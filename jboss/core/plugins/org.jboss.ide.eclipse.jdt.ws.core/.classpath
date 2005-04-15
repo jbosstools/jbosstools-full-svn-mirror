@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis-1.2/axis.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis-1.2/commons-discovery.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis-1.2/commons-logging.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis-1.2/log4j-1.2.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis-1.2/wsdl4j.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/wsi-1.0/jaxr-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/wsi-1.0/jaxrpc-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/wsi-1.0/saaj-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/wsi-1.0/xml-api.jar"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
