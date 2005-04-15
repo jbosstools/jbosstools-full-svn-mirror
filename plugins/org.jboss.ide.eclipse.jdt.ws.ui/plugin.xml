@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin
+   id="org.jboss.ide.eclipse.jdt.ws.ui"
+   name="%plugin.name"
+   version="1.5.0.m1"
+   provider-name="%plugin.provider"
+   class="org.jboss.ide.eclipse.jdt.ws.ui.JDTWSUIPlugin">
+
+   <runtime>
+      <library name="org-jboss-ide-eclipse-jdt-ws-ui.jar">
+         <export name="*"/>
+      </library>
+   </runtime>
+
+   <requires>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.jboss.ide.eclipse.ui"/>
+      <import plugin="org.jboss.ide.eclipse.core"/>
+      <import plugin="org.jboss.ide.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.jdt.ui"/>
+      <import plugin="org.eclipse.jdt"/>
+      <import plugin="org.eclipse.jdt.launching"/>
+      <import plugin="org.jboss.ide.eclipse.jdt.ui"/>
+      <import plugin="org.jboss.ide.eclipse.jdt.ws.core"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.eclipse.debug.core"/>
+      <import plugin="org.jboss.ide.eclipse.jdt.test.core"/>
+      <import plugin="org.eclipse.core.runtime"/>
+   </requires>
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%org.jboss.ide.eclipse.ui.wizards.webservices"
+            parentCategory="org.jboss.ide.eclipse.ui.wizards"
+            id="org.jboss.ide.eclipse.ui.wizards.webservices">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            name="Web Services Test Client"
+            icon="icons/full/ctool16/newclass_wiz.gif"
+            category="org.jboss.ide.eclipse.ui.wizards/org.jboss.ide.eclipse.ui.wizards.webservices"
+            class="org.jboss.ide.eclipse.jdt.ws.ui.wizards.webservices.NewWebServicesTestClientWizard"
+            id="org.jboss.ide.eclipse.jdt.ws.ui.wizards.webservices.NewWebServicesTestClientWizard">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.jdt.ui.classpathContainerPage">
+      <classpathContainerPage
+            name="%org.jboss.ide.eclipse.jdt.core.classpath.wsi-1.0"
+            class="org.jboss.ide.eclipse.jdt.ws.ui.pages.WSI10ClasspathContainerPage"
+            id="org.jboss.ide.eclipse.jdt.core.classpath.wsi-1.0">
+      </classpathContainerPage>
+      <classpathContainerPage
+            name="%org.jboss.ide.eclipse.jdt.core.classpath.axis-1.2"
+            class="org.jboss.ide.eclipse.jdt.ws.ui.pages.Axis12ClasspathContainerPage"
+            id="org.jboss.ide.eclipse.jdt.core.classpath.axis-1.2">
+      </classpathContainerPage>
+   </extension>
+
+</plugin>

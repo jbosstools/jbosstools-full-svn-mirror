@@ -1,0 +1,41 @@
+<chapter id="installation">
+    <title>Install &amp; Upgrade</title>
+    <para>Eclipse offers an easy way to install/upgrade features. It is done by hand the first time and then, Eclipse can check whether updates are available, download them and install them.</para>
+    <para>This chapter describes how to install JBoss-IDE with the install/update features of Eclipse, and how to stay up-to-date automatically.</para>
+    <section>
+    	<title>Eclipse 3.0.x series</title>
+    	<para>
+    		Follow these steps :
+    		<itemizedlist>
+    			<listitem>Start Eclipse.</listitem>
+    			<listitem>Select <literal>Help</literal> &gt; <literal>Software Updates</literal> &gt; <literal>Find and Install...</literal></listitem>
+    			<listitem>Select <literal>Search for new features to install</literal></listitem>
+    			<listitem>
+    				Select <literal>Add Update Site</literal> from the right menu. In the dialog fill the name with <literal>JBossIDE</literal>
+    				and the URL with <ulink url="http://jboss.sourceforge.net/jbosside/updates">http://jboss.sourceforge.net/jbosside/updates</ulink>
+    			</listitem>
+    			<listitem>
+    				Expand the <literal>JBossIDE</literal> tree, and check the feature named <literal>JBoss-IDE 1.0/Eclipse 3.0</literal>.
+    				Click Next, and Eclipse will scan for the current releases. After the scan is complete, select the 1.4.0 release and click <literal>Finish</literal>.
+    			</listitem>
+    			<listitem>At the end of the installation, you will be prompted to restart Eclipse. Click yes.</listitem>
+    		</itemizedlist>
+    		
+			<tip>If you are behind a proxy you have to go to <literal>Window</literal> &gt; <literal>Preferences</literal> &gt; <literal>Install/Update</literal>,
+			select <literal>Enable HTTP Proxy Connection</literal> and insert values for <literal>Host Address</literal> and <literal>Port</literal>.</tip>
+			
+			<tip>You can be notified when new updates are available. You can also configure Eclipse to fetch new updates and make them ready to install.
+			All this configuration can be done through the  <literal>Window</literal> &gt; <literal>Preferences</literal> &gt; <literal>Install/Update</literal> &gt; <literal>Automatic Updates</literal> preferences page.</tip>
+		
+    		Have a look at the Eclipse documentation to get more information about the Install/Update Manager.
+			<figure id="jbosside.update">
+            <title>Overview of the update search result.</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata align="center" fileref="images/jbosside-update.jpg"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    	</para>
+    </section>
+</chapter>
