@@ -1,0 +1,49 @@
+<html>
+<head>
+	<link href="tutorial.css" type="text/css" rel="stylesheet">
+	<title>JBoss-IDE AOP Tutorial</title>
+</head>
+<body>
+
+<b>Creating a new AOP Project</b>
+<hr/>
+For the time being, creating an AOP project consists of first creating a Java Project, then afterwards converting that project into an AOP project.
+In the future there will be a New AOP Project Wizard, but for now just stick with these directions:<br/><br/>
+<ul>
+	<li> From eclipse's main menu, you can click on the File Menu, and under it, New &gt; Project...</li>
+	<li> Double click on "Java Project"</li>
+	<li> In the Project Name text box, let's enter "HelloAOP" (without quotes -- make sure not to enter a space).</li>
+	<li> "Create Project in Workspace" should be fine for the project location. If you want to use an external location, make sure there are no spaces in the path.</li>
+	<li> Under "Project layout" make sure to click "Create seperate source and output folders", then click the "Next" button.</li>
+	<li> The project properties window should now open. The only thing you should need to do at this point is to add all the required AOP libraries to your project's
+	libraries. The easiest way to get the AOP libraries needed is to just use the plugin's jar files, but this can be unstable when upgrading the version of the plugin.
+	The best solution is to grab the latest release of jboss aop (currently 1.0RC1:  <a href="http://prdownloads.sourceforge.net/jboss/jboss-aop-1.0RC1.zip?download">Here's a link</a>),
+	and unzip the file into a place that you can remember.
+	</li>
+	<ul>
+		<li> Click on the "Libraries" tab of the project properties window.</li>
+		<li> Click the "Add External JARs.." Button.</li>
+		<li> Browse to the directory where you extracted the jboss-aop-1.0RC1.zip file, and select all the JAR files in the directory <b>except</b> jboss-aop-jdk15.jar.</li>
+		<li> Click The "Finish" Button. </li>
+		<li> <i>NOTE</i>: If you get a dialog box asking if you want to switch to the Java Perspective, click Yes. </li>
+	</ul>
+
+	<li> At this point, your eclipse workbench should look something like this:</li>
+
+	<img src="images/after-initial-setup.jpg"/>
+	<br/>
+
+	<li> All we need to do now is right click on the Project, and Click on "Convert to AOP Project..." to make this Project an AOP Project.</li>
+ </ul>
+
+<hr/>
+<center>
+<table width="100%">
+<tr>
+	<td><a href="index.html">Contents</a></td>
+	<td align="right"><a href="page1.html">&lt; Back</a> | <a href="page3.html">Next &gt;</a></td>
+</tr>
+</table>
+</center>
+</body>
+</html>
