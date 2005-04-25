@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.jboss.ide.eclipse"
+      id="org.jboss.ide.eclipse.feature"
       label="JBoss-IDE"
       version="1.5.0.m1"
       provider-name="JBoss Team"
