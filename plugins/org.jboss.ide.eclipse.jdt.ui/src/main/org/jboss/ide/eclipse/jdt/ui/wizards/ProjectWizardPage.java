@@ -264,7 +264,7 @@ public abstract class ProjectWizardPage extends JavaCapabilityConfigurationPage
                )
                {
                   // if .classpath exists noneed to look for files
-                  ClassPathDetector detector = new ClassPathDetector(fCurrProject);
+                  ClassPathDetector detector = new ClassPathDetector(fCurrProject.getProject(), monitor);
                   entries = detector.getClasspath();
                   outputLocation = detector.getOutputLocation();
                }
