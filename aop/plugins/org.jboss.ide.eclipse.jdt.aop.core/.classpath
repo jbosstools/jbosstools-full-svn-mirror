@@ -28,11 +28,15 @@
 		<attributes>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="src/eclipse31">
+		<attributes>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="src/main">
 		<attributes>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" sourcepath="/aop/src/main" kind="lib" path="jboss-aop.jar">
+	<classpathentry exported="true" kind="lib" path="jboss-aop.jar">
 		<attributes>
 		</attributes>
 	</classpathentry>
@@ -73,10 +77,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
-		<attributes>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="src/eclipse31">
 		<attributes>
 		</attributes>
 	</classpathentry>

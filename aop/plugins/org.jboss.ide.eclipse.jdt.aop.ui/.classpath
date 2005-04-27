@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="src/eclipse31">
+		<attributes>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="src/main">
 		<attributes>
 		</attributes>
@@ -9,10 +13,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
-		<attributes>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="src/eclipse31">
 		<attributes>
 		</attributes>
 	</classpathentry>
