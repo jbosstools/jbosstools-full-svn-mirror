@@ -1,5 +1,6 @@
 package org.jboss.ide.eclipse.jdt.aop.core.classpath;
 
+
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 

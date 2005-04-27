@@ -64,8 +64,12 @@ public class JDTFieldMatcher extends MatcherHelper {
 			
 			ClassExpression type = node.getType();
 			
-			String typeSig = jdtField.getTypeSignature();
-			IType fieldType = JavaModelUtil.findType(jdtField.getJavaProject(), typeSig);
+			String typeSig = JavaModelUtil.getResolvedTypeName(jdtField.getTypeSignature(), jdtField.getDeclaringType());
+			IType fieldType = null;
+			try {
+				fieldType = JavaModelUtil.findType(jdtField.getJavaProject(), typeSig);
+			} catch( JavaModelException jme ) {
+			}
 			if (fieldType == null)
 			{
 				if (! JDTPointcutUtil.matchesClassExprPrimitive(type, typeSig)) return Boolean.FALSE;

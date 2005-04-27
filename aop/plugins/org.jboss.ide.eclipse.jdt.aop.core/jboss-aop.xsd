@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-	JBoss, the OpenSource J2EE webOS
+	JBoss, the OpenSource webOS
 	Distributable under LGPL license.
 	See terms of license at gnu.org.
 	
-	andrew oswald  May 11, 2004 
+	Robert Stryker  April 14, 2005
  -->
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="1.0">
@@ -16,76 +16,44 @@
 		</xsd:appinfo>
 	</xsd:annotation>
 	
-	<!--
-		| AOPType
-	 -->
 	<xsd:complexType name="AOPType">
-		<xsd:sequence>
-			<xsd:element name="aspect" type="Aspect" minOccurs="0" maxOccurs="unbounded">
-				<xsd:annotation>
-					<xsd:appinfo>
-						<jxb:property name="Aspects"/>
-					</xsd:appinfo>
-				</xsd:annotation>					
-			</xsd:element>
-			<xsd:element name="interceptor" type="Interceptor" minOccurs="0" maxOccurs="unbounded">
-				<xsd:annotation>
-					<xsd:appinfo>
-						<jxb:property name="Interceptors"/>
-					</xsd:appinfo>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="pointcut" type="Pointcut" minOccurs="0" maxOccurs="unbounded">
-				<xsd:annotation>
-					<xsd:appinfo>
-						<jxb:property name="Pointcuts"/>
-					</xsd:appinfo>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="bind" type="Binding" minOccurs="0" maxOccurs="unbounded">
-				<xsd:annotation>
-					<xsd:appinfo>
-						<jxb:property name="Bindings"/>
-					</xsd:appinfo>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			
+			<xsd:annotation>
+				<xsd:appinfo>
+					<jxb:property name="topLevelElements"/>
+				</xsd:appinfo>
+			</xsd:annotation>
+
+			<xsd:element name="interceptor" type="Interceptor"/>
+			<xsd:element name="aspect" type="Aspect"/>
+			<xsd:element name="pointcut" type="Pointcut"/>
+			<xsd:element name="bind" type="Binding"/>
+			<xsd:element name="typedef" type="Typedef"/>
+			<xsd:element name="introduction" type="Introduction"/>
+			<xsd:element name="metadata-loader" type="MetaDataLoader"/>
+			<xsd:element name="metadata" type="MetaData"/>
+			<xsd:element name="stack" type="Stack"/>
+			<xsd:element name="pluggable-pointcut" type="PluggablePointcut"/>
+			<xsd:element name="prepare" type="RequiredExprType"/>
+			<xsd:element name="cflow-stack" type="CFlowStack"/>
+			<xsd:element name="dynamic-cflow" type="DynamicCFlow"/>
+			<xsd:element name="annotation-introduction" type="AnnotationIntroduction"/>
+			<xsd:element name="annotation" type="Annotation"/>
+		</xsd:choice>
 	</xsd:complexType>
-	<!--
-		| Binding
-	 -->
-	<xsd:complexType name="Binding">
-		<xsd:sequence>
-			<xsd:element name="interceptor" type="Interceptor" minOccurs="0" maxOccurs="unbounded">
-				<xsd:annotation>
-					<xsd:appinfo>
-						<jxb:property name="Interceptors"/>
-					</xsd:appinfo>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="interceptor-ref" type="InterceptorRef" minOccurs="0" maxOccurs="unbounded">
-				<xsd:annotation>
-					<xsd:appinfo>
-						<jxb:property name="InterceptorRefs"/>
-					</xsd:appinfo>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="advice" type="Advice" minOccurs="0" maxOccurs="unbounded">
-				<xsd:annotation>
-					<xsd:appinfo>
-						<jxb:property name="Advised"/>
-					</xsd:appinfo>
-				</xsd:annotation>
-			</xsd:element>
-		</xsd:sequence>
-		<xsd:attribute name="pointcut" type="xsd:string"/>
-	</xsd:complexType>
-	<!--
+
+			<!--
+			<xsd:element name="domain" type="Domain"/>
+			-->
+	
+	
+		<!--
 		| Interceptor
 	 -->
 	<xsd:complexType name="Interceptor">
+		<xsd:any minOccurs="0" maxOccurs="unbounded"/>
 		<xsd:attribute name="class" type="xsd:string">
-			<!-- inline annotation to override reserved name -->
 			<xsd:annotation>
 				<xsd:appinfo>
 					<jxb:property name="Clazz"/>
@@ -94,17 +62,23 @@
 		</xsd:attribute>
 		<xsd:attribute name="name" type="xsd:string" use="optional"/>
 		<xsd:attribute name="factory" type="xsd:string" use="optional"/>
+		<xsd:attribute name="scope" type="AspectScope" default="PER_VM"/>
 	</xsd:complexType>
-	<!--
+	
+	
+		<!--
 	    | InterceptorRef
 	-->
 	<xsd:complexType name="InterceptorRef">
 		<xsd:attribute name="name" type="xsd:string"/>
 	</xsd:complexType>
-	<!--
+	
+	
+		<!--
 		| Aspect
 	-->
 	<xsd:complexType name="Aspect">
+		<xsd:any minOccurs="0" maxOccurs="unbounded"/>
 		<xsd:attribute name="class" type="xsd:string" use="required">
 			<xsd:annotation>
 				<xsd:appinfo>
@@ -114,7 +88,8 @@
 		</xsd:attribute>
 		<xsd:attribute name="scope" type="AspectScope" default="PER_VM"/>
 	</xsd:complexType>
-	<!--
+	
+		<!--
 		| Aspect Scope
 	-->
 	<xsd:simpleType name="AspectScope">
@@ -122,15 +97,10 @@
 			<xsd:enumeration value="PER_VM"/>
 			<xsd:enumeration value="PER_CLASS"/>
 			<xsd:enumeration value="PER_INSTANCE"/>
+			<xsd:enumeration value="PER_JOINPOINT"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<!--
-		| Advice
-	-->
-	<xsd:complexType name="Advice">
-		<xsd:attribute name="name" type="xsd:string"/>
-		<xsd:attribute name="aspect" type="xsd:string"/>
-	</xsd:complexType>
+	
 	<!--
 		| Pointcut
 	 -->
@@ -138,4 +108,186 @@
 		<xsd:attribute name="name" type="xsd:string" use="required"/>
 		<xsd:attribute name="expr" type="xsd:string" use="required"/>
 	</xsd:complexType>
-</xsd:schema>
+	
+	
+	
+	
+	<xsd:complexType name="Binding">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<jxb:property name="Elements"/>
+				</xsd:appinfo>
+			</xsd:annotation>
+
+			<xsd:element name="interceptor" type="Interceptor"/>
+			<xsd:element name="interceptor-ref" type="InterceptorRef"/>
+			<xsd:element name="advice" type="Advice"/>
+		</xsd:choice>
+		<xsd:attribute name="name" type="xsd:string" use="optional"/>
+		<xsd:attribute name="pointcut" type="xsd:string"/>
+		<xsd:attribute name="cflow" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+	
+		<!--
+		| Advice
+	-->
+	<xsd:complexType name="Advice">
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="aspect" type="xsd:string"/>
+	</xsd:complexType>
+
+
+		<!--
+		| Typedef
+	-->
+	<xsd:complexType name="Typedef">
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="expr" type="xsd:string"/>
+	</xsd:complexType>
+	
+	
+	<!--
+		| Introduction
+	-->
+	<xsd:complexType name="Introduction">
+		<xsd:choice>
+			<xsd:element name="mixin" type="Mixin" minOccurs="1" maxOccurs="unbounded"/>
+			<xsd:element name="interfaces" type="xsd:string"/>
+		</xsd:choice>
+		<xsd:attribute name="class" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<jxb:property name="Clazz"/>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="expr" type="xsd:string" use="optional"/>		
+	</xsd:complexType>
+
+	<!--
+		| Mixin
+	-->
+	<xsd:complexType name="Mixin">
+		<xsd:sequence>
+			<xsd:element name="interfaces" type="xsd:string"/>
+			<xsd:element name="class" type="xsd:string">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property name="Clazz"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			
+			<xsd:element name="construction" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="transient" type="xsd:boolean" default="true"/>
+	</xsd:complexType>
+
+
+
+	<!--
+		| MetadataLoader
+	-->
+	<xsd:complexType name="MetaDataLoader">
+		<xsd:attribute name="tag" type="xsd:string" use="required"/>
+		<xsd:attribute name="class" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<jxb:property name="Clazz"/>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+
+
+	<!--
+		| Metadata
+	-->
+	<xsd:complexType name="MetaData">
+		<xsd:any minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:attribute name="tag" type="xsd:string" use="required"/>
+		<xsd:attribute name="class" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<jxb:property name="Clazz"/>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+
+	<!--
+		| Stack
+	-->
+	<xsd:complexType name="Stack">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="interceptor" type="Interceptor"/>
+			<xsd:element name="interceptor-ref" type="InterceptorRef"/>
+			<xsd:element name="stack-ref" type="StackRef"/>
+			<xsd:element name="advice" type="Advice"/>
+		</xsd:choice>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+
+
+	<xsd:complexType name="StackRef">
+		<xsd:attribute name="name" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="PluggablePointcut">
+		<xsd:any minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="class" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<jxb:property name="Clazz"/>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	
+
+	<xsd:complexType name="CFlowStack">
+		<xsd:choice minOccurs="1" maxOccurs="unbounded">
+			<xsd:element name="called" type="RequiredExprType"/>
+			<xsd:element name="not-called" type="RequiredExprType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	
+	<xsd:complexType name="RequiredExprType">
+		<xsd:attribute name="expr" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="DynamicCFlow">
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="class" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<jxb:property name="Clazz"/>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="AnnotationIntroduction">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="expr" type="xsd:string"/>
+				<xsd:attribute name="invisible" type="xsd:boolean" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+
+	<xsd:complexType name="Annotation">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="expr" type="xsd:string"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+
+</xsd:schema>	

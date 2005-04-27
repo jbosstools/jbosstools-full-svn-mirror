@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -30,8 +31,6 @@ import org.eclipse.jdt.core.search.IJavaSearchScope;
 import org.eclipse.jdt.core.search.SearchEngine;
 import org.eclipse.jdt.internal.core.CompilationUnit;
 import org.eclipse.jdt.internal.core.JavaElementDelta;
-import org.eclipse.jdt.internal.core.SourceField;
-import org.eclipse.jdt.internal.core.SourceMethod;
 import org.eclipse.jdt.internal.corext.util.AllTypesCache;
 import org.eclipse.jdt.internal.corext.util.TypeInfo;
 import org.jboss.aop.AspectManager;
@@ -459,7 +458,7 @@ public class AopModel implements IElementChangedListener
 		
 		Aop aop = descriptor.getAop();
 		
-		for (Iterator iter = aop.getPointcuts().iterator(); iter.hasNext(); )
+		for (Iterator iter = getTypeFromAop(Pointcut.class, aop).iterator(); iter.hasNext(); )
 		{
 			Pointcut pointcut = (Pointcut) iter.next();
 			if (AspectManager.instance().getPointcut(pointcut.getName()) == null)
@@ -482,7 +481,8 @@ public class AopModel implements IElementChangedListener
 			IAopAspect aspect = aspects[i];
 			boolean found = false;
 			
-			for (Iterator iter = aop.getAspects().iterator(); iter.hasNext(); )
+			
+			for (Iterator iter = getTypeFromAop(Aspect.class, aop).iterator(); iter.hasNext(); )
 			{
 				Aspect xmlAspect = (Aspect) iter.next();	
 				if (xmlAspect.getClazz().equals(aspect.getType().getFullyQualifiedName()))
@@ -509,7 +509,7 @@ public class AopModel implements IElementChangedListener
 			}
 		}
 		
-		for (Iterator iter = aop.getAspects().iterator(); iter.hasNext(); )
+		for (Iterator iter = getTypeFromAop(Aspect.class, aop).iterator(); iter.hasNext(); )
 		{
 			Aspect xmlAspect = (Aspect) iter.next();
 			if (! advisors.hasAspect(xmlAspect.getClazz()))
@@ -524,7 +524,7 @@ public class AopModel implements IElementChangedListener
 		{
 			boolean found = false;
 			
-			for (Iterator iter = aop.getInterceptors().iterator(); iter.hasNext(); )
+			for (Iterator iter = getTypeFromAop(Interceptor.class, aop).iterator(); iter.hasNext(); )
 			{
 				Interceptor xmlInterceptor = (Interceptor) iter.next();	
 				if (xmlInterceptor.getClazz().equals(interceptors[i].getAdvisingType().getFullyQualifiedName()))
@@ -547,7 +547,7 @@ public class AopModel implements IElementChangedListener
 			}
 		}
 		
-		for (Iterator iter = aop.getInterceptors().iterator(); iter.hasNext(); )
+		for (Iterator iter = getTypeFromAop(Interceptor.class, aop).iterator(); iter.hasNext(); )
 		{
 			Interceptor xmlInterceptor = (Interceptor) iter.next();
 			if (! advisors.hasInterceptor(xmlInterceptor.getClazz()))
@@ -566,7 +566,7 @@ public class AopModel implements IElementChangedListener
 		{
 			boolean found = false;
 			
-			for (Iterator iter = aop.getBindings().iterator(); iter.hasNext(); )
+			for (Iterator iter = getTypeFromAop(Binding.class, aop).iterator(); iter.hasNext(); )
 			{
 				Binding binding = (Binding) iter.next();
 				
@@ -584,7 +584,7 @@ public class AopModel implements IElementChangedListener
 						{
 							IAopInterceptor pointcutInterceptor = (IAopInterceptor) pointcutAdvisors[j];
 							
-							for (Iterator iter2 = binding.getInterceptors().iterator(); iter2.hasNext(); )
+							for (Iterator iter2 = getFromBinding(Interceptor.class, binding).iterator(); iter2.hasNext(); )
 							{
 								Interceptor interceptor = (Interceptor) iter2.next();
 								if (interceptor.getClazz().equals(pointcutInterceptor.getAdvisingType().getFullyQualifiedName()))
@@ -594,7 +594,7 @@ public class AopModel implements IElementChangedListener
 								}
 							}
 							
-							for (Iterator iter2 = binding.getInterceptorRefs().iterator(); iter2.hasNext(); )
+							for (Iterator iter2 = getFromBinding(InterceptorRef.class, binding).iterator(); iter2.hasNext(); )
 							{
 								InterceptorRef interceptorRef = (InterceptorRef) iter2.next();
 								
@@ -609,7 +609,7 @@ public class AopModel implements IElementChangedListener
 						{
 							IAopAdvice pointcutAdvice = (IAopAdvice) pointcutAdvisors[j];
 							
-							for (Iterator iter2 = binding.getAdvised().iterator(); iter2.hasNext(); )
+							for (Iterator iter2 = getFromBinding(Advice.class, binding).iterator(); iter2.hasNext(); )
 							{
 								Advice advice = (Advice) iter2.next();
 								if (advice.getAspect().equals(pointcutAdvice.getAspect().getType().getFullyQualifiedName()))
@@ -640,7 +640,7 @@ public class AopModel implements IElementChangedListener
 				// At this point we've identified all "removed" advisors of this pointcut.
 				// Now we need to reverse the loop and look for all "added" advisors, and
 				// apply them to this pointcut. (and also start firing some advisor added events)
-				for (Iterator iter2 = binding.getInterceptorRefs().iterator(); iter2.hasNext(); )
+				for (Iterator iter2 = getFromBinding(InterceptorRef.class, binding).iterator(); iter2.hasNext(); )
 				{
 					InterceptorRef interceptorRef = (InterceptorRef) iter2.next();
 					IAopInterceptor interceptor = advisors.findInterceptor(interceptorRef.getName());
@@ -673,7 +673,7 @@ public class AopModel implements IElementChangedListener
 					}
 				}
 				
-				for (Iterator iter2 = binding.getInterceptors().iterator(); iter2.hasNext(); )
+				for (Iterator iter2 = getFromBinding(Interceptor.class, binding).iterator(); iter2.hasNext(); )
 				{
 					Interceptor xmlInterceptor = (Interceptor) iter2.next();
 					IAopAdvisor pointcutAdvisors[] = getPointcutAdvisors(project, expressions[i]);
@@ -706,7 +706,7 @@ public class AopModel implements IElementChangedListener
 					}
 				}
 				
-				for (Iterator iter2 = binding.getAdvised().iterator(); iter2.hasNext(); )
+				for (Iterator iter2 = getFromBinding(Advice.class, binding).iterator(); iter2.hasNext(); )
 				{
 					Advice xmlAdvice = (Advice) iter2.next();
 					IAopAdvisor pointcutAdvisors[] = getPointcutAdvisors(project, expressions[i]);
@@ -771,7 +771,7 @@ public class AopModel implements IElementChangedListener
 		// Now it's time to go through and just manually add new binding/pointcuts
 		// (the same we do in init.. )
 		
-		for (Iterator iter = aop.getBindings().iterator(); iter.hasNext(); )
+		for (Iterator iter = getTypeFromAop(Binding.class, aop).iterator(); iter.hasNext(); )
 		{
 			Binding binding = (Binding) iter.next();
 			boolean found = false;
@@ -805,7 +805,7 @@ public class AopModel implements IElementChangedListener
 		AopDescriptor descriptor = AopCorePlugin.getDefault().getDefaultDescriptor(project);
 		Aop aop = descriptor.getAop();
 		
-		for (Iterator iter = aop.getPointcuts().iterator(); iter.hasNext(); )
+		for (Iterator iter = getTypeFromAop(Pointcut.class, aop).iterator(); iter.hasNext(); )
 		{
 			Pointcut pointcut = (Pointcut) iter.next();
 			try {
@@ -818,15 +818,14 @@ public class AopModel implements IElementChangedListener
 			}
 		}
 		
-		for (Iterator iter = aop.getAspects().iterator(); iter.hasNext(); )
+		for (Iterator iter = getTypeFromAop(Aspect.class, aop).iterator(); iter.hasNext(); )
 		{
 			Aspect aspect = (Aspect) iter.next();
 			advisors.addAspect(aspect.getClazz());
 		}
 		
 		monitor.worked(1);
-		
-		for (Iterator iter = aop.getInterceptors().iterator(); iter.hasNext(); )
+		for (Iterator iter = getTypeFromAop(Interceptor.class, aop).iterator(); iter.hasNext(); )
 		{
 			Interceptor interceptor = (Interceptor) iter.next();
 			advisors.addInterceptor(interceptor.getClazz());
@@ -861,7 +860,7 @@ public class AopModel implements IElementChangedListener
 			e.printStackTrace();
 		}
 		
-		for (Iterator iter = aop.getBindings().iterator(); iter.hasNext(); )
+		for (Iterator iter = getTypeFromAop(Binding.class, aop).iterator(); iter.hasNext(); )
 		{
 			Binding binding = (Binding) iter.next();
 			bindNewPointcut (project, binding, monitor);
@@ -912,7 +911,7 @@ public class AopModel implements IElementChangedListener
 			PointcutAdvisedCollector collector = new PointcutAdvisedCollector(expression);
 			expression.setCollector(collector);
 			
-			for (Iterator iter2 = binding.getAdvised().iterator(); iter2.hasNext(); )
+			for (Iterator iter2 = getFromBinding(Advice.class, binding).iterator(); iter2.hasNext(); )
 			{
 				Advice advice = (Advice) iter2.next();
 				IAopAdvice aopAdvice = advisors.addAdvice (advice.getAspect(), advice.getName());
@@ -921,7 +920,7 @@ public class AopModel implements IElementChangedListener
 				collector.addAdvisor(aopAdvice);
 			}
 			
-			for (Iterator iter2 = binding.getInterceptorRefs().iterator(); iter2.hasNext(); )
+			for (Iterator iter2 = getFromBinding(InterceptorRef.class, binding).iterator(); iter2.hasNext(); )
 			{
 				InterceptorRef ref = (InterceptorRef) iter2.next();
 				
@@ -931,7 +930,7 @@ public class AopModel implements IElementChangedListener
 				collector.addAdvisor(interceptor);
 			}
 			
-			for (Iterator iter2 = binding.getInterceptors().iterator(); iter2.hasNext(); )
+			for (Iterator iter2 = getFromBinding(Interceptor.class, binding).iterator(); iter2.hasNext(); )
 			{
 				Interceptor interceptor = (Interceptor) iter2.next();
 				
@@ -1209,7 +1208,7 @@ public class AopModel implements IElementChangedListener
 	private ArrayList elementChangedGetAllAffected(IJavaElementDelta delta, boolean includeCompilationUnit) {
 		ArrayList changed = new ArrayList();
 		IJavaElementDelta changedChildren[] = delta.getAffectedChildren();
-		if( delta.getElement() instanceof SourceMethod || delta.getElement() instanceof SourceField 
+		if( delta.getElement() instanceof IMethod || delta.getElement() instanceof IField 
 				|| (delta.getElement() instanceof CompilationUnit && includeCompilationUnit)) {
 			
 			// We only care about added or removed... not changed.
@@ -1472,4 +1471,61 @@ public class AopModel implements IElementChangedListener
 			}
 		}
 	}
+	
+	
+	
+	
+	
+	public static List getTypeFromAop(Class clazz, Aop aop) {
+		Iterator i = aop.getTopLevelElements().iterator();
+		ArrayList list = new ArrayList();
+		while( i.hasNext() ) {
+			Object o = i.next();
+			if( clazz.isAssignableFrom(o.getClass())) {
+				list.add(o);
+			}
+		}
+		return list;
+	}
+
+	public static List getFromBinding(Class clazz, Binding binding) {
+		Iterator i = binding.getElements().iterator();
+		ArrayList list = new ArrayList();
+		while( i.hasNext() ) {
+			Object o = i.next();
+			if( clazz.isAssignableFrom(o.getClass())) {
+				list.add(o);
+			}
+		}
+		return list;
+	}
+	
+	
+	/*
+	
+	public static List getInterceptorsFromBinding(Binding binding) {
+		Iterator i = binding.getElements().iterator();
+		ArrayList list = new ArrayList();
+		while( i.hasNext() ) {
+			Object o = i.next();
+			if( o instanceof Interceptor ) {
+				list.add(o);
+			}
+		}
+		return list;
+	}
+	public static List getInterceptorRefssFromBinding(Binding binding) {
+		Iterator i = binding.getElements().iterator();
+		ArrayList list = new ArrayList();
+		while( i.hasNext() ) {
+			Object o = i.next();
+			if( o instanceof InterceptorRef ) {
+				list.add(o);
+			}
+		}
+		return list;
+	}
+	
+	*/
+
 }

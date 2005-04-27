@@ -17,6 +17,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.aop.AspectXmlLoader;
 import org.jboss.aop.advice.Scope;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AOPType;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aop;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aspect;
@@ -24,6 +25,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
 import org.jboss.ide.eclipse.jdt.aop.core.util.JaxbAopUtil;
 
 /**
@@ -86,7 +88,7 @@ public class AopDescriptor {
 	
 	public Binding findBinding (String pointcut)
 	{
-		List binds = getAop().getBindings();
+		List binds = AopModel.getTypeFromAop(Binding.class, getAop()); 
 		Iterator bIter = binds.iterator();
 		while (bIter.hasNext())
 		{
@@ -99,9 +101,11 @@ public class AopDescriptor {
 		
 		try {
 			// No binding found -- create a new one and return it
-			Binding binding = JaxbAopUtil.instance().getFactory().createBinding();
+			AOPType.Bind binding = JaxbAopUtil.instance().getFactory().createAOPTypeBind();
+			// TODO    a: WHERE WE LEFT OFF
+			//Binding binding = JaxbAopUtil.instance().getFactory().createBinding();
 			binding.setPointcut(pointcut);
-			getAop().getBindings().add(binding);
+			getAop().getTopLevelElements().add(binding);
 			
 			return binding;
 		} catch (JAXBException e) {
@@ -118,7 +122,7 @@ public class AopDescriptor {
 	
 	private Aspect findAspect (String className, String scope)
 	{
-		List aspects = getAop().getAspects();
+		List aspects = AopModel.getTypeFromAop(Aspect.class, getAop()); 
 		Iterator aIter = aspects.iterator();
 		while (aIter.hasNext())
 		{
@@ -133,10 +137,10 @@ public class AopDescriptor {
 		
 		try {
 			// No aspect found, create new one and return it
-			Aspect aspect = JaxbAopUtil.instance().getFactory().createAspect();
+			Aspect aspect = JaxbAopUtil.instance().getFactory().createAOPTypeAspect();
 			aspect.setClazz(className);
 			aspect.setScope(scope);
-			getAop().getAspects().add(aspect);
+			getAop().getTopLevelElements().add(aspect);
 			
 			return aspect;
 		} catch (JAXBException e) {
@@ -150,10 +154,9 @@ public class AopDescriptor {
 	{
 		try {
 			Binding binding = findBinding(pointcut);
-			Interceptor interceptor = JaxbAopUtil.instance().getFactory().createInterceptor();
+			Interceptor interceptor = JaxbAopUtil.instance().getFactory().createBindingInterceptor();
 			interceptor.setClazz(className);
-			
-			binding.getInterceptors().add(interceptor);
+			binding.getElements().add(interceptor);
 			return interceptor;
 		} catch (JAXBException e) {
 			e.printStackTrace();
@@ -165,10 +168,10 @@ public class AopDescriptor {
 	{
 		try {
 			Binding binding = findBinding(pointcut);
-			InterceptorRef interceptorRef = JaxbAopUtil.instance().getFactory().createInterceptorRef();
+			InterceptorRef interceptorRef = JaxbAopUtil.instance().getFactory().createBindingInterceptorRef();
 			interceptorRef.setName(name);
 			
-			binding.getInterceptorRefs().add(interceptorRef);
+			binding.getElements().add(interceptorRef);
 			
 		} catch (JAXBException e) {
 			e.printStackTrace();
@@ -180,12 +183,11 @@ public class AopDescriptor {
 		try {
 			Binding binding = findBinding(pointcut);
 			Aspect aspect = findAspect(aspectClass);
-			
-			Advice advice = JaxbAopUtil.instance().getFactory().createAdvice();
+			Advice advice = JaxbAopUtil.instance().getFactory().createBindingAdvice();
 			advice.setAspect(aspect.getClazz());
 			advice.setName(adviceName);
 			
-			binding.getAdvised().add(advice);
+			binding.getElements().add(advice);
 			return advice;
 		} catch (JAXBException e) {
 			e.printStackTrace();
@@ -201,12 +203,10 @@ public class AopDescriptor {
 	public void addAspect(String className, Scope scope)
 	{
 		try {
-			List aspects = getAop().getAspects();
-			Aspect aspect = JaxbAopUtil.instance().getFactory().createAspect();
+			Aspect aspect = JaxbAopUtil.instance().getFactory().createAOPTypeAspect();
 			aspect.setClazz(className);
 			aspect.setScope(scope.name());
-			
-			aspects.add(aspect);	
+			getAop().getTopLevelElements().add(aspect);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
@@ -215,12 +215,11 @@ public class AopDescriptor {
 	public void addPointcut(String name, String expr)
 	{
 		try {
-			List pointcuts = getAop().getPointcuts();
-			Pointcut pointcut = JaxbAopUtil.instance().getFactory().createPointcut();
+			Pointcut pointcut = JaxbAopUtil.instance().getFactory().createAOPTypePointcut();
 			pointcut.setName(name);
 			pointcut.setExpr(expr);
 			
-			pointcuts.add(pointcut);
+			getAop().getTopLevelElements().add(pointcut);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
@@ -228,15 +227,18 @@ public class AopDescriptor {
 	
 	public List getParent (Interceptor interceptor)
 	{
-		if (getAop().getInterceptors().contains(interceptor)) return getAop().getInterceptors();
+		List interceptors = AopModel.getTypeFromAop(Interceptor.class, getAop());
+		if ( interceptors.contains((interceptor)))
+				return interceptors;
 		else {
-			Iterator bIter = getAop().getBindings().iterator();
+			Iterator bIter = AopModel.getTypeFromAop(Binding.class, getAop()).iterator();
 			while (bIter.hasNext())
 			{
 				Binding binding = (Binding) bIter.next();
-				if (binding.getInterceptors().contains(interceptor))
+				List bindInterceptors = AopModel.getFromBinding(Interceptor.class, binding);
+				if (bindInterceptors.contains(interceptor))
 				{
-					return binding.getInterceptors();
+					return bindInterceptors;
 				}
 			}
 		}
@@ -246,13 +248,14 @@ public class AopDescriptor {
 	
 	public List getParent (Advice advice)
 	{
-		Iterator bIter = getAop().getBindings().iterator();
+		Iterator bIter = AopModel.getTypeFromAop(Binding.class, getAop()).iterator();
 		while (bIter.hasNext())
 		{
 			Binding binding = (Binding) bIter.next();
-			if (binding.getAdvised().contains(advice))
+			List advised = AopModel.getFromBinding(Advice.class, binding);
+			if (advised.contains(advice))
 			{
-				return binding.getAdvised();
+				return advised;
 			}
 		}
 		return null;
@@ -260,13 +263,14 @@ public class AopDescriptor {
 	
 	public List getParent (InterceptorRef interceptorRef)
 	{
-		Iterator bIter = getAop().getBindings().iterator();
+		Iterator bIter = AopModel.getTypeFromAop(Binding.class, getAop()).iterator();
 		while (bIter.hasNext())
 		{
 			Binding binding = (Binding) bIter.next();
-			if (binding.getInterceptorRefs().contains(interceptorRef))
+			List referenceList = AopModel.getFromBinding(InterceptorRef.class, binding);
+			if (referenceList.contains(interceptorRef))
 			{
-				return binding.getInterceptorRefs();
+				return referenceList;
 			}
 		}
 		return null;
@@ -283,9 +287,10 @@ public class AopDescriptor {
 			parent = getParent ((InterceptorRef) object);
 		else if (object instanceof Binding)
 		{
-			if (getAop().getBindings().contains(object))
+			List bindings = AopModel.getTypeFromAop(Binding.class, getAop());
+			if (bindings.contains(object))
 			{
-				parent = getAop().getBindings();
+				parent = bindings;
 			}
 		}
 		
