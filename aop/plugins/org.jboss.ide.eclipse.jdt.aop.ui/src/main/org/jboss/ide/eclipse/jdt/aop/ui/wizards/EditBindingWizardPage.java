@@ -36,6 +36,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
 import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.PointcutPreviewDialog;
 import org.jboss.ide.eclipse.jdt.aop.ui.util.AdvisorDialogUtil;
@@ -227,11 +228,11 @@ public class EditBindingWizardPage extends WizardPage {
 		
 		if (binding != null)
 		{
-			for (Iterator iter = binding.getInterceptorRefs().iterator(); iter.hasNext(); )
+			for (Iterator iter = AopModel.getFromBinding(InterceptorRef.class, binding).iterator(); iter.hasNext(); )
 			{
 				interceptorList.add(iter.next());
 			}
-			for (Iterator iter = binding.getInterceptors().iterator(); iter.hasNext(); )
+			for (Iterator iter = AopModel.getFromBinding(Interceptor.class, binding).iterator(); iter.hasNext(); )
 			{
 				interceptorList.add(iter.next());
 			}
@@ -318,7 +319,7 @@ public class EditBindingWizardPage extends WizardPage {
 		
 		if (binding != null)
 		{
-			for (Iterator iter = binding.getAdvised().iterator(); iter.hasNext(); )
+			for (Iterator iter = AopModel.getFromBinding(Advice.class, binding).iterator(); iter.hasNext(); )
 			{
 				adviceList.add(iter.next());
 			}
@@ -400,14 +401,14 @@ public class EditBindingWizardPage extends WizardPage {
 		Interceptor interceptor = getSelectedInterceptor();
 		if (interceptor != null)
 		{
-			binding.getInterceptors().remove(interceptor);
+			binding.getElements().remove(interceptor);
 			interceptorList.remove(interceptor);
 		}
 		
 		InterceptorRef interceptorRef = getSelectedInterceptorRef();
 		if (interceptorRef != null)
 		{
-			binding.getInterceptorRefs().remove(interceptorRef);
+			binding.getElements().remove(interceptorRef);
 			interceptorList.remove(interceptorRef);
 		}
 	}
@@ -423,9 +424,17 @@ public class EditBindingWizardPage extends WizardPage {
 				interceptorList.insert(interceptor, position-1);
 				interceptorList.getTable().select(position-1);
 				
-				int index = binding.getInterceptors().indexOf(interceptor);
-				binding.getInterceptors().remove(index);
-				binding.getInterceptors().add(index-1, interceptor);
+				List elements = binding.getElements();
+				int currentIndex = elements.indexOf(interceptor);
+
+				for( int i = currentIndex-1; i >=0; i++ ) {
+					if( elements.get(i) instanceof Interceptor ) {
+						binding.getElements().remove(currentIndex);
+						binding.getElements().add(i, interceptor);
+						break;
+					}
+				}
+
 			}
 		}
 		
@@ -439,9 +448,16 @@ public class EditBindingWizardPage extends WizardPage {
 				interceptorList.insert(interceptorRef, position-1);
 				interceptorList.getTable().select(position-1);
 				
-				int index = binding.getInterceptorRefs().indexOf(interceptor);
-				binding.getInterceptorRefs().remove(index);
-				binding.getInterceptorRefs().add(index-1, interceptor);
+				List elements = binding.getElements();
+				int currentIndex = elements.indexOf(interceptorRef);
+
+				for( int i = currentIndex-1; i >=0; i++ ) {
+					if( elements.get(i) instanceof InterceptorRef ) {
+						binding.getElements().remove(currentIndex);
+						binding.getElements().add(i, interceptorRef);
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -457,9 +473,16 @@ public class EditBindingWizardPage extends WizardPage {
 				interceptorList.insert(interceptor, position+1);
 				interceptorList.getTable().select(position + 1);
 				
-				int index = binding.getInterceptors().indexOf(interceptor);
-				binding.getInterceptors().remove(index);
-				binding.getInterceptors().add(index+1, interceptor);
+				List elements = binding.getElements();
+				int currentIndex = elements.indexOf(interceptor);
+
+				for( int i = currentIndex+1; i < elements.size(); i++ ) {
+					if( elements.get(i) instanceof Interceptor ) {
+						binding.getElements().remove(currentIndex);
+						binding.getElements().add(i, interceptor);
+						break;
+					}
+				}
 			}
 		}
 		
@@ -473,9 +496,17 @@ public class EditBindingWizardPage extends WizardPage {
 				interceptorList.insert(interceptorRef, position+1);
 				interceptorList.getTable().select(position+1);
 				
-				int index = binding.getInterceptorRefs().indexOf(interceptor);
-				binding.getInterceptorRefs().remove(index);
-				binding.getInterceptorRefs().add(index+1, interceptor);
+				List elements = binding.getElements();
+				int currentIndex = elements.indexOf(interceptorRef);
+
+				for( int i = currentIndex+1; i < elements.size(); i++ ) {
+					if( elements.get(i) instanceof InterceptorRef ) {
+						binding.getElements().remove(currentIndex);
+						binding.getElements().add(i, interceptorRef);
+						break;
+					}
+				}
+
 			}
 		}
 	}
@@ -508,7 +539,7 @@ public class EditBindingWizardPage extends WizardPage {
 		Advice advice = getSelectedAdvice();
 		if (advice != null)
 		{
-			binding.getAdvised().remove(advice);
+			binding.getElements().remove(advice);
 			adviceList.remove(advice);
 		}
 	}
@@ -524,9 +555,16 @@ public class EditBindingWizardPage extends WizardPage {
 				adviceList.insert(advice, position-1);
 				adviceList.getTable().select(position - 1);
 				
-				int index = binding.getAdvised().indexOf(advice);
-				binding.getAdvised().remove(index);
-				binding.getAdvised().add(index-1, advice);
+				List elements = binding.getElements();
+				int currentIndex = elements.indexOf(advice);
+
+				for( int i = currentIndex-1; i < elements.size(); i++ ) {
+					if( elements.get(i) instanceof Advice ) {
+						binding.getElements().remove(currentIndex);
+						binding.getElements().add(i, advice);
+						break;
+					}
+				}
 			}
 		}
 	}	
@@ -542,9 +580,16 @@ public class EditBindingWizardPage extends WizardPage {
 				adviceList.insert(advice, position+1);
 				adviceList.getTable().select(position + 1);
 				
-				int index = binding.getAdvised().indexOf(advice);
-				binding.getAdvised().remove(index);
-				binding.getAdvised().add(index+1, advice);
+				List elements = binding.getElements();
+				int currentIndex = elements.indexOf(advice);
+
+				for( int i = currentIndex+1; i < elements.size(); i++ ) {
+					if( elements.get(i) instanceof Advice ) {
+						binding.getElements().remove(currentIndex);
+						binding.getElements().add(i, advice);
+						break;
+					}
+				}
 			}
 		}
 	}

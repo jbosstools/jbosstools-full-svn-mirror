@@ -21,6 +21,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
 
 /**
  * @author Marshall
@@ -46,6 +47,8 @@ public class AspectManagerContentProvider implements IStructuredContentProvider,
 	
 	public Object[] getChildren(Object parentElement) {
 		
+		List tmp;
+		
 		if (parentElement instanceof AopDescriptor)
 		{
  			AopDescriptor descriptor = (AopDescriptor) parentElement;
@@ -53,23 +56,28 @@ public class AspectManagerContentProvider implements IStructuredContentProvider,
  			
  			ArrayList children = new ArrayList();
  			
- 			if (aop.getAspects().size() > 0)
- 				children.add(aop.getAspects());
+ 			
+ 			tmp = AopModel.getTypeFromAop(Aspect.class, aop);
+ 			if (tmp.size() > 0)
+ 				children.add(tmp);
  			else 
  				children.add(AspectManagerContentProvider.ASPECTS);
  			
- 			if (aop.getBindings().size() > 0)
- 				children.add(aop.getBindings());
+ 			tmp = AopModel.getTypeFromAop(Binding.class, aop);
+ 			if (tmp.size() > 0)
+ 				children.add(tmp);
  			else
  				children.add(AspectManagerContentProvider.BINDINGS);
  			
- 			if (aop.getInterceptors().size() > 0)
- 				children.add(aop.getInterceptors());
+ 			tmp = AopModel.getTypeFromAop(Interceptor.class, aop);
+ 			if (tmp.size() > 0)
+ 				children.add(tmp);
  			else
  				children.add(AspectManagerContentProvider.INTERCEPTORS);
  			
- 			if (aop.getPointcuts().size() > 0)
- 				children.add(aop.getPointcuts());
+ 			tmp = AopModel.getTypeFromAop(Pointcut.class, aop);
+ 			if (tmp.size() > 0)
+ 				children.add(tmp);
  			else
  				children.add(AspectManagerContentProvider.POINTCUTS);
  			
@@ -85,13 +93,18 @@ public class AspectManagerContentProvider implements IStructuredContentProvider,
 			Binding binding = (Binding) parentElement;
 			ArrayList children = new ArrayList();
 			
-			if (binding.getAdvised().size() > 0)
-				children.addAll(binding.getAdvised());
-			if (binding.getInterceptorRefs().size() > 0)
-				children.addAll(binding.getInterceptorRefs());
-			if (binding.getInterceptors().size() > 0)
-				children.addAll(binding.getInterceptors());
-			
+			tmp = AopModel.getFromBinding(Advice.class, binding);
+			if (tmp.size() > 0)
+				children.addAll(tmp);
+
+			tmp = AopModel.getFromBinding(InterceptorRef.class, binding);
+			if (tmp.size() > 0)
+				children.addAll(tmp);
+
+			tmp = AopModel.getFromBinding(Interceptor.class, binding);
+			if (tmp.size() > 0)
+				children.addAll(tmp);
+
 			return children.toArray();
 		}
 		
@@ -104,44 +117,48 @@ public class AspectManagerContentProvider implements IStructuredContentProvider,
 		final Object child = possibleChild;
 		if (child instanceof Advice)
 		{
-			return visitList(descriptor.getAop().getBindings(), new ListVisitor() {
+			return visitList( AopModel.getTypeFromAop(Binding.class, descriptor.getAop()), 
+					new ListVisitor() {
 				public Object visit(Object element) {
-					if (((Binding)element).getAdvised().contains(child)) return element;
+					if (((Binding)element).getElements().contains(child)) return element;
 					return null;
 				}
 			});
 		}
 		else if (child instanceof InterceptorRef)
 		{
-			return visitList(descriptor.getAop().getBindings(), new ListVisitor() {
+			return visitList( AopModel.getTypeFromAop(Binding.class, descriptor.getAop()), 
+					new ListVisitor() {
 				public Object visit(Object element) {
-					if (((Binding)element).getInterceptorRefs().contains(child)) return element;
+					if (((Binding)element).getElements().contains(child)) return element;
 					return null;
 				}
 			});
 		}
+		
+		
 		else if (child instanceof Interceptor)
 		{
-			Object result = visitList(descriptor.getAop().getBindings(), new ListVisitor() {
+			Object result = visitList(AopModel.getTypeFromAop(Binding.class, descriptor.getAop()), new ListVisitor() {
 				public Object visit(Object element) {
-					if (((Binding)element).getInterceptors().contains(child)) return element;
+					if (((Binding)element).getElements().contains(child)) return element;
 					return null;
 				}
 			});
 			
 			if (result == null)
 			{
-				return visitList(descriptor.getAop().getInterceptors(), new ListVisitor() {
+				return visitList(AopModel.getTypeFromAop(Interceptor.class, descriptor.getAop()), new ListVisitor() {
 					public Object visit(Object element) {
 						if (((Interceptor)element).equals(child)) return descriptor;
 						return null;
 					}
 				});
 			} else return result;
-		}
+		} 
 		else if (child instanceof String)
 		{
-			return visitList(descriptor.getAop().getBindings(), new ListVisitor() {
+			return visitList(AopModel.getTypeFromAop(Binding.class, descriptor.getAop()), new ListVisitor() {
 				public Object visit(Object element) {
 					if (((Binding)element).getPointcut().equals(child)) return element;
 					return null;
@@ -150,15 +167,15 @@ public class AspectManagerContentProvider implements IStructuredContentProvider,
 		}
 		else if (child instanceof Binding)
 		{
-			return descriptor.getAop().getBindings();
+			return AopModel.getTypeFromAop(Binding.class, descriptor.getAop());
 		}
 		else if (child instanceof Aspect)
 		{
-			return descriptor.getAop().getAspects();
+			return AopModel.getTypeFromAop(Aspect.class, descriptor.getAop());
 		}
 		else if (child instanceof Pointcut)
 		{
-			return descriptor.getAop().getPointcuts();
+			return AopModel.getTypeFromAop(Pointcut.class, descriptor.getAop());
 		}
 		
 		return null;

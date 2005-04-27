@@ -10,6 +10,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.internal.ui.viewsupport.JavaUILabelProvider;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.util.Geometry;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -20,6 +21,11 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -27,6 +33,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -39,6 +46,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
 import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvised;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopUiPlugin;
+import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces.PointcutPreviewAssistComposite;
 
 /**
  * @author Marshall
@@ -47,28 +55,34 @@ public class PointcutPreviewDialog extends Dialog {
 
 	protected IJavaProject project;
 	protected Text pointcutText;
-	protected Label errorImage, errorLabel;
+	protected Label errorImage, errorLabel, pointcutLabel;
 	protected TableViewer pointcutPreview;
-	protected Button previewButton;
+	protected Button previewButton, wizardButton;
 	protected String pointcut;
 	protected ArrayList advisable;
+	protected PointcutPreviewAssistComposite assistComposite;
+	protected Composite main;
 	
-	protected boolean preview;
+	protected boolean preview, advanced;
 	
 	private ProgressBar previewProgress;
 	
 	public static final int PREVIEW_ID = -3000;
+	public static final int WIZARD_ID = -3001;
 	
 	public PointcutPreviewDialog (String pointcut, Shell shell, IJavaProject project, boolean preview)
 	{
 		super(shell);
-		
 		this.project = project;
 		this.pointcut = pointcut;
 		this.preview = preview;
 		this.advisable = new ArrayList();
+		this.advanced = true;
 	}
 
+
+	
+	
 	public String getPointcut () 
 	{
 		return pointcut;
@@ -82,14 +96,24 @@ public class PointcutPreviewDialog extends Dialog {
 	protected Control createDialogArea (Composite parent)
 	{
 		getShell().setText("Edit Pointcut...");
+
+		GridData mainData = new GridData();
+		mainData.horizontalAlignment = GridData.FILL;
+ 		mainData.grabExcessHorizontalSpace = true;
+		main = new Composite (parent, SWT.NONE);
+		main.setLayoutData(mainData);
 		
-		Composite main = new Composite (parent, SWT.NONE);
-		main.setLayout(new GridLayout(2, false));
-		
-		Label pointcutLabel = new Label(main, SWT.NONE);
+		main.setLayout( new FormLayout());
+
+		pointcutLabel = new Label(main, SWT.NONE);
 		pointcutLabel.setText("Pointcut:");
-		pointcutLabel.setLayoutData(new GridData(GridData.BEGINNING, GridData.CENTER, false, false));
 		
+		FormData pointcutLabelData = new FormData();
+		pointcutLabelData.left = new FormAttachment(0,10);
+		pointcutLabelData.top = new FormAttachment(0,10);
+		pointcutLabelData.right = new FormAttachment(0,60);
+		
+		pointcutLabel.setLayoutData(pointcutLabelData);
 		pointcutText = new Text(main, SWT.BORDER);
 		
 		if (pointcut != null)
@@ -101,36 +125,77 @@ public class PointcutPreviewDialog extends Dialog {
 			}
 		});
 		
-		pointcutText.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		FormData pointcutTextData = new FormData();
+		pointcutTextData.top = new FormAttachment(0, 5);
+		pointcutTextData.left = new FormAttachment(pointcutLabel, 10);
+		pointcutTextData.right = new FormAttachment(100,-10);
+		pointcutText.setLayoutData(pointcutTextData);
+		
+		assistComposite = new PointcutPreviewAssistComposite(main, this); 
+		FormData assistCompositeData = new FormData();
+		assistCompositeData.top = new FormAttachment(pointcutLabel, 10);
+		assistCompositeData.bottom = new FormAttachment(pointcutLabel, 12);
+		assistCompositeData.left = new FormAttachment(0, 5);
+		assistCompositeData.right = new FormAttachment( 100, -10);
+		assistComposite.setLayoutData(assistCompositeData);
+		assistComposite.setVisible(false);
+
+
 		
 		previewProgress = new ProgressBar(main, SWT.SMOOTH);
-		previewProgress.setLayoutData(new GridData(GridData.FILL, GridData.CENTER, false, false, 2, 1));
-		previewProgress.setVisible(false);
+		FormData previewProgressData = new FormData();
+		previewProgressData.left = new FormAttachment(0,10);
+		previewProgressData.right = new FormAttachment(100,-5);
+		previewProgressData.top = new FormAttachment(assistComposite, 10);
+		
+		previewProgress.setLayoutData(previewProgressData);
+		previewProgress.setVisible(true);
+		
+		FormData errorCompositeData = new FormData();
+		errorCompositeData.left = new FormAttachment(0,10);
+		errorCompositeData.right = new FormAttachment(100,-5);
+		errorCompositeData.top = new FormAttachment(previewProgress, 5);
+		errorCompositeData.bottom = new FormAttachment(previewProgress, 50);
+		
 		
 		Composite errorComposite = new Composite(main, SWT.NONE);
+		errorComposite.setLayoutData(errorCompositeData);
+		
 		errorComposite.setLayout(new GridLayout(2, false));
-		errorComposite.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 		
 		errorImage = new Label(errorComposite, SWT.NONE);
 		errorImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK));
 		errorLabel = new Label(errorComposite, SWT.NONE);
 		errorLabel.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 		errorImage.setVisible(false);
-		errorLabel.setText("                             ");
+		errorLabel.setText("                                                             " + 
+				"                                                                        ");
+		
 		
 		if (preview)
 		{
+			FormData pointcutPreviewData = new FormData();
+			pointcutPreviewData.left = new FormAttachment(0,5);
+			pointcutPreviewData.top = new FormAttachment(errorComposite, 10);
+			pointcutPreviewData.right = new FormAttachment(100,-5);
 			pointcutPreview = new TableViewer(main, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 			
 			AdvisedLabelProvider provider = new AdvisedLabelProvider();
 			pointcutPreview.setLabelProvider(provider);
 			pointcutPreview.setContentProvider(provider);
-			pointcutPreview.getTable().setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false, 2, 1));
+			pointcutPreview.getTable().setLayoutData(pointcutPreviewData);
 			pointcutPreview.setInput(advisable);
 		}
+	
+		
+		
+		
+		
 		
 		return main;
 	}
+	
+
 	
 	protected void createButtonsForButtonBar(Composite parent) {
 		super.createButtonsForButtonBar(parent);
@@ -150,8 +215,72 @@ public class PointcutPreviewDialog extends Dialog {
 		});
 		setButtonLayoutData(previewButton);
 		
+		wizardButton = createButton(parent, WIZARD_ID, "Wizard", false );
+		wizardButton.setText("Open Wizard");
+		setButtonLayoutData(wizardButton);
+		wizardButton.addSelectionListener(new SelectionListener () {
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+	
+			public void widgetSelected(SelectionEvent e) {
+				morePressed();
+			}
+		});
+	
+		
 	}
 	
+	protected void morePressed() {
+		boolean closing = assistComposite.isVisible();
+		//int height = assistComposite.getBounds().height;
+		
+		
+		FormData assistCompositeData = new FormData();
+		assistCompositeData.top = new FormAttachment(pointcutLabel, 10);
+		assistCompositeData.left = new FormAttachment(0, 5);
+		assistCompositeData.right = new FormAttachment( 100, -10);
+		if( closing ) {
+			assistCompositeData.bottom = new FormAttachment(pointcutLabel, 12);
+			wizardButton.setText("Open Wizard");
+		} else {
+			wizardButton.setText("Close Wizard");
+		}
+		assistComposite.setLayoutData(assistCompositeData);
+		
+
+		Point size = getInitialSize();
+		Point location = getShell().getLocation();
+		assistComposite.setVisible( !assistComposite.isVisible() ); // invert visiblilty
+
+		getShell().setBounds(getConstrainedShellBounds(new Rectangle(location.x,
+				location.y, size.x, size.y)));
+	}
+	
+	protected Point getInitialLocation(Point initialSize) {
+		Composite parent = getShell().getParent();
+
+		Monitor monitor = getShell().getDisplay().getPrimaryMonitor();
+		if (parent != null) {
+			monitor = parent.getMonitor();
+		}
+
+		Rectangle monitorBounds = monitor.getClientArea();
+		Point centerPoint;
+		if (parent != null) {
+			centerPoint = Geometry.centerPoint(parent.getBounds());
+		} else {
+			centerPoint = Geometry.centerPoint(monitorBounds);
+		}
+
+		return new Point(centerPoint.x - (initialSize.x/2), 100);
+	}
+	protected Point getInitialSize() {
+		Point p = super.getInitialSize();
+		p.x = 451;
+		return p;
+	}
+
 	protected void previewPressed ()
 	{
 		pointcutText.setEnabled(false);
@@ -286,6 +415,14 @@ public class PointcutPreviewDialog extends Dialog {
 			showError(e.getMessage());
 		} catch (RuntimeException e) {
 			showError(e.getMessage());
+		} catch( Exception e ) {
+			showError(e.getMessage());
+		} catch( Throwable t ) {
+			showError(t.getMessage());
 		}
+	}
+	
+	public void setPointcutText( String expression ) {
+		pointcutText.setText(expression);
 	}
 }
