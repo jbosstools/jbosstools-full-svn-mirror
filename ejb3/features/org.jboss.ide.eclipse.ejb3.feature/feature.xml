@@ -426,8 +426,6 @@ END OF TERMS AND CONDITIONS
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.jdt"/>
       <import plugin="org.eclipse.jdt.core"/>
-      <import plugin="org.jboss.ide.eclipse.jdt.aop.core"/>
-      <import plugin="org.jboss.ide.eclipse.launcher.core"/>
       <import plugin="org.eclipse.debug.core"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.jdt.ui"/>
@@ -435,7 +433,6 @@ END OF TERMS AND CONDITIONS
       <import plugin="org.eclipse.jface.text"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.jdt.launching"/>
-      <import plugin="org.jboss.ide.eclipse.launcher.ui"/>
    </requires>
 
    <plugin
