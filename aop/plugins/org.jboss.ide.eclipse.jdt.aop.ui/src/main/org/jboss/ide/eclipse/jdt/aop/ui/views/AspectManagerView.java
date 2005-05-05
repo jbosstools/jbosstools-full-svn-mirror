@@ -35,7 +35,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aspect;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
-import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopUiPlugin;
 import org.jboss.ide.eclipse.jdt.aop.ui.actions.ApplyAdviceAction;
@@ -284,7 +284,7 @@ public class AspectManagerView extends ViewPart {
     				
     			} else if (selected instanceof List) {
     				List list = (List) selected;
-    				if( AopModel.getTypeFromAop(Binding.class, descriptor.getAop()).equals(list))
+    				if( AopModelUtils.getBindingsFromAop(descriptor.getAop()).equals(list))
     				{
     					manager.add(createBindingAction);
     				}

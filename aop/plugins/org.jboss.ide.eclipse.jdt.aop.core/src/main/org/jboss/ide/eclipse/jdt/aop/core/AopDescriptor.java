@@ -26,6 +26,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
 import org.jboss.ide.eclipse.jdt.aop.core.util.JaxbAopUtil;
 
 /**
@@ -88,7 +89,7 @@ public class AopDescriptor {
 	
 	public Binding findBinding (String pointcut)
 	{
-		List binds = AopModel.getTypeFromAop(Binding.class, getAop()); 
+		List binds = AopModelUtils.getBindingsFromAop(getAop()); 
 		Iterator bIter = binds.iterator();
 		while (bIter.hasNext())
 		{
@@ -122,7 +123,7 @@ public class AopDescriptor {
 	
 	private Aspect findAspect (String className, String scope)
 	{
-		List aspects = AopModel.getTypeFromAop(Aspect.class, getAop()); 
+		List aspects = AopModelUtils.getAspectsFromAop(getAop()); 
 		Iterator aIter = aspects.iterator();
 		while (aIter.hasNext())
 		{
@@ -227,15 +228,15 @@ public class AopDescriptor {
 	
 	public List getParent (Interceptor interceptor)
 	{
-		List interceptors = AopModel.getTypeFromAop(Interceptor.class, getAop());
+		List interceptors = AopModelUtils.getInterceptorsFromAop(getAop());
 		if ( interceptors.contains((interceptor)))
 				return interceptors;
 		else {
-			Iterator bIter = AopModel.getTypeFromAop(Binding.class, getAop()).iterator();
+			Iterator bIter = AopModelUtils.getBindingsFromAop(getAop()).iterator();
 			while (bIter.hasNext())
 			{
 				Binding binding = (Binding) bIter.next();
-				List bindInterceptors = AopModel.getFromBinding(Interceptor.class, binding);
+				List bindInterceptors = AopModelUtils.getInterceptorsFromBinding(binding);
 				if (bindInterceptors.contains(interceptor))
 				{
 					return bindInterceptors;
@@ -248,11 +249,11 @@ public class AopDescriptor {
 	
 	public List getParent (Advice advice)
 	{
-		Iterator bIter = AopModel.getTypeFromAop(Binding.class, getAop()).iterator();
+		Iterator bIter = AopModelUtils.getBindingsFromAop(getAop()).iterator();
 		while (bIter.hasNext())
 		{
 			Binding binding = (Binding) bIter.next();
-			List advised = AopModel.getFromBinding(Advice.class, binding);
+			List advised = AopModelUtils.getAdvicesFromBinding(binding);
 			if (advised.contains(advice))
 			{
 				return advised;
@@ -263,11 +264,11 @@ public class AopDescriptor {
 	
 	public List getParent (InterceptorRef interceptorRef)
 	{
-		Iterator bIter = AopModel.getTypeFromAop(Binding.class, getAop()).iterator();
+		Iterator bIter = AopModelUtils.getBindingsFromAop(getAop()).iterator();
 		while (bIter.hasNext())
 		{
 			Binding binding = (Binding) bIter.next();
-			List referenceList = AopModel.getFromBinding(InterceptorRef.class, binding);
+			List referenceList = AopModelUtils.getInterceptorRefssFromBinding(binding);
 			if (referenceList.contains(interceptorRef))
 			{
 				return referenceList;
@@ -287,7 +288,7 @@ public class AopDescriptor {
 			parent = getParent ((InterceptorRef) object);
 		else if (object instanceof Binding)
 		{
-			List bindings = AopModel.getTypeFromAop(Binding.class, getAop());
+			List bindings = AopModelUtils.getBindingsFromAop(getAop());
 			if (bindings.contains(object))
 			{
 				parent = bindings;

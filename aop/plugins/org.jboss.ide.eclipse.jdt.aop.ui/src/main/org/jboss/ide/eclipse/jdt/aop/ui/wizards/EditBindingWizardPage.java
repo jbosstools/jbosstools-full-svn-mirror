@@ -36,7 +36,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
-import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
 import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.PointcutPreviewDialog;
 import org.jboss.ide.eclipse.jdt.aop.ui.util.AdvisorDialogUtil;
@@ -228,11 +228,11 @@ public class EditBindingWizardPage extends WizardPage {
 		
 		if (binding != null)
 		{
-			for (Iterator iter = AopModel.getFromBinding(InterceptorRef.class, binding).iterator(); iter.hasNext(); )
+			for (Iterator iter = AopModelUtils.getInterceptorRefssFromBinding(binding).iterator(); iter.hasNext(); )
 			{
 				interceptorList.add(iter.next());
 			}
-			for (Iterator iter = AopModel.getFromBinding(Interceptor.class, binding).iterator(); iter.hasNext(); )
+			for (Iterator iter = AopModelUtils.getInterceptorsFromBinding(binding).iterator(); iter.hasNext(); )
 			{
 				interceptorList.add(iter.next());
 			}
@@ -319,7 +319,7 @@ public class EditBindingWizardPage extends WizardPage {
 		
 		if (binding != null)
 		{
-			for (Iterator iter = AopModel.getFromBinding(Advice.class, binding).iterator(); iter.hasNext(); )
+			for (Iterator iter = AopModelUtils.getAdvicesFromBinding(binding).iterator(); iter.hasNext(); )
 			{
 				adviceList.add(iter.next());
 			}
