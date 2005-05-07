@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -35,6 +34,7 @@ import org.eclipse.jdt.internal.corext.util.AllTypesCache;
 import org.eclipse.jdt.internal.corext.util.TypeInfo;
 import org.jboss.aop.AspectManager;
 import org.jboss.aop.pointcut.PointcutExpression;
+import org.jboss.aop.pointcut.TypedefExpression;
 import org.jboss.aop.pointcut.ast.ParseException;
 import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.AopDescriptor;
@@ -45,9 +45,18 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAdvisedCollector;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvice;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAspect;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopModelChangeListener;
 import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopAdvised;
 import org.jboss.ide.eclipse.jdt.aop.core.model.internal.ProjectAdvisors;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 
 
 /**
@@ -804,6 +813,20 @@ public class AopModel implements IElementChangedListener
 		
 		AopDescriptor descriptor = AopCorePlugin.getDefault().getDefaultDescriptor(project);
 		Aop aop = descriptor.getAop();
+		
+		for (Iterator iter = AopModelUtils.getTypedefsFromAop(aop).iterator(); iter.hasNext(); )
+		{
+			Typedef jaxbTypedef = (Typedef) iter.next();
+			try {
+				TypedefExpression typedefExpression = new TypedefExpression(jaxbTypedef.getName(), jaxbTypedef.getExpr());
+				AspectManager.instance().addTypedef(new JDTTypedefExpression( typedefExpression ));
+			} catch( Exception typedefExec ) {
+				
+			}
+		}
+		monitor.worked(1);
+
+		
 		
 		for (Iterator iter = AopModelUtils.getPointcutsFromAop(aop).iterator(); iter.hasNext(); )
 		{

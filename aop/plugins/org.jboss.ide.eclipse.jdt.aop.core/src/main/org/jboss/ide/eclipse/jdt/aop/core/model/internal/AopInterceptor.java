@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.corext.util.JavaModelUtil;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopInterceptor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
 
 
 public class AopInterceptor extends AopAdvisor implements IAopInterceptor

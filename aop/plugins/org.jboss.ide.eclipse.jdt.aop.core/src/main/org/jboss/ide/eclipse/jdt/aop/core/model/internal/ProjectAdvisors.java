@@ -11,10 +11,10 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
 import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvice;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvisor;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAspect;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopInterceptor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvice;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAspect;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
 
 /**
  * @author Marshall

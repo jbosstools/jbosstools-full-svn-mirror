@@ -1,7 +1,7 @@
 package org.jboss.ide.eclipse.jdt.aop.core.model.internal;
 
 import org.eclipse.jdt.core.IJavaElement;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvised;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
 
 /**
  * @author Marshall

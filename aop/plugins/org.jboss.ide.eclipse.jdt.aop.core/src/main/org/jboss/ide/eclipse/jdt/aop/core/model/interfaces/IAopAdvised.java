@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.jdt.aop.core.model;
+package org.jboss.ide.eclipse.jdt.aop.core.model.interfaces;
 
 import org.eclipse.jdt.core.IJavaElement;
 

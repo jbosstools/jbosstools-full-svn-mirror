@@ -1,7 +1,7 @@
 /*
  * Created on Sep 23, 2004
  */
-package org.jboss.ide.eclipse.jdt.aop.core.model;
+package org.jboss.ide.eclipse.jdt.aop.core.model.interfaces;
 
 
 /**

@@ -1,7 +1,7 @@
 /*
  * Created on Jan 22, 2005
  */
-package org.jboss.ide.eclipse.jdt.aop.core.model;
+package org.jboss.ide.eclipse.jdt.aop.core.model.interfaces;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
