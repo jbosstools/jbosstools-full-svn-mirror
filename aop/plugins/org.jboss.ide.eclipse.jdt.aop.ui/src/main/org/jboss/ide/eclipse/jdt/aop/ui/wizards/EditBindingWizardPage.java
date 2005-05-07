@@ -36,8 +36,10 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
+import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.PointcutChooseDialog;
 import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.PointcutPreviewDialog;
 import org.jboss.ide.eclipse.jdt.aop.ui.util.AdvisorDialogUtil;
 
@@ -47,7 +49,7 @@ import org.jboss.ide.eclipse.jdt.aop.ui.util.AdvisorDialogUtil;
 public class EditBindingWizardPage extends WizardPage {
 
 	protected Text pointcutText;
-	protected Button editPointcutButton;
+	protected Button editPointcutButton, choosePointcutButton;
 	protected TableViewer interceptorList;
 	protected Button addInterceptorButton, removeInterceptorButton, moveInterceptorUpButton, moveInterceptorDownButton;
 	protected TableViewer adviceList;
@@ -55,6 +57,12 @@ public class EditBindingWizardPage extends WizardPage {
 	protected ButtonListener buttonListener;
 	protected Binding binding;
 	protected AopDescriptor descriptor;
+	
+	
+	// original state
+	private String originalName;
+	private String originalPointcut;
+	private ArrayList originalElements;
 	
 	/**
 	 * @param pageName
@@ -67,7 +75,42 @@ public class EditBindingWizardPage extends WizardPage {
 		
 		this.binding = binding;
 		this.descriptor = descriptor;
+		
+		
+		if( binding != null ) {
+			// save the state of the original in case of cancel.
+			this.originalName = binding.getName();
+			this.originalPointcut = binding.getPointcut();
+			this.originalElements = new ArrayList(binding.getElements().size());
+			for( Iterator i = binding.getElements().iterator(); i.hasNext(); ) {
+				this.originalElements.add(i.next());
+			}
+		} // end if
+		
 	}
+	
+	/*
+	 * Some getters that we can use to make sure the state 
+	 * of the overall plugin remains the same in the event of
+	 * a cancel.
+	 */
+	
+	public Binding getBinding() {
+		return binding;
+	}
+	
+	public String getOriginalPointcut() {
+		return this.originalPointcut;
+	}
+	public String getOriginalName() {
+		return this.originalName;
+	}
+	public ArrayList getOriginalElements() {
+		return this.originalElements;
+	}
+	
+	
+	
 	
 	
 
@@ -79,6 +122,8 @@ public class EditBindingWizardPage extends WizardPage {
 		public void widgetSelected(SelectionEvent e) {
 			if (e.getSource().equals(editPointcutButton))
 				editPointcutPressed();
+			else if( e.getSource().equals(choosePointcutButton))
+				choosePointcutPressed();
 			else if (e.getSource().equals(addInterceptorButton))
 				addInterceptorPressed();
 			else if (e.getSource().equals(removeInterceptorButton))
@@ -134,14 +179,21 @@ public class EditBindingWizardPage extends WizardPage {
 			pointcutText.setText(binding.getPointcut());
 		
 		Composite editPointcutComposite = new Composite(main, SWT.NONE);
-		editPointcutComposite.setLayout(new GridLayout(1, true));
+		editPointcutComposite.setLayout(new GridLayout(2, false));
 		editPointcutComposite.setLayoutData(new GridData(GridData.END, GridData.CENTER, false, false));
 		
 		editPointcutButton = new Button(editPointcutComposite, SWT.PUSH);
 		editPointcutButton.setText("Edit...");
 		editPointcutButton.addSelectionListener(buttonListener);
 		editPointcutButton.setLayoutData(new GridData(GridData.FILL, GridData.CENTER, true, false));
-		
+
+		choosePointcutButton = new Button(editPointcutComposite, SWT.PUSH);
+		choosePointcutButton.setText("Choose...");
+		choosePointcutButton.addSelectionListener(buttonListener);
+		choosePointcutButton.setLayoutData(new GridData(GridData.FILL, GridData.CENTER, true, false));
+		List pointcuts = AopModelUtils.getPointcutsFromAop(descriptor.getAop());
+		choosePointcutButton.setEnabled(pointcuts.size() > 0 ? true : false );
+
 		createInterceptorControls (main);
 		createAdviceControls (main);
 		
@@ -331,6 +383,9 @@ public class EditBindingWizardPage extends WizardPage {
 		PointcutPreviewDialog previewDialog = new PointcutPreviewDialog(pointcutText.getText(), getShell(), AopCorePlugin.getCurrentJavaProject(), false);
 		
 		int response = -1;
+		
+		// TODO: This is what makes the edit dialog re-open every time
+
 		do {
 			previewDialog.create();
 			response = previewDialog.open();
@@ -357,6 +412,24 @@ public class EditBindingWizardPage extends WizardPage {
 				
 				binding.setPointcut(pointcut);
 			}
+		}
+	}
+
+	
+	protected void choosePointcutPressed ()
+	{
+		PointcutChooseDialog dialog = new PointcutChooseDialog(getShell());
+		
+		int response = dialog.open();
+		
+		if( response == Dialog.OK && dialog.getPointcut() != null ) {
+			Pointcut pointcut = dialog.getPointcut();
+			pointcutText.setText(pointcut.getName());
+			if (binding == null)
+			{
+				binding = descriptor.findBinding(pointcut.getExpr());
+			}
+			binding.setPointcut(pointcut.getExpr());
 		}
 	}
 	

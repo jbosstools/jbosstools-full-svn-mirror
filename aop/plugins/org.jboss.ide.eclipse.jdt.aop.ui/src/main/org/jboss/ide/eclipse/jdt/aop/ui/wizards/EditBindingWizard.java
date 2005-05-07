@@ -6,6 +6,8 @@
  */
 package org.jboss.ide.eclipse.jdt.aop.ui.wizards;
 
+import java.util.Iterator;
+
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
@@ -23,6 +25,8 @@ public class EditBindingWizard extends Wizard implements INewWizard{
 
 	protected EditBindingWizardPage page1;
 	protected AopDescriptor descriptor;
+	protected boolean create;
+	protected Binding bind;
 	
 	public EditBindingWizard ()
 	{
@@ -31,7 +35,9 @@ public class EditBindingWizard extends Wizard implements INewWizard{
 	
 	public EditBindingWizard (Binding binding, AopDescriptor descriptor) {
 		super();
-		page1 = new EditBindingWizardPage(binding, descriptor);
+		this.create = binding == null ? true : false;
+		this.bind = binding;
+		this.page1 = new EditBindingWizardPage(binding, descriptor);
 		this.descriptor = descriptor;
 	}
 
@@ -40,8 +46,25 @@ public class EditBindingWizard extends Wizard implements INewWizard{
 	}
 	
 	public boolean performFinish() {
-		
 		descriptor.save();
+		return true;
+	}
+	
+	public boolean performCancel() {
+		if( create ) {
+			// delete the new binding that was created
+			if( page1.getBinding() != null ) 
+				descriptor.remove(page1.getBinding());
+		} else {
+			// be very upset... Time to restore the state
+			this.bind.setName(page1.getOriginalName());
+			this.bind.setPointcut(page1.getOriginalPointcut());
+			this.bind.getElements().clear();
+			Iterator i = page1.getOriginalElements().iterator();
+			while(i.hasNext()) {
+				this.bind.getElements().add(i.next());
+			}
+		}
 		
 		return true;
 	}
