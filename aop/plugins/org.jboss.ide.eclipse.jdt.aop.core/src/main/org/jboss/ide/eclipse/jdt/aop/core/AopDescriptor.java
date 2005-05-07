@@ -30,6 +30,12 @@ import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
 import org.jboss.ide.eclipse.jdt.aop.core.util.JaxbAopUtil;
 
 /**
+ * This class represents an aop descriptor file, and it's 
+ * corresponding jaxb implementation.
+ * 
+ * It is responsible for adding and removing elements from both
+ * the jaxb object and the underlying file.
+ * 
  * @author Marshall
  */
 public class AopDescriptor {
@@ -37,6 +43,11 @@ public class AopDescriptor {
 	private Aop aop;
 	private File file;
 
+	
+	/*
+	 * Simple getters and setters section
+	 */
+	
 	/**
 	 * @return Returns the aop.
 	 */
@@ -61,6 +72,15 @@ public class AopDescriptor {
 	public void setFile(File file) {
 		this.file = file;
 	}
+	
+
+	
+	
+	
+	/**
+	 * Returns true if the files are equal, as determined
+	 * by equalsFile(File)
+	 */
 	
 	public boolean equals (Object other)
 	{
@@ -103,8 +123,6 @@ public class AopDescriptor {
 		try {
 			// No binding found -- create a new one and return it
 			AOPType.Bind binding = JaxbAopUtil.instance().getFactory().createAOPTypeBind();
-			// TODO    a: WHERE WE LEFT OFF
-			//Binding binding = JaxbAopUtil.instance().getFactory().createBinding();
 			binding.setPointcut(pointcut);
 			getAop().getTopLevelElements().add(binding);
 			
@@ -226,7 +244,10 @@ public class AopDescriptor {
 		}
 	}
 	
-	public List getParent (Interceptor interceptor)
+
+	
+	
+	private List getParent (Interceptor interceptor)
 	{
 		List interceptors = AopModelUtils.getInterceptorsFromAop(getAop());
 		if ( interceptors.contains((interceptor)))
@@ -239,7 +260,7 @@ public class AopDescriptor {
 				List bindInterceptors = AopModelUtils.getInterceptorsFromBinding(binding);
 				if (bindInterceptors.contains(interceptor))
 				{
-					return bindInterceptors;
+					return binding.getElements();
 				}
 			}
 		}
@@ -247,7 +268,7 @@ public class AopDescriptor {
 		return null;
 	}
 	
-	public List getParent (Advice advice)
+	private List getParent (Advice advice)
 	{
 		Iterator bIter = AopModelUtils.getBindingsFromAop(getAop()).iterator();
 		while (bIter.hasNext())
@@ -256,13 +277,14 @@ public class AopDescriptor {
 			List advised = AopModelUtils.getAdvicesFromBinding(binding);
 			if (advised.contains(advice))
 			{
-				return advised;
+				return binding.getElements();
 			}
 		}
 		return null;
 	}
 	
-	public List getParent (InterceptorRef interceptorRef)
+	
+	private List getParent (InterceptorRef interceptorRef)
 	{
 		Iterator bIter = AopModelUtils.getBindingsFromAop(getAop()).iterator();
 		while (bIter.hasNext())
@@ -271,12 +293,28 @@ public class AopDescriptor {
 			List referenceList = AopModelUtils.getInterceptorRefssFromBinding(binding);
 			if (referenceList.contains(interceptorRef))
 			{
-				return referenceList;
+				return binding.getElements();
 			}
 		}
 		return null;
 	}
 	
+	
+	
+	/**
+	 * This method removes an object from its parent in the descriptor file
+	 * and the descriptor's jaxb implementation.
+	 * 
+	 * IT DOES NOT DELETE IT FROM THE REST OF THE MODEL!!!
+	 * 
+	 * A call to updateModel, in AopModel, will most likely 
+	 * do the further evaluations and determine it should be
+	 * removed from the model, but AopModel.updateModel is a 
+	 * fairly long running process.
+	 * 
+	 * 
+	 * @param object
+	 */
 	public void remove (Object object)
 	{
 		List parent = null;
@@ -291,7 +329,7 @@ public class AopDescriptor {
 			List bindings = AopModelUtils.getBindingsFromAop(getAop());
 			if (bindings.contains(object))
 			{
-				parent = bindings;
+				parent = getAop().getTopLevelElements();
 			}
 		}
 		
@@ -301,10 +339,21 @@ public class AopDescriptor {
 		}
 	}
 	
+	
+	/**
+	 * Unmarshalls aop directly from file, overwriting 
+	 * any unsaved changes.
+	 *
+	 */
 	public void update ()
 	{
 		this.aop = JaxbAopUtil.instance().unmarshal(getFile());
 	}
+	
+	/**
+	 * Saves the live aop to a file. 
+	 *
+	 */
 	
 	public void save ()
 	{
