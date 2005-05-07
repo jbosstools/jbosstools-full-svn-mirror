@@ -35,14 +35,15 @@ import org.jboss.aop.pointcut.ast.TypeExpressionParserVisitor;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class JDTTypeMatcher implements TypeExpressionParserVisitor {
+public class JDTTypeMatcher extends TypeMatcher implements TypeExpressionParserVisitor {
 
-	private TypeMatcher matcherDelegate;
+	//private TypeMatcher matcherDelegate;
 	private IType type;
 	
 	public JDTTypeMatcher (IType type)
 	{
-		matcherDelegate = new TypeMatcher(null, (Class) null);
+		//matcherDelegate = new TypeMatcher(null, (Class) null);
+		super(null, (Class)null);
 		this.type = type;
 	}
 	
@@ -67,124 +68,4 @@ public class JDTTypeMatcher implements TypeExpressionParserVisitor {
 		return new Boolean(JDTPointcutUtil.has(type, f));
 	}
 	
-	/**
-	 * @param node
-	 * @param data
-	 * @return
-	 */
-	public Object visit(ASTAllParameter node, Object data) {
-		return matcherDelegate.visit(node, data);
-	}
-	/**
-	 * @param node
-	 * @param data
-	 * @return
-	 */
-	public Object visit(ASTAttribute node, Object data) {
-		return matcherDelegate.visit(node, data);
-	}
-	/**
-	 * @param node
-	 * @param data
-	 * @return
-	 */
-	public Object visit(ASTConstructor node, Object data) {
-		return matcherDelegate.visit(node, data);
-	}
-	/**
-	 * @param arg0
-	 * @param arg1
-	 * @return
-	 */
-	public Object visit(ASTException arg0, Object arg1) {
-		return matcherDelegate.visit(arg0, arg1);
-	}
-	/**
-	 * @param node
-	 * @param data
-	 * @return
-	 */
-	public Object visit(ASTField node, Object data) {
-		return matcherDelegate.visit(node, data);
-	}
-	/**
-	 * @param node
-	 * @param data
-	 * @return
-	 */
-	public Object visit(ASTMethod node, Object data) {
-		return matcherDelegate.visit(node, data);
-	}
-	/**
-	 * @param node
-	 * @param data
-	 * @return
-	 */
-	public Object visit(ASTParameter node, Object data) {
-		return matcherDelegate.visit(node, data);
-	}
-	/**
-	 * @param node
-	 * @param data
-	 * @return
-	 */
-	public Object visit(ASTAnd node, Object data) {
-		return matcherDelegate.visit(node, data);
-	}
-	/**
-	 * @param node
-	 * @param data
-	 * @return
-	 */
-	public Object visit(ASTBoolean node, Object data) {
-		return matcherDelegate.visit(node, data);
-	}
-	/**
-	 * @param node
-	 * @param data
-	 * @return
-	 */
-	public Object visit(ASTComposite node, Object data) {
-		return matcherDelegate.visit(node, data);
-	}
-	/**
-	 * @param node
-	 * @param data
-	 * @return
-	 */
-	public Object visit(ASTNot node, Object data) {
-		return matcherDelegate.visit(node, data);
-	}
-	/**
-	 * @param node
-	 * @param data
-	 * @return
-	 */
-	public Object visit(ASTOr node, Object data) {
-		return matcherDelegate.visit(node, data);
-	}
-	/**
-	 * @param node
-	 * @param data
-	 * @return
-	 */
-	public Object visit(ASTStart node, Object data) {
-		return matcherDelegate.visit(node, data);
-	}
-	/**
-	 * @param node
-	 * @param data
-	 * @return
-	 */
-	public Object visit(ASTSub node, Object data) {
-		return matcherDelegate.visit(node, data);
-	}
-	/**
-	 * @param node
-	 * @param data
-	 * @return
-	 */
-	public Object visit(SimpleNode node, Object data) {
-		return matcherDelegate.visit(node, data);
-	}
 }
