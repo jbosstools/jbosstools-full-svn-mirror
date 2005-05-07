@@ -11,6 +11,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
 
 /**
  * 
@@ -59,6 +60,12 @@ public class AopModelUtils {
 	public static List getBindingsFromAop(Aop aop) {
 		return getTypeFromAop(Binding.class, aop);
 	}
+	
+	public static List getTypedefsFromAop(Aop aop) {
+		return getTypeFromAop(Typedef.class, aop);
+	}
+	
+	
 	
 	/**
 	 * Private method that returns all children of a binding 
