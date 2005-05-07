@@ -37,6 +37,8 @@ public class AspectManagerContentProvider implements IStructuredContentProvider,
 		new AspectManagerContentProviderTypeWrapper("_INTERCEPTORS_");
 	public static final AspectManagerContentProviderTypeWrapper POINTCUTS = 
 		new AspectManagerContentProviderTypeWrapper("_POINTCUTS_");
+	public static final AspectManagerContentProviderTypeWrapper TYPEDEFS = 
+		new AspectManagerContentProviderTypeWrapper("_TYPEDEFS_");
 	
 	public static class AspectManagerContentProviderTypeWrapper {
 		private String type;
@@ -57,6 +59,11 @@ public class AspectManagerContentProvider implements IStructuredContentProvider,
  			ArrayList children = new ArrayList();
  			
  			
+			/*
+			 * This section will designate a number of elements as children.
+			 * If aspects exist, an arraylist of the aspects will be added.
+			 * If no aspects exist, a constant will be added as a child.
+			 */
  			tmp = AopModelUtils.getAspectsFromAop(aop);
  			if (tmp.size() > 0)
  				children.add(tmp);
@@ -75,17 +82,25 @@ public class AspectManagerContentProvider implements IStructuredContentProvider,
  			else
  				children.add(AspectManagerContentProvider.INTERCEPTORS);
  			
- 			tmp = AopModelUtils.getPointcutsFromAop(aop);
+			tmp = AopModelUtils.getPointcutsFromAop(aop);
  			if (tmp.size() > 0)
  				children.add(tmp);
  			else
  				children.add(AspectManagerContentProvider.POINTCUTS);
+ 			
+			tmp = AopModelUtils.getTypedefsFromAop(aop);
+ 			if (tmp.size() > 0)
+ 				children.add(tmp);
+ 			else
+ 				children.add(AspectManagerContentProvider.TYPEDEFS);
  			
  			
  			return children.toArray();
 		}
 		else if (parentElement instanceof List)
 		{
+			// if the parent is a list, then the children are the 
+			// elements in the list. 
 			return ((List) parentElement).toArray();
 		}
 		else if (parentElement instanceof Binding)

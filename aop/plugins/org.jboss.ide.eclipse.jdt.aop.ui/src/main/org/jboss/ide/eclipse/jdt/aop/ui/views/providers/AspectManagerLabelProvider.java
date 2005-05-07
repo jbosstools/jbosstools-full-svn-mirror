@@ -20,6 +20,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
 
 /**
@@ -47,6 +48,7 @@ public class AspectManagerLabelProvider extends LabelProvider {
 				else if (firstElement instanceof Pointcut) { return "Pointcuts"; }
 				else if (firstElement instanceof Advice) { return "Advice"; }
 				else if (firstElement instanceof InterceptorRef) { return "Interceptor References"; }
+				else if (firstElement instanceof Typedef) { return "Typedefs"; }
 			}
 		} 
 		else if( obj instanceof AspectManagerContentProvider.AspectManagerContentProviderTypeWrapper) 
@@ -56,6 +58,7 @@ public class AspectManagerLabelProvider extends LabelProvider {
 			else if( obj == AspectManagerContentProvider.BINDINGS ) return "Bindings";
 			else if( obj == AspectManagerContentProvider.INTERCEPTORS ) return "Interceptors";
 			else if( obj == AspectManagerContentProvider.POINTCUTS ) return "Pointcuts";
+			else if( obj == AspectManagerContentProvider.TYPEDEFS ) return "Typedefs";
 			
 		}
 		else if (obj instanceof Aspect)
@@ -78,7 +81,7 @@ public class AspectManagerLabelProvider extends LabelProvider {
 		else if (obj instanceof Pointcut)
 		{
 			Pointcut pointcut = (Pointcut)obj;
-			return pointcut.getName() + " : " + pointcut.getName();
+			return pointcut.getName() + " : " + pointcut.getExpr();
 		}
 		else if (obj instanceof Advice)
 		{
@@ -89,6 +92,11 @@ public class AspectManagerLabelProvider extends LabelProvider {
 		{
 			InterceptorRef ref = (InterceptorRef) obj;
 			return ref.getName();
+		}
+		else if( obj instanceof Typedef ) 
+		{
+			Typedef typedef = (Typedef)obj;
+			return typedef.getName() + " : " + typedef.getExpr();
 		}
 		return obj.getClass().toString();
 	}
