@@ -39,6 +39,7 @@ public class BoundPointcut {
 	public static final String CONSTRUCTOR_CALLED_BY_METHOD = "constructorcalledbymethod";
 	public static final String CONSTRUCTOR_CALLED_BY_CONSTRUCTOR = "constructorcalledbyconstructor";
 	
+	
 	public BoundPointcut (IJavaElement element)
 	{
 		this.element = element;
@@ -55,6 +56,7 @@ public class BoundPointcut {
 			setOption(FIELD_WRITE, Boolean.TRUE);
 		}
 	}
+	
 	
 	public BoundPointcut (Binding binding)
 	{
@@ -92,9 +94,21 @@ public class BoundPointcut {
 		}
 	}
 	
+	
+	/**
+	 * Returns a string version of the pointcut.
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public String getPointcut ()
 		throws Exception
 	{
+		/*
+		 * Either the element is set, or the binding is set.
+		 * It will not be the case that both are set.
+		 * 
+		 */
 		if (element != null)
 		{
 			if (element.getElementType() == IJavaElement.FIELD)
