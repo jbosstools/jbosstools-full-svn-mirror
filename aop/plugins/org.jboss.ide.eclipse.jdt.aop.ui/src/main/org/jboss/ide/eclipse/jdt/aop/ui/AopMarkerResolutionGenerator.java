@@ -19,10 +19,10 @@ import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IMarkerResolution2;
 import org.eclipse.ui.IMarkerResolutionGenerator;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvice;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvised;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvisor;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopInterceptor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvice;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
 import org.jboss.ide.eclipse.jdt.aop.ui.util.JumpToCodeUtil;
 
 /**

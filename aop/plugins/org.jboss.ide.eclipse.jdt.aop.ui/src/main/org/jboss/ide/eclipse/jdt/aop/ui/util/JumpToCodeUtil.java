@@ -23,7 +23,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aspect;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.ReportAdvice;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.ReportInterceptor;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvisor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
 
 /**
  * @author Honain, Marshall

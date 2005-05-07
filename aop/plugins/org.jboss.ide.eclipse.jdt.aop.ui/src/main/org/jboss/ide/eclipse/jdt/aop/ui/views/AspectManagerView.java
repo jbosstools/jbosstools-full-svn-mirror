@@ -6,6 +6,8 @@
  */
 package org.jboss.ide.eclipse.jdt.aop.ui.views;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jdt.core.IJavaProject;
@@ -28,6 +30,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jboss.aop.AspectManager;
 import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.AopDescriptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
@@ -36,6 +39,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopUiPlugin;
 import org.jboss.ide.eclipse.jdt.aop.ui.actions.ApplyAdviceAction;
@@ -282,12 +286,6 @@ public class AspectManagerView extends ViewPart {
     				manager.add(goToAction);
     				manager.add(createAdviceAction);
     				
-    			} else if (selected instanceof List) {
-    				List list = (List) selected;
-    				if( AopModelUtils.getBindingsFromAop(descriptor.getAop()).equals(list))
-    				{
-    					manager.add(createBindingAction);
-    				}
     			} else if (selected instanceof Binding) {
     			    manager.add(editBindingAction);
     				manager.add(applyInterceptorsAction);
@@ -306,8 +304,23 @@ public class AspectManagerView extends ViewPart {
     				manager.add(goToAction);
     				manager.add(new Separator());
     				manager.add(removeInterceptorRefAction);
+    			} 
+				
+				/* 
+				 * If they're not clicking on a sub-element, but a category
+				 */
+				
+				else if (selected instanceof List) {
+					// Category with children
+    				List list = (List) selected;
+    				if( AopModelUtils.getBindingsFromAop(descriptor.getAop()).equals(list)) {
+    					manager.add(createBindingAction);
+    				} else if( AopModelUtils.getPointcutsFromAop(descriptor.getAop()).equals(list)) {
+						manager.add(createPointcutAction);
+    				}
     			} else if( selected instanceof AspectManagerContentProvider.AspectManagerContentProviderTypeWrapper) {
-    				if( selected == AspectManagerContentProvider.BINDINGS ) {
+    				// Category without children
+					if( selected == AspectManagerContentProvider.BINDINGS ) {
     					manager.add(createBindingAction);
     				} else if( selected == AspectManagerContentProvider.POINTCUTS) {
     					manager.add(createPointcutAction);
@@ -315,6 +328,8 @@ public class AspectManagerView extends ViewPart {
     			}
     		}
     	}
+		
+
     	manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
     }
     

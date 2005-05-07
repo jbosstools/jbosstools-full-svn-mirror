@@ -43,7 +43,7 @@ import org.jboss.aop.pointcut.PointcutExpression;
 import org.jboss.aop.pointcut.ast.ParseException;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AdvisedCollector;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvised;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopUiPlugin;
 import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces.PointcutPreviewAssistComposite;

@@ -80,7 +80,7 @@ public class DescriptorChangeListener implements IResourceChangeListener
 
 			if (changedResource.getRawLocation() == null)
 			{
-				System.out.println("[descriptor-change-listener] raw location was null for resource: " + changedResource);
+				//System.out.println("[descriptor-change-listener] raw location was null for resource: " + changedResource);
 				return true;
 			}
 			
@@ -129,6 +129,7 @@ public class DescriptorChangeListener implements IResourceChangeListener
 				protected IStatus run (final IProgressMonitor monitor) {
 					Display.getDefault().asyncExec(new Runnable(){
 						public void run () {
+							System.out.println("[descriptor-change-listener] reconciling");
 							AopCorePlugin.getDefault().updateModel(finalProject, monitor);
 						}
 					});
@@ -152,6 +153,8 @@ public class DescriptorChangeListener implements IResourceChangeListener
 			{
 				AspectManagerView.instance().setDescriptorAsync(result);
 			}
+			System.out.println("[descriptor-change-listener] ending");
+
 
 			return true;
 		}
