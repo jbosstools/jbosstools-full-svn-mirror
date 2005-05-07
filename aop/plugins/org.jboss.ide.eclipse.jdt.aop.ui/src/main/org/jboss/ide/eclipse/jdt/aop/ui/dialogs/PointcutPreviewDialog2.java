@@ -131,7 +131,7 @@ public class PointcutPreviewDialog2 extends Dialog {
 		private void createMembers(String label, boolean classOnly) {
 			typeComposite = new TypeComposite(this, true, false, label, classOnly, null);
 			add = new Button(this, SWT.NONE);
-			collected = new Text(this, SWT.DEFAULT);
+			collected = new Text(this, SWT.LEFT | SWT.SINGLE | SWT.READ_ONLY | SWT.BORDER);
 			clear = new Button(this, SWT.NONE);
 			back = new Button(this, SWT.NONE);
 			add.setText("Add");
@@ -275,7 +275,7 @@ public class PointcutPreviewDialog2 extends Dialog {
 			comboData.left = new FormAttachment(0,5);
 			combo.setLayoutData(comboData);
 			
-			Text pattern = new Text(c, SWT.DEFAULT);
+			Text pattern = new Text(c, SWT.LEFT | SWT.SINGLE | SWT.READ_ONLY | SWT.BORDER);
 			pattern1 = pattern;
 			pattern.setEditable(true);
 			FormData patternData = new FormData();
@@ -397,7 +397,7 @@ public class PointcutPreviewDialog2 extends Dialog {
 			comboData.left = new FormAttachment(0,5);
 			combo.setLayoutData(comboData);
 			
-			annotPattern = new Text(this, SWT.DEFAULT);
+			annotPattern = new Text(this, SWT.LEFT | SWT.SINGLE | SWT.READ_ONLY | SWT.BORDER);
 			annotPattern.setEditable(true);
 			FormData annotPatternData = new FormData();
 			annotPatternData.left = new FormAttachment(combo,5);
@@ -409,7 +409,7 @@ public class PointcutPreviewDialog2 extends Dialog {
 				new TypePatternModifyListener(annotPattern, false, false);
 			annotPattern.addModifyListener(typeListener);
 			
-			namePattern = new Text(this, SWT.DEFAULT);
+			namePattern = new Text(this, SWT.LEFT | SWT.SINGLE | SWT.READ_ONLY | SWT.BORDER);
 			namePattern.setEditable(!constructor);
 			FormData namePatternData = new FormData();
 			namePatternData.left = new FormAttachment(combo,5);

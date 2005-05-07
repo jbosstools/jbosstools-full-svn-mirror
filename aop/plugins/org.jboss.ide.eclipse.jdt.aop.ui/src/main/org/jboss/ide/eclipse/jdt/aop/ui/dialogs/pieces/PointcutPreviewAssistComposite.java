@@ -7,7 +7,10 @@
 package org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -21,6 +24,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
+import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
+import org.jboss.ide.eclipse.jdt.aop.core.AopDescriptor;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
 import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.PointcutPreviewDialog;
 import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.PointcutPreviewDialog2;
 
@@ -38,6 +45,7 @@ import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.PointcutPreviewDialog2;
  */
 public class PointcutPreviewAssistComposite extends Composite {
 	/* The various pointcut expressions */
+	public static final String NAMED_POINTCUT = "Some Named Pointcut";
 	public static final String EXECUTION_METHOD = "execution(method)";
 	public static final String EXECUTION_CONSTRUCTOR = "execution(constructor)";
 	public static final String GET_FIELD = "get(field)";
@@ -190,7 +198,7 @@ public class PointcutPreviewAssistComposite extends Composite {
 	protected static class ExpressionRowComposite extends Composite {
 
 		private Button modify;
-		private Combo commandCombo, conjunction;
+		private Combo commandCombo, conjunction, namedPointcutCombo;
 		private Text expression;
 		private boolean isConjunctive;
 		private PointcutPreviewAssistComposite comp;
@@ -205,8 +213,9 @@ public class PointcutPreviewAssistComposite extends Composite {
 			if( includeConjunction ) 
 				conjunction = new Combo(this,SWT.DROP_DOWN | SWT.READ_ONLY);
 			commandCombo = new Combo(this,SWT.DROP_DOWN | SWT.READ_ONLY);
+			namedPointcutCombo = new Combo(this,SWT.DROP_DOWN | SWT.READ_ONLY);
 			modify = new Button(this, SWT.NONE);
-			expression = new Text(this, SWT.DEFAULT);
+			expression = new Text(this, SWT.LEFT | SWT.SINGLE | SWT.READ_ONLY | SWT.BORDER);
 			
 			
 			
@@ -217,7 +226,7 @@ public class PointcutPreviewAssistComposite extends Composite {
 			
 			
 			modify.setText("Modify");
-			expression.setEditable(false);
+			expression.setEditable(true);
 			if( includeConjunction ) {
 				modify.setEnabled(false);
 				commandCombo.setEnabled(false);
@@ -255,12 +264,21 @@ public class PointcutPreviewAssistComposite extends Composite {
 			expressionData.right = new FormAttachment(100,-5);
 			expressionData.top = new FormAttachment(commandCombo,5);
 			expression.setLayoutData(expressionData);
+			
+			FormData namedPointcutData = new FormData();
+			namedPointcutData.left = new FormAttachment(0,conjunctionEnds+10);
+			namedPointcutData.right = new FormAttachment(100,-5);
+			namedPointcutData.top = new FormAttachment(commandCombo,5);
+			namedPointcutCombo.setLayoutData(namedPointcutData);
+			namedPointcutCombo.setVisible(false);
 		}
 		
 		/**
 		 * Simply fill a command combo
 		 */
 		private void fillCombo() {
+			// Fill the command combo
+			commandCombo.add(NAMED_POINTCUT);
 			commandCombo.add(EXECUTION_METHOD);
 			commandCombo.add(EXECUTION_CONSTRUCTOR);
 			commandCombo.add(GET_FIELD);
@@ -275,6 +293,19 @@ public class PointcutPreviewAssistComposite extends Composite {
 			commandCombo.add(HAS_METHOD);
 			commandCombo.add(HAS_CONSTRUCTOR);
 			commandCombo.add(HASFIELD_FIELD);
+			
+			
+			// Fill the named pointcut combo
+			IJavaProject proj = AopCorePlugin.getCurrentJavaProject();
+			AopDescriptor descriptor = AopCorePlugin.getDefault().getDefaultDescriptor(proj);
+			
+			List pointcuts = AopModelUtils.getPointcutsFromAop(descriptor.getAop());
+			for( Iterator i = pointcuts.iterator(); i.hasNext(); ) {
+				Pointcut pointcut = (Pointcut)i.next();
+				namedPointcutCombo.add("[" + pointcut.getName() + "]  " + pointcut.getExpr());
+			}
+			
+			
 			
 			if( isConjunctive ) {
 				conjunction.add(CONJ_BLANK);
@@ -304,13 +335,33 @@ public class PointcutPreviewAssistComposite extends Composite {
 			commandCombo.addSelectionListener(new SelectionListener() {
 
 				public void widgetSelected(SelectionEvent e) {
-					//expression.setText("");
+					Object selected = commandCombo.getItem(commandCombo.getSelectionIndex());
+					
+					// expression and modify are only 
+					// shown when command is not named_pointcut
+					expression.setVisible(!selected.equals(NAMED_POINTCUT));
+					modify.setEnabled(!selected.equals(NAMED_POINTCUT));
+					
+					// pointcutcombo, the opposite
+					namedPointcutCombo.setVisible(selected.equals(NAMED_POINTCUT));
 					comp.updatePointcutTextBox();
 				}
 
 				public void widgetDefaultSelected(SelectionEvent e) {
 					widgetSelected(e);
 				}
+				
+			});
+			
+			namedPointcutCombo.addSelectionListener(new SelectionListener() {
+
+				public void widgetSelected(SelectionEvent e) {
+					comp.updatePointcutTextBox();
+				}
+
+				public void widgetDefaultSelected(SelectionEvent e) {
+					widgetSelected(e);
+				} 
 				
 			});
 		}
@@ -361,9 +412,18 @@ public class PointcutPreviewAssistComposite extends Composite {
 			
 			String conj = isConjunctive ? " " + conjunction.getItem(conjunction.getSelectionIndex()) + " ": "";
 			String command = commandCombo.getItem(commandCombo.getSelectionIndex());
-			String rawCommand = command.substring(0, command.indexOf("("));
-			
-			return conj + rawCommand + "(" + expression.getText() + ")";
+			int openParenIndex = command.indexOf("(");
+			if( openParenIndex > -1 ) {
+				String rawCommand = command.substring(0, command.indexOf("("));
+				return conj + rawCommand + "(" + expression.getText() + ")";
+			} else {
+				// we dont have a command here... just a named pointcut
+				int pointcutComboIndex = namedPointcutCombo.getSelectionIndex();
+				if( pointcutComboIndex == -1 ) return "";
+				String s = (String)namedPointcutCombo.getItem(pointcutComboIndex);
+				
+				return conj + s.substring(1, s.indexOf(']'));
+			}
 		}
 	}
 	
