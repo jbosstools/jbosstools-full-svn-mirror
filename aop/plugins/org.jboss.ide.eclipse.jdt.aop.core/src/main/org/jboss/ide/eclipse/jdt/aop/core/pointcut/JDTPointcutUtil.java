@@ -178,7 +178,7 @@ public class JDTPointcutUtil {
 	public static IType getSuperType (IType type)
 	{
 		try {
-			String superClassName = type.getSuperclassName();
+			String superClassName = type.getSuperclassTypeSignature();
 			
 			if (superClassName != null)
 			{
