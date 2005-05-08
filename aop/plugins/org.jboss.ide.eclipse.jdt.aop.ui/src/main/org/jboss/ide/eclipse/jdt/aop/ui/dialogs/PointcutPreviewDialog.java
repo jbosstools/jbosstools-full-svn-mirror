@@ -11,8 +11,10 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.internal.ui.viewsupport.JavaUILabelProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.util.Geometry;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
@@ -20,6 +22,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -55,7 +58,7 @@ public class PointcutPreviewDialog extends Dialog {
 
 	protected IJavaProject project;
 	protected Text pointcutText;
-	protected Label errorImage, errorLabel, pointcutLabel;
+	protected Label messageImage, messageLabel, pointcutLabel;
 	protected TableViewer pointcutPreview;
 	protected Button previewButton, wizardButton;
 	protected String pointcut;
@@ -163,29 +166,28 @@ public class PointcutPreviewDialog extends Dialog {
 		
 		errorComposite.setLayout(new GridLayout(2, false));
 		
-		errorImage = new Label(errorComposite, SWT.NONE);
-		errorImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK));
-		errorLabel = new Label(errorComposite, SWT.NONE);
-		errorLabel.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
-		errorImage.setVisible(false);
-		errorLabel.setText("                                                             " + 
+		messageImage = new Label(errorComposite, SWT.NONE);
+		messageImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK));
+		messageImage.setVisible(false);
+		messageLabel = new Label(errorComposite, SWT.NONE);
+		messageLabel.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		messageImage.setVisible(true);
+		messageLabel.setText("                                                             " + 
 				"                                                                        ");
 		
 		
-		if (preview)
-		{
-			FormData pointcutPreviewData = new FormData();
-			pointcutPreviewData.left = new FormAttachment(0,5);
-			pointcutPreviewData.top = new FormAttachment(errorComposite, 10);
-			pointcutPreviewData.right = new FormAttachment(100,-5);
-			pointcutPreview = new TableViewer(main, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-			
-			AdvisedLabelProvider provider = new AdvisedLabelProvider();
-			pointcutPreview.setLabelProvider(provider);
-			pointcutPreview.setContentProvider(provider);
-			pointcutPreview.getTable().setLayoutData(pointcutPreviewData);
-			pointcutPreview.setInput(advisable);
-		}
+		FormData pointcutPreviewData = new FormData();
+		pointcutPreviewData.left = new FormAttachment(0,5);
+		pointcutPreviewData.top = new FormAttachment(errorComposite, 10);
+		pointcutPreviewData.right = new FormAttachment(100,-5);
+		pointcutPreview = new TableViewer(main, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		pointcutPreview.getTable().setEnabled(false);
+
+		AdvisedLabelProvider provider = new AdvisedLabelProvider();
+		pointcutPreview.setLabelProvider(provider);
+		pointcutPreview.setContentProvider(provider);
+		pointcutPreview.getTable().setLayoutData(pointcutPreviewData);
+		pointcutPreview.setInput(advisable);
 	
 		
 		
@@ -249,9 +251,14 @@ public class PointcutPreviewDialog extends Dialog {
 		assistComposite.setLayoutData(assistCompositeData);
 		
 
+		assistComposite.setVisible( !assistComposite.isVisible() ); // invert visiblilty
+		resizeMyself();
+	}
+	
+	private void resizeMyself() {
+		
 		Point size = getInitialSize();
 		Point location = getShell().getLocation();
-		assistComposite.setVisible( !assistComposite.isVisible() ); // invert visiblilty
 
 		getShell().setBounds(getConstrainedShellBounds(new Rectangle(location.x,
 				location.y, size.x, size.y)));
@@ -283,12 +290,21 @@ public class PointcutPreviewDialog extends Dialog {
 
 	protected void previewPressed ()
 	{
-		pointcutText.setEnabled(false);
-		getButton(OK).setEnabled(false);
-		getButton(CANCEL).setEnabled(false);
-		previewButton.setEnabled(false);
-		
-		updatePreview();
+		try {
+			//clearError();
+			pointcut = pointcutText.getText();
+			
+			JDTPointcutExpression expression = new JDTPointcutExpression (new PointcutExpression(null, pointcut));
+			AopModel.instance().findAllAdvised(AopModel.instance().getRegisteredTypes(), expression, new PreviewCollector(), new NullProgressMonitor());
+		} catch (ParseException e) {
+			showError(e.getMessage());
+		} catch (RuntimeException e) {
+			showError(e.getMessage());
+		} catch( Exception e ) {
+			showError(e.getMessage());
+		} catch( Throwable t ) {
+			showError(t.getMessage());
+		}
 	}
 	
 	private class AdvisedLabelProvider extends LabelProvider implements IStructuredContentProvider
@@ -323,6 +339,7 @@ public class PointcutPreviewDialog extends Dialog {
 		}
 	}
 	
+	/*
 	protected void clearError ()
 	{
 		errorImage.setVisible(false);
@@ -331,21 +348,36 @@ public class PointcutPreviewDialog extends Dialog {
 		
 		getButton(OK).setEnabled(true);
 	}
+	*/
 	
-	protected void showError (String error)
+	protected void showError( String error ) {
+		messageImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK));
+		messageImage.setVisible(true);
+		messageImage.redraw();
+		showMessage(error, false);
+	}
+	
+	protected void showSuccess(String message) {
+		//messageImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_TASK_TSK));
+		messageImage.setImage(Display.getDefault().getSystemImage(SWT.ICON_INFORMATION));
+		messageImage.redraw();
+		showMessage(message, true);
+	}
+	
+	protected void showMessage (String message, boolean success)
 	{
-		errorImage.setVisible(true);
-		errorLabel.setVisible(true);
 		
-		errorLabel.setText(error);
-		errorLabel.setToolTipText(error);
-		getButton(OK).setEnabled(false);
-		getButton(CANCEL).setEnabled(true);
-		previewButton.setEnabled(true);
+		messageImage.setVisible(true);
+		messageLabel.setVisible(true);
+		
+		messageLabel.setText(message);
+		messageLabel.setToolTipText(message);
+		getButton(OK).setEnabled(success);
 		previewProgress.setVisible(false);
-		pointcutText.setEnabled(true);
 		
-		errorLabel.getParent().getParent().redraw();
+		messageLabel.getParent().getParent().redraw();
+		pointcutPreview.setInput(advisable);
+		resizeMyself();
 	}
 	
 	private class PreviewCollector extends AdvisedCollector
@@ -360,6 +392,7 @@ public class PointcutPreviewDialog extends Dialog {
 					previewProgress.setSelection(0);
 					previewProgress.setSize(previewProgress.getSize().x, 10);
 					advisable.clear();
+					
 				}
 			});
 		}
@@ -383,13 +416,8 @@ public class PointcutPreviewDialog extends Dialog {
 		public void done () {
 			Display.getDefault().asyncExec(new Runnable() {
 				public void run() {
-					pointcutText.setEnabled(false);
-					getButton(OK).setEnabled(false);
-					getButton(CANCEL).setEnabled(false);
-					previewButton.setEnabled(false);
-					
-					setReturnCode(PREVIEW_ID);
-					close();
+					pointcutPreview.setInput(advisable);
+					showSuccess("Acceptable pointcut expression advising " + advisable.size() + " elements");
 				}
 			});
 		}
@@ -402,26 +430,7 @@ public class PointcutPreviewDialog extends Dialog {
 			});
 		}
 	}
-	
-	protected void updatePreview ()
-	{
-		try {
-			clearError();
-			pointcut = pointcutText.getText();
-			
-			JDTPointcutExpression expression = new JDTPointcutExpression (new PointcutExpression(null, pointcut));
-			AopModel.instance().findAllAdvised(AopModel.instance().getRegisteredTypes(), expression, new PreviewCollector(), new NullProgressMonitor());
-		} catch (ParseException e) {
-			showError(e.getMessage());
-		} catch (RuntimeException e) {
-			showError(e.getMessage());
-		} catch( Exception e ) {
-			showError(e.getMessage());
-		} catch( Throwable t ) {
-			showError(t.getMessage());
-		}
-	}
-	
+		
 	public void setPointcutText( String expression ) {
 		pointcutText.setText(expression);
 	}

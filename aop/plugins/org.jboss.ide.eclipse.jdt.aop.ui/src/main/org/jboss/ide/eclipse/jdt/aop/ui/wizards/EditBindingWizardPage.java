@@ -384,18 +384,7 @@ public class EditBindingWizardPage extends WizardPage {
 		
 		int response = -1;
 		
-		// TODO: This is what makes the edit dialog re-open every time
-
-		do {
-			previewDialog.create();
-			response = previewDialog.open();
-		
-			if (response == PointcutPreviewDialog.PREVIEW_ID)
-			{
-				previewDialog.setPreview(true);
-			}
-		} while (response == PointcutPreviewDialog.PREVIEW_ID);
-		
+		response = previewDialog.open();
 		if (response == Dialog.OK)
 		{
 			String pointcut = previewDialog.getPointcut();
@@ -427,9 +416,9 @@ public class EditBindingWizardPage extends WizardPage {
 			pointcutText.setText(pointcut.getName());
 			if (binding == null)
 			{
-				binding = descriptor.findBinding(pointcut.getExpr());
+				binding = descriptor.findBinding(pointcut.getName());
 			}
-			binding.setPointcut(pointcut.getExpr());
+			binding.setPointcut(pointcut.getName());
 		}
 	}
 	
