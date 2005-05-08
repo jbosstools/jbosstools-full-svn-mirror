@@ -42,7 +42,21 @@ public class AopDescriptor {
 	
 	private Aop aop;
 	private File file;
-
+	
+	/*
+	 * This 'dirty' isn't a real check for a dirty buffer.
+	 * It will only be used to make sure an unmarshall isn't
+	 * performed right after a marshall (ie a load right after a save)
+	 * 
+	 * After any save, it is bound to happen that updateModel is called.
+	 * Calling updateModel should not re-load, but  
+	 * should then set dirty to true so further reloads work as planned.
+	 */
+	private boolean dirty;
+	
+	public AopDescriptor() {
+		this.dirty = true;
+	}
 	
 	/*
 	 * Simple getters and setters section
@@ -347,16 +361,22 @@ public class AopDescriptor {
 	 */
 	public void update ()
 	{
-		this.aop = JaxbAopUtil.instance().unmarshal(getFile());
+		if( this.dirty ) {
+			System.out.println("[aop-descriptor] - updating...");
+			this.aop = JaxbAopUtil.instance().unmarshal(getFile());
+		} else {
+			System.out.println("[aop-descriptor] - NOT updating...");
+			this.dirty = true;			
+		}
 	}
 	
 	/**
 	 * Saves the live aop to a file. 
-	 *
 	 */
 	
 	public void save ()
 	{
+		this.dirty = false;
 		JaxbAopUtil.instance().marshal(aop, file);
 		
 		try {
