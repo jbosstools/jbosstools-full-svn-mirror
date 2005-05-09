@@ -65,35 +65,26 @@ public class AspectManagerContentProvider implements IStructuredContentProvider,
 			 * If no aspects exist, a constant will be added as a child.
 			 */
  			tmp = AopModelUtils.getAspectsFromAop(aop);
- 			if (tmp.size() > 0)
- 				children.add(tmp);
- 			else 
- 				children.add(AspectManagerContentProvider.ASPECTS);
+			tmp.add(0, AspectManagerContentProvider.ASPECTS);
+ 			children.add(tmp);
  			
+			
  			tmp = AopModelUtils.getBindingsFromAop(aop);
- 			if (tmp.size() > 0)
- 				children.add(tmp);
- 			else
- 				children.add(AspectManagerContentProvider.BINDINGS);
+ 			tmp.add(0,AspectManagerContentProvider.BINDINGS);
+			children.add(tmp);
  			
  			tmp = AopModelUtils.getInterceptorsFromAop(aop);
- 			if (tmp.size() > 0)
- 				children.add(tmp);
- 			else
- 				children.add(AspectManagerContentProvider.INTERCEPTORS);
+			tmp.add(0,AspectManagerContentProvider.INTERCEPTORS);
+			children.add(tmp);
  			
 			tmp = AopModelUtils.getPointcutsFromAop(aop);
- 			if (tmp.size() > 0)
- 				children.add(tmp);
- 			else
- 				children.add(AspectManagerContentProvider.POINTCUTS);
+			tmp.add(0,AspectManagerContentProvider.POINTCUTS);
+			children.add(tmp);
  			
 			tmp = AopModelUtils.getTypedefsFromAop(aop);
- 			if (tmp.size() > 0)
- 				children.add(tmp);
- 			else
- 				children.add(AspectManagerContentProvider.TYPEDEFS);
- 			
+ 			tmp.add(0,AspectManagerContentProvider.TYPEDEFS);
+			children.add(tmp);
+			 			
  			
  			return children.toArray();
 		}
@@ -101,7 +92,7 @@ public class AspectManagerContentProvider implements IStructuredContentProvider,
 		{
 			// if the parent is a list, then the children are the 
 			// elements in the list. 
-			return ((List) parentElement).toArray();
+			return ((List) parentElement).subList(1, ((List)parentElement).size()).toArray();
 		}
 		else if (parentElement instanceof Binding)
 		{

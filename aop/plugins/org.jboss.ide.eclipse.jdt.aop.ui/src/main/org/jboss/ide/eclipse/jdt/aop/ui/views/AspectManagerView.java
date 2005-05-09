@@ -313,19 +313,22 @@ public class AspectManagerView extends ViewPart {
 				else if (selected instanceof List) {
 					// Category with children
     				List list = (List) selected;
-    				if( AopModelUtils.getBindingsFromAop(descriptor.getAop()).equals(list)) {
+					if( list.get(0) == AspectManagerContentProvider.BINDINGS) {
     					manager.add(createBindingAction);
-    				} else if( AopModelUtils.getPointcutsFromAop(descriptor.getAop()).equals(list)) {
+					}
+    				else if( list.get(0) == AspectManagerContentProvider.POINTCUTS) {
 						manager.add(createPointcutAction);
     				}
-    			} else if( selected instanceof AspectManagerContentProvider.AspectManagerContentProviderTypeWrapper) {
+    			} 
+				/*
+				else if( selected instanceof AspectManagerContentProvider.AspectManagerContentProviderTypeWrapper) {
     				// Category without children
 					if( selected == AspectManagerContentProvider.BINDINGS ) {
     					manager.add(createBindingAction);
     				} else if( selected == AspectManagerContentProvider.POINTCUTS) {
     					manager.add(createPointcutAction);
     				}
-    			}
+    			} */
     		}
     	}
 		
