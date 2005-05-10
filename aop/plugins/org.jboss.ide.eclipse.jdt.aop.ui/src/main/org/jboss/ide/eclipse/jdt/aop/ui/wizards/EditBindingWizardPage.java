@@ -64,9 +64,6 @@ public class EditBindingWizardPage extends WizardPage {
 	private String originalPointcut;
 	private ArrayList originalElements;
 	
-	/**
-	 * @param pageName
-	 */
 	public EditBindingWizardPage (Binding binding, AopDescriptor descriptor) {
 		super(binding == null ? "Create a new JBossAOP Binding" : "Edit a JBossAOP Binding");
 		
@@ -380,14 +377,17 @@ public class EditBindingWizardPage extends WizardPage {
 	
 	protected void editPointcutPressed ()
 	{
-		PointcutPreviewDialog previewDialog = new PointcutPreviewDialog(pointcutText.getText(), getShell(), AopCorePlugin.getCurrentJavaProject(), false);
+		PointcutPreviewDialog previewDialog = 
+			new PointcutPreviewDialog(null, pointcutText.getText(), getShell(), 
+				AopCorePlugin.getCurrentJavaProject(), 
+				PointcutPreviewDialog.UNNAMED_POINTCUT);
 		
 		int response = -1;
 		
 		response = previewDialog.open();
 		if (response == Dialog.OK)
 		{
-			String pointcut = previewDialog.getPointcut();
+			String pointcut = previewDialog.getExpression();
 			pointcutText.setText(pointcut);
 			
 			addInterceptorButton.setEnabled(pointcut != null && pointcut.length() > 0);

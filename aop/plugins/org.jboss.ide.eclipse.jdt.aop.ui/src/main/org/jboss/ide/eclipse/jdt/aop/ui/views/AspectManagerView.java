@@ -6,8 +6,6 @@
  */
 package org.jboss.ide.eclipse.jdt.aop.ui.views;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jdt.core.IJavaProject;
@@ -38,13 +36,13 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aspect;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
-import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
-import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopUiPlugin;
 import org.jboss.ide.eclipse.jdt.aop.ui.actions.ApplyAdviceAction;
 import org.jboss.ide.eclipse.jdt.aop.ui.actions.ApplyInterceptorAction;
-import org.jboss.ide.eclipse.jdt.aop.ui.actions.ConvertToPointcutAction;
+import org.jboss.ide.eclipse.jdt.aop.ui.actions.CreateNewNamedPointcutAction;
+import org.jboss.ide.eclipse.jdt.aop.ui.actions.ModifyNamedPointcutAction;
 import org.jboss.ide.eclipse.jdt.aop.ui.util.JumpToCodeUtil;
 import org.jboss.ide.eclipse.jdt.aop.ui.views.providers.AspectManagerContentProvider;
 import org.jboss.ide.eclipse.jdt.aop.ui.views.providers.AspectManagerLabelProvider;
@@ -61,8 +59,13 @@ public class AspectManagerView extends ViewPart {
     private AspectManagerContentProvider contentProvider;
     private AspectManagerLabelProvider labelProvider;
     private ISelection currentSelection;
-    private Action createAdviceAction, createAspectAction, createPointcutAction, goToAdviceAction, showAspectAction, showInterceptorAction, applyAdviceAction, applyInterceptorsAction;
-    private Action createBindingAction, removeInterceptorAction, removeAdviceAction, removeInterceptorRefAction, removeBindingAction, goToAction, editBindingAction;
+    private Action createAdviceAction, createAspectAction, createPointcutAction, 
+    				goToAdviceAction, showAspectAction, showInterceptorAction, 
+    				applyAdviceAction, applyInterceptorsAction,
+    				createBindingAction, removeInterceptorAction, 
+    				removeAdviceAction, removeInterceptorRefAction, 
+    				removeBindingAction, removeNamedPointcutAction, 
+    				goToAction, editBindingAction, editPointcutAction;
     
     public AspectManagerView ()
     {
@@ -111,11 +114,18 @@ public class AspectManagerView extends ViewPart {
     	createAdviceAction.setToolTipText("Create a new advice method under this Aspect.");
     	createAdviceAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_ADVICE));
     	
-    	createPointcutAction = new ConvertToPointcutAction(treeViewer);
-    	createPointcutAction.setText("Create a Pointcut...");
+    	createPointcutAction = new CreateNewNamedPointcutAction(treeViewer, getSite().getShell());
+    	createPointcutAction.setText("Create Pointcut");
     	createPointcutAction.setToolTipText("Create a new named Pointcut.");
     	createPointcutAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_POINTCUT));
-    	
+
+    	editPointcutAction = new ModifyNamedPointcutAction(this, getSite().getShell());
+    	editPointcutAction.setText("Edit Pointcut");
+    	editPointcutAction.setToolTipText("Edit this pointcut.");
+    	editPointcutAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_POINTCUT));
+
+		
+		
     	applyAdviceAction = new ApplyAdviceAction(treeViewer);
     	applyAdviceAction.setText("Apply Advice...");
     	applyAdviceAction.setToolTipText("Apply Advice to this Binding");
@@ -145,6 +155,7 @@ public class AspectManagerView extends ViewPart {
     			
     			int response = dialog.open();
     			
+				// TODO: COMPLETE ME... cancel doesn't work.
     			if (response == WizardDialog.OK)
     			{
     			}
@@ -182,14 +193,29 @@ public class AspectManagerView extends ViewPart {
     			{
     				descriptor.remove(interceptor);
     				descriptor.save();
-    				
-    				setDescriptor(descriptor);
     			}
     		}
     	};
     	removeInterceptorAction.setText("Remove");
     	removeInterceptorAction.setToolTipText("Remove this Interceptor");
     	removeInterceptorAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
+    	
+    	removeNamedPointcutAction = new Action() {
+    		public void run() {
+    			AopDescriptor descriptor = (AopDescriptor) treeViewer.getInput();
+    			Pointcut pointcut = (Pointcut) getSelected();
+
+    			if (AopUiPlugin.confirm("Are you sure you want to delete the pointcut: \"" + pointcut.getName() + "\" ?"))
+    			{
+    				descriptor.remove(pointcut);
+					AspectManager.instance().removePointcut(pointcut.getName());
+    				descriptor.save();
+    			}
+    		}
+    	};
+    	removeNamedPointcutAction.setText("Remove");
+		removeNamedPointcutAction.setToolTipText("Remove this Pointcut");
+		removeNamedPointcutAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
     	
     	removeAdviceAction = new Action() {
     		public void run() {
@@ -200,8 +226,6 @@ public class AspectManagerView extends ViewPart {
     			{
     				descriptor.remove(advice);
     				descriptor.save();
-    				
-    				setDescriptor(descriptor);
     			}
     		}
     	};
@@ -218,8 +242,6 @@ public class AspectManagerView extends ViewPart {
     			{
     				descriptor.remove(interceptorRef);
     				descriptor.save();
-    				
-    				setDescriptor(descriptor);
     			}
     		}
     	};
@@ -236,8 +258,6 @@ public class AspectManagerView extends ViewPart {
     			{
     				descriptor.remove(binding);
     				descriptor.save();
-    				
-    				setDescriptor(descriptor);
     			}	
     		}
     	};
@@ -247,7 +267,12 @@ public class AspectManagerView extends ViewPart {
     	
     }
     
-    private Object getSelected ()
+	
+	/**
+	 * Returns the first selected item from the view.
+	 * @return
+	 */
+    public Object getSelected ()
     {
     	if (treeViewer.getSelection() instanceof IStructuredSelection)
     	{
@@ -304,7 +329,11 @@ public class AspectManagerView extends ViewPart {
     				manager.add(goToAction);
     				manager.add(new Separator());
     				manager.add(removeInterceptorRefAction);
-    			} 
+    			} else if( selected instanceof Pointcut ) {
+					manager.add(editPointcutAction);
+					manager.add(new Separator());
+					manager.add(removeNamedPointcutAction);
+    			}
 				
 				/* 
 				 * If they're not clicking on a sub-element, but a category
@@ -320,15 +349,6 @@ public class AspectManagerView extends ViewPart {
 						manager.add(createPointcutAction);
     				}
     			} 
-				/*
-				else if( selected instanceof AspectManagerContentProvider.AspectManagerContentProviderTypeWrapper) {
-    				// Category without children
-					if( selected == AspectManagerContentProvider.BINDINGS ) {
-    					manager.add(createBindingAction);
-    				} else if( selected == AspectManagerContentProvider.POINTCUTS) {
-    					manager.add(createPointcutAction);
-    				}
-    			} */
     		}
     	}
 		

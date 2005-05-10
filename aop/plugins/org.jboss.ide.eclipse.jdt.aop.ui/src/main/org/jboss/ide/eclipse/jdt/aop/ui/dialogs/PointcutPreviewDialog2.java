@@ -1,8 +1,9 @@
-/*
- * Created on Jan 21, 2005
- */
 package org.jboss.ide.eclipse.jdt.aop.ui.dialogs;
 
+import java.util.Iterator;
+import java.util.List;
+
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.internal.ui.refactoring.contentassist.ControlContentAssistHelper;
 import org.eclipse.jface.dialogs.Dialog;
@@ -23,11 +24,19 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
+import org.jboss.ide.eclipse.jdt.aop.core.AopDescriptor;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
 import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces.PointcutPreviewAssistComposite;
 import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces.PointcutPreviewTypeCompletionProcessor;
 
 /**
- * @author Marshall
+ * This class represents the second pointcut preview dialog.
+ * Perhaps it's poorly named. It provides the controls 
+ * to build a constructor pattern, a method pattern,
+ * a field pattern, or a type pattern.
+ * 
+ * @author Rob Stryker
  */
 public class PointcutPreviewDialog2 extends Dialog {
 
@@ -228,70 +237,75 @@ public class PointcutPreviewDialog2 extends Dialog {
 	
 	public static class TypeComposite extends Composite implements PointcutComposite {
 		Composite c;
-		private Combo combo1;
-		private Text pattern1;
-		
+		private Combo patternType;
+		private Combo typedefs;
+		private boolean typedefsLoaded;
+		private Text pattern;
 		private String type, text;
 
+		private Label categoryLabel;
+		
+		/**
+		 * Used by a composite containing ONLY a typecomposite.
+		 */
 		public TypeComposite(Composite parent, String expression ) {
 			this(parent, false, false, "Type Pattern", expression);
 		}
 
+		/**
+		 * Used by membertype for everything it seems.
+		 */
 		public TypeComposite(Composite parent, boolean enableBaseTypes, 
 				boolean enableVoid, String labelString, String expression) {
 			this(parent, enableBaseTypes, enableVoid, labelString, false, expression );
 		}
-
-		public TypeComposite(Composite parent, boolean enableBaseTypes, 
-				boolean enableVoid, String labelString) {
-			this(parent, enableBaseTypes, enableVoid, labelString, false, null);
-		}
+		
 		
 		public TypeComposite(Composite parent, boolean enableBaseTypes, 
 				boolean enableVoid, String labelString, boolean classOnly, String expression ) {
 			super(parent, SWT.NONE);
 			c = this;
 			c.setLayout( new FormLayout());
+			typedefsLoaded = false;
 			
 	
 			
-			Label categoryLabel = new Label(c, SWT.NONE );
+			categoryLabel = new Label(c, SWT.NONE );
 			categoryLabel.setText(labelString);
 			FormData labelData = new FormData();
 			labelData.left = new FormAttachment(0,5);
 			labelData.top = new FormAttachment(0,0);
 			categoryLabel.setLayoutData(labelData);
 	
-			final Combo combo = new Combo(c, SWT.READ_ONLY);
-			combo1 = combo;
-			combo.add(PointcutPreviewAssistComposite.CLASS);
-			if( !classOnly ) { 
-				combo.add(PointcutPreviewAssistComposite.ANNOTATION);
-				combo.add(PointcutPreviewAssistComposite.INSTANCE_OF);
-			}
+			patternType = new Combo(c, SWT.READ_ONLY);
+			pattern = new Text(c, SWT.LEFT | SWT.SINGLE | SWT.READ_ONLY | SWT.BORDER);
+			typedefs = new Combo(c, SWT.READ_ONLY);
+			typedefs.setVisible(false);
+
 			
-			FormData comboData = new FormData();
-			comboData.top = new FormAttachment(categoryLabel, 5);
-			comboData.left = new FormAttachment(0,5);
-			combo.setLayoutData(comboData);
+			setWidgetDatas();
+			fillCombos( classOnly );
 			
-			Text pattern = new Text(c, SWT.LEFT | SWT.SINGLE | SWT.READ_ONLY | SWT.BORDER);
-			pattern1 = pattern;
-			pattern.setEditable(true);
-			FormData patternData = new FormData();
-			patternData.left = new FormAttachment(combo,5);
-			patternData.top = new FormAttachment(categoryLabel,5);
-			patternData.right = new FormAttachment(100,-5);
-			pattern.setLayoutData(patternData);
 	
 			final TypePatternModifyListener typeListener = 
 				new TypePatternModifyListener(pattern, enableBaseTypes, enableVoid);
 			pattern.addModifyListener(typeListener);
 	
-			combo.addSelectionListener(new SelectionListener() {
+			patternType.addSelectionListener(new SelectionListener() {
 	
 				public void widgetSelected(SelectionEvent e) {
-					typeListener.setTypePulldown(combo.getItem(combo.getSelectionIndex()));
+					String patternTypeString = patternType.getItem(patternType.getSelectionIndex());
+					if( patternTypeString.equals(PointcutPreviewAssistComposite.TYPEDEF)) {
+						if( !typedefsLoaded ) {
+							lazyLoadTypedefs();
+						}
+						pattern.setVisible(false);
+						typedefs.setVisible(true);
+					} else {
+						typedefs.setVisible(false);
+						pattern.setVisible(true);
+						typeListener.setTypePulldown(patternTypeString);
+					}
 				}
 	
 				public void widgetDefaultSelected(SelectionEvent e) {
@@ -300,13 +314,55 @@ public class PointcutPreviewDialog2 extends Dialog {
 				
 			});
 	
-			combo.select(0);
-			typeListener.setTypePulldown(combo.getItem(combo.getSelectionIndex()));
+			patternType.select(0);
+			typeListener.setTypePulldown(patternType.getItem(patternType.getSelectionIndex()));
 			
 			
 			if( expression != null && expression != "") {
 				loadExpressionIntoWidgets(expression.trim());
 			}
+		}
+		private void setWidgetDatas() {
+			FormData comboData = new FormData();
+			comboData.top = new FormAttachment(categoryLabel, 5);
+			comboData.left = new FormAttachment(0,5);
+			patternType.setLayoutData(comboData);
+			
+			pattern.setEditable(true);
+			FormData patternData = new FormData();
+			patternData.left = new FormAttachment(patternType,5);
+			patternData.top = new FormAttachment(categoryLabel,5);
+			patternData.right = new FormAttachment(100,-5);
+			pattern.setLayoutData(patternData);
+
+			FormData typedefData = new FormData();
+			typedefData.left = new FormAttachment(patternType,5);
+			typedefData.top = new FormAttachment(categoryLabel,5);
+			typedefData.right = new FormAttachment(100,-5);
+			typedefs.setLayoutData(typedefData);
+			typedefs.setVisible(true);
+		}
+		private void fillCombos(boolean classOnly ) {
+			patternType.add(PointcutPreviewAssistComposite.CLASS);
+			if( !classOnly ) { 
+				patternType.add(PointcutPreviewAssistComposite.ANNOTATION);
+				patternType.add(PointcutPreviewAssistComposite.INSTANCE_OF);
+				patternType.add(PointcutPreviewAssistComposite.TYPEDEF);
+			}
+			
+
+		}
+		
+		private void lazyLoadTypedefs() {
+			typedefsLoaded = true;
+			IJavaProject proj = AopCorePlugin.getCurrentJavaProject();
+			AopDescriptor aop = AopCorePlugin.getDefault().getDefaultDescriptor(proj);
+			List list = AopModelUtils.getTypedefsFromAop(aop.getAop());
+			for( Iterator i = list.iterator(); i.hasNext(); ) {
+				Typedef def = (Typedef)i.next();
+				typedefs.add("[" + def.getName() + "] " + def.getExpr());
+			}
+
 		}
 		
 		private void loadExpressionIntoWidgets(String expression) {
@@ -317,8 +373,11 @@ public class PointcutPreviewDialog2 extends Dialog {
 			if( expression.startsWith("@")) {
 				type = PointcutPreviewAssistComposite.ANNOTATION;
 				text = expression.substring(1);
-			} else if( expression.startsWith("$")) {
+			} else if( expression.startsWith("$instanceof")) {
 				type = PointcutPreviewAssistComposite.INSTANCE_OF;
+				text =  expression.substring(expression.indexOf("(") + 1, expression.length()-1);
+			} else if( expression.startsWith("$typedef")) {
+				type = PointcutPreviewAssistComposite.TYPEDEF;
 				text =  expression.substring(expression.indexOf("(") + 1, expression.length()-1);
 			} else if( expression.trim().indexOf(" ") == -1 ){
 				type = PointcutPreviewAssistComposite.CLASS;
@@ -327,11 +386,11 @@ public class PointcutPreviewDialog2 extends Dialog {
 				return;
 			}
 			
-			pattern1.setText(text);
-			String [] tmp = combo1.getItems();
+			pattern.setText(text);
+			String [] tmp = patternType.getItems();
 			for( int i = 0; i < tmp.length; i++ ) {
-				if( combo1.getItem(i).equals(type)) {
-					combo1.select(i);
+				if( patternType.getItem(i).equals(type)) {
+					patternType.select(i);
 				}
 			}
 
@@ -339,23 +398,31 @@ public class PointcutPreviewDialog2 extends Dialog {
 		}
 		
 		public Combo getCombo() {
-			return combo1;
+			return patternType;
 		}
 		public Text getPattern() {
-			return pattern1;
+			return pattern;
 		}
 		public String toString1() {
-			if( combo1.getItem(combo1.getSelectionIndex())
+			if( patternType.getItem(patternType.getSelectionIndex())
 					.equals(PointcutPreviewAssistComposite.CLASS)) {
-				return pattern1.getText();
+				return pattern.getText();
 			}
-			if( combo1.getItem(combo1.getSelectionIndex())
+			if( patternType.getItem(patternType.getSelectionIndex())
 					.equals(PointcutPreviewAssistComposite.ANNOTATION)) {
-				return "@" + pattern1.getText();
+				return "@" + pattern.getText();
 			}
-			if( combo1.getItem(combo1.getSelectionIndex())
+			if( patternType.getItem(patternType.getSelectionIndex())
 					.equals(PointcutPreviewAssistComposite.INSTANCE_OF)) {
-				return "$instanceof(" + pattern1.getText() + ")";
+				return "$instanceof(" + pattern.getText() + ")";
+			}
+			if( patternType.getItem(patternType.getSelectionIndex())
+					.equals(PointcutPreviewAssistComposite.TYPEDEF)) {
+				int index = typedefs.getSelectionIndex();
+				if( index == -1 ) return "";
+				String s = typedefs.getItem(index);
+				String typedefName = s.substring(1, s.indexOf(']'));
+				return "$typedef{" + typedefName + "}";
 			}
 			// TODO: Throw exception?
 			return "";

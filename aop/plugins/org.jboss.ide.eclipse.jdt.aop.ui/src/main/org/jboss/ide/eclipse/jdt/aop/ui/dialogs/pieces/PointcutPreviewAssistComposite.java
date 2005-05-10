@@ -73,6 +73,7 @@ public class PointcutPreviewAssistComposite extends Composite {
 	public static final String CLASS = "Class";
 	public static final String ANNOTATION = "Annotation";
 	public static final String INSTANCE_OF = "Instanceof";
+	public static final String TYPEDEF = "Typedef";
 	public static final String NAME = "Name";
 	
 	public static HashMap pointcutToComposite;
@@ -215,18 +216,18 @@ public class PointcutPreviewAssistComposite extends Composite {
 			commandCombo = new Combo(this,SWT.DROP_DOWN | SWT.READ_ONLY);
 			namedPointcutCombo = new Combo(this,SWT.DROP_DOWN | SWT.READ_ONLY);
 			modify = new Button(this, SWT.NONE);
+			modify.setEnabled(false);
 			expression = new Text(this, SWT.LEFT | SWT.SINGLE | SWT.READ_ONLY | SWT.BORDER);
-			
+			expression.setEditable(false);
 			
 			
 			
 			loadLayoutData();
-			fillCombo();
-			addButtonListener();
+			fillCombos();
+			addListeners();
 			
 			
 			modify.setText("Modify");
-			expression.setEditable(true);
 			if( includeConjunction ) {
 				modify.setEnabled(false);
 				commandCombo.setEnabled(false);
@@ -236,7 +237,7 @@ public class PointcutPreviewAssistComposite extends Composite {
 		/**
 		 * THis is all layout stuff.
 		 */
-		private void loadLayoutData() {
+		protected void loadLayoutData() {
 			int conjunctionEnds = 65;
 			
 			if( isConjunctive ) {
@@ -276,7 +277,7 @@ public class PointcutPreviewAssistComposite extends Composite {
 		/**
 		 * Simply fill a command combo
 		 */
-		private void fillCombo() {
+		protected void fillCombos() {
 			// Fill the command combo
 			commandCombo.add(NAMED_POINTCUT);
 			commandCombo.add(EXECUTION_METHOD);
@@ -312,65 +313,14 @@ public class PointcutPreviewAssistComposite extends Composite {
 				conjunction.add(CONJ_AND);
 				conjunction.add(CONJ_OR);
 				conjunction.select(0);
-			
-				conjunction.addSelectionListener(new SelectionListener() {
-
-					public void widgetSelected(SelectionEvent e) {
-						int index = conjunction.getSelectionIndex();
-						if( index == -1 ) return;
-						
-						boolean enabled = !conjunction.getItem(index).equals(CONJ_BLANK);
-						modify.setEnabled(enabled);
-						commandCombo.setEnabled(enabled);
-						if( !enabled ) commandCombo.deselectAll();
-						comp.updatePointcutTextBox();
-					}
-
-					public void widgetDefaultSelected(SelectionEvent e) {
-						widgetSelected(e);
-					}
-					
-				});
 			}
-			commandCombo.addSelectionListener(new SelectionListener() {
-
-				public void widgetSelected(SelectionEvent e) {
-					Object selected = commandCombo.getItem(commandCombo.getSelectionIndex());
-					
-					// expression and modify are only 
-					// shown when command is not named_pointcut
-					expression.setVisible(!selected.equals(NAMED_POINTCUT));
-					modify.setEnabled(!selected.equals(NAMED_POINTCUT));
-					
-					// pointcutcombo, the opposite
-					namedPointcutCombo.setVisible(selected.equals(NAMED_POINTCUT));
-					comp.updatePointcutTextBox();
-				}
-
-				public void widgetDefaultSelected(SelectionEvent e) {
-					widgetSelected(e);
-				}
-				
-			});
-			
-			namedPointcutCombo.addSelectionListener(new SelectionListener() {
-
-				public void widgetSelected(SelectionEvent e) {
-					comp.updatePointcutTextBox();
-				}
-
-				public void widgetDefaultSelected(SelectionEvent e) {
-					widgetSelected(e);
-				} 
-				
-			});
 		}
 		
 		/**
 		 * Clicking on the modify button will open a new dialog 
 		 * to access further controls for pointcut expression creation.
 		 */
-		private void addButtonListener() {
+		protected void addListeners() {
 			modify.addSelectionListener(new SelectionListener() {
 
 				public void widgetSelected(SelectionEvent e) {
@@ -392,6 +342,59 @@ public class PointcutPreviewAssistComposite extends Composite {
 				}
 				
 			});
+			commandCombo.addSelectionListener(new SelectionListener() {
+
+				public void widgetSelected(SelectionEvent e) {
+					Object selected = commandCombo.getItem(commandCombo.getSelectionIndex());
+					
+					// expression and modify are only 
+					// shown when command is not named_pointcut
+					expression.setVisible(!selected.equals(NAMED_POINTCUT));
+					modify.setEnabled(!selected.equals(NAMED_POINTCUT));
+					
+					// pointcutcombo, the opposite
+					namedPointcutCombo.setVisible(selected.equals(NAMED_POINTCUT));
+					comp.updatePointcutTextBox();
+				}
+
+				public void widgetDefaultSelected(SelectionEvent e) {
+					widgetSelected(e);
+				}
+				
+			});
+			namedPointcutCombo.addSelectionListener(new SelectionListener() {
+
+				public void widgetSelected(SelectionEvent e) {
+					comp.updatePointcutTextBox();
+				}
+
+				public void widgetDefaultSelected(SelectionEvent e) {
+					widgetSelected(e);
+				} 
+				
+			});
+
+			if( isConjunctive ) {
+				conjunction.addSelectionListener(new SelectionListener() {
+
+					public void widgetSelected(SelectionEvent e) {
+						int index = conjunction.getSelectionIndex();
+						if( index == -1 ) return;
+						
+						boolean enabled = !conjunction.getItem(index).equals(CONJ_BLANK);
+						modify.setEnabled(enabled);
+						commandCombo.setEnabled(enabled);
+						if( !enabled ) commandCombo.deselectAll();
+						comp.updatePointcutTextBox();
+					}
+
+					public void widgetDefaultSelected(SelectionEvent e) {
+						widgetSelected(e);
+					}
+					
+				});
+				
+			}
 		}
 
 		/**
