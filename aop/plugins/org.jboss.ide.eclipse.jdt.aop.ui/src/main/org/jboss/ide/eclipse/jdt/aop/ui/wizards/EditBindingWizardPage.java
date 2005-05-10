@@ -380,7 +380,7 @@ public class EditBindingWizardPage extends WizardPage {
 		PointcutPreviewDialog previewDialog = 
 			new PointcutPreviewDialog(null, pointcutText.getText(), getShell(), 
 				AopCorePlugin.getCurrentJavaProject(), 
-				PointcutPreviewDialog.UNNAMED_POINTCUT);
+				PointcutPreviewDialog.UNNAMED);
 		
 		int response = -1;
 		

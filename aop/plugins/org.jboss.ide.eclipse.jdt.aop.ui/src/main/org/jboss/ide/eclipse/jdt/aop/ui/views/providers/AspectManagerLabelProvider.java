@@ -103,6 +103,7 @@ public class AspectManagerLabelProvider extends LabelProvider {
 			else if( firstElement == AspectManagerContentProvider.BINDINGS ) return AopSharedImages.getImage(AopSharedImages.IMG_BINDING);
 			else if( firstElement == AspectManagerContentProvider.INTERCEPTORS ) return AopSharedImages.getImage(AopSharedImages.IMG_INTERCEPTOR);
 			else if( firstElement == AspectManagerContentProvider.POINTCUTS ) return AopSharedImages.getImage(AopSharedImages.IMG_POINTCUT);
+			else if( firstElement == AspectManagerContentProvider.TYPEDEFS ) return AopSharedImages.getImage(AopSharedImages.IMG_TYPEDEF);
 			
 		}
 		else if (obj instanceof Aspect)
@@ -128,6 +129,10 @@ public class AspectManagerLabelProvider extends LabelProvider {
 		else if (obj instanceof InterceptorRef)
 		{
 			return AopSharedImages.getImage(AopSharedImages.IMG_INTERCEPTOR);
+		}
+		else if (obj instanceof Typedef)
+		{
+			return AopSharedImages.getImage(AopSharedImages.IMG_TYPEDEF);
 		}
 		return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_DEFAULT);
 	}

@@ -23,6 +23,11 @@ public interface IAopAdvised
 	 */
 	public static final int TYPE_METHOD_EXECUTION = 2;
 	
+	/**
+	 * This advised element represents a class that matches some type pattern.
+	 */
+	public static final int TYPE_CLASS = 3;
+	
 	
 	/**
 	 * Return the IJavaElement that corresponds with this object

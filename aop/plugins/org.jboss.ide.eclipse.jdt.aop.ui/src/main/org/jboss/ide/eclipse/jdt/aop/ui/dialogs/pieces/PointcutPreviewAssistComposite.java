@@ -119,7 +119,7 @@ public class PointcutPreviewAssistComposite extends Composite {
 		fillPointcutExplanationMap();
 	}
 	
-	private ExpressionRowComposite createRow(Composite parent, Control top) {
+	protected ExpressionRowComposite createRow(Composite parent, Control top) {
 		ExpressionRowComposite c = 
 			new ExpressionRowComposite(parent, SWT.NONE, this, top==null?false:true);
 
@@ -140,7 +140,7 @@ public class PointcutPreviewAssistComposite extends Composite {
 	 * Maps an item in the command combo to a required parameter type.
 	 * (Ex: execute(method) -> method,   get(field) -> field
 	 */
-	private void fillPointcutCompositeMap() {
+	protected void fillPointcutCompositeMap() {
 		pointcutToComposite.put(EXECUTION_METHOD, METHOD);
 		pointcutToComposite.put(EXECUTION_CONSTRUCTOR, CONSTRUCTOR);
 		pointcutToComposite.put(GET_FIELD, FIELD);
@@ -198,11 +198,11 @@ public class PointcutPreviewAssistComposite extends Composite {
 	 */
 	protected static class ExpressionRowComposite extends Composite {
 
-		private Button modify;
-		private Combo commandCombo, conjunction, namedPointcutCombo;
-		private Text expression;
-		private boolean isConjunctive;
-		private PointcutPreviewAssistComposite comp;
+		protected Button modify;
+		protected Combo commandCombo, conjunction, namedPointcutCombo;
+		protected Text expression;
+		protected boolean isConjunctive;
+		protected PointcutPreviewAssistComposite comp;
 		
 		public ExpressionRowComposite(Composite parent, int style, 
 				PointcutPreviewAssistComposite comp, boolean includeConjunction) {

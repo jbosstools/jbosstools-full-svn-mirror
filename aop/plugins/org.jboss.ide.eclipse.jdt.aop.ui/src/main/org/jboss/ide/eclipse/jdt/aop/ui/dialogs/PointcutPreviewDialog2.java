@@ -41,10 +41,10 @@ import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces.PointcutPreviewTypeComple
 public class PointcutPreviewDialog2 extends Dialog {
 
 	
-	private String type;
-	private PointcutComposite content;
-	private String retVal;
-	private String expression;
+	protected String type;
+	protected PointcutComposite content;
+	protected String retVal;
+	protected String expression;
 	
 	public PointcutPreviewDialog2 (String expression, Shell shell, String type)
 	{
@@ -342,15 +342,14 @@ public class PointcutPreviewDialog2 extends Dialog {
 			typedefs.setLayoutData(typedefData);
 			typedefs.setVisible(true);
 		}
+		
 		private void fillCombos(boolean classOnly ) {
 			patternType.add(PointcutPreviewAssistComposite.CLASS);
+			patternType.add(PointcutPreviewAssistComposite.INSTANCE_OF);
 			if( !classOnly ) { 
 				patternType.add(PointcutPreviewAssistComposite.ANNOTATION);
-				patternType.add(PointcutPreviewAssistComposite.INSTANCE_OF);
 				patternType.add(PointcutPreviewAssistComposite.TYPEDEF);
 			}
-			
-
 		}
 		
 		private void lazyLoadTypedefs() {
@@ -414,7 +413,7 @@ public class PointcutPreviewDialog2 extends Dialog {
 			}
 			if( patternType.getItem(patternType.getSelectionIndex())
 					.equals(PointcutPreviewAssistComposite.INSTANCE_OF)) {
-				return "$instanceof(" + pattern.getText() + ")";
+				return "$instanceof{" + pattern.getText() + "}";
 			}
 			if( patternType.getItem(patternType.getSelectionIndex())
 					.equals(PointcutPreviewAssistComposite.TYPEDEF)) {

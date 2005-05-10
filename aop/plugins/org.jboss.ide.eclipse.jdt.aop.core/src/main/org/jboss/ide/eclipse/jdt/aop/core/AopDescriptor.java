@@ -25,7 +25,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
-import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
 import org.jboss.ide.eclipse.jdt.aop.core.util.JaxbAopUtil;
 
@@ -313,6 +313,20 @@ public class AopDescriptor {
 		return null;
 	}
 	
+	/**
+	 * Used only with a parameter that can only be found as an element
+	 * of the top level of the tree.
+	 * 
+	 * Interceptors, interceptorrefs, etc, are not applicable.
+	 * They can be found under AOP or under BINDING.
+	 * @param o
+	 * @return
+	 */
+	private List getTopLevelParent(Object o) {
+		if( getAop().getTopLevelElements().contains(o))
+			return getAop().getTopLevelElements();
+		return null;
+	}
 	
 	
 	/**
@@ -338,13 +352,12 @@ public class AopDescriptor {
 			parent = getParent ((Advice) object);
 		else if (object instanceof InterceptorRef)
 			parent = getParent ((InterceptorRef) object);
-		else if (object instanceof Binding)
-		{
-			List bindings = AopModelUtils.getBindingsFromAop(getAop());
-			if (bindings.contains(object))
-			{
-				parent = getAop().getTopLevelElements();
-			}
+		else if (object instanceof Binding) {
+			parent = getTopLevelParent((Binding)object);
+		} else if (object instanceof Pointcut) {
+			parent = getTopLevelParent((Pointcut)object);
+		} else if (object instanceof Typedef) {
+			parent = getTopLevelParent((Typedef)object);
 		}
 		
 		if (parent != null)

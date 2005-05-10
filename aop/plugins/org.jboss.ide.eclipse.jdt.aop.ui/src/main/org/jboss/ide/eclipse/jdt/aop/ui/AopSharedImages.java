@@ -28,6 +28,7 @@ public class AopSharedImages {
 	public static final String IMG_NEW_BINDING = "newbinding";
 	public static final String IMG_ADVICE = "advice";
 	public static final String IMG_ADVICE_24 = "advice24";
+	public static final String IMG_TYPEDEF = "typedef";
 	
 	private static AopSharedImages instance;
 	
@@ -48,6 +49,7 @@ public class AopSharedImages {
 		descriptors.put(IMG_NEW_BINDING, ImageDescriptor.createFromURL(pluginBundle.getEntry("/icons/newbinding.gif")));
 		descriptors.put(IMG_ADVICE, ImageDescriptor.createFromURL(pluginBundle.getEntry("/icons/advice.gif")));
 		descriptors.put(IMG_ADVICE_24, ImageDescriptor.createFromURL(pluginBundle.getEntry("/icons/advice24.gif")));
+		descriptors.put(IMG_TYPEDEF, ImageDescriptor.createFromURL(pluginBundle.getEntry("/icons/typedef.gif")));
 		
 		Iterator iter = descriptors.keySet().iterator();
 		while (iter.hasNext())

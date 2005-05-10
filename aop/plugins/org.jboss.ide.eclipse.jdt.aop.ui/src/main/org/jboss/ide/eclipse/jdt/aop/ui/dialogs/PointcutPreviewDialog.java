@@ -57,17 +57,17 @@ import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces.PointcutPreviewAssistComp
 public class PointcutPreviewDialog extends Dialog {
 
 	protected IJavaProject project;
-	protected Text pointcutText, nameText;
-	protected Label messageImage, messageLabel, nameErrorImage, nameErrorLabel, pointcutLabel, nameLabel;
-	protected TableViewer pointcutPreview;
+	protected Text expressionText, nameText;
+	protected Label messageImage, messageLabel, nameErrorImage, nameErrorLabel, expressionLabel, nameLabel;
+	protected TableViewer expressionPreview;
 	protected Button previewButton, wizardButton;
-	protected String pointcut, name;
+	protected String expressionString, name;
 	protected ArrayList advisable;
 	protected PointcutPreviewAssistComposite assistComposite;
 	protected Composite main, errorComposite, nameErrorComposite;
 	protected boolean named;
-	public static final int NAMED_POINTCUT = 0;
-	public static final int UNNAMED_POINTCUT = 1;
+	public static final int NAMED = 0;
+	public static final int UNNAMED = 1;
 	
 	protected boolean advanced;
 	
@@ -75,9 +75,9 @@ public class PointcutPreviewDialog extends Dialog {
 	
 	
 	// These are some booleans to determine if OK and PREVIEW should be enabled.
-	private boolean nameIsValid;
-	private boolean expressionCompiles;
-	private boolean successfulPreview;  // not in use?
+	protected boolean nameIsValid;
+	protected boolean expressionCompiles;
+	protected boolean successfulPreview;  // not in use?
 	
 	public static final int PREVIEW_ID = -3000;
 	public static final int WIZARD_ID = -3001;
@@ -86,9 +86,9 @@ public class PointcutPreviewDialog extends Dialog {
 			IJavaProject project, int named)
 	{
 		super(shell);
-		this.named = named == PointcutPreviewDialog.NAMED_POINTCUT ? true : false;
+		this.named = named == PointcutPreviewDialog.NAMED ? true : false;
 		this.project = project;
-		this.pointcut = pointcut;
+		this.expressionString = pointcut;
 		this.name = name;
 		this.advisable = new ArrayList();
 		this.advanced = true;
@@ -103,16 +103,20 @@ public class PointcutPreviewDialog extends Dialog {
 	
 	public String getExpression () 
 	{
-		return pointcut;
+		return expressionString;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
+	protected void addText() {
+		getShell().setText("Edit Pointcut...");
+		expressionLabel.setText("Pointcut:");
+	}
+	
 	protected Control createDialogArea (Composite parent)
 	{
-		getShell().setText("Edit Pointcut...");
 
 		GridData mainData = new GridData();
 		mainData.horizontalAlignment = GridData.FILL;
@@ -130,10 +134,10 @@ public class PointcutPreviewDialog extends Dialog {
 			nameErrorLabel = new Label(nameErrorComposite, SWT.NONE);
 		}
 
-		pointcutLabel = new Label(main, SWT.NONE);
-		pointcutText = new Text(main, SWT.BORDER);
+		expressionLabel = new Label(main, SWT.NONE);
+		expressionText = new Text(main, SWT.BORDER);
 
-		assistComposite = new PointcutPreviewAssistComposite(main, this); 
+		assistComposite = createOurAssistComposite(); 
 		previewProgress = new ProgressBar(main, SWT.SMOOTH);
 		errorComposite = new Composite(main, SWT.NONE);
 		messageImage = new Label(errorComposite, SWT.NONE);
@@ -142,9 +146,13 @@ public class PointcutPreviewDialog extends Dialog {
 		
 		setLayoutDatas();
 		addListeners();
-		
+		addText();
 		
 		return main;
+	}
+	
+	protected PointcutPreviewAssistComposite createOurAssistComposite() {
+		return new PointcutPreviewAssistComposite(main, this); 
 	}
 	
 	private void setLayoutDatas() {
@@ -153,9 +161,8 @@ public class PointcutPreviewDialog extends Dialog {
 		messageImage.setVisible(false);
 		messageLabel.setText("                                                             " + 
 				"                                                                        ");
-		pointcutLabel.setText("Pointcut:");
-		if (pointcut != null)
-			pointcutText.setText(pointcut);
+		if (expressionString != null)
+			expressionText.setText(expressionString);
 		if( name != null && name != "") {
 			nameText.setText(name);
 			nameText.setEnabled(false);
@@ -170,13 +177,13 @@ public class PointcutPreviewDialog extends Dialog {
 			pointcutLabelData.left = new FormAttachment(0,10);
 			pointcutLabelData.top = new FormAttachment(0,10);
 			pointcutLabelData.right = new FormAttachment(0,60);
-			pointcutLabel.setLayoutData(pointcutLabelData);
+			expressionLabel.setLayoutData(pointcutLabelData);
 			
 			FormData pointcutTextData = new FormData();
 			pointcutTextData.top = new FormAttachment(0, 5);
-			pointcutTextData.left = new FormAttachment(pointcutLabel, 10);
+			pointcutTextData.left = new FormAttachment(expressionLabel, 10);
 			pointcutTextData.right = new FormAttachment(100,-10);
-			pointcutText.setLayoutData(pointcutTextData);
+			expressionText.setLayoutData(pointcutTextData);
 		} else {
 			nameErrorImage.setVisible(false);
 			nameErrorLabel.setVisible(false);
@@ -200,7 +207,7 @@ public class PointcutPreviewDialog extends Dialog {
 			FormData nameErrorCompositeData = new FormData();
 			nameErrorCompositeData.left = new FormAttachment(nameText, 10);
 			nameErrorCompositeData.right = new FormAttachment(100,-10);
-			nameErrorCompositeData.bottom = new FormAttachment(pointcutText, -5);
+			nameErrorCompositeData.bottom = new FormAttachment(expressionText, -5);
 			nameErrorComposite.setLayoutData(nameErrorCompositeData);
 			
 			nameErrorComposite.setLayout(new FormLayout());
@@ -219,13 +226,13 @@ public class PointcutPreviewDialog extends Dialog {
 			pointcutLabelData.left = new FormAttachment(0,10);
 			pointcutLabelData.top = new FormAttachment(nameLabel,10);
 			pointcutLabelData.right = new FormAttachment(0,60);
-			pointcutLabel.setLayoutData(pointcutLabelData);
+			expressionLabel.setLayoutData(pointcutLabelData);
 			
 			FormData pointcutTextData = new FormData();
 			pointcutTextData.top = new FormAttachment(nameLabel, 5);
-			pointcutTextData.left = new FormAttachment(pointcutLabel, 10);
+			pointcutTextData.left = new FormAttachment(expressionLabel, 10);
 			pointcutTextData.right = new FormAttachment(100,-10);
-			pointcutText.setLayoutData(pointcutTextData);
+			expressionText.setLayoutData(pointcutTextData);
 
 		}
 
@@ -236,8 +243,8 @@ public class PointcutPreviewDialog extends Dialog {
 		// Everything else should be independent.
 		
 		FormData assistCompositeData = new FormData();
-		assistCompositeData.top = new FormAttachment(pointcutLabel, 10);
-		assistCompositeData.bottom = new FormAttachment(pointcutLabel, 12);
+		assistCompositeData.top = new FormAttachment(expressionLabel, 10);
+		assistCompositeData.bottom = new FormAttachment(expressionLabel, 12);
 		assistCompositeData.left = new FormAttachment(0, 5);
 		assistCompositeData.right = new FormAttachment( 100, -10);
 		assistComposite.setLayoutData(assistCompositeData);
@@ -270,23 +277,23 @@ public class PointcutPreviewDialog extends Dialog {
 		pointcutPreviewData.left = new FormAttachment(0,5);
 		pointcutPreviewData.top = new FormAttachment(errorComposite, 10);
 		pointcutPreviewData.right = new FormAttachment(100,-5);
-		pointcutPreview = new TableViewer(main, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-		pointcutPreview.getTable().setEnabled(false);
+		expressionPreview = new TableViewer(main, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		expressionPreview.getTable().setEnabled(false);
 
 		AdvisedLabelProvider provider = new AdvisedLabelProvider();
-		pointcutPreview.setLabelProvider(provider);
-		pointcutPreview.setContentProvider(provider);
-		pointcutPreview.getTable().setLayoutData(pointcutPreviewData);
-		pointcutPreview.setInput(advisable);
+		expressionPreview.setLabelProvider(provider);
+		expressionPreview.setContentProvider(provider);
+		expressionPreview.getTable().setLayoutData(pointcutPreviewData);
+		expressionPreview.setInput(advisable);
 	}
 
-	private void addListeners() {
-		pointcutText.addModifyListener(new ModifyListener () {
+	protected void addListeners() {
+		expressionText.addModifyListener(new ModifyListener () {
 			public void modifyText(ModifyEvent e) {
-				pointcut = pointcutText.getText();
-				String localName = named ? name : pointcut;
+				expressionString = expressionText.getText();
+				String localName = named ? name : expressionString;
 
-				if( pointcut == "" ) {
+				if( expressionString == "" ) {
 					expressionCompiles = false;
 					redrawButtons();
 					return;
@@ -294,14 +301,16 @@ public class PointcutPreviewDialog extends Dialog {
 
 				
 				try {
-					PointcutExpression expr = new PointcutExpression(localName, pointcut);
+					PointcutExpression expr = new PointcutExpression(localName, expressionString);
 					expressionCompiles = true;
 					redrawButtons();
+					clearError();
 				} catch( Throwable thr) {
 					// Most will be parse errors (simple exceptions.)
 					// Some will be a TokenMgrError.
 					expressionCompiles = false;
 					redrawButtons();
+					showError(thr);
 				}
 			}
 		});
@@ -324,7 +333,8 @@ public class PointcutPreviewDialog extends Dialog {
 		}
 
 	}
-	private void redrawButtons() {
+	
+	protected void redrawButtons() {
 		if( expressionCompiles == false || nameIsValid == false) {
 			getButton(IDialogConstants.OK_ID).setEnabled(false);
 			previewButton.setEnabled(false);
@@ -336,7 +346,7 @@ public class PointcutPreviewDialog extends Dialog {
 			getButton(IDialogConstants.OK_ID).setEnabled(true);
 			previewButton.setEnabled(true);
 		}
-		
+//		System.out.println("expression compiles: " + expressionCompiles + ", name is valid: " + nameIsValid);
 		
 	}
 	
@@ -346,6 +356,15 @@ public class PointcutPreviewDialog extends Dialog {
 		
 		previewButton = createButton(parent, PREVIEW_ID, "Preview >>", false);
 		previewButton.setText("Preview >>");
+		setButtonLayoutData(previewButton);
+		
+		wizardButton = createButton(parent, WIZARD_ID, "Wizard", false );
+		wizardButton.setText("Open Wizard");
+		setButtonLayoutData(wizardButton);
+		addSelectionListenersForButtonBar();
+	}
+	
+	protected void addSelectionListenersForButtonBar() {
 		previewButton.addSelectionListener(new SelectionListener () {
 			boolean on = false;
 			
@@ -357,11 +376,6 @@ public class PointcutPreviewDialog extends Dialog {
 				previewPressed();
 			}
 		});
-		setButtonLayoutData(previewButton);
-		
-		wizardButton = createButton(parent, WIZARD_ID, "Wizard", false );
-		wizardButton.setText("Open Wizard");
-		setButtonLayoutData(wizardButton);
 		wizardButton.addSelectionListener(new SelectionListener () {
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
@@ -371,8 +385,6 @@ public class PointcutPreviewDialog extends Dialog {
 				morePressed();
 			}
 		});
-	
-		
 	}
 	
 	protected void morePressed() {
@@ -381,11 +393,11 @@ public class PointcutPreviewDialog extends Dialog {
 		
 		
 		FormData assistCompositeData = new FormData();
-		assistCompositeData.top = new FormAttachment(pointcutLabel, 10);
+		assistCompositeData.top = new FormAttachment(expressionLabel, 10);
 		assistCompositeData.left = new FormAttachment(0, 5);
 		assistCompositeData.right = new FormAttachment( 100, -10);
 		if( closing ) {
-			assistCompositeData.bottom = new FormAttachment(pointcutLabel, 12);
+			assistCompositeData.bottom = new FormAttachment(expressionLabel, 12);
 			wizardButton.setText("Open Wizard");
 		} else {
 			wizardButton.setText("Close Wizard");
@@ -434,10 +446,12 @@ public class PointcutPreviewDialog extends Dialog {
 	{
 		try {
 			//clearError();
-			pointcut = pointcutText.getText();
+			expressionString = expressionText.getText();
 			
-			JDTPointcutExpression expression = new JDTPointcutExpression (new PointcutExpression(null, pointcut));
-			AopModel.instance().findAllAdvised(AopModel.instance().getRegisteredTypes(), expression, new PreviewCollector(), new NullProgressMonitor());
+			JDTPointcutExpression expression = new JDTPointcutExpression (new PointcutExpression(null, expressionString));
+			//AopModel.instance().findAllAdvised(AopModel.instance().getRegisteredTypes(), expression, new PreviewCollector(), new NullProgressMonitor());
+			AopModel.instance().findAllAdvised(AopModel.instance().getRegisteredTypesAsITypes(), 
+					expression, new PreviewCollector("pointcut"), new NullProgressMonitor());
 		} catch (ParseException e) {
 			showError(e);
 		} catch (RuntimeException e) {
@@ -481,6 +495,10 @@ public class PointcutPreviewDialog extends Dialog {
 		}
 	}
 	
+	protected void clearError() {
+		messageImage.setVisible(false);
+		messageLabel.setVisible(false);
+	}
 	
 	protected void showError( Throwable error ) {
 		messageImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK));
@@ -508,12 +526,17 @@ public class PointcutPreviewDialog extends Dialog {
 		previewProgress.setVisible(false);
 		
 		messageLabel.getParent().getParent().redraw();
-		pointcutPreview.setInput(advisable);
+		expressionPreview.setInput(advisable);
 		resizeMyself();
 	}
 	
 	protected class PreviewCollector extends AdvisedCollector
 	{
+		private String category;
+		
+		public PreviewCollector(String category) {
+			this.category = category;
+		}
 		
 		public void beginTask (String typeName, final int numberOfAdvised) {
 			Display.getDefault().asyncExec(new Runnable() {
@@ -548,8 +571,8 @@ public class PointcutPreviewDialog extends Dialog {
 		public void done () {
 			Display.getDefault().asyncExec(new Runnable() {
 				public void run() {
-					pointcutPreview.setInput(advisable);
-					showSuccess("Acceptable pointcut expression advising " + advisable.size() + " elements");
+					expressionPreview.setInput(advisable);
+					showSuccess("Acceptable " + category + " expression advising " + advisable.size() + " elements");
 				}
 			});
 		}
@@ -564,6 +587,6 @@ public class PointcutPreviewDialog extends Dialog {
 	}
 		
 	public void setPointcutText( String expression ) {
-		pointcutText.setText(expression);
+		expressionText.setText(expression);
 	}
 }

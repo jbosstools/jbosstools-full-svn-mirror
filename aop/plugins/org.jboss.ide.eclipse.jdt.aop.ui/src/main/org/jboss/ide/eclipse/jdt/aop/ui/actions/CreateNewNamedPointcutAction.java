@@ -29,7 +29,7 @@ public class CreateNewNamedPointcutAction extends Action {
 		PointcutPreviewDialog previewDialog = 
 			new PointcutPreviewDialog(null, "", shell, 
 				AopCorePlugin.getCurrentJavaProject(), 
-				PointcutPreviewDialog.NAMED_POINTCUT);
+				PointcutPreviewDialog.NAMED);
 		
 		int response = -1;
 		

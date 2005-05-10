@@ -29,7 +29,7 @@ public class ModifyNamedPointcutAction extends Action {
 		PointcutPreviewDialog previewDialog = 
 			new PointcutPreviewDialog(p.getName(), p.getExpr(), shell, 
 				AopCorePlugin.getCurrentJavaProject(), 
-				PointcutPreviewDialog.NAMED_POINTCUT);
+				PointcutPreviewDialog.NAMED);
 		
 		int response = -1;
 		

@@ -14,6 +14,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -37,12 +38,19 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
+import org.jboss.ide.eclipse.jdt.aop.core.util.JaxbAopUtil;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopUiPlugin;
 import org.jboss.ide.eclipse.jdt.aop.ui.actions.ApplyAdviceAction;
 import org.jboss.ide.eclipse.jdt.aop.ui.actions.ApplyInterceptorAction;
 import org.jboss.ide.eclipse.jdt.aop.ui.actions.CreateNewNamedPointcutAction;
+import org.jboss.ide.eclipse.jdt.aop.ui.actions.CreateNewNamedTypedefAction;
 import org.jboss.ide.eclipse.jdt.aop.ui.actions.ModifyNamedPointcutAction;
+import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.PointcutPreviewDialog;
+import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.TypedefPreviewDialog;
 import org.jboss.ide.eclipse.jdt.aop.ui.util.JumpToCodeUtil;
 import org.jboss.ide.eclipse.jdt.aop.ui.views.providers.AspectManagerContentProvider;
 import org.jboss.ide.eclipse.jdt.aop.ui.views.providers.AspectManagerLabelProvider;
@@ -61,10 +69,10 @@ public class AspectManagerView extends ViewPart {
     private ISelection currentSelection;
     private Action createAdviceAction, createAspectAction, createPointcutAction, 
     				goToAdviceAction, showAspectAction, showInterceptorAction, 
-    				applyAdviceAction, applyInterceptorsAction,
-    				createBindingAction, removeInterceptorAction, 
+    				applyAdviceAction, applyInterceptorsAction, removeTypedefAction,
+    				createBindingAction, createTypedefAction, removeInterceptorAction, 
     				removeAdviceAction, removeInterceptorRefAction, 
-    				removeBindingAction, removeNamedPointcutAction, 
+    				removeBindingAction, removeNamedPointcutAction, editTypedefAction,
     				goToAction, editBindingAction, editPointcutAction;
     
     public AspectManagerView ()
@@ -119,7 +127,26 @@ public class AspectManagerView extends ViewPart {
     	createPointcutAction.setToolTipText("Create a new named Pointcut.");
     	createPointcutAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_POINTCUT));
 
-    	editPointcutAction = new ModifyNamedPointcutAction(this, getSite().getShell());
+		
+		editPointcutAction = new Action() { 
+			public void run() {
+				Pointcut p = (Pointcut)getSelected();
+				PointcutPreviewDialog previewDialog = 
+					new PointcutPreviewDialog(p.getName(), p.getExpr(), getSite().getShell(), 
+						AopCorePlugin.getCurrentJavaProject(), 
+						PointcutPreviewDialog.NAMED);
+				
+				int response = -1;
+				
+				response = previewDialog.open();
+				if (response == Dialog.OK) {
+					p.setExpr(previewDialog.getExpression());
+					AopDescriptor descriptor = (AopDescriptor) getTreeViewer().getInput();
+					descriptor.save();
+				}
+			}
+
+		};
     	editPointcutAction.setText("Edit Pointcut");
     	editPointcutAction.setToolTipText("Edit this pointcut.");
     	editPointcutAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_POINTCUT));
@@ -165,7 +192,70 @@ public class AspectManagerView extends ViewPart {
     	createBindingAction.setToolTipText("Create Binding");
     	createBindingAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_NEW_BINDING));
     	
-    	editBindingAction = new Action () {
+		
+		createTypedefAction = new Action() { 
+			
+			public void run() {
+				TypedefPreviewDialog dialog = new TypedefPreviewDialog(getSite().getShell());
+				int response = dialog.open();
+				if( response == Dialog.OK) {
+					try {
+						JDTTypedefExpression expression = dialog.getTypedefExpression();
+						// TODO: We eventually wanna move this to a model function
+						AspectManager.instance().addTypedef(expression);
+						AopModel.instance();
+						AopDescriptor desc = AopCorePlugin.getDefault().getDefaultDescriptor(AopCorePlugin.getCurrentJavaProject());
+						Typedef jaxbTypeDef = JaxbAopUtil.instance().getFactory().createAOPTypeTypedef();
+						jaxbTypeDef.setExpr(expression.getExpr());
+						jaxbTypeDef.setName(expression.getName());
+						desc.getAop().getTopLevelElements().add(jaxbTypeDef);
+						desc.save();
+					} catch( Exception e ) {
+					}
+				}
+			}
+
+		};
+    	createTypedefAction = new CreateNewNamedTypedefAction(getTreeViewer(), getSite().getShell());
+    	createTypedefAction.setText("Create Typedef");
+    	createTypedefAction.setToolTipText("Create Typedef");
+    	createTypedefAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_TYPEDEF));
+
+		
+		
+		editTypedefAction = new Action() { 
+			
+			public void run() {
+				Typedef td = (Typedef)getSelected();
+				String name = td.getName();
+				
+				TypedefPreviewDialog dialog = new TypedefPreviewDialog(name, td.getExpr(),
+						getSite().getShell(), PointcutPreviewDialog.NAMED);
+				int response = dialog.open();
+				if( response == Dialog.OK) {
+					try {
+						JDTTypedefExpression expression = dialog.getTypedefExpression();
+						AopDescriptor desc = AopCorePlugin.getDefault().getDefaultDescriptor(AopCorePlugin.getCurrentJavaProject());
+
+						
+						td.setExpr(expression.getExpr());
+						AspectManager.instance().addTypedef(expression);
+						desc.save();
+					} catch( Exception e ) {
+					}
+				}
+			}
+
+		};
+    	editTypedefAction.setText("Edit Typedef");
+    	editTypedefAction.setToolTipText("Edit Typedef");
+    	editTypedefAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_TYPEDEF));
+
+		
+		
+		
+		
+		editBindingAction = new Action () {
     		public void run () {
     			EditBindingWizard wizard = new EditBindingWizard((Binding) getSelected(), (AopDescriptor) treeViewer.getInput());
     	    	WizardDialog dialog = new WizardDialog(getSite().getShell(), wizard);
@@ -200,6 +290,25 @@ public class AspectManagerView extends ViewPart {
     	removeInterceptorAction.setToolTipText("Remove this Interceptor");
     	removeInterceptorAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
     	
+		
+    	removeTypedefAction = new Action() {
+    		public void run() {
+    			AopDescriptor descriptor = (AopDescriptor) treeViewer.getInput();
+    			Typedef typedef = (Typedef) getSelected();
+
+    			if (AopUiPlugin.confirm("Are you sure you want to delete the typedef: \"" + typedef.getName() + "\" ?"))
+    			{
+    				descriptor.remove(typedef);
+					AspectManager.instance().removeTypedef(typedef.getName());
+    				descriptor.save();
+    			}
+    		}
+    	};
+    	removeTypedefAction.setText("Remove");
+		removeTypedefAction.setToolTipText("Remove this Typedef");
+		removeTypedefAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
+
+		
     	removeNamedPointcutAction = new Action() {
     		public void run() {
     			AopDescriptor descriptor = (AopDescriptor) treeViewer.getInput();
@@ -333,6 +442,10 @@ public class AspectManagerView extends ViewPart {
 					manager.add(editPointcutAction);
 					manager.add(new Separator());
 					manager.add(removeNamedPointcutAction);
+    			} else if( selected instanceof Typedef ) {
+					manager.add(editTypedefAction);
+					manager.add(new Separator());
+					manager.add(removeTypedefAction);
     			}
 				
 				/* 
@@ -347,6 +460,9 @@ public class AspectManagerView extends ViewPart {
 					}
     				else if( list.get(0) == AspectManagerContentProvider.POINTCUTS) {
 						manager.add(createPointcutAction);
+    				}
+    				else if( list.get(0) == AspectManagerContentProvider.TYPEDEFS) {
+						manager.add(createTypedefAction);
     				}
     			} 
     		}

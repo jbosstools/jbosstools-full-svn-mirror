@@ -125,6 +125,7 @@ public class JDTPointcutUtil {
 			
 			for (int i = 0; i < superTypes.length; i++)
 			{
+				if (superTypes[i] == type ) continue;
 				if (subtypeOf(superTypes[i], instanceOf)) return true;
 			}
 			if (type.isInterface()) return false;

@@ -1073,30 +1073,19 @@ public class AopModel implements IElementChangedListener
 		return (IJavaElement[]) registeredTypes.toArray(new IJavaElement[registeredTypes.size()]);
 	}
 	
-	/**
-	 * Finds all types in the supplied project that match the supplied pointcut expression,
-	 * and returns them as an array. This is a convienence method for methods wanting to only pass in 1 element.
-	 * 
-	 * @param project The project to search for all advised types in.
-	 * @param expression The pointcut expression to match
-	 * @return
-	 */
+	public IType[] getRegisteredTypesAsITypes() 
+	{
+		return (IType[])registeredTypes.toArray(new IType[registeredTypes.size()]);
+	}
+	
 	public void findAllAdvised (IJavaElement element, JDTPointcutExpression expression, IAdvisedCollector collector, IProgressMonitor monitor)
 		throws RuntimeException
 	{
 		findAllAdvised(new IJavaElement[]{element}, expression, collector, monitor);
 	}
 	
-	/**
-	 * Finds all types in the supplied project that match the supplied pointcut expression,
-	 * and returns them as an array.
-	 * 
-	 * @param project The project to search for all advised types in.
-	 * @param expression The pointcut expression to match
-	 * @return
-	 */
 	public void findAllAdvised (final IJavaElement elements[], final JDTPointcutExpression expression, final IAdvisedCollector collector, final IProgressMonitor monitor)
-		throws RuntimeException
+	throws RuntimeException
 	{
 		new Thread (new Runnable() {
 			public void run () {
@@ -1121,6 +1110,41 @@ public class AopModel implements IElementChangedListener
 			}
 		}).start();
 	}
+
+	
+	
+	/**
+	 * Much simpler implementation that requires types to begin with.
+	 * 
+	 * @param types       An array of types to check
+	 * @param expression  A pointcut expression to match against
+	 * @param collector   A collector of types
+	 * @param monitor     Something to keep time, of course
+	 * @throws RuntimeException
+	 */
+	public void findAllAdvised (final IType types[], final JDTPointcutExpression expression, final IAdvisedCollector collector, final IProgressMonitor monitor)
+	throws RuntimeException
+	{
+		new Thread (new Runnable() {
+			public void run () {
+				AdvisedSearchRequestor requestor = new AdvisedSearchRequestor(expression, collector);
+				try {
+					requestor.start(types.length);
+					for( int i = 0; i < types.length; i++ ) {
+						requestor.acceptType(types[i]);
+					}
+					requestor.finished();
+				} catch (Exception e) {
+					requestor.handleException(e);
+				}
+			}
+		}).start();
+	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * This method is used when elementChanged's delta's element is not directly
