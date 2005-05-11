@@ -520,8 +520,8 @@ public class PointcutPreviewDialog extends Dialog {
 		messageImage.setVisible(true);
 		messageLabel.setVisible(true);
 		
-		messageLabel.setText(message);
-		messageLabel.setToolTipText(message);
+		messageLabel.setText(message != null ? message : "");
+		messageLabel.setToolTipText(message != null ? message : "");
 		getButton(OK).setEnabled(success);
 		previewProgress.setVisible(false);
 		
