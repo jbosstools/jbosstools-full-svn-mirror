@@ -145,6 +145,9 @@ public class AopJavaEditor extends CompilationUnitEditor implements IAopModelCha
 			{
 				IAopAdvice advice = (IAopAdvice) advisor;
 				IMethod method = advice.getAdvisingMethod();
+				if( method.getCompilationUnit() == null ) 
+					return;
+				
 				
 				if (method.getCompilationUnit().equals(getInputJavaElement()))
 				{
