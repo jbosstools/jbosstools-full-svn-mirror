@@ -33,6 +33,8 @@ import org.eclipse.jdt.internal.core.JavaElementDelta;
 import org.eclipse.jdt.internal.corext.util.AllTypesCache;
 import org.eclipse.jdt.internal.corext.util.TypeInfo;
 import org.jboss.aop.AspectManager;
+import org.jboss.aop.advice.AspectDefinition;
+import org.jboss.aop.advice.Scope;
 import org.jboss.aop.pointcut.PointcutExpression;
 import org.jboss.aop.pointcut.TypedefExpression;
 import org.jboss.aop.pointcut.ast.ParseException;
@@ -845,6 +847,15 @@ public class AopModel implements IElementChangedListener
 		{
 			Aspect aspect = (Aspect) iter.next();
 			advisors.addAspect(aspect.getClazz());
+			String scope = aspect.getScope();
+			Scope sScope = AopModel.getScopeFromString(aspect.getScope());
+			
+			AspectDefinition def = new AspectDefinition(aspect.getClazz(), sScope, null);
+			try {
+				AspectManager.instance().addAspectDefinition(def);
+			} catch( Exception e ) {
+				
+			}
 		}
 		
 		monitor.worked(1);
@@ -1518,4 +1529,27 @@ public class AopModel implements IElementChangedListener
 			}
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * Simple utility functions that are used but not part of the model.
+	 */
+	
+	public static Scope getScopeFromString( String s ) {
+		if( s == "PER_VM" ) return Scope.PER_VM;
+		if( s == "PER_CLASS" ) return Scope.PER_CLASS;
+		if( s == "PER_CLASS_JOINPOINT") return Scope.PER_CLASS_JOINPOINT;
+		if( s == "PER_INSTANCE") return Scope.PER_INSTANCE;
+		if( s == "PER_JOINPOINT") return Scope.PER_JOINPOINT;
+		return null;
+	}
+	
 }
