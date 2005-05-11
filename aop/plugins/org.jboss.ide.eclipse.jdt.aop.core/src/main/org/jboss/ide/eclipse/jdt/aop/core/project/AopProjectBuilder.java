@@ -12,6 +12,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.util.Iterator;
 import java.util.Map;
 
 import javassist.bytecode.ClassFile;
@@ -27,8 +30,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.internal.ui.wizards.JavaProjectWizard;
 import org.jboss.aop.AspectManager;
+import org.jboss.aop.Deployment;
+import org.jboss.aop.advice.AspectDefinition;
 import org.jboss.aop.annotation.compiler.ByteCodeAnnotationCompiler;
 import org.jboss.aop.standalone.Compiler;
 import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
@@ -70,10 +74,72 @@ public class AopProjectBuilder extends IncrementalProjectBuilder {
 	
 	private static class CustomAspectManager extends AspectManager
 	{
-			public static void  cleanInstance ()
-			{
-				manager = null;
+		private static AspectManager myOldManager;
+		private static boolean saveOldManagerData;
+		
+		/*
+		 * Essentially steal the entire constructor of the original...
+		 */
+		   public static synchronized AspectManager instance()
+		   {
+		      if (manager != null) return manager;
+		      AccessController.doPrivileged(new PrivilegedAction()
+		      {
+		         public Object run()
+		         {
+		            String optimized = System.getProperty("jboss.aop.optimized", null);
+		            if (optimized != null)
+		            {
+		               optimize = (new Boolean(optimized)).booleanValue();
+		            }
+					
+					// Make sure we're returning one of our own.
+		            manager = new CustomAspectManager();
+					
+					// Then fill it with important info from the last instance.
+					((CustomAspectManager)manager).saveOurOldManagerData();
+
+		            if (!verbose)
+		            {
+		               verbose = (new Boolean(System.getProperty("jboss.aop.verbose", "false"))).booleanValue();
+		            }
+		            Deployment.deploy();
+		            return null;
+		         }
+		      });
+		      return manager;
+		   }
+
+		/**
+		 * This method is here to restore things that, for some reason,
+		 * are not filled in to the new manager by the xml file alone. 
+		 *
+		 */
+		protected void saveOurOldManagerData() {
+			Map aspectMap = myOldManager.getAspectDefinitions();
+			Iterator i = aspectMap.keySet().iterator();
+			String key;
+			AspectDefinition def;
+			while(i.hasNext()) {
+				// String -> AspectDefinition
+				key = (String)i.next();
+				def = (AspectDefinition)aspectMap.get(key);
+				System.out.println("Adding " + def.getName() + " to new manager");
+				try {
+					addAspectDefinition(def);
+				} catch( Exception e) {
+					System.out.println("[builder - saveOurOldManagerData] " + e.getMessage());
+				}
 			}
+			
+		}
+				
+		public static void  cleanInstance ()
+		{
+			myOldManager = manager;
+			manager = null;
+			saveOldManagerData = true;
+		}
 	}
 	
 	private class OptimizedClassVisitor
