@@ -45,7 +45,7 @@ import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.PointcutPreviewDialog2;
  */
 public class PointcutPreviewAssistComposite extends Composite {
 	/* The various pointcut expressions */
-	public static final String NAMED_POINTCUT = "Some Named Pointcut";
+	public static final String NAMED_POINTCUT = "Named Pointcut";
 	public static final String EXECUTION_METHOD = "execution(method)";
 	public static final String EXECUTION_CONSTRUCTOR = "execution(constructor)";
 	public static final String GET_FIELD = "get(field)";
