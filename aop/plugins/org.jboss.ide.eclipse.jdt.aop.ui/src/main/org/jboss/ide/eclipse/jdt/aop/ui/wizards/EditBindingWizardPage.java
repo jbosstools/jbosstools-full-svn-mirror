@@ -414,6 +414,8 @@ public class EditBindingWizardPage extends WizardPage {
 		if( response == Dialog.OK && dialog.getPointcut() != null ) {
 			Pointcut pointcut = dialog.getPointcut();
 			pointcutText.setText(pointcut.getName());
+			addInterceptorButton.setEnabled(pointcutText.getText() != null && pointcutText.getText().length() > 0);
+			addAdviceButton.setEnabled(pointcutText.getText() != null && pointcutText.getText().length() > 0);
 			if (binding == null)
 			{
 				binding = descriptor.findBinding(pointcut.getName());
