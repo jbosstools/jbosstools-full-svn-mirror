@@ -9,9 +9,7 @@ package org.jboss.ide.eclipse.jdt.aop.core.model.internal;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.eclipse.jdt.core.IField;
 import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.IMethod;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
