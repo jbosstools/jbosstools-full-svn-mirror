@@ -7,6 +7,8 @@
 package org.jboss.ide.eclipse.jdt.aop.core;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,13 +23,23 @@ import org.jboss.aop.advice.AspectDefinition;
 import org.jboss.aop.advice.Scope;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AOPType;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Annotation;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AnnotationIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aop;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aspect;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.CFlowStack;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.DynamicCFlow;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.MetaDataLoader;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.PluggablePointcut;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Stack;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AOPType.Metadata;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AOPType.Prepare;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
 import org.jboss.ide.eclipse.jdt.aop.core.util.JaxbAopUtil;
@@ -402,6 +414,7 @@ public class AopDescriptor {
 	public void save ()
 	{
 		this.dirty = false;
+		sortAop();
 		JaxbAopUtil.instance().marshal(aop, file);
 		
 		try {
@@ -412,6 +425,35 @@ public class AopDescriptor {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void sortAop() {
+		List elements = getAop().getTopLevelElements();
+		Collections.sort(elements, new Comparator() {
+			
+			public int compare(Object arg0, Object arg1) {
+				return getIntVal(arg0) - getIntVal(arg1);
+			} 
+			
+			private int getIntVal(Object arg) {
+				if( arg instanceof Typedef ) return 0;
+				if( arg instanceof Pointcut ) return 1;
+				if( arg instanceof Interceptor ) return 2;
+				if( arg instanceof Aspect ) return 3;
+				if( arg instanceof Binding ) return 4;
+				if( arg instanceof Introduction ) return 5;
+				if( arg instanceof MetaDataLoader) return 6;
+				if( arg instanceof Metadata ) return 7;
+				if( arg instanceof Stack ) return 8;
+				if( arg instanceof PluggablePointcut ) return 9;
+				if( arg instanceof Prepare ) return 10;
+				if( arg instanceof CFlowStack ) return 11;
+				if( arg instanceof DynamicCFlow ) return 12;
+				if( arg instanceof AnnotationIntroduction ) return 13;
+				if( arg instanceof Annotation ) return 14;
+				return -1;
+			}
+		});
 	}
 
 }
