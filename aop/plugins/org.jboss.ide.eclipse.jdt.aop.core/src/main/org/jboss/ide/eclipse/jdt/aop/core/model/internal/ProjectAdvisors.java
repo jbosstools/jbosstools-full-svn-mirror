@@ -80,7 +80,7 @@ public class ProjectAdvisors {
 	public IAopInterceptor addInterceptor (String fqClassName, String name)
 	{
 		try {
-			
+			if( name == null || name == "") name = fqClassName;
 			AopInterceptor interceptor = new AopInterceptor (project, fqClassName, name);
 			interceptors.add(interceptor);
 			
