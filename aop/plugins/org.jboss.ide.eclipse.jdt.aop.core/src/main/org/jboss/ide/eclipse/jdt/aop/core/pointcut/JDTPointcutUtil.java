@@ -141,6 +141,9 @@ public class JDTPointcutUtil {
 		String original = classExpr.getOriginal();
 		String typedefName = original.substring("$typedef{".length(), original.lastIndexOf("}"));
 		Typedef typedef = AspectManager.instance().getTypedef(typedefName);
+		
+		if( typedef == null ) return false;
+		
 		try {
 			return new JDTTypedefExpression(typedef).matches(type);
 		} catch (ParseException e) {
