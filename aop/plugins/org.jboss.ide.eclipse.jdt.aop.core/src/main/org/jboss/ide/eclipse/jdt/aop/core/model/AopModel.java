@@ -283,7 +283,8 @@ public class AopModel implements IElementChangedListener
 			JDTPointcutExpression expressions[] = getProjectPointcuts(type.getJavaProject());
 			for (int i = 0; i < expressions.length; i++)
 			{
-				findAllAdvised(type, expressions[i], expressions[i].getCollector(), new NullProgressMonitor());
+				IType typeArray[] = new IType[]{type};
+				findAllAdvised(typeArray, expressions[i], expressions[i].getCollector(), new NullProgressMonitor());
 			}
 			
 			registeredTypes.add(type);
@@ -816,6 +817,12 @@ public class AopModel implements IElementChangedListener
 		AopDescriptor descriptor = AopCorePlugin.getDefault().getDefaultDescriptor(project);
 		Aop aop = descriptor.getAop();
 		
+		
+		/**
+		 * Start with the typedefs, because if you start with pointcuts or 
+		 * bindings, they'll crap the bed if they find a typedef they don't 
+		 * understand.
+		 */
 		for (Iterator iter = AopModelUtils.getTypedefsFromAop(aop).iterator(); iter.hasNext(); )
 		{
 			Typedef jaxbTypedef = (Typedef) iter.next();
@@ -974,10 +981,10 @@ public class AopModel implements IElementChangedListener
 				collector.addAdvisor(aopInterceptor);
 			}
 
-			IJavaElement elements[] = (IJavaElement[]) registeredTypes.toArray(new IJavaElement[registeredTypes.size()]);
-			
-			if (elements.length > 0)
-				findAllAdvised (elements, expression, collector, monitor);
+			//IJavaElement elements[] = (IJavaElement[]) registeredTypes.toArray(new IJavaElement[registeredTypes.size()]);
+			IType typeArray[] = (IType[]) registeredTypes.toArray(new IType[registeredTypes.size()]);
+			if (typeArray.length > 0)
+				findAllAdvised (typeArray, expression, collector, monitor);
 			
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -1095,6 +1102,17 @@ public class AopModel implements IElementChangedListener
 		findAllAdvised(new IJavaElement[]{element}, expression, collector, monitor);
 	}
 	
+	
+	/**
+	 * This method will be deprecated or used scarcely in the future. 
+	 * It is a long-running very slow implementation.
+	 * 
+	 * @param elements
+	 * @param expression
+	 * @param collector
+	 * @param monitor
+	 * @throws RuntimeException
+	 */
 	public void findAllAdvised (final IJavaElement elements[], final JDTPointcutExpression expression, final IAdvisedCollector collector, final IProgressMonitor monitor)
 	throws RuntimeException
 	{
