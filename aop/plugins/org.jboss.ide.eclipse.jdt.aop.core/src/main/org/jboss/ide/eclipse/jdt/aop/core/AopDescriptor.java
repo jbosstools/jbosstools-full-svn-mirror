@@ -15,7 +15,9 @@ import javax.xml.bind.JAXBException;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.jboss.aop.AspectManager;
 import org.jboss.aop.AspectXmlLoader;
+import org.jboss.aop.advice.AspectDefinition;
 import org.jboss.aop.advice.Scope;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AOPType;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
@@ -26,6 +28,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
 import org.jboss.ide.eclipse.jdt.aop.core.util.JaxbAopUtil;
 
@@ -175,6 +178,15 @@ public class AopDescriptor {
 			aspect.setScope(scope);
 			getAop().getTopLevelElements().add(aspect);
 			
+			// add it to the underlying model as well.
+			Scope sScope = AopModel.getScopeFromString(aspect.getScope());
+			
+			AspectDefinition def = new AspectDefinition(aspect.getClazz(), sScope, null);
+			try {
+				AspectManager.instance().addAspectDefinition(def);
+			} catch( Exception e ) {
+				
+			}
 			return aspect;
 		} catch (JAXBException e) {
 			e.printStackTrace();
