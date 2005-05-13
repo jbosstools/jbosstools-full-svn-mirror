@@ -22,6 +22,9 @@ import org.eclipse.jdt.internal.core.JavaElementDelta;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
 
+/**
+ * @author Rob Stryker
+ */
 public class AopModelElementChangedListener implements IElementChangedListener {
 	
 	public AopModelElementChangedListener() {
