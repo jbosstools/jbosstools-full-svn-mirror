@@ -104,15 +104,8 @@ public class TypedefPreviewDialog extends PointcutPreviewDialog {
 	
 	protected void previewPressed() {
 		IType[] types = AopModel.instance().getRegisteredTypesAsITypes();
-		
 		PreviewCollector collector = new PreviewCollector("typedef");
-		collector.beginTask("Collecting matching types", types.length);
-		for( int i = 0; i < types.length; i++ ) {
-			if( tdExpr.matches(types[i])) {
-				collector.collectAdvised(new AopAdvised(IAopAdvised.TYPE_CLASS, types[i]));
-			}
-		}
-		collector.done();
+		AopModel.instance().findAllAdvised(types, tdExpr, collector);
 	}
 
 
