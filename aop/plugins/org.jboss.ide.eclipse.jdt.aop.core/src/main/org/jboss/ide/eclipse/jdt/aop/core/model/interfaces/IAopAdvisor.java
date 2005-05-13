@@ -14,6 +14,7 @@ public interface IAopAdvisor extends IAdaptable {
 
 	public static final int ADVICE = 0;
 	public static final int INTERCEPTOR = 1;
+	public static final int TYPEDEF = 2;
 	
 	public IJavaElement getAdvisingElement();
 	
