@@ -170,9 +170,13 @@ public class PointcutPreviewTypeCompletionProcessor extends CUPositionCompletion
 			
 			// Prevent truncation from java.lang.String to String
 			String completion = String.valueOf(proposal.getCompletion());
-			String proposalPackage = String.valueOf(proposal.getDeclarationSignature());
-			if( !completion.startsWith(proposalPackage)) {
-				proposal.setCompletion((proposalPackage + "." + completion).toCharArray());
+			
+			char[] propSig = proposal.getDeclarationSignature();
+			if( propSig != null && propSig.length != 0 ) {
+				String proposalPackage = String.valueOf(proposal.getDeclarationSignature());
+				if( !completion.startsWith(proposalPackage)) {
+					proposal.setCompletion((proposalPackage + "." + completion).toCharArray());
+				}
 			}
 			
 			
