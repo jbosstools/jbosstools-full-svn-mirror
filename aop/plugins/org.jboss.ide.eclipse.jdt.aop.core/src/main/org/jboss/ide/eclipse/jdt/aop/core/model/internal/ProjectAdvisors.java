@@ -4,6 +4,7 @@
 package org.jboss.ide.eclipse.jdt.aop.core.model.internal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -15,6 +16,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvice;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAspect;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 
 /**
  * @author Marshall
@@ -23,12 +25,14 @@ public class ProjectAdvisors {
 
 	private Hashtable aspects;
 	private ArrayList interceptors;
+	private Hashtable typedefs;
 	private IJavaProject project;
 	
 	public ProjectAdvisors (IJavaProject project)
 	{
 		this.project = project;
 		aspects = new Hashtable();
+		typedefs = new Hashtable();
 		interceptors = new ArrayList();
 	}
 	
@@ -178,4 +182,27 @@ public class ProjectAdvisors {
 	{
 		return (IAopInterceptor[]) interceptors.toArray(new IAopInterceptor[interceptors.size()]);
 	}
+	
+	
+	
+	/*
+	 * Again, pushing the limits of what is an advisor, but for the sake
+	 * of using classes that are already here and not overflowing the product:
+	 */
+	
+	public AopTypedef addTypedef(JDTTypedefExpression expression ) {
+		AopTypedef def = new AopTypedef(expression);
+		typedefs.put(expression.getName(), def);
+		return def;
+	}
+	
+	public void removeTypedef(JDTTypedefExpression expression ) {
+		typedefs.remove(expression.getName());
+	}
+	
+	public AopTypedef[] getTypedefs ()
+	{
+		return (AopTypedef[]) typedefs.values().toArray(new AopTypedef[typedefs.size()]);
+	}
+
 }
