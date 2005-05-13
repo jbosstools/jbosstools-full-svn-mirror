@@ -58,6 +58,36 @@ public class TypedefPreviewDialog extends PointcutPreviewDialog {
 		if( this.named ) {
 			nameText.addModifyListener(new ModifyListener () {
 			public void modifyText(ModifyEvent e) {
+				nameActions();
+				recompileAction();
+				redrawButtons();
+			}
+			
+			private void recompileAction() {
+				expressionString = expressionText.getText();
+				String localName = named ? name : expressionString;
+
+				if( expressionString == "" ) {
+					expressionCompiles = false;
+					redrawButtons();
+					return;
+				}
+
+				
+				try {
+					tdExpr = new JDTTypedefExpression( new TypedefExpression(localName, expressionString ) );
+					expressionCompiles = true;
+					redrawButtons();
+					clearError();
+				} catch( Throwable thr) {
+					// Most will be parse errors (simple exceptions.)
+					// Some will be a TokenMgrError.
+					expressionCompiles = false;
+					showError(thr);
+				}
+			}
+
+			private void nameActions() {
 				name = nameText.getText();
 				Typedef typedef = AspectManager.instance().getTypedef(name);
 				nameErrorImage.setVisible(typedef != null);
@@ -65,7 +95,6 @@ public class TypedefPreviewDialog extends PointcutPreviewDialog {
 				nameErrorComposite.redraw();
 	
 				nameIsValid = !(typedef != null || name == "" );
-				redrawButtons();
 			}
 		});
 		}
@@ -103,6 +132,7 @@ public class TypedefPreviewDialog extends PointcutPreviewDialog {
 	}
 	
 	protected void previewPressed() {
+		if( tdExpr == null ) return;
 		IType[] types = AopModel.instance().getRegisteredTypesAsITypes();
 		PreviewCollector collector = new PreviewCollector("typedef");
 		AopModel.instance().findAllAdvised(types, tdExpr, collector);
