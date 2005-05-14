@@ -239,6 +239,11 @@ public class AopUiPlugin extends AbstractUIPlugin
 			IField field = (IField) element;
 			elementRange = field.getNameRange();
 		}
+		else if( element instanceof IType ) 
+		{
+			IType type = (IType) element;
+			elementRange = type.getNameRange();
+		}
 		else if (element instanceof ISourceReference)
 		{
 			ISourceReference ref = (ISourceReference) element;

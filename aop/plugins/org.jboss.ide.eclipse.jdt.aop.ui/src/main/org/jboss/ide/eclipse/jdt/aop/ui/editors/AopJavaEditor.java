@@ -269,15 +269,23 @@ public class AopJavaEditor extends CompilationUnitEditor implements IAopModelCha
 		HashMap attributes = new HashMap();
 		
 		try {		
-			ISourceRange elementRange = AopUiPlugin.getDefault().getSourceRange(element);
-			
+//			ISourceRange elementRange = AopUiPlugin.getDefault().getSourceRange(element);
+
+			ISourceRange elementRange = ((IMember)element).getNameRange();
 			if (elementRange != null)
 			{
 				int offset = elementRange.getOffset();
 				int length = elementRange.getLength();
 				int end = 0;
+				end = offset + length;
 				
-				if (element instanceof IMember)
+				/*
+				
+				if( element instanceof IType ) {
+					ISourceRange range = ((IType)element).getNameRange();
+					end = range.getOffset() + range.getLength();
+				} 
+				else if (element instanceof IMember)
 				{
 					ISourceRange range = ((IMember)element).getSourceRange();
 					end = range.getOffset() + range.getLength();
@@ -286,7 +294,8 @@ public class AopJavaEditor extends CompilationUnitEditor implements IAopModelCha
 				{
 					end = offset + length;
 				}
-
+				*/
+				
 				MarkerUtilities.setCharStart(attributes, offset);
 				MarkerUtilities.setCharEnd(attributes, end);
 			}

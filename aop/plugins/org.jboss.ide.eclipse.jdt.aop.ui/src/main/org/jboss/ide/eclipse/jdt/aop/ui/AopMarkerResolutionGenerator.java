@@ -189,7 +189,12 @@ public class AopMarkerResolutionGenerator implements IMarkerResolutionGenerator
 		}
 		
 		public String getDescription() {
-			return getLabel();
+			String s = "";
+			s += "This class fits the specifications of the typedef named " + expression.getName()
+			 + ". The expression is: <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       " + expression.getExpr() + "\n\n";
+			
+			
+			return s;
 		}
 
 		public void run(IMarker marker) {
