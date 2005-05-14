@@ -344,12 +344,14 @@ public class AopModel {
 		return (IAopAdvised[]) advised.toArray(new IAopAdvised[advised.size()]);
 	}
 	
+	
 	public IAopAdvisor[] getElementAdvisors (IJavaElement element)
 	{
 		ArrayList advisors = new ArrayList();
 		
 		IAopAspect aspects[] = getProjectAdvisors(element.getJavaProject()).getAspects();
 		IAopInterceptor interceptors[] = getProjectAdvisors(element.getJavaProject()).getInterceptors();
+		AopTypedef typedefs[] = getProjectAdvisors(element.getJavaProject()).getTypedefs();
 		
 		for (int i = 0; i < aspects.length; i++)
 		{
@@ -368,6 +370,12 @@ public class AopModel {
 			if (interceptors[i].advises(element))
 			{
 				advisors.add(interceptors[i]);
+			}
+		}
+		
+		for( int i = 0; i < typedefs.length; i++ ) {
+			if( typedefs[i].advises(element)) {
+				advisors.add(typedefs[i]);
 			}
 		}
 		
@@ -401,6 +409,7 @@ public class AopModel {
 		
 		return null;
 	}
+	
 	
 	protected void fireAdvisorAdded (IAopAdvised advised, IAopAdvisor advisor)
 	{
