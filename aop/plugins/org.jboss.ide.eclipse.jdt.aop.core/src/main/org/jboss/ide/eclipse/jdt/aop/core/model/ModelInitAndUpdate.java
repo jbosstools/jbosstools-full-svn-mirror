@@ -1,7 +1,9 @@
 package org.jboss.ide.eclipse.jdt.aop.core.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -32,6 +34,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAspect;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopTypedef;
 import org.jboss.ide.eclipse.jdt.aop.core.model.internal.ProjectAdvisors;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
@@ -110,6 +113,18 @@ public class ModelInitAndUpdate {
 		{
 			ICompilationUnit unit = (ICompilationUnit) element;
 			sourceTypes.add(unit.findPrimaryType());
+
+			// TODO: fix? This may break it
+			
+			try {
+				IType[] types = unit.getAllTypes();
+				for(  int i = 0; i < types.length; i++ ) {
+					sourceTypes.add(types[i]);
+				}
+			} catch( JavaModelException jme ) {
+			}
+			// end possible break
+			
 		}
 		else if (element instanceof IPackageFragment)
 		{
@@ -213,6 +228,17 @@ public class ModelInitAndUpdate {
 	}
 	
 	
+	
+	
+	/*
+	 * 
+	 * BEGINNING UPDATE
+	 * 
+	 * 
+	 */
+	
+	
+	
 	/**
 	 * Update the internal AOP Model of the given project.
 	 * This will still take time to execute, but nowhere near as long as initializing the model.
@@ -236,21 +262,8 @@ public class ModelInitAndUpdate {
 		
 		Aop aop = descriptor.getAop();
 
-		// Init the typedefs
-		AspectManager.instance().getTypedefs().clear();
-		for (Iterator iter = AopModelUtils.getTypedefsFromAop(aop).iterator(); iter.hasNext(); )
-		{
-			Typedef jaxbTypedef = (Typedef) iter.next();
-			try {
-				TypedefExpression typedefExpression = new TypedefExpression(jaxbTypedef.getName(), jaxbTypedef.getExpr());
-				AspectManager.instance().addTypedef(new JDTTypedefExpression( typedefExpression ));
-			} catch( Exception typedefExec ) {
-				
-			}
-		}
+		updateTypedefs(aop, project, monitor);
 
-		
-		
 		
 		// Rather than completely re-creating the entire internal model, we'll try to be "smart" about changed pointcuts,
 		// and added/removed advisors
@@ -608,4 +621,116 @@ public class ModelInitAndUpdate {
 	}
 
 
+	private class PojoTypedef {
+		private String name;
+		private String expr;
+		public PojoTypedef(String name, String expr) {
+			this.name = name;
+			this.expr = expr;
+		}
+		public String getName() { return name; }
+		public String getExpr() { return expr; }
+	}
+	
+	private void updateTypedefs(Aop aop, IJavaProject project, IProgressMonitor monitor) {
+		ArrayList deleted,added;
+		deleted = new ArrayList();
+		added = new ArrayList();
+		
+		HashMap jaxbMap = new HashMap();
+		HashMap jdtMap = new HashMap();
+
+		
+		// Load the map of the new stuff
+		List typedefList = AopModelUtils.getTypedefsFromAop(aop);
+		for(Iterator i = typedefList.iterator();i.hasNext();){
+			Typedef d = (Typedef)i.next();
+			jaxbMap.put(d.getName(), d);
+		}
+		
+		/*
+		// Load the map of the old stuff (from aspectmanager)
+		Iterator j = AspectManager.instance().getTypedefs().keySet().iterator();
+		while(j.hasNext()) {
+			String key = (String)j.next();
+			jdtMap.put(key, AspectManager.instance().getTypedef(key));
+		}
+		*/
+		
+		/* Do it from the projectAdvisors instead. */
+		ProjectAdvisors advisors = AopModel.instance().getProjectAdvisors(project);
+		AopTypedef[] aopTypedefs = advisors.getTypedefs();
+		for( int i = 0; i < aopTypedefs.length; i++ ) {
+			JDTTypedefExpression jdtExpr = aopTypedefs[i].getTypedef();
+			jdtMap.put(jdtExpr.getName(), jdtExpr);
+		}
+		
+		
+		// Both maps are loaded. Now we'll go through both and see what we find.
+		Iterator jaxbKeyIterator = jaxbMap.keySet().iterator();
+		while(jaxbKeyIterator.hasNext()) {
+			String key = (String)jaxbKeyIterator.next();
+			Typedef jaxbTypedef = (Typedef)jaxbMap.get(key);
+			JDTTypedefExpression jdtTypedef = (JDTTypedefExpression)jdtMap.get(key);
+
+			jaxbKeyIterator.remove();
+
+			if( jdtTypedef == null ) {
+				// this jaxb one is new.
+				try {
+					JDTTypedefExpression newTypedef = new JDTTypedefExpression(
+							new TypedefExpression(jaxbTypedef.getName(), jaxbTypedef.getExpr()));
+					
+					added.add(newTypedef);
+				} catch( Exception e ) {					
+				}
+			} else {
+				// the key is present in both. But do the expressions match?
+				if( jdtTypedef.getExpr().equals(jaxbTypedef.getExpr())) {
+					// they match. Remove them from both maps.
+					jdtMap.remove(key);
+				} else {
+					// They do NOT match. jaxb is added, jdt is removed.
+					try {
+						JDTTypedefExpression newTypedef = new JDTTypedefExpression(
+								new TypedefExpression(jaxbTypedef.getName(), jaxbTypedef.getExpr()));
+	
+						added.add(newTypedef);
+						deleted.add(jdtTypedef);
+						
+						jdtMap.remove(key);
+					} catch( Exception e ) {
+						System.out.println("DEAD");
+					}
+				}
+			}
+			
+		}
+		
+		
+		// Whatever's left has been removed.
+		Iterator i = jdtMap.keySet().iterator();
+		while(i.hasNext()) {
+			String key = (String)i.next();
+			JDTTypedefExpression del = (JDTTypedefExpression)jdtMap.get(key);
+			deleted.add(del);
+		}
+		
+		// Tell the model to fire the actions
+		Iterator deletedIter = deleted.iterator();
+		while(deletedIter.hasNext()) {
+			JDTTypedefExpression del = (JDTTypedefExpression)deletedIter.next();
+			AopModel.instance().removeTypedef(project, del);
+		}
+		
+		Iterator addedIter = added.iterator();
+		while(addedIter.hasNext()) {
+//			Typedef def = (Typedef)addedIter.next();
+//			JDTTypedefExpression add = new JDTTypedefExpression(new TypedefExpression(def.getName(), def.getExpr()));
+			JDTTypedefExpression add = (JDTTypedefExpression)addedIter.next();
+			AopModel.instance().addNewTypedef(project,add);
+		}
+
+	}
+	
 }
