@@ -299,7 +299,6 @@ public class AspectManagerView extends ViewPart {
     			if (AopUiPlugin.confirm("Are you sure you want to delete the typedef: \"" + typedef.getName() + "\" ?"))
     			{
     				descriptor.remove(typedef);
-					AspectManager.instance().removeTypedef(typedef.getName());
     				descriptor.save();
     			}
     		}
