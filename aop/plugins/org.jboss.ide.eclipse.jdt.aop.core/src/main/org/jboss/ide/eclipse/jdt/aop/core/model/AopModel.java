@@ -709,6 +709,11 @@ public class AopModel {
 		return (AopAdvised[])(list.toArray(new AopAdvised[list.size()]));
 	}
 	
+	/**
+	 * Adds a new typedef expression to the model.
+	 * @param project
+	 * @param tdExpr
+	 */
 	public void addNewTypedef( IJavaProject project, JDTTypedefExpression tdExpr ) {
 		try {
 			AspectManager.instance().addTypedef(tdExpr);
@@ -721,12 +726,28 @@ public class AopModel {
 				fireAdvisorAdded(advisedClasses[i], typedef);
 			}
 			
-			int z = 1;
 			
 		} catch( Exception e ) {
 			
 		}
 		
+	}
+	
+	/**
+	 * Removes a typedef from the model, from the list of advisors,
+	 * and from the underlying aspectmanager in main aop.
+	 * @param project
+	 * @param tdExpr
+	 */
+	public void removeTypedef(IJavaProject project, JDTTypedefExpression tdExpr) {
+		AspectManager.instance().removeTypedef(tdExpr.getName());
+		ProjectAdvisors advisors = getProjectAdvisors(project);
+		AopTypedef advisorTypedef = advisors.getTypedef(tdExpr.getName());
+		IAopAdvised[] advisedClasses = advisorTypedef.getAdvised();
+		for( int i = 0; i < advisedClasses.length; i++ ) {
+			fireAdvisorRemoved(advisedClasses[i], advisorTypedef);
+		}
+		advisors.removeTypedef(tdExpr);
 	}
 	
 	/**
