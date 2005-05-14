@@ -20,7 +20,11 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.core.CompilationUnit;
 import org.eclipse.jdt.internal.core.JavaElementDelta;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
+import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopAdvised;
+import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopTypedef;
+import org.jboss.ide.eclipse.jdt.aop.core.model.internal.ProjectAdvisors;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 
 /**
  * @author Rob Stryker
@@ -36,8 +40,8 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 	{
 		ArrayList changed = new ArrayList();
 		IJavaProject project = event.getDelta().getElement().getJavaProject();
+		ICompilationUnit unit = elementChangedGetCompilationUnit(event);
 		if( project == null ) {
-			ICompilationUnit unit = elementChangedGetCompilationUnit(event);
 			if( unit == null ) {
 				//System.out.println("Problem"); 
 				return;
@@ -87,7 +91,7 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 		
 		
 		
-		// Finally check the annotations
+		// Check the annotations
 		if( annotationsHaveChanged ) {
 			try {
 				IType types[] = ((CompilationUnit)event.getDelta().getElement()).getTypes();
@@ -98,6 +102,9 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 				//e.printStackTrace();
 			}
 		}
+		
+		// Check to make sure typedef integrity remains.
+		reconcileTypedefs(unit);
 	}
 
 	
@@ -324,5 +331,43 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 		}
 	}
 
+
 	
+	
+	private void reconcileTypedefs(ICompilationUnit unit) {
+		try {
+			IType[] types = unit.getAllTypes();
+			IJavaProject project = unit.getJavaProject();
+			ProjectAdvisors advisors = AopModel.instance().getProjectAdvisors(project);
+			
+			AopTypedef[] typedefs = advisors.getTypedefs();
+			for( int i = 0; i < typedefs.length; i++ ) {
+				JDTTypedefExpression expr = typedefs[i].getTypedef();
+				for( int j = 0; j < types.length; j++ ) {
+					boolean currentlyAdvises = typedefs[i].advises(types[j]);
+					boolean shouldAdvise = expr.matches(types[j]);
+					
+					if( currentlyAdvises  &&  shouldAdvise ) continue;
+					if( !currentlyAdvises && !shouldAdvise ) continue;
+					
+
+					if( shouldAdvise ) {
+						IAopAdvised advised = new AopAdvised(IAopAdvised.TYPE_CLASS, types[j]);
+						typedefs[i].addAdvised(advised);
+						AopModel.instance().fireAdvisorAdded(advised, typedefs[i]);
+					} else {
+						IAopAdvised advised = typedefs[i].getAdvised(types[j]);
+						typedefs[i].removeAdvised(advised);
+						AopModel.instance().fireAdvisorRemoved(advised, typedefs[i]);
+					}
+					
+					
+					
+				}
+			}
+		} catch( Exception e) {
+			System.out.println("[reconcileTypedefs error]");
+			e.printStackTrace();
+		}
+	}
 }
