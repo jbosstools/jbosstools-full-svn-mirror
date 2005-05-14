@@ -1,7 +1,6 @@
 package org.jboss.ide.eclipse.jdt.aop.core.model.internal;
 
 import org.eclipse.jdt.core.IJavaElement;
-import org.jboss.aop.pointcut.TypedefExpression;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 
@@ -28,11 +27,19 @@ public class AopTypedef extends AopAdvisor {
 		return TYPEDEF;
 	}
 	
-	public TypedefExpression getTypedef() {
+	public JDTTypedefExpression getTypedef() {
 		return tdExpr;
 	}
 	
-	
+	// Must override .equals
+	public boolean equals (Object other) {
+		if( other instanceof AopTypedef ) {
+			AopTypedef otherr = (AopTypedef)other;
+			return otherr.getTypedef().equals(getTypedef());
+		} else {
+			return false;
+		}
+	}
 	
 	/*
 	 * These are methods from the superclass that 
