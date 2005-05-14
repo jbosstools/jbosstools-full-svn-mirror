@@ -204,5 +204,9 @@ public class ProjectAdvisors {
 	{
 		return (AopTypedef[]) typedefs.values().toArray(new AopTypedef[typedefs.size()]);
 	}
+	
+	public AopTypedef getTypedef( String name ) {
+		return (AopTypedef)typedefs.get(name);
+	}
 
 }
