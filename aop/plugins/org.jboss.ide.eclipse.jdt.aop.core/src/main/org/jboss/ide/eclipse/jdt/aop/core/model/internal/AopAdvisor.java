@@ -99,7 +99,12 @@ public abstract class AopAdvisor implements IAopAdvisor, Comparable
 	 */
 	public boolean advises (IJavaElement element)
 	{
-		return getAdvised(element) == null ? false : true;
+		IAopAdvised adv = getAdvised(element);
+		boolean retval;
+		if( adv == null ) retval = false;
+		else retval = true;
+		return retval;
+		//		return getAdvised(element) == null ? false : true;
 	}
 	
 	/**
