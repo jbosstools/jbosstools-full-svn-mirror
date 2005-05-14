@@ -268,6 +268,9 @@ public class AopUiPlugin extends AbstractUIPlugin
 					return child;
 				}
 			}
+			if( getSourceRange(types[i]).getOffset() == offset ) {
+				return types[i];
+			}
 		}
 
 		return null;
