@@ -18,9 +18,9 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IField;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IMember;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.ISourceRange;
 import org.eclipse.jdt.core.IType;
@@ -36,6 +36,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopModelChangeListener;
+import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopTypedef;
 import org.jboss.ide.eclipse.jdt.aop.core.project.AopProjectNature;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopUiPlugin;
 import org.jboss.ide.eclipse.jdt.aop.ui.views.AdvisedMembersView;
@@ -51,6 +52,7 @@ public class AopJavaEditor extends CompilationUnitEditor implements IAopModelCha
 	
 	public static final String MARKER_PROP_ADVISOR = "marker-advisor";
 	public static final String MARKER_PROP_ADVISED = "marker-advised";
+	public static final String MARKER_TYPEDEFED = "marker-typedefed";
 	
 	public AopJavaEditor ()
 	{
@@ -131,62 +133,87 @@ public class AopJavaEditor extends CompilationUnitEditor implements IAopModelCha
 		}
 	}
 	
+	
+	private void advisorAddedAdvice(IAopAdvised advised, IAopAdvice advice) {
+		IJavaElement element = advised.getAdvisedElement();
+		
+		if (!elementHasMarkerOfType(element, AopUiPlugin.ADVISED_MARKER))
+		{
+			createAdvisedMarker(element, advice, AopUiPlugin.ADVISED_MARKER);
+		}
+
+		
+		
+		IMethod method = advice.getAdvisingMethod();
+		if( method.getCompilationUnit() == null ) 
+			return;
+		
+		
+		if (method.getCompilationUnit().equals(getInputJavaElement()))
+		{
+
+			if (!elementHasMarkerOfType(method, AopUiPlugin.ADVICE_MARKER))
+			{
+				createAdvisorMarker(method, advised, AopUiPlugin.ADVICE_MARKER);
+			}
+		}
+	}
+
+	private void advisorAddedInterceptor(IAopAdvised advised, IAopInterceptor interceptor) throws Exception {
+		IJavaElement element = advised.getAdvisedElement();
+		
+		if (!elementHasMarkerOfType(element, AopUiPlugin.ADVISED_MARKER))
+		{
+			createAdvisedMarker(element, interceptor, AopUiPlugin.ADVISED_MARKER);
+		}
+
+		
+		IType type = interceptor.getAdvisingType();
+		ICompilationUnit unit = (ICompilationUnit) getInputJavaElement();
+		
+		if (unit == null)
+			return;
+		
+		IType types[] = unit.getAllTypes();
+		for (int i = 0; i < types.length; i++)
+		{
+			if (types[i].equals(type))
+			{
+				// marking the type doesn't do much good -- so we'll mark the invoke method instead
+				IMethod invokeMethod = AopCorePlugin.getDefault().getInvokeMethod(types[i]);
+				if (invokeMethod != null)
+				{
+					if (!elementHasMarkerOfType(invokeMethod, AopUiPlugin.INTERCEPTOR_MARKER))
+					{
+						createAdvisorMarker(invokeMethod, advised, AopUiPlugin.INTERCEPTOR_MARKER);
+					}
+				}
+				break;
+			}
+		}
+	}
+		
+	private void advisorAddedTypedef(IAopAdvised advised, AopTypedef typedef) {
+		IJavaElement element = advised.getAdvisedElement();
+		//System.out.println("element is: " + element.getElementName() + " with " + element.getPrimaryElement().getElementName());
+		
+		if (!elementHasMarkerOfType(element, AopUiPlugin.TYPEDEF_MARKER))
+		{
+			createAdvisedMarker(element, typedef, AopUiPlugin.TYPEDEF_MARKER);
+		}
+	}
+	
 	public void advisorAdded(IAopAdvised advised, IAopAdvisor advisor)
 	{
 		try {
-			IJavaElement element = advised.getAdvisedElement();
+			if( advisor.getType() == IAopAdvisor.ADVICE )  
+				{advisorAddedAdvice(advised, (IAopAdvice)advisor); return;}
+			if( advisor.getType() == IAopAdvisor.INTERCEPTOR )  
+				{advisorAddedInterceptor(advised, (IAopInterceptor)advisor); return;}
+			if( advisor.getType() == IAopAdvice.TYPEDEF ) 
+				{advisorAddedTypedef(advised, (AopTypedef)advisor);return;}
 			
-			if (!elementHasMarkerOfType(element, AopUiPlugin.ADVISED_MARKER))
-			{
-				createAdvisedMarker(element, advisor, AopUiPlugin.ADVISED_MARKER);
-			}
-			
-			if (advisor.getType() == IAopAdvisor.ADVICE)
-			{
-				IAopAdvice advice = (IAopAdvice) advisor;
-				IMethod method = advice.getAdvisingMethod();
-				if( method.getCompilationUnit() == null ) 
-					return;
-				
-				
-				if (method.getCompilationUnit().equals(getInputJavaElement()))
-				{
-
-					if (!elementHasMarkerOfType(method, AopUiPlugin.ADVICE_MARKER))
-					{
-						createAdvisorMarker(method, advised, AopUiPlugin.ADVICE_MARKER);
-					}
-				}
-			}
-			
-			if (advisor.getType() == IAopAdvisor.INTERCEPTOR)
-			{
-				IAopInterceptor interceptor = (IAopInterceptor) advisor;
-				IType type = interceptor.getAdvisingType();
-				ICompilationUnit unit = (ICompilationUnit) getInputJavaElement();
-				
-				if (unit == null)
-					return;
-				
-				IType types[] = unit.getAllTypes();
-				for (int i = 0; i < types.length; i++)
-				{
-					if (types[i].equals(type))
-					{
-						// marking the type doesn't do much good -- so we'll mark the invoke method instead
-						IMethod invokeMethod = AopCorePlugin.getDefault().getInvokeMethod(types[i]);
-						if (invokeMethod != null)
-						{
-							if (!elementHasMarkerOfType(invokeMethod, AopUiPlugin.INTERCEPTOR_MARKER))
-							{
-								createAdvisorMarker(invokeMethod, advised, AopUiPlugin.INTERCEPTOR_MARKER);
-							}
-						}
-						break;
-					}
-				}
-			}
-		} catch (CoreException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -195,7 +222,6 @@ public class AopJavaEditor extends CompilationUnitEditor implements IAopModelCha
 	{
 		try {
 			IJavaElement element = advised.getAdvisedElement();
-			ArrayList markersToRemove = new ArrayList();
 			
 			for (Iterator iter = getElementMarkers(element).iterator(); iter.hasNext(); )
 			{
@@ -215,6 +241,7 @@ public class AopJavaEditor extends CompilationUnitEditor implements IAopModelCha
 			}
 			
 			element = advisor.getAdvisingElement();
+			if( element == null ) return;
 			for (Iterator iter = getElementMarkers(element).iterator(); iter.hasNext(); )
 			{
 				IMarker marker = (IMarker) iter.next();
@@ -249,17 +276,14 @@ public class AopJavaEditor extends CompilationUnitEditor implements IAopModelCha
 				int offset = elementRange.getOffset();
 				int length = elementRange.getLength();
 				int end = 0;
-				if (element instanceof IMethod)
+				
+				if (element instanceof IMember)
 				{
-					ISourceRange range = ((IMethod)element).getSourceRange();
+					ISourceRange range = ((IMember)element).getSourceRange();
 					end = range.getOffset() + range.getLength();
 				}
-				else if (element instanceof IField)
+				else 
 				{
-					ISourceRange range = ((IField)element).getSourceRange();
-					end = range.getOffset() + range.getLength();
-				}
-				else {
 					end = offset + length;
 				}
 
