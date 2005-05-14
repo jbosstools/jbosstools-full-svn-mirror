@@ -188,6 +188,9 @@
       <markerResolutionGenerator
             class="org.jboss.ide.eclipse.jdt.aop.ui.AopMarkerResolutionGenerator"
             markerType="org.jboss.ide.eclipse.jdt.aop.ui.interceptormarker"/>
+      <markerResolutionGenerator
+            class="org.jboss.ide.eclipse.jdt.aop.ui.AopMarkerResolutionGenerator"
+            markerType="org.jboss.ide.eclipse.jdt.aop.ui.typedefmarker"/>
    </extension>
    <extension
          point="org.eclipse.ui.ide.markerImageProviders">
@@ -195,6 +198,10 @@
             markertype="org.jboss.ide.eclipse.jdt.aop.ui.advisedmarker"
             icon="icons/advised-marker.gif"
             id="org.jboss.ide.eclipse.jdt.aop.ui.advisedMarkerImageProvider"/>
+      <imageprovider
+            icon="icons/typedef-marker.gif"
+            id="org.jboss.ide.eclipse.jdt.aop.ui.typedefMarkerImageProvider"
+            markertype="org.jboss.ide.eclipse.jdt.aop.ui.typedefmarker"/>
          
    </extension>
    <extension
@@ -227,6 +234,13 @@
             markertype="org.jboss.ide.eclipse.jdt.aop.ui.interceptormarker"
             icon="icons/interceptor-marker.gif"
             id="org.jboss.ide.eclipse.jdt.aop.ui.interceptorMarkerImageProvider"/>
+   </extension>
+   <extension
+         id="typedefmarker"
+         name="Typedef Marker"
+         point="org.eclipse.core.resources.markers">
+      <super type="org.eclipse.core.resources.textmarker"/>
+      <persistent value="false"/>
    </extension>
 
 </plugin>
