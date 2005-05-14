@@ -23,6 +23,8 @@ import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvice;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopTypedef;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 import org.jboss.ide.eclipse.jdt.aop.ui.util.JumpToCodeUtil;
 
 /**
@@ -54,6 +56,15 @@ public class AopMarkerResolutionGenerator implements IMarkerResolutionGenerator
 			
 			if (markerElement != null)
 			{
+				/*
+				 * First do the typedefs
+				 */
+
+				if( markerElement instanceof IType ) {
+					
+				}
+				
+				
 				IAopAdvisor advisors[] = AopModel.instance().getElementAdvisors(markerElement);
 				
 				if (advisors != null && advisors.length > 0)
@@ -75,6 +86,11 @@ public class AopMarkerResolutionGenerator implements IMarkerResolutionGenerator
 							IType type = (IType) interceptor.getAdvisingElement();
 							
 							resolutions.add(new AdvisedMarkerResolution(markerElement, type, AdvisedMarkerResolution.TYPE_INTERCEPTOR));
+						} 
+						else if( advisor instanceof AopTypedef) 
+						{
+							AopTypedef typedef = (AopTypedef)advisor;
+							resolutions.add(new TypedefMarkerResolution(markerElement, typedef));
 						}
 						
 					}
@@ -150,6 +166,38 @@ public class AopMarkerResolutionGenerator implements IMarkerResolutionGenerator
 		
 		return "";
 	}
+
+	
+	
+	protected static class TypedefMarkerResolution implements IMarkerResolution2	{
+
+		protected IJavaElement advised;
+		protected JDTTypedefExpression expression;
+		
+		public TypedefMarkerResolution (IJavaElement advised, AopTypedef advisor)
+		{
+			this.advised = advised;
+			this.expression = advisor.getTypedef();
+		}
+		
+		public String getLabel() {
+			return expression.getName() + ":  " + expression.getExpr();
+		}
+
+		public Image getImage() {
+			return AopSharedImages.getImage(AopSharedImages.IMG_TYPEDEF);
+		}
+		
+		public String getDescription() {
+			return getLabel();
+		}
+
+		public void run(IMarker marker) {
+			//JumpToCodeUtil.jumpTo(advisor);
+		}
+	}
+
+	
 	
 	protected static class AdvisedMarkerResolution implements IMarkerResolution2
 	{
