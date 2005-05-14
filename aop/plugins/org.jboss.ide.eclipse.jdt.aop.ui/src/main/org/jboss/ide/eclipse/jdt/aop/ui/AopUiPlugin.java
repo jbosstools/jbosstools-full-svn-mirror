@@ -46,6 +46,7 @@ public class AopUiPlugin extends AbstractUIPlugin
 	public static final String ADVISED_MARKER = "org.jboss.ide.eclipse.jdt.aop.ui.advisedmarker";
 	public static final String ADVICE_MARKER = "org.jboss.ide.eclipse.jdt.aop.ui.advicemarker";
 	public static final String INTERCEPTOR_MARKER = "org.jboss.ide.eclipse.jdt.aop.ui.interceptormarker";
+	public static final String TYPEDEF_MARKER = "org.jboss.ide.eclipse.jdt.aop.ui.typedefmarker";
 
 	public AopUiPlugin()
 	{
