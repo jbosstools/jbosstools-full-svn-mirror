@@ -250,7 +250,8 @@ public class PointcutPreviewTypeCompletionProcessor extends CUPositionCompletion
 							proposal.getReplaceStart(),
 							proposal.getReplaceEnd(),
 							proposal.getRelevance(),
-							JavaElementImageProvider.getTypeImageDescriptor(false, false, false, proposal.getFlags() ));
+							JavaElementImageProvider.
+							getTypeImageDescriptor(false, false, proposal.getFlags(), false));
 								//TODO: extract isInner and isInInterface from Signature?
 					break;
 					
