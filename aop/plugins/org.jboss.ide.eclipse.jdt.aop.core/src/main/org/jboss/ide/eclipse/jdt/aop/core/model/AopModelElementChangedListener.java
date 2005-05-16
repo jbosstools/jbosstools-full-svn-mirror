@@ -58,9 +58,9 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 
 		
 		// Check to make sure typedef integrity remains.
-		reconcileTypedefs(unit);
+		if( unit.exists())
+			reconcileTypedefs(unit);
 
-		
 		changed.addAll(elementChangedGetAllAffected(event.getDelta()));		
 		
 		
