@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 
 import org.eclipse.jdt.core.IField;
 import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.Signature;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -31,6 +32,24 @@ public class QDoxMatcher {
 	public static final boolean CONSTRUCTOR = true;
 	public static final boolean METHOD      = false;
 	
+	
+	
+	public static JavaClass matchClass( IType jdtType ) {
+        JavaDocBuilder builder = new JavaDocBuilder();
+		try {
+			builder.addSource(new StringReader(jdtType.getCompilationUnit().getSource()));
+			String type = jdtType.getElementName();
+			JavaClass[] classes = builder.getClasses();
+        	for( int i = 0; i < classes.length; i++ ) {
+        		//System.out.println("jdt: " + type + ", qdox: " + classes[i].getName());
+        		if( !type.equals(classes[i].getName())) continue;
+        		return classes[i];
+        	}
+		} catch( Exception jme ) {
+			
+		}
+		return null;
+	}
 	
 	/**
 	 * Takes the contents of this constructor's compilation unit,

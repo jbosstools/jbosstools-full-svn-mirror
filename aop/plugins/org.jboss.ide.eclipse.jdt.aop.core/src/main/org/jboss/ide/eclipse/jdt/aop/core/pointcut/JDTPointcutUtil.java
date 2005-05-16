@@ -28,6 +28,9 @@ import org.jboss.aop.pointcut.ast.ASTMethod;
 import org.jboss.aop.pointcut.ast.ClassExpression;
 import org.jboss.aop.pointcut.ast.ParseException;
 
+import com.thoughtworks.qdox.model.DocletTag;
+import com.thoughtworks.qdox.model.JavaClass;
+
 /**
  * @author Marshall
  *
@@ -86,6 +89,14 @@ public class JDTPointcutUtil {
 		{
 			if (classExpr.isAnnotation())
 			{
+				JavaClass qdoxClass = QDoxMatcher.matchClass(type);
+				DocletTag[] tags = qdoxClass.getTags();
+				for( int i = 0; i < tags.length; i++ ) {
+					if( classExpr.getOriginal().equals(tags[i].getName())) {
+						return true;
+					}
+				}
+
 				return false;
 				// We'll need to hook in a concrete data type for JDK1.5 annotations here
 			}
