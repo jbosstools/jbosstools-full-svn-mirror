@@ -25,6 +25,7 @@ import org.jboss.aop.AspectManager;
 import org.jboss.aop.advice.Scope;
 import org.jboss.aop.pointcut.PointcutExpression;
 import org.jboss.aop.pointcut.ast.ParseException;
+import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
@@ -612,13 +613,25 @@ public class AopModel {
 	 * @return
 	 */
 	public IJavaElement[] getRegisteredTypes()
-	{
+	{	
+		cleanRegisteredTypes();
 		return (IJavaElement[]) registeredTypes.toArray(new IJavaElement[registeredTypes.size()]);
 	}
 	
 	public IType[] getRegisteredTypesAsITypes() 
 	{
+		cleanRegisteredTypes();
 		return (IType[])registeredTypes.toArray(new IType[registeredTypes.size()]);
+	}
+	
+	private void cleanRegisteredTypes() {
+		Iterator i = registeredTypes.iterator();
+		while(i.hasNext()) {
+			IType type = (IType)i.next();
+			if( !type.exists()) 
+				removeSourceElement(type);
+		}
+			
 	}
 	
 	public void findAllAdvised (IJavaElement element, JDTPointcutExpression expression, IAdvisedCollector collector, IProgressMonitor monitor)
@@ -847,7 +860,25 @@ public class AopModel {
 		}
 	}
 	
-	
+	public void removeSourceElement(IType type) {
+		// TODO: what else?
+
+		registeredTypes.remove(type);
+		
+		ProjectAdvisors advisors = getProjectAdvisors(AopCorePlugin.getCurrentJavaProject());
+		AopTypedef[] typedefs = advisors.getTypedefs();
+		for( int i = 0; i < typedefs.length; i++ ) {
+			if( typedefs[i].advises(type)) {
+				IAopAdvised advised = typedefs[i].getAdvised(type);
+				typedefs[i].removeAdvised(advised);
+				fireAdvisorRemoved(advised, typedefs[i]);
+			}
+		}
+		
+		
+		
+		
+	}
 	
 	/*
 	 * Simple utility functions that are used but not part of the model.

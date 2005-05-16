@@ -125,6 +125,13 @@ public class ModelInitAndUpdate {
 			}
 			// end possible break
 			
+		} else if( element instanceof IType ) {
+			try {
+				IType[] types = ((IType)element).getTypes();
+				sourceTypes.add(element);
+				for( int i = 0; i < types.length; i++ ) processSourceElement(sourceTypes, element);
+			} catch( JavaModelException jme) {
+			}
 		}
 		else if (element instanceof IPackageFragment)
 		{

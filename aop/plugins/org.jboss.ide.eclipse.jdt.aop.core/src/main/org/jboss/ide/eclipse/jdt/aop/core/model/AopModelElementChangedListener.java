@@ -57,6 +57,10 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 		}
 
 		
+		// Check to make sure typedef integrity remains.
+		reconcileTypedefs(unit);
+
+		
 		changed.addAll(elementChangedGetAllAffected(event.getDelta()));		
 		
 		
@@ -94,7 +98,7 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 		// Check the annotations
 		if( annotationsHaveChanged ) {
 			try {
-				IType types[] = ((CompilationUnit)event.getDelta().getElement()).getTypes();
+				IType types[] = ((CompilationUnit)event.getDelta().getElement()).getAllTypes();
 				for( int i = 0; i < types.length; i++ ) {
 					elementChangedCompilationUnit(types[i], expressions);
 				}
@@ -103,8 +107,6 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 			}
 		}
 		
-		// Check to make sure typedef integrity remains.
-		reconcileTypedefs(unit);
 	}
 
 	
@@ -152,8 +154,12 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 	 */
 	private ArrayList elementChangedGetAllAffected(IJavaElementDelta delta, boolean includeCompilationUnit) {
 		ArrayList changed = new ArrayList();
+//		System.out.println("[element changed get all affected] - " + delta.getElement().getClass().getName()
+//				+ " - " + delta.getElement().getElementName() + ", " + delta.getKind());
 		IJavaElementDelta changedChildren[] = delta.getAffectedChildren();
-		if( delta.getElement() instanceof IMethod || delta.getElement() instanceof IField 
+		if( delta.getElement() instanceof IMethod 
+				|| delta.getElement() instanceof IField 
+				|| delta.getElement() instanceof IType
 				|| (delta.getElement() instanceof CompilationUnit && includeCompilationUnit)) {
 			
 			// We only care about added or removed... not changed.
@@ -187,24 +193,28 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 	{
 		IJavaElement added = addedDelta.getElement();
 		
-		for (int j = 0; j < expressions.length; j++)
-		{
-			if (added.getElementType() == IJavaElement.METHOD)
+		if( added.getElementType() == IJavaElement.TYPE) {
+			AopModel.instance().registerType((IType)added);
+		} else {
+			for (int j = 0; j < expressions.length; j++)
 			{
-				if (expressions[j].matchesExecution((IMethod) added))
+				if (added.getElementType() == IJavaElement.METHOD)
 				{
-					AopModel.instance().addAdvisedToPointcutAdvisors(added, IAopAdvised.TYPE_METHOD_EXECUTION, expressions[j]);
+					if (expressions[j].matchesExecution((IMethod) added))
+					{
+						AopModel.instance().addAdvisedToPointcutAdvisors(added, IAopAdvised.TYPE_METHOD_EXECUTION, expressions[j]);
+					}
 				}
-			}
-			else if (added.getElementType() == IJavaElement.FIELD)
-			{
-				if (expressions[j].matchesGet((IField) added))
+				else if (added.getElementType() == IJavaElement.FIELD)
 				{
-					AopModel.instance().addAdvisedToPointcutAdvisors(added, IAopAdvised.TYPE_FIELD_GET, expressions[j]);
-				}
-				if (expressions[j].matchesSet((IField) added))
-				{
-					AopModel.instance().addAdvisedToPointcutAdvisors(added, IAopAdvised.TYPE_FIELD_SET, expressions[j]);
+					if (expressions[j].matchesGet((IField) added))
+					{
+						AopModel.instance().addAdvisedToPointcutAdvisors(added, IAopAdvised.TYPE_FIELD_GET, expressions[j]);
+					}
+					if (expressions[j].matchesSet((IField) added))
+					{
+						AopModel.instance().addAdvisedToPointcutAdvisors(added, IAopAdvised.TYPE_FIELD_SET, expressions[j]);
+					}
 				}
 			}
 		}
@@ -221,6 +231,7 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 		IJavaElement removed = removedDelta.getElement();
 		if( removed instanceof IMethod ) elementChangedRemoveMethod(((IMethod)removed), expressions);
 		if( removed instanceof IField ) elementChangedRemoveField((IField)removed, expressions);
+		if( removed instanceof IType ) elementChangedRemoveType((IType)removed, expressions);
 	}
 	
 	private void elementChangedRemoveMethod(IMethod method, JDTPointcutExpression expressions[])
@@ -245,7 +256,9 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 		}
 	}
 	
-	
+	private void elementChangedRemoveType(IType type, JDTPointcutExpression expressions[] ) {
+		AopModel.instance().removeSourceElement(type);
+	}
 	/**
 	 * This method is only reached if the compilation unit has changed,
 	 * which implies the annotations have changed.
@@ -346,6 +359,8 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 				for( int j = 0; j < types.length; j++ ) {
 					boolean currentlyAdvises = typedefs[i].advises(types[j]);
 					boolean shouldAdvise = expr.matches(types[j]);
+					
+//					System.out.println("currently: " + currentlyAdvises + ", should: " + shouldAdvise);
 					
 					if( currentlyAdvises  &&  shouldAdvise ) continue;
 					if( !currentlyAdvises && !shouldAdvise ) continue;
