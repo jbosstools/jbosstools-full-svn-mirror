@@ -2,7 +2,7 @@
 <feature
       id="org.jboss.ide.eclipse.jdt.aop.feature"
       label="org.jboss.ide.eclipse.jdt.aop.feature"
-      version="1.1.0.beta2"
+      version="1.1.0"
       provider-name="JBoss, Inc.">
 
    <description url="http://www.yourdomain.com/description">
@@ -445,12 +445,12 @@ END OF TERMS AND CONDITIONS
          id="org.jboss.ide.eclipse.jdt.aop.core"
          download-size="0"
          install-size="0"
-         version="1.1.0.beta2"/>
+         version="1.1.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.aop.ui"
          download-size="0"
          install-size="0"
-         version="1.1.0.beta2"/>
+         version="1.1.0"/>
 
 </feature>
