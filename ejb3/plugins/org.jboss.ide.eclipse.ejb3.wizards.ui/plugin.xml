@@ -3,7 +3,7 @@
 <plugin
    id="org.jboss.ide.eclipse.ejb3.wizards.ui"
    name="EJB3 Wizards UI Plug-in"
-   version="1.0.0.beta2"
+   version="1.0.0"
    provider-name="JBoss Inc"
    class="org.jboss.ide.eclipse.ejb3.wizards.ui.EJB3WizardsUIPlugin">
 
