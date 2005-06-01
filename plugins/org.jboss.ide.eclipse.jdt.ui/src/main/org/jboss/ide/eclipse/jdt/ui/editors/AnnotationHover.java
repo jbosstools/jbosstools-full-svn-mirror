@@ -136,7 +136,7 @@ public class AnnotationHover implements IAnnotationHover
    {
       StringBuffer buffer = new StringBuffer();
       HTMLPrinter.addPageProlog(buffer);
-      HTMLPrinter.addParagraph(buffer, HTMLPrinter.convertToHTMLContent(JavaUIMessages.getString("JavaAnnotationHover.multipleMarkersAtThisLine")));//$NON-NLS-1$
+      HTMLPrinter.addParagraph(buffer, HTMLPrinter.convertToHTMLContent(JavaUIMessages.JavaAnnotationHover_multipleMarkersAtThisLine));//$NON-NLS-1$
 
       HTMLPrinter.startBulletList(buffer);
       Iterator e = messages.iterator();
