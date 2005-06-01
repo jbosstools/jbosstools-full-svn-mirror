@@ -115,12 +115,12 @@ public class NewEntityEJBWizardPage extends DOMClassWizardPage
       accessButtons.setLabelText(JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.Select_the_access_of_the_EJB_9"));//$NON-NLS-1$
 
       // Constructors and inherited must be left as first elements
-      buttonNames = new String[]{NewWizardMessages.getString("NewClassWizardPage.methods.constructors"), //$NON-NLS-1$
-      NewWizardMessages.getString("NewClassWizardPage.methods.inherited"),//$NON-NLS-1$
+      buttonNames = new String[]{NewWizardMessages.NewClassWizardPage_methods_constructors, //$NON-NLS-1$
+      NewWizardMessages.NewClassWizardPage_methods_inherited,//$NON-NLS-1$
       };
 
       fMethodStubsButtons = new SelectionButtonDialogFieldGroup(SWT.CHECK, buttonNames, 2);
-      fMethodStubsButtons.setLabelText(NewWizardMessages.getString("NewClassWizardPage.methods.label"));//$NON-NLS-1$
+      fMethodStubsButtons.setLabelText(NewWizardMessages.NewClassWizardPage_methods_label);//$NON-NLS-1$
 
       // Constructors and inherited must be left as first elements
       buttonNames = new String[]{JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.CMP_1.1_10"), JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.CMP_2.x_11"), JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.BMP_12")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$

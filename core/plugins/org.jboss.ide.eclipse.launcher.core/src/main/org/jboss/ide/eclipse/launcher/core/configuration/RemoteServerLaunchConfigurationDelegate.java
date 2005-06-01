@@ -53,13 +53,13 @@ public class RemoteServerLaunchConfigurationDelegate extends AbstractServerLaunc
          monitor = new NullProgressMonitor();
       }
 
-      monitor.beginTask(MessageFormat.format(LaunchingMessages.getString("JavaRemoteApplicationLaunchConfigurationDelegate.Attaching_to_{0}..._1"), new String[]{configuration.getName()}), 3);//$NON-NLS-1$
+      monitor.beginTask(MessageFormat.format(LaunchingMessages.JavaRemoteApplicationLaunchConfigurationDelegate_Attaching_to__0_____1, new String[]{configuration.getName()}), 3);//$NON-NLS-1$
       // check for cancellation
       if (monitor.isCanceled())
       {
          return;
       }
-      monitor.subTask(LaunchingMessages.getString("JavaRemoteApplicationLaunchConfigurationDelegate.Verifying_launch_attributes..._1"));//$NON-NLS-1$
+      monitor.subTask(LaunchingMessages.JavaRemoteApplicationLaunchConfigurationDelegate_Verifying_launch_attributes____1);//$NON-NLS-1$
 
       String connectorId = getVMConnectorId(configuration);
       IVMConnector connector = null;
@@ -73,7 +73,7 @@ public class RemoteServerLaunchConfigurationDelegate extends AbstractServerLaunc
       }
       if (connector == null)
       {
-         abort(LaunchingMessages.getString("JavaRemoteApplicationLaunchConfigurationDelegate.Connector_not_specified_2"), null, IJavaLaunchConfigurationConstants.ERR_CONNECTOR_NOT_AVAILABLE);//$NON-NLS-1$
+         abort(LaunchingMessages.JavaRemoteApplicationLaunchConfigurationDelegate_Connector_not_specified_2, null, IJavaLaunchConfigurationConstants.ERR_CONNECTOR_NOT_AVAILABLE);//$NON-NLS-1$
       }
 
       Map argMap = configuration.getAttribute(IJavaLaunchConfigurationConstants.ATTR_CONNECT_MAP, (Map) null);

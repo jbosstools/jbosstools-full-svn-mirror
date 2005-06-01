@@ -79,12 +79,12 @@ public class NewMessageDrivenEJBWizardPage extends DOMClassWizardPage
       super.createContent();
 
       // Constructors and inherited must be left as first elements
-      String[] buttonNames = new String[]{NewWizardMessages.getString("NewClassWizardPage.methods.constructors"), //$NON-NLS-1$
-      NewWizardMessages.getString("NewClassWizardPage.methods.inherited"), //$NON-NLS-1$
+      String[] buttonNames = new String[]{NewWizardMessages.NewClassWizardPage_methods_constructors, //$NON-NLS-1$
+      NewWizardMessages.NewClassWizardPage_methods_inherited, //$NON-NLS-1$
       "ejbCreate() method"};//$NON-NLS-1$
 
       fMethodStubsButtons = new SelectionButtonDialogFieldGroup(SWT.CHECK, buttonNames, 2);
-      fMethodStubsButtons.setLabelText(NewWizardMessages.getString("NewClassWizardPage.methods.label"));//$NON-NLS-1$
+      fMethodStubsButtons.setLabelText(NewWizardMessages.NewClassWizardPage_methods_label);//$NON-NLS-1$
    }
 
 
