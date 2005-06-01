@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.debug.internal.ui.DefaultLabelProvider;
+import org.eclipse.jdt.internal.ui.viewsupport.ListContentProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -33,7 +34,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.ui.internal.dialogs.ListContentProvider;
 import org.jboss.ide.eclipse.xdoclet.run.XDocletRunMessages;
 import org.jboss.ide.eclipse.xdoclet.run.XDocletRunPlugin;
 import org.jboss.ide.eclipse.xdoclet.run.model.XDocletConfiguration;
