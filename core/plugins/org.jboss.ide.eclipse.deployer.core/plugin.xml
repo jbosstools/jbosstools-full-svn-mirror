@@ -3,7 +3,7 @@
 <plugin
    id="org.jboss.ide.eclipse.deployer.core"
    name="%plugin.name"
-   version="1.5.0.m1"
+   version="1.5.0"
    provider-name="%plugin.provider"
    class="org.jboss.ide.eclipse.deployer.core.DeployerCorePlugin">
 
