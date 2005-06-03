@@ -3,7 +3,7 @@
 <plugin
    id="org.jboss.ide.eclipse.jdt.j2ee.jsp.core"
    name="%plugin.name"
-   version="1.5.0.m1"
+   version="1.5.0"
    provider-name="%plugin.provider"
    class="org.jboss.ide.eclipse.jdt.j2ee.jsp.core.JDTJ2EEJSPCorePlugin">
 
