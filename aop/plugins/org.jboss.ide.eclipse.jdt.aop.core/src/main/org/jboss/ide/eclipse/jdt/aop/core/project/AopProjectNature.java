@@ -11,11 +11,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jface.wizard.ProgressMonitorPart;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.ui.PlatformUI;
 import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.AopDescriptor;
 
@@ -49,7 +47,7 @@ public class AopProjectNature implements IProjectNature {
 	   desc.setBuildSpec(newCommands);
 	   
 	   try {
-			project.setDescription(desc, new ProgressMonitorPart(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), new RowLayout()));
+			project.setDescription(desc, new NullProgressMonitor());
 	   } catch (CoreException e) {
 			e.printStackTrace();
 		}
