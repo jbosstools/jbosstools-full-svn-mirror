@@ -12,7 +12,7 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.search.IJavaSearchConstants;
 import org.eclipse.jdt.core.search.IJavaSearchScope;
 import org.eclipse.jdt.core.search.SearchEngine;
-import org.eclipse.jdt.internal.ui.dialogs.TypeSelectionDialog;
+import org.eclipse.jdt.internal.ui.dialogs.TypeSelectionDialog2;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
@@ -135,7 +135,7 @@ public class ConvertToPointcutWizard extends Wizard {
 					IJavaElement[] elements= new IJavaElement[] { fromElement.getJavaProject() };
 					IJavaSearchScope scope= SearchEngine.createJavaSearchScope(elements);
 
-					TypeSelectionDialog dialog= new TypeSelectionDialog(getShell(), getWizard().getContainer(), IJavaSearchConstants.CLASS, scope);
+					TypeSelectionDialog2 dialog= new TypeSelectionDialog2(getShell(), false, getWizard().getContainer(), scope, IJavaSearchConstants.CLASS);
 					dialog.setTitle("Called by..");
 					dialog.setMessage("Please select a class...");
 					//dialog.setFilter(calledByMethodText.getText());
