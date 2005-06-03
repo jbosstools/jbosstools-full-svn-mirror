@@ -179,7 +179,7 @@ public class JSPScripletCompletionProcessor implements IContentAssistProcessor
          String errorMsg = collector.getErrorMessage();
          if (errorMsg == null || errorMsg.trim().length() == 0)
          {
-            errorMsg = JavaUIMessages.getString("JavaEditor.codeassist.noCompletions");//$NON-NLS-1$
+            errorMsg = JavaUIMessages.JavaEditor_codeassist_noCompletions;//$NON-NLS-1$
          }
          return errorMsg;
       }
