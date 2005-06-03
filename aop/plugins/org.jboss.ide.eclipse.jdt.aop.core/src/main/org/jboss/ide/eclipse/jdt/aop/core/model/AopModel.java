@@ -16,11 +16,6 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.search.IJavaSearchConstants;
-import org.eclipse.jdt.core.search.IJavaSearchScope;
-import org.eclipse.jdt.core.search.SearchEngine;
-import org.eclipse.jdt.internal.corext.util.AllTypesCache;
-import org.eclipse.jdt.internal.corext.util.TypeInfo;
 import org.jboss.aop.AspectManager;
 import org.jboss.aop.advice.Scope;
 import org.jboss.aop.pointcut.PointcutExpression;
@@ -113,7 +108,6 @@ public class AopModel {
 		
 		return (IAopAdvisor[]) pointcutAdvisors.toArray(new IAopAdvisor[pointcutAdvisors.size()]);
 	}
-	
 	
 	protected JDTPointcutExpression[] getProjectPointcuts (IJavaProject project)
 	{
@@ -633,52 +627,6 @@ public class AopModel {
 		}
 			
 	}
-	
-	public void findAllAdvised (IJavaElement element, JDTPointcutExpression expression, IAdvisedCollector collector, IProgressMonitor monitor)
-		throws RuntimeException
-	{
-		findAllAdvised(new IJavaElement[]{element}, expression, collector, monitor);
-	}
-	
-	
-	/**
-	 * This method will be deprecated or used scarcely in the future. 
-	 * It is a long-running very slow implementation.
-	 * 
-	 * @param elements
-	 * @param expression
-	 * @param collector
-	 * @param monitor
-	 * @throws RuntimeException
-	 */
-	public void findAllAdvised (final IJavaElement elements[], final JDTPointcutExpression expression, final IAdvisedCollector collector, final IProgressMonitor monitor)
-	throws RuntimeException
-	{
-		new Thread (new Runnable() {
-			public void run () {
-				AdvisedSearchRequestor requestor = new AdvisedSearchRequestor(expression, collector);
-				try {
-					ArrayList allTypes = new ArrayList();
-					IJavaSearchScope scope = SearchEngine.createJavaSearchScope(elements);
-					AllTypesCache.getTypes(scope, IJavaSearchConstants.TYPE, new NullProgressMonitor(), allTypes);
-					
-					requestor.start(allTypes.size());
-					for (Iterator iter = allTypes.iterator(); iter.hasNext(); )
-					{
-						TypeInfo typeInfo = (TypeInfo) iter.next();
-						IType type = typeInfo.resolveType(scope);
-						
-						requestor.acceptType(type);
-					}
-					requestor.finished();
-				} catch (Exception e) {
-					requestor.handleException(e);
-				}
-			}
-		}).start();
-	}
-
-	
 	
 	/**
 	 * Much simpler implementation that requires types to begin with.
