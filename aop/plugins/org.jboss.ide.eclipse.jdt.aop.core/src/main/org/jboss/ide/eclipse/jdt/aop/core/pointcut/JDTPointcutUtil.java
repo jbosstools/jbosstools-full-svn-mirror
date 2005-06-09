@@ -123,7 +123,7 @@ public class JDTPointcutUtil {
 		if (type == null) return false;
 		if (instanceOf.isInstanceOfAnnotated())
 		{
-			// Plugin annotation code at a later time..
+			// TODO Plugin annotation code at a later time..
 			return false;
 		}
 		else if (instanceOf.matches(type.getFullyQualifiedName()))
