@@ -3,9 +3,9 @@
 		<section>
 			<title>Adding a view</title>
 			<para>
-				Adding a view to a plug-in is as simple as 
-				extending <literal>org.eclipse.ui.views</literal>,
-				declaring a category for it to be listed, and then 
+				Adding a view to a plug-in is as simple as using the 
+				<literal>org.eclipse.ui.views</literal> extension point,
+				declaring a category for it to be listed in, and then 
 				declaring your view with some parameters. If
 				you're feeling really ambitious, you can designate where
 				this view should appear when loaded relative to other
@@ -73,6 +73,10 @@
 			SWT-oriented <literal>createPartControl</literal> method, and
 			it may provide as a slight jumping off point for investigating
 			SWT code, but it is really just a few simple examples.</para>
+			
+			<para>NOTE: Having Views with ample SWT controls is not customary, 
+			and is often frowned upon in view implementations. However,
+			it is possible to do it and so it was included as an example.</para>
 		</section>
 		
 		<section>
@@ -96,9 +100,9 @@
 				top level of the model, to designate a new model, etc. In 
 				the two examples mentioned above, we use the viewSite as our
 				input, but that's completely arbitrary amd just serves as an
-				example. For a real model (as opposed to the strings), 
-				the root element might be something like an xml element, 
-				or a list of some sort that is likely to change.</para>
+				example. For a real model (as opposed to the strings example), 
+				the root element might be something like an xml Document, 
+				or whatever model your view intends to display data from.</para>
 				<para>For Completeness:</para>
 				<programlisting>
 	class ViewContentProvider implements IStructuredContentProvider {
@@ -145,7 +149,11 @@
 				both taking an object to evaluate. </para>
 			<para>NOTE: If you use a shared image in the eclipse platform, 
 			you do not need to create or destroy it. If you use your own image,
-			you are in charge of creating it AND destroying it.</para>
+			you are in charge of creating it AND destroying it.
+			One good practice is to create shared images for your entire plug-in
+			during it's initialization, and then destroy those images
+			when your plug-in shuts down. This way you aren't
+			creating and destroying images needlessly.</para>
 			</section>
 			
 			<section><title>ITableLabelProvider</title>
@@ -274,6 +282,12 @@
 		// Add the options to the view's toolbar (IToolBarManager)
 		drillDownAdapter.addNavigationActions(manager);
 				</programlisting>
+				
+				<para>Without drilldown adapters, your tree's content provider
+				could probably get away without completing the 
+				<literal>getParent</literal> method. If you do use drilldown 
+				adapters, however, this method will need to be completed so that
+				the model can navigate both up and down the trees.</para>
 			</section>
 		
 		</section>
@@ -282,7 +296,8 @@
 			<para>Other features are able to be added to views as well.
 			Viewers can have doubleclick actions, and I didn't get into
 			the specifics of adding the toolbar icons, but the code is all
-			very short and concise. The ease with which one can make a view
+			very short, concise, and in the examples. 
+			The ease with which one can make a view
 			should help make adding them to your plug-in as painless as possible.</para>
 			
 			<para>
@@ -295,8 +310,8 @@
 				specifically saved by the user. Views should not behave in this manner.
 				All changes should be live as soon as they are executed.</para>
 				
-				<para>Finally, there will be many other examples of views
-				in future examples, and often times tips about specific 
+				<para>Finally, there will be many other code snippets for views
+				in future examples, and occasional tips about specific 
 				quirks found when using them. </para>
 				
 		</section>
