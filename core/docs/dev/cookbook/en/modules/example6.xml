@@ -1,0 +1,194 @@
+<chapter id="Example6">
+	<title>Tracking Changes to Resources and Java Elements</title>
+	<para>Tracking changes in resoures is easy to implement but could
+	be indespensible for your plug-in. The code that I need to relate 
+	is short, but I figured it should be included here to be a more
+	complete guide to common tasks for eclipse plug-ins.</para>
+	
+	<para>I've implemented a view who's input is a model that listens for changes 
+	in resources as well as changes in java elements, such as classes, compilation units, packages,
+	methods, fields, etc. It then adds these change events to its model, alerts the 
+	view, and displays them in the view. This example provides another
+	example of a content provider for a view, and a label provider. </para>
+	
+	<section><title>Dependencies</title>
+		<para>As you can see by browsing the <literal>MANIFEST.MF</literal>,
+		I've included the following plug-in dependencies: </para>
+		<programlisting>
+		Require-Bundle: org.eclipse.ui,
+		 org.eclipse.core.runtime,
+		 org.eclipse.core.resources,
+		 org.eclipse.jdt,
+		 org.eclipse.jdt.core,
+		 org.eclipse.jdt.ui,
+		 org.eclipse.ui.intro
+		</programlisting>
+		
+		<para>
+			The JDT packages are required to do any sort of processing regarding
+			methods, fields, compilation units, and others. The resource package
+			is required to become a listener for changes in resources.
+		</para>
+	</section>
+	
+	<section>
+		<title>Resource Changes</title>
+		<para>Resources are only marked as changed, and thus the events fired,
+		when the resource is saved or resynced with the underlying file 
+		representation. Simply typing in the editor will NOT triger a resource changed
+		event to fire. 
+		</para>
+		<para>The following code is necessary:</para>
+		<programlisting>
+		/*
+		 * To register as an IResourceChangeListener: 
+		 */
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		workspace.addResourceChangeListener(this);		
+
+
+		/*
+		 * The interface must be implemented
+		 */
+		public void resourceChanged(IResourceChangeEvent event) {
+			root.addResourceChange(event);
+
+			/* 
+			 * Tell the view, and other listeners, 
+			 * the model has changed 
+			 */
+			for( Iterator i = listeners.iterator(); i.hasNext();) {
+				((MyChangeListener)i.next()).fireMyChangeEvent();
+			}
+		}
+
+		</programlisting>
+		
+		<para>The IResourceChangeEvent object and it's change delta are only valid for the
+		duration of the <literal>resourceChanged</literal> call. This call is 
+		made to a valid and registered listener when the platform notices changed
+		resources.</para>
+		
+		<para>Because in my implementation, the model is the listener, 
+		when the model receives an event, it adds it the event to one of it's arraylists 
+		and alerts the view to refresh itself because the model has changed.</para>
+	</section>
+	
+	<section>
+		<title>Element Changes</title>
+		<para>Element changes are fired as soon as a delta between the current file
+		buffer and the most recent file buffer can be calculated. This is usually within 
+		2 seconds of when you stop typing. As soon as the delta is calculated, it is fired
+		off to all available listeners. </para>
+		<para>JBoss AOP IDE makes use of these in calculating typedef matching, advisors, 
+		and other things that are dependent upon the exact text of a java source file. 
+		Changing a method name, for example, from "someMethod" to "otherMethod", 
+		will fire off one event with two changed elements burried inside, one 
+		denoting the removal of "someMethod", and one denoting the addition of "otherMethod".
+		</para>
+		
+		<para>The program code necessary to become an elementChangeListener is as follows:</para>
+		<programlisting>
+		/* Register yourself as a listener */
+		JavaCore.addElementChangedListener(this);
+		
+		/* fulfill the IElementChangedListener interface */	
+		public void elementChanged(ElementChangedEvent event) {
+	
+			root.addElementChange(event);
+
+			/* 
+			 * Tell the view, and other listeners, 
+			 * the model has changed 
+			 */
+			for( Iterator i = listeners.iterator(); i.hasNext();) {
+				System.out.println("firing");
+				((MyChangeListener)i.next()).fireMyChangeEvent();
+			}
+		}	
+		</programlisting>
+		
+		<para>From here, the tree viewer should do all of the work.</para>
+	</section>
+	
+	<section>
+		<title>View Notes</title>
+		<para>
+			During the <literal>ElementChanged</literal> method call,
+			the view and the viewer will not be updated, even if you
+			specifically call <literal>viewer.refresh()</literal>
+			inside the view's class. The reason for this is that
+			in eclipse, SWT is modeled as one single thread, 
+			and these events must be fired while other threads are
+			modifying the gui. </para>
+		<para>
+			In order to force the viewer to update, you must do it via
+			an <literal>asyncExec</literal> call on your display, 
+			which is a member of the SWT thread. Seen below:</para>
+			
+			<programlisting>
+	// Called from our model when *IT* receives a real event
+	public void fireMyChangeEvent() {
+		// event fired
+		System.out.println("fired");
+		final Example6Model model = Example6ResourceTrackingPlugin.getDefault().getModel();
+
+        if (!viewer.getControl().isDisposed())
+        {
+	        Display display = viewer.getControl().getDisplay();
+	        
+	        if (!display.isDisposed()) {
+	            display.asyncExec(new Runnable() {
+	                public void run() {
+	                    //make sure the tree still exists
+	                    if (viewer != null &amp;&amp; viewer.getControl().isDisposed())
+	                        return;
+	            		viewer.refresh();
+	                }
+	            });
+	        }
+	        }
+
+	}
+			</programlisting>
+			
+			<para>The asyncExec call makes sure that your viewer's refresh
+			occurs as soon as possible without any side effects. There are
+			no events fired after such a gui update is complete to alert
+			you that the viewer's update is complete.</para> 
+	</section>
+	
+	<section>
+		<title>Some JDT examples</title>
+		<para>The ViewContentProvider internal class for 
+		our SampleView manages how to display the content, what
+		objects have children, and other things for our model.
+		Because the entry point is our model, it's first children would be
+		the input object, the model. From there, we declare that it's 2 children
+		are strings that represent which collection we plan to display.</para>
+		
+		<para>So the next time it tries to check for children, we return
+		which ever collection it seeks, a collection of either <literal>
+		ElementChangedEvent</literal>s or <literal>ResourceChangeEvent</literal>s,
+		which contain deltas and then eventually elements that have been changed.</para>
+		
+		<para>The <literal>ElementChangedEvent</literal>s have 
+		<literal>IJavaElementDelta</literal>s, which correspond to a change
+		for one java element (method, field, package fragment, type, etc). </para>
+		
+		<para>Because this example focuses on deltas, we don't get into a lot
+		of the JDT possibilities, but it works just as any heirarchy you'd expect
+		for java classes. Given some IType (class type), you can get a list of member
+		variables, methods, inner types, and other things. </para>
+		
+		<para>One last thing I'd like to note in our example is the use of the 
+		<literal>JavaUILabelProvider</literal> to assist in providing images and
+		text if we had wanted it to. This is what has allowed members, types, 
+		folders, and others, to show icons in the SampleView's tree.
+		This class will be very helpful if you want to display icons and information
+		about some JDT elements that you'll be modeling, and it's listed here 
+		so that you may do so.
+		</para>
+		
+	</section>
+</chapter>

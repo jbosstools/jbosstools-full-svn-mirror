@@ -1,0 +1,303 @@
+<chapter id="Example4">
+		<title>A plug-in with views</title>
+		<section>
+			<title>Adding a view</title>
+			<para>
+				Adding a view to a plug-in is as simple as 
+				extending <literal>org.eclipse.ui.views</literal>,
+				declaring a category for it to be listed, and then 
+				declaring your view with some parameters. If
+				you're feeling really ambitious, you can designate where
+				this view should appear when loaded relative to other
+				views, or even what perspective you want it to appear in.
+				You can do this through the gui editor for the 
+				plugin.xml file, or you can do it manually.</para>
+				
+			<para>
+				In the included example, <literal>Example4Views</literal>,
+				I've declared a plug-in with two views. The main plug-in class
+				contains only the default information and nothing more. 
+				It contains only the boiler-plate code needed to allow the 
+				plug-in to run.</para>
+				
+			<para>
+				Looking at the plug-in.xml, however, we'll notice exactly what is
+				detailed above. Whether you use the gui or look at the raw 
+				xml, what we have is an extension to <literal>org.eclipse.ui.views</literal>
+				as well as one to <literal>org.eclipse.ui.perspectiveExtensions</literal>.
+				For completeness, the xml for one view is listed below.</para>
+				
+				<programlisting>
+   &lt;extension point="org.eclipse.ui.views"&gt;
+      &lt;category name="Sample Category" id="Example4Views"&gt;
+      &lt;/category&gt;
+      &lt;view name="Table / List View" 
+      		icon="icons/sample.gif" category="Example4Views" 
+            class="example4Views.views.TableView"
+            id="example4Views.views.TableView"&gt;
+      &lt;/view&gt;
+   &lt;/extension&gt;
+   &lt;extension
+         point="org.eclipse.ui.perspectiveExtensions"&gt;
+      &lt;perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective"&gt;
+         &lt;view
+               ratio="0.5"
+               relative="org.eclipse.ui.views.TaskList"
+               relationship="right"
+               id="example4Views.views.TableView"&gt;
+         &lt;/view&gt;
+      &lt;/perspectiveExtension&gt;
+   &lt;/extension&gt;
+				</programlisting>
+		</section>
+		
+		
+		<section>
+			<title>Creating the control</title>
+			<para>Creating the control for the view involves any amount
+			of SWT layout coding that you find desirable. For our first two 
+			examples, <literal>TableView</literal> and <literal>TreeView</literal>
+			the SWT is minimal. All we do there is create our JFace Viewer, which
+			helps us organize and display our data. For those two classes, 
+			the actual SWT code is as follows:</para>
+			<programlisting>
+				// TreeView.java
+				viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+				
+				//TableView.java
+				viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+			</programlisting>
+			
+			<para>The <literal>SWTView.java></literal> has a much more
+			SWT-oriented <literal>createPartControl</literal> method, and
+			it may provide as a slight jumping off point for investigating
+			SWT code, but it is really just a few simple examples.</para>
+		</section>
+		
+		<section>
+			<title>Content Providers</title>
+			<section><title>Introduction</title>
+			<para>The content provider for a viewer helps organize the data
+			from some underlying model and figure out how to display it in the 
+			viewer. The content provider is a JFace element and so rests a level
+			above the actual list, table, or tree lying underneath. It provides 
+			APIs that will quickly allow you to change the SWT element's 
+			data without dealing with the annoyances of those underlying
+			elements.</para>
+			</section>
+			
+			<section><title>TableViewer's Content Provider</title>
+				<para>The TableViewer only requires an <literal>
+				IStructuredContentProvider</literal>, which only requires
+				three methods. I think the code is rather self-explanatory
+				here, and there's not much more I can say on it.</para>
+				<para><literal>inputChanged</literal> is used to change the 
+				top level of the model, to designate a new model, etc. In 
+				the two examples mentioned above, we use the viewSite as our
+				input, but that's completely arbitrary amd just serves as an
+				example. For a real model (as opposed to the strings), 
+				the root element might be something like an xml element, 
+				or a list of some sort that is likely to change.</para>
+				<para>For Completeness:</para>
+				<programlisting>
+	class ViewContentProvider implements IStructuredContentProvider {
+		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
+		}
+		public void dispose() {
+		}
+		public Object[] getElements(Object parent) {
+			ArrayList list = new ArrayList();
+			list.addAll(Arrays.asList(new String[] {"One", "Two", "Three"}));
+			list.add(new Integer(5));
+			return list.toArray();
+		}
+	}
+				</programlisting>
+
+			</section>
+			<section><title>TreeViewer's ContentProvider</title>
+				<para>The TreeViewer requires an ITreeContentProvider, and
+				its associated methods. This implementation also uses the viewSite as
+				its root, however any calls requesting the children of the 
+				root are deferred to the proxy element, the <literal>invisibleroot</literal>.
+				Then, from the children returned, further children can be found through the 
+				appropriate APIs.</para>
+				<para>The required methods for a complete 
+				<literal>ITreeContentProvider</literal> are listed below:</para>
+				<programlisting>
+		public void inputChanged(Viewer v, Object oldInput, Object newInput);
+		public void dispose();
+		public Object[] getElements(Object parent);
+		public Object getParent(Object child);
+		public Object [] getChildren(Object parent);
+		public boolean hasChildren(Object parent);
+						</programlisting>
+			</section>
+		</section>
+		
+		<section><title>Label Providers</title>
+			<section><title>The Generic LabelProvider</title>
+			<para>	The label provider is used to show the text and the image
+				associated with a given object element. Because of how simple
+				the idea is, and also the implementation, it only requires
+				two methods: <literal>getText</literal> and <literal>getImage</literal>,
+				both taking an object to evaluate. </para>
+			<para>NOTE: If you use a shared image in the eclipse platform, 
+			you do not need to create or destroy it. If you use your own image,
+			you are in charge of creating it AND destroying it.</para>
+			</section>
+			
+			<section><title>ITableLabelProvider</title>
+				<para>This label provider is different only in that the table
+					gives to each element an entire row, and so given
+					some object, it can have multiple columns, each of which
+					can have a text representation and an associated image.
+				</para>
+			</section>
+		</section>
+		
+		<section><title>Context Menus</title>
+			<para>Context menus for your own view are a lot easier to add,
+			and can be added or removed, set enabled or disabled, over a 
+			much wider range of criteria then those through the <literal>plugin.xml</literal>
+			file. </para>
+			
+			<section><title>Creating a (mostly) static Context Menu</title>
+				<para>If we look at the <literal>SWTView</literal>, we see
+				that we register our menu during when our control is created
+				in the <literal>createPartControl</literal> method call. 
+				We declare our actions right there, and register them with our menu manager.
+				The menuManager can still be changed programatically, 
+				but that usually means the menu intends to stay relatively constant
+				regardless of what items are selected. </para>
+				
+				<para>The menu manager is actually pretty robust. You can mark it 
+				as dirty, add or remove actions from it, as well as other things. In
+				the SWTView example, we've specifically noted not to clear itself
+				before showing each time. To clear before showing every time would
+				be characteristic of a menu that is very sensitive to what 
+				elements are selected, as we'll see in the other views. 
+				For the SWTView, we've created an unchanging menu
+				that is not context sensitive at all.</para> 
+				<programlisting>
+		// creating the Menu and registering it
+		MenuManager menuMgr = new MenuManager("#PopupMenu");
+		menuMgr.setRemoveAllWhenShown(false);
+		Menu menu = menuMgr.createContextMenu(viewer.getControl());
+		viewer.getControl().setMenu(menu);
+		getSite().registerContextMenu(menuMgr, viewer);
+		
+		// create our action
+		Action act1 = new Action() { 
+			public void run() {
+				showMessage("Action1");
+			}
+		} ; 
+		act1.setText("SWT Action 1");
+		
+		// add it
+		menuMgr.add(act1) ;
+		
+		// required, for extensions
+		menuMgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+				</programlisting>
+			</section>
+			
+			<section><title>A dynamic Context Menu</title>
+				<para>Looking at our <literal>TableView</literal> implementation, 
+				the first thing we do to start off the menu process 
+				is create our actions. We give them titles, descriptions, tooltips,
+				and run methods. The next step is to create the menu manager
+				and hook the actions into it.</para>
+				
+				<para>The differing code is seen below: </para>
+				<programlisting>
+		menuMgr.setRemoveAllWhenShown(true);
+		menuMgr.addMenuListener(new IMenuListener() {
+			public void menuAboutToShow(IMenuManager manager) {
+				TableView.this.fillContextMenu(manager);
+			}
+		});
+				</programlisting>
+				<para>Here, we declare that we want to clear out the menu
+				every time it's about to be shown. Then we add a listener, where
+				we can add actions to the menu in a much more fine-tuned manner.</para>
+				
+				<para>If we go down to the <literal>fillContextMenu</literal> method, 
+				we get the selection from the viewer. I know it will return an
+				<literal>IStructuredSelection</literal>, but I've decided to
+				add no actions if more than one element is selected. I add
+				one action regardless of what element is selected, but if a 
+				String is selected, I add the second action as well. </para>
+				
+				<para>So when we run this example and open the List / Table View, 
+				if we right click on the integer element, we should only see one
+				action, and if we right-click on one of the other three, we should see
+				two. Whether the object is a String or an Integer goes back to the 
+				Content Providers, and what they have given us as their list of 
+				children. If we look at the <literal>TableView</literal>'s <literal>
+				ViewContentProvider</literal> inner class and its <literal>
+				getElements</literal> method, the code returns a list
+				with 3 Strings and one Integer. </para>
+				
+				<programlisting>
+		public Object[] getElements(Object parent) {
+			ArrayList list = new ArrayList();
+			list.addAll(Arrays.asList(new String[] {"One", "Two", "Three"}));
+			list.add(new Integer(5));
+			return list.toArray();
+		}
+				</programlisting>
+				
+				
+			</section>
+			
+			<section><title>Drilldown Adapters</title>
+				<para>Drilldown Adapters are a feature available for 
+				TreeViewers to help navigate through the data, instead of 
+				having to deal with ever expanding trees. In this way you
+				can essentially zoom in to view just one part of the tree, 
+				i.e., drill down.  Only two lines of code were added
+				throughout the initialization of the viewer to invoke
+				this feature in the context menu. 
+				Only one line was needed to add them to the view's toolbar.
+				They are shown below</para>
+				
+				<programlisting>
+		// Create the Drill Down Adapter
+		drillDownAdapter = new DrillDownAdapter(viewer);
+				
+		// Add the options to the context menu (IMenuManager)
+		drillDownAdapter.addNavigationActions(manager);
+				
+		// Add the options to the view's toolbar (IToolBarManager)
+		drillDownAdapter.addNavigationActions(manager);
+				</programlisting>
+			</section>
+		
+		</section>
+		
+		<section><title>Conclusion</title>
+			<para>Other features are able to be added to views as well.
+			Viewers can have doubleclick actions, and I didn't get into
+			the specifics of adding the toolbar icons, but the code is all
+			very short and concise. The ease with which one can make a view
+			should help make adding them to your plug-in as painless as possible.</para>
+			
+			<para>
+				One thing of note to anyone using a view to add, remove, or change
+				data to some underlying model.  By convention, any changes made to 
+				data in a view (such as right clicking on an element and selecting
+				a delete action) should be saved to the model right away, and to
+				its underlying file resource if one exists. Editors, on the other hand,
+				follow the open, save, store, model, where changes must be 
+				specifically saved by the user. Views should not behave in this manner.
+				All changes should be live as soon as they are executed.</para>
+				
+				<para>Finally, there will be many other examples of views
+				in future examples, and often times tips about specific 
+				quirks found when using them. </para>
+				
+		</section>
+</chapter>
