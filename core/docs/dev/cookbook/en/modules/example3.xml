@@ -58,7 +58,8 @@ most problems regarding packaging jars with your plugin.</para>
 		editor of your plugin and pressing <literal>ctrl+shift+o</literal>,
 		which organizes your import statements and 
 		should import this item. Then save the file) We won't run this 
-		application, as it doesn't actually do anything.</para>
+		application, as it doesn't actually do anything.
+		This exercise was just demonstrative.</para>
 	</section>
 	
 	
@@ -73,7 +74,7 @@ most problems regarding packaging jars with your plugin.</para>
 		
 		<para>Next, let's try to get a reference to that plug-in's singleton
 		object in a new method. Put the following method in the 
-		<literal>example3Dependencies.Example3Dependencies.java</literal> class file,
+		<literal>example3Dependencies.Example3Dependencies.java</literal> .java file,
 		right after our <literal>neverCalled()</literal> method.</para>
 
 		<programlisting>public void neverCalled2() {
@@ -85,7 +86,7 @@ most problems regarding packaging jars with your plugin.</para>
 		on the <literal>Dependencies</literal> tab. Click <literal>add</literal>
 		and select <literal>Example3Z</literal>. Then save the file.</para>
 		
-		<para>If we go back and look at our plugin class file, 
+		<para>If we go back and look at our plugin .java file, 
 		<literal>example3Dependencies.Example3Dependencies.java</literal>, 
 		we'll see a new error.</para>
 		

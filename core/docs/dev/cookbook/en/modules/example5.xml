@@ -8,7 +8,7 @@
   		project named <literal>Example5aCustomEditor</literal>
   		is the eclipse template generated for you, with absolutely no 
   		modifications at all by me to mark up or elaborate on the topic.
-  		It primarily colors xml documents.</para>
+  		It primarily parses and then colors xml documents.</para>
   		
   		<para>
 	  		<literal>Example5bMultiPageEditor</literal> is a two-page editor
@@ -22,7 +22,7 @@
   	<title>Custom Editor</title>
   	<para>
   		The basic TextEditor is a large text field centered inside
-  		your workbench, and provides columns for line numbers and markers.
+  		your workbench, and provides columns for line numbers and markers on the sides.
   		Because of this, most editors you produce should probably inherit
   		from TextEditor. The steps to creating your editor 
   		are: declaring your dependencies, declaring your extension, and
@@ -43,7 +43,8 @@
   		files we can be used to edit, a class for the editor, and a contributor
   		class, which manages the context menus for editors. (You are, of course,
   		welcome to create your own contributer after studying some of the generalized
-  		ones, but that is an exercise left up to the reader, should they care to do so.)</para>
+  		ones, but that is an exercise left up to the reader, should they care to do so.
+  		My example has used a common contributor class.)</para>
   		
   	<para>
   		The astute reader who is actively browsing the project code now 
@@ -144,7 +145,7 @@
   	
   	<para>The only method we MUST implement from the abstract superclass is the
   	<literal>createPages</literal> method. Everything else is done for us, though
-  	I'm sure we're welcome to override what we need to. In this example, we don't
+  	we're always welcome to override what we need to. In this example, we don't
   	override much at all. </para>
   	
   	<para>We begin by creating each of our two pages, and then changing the title 

@@ -31,6 +31,26 @@
 		</para>
 	</section>
 	
+	<section><title>Project Structure</title>
+	<para>
+		For this example, I've made a model class, <literal>Example6Model</literal>.
+		It has an inner type <literal>ModelRoot</literal> which keeps track
+		of two arraylists, one containing change events for resources, the other 
+		containing change events for elements. I've set the 
+		<literal>Example6Model</literal> up as a listener for both types of 
+		events. </para>
+	<para>
+		I also added an interface called <literal>MyChangeListener</literal>,
+		which the model will fire events to after receiving either type of event.
+		The view has been registered as a listener to the model.</para>
+	<para>
+		So the general flow of execution is that a resource or java element
+		will be changed and fire events to our model who is a listener for them.
+		Our model will update itself by adding this new event, then alert
+		the view that the model has changed and the viewer should refresh itself.
+	</para>
+	</section>
+	
 	<section>
 		<title>Resource Changes</title>
 		<para>Resources are only marked as changed, and thus the events fired,
@@ -78,13 +98,13 @@
 		<title>Element Changes</title>
 		<para>Element changes are fired as soon as a delta between the current file
 		buffer and the most recent file buffer can be calculated. This is usually within 
-		2 seconds of when you stop typing. As soon as the delta is calculated, it is fired
+		a few seconds of when you stop typing. As soon as the delta is calculated, it is fired
 		off to all available listeners. </para>
 		<para>JBoss AOP IDE makes use of these in calculating typedef matching, advisors, 
 		and other things that are dependent upon the exact text of a java source file. 
-		Changing a method name, for example, from "someMethod" to "otherMethod", 
+		Changing a method name from "someMethod" to "newMethod", 
 		will fire off one event with two changed elements burried inside, one 
-		denoting the removal of "someMethod", and one denoting the addition of "otherMethod".
+		denoting the removal of "someMethod", and one denoting the addition of "newMethod".
 		</para>
 		
 		<para>The program code necessary to become an elementChangeListener is as follows:</para>
@@ -179,7 +199,7 @@
 		<para>Because this example focuses on deltas, we don't get into a lot
 		of the JDT possibilities, but it works just as any heirarchy you'd expect
 		for java classes. Given some IType (class type), you can get a list of member
-		variables, methods, inner types, and other things. </para>
+		variables, methods, inner types, its package, and other things. </para>
 		
 		<para>One last thing I'd like to note in our example is the use of the 
 		<literal>JavaUILabelProvider</literal> to assist in providing images and
