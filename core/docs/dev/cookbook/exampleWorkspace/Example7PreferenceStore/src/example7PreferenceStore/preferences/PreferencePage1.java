@@ -1,19 +1,15 @@
 package example7PreferenceStore.preferences;
 
-import java.util.ArrayList;
-
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -48,7 +44,7 @@ public class PreferencePage1 extends PreferencePage implements IWorkbenchPrefere
 	
 	public PreferencePage1() {
 		setPreferenceStore(Example7PreferenceStorePlugin.getDefault().getPreferenceStore());
-		setDescription("Some simple preferences");
+		setDescription("Some preference examples");
 	}
 
 	public void init(IWorkbench workbench) {
@@ -79,17 +75,15 @@ public class PreferencePage1 extends PreferencePage implements IWorkbenchPrefere
 		targetComposite.setLayoutData(targetCompositeData);
 		
 
-		loadPreferences();			
-		if( targetComposite.getViewer().getTable().getItemCount() == 0 ) {
-		} 
-		
+		// Fill our widgets with values from the preference store
+		loadPreferences();
 
 		return main;
 	}
 	
 	private void loadPreferences() {
 		/*
-		 * I'm saving the preferences as __JAR_TO_SEARCH__0, 1,2, etc.
+		 * I'm saving the preferences as "__JAR_TO_SEARCH__0", 1,2, etc.
 		 */
 		
 		
@@ -130,8 +124,9 @@ public class PreferencePage1 extends PreferencePage implements IWorkbenchPrefere
 	
 	/**
 	 * On an ok, we want to delete all JAR_PREFIX and TARGET_PREFIX
-	 * preferences (not the entire plugin's preferences, just these...
-	 * and then save whichever are active in the gui.
+	 * preferences and then save whichever are active in the gui.
+	 * (We will not delete all saved preferences, as 
+	 *  any part of the plug-in can declare and store preferences.) 
 	 */
 	public boolean performOk() {
 		clearPreferences();
@@ -499,7 +494,7 @@ public class PreferencePage1 extends PreferencePage implements IWorkbenchPrefere
 	}
 	
 	
-	private class NameUriPair {
+	public static class NameUriPair {
 		private String name;
 		private String uri;
 		
