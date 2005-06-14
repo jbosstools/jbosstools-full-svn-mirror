@@ -21,9 +21,15 @@ public class Action1 implements IObjectActionDelegate, IWorkbenchWindowActionDel
 	public void run(IAction action) {
 		// Here we'll just get our preference store and see if it
 		// contains a preference by that name. 
-		IPreferenceStore store = Example7PreferenceStorePlugin.getDefault().getPreferenceStore();
-		System.out.println("Does store contain one target? " +
-				store.contains(PreferencePage1.TARGET_PREFIX + "0"));
+		IPreferenceStore store = Example7PreferenceStorePlugin
+			.getDefault().getPreferenceStore();
+		boolean contains = store.contains(PreferencePage1.TARGET_PREFIX + "0");
+		System.out.println("Does store contain one target? " + contains );
+		if( contains ) {
+			String s = store.getString(PreferencePage1.TARGET_PREFIX + "0");
+			PreferencePage1.NameUriPair pair = new PreferencePage1.NameUriPair(s);
+			System.out.println("name: " + pair.getName() + ", uri: " + pair.getUri());
+		}
 	}
 
 	public void selectionChanged(IAction action, ISelection selection) {
