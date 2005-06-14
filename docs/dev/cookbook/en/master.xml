@@ -9,6 +9,7 @@
 <!ENTITY views SYSTEM "modules/example4.xml">
 <!ENTITY editors SYSTEM "modules/example5.xml">
 <!ENTITY tracking SYSTEM "modules/example6.xml">
+<!ENTITY preferences SYSTEM "modules/example7.xml">
 ]>
 
 <book lang="en">
@@ -27,4 +28,5 @@
 &views;
 &editors;
 &tracking;
+&preferences;
 </book>
