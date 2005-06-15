@@ -373,14 +373,14 @@ public class NewSessionBeanWizardPage extends NewTypeWizardPage {
 			if (packageName.length() > 0) {
 				IStatus val= JavaConventions.validatePackageName(packageName);
 				if (val.getSeverity() == IStatus.ERROR) {
-					status.setError(NewWizardMessages.getFormattedString("NewTypeWizardPage.error.InvalidPackageName", val.getMessage())); //$NON-NLS-1$
+					status.setError(NewWizardMessages.bind(NewWizardMessages.NewTypeWizardPage_error_InvalidPackageName, val.getMessage())); //$NON-NLS-1$
 					throw new CoreException(status);
 				} else if (val.getSeverity() == IStatus.WARNING) {
-					status.setWarning(NewWizardMessages.getFormattedString("NewTypeWizardPage.warning.DiscouragedPackageName", val.getMessage())); //$NON-NLS-1$
+					status.setWarning(NewWizardMessages.bind(NewWizardMessages.NewTypeWizardPage_warning_DiscouragedPackageName, val.getMessage())); //$NON-NLS-1$
 					// continue
 				}
 			} else {
-				status.setWarning(NewWizardMessages.getString("NewTypeWizardPage.warning.DefaultPackageDiscouraged")); //$NON-NLS-1$
+				status.setWarning(NewWizardMessages.NewTypeWizardPage_warning_DefaultPackageDiscouraged); //$NON-NLS-1$
 			}
 			
 			IPackageFragmentRoot root= getPackageFragmentRoot();
@@ -394,7 +394,7 @@ public class NewSessionBeanWizardPage extends NewTypeWizardPage {
 							// like the bin folder
 							IPath packagePath= rootPath.append(packageName.replace('.', '/'));
 							if (outputPath.isPrefixOf(packagePath)) {
-								status.setError(NewWizardMessages.getString("NewTypeWizardPage.error.ClashOutputLocation")); //$NON-NLS-1$
+								status.setError(NewWizardMessages.NewTypeWizardPage_error_ClashOutputLocation); //$NON-NLS-1$
 								throw new CoreException(status);
 							}
 						}

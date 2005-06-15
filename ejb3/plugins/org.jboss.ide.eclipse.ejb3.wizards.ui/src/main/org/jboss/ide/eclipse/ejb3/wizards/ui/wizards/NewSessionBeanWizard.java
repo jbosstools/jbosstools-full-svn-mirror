@@ -4,6 +4,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.internal.ui.wizards.NewElementWizard;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
@@ -45,5 +46,9 @@ public class NewSessionBeanWizard extends NewElementWizard {
 		throws InterruptedException, CoreException
 	{
 		page.createType(monitor);
+	}
+	
+	public IJavaElement getCreatedElement() {
+		return page.getCreatedType();
 	}
 }
