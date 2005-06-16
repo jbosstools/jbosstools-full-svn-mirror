@@ -29,6 +29,7 @@
       <import plugin="org.jboss.ide.eclipse.launcher.core"/>
       <import plugin="org.jboss.ide.eclipse.launcher.ui"/>
       <import plugin="org.eclipse.debug.core"/>
+      <import plugin="org.eclipse.debug.ui"/>
    </requires>
    <extension
          id="org.jboss.ide.eclipse.ejb3.wizards.ui.NewStatelessSessionBeanWizard"
