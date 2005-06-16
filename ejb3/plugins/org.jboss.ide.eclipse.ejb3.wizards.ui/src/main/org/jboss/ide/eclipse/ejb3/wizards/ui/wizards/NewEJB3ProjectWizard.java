@@ -269,5 +269,11 @@ public class NewEJB3ProjectWizard extends Wizard implements INewWizard {
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 	}
+	
+	public boolean canFinish() {
+		if (page2 == null) return false;
+		
+		return page2.getLaunchConfiguration() != null;
+	}
 
 }
