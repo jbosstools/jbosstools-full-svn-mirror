@@ -1,7 +1,7 @@
 /*
  * Created on Jan 18, 2005
  */
-package org.jboss.ide.eclipse.jdt.aop.core.pointcut;
+package org.jboss.ide.eclipse.jdt.aop.core.matchers;
 
 import javassist.NotFoundException;
 
@@ -16,6 +16,7 @@ import org.jboss.aop.pointcut.ast.ASTMethod;
 import org.jboss.aop.pointcut.ast.ASTStart;
 import org.jboss.aop.pointcut.ast.Node;
 import org.jboss.aop.pointcut.ast.ParseException;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
 
 /**
  * @author Marshall

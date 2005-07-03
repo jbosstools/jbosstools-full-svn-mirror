@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.IType;
 import org.jboss.aop.pointcut.Typedef;
 import org.jboss.aop.pointcut.TypedefExpression;
 import org.jboss.aop.pointcut.ast.ParseException;
+import org.jboss.ide.eclipse.jdt.aop.core.matchers.JDTTypeMatcher;
 
 /**
  * @author Marshall

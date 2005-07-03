@@ -4,7 +4,7 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package org.jboss.ide.eclipse.jdt.aop.core.pointcut;
+package org.jboss.ide.eclipse.jdt.aop.core.matchers;
 
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -27,6 +27,7 @@ import org.jboss.aop.pointcut.ast.ASTField;
 import org.jboss.aop.pointcut.ast.ASTMethod;
 import org.jboss.aop.pointcut.ast.ClassExpression;
 import org.jboss.aop.pointcut.ast.ParseException;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 
 import com.thoughtworks.qdox.model.DocletTag;
 import com.thoughtworks.qdox.model.JavaClass;

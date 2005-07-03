@@ -4,7 +4,7 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package org.jboss.ide.eclipse.jdt.aop.core.pointcut;
+package org.jboss.ide.eclipse.jdt.aop.core.matchers;
 
 import org.eclipse.jdt.core.IType;
 import org.jboss.aop.pointcut.TypeMatcher;

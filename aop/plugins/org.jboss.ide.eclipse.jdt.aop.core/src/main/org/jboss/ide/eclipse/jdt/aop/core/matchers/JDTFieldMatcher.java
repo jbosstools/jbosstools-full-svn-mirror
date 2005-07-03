@@ -1,7 +1,7 @@
 /*
  * Created on Jan 11, 2005
  */
-package org.jboss.ide.eclipse.jdt.aop.core.pointcut;
+package org.jboss.ide.eclipse.jdt.aop.core.matchers;
 
 import java.io.StringReader;
 

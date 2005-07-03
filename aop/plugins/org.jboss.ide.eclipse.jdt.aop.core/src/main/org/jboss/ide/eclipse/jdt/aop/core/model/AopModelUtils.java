@@ -10,6 +10,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aspect;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
 
@@ -65,6 +66,9 @@ public class AopModelUtils {
 		return getTypeFromAop(Typedef.class, aop);
 	}
 	
+	public static List getIntroductionsFromAop(Aop aop) {
+		return getTypeFromAop(Introduction.class, aop);
+	}
 	
 	
 	/**
