@@ -37,6 +37,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aspect;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
@@ -48,7 +49,7 @@ import org.jboss.ide.eclipse.jdt.aop.ui.actions.ApplyAdviceAction;
 import org.jboss.ide.eclipse.jdt.aop.ui.actions.ApplyInterceptorAction;
 import org.jboss.ide.eclipse.jdt.aop.ui.actions.CreateNewNamedPointcutAction;
 import org.jboss.ide.eclipse.jdt.aop.ui.actions.CreateNewNamedTypedefAction;
-import org.jboss.ide.eclipse.jdt.aop.ui.actions.ModifyNamedPointcutAction;
+import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.IntroductionDialog;
 import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.PointcutPreviewDialog;
 import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.TypedefPreviewDialog;
 import org.jboss.ide.eclipse.jdt.aop.ui.util.JumpToCodeUtil;
@@ -73,7 +74,8 @@ public class AspectManagerView extends ViewPart {
     				createBindingAction, createTypedefAction, removeInterceptorAction, 
     				removeAdviceAction, removeInterceptorRefAction, 
     				removeBindingAction, removeNamedPointcutAction, editTypedefAction,
-    				goToAction, editBindingAction, editPointcutAction;
+    				goToAction, editBindingAction, editPointcutAction, 
+    				createIntroductionAction, editIntroductionAction, deleteIntroductionAction;
     
     public AspectManagerView ()
     {
@@ -373,6 +375,39 @@ public class AspectManagerView extends ViewPart {
     	removeBindingAction.setToolTipText("Remove this Binding");
     	removeBindingAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
     	
+    	
+    	createIntroductionAction = new Action() {
+    		public void run() {
+    			IntroductionDialog dialog = new IntroductionDialog(getSite().getShell());
+    			if( dialog.open() == Dialog.OK) {
+    				System.out.println("success");
+    			}
+    		}
+    	};
+    	createIntroductionAction.setText("Add an Introduction");
+    	createIntroductionAction.setToolTipText("Create and add a new introduction");
+    	// createIntroductionAction.setImageDescriptor(something);
+    	
+    	deleteIntroductionAction = new Action() {
+    		public void run() {
+    			
+    		}
+    	};
+    	deleteIntroductionAction.setText("Delete");
+    	deleteIntroductionAction.setToolTipText("Remove this introduction");
+    	deleteIntroductionAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
+    	
+    	editIntroductionAction = new Action() {
+    		public void run() {
+    			
+    		}
+    	};
+    	editIntroductionAction.setText("Edit");
+    	editIntroductionAction.setToolTipText("Edit this introduction");
+    	// createIntroductionAction.setImageDescriptor(something);
+    	
+    	
+    	
     }
     
 	
@@ -445,6 +480,10 @@ public class AspectManagerView extends ViewPart {
 					manager.add(editTypedefAction);
 					manager.add(new Separator());
 					manager.add(removeTypedefAction);
+    			} else if( selected instanceof Introduction ) {
+					manager.add(editIntroductionAction);
+					manager.add(new Separator());
+					manager.add(deleteIntroductionAction);
     			}
 				
 				/* 
@@ -462,6 +501,9 @@ public class AspectManagerView extends ViewPart {
     				}
     				else if( list.get(0) == AspectManagerContentProvider.TYPEDEFS) {
 						manager.add(createTypedefAction);
+    				}
+    				else if( list.get(0) == AspectManagerContentProvider.INTRODUCTIONS) {
+						manager.add(createIntroductionAction);
     				}
     			} 
     		}

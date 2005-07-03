@@ -28,7 +28,7 @@ import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces.PointcutPreviewAssistComp
  */
 public class TypedefPreviewDialog extends PointcutPreviewDialog {
 
-	private JDTTypedefExpression tdExpr;
+	protected JDTTypedefExpression tdExpr;
 	
 	
 	public TypedefPreviewDialog(Shell parentShell) {

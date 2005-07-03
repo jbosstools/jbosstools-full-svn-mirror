@@ -4,12 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.IPackageFragment;
-import org.eclipse.jdt.internal.ui.refactoring.contentassist.ControlContentAssistHelper;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
@@ -27,8 +23,8 @@ import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.AopDescriptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
+import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces.AopUICompletionProcessor;
 import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces.PointcutPreviewAssistComposite;
-import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces.PointcutPreviewTypeCompletionProcessor;
 
 /**
  * This class represents the second pointcut preview dialog.
@@ -244,6 +240,7 @@ public class PointcutPreviewDialog2 extends Dialog {
 		private String type, text;
 
 		private Label categoryLabel;
+		private AopUICompletionProcessor processor;
 		
 		/**
 		 * Used by a composite containing ONLY a typecomposite.
@@ -286,10 +283,8 @@ public class PointcutPreviewDialog2 extends Dialog {
 			setWidgetDatas();
 			fillCombos( classOnly );
 			
-	
-			final TypePatternModifyListener typeListener = 
-				new TypePatternModifyListener(pattern, enableBaseTypes, enableVoid);
-			pattern.addModifyListener(typeListener);
+			processor = new AopUICompletionProcessor(pattern); 
+
 	
 			patternType.addSelectionListener(new SelectionListener() {
 	
@@ -304,7 +299,7 @@ public class PointcutPreviewDialog2 extends Dialog {
 					} else {
 						typedefs.setVisible(false);
 						pattern.setVisible(true);
-						typeListener.setTypePulldown(patternTypeString);
+						updateProcessor(patternTypeString);
 					}
 				}
 	
@@ -315,13 +310,25 @@ public class PointcutPreviewDialog2 extends Dialog {
 			});
 	
 			patternType.select(0);
-			typeListener.setTypePulldown(patternType.getItem(patternType.getSelectionIndex()));
+			updateProcessor(patternType.getItem(patternType.getSelectionIndex()));
 			
 			
 			if( expression != null && expression != "") {
 				loadExpressionIntoWidgets(expression.trim());
 			}
 		}
+		
+		private void updateProcessor(String pulldownString) {
+			if( pulldownString.equals(PointcutPreviewAssistComposite.CLASS)) 
+				processor.setType(AopUICompletionProcessor.CLAZZ);
+			if( pulldownString.equals(PointcutPreviewAssistComposite.ANNOTATION)) 
+				processor.setType(AopUICompletionProcessor.ANNOTATION);
+			if( pulldownString.equals(PointcutPreviewAssistComposite.TYPEDEF)) 
+				processor.setType(AopUICompletionProcessor.TYPEDEF);
+			if( pulldownString.equals(PointcutPreviewAssistComposite.INSTANCE_OF)) 
+				processor.setType(AopUICompletionProcessor.INSTANCEOF);
+		}
+
 		private void setWidgetDatas() {
 			FormData comboData = new FormData();
 			comboData.top = new FormAttachment(categoryLabel, 5);
@@ -471,9 +478,10 @@ public class PointcutPreviewDialog2 extends Dialog {
 			annotPatternData.right = new FormAttachment(100,-5);
 			annotPattern.setLayoutData(annotPatternData);
 	
-			final TypePatternModifyListener typeListener = 
-				new TypePatternModifyListener(annotPattern, false, false);
-			annotPattern.addModifyListener(typeListener);
+			AopUICompletionProcessor processor = 
+				new AopUICompletionProcessor(annotPattern);
+			processor.setType(AopUICompletionProcessor.ANNOTATION);
+			
 			
 			namePattern = new Text(this, SWT.LEFT | SWT.SINGLE | SWT.READ_ONLY | SWT.BORDER);
 			namePattern.setEditable(!constructor);
@@ -487,7 +495,6 @@ public class PointcutPreviewDialog2 extends Dialog {
 			combo.addSelectionListener(new SelectionListener() {
 	
 				public void widgetSelected(SelectionEvent e) {
-					typeListener.setTypePulldown(combo.getItem(combo.getSelectionIndex()));
 					if(combo.getItem(combo.getSelectionIndex())
 							.equals(PointcutPreviewAssistComposite.NAME)) {
 						annotPattern.setVisible(false);
@@ -509,7 +516,6 @@ public class PointcutPreviewDialog2 extends Dialog {
 				namePattern.setEditable(false);				
 			}
 			annotPattern.setVisible(false);
-			typeListener.setTypePulldown(PointcutPreviewAssistComposite.ANNOTATION);
 
 			combo.select(0);
 			if( expression != null ) {
@@ -548,69 +554,76 @@ public class PointcutPreviewDialog2 extends Dialog {
 
 	
 	
-	/* Class to be used by any pointcut that requires a Type pattern */
-	public static class TypePatternModifyListener implements ModifyListener {
-		private IPackageFragment fragment = null;
-		private org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces.PointcutPreviewTypeCompletionProcessor completionProcessor;
-		private Text pattern;
-		private String text;
-		
-		private String typePulldown;
-		private boolean allowsStars;
-
-		public TypePatternModifyListener(Text pattern) {
-			this(pattern,false,false);
-		}
-		
-		public TypePatternModifyListener( Text pattern, boolean enableBaseTypes, boolean enableVoid) {
-			this.pattern = pattern;
-			completionProcessor = new PointcutPreviewTypeCompletionProcessor(
-					new PointcutPreviewTypeCompletionProcessor.TypeCompletionRequestor(enableBaseTypes,enableVoid));
-			ControlContentAssistHelper.createTextContentAssistant(pattern, completionProcessor);
-			completionProcessor.setTextField(pattern);
-			try {
-				IPackageFragment[] fragments = AopCorePlugin.getCurrentJavaProject().getPackageFragments();
-				fragment = fragments[0];
-			} catch( Exception e ) {
-			}
-		}
-		
-
-		public void modifyText(ModifyEvent e) {
-			boolean changed = true;
-			if( pattern.getText().indexOf("@") != -1) {
-				int position = pattern.getCaretPosition();
-				pattern.setText(text);
-				pattern.setSelection(position-1,position-1);
-				changed = false;
-			}
-			if( !allowsStars && pattern.getText().indexOf("*") != -1) {
-				int position = pattern.getCaretPosition();
-				pattern.setText(text);
-				pattern.setSelection(position-1,position-1);
-				changed = false;
-			}
-			
-			if( changed ) {
-				text = pattern.getText();
-			}
-			completionProcessor.setExtendsCompletionContext( fragment );
-		}
-		
-		public void setTypePulldown( String s ) {
-			typePulldown = s;
-			if( s.equals(PointcutPreviewAssistComposite.CLASS )) {
-				allowsStars = true;;
-			} else {
-				allowsStars = false;
-				pattern.setText(pattern.getText().replace('*', '\0'));
-			}
-
-			completionProcessor.setType(s);
-		}
-				
-	}
-	
+//	/* Class to be used by any pointcut that requires a Type pattern */
+//	public static class TypePatternModifyListener implements ModifyListener {
+//		private IPackageFragment fragment = null;
+//		private PointcutPreviewTypeCompletionProcessor completionProcessor;
+//		private Text pattern;
+//		private String text;
+//		
+//		private String typePulldown;
+//		private boolean allowsStars;
+//
+//		public TypePatternModifyListener(Text pattern) {
+//			this(pattern,false,false);
+//		}
+//		
+//		public TypePatternModifyListener( Text pattern, boolean enableBaseTypes, boolean enableVoid) {
+//			this(pattern, enableBaseTypes, enableVoid, true);
+//		}
+//		
+//		public TypePatternModifyListener( Text pattern, boolean enableBaseTypes, 
+//				boolean enableVoid, boolean addStars) {
+//			this.pattern = pattern;
+//			completionProcessor = new PointcutPreviewTypeCompletionProcessor(
+//					new PointcutPreviewTypeCompletionProcessor.TypeCompletionRequestor(enableBaseTypes,enableVoid), addStars);
+//			ControlContentAssistHelper.createTextContentAssistant(pattern, completionProcessor);
+//			completionProcessor.setTextField(pattern);
+//			try {
+//				IPackageFragment[] fragments = AopCorePlugin.getCurrentJavaProject().getPackageFragments();
+//				fragment = fragments[0];
+//			} catch( Exception e ) {
+//			}			
+//		}
+//		
+//		
+//
+//		public void modifyText(ModifyEvent e) {
+//			boolean changed = true;
+//			if( pattern.getText().indexOf("@") != -1) {
+//				int position = pattern.getCaretPosition();
+//				pattern.setText(text);
+//				pattern.setSelection(position-1,position-1);
+//				changed = false;
+//			}
+//			if( !allowsStars && pattern.getText().indexOf("*") != -1) {
+//				int position = pattern.getCaretPosition();
+//				pattern.setText(text);
+//				pattern.setSelection(position-1,position-1);
+//				changed = false;
+//			}
+//			
+//			if( changed ) {
+//				text = pattern.getText();
+//			}
+//			completionProcessor.setExtendsCompletionContext( fragment );
+//		}
+//		
+//		public void setTypePulldown( String s ) {
+//			typePulldown = s;
+//			if( s.equals(PointcutPreviewAssistComposite.CLASS )) {
+//				allowsStars = true;;
+//			} else {
+//				allowsStars = false;
+//				pattern.setText(pattern.getText().replace('*', '\0'));
+//			}
+//
+//			completionProcessor.setType(s);
+//		}
+//		
+//		
+//	}
+//	
 	
 	/**
 	 * The class that creates controls to assist in producing field, method,

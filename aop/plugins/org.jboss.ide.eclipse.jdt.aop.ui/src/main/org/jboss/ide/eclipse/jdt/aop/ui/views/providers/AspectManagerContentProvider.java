@@ -39,6 +39,8 @@ public class AspectManagerContentProvider implements IStructuredContentProvider,
 		new AspectManagerContentProviderTypeWrapper("_POINTCUTS_");
 	public static final AspectManagerContentProviderTypeWrapper TYPEDEFS = 
 		new AspectManagerContentProviderTypeWrapper("_TYPEDEFS_");
+	public static final AspectManagerContentProviderTypeWrapper INTRODUCTIONS = 
+		new AspectManagerContentProviderTypeWrapper("_INTRODUCTIONS_");
 	
 	public static class AspectManagerContentProviderTypeWrapper {
 		private String type;
@@ -85,6 +87,10 @@ public class AspectManagerContentProvider implements IStructuredContentProvider,
  			tmp.add(0,AspectManagerContentProvider.TYPEDEFS);
 			children.add(tmp);
 			 			
+//			tmp = AopModelUtils.getIntroductionsFromAop(aop);
+// 			tmp.add(0,AspectManagerContentProvider.INTRODUCTIONS);
+//			children.add(tmp);
+			
  			
  			return children.toArray();
 		}

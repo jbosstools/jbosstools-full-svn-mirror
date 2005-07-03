@@ -46,6 +46,7 @@ public class AspectManagerLabelProvider extends LabelProvider {
 			else if( firstElement == AspectManagerContentProvider.INTERCEPTORS ) return "Interceptors";
 			else if( firstElement == AspectManagerContentProvider.POINTCUTS ) return "Pointcuts";
 			else if( firstElement == AspectManagerContentProvider.TYPEDEFS ) return "Typedefs";
+			else if( firstElement == AspectManagerContentProvider.INTRODUCTIONS ) return "Introductions";
 			
 		}
 		else if (obj instanceof Aspect)

@@ -176,7 +176,7 @@ public class PointcutPreviewDialog extends Dialog {
 			FormData pointcutLabelData = new FormData();
 			pointcutLabelData.left = new FormAttachment(0,10);
 			pointcutLabelData.top = new FormAttachment(0,10);
-			pointcutLabelData.right = new FormAttachment(0,60);
+			//pointcutLabelData.right = new FormAttachment(0,60);
 			expressionLabel.setLayoutData(pointcutLabelData);
 			
 			FormData pointcutTextData = new FormData();
