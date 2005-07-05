@@ -1,37 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
-<plugin
-   id="org.jboss.ide.eclipse.ejb3.wizards.ui"
-   name="EJB3 Wizards UI Plug-in"
-   version="1.0.0"
-   provider-name="JBoss Inc"
-   class="org.jboss.ide.eclipse.ejb3.wizards.ui.EJB3WizardsUIPlugin">
+<plugin>
 
-   <runtime>
-      <library name="ejb3-wizards-ui.jar">
-         <export name="*"/>
-      </library>
-   </runtime>
-
-   <requires>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.jboss.ide.eclipse.ejb3.wizards.core"/>
-      <import plugin="org.eclipse.jdt"/>
-      <import plugin="org.eclipse.jdt.core"/>
-      <import plugin="org.eclipse.jdt.ui"/>
-      <import plugin="org.eclipse.jdt.source"/>
-      <import plugin="org.eclipse.jface.text"/>
-      <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.jboss.ide.eclipse.jdt.aop.core"/>
-      <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="org.eclipse.jdt.launching"/>
-      <import plugin="org.jboss.ide.eclipse.launcher.core"/>
-      <import plugin="org.jboss.ide.eclipse.launcher.ui"/>
-      <import plugin="org.eclipse.debug.core"/>
-      <import plugin="org.eclipse.debug.ui"/>
-   </requires>
-   <extension
+     <extension
          id="org.jboss.ide.eclipse.ejb3.wizards.ui.NewStatelessSessionBeanWizard"
          point="org.eclipse.ui.newWizards">
       <category
@@ -56,6 +27,13 @@
             category="org.jboss.ide.eclipse.ejb3.wizards.ui.ejb3Category"
             name="Message Driven Bean"
             id="org.jboss.ide.eclipse.ejb3.wizards.ui.NewMessageDrivenBeanWizard"/>
+   </extension>
+   <extension
+         point="org.eclipse.jdt.ui.classpathContainerPage">
+      <classpathContainerPage
+            class="org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.pages.JBossEJB3LibrariesPage"
+            id="org.jboss.ide.eclipse.jdt.ejb3.wizards.core.classpath.EJB3_CONTAINER"
+            name="JBoss EJB3 Libraries"/>
    </extension>
 
 </plugin>

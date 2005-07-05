@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EJB3 Wizards Core Plugin
+Bundle-SymbolicName: org.jboss.ide.eclipse.ejb3.wizards.core; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-ClassPath: ejb3-wizards-core.jar,
+ jboss-ejb3.jar,
+ jboss-ejb3x.jar,
+ jboss-remoting.jar,
+ jbosssx-client.jar,
+ jboss-transaction-client.jar,
+ jnp-client.jar,
+ jboss-j2ee.jar
+Bundle-Activator: org.jboss.ide.eclipse.ejb3.wizards.core.EJB3WizardsCorePlugin
+Bundle-Vendor: JBoss Inc.
+Bundle-Localization: plugin
+Export-Package: org.jboss.ide.eclipse.ejb3.wizards.core,
+ org.jboss.ide.eclipse.ejb3.wizards.core.classpath,
+ org.jboss.ide.eclipse.ejb3.wizards.core.project
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.jdt,
+ org.eclipse.jdt.core,
+ org.jboss.ide.eclipse.jdt.aop.core,
+ org.jboss.ide.eclipse.launcher.core,
+ org.eclipse.debug.core
+Eclipse-AutoStart: true
