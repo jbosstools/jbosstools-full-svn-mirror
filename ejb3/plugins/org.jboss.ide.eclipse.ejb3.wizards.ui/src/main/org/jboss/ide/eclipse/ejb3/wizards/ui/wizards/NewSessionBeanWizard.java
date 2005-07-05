@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.internal.ui.wizards.NewElementWizard;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
+import org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.pages.NewSessionBeanWizardPage;
 
 /**
  * @author Marshall
