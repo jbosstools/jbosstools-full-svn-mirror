@@ -19,19 +19,21 @@ public class EJB3ClasspathContainer extends AopClasspathContainer {
 	public static final String CONTAINER_ID = "org.jboss.ide.eclipse.jdt.ejb3.wizards.core.classpath.EJB3_CONTAINER";
 	public static final String DESCRIPTION = "JBoss EJB3 Libraries";
 	public static final QualifiedName JBOSS_EJB3_CONFIGURATION = new QualifiedName("org.jboss.ide.eclipse.ejb3.wizards.core.classpath", "jboss-ejb3-configuration");
-	
 	protected ILaunchConfiguration jbossConfig;
-	
-	protected static final IPath[] ejb3JarPaths = new IPath [] {
-		new Path("jboss-ejb3x.jar"),new Path("jboss-remoting.jar"), new Path("jboss-ejb3.jar")
-	};
+
+	private static IPath clientPath, libPath, serverAllLibPath, ejb3DeployerPath;
+	static {
+		clientPath = new Path("client");
+		libPath = new Path("lib");
+		serverAllLibPath = new Path("server/all/lib");
+		ejb3DeployerPath = new Path("server/all/deploy/ejb3.deployer");
+	}
 	
 	protected static final IPath[] jbossJarPaths = new IPath [] {
-		new Path("client").append(new Path("jnp-client.jar")),  new Path("client").append(new Path("jbosssx-client.jar")),
-		new Path("client").append(new Path("jboss-j2ee.jar")), new Path("client").append(new Path("jboss-transaction-client.jar")),
-		new Path("server/all/deploy/ejb3.deployer/hibernate3.jar"), new Path("lib/commons-logging.jar")
+		clientPath.append("jnp-client.jar"),  clientPath.append("jbosssx-client.jar"), clientPath.append("jboss-j2ee.jar"), clientPath.append("jboss-transaction-client.jar"),
+		ejb3DeployerPath.append("jboss-ejb3.jar"), ejb3DeployerPath.append("jboss-ejb3x.jar"), ejb3DeployerPath.append("hibernate3.jar"),
+		libPath.append("commons-logging.jar"), serverAllLibPath.append("jboss-remoting.jar")
 	};
-	
 	
 	public EJB3ClasspathContainer (IPath path, ILaunchConfiguration jbossConfig)
 	{
@@ -50,14 +52,7 @@ public class EJB3ClasspathContainer extends AopClasspathContainer {
 		}
 		
 		ArrayList paths = new ArrayList();
-		
-		for (int i = 0; i < ejb3JarPaths.length; i++)
-		{
-			IPath jar = ejb3JarPaths[i];
-			IPath entryPath = new Path(baseDir).append(jar);
-			paths.add(entryPath);
-		}
-		
+
 		if (jbossBaseDir != null)
 		{
 			for (int i = 0; i < jbossJarPaths.length; i++)
@@ -73,7 +68,7 @@ public class EJB3ClasspathContainer extends AopClasspathContainer {
 	}
 	
 	protected IPath[] getAopJarRelativePaths() {
-		return ejb3JarPaths;
+		return new IPath[0];
 	}
 
 	public String getContainerId() {
