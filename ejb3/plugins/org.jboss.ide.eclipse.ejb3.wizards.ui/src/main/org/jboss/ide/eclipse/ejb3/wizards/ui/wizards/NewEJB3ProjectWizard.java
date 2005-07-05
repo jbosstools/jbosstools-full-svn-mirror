@@ -23,7 +23,9 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.ui.util.CoreUtility;
+import org.eclipse.jdt.internal.ui.wizards.JavaProjectWizard;
 import org.eclipse.jdt.internal.ui.wizards.JavaProjectWizardSecondPage;
 import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -36,6 +38,7 @@ import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 import org.jboss.ide.eclipse.ejb3.wizards.core.classpath.EJB3ClasspathContainer;
 import org.jboss.ide.eclipse.ejb3.wizards.core.project.EJB3ProjectNature;
 import org.jboss.ide.eclipse.ejb3.wizards.ui.EJB3WizardsUIPlugin;
+import org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.pages.JBossSelectionPage;
 import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.classpath.AopJdk15ClasspathContainer;
 
@@ -133,7 +136,6 @@ public class NewEJB3ProjectWizard extends Wizard implements INewWizard {
 		entries.add(JavaCore.newSourceEntry(srcLocation));
 		
 		createJndiProperties (srcLocation);
-		project.getProject().setPersistentProperty(EJB3ClasspathContainer.JBOSS_EJB3_CONFIGURATION, page2.getLaunchConfiguration().getName());
 		project.setRawClasspath(configureClasspathEntries(entries), outputLocation, monitor);
 	}
 	
@@ -151,10 +153,23 @@ public class NewEJB3ProjectWizard extends Wizard implements INewWizard {
 		}
 	}
 	
+	private IClasspathEntry[] getDefaultClasspathEntries ()
+		throws CoreException
+	{
+		return new IClasspathEntry[] {
+				JavaRuntime.getDefaultJREContainerEntry()
+		};
+	}
+	
 	private IClasspathEntry[] configureClasspathEntries (ArrayList classpathEntries)
 		throws CoreException
 	{
-		classpathEntries.add(JavaRuntime.getDefaultJREContainerEntry());
+		IClasspathEntry defaultEntries[] = getDefaultClasspathEntries();
+		for (int i = 0; i < defaultEntries.length; i++)
+		{
+			classpathEntries.add(defaultEntries[i]);
+		}
+		
 		classpathEntries.add(JavaCore.newContainerEntry(new Path(AopJdk15ClasspathContainer.CONTAINER_ID)));
 		classpathEntries.add(JavaCore.newContainerEntry(new Path(EJB3ClasspathContainer.CONTAINER_ID)));
 		
@@ -181,6 +196,15 @@ public class NewEJB3ProjectWizard extends Wizard implements INewWizard {
 		}	
 	}
 	
+    private boolean is15Classpath(IJavaProject javaProject) {
+    	try {
+    		return javaProject.findType("java.lang.Enum") != null; //$NON-NLS-1$
+    	} catch (JavaModelException e) {
+    		// ignore
+    		return false;
+    	}
+    }
+    
 	public boolean performFinish()
 	{
 		IRunnableWithProgress op = new IRunnableWithProgress()
@@ -197,9 +221,23 @@ public class NewEJB3ProjectWizard extends Wizard implements INewWizard {
 					monitor.worked(1);
 					
 					IJavaProject javaProject = JavaCore.create(project);
-					EJB3ProjectNature.ensureAopProjectNature(javaProject);
+					javaProject.setRawClasspath(getDefaultClasspathEntries(), monitor);
 					monitor.worked(1);
 				
+					if (! is15Classpath(javaProject))
+					{
+						EJB3WizardsUIPlugin.warn("EJB3 Projects require a 5.0 JRE to compile. " +
+							"Since a 5.0 JRE isn't available, a simple java project will be created with your current default JRE. " +
+							"After you have installed a 5.0 JRE you can add JBoss EJB3 Libraries to your Java Project under " +
+							"Project Properties > Java Build Path > Libraries > Add Library.");
+						
+						return;
+					}
+					
+
+					EJB3ProjectNature.ensureAopProjectNature(javaProject);
+					AopCorePlugin.getDefault().setJava50CompilerCompliance(javaProject);
+					
 					ArrayList sourcePaths = findSourcePaths(project);
 					IPath outputLocation = findOutputLocation(project);
 					
@@ -246,6 +284,7 @@ public class NewEJB3ProjectWizard extends Wizard implements INewWizard {
 						
 						javaProject.getProject().getPersistentProperty(EJB3ClasspathContainer.JBOSS_EJB3_CONFIGURATION);
 						javaProject.setRawClasspath(configureClasspathEntries(cpEntries), outputLocation, monitor);
+						
 					}
 					else {
 						createSrcAndBin(javaProject, monitor);
