@@ -15,6 +15,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -602,9 +603,16 @@ public class AopCorePlugin extends Plugin {
 		return null;
 	}
 	
-	public boolean has15Compliance (IJavaProject javaProject)
+	public boolean hasJava50CompilerCompliance (IJavaProject javaProject)
 	{
-    	String projectCompatibility = javaProject.getOption(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, true);
-    	return JavaCore.VERSION_1_5.equals(projectCompatibility);
+    	String compliance = javaProject.getOption(JavaCore.COMPILER_COMPLIANCE, true);
+    	return JavaCore.VERSION_1_5.equals(compliance);
+	}
+	
+	public void setJava50CompilerCompliance (IJavaProject javaProject)
+	{
+		Map map= javaProject.getOptions(false);
+		JavaModelUtil.set50CompilanceOptions(map);
+		javaProject.setOptions(map);
 	}
 }
