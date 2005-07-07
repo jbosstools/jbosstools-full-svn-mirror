@@ -51,11 +51,38 @@ public class AopProjectBuilder extends IncrementalProjectBuilder {
 	private URLClassLoader projectLoader;
 	private ClassLoader systemLoader;
 	private ByteCodeAnnotationCompiler annotationCompiler;
+	private static boolean building;
+	
+	static {
+		building = false;
+	}
 	
 	protected void startupOnInitialize() {
 		super.startupOnInitialize();
 	}
-
+	
+	/**
+	 * This is a long-running blocking operation. Mostly needed for our tests.
+	 */
+	public static void waitForBuild ()
+	{
+		try {
+			if (!building)
+			{
+				System.out.println("[aop-builder] waiting for builder to start building...");
+				while (!building)
+					Thread.sleep((long) 300);
+			}
+			
+			System.out.println("[aop-builder] waiting for builder to finish building...");
+			while (building)
+				Thread.sleep((long) 300);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	private void initClassLoader ()
 	{
 		CustomAspectManager.cleanInstance();
@@ -246,6 +273,7 @@ public class AopProjectBuilder extends IncrementalProjectBuilder {
 	protected void initBuild (IProgressMonitor monitor)
 		throws CoreException
 	{
+		building = true;
 		getProject().refreshLocal(IResource.DEPTH_INFINITE, monitor);
 		
 		initClassLoader();
@@ -261,7 +289,7 @@ public class AopProjectBuilder extends IncrementalProjectBuilder {
 		IResourceDelta delta = getDelta(getProject());
 		if (delta != null)
 		{
-			if (! AopCorePlugin.getDefault().has15Compliance(javaProject))
+			if (! AopCorePlugin.getDefault().hasJava50CompilerCompliance(javaProject))
 			{
 				delta.accept (new AnnotationBuildVisitor(monitor));
 			}
@@ -273,7 +301,7 @@ public class AopProjectBuilder extends IncrementalProjectBuilder {
 	protected void cleanBuild (IProgressMonitor monitor)
 		throws CoreException
 	{
-		if (! AopCorePlugin.getDefault().has15Compliance(javaProject))
+		if (! AopCorePlugin.getDefault().hasJava50CompilerCompliance(javaProject))
 		{
 			getProject().accept(new AnnotationBuildVisitor(monitor));
 		}
@@ -292,6 +320,7 @@ public class AopProjectBuilder extends IncrementalProjectBuilder {
 		//AopCorePlugin.getDefault().updateModel(javaProject);
 		
 		getProject().refreshLocal(IResource.DEPTH_INFINITE, monitor);
+		building = false;
 	}
 	
 	protected class AnnotationBuildVisitor implements IResourceVisitor, IResourceDeltaVisitor
