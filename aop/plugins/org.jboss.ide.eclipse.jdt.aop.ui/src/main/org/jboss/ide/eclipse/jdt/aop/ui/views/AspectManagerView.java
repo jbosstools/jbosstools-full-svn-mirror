@@ -6,7 +6,10 @@
  */
 package org.jboss.ide.eclipse.jdt.aop.ui.views;
 
+import java.util.Iterator;
 import java.util.List;
+
+import javax.xml.bind.JAXBException;
 
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.action.Action;
@@ -30,6 +33,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.aop.AspectManager;
+import org.jboss.aop.introduction.InterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.AopDescriptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
@@ -41,6 +45,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 import org.jboss.ide.eclipse.jdt.aop.core.util.JaxbAopUtil;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
@@ -380,7 +385,11 @@ public class AspectManagerView extends ViewPart {
     		public void run() {
     			IntroductionDialog dialog = new IntroductionDialog(getSite().getShell());
     			if( dialog.open() == Dialog.OK) {
-    				System.out.println("success");
+    				JDTInterfaceIntroduction introduction = dialog.getIntroduction();
+    				AopDescriptor descriptor = (AopDescriptor) treeViewer.getInput();
+    				descriptor.addInterfaceIntroduction(introduction);
+    				descriptor.save();
+
     			}
     		}
     	};
@@ -390,7 +399,14 @@ public class AspectManagerView extends ViewPart {
     	
     	deleteIntroductionAction = new Action() {
     		public void run() {
-    			
+    			Introduction jaxbIntro = (Introduction)getSelected();
+    			String expr = jaxbIntro.getClazz() == null ? jaxbIntro.getExpr() : jaxbIntro.getClazz();
+    			if (AopUiPlugin.confirm("Are you sure you want to delete the Introduction: \"" + expr + "\" ?"))
+    			{
+    				AopDescriptor descriptor = (AopDescriptor) getTreeViewer().getInput();
+    				descriptor.remove(jaxbIntro);
+    				descriptor.save();
+    			}
     		}
     	};
     	deleteIntroductionAction.setText("Delete");
@@ -399,6 +415,44 @@ public class AspectManagerView extends ViewPart {
     	
     	editIntroductionAction = new Action() {
     		public void run() {
+    			Introduction jaxbIntro = (Introduction)getSelected();
+    			IntroductionDialog dialog = new IntroductionDialog(getSite().getShell(), jaxbIntro);
+    			if( dialog.open() == Dialog.OK) {
+    				JDTInterfaceIntroduction jdtIntro = dialog.getIntroduction();
+    				if( jdtIntro.getClassExpr().indexOf('(') != -1 ) {
+    					jaxbIntro.setExpr(jdtIntro.getClassExpr());
+    					jaxbIntro.setClazz(null);
+    				} else {
+    					jaxbIntro.setClazz(jdtIntro.getClassExpr());
+    					jaxbIntro.setExpr(null);
+    				}
+    				
+    				String interfacesAsString = jdtIntro.getInterfacesAsString();
+    				if( interfacesAsString.equals("")) 
+    					jaxbIntro.setInterfaces(null);
+    				jaxbIntro.setInterfaces(interfacesAsString);
+    				
+    				// add the mixins
+    				jaxbIntro.getMixin().clear();
+    				for( Iterator i = jdtIntro.getMixins().iterator(); i.hasNext(); ) {
+    					try {
+	    					InterfaceIntroduction.Mixin jdtMixin = (InterfaceIntroduction.Mixin)i.next();
+	    					org.jboss.ide.eclipse.jdt.aop.core.jaxb.Mixin newJaxbMixin = 
+	    						JaxbAopUtil.instance().getFactory().createMixin();
+	    					newJaxbMixin.setClazz(jdtMixin.getClassName());
+	    					newJaxbMixin.setConstruction(jdtMixin.getConstruction());
+	    					String mixinInterfacesAsString =jdtIntro.getMixinInterfacesAsString(jdtMixin); 
+	    					newJaxbMixin.setInterfaces(mixinInterfacesAsString);
+	    					jaxbIntro.getMixin().add(newJaxbMixin);
+    					} catch( JAXBException jaxbe) {
+    						
+    					}
+    					
+    				}
+					AopDescriptor descriptor = (AopDescriptor) getTreeViewer().getInput();
+					descriptor.save();
+
+    			}
     			
     		}
     	};

@@ -40,7 +40,7 @@ public class TypedefPreviewDialog extends PointcutPreviewDialog {
 		try {
 			tdExpr = new JDTTypedefExpression( new TypedefExpression(name, expressionString ) );
 			expressionCompiles = true;
-		} catch( Exception e ) {
+		} catch( Throwable e ) {
 			
 		}
 	}

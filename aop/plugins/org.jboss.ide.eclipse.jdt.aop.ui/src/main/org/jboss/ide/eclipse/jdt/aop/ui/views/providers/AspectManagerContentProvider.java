@@ -87,9 +87,9 @@ public class AspectManagerContentProvider implements IStructuredContentProvider,
  			tmp.add(0,AspectManagerContentProvider.TYPEDEFS);
 			children.add(tmp);
 			 			
-//			tmp = AopModelUtils.getIntroductionsFromAop(aop);
-// 			tmp.add(0,AspectManagerContentProvider.INTRODUCTIONS);
-//			children.add(tmp);
+			tmp = AopModelUtils.getIntroductionsFromAop(aop);
+ 			tmp.add(0,AspectManagerContentProvider.INTRODUCTIONS);
+			children.add(tmp);
 			
  			
  			return children.toArray();

@@ -51,8 +51,12 @@
 		<!--
 		| Interceptor
 	 -->
+	 
 	<xsd:complexType name="Interceptor">
-		<xsd:any minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:sequence>
+			<xsd:any minOccurs="0" maxOccurs="unbounded"/>			
+		</xsd:sequence>
+
 		<xsd:attribute name="class" type="xsd:string">
 			<xsd:annotation>
 				<xsd:appinfo>
@@ -63,6 +67,7 @@
 		<xsd:attribute name="name" type="xsd:string" use="optional"/>
 		<xsd:attribute name="factory" type="xsd:string" use="optional"/>
 		<xsd:attribute name="scope" type="AspectScope" default="PER_VM"/>
+		
 	</xsd:complexType>
 	
 	
@@ -78,7 +83,10 @@
 		| Aspect
 	-->
 	<xsd:complexType name="Aspect">
-		<xsd:any minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:sequence>
+			<xsd:any minOccurs="0" maxOccurs="unbounded"/>			
+		</xsd:sequence>
+
 		<xsd:attribute name="class" type="xsd:string" use="required">
 			<xsd:annotation>
 				<xsd:appinfo>
@@ -151,10 +159,10 @@
 		| Introduction
 	-->
 	<xsd:complexType name="Introduction">
-		<xsd:choice>
-			<xsd:element name="mixin" type="Mixin" minOccurs="1" maxOccurs="unbounded"/>
-			<xsd:element name="interfaces" type="xsd:string"/>
-		</xsd:choice>
+		<xsd:sequence>
+			<xsd:element name="mixin" type="Mixin" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="interfaces" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
 		<xsd:attribute name="class" type="xsd:string" use="optional">
 			<xsd:annotation>
 				<xsd:appinfo>
@@ -206,7 +214,10 @@
 		| Metadata
 	-->
 	<xsd:complexType name="MetaData">
-		<xsd:any minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:sequence>
+			<xsd:any minOccurs="0" maxOccurs="unbounded"/>			
+		</xsd:sequence>
+
 		<xsd:attribute name="tag" type="xsd:string" use="required"/>
 		<xsd:attribute name="class" type="xsd:string" use="required">
 			<xsd:annotation>
@@ -237,7 +248,10 @@
 	</xsd:complexType>
 
 	<xsd:complexType name="PluggablePointcut">
-		<xsd:any minOccurs="0" maxOccurs="unbounded"/>
+		<xsd:sequence>
+			<xsd:any minOccurs="0" maxOccurs="unbounded"/>			
+		</xsd:sequence>
+
 		<xsd:attribute name="name" type="xsd:string" use="required"/>
 		<xsd:attribute name="class" type="xsd:string" use="required">
 			<xsd:annotation>

@@ -53,7 +53,7 @@ public class PointcutPreviewDialog2 extends Dialog {
 	
 	protected Control createDialogArea (Composite parent)
 	{
-		getShell().setText("Edit Pointcut...");
+		getShell().setText("Edit Pattern...");
 
 		GridData mainData = new GridData();
 		mainData.horizontalAlignment = GridData.FILL;

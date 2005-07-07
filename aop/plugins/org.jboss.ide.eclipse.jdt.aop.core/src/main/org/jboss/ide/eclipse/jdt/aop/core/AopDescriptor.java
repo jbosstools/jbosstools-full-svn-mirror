@@ -7,6 +7,7 @@
 package org.jboss.ide.eclipse.jdt.aop.core;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -21,6 +22,7 @@ import org.jboss.aop.AspectManager;
 import org.jboss.aop.AspectXmlLoader;
 import org.jboss.aop.advice.AspectDefinition;
 import org.jboss.aop.advice.Scope;
+import org.jboss.aop.introduction.InterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AOPType;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Annotation;
@@ -42,6 +44,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AOPType.Metadata;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AOPType.Prepare;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.util.JaxbAopUtil;
 
 /**
@@ -283,7 +286,63 @@ public class AopDescriptor {
 	}
 	
 
-	
+	public void addInterfaceIntroduction(JDTInterfaceIntroduction intro) {
+		try {
+			Introduction jaxbIntro = 
+				JaxbAopUtil.instance().getFactory().createAOPTypeIntroduction();
+			List jaxbMixins = jaxbIntro.getMixin();
+			
+			// handle this part
+			String expr = intro.getClassExpr();
+			if( expr.indexOf('(') == -1 ) {
+				jaxbIntro.setClazz(expr);
+			} else {
+				jaxbIntro.setExpr(expr);				
+			}
+			
+			
+			if( intro.getInterfacesAsString() != "")
+				jaxbIntro.setInterfaces(intro.getInterfacesAsString());
+			
+			// Now this part
+			ArrayList jdtList = intro.getMixins();
+			for(Iterator i = jdtList.iterator();i.hasNext();) {
+				Object o = i.next();
+				if( o instanceof InterfaceIntroduction.Mixin ) {
+					InterfaceIntroduction.Mixin mixin = 
+						(InterfaceIntroduction.Mixin)o;
+					
+					org.jboss.ide.eclipse.jdt.aop.core.jaxb.Mixin jaxbMixin = 
+						JaxbAopUtil.instance().getFactory().createMixin();
+					
+					jaxbMixin.setClazz(mixin.getClassName());
+					jaxbMixin.setConstruction(mixin.getConstruction());
+					jaxbMixin.setInterfaces(intro.getMixinInterfacesAsString(mixin));
+					jaxbMixins.add(jaxbMixin);
+				}
+			}
+
+//			Introduction jaxbIntro = 
+//				JaxbAopUtil.instance().getFactory().createAOPTypeIntroduction();
+//			List jaxbMixins = jaxbIntro.getMixin();
+//
+//			jaxbIntro.setClazz("blsdfsad");
+//			jaxbIntro.setInterfaces("SDSFD, DFD");
+//
+//			org.jboss.ide.eclipse.jdt.aop.core.jaxb.Mixin jaxbMixin =
+//				JaxbAopUtil.instance().getFactory().createMixin();
+//			
+//			jaxbMixin.setInterfaces("thisthat, the otherthing");
+//			jaxbMixin.setClazz("AHH");
+//			jaxbMixin.setConstruction("ahdsafds");
+//			jaxbMixins.add(jaxbMixin);
+			
+			getAop().getTopLevelElements().add(jaxbIntro);
+			
+		} catch( JAXBException e ) {
+			e.printStackTrace();
+		}
+	}
 	
 	private List getParent (Interceptor interceptor)
 	{
@@ -382,6 +441,8 @@ public class AopDescriptor {
 			parent = getTopLevelParent((Pointcut)object);
 		} else if (object instanceof Typedef) {
 			parent = getTopLevelParent((Typedef)object);
+		} else if( object instanceof Introduction ) {
+			parent = getTopLevelParent((Introduction)object);
 		}
 		
 		if (parent != null)

@@ -19,6 +19,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aspect;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
@@ -85,6 +86,11 @@ public class AspectManagerLabelProvider extends LabelProvider {
 		{
 			Typedef typedef = (Typedef)obj;
 			return typedef.getName() + " : " + typedef.getExpr();
+		}
+		else if( obj instanceof Introduction ) 
+		{
+			Introduction intro = (Introduction)obj;
+			return intro.getClazz().equals("") ? intro.getExpr() : intro.getClazz();
 		}
 		return obj.getClass().toString();
 	}
