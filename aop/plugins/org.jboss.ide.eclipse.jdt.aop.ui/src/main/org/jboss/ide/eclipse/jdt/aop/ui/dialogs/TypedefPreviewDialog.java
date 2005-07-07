@@ -154,7 +154,7 @@ public class TypedefPreviewDialog extends PointcutPreviewDialog {
 		protected ExpressionRowComposite createRow(Composite parent, Control top) {
 			ExpressionRowComposite c = 
 				//new ExpressionRowComposite(parent, SWT.NONE, this, top==null?false:true);
-				new TypedefRowComposite(parent, SWT.NONE, this, top==null?false:true);
+				new TypedefRowComposite(parent, SWT.NONE, this, top);
 				
 			FormData cData = new FormData();
 			if( top == null ) {
@@ -180,8 +180,8 @@ public class TypedefPreviewDialog extends PointcutPreviewDialog {
 			protected static final String CLASS_ONLY = "__CLASS_ONLY__";
 			
 			public TypedefRowComposite(Composite parent, int style, 
-					PointcutPreviewAssistComposite comp, boolean includeConjunction) {
-				super(parent, style, comp, includeConjunction);
+					PointcutPreviewAssistComposite comp, Control top) {
+				super(parent, style, comp, top);
 			}
 			
 			protected void fillCombos() {

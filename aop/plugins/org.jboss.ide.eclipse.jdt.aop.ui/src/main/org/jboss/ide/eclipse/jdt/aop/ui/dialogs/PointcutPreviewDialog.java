@@ -400,6 +400,7 @@ public class PointcutPreviewDialog extends Dialog {
 			assistCompositeData.bottom = new FormAttachment(expressionLabel, 12);
 			wizardButton.setText("Open Wizard");
 		} else {
+			assistCompositeData.bottom = new FormAttachment(expressionLabel, 300);
 			wizardButton.setText("Close Wizard");
 		}
 		assistComposite.setLayoutData(assistCompositeData);
