@@ -6,6 +6,7 @@
  */
 package org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,8 +14,10 @@ import java.util.List;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -62,7 +65,7 @@ public class PointcutPreviewAssistComposite extends Composite {
 	public static final String HASFIELD_FIELD = "hasfield(field)";
 	public static final String CONJ_AND = "AND";
 	public static final String CONJ_OR = "OR";
-	public static final String CONJ_BLANK = "DONE";
+//	public static final String CONJ_BLANK = "DONE";
 	
 	public static final String TYPE = "__TYPE__";
 	public static final String METHOD = "__METHOD__";
@@ -76,23 +79,31 @@ public class PointcutPreviewAssistComposite extends Composite {
 	public static final String TYPEDEF = "Typedef";
 	public static final String NAME = "Name";
 	
+	private static final int maxRows = 20;
 	public static HashMap pointcutToComposite;
 	public static HashMap pointcutExplanations;
 
 	private String currentPointcutComposite;
 	private Text explanationLabel;
-	private ExpressionRowComposite expr1, expr2, expr3, expr4, expr5;
+	private Button addRowButton, removeRowButton;
 	private final PointcutPreviewDialog dialog;
+	private ScrolledComposite sc;
+	
+	
+	private ArrayList rowList;
+	private int lastVisible;
 
 	public PointcutPreviewAssistComposite(Composite parent, 
 			PointcutPreviewDialog dialog) {
-		
+ 		
 		
 		super( parent, SWT.NONE);
 		this.dialog = dialog;
 		
 		pointcutToComposite = new HashMap();
 		pointcutExplanations = new HashMap();
+		this.rowList = new ArrayList();
+		this.lastVisible = -1;
 		setLayout( new FormLayout() );
 
 		
@@ -101,27 +112,118 @@ public class PointcutPreviewAssistComposite extends Composite {
 		group.setText("Build your expression");
 		FormData groupData = new FormData();
 		groupData.top = new FormAttachment(0,0);
-		groupData.bottom = new FormAttachment(100,0);
+		groupData.bottom = new FormAttachment(0,250);
 		groupData.left = new FormAttachment(0,0);
 		groupData.right = new FormAttachment(100,0);
 		group.setLayoutData(groupData);
-		group.setLayout( new FormLayout());
-		
-		// our 5 rows
-		expr1 = createRow(group, null);
-		expr2 = createRow(group, expr1);
-		expr3 = createRow(group, expr2);
-		expr4 = createRow(group, expr3);
-		expr5 = createRow(group, expr4);
+		group.setLayout( new FillLayout());
 		
 		
-		fillPointcutCompositeMap();
+		/** TEST **/
+	     sc = new ScrolledComposite(group, SWT.H_SCROLL
+	            | SWT.V_SCROLL);
+
+	        // Create a child composite to hold the controls
+	        Composite child = new Composite(sc, SWT.NONE);
+	        child.setLayout(new FormLayout());
+
+	        // Create the buttons
+	        ExpressionRowComposite last = null;
+	        for( int i = 0; i < maxRows; i++ ) {
+	        	last = createRow(child, last);
+	    		rowList.add(last);
+	        	if( i > 3 ) {
+	        		last.setVisible(false);
+	        	} else {
+					int locY = last.getLocation().y;
+					int sY = last.getSize().y;
+					sc.setMinHeight(locY+sY);
+		        	lastVisible = i;	        		
+	        	}
+	        }
+	        
+	        /*
+	         * // Set the absolute size of the child child.setSize(400, 400);
+	         */
+	        // Set the child as the scrolled content of the ScrolledComposite
+	        sc.setContent(child);
+
+
+	        // Expand both horizontally and vertically
+	        sc.setExpandHorizontal(true);
+	        sc.setExpandVertical(true);
+
+
+		    addRowButton = new Button(this, SWT.PUSH);
+		    FormData addData = new FormData();
+		    addData.left = new FormAttachment(0,0);
+		    addData.top = new FormAttachment(group, 5);
+		    addData.bottom = new FormAttachment(100,0);
+		    addRowButton.setLayoutData(addData);
+			addRowButton.setText("Add New Row");
+			addRowButton.setVisible(true);
+
+			addRowButton.addSelectionListener(new SelectionListener() {
+
+				public void widgetSelected(SelectionEvent e) {
+					lastVisible++;
+					boolean anyLeft = (lastVisible != PointcutPreviewAssistComposite.maxRows - 1);
+					addRowButton.setEnabled(anyLeft);
+					removeRowButton.setEnabled(true);
+
+					ExpressionRowComposite tmp = (ExpressionRowComposite)rowList.get(lastVisible);
+					tmp.setVisible(true);
+					int locY = tmp.getLocation().y;
+					int sY = tmp.getSize().y;
+					sc.setMinHeight(locY+sY);
+					updatePointcutTextBox();
+				}
+
+				public void widgetDefaultSelected(SelectionEvent e) {
+					widgetSelected(e);
+				} 
+				
+			});
+			
+		    removeRowButton = new Button(this, SWT.PUSH);
+		    FormData removeData = new FormData();
+		    removeData.left = new FormAttachment(addRowButton,5);
+		    removeData.top = new FormAttachment(group, 5);
+		    removeData.bottom = new FormAttachment(100,0);
+		    removeRowButton.setLayoutData(removeData);
+			removeRowButton.setText("Remove Last Row");
+			removeRowButton.setVisible(true);
+
+			removeRowButton.addSelectionListener(new SelectionListener() {
+
+				public void widgetSelected(SelectionEvent e) {
+					removeRowButton.setEnabled(lastVisible != 0);
+					addRowButton.setEnabled(true);
+
+					ExpressionRowComposite tmp = (ExpressionRowComposite)rowList.get(lastVisible);
+					tmp.setVisible(false);
+					int locY = tmp.getLocation().y;
+					sc.setMinHeight(locY);
+					lastVisible--;
+					updatePointcutTextBox();					
+				}
+
+				public void widgetDefaultSelected(SelectionEvent e) {
+					widgetSelected(e);
+				} 
+				
+			});
+
+			fillPointcutCompositeMap();
 		fillPointcutExplanationMap();
 	}
 	
+	public int getLastVisible() {
+		return lastVisible;
+	}
 	protected ExpressionRowComposite createRow(Composite parent, Control top) {
 		ExpressionRowComposite c = 
-			new ExpressionRowComposite(parent, SWT.NONE, this, top==null?false:true);
+			new ExpressionRowComposite(parent, SWT.NONE, this, top);
 
 		FormData cData = new FormData();
 		if( top == null ) {
@@ -133,6 +235,7 @@ public class PointcutPreviewAssistComposite extends Composite {
 		cData.left = new FormAttachment(0,5);
 		cData.right= new FormAttachment(100,-5);
 		c.setLayoutData(cData);
+		
 		return c;
 	}
 	
@@ -185,8 +288,12 @@ public class PointcutPreviewAssistComposite extends Composite {
 	 * Allows one of the five rows to update the pointcut textbox when modified.
 	 */
 	public void updatePointcutTextBox() {
-		dialog.setPointcutText(expr1.toString() + expr2.toString() + 
-				expr3.toString() + expr4.toString() + expr5.toString());
+		String ret = "";
+		for( Iterator i = rowList.iterator(); i.hasNext(); ) {
+			ExpressionRowComposite rowComp = (ExpressionRowComposite)i.next();
+			ret += rowComp.toString();
+		}
+		dialog.setPointcutText(ret);
 	}
 	
 	
@@ -203,15 +310,17 @@ public class PointcutPreviewAssistComposite extends Composite {
 		protected Text expression;
 		protected boolean isConjunctive;
 		protected PointcutPreviewAssistComposite comp;
+		protected Control top;
 		
 		public ExpressionRowComposite(Composite parent, int style, 
-				PointcutPreviewAssistComposite comp, boolean includeConjunction) {
+				PointcutPreviewAssistComposite comp, Control top) {
 			super(parent, style);
 			setLayout(new FormLayout());
-			this.isConjunctive = includeConjunction;
+			this.isConjunctive = top == null ? false : true;
 			this.comp = comp;
+			this.top = top;
 			
-			if( includeConjunction ) 
+			if( this.isConjunctive ) 
 				conjunction = new Combo(this,SWT.DROP_DOWN | SWT.READ_ONLY);
 			commandCombo = new Combo(this,SWT.DROP_DOWN | SWT.READ_ONLY);
 			namedPointcutCombo = new Combo(this,SWT.DROP_DOWN | SWT.READ_ONLY);
@@ -228,10 +337,6 @@ public class PointcutPreviewAssistComposite extends Composite {
 			
 			
 			modify.setText("Modify");
-			if( includeConjunction ) {
-				modify.setEnabled(false);
-				commandCombo.setEnabled(false);
-			}
 		}
 		
 		/**
@@ -304,12 +409,13 @@ public class PointcutPreviewAssistComposite extends Composite {
 			for( Iterator i = pointcuts.iterator(); i.hasNext(); ) {
 				Pointcut pointcut = (Pointcut)i.next();
 				namedPointcutCombo.add("[" + pointcut.getName() + "]  " + pointcut.getExpr());
+				
 			}
 			
 			
 			
 			if( isConjunctive ) {
-				conjunction.add(CONJ_BLANK);
+//				conjunction.add(CONJ_BLANK);
 				conjunction.add(CONJ_AND);
 				conjunction.add(CONJ_OR);
 				conjunction.select(0);
@@ -381,10 +487,6 @@ public class PointcutPreviewAssistComposite extends Composite {
 						int index = conjunction.getSelectionIndex();
 						if( index == -1 ) return;
 						
-						boolean enabled = !conjunction.getItem(index).equals(CONJ_BLANK);
-						modify.setEnabled(enabled);
-						commandCombo.setEnabled(enabled);
-						if( !enabled ) commandCombo.deselectAll();
 						comp.updatePointcutTextBox();
 					}
 
@@ -401,12 +503,7 @@ public class PointcutPreviewAssistComposite extends Composite {
 		 * Turns the controls into a usable portion of a pointcut expression.
 		 */
 		public String toString() {
-			if( isConjunctive ) {
-				if( conjunction.getItem(conjunction.getSelectionIndex()).
-						equals(PointcutPreviewAssistComposite.CONJ_BLANK)) {
-					return "";
-				}
-			}
+			if( !isVisible()) return "";
 			
 			if( commandCombo.getSelectionIndex() == -1 ) return "";
 
@@ -428,6 +525,8 @@ public class PointcutPreviewAssistComposite extends Composite {
 				return conj + s.substring(1, s.indexOf(']'));
 			}
 		}
+
+
 	}
 	
 }

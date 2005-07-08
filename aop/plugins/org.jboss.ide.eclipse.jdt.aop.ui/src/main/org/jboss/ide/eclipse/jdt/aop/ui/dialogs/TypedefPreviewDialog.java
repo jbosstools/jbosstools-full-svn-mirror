@@ -193,7 +193,6 @@ public class TypedefPreviewDialog extends PointcutPreviewDialog {
 				commandCombo.add(CLASS_TYPE);
 				
 				if( isConjunctive ) {
-					conjunction.add(CONJ_BLANK);
 					conjunction.add(CONJ_AND);
 					conjunction.add(CONJ_OR);
 					conjunction.select(0);
@@ -251,10 +250,6 @@ public class TypedefPreviewDialog extends PointcutPreviewDialog {
 							int index = conjunction.getSelectionIndex();
 							if( index == -1 ) return;
 							
-							boolean enabled = !conjunction.getItem(index).equals(CONJ_BLANK);
-							modify.setEnabled(enabled);
-							commandCombo.setEnabled(enabled);
-							if( !enabled ) commandCombo.deselectAll();
 							comp.updatePointcutTextBox();
 						}
 

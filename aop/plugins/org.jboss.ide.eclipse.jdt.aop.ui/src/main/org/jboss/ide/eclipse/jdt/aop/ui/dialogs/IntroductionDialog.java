@@ -43,6 +43,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction.JDTMixin;
+import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
 import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces.AopUICompletionProcessor;
 
 /**
@@ -708,6 +709,9 @@ public class IntroductionDialog extends Dialog {
 			if( element instanceof InterfaceWrapper ) {
 				return JavaPluginImages.get(JavaPluginImages.IMG_OBJS_INTERFACE);
 			}
+			if( element instanceof InterfaceIntroduction.Mixin) {
+				return AopSharedImages.getImage(AopSharedImages.IMG_MIXIN);
+			}
 			return null;
 		}
 
@@ -716,7 +720,7 @@ public class IntroductionDialog extends Dialog {
 				return element.toString();
 			}
 			if( element instanceof InterfaceIntroduction.Mixin) {
-				return "Mixin: " + ((InterfaceIntroduction.Mixin)element).getClassName();
+				return  ((InterfaceIntroduction.Mixin)element).getClassName();
 			}
 			return "TEST: " + element.getClass().getName();
 		}
