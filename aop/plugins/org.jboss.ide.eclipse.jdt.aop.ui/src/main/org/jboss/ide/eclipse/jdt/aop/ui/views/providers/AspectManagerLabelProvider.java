@@ -111,6 +111,7 @@ public class AspectManagerLabelProvider extends LabelProvider {
 			else if( firstElement == AspectManagerContentProvider.INTERCEPTORS ) return AopSharedImages.getImage(AopSharedImages.IMG_INTERCEPTOR);
 			else if( firstElement == AspectManagerContentProvider.POINTCUTS ) return AopSharedImages.getImage(AopSharedImages.IMG_POINTCUT);
 			else if( firstElement == AspectManagerContentProvider.TYPEDEFS ) return AopSharedImages.getImage(AopSharedImages.IMG_TYPEDEF);
+			else if( firstElement == AspectManagerContentProvider.INTRODUCTIONS ) return AopSharedImages.getImage(AopSharedImages.IMG_INTRODUCTION);
 			
 		}
 		else if (obj instanceof Aspect)
