@@ -587,8 +587,10 @@ public class AspectManagerView extends ViewPart {
     
     public void setDescriptor(AopDescriptor descriptor) {
         if (treeViewer != null && descriptor != null) {
+        	int select = treeViewer.getTree().getVerticalBar().getSelection();
             contentProvider.setDescriptor(descriptor);
             treeViewer.setInput(descriptor);
+            treeViewer.getTree().getVerticalBar().setSelection(select);
         }
     }
     

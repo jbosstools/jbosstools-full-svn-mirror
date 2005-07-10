@@ -90,7 +90,10 @@ public class AspectManagerLabelProvider extends LabelProvider {
 		else if( obj instanceof Introduction ) 
 		{
 			Introduction intro = (Introduction)obj;
-			return intro.getClazz().equals("") ? intro.getExpr() : intro.getClazz();
+			if (intro.getClazz() == null || intro.getClazz().equals("")) {
+				return intro.getExpr();
+			}
+			return intro.getClazz();
 		}
 		return obj.getClass().toString();
 	}
@@ -141,6 +144,10 @@ public class AspectManagerLabelProvider extends LabelProvider {
 		else if (obj instanceof Typedef)
 		{
 			return AopSharedImages.getImage(AopSharedImages.IMG_TYPEDEF);
+		}
+		else if (obj instanceof Introduction)
+		{
+			return AopSharedImages.getImage(AopSharedImages.IMG_INTRODUCTION);
 		}
 		return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_DEFAULT);
 	}

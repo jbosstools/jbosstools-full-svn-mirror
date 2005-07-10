@@ -156,6 +156,10 @@
             id="org.jboss.ide.eclipse.jdt.aop.ui.editors.AopJavaEditor"
             extensions="java"/>
    </extension>
+   
+   
+   
+   <!-- Markers -->
    <extension
          id="advisedmarker"
          name="Advised Marker"
@@ -177,6 +181,39 @@
       <super type="org.eclipse.core.resources.textmarker"/>
       <persistent value="false"/>
    </extension>
+   <extension
+         id="typedefmarker"
+         name="Typedef Marker"
+         point="org.eclipse.core.resources.markers">
+      <super type="org.eclipse.core.resources.textmarker"/>
+      <persistent value="false"/>
+   </extension>
+   <extension
+         id="introductionmarker"
+         name="Introduction Marker"
+         point="org.eclipse.core.resources.markers">
+      <super type="org.eclipse.core.resources.textmarker"/>
+      <persistent value="false"/>
+   </extension>
+   
+   
+   
+   <extension
+         point="org.eclipse.ui.ide.markerImageProviders">
+      <imageprovider
+            markertype="org.jboss.ide.eclipse.jdt.aop.ui.advicemarker"
+            icon="icons/advice-marker.gif"
+            id="org.jboss.ide.eclipse.jdt.aop.ui.adviceMarkerImageProvider"/>
+      <imageprovider
+            markertype="org.jboss.ide.eclipse.jdt.aop.ui.interceptormarker"
+            icon="icons/interceptor-marker.gif"
+            id="org.jboss.ide.eclipse.jdt.aop.ui.interceptorMarkerImageProvider"/>
+      <imageprovider
+            markertype="org.jboss.ide.eclipse.jdt.aop.ui.introductionmarker"
+            icon="icons/introduction-marker.gif"
+            id="org.jboss.ide.eclipse.jdt.aop.ui.introductionMarkerImageProvider"/>
+   </extension>
+   
    <extension
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator
@@ -204,6 +241,10 @@
             markertype="org.jboss.ide.eclipse.jdt.aop.ui.typedefmarker"/>
          
    </extension>
+   
+   
+   
+   
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
@@ -223,24 +264,6 @@
             project="false"
             name="JBossAOP Binding"
             id="org.jboss.ide.eclipse.jdt.aop.ui.NewBindingWizard"/>
-   </extension>
-   <extension
-         point="org.eclipse.ui.ide.markerImageProviders">
-      <imageprovider
-            markertype="org.jboss.ide.eclipse.jdt.aop.ui.advicemarker"
-            icon="icons/advice-marker.gif"
-            id="org.jboss.ide.eclipse.jdt.aop.ui.adviceMarkerImageProvider"/>
-      <imageprovider
-            markertype="org.jboss.ide.eclipse.jdt.aop.ui.interceptormarker"
-            icon="icons/interceptor-marker.gif"
-            id="org.jboss.ide.eclipse.jdt.aop.ui.interceptorMarkerImageProvider"/>
-   </extension>
-   <extension
-         id="typedefmarker"
-         name="Typedef Marker"
-         point="org.eclipse.core.resources.markers">
-      <super type="org.eclipse.core.resources.textmarker"/>
-      <persistent value="false"/>
    </extension>
 
 </plugin>

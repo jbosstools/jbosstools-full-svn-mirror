@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.internal.corext.util.JavaModelUtil;
 import org.eclipse.jdt.internal.ui.JavaPluginImages;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
@@ -35,12 +37,15 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.aop.introduction.InterfaceIntroduction;
+import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction.JDTMixin;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
@@ -80,26 +85,8 @@ public class IntroductionDialog extends Dialog {
 	}
 	
 	public IntroductionDialog(Shell parentShell, Introduction intro ) {
-		this(parentShell);
-		
-		// make a copy of the provided jaxb-introduction into the aop's jdt type.
-		String expr = intro.getClazz() == null ? intro.getExpr() : intro.getClazz();
-		
-		introduction.setClassExpression(expr);
-		introduction.setInterfaces(intro.getInterfaces());
-		ArrayList introductionMixins = introduction.getMixins();
-		java.util.List jaxbMixins = intro.getMixin();
-		for( Iterator i = jaxbMixins.iterator(); i.hasNext(); ) {
-			org.jboss.ide.eclipse.jdt.aop.core.jaxb.Mixin jaxbMix = 
-				(org.jboss.ide.eclipse.jdt.aop.core.jaxb.Mixin)i.next();
-			String tempInterfaces = jaxbMix.getInterfaces();
-			String[] tempInterfacesArray = tempInterfaces == null ? new String[] { } : tempInterfaces.split(", ");
-			InterfaceIntroduction.Mixin tempMixin = 
-				new InterfaceIntroduction.Mixin(
-						jaxbMix.getClazz(), tempInterfacesArray, 
-						jaxbMix.getConstruction(), jaxbMix.isTransient());
-			introductionMixins.add(tempMixin);
-		}
+		super(parentShell);
+		introduction = AopModelUtils.toJDT(intro);
 	}
 
 	public JDTInterfaceIntroduction getIntroduction() {
@@ -332,9 +319,24 @@ public class IntroductionDialog extends Dialog {
 
 				public void widgetSelected(SelectionEvent e) {
 					if( text.getText().equals("")) return;
-					IntroductionDialog.this.introduction.addInterface(text.getText());
-					text.setText("");
-					refreshViewer();
+					try {
+						IType type = JavaModelUtil.findType(AopCorePlugin.getCurrentJavaProject(),
+								text.getText());
+						if( type != null && type.isInterface() ) {
+							IntroductionDialog.this.introduction.addInterface(text.getText());
+							text.setText("");
+							refreshViewer();							
+						} else {
+							// not valid
+							MessageBox error = new MessageBox(IntroductionDialog.this.getShell(), 
+									SWT.OK | SWT.ICON_ERROR);
+							error.setText("Interface Not Found");
+							error.setMessage("The fully qualified type \"" + text.getText() + "\" " +
+									"is not a valid interface or was not found.");
+							error.open();
+						}
+					} catch( JavaModelException jme ) {
+					}
 				}
 
 				public void widgetDefaultSelected(SelectionEvent e) {
@@ -483,10 +485,25 @@ public class IntroductionDialog extends Dialog {
 
 				public void widgetSelected(SelectionEvent e) {
 					if( newInterface.getText().equals("")) return;
-					jdtMixin.addInterface(newInterface.getText());
-					newInterface.setText("");
-					refreshMixinModel();
-					refreshInternalViewer();
+					try {
+						IType type = JavaModelUtil.findType(AopCorePlugin.getCurrentJavaProject(),
+								newInterface.getText());
+						if( type != null && type.isInterface() ) {
+							jdtMixin.addInterface(newInterface.getText());
+							newInterface.setText("");
+							refreshMixinModel();
+							refreshInternalViewer();
+						} else {
+							// not valid
+							MessageBox error = new MessageBox(IntroductionDialog.this.getShell(), 
+									SWT.OK | SWT.ICON_ERROR);
+							error.setText("Interface Not Found");
+							error.setMessage("The fully qualified type \"" + newInterface.getText() + "\" " +
+									"is not a valid interface or was not found.");
+							error.open();
+						}
+					} catch( JavaModelException jme ) {
+					}
 				}
 
 				public void widgetDefaultSelected(SelectionEvent e) {

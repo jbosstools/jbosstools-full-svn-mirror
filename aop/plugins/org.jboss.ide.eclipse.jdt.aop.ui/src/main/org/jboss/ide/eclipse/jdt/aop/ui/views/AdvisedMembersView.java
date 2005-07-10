@@ -8,6 +8,7 @@ package org.jboss.ide.eclipse.jdt.aop.ui.views;
 
 
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IType;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -21,6 +22,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopModelChangeListener;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopTypeMatcher;
 import org.jboss.ide.eclipse.jdt.aop.ui.util.JumpToCodeUtil;
 import org.jboss.ide.eclipse.jdt.aop.ui.views.providers.AdvisedMembersContentProvider;
 import org.jboss.ide.eclipse.jdt.aop.ui.views.providers.AdvisedMembersLabelProvider;
@@ -129,5 +131,21 @@ public class AdvisedMembersView extends ViewPart implements IAopModelChangeListe
 	public void advisorRemoved(IAopAdvised advised, IAopAdvisor advisor)
 	{
 		refresh();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopModelChangeListener#typeMatchAdded(org.eclipse.jdt.core.IType, org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopTypeMatcher)
+	 */
+	public void typeMatchAdded(IType type, IAopTypeMatcher matcher) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopModelChangeListener#typeMatchRemoved(org.eclipse.jdt.core.IType, org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopTypeMatcher)
+	 */
+	public void typeMatchRemoved(IType type, IAopTypeMatcher matcher) {
+		// TODO Auto-generated method stub
+		
 	}
 }

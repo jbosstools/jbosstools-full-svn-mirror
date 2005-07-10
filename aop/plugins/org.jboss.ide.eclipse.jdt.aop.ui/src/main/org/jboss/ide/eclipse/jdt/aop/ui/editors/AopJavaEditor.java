@@ -36,6 +36,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopModelChangeListener;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopTypeMatcher;
 import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopTypedef;
 import org.jboss.ide.eclipse.jdt.aop.core.project.AopProjectNature;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopUiPlugin;
@@ -193,15 +194,63 @@ public class AopJavaEditor extends CompilationUnitEditor implements IAopModelCha
 		}
 	}
 		
-	private void advisorAddedTypedef(IAopAdvised advised, AopTypedef typedef) {
-		IJavaElement element = advised.getAdvisedElement();
-		//System.out.println("element is: " + element.getElementName() + " with " + element.getPrimaryElement().getElementName());
-		
-		if (!elementHasMarkerOfType(element, AopUiPlugin.TYPEDEF_MARKER))
+	private void matchedTypeAdded(IType matchedType, IAopTypeMatcher matcher, String markerType) {
+		if (!elementHasMarkerOfType(matchedType, markerType))
 		{
-			createAdvisedMarker(element, typedef, AopUiPlugin.TYPEDEF_MARKER);
+			HashMap attributes = createElementMarkerAttributes(matchedType);
+
+			attributes.put(IMarker.MESSAGE, "This member is advised.");
+			attributes.put(MARKER_PROP_ADVISOR, matcher);
+			
+			createElementMarker(matchedType, attributes, markerType);
 		}
 	}
+	
+	private void matchedTypeRemoved(IType matchedType, IAopTypeMatcher matcher) {
+		for (Iterator iter = getElementMarkers(matchedType).iterator(); iter.hasNext(); )
+		{
+			IMarker marker = (IMarker) iter.next();
+			if (marker != null)
+			{
+				try {
+					Object tmp = marker.getAttribute(MARKER_PROP_ADVISOR) ;
+					if (matcher != null)
+					{
+						if (matcher.equals(tmp))
+						{
+							try {
+								marker.delete();
+								iter.remove();
+							} catch( Exception e ) {
+								
+							}
+						}
+					}
+				} catch( Exception e ) {
+					
+				}
+			}
+		}
+	}
+
+	public void typeMatchAdded(IType type, IAopTypeMatcher matcher) {
+		if( matcher.getType() == IAopTypeMatcher.TYPEDEF ) 
+			{matchedTypeAdded(type, matcher, AopUiPlugin.TYPEDEF_MARKER);return;}
+
+		// TODO: Fix
+		if( matcher.getType() == IAopTypeMatcher.INTRODUCTION ) 
+			{matchedTypeAdded(type, matcher, AopUiPlugin.INTRODUCTION_MARKER);return;}
+
+	}
+
+	public void typeMatchRemoved(IType type, IAopTypeMatcher matcher) {
+		if( matcher.getType() == IAopTypeMatcher.TYPEDEF ) 
+			{matchedTypeRemoved(type, matcher);return;}
+		if( matcher.getType() == IAopTypeMatcher.INTRODUCTION ) 
+			{matchedTypeRemoved(type, matcher);return;}
+	
+	}
+
 	
 	public void advisorAdded(IAopAdvised advised, IAopAdvisor advisor)
 	{
@@ -210,8 +259,6 @@ public class AopJavaEditor extends CompilationUnitEditor implements IAopModelCha
 				{advisorAddedAdvice(advised, (IAopAdvice)advisor); return;}
 			if( advisor.getType() == IAopAdvisor.INTERCEPTOR )  
 				{advisorAddedInterceptor(advised, (IAopInterceptor)advisor); return;}
-			if( advisor.getType() == IAopAdvice.TYPEDEF ) 
-				{advisorAddedTypedef(advised, (AopTypedef)advisor);return;}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -330,6 +377,8 @@ public class AopJavaEditor extends CompilationUnitEditor implements IAopModelCha
 		}
 	}
 	
+	
+	
 	private void createAdvisedMarker (IJavaElement element, IAopAdvisor advisor, String markerType)
 	{
 		HashMap attributes = createElementMarkerAttributes(element);
@@ -403,4 +452,7 @@ public class AopJavaEditor extends CompilationUnitEditor implements IAopModelCha
 			AdvisedMembersView.instance().refresh();
 		}
 	}
+
+	
+	
 }
