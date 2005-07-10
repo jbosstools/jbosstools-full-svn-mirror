@@ -3,10 +3,14 @@
  */
 package org.jboss.ide.eclipse.jdt.aop.core.pointcut;
 
+import java.io.StringReader;
 import java.util.Arrays;
 
+import org.eclipse.jdt.core.IType;
 import org.jboss.aop.introduction.InterfaceIntroduction;
 import org.jboss.aop.pointcut.ast.ClassExpression;
+import org.jboss.aop.pointcut.ast.TypeExpressionParser;
+import org.jboss.ide.eclipse.jdt.aop.core.matchers.JDTTypeMatcher;
 
 /**
  * @author Rob Stryker
@@ -21,10 +25,15 @@ public class JDTInterfaceIntroduction extends InterfaceIntroduction{
 	public void setClassExpression(String expr) {
 		try {
 			this.classExpr = new ClassExpression(expr);
-		} catch( Exception e ) {
+			this.name = expr;
+		} catch( Throwable e ) {
 		}
 	}
 	
+	public void setName( String s ) {
+		this.name = s;
+	}
+
 	public void setInterfaces( String[] s ) {
 		this.interfaces = s;
 	}
@@ -81,6 +90,20 @@ public class JDTInterfaceIntroduction extends InterfaceIntroduction{
 			}
 		}
 		return retval;
+	}
+	
+	public boolean matches (IType type)
+	{
+		try {
+			if( ast == null ) {
+				ast = new TypeExpressionParser(new StringReader(this.classExpr.getOriginal())).Start();
+			}
+		} catch( Throwable throwable ) {
+			return false;
+		}
+		
+		JDTTypeMatcher matcher = new JDTTypeMatcher(type);
+		return ((Boolean) ast.jjtAccept(matcher, null)).booleanValue();
 	}
 	
 	/**

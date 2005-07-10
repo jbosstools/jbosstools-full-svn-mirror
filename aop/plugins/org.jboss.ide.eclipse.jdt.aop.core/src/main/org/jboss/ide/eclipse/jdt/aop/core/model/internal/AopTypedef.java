@@ -1,7 +1,6 @@
 package org.jboss.ide.eclipse.jdt.aop.core.model.internal;
 
-import org.eclipse.jdt.core.IJavaElement;
-import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopTypeMatcher;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 
 /**
@@ -13,25 +12,24 @@ import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
  * @author Rob Stryker
  *
  */
-public class AopTypedef extends AopAdvisor {
+public class AopTypedef extends AopTypeMatcher {
 	
 	private JDTTypedefExpression tdExpr;
 	
 	public AopTypedef(JDTTypedefExpression expr) {
-		super(null);
+		super(IAopTypeMatcher.TYPEDEF);
 		this.tdExpr = expr;
 	}
 
 	
 	public int getType() {
-		return TYPEDEF;
+		return IAopTypeMatcher.TYPEDEF;
 	}
 	
 	public JDTTypedefExpression getTypedef() {
 		return tdExpr;
 	}
 	
-	// Must override .equals
 	public boolean equals (Object other) {
 		if( other instanceof AopTypedef ) {
 			AopTypedef otherr = (AopTypedef)other;
@@ -41,29 +39,5 @@ public class AopTypedef extends AopAdvisor {
 		}
 	}
 	
-	/*
-	 * These are methods from the superclass that 
-	 * don't apply to a typedef. Sadly, I feel like
-	 * I'm breaking the model. 
-	 */
-	public IJavaElement getAdvisingElement() {
-		return null;
-	}
-
-	public Object getAdapter(Class adapter)	{
-		return null;
-	}
-
-
-	public JDTPointcutExpression[] getAssignedPointcuts () {
-		return null;
-	}
-	
-	public void assignPointcut(JDTPointcutExpression expression) {
-	}
-	
-	public void unassignPointcut(JDTPointcutExpression expression) {
-	}
-
 
 }

@@ -4,7 +4,6 @@
 package org.jboss.ide.eclipse.jdt.aop.core.model.internal;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -16,6 +15,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvice;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAspect;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 
 /**
@@ -26,6 +26,7 @@ public class ProjectAdvisors {
 	private Hashtable aspects;
 	private ArrayList interceptors;
 	private Hashtable typedefs;
+	private Hashtable introductions;
 	private IJavaProject project;
 	
 	public ProjectAdvisors (IJavaProject project)
@@ -34,6 +35,7 @@ public class ProjectAdvisors {
 		aspects = new Hashtable();
 		typedefs = new Hashtable();
 		interceptors = new ArrayList();
+		introductions = new Hashtable();
 	}
 	
 	public boolean hasAspect (String fqClassName)
@@ -208,5 +210,25 @@ public class ProjectAdvisors {
 	public AopTypedef getTypedef( String name ) {
 		return (AopTypedef)typedefs.get(name);
 	}
-
+	
+	
+	public AopInterfaceIntroduction addIntroduction(JDTInterfaceIntroduction intro) {
+		AopInterfaceIntroduction aopIntro = new AopInterfaceIntroduction(intro);
+		introductions.put(intro.getName(), aopIntro);
+		return aopIntro;
+	}
+	
+	public void removeIntroduction(JDTInterfaceIntroduction intro ) {
+		introductions.remove(intro.getName());
+	}
+	
+	public AopInterfaceIntroduction[] getIntroductions() {
+		return (AopInterfaceIntroduction[]) introductions.values().toArray(
+				new AopInterfaceIntroduction[introductions.size()]);
+	}
+	
+	public AopInterfaceIntroduction getIntroduction( String name ) {
+		return (AopInterfaceIntroduction)introductions.get(name);
+	}
+	
 }

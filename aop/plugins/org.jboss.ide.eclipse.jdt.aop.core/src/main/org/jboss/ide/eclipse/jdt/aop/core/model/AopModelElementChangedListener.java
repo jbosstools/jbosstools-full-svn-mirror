@@ -357,23 +357,21 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 			for( int i = 0; i < typedefs.length; i++ ) {
 				JDTTypedefExpression expr = typedefs[i].getTypedef();
 				for( int j = 0; j < types.length; j++ ) {
-					boolean currentlyAdvises = typedefs[i].advises(types[j]);
-					boolean shouldAdvise = expr.matches(types[j]);
+					boolean currentlyMatches = typedefs[i].matches(types[j]);
+					boolean shouldMatch = expr.matches(types[j]);
 					
 //					System.out.println("currently: " + currentlyAdvises + ", should: " + shouldAdvise);
 					
-					if( currentlyAdvises  &&  shouldAdvise ) continue;
-					if( !currentlyAdvises && !shouldAdvise ) continue;
+					if( currentlyMatches  &&  shouldMatch ) continue;
+					if( !currentlyMatches && !shouldMatch ) continue;
 					
 
-					if( shouldAdvise ) {
-						IAopAdvised advised = new AopAdvised(IAopAdvised.TYPE_CLASS, types[j]);
-						typedefs[i].addAdvised(advised);
-						AopModel.instance().fireAdvisorAdded(advised, typedefs[i]);
+					if( shouldMatch ) {
+						typedefs[i].addMatchedType(types[j]);
+						AopModel.instance().fireTypeMatchAdded(types[j], typedefs[i]);
 					} else {
-						IAopAdvised advised = typedefs[i].getAdvised(types[j]);
-						typedefs[i].removeAdvised(advised);
-						AopModel.instance().fireAdvisorRemoved(advised, typedefs[i]);
+						typedefs[i].removeMatchedType(types[j]);
+						AopModel.instance().fireTypeMatchRemoved(types[j], typedefs[i]);
 					}
 					
 					

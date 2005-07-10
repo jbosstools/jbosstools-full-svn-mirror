@@ -27,6 +27,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aspect;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvice;
@@ -34,8 +35,10 @@ import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAspect;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopInterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopTypedef;
 import org.jboss.ide.eclipse.jdt.aop.core.model.internal.ProjectAdvisors;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 
@@ -74,6 +77,7 @@ public class ModelInitAndUpdate {
 		initializeAspects(aop, monitor, advisors);
 		initializeInterceptors(aop, project, monitor, advisors);
 		initializeBindings(aop, project, monitor);
+		initializeIntroductions(aop, project, monitor);
 		
 	}
 	
@@ -175,6 +179,14 @@ public class ModelInitAndUpdate {
 		monitor.worked(1);
 	}
 	
+	private void initializeIntroductions(Aop aop, IJavaProject project, IProgressMonitor monitor ) {
+		for( Iterator iter = AopModelUtils.getIntroductionsFromAop(aop).iterator(); iter.hasNext();) {
+			Introduction jaxbIntro = (Introduction)iter.next();
+			JDTInterfaceIntroduction jdtIntro = AopModelUtils.toJDT(jaxbIntro);
+			AopModel.instance().addInterfaceIntroduction(project, jdtIntro);
+		}
+	}
+	
 	private void initializePointcuts(Aop aop, IProgressMonitor monitor) {
 		for (Iterator iter = AopModelUtils.getPointcutsFromAop(aop).iterator(); iter.hasNext(); )
 		{
@@ -270,6 +282,7 @@ public class ModelInitAndUpdate {
 		Aop aop = descriptor.getAop();
 
 		updateTypedefs(aop, project, monitor);
+		updateIntroductions(aop, project, monitor);
 
 		
 		// Rather than completely re-creating the entire internal model, we'll try to be "smart" about changed pointcuts,
@@ -732,12 +745,101 @@ public class ModelInitAndUpdate {
 		
 		Iterator addedIter = added.iterator();
 		while(addedIter.hasNext()) {
-//			Typedef def = (Typedef)addedIter.next();
-//			JDTTypedefExpression add = new JDTTypedefExpression(new TypedefExpression(def.getName(), def.getExpr()));
 			JDTTypedefExpression add = (JDTTypedefExpression)addedIter.next();
 			AopModel.instance().addNewTypedef(project,add);
 		}
 
 	}
 	
+	private void updateIntroductions(Aop aop, IJavaProject project, IProgressMonitor monitor) {
+		ArrayList deleted,added;
+		deleted = new ArrayList();
+		added = new ArrayList();
+		
+		HashMap jaxbMap = new HashMap();
+		HashMap jdtMap = new HashMap();
+
+		
+		// Load the map of the new stuff
+		List introductionList = AopModelUtils.getIntroductionsFromAop(aop);
+		for(Iterator i = introductionList.iterator();i.hasNext();){
+			Introduction in = (Introduction)i.next();
+			String key = in.getClazz() != null ? in.getClazz() : in.getExpr();
+			jaxbMap.put(key, in);
+		}
+		
+		
+		/* Do it from the projectAdvisors instead. */
+		ProjectAdvisors advisors = AopModel.instance().getProjectAdvisors(project);
+		AopInterfaceIntroduction[] introductions = advisors.getIntroductions();
+		for( int i = 0; i < introductions.length; i++ ) {
+			JDTInterfaceIntroduction jdtInter = introductions[i].getIntroduction();
+			jdtMap.put(jdtInter.getName(), jdtInter);
+		}
+
+		
+		// Both maps are loaded. Now we'll go through both and see what we find.
+		Iterator jaxbKeyIterator = jaxbMap.keySet().iterator();
+		while(jaxbKeyIterator.hasNext()) {
+			String key = (String)jaxbKeyIterator.next();
+			Introduction jaxbIntro = (Introduction)jaxbMap.get(key);
+			JDTInterfaceIntroduction jdtIntro = (JDTInterfaceIntroduction)jdtMap.get(key);
+
+			jaxbKeyIterator.remove();
+			
+			if( jdtIntro == null ) {
+				// this jaxb one is new.
+				try {
+					JDTInterfaceIntroduction newJDTIntro = 
+						AopModelUtils.toJDT(jaxbIntro);
+					added.add(newJDTIntro);
+				} catch( Exception e ) {					
+				}
+			} else {
+				// the key is present in both. But do the expressions match?
+				if( true ) {
+					// they match. Remove them from both maps.
+					jdtMap.remove(key);
+				} else {
+					// They do NOT match. jaxb is added, jdt is removed.
+					try {
+						JDTInterfaceIntroduction newJDTIntro = 
+							AopModelUtils.toJDT(jaxbIntro);
+						added.add(newJDTIntro);
+						deleted.add(jdtIntro);
+	
+						jdtMap.remove(key);
+					} catch( Exception e ) {
+						System.out.println("DEAD");
+					}
+				}
+				
+			}
+			
+		}
+		
+		// Whatever's left has been removed.
+		Iterator i = jdtMap.keySet().iterator();
+		while(i.hasNext()) {
+			String key = (String)i.next();
+			JDTInterfaceIntroduction del = (JDTInterfaceIntroduction)jdtMap.get(key);
+			deleted.add(del);
+		}
+		
+		// Tell the model to fire the actions
+		Iterator deletedIter = deleted.iterator();
+		while(deletedIter.hasNext()) {
+			JDTInterfaceIntroduction del = (JDTInterfaceIntroduction)deletedIter.next();
+			AopModel.instance().removeInterfaceIntroduction(project, del);
+		}
+		
+		Iterator addedIter = added.iterator();
+		while(addedIter.hasNext()) {
+			JDTInterfaceIntroduction add = (JDTInterfaceIntroduction)addedIter.next();
+			AopModel.instance().addInterfaceIntroduction(project,add);
+		}
+
+	}
+
+		
 }

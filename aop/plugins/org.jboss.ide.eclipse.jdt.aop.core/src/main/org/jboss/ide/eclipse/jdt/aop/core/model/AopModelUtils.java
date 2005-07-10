@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jboss.aop.introduction.InterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aop;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aspect;
@@ -13,6 +14,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
 
 /**
  * 
@@ -102,5 +104,40 @@ public class AopModelUtils {
 		return getFromBinding(Advice.class, binding);
 	}
 	
+	
+	
+	
+	public static JDTInterfaceIntroduction toJDT(
+			org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction jaxbIntro) {
+		
+		JDTInterfaceIntroduction jdtIntro = new JDTInterfaceIntroduction();
+
+		// make a copy of the provided jaxb-introduction into the aop's jdt type.
+		String expr = jaxbIntro.getClazz() == null ? jaxbIntro.getExpr() : jaxbIntro.getClazz();
+		
+		jdtIntro.setClassExpression(expr);
+		jdtIntro.setInterfaces(jaxbIntro.getInterfaces());
+		ArrayList introductionMixins = jdtIntro.getMixins();
+		java.util.List jaxbMixins = jaxbIntro.getMixin();
+		for( Iterator i = jaxbMixins.iterator(); i.hasNext(); ) {
+			org.jboss.ide.eclipse.jdt.aop.core.jaxb.Mixin jaxbMix = 
+				(org.jboss.ide.eclipse.jdt.aop.core.jaxb.Mixin)i.next();
+			String tempInterfaces = jaxbMix.getInterfaces();
+			String[] tempInterfacesArray = tempInterfaces == null ? new String[] { } : tempInterfaces.split(", ");
+			InterfaceIntroduction.Mixin tempMixin = 
+				new InterfaceIntroduction.Mixin(
+						jaxbMix.getClazz(), tempInterfacesArray, 
+						jaxbMix.getConstruction(), jaxbMix.isTransient());
+			introductionMixins.add(tempMixin);
+		}
+
+		return jdtIntro;
+	}
+	
+	public static org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction 
+		toJaxb(JDTInterfaceIntroduction intro) {
+		
+		return null;
+	}
 
 }

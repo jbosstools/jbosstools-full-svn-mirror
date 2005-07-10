@@ -32,9 +32,12 @@ import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAspect;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopModelChangeListener;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopTypeMatcher;
 import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopAdvised;
+import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopInterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopTypedef;
 import org.jboss.ide.eclipse.jdt.aop.core.model.internal.ProjectAdvisors;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 
@@ -187,6 +190,7 @@ public class AopModel {
 			IAopInterceptor interceptors[] = advisors.getInterceptors();
 			IAopAspect aspects[] = advisors.getAspects();
 			AopTypedef typedefs[] = advisors.getTypedefs();
+			AopInterfaceIntroduction introductions[] = advisors.getIntroductions();
 			
 			for (int i = 0; i < interceptors.length; i++)
 			{
@@ -213,12 +217,20 @@ public class AopModel {
 			
 			
 			for( int i = 0; i < typedefs.length; i++ ) {
-				IAopAdvised advised[] = typedefs[i].getAdvised();
-				for( int j = 0; j < advised.length; j++ ) {
-					listener.advisorAdded(advised[j], typedefs[i]);					
+				IType[] types = typedefs[i].getMatched();
+				for( int j = 0; j < types.length; j++ ) {
+					listener.typeMatchAdded(types[j], typedefs[i]);					
 				}
 			}
-		}
+
+		
+			for( int i = 0; i < introductions.length; i++ ) {
+				IType[] types = introductions[i].getMatched();
+				for( int j = 0; j < types.length; j++ ) {
+					listener.typeMatchAdded(types[j], introductions[i]);					
+				}
+			}
+}
 	}
 	
 	public void addAopModelChangeListener (IJavaProject project, IAopModelChangeListener listener)
@@ -346,7 +358,6 @@ public class AopModel {
 		
 		IAopAspect aspects[] = getProjectAdvisors(element.getJavaProject()).getAspects();
 		IAopInterceptor interceptors[] = getProjectAdvisors(element.getJavaProject()).getInterceptors();
-		AopTypedef typedefs[] = getProjectAdvisors(element.getJavaProject()).getTypedefs();
 		
 		for (int i = 0; i < aspects.length; i++)
 		{
@@ -368,13 +379,43 @@ public class AopModel {
 			}
 		}
 		
+		
+		// TODO: MOVE ME! I DONT BELONG HERE!
+//		if( element instanceof IType ) {
+//			for( int i = 0; i < typedefs.length; i++ ) {
+//				if( typedefs[i].advises(element)) {
+//					advisors.add(typedefs[i]);
+//				}
+//			}
+//		}
+		
+		return (IAopAdvisor[]) advisors.toArray(new IAopAdvisor[advisors.size()]);
+	}
+	
+	public IAopTypeMatcher[] getElementTypeMatchers(IJavaElement element) {
+		if( !(element instanceof IType )) {
+			return new IAopTypeMatcher[] {};
+		}
+
+		ArrayList list = new ArrayList();
+		AopTypedef typedefs[] = getProjectAdvisors(element.getJavaProject()).getTypedefs();
 		for( int i = 0; i < typedefs.length; i++ ) {
-			if( typedefs[i].advises(element)) {
-				advisors.add(typedefs[i]);
+			if( typedefs[i].matches((IType)element)) {
+				list.add(typedefs[i]);
 			}
 		}
 		
-		return (IAopAdvisor[]) advisors.toArray(new IAopAdvisor[advisors.size()]);
+		AopInterfaceIntroduction intros[] = getProjectAdvisors(element.getJavaProject()).getIntroductions();
+		for( int i = 0; i < typedefs.length; i++ ) {
+			if( intros[i].matches((IType)element)) {
+				list.add(intros[i]);
+			}
+		}
+		
+		
+
+		return (IAopTypeMatcher[]) list.toArray(new IAopTypeMatcher[list.size()]);
+		
 	}
 	
 	public IAopAdvisor findAdvisor (IJavaElement element)
@@ -405,7 +446,35 @@ public class AopModel {
 		return null;
 	}
 	
-	
+	protected void fireTypeMatchAdded( IType matched, IAopTypeMatcher matcher ) {
+		ArrayList listeners = getProjectAopModelChangeListeners(matched.getJavaProject());
+		for (Iterator iter = listeners.iterator(); iter.hasNext(); )
+		{
+			IAopModelChangeListener listener = (IAopModelChangeListener) iter.next();
+			listener.typeMatchAdded(matched, matcher);
+		}
+		
+		for (Iterator iter = globalListeners.iterator(); iter.hasNext(); )
+		{
+			IAopModelChangeListener listener = (IAopModelChangeListener) iter.next();
+			listener.typeMatchAdded(matched, matcher);
+		}
+	}
+	protected void fireTypeMatchRemoved( IType matched, IAopTypeMatcher matcher ) {
+		ArrayList listeners = getProjectAopModelChangeListeners(matched.getJavaProject());
+		for (Iterator iter = listeners.iterator(); iter.hasNext(); )
+		{
+			IAopModelChangeListener listener = (IAopModelChangeListener) iter.next();
+			listener.typeMatchRemoved(matched, matcher);
+		}
+		
+		for (Iterator iter = globalListeners.iterator(); iter.hasNext(); )
+		{
+			IAopModelChangeListener listener = (IAopModelChangeListener) iter.next();
+			listener.typeMatchRemoved(matched, matcher);
+		}
+	}
+
 	protected void fireAdvisorAdded (IAopAdvised advised, IAopAdvisor advisor)
 	{
 		ArrayList listeners = getProjectAopModelChangeListeners(advised.getAdvisedElement().getJavaProject());
@@ -668,17 +737,28 @@ public class AopModel {
 		collector.done();
 	}
 	
-	public AopAdvised[] findAllAdvised(JDTTypedefExpression tdExpr) {
+	public IType[] findAllAdvised(JDTTypedefExpression tdExpr) {
 		ArrayList list = new ArrayList();
 		IType[] types = getRegisteredTypesAsITypes();
 		for( int i = 0; i < types.length; i++ ) {
 			if( tdExpr.matches(types[i])) {
-				list.add(new AopAdvised(IAopAdvised.TYPE_CLASS, types[i]));
+				list.add(types[i]);
 			}
 		}		
-		return (AopAdvised[])(list.toArray(new AopAdvised[list.size()]));
+		return (IType[])(list.toArray(new IType[list.size()]));
 	}
 	
+	// TODO:  Test me
+	public IType[] findAllAdvised(JDTInterfaceIntroduction intro) {
+		ArrayList list = new ArrayList();
+		IType[] types = getRegisteredTypesAsITypes();
+		for( int i = 0; i < types.length; i++ ) {
+			if( intro.matches(types[i])) {
+				list.add(types[i]);
+			}
+		}		
+		return (IType[])(list.toArray(new IType[list.size()]));
+	}
 	/**
 	 * Adds a new typedef expression to the model.
 	 * @param project
@@ -689,13 +769,12 @@ public class AopModel {
 			AspectManager.instance().addTypedef(tdExpr);
 			ProjectAdvisors advisors = getProjectAdvisors(project);
 			AopTypedef typedef = advisors.addTypedef(tdExpr);
-			IAopAdvised[] advisedClasses = AopModel.instance().findAllAdvised(tdExpr);
-			typedef.addAdvised(advisedClasses);
+			IType[] matchedClasses = AopModel.instance().findAllAdvised(tdExpr);
+			typedef.addMatchedType(matchedClasses);
 			
-			for( int i = 0; i < advisedClasses.length; i++ ) {
-				fireAdvisorAdded(advisedClasses[i], typedef);
+			for( int i = 0; i < matchedClasses.length; i++ ) {
+				fireTypeMatchAdded(matchedClasses[i], typedef);
 			}
-			
 			
 		} catch( Exception e ) {
 			
@@ -713,11 +792,37 @@ public class AopModel {
 		AspectManager.instance().removeTypedef(tdExpr.getName());
 		ProjectAdvisors advisors = getProjectAdvisors(project);
 		AopTypedef advisorTypedef = advisors.getTypedef(tdExpr.getName());
-		IAopAdvised[] advisedClasses = advisorTypedef.getAdvised();
-		for( int i = 0; i < advisedClasses.length; i++ ) {
-			fireAdvisorRemoved(advisedClasses[i], advisorTypedef);
+		IType[] matchedClasses = advisorTypedef.getMatched();
+		for( int i = 0; i < matchedClasses.length; i++ ) {
+			fireTypeMatchRemoved(matchedClasses[i], advisorTypedef);
 		}
 		advisors.removeTypedef(tdExpr);
+	}
+	
+	
+	public void addInterfaceIntroduction(IJavaProject project, JDTInterfaceIntroduction intro) {
+		ProjectAdvisors advisors = getProjectAdvisors(project);
+		AopInterfaceIntroduction aopIntro = advisors.addIntroduction(intro);
+		IType[] matchedClasses = AopModel.instance().findAllAdvised(intro);
+		aopIntro.addMatchedType(matchedClasses);
+		
+		for( int i = 0; i < matchedClasses.length; i++ ) {
+			fireTypeMatchAdded(matchedClasses[i], aopIntro);
+		}
+		
+		System.out.println("adding an introduction" + intro.getName());
+	}
+	
+	public void removeInterfaceIntroduction(IJavaProject project, JDTInterfaceIntroduction intro) {
+		ProjectAdvisors advisors = getProjectAdvisors(project);
+		AopInterfaceIntroduction aopIntro = advisors.getIntroduction(intro.getClassExpr());
+		IType[] matchedClasses = aopIntro.getMatched();
+		for( int i = 0; i < matchedClasses.length; i++ ) {
+			fireTypeMatchRemoved(matchedClasses[i], aopIntro);
+		}
+		advisors.removeIntroduction(intro);
+
+		System.out.println("Removing an introduction: " + intro.getName());		
 	}
 	
 	/**
@@ -816,10 +921,9 @@ public class AopModel {
 		ProjectAdvisors advisors = getProjectAdvisors(AopCorePlugin.getCurrentJavaProject());
 		AopTypedef[] typedefs = advisors.getTypedefs();
 		for( int i = 0; i < typedefs.length; i++ ) {
-			if( typedefs[i].advises(type)) {
-				IAopAdvised advised = typedefs[i].getAdvised(type);
-				typedefs[i].removeAdvised(advised);
-				fireAdvisorRemoved(advised, typedefs[i]);
+			if( typedefs[i].matches(type)) {
+				typedefs[i].removeMatchedType(type);
+				fireTypeMatchRemoved(type, typedefs[i]);
 			}
 		}
 		
