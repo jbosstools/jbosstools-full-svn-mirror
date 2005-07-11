@@ -21,8 +21,10 @@ import org.eclipse.jdt.internal.core.CompilationUnit;
 import org.eclipse.jdt.internal.core.JavaElementDelta;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
 import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopAdvised;
+import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopInterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopTypedef;
 import org.jboss.ide.eclipse.jdt.aop.core.model.internal.ProjectAdvisors;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 
@@ -57,9 +59,11 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 		}
 
 		
-		// Check to make sure typedef integrity remains.
-		if( unit.exists())
+		// Check to make sure typedef and mixin integrity remains.
+		if( unit.exists()) {
 			reconcileTypedefs(unit);
+			reconcileIntroductions(unit);
+		}
 
 		changed.addAll(elementChangedGetAllAffected(event.getDelta()));		
 		
@@ -382,5 +386,43 @@ public class AopModelElementChangedListener implements IElementChangedListener {
 			System.out.println("[reconcileTypedefs error]");
 			e.printStackTrace();
 		}
+	}
+	
+	private void reconcileIntroductions(ICompilationUnit unit) {
+		try {
+			IType[] types = unit.getAllTypes();
+			IJavaProject project = unit.getJavaProject();
+			ProjectAdvisors advisors = AopModel.instance().getProjectAdvisors(project);
+			
+			AopInterfaceIntroduction[] introductions = advisors.getIntroductions();
+			for( int i = 0; i < introductions.length; i++ ) {
+				JDTInterfaceIntroduction expr = introductions[i].getIntroduction();
+				for( int j = 0; j < types.length; j++ ) {
+					boolean currentlyMatches = introductions[i].matches(types[j]);
+					boolean shouldMatch = expr.matches(types[j]);
+					
+	//				System.out.println("currently: " + currentlyAdvises + ", should: " + shouldAdvise);
+					
+					if( currentlyMatches  &&  shouldMatch ) continue;
+					if( !currentlyMatches && !shouldMatch ) continue;
+					
+	
+					if( shouldMatch ) {
+						introductions[i].addMatchedType(types[j]);
+						AopModel.instance().fireTypeMatchAdded(types[j], introductions[i]);
+					} else {
+						introductions[i].removeMatchedType(types[j]);
+						AopModel.instance().fireTypeMatchRemoved(types[j], introductions[i]);
+					}
+					
+					
+					
+				}
+			}
+		} catch( Exception e) {
+			System.out.println("[reconcileTypedefs error]");
+			e.printStackTrace();
+		}
+		
 	}
 }
