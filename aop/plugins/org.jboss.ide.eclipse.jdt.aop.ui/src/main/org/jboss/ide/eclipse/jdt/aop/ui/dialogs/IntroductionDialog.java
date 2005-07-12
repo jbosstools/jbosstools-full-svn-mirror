@@ -217,6 +217,7 @@ public class IntroductionDialog extends Dialog {
 			}
 		};
 		addMixinAction.setText("Create New Mixin");
+		addMixinAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_MIXIN));
 
 		
 		deleteMixinAction = new Action() {
@@ -449,7 +450,7 @@ public class IntroductionDialog extends Dialog {
 		private void setWidgetText() {
 			group.setText("Mixins");
 			interfaceLabel.setText("Interfaces");
-			classLabel.setText("Class");
+			classLabel.setText("Implementation Class");
 			constructionLabel.setText("Construction");
 			addInterfaceButton.setText("Add Interface");
 		}
@@ -518,6 +519,7 @@ public class IntroductionDialog extends Dialog {
 					jdtMixin.setClassname(classname.getText());
 					refreshMixinModel();
 					refreshViewer();
+					construction.setText("new " + classname.getText() + "()");
 				} 
 			} );
 

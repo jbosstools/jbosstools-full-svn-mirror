@@ -201,8 +201,7 @@ public class AopUICompletionProcessor implements IContentAssistProcessor, ISubje
 				IJavaSearchConstants.PACKAGE, IJavaSearchConstants.DECLARATIONS,
 				SearchPattern.R_EXACT_MATCH );
 		
-		
-		
+		if( packagePattern == null ) return null;
 		
 		SearchEngine searchEngine = new SearchEngine();
 		
@@ -223,11 +222,13 @@ public class AopUICompletionProcessor implements IContentAssistProcessor, ISubje
 	}
 	
 	protected ArrayList getPackageProposals( String packageName, String textBoxString, String remainder ) {
+		
 		IJavaSearchScope scope = SearchEngine.createWorkspaceScope();
 		SearchPattern packagePattern = SearchPattern.createPattern(textBoxString, 
 				IJavaSearchConstants.PACKAGE, IJavaSearchConstants.DECLARATIONS,
 				SearchPattern.R_PREFIX_MATCH);
 		
+		if( packagePattern == null ) return new ArrayList();
 		
 		
 		
