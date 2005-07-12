@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
@@ -637,6 +638,13 @@ public class ModelInitAndUpdate {
 				// New pointcut to add.
 				model.bindNewPointcut(project, binding, monitor);
 			}
+		}
+		
+		try {
+			AopCorePlugin.getDefault().cleanProject(AopCorePlugin.getCurrentJavaProject());
+			System.out.println("[modelInitAndUpdate] - Forced Rebuild");
+		} catch( CoreException ce ) {
+			System.out.println("[modelInitAndUpdate] - Core Exception on attempted rebuild");
 		}
 	}
 

@@ -748,7 +748,6 @@ public class AopModel {
 		return (IType[])(list.toArray(new IType[list.size()]));
 	}
 	
-	// TODO:  Test me
 	public IType[] findAllAdvised(JDTInterfaceIntroduction intro) {
 		ArrayList list = new ArrayList();
 		IType[] types = getRegisteredTypesAsITypes();
@@ -801,6 +800,8 @@ public class AopModel {
 	
 	
 	public void addInterfaceIntroduction(IJavaProject project, JDTInterfaceIntroduction intro) {
+		AspectManager.instance().addInterfaceIntroduction(intro);
+		
 		ProjectAdvisors advisors = getProjectAdvisors(project);
 		AopInterfaceIntroduction aopIntro = advisors.addIntroduction(intro);
 		IType[] matchedClasses = AopModel.instance().findAllAdvised(intro);
@@ -809,11 +810,10 @@ public class AopModel {
 		for( int i = 0; i < matchedClasses.length; i++ ) {
 			fireTypeMatchAdded(matchedClasses[i], aopIntro);
 		}
-		
-		System.out.println("adding an introduction" + intro.getName());
 	}
 	
 	public void removeInterfaceIntroduction(IJavaProject project, JDTInterfaceIntroduction intro) {
+		AspectManager.instance().removeInterfaceIntroduction(intro.getName());
 		ProjectAdvisors advisors = getProjectAdvisors(project);
 		AopInterfaceIntroduction aopIntro = advisors.getIntroduction(intro.getClassExpr());
 		IType[] matchedClasses = aopIntro.getMatched();
@@ -821,8 +821,6 @@ public class AopModel {
 			fireTypeMatchRemoved(matchedClasses[i], aopIntro);
 		}
 		advisors.removeIntroduction(intro);
-
-		System.out.println("Removing an introduction: " + intro.getName());		
 	}
 	
 	/**
@@ -944,5 +942,8 @@ public class AopModel {
 		if( s == "PER_JOINPOINT") return Scope.PER_JOINPOINT;
 		return null;
 	}
+	
+	
+
 	
 }
