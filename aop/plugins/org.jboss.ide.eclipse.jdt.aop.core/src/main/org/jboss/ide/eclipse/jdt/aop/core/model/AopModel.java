@@ -4,6 +4,7 @@
 package org.jboss.ide.eclipse.jdt.aop.core.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -397,6 +398,17 @@ public class AopModel {
 			return new IAopTypeMatcher[] {};
 		}
 
+		ArrayList vals = new ArrayList();
+		vals.addAll(Arrays.asList(getTypedefTypeMatchers((IType)element)));
+		vals.addAll(Arrays.asList(getIntroductionTypeMatchers((IType)element)));
+		
+		
+
+		return (IAopTypeMatcher[]) vals.toArray(new IAopTypeMatcher[vals.size()]);
+		
+	}
+	
+	public IAopTypeMatcher[] getTypedefTypeMatchers(IType element) {
 		ArrayList list = new ArrayList();
 		AopTypedef typedefs[] = getProjectAdvisors(element.getJavaProject()).getTypedefs();
 		for( int i = 0; i < typedefs.length; i++ ) {
@@ -404,19 +416,20 @@ public class AopModel {
 				list.add(typedefs[i]);
 			}
 		}
-		
+		return (IAopTypeMatcher[]) list.toArray(new IAopTypeMatcher[list.size()]);		
+	}
+
+	public IAopTypeMatcher[] getIntroductionTypeMatchers(IType element) {
+		ArrayList list = new ArrayList();
 		AopInterfaceIntroduction intros[] = getProjectAdvisors(element.getJavaProject()).getIntroductions();
-		for( int i = 0; i < typedefs.length; i++ ) {
+		for( int i = 0; i < intros.length; i++ ) {
 			if( intros[i].matches((IType)element)) {
 				list.add(intros[i]);
 			}
 		}
-		
-		
-
-		return (IAopTypeMatcher[]) list.toArray(new IAopTypeMatcher[list.size()]);
-		
+		return (IAopTypeMatcher[]) list.toArray(new IAopTypeMatcher[list.size()]);		
 	}
+
 	
 	public IAopAdvisor findAdvisor (IJavaElement element)
 	{
