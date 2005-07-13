@@ -1,0 +1,62 @@
+<chapter id="the.project">
+	<title>The Project</title>
+	<para>
+		We will create a source folder, import libraries and make the build path.
+	</para>
+	
+	<informaltable frame="none">
+	<tgroup cols="2" align="left" colsep="1" rowsep="1">
+		<tbody>
+			<row>
+				<entry valign="top"><para>
+					Create a new J2EE 1.3 Project. Select File &gt; <literal>New</literal> &gt; <literal>Project...</literal> and choose <literal>JBoss-IDE</literal> &gt; <literal>J2EE 1.3 Project</literal>.
+				</para></entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/select-wizard.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry valign="top"><para>
+					Enter <literal>Tutorial</literal> for the project name and select the Next button.
+				</para></entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/project-name.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry valign="top"><para>
+					Create a source folder named <literal>src</literal>. Make sure the default output folder will be <literal>bin</literal>.
+				</para></entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/source-path.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry valign="top"><para>
+					In the package explorer, the new project should look like this. Note that the J2EE 1.3 core classes are directly added. They are available like a standard library with all the source code.
+				</para></entry>
+				<entry align="left">
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/package-explorer-initial.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+		</tbody>
+	</tgroup>
+	</informaltable>
+	
+</chapter>
