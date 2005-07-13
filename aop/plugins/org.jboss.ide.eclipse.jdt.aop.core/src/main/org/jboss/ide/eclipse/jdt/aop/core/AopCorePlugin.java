@@ -6,6 +6,7 @@
  */
 package org.jboss.ide.eclipse.jdt.aop.core;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -14,6 +15,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -263,22 +265,51 @@ public class AopCorePlugin extends Plugin {
 	{
 		try {
 			IType type = (IType) method.getParent();
+
+			
+			
 			String className = type.getFullyQualifiedName();
 			String methodName = method.isConstructor() ? "new" : method.getElementName();
 			String modifiers = Flags.toString(method.getFlags());
-			String returnType = JavaModelUtil.getResolvedTypeName(method.getReturnType(), method.getDeclaringType());
+			String returnTypeSig = JavaModelUtil.getResolvedTypeName(method.getReturnType(), method.getDeclaringType());
+			IType retType = null;
+			try {
+				retType = JavaModelUtil.findType(getCurrentJavaProject(), returnTypeSig);
+			} catch( JavaModelException jme ) {
+			}
+			String fqReturnClass;
+			if( retType == null ) {
+				fqReturnClass = returnTypeSig;
+			} else {
+				fqReturnClass = retType.getFullyQualifiedName();
+			}
+				
 			
 			String params[] = method.getParameterTypes();
 			String signature = modifiers + " ";
 			
 			if (!method.isConstructor())
-				signature += returnType + " ";
+				signature += fqReturnClass + " ";
 			
 			signature += className + "->" + methodName + "(";
 			
 			for (int i = 0; i < params.length; i++)
 			{
-				signature += JavaModelUtil.getResolvedTypeName(params[i], method.getDeclaringType());
+				String paramSig = JavaModelUtil.getResolvedTypeName(params[i], method.getDeclaringType()); 
+
+				String fqParamClass;
+				IType paramType = null;
+				try {
+					paramType = JavaModelUtil.findType(getCurrentJavaProject(), paramSig);
+				} catch( JavaModelException jme ) {
+				}
+				
+				if( paramType == null ) {
+					fqParamClass = paramSig;
+				} else {
+					fqParamClass = paramType.getFullyQualifiedName();
+				}
+				signature += fqParamClass;
 
 				if (i < params.length - 1)
 				{
@@ -303,9 +334,26 @@ public class AopCorePlugin extends Plugin {
 			String className = type.getFullyQualifiedName();
 			String fieldName = field.getElementName();
 			String modifiers = Flags.toString(field.getFlags());
-			String fieldType = JavaModelUtil.getResolvedTypeName(field.getTypeSignature(), field.getDeclaringType());
 			
-			return modifiers + " " + fieldType + " " + className + "->" + fieldName;
+			String fieldResolvedType = JavaModelUtil.getResolvedTypeName(field.getTypeSignature(), field.getDeclaringType());
+
+			IType fieldType = null;
+			try {
+				fieldType = JavaModelUtil.findType(getCurrentJavaProject(), fieldResolvedType);
+			} catch( JavaModelException jme ) {
+			}
+			
+			String fqClass;
+			if( fieldType == null ) {
+				fqClass = fieldResolvedType;
+			} else {
+				fqClass = fieldType.getFullyQualifiedName();
+			}
+
+			
+			
+			
+			return modifiers + " " + fqClass + " " + className + "->" + fieldName;
 		} catch (Exception e)
 		{
 			e.printStackTrace();
@@ -555,9 +603,16 @@ public class AopCorePlugin extends Plugin {
 		return null;
 	}
 	
-	public boolean has15Compliance (IJavaProject javaProject)
+	public boolean hasJava50CompilerCompliance (IJavaProject javaProject)
 	{
-    	String projectCompatibility = javaProject.getOption(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, true);
-    	return JavaCore.VERSION_1_5.equals(projectCompatibility);
+    	String compliance = javaProject.getOption(JavaCore.COMPILER_COMPLIANCE, true);
+    	return JavaCore.VERSION_1_5.equals(compliance);
+	}
+	
+	public void setJava50CompilerCompliance (IJavaProject javaProject)
+	{
+		Map map= javaProject.getOptions(false);
+		JavaModelUtil.set50CompilanceOptions(map);
+		javaProject.setOptions(map);
 	}
 }

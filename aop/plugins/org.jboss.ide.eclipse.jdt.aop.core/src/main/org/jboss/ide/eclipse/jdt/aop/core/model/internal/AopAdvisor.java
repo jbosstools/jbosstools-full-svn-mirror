@@ -9,11 +9,9 @@ package org.jboss.ide.eclipse.jdt.aop.core.model.internal;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.eclipse.jdt.core.IField;
 import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.IMethod;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvised;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvisor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
 
 
@@ -101,7 +99,12 @@ public abstract class AopAdvisor implements IAopAdvisor, Comparable
 	 */
 	public boolean advises (IJavaElement element)
 	{
-		return getAdvised(element) == null ? false : true;
+		IAopAdvised adv = getAdvised(element);
+		boolean retval;
+		if( adv == null ) retval = false;
+		else retval = true;
+		return retval;
+		//		return getAdvised(element) == null ? false : true;
 	}
 	
 	/**

@@ -1,12 +1,14 @@
 package org.jboss.ide.eclipse.ejb3.wizards.ui;
 
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.plugin.*;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
-import java.util.*;
 
 /**
  * The main plugin class to be used in the desktop.
@@ -85,4 +87,27 @@ public class EJB3WizardsUIPlugin extends AbstractUIPlugin {
 		
 		dialog.open();
 	}
+
+	public static void error(String string) {
+		MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getShell(),
+				"EJB3 Tools - Error", Display.getDefault().getSystemImage(SWT.ICON_ERROR),
+				string, MessageDialog.ERROR,new String[] { "OK", }, 0);
+
+		dialog.setBlockOnOpen(true);
+		
+		dialog.open();
+	}
+	
+	public static void warn(String string) {
+		MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getShell(),
+				"EJB3 Tools - Warning", Display.getDefault().getSystemImage(SWT.ICON_WARNING),
+				string, MessageDialog.WARNING,new String[] { "OK", }, 0);
+
+		dialog.setBlockOnOpen(true);
+		
+		dialog.open();
+	}
+	
 }

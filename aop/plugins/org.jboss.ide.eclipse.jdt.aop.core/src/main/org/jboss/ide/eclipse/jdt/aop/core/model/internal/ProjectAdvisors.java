@@ -11,10 +11,12 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.JavaModelException;
 import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvice;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvisor;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAspect;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopInterceptor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvice;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAspect;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 
 /**
  * @author Marshall
@@ -23,13 +25,17 @@ public class ProjectAdvisors {
 
 	private Hashtable aspects;
 	private ArrayList interceptors;
+	private Hashtable typedefs;
+	private Hashtable introductions;
 	private IJavaProject project;
 	
 	public ProjectAdvisors (IJavaProject project)
 	{
 		this.project = project;
 		aspects = new Hashtable();
+		typedefs = new Hashtable();
 		interceptors = new ArrayList();
+		introductions = new Hashtable();
 	}
 	
 	public boolean hasAspect (String fqClassName)
@@ -80,7 +86,7 @@ public class ProjectAdvisors {
 	public IAopInterceptor addInterceptor (String fqClassName, String name)
 	{
 		try {
-			
+			if( name == null || name == "") name = fqClassName;
 			AopInterceptor interceptor = new AopInterceptor (project, fqClassName, name);
 			interceptors.add(interceptor);
 			
@@ -178,4 +184,51 @@ public class ProjectAdvisors {
 	{
 		return (IAopInterceptor[]) interceptors.toArray(new IAopInterceptor[interceptors.size()]);
 	}
+	
+	
+	
+	/*
+	 * Again, pushing the limits of what is an advisor, but for the sake
+	 * of using classes that are already here and not overflowing the product:
+	 */
+	
+	public AopTypedef addTypedef(JDTTypedefExpression expression ) {
+		AopTypedef def = new AopTypedef(expression);
+		typedefs.put(expression.getName(), def);
+		return def;
+	}
+	
+	public void removeTypedef(JDTTypedefExpression expression ) {
+		typedefs.remove(expression.getName());
+	}
+	
+	public AopTypedef[] getTypedefs ()
+	{
+		return (AopTypedef[]) typedefs.values().toArray(new AopTypedef[typedefs.size()]);
+	}
+	
+	public AopTypedef getTypedef( String name ) {
+		return (AopTypedef)typedefs.get(name);
+	}
+	
+	
+	public AopInterfaceIntroduction addIntroduction(JDTInterfaceIntroduction intro) {
+		AopInterfaceIntroduction aopIntro = new AopInterfaceIntroduction(intro);
+		introductions.put(intro.getName(), aopIntro);
+		return aopIntro;
+	}
+	
+	public void removeIntroduction(JDTInterfaceIntroduction intro ) {
+		introductions.remove(intro.getName());
+	}
+	
+	public AopInterfaceIntroduction[] getIntroductions() {
+		return (AopInterfaceIntroduction[]) introductions.values().toArray(
+				new AopInterfaceIntroduction[introductions.size()]);
+	}
+	
+	public AopInterfaceIntroduction getIntroduction( String name ) {
+		return (AopInterfaceIntroduction)introductions.get(name);
+	}
+	
 }

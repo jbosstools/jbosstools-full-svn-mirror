@@ -10,6 +10,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IClasspathEntry;
@@ -47,11 +49,24 @@ public class AddAopNatureAction implements IObjectActionDelegate {
 				throws InvocationTargetException, InterruptedException
 			{
 				Object first = selection.getFirstElement();
-				
-				if (first instanceof IJavaProject)
-				{
+				if( !(first instanceof IProject) ) return;
+				IProject proj = (IProject)first;
+				IProjectNature nature = null;
+				try {
+					nature = proj.getNature("org.eclipse.jdt.core.javanature");
+				} catch(Exception e) {
 					
-					IJavaProject project = (IJavaProject) first;
+				}
+				
+				
+				if (nature != null)
+				{
+					IJavaProject project;
+					if( !(first instanceof IJavaProject)) {
+						project = JavaCore.create(proj);
+					} else {
+						project = (IJavaProject) first;
+					}
 					monitor.beginTask("Applying AOP Project Nature to Project \"" + project.getElementName() + "\"...", 2);
 					AopCorePlugin.setCurrentJavaProject(project);
 					

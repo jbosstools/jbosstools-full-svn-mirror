@@ -19,7 +19,9 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aspect;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
 
 /**
@@ -38,24 +40,14 @@ public class AspectManagerLabelProvider extends LabelProvider {
 			List list = (List) obj;
 			
 			
-			if (list.size() > 0)
-			{
-				Object firstElement = list.get(0);
-				if (firstElement instanceof Aspect) { return "Aspects"; }
-				else if (firstElement instanceof Binding) { return "Bindings"; }
-				else if (firstElement instanceof Interceptor) { return "Interceptors"; }
-				else if (firstElement instanceof Pointcut) { return "Pointcuts"; }
-				else if (firstElement instanceof Advice) { return "Advice"; }
-				else if (firstElement instanceof InterceptorRef) { return "Interceptor References"; }
-			}
-		} 
-		else if( obj instanceof AspectManagerContentProvider.AspectManagerContentProviderTypeWrapper) 
-		{
+			Object firstElement = list.get(0);
 			// TODO: Is this right? What about Advice and InterceptorRef ?
-			if( obj == AspectManagerContentProvider.ASPECTS ) return "Aspects";
-			else if( obj == AspectManagerContentProvider.BINDINGS ) return "Bindings";
-			else if( obj == AspectManagerContentProvider.INTERCEPTORS ) return "Interceptors";
-			else if( obj == AspectManagerContentProvider.POINTCUTS ) return "Pointcuts";
+			if( firstElement == AspectManagerContentProvider.ASPECTS ) return "Aspects";
+			else if( firstElement == AspectManagerContentProvider.BINDINGS ) return "Bindings";
+			else if( firstElement == AspectManagerContentProvider.INTERCEPTORS ) return "Interceptors";
+			else if( firstElement == AspectManagerContentProvider.POINTCUTS ) return "Pointcuts";
+			else if( firstElement == AspectManagerContentProvider.TYPEDEFS ) return "Typedefs";
+			else if( firstElement == AspectManagerContentProvider.INTRODUCTIONS ) return "Introductions";
 			
 		}
 		else if (obj instanceof Aspect)
@@ -78,7 +70,7 @@ public class AspectManagerLabelProvider extends LabelProvider {
 		else if (obj instanceof Pointcut)
 		{
 			Pointcut pointcut = (Pointcut)obj;
-			return pointcut.getName() + " : " + pointcut.getName();
+			return pointcut.getName() + " : " + pointcut.getExpr();
 		}
 		else if (obj instanceof Advice)
 		{
@@ -89,6 +81,19 @@ public class AspectManagerLabelProvider extends LabelProvider {
 		{
 			InterceptorRef ref = (InterceptorRef) obj;
 			return ref.getName();
+		}
+		else if( obj instanceof Typedef ) 
+		{
+			Typedef typedef = (Typedef)obj;
+			return typedef.getName() + " : " + typedef.getExpr();
+		}
+		else if( obj instanceof Introduction ) 
+		{
+			Introduction intro = (Introduction)obj;
+			if (intro.getClazz() == null || intro.getClazz().equals("")) {
+				return intro.getExpr();
+			}
+			return intro.getClazz();
 		}
 		return obj.getClass().toString();
 	}
@@ -103,24 +108,13 @@ public class AspectManagerLabelProvider extends LabelProvider {
 		else if (obj instanceof List)
 		{
 			List list = (List)obj;
-			if (list.size() > 0)
-			{
-				Object firstElement = list.get(0);
-				if (firstElement instanceof Aspect) { return AopSharedImages.getImage(AopSharedImages.IMG_ASPECT); }
-				else if (firstElement instanceof Binding) { return AopSharedImages.getImage(AopSharedImages.IMG_BINDING); }
-				else if (firstElement instanceof Interceptor) { return AopSharedImages.getImage(AopSharedImages.IMG_INTERCEPTOR); }
-				else if (firstElement instanceof Pointcut) { return AopSharedImages.getImage(AopSharedImages.IMG_POINTCUT); }
-				else if (firstElement instanceof Advice) { return AopSharedImages.getImage(AopSharedImages.IMG_ADVICE); }
-				else if (firstElement instanceof InterceptorRef) { return AopSharedImages.getImage(AopSharedImages.IMG_INTERCEPTOR);  }
-			}
-		}
-		else if( obj instanceof AspectManagerContentProvider.AspectManagerContentProviderTypeWrapper) 
-		{
-			// TODO: Is this right? What about Advice and InterceptorRef ?
-			if( obj == AspectManagerContentProvider.ASPECTS ) return AopSharedImages.getImage(AopSharedImages.IMG_ASPECT);
-			else if( obj == AspectManagerContentProvider.BINDINGS ) return AopSharedImages.getImage(AopSharedImages.IMG_BINDING);
-			else if( obj == AspectManagerContentProvider.INTERCEPTORS ) return AopSharedImages.getImage(AopSharedImages.IMG_INTERCEPTOR);
-			else if( obj == AspectManagerContentProvider.POINTCUTS ) return AopSharedImages.getImage(AopSharedImages.IMG_POINTCUT);
+			Object firstElement = list.get(0);
+			if( firstElement == AspectManagerContentProvider.ASPECTS ) return AopSharedImages.getImage(AopSharedImages.IMG_ASPECT);
+			else if( firstElement == AspectManagerContentProvider.BINDINGS ) return AopSharedImages.getImage(AopSharedImages.IMG_BINDING);
+			else if( firstElement == AspectManagerContentProvider.INTERCEPTORS ) return AopSharedImages.getImage(AopSharedImages.IMG_INTERCEPTOR);
+			else if( firstElement == AspectManagerContentProvider.POINTCUTS ) return AopSharedImages.getImage(AopSharedImages.IMG_POINTCUT);
+			else if( firstElement == AspectManagerContentProvider.TYPEDEFS ) return AopSharedImages.getImage(AopSharedImages.IMG_TYPEDEF);
+			else if( firstElement == AspectManagerContentProvider.INTRODUCTIONS ) return AopSharedImages.getImage(AopSharedImages.IMG_INTRODUCTION);
 			
 		}
 		else if (obj instanceof Aspect)
@@ -146,6 +140,14 @@ public class AspectManagerLabelProvider extends LabelProvider {
 		else if (obj instanceof InterceptorRef)
 		{
 			return AopSharedImages.getImage(AopSharedImages.IMG_INTERCEPTOR);
+		}
+		else if (obj instanceof Typedef)
+		{
+			return AopSharedImages.getImage(AopSharedImages.IMG_TYPEDEF);
+		}
+		else if (obj instanceof Introduction)
+		{
+			return AopSharedImages.getImage(AopSharedImages.IMG_INTRODUCTION);
 		}
 		return JavaUI.getSharedImages().getImage(ISharedImages.IMG_OBJS_DEFAULT);
 	}

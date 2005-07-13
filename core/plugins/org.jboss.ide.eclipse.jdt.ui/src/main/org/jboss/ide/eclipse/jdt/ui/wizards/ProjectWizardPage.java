@@ -77,7 +77,7 @@ public abstract class ProjectWizardPage extends JavaCapabilityConfigurationPage
    {
       try
       {
-         monitor.beginTask(NewWizardMessages.getString("NewProjectCreationWizardPage.createproject.desc"), 3);//$NON-NLS-1$
+         monitor.beginTask(NewWizardMessages.JavaProjectWizardSecondPage_operation_create, 3);//$NON-NLS-1$
          if (fCurrProject == null)
          {
             this.updateProject(true, new SubProgressMonitor(monitor, 1));
@@ -151,8 +151,8 @@ public abstract class ProjectWizardPage extends JavaCapabilityConfigurationPage
       }
       catch (InvocationTargetException e)
       {
-         String title = NewWizardMessages.getString("NewProjectCreationWizardPage.EarlyCreationOperation.error.title");//$NON-NLS-1$
-         String message = NewWizardMessages.getString("NewProjectCreationWizardPage.EarlyCreationOperation.error.desc");//$NON-NLS-1$
+         String title = NewWizardMessages.JavaProjectWizard_op_error_title;//$NON-NLS-1$
+         String message = NewWizardMessages.JavaProjectWizard_op_error_create_message;//$NON-NLS-1$
          ExceptionHandler.handle(e, getShell(), title, message);
       }
       catch (InterruptedException e)
@@ -192,7 +192,7 @@ public abstract class ProjectWizardPage extends JavaCapabilityConfigurationPage
                {
                   monitor = new NullProgressMonitor();
                }
-               monitor.beginTask(NewWizardMessages.getString("NewProjectCreationWizardPage.removeproject.desc"), 3);//$NON-NLS-1$
+               monitor.beginTask(NewWizardMessages.JavaProjectWizardSecondPage_operation_remove, 3);//$NON-NLS-1$
 
                try
                {
@@ -217,8 +217,8 @@ public abstract class ProjectWizardPage extends JavaCapabilityConfigurationPage
       }
       catch (InvocationTargetException e)
       {
-         String title = NewWizardMessages.getString("NewProjectCreationWizardPage.op_error.title");//$NON-NLS-1$
-         String message = NewWizardMessages.getString("NewProjectCreationWizardPage.op_error_remove.message");//$NON-NLS-1$
+         String title = NewWizardMessages.JavaProjectWizardSecondPage_error_remove_title;//$NON-NLS-1$
+         String message = NewWizardMessages.JavaProjectWizardSecondPage_error_remove_message;//$NON-NLS-1$
          ExceptionHandler.handle(e, getShell(), title, message);
       }
       catch (InterruptedException e)
@@ -249,7 +249,7 @@ public abstract class ProjectWizardPage extends JavaCapabilityConfigurationPage
       }
       try
       {
-         monitor.beginTask(NewWizardMessages.getString("NewProjectCreationWizardPage.EarlyCreationOperation.desc"), 2);//$NON-NLS-1$
+         monitor.beginTask(NewWizardMessages.JavaProjectWizardSecondPage_operation_initialize, 2);//$NON-NLS-1$
 
          createProject(fCurrProject, fCurrProjectLocation, new SubProgressMonitor(monitor, 1));
          if (initialize)
@@ -264,7 +264,7 @@ public abstract class ProjectWizardPage extends JavaCapabilityConfigurationPage
                )
                {
                   // if .classpath exists noneed to look for files
-                  ClassPathDetector detector = new ClassPathDetector(fCurrProject);
+                  ClassPathDetector detector = new ClassPathDetector(fCurrProject.getProject(), monitor);
                   entries = detector.getClasspath();
                   outputLocation = detector.getOutputLocation();
                }

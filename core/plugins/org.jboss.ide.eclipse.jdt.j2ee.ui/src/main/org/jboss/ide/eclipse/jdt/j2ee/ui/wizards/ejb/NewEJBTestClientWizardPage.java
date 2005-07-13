@@ -35,7 +35,7 @@ import org.eclipse.jdt.core.search.SearchEngine;
 import org.eclipse.jdt.internal.corext.util.JavaModelUtil;
 import org.eclipse.jdt.internal.ui.dialogs.StatusInfo;
 import org.eclipse.jdt.internal.ui.dialogs.StatusUtil;
-import org.eclipse.jdt.internal.ui.dialogs.TypeSelectionDialog;
+import org.eclipse.jdt.internal.ui.dialogs.TypeSelectionDialog2;
 import org.eclipse.jdt.internal.ui.wizards.dialogfields.DialogField;
 import org.eclipse.jdt.internal.ui.wizards.dialogfields.LayoutUtil;
 import org.eclipse.jdt.internal.ui.wizards.dialogfields.StringButtonDialogField;
@@ -400,11 +400,11 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       IJavaElement[] elements = new IJavaElement[]{root.getJavaProject()};
       IJavaSearchScope scope = SearchEngine.createJavaSearchScope(elements);
 
-      TypeSelectionDialog dialog = new TypeSelectionDialog(getShell(), getWizard().getContainer(), IJavaSearchConstants.INTERFACE, scope);
+      TypeSelectionDialog2 dialog = new TypeSelectionDialog2(getShell(), false, getWizard().getContainer(), scope, IJavaSearchConstants.INTERFACE);
       dialog.setTitle(JDTJ2EEUIMessages.getString("NewEJBTestClientWizardPage.dialog.title"));//$NON-NLS-1$
       dialog.setMessage(JDTJ2EEUIMessages.getString("NewEJBTestClientWizardPage.dialog.message"));//$NON-NLS-1$
 
-      if (dialog.open() == TypeSelectionDialog.OK)
+      if (dialog.open() == TypeSelectionDialog2.OK)
       {
          return (IType) dialog.getFirstResult();
       }

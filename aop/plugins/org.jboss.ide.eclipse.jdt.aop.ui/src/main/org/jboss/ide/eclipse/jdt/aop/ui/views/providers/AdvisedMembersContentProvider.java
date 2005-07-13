@@ -19,7 +19,8 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvisor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopTypeMatcher;
 
 /**
  * @author Marshall
@@ -27,6 +28,8 @@ import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvisor;
 public class AdvisedMembersContentProvider implements IStructuredContentProvider, ITreeContentProvider
 {
     public static final Object[] NO_ADVISED_CHILDREN = new Object[] {  "noadvisedchildren" };
+    public static final String MATCHED_TYPEDEFS = "__MATCHED_TYPEDEFS__";
+    public static final String MATCHED_INTRODUCTIONS = "__MATCHED_INTRODUCTIONS__";
     
 	public Object[] getChildren(Object parentElement) {
 		if (parentElement instanceof ICompilationUnit)
@@ -38,7 +41,10 @@ public class AdvisedMembersContentProvider implements IStructuredContentProvider
 				types.remove(unit.findPrimaryType());
 			} catch( JavaModelException jme) {
 			}
-			ArrayList children = AopModel.instance().getAdvisedChildren (unit.findPrimaryType());
+			ArrayList children = new ArrayList();
+			children.add(new TypeMatcherWrapper(MATCHED_TYPEDEFS, unit.findPrimaryType()));
+			children.add(new TypeMatcherWrapper(MATCHED_INTRODUCTIONS, unit.findPrimaryType()));
+			children.addAll(AopModel.instance().getAdvisedChildren (unit.findPrimaryType()));
 			children.addAll(types);
 
 			
@@ -52,7 +58,10 @@ public class AdvisedMembersContentProvider implements IStructuredContentProvider
 		else if (parentElement instanceof IType)
 		{
 			IType type = (IType) parentElement;
-			ArrayList children = AopModel.instance().getAdvisedChildren (type);
+			ArrayList children = new ArrayList();
+			
+			children.addAll(AopModel.instance().getAdvisedChildren (type));
+			
 			if (children.size() > 0)
 				return children.toArray();
 		}
@@ -61,6 +70,19 @@ public class AdvisedMembersContentProvider implements IStructuredContentProvider
 			return AopModel.instance().getElementAdvisors((IJavaElement) parentElement);
 		}
 		
+		else if( parentElement instanceof TypeMatcherWrapper ) {
+			
+			TypeMatcherWrapper matcher = (TypeMatcherWrapper)parentElement;
+			IType type = matcher.getItype();
+			IAopTypeMatcher[] rets = new IAopTypeMatcher[] { };
+			if( matcher.getType().equals(MATCHED_TYPEDEFS))
+				rets = AopModel.instance().getTypedefTypeMatchers(matcher.getItype());
+			else if( matcher.getType().equals(MATCHED_INTRODUCTIONS)) {
+				rets = AopModel.instance().getIntroductionTypeMatchers(matcher.getItype());				
+			}
+			return rets;
+		}
+
 		return new Object[0];
 	}
 	
@@ -116,4 +138,22 @@ public class AdvisedMembersContentProvider implements IStructuredContentProvider
 	
 	public Object[] getElements(Object inputElement) {	return getChildren(inputElement); }
 	public void dispose() {	}
+	
+	public static class TypeMatcherWrapper {
+		public String type;
+		public IType itype;
+		
+		public TypeMatcherWrapper( String type, IType itype ) {
+			this.type = type;
+			this.itype = itype;
+		}
+
+		public IType getItype() {
+			return itype;
+		}
+
+		public String getType() {
+			return type;
+		}
+	}
 }

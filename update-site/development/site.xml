@@ -18,6 +18,12 @@
    <feature url="features/org.jboss.ide.eclipse.ejb3.feature_1.0.0.beta2.jar" id="org.jboss.ide.eclipse.ejb3.feature" version="1.0.0.beta2">
       <category name="JBoss Persistence Tools"/>
    </feature>
+   <feature url="features/org.hibernate.eclipse.feature_3.0.0.alpha3.jar" id="org.hibernate.eclipse.feature" version="3.0.0.alpha3">
+      <category name="JBoss Persistence Tools"/>
+   </feature>
+   <feature url="features/org.hibernate.eclipse.feature_3.0.0.alpha4.jar" id="org.hibernate.eclipse.feature" version="3.0.0.alpha4">
+      <category name="JBoss Persistence Tools"/>
+   </feature>
    <category-def name="JBoss jBPM Designer" label="JBoss jBPM Designer"/>
    <category-def name="JBossAOP Developer" label="JBossAOP Developer"/>
    <category-def name="JBossIDE" label="JBossIDE"/>

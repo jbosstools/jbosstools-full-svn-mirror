@@ -4,8 +4,8 @@
 package org.jboss.ide.eclipse.jdt.aop.core.model.internal;
 
 import org.eclipse.jdt.core.IMethod;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvice;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAspect;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvice;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAspect;
 
 
 public class AopAdvice extends AopAdvisor implements IAopAdvice

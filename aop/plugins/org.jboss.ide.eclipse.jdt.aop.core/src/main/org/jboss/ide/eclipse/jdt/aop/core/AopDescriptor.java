@@ -7,6 +7,9 @@
 package org.jboss.ide.eclipse.jdt.aop.core;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,25 +18,68 @@ import javax.xml.bind.JAXBException;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.jboss.aop.AspectManager;
 import org.jboss.aop.AspectXmlLoader;
+import org.jboss.aop.advice.AspectDefinition;
 import org.jboss.aop.advice.Scope;
+import org.jboss.aop.introduction.InterfaceIntroduction;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AOPType;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Annotation;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AnnotationIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aop;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aspect;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.CFlowStack;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.DynamicCFlow;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.MetaDataLoader;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.PluggablePointcut;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Stack;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AOPType.Metadata;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AOPType.Prepare;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.util.JaxbAopUtil;
 
 /**
+ * This class represents an aop descriptor file, and it's 
+ * corresponding jaxb implementation.
+ * 
+ * It is responsible for adding and removing elements from both
+ * the jaxb object and the underlying file.
+ * 
  * @author Marshall
  */
 public class AopDescriptor {
 	
 	private Aop aop;
 	private File file;
-
+	
+	/*
+	 * This 'dirty' isn't a real check for a dirty buffer.
+	 * It will only be used to make sure an unmarshall isn't
+	 * performed right after a marshall (ie a load right after a save)
+	 * 
+	 * After any save, it is bound to happen that updateModel is called.
+	 * Calling updateModel should not re-load, but  
+	 * should then set dirty to true so further reloads work as planned.
+	 */
+	private boolean dirty;
+	
+	public AopDescriptor() {
+		this.dirty = true;
+	}
+	
+	/*
+	 * Simple getters and setters section
+	 */
+	
 	/**
 	 * @return Returns the aop.
 	 */
@@ -58,6 +104,15 @@ public class AopDescriptor {
 	public void setFile(File file) {
 		this.file = file;
 	}
+	
+
+	
+	
+	
+	/**
+	 * Returns true if the files are equal, as determined
+	 * by equalsFile(File)
+	 */
 	
 	public boolean equals (Object other)
 	{
@@ -86,7 +141,7 @@ public class AopDescriptor {
 	
 	public Binding findBinding (String pointcut)
 	{
-		List binds = getAop().getBindings();
+		List binds = AopModelUtils.getBindingsFromAop(getAop()); 
 		Iterator bIter = binds.iterator();
 		while (bIter.hasNext())
 		{
@@ -99,9 +154,9 @@ public class AopDescriptor {
 		
 		try {
 			// No binding found -- create a new one and return it
-			Binding binding = JaxbAopUtil.instance().getFactory().createBinding();
+			AOPType.Bind binding = JaxbAopUtil.instance().getFactory().createAOPTypeBind();
 			binding.setPointcut(pointcut);
-			getAop().getBindings().add(binding);
+			getAop().getTopLevelElements().add(binding);
 			
 			return binding;
 		} catch (JAXBException e) {
@@ -118,7 +173,7 @@ public class AopDescriptor {
 	
 	private Aspect findAspect (String className, String scope)
 	{
-		List aspects = getAop().getAspects();
+		List aspects = AopModelUtils.getAspectsFromAop(getAop()); 
 		Iterator aIter = aspects.iterator();
 		while (aIter.hasNext())
 		{
@@ -133,11 +188,20 @@ public class AopDescriptor {
 		
 		try {
 			// No aspect found, create new one and return it
-			Aspect aspect = JaxbAopUtil.instance().getFactory().createAspect();
+			Aspect aspect = JaxbAopUtil.instance().getFactory().createAOPTypeAspect();
 			aspect.setClazz(className);
 			aspect.setScope(scope);
-			getAop().getAspects().add(aspect);
+			getAop().getTopLevelElements().add(aspect);
 			
+			// add it to the underlying model as well.
+			Scope sScope = AopModel.getScopeFromString(aspect.getScope());
+			
+			AspectDefinition def = new AspectDefinition(aspect.getClazz(), sScope, null);
+			try {
+				AspectManager.instance().addAspectDefinition(def);
+			} catch( Exception e ) {
+				
+			}
 			return aspect;
 		} catch (JAXBException e) {
 			e.printStackTrace();
@@ -150,10 +214,9 @@ public class AopDescriptor {
 	{
 		try {
 			Binding binding = findBinding(pointcut);
-			Interceptor interceptor = JaxbAopUtil.instance().getFactory().createInterceptor();
+			Interceptor interceptor = JaxbAopUtil.instance().getFactory().createBindingInterceptor();
 			interceptor.setClazz(className);
-			
-			binding.getInterceptors().add(interceptor);
+			binding.getElements().add(interceptor);
 			return interceptor;
 		} catch (JAXBException e) {
 			e.printStackTrace();
@@ -165,10 +228,10 @@ public class AopDescriptor {
 	{
 		try {
 			Binding binding = findBinding(pointcut);
-			InterceptorRef interceptorRef = JaxbAopUtil.instance().getFactory().createInterceptorRef();
+			InterceptorRef interceptorRef = JaxbAopUtil.instance().getFactory().createBindingInterceptorRef();
 			interceptorRef.setName(name);
 			
-			binding.getInterceptorRefs().add(interceptorRef);
+			binding.getElements().add(interceptorRef);
 			
 		} catch (JAXBException e) {
 			e.printStackTrace();
@@ -180,12 +243,11 @@ public class AopDescriptor {
 		try {
 			Binding binding = findBinding(pointcut);
 			Aspect aspect = findAspect(aspectClass);
-			
-			Advice advice = JaxbAopUtil.instance().getFactory().createAdvice();
+			Advice advice = JaxbAopUtil.instance().getFactory().createBindingAdvice();
 			advice.setAspect(aspect.getClazz());
 			advice.setName(adviceName);
 			
-			binding.getAdvised().add(advice);
+			binding.getElements().add(advice);
 			return advice;
 		} catch (JAXBException e) {
 			e.printStackTrace();
@@ -201,12 +263,10 @@ public class AopDescriptor {
 	public void addAspect(String className, Scope scope)
 	{
 		try {
-			List aspects = getAop().getAspects();
-			Aspect aspect = JaxbAopUtil.instance().getFactory().createAspect();
+			Aspect aspect = JaxbAopUtil.instance().getFactory().createAOPTypeAspect();
 			aspect.setClazz(className);
 			aspect.setScope(scope.name());
-			
-			aspects.add(aspect);	
+			getAop().getTopLevelElements().add(aspect);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
@@ -215,28 +275,89 @@ public class AopDescriptor {
 	public void addPointcut(String name, String expr)
 	{
 		try {
-			List pointcuts = getAop().getPointcuts();
-			Pointcut pointcut = JaxbAopUtil.instance().getFactory().createPointcut();
+			Pointcut pointcut = JaxbAopUtil.instance().getFactory().createAOPTypePointcut();
 			pointcut.setName(name);
 			pointcut.setExpr(expr);
 			
-			pointcuts.add(pointcut);
+			getAop().getTopLevelElements().add(pointcut);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public List getParent (Interceptor interceptor)
+
+	public void addInterfaceIntroduction(JDTInterfaceIntroduction intro) {
+		try {
+			Introduction jaxbIntro = 
+				JaxbAopUtil.instance().getFactory().createAOPTypeIntroduction();
+			List jaxbMixins = jaxbIntro.getMixin();
+			
+			// handle this part
+			String expr = intro.getClassExpr();
+			if( expr.indexOf('(') == -1 ) {
+				jaxbIntro.setClazz(expr);
+			} else {
+				jaxbIntro.setExpr(expr);				
+			}
+			
+			
+			if( intro.getInterfacesAsString() != "")
+				jaxbIntro.setInterfaces(intro.getInterfacesAsString());
+			
+			// Now this part
+			ArrayList jdtList = intro.getMixins();
+			for(Iterator i = jdtList.iterator();i.hasNext();) {
+				Object o = i.next();
+				if( o instanceof InterfaceIntroduction.Mixin ) {
+					InterfaceIntroduction.Mixin mixin = 
+						(InterfaceIntroduction.Mixin)o;
+					
+					org.jboss.ide.eclipse.jdt.aop.core.jaxb.Mixin jaxbMixin = 
+						JaxbAopUtil.instance().getFactory().createMixin();
+					
+					jaxbMixin.setClazz(mixin.getClassName());
+					jaxbMixin.setConstruction(mixin.getConstruction());
+					jaxbMixin.setInterfaces(intro.getMixinInterfacesAsString(mixin));
+					jaxbMixins.add(jaxbMixin);
+				}
+			}
+
+//			Introduction jaxbIntro = 
+//				JaxbAopUtil.instance().getFactory().createAOPTypeIntroduction();
+//			List jaxbMixins = jaxbIntro.getMixin();
+//
+//			jaxbIntro.setClazz("blsdfsad");
+//			jaxbIntro.setInterfaces("SDSFD, DFD");
+//
+//			org.jboss.ide.eclipse.jdt.aop.core.jaxb.Mixin jaxbMixin =
+//				JaxbAopUtil.instance().getFactory().createMixin();
+//			
+//			jaxbMixin.setInterfaces("thisthat, the otherthing");
+//			jaxbMixin.setClazz("AHH");
+//			jaxbMixin.setConstruction("ahdsafds");
+//			jaxbMixins.add(jaxbMixin);
+			
+			getAop().getTopLevelElements().add(jaxbIntro);
+			
+		} catch( JAXBException e ) {
+			e.printStackTrace();
+		}
+	}
+	
+	private List getParent (Interceptor interceptor)
 	{
-		if (getAop().getInterceptors().contains(interceptor)) return getAop().getInterceptors();
+		List interceptors = AopModelUtils.getInterceptorsFromAop(getAop());
+		if ( interceptors.contains((interceptor)))
+				return interceptors;
 		else {
-			Iterator bIter = getAop().getBindings().iterator();
+			Iterator bIter = AopModelUtils.getBindingsFromAop(getAop()).iterator();
 			while (bIter.hasNext())
 			{
 				Binding binding = (Binding) bIter.next();
-				if (binding.getInterceptors().contains(interceptor))
+				List bindInterceptors = AopModelUtils.getInterceptorsFromBinding(binding);
+				if (bindInterceptors.contains(interceptor))
 				{
-					return binding.getInterceptors();
+					return binding.getElements();
 				}
 			}
 		}
@@ -244,34 +365,67 @@ public class AopDescriptor {
 		return null;
 	}
 	
-	public List getParent (Advice advice)
+	private List getParent (Advice advice)
 	{
-		Iterator bIter = getAop().getBindings().iterator();
+		Iterator bIter = AopModelUtils.getBindingsFromAop(getAop()).iterator();
 		while (bIter.hasNext())
 		{
 			Binding binding = (Binding) bIter.next();
-			if (binding.getAdvised().contains(advice))
+			List advised = AopModelUtils.getAdvicesFromBinding(binding);
+			if (advised.contains(advice))
 			{
-				return binding.getAdvised();
+				return binding.getElements();
 			}
 		}
 		return null;
 	}
 	
-	public List getParent (InterceptorRef interceptorRef)
+	
+	private List getParent (InterceptorRef interceptorRef)
 	{
-		Iterator bIter = getAop().getBindings().iterator();
+		Iterator bIter = AopModelUtils.getBindingsFromAop(getAop()).iterator();
 		while (bIter.hasNext())
 		{
 			Binding binding = (Binding) bIter.next();
-			if (binding.getInterceptorRefs().contains(interceptorRef))
+			List referenceList = AopModelUtils.getInterceptorRefssFromBinding(binding);
+			if (referenceList.contains(interceptorRef))
 			{
-				return binding.getInterceptorRefs();
+				return binding.getElements();
 			}
 		}
 		return null;
 	}
 	
+	/**
+	 * Used only with a parameter that can only be found as an element
+	 * of the top level of the tree.
+	 * 
+	 * Interceptors, interceptorrefs, etc, are not applicable.
+	 * They can be found under AOP or under BINDING.
+	 * @param o
+	 * @return
+	 */
+	private List getTopLevelParent(Object o) {
+		if( getAop().getTopLevelElements().contains(o))
+			return getAop().getTopLevelElements();
+		return null;
+	}
+	
+	
+	/**
+	 * This method removes an object from its parent in the descriptor file
+	 * and the descriptor's jaxb implementation.
+	 * 
+	 * IT DOES NOT DELETE IT FROM THE REST OF THE MODEL!!!
+	 * 
+	 * A call to updateModel, in AopModel, will most likely 
+	 * do the further evaluations and determine it should be
+	 * removed from the model, but AopModel.updateModel is a 
+	 * fairly long running process.
+	 * 
+	 * 
+	 * @param object
+	 */
 	public void remove (Object object)
 	{
 		List parent = null;
@@ -281,12 +435,14 @@ public class AopDescriptor {
 			parent = getParent ((Advice) object);
 		else if (object instanceof InterceptorRef)
 			parent = getParent ((InterceptorRef) object);
-		else if (object instanceof Binding)
-		{
-			if (getAop().getBindings().contains(object))
-			{
-				parent = getAop().getBindings();
-			}
+		else if (object instanceof Binding) {
+			parent = getTopLevelParent((Binding)object);
+		} else if (object instanceof Pointcut) {
+			parent = getTopLevelParent((Pointcut)object);
+		} else if (object instanceof Typedef) {
+			parent = getTopLevelParent((Typedef)object);
+		} else if( object instanceof Introduction ) {
+			parent = getTopLevelParent((Introduction)object);
 		}
 		
 		if (parent != null)
@@ -295,13 +451,31 @@ public class AopDescriptor {
 		}
 	}
 	
+	
+	/**
+	 * Unmarshalls aop directly from file, overwriting 
+	 * any unsaved changes.
+	 *
+	 */
 	public void update ()
 	{
-		this.aop = JaxbAopUtil.instance().unmarshal(getFile());
+		if( this.dirty ) {
+			System.out.println("[aop-descriptor] - updating...");
+			this.aop = JaxbAopUtil.instance().unmarshal(getFile());
+		} else {
+			System.out.println("[aop-descriptor] - NOT updating...");
+			this.dirty = true;			
+		}
 	}
+	
+	/**
+	 * Saves the live aop to a file. 
+	 */
 	
 	public void save ()
 	{
+		this.dirty = false;
+		sortAop();
 		JaxbAopUtil.instance().marshal(aop, file);
 		
 		try {
@@ -312,6 +486,35 @@ public class AopDescriptor {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void sortAop() {
+		List elements = getAop().getTopLevelElements();
+		Collections.sort(elements, new Comparator() {
+			
+			public int compare(Object arg0, Object arg1) {
+				return getIntVal(arg0) - getIntVal(arg1);
+			} 
+			
+			private int getIntVal(Object arg) {
+				if( arg instanceof Typedef ) return 0;
+				if( arg instanceof Pointcut ) return 1;
+				if( arg instanceof Interceptor ) return 2;
+				if( arg instanceof Aspect ) return 3;
+				if( arg instanceof Binding ) return 4;
+				if( arg instanceof Introduction ) return 5;
+				if( arg instanceof MetaDataLoader) return 6;
+				if( arg instanceof Metadata ) return 7;
+				if( arg instanceof Stack ) return 8;
+				if( arg instanceof PluggablePointcut ) return 9;
+				if( arg instanceof Prepare ) return 10;
+				if( arg instanceof CFlowStack ) return 11;
+				if( arg instanceof DynamicCFlow ) return 12;
+				if( arg instanceof AnnotationIntroduction ) return 13;
+				if( arg instanceof Annotation ) return 14;
+				return -1;
+			}
+		});
 	}
 
 }

@@ -6,9 +6,13 @@
 	<classpathentry exported="true" kind="lib" path="jaxb-impl.jar"/>
 	<classpathentry exported="true" kind="lib" path="jaxb-libs.jar"/>
 	<classpathentry exported="true" kind="lib" path="relaxngDatatype.jar"/>
-	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="generated"/>
-	<classpathentry exported="true" sourcepath="/aop/src/main" kind="lib" path="jboss-aop.jar"/>
+	<classpathentry kind="src" path="src/eclipse31"/>
+	<classpathentry kind="src" path="src/main"/>
+	<classpathentry exported="true" sourcepath="/jboss-aop" kind="lib" path="jboss-aop.jar">
+		<attributes>
+		</attributes>
+	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="jboss-common.jar"/>
 	<classpathentry exported="true" kind="lib" path="qdox.jar"/>
 	<classpathentry exported="true" kind="lib" path="concurrent.jar"/>

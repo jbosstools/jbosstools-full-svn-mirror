@@ -2,7 +2,7 @@
 <feature
       id="org.jboss.ide.eclipse.ejb3.feature"
       label="org.jboss.ide.eclipse.ejb3.feature"
-      version="1.0.0.beta2"
+      version="1.0.0"
       provider-name="JBoss, Inc.">
 
    <description url="http://www.yourdomain.com/description">
@@ -426,8 +426,6 @@ END OF TERMS AND CONDITIONS
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.jdt"/>
       <import plugin="org.eclipse.jdt.core"/>
-      <import plugin="org.jboss.ide.eclipse.jdt.aop.core"/>
-      <import plugin="org.jboss.ide.eclipse.launcher.core"/>
       <import plugin="org.eclipse.debug.core"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.jdt.ui"/>
@@ -435,19 +433,54 @@ END OF TERMS AND CONDITIONS
       <import plugin="org.eclipse.jface.text"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.jdt.launching"/>
-      <import plugin="org.jboss.ide.eclipse.launcher.ui"/>
    </requires>
 
    <plugin
          id="org.jboss.ide.eclipse.ejb3.wizards.core"
          download-size="0"
          install-size="0"
-         version="1.0.0.beta2"/>
+         version="1.0.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.ejb3.wizards.ui"
          download-size="0"
          install-size="0"
-         version="1.0.0.beta2"/>
+         version="1.0.0"/>
+
+   <plugin
+         id="org.jboss.ide.eclipse.jdt.aop.core"
+         download-size="0"
+         install-size="0"
+         version="1.1.0"/>
+
+   <plugin
+         id="org.jboss.ide.eclipse.core"
+         download-size="0"
+         install-size="0"
+         version="1.5.0"/>
+
+   <plugin
+         id="org.jboss.ide.eclipse.ui"
+         download-size="0"
+         install-size="0"
+         version="1.5.0"/>
+
+   <plugin
+         id="org.apache.xalan"
+         download-size="0"
+         install-size="0"
+         version="2.6.0"/>
+
+   <plugin
+         id="org.jboss.ide.eclipse.launcher.core"
+         download-size="0"
+         install-size="0"
+         version="1.5.0"/>
+
+   <plugin
+         id="org.jboss.ide.eclipse.launcher.ui"
+         download-size="0"
+         install-size="0"
+         version="1.5.0"/>
 
 </feature>

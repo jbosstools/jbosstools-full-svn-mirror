@@ -3,6 +3,9 @@
  */
 package org.jboss.ide.eclipse.jdt.aop.core.model;
 
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAdvisedCollector;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
+
 /**
  * @author Marshall
  * 

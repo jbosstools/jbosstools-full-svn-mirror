@@ -36,7 +36,10 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
+import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.PointcutChooseDialog;
 import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.PointcutPreviewDialog;
 import org.jboss.ide.eclipse.jdt.aop.ui.util.AdvisorDialogUtil;
 
@@ -46,7 +49,7 @@ import org.jboss.ide.eclipse.jdt.aop.ui.util.AdvisorDialogUtil;
 public class EditBindingWizardPage extends WizardPage {
 
 	protected Text pointcutText;
-	protected Button editPointcutButton;
+	protected Button editPointcutButton, choosePointcutButton;
 	protected TableViewer interceptorList;
 	protected Button addInterceptorButton, removeInterceptorButton, moveInterceptorUpButton, moveInterceptorDownButton;
 	protected TableViewer adviceList;
@@ -55,9 +58,12 @@ public class EditBindingWizardPage extends WizardPage {
 	protected Binding binding;
 	protected AopDescriptor descriptor;
 	
-	/**
-	 * @param pageName
-	 */
+	
+	// original state
+	private String originalName;
+	private String originalPointcut;
+	private ArrayList originalElements;
+	
 	public EditBindingWizardPage (Binding binding, AopDescriptor descriptor) {
 		super(binding == null ? "Create a new JBossAOP Binding" : "Edit a JBossAOP Binding");
 		
@@ -66,7 +72,42 @@ public class EditBindingWizardPage extends WizardPage {
 		
 		this.binding = binding;
 		this.descriptor = descriptor;
+		
+		
+		if( binding != null ) {
+			// save the state of the original in case of cancel.
+			this.originalName = binding.getName();
+			this.originalPointcut = binding.getPointcut();
+			this.originalElements = new ArrayList(binding.getElements().size());
+			for( Iterator i = binding.getElements().iterator(); i.hasNext(); ) {
+				this.originalElements.add(i.next());
+			}
+		} // end if
+		
 	}
+	
+	/*
+	 * Some getters that we can use to make sure the state 
+	 * of the overall plugin remains the same in the event of
+	 * a cancel.
+	 */
+	
+	public Binding getBinding() {
+		return binding;
+	}
+	
+	public String getOriginalPointcut() {
+		return this.originalPointcut;
+	}
+	public String getOriginalName() {
+		return this.originalName;
+	}
+	public ArrayList getOriginalElements() {
+		return this.originalElements;
+	}
+	
+	
+	
 	
 	
 
@@ -78,6 +119,8 @@ public class EditBindingWizardPage extends WizardPage {
 		public void widgetSelected(SelectionEvent e) {
 			if (e.getSource().equals(editPointcutButton))
 				editPointcutPressed();
+			else if( e.getSource().equals(choosePointcutButton))
+				choosePointcutPressed();
 			else if (e.getSource().equals(addInterceptorButton))
 				addInterceptorPressed();
 			else if (e.getSource().equals(removeInterceptorButton))
@@ -133,14 +176,21 @@ public class EditBindingWizardPage extends WizardPage {
 			pointcutText.setText(binding.getPointcut());
 		
 		Composite editPointcutComposite = new Composite(main, SWT.NONE);
-		editPointcutComposite.setLayout(new GridLayout(1, true));
+		editPointcutComposite.setLayout(new GridLayout(2, false));
 		editPointcutComposite.setLayoutData(new GridData(GridData.END, GridData.CENTER, false, false));
 		
 		editPointcutButton = new Button(editPointcutComposite, SWT.PUSH);
 		editPointcutButton.setText("Edit...");
 		editPointcutButton.addSelectionListener(buttonListener);
 		editPointcutButton.setLayoutData(new GridData(GridData.FILL, GridData.CENTER, true, false));
-		
+
+		choosePointcutButton = new Button(editPointcutComposite, SWT.PUSH);
+		choosePointcutButton.setText("Choose...");
+		choosePointcutButton.addSelectionListener(buttonListener);
+		choosePointcutButton.setLayoutData(new GridData(GridData.FILL, GridData.CENTER, true, false));
+		List pointcuts = AopModelUtils.getPointcutsFromAop(descriptor.getAop());
+		choosePointcutButton.setEnabled(pointcuts.size() > 0 ? true : false );
+
 		createInterceptorControls (main);
 		createAdviceControls (main);
 		
@@ -227,11 +277,11 @@ public class EditBindingWizardPage extends WizardPage {
 		
 		if (binding != null)
 		{
-			for (Iterator iter = binding.getInterceptorRefs().iterator(); iter.hasNext(); )
+			for (Iterator iter = AopModelUtils.getInterceptorRefssFromBinding(binding).iterator(); iter.hasNext(); )
 			{
 				interceptorList.add(iter.next());
 			}
-			for (Iterator iter = binding.getInterceptors().iterator(); iter.hasNext(); )
+			for (Iterator iter = AopModelUtils.getInterceptorsFromBinding(binding).iterator(); iter.hasNext(); )
 			{
 				interceptorList.add(iter.next());
 			}
@@ -318,7 +368,7 @@ public class EditBindingWizardPage extends WizardPage {
 		
 		if (binding != null)
 		{
-			for (Iterator iter = binding.getAdvised().iterator(); iter.hasNext(); )
+			for (Iterator iter = AopModelUtils.getAdvicesFromBinding(binding).iterator(); iter.hasNext(); )
 			{
 				adviceList.add(iter.next());
 			}
@@ -327,22 +377,17 @@ public class EditBindingWizardPage extends WizardPage {
 	
 	protected void editPointcutPressed ()
 	{
-		PointcutPreviewDialog previewDialog = new PointcutPreviewDialog(pointcutText.getText(), getShell(), AopCorePlugin.getCurrentJavaProject(), false);
+		PointcutPreviewDialog previewDialog = 
+			new PointcutPreviewDialog(null, pointcutText.getText(), getShell(), 
+				AopCorePlugin.getCurrentJavaProject(), 
+				PointcutPreviewDialog.UNNAMED);
 		
 		int response = -1;
-		do {
-			previewDialog.create();
-			response = previewDialog.open();
 		
-			if (response == PointcutPreviewDialog.PREVIEW_ID)
-			{
-				previewDialog.setPreview(true);
-			}
-		} while (response == PointcutPreviewDialog.PREVIEW_ID);
-		
+		response = previewDialog.open();
 		if (response == Dialog.OK)
 		{
-			String pointcut = previewDialog.getPointcut();
+			String pointcut = previewDialog.getExpression();
 			pointcutText.setText(pointcut);
 			
 			addInterceptorButton.setEnabled(pointcut != null && pointcut.length() > 0);
@@ -356,6 +401,26 @@ public class EditBindingWizardPage extends WizardPage {
 				
 				binding.setPointcut(pointcut);
 			}
+		}
+	}
+
+	
+	protected void choosePointcutPressed ()
+	{
+		PointcutChooseDialog dialog = new PointcutChooseDialog(getShell());
+		
+		int response = dialog.open();
+		
+		if( response == Dialog.OK && dialog.getPointcut() != null ) {
+			Pointcut pointcut = dialog.getPointcut();
+			pointcutText.setText(pointcut.getName());
+			addInterceptorButton.setEnabled(pointcutText.getText() != null && pointcutText.getText().length() > 0);
+			addAdviceButton.setEnabled(pointcutText.getText() != null && pointcutText.getText().length() > 0);
+			if (binding == null)
+			{
+				binding = descriptor.findBinding(pointcut.getName());
+			}
+			binding.setPointcut(pointcut.getName());
 		}
 	}
 	
@@ -400,14 +465,14 @@ public class EditBindingWizardPage extends WizardPage {
 		Interceptor interceptor = getSelectedInterceptor();
 		if (interceptor != null)
 		{
-			binding.getInterceptors().remove(interceptor);
+			binding.getElements().remove(interceptor);
 			interceptorList.remove(interceptor);
 		}
 		
 		InterceptorRef interceptorRef = getSelectedInterceptorRef();
 		if (interceptorRef != null)
 		{
-			binding.getInterceptorRefs().remove(interceptorRef);
+			binding.getElements().remove(interceptorRef);
 			interceptorList.remove(interceptorRef);
 		}
 	}
@@ -423,9 +488,17 @@ public class EditBindingWizardPage extends WizardPage {
 				interceptorList.insert(interceptor, position-1);
 				interceptorList.getTable().select(position-1);
 				
-				int index = binding.getInterceptors().indexOf(interceptor);
-				binding.getInterceptors().remove(index);
-				binding.getInterceptors().add(index-1, interceptor);
+				List elements = binding.getElements();
+				int currentIndex = elements.indexOf(interceptor);
+
+				for( int i = currentIndex-1; i >=0; i++ ) {
+					if( elements.get(i) instanceof Interceptor ) {
+						binding.getElements().remove(currentIndex);
+						binding.getElements().add(i, interceptor);
+						break;
+					}
+				}
+
 			}
 		}
 		
@@ -439,9 +512,16 @@ public class EditBindingWizardPage extends WizardPage {
 				interceptorList.insert(interceptorRef, position-1);
 				interceptorList.getTable().select(position-1);
 				
-				int index = binding.getInterceptorRefs().indexOf(interceptor);
-				binding.getInterceptorRefs().remove(index);
-				binding.getInterceptorRefs().add(index-1, interceptor);
+				List elements = binding.getElements();
+				int currentIndex = elements.indexOf(interceptorRef);
+
+				for( int i = currentIndex-1; i >=0; i++ ) {
+					if( elements.get(i) instanceof InterceptorRef ) {
+						binding.getElements().remove(currentIndex);
+						binding.getElements().add(i, interceptorRef);
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -457,9 +537,16 @@ public class EditBindingWizardPage extends WizardPage {
 				interceptorList.insert(interceptor, position+1);
 				interceptorList.getTable().select(position + 1);
 				
-				int index = binding.getInterceptors().indexOf(interceptor);
-				binding.getInterceptors().remove(index);
-				binding.getInterceptors().add(index+1, interceptor);
+				List elements = binding.getElements();
+				int currentIndex = elements.indexOf(interceptor);
+
+				for( int i = currentIndex+1; i < elements.size(); i++ ) {
+					if( elements.get(i) instanceof Interceptor ) {
+						binding.getElements().remove(currentIndex);
+						binding.getElements().add(i, interceptor);
+						break;
+					}
+				}
 			}
 		}
 		
@@ -473,9 +560,17 @@ public class EditBindingWizardPage extends WizardPage {
 				interceptorList.insert(interceptorRef, position+1);
 				interceptorList.getTable().select(position+1);
 				
-				int index = binding.getInterceptorRefs().indexOf(interceptor);
-				binding.getInterceptorRefs().remove(index);
-				binding.getInterceptorRefs().add(index+1, interceptor);
+				List elements = binding.getElements();
+				int currentIndex = elements.indexOf(interceptorRef);
+
+				for( int i = currentIndex+1; i < elements.size(); i++ ) {
+					if( elements.get(i) instanceof InterceptorRef ) {
+						binding.getElements().remove(currentIndex);
+						binding.getElements().add(i, interceptorRef);
+						break;
+					}
+				}
+
 			}
 		}
 	}
@@ -508,7 +603,7 @@ public class EditBindingWizardPage extends WizardPage {
 		Advice advice = getSelectedAdvice();
 		if (advice != null)
 		{
-			binding.getAdvised().remove(advice);
+			binding.getElements().remove(advice);
 			adviceList.remove(advice);
 		}
 	}
@@ -524,9 +619,16 @@ public class EditBindingWizardPage extends WizardPage {
 				adviceList.insert(advice, position-1);
 				adviceList.getTable().select(position - 1);
 				
-				int index = binding.getAdvised().indexOf(advice);
-				binding.getAdvised().remove(index);
-				binding.getAdvised().add(index-1, advice);
+				List elements = binding.getElements();
+				int currentIndex = elements.indexOf(advice);
+
+				for( int i = currentIndex-1; i < elements.size(); i++ ) {
+					if( elements.get(i) instanceof Advice ) {
+						binding.getElements().remove(currentIndex);
+						binding.getElements().add(i, advice);
+						break;
+					}
+				}
 			}
 		}
 	}	
@@ -542,9 +644,16 @@ public class EditBindingWizardPage extends WizardPage {
 				adviceList.insert(advice, position+1);
 				adviceList.getTable().select(position + 1);
 				
-				int index = binding.getAdvised().indexOf(advice);
-				binding.getAdvised().remove(index);
-				binding.getAdvised().add(index+1, advice);
+				List elements = binding.getElements();
+				int currentIndex = elements.indexOf(advice);
+
+				for( int i = currentIndex+1; i < elements.size(); i++ ) {
+					if( elements.get(i) instanceof Advice ) {
+						binding.getElements().remove(currentIndex);
+						binding.getElements().add(i, advice);
+						break;
+					}
+				}
 			}
 		}
 	}

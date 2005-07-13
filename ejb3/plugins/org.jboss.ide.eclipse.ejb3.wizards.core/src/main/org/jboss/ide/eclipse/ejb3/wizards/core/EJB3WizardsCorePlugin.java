@@ -1,12 +1,14 @@
 package org.jboss.ide.eclipse.ejb3.wizards.core;
 
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Plugin;
-import org.osgi.framework.BundleContext;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Plugin;
+import org.eclipse.debug.core.ILaunchConfiguration;
+import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
@@ -16,6 +18,8 @@ public class EJB3WizardsCorePlugin extends Plugin {
 	private static EJB3WizardsCorePlugin plugin;
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
+	
+	private ILaunchConfiguration selectedLaunchConfiguration;
 	
 	/**
 	 * The constructor.
@@ -89,5 +93,15 @@ public class EJB3WizardsCorePlugin extends Plugin {
 			ioe.printStackTrace();
 		}
 		return null;
+	}
+	
+	
+	public ILaunchConfiguration getSelectedLaunchConfiguration() {
+		return selectedLaunchConfiguration;
+	}
+	
+	public void setSelectedLaunchConfiguration(
+			ILaunchConfiguration selectedLaunchConfiguration) {
+		this.selectedLaunchConfiguration = selectedLaunchConfiguration;
 	}
 }

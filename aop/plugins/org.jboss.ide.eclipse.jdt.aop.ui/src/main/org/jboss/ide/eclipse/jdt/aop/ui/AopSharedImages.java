@@ -28,6 +28,12 @@ public class AopSharedImages {
 	public static final String IMG_NEW_BINDING = "newbinding";
 	public static final String IMG_ADVICE = "advice";
 	public static final String IMG_ADVICE_24 = "advice24";
+	public static final String IMG_TYPEDEF = "typedef";
+	public static final String IMG_TYPEDEF24 = "typedef24";
+	public static final String IMG_INTRODUCTION = "introduction";
+	public static final String IMG_INTRODUCTION24 = "introduction24";
+	public static final String IMG_MIXIN = "mixin";
+	
 	
 	private static AopSharedImages instance;
 	
@@ -48,6 +54,11 @@ public class AopSharedImages {
 		descriptors.put(IMG_NEW_BINDING, ImageDescriptor.createFromURL(pluginBundle.getEntry("/icons/newbinding.gif")));
 		descriptors.put(IMG_ADVICE, ImageDescriptor.createFromURL(pluginBundle.getEntry("/icons/advice.gif")));
 		descriptors.put(IMG_ADVICE_24, ImageDescriptor.createFromURL(pluginBundle.getEntry("/icons/advice24.gif")));
+		descriptors.put(IMG_TYPEDEF, ImageDescriptor.createFromURL(pluginBundle.getEntry("/icons/typedef.gif")));
+		descriptors.put(IMG_TYPEDEF24, ImageDescriptor.createFromURL(pluginBundle.getEntry("/icons/typedef24.gif")));
+		descriptors.put(IMG_INTRODUCTION, ImageDescriptor.createFromURL(pluginBundle.getEntry("/icons/introduction.gif")));
+		descriptors.put(IMG_INTRODUCTION24, ImageDescriptor.createFromURL(pluginBundle.getEntry("/icons/introduction24.gif")));
+		descriptors.put(IMG_MIXIN, ImageDescriptor.createFromURL(pluginBundle.getEntry("/icons/mixin.gif")));
 		
 		Iterator iter = descriptors.keySet().iterator();
 		while (iter.hasNext())

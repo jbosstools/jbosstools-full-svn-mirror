@@ -83,7 +83,7 @@ public class ServerLaunchArgumentsTab extends AbstractLaunchConfigurationTab
       //createVerticalSpacer(comp, 1);
 
       fPrgmArgumentsLabel = new Label(comp, SWT.NONE);
-      fPrgmArgumentsLabel.setText(LauncherMessages.getString("JavaArgumentsTab.&Program_arguments__5"));//$NON-NLS-1$
+      fPrgmArgumentsLabel.setText(LauncherMessages.JavaArgumentsTab__Program_arguments__5);//$NON-NLS-1$
 
       fPrgmArgumentsText = new Text(comp, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
       gd = new GridData(GridData.FILL_BOTH);
@@ -99,7 +99,7 @@ public class ServerLaunchArgumentsTab extends AbstractLaunchConfigurationTab
          });
 
       fVMArgumentsLabel = new Label(comp, SWT.NONE);
-      fVMArgumentsLabel.setText(LauncherMessages.getString("JavaArgumentsTab.VM_ar&guments__6"));//$NON-NLS-1$
+      fVMArgumentsLabel.setText(LauncherMessages.JavaArgumentsTab_VM_ar_guments__6);//$NON-NLS-1$
 
       fVMArgumentsText = new Text(comp, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
       gd = new GridData(GridData.FILL_BOTH);
@@ -155,7 +155,7 @@ public class ServerLaunchArgumentsTab extends AbstractLaunchConfigurationTab
       }
       catch (CoreException e)
       {
-         setErrorMessage(LauncherMessages.getString("JavaArgumentsTab.Exception_occurred_reading_configuration___15") + e.getStatus().getMessage());//$NON-NLS-1$
+         setErrorMessage(LauncherMessages.JavaArgumentsTab_Exception_occurred_reading_configuration___15 + e.getStatus().getMessage());//$NON-NLS-1$
          JDIDebugUIPlugin.log(e);
       }
    }

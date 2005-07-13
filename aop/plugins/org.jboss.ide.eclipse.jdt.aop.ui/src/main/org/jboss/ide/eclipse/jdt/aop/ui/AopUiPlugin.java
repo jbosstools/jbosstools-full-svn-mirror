@@ -46,6 +46,8 @@ public class AopUiPlugin extends AbstractUIPlugin
 	public static final String ADVISED_MARKER = "org.jboss.ide.eclipse.jdt.aop.ui.advisedmarker";
 	public static final String ADVICE_MARKER = "org.jboss.ide.eclipse.jdt.aop.ui.advicemarker";
 	public static final String INTERCEPTOR_MARKER = "org.jboss.ide.eclipse.jdt.aop.ui.interceptormarker";
+	public static final String TYPEDEF_MARKER = "org.jboss.ide.eclipse.jdt.aop.ui.typedefmarker";
+	public static final String INTRODUCTION_MARKER = "org.jboss.ide.eclipse.jdt.aop.ui.introductionmarker";
 
 	public AopUiPlugin()
 	{
@@ -238,6 +240,11 @@ public class AopUiPlugin extends AbstractUIPlugin
 			IField field = (IField) element;
 			elementRange = field.getNameRange();
 		}
+		else if( element instanceof IType ) 
+		{
+			IType type = (IType) element;
+			elementRange = type.getNameRange();
+		}
 		else if (element instanceof ISourceReference)
 		{
 			ISourceReference ref = (ISourceReference) element;
@@ -266,6 +273,9 @@ public class AopUiPlugin extends AbstractUIPlugin
 				{
 					return child;
 				}
+			}
+			if( getSourceRange(types[i]).getOffset() == offset ) {
+				return types[i];
 			}
 		}
 

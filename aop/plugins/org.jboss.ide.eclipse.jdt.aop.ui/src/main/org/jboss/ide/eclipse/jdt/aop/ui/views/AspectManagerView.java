@@ -6,7 +6,10 @@
  */
 package org.jboss.ide.eclipse.jdt.aop.ui.views;
 
+import java.util.Iterator;
 import java.util.List;
+
+import javax.xml.bind.JAXBException;
 
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.action.Action;
@@ -14,6 +17,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -28,6 +32,8 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jboss.aop.AspectManager;
+import org.jboss.aop.introduction.InterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.AopDescriptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
@@ -35,11 +41,22 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aspect;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Binding;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.InterceptorRef;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
+import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
+import org.jboss.ide.eclipse.jdt.aop.core.util.JaxbAopUtil;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopUiPlugin;
 import org.jboss.ide.eclipse.jdt.aop.ui.actions.ApplyAdviceAction;
 import org.jboss.ide.eclipse.jdt.aop.ui.actions.ApplyInterceptorAction;
-import org.jboss.ide.eclipse.jdt.aop.ui.actions.ConvertToPointcutAction;
+import org.jboss.ide.eclipse.jdt.aop.ui.actions.CreateNewNamedPointcutAction;
+import org.jboss.ide.eclipse.jdt.aop.ui.actions.CreateNewNamedTypedefAction;
+import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.IntroductionDialog;
+import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.PointcutPreviewDialog;
+import org.jboss.ide.eclipse.jdt.aop.ui.dialogs.TypedefPreviewDialog;
 import org.jboss.ide.eclipse.jdt.aop.ui.util.JumpToCodeUtil;
 import org.jboss.ide.eclipse.jdt.aop.ui.views.providers.AspectManagerContentProvider;
 import org.jboss.ide.eclipse.jdt.aop.ui.views.providers.AspectManagerLabelProvider;
@@ -56,8 +73,14 @@ public class AspectManagerView extends ViewPart {
     private AspectManagerContentProvider contentProvider;
     private AspectManagerLabelProvider labelProvider;
     private ISelection currentSelection;
-    private Action createAdviceAction, createAspectAction, createPointcutAction, goToAdviceAction, showAspectAction, showInterceptorAction, applyAdviceAction, applyInterceptorsAction;
-    private Action createBindingAction, removeInterceptorAction, removeAdviceAction, removeInterceptorRefAction, removeBindingAction, goToAction, editBindingAction;
+    private Action createAdviceAction, createAspectAction, createPointcutAction, 
+    				goToAdviceAction, showAspectAction, showInterceptorAction, 
+    				applyAdviceAction, applyInterceptorsAction, removeTypedefAction,
+    				createBindingAction, createTypedefAction, removeInterceptorAction, 
+    				removeAdviceAction, removeInterceptorRefAction, 
+    				removeBindingAction, removeNamedPointcutAction, editTypedefAction,
+    				goToAction, editBindingAction, editPointcutAction, 
+    				createIntroductionAction, editIntroductionAction, deleteIntroductionAction;
     
     public AspectManagerView ()
     {
@@ -106,11 +129,37 @@ public class AspectManagerView extends ViewPart {
     	createAdviceAction.setToolTipText("Create a new advice method under this Aspect.");
     	createAdviceAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_ADVICE));
     	
-    	createPointcutAction = new ConvertToPointcutAction(treeViewer);
-    	createPointcutAction.setText("Create a Pointcut...");
+    	createPointcutAction = new CreateNewNamedPointcutAction(treeViewer, getSite().getShell());
+    	createPointcutAction.setText("Create Pointcut");
     	createPointcutAction.setToolTipText("Create a new named Pointcut.");
     	createPointcutAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_POINTCUT));
-    	
+
+		
+		editPointcutAction = new Action() { 
+			public void run() {
+				Pointcut p = (Pointcut)getSelected();
+				PointcutPreviewDialog previewDialog = 
+					new PointcutPreviewDialog(p.getName(), p.getExpr(), getSite().getShell(), 
+						AopCorePlugin.getCurrentJavaProject(), 
+						PointcutPreviewDialog.NAMED);
+				
+				int response = -1;
+				
+				response = previewDialog.open();
+				if (response == Dialog.OK) {
+					p.setExpr(previewDialog.getExpression());
+					AopDescriptor descriptor = (AopDescriptor) getTreeViewer().getInput();
+					descriptor.save();
+				}
+			}
+
+		};
+    	editPointcutAction.setText("Edit Pointcut");
+    	editPointcutAction.setToolTipText("Edit this pointcut.");
+    	editPointcutAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_POINTCUT));
+
+		
+		
     	applyAdviceAction = new ApplyAdviceAction(treeViewer);
     	applyAdviceAction.setText("Apply Advice...");
     	applyAdviceAction.setToolTipText("Apply Advice to this Binding");
@@ -140,6 +189,7 @@ public class AspectManagerView extends ViewPart {
     			
     			int response = dialog.open();
     			
+				// TODO: COMPLETE ME... cancel doesn't work.
     			if (response == WizardDialog.OK)
     			{
     			}
@@ -149,7 +199,70 @@ public class AspectManagerView extends ViewPart {
     	createBindingAction.setToolTipText("Create Binding");
     	createBindingAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_NEW_BINDING));
     	
-    	editBindingAction = new Action () {
+		
+		createTypedefAction = new Action() { 
+			
+			public void run() {
+				TypedefPreviewDialog dialog = new TypedefPreviewDialog(getSite().getShell());
+				int response = dialog.open();
+				if( response == Dialog.OK) {
+					try {
+						JDTTypedefExpression expression = dialog.getTypedefExpression();
+						// TODO: We eventually wanna move this to a model function
+						AspectManager.instance().addTypedef(expression);
+						AopModel.instance();
+						AopDescriptor desc = AopCorePlugin.getDefault().getDefaultDescriptor(AopCorePlugin.getCurrentJavaProject());
+						Typedef jaxbTypeDef = JaxbAopUtil.instance().getFactory().createAOPTypeTypedef();
+						jaxbTypeDef.setExpr(expression.getExpr());
+						jaxbTypeDef.setName(expression.getName());
+						desc.getAop().getTopLevelElements().add(jaxbTypeDef);
+						desc.save();
+					} catch( Exception e ) {
+					}
+				}
+			}
+
+		};
+    	createTypedefAction = new CreateNewNamedTypedefAction(getTreeViewer(), getSite().getShell());
+    	createTypedefAction.setText("Create Typedef");
+    	createTypedefAction.setToolTipText("Create Typedef");
+    	createTypedefAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_TYPEDEF));
+
+		
+		
+		editTypedefAction = new Action() { 
+			
+			public void run() {
+				Typedef td = (Typedef)getSelected();
+				String name = td.getName();
+				
+				TypedefPreviewDialog dialog = new TypedefPreviewDialog(name, td.getExpr(),
+						getSite().getShell(), PointcutPreviewDialog.NAMED);
+				int response = dialog.open();
+				if( response == Dialog.OK) {
+					try {
+						JDTTypedefExpression expression = dialog.getTypedefExpression();
+						AopDescriptor desc = AopCorePlugin.getDefault().getDefaultDescriptor(AopCorePlugin.getCurrentJavaProject());
+
+						
+						td.setExpr(expression.getExpr());
+						AspectManager.instance().addTypedef(expression);
+						desc.save();
+					} catch( Exception e ) {
+					}
+				}
+			}
+
+		};
+    	editTypedefAction.setText("Edit Typedef");
+    	editTypedefAction.setToolTipText("Edit Typedef");
+    	editTypedefAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_TYPEDEF));
+
+		
+		
+		
+		
+		editBindingAction = new Action () {
     		public void run () {
     			EditBindingWizard wizard = new EditBindingWizard((Binding) getSelected(), (AopDescriptor) treeViewer.getInput());
     	    	WizardDialog dialog = new WizardDialog(getSite().getShell(), wizard);
@@ -177,14 +290,47 @@ public class AspectManagerView extends ViewPart {
     			{
     				descriptor.remove(interceptor);
     				descriptor.save();
-    				
-    				setDescriptor(descriptor);
     			}
     		}
     	};
     	removeInterceptorAction.setText("Remove");
     	removeInterceptorAction.setToolTipText("Remove this Interceptor");
     	removeInterceptorAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
+    	
+		
+    	removeTypedefAction = new Action() {
+    		public void run() {
+    			AopDescriptor descriptor = (AopDescriptor) treeViewer.getInput();
+    			Typedef typedef = (Typedef) getSelected();
+
+    			if (AopUiPlugin.confirm("Are you sure you want to delete the typedef: \"" + typedef.getName() + "\" ?"))
+    			{
+    				descriptor.remove(typedef);
+    				descriptor.save();
+    			}
+    		}
+    	};
+    	removeTypedefAction.setText("Remove");
+		removeTypedefAction.setToolTipText("Remove this Typedef");
+		removeTypedefAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
+
+		
+    	removeNamedPointcutAction = new Action() {
+    		public void run() {
+    			AopDescriptor descriptor = (AopDescriptor) treeViewer.getInput();
+    			Pointcut pointcut = (Pointcut) getSelected();
+
+    			if (AopUiPlugin.confirm("Are you sure you want to delete the pointcut: \"" + pointcut.getName() + "\" ?"))
+    			{
+    				descriptor.remove(pointcut);
+					AspectManager.instance().removePointcut(pointcut.getName());
+    				descriptor.save();
+    			}
+    		}
+    	};
+    	removeNamedPointcutAction.setText("Remove");
+		removeNamedPointcutAction.setToolTipText("Remove this Pointcut");
+		removeNamedPointcutAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
     	
     	removeAdviceAction = new Action() {
     		public void run() {
@@ -195,8 +341,6 @@ public class AspectManagerView extends ViewPart {
     			{
     				descriptor.remove(advice);
     				descriptor.save();
-    				
-    				setDescriptor(descriptor);
     			}
     		}
     	};
@@ -213,8 +357,6 @@ public class AspectManagerView extends ViewPart {
     			{
     				descriptor.remove(interceptorRef);
     				descriptor.save();
-    				
-    				setDescriptor(descriptor);
     			}
     		}
     	};
@@ -231,8 +373,6 @@ public class AspectManagerView extends ViewPart {
     			{
     				descriptor.remove(binding);
     				descriptor.save();
-    				
-    				setDescriptor(descriptor);
     			}	
     		}
     	};
@@ -240,9 +380,96 @@ public class AspectManagerView extends ViewPart {
     	removeBindingAction.setToolTipText("Remove this Binding");
     	removeBindingAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
     	
+    	
+    	createIntroductionAction = new Action() {
+    		public void run() {
+    			IntroductionDialog dialog = new IntroductionDialog(getSite().getShell());
+    			if( dialog.open() == Dialog.OK) {
+    				JDTInterfaceIntroduction introduction = dialog.getIntroduction();
+    				AopDescriptor descriptor = (AopDescriptor) treeViewer.getInput();
+    				descriptor.addInterfaceIntroduction(introduction);
+    				descriptor.save();
+
+    			}
+    		}
+    	};
+    	createIntroductionAction.setText("Add an Introduction");
+    	createIntroductionAction.setToolTipText("Create and add a new introduction");
+    	// createIntroductionAction.setImageDescriptor(something);
+    	
+    	deleteIntroductionAction = new Action() {
+    		public void run() {
+    			Introduction jaxbIntro = (Introduction)getSelected();
+    			String expr = jaxbIntro.getClazz() == null ? jaxbIntro.getExpr() : jaxbIntro.getClazz();
+    			if (AopUiPlugin.confirm("Are you sure you want to delete the Introduction: \"" + expr + "\" ?"))
+    			{
+    				AopDescriptor descriptor = (AopDescriptor) getTreeViewer().getInput();
+    				descriptor.remove(jaxbIntro);
+    				descriptor.save();
+    			}
+    		}
+    	};
+    	deleteIntroductionAction.setText("Delete");
+    	deleteIntroductionAction.setToolTipText("Remove this introduction");
+    	deleteIntroductionAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
+    	
+    	editIntroductionAction = new Action() {
+    		public void run() {
+    			Introduction jaxbIntro = (Introduction)getSelected();
+    			IntroductionDialog dialog = new IntroductionDialog(getSite().getShell(), jaxbIntro);
+    			if( dialog.open() == Dialog.OK) {
+    				JDTInterfaceIntroduction jdtIntro = dialog.getIntroduction();
+    				if( jdtIntro.getClassExpr().indexOf('(') != -1 ) {
+    					jaxbIntro.setExpr(jdtIntro.getClassExpr());
+    					jaxbIntro.setClazz(null);
+    				} else {
+    					jaxbIntro.setClazz(jdtIntro.getClassExpr());
+    					jaxbIntro.setExpr(null);
+    				}
+    				
+    				String interfacesAsString = jdtIntro.getInterfacesAsString();
+    				if( interfacesAsString.equals("")) 
+    					jaxbIntro.setInterfaces(null);
+    				jaxbIntro.setInterfaces(interfacesAsString);
+    				
+    				// add the mixins
+    				jaxbIntro.getMixin().clear();
+    				for( Iterator i = jdtIntro.getMixins().iterator(); i.hasNext(); ) {
+    					try {
+	    					InterfaceIntroduction.Mixin jdtMixin = (InterfaceIntroduction.Mixin)i.next();
+	    					org.jboss.ide.eclipse.jdt.aop.core.jaxb.Mixin newJaxbMixin = 
+	    						JaxbAopUtil.instance().getFactory().createMixin();
+	    					newJaxbMixin.setClazz(jdtMixin.getClassName());
+	    					newJaxbMixin.setConstruction(jdtMixin.getConstruction());
+	    					String mixinInterfacesAsString =jdtIntro.getMixinInterfacesAsString(jdtMixin); 
+	    					newJaxbMixin.setInterfaces(mixinInterfacesAsString);
+	    					jaxbIntro.getMixin().add(newJaxbMixin);
+    					} catch( JAXBException jaxbe) {
+    						
+    					}
+    					
+    				}
+					AopDescriptor descriptor = (AopDescriptor) getTreeViewer().getInput();
+					descriptor.save();
+
+    			}
+    			
+    		}
+    	};
+    	editIntroductionAction.setText("Edit");
+    	editIntroductionAction.setToolTipText("Edit this introduction");
+    	// createIntroductionAction.setImageDescriptor(something);
+    	
+    	
+    	
     }
     
-    private Object getSelected ()
+	
+	/**
+	 * Returns the first selected item from the view.
+	 * @return
+	 */
+    public Object getSelected ()
     {
     	if (treeViewer.getSelection() instanceof IStructuredSelection)
     	{
@@ -281,12 +508,6 @@ public class AspectManagerView extends ViewPart {
     				manager.add(goToAction);
     				manager.add(createAdviceAction);
     				
-    			} else if (selected instanceof List) {
-    				List list = (List) selected;
-    				if (descriptor.getAop().getBindings().equals(list))
-    				{
-    					manager.add(createBindingAction);
-    				}
     			} else if (selected instanceof Binding) {
     			    manager.add(editBindingAction);
     				manager.add(applyInterceptorsAction);
@@ -305,15 +526,44 @@ public class AspectManagerView extends ViewPart {
     				manager.add(goToAction);
     				manager.add(new Separator());
     				manager.add(removeInterceptorRefAction);
-    			} else if( selected instanceof AspectManagerContentProvider.AspectManagerContentProviderTypeWrapper) {
-    				if( selected == AspectManagerContentProvider.BINDINGS ) {
-    					manager.add(createBindingAction);
-    				} else if( selected == AspectManagerContentProvider.POINTCUTS) {
-    					manager.add(createPointcutAction);
-    				}
+    			} else if( selected instanceof Pointcut ) {
+					manager.add(editPointcutAction);
+					manager.add(new Separator());
+					manager.add(removeNamedPointcutAction);
+    			} else if( selected instanceof Typedef ) {
+					manager.add(editTypedefAction);
+					manager.add(new Separator());
+					manager.add(removeTypedefAction);
+    			} else if( selected instanceof Introduction ) {
+					manager.add(editIntroductionAction);
+					manager.add(new Separator());
+					manager.add(deleteIntroductionAction);
     			}
+				
+				/* 
+				 * If they're not clicking on a sub-element, but a category
+				 */
+				
+				else if (selected instanceof List) {
+					// Category with children
+    				List list = (List) selected;
+					if( list.get(0) == AspectManagerContentProvider.BINDINGS) {
+    					manager.add(createBindingAction);
+					}
+    				else if( list.get(0) == AspectManagerContentProvider.POINTCUTS) {
+						manager.add(createPointcutAction);
+    				}
+    				else if( list.get(0) == AspectManagerContentProvider.TYPEDEFS) {
+						manager.add(createTypedefAction);
+    				}
+    				else if( list.get(0) == AspectManagerContentProvider.INTRODUCTIONS) {
+						manager.add(createIntroductionAction);
+    				}
+    			} 
     		}
     	}
+		
+
     	manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
     }
     
@@ -337,8 +587,10 @@ public class AspectManagerView extends ViewPart {
     
     public void setDescriptor(AopDescriptor descriptor) {
         if (treeViewer != null && descriptor != null) {
+        	int select = treeViewer.getTree().getVerticalBar().getSelection();
             contentProvider.setDescriptor(descriptor);
             treeViewer.setInput(descriptor);
+            treeViewer.getTree().getVerticalBar().setSelection(select);
         }
     }
     

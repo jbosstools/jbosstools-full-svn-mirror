@@ -99,7 +99,7 @@ public class RemoteServerConnectTab
       connectorComp.setLayoutData(gd);
 
       Label l = new Label(connectorComp, SWT.NONE);
-      l.setText(LauncherMessages.getString("JavaConnectTab.Connect&ion_Type__7"));//$NON-NLS-1$
+      l.setText(LauncherMessages.JavaConnectTab_Connect_ion_Type__7);//$NON-NLS-1$
       gd = new GridData(GridData.BEGINNING);
       gd.horizontalSpan = 2;
       l.setLayoutData(gd);
@@ -126,7 +126,7 @@ public class RemoteServerConnectTab
       createVerticalSpacer(comp, 2);
 
       Group group = new Group(comp, SWT.NONE);
-      group.setText(LauncherMessages.getString("JavaConnectTab.Connection_Properties_1"));//$NON-NLS-1$
+      group.setText(LauncherMessages.JavaConnectTab_Connection_Properties_1);//$NON-NLS-1$
       group.setLayout(new GridLayout());
       gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.FILL_HORIZONTAL);
       gd.horizontalSpan = 2;
@@ -167,7 +167,7 @@ public class RemoteServerConnectTab
     */
    public String getName()
    {
-      return LauncherMessages.getString("JavaConnectTab.Conn&ect_20");//$NON-NLS-1$
+      return LauncherMessages.JavaConnectTab_Conn_ect_20;//$NON-NLS-1$
    }
 
 
@@ -203,7 +203,7 @@ public class RemoteServerConnectTab
             String value = ((StringFieldEditor) editor).getStringValue();
             if (!arg.isValid(value))
             {
-               setErrorMessage(arg.label() + LauncherMessages.getString("JavaConnectTab._is_invalid._5"));//$NON-NLS-1$
+               setErrorMessage(arg.label() + LauncherMessages.JavaConnectTab__is_invalid__5);//$NON-NLS-1$
                return false;
             }
          }
@@ -325,7 +325,7 @@ public class RemoteServerConnectTab
       }
       catch (CoreException e)
       {
-         JDIDebugUIPlugin.errorDialog(LauncherMessages.getString("JavaConnectTab.Unable_to_display_connection_arguments._2"), e.getStatus());//$NON-NLS-1$
+         JDIDebugUIPlugin.errorDialog(LauncherMessages.JavaConnectTab_Unable_to_display_connection_arguments__2, e.getStatus());//$NON-NLS-1$
          return;
       }
 

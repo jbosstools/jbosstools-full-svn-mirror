@@ -19,10 +19,15 @@ import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IMarkerResolution2;
 import org.eclipse.ui.IMarkerResolutionGenerator;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvice;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvised;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvisor;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopInterceptor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvice;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopTypeMatcher;
+import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopInterfaceIntroduction;
+import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopTypedef;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
+import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 import org.jboss.ide.eclipse.jdt.aop.ui.util.JumpToCodeUtil;
 
 /**
@@ -54,8 +59,10 @@ public class AopMarkerResolutionGenerator implements IMarkerResolutionGenerator
 			
 			if (markerElement != null)
 			{
+
 				IAopAdvisor advisors[] = AopModel.instance().getElementAdvisors(markerElement);
-				
+				IAopTypeMatcher typeMatchers[] = AopModel.instance().getElementTypeMatchers(markerElement);
+
 				if (advisors != null && advisors.length > 0)
 				{
 					for (int j = 0; j < advisors.length; j++)
@@ -75,7 +82,7 @@ public class AopMarkerResolutionGenerator implements IMarkerResolutionGenerator
 							IType type = (IType) interceptor.getAdvisingElement();
 							
 							resolutions.add(new AdvisedMarkerResolution(markerElement, type, AdvisedMarkerResolution.TYPE_INTERCEPTOR));
-						}
+						} 
 						
 					}
 				}
@@ -107,8 +114,21 @@ public class AopMarkerResolutionGenerator implements IMarkerResolutionGenerator
 						}
 					}
 				}
+				
+				
+				// Now the type matchers
+				for( int i = 0; i < typeMatchers.length; i++ ) {
+					if( typeMatchers[i] instanceof AopTypedef) {
+						AopTypedef typedef = (AopTypedef)typeMatchers[i];
+						resolutions.add(new TypedefMarkerResolution(markerElement, typedef));
+					} else if( typeMatchers[i] instanceof AopInterfaceIntroduction) {
+						AopInterfaceIntroduction intro = (AopInterfaceIntroduction)typeMatchers[i];
+						resolutions.add(
+								new InterfaceIntroductionMarkerResolution((IType)markerElement, intro));
+					}
+
+				}
 			}
-			
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
@@ -150,6 +170,75 @@ public class AopMarkerResolutionGenerator implements IMarkerResolutionGenerator
 		
 		return "";
 	}
+
+	
+	
+	protected static class TypedefMarkerResolution implements IMarkerResolution2	{
+
+		protected IJavaElement matched;
+		protected JDTTypedefExpression expression;
+		
+		public TypedefMarkerResolution (IJavaElement matched, AopTypedef matcher)
+		{
+			this.matched = matched;
+			this.expression = matcher.getTypedef();
+		}
+		
+		public String getLabel() {
+			return expression.getName() + ":  " + expression.getExpr();
+		}
+
+		public Image getImage() {
+			return AopSharedImages.getImage(AopSharedImages.IMG_TYPEDEF);
+		}
+		
+		public String getDescription() {
+			String s = "";
+			s += "This class fits the specifications of the typedef named " + expression.getName()
+			 + ". The expression is: <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       " + expression.getExpr() + "\n\n";
+			
+			
+			return s;
+		}
+
+		public void run(IMarker marker) {
+			//JumpToCodeUtil.jumpTo(advisor);
+		}
+	}
+
+	protected static class InterfaceIntroductionMarkerResolution implements IMarkerResolution2	{
+
+		protected IJavaElement matched;
+		protected JDTInterfaceIntroduction introduction;
+		
+		public InterfaceIntroductionMarkerResolution (IType matched, AopInterfaceIntroduction intro)
+		{
+			this.matched = matched;
+			this.introduction = intro.getIntroduction();
+		}
+		
+		public String getLabel() {
+			return introduction.getName() + ":  " + introduction.getClassExpr();
+		}
+
+		public Image getImage() {
+			return AopSharedImages.getImage(AopSharedImages.IMG_INTRODUCTION);
+		}
+		
+		public String getDescription() {
+			String s = "";
+			
+			s += "This class fits the type expression of the introduction named " + introduction.getName();
+			s += ". The type expression is: <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       " + introduction.getClassExpr() + "\n\n";
+			return s;
+		}
+
+		public void run(IMarker marker) {
+			//JumpToCodeUtil.jumpTo(advisor);
+		}
+	}
+
+	
 	
 	protected static class AdvisedMarkerResolution implements IMarkerResolution2
 	{

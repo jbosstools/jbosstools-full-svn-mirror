@@ -15,8 +15,13 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.jboss.aop.pointcut.Pointcut;
 import org.jboss.aop.pointcut.PointcutExpression;
 import org.jboss.aop.pointcut.ast.ParseException;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAdvisedCollector;
-import org.jboss.ide.eclipse.jdt.aop.core.model.IAopAdvised;
+import org.jboss.ide.eclipse.jdt.aop.core.matchers.JDTExecutionConstructorMatcher;
+import org.jboss.ide.eclipse.jdt.aop.core.matchers.JDTExecutionMethodMatcher;
+import org.jboss.ide.eclipse.jdt.aop.core.matchers.JDTFieldGetMatcher;
+import org.jboss.ide.eclipse.jdt.aop.core.matchers.JDTFieldMatcher;
+import org.jboss.ide.eclipse.jdt.aop.core.matchers.JDTFieldSetMatcher;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAdvisedCollector;
+import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
 
 /**
  * @author Marshall
