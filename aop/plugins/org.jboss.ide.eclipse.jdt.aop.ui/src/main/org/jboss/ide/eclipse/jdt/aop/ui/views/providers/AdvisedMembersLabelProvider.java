@@ -15,6 +15,8 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvice;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopInterceptor;
+import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopInterfaceIntroduction;
+import org.jboss.ide.eclipse.jdt.aop.core.model.internal.AopTypedef;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopSharedImages;
 import org.jboss.ide.eclipse.jdt.aop.ui.AopUiPlugin;
 
@@ -46,6 +48,24 @@ public class AdvisedMembersLabelProvider extends LabelProvider {
 			return javaUILabelProviderDelegate.getImage(element);
 		}
 		
+		else if( element instanceof AdvisedMembersContentProvider.TypeMatcherWrapper ) {
+			
+			AdvisedMembersContentProvider.TypeMatcherWrapper matcher = 
+				(AdvisedMembersContentProvider.TypeMatcherWrapper)element;
+			
+			if( matcher.getType().equals(AdvisedMembersContentProvider.MATCHED_TYPEDEFS)) {
+				return AopSharedImages.getImage(AopSharedImages.IMG_TYPEDEF24);				
+			} else if( matcher.getType().equals(AdvisedMembersContentProvider.MATCHED_INTRODUCTIONS)) {
+				return AopSharedImages.getImage(AopSharedImages.IMG_INTRODUCTION24);
+			}
+		}
+		else if( element instanceof AopTypedef ) {
+			return AopSharedImages.getImage(AopSharedImages.IMG_TYPEDEF24);				
+		}
+		else if( element instanceof AopInterfaceIntroduction ) {
+			return AopSharedImages.getImage(AopSharedImages.IMG_INTRODUCTION24);
+		}
+
 		else if (element.equals(AdvisedMembersContentProvider.NO_ADVISED_CHILDREN[0]))
 		{
 			return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_WARN_TSK);
@@ -77,6 +97,27 @@ public class AdvisedMembersLabelProvider extends LabelProvider {
 		if( element instanceof IType ) {
 			return ((IType)element).getElementName();
 		}
+		
+		else if( element instanceof AdvisedMembersContentProvider.TypeMatcherWrapper ) {
+			
+			AdvisedMembersContentProvider.TypeMatcherWrapper matcher = 
+				(AdvisedMembersContentProvider.TypeMatcherWrapper)element;
+			
+			if( matcher.getType().equals(AdvisedMembersContentProvider.MATCHED_TYPEDEFS)) {
+				return "Matched Typedefs";
+			} else if( matcher.getType().equals(AdvisedMembersContentProvider.MATCHED_INTRODUCTIONS)) {
+				return "Matched Introductions";
+			}
+		}
+		else if( element instanceof AopTypedef ) {
+			return ((AopTypedef)element).getTypedef().getName() + " : " + 
+			((AopTypedef)element).getTypedef().getExpr();
+		}
+		else if( element instanceof AopInterfaceIntroduction ) {
+			return ((AopInterfaceIntroduction)element).getIntroduction().getClassExpr();
+		}
+
+
 		return javaUILabelProviderDelegate.getText(element);
 	}
 }
