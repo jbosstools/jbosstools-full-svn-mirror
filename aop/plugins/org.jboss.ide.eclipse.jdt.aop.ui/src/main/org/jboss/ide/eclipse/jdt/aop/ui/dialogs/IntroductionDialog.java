@@ -113,9 +113,14 @@ public class IntroductionDialog extends Dialog {
 
 		createActions();
 		
+		
+		// TODO: Remove method and call upon fix for JBAOP-71
+		interfaceComposite.disableAddingInterfaces();
+		
 			
 		return main;
 	}
+	
 	
 	protected void createWidgets() {
 		
@@ -301,6 +306,12 @@ public class IntroductionDialog extends Dialog {
 			addListeners();
 			addProviders();
 			createContextMenu();
+		}
+		
+		public void disableAddingInterfaces() {
+			interfaceViewer.getTable().setEnabled(false);
+			text.setEnabled(false);
+			add.setEnabled(false);
 		}
 		
 		private void setWidgetText() {
