@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.jboss.ide.eclipse.jsr88deployer.core;
+package org.jboss.ide.eclipse.jsr88deployer.core.utils;
 
 import java.util.ArrayList;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.TableItem;
-import org.jboss.ide.eclipse.jsr88deployer.core.utils.StringProperties;
+import org.jboss.ide.eclipse.jsr88deployer.core.JSR88CorePlugin;
 
 
 /**
