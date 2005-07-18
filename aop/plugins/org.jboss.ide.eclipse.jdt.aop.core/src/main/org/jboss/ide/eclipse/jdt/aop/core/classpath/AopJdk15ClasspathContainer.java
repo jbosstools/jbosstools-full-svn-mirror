@@ -9,7 +9,7 @@ import org.eclipse.core.runtime.Path;
  */
 public class AopJdk15ClasspathContainer extends AopClasspathContainer {
 	public static final String CONTAINER_ID = "org.jboss.ide.eclipse.jdt.aop.core.classpath.AOP_15_CONTAINER";
-	public static final String DESCRIPTION = "JBossAOP 1.1 Libraries (jdk 1.5)";
+	public static final String DESCRIPTION = "JBossAOP 1.3 Libraries (jdk 1.5)";
 	
 	protected final static IPath aopJars[] = new IPath[] {
 		new Path("jboss-aop-jdk50.jar"), new Path("jboss-common.jar"), new Path("qdox.jar"),

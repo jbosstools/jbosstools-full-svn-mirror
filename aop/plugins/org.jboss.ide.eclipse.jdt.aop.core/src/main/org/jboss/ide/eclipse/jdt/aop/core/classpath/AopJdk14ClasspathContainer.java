@@ -14,7 +14,7 @@ public class AopJdk14ClasspathContainer extends AopClasspathContainer
 {
 	
 	public static final String CONTAINER_ID = "org.jboss.ide.eclipse.jdt.aop.core.classpath.AOP_14_CONTAINER";
-	public static final String DESCRIPTION = "JBossAOP 1.1 Libraries";
+	public static final String DESCRIPTION = "JBossAOP 1.3 Libraries";
 	
 	protected final static IPath aopJars[] = new IPath[] {
 			new Path("jboss-aop.jar"), new Path("jboss-common.jar"), new Path("qdox.jar"),
