@@ -26,14 +26,13 @@ import org.eclipse.jdt.internal.corext.template.java.JavaContextType;
 import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.jdt.internal.ui.JavaUIMessages;
 import org.eclipse.jdt.internal.ui.text.JavaCodeReader;
-import org.eclipse.jdt.internal.ui.text.java.ExperimentalResultCollector;
 import org.eclipse.jdt.internal.ui.text.java.JavaCompletionProposal;
-import org.eclipse.jdt.internal.ui.text.java.JavaCompletionProposalComparator;
 import org.eclipse.jdt.internal.ui.text.java.JavaParameterListValidator;
-import org.eclipse.jdt.internal.ui.text.java.ResultCollector;
 import org.eclipse.jdt.internal.ui.text.template.contentassist.TemplateEngine;
 import org.eclipse.jdt.ui.IWorkingCopyManager;
 import org.eclipse.jdt.ui.PreferenceConstants;
+import org.eclipse.jdt.ui.text.java.CompletionProposalCollector;
+import org.eclipse.jdt.ui.text.java.CompletionProposalComparator;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.BadLocationException;
@@ -65,9 +64,9 @@ public class JSPScripletCompletionProcessor implements IContentAssistProcessor
    /** Description of the Field */
    protected IWorkingCopyManager fManager;
 
-   private ResultCollector collector;
-   private JavaCompletionProposalComparator comparator;
-   private ExperimentalResultCollector experimentalCollector;
+   private CompletionProposalCollector collector;
+   private CompletionProposalComparator comparator;
+//   private ExperimentalResultCollector experimentalCollector;
 
    private IFile file;
    private JSPProject jspProject;
@@ -88,8 +87,8 @@ public class JSPScripletCompletionProcessor implements IContentAssistProcessor
    public JSPScripletCompletionProcessor(IFile file)
    {
       this.file = file;
-      this.collector = new JSPResultCollector();
       this.jspProject = JSPProjectManager.getJSPProject(file.getProject());
+      this.collector = new JSPResultCollector(jspProject.getJavaProject());
       this.fManager = JavaPlugin.getDefault().getWorkingCopyManager();
 
       TemplateContextType contextType = JavaPlugin.getDefault().getTemplateContextRegistry().getContextType("java");//$NON-NLS-1$
@@ -102,8 +101,8 @@ public class JSPScripletCompletionProcessor implements IContentAssistProcessor
       {
          this.templateEngine = new TemplateEngine(contextType);
       }
-      this.experimentalCollector = new ExperimentalResultCollector();
-      this.comparator = new JavaCompletionProposalComparator();
+//      this.experimentalCollector = new ExperimentalResultCollector();
+      this.comparator = new CompletionProposalComparator();
    }
 
 
@@ -180,14 +179,15 @@ public class JSPScripletCompletionProcessor implements IContentAssistProcessor
          String errorMsg = collector.getErrorMessage();
          if (errorMsg == null || errorMsg.trim().length() == 0)
          {
-            errorMsg = JavaUIMessages.getString("JavaEditor.codeassist.noCompletions");//$NON-NLS-1$
+            errorMsg = JavaUIMessages.JavaEditor_codeassist_noCompletions;//$NON-NLS-1$
          }
          return errorMsg;
       }
 
       if (PreferenceConstants.getPreferenceStore().getBoolean(PreferenceConstants.CODEASSIST_FILL_ARGUMENT_NAMES))
       {
-         return experimentalCollector.getErrorMessage();
+		  return collector.getErrorMessage();
+         //return experimentalCollector.getErrorMessage();
       }
 
       return collector.getErrorMessage();
@@ -337,6 +337,7 @@ public class JSPScripletCompletionProcessor implements IContentAssistProcessor
    }
 
 
+   
    /**
     * Description of the Method
     *
@@ -385,9 +386,9 @@ public class JSPScripletCompletionProcessor implements IContentAssistProcessor
                IDocument javaDocument = new Document(info.getContent());
                int javaOffset = javaDocument.getLineOffset(javaLine) + javaColumn;
 
-               this.collector.setPreventEating(false);
-               this.collector.reset(javaOffset, this.jspProject.getJavaProject(), null);
-               this.collector.setViewer(viewer);
+//               this.collector.setPreventEating(false);
+//               this.collector.reset(javaOffset, this.jspProject.getJavaProject(), null);
+//               this.collector.setViewer(viewer);
 
                Point selection = viewer.getSelectedRange();
                if (selection.y > 0)
@@ -396,7 +397,7 @@ public class JSPScripletCompletionProcessor implements IContentAssistProcessor
                }
 
                this.complete(info, javaOffset);
-               results = this.collector.getResults();
+               results = this.collector.getJavaCompletionProposals();
 
                // Re-translate the final coordinates
                for (int i = 0; i < results.length; i++)

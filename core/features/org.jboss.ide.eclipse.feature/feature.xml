@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.jboss.ide.eclipse"
+      id="org.jboss.ide.eclipse.feature"
       label="JBoss-IDE"
-      version="1.5.0.m1"
+      version="1.5.0"
       provider-name="JBoss Team"
       image="splash.jpg">
 
@@ -150,180 +150,162 @@ END OF TERMS AND CONDITIONS
          id="org.jboss.ide.eclipse.core"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.deployer.core"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.deployer.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.core"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.j2ee.core"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.j2ee.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.test.core"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.test.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.ws.core"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.ws.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.launcher.core"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.launcher.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.packaging.core"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.packaging.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.xdoclet.assist"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.xdoclet.core"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.xdoclet.run"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.xdoclet.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.j2ee.jsp.core"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.xml.core"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.xml.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.j2ee.xml.core"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.j2ee.xml.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0.m1"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.apache.xalan"
          download-size="0"
          install-size="0"
          version="2.6.0"/>
-
-   <plugin
-         id="org.eclipse.xsd"
-         download-size="0"
-         install-size="0"
-         version="2.0.1"/>
-
-   <plugin
-         id="org.eclipse.emf.ecore"
-         download-size="0"
-         install-size="0"
-         version="2.0.1"/>
-
-   <plugin
-         id="org.eclipse.emf.common"
-         download-size="0"
-         install-size="0"
-         version="2.0.1"/>
 
 </feature>

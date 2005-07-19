@@ -3,7 +3,7 @@
 <plugin
    id="org.jboss.ide.eclipse.launcher.ui"
    name="%plugin.name"
-   version="1.5.0.m1"
+   version="1.5.0"
    provider-name="%plugin.provider"
    class="org.jboss.ide.eclipse.launcher.ui.LauncherUIPlugin">
 
@@ -66,27 +66,27 @@
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
       <launchConfigurationTypeImage
-            icon="icons/full/obj16/server.gif"
+            icon="icons/full/obj16/jboss-configuration.gif"
             configTypeID="org.jboss.ide.eclipse.launcher.configuration.jboss.JBoss24xLaunchConfigurationDelegate"
             id="org.jboss.ide.eclipse.launcher.configuration.jboss.JBoss24xLaunchConfigurationDelegate.image">
       </launchConfigurationTypeImage>
       <launchConfigurationTypeImage
-            icon="icons/full/obj16/server.gif"
+            icon="icons/full/obj16/jboss-configuration.gif"
             configTypeID="org.jboss.ide.eclipse.launcher.configuration.jboss.JBoss30xLaunchConfigurationDelegate"
             id="org.jboss.ide.eclipse.launcher.configuration.jboss.JBoss30xLaunchConfigurationDelegate.image">
       </launchConfigurationTypeImage>
       <launchConfigurationTypeImage
-            icon="icons/full/obj16/server.gif"
+            icon="icons/full/obj16/jboss-configuration.gif"
             configTypeID="org.jboss.ide.eclipse.launcher.configuration.jboss.JBoss32xLaunchConfigurationDelegate"
             id="org.jboss.ide.eclipse.launcher.configuration.jboss.JBoss32xLaunchConfigurationDelegate.image">
       </launchConfigurationTypeImage>
       <launchConfigurationTypeImage
-            icon="icons/full/obj16/server.gif"
+            icon="icons/full/obj16/jboss-configuration.gif"
             configTypeID="org.jboss.ide.eclipse.launcher.configuration.jboss.JBoss40xLaunchConfigurationDelegate"
             id="org.jboss.ide.eclipse.launcher.configuration.jboss.JBoss40xLaunchConfigurationDelegate.image">
       </launchConfigurationTypeImage>
       <launchConfigurationTypeImage
-            icon="icons/full/obj16/server.gif"
+            icon="icons/full/obj16/jboss-configuration.gif"
             configTypeID="org.jboss.ide.eclipse.launcher.configuration.RemoteServerLaunchConfigurationDelegate"
             id="org.jboss.ide.eclipse.launcher.configuration.RemoteServerLaunchConfigurationDelegate.image">
       </launchConfigurationTypeImage>

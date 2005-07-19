@@ -268,11 +268,11 @@ public abstract class DOMClassWizardPage extends ClassWizardPage implements IGen
    protected void createContent()
    {
       // Constructors and inherited must be left as is
-      String[] buttonNames = new String[]{NewWizardMessages.getString("NewClassWizardPage.methods.constructors"), //$NON-NLS-1$ //$NON-NLS-2$
-      NewWizardMessages.getString("NewClassWizardPage.methods.inherited")//$NON-NLS-1$
+      String[] buttonNames = new String[]{NewWizardMessages.NewClassWizardPage_methods_constructors, //$NON-NLS-1$ //$NON-NLS-2$
+      NewWizardMessages.NewClassWizardPage_methods_inherited//$NON-NLS-1$
       };
       this.fMethodStubsButtons = new SelectionButtonDialogFieldGroup(SWT.CHECK, buttonNames, 1);
-      this.fMethodStubsButtons.setLabelText(NewWizardMessages.getString("NewClassWizardPage.methods.label"));//$NON-NLS-1$
+      this.fMethodStubsButtons.setLabelText(NewWizardMessages.NewClassWizardPage_methods_label);//$NON-NLS-1$
    }
 
 
