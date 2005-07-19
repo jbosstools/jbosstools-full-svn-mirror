@@ -6,6 +6,7 @@
 <!ENTITY started SYSTEM "modules/01_started.xml">
 <!ENTITY create SYSTEM "modules/02_createElements.xml">
 <!ENTITY editor SYSTEM "modules/03_editorMarkers.xml">
+<!ENTITY running SYSTEM "modules/04_running.xml">
 ]>
 
 <book lang="en">
@@ -21,4 +22,5 @@
 &started;
 &create;
 &editor;
+&running;
 </book>
