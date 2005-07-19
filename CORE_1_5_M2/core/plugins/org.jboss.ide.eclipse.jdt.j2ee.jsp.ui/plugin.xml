@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin
+   id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui"
+   name="%plugin.name"
+   version="1.5.0"
+   provider-name="%plugin.provider"
+   class="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.JDTJ2EEJSPUIPlugin">
+
+   <runtime>
+      <library name="org-jboss-ide-eclipse-jdt-j2ee-jsp-ui.jar">
+         <export name="*"/>
+      </library>
+   </runtime>
+
+   <requires>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.jboss.ide.eclipse.ui"/>
+      <import plugin="org.jboss.ide.eclipse.core"/>
+      <import plugin="org.jboss.ide.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.jdt.ui"/>
+      <import plugin="org.eclipse.jdt"/>
+      <import plugin="org.eclipse.jdt.launching"/>
+      <import plugin="org.jboss.ide.eclipse.jdt.ui"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.eclipse.debug.core"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.jboss.ide.eclipse.jdt.j2ee.jsp.core"/>
+      <import plugin="org.eclipse.jdt.debug"/>
+      <import plugin="org.eclipse.jdt.debug.ui"/>
+      <import plugin="org.apache.ant"/>
+      <import plugin="org.jboss.ide.eclipse.jdt.xml.core"/>
+      <import plugin="org.jboss.ide.eclipse.jdt.xml.ui"/>
+   </requires>
+
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            objectClass="org.eclipse.jdt.core.IJavaProject"
+            adaptable="true"
+            name="%org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.properties.JSPProjectNaturePropertyPage"
+            class="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.properties.JSPProjectNaturePropertyPage"
+            id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.properties.JSPProjectNaturePropertyPage">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.markerImageProviders">
+      <imageprovider
+            markertype="org.eclipse.jdt.debug.javaStratumLineBreakpointMarker"
+            icon="icons/full/obj16/brkp_obj.gif"
+            id="org.eclipse.jsp.breakpointMarkerProvider">
+      </imageprovider>
+   </extension>
+   <extension
+         id="org.jboss.ide.eclipse.jdt.j2ee.jsp.problem"
+         name="JSP Compilation Error"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            lightweight="true"
+            adaptable="true"
+            location="TOP_LEFT"
+            label="%org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.decorators.JSPNatureDecorator"
+            class="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.decorators.JSPNatureDecorator"
+            state="true"
+            id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.decorators.JSPNatureDecorator">
+         <description>
+            Indicates that the resource is deployed
+         </description>
+         <enablement>
+            <objectClass
+                  name="org.eclipse.core.resources.IResource">
+            </objectClass>
+         </enablement>
+      </decorator>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.core.resources.IResource"
+            id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.popupMenus.iResourceContributions">
+         <action
+               label="%org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.actions.JSPCompilationAction"
+               icon="icons/full/obj16/debugt_obj.gif"
+               class="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.actions.JSPCompilationAction"
+               enablesFor="1"
+               id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.actions.JSPCompilationAction">
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="%org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.preferences.JSPSyntaxPreferencePage"
+            category="org.jboss.ide.eclipse.ui.MainPreferencePage"
+            class="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.preferences.JSPSyntaxPreferencePage"
+            id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.preferences.JSPSyntaxPreferencePage">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="%org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.editors.JSPEditor"
+            icon="icons/full/obj16/jsp.gif"
+            extensions="jsp,jsf,jspf"
+            class="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.editors.JSPEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.editors.JSPEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editorActions">
+      <editorContribution
+            targetID="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.editors.JSPEditor"
+            id="org.eclipse.jsp.BreakpointRulerActions">
+         <action
+               label="%org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.actions.ToggleJspBreakpointAction"
+               class="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.actions.ToggleJspBreakpointRulerActionDelegate"
+               actionID="RulerDoubleClick"
+               id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.actions.ToggleJspBreakpointAction">
+         </action>
+      </editorContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            name="%org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.wizards.NewJSPPageWizard"
+            icon="icons/full/ctool16/newjsp_wiz.gif"
+            category="org.jboss.ide.eclipse.ui.wizards/org.jboss.ide.eclipse.ui.wizards.web"
+            class="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.wizards.NewJSPPageWizard"
+            id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.wizards.NewJSPPageWizard">
+      </wizard>
+   </extension>
+
+</plugin>
