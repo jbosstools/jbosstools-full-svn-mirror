@@ -347,7 +347,6 @@ public class PointcutPreviewDialog2 extends Dialog {
 			typedefData.top = new FormAttachment(categoryLabel,5);
 			typedefData.right = new FormAttachment(100,-5);
 			typedefs.setLayoutData(typedefData);
-			typedefs.setVisible(true);
 		}
 		
 		private void fillCombos(boolean classOnly ) {
