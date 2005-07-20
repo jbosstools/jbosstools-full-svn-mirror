@@ -395,7 +395,7 @@ public class AspectManagerView extends ViewPart {
     	};
     	createIntroductionAction.setText("Add an Introduction");
     	createIntroductionAction.setToolTipText("Create and add a new introduction");
-    	// createIntroductionAction.setImageDescriptor(something);
+    	createIntroductionAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_INTRODUCTION));
     	
     	deleteIntroductionAction = new Action() {
     		public void run() {
@@ -458,7 +458,7 @@ public class AspectManagerView extends ViewPart {
     	};
     	editIntroductionAction.setText("Edit");
     	editIntroductionAction.setToolTipText("Edit this introduction");
-    	// createIntroductionAction.setImageDescriptor(something);
+    	editIntroductionAction.setImageDescriptor(AopSharedImages.getImageDescriptor(AopSharedImages.IMG_INTRODUCTION));
     	
     	
     	
