@@ -3,13 +3,23 @@
  */
 package org.jboss.ide.eclipse.jdt.aop.core.matchers;
 
-import java.io.StringReader;
+import java.util.Iterator;
+import java.util.List;
 
 import javassist.NotFoundException;
 
 import org.eclipse.jdt.core.IField;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.MarkerAnnotation;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.internal.corext.util.JavaModelUtil;
 import org.jboss.aop.AspectManager;
 import org.jboss.aop.pointcut.MatcherHelper;
@@ -25,10 +35,10 @@ import org.jboss.aop.pointcut.ast.ASTMethod;
 import org.jboss.aop.pointcut.ast.ASTStart;
 import org.jboss.aop.pointcut.ast.ClassExpression;
 import org.jboss.aop.pointcut.ast.Node;
+import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
+import org.jboss.ide.eclipse.jdt.aop.core.matchers.JDTMethodMatcher.TempBool;
 
-import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.DocletTag;
-import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaField;
 
 /**
@@ -83,18 +93,61 @@ public class JDTFieldMatcher extends MatcherHelper {
 		
 			if (node.getFieldIdentifier().isAnnotation())
 			{
-				//TODO implement annotation code here
-				JavaField qDoxField = QDoxMatcher.matchField(jdtField);
-				// qDoxField will be null if there's an exception, such as a compile exception.
-				//System.out.println("QDOXFIELD: " + qDoxField);
-				if( qDoxField == null ) return Boolean.FALSE;
-				DocletTag[] tags = qDoxField.getTags();
-				for( int k = 0; k < tags.length; k++ ) {
-					if( node.getFieldIdentifier().getOriginal().equals(tags[k].getName())) 
-						return Boolean.TRUE;
-				}
-		        return Boolean.FALSE;
+				if( AopCorePlugin.getDefault().hasJava50CompilerCompliance(jdtField.getJavaProject())) {
+				    ASTParser c = ASTParser.newParser(AST.JLS3);
+				    c.setSource(jdtField.getCompilationUnit().getSource().toCharArray());
+				    c.setResolveBindings(true);
+			        CompilationUnit beanAstUnit = (CompilationUnit) c.createAST(null);
+			        AST ast = beanAstUnit.getAST();
+			        
+			        final String targetAnnot = node.getFieldIdentifier().getOriginal().substring(1);
+			        final String targetMethodName = jdtField.getElementName();
+			        
+			        final TempBool tempBool = new TempBool(false);
+			        
 
+			        beanAstUnit.accept(new ASTVisitor () {
+			            public boolean visit(MarkerAnnotation node) {
+			                Name name = node.getTypeName();
+			                String annotationName = name.getFullyQualifiedName();
+			                if( annotationName.equals(targetAnnot)) {
+			                	tempBool.setValue(true);
+			                } 
+			                return true;
+			            }
+			            
+			            public boolean visit(MethodDeclaration node ) {
+			            	return false;
+			            }
+
+			            public boolean visit(FieldDeclaration node) {
+			            	List list = node.fragments();
+			            	for( Iterator i = list.iterator(); i.hasNext(); ) {
+			            		VariableDeclarationFragment frag = (VariableDeclarationFragment)i.next();
+			            		String name = frag.getName().getFullyQualifiedName();
+			            		if( name.equals(targetMethodName)) {
+			            			return true;
+			            		} 
+			            	}
+			            	return false;
+			            }
+			        });
+			        return tempBool.getBool();
+
+				} else {
+	
+					//TODO implement annotation code here
+					JavaField qDoxField = QDoxMatcher.matchField(jdtField);
+					// qDoxField will be null if there's an exception, such as a compile exception.
+					//System.out.println("QDOXFIELD: " + qDoxField);
+					if( qDoxField == null ) return Boolean.FALSE;
+					DocletTag[] tags = qDoxField.getTags();
+					for( int k = 0; k < tags.length; k++ ) {
+						if( node.getFieldIdentifier().getOriginal().equals(tags[k].getName())) 
+							return Boolean.TRUE;
+					}
+			        return Boolean.FALSE;
+				}
 			}
 			else
 			{

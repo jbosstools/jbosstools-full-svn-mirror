@@ -16,6 +16,14 @@ import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.Signature;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.MarkerAnnotation;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.internal.corext.util.JavaModelUtil;
 import org.jboss.aop.AspectManager;
 import org.jboss.aop.pointcut.MatcherHelper;
@@ -26,6 +34,8 @@ import org.jboss.aop.pointcut.ast.ASTConstructor;
 import org.jboss.aop.pointcut.ast.ASTParameter;
 import org.jboss.aop.pointcut.ast.ASTStart;
 import org.jboss.aop.pointcut.ast.ClassExpression;
+import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
+import org.jboss.ide.eclipse.jdt.aop.core.matchers.JDTMethodMatcher.TempBool;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.DocletTag;
@@ -74,20 +84,59 @@ public class JDTConstructorMatcher extends MatcherHelper {
 			
 			if (node.getConstructorAnnotation() !=  null)
 			{
-				JavaMethod qDoxMethod = QDoxMatcher.matchMethod(constructor, QDoxMatcher.CONSTRUCTOR);
-				// qDoxMethod will be null if there's an exception, such as a compile exception.
-				//System.out.println(qDoxMethod);
-				if( qDoxMethod == null ) return Boolean.FALSE;
-				DocletTag[] tags = qDoxMethod.getTags();
-				//System.out.println("node: " + node.getConstructorAnnotation().getOriginal());
-				for( int k = 0; k < tags.length; k++ ) {
-					//System.out.println("   tags: " + tags[k].getName() );
-					if( node.getConstructorAnnotation().getOriginal().equals( 
-							tags[k].getName()))
-						return Boolean.TRUE;
-				}
-		        return Boolean.FALSE;
+				if( AopCorePlugin.getDefault().hasJava50CompilerCompliance(constructor.getJavaProject())) {
+				    ASTParser c = ASTParser.newParser(AST.JLS3);
+				    c.setSource(constructor.getCompilationUnit().getSource().toCharArray());
+				    c.setResolveBindings(true);
+			        CompilationUnit beanAstUnit = (CompilationUnit) c.createAST(null);
+			        AST ast = beanAstUnit.getAST();
+			        
+			        final String targetAnnot = node.getConstructorAnnotation().getOriginal().substring(1);
+			        final String targetMethodName = constructor.getElementName();
+			        
+			        final TempBool tempBool = new TempBool(false);
+			        
 
+			        beanAstUnit.accept(new ASTVisitor () {
+			            public boolean visit(MarkerAnnotation node) {
+			                Name name = node.getTypeName();
+			                String annotationName = name.getFullyQualifiedName();
+			                if( annotationName.equals(targetAnnot)) {
+			                	tempBool.setValue(true);
+			                } else {
+			                }
+			                return true;
+			            }
+			            
+			            public boolean visit(FieldDeclaration node ) {
+			            	return false;
+			            }
+
+			            public boolean visit(MethodDeclaration node) {
+			            	if( node.getName().getFullyQualifiedName().equals(targetMethodName)) {
+			            		return true;
+			            	} else {
+			            		return false;
+			            	}
+			            }
+			        });
+			        return tempBool.getBool();
+				} else {
+
+					JavaMethod qDoxMethod = QDoxMatcher.matchMethod(constructor, QDoxMatcher.CONSTRUCTOR);
+					// qDoxMethod will be null if there's an exception, such as a compile exception.
+					//System.out.println(qDoxMethod);
+					if( qDoxMethod == null ) return Boolean.FALSE;
+					DocletTag[] tags = qDoxMethod.getTags();
+					//System.out.println("node: " + node.getConstructorAnnotation().getOriginal());
+					for( int k = 0; k < tags.length; k++ ) {
+						//System.out.println("   tags: " + tags[k].getName() );
+						if( node.getConstructorAnnotation().getOriginal().equals( 
+								tags[k].getName()))
+							return Boolean.TRUE;
+					}
+			        return Boolean.FALSE;
+				}
 			}
 			
 			ArrayList nodeExceptions = node.getExceptions();
