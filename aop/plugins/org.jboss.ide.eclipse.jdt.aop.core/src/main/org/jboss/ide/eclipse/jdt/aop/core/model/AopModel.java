@@ -705,6 +705,7 @@ public class AopModel {
 		while(i.hasNext()) {
 			IType type = (IType)i.next();
 			if( !type.exists()) 
+				i.remove();
 				removeSourceElement(type);
 		}
 			
