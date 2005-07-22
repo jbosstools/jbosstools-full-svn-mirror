@@ -1,0 +1,27 @@
+product.name=JBossIDE
+product.release=1.5M2
+
+build.types=standalone.product,bundle.eclipse,update.site
+splash.path=art/splash.bmp
+product.build.directory=%build-output-directory%
+eclipse.version=eclipse-SDK-3.1
+
+requirement.root=${build.root}/requirements
+builder.build.path=${product.build.directory}/eclipse
+builder.root=..
+builders=hibernate-tools,core,aop,ejb3,jbpm
+
+
+eclipse.archive.path=%eclipse-archive-path%
+platform.names=win32,linux-gtk
+
+eclipse.builds=eclipse-SDK-3.1-win32.zip
+
+buildScriptExt=bat
+
+# SSH/SCP properties
+ssh.username=f-jbosside
+ssh.host=download.jboss.org
+ssh.key=%ssh-key%
+ssh.passphrase=%ssh-passphrase%
+scp.basedir=/htdocs/jbosside/builds

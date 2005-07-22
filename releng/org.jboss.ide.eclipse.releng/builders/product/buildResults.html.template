@@ -1,0 +1,12 @@
+<html>
+	<head>
+		<title>%build-type% build results for %timestamp%</title>
+	</head>
+	
+	<body>
+		<h1>%build-type% build results for %timestamp%</h1>
+		<hr/>
+		
+		
+	</body>
+</html>

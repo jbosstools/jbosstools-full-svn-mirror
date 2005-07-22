@@ -1,0 +1,45 @@
+<project default="customize">
+
+	<target name="customize">
+		<property file="customize.properties"/>
+		
+		<copy todir="builders">
+			<fileset dir="builders">
+				<include name="**/*.properties.template"/>
+			</fileset>
+			<mapper type="glob" from="*.properties.template" to="*.properties"/>
+			<filterset begintoken="%" endtoken="%">
+				<filter token="eclipse-archive-path" value="${eclipse.archive.path}"/>
+				<filter token="ssh-key" value="${ssh-key}"/>
+				<filter token="ssh-passphrase" value="${ssh.passphrase}"/>
+				<filter token="build-output-directory" value="${build.output.directory}"/>
+				<filter token="clean-eclipse-home" value="${clean.eclipse.home}"/>
+				<filter token="releng-root" value="${releng.root}"/>
+			</filterset>
+		</copy>
+		
+	</target>
+	
+	<target name="customize.interactive">
+	    <taskdef name="Cheese" classname="org.jboss.cheese.CheeseTask" classpath="lib/jboss-cheese.jar"/>
+
+		<Cheese>
+			<Questions>
+				<DialogDescription>
+					JBossIDE Releng Customization
+				</DialogDescription>
+				
+				<fileSelectionQuestion type="directory" label="Location of eclipse zip binaries" propertyName="eclipse.archive.path" default="C:\Downloads"/>
+				<fileSelectionQuestion type="directory" label="Location for build binaries" propertyName="build.output.directory" default="C:\jbosside-build"/>
+				<fileSelectionQuestion type="directory" label="Location of a clean eclipse 3.1 installation (no external plugins)" propertyName="clean.eclipse.home"/>
+				<fileSelectionQuestion type="directory" label="Location of JBossIDE Releng Project Root" propertyName="releng.root" default="${basedir}"/>
+
+				<fileSelectionQuestion type="none" label="Location of SSH Private Key" propertyName="ssh.key"/>
+				<textQuestion label="SSH Passphrase" propertyName="ssh.passphrase" />
+			</Questions>
+		</Cheese>
+		
+		<antcall target="customize" inheritall="true"/>
+	</target>
+	
+</project>
