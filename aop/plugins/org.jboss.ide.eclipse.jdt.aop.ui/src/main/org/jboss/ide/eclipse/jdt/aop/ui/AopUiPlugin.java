@@ -34,6 +34,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.project.AopProjectNature;
+import org.jboss.ide.eclipse.jdt.aop.ui.editors.AopJavaEditorUtils;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -60,6 +61,7 @@ public class AopUiPlugin extends AbstractUIPlugin
 		super.start(context);
 
 		// force initialization
+		AopJavaEditorUtils.instance();
 		AopCorePlugin.getDefault();
 		
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(

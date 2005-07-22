@@ -145,17 +145,6 @@
             image="icons/launchicon.gif"
             id="org.jboss.ide.eclipse.jdt.aop.ui.launchGroupRun"/>
    </extension>
-   <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            icon="icons/jcu_obj.gif"
-            class="org.jboss.ide.eclipse.jdt.aop.ui.editors.AopJavaEditor"
-            default="true"
-            name="JBoss AOP Java Editor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            id="org.jboss.ide.eclipse.jdt.aop.ui.editors.AopJavaEditor"
-            extensions="java"/>
-   </extension>
    
    
    
