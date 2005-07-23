@@ -10,7 +10,7 @@
 			<mapper type="glob" from="*.properties.template" to="*.properties"/>
 			<filterset begintoken="%" endtoken="%">
 				<filter token="eclipse-archive-path" value="${eclipse.archive.path}"/>
-				<filter token="ssh-key" value="${ssh-key}"/>
+				<filter token="ssh-key" value="${ssh.key}"/>
 				<filter token="ssh-passphrase" value="${ssh.passphrase}"/>
 				<filter token="build-output-directory" value="${build.output.directory}"/>
 				<filter token="clean-eclipse-home" value="${clean.eclipse.home}"/>
