@@ -149,6 +149,7 @@
         <!-- arg value="-DbuildId=${buildId}" / -->
         <!-- arg value="-DbuildLabel=${buildLabel}" / -->
 		  <arg value="-DbaseLocation=${baseLocation}" />
+     	<arg value="-DbuildScriptExt=${buildScriptExt}" />
 
 	<!--arg value="-debug"/-->
      </java>
