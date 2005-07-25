@@ -1,12 +1,37 @@
 <html>
 	<head>
-		<title>%build-type% build results for %timestamp%</title>
+		<title>JBossIDE build results for %jbosside-build-name%</title>
 	</head>
 	
 	<body>
-		<h1>%build-type% build results for %timestamp%</h1>
+		<h1>JBossIDE build results for %jbosside-build-name%</h1>
 		<hr/>
 		
+		<b>Build Targets</b>:<br/>
+		<table>
+			<tr><td>Package</td><td>Version</td></tr>
+			<tr><td>Eclipse</td><td>%eclipse-target%</td></tr>
+			<tr><td>Webtools</td><td>%webtools-target%</td></tr>
+			<tr><td>GEF</td><td>%gef-target%</td></tr>
+			<tr><td>EMF/XSD/SDO</td><td>%emf-xsd-sdo-target%</td></tr>
+			<tr><td>JEM</td><td>%jem-target%</td></tr>
+		</table>
 		
+		<b>ALL JBossIDE Plugins and Components</b>:<br/>
+		<a href="%jbosside-download-root%/%jbosside-all-filename%">%jbosside-all-filename%</a><br/><br/>
+		
+		<b>Win32 Bundle w/ Eclipse (%eclipse-target%) & Webtools (%webtools-target%)</b>:<br/>
+		<a href="%jbosside-download-root%/%jbosside-win32-bundle-filename%">%jbosside-win32-bundle-filename%</a><br/><br/>		
+
+		<b>Linux/GTK2 Bundle w/ Eclipse (%eclipse-target%) & Webtools (%webtools-target%)</b>:<br/>
+		<a href="%jbosside-download-root%/%jbosside-linux-gtk2-bundle-filename%">%jbosside-linux-gtk2-bundle-filename%</a><br/><br/>
+		
+		JBossIDE Core Plugins: <a href="%jbosside-download-root%/core/%jbosside-core-filename%">%jbosside-core-filename%</a><br/>
+		AOP Developer: <a href="%jbosside-download-root%/aop/%jbosside-aop-filename%">%jbosside-aop-filename%</a><br/>
+		Hibernate Tools: <a href="%jbosside-download-root%/hibernate-tools/%jbosside-hibernate-tools-filename%">%jbosside-hibernate-tools-filename%</a><br/>
+		jBPM Designer: <a href="%jbosside-download-root%/jbpm/%jbosside-jbpm-filename%">%jbosside-jbpm-filename%</a><br/>
+		EJB3 Tools: <a href="%jbosside-download-root%/ejb3/%jbosside-ejb3-filename%">%jbosside-ejb3-filename%</a><br/>
+		<br/>		
+		<a href="%jbosside-download-root%/build.log.zip">Download Build Log</a>
 	</body>
 </html>
