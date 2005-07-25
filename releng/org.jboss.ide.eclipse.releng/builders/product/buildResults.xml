@@ -1,0 +1,105 @@
+<project default="build.results">
+
+	<macrodef name="load.property">
+		<attribute name="file"/>
+		<attribute name="property"/>
+		<attribute name="dest" default="@{property}"/>
+		
+		<sequential>
+			<loadproperties srcfile="@{file}" >
+				<filterchain>
+					<linecontains>
+						<contains value="@{property}"/>
+					</linecontains>
+					<replacestring from="@{property}" to="@{dest}"/>
+				</filterchain>
+			</loadproperties>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="get.version.tag">
+		<attribute name="property"/>
+		<attribute name="builder"/>
+		
+		<sequential>
+			<if>
+				<equals arg1="${product.buildType}" value="R"/>
+				<then>
+					<loadproperties srcfile="versionTags/${product.versionTag}.tags">
+						<filterchain>
+							<linecontains>
+								<contains value="@{builder}"/>
+							</linecontains>
+							<replacestring from="@{builder}" to="@{property}"/>
+						</filterchain>
+					</loadproperties>
+				</then>
+				<else>
+					<property name="@{property}" value="${product.versionTag}"/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+		
+	<target name="get.build.properties">
+		<load.property file="../../requirements/eclipse/build.properties" property="eclipseBuildID"/>
+		<load.property file="../../requirements/emf-sdo-xsd/build.properties" property="build.archive" dest="emf.xsd.sdo.build.archive"/>
+		<load.property file="../../requirements/gef/build.properties" property="build.archive" dest="gef.build.archive"/>
+		<load.property file="../../requirements/jem/build.properties" property="build.archive" dest="jem.build.archive"/>
+		<load.property file="../../requirements/webtools/build.properties" property="build.archive" dest="webtools.build.archive"/>
+
+		<get.version.tag builder="aop" property="aop.versionTag"/>
+		<get.version.tag builder="ejb3" property="ejb3.versionTag"/>
+		<get.version.tag builder="core" property="aop.versionTag"/>
+		<load.property file="../hibernate-tools/build.properties" property="hibernate.tools.release"/>
+		<get.version.tag builder="hibernate-tools" property="hibernate-tools.versionTag"/>
+		<get.version.tag builder="jbpm" property="jbpm.versionTag"/>
+	</target>
+		
+	<target name="build.results">
+		<copy todir="${product.build.directory}">
+			<fileset file="buildResults.html.template"/>
+			<mapper type="glob" from="*.html.template" to="*.html"/>
+			<filterset begintoken="%" endtoken="%">
+				<filter token="jbosside-build-name" value="${product.versionTag}"/>
+				<filter token="jbosside-download-root" value="${jbosside.download.root}"/>
+				
+				<filter token="eclipse-target" value="${eclipseBuildID}"/>
+				<filter token="webtools-target" value="${webtools.build.archive}"/>
+				<filter token="gef-target" value="${gef.build.archive}"/>
+				<filter token="emf-xsd-sdo-target" value="${emf.xsd.sdo.build.archive}"/>
+				<filter token="jem-target" value="${jem.build.archive}"/>
+				
+				<filter token="jbosside-all-filename" value="${product.name}-${product.versionTag}-ALL.zip"/>
+				<filter token="jbosside-win32-bundle-filename" value="${product.name}-${product.versionTag}-Bundle-win32.zip"/>
+				<filter token="jbosside-linux-gtk2-bundle-filename" value="${product.name}-${product.versionTag}-Bundle-linux-gtk.tar.gz"/>
+				<filter token="jbosside-core-filename" value="JBossIDE-CORE-${core.versionTag}.zip"/>
+				<filter token="jbosside-aop-filename" value="JBossIDE-AOP-Developer-${aop.versionTag}.zip"/>
+				<filter token="jbosside-hibernate-tools-filename" value="HibernateTools-${hibernate.tools.release}.${hibernate-tools.versionTag}.zip"/>
+				<filter token="jbosside-jbpm-filename" value="jBPM-Designer-${jbpm.versionTag}.zip"/>
+				<filter token="jbosside-ejb3-filename" value="JBossIDE-EJB3-Tools-${ejb3.versionTag}.zip"/>
+			</filterset>
+		</copy>
+		
+		<echo file="${product.build.directory}/log.properties">
+			upload.to=${product.buildDesc}/${product.versionTag}
+		</echo>
+	</target>
+	
+	<property file="../global.properties"/>
+	<property file="build.properties"/>
+	
+	<target name="publish.log" if="${enable.publishing}">
+		<zip destfile="${product.build.directory}/build.log.zip">
+			<fileset file="${build.root}/builders/build.log"/>
+		</zip>
+		<delete>
+			<fileset file="${build.root}/builders/build.log"/>
+		</delete>
+		
+		<property file="${product.build.directory}/log.properties"/>
+		<scp trust="true" todir="${ssh.username}@${ssh.host}:${scp.basedir}/${upload.to}" keyfile="${ssh.key}" passphrase="${ssh.passphrase}">
+			<fileset file="${product.build.directory}/build.log.zip"/>
+		</scp>
+	</target>
+</project>
