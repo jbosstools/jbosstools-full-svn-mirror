@@ -15,7 +15,7 @@
 		</if>
 		
 		<echo>extracting jwsdp into ${jwsdp.basedir}..</echo>
-		<exec executable="${jwsdp.installer}">
+		<exec executable="${jwsdp.executable}">
 			<arg line="-is:javahome ${java.home}"/>
 			<arg line='-P installLocation="${jwsdp.basedir}"'/>
 			<arg line="-silent"/>
