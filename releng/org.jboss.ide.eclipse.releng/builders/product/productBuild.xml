@@ -1,4 +1,4 @@
-<project name="build">
+<project name="build" >
 
 	<taskdef classpath="../../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
 	
@@ -61,6 +61,9 @@
 	</macrodef>
 	
    <target name="build">
+   	
+   	<property name="jbosside.download.root" value="${jbosside.download.url}/${product.buildDesc}/${product.versionTag}"/>
+   	
 	<delete includeemptydirs="true" failonerror="false">
 		<fileset dir="${product.build.directory}" defaultexcludes="false">
 			<include name="**/*"/>
@@ -93,6 +96,9 @@
 
 		</sequential>
 	</for>
+   	
+   	<antcall target="publish.results" inheritall="true"/>
+   	<antcall target="send.notification.email" inheritall="true"/>
    </target>
 	
 	<target name="build.platform">
@@ -102,7 +108,7 @@
 	              select="\1"
 		      casesensitive="false" />
 		
-	 <var name="build.dest" value="${product.build.directory}/${product.name}-${product.versionTag}-${platform.name}"/>
+	 <var name="build.dest" value="${product.build.directory}/${product.name}-${product.versionTag}-Bundle-${platform.name}"/>
 		<var name="current.platform" value="${platform.name}"/>
 			
 
@@ -140,55 +146,22 @@
 		<property name="builders.built" value="1"/>
 		<for list="${builders}" param="builder">
 		  <sequential>
-					 <!--var file="${builder.root}/@{builder}/build.requires"/-->
-				<!--loadproperties srcFile="${builder.root}/@{builder}/build.properties">
-					<filterchain>
-						<linecontains>
-						  <contains value="@{builder}.builder.requires"/>
-						</linecontains>
-					</filterchain>
-				 </loadproperties-->
-
-				<!--echo>Builder @{builder} requires ${builder.requires}</echo>
-				<for list="${builder.requires}" param="requirement">
-					<sequential>
-						<if>
-							<not>
-								<available file="${requirement.root}/@{requirement}/return.properties" />
-							</not>
-							<then>
-								<echo>${requirement.root}/@{requirement}/return.properties is not available</echo>
-								<ant dir="${requirement.root}/@{requirement}" antfile="buildRequirement.xml" target="build.requirement" inheritAll="true" />
-								<if>
-									<available file="${requirement.root}/@{requirement}/return.properties" />
-									<then>
-										<echo>load properties from ${requirement.root}/@{requirement}/return.properties</echo>
-										<loadproperties srcFile="${requirement.root}/@{requirement}/return.properties" />
-									</then>
-								</if>
-							</then>
-						</if>
-					</sequential>
-				</for-->
-
 		  		<if>
 		  			<equals arg1="${product.buildDesc}" arg2="release"/>
 		  			<then>
 		  				<propertycopy override="true" name="builder.version" from="versionTags.@{builder}"/>
-		  				<echo>builder.version is now from property versionTags.@{builder} = ${builder.version}</echo>
 		  			</then>
 		  			<else>
 		  				<property name="builder.version" value="${product.versionTag}"/>
 		  			</else>
 		  		</if>
 		  	
-		  		<echo>builder.version=${builder.version}</echo>
 				<ant dir="${builder.root}" antfile="builder-wrap.xml" target="${product.buildDesc}" inheritAll="true">
 					<property name="builder" value="@{builder}"/>
 					<property name="versionTag" value="${builder.version}"/>
 				</ant>
 
-					<property name="buildType" value="${product.buildType}"/>
+				<property name="buildType" value="${product.buildType}"/>
 		  	
 				<loadproperties srcFile="${builder.root}/@{builder}/build.properties">
 					<filterchain>
@@ -255,7 +228,7 @@
 	</target>
 	
 	<target name="scp.builder.archives">
-		<scp.fileset.trusted todir="${product.buildDesc}">
+		<scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}">
 			<fileset dir="${product.build.directory}/builders">
 				<include name="**/*.zip"/>
 			</fileset>
@@ -268,12 +241,33 @@
 	</target>
 	
 	<target name="scp.archive">
-		<echo>scp ${scp.archive.path} ...</echo>
-		<scp.fileset.trusted todir="${product.buildDesc}">
+		<scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}">
 			<fileset file="${scp.archive.path}"/>
 		</scp.fileset.trusted>
 		<!--scp trust="true" todir="${ssh.username}@${ssh.host}:${scp.basedir}/${product.buildDesc}" keyfile="${ssh.key}" passphrase="${ssh.passphrase}">
 			<fileset file="${scp.archive.path}"/>
 		</scp-->
+	</target>
+	
+	<target name="publish.results" if="${enable.publishing}">
+		<ant antfile="buildResults.xml" target="build.results" inheritall="true"/>
+		
+		<scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}">
+			<fileset file="${product.build.directory}/buildResults.html"/>
+		</scp.fileset.trusted>
+	</target>
+	
+	<target name="send.notification.email" if="${enable.notification}">
+		<property name="email.subject" value="Build ${product.versionTag} results"/>
+		<property name="email.body">
+			The results for ${product.versionTag} have been posted at this address:
+						${jbosside.download.root}/buildResults.html
+		</property>
+		
+		<mail subject="${email.subject}">
+			<from address="jbosside-build@jboss.org"/>
+			<to address="${email.list}"/>
+			<message>${email.body}</message>
+		</mail>
 	</target>
 </project>
