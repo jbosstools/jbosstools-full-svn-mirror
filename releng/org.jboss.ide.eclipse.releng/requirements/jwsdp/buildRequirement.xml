@@ -3,20 +3,24 @@
 	<taskdef classpath="../../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
 
 	<target name="build.requirement">
+		<var name="script.extension" value="sh"/>
+		<var name="jwsdp.executable" value="${jwsdp.unix.installer}"/>
+		
+		<if>
+			<contains string="${os.name}" substring="Windows"/>
+			<then>
+				<var name="script.extension" value="bat"/>
+				<var name="jwsdp.executable" value="${jwsdp.win32.installer}"/>
+			</then>
+		</if>
+		
 		<echo>extracting jwsdp into ${jwsdp.basedir}..</echo>
 		<exec executable="${jwsdp.installer}">
 			<arg line="-is:javahome ${java.home}"/>
 			<arg line='-P installLocation="${jwsdp.basedir}"'/>
 			<arg line="-silent"/>
 		</exec>
-
-		<var name="script.extension" value="sh"/>
-		<if>
-			<contains string="${os.name}" substring="Windows"/>
-			<then>
-				<var name="script.extension" value="bat"/>
-			</then>
-		</if>
+				
 		<propertyregex property="escaped.basedir"
 			input="${basedir}"
 			regexp="\\"
