@@ -9,7 +9,7 @@
 		<property name="build.script" value="${hibernateext.root}/${hibernateext.build.script}"/>
 
 		<if>
-			<equals arg1="${buildScriptExt}" substring="bat"/>
+			<equals arg1="${buildScriptExt}" arg2="bat"/>
 			<then>
 				<exec executable="${build.script}" dir="${hibernateext.root}/console"/>
 				<exec executable="${build.script}" dir="${hibernateext.root}/tools"/>
