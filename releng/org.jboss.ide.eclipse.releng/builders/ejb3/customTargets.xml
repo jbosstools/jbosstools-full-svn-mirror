@@ -22,7 +22,7 @@
 <!-- ===================================================================== -->
 
 <target name="assemble.org.jboss.ide.eclipse.ejb3.feature">
-	<property name="archiveName" value="JBossIDE-EJB3-${versionTag}.zip"/>
+	<property name="archiveName" value="JBossIDE-EJB3-Tools-${versionTag}.zip"/>
 	<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/>
 </target>
 
