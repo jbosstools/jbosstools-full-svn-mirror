@@ -73,7 +73,7 @@
 	
 	<!--ant antfile="${hibernate-ext-src.home}/org.hibernate.eclipse/hibernate-build.xml" dir="${hibernate-ext-src.home}/org.hibernate.eclipse" target="update"/-->
 	<echo>${hibernate-ext-src.home}</echo>
-	<exec executable="${hibernate-ext-src.home}/build.bat" dir="${hibernate-ext-src.home}/org.hibernate.eclipse">
+	<exec executable="${hibernate-ext-src.home}/build.${buildScriptExt}" dir="${hibernate-ext-src.home}/org.hibernate.eclipse">
 		<arg line="-f hibernate-build.xml"/>
 		<arg line="update"/>
 	</exec>
