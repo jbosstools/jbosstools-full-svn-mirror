@@ -35,6 +35,7 @@
 <!-- ===================================================================== -->
 
 <target name="assemble.org.jbpm.feature">
+	<property name="archiveName" value="jBPM-Designer-${versionTag}.zip"/>
 	<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/>
 </target>
 
