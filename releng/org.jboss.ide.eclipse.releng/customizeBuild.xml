@@ -21,6 +21,14 @@
 			</filterset>
 		</copy>
 		
+		<mkdir dir="bin"/>
+		<javac destdir="bin" srcdir="src">
+			<classpath>
+				<fileset dir="lib">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
 	</target>
 	
 	<target name="customize.interactive">
