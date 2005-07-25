@@ -23,7 +23,7 @@
 <!-- ===================================================================== -->
 
 <target name="assemble.org.jboss.ide.eclipse.jdt.aop.feature">
-	<property name="archiveName" value="JBossIDE-AOP-${versionTag}.zip"/>
+	<property name="archiveName" value="JBossIDE-AOP-Developer-${versionTag}.zip"/>
 	<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/>
 </target>
 
