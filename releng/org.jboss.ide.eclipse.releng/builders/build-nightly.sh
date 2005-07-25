@@ -1,6 +1,7 @@
 #!/bin/sh
 
-TARGET=shift
+TARGET=$1
+shift
 ANT=$ANT_HOME/bin/ant
 
 if [ "$ANT_HOME" = "" ]; then
@@ -11,7 +12,8 @@ fi
 $ANT $@ -lib ../lib -f common/buildRequirements.xml cleanRequirements
 
 if [ "$TARGET" = "product" ]; then
-	$ANT $@ -lib ../lib -f product/productBuild.xml nightly
+	$ANT $@ -lib ../lib -f product/productBuild.xml nightly > build.log
+	$ANT $@ -lib ../lib -f product/buildResults.xml publish.log
 else
 	$ANT $@ -lib ../lib -f builder-wrap.xml nightly -Dbuilder=$TARGET
 fi

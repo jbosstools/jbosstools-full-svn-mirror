@@ -6,7 +6,8 @@ call %ANT_HOME%\bin\ant %3 %4 %5 %6 -lib ..\lib -f builder-wrap.xml release -Dre
 goto end
 
 :productBuild
-call %ANT_HOME%\bin\ant %3 %4 %5 %6 -lib ..\lib -f product/productBuild.xml release -DreleaseNumber=%2
+call %ANT_HOME%\bin\ant %3 %4 %5 %6 -lib ..\lib -f product/productBuild.xml release -DreleaseNumber=%2 > build.log
+call %ANT_HOME%\bin\ant %2 %3 %4 %5 -lib ..\lib -f product/buildResults.xml publish.log
 goto end
 
 :noAnt

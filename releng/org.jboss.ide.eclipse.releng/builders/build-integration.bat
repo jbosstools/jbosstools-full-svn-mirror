@@ -6,7 +6,8 @@ call %ANT_HOME%\bin\ant %2 %3 %4 %5 -lib ..\lib -f builder-wrap.xml integration 
 goto end
 
 :productBuild
-call %ANT_HOME%\bin\ant %2 %3 %4 %5 -lib ..\lib -f product/productBuild.xml integration
+call %ANT_HOME%\bin\ant %2 %3 %4 %5 -lib ..\lib -f product/productBuild.xml integration > build.log
+call %ANT_HOME%\bin\ant %2 %3 %4 %5 -lib ..\lib -f product/buildResults.xml publish.log
 goto end
 
 :noAnt
