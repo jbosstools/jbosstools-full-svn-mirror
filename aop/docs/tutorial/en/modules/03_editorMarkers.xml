@@ -117,7 +117,7 @@
 		<figure id="editorChangesPre">
 		   <mediaobject>
 		      <imageobject>
-				<imagedata align="center" fileref="images/03_editor_changes_pre.gif"/>
+				<imagedata align="center" fileref="images/03_editor_changes_post.gif"/>
 		      </imageobject>
 		      <caption><para>The before view. Class matches the introduction.</para></caption>
 		   </mediaobject>
@@ -126,11 +126,12 @@
 		<figure id="editorChangesPost">
 		   <mediaobject>
 		      <imageobject>
-				<imagedata align="center" fileref="images/03_editor_changes_post.gif"/>
+				<imagedata align="center" fileref="images/03_editor_changes_pre.gif"/>
 		      </imageobject>
 		      <caption><para>The after view. Class does not match the introduction.</para></caption>
 		   </mediaobject>
 		</figure>
+
 		
 	</section>
 	
