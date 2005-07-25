@@ -8,22 +8,21 @@
 		<property name="hibernateext.root" value="${hibernateext.build.dir}/${hibernateext.cvs.module}"/>
 		<property name="build.script" value="${hibernateext.root}/${hibernateext.build.script}"/>
 
-		<echo>exec ${build.script} in ${hibernateext.root}/console</echo>
-		<exec executable="${build.script}" dir="${hibernateext.root}/console"/>
-		<echo>exec ${build.script} in ${hibernateext.root}/tools</echo>
-		<exec executable="${build.script}" dir="${hibernateext.root}/tools"/>
-
-		<!-- This part will actually be done in the "pre-build" step of the hibernate-tools plugin customTargets.xml -->
-		<!--exec executable="${build.script}" dir="${hibernateext.root}/org.hibernate.eclipse">
-			<arg line="-f hibernate-build.xml"/>
-			<arg line="update"/>
- </exec-->
- 		<echo>${hibernateext.build.dir}</echo>
-		<!--propertyregex property="hibernateext.build.dir.escaped"
-			input="${hibernateext.build.dir}"
-			regexp="\\"
-			replace="/"
-			casesensitive="false" /-->
+		<if>
+			<equals arg1="${buildScriptExt}" substring="bat"/>
+			<then>
+				<exec executable="${build.script}" dir="${hibernateext.root}/console"/>
+				<exec executable="${build.script}" dir="${hibernateext.root}/tools"/>
+			</then>
+			<else>
+				<exec executable="chmod">
+					<arg value="755" />
+					<arg value="${build.script}"/>
+				</exec>
+				<exec executable="${build.script}" dir="${hibernateext.root}/console"/>
+				<exec executable="${build.script}" dir="${hibernateext.root}/tools"/>
+			</else>
+		</if>
  		
  		<echo file="return.properties">
 			hibernate.base=${hibernateext.build.dir}/hibernate-3.0
