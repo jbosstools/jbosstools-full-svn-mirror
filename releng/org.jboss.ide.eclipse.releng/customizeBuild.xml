@@ -15,6 +15,9 @@
 				<filter token="build-output-directory" value="${build.output.directory}"/>
 				<filter token="clean-eclipse-home" value="${clean.eclipse.home}"/>
 				<filter token="releng-root" value="${releng.root}"/>
+				<filter token="enable-publishing" value="${enable.publishing}"/>
+				<filter token="enable-notification" value="${enable.notification}"/>
+				<filter token="build-script-ext" value="${build.script.ext}"/>
 			</filterset>
 		</copy>
 		
@@ -36,8 +39,15 @@
 
 				<fileSelectionQuestion type="none" label="Location of SSH Private Key" propertyName="ssh.key"/>
 				<textQuestion label="SSH Passphrase" propertyName="ssh.passphrase" />
+				
+				<booleanQuestion label="Enable SCP Publishing?" propertyName="enable.publishing" default="false"/>
+				<booleanQuestion label="Enable Email Notification?" propertyName="enable.notification" default="false"/>
 			</Questions>
 		</Cheese>
+		
+		<condition property="build.script.ext" value="sh" else="bat" >
+			<os family="unix"/>
+		</condition>
 		
 		<antcall target="customize" inheritall="true"/>
 	</target>

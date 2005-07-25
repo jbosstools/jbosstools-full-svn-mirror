@@ -4,3 +4,6 @@ ssh.passphrase=PRIVATE_SSH_KEY_PASSPHRASE
 build.output.directory=PATH_TO_BUILD_OUTPUT_DIRECTORY
 clean.eclipse.home=PATH_TO_CLEAN_ECLIPSE_INSTALLATION
 releng.root=ABSOLUTE_PATH_TO_RELENG_PROJECT_ROOT
+enable.publishing=ENABLE_PUBLISHING
+enable.notification=ENABLE_NOTIFICATION
+build.script.ext=sh
