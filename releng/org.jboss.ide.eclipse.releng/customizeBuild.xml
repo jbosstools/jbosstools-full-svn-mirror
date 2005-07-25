@@ -1,4 +1,4 @@
-<project default="customize">
+<project default="customize.interactive">
 
 	<target name="customize">
 		<property file="customize.properties"/>
