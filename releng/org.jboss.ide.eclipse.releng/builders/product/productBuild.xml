@@ -227,7 +227,7 @@
 		</antcall>
 	</target>
 	
-	<target name="scp.builder.archives">
+	<target name="scp.builder.archives" if="${enable.publishing}">
 		<scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}">
 			<fileset dir="${product.build.directory}/builders">
 				<include name="**/*.zip"/>
@@ -240,7 +240,7 @@
 		</scp-->
 	</target>
 	
-	<target name="scp.archive">
+	<target name="scp.archive" if="${enable.publishing}">
 		<scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}">
 			<fileset file="${scp.archive.path}"/>
 		</scp.fileset.trusted>
