@@ -44,13 +44,18 @@
 <!-- Replace values for cvsRoot, package and mapVersionTag as desired. -->
 <!-- ===================================================================== -->
 <target name="getMapFiles">
-	<property name="mapDir" value="${buildDirectory}" />
+	<property name="mapDir" value="${buildDirectory}/maps" />
 	<cvs
 		cvsRoot="${jbpm-cvs-root}"
-		dest="${mapDir}"
+		dest="${buildDirectory}"
 		package="jbpm.ide/org.jbpm.build/maps"
 		tag="HEAD"
 	/>
+	
+	<copy todir="${mapDir}">
+		<fileset file="${buildDirectory}/jbpm.ide/org.jbpm.build/maps/elements.map"/>
+	</copy>
+	
 	<replace dir="${mapDir}" token="%jbpm-cvs-root%" value="${jbpm-cvs-root}" />
 </target>
 
