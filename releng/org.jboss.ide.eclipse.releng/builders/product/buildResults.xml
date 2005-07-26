@@ -90,7 +90,7 @@
 	<property file="../global.properties"/>
 	<property file="build.properties"/>
 	
-	<target name="publish.log" if="${enable.publishing}">
+	<target name="publish.log" if="enable.publishing">
 
 		<property file="${product.build.root}/log.properties"/>
 			

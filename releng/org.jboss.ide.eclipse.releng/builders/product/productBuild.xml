@@ -100,8 +100,8 @@
 		</sequential>
 	</for>
    	
-   	<antcall target="publish.results" inheritall="true"/>
-   	<antcall target="send.notification.email" inheritall="true"/>
+   	<runtarget target="publish.results"/>
+   	<runtarget target="send.notification.email"/>
    </target>
 	
 	<target name="build.platform">
@@ -230,7 +230,7 @@
 		</antcall>
 	</target>
 	
-	<target name="scp.builder.archives" if="${enable.publishing}">
+	<target name="scp.builder.archives" if="enable.publishing">
 		<scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}">
 			<fileset dir="${product.build.directory}/builders">
 				<include name="**/*.zip"/>
@@ -243,7 +243,7 @@
 		</scp-->
 	</target>
 	
-	<target name="scp.archive" if="${enable.publishing}">
+	<target name="scp.archive" if="enable.publishing">
 		<scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}">
 			<fileset file="${scp.archive.path}"/>
 		</scp.fileset.trusted>
@@ -252,7 +252,7 @@
 		</scp-->
 	</target>
 	
-	<target name="publish.results" if="${enable.publishing}">
+	<target name="publish.results" if="enable.publishing">
 		<ant antfile="buildResults.xml" target="build.results" inheritall="true"/>
 		
 		<scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}">
@@ -260,7 +260,7 @@
 		</scp.fileset.trusted>
 	</target>
 	
-	<target name="send.notification.email" if="${enable.notification}">
+	<target name="send.notification.email" if="enable.notification">
 		<property name="email.subject" value="Build ${product.versionTag} results"/>
 		<property name="email.body">
 			The results for ${product.versionTag} have been posted at this address:
