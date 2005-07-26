@@ -231,7 +231,7 @@
 	</target>
 	
 	<target name="scp.builder.archives" if="enable.publishing">
-		<scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}">
+		<scp.fileset.trusted todir="${product.buildDesc}">
 			<fileset dir="${product.build.directory}/builders">
 				<include name="**/*.zip"/>
 			</fileset>
@@ -244,7 +244,7 @@
 	</target>
 	
 	<target name="scp.archive" if="enable.publishing">
-		<scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}">
+		<scp.fileset.trusted todir="${product.buildDesc}">
 			<fileset file="${scp.archive.path}"/>
 		</scp.fileset.trusted>
 		<!--scp trust="true" todir="${ssh.username}@${ssh.host}:${scp.basedir}/${product.buildDesc}" keyfile="${ssh.key}" passphrase="${ssh.passphrase}">
@@ -255,7 +255,7 @@
 	<target name="publish.results" if="enable.publishing">
 		<ant antfile="buildResults.xml" target="build.results" inheritall="true"/>
 		
-		<scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}">
+		<scp.fileset.trusted todir="${product.buildDesc}">
 			<fileset file="${product.build.directory}/buildResults.html"/>
 		</scp.fileset.trusted>
 	</target>
