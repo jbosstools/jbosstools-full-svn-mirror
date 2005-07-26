@@ -23,7 +23,7 @@
 		
 		<sequential>
 			<if>
-				<equals arg1="${product.buildType}" value="R"/>
+				<equals arg1="${product.buildType}" arg2="R"/>
 				<then>
 					<loadproperties srcfile="versionTags/${product.versionTag}.tags">
 						<filterchain>
