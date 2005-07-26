@@ -2,7 +2,7 @@ product.name=JBossIDE
 product.release=1.5M2
 
 build.types=standalone.product,bundle.eclipse,update.site
-splash.path=art/splash.bmp
+splash.path=${build.root}/art/splash.bmp
 product.build.directory=%build-output-directory%
 eclipse.version=eclipse-SDK-3.1
 
