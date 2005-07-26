@@ -29,6 +29,13 @@
 				</fileset>
 			</classpath>
 		</javac>
+		
+		<!-- this will copy all property and xml files over to the bin folder -->
+		<copy todir="bin">
+			<fileset dir="src">
+				<exclude name="**/*.java"/>
+			</fileset>
+		</copy>
 	</target>
 	
 	<target name="customize.interactive">
