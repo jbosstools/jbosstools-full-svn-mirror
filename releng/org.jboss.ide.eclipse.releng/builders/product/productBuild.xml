@@ -173,8 +173,8 @@
 		<unzip dest="${build.dest}/eclipse">
 			<fileset dir="${product.build.directory}">
 				<include name="**/*.zip"/>
-				<exclude name="all/*.zip"/>
-				<exclude name="bundle/*.zip"/>
+				<exclude name="all/**/*.zip"/>
+				<exclude name="bundle/**/*.zip"/>
 			</fileset>
 		</unzip>
 	</target>
