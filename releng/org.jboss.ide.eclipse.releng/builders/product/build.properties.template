@@ -15,7 +15,7 @@ builders=hibernate-tools,core,aop,ejb3,jbpm
 eclipse.archive.path=%eclipse-archive-path%
 platform.names=win32,linux-gtk
 
-eclipse.builds=eclipse-SDK-3.1-win32.zip,eclipse-SDK-3.1-linux-gtk
+eclipse.builds=eclipse-SDK-3.1-win32.zip,eclipse-SDK-3.1-linux-gtk.tar.gz
 
 buildScriptExt=%build-script-ext%
 
