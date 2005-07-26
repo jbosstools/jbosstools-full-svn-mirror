@@ -56,7 +56,7 @@
 		<get.version.tag builder="jbpm" property="jbpm.versionTag"/>
 	</target>
 		
-	<target name="build.results">
+	<target name="build.results" depends="get.build.properties">
 		<copy todir="${product.build.directory}">
 			<fileset file="buildResults.html.template"/>
 			<mapper type="glob" from="*.html.template" to="*.html"/>
