@@ -208,6 +208,11 @@
 	
 	<target name="build.standalone.release" depends="run.builders,extract.features.and.plugins">
 		<zip destfile="${build.dest}.zip" basedir="${build.dest}"/>
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="${build.dest}" defaultexcludes="false">
+				<include name="**/*"/>
+			</fileset>
+		</delete>
 		
 		<!--antcall target="scp.archive" inheritall="true">
 			<param name="scp.archive.path" value="${build.dest}.zip"/>
