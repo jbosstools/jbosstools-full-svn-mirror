@@ -209,19 +209,19 @@
 	<target name="build.standalone.release" depends="run.builders,extract.features.and.plugins">
 		<zip destfile="${build.dest}.zip" basedir="${build.dest}"/>
 		
-		<antcall target="scp.archive" inheritall="true">
+		<!--antcall target="scp.archive" inheritall="true">
 			<param name="scp.archive.path" value="${build.dest}.zip"/>
 		</antcall>
 		
-		<antcall target="scp.builder.archives" inheritall="true"/>
+		<antcall target="scp.builder.archives" inheritall="true"/-->
 	</target>
 
 	<target name="build.bundled.release.zip" depends="build.bundled.release">
 		<zip destfile="${build.dest}.zip" basedir="${build.dest}"/>
 		
-		<antcall target="scp.archive" inheritall="true">
+		<!--antcall target="scp.archive" inheritall="true">
 			<param name="scp.archive.path" value="${build.dest}.zip"/>
-		</antcall>
+		</antcall-->
 	</target>
 		
 	<target name="build.bundled.release.tar.gz" depends="build.bundled.release">
@@ -229,9 +229,9 @@
 		<gzip destfile="${build.dest}.tar.gz" src="${build.dest}.tar"/>
 		<delete file="${build.dest}.tar"/>
 
-		<antcall target="scp.archive" inheritall="true">
+		<!--antcall target="scp.archive" inheritall="true">
 			<param name="scp.archive.path" value="${build.dest}.tar.gz"/>
-		</antcall>
+		</antcall-->
 	</target>
 	
 	<target name="scp.builder.archives" if="enable.publishing">
@@ -257,6 +257,10 @@
 	</target>
 	
 	<target name="publish.results" if="enable.publishing">
+		<scp.fileset.trusted todir="${product.buildDesc}">
+			<fileset dir="${product.build.directory}"/>
+		</scp.fileset.trusted>
+		
 		<ant antfile="buildResults.xml" target="build.results" inheritall="true"/>
 		
 		<scp.fileset.trusted todir="${product.buildDesc}">
@@ -266,10 +270,7 @@
 	
 	<target name="send.notification.email" if="enable.notification">
 		<property name="email.subject" value="Build ${product.versionTag} results"/>
-		<property name="email.body">
-			The results for ${product.versionTag} have been posted at this address:
-						${jbosside.download.root}/buildResults.html
-		</property>
+		<property name="email.body" value="The results for ${product.versionTag} have been posted at this address:\n${jbosside.download.root}/buildResults.html"/>
 		
 		<mail subject="${email.subject}">
 			<from address="jbosside-build@jboss.org"/>
