@@ -4,7 +4,9 @@
 	
 	<loadproperties srcFile="../global.properties"/>
 	<loadproperties srcFile="build.properties"/>
-
+	
+	<import file="../common/scp.xml"/>
+	
 	<var name="build.dest" value=""/>
 	<var name="current.platform" value=""/>
 	<var name="keep.builder.zips" value="false"/>
@@ -34,31 +36,6 @@
    	
 	<runtarget target="build"/>
    </target>
-
-	<macrodef name="scp.fileset.trusted">
-		<attribute name="todir" default=""/>
-		<attribute name="relative" default="true"/>
-		<element name="files-to-scp" implicit="true"/>
-		<sequential>
-			<if>
-				<equals arg1="@{relative}" arg2="true"/>
-				<then>
-					<property name="directory" value="${scp.basedir}/@{todir}"/>
-				</then>
-				<else>
-					<property name="directory" value="@{todir}"/>
-				</else>
-			</if>
-			<scp
-				trust="yes"
-				todir="${ssh.username}@${ssh.host}:${directory}"
-				keyfile="${ssh.key}"
-				passphrase="${ssh.passphrase}">
-				
-				<files-to-scp/>
-			</scp>
-		</sequential>
-	</macrodef>
 	
    <target name="build">
    	

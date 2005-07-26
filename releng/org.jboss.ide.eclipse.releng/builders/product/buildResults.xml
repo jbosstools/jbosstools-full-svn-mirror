@@ -1,5 +1,7 @@
 <project default="build.results">
 
+	<import file="../common/scp.xml"/>
+	
 	<macrodef name="load.property">
 		<attribute name="file"/>
 		<attribute name="property"/>
@@ -101,8 +103,12 @@
 			<fileset file="${build.root}/builders/build.log"/>
 		</delete>
 		
-		<scp trust="true" todir="${ssh.username}@${ssh.host}:${scp.basedir}/${upload.to}" keyfile="${ssh.key}" passphrase="${ssh.passphrase}">
+		<scp.fileset.trusted todir="${upload.to}">
+			<fileset dir="${build.dir}/build.log.zip"/>
+		</scp.fileset.trusted>
+			
+		<!--scp trust="true" todir="${ssh.username}@${ssh.host}:${scp.basedir}/${upload.to}" keyfile="${ssh.key}" passphrase="${ssh.passphrase}">
 			<fileset file="${build.dir}/build.log.zip"/>
-		</scp>
+		</scp-->
 	</target>
 </project>
