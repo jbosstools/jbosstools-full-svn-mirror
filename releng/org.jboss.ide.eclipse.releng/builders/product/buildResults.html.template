@@ -18,13 +18,13 @@
 		</table>
 		
 		<b>ALL JBossIDE Plugins and Components</b>:<br/>
-		<a href="%jbosside-download-root%/%jbosside-all-filename%">%jbosside-all-filename%</a><br/><br/>
+		<a href="%jbosside-download-root%/all/%jbosside-all-filename%">%jbosside-all-filename%</a><br/><br/>
 		
 		<b>Win32 Bundle w/ Eclipse (%eclipse-target%) & Webtools (%webtools-target%)</b>:<br/>
-		<a href="%jbosside-download-root%/%jbosside-win32-bundle-filename%">%jbosside-win32-bundle-filename%</a><br/><br/>		
+		<a href="%jbosside-download-root%/bundle/%jbosside-win32-bundle-filename%">%jbosside-win32-bundle-filename%</a><br/><br/>		
 
 		<b>Linux/GTK2 Bundle w/ Eclipse (%eclipse-target%) & Webtools (%webtools-target%)</b>:<br/>
-		<a href="%jbosside-download-root%/%jbosside-linux-gtk2-bundle-filename%">%jbosside-linux-gtk2-bundle-filename%</a><br/><br/>
+		<a href="%jbosside-download-root%/bundle/%jbosside-linux-gtk2-bundle-filename%">%jbosside-linux-gtk2-bundle-filename%</a><br/><br/>
 		
 		JBossIDE Core Plugins: <a href="%jbosside-download-root%/core/%jbosside-core-filename%">%jbosside-core-filename%</a><br/>
 		AOP Developer: <a href="%jbosside-download-root%/aop/%jbosside-aop-filename%">%jbosside-aop-filename%</a><br/>

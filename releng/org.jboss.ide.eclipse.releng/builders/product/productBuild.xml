@@ -66,6 +66,8 @@
    	<property name="product.build.directory" value="${product.build.root}/${product.versionTag}"/>
    	
    	<mkdir dir="${product.build.directory}"/>
+   	<mkdir dir="${product.build.directory}/all"/>
+   	<mkdir dir="${product.build.directory}/bundle"/>
    	
 	<delete includeemptydirs="true" failonerror="false">
 		<fileset dir="${product.build.root}" defaultexcludes="false">
@@ -91,7 +93,7 @@
 				<equals arg1="@{build.type}" arg2="standalone.product"/>
 				<then>
 		
-   				<var name="build.dest" value="${product.build.directory}/${product.name}-${product.versionTag}-ALL"/>
+   				<var name="build.dest" value="${product.build.directory}/all/${product.name}-${product.versionTag}-ALL"/>
 					<runtarget target="build.standalone.release"/>
 				</then>
 			</elseif>
@@ -111,7 +113,7 @@
 	              select="\1"
 		      casesensitive="false" />
 		
-	 <var name="build.dest" value="${product.build.directory}/${product.name}-${product.versionTag}-Bundle-${platform.name}"/>
+	 <var name="build.dest" value="${product.build.directory}/bundle/${product.name}-${product.versionTag}-Bundle-${platform.name}"/>
 		<var name="current.platform" value="${platform.name}"/>
 			
 
@@ -174,8 +176,8 @@
 					</filterchain>
 				</loadproperties>
 
-				<mkdir dir="${product.build.directory}/builders/@{builder}"/>
-				<copy todir="${product.build.directory}/builders/@{builder}">
+				<mkdir dir="${product.build.directory}/@{builder}"/>
+				<copy todir="${product.build.directory}/@{builder}">
 					<fileset dir="${builder.build.path}/${buildLabel}">
 						<include name="**/*"/>
 					</fileset>
@@ -192,8 +194,10 @@
 
 	<target name="extract.features.and.plugins">
 		<unzip dest="${build.dest}/eclipse">
-			<fileset dir="${product.build.directory}/builders">
+			<fileset dir="${product.build.directory}">
 				<include name="**/*.zip"/>
+				<exclude name="all/*.zip"/>
+				<exclude name="bundle/*.zip"/>
 			</fileset>
 		</unzip>
 	</target>
