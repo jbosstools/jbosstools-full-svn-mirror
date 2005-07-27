@@ -39,7 +39,7 @@
 	
    <target name="build">
    	
-   	<property name="jbosside.download.root" value="${jbosside.download.url}/${product.buildDesc}/${product.versionTag}"/>
+   	<property name="jbosside.download.root" value="${jbosside.download.url}/builds/${product.buildDesc}/${product.versionTag}"/>
    	<property name="product.build.directory" value="${product.build.root}/${product.versionTag}"/>
    	
    	<mkdir dir="${product.build.directory}"/>
