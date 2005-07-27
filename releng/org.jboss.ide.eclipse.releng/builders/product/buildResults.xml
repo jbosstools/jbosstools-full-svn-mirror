@@ -63,6 +63,7 @@
 			<fileset file="buildResults.html.template"/>
 			<mapper type="glob" from="*.html.template" to="*.html"/>
 			<filterset begintoken="%" endtoken="%">
+				<filter token="build-type" value="${product.buildDesc}"/>
 				<filter token="jbosside-build-name" value="${product.versionTag}"/>
 				<filter token="jbosside-download-root" value="${jbosside.download.root}"/>
 				

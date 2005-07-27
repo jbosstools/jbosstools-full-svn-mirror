@@ -1,10 +1,10 @@
 <html>
 	<head>
-		<title>JBossIDE build results for %jbosside-build-name%</title>
+		<title>JBossIDE build results for %build-type% build %jbosside-build-name%</title>
 	</head>
 	
 	<body>
-		<h1>JBossIDE build results for %jbosside-build-name%</h1>
+		<h1>JBossIDE build results for %build-type% build %jbosside-build-name%</h1>
 		<hr/>
 		
 		<b>Build Targets</b>:<br/>
