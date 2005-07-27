@@ -52,7 +52,7 @@
 
 		<get.version.tag builder="aop" property="aop.versionTag"/>
 		<get.version.tag builder="ejb3" property="ejb3.versionTag"/>
-		<get.version.tag builder="core" property="aop.versionTag"/>
+		<get.version.tag builder="core" property="core.versionTag"/>
 		<load.property file="../hibernate-tools/build.properties" property="hibernate.tools.release"/>
 		<get.version.tag builder="hibernate-tools" property="hibernate-tools.versionTag"/>
 		<get.version.tag builder="jbpm" property="jbpm.versionTag"/>
