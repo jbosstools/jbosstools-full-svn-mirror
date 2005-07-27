@@ -28,7 +28,3 @@ scp.basedir=/htdocs/jbosside/builds
 
 # HTTP Download URL
 jbosside.download.url=http://download.jboss.org/jbosside
-
-# Email notification properties
-email.list=dev-jbosside@jboss.org
-

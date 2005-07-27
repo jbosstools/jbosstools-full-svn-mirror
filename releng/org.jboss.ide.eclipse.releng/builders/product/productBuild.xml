@@ -251,9 +251,8 @@
 	</target>
 	
 	<target name="send.notification.email" if="enable.notification">
-		<property name="email.subject" value="Build ${product.versionTag} results"/>
-		<property name="email.body" value="The results for ${product.versionTag} have been posted at this address:\n${jbosside.download.root}/buildResults.html"/>
-		
+		<property file="email.properties"/>
+			
 		<mail subject="${email.subject}">
 			<from address="jbosside-build@jboss.org"/>
 			<to address="${email.list}"/>
