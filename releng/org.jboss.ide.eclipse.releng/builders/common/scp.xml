@@ -1,5 +1,10 @@
 <project>
-	<!-- The REAL version 
+	<taskdef classpath="../../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
+	
+	<loadproperties srcFile="../global.properties"/>
+	<loadproperties srcFile="build.properties"/>
+	
+	<!-- The REAL version -->
 	<macrodef name="scp.fileset.trusted">
 		<attribute name="todir" default=""/>
 		<attribute name="relative" default="true"/>
@@ -24,9 +29,9 @@
 			</scp>
 		</sequential>
 	</macrodef>
-	-->
 	
-	<!-- The "local copy" (debug) version -->
+	
+	<!-- The "local copy" (debug) version 
 	<macrodef name="scp.fileset.trusted">
 		<attribute name="todir" default=""/>
 		<attribute name="relative" default="true"/>
@@ -38,5 +43,5 @@
 			</copy>
 		</sequential>
 	</macrodef>
-	
+	-->
 </project>
