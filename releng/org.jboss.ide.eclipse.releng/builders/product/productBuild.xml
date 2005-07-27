@@ -241,7 +241,7 @@
 	<target name="publish.results" if="enable.publishing">
 		<scp.fileset.trusted todir="${product.buildDesc}">
 			<fileset dir="${product.build.root}">
-				<exclude name="eclipse/**/*"/>
+				<exclude name="eclipse" />
 				<exclude name="eclipse-SDK.zip"/>
 			</fileset>
 		</scp.fileset.trusted>
