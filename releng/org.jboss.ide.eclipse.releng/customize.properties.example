@@ -1,9 +1,55 @@
-eclipse.archive.path=PATH_TO_ECLIPSE_ARCHIVES
-ssh.key=PATH_TO_PRIVATE_SSH_KEY
-ssh.passphrase=PRIVATE_SSH_KEY_PASSPHRASE
-build.output.directory=PATH_TO_BUILD_OUTPUT_DIRECTORY
-clean.eclipse.home=PATH_TO_CLEAN_ECLIPSE_INSTALLATION
-releng.root=ABSOLUTE_PATH_TO_RELENG_PROJECT_ROOT
-enable.publishing=ENABLE_PUBLISHING
-enable.notification=ENABLE_NOTIFICATION
+##############################
+## A directory that contains various builds of eclipse
+## e.g. /home/marshall/eclipse/builds contains eclipse-3.1-SDK-linux-gtk.tar.gz and eclipse-3.1-SDK-win32.zip
+##############################
+eclipse.archive.path=/home/marshall/eclipse/builds
+
+##############################
+## A absolute filename of a ssh private key for the jboss download server (download.jboss.org)
+## This is disabled by default. You will need to enable publishing and uncomment this.
+##############################
+# ssh.key=/home/marshall/.ssh/id_rsa
+
+##############################
+## The passphrase for the ssh private key.
+## This is disabled by default. You will need to enable publishing and uncomment this.
+##############################
+# ssh.passphrase=password
+
+##############################
+## The directory where build binaries will be placed.
+## e.g. /home/marshall/jbosside-build will contain JBossIDE-ALL.zip, builders/aop/JBossIDE-AOP-Developer.zip etc..
+##############################
+build.output.directory=/home/marshall/jbosside-build
+
+##############################
+## A directory that contains a _completely clean_ copy of eclipse.
+## This should point to the top level eclipse folder.
+## e.g. /home/marshall/eclipse/builds/eclipse-3.1-clean/eclipse
+##############################
+clean.eclipse.home=/home/marshall/eclipse/builds/eclipse-3.1-clean/eclipse
+
+##############################
+## The absolute path to the root of the JBossIDE releng project (where this file is located)
+## e.g. /home/marshall/code/jbosside-cvs/jbosside/releng/org.jboss.ide.eclipse.releng
+##############################
+releng.root=/home/marshall/code/jbosside-cvs/jbosside/releng/org.jboss.ide.eclipse.releng
+
+##############################
+## Whether or not to enable SCP publishing.
+## This should only be enabled if you have authorization to upload to download.jboss.org.
+## If you do not have authorization, the publishing step will fail.
+##############################
+enable.publishing=false
+
+##############################
+## Whether or not to enable email notification.
+## This should only be enabled if you intend on sending out emails on a succesful build. 
+##############################
+enable.notification=false
+
+##############################
+## The extension for various build scripts where there are .bat and .sh pairs.
+## In unix this should be sh, in windows this should be bat
+##############################
 build.script.ext=sh
