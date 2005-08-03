@@ -7,5 +7,5 @@ build.root=%releng-root%
 genericTargets=${pdescriptdir}/genericTargets.xml
 baseLocation=${clean.eclipse.home}/..
 #genericTargets=${build.root}/builders/genericTargets.xml
-enable.publishing=%enable-publishing%
-enable.notification=%enable-notification%
+%comment-enable-publishing% enable.publishing=%enable-publishing%
+%comment-enable-notification% enable.notification=%enable-notification%

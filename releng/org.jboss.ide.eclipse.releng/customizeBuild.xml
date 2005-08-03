@@ -1,9 +1,31 @@
 <project default="customize.interactive">
 
+	<taskdef classpath="lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
+	
 	<target name="customize">
 		<property file="customize.properties"/>
 		
-		<copy todir="builders">
+		<if>
+			<equals arg1="${enable.publishing}" arg2="false"/>
+			<then>
+				<property name="comment.enable.publishing" value="#"/>
+			</then>
+			<else>
+				<property name="comment.enable.publishing" value=""/>
+			</else>
+		</if>
+		
+		<if>
+			<equals arg1="${enable.notification}" arg2="false"/>
+			<then>
+				<property name="comment.enable.notification" value="#"/>
+			</then>
+			<else>
+				<property name="comment.enable.notification" value=""/>
+			</else>
+		</if>
+					
+		<copy todir="builders" overwrite="true">
 			<fileset dir="builders">
 				<include name="**/*.properties.template"/>
 			</fileset>
@@ -15,7 +37,10 @@
 				<filter token="build-output-directory" value="${build.output.directory}"/>
 				<filter token="clean-eclipse-home" value="${clean.eclipse.home}"/>
 				<filter token="releng-root" value="${releng.root}"/>
+				
+				<filter token="comment-enable-publishing" value="${comment.enable.publishing}"/>
 				<filter token="enable-publishing" value="${enable.publishing}"/>
+				<filter token="comment-enable-notification" value="${comment.enable.notification}"/>
 				<filter token="enable-notification" value="${enable.notification}"/>
 				<filter token="build-script-ext" value="${build.script.ext}"/>
 			</filterset>
