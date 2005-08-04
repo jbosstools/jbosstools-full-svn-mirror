@@ -17,8 +17,9 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Link;
 import org.jboss.ide.eclipse.ejb3.wizards.core.EJB3WizardsCorePlugin;
 import org.jboss.ide.eclipse.launcher.core.ServerLaunchManager;
 import org.jboss.ide.eclipse.launcher.ui.views.ServerNavigatorContentProvider;
@@ -28,6 +29,7 @@ public class JBossSelectionPage extends WizardPage {
 
 	protected TableViewer configurations;
 	protected ILaunchConfiguration configuration;
+	protected Button newConfiguration, editConfiguration;
 	
 	public JBossSelectionPage ()
 	{
@@ -55,9 +57,12 @@ public class JBossSelectionPage extends WizardPage {
 		
 		refreshConfigurations();
 		
-		Link newConfigurationLink = new Link(main, SWT.NONE);
-		newConfigurationLink.setText("<a href=\"create\">Create a JBoss configuration</a>");
-		newConfigurationLink.addSelectionListener(new SelectionListener() {
+		Composite links = new Composite(main, SWT.NONE);
+		links.setLayout(new RowLayout());
+		
+		newConfiguration = new Button(links, SWT.NONE);
+		newConfiguration.setText("Create a JBoss configuration");
+		newConfiguration.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
@@ -66,6 +71,19 @@ public class JBossSelectionPage extends WizardPage {
 				createJBossConfiguration();
 			}
 		});
+		
+		editConfiguration = new Button(links, SWT.NONE);
+		editConfiguration.setText("Edit JBoss Configuration");
+		editConfiguration.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+			public void widgetSelected(SelectionEvent e) {
+				editJBossConfiguration();
+			}
+		});
+		
+		editConfiguration.setEnabled(false);
 		
 		setControl(main);
 	}
@@ -85,7 +103,14 @@ public class JBossSelectionPage extends WizardPage {
 				DebugUIPlugin.getShell(), new StructuredSelection(), IDebugUIConstants.ID_DEBUG_LAUNCH_GROUP);
 		
 		refreshConfigurations();
+	}
+	
+	private void editJBossConfiguration ()
+	{
+		int status = DebugUITools.openLaunchConfigurationDialogOnGroup(
+				DebugUIPlugin.getShell(), new StructuredSelection(configuration), IDebugUIConstants.ID_DEBUG_LAUNCH_GROUP);
 		
+		refreshConfigurations();
 	}
 	
 	protected void configurationSelected ()
@@ -94,8 +119,8 @@ public class JBossSelectionPage extends WizardPage {
 		configuration = (ILaunchConfiguration) selection.getFirstElement();
 		
 		getWizard().getContainer().updateButtons();
-		
 		EJB3WizardsCorePlugin.getDefault().setSelectedLaunchConfiguration(configuration);
+		editConfiguration.setEnabled(true);
 	}
 	
 	public ILaunchConfiguration getLaunchConfiguration ()
