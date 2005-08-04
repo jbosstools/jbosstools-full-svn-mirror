@@ -19,13 +19,11 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.ui.util.CoreUtility;
-import org.eclipse.jdt.internal.ui.wizards.JavaProjectWizard;
 import org.eclipse.jdt.internal.ui.wizards.JavaProjectWizardSecondPage;
 import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -38,7 +36,7 @@ import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 import org.jboss.ide.eclipse.ejb3.wizards.core.classpath.EJB3ClasspathContainer;
 import org.jboss.ide.eclipse.ejb3.wizards.core.project.EJB3ProjectNature;
 import org.jboss.ide.eclipse.ejb3.wizards.ui.EJB3WizardsUIPlugin;
-import org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.pages.JBossSelectionPage;
+import org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.pages.JBossEJB3LibrariesPage;
 import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.classpath.AopJdk15ClasspathContainer;
 
@@ -48,14 +46,14 @@ import org.jboss.ide.eclipse.jdt.aop.core.classpath.AopJdk15ClasspathContainer;
 public class NewEJB3ProjectWizard extends Wizard implements INewWizard {
 
 	protected WizardNewProjectCreationPage page1;
-	protected JBossSelectionPage page2;
+	protected JBossEJB3LibrariesPage page2;
 	
 	public void addPages() {
 		page1 = new WizardNewProjectCreationPage("EJB3 Project Wizard");
 		page1.setDescription("Create a EJB 3.0 Project in the workspace or in an external location.");
 		page1.setTitle("Create a EJB3 Project");
 		
-		page2 = new JBossSelectionPage();
+		page2 = new JBossEJB3LibrariesPage();
 		page2.setDescription("Select a JBoss configuration that has the JBoss EJB3 container installed.");
 		page2.setTitle("Select a JBoss configuration");
 		addPage(page1);
@@ -171,7 +169,7 @@ public class NewEJB3ProjectWizard extends Wizard implements INewWizard {
 		}
 		
 		classpathEntries.add(JavaCore.newContainerEntry(new Path(AopJdk15ClasspathContainer.CONTAINER_ID)));
-		classpathEntries.add(JavaCore.newContainerEntry(new Path(EJB3ClasspathContainer.CONTAINER_ID)));
+		classpathEntries.add(JavaCore.newContainerEntry(new Path(EJB3ClasspathContainer.CONTAINER_ID).append(page2.getLaunchConfiguration().getName())));
 		
 		return (IClasspathEntry[]) classpathEntries.toArray(new IClasspathEntry[classpathEntries.size()]);
 	}
@@ -213,6 +211,16 @@ public class NewEJB3ProjectWizard extends Wizard implements INewWizard {
 				throws InvocationTargetException, InterruptedException
 			{
 				try {
+					monitor.beginTask("Configuring EJB3 Classpath...", 1);
+					boolean page2Finished = page2.finish();
+					
+					if (! page2Finished)
+					{
+						throw new InterruptedException();
+					}
+					
+					monitor.worked(1);
+					
 					monitor.beginTask("Applying natures..", 2);
 					IProject project = page1.getProjectHandle();
 					
@@ -292,13 +300,15 @@ public class NewEJB3ProjectWizard extends Wizard implements INewWizard {
 				} catch (CoreException e) {
 					e.printStackTrace();
 				}
-				
+
 				monitor.done();
 			}
 		};
 		
 		try {
 			new ProgressMonitorDialog(getShell()).run(false, true, op);
+		} catch (InterruptedException e) {
+			return false;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
