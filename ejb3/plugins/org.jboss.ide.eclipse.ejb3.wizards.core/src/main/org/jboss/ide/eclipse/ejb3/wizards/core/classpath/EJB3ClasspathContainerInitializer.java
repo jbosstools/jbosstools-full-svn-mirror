@@ -8,13 +8,10 @@ package org.jboss.ide.eclipse.ejb3.wizards.core.classpath;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.jdt.core.ClasspathContainerInitializer;
 import org.eclipse.jdt.core.IClasspathContainer;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.jboss.ide.eclipse.ejb3.wizards.core.EJB3WizardsCorePlugin;
-import org.jboss.ide.eclipse.launcher.core.ServerLaunchManager;
 
 /**
  * @author Marshall
@@ -32,28 +29,7 @@ public class EJB3ClasspathContainerInitializer extends ClasspathContainerInitial
 		
 		if (containerId.equals(EJB3ClasspathContainer.CONTAINER_ID))
 		{
-			String configName = project.getProject().getPersistentProperty(EJB3ClasspathContainer.JBOSS_EJB3_CONFIGURATION);
-			if (configName == null)
-			{
-				ILaunchConfiguration config = EJB3WizardsCorePlugin.getDefault().getSelectedLaunchConfiguration();
-				if (config != null)
-				{
-					configName = config.getName();
-					
-					project.getProject().setPersistentProperty(EJB3ClasspathContainer.JBOSS_EJB3_CONFIGURATION, configName);
-				}
-			}
-			
-			ILaunchConfiguration[] configurations = ServerLaunchManager.getInstance().getServerConfigurations();
-			ILaunchConfiguration config = null;
-			for (int i = 0; i < configurations.length; i++)
-			{
-				if (configurations[i].getName().equals(configName))
-					config = configurations[i];
-			}
-			
-			if (config != null)
-				container = new EJB3ClasspathContainer (containerPath, config);		
+			container = new EJB3ClasspathContainer (containerPath, project);		
 		}
 		
 		if (container != null)
@@ -69,5 +45,4 @@ public class EJB3ClasspathContainerInitializer extends ClasspathContainerInitial
 		
 		return "";
 	}
-
 }

@@ -8,8 +8,9 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.debug.core.ILaunchConfiguration;
-import org.jboss.ide.eclipse.ejb3.wizards.core.EJB3WizardsCorePlugin;
+import org.eclipse.jdt.core.IJavaProject;
 import org.jboss.ide.eclipse.jdt.aop.core.classpath.AopClasspathContainer;
+import org.jboss.ide.eclipse.launcher.core.ServerLaunchManager;
 import org.jboss.ide.eclipse.launcher.core.constants.IJBossConstants;
 
 /**
@@ -21,32 +22,62 @@ public class EJB3ClasspathContainer extends AopClasspathContainer {
 	public static final QualifiedName JBOSS_EJB3_CONFIGURATION = new QualifiedName("org.jboss.ide.eclipse.ejb3.wizards.core.classpath", "jboss-ejb3-configuration");
 	protected ILaunchConfiguration jbossConfig;
 
-	private static IPath clientPath, libPath, serverAllLibPath, ejb3DeployerPath;
+	private static IPath clientPath, libPath, serverConfigLibPath, ejb3DeployerPath;
 	static {
 		clientPath = new Path("client");
 		libPath = new Path("lib");
-		serverAllLibPath = new Path("server/all/lib");
-		ejb3DeployerPath = new Path("server/all/deploy/ejb3.deployer");
+		
+		serverConfigLibPath = new Path("lib");
+		ejb3DeployerPath = new Path("deploy/ejb3.deployer");
 	}
 	
-	protected static final IPath[] jbossJarPaths = new IPath [] {
-		clientPath.append("jnp-client.jar"),  clientPath.append("jbosssx-client.jar"), clientPath.append("jboss-j2ee.jar"), clientPath.append("jboss-transaction-client.jar"),
-		ejb3DeployerPath.append("jboss-ejb3.jar"), ejb3DeployerPath.append("jboss-ejb3x.jar"), ejb3DeployerPath.append("hibernate3.jar"),
-		libPath.append("commons-logging.jar"), serverAllLibPath.append("jboss-remoting.jar")
+	public static final IPath[] jbossJarPaths = new IPath [] {
+		clientPath.append("jnp-client.jar"),  clientPath.append("jbosssx-client.jar"),
+		clientPath.append("jboss-j2ee.jar"), clientPath.append("jboss-transaction-client.jar"),
+		libPath.append("commons-logging.jar"), 
 	};
 	
-	public EJB3ClasspathContainer (IPath path, ILaunchConfiguration jbossConfig)
+	public static final IPath[] jbossConfigRelativeJarPaths = new IPath [] {
+		ejb3DeployerPath.append("jboss-ejb3.jar"), ejb3DeployerPath.append("jboss-ejb3x.jar"),
+		ejb3DeployerPath.append("hibernate3.jar"), ejb3DeployerPath.append("ejb3-persistence.jar"),
+		serverConfigLibPath.append("jboss-remoting.jar")
+	};
+	
+	public EJB3ClasspathContainer (IPath path, IJavaProject project)
 	{
 		super (path);
-		this.jbossConfig = jbossConfig;
+		
+		try {
+			String configName = path.segment(1);
+			
+			if (configName == null)
+			{
+				// old classpath container, try finding the persisten property
+				configName = project.getProject().getPersistentProperty(JBOSS_EJB3_CONFIGURATION);
+			}
+			System.out.println("configName = " +configName);
+			
+			ILaunchConfiguration[] configurations = ServerLaunchManager.getInstance().getServerConfigurations();
+			for (int i = 0; i < configurations.length; i++)
+			{
+				if (configurations[i].getName().equals(configName))
+					jbossConfig = configurations[i];
+			}
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public IPath[] getAopJarPaths ()
 	{
-		String baseDir = EJB3WizardsCorePlugin.getDefault().getBaseDir();
 		String jbossBaseDir = null;
+		String jbossConfigDir = null;
+		
 		try {
 			jbossBaseDir = jbossConfig.getAttribute(IJBossConstants.ATTR_JBOSS_HOME_DIR, "");
+			jbossConfigDir = jbossConfig.getAttribute(IJBossConstants.ATTR_SERVER_CONFIGURATION, "default");
 		} catch (CoreException e) {
 			
 		}
@@ -61,9 +92,20 @@ public class EJB3ClasspathContainer extends AopClasspathContainer {
 				IPath entryPath = new Path(jbossBaseDir).append(jar);
 				paths.add(entryPath);
 			}
+			
+			if (jbossConfigDir != null)
+			{
+				IPath jbossServerConfigPath = new Path(jbossBaseDir).append("server").append(jbossConfigDir);
+				for (int i = 0; i < jbossConfigRelativeJarPaths.length; i++)
+				{
+					IPath jar = jbossConfigRelativeJarPaths[i];
+					IPath entryPath = jbossServerConfigPath.append(jar);
+					paths.add(entryPath);
+				}
+			}
 		}
 		
-		System.out.println("paths = " + paths);
+		//System.out.println("paths = " + paths);
 		return (IPath []) paths.toArray(new IPath[paths.size()]);
 	}
 	
