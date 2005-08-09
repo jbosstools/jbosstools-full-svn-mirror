@@ -27,7 +27,6 @@
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.jboss.ide.eclipse.core"/>
       <import plugin="org.jboss.ide.eclipse.ui"/>
-      <import plugin="org.apache.xalan"/>
    </requires>
 
    <extension

@@ -35,7 +35,6 @@
       <import plugin="org.jboss.ide.eclipse.ui"/>
       <import plugin="org.jboss.ide.eclipse.xdoclet.core"/>
       <import plugin="org.jboss.ide.eclipse.xdoclet.ui"/>
-      <import plugin="org.apache.xalan"/>
       <import plugin="org.eclipse.jdt.launching"/>
       <import plugin="org.eclipse.jdt.ui"/>
    </requires>
