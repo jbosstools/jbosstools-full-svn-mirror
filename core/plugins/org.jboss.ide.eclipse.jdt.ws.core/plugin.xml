@@ -55,7 +55,6 @@
       <import plugin="org.eclipse.jdt.ui"/>
       <import plugin="org.jboss.ide.eclipse.jdt.core"/>
       <import plugin="org.jboss.ide.eclipse.jdt.test.core"/>
-      <import plugin="org.apache.xalan"/>
       <import plugin="org.eclipse.core.runtime"/>
    </requires>
 
