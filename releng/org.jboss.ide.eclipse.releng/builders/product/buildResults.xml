@@ -106,6 +106,7 @@
 		
 		<scp.fileset.trusted todir="${upload.to}">
 			<fileset file="${build.dir}/build.log.zip"/>
+			<fileset file="${build.dir}/buildResults.html"/>
 		</scp.fileset.trusted>
 			
 		<!--scp trust="true" todir="${ssh.username}@${ssh.host}:${scp.basedir}/${upload.to}" keyfile="${ssh.key}" passphrase="${ssh.passphrase}">
