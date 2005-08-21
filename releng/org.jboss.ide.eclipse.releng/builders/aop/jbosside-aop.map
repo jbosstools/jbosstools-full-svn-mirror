@@ -1,3 +1,0 @@
-feature@org.jboss.ide.eclipse.jdt.aop.feature=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/aop/features/org.jboss.ide.eclipse.jdt.aop.feature
-plugin@org.jboss.ide.eclipse.jdt.aop.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/aop/plugins/org.jboss.ide.eclipse.jdt.aop.core
-plugin@org.jboss.ide.eclipse.jdt.aop.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/aop/plugins/org.jboss.ide.eclipse.jdt.aop.ui
