@@ -1,5 +1,0 @@
-plugin@org.jbpm.core=HEAD,%jbpm-cvs-root%,,jbpm.ide/org.jbpm.core/
-plugin@org.jbpm.db=HEAD,%jbpm-cvs-root%,,jbpm.ide/org.jbpm.db/
-plugin@org.jbpm.help=HEAD,%jbpm-cvs-root%,,jbpm.ide/org.jbpm.help/
-plugin@org.jbpm.ui=HEAD,%jbpm-cvs-root%,,jbpm.ide/org.jbpm.ui/
-feature@org.jbpm.feature=HEAD,%jbpm-cvs-root%,,jbpm.ide/org.jbpm.feature/
