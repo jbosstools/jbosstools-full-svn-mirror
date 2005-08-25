@@ -4,7 +4,7 @@
 	
 	<taskdef classpath="../../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
 
-	<target name="build.requirement" depends="download.hibernate,unzip.hibernate,checkout.hibernateext">
+	<target name="build.requirement" depends="checkout.hibernateext">
 		<property name="hibernateext.root" value="${hibernateext.build.dir}/${hibernateext.cvs.module}"/>
 		<property name="build.script" value="${hibernateext.root}/${hibernateext.build.script}"/>
 
@@ -25,34 +25,13 @@
 		</if>
  		
  		<echo file="return.properties">
-			hibernate.base=${hibernateext.build.dir}/hibernate-3.0
 			hibernateext.base=${hibernateext.build.dir}/${hibernateext.cvs.module}
 		</echo>
-	</target>
-
-	<target name="check.hibernate.downloaded">
-		<available file="${hibernateext.build.dir}/${hibernate.release.name}"
-			property="hibernate.downloaded"/>
-	</target>
-
-	<target name="check.hibernate.unzipped">
-		<available file="${hibernateext.build.dir}/hibernate-3.0" type="dir"
-			property="hibernate.unzipped"/>
 	</target>
 
 	<target name="check.hibernateext.checkedout">
 		<available file="${hibernateext.build.dir}/${hibernateext.cvs.module}" type="dir"
 			property="hibernateext.checkedout"/>
-	</target>
-
-	<target name="download.hibernate" depends="check.hibernate.downloaded" unless="hibernate.downloaded">
-		<mkdir dir="${hibernateext.build.dir}"/>
-		<get src="${hibernate.release.url}/${hibernate.release.name}" dest="${hibernateext.build.dir}/${hibernate.release.name}"/>
-
-	</target>
-
-	<target name="unzip.hibernate" depends="download.hibernate,check.hibernate.unzipped" unless="hibernate.unzipped">
-		<unzip src="${hibernateext.build.dir}/${hibernate.release.name}" dest="${hibernateext.build.dir}"/>
 	</target>
 
 	<target name="checkout.hibernateext" depends="check.hibernateext.checkedout" unless="hibernateext.checkedout">
