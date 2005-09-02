@@ -67,12 +67,12 @@
    <property name="tools.dist.dir" location="${hibernate-ext-src.home}/tools/target/hibernate-tools/" />
    <property name="console.dist.dir" location="${hibernate-ext-src.home}/console/target/hibernateconsole" />
 
-   <delete dir="${buildDirectory}/plugins/org.hibernate.eclipse/lib"> 
+   <!--delete dir="${buildDirectory}/plugins/org.hibernate.eclipse/lib"> 
    	 <include name="**/*"/>
-   </delete>
+   </delete-->
 	
 	<!--ant antfile="${hibernate-ext-src.home}/org.hibernate.eclipse/hibernate-build.xml" dir="${hibernate-ext-src.home}/org.hibernate.eclipse" target="update"/-->
-	<echo>${hibernate-ext-src.home}</echo>
+	<!--echo>${hibernate-ext-src.home}</echo>
 	<exec executable="${hibernate-ext-src.home}/build.${buildScriptExt}" dir="${hibernate-ext-src.home}/org.hibernate.eclipse">
 		<arg line="-f hibernate-build.xml"/>
 		<arg line="update"/>
@@ -81,7 +81,7 @@
      <fileset dir="${hibernate-ext-src.home}/org.hibernate.eclipse/lib">
      	<include name="**/*"/>
 	 </fileset>
-   </copy>
+   </copy-->
 
 	<updateVersions type="feature" version="${hibernate.tools.release}.${versionTag}" append="false"
 		updateAssembleScript="false" recursivePlugins="true" failOnRecursiveError="false"
