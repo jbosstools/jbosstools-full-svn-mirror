@@ -3,7 +3,7 @@
 	<taskdef classpath="../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
 	
 	<property file="custom.properties" />
-	<property name="archiveName" value="jbpm-gpd-3.0-${buildId}.zip" />
+	<!--property name="archiveName" value="jbpm-gpd-3.0-${buildId}.zip" /-->
 	<property name="archive-file" value="${workspace-dir}/${buildLabel}/${archiveName}" />
 	<property name="site-dir" value="${workspace-dir}/site" />
 	<property name="site-stage-dir" value="${site-dir}/temp" />
