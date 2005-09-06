@@ -1,22 +1,22 @@
 feature@org.jboss.ide.eclipse.feature=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/features/org.jboss.ide.eclipse.feature
-plugin@org.apache.xalan=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.apache.xalan
+#plugin@org.apache.xalan=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.apache.xalan
 plugin@org.jboss.ide.eclipse.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.core
 plugin@org.jboss.ide.eclipse.deployer.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.deployer.core
 plugin@org.jboss.ide.eclipse.deployer.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.deployer.ui
 plugin@org.jboss.ide.eclipse.jdt.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.core
 plugin@org.jboss.ide.eclipse.jdt.j2ee.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.j2ee.core
-plugin@org.jboss.ide.eclipse.jdt.j2ee.jsp.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.j2ee.jsp.core
-plugin@org.jboss.ide.eclipse.jdt.j2ee.jsp.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.j2ee.jsp.ui
+#plugin@org.jboss.ide.eclipse.jdt.j2ee.jsp.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.j2ee.jsp.core
+#plugin@org.jboss.ide.eclipse.jdt.j2ee.jsp.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.j2ee.jsp.ui
 plugin@org.jboss.ide.eclipse.jdt.j2ee.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.j2ee.ui
-plugin@org.jboss.ide.eclipse.jdt.j2ee.xml.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.j2ee.xml.core
-plugin@org.jboss.ide.eclipse.jdt.j2ee.xml.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.j2ee.xml.ui
+#plugin@org.jboss.ide.eclipse.jdt.j2ee.xml.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.j2ee.xml.core
+#plugin@org.jboss.ide.eclipse.jdt.j2ee.xml.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.j2ee.xml.ui
 plugin@org.jboss.ide.eclipse.jdt.test.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.test.core
 plugin@org.jboss.ide.eclipse.jdt.test.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.test.ui
 plugin@org.jboss.ide.eclipse.jdt.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.ui
 plugin@org.jboss.ide.eclipse.jdt.ws.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.ws.core
 plugin@org.jboss.ide.eclipse.jdt.ws.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.ws.ui
-plugin@org.jboss.ide.eclipse.jdt.xml.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.xml.core
-plugin@org.jboss.ide.eclipse.jdt.xml.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.xml.ui
+#plugin@org.jboss.ide.eclipse.jdt.xml.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.xml.core
+#plugin@org.jboss.ide.eclipse.jdt.xml.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.jdt.xml.ui
 plugin@org.jboss.ide.eclipse.launcher.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.launcher.core
 plugin@org.jboss.ide.eclipse.launcher.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.launcher.ui
 plugin@org.jboss.ide.eclipse.packaging.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.packaging.core
@@ -29,7 +29,7 @@ plugin@org.jboss.ide.eclipse.xdoclet.ui=HEAD,:pserver:anonymous@anoncvs.forge.jb
 
 
 # Eclipse Dependencies
-
-plugin@org.eclipse.emf.common=R2_0_1,:pserver:anonymous@dev.eclipse.org:/home/tools,,org.eclipse.emf/plugins/org.eclipse.emf.common
-plugin@org.eclipse.emf.ecore=R2_0_1,:pserver:anonymous@dev.eclipse.org:/home/tools,,org.eclipse.emf/plugins/org.eclipse.emf.ecore
-plugin@org.eclipse.xsd=R2_0_1,:pserver:anonymous@dev.eclipse.org:/home/technology,,org.eclipse.xsd/plugins/org.eclipse.xsd
+# These should all now be accounted for in the binary dependency section
+#plugin@org.eclipse.emf.common=R2_0_1,:pserver:anonymous@dev.eclipse.org:/home/tools,,org.eclipse.emf/plugins/org.eclipse.emf.common
+#plugin@org.eclipse.emf.ecore=R2_0_1,:pserver:anonymous@dev.eclipse.org:/home/tools,,org.eclipse.emf/plugins/org.eclipse.emf.ecore
+#plugin@org.eclipse.xsd=R2_0_1,:pserver:anonymous@dev.eclipse.org:/home/technology,,org.eclipse.xsd/plugins/org.eclipse.xsd
