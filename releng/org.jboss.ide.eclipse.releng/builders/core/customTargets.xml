@@ -73,7 +73,9 @@
 			<equals arg1="${buildType}" arg2="R"/>
 		</not>
 	</condition>
-	<updateVersions type="feature" version="${versionTag}" append="${append}" updateAssembleScript="false" recursivePlugins="true">
+	<updateVersions type="feature" version="${versionTag}" append="${append}"
+		updateAssembleScript="false" recursivePlugins="true"
+		pluginRegex="org.jboss.ide.*">
 		<fileset dir="${buildDirectory}/features">
 			<include name="*org.jboss.ide*"/>
 			<exclude name="*aop*"/>
