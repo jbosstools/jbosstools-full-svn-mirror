@@ -120,6 +120,25 @@
 <!-- Steps to do after  running assemble. -->
 <!-- ===================================================================== -->
 <target name="postAssemble">
+	<property name="tmp.dir" value="${buildDirectory}/../tmp"/>
+	<property name="plugins.dir" value="${buildDirectory}/plugins"/>
+		
+	<mkdir dir="${tmp.dir}/plugins" />
+		
+	<for list="${include.plugins}"  param="plugin.name" trim="true">
+		<sequential>
+			<copy todir="${tmp.dir}/plugins">
+				<fileset dir="${plugins.dir}">
+					<include name="@{plugin.name}_*/**/*.*" />
+					<include name="@{plugin.name}_*.jar"/>
+				</fileset>
+			</copy>
+		</sequential>
+	</for>
+	
+	<property name="archive" value="${buildDirectory}/${buildLabel}/JBossIDE-CORE-${versionTag}.zip"/>
+	<zip destfile="${archive}" basedir="${tmp.dir}" update="yes"/>
+	<delete dir="${tmp.dir}"/>
 </target>
 
 <!-- ===================================================================== -->
