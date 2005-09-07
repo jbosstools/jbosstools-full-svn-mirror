@@ -219,7 +219,7 @@
 <!-- Steps to do after the build is done. -->
 <!-- ===================================================================== -->
 <target name="postBuild">
-	<echo message="doing postBuild"/>
+	<!--echo message="doing postBuild"/>
 	<delete file="${site-stage-dir}/.project" />
 	<delete dir="${site-stage-dir}/plugins" />
 	<delete dir="${site-stage-dir}/features" />
@@ -238,7 +238,7 @@
 		</path>
 	</foreach>
 	<zip destfile="${site-dir}/${archiveName}" basedir="${site-stage-dir}" />
-	<delete dir="${site-stage-dir}" />
+	<delete dir="${site-stage-dir}" /-->
 </target>
 
 <target name="zipPluginDir">
