@@ -2,6 +2,8 @@
 	<taskdef name="updateVersions" classname="org.jboss.ide.eclipse.releng.UpdateVersionsTask" classpath="../../bin"/>
 	
 	<taskdef classpath="../../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
+	<import file="../common/bundlePlugins.xml"/>
+	
 <!-- ===================================================================== -->
 <!-- Run a given ${target} on all elements being built -->
 <!-- Add on <ant> task for each top level element being built. -->
@@ -120,7 +122,11 @@
 <!-- Steps to do after  running assemble. -->
 <!-- ===================================================================== -->
 <target name="postAssemble">
-	<property name="tmp.dir" value="${buildDirectory}/../tmp"/>
+	
+	<bundlePlugins pluginList="${include.plugins}" buildDirectory="${buildDirectory}"
+		archivePath="${buildDirectory}/${buildLabel}/JBossIDE-CORE-${versionTag}.zip" />
+	
+	<!--property name="tmp.dir" value="${buildDirectory}/../tmp"/>
 	<property name="plugins.dir" value="${buildDirectory}/plugins"/>
 		
 	<mkdir dir="${tmp.dir}/plugins" />
@@ -138,7 +144,7 @@
 	
 	<property name="archive" value="${buildDirectory}/${buildLabel}/JBossIDE-CORE-${versionTag}.zip"/>
 	<zip destfile="${archive}" basedir="${tmp.dir}" update="yes"/>
-	<delete dir="${tmp.dir}"/>
+	<delete dir="${tmp.dir}"/-->
 </target>
 
 <!-- ===================================================================== -->
