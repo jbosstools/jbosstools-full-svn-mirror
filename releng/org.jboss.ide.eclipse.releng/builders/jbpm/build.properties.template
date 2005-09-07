@@ -110,3 +110,22 @@ jbpm-core-version-tag=jbpm_3_0
 jbpm-db-module=jbpm.db
 jbpm-db-version-tag=jbpm_3_0
 default-jbpm-name=jBPM 3.0
+
+# include these plugins in the binary distribution
+include.plugins=\
+	org.apache.xerces,\
+	org.eclipse.draw2d,\
+	org.eclipse.emf.common,\
+	org.eclipse.emf.ecore,\
+	org.eclipse.emf.ecore.xmi,\
+	org.eclipse.gef,\
+	org.eclipse.jem.util,\
+	org.eclipse.wst.common.frameworks,\
+	org.eclipse.wst.common.ui,\
+	org.eclipse.wst.common.uriresolver,\
+	org.eclipse.wst.sse.core,\
+	org.eclipse.wst.sse.ui,\
+	org.eclipse.validation,\
+	org.eclipse.wst.xml.core,\
+	org.eclipse.wst.xml.ui,\
+	org.eclipse.wst.xml.uriresolver

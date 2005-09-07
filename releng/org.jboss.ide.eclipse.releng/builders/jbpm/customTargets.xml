@@ -4,7 +4,6 @@
 	
 	<property file="custom.properties" />
 	<!--property name="archiveName" value="jbpm-gpd-3.0-${buildId}.zip" /-->
-	<property name="archive-file" value="${workspace-dir}/${buildLabel}/${archiveName}" />
 	<property name="site-dir" value="${workspace-dir}/site" />
 	<property name="site-stage-dir" value="${site-dir}/temp" />
 	<property name="docbook-dir" value="${build-dir}/plugins/docbook-support" />
@@ -16,6 +15,7 @@
 	<property name="jbpm-db-download-dir" value="${download-dir}/${jbpm-db-module}.${jbpm-db-version-tag}" />
 	<property name="jbpm-db-plugin-dir" value="${build-dir}/plugins/org.jbpm.db" />
 	
+	<import file="../common/bundlePlugins.xml"/>
 <!-- ===================================================================== -->
 <!-- Run a given ${target} on all elements being built -->
 <!-- Add on <ant> task for each top level element being built. -->
@@ -209,31 +209,10 @@
 <!-- ===================================================================== -->
 <target name="postAssemble">
 	<echo message="doing postAssemble"/>
-	<property name="assemble-temp-dir" value="${workspace-dir}/${buildLabel}/temp/" />
-	<property name="install-plugins-dir" value="${install-dir}/eclipse/plugins" />
-	<mkdir dir="${assemble-temp-dir}/eclipse/plugins" />
-	<copy todir="${assemble-temp-dir}/eclipse/plugins">
-		<fileset dir="${install-plugins-dir}">
-			<include name="org.apache.xerces_*/**/*.*" />
-			<include name="org.eclipse.draw2d_*.jar" />
-			<include name="org.eclipse.emf.common_*/**/*.*" />
-			<include name="org.eclipse.emf.ecore_*/**/*.*" />
-			<include name="org.eclipse.emf.ecore.xmi_*/**/*.*" />
-			<include name="org.eclipse.gef_*.jar" />
-			<include name="org.eclipse.jem.util_*/**/*.*" />
-			<include name="org.eclipse.wst.common.frameworks_*/**/*.*" />
-			<include name="org.eclipse.wst.common.ui_*/**/*.*" />
-			<include name="org.eclipse.wst.common.uriresolver_*/**/*.*" />
-			<include name="org.eclipse.wst.sse.core_*/**/*.*" />
-			<include name="org.eclipse.wst.sse.ui_*/**/*.*" />
-			<include name="org.eclipse.wst.validation_*/**/*.*" />
-			<include name="org.eclipse.wst.xml.core_*/**/*.*" />
-			<include name="org.eclipse.wst.xml.ui_*/**/*.*" />
-			<include name="org.eclipse.wst.xml.uriresolver_*/**/*.*" />			
-		</fileset>
-	</copy>
-	<zip destfile="${archive-file}" basedir="${assemble-temp-dir}" update="yes" />
-	<delete dir="${assemble-temp-dir}" />
+	
+	<bundlePlugins pluginList="${include.plugins}" buildDirectory="${buildDirectory}"
+			archivePath="${buildDirectory}/${buildLabel}/jBPM-Designer-${versionTag}.zip" />
+	
 </target>
 
 <!-- ===================================================================== -->
@@ -244,6 +223,7 @@
 	<delete file="${site-stage-dir}/.project" />
 	<delete dir="${site-stage-dir}/plugins" />
 	<delete dir="${site-stage-dir}/features" />
+	<property name="archive-file" value="${workspace-dir}/${buildLabel}/jBPM-Designer-${versionTag}.zip" />
 	<unzip src="${archive-file}" dest="${site-stage-dir}" />
 	<copy todir="${site-stage-dir}">
 		<fileset dir="${site-stage-dir}/eclipse" />
