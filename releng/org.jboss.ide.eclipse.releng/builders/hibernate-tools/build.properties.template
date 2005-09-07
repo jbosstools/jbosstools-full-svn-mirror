@@ -160,7 +160,7 @@ hibernate.tools.release=3.0.0
 ####
 # These are plugins that will be bundled in the binary build of this builder's zip/update site
 ####
-builder.package.plugins=\
+include.plugins=\
 	org.apache.xerces,\
 	org.eclipse.draw2d,\
 	org.eclipse.emf.common,\
