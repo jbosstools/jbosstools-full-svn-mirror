@@ -39,7 +39,7 @@
 		<b>Linux/GTK2 Bundle w/ Eclipse (%eclipse-target%) & Webtools (%webtools-target%)</b>:<br/>
 		<a href="%jbosside-download-root%/bundle/%jbosside-linux-gtk2-bundle-filename%">%jbosside-linux-gtk2-bundle-filename%</a><br/><br/>
 		
-		JBossIDE Core Plugins: <a href="%jbosside-download-root%/core/%jbosside-core-filename%">%jbosside-core-filename%</a><br/>
+		JBossIDE Core Plugins: <a href="%jbosside-download-root%/core/%jbosside-core-filename%">%jbosside-core-filename%</a><br/> <a href="http://www.jboss.com/products/jbosside">[website]</a><a href="http://www.jboss.com/index.html?module=bb&op=viewforum&f=201">[forum]</a>
 		AOP Developer: <a href="%jbosside-download-root%/aop/%jbosside-aop-filename%">%jbosside-aop-filename%</a><br/>
 		Hibernate Tools: <a href="%jbosside-download-root%/hibernate-tools/%jbosside-hibernate-tools-filename%">%jbosside-hibernate-tools-filename%</a> <a href="http://tools.hibernate.org">[website]</a><a href="http://forum.hibernate.org/viewforum.php?f=6">[forum]</a><br/> 
 		jBPM Designer: <a href="%jbosside-download-root%/jbpm/%jbosside-jbpm-filename%">%jbosside-jbpm-filename%</a><br/>
