@@ -81,6 +81,18 @@
 				<filter token="jbosside-hibernate-tools-filename" value="HibernateTools-${hibernate.tools.release}.${hibernate-tools.versionTag}.zip"/>
 				<filter token="jbosside-jbpm-filename" value="jBPM-Designer-${jbpm.versionTag}.zip"/>
 				<filter token="jbosside-ejb3-filename" value="JBossIDE-EJB3-Tools-${ejb3.versionTag}.zip"/>
+                <filter token="build-information" value="&lt;h2&gt;Warning&lt;/h2&gt;
+                
+                &lt;p&gt;These nightly builds are direct builds from CVS and are provided as-is. Do not expect everything works.&lt;/p&gt;
+                
+                &lt;p&gt; Any suggestions/issues should be posted
+                on the relevant product forums and should clearly indicate that you are using a nightly build! &lt;/p&gt;
+                
+                &lt;h2&gt;Versioning/Updates&lt;/h2&gt;
+                &lt;p&gt;These nightly builds are versioned with a Ntimestamp and thus should be picked up as a newer version than 
+                any existing plugin installation. But if you have issues with the installation then try and 
+                remove any older versions of the plugins and start eclipse with a &lt;code&gt;-clean&lt;/code&gt; argument to make it rescan 
+                the plugins/features directories.&lt;/p&gt;"/>          
 			</filterset>
 		</copy>
 		
