@@ -143,22 +143,24 @@ public class AopProjectBuilder extends IncrementalProjectBuilder {
 		 *
 		 */
 		protected void saveOurOldManagerData() {
-			Map aspectMap = myOldManager.getAspectDefinitions();
-			Iterator i = aspectMap.keySet().iterator();
-			String key;
-			AspectDefinition def;
-			while(i.hasNext()) {
-				// String -> AspectDefinition
-				key = (String)i.next();
-				def = (AspectDefinition)aspectMap.get(key);
-				System.out.println("Adding " + def.getName() + " to new manager");
-				try {
-					addAspectDefinition(def);
-				} catch( Exception e) {
-					System.out.println("[builder - saveOurOldManagerData] " + e.getMessage());
+			if (myOldManager != null)
+			{
+				Map aspectMap = myOldManager.getAspectDefinitions();
+				Iterator i = aspectMap.keySet().iterator();
+				String key;
+				AspectDefinition def;
+				while(i.hasNext()) {
+					// String -> AspectDefinition
+					key = (String)i.next();
+					def = (AspectDefinition)aspectMap.get(key);
+					System.out.println("Adding " + def.getName() + " to new manager");
+					try {
+						addAspectDefinition(def);
+					} catch( Exception e) {
+						System.out.println("[builder - saveOurOldManagerData] " + e.getMessage());
+					}
 				}
 			}
-			
 		}
 				
 		public static void  cleanInstance ()
