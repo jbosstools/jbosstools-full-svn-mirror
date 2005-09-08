@@ -3,9 +3,22 @@
 		<title>JBossIDE build results for %build-type% build %jbosside-build-name%</title>
 	</head>
 	
-	<body>
+	<body style="font-family: sans-serif">
 		<h1>JBossIDE build results for %build-type% build %jbosside-build-name%</h1>
 		<hr/>
+		
+		<h2>Warning</h2>
+		
+		<p>These nightly builds are direct builds from CVS and are provided as-is. Do not expect everything works.</p>
+		
+		<p> Any suggestions/issues should be posted
+		on the relevant product forums and should clearly indicate that you are using a nightly build! </p>
+		
+		<h2>Versioning/Updates</h2>
+		<p>These nightly builds are versioned with a Ntimestamp and thus should be picked up as a newer version than 
+		any existing hibernate plugin installation. But if you have issues with the installation then try and 
+		remove any older versions of the plugins and start eclipse with a <code>-clean</code> argument to make it rescan 
+		the plugins/features directories.</p>
 		
 		<b>Build Targets</b>:<br/>
 		<table>
@@ -28,7 +41,7 @@
 		
 		JBossIDE Core Plugins: <a href="%jbosside-download-root%/core/%jbosside-core-filename%">%jbosside-core-filename%</a><br/>
 		AOP Developer: <a href="%jbosside-download-root%/aop/%jbosside-aop-filename%">%jbosside-aop-filename%</a><br/>
-		Hibernate Tools: <a href="%jbosside-download-root%/hibernate-tools/%jbosside-hibernate-tools-filename%">%jbosside-hibernate-tools-filename%</a><br/>
+		Hibernate Tools: <a href="%jbosside-download-root%/hibernate-tools/%jbosside-hibernate-tools-filename%">%jbosside-hibernate-tools-filename%</a> <a href="http://tools.hibernate.org">[website]</a><a href="http://forum.hibernate.org/viewforum.php?f=6">[forum]</a><br/> 
 		jBPM Designer: <a href="%jbosside-download-root%/jbpm/%jbosside-jbpm-filename%">%jbosside-jbpm-filename%</a><br/>
 		EJB3 Tools: <a href="%jbosside-download-root%/ejb3/%jbosside-ejb3-filename%">%jbosside-ejb3-filename%</a><br/>
 		<br/>		
