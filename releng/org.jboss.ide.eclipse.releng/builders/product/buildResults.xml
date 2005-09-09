@@ -45,9 +45,16 @@
 		
 	<target name="get.build.properties">
 		<load.property file="../../requirements/eclipse/build.properties" property="eclipseBuildID"/>
-		<load.property file="../../requirements/emf-sdo-xsd/build.properties" property="build.archive" dest="emf.xsd.sdo.build.archive"/>
+		<load.property file="../../requirements/eclipse/build.properties" property="eclipseURL"/>
+		<property name="eclipse.download.url" value="${eclipseURL}/eclipse-SDK-${eclipseBuildID}-win32.zip"/>
+		
+		<load.property file="../../requirements/emf-sdo-xsd/build.properties" property="build.uri" dest="emf.sdo.xsd.build.uri"/>
+		<load.property file="../../requirements/emf-sdo-xsd/build.properties" property="build.archive" dest="emf.sdo.xsd.build.archive"/>
+		<load.property file="../../requirements/gef/build.properties" property="build.uri" dest="gef.build.uri"/>
 		<load.property file="../../requirements/gef/build.properties" property="build.archive" dest="gef.build.archive"/>
+		<load.property file="../../requirements/jem/build.properties" property="build.uri" dest="jem.build.uri"/>
 		<load.property file="../../requirements/jem/build.properties" property="build.archive" dest="jem.build.archive"/>
+		<load.property file="../../requirements/webtools/build.properties" property="build.uri" dest="webtools.build.uri"/>
 		<load.property file="../../requirements/webtools/build.properties" property="build.archive" dest="webtools.build.archive"/>
 
 		<get.version.tag builder="aop" property="aop.versionTag"/>
@@ -59,18 +66,28 @@
 	</target>
 		
 	<target name="build.results" depends="get.build.properties">
-		<copy todir="${product.build.directory}">
+		<tstamp>
+			<format property="date" pattern="MMMM d yyyy"/>
+		</tstamp>
+		
+		<copy todir="${product.build.directory}" overwrite="true">
 			<fileset file="buildResults.html.template"/>
 			<mapper type="glob" from="*.html.template" to="*.html"/>
 			<filterset begintoken="%" endtoken="%">
 				<filter token="build-type" value="${product.buildDesc}"/>
 				<filter token="jbosside-build-name" value="${product.versionTag}"/>
 				<filter token="jbosside-download-root" value="${jbosside.download.root}"/>
+				<filter token="date" value="${date}"/>
 				
-				<filter token="eclipse-target" value="${eclipseBuildID}"/>
+				<filter token="eclipse-download-url" value="${eclipse.download.url}"/>
+				<filter token="eclipse-target" value="eclipse-SDK-${eclipseBuildID}-win32.zip"/>
+				<filter token="webtools-download-url" value="${webtools.build.uri}/${webtools.build.archive}"/>
 				<filter token="webtools-target" value="${webtools.build.archive}"/>
+				<filter token="gef-download-url" value="${gef.build.uri}/${gef.build.archive}"/>
 				<filter token="gef-target" value="${gef.build.archive}"/>
-				<filter token="emf-xsd-sdo-target" value="${emf.xsd.sdo.build.archive}"/>
+				<filter token="emf-sdo-xsd-download-url" value="${emf.sdo.xsd.build.uri}/${emf.sdo.xsd.build.archive}"/>
+				<filter token="emf-sdo-xsd-target" value="${emf.sdo.xsd.build.archive}"/>
+				<filter token="jem-download-url" value="${jem.build.uri}/${jem.build.archive}"/>
 				<filter token="jem-target" value="${jem.build.archive}"/>
 				
 				<filter token="jbosside-all-filename" value="${product.name}-${product.versionTag}-ALL.zip"/>
@@ -96,10 +113,10 @@
 			</filterset>
 		</copy>
 		
-		<echo file="${product.build.root}/log.properties">
+		<!--echo file="${product.build.root}/log.properties">
 			upload.to=${product.buildDesc}/${product.versionTag}
 			build.dir=${product.build.directory}
-		</echo>
+		</echo-->
 	</target>
 	
 	<property file="../global.properties"/>

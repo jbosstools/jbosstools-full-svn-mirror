@@ -1,39 +1,75 @@
 <html>
 	<head>
 		<title>JBossIDE build results for %build-type% build %jbosside-build-name%</title>
+		<style>
+			div.section {
+				background-color: #0080C0;
+				color: white;
+				font-weight: bold;
+				font-family: Arial, Helvetica;
+				font-size: 12pt;
+				padding-left: 5px;
+			}
+			body, td, li {
+				font-family: Arial, Helvetica;
+				font-size: 10pt;
+			}
+			
+			td.platform  {
+				width: 250px;
+			}
+		</style>
 	</head>
 	
 	<body style="font-family: sans-serif">
-		<h1>JBossIDE build results for %build-type% build %jbosside-build-name%</h1>
+		<h1>JBossIDE %build-type% build: %jbosside-build-name%</h1>
+		%date% <a href="%jbosside-download-root%/build.log.zip">Download Build Log</a>
 		<hr/>
 		
 		%build-information%
 		
-		<b>Build Targets</b>:<br/>
-		<table>
-			<tr><td>Package</td><td>Version</td></tr>
-			<tr><td>Eclipse</td><td>%eclipse-target%</td></tr>
-			<tr><td>Webtools</td><td>%webtools-target%</td></tr>
-			<tr><td>GEF</td><td>%gef-target%</td></tr>
-			<tr><td>EMF/XSD/SDO</td><td>%emf-xsd-sdo-target%</td></tr>
-			<tr><td>JEM</td><td>%jem-target%</td></tr>
+		<div class="section">Build Targets / Drivers</div>
+		<ul>
+			<li>The Eclipse driver used in this build was <a href="%eclipse-download-url%">%eclipse-target%</a>.</li>
+		 	<li>The WTP driver used in this build was <a href="%webtools-download-url%">%webtools-target%</a>.</li>
+		 	<li>The GEF driver used in this build was <a href="%gef-download-url%">%gef-target%</a>.</li>
+		 	<li>The EMF/XSD/SDO driver used in this build was <a href="%emf-sdo-xsd-download-url%">%emf-sdo-xsd-target%</a>.</li>
+		 	<li>The JEM driver used in this build was <a href="%jem-download-url%">%jem-target%</a>.</li>
+		 </ul>
+		
+		<div class="section">JBossIDE Bundles</div>
+		JBossIDE bundle builds include all plugins and components of JBossIDE as well as the entire Eclipse SDK. Please
+		choose the correct bundle for your platform.<br/>
+		
+		<table border="0" style="margin-left: 15px;"  cellspacing="5">
+			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
+			<tr><td class="platform">Windows</td><td><a href="%jbosside-download-root%/bundle/%jbosside-win32-bundle-filename%">%jbosside-win32-bundle-filename%</a></td></tr>
+			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
+			<tr><td class="platform">Linux (x86/GTK2)</td><td><a href="%jbosside-download-root%/bundle/%jbosside-linux-gtk2-bundle-filename%">%jbosside-linux-gtk2-bundle-filename%</a></td></tr>
 		</table>
 		
-		<b>ALL JBossIDE Plugins and Components</b>:<br/>
-		<a href="%jbosside-download-root%/all/%jbosside-all-filename%">%jbosside-all-filename%</a><br/><br/>
+		<div class="section">All JBossIDE Components</div>
+		This is a single build that contains all of JBossIDE's components (JBossIDE-Core, JBossAOP Developer, Hibernate Tools, jBPM Designer, EJB3 Tools).<br/>
 		
-		<b>Win32 Bundle w/ Eclipse (%eclipse-target%) & Webtools (%webtools-target%)</b>:<br/>
-		<a href="%jbosside-download-root%/bundle/%jbosside-win32-bundle-filename%">%jbosside-win32-bundle-filename%</a><br/><br/>		
-
-		<b>Linux/GTK2 Bundle w/ Eclipse (%eclipse-target%) & Webtools (%webtools-target%)</b>:<br/>
-		<a href="%jbosside-download-root%/bundle/%jbosside-linux-gtk2-bundle-filename%">%jbosside-linux-gtk2-bundle-filename%</a><br/><br/>
+		<table border="0" style="margin-left: 15px;"  cellspacing="5">
+			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
+			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/all/%jbosside-all-filename%">%jbosside-all-filename%</a></td></tr>
+		</table>
 		
-		JBossIDE Core Plugins: <a href="%jbosside-download-root%/core/%jbosside-core-filename%">%jbosside-core-filename%</a> <a href="http://www.jboss.com/products/jbosside">[website]</a><a href="http://www.jboss.com/index.html?module=bb&op=viewforum&f=201">[forum]</a><br/>
-		AOP Developer: <a href="%jbosside-download-root%/aop/%jbosside-aop-filename%">%jbosside-aop-filename%</a><br/>
-		Hibernate Tools: <a href="%jbosside-download-root%/hibernate-tools/%jbosside-hibernate-tools-filename%">%jbosside-hibernate-tools-filename%</a> <a href="http://tools.hibernate.org">[website]</a><a href="http://forum.hibernate.org/viewforum.php?f=6">[forum]</a><br/> 
-		jBPM Designer: <a href="%jbosside-download-root%/jbpm/%jbosside-jbpm-filename%">%jbosside-jbpm-filename%</a><br/>
-		EJB3 Tools: <a href="%jbosside-download-root%/ejb3/%jbosside-ejb3-filename%">%jbosside-ejb3-filename%</a><br/>
-		<br/>		
-		<a href="%jbosside-download-root%/build.log.zip">Download Build Log</a>
+		<div class="section">Standalone JBossIDE Components</div>
+		These are standalone versions of each component in JBossIDE. Each component comes with all necessary requirements to run in a clean version of the Eclipse SDK.<br/>
+		
+		<table border="0" style="margin-left: 15px;"  cellspacing="5">
+			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
+			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/core/%jbosside-core-filename%">%jbosside-core-filename%</a> (<a href="http://www.jboss.com/products/jbosside">website</a>) (<a href="http://www.jboss.com/index.html?module=bb&op=viewforum&f=201">forum</a>)</td></tr>
+			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
+			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/aop/%jbosside-aop-filename%">%jbosside-aop-filename%</a></td></tr>
+			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
+			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/hibernate-tools/%jbosside-hibernate-tools-filename%">%jbosside-hibernate-tools-filename%</a> (<a href="http://tools.hibernate.org">website</a>) (<a href="http://forum.hibernate.org/viewforum.php?f=6">forum</a>)</td></tr>
+			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
+			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/jbpm/%jbosside-jbpm-filename%">%jbosside-jbpm-filename%</a></td></tr>
+			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
+			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/ejb3/%jbosside-ejb3-filename%">%jbosside-ejb3-filename%</a></td></tr>
+		</table>
 	</body>
 </html>
