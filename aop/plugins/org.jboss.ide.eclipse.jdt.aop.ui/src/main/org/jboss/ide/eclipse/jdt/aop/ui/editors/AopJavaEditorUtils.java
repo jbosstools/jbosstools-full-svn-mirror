@@ -27,6 +27,7 @@ import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IWindowListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -52,13 +53,14 @@ import org.jboss.ide.eclipse.jdt.aop.ui.views.AspectManagerView;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class AopJavaEditorUtils implements IAopModelChangeListener {
+public class AopJavaEditorUtils implements IAopModelChangeListener, IWindowListener {
 	
 	public static final String MARKER_PROP_ADVISOR = "marker-advisor";
 	public static final String MARKER_PROP_ADVISED = "marker-advised";
 	public static final String MARKER_TYPEDEFED = "marker-typedefed";
 
 	private static AopJavaEditorUtils instance = null;
+	private AopEditorListener listener;
 	
 	public static AopJavaEditorUtils instance() {
 		if( instance == null ) {
@@ -71,16 +73,31 @@ public class AopJavaEditorUtils implements IAopModelChangeListener {
 	private HashMap markers;
 	
 	public AopJavaEditorUtils() {
-		IWorkbenchWindow window = 
-			Workbench.getInstance().getActiveWorkbenchWindow();
-		AopModel.instance().addAopModelChangeListener(this);
 		markers = new HashMap();
+		listener = new AopEditorListener();
 		
+		Workbench.getInstance().addWindowListener(this);
+		AopModel.instance().addAopModelChangeListener(this);
+	}
+	
+	private void addPartListeners (IWorkbenchWindow window)
+	{
 		IWorkbenchPage[] pages = window.getPages();
 		for( int i = 0; i < pages.length; i++ ) {
-			pages[i].addPartListener(new AopEditorListener());
+			pages[i].addPartListener(listener);
 		}
-		
+	}
+	
+	public void windowClosed(IWorkbenchWindow window) {	}
+	public void windowDeactivated(IWorkbenchWindow window) { }
+	
+	public void windowOpened(IWorkbenchWindow window)
+	{
+		addPartListeners(window);
+	}
+	
+	public void windowActivated(IWorkbenchWindow window) {
+		addPartListeners(window);
 	}
 	
 	public static class AopEditorListener implements IPartListener2 {
