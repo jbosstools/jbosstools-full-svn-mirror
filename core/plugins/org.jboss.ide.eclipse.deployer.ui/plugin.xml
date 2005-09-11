@@ -40,7 +40,7 @@
       </command>
       <keyBinding
             commandId="org.jboss.ide.eclipse.deployer.ui.commands.RedeployAction"
-            keySequence="Ctrl+Alt+F8"
+            keySequence="Shift+Ctrl+F3"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
    </extension>

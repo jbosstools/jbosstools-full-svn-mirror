@@ -56,7 +56,7 @@
       </command>
       <keyBinding
             commandId="org.jboss.ide.eclipse.packaging.ui.commands.PackagingRunAction"
-            keySequence="Ctrl+Alt+0"
+            keySequence="Shift+Ctrl+F2"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
    </extension>

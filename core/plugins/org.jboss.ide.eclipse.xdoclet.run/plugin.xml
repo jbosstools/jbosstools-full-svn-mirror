@@ -58,7 +58,7 @@
       </command>
       <keyBinding
             commandId="org.jboss.ide.eclipse.xdoclet.run.ui.commands.XDocletRunAction"
-            keySequence="Ctrl+Alt+9"
+            keySequence="Shift+Ctrl+F1"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
    </extension>
