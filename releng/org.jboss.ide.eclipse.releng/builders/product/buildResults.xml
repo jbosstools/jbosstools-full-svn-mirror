@@ -64,7 +64,7 @@
 		<get.version.tag builder="hibernate-tools" property="hibernate-tools.versionTag"/>
 		<get.version.tag builder="jbpm" property="jbpm.versionTag"/>
 		
-		<loadfile property="build.information" srcfile="buildinfo/${product.buildDesc}.html"/>
+		<loadfile property="build.information" srcfile="buildInfo/${product.buildDesc}.html"/>
 	</target>
 		
 	<target name="build.results" depends="get.build.properties">
