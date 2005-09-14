@@ -15,7 +15,13 @@ $ANT $@ -lib ../lib -f common/buildRequirements.xml cleanRequirements
 
 if [ "$TARGET" = "product" ]; then
 	$ANT $@ -lib ../lib -f product/productBuild.xml release -DreleaseNumber=$RELEASE > build.log
-	$ANT $@ -lib ../lib -f product/buildResults.xml publish.log
+
+	if [ "$?" = "0" ]; then
+		$ANT $@ -lib ../lib -f product/buildResults.xml publish.log
+	else
+		echo "\t[JBossIDE-Build ERROR] There was an error running the build"
+	fi
+
 else
 	$ANT $@ -lib ../lib -f builder-wrap.xml release -Dbuilder=$TARGET -DreleaseNumber=$RELEASE
 fi
