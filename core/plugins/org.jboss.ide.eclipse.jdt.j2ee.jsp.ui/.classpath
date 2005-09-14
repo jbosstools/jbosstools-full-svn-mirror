@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="src/main"/>
-	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/org.jboss.ide.eclipse.jdt.j2ee.core/lib/j2ee-1.4/servlet-api.jar"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>
