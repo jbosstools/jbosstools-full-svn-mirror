@@ -1,5 +1,5 @@
 aop=1.1.0.beta4
 ejb3=1.0.0.beta4
 core=1.5.0.M3
-hibernate-tools=beta1
+hibernate-tools=alpha6
 jbpm=3.0.3
