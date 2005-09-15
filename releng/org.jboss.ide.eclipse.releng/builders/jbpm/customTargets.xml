@@ -117,6 +117,17 @@
 	<replace 
 		file="${build-dir}/plugins/org.jbpm.ui/src/org/jbpm/ui/PluginConstants.java" 
 		token="%default-jbpm-name%" value="${default-jbpm-name}" />
+	
+	<condition property="append" else="false">
+		<not>
+			<equals arg1="${buildType}" arg2="R"/>
+		</not>
+	</condition>
+	<updateVersions type="feature" version="${versionTag}" append="${append}" updateAssembleScript="false" recursivePlugins="true">
+		<fileset dir="${buildDirectory}/features">
+			<include name="*jbpm*"/>
+		</fileset>
+	</updateVersions>
 </target>
 
 <target name="initPostFetch" >
