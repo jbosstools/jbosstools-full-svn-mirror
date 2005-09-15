@@ -1,5 +1,5 @@
 <project name="Build specific targets and properties" default="noDefault" >
-
+	<taskdef name="updateVersions" classname="org.jboss.ide.eclipse.releng.UpdateVersionsTask" classpath="../../bin"/>
 	<taskdef classpath="../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
 	
 	<property file="custom.properties" />
