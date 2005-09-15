@@ -123,7 +123,9 @@
 			<equals arg1="${buildType}" arg2="R"/>
 		</not>
 	</condition>
-	<updateVersions type="feature" version="${versionTag}" append="${append}" updateAssembleScript="false" recursivePlugins="true">
+	<updateVersions type="feature" version="${versionTag}" append="${append}"
+		updateAssembleScript="false" recursivePlugins="true" failonrecursiveerror="false"
+		pluginRegex="org.jbpm.*">
 		<fileset dir="${buildDirectory}/features">
 			<include name="*jbpm*"/>
 		</fileset>
