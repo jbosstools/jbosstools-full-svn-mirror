@@ -116,6 +116,7 @@ include.plugins=\
 	org.apache.xerces,\
 	org.eclipse.draw2d,\
 	org.eclipse.emf.common,\
+	org.eclipse.emf.common.ui,\
 	org.eclipse.emf.ecore,\
 	org.eclipse.emf.ecore.xmi,\
 	org.eclipse.emf.edit,\
