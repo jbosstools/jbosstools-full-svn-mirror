@@ -64,10 +64,10 @@
 			</filterset>
 		</copy>
 		
-		<!--echo file="${product.build.root}/log.properties">
+		<echo file="${product.build.root}/log.properties">
 			upload.to=${product.buildDesc}/${product.versionTag}
-			build.dir=${product.build.directory}
-		</echo-->
+			product.build.directory=${product.build.directory}
+		</echo>
 	</target>
 	
 	<property file="../global.properties"/>
