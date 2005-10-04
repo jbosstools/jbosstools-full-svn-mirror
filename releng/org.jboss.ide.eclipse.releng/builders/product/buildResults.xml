@@ -77,7 +77,7 @@
 
 		<property file="${product.build.root}/log.properties"/>
 			
-		<zip destfile="${build.dir}/build.log.zip">
+		<zip destfile="${product.build.directory}/build.log.zip">
 			<fileset file="${build.root}/builders/build.log"/>
 		</zip>
 		<delete>
@@ -85,8 +85,8 @@
 		</delete>
 		
 		<scp.fileset.trusted todir="${upload.to}">
-			<fileset file="${build.dir}/build.log.zip"/>
-			<fileset file="${build.dir}/buildResults.html"/>
+			<fileset file="${product.build.directory}/build.log.zip"/>
+			<fileset file="${product.build.directory}/buildResults.html"/>
 		</scp.fileset.trusted>
 			
 		<!--scp trust="true" todir="${ssh.username}@${ssh.host}:${scp.basedir}/${upload.to}" keyfile="${ssh.key}" passphrase="${ssh.passphrase}">
