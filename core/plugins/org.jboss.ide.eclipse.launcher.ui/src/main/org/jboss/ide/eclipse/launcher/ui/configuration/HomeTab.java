@@ -244,8 +244,19 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
          configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_HOMEDIR_CLASSPATH, ServerLaunchUtil.appendListElementToString(homedirText.getText(), File.separator, relativeStartClasspath));
          List relativeShutdownClasspath = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_HOMEDIR_SHUTDOWN_CLASSPATH, Collections.EMPTY_LIST);
          configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_HOMEDIR_SHUTDOWN_CLASSPATH, ServerLaunchUtil.appendListElementToString(homedirText.getText(), File.separator, relativeShutdownClasspath));
-         configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_DEFAULT_VM_ARGS, IJBossConstants.JBOSS_HOME_OPTION
-               + homedirText.getText());
+         
+         String jbossHomeProperty = IJBossConstants.JBOSS_HOME_OPTION;
+         String homedir = homedirText.getText();
+         
+         if (homedir.indexOf(" ") != -1)
+         {
+        	 jbossHomeProperty += "\"" + homedir + "\"";
+         } else {
+        	 jbossHomeProperty += homedir;
+         }
+         
+         configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_DEFAULT_VM_ARGS, jbossHomeProperty);
+         
          configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_DEFAULT_PROGRAM_ARGS, IJBossConstants.JBOSS_CONFIGURATION_OPTION + " " + serverConfig);
          
          Map logFiles = new HashMap();
@@ -325,14 +336,18 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
 	            File dir = new File(homedir);
 	            File server = new File(dir, "server");//$NON-NLS-1$
 	            File[] configs = server.listFiles();
-	            for (int j = 0; j < configs.length; j++)
+	            
+	            if (configs != null)
 	            {
-	               File config = configs[j];
-	               File deploy = new File(config, "deploy");//$NON-NLS-1$
-	               if (deploy.exists() && deploy.isDirectory())
-	               {
-	                  serverConfigurations.add(config.getName());
-	               }
+		            for (int j = 0; j < configs.length; j++)
+		            {
+		               File config = configs[j];
+		               File deploy = new File(config, "deploy");//$NON-NLS-1$
+		               if (deploy.exists() && deploy.isDirectory())
+		               {
+		                  serverConfigurations.add(config.getName());
+		               }
+		            }
 	            }
 	         }
 	      }
