@@ -39,7 +39,7 @@ public class DeployAction extends AbstractDeployAction
     * @param resource  Description of the Parameter
     * @return          The deploymentTarget value
     */
-   protected ITarget getDeploymentTarget(IResource resource)
+   protected ITarget[] getDeploymentTargets(IResource[] resources)
    {
       ITarget target = null;
 
@@ -56,7 +56,7 @@ public class DeployAction extends AbstractDeployAction
          target = dialog.getTarget();
       }
 
-      return target;
+      return new ITarget[] { target };
    }
 
 

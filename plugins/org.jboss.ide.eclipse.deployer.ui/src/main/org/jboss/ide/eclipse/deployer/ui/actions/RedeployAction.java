@@ -41,36 +41,40 @@ public class RedeployAction extends AbstractDeployAction
     * @param resource  Description of the Parameter
     * @return          The deploymentTarget value
     */
-   protected ITarget getDeploymentTarget(IResource resource)
+   protected ITarget[] getDeploymentTargets(IResource[] resources)
    {
-      ITarget target = null;
+	   ITarget[] targets = new ITarget[resources.length];
 
-      try
-      {
-         DeployerCorePlugin.getDefault().refreshDebugTargets();
-         DeployerCorePlugin.getDefault().refreshTargets();
-
-         Collection choices = new ArrayList();
-         choices.addAll(DeployerCorePlugin.getDefault().getDebugTargets());
-         choices.addAll(DeployerCorePlugin.getDefault().getTargets());
-
-         target = (ITarget) resource.getSessionProperty(IDeployerUIConstants.QNAME_TARGET);
-         if (!choices.contains(target))
-         {
-            TargetChoiceDialog dialog = new TargetChoiceDialog(AbstractPlugin.getShell(), choices);
-            if (dialog.open() == IDialogConstants.OK_ID)
-            {
-               target = dialog.getTarget();
-            }
-         }
-      }
-      catch (CoreException ce)
-      {
-         AbstractPlugin.logError("Unable to get target session property", ce);//$NON-NLS-1$
-      }
-
-      return target;
-   }
+		try
+		{
+			DeployerCorePlugin.getDefault().refreshDebugTargets();
+			DeployerCorePlugin.getDefault().refreshTargets();
+			
+			Collection choices = new ArrayList();
+			choices.addAll(DeployerCorePlugin.getDefault().getDebugTargets());
+			choices.addAll(DeployerCorePlugin.getDefault().getTargets());
+			
+			for (int i = 0; i < resources.length; i++)
+			{
+				ITarget target = (ITarget) resources[i].getSessionProperty(IDeployerUIConstants.QNAME_TARGET);
+				if (!choices.contains(target))
+				{
+					TargetChoiceDialog dialog = new TargetChoiceDialog(AbstractPlugin.getShell(), choices);
+					if (dialog.open() == IDialogConstants.OK_ID)
+					{
+						target = dialog.getTarget();
+					}
+				}
+				targets[i] = target;
+			}
+		}
+		catch (CoreException ce)
+		{
+			AbstractPlugin.logError("Unable to get target session property", ce);//$NON-NLS-1$
+		}
+			
+			return targets;
+		}
 
 
    /**
