@@ -38,54 +38,6 @@
    </requires>
 
    <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            name="%org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.ApplicationXmlEditor"
-            default="true"
-            icon="icons/full/obj16/xml.gif"
-            filenames="application.xml"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            class="org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.ApplicationXmlEditor"
-            id="org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.ApplicationXmlEditor">
-      </editor>
-      <editor
-            default="true"
-            name="%org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.ConnectorXmlEditor"
-            icon="icons/full/obj16/xml.gif"
-            filenames="ra.xml"
-            class="org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.ConnectorXmlEditor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            id="org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.ConnectorXmlEditor">
-      </editor>
-      <editor
-            default="true"
-            name="%org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.EjbXmlEditor"
-            icon="icons/full/obj16/xml.gif"
-            filenames="ejb-jar.xml"
-            class="org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.EjbXmlEditor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            id="org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.EjbXmlEditor">
-      </editor>
-      <editor
-            default="true"
-            name="%org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.TldEditor"
-            icon="icons/full/obj16/xml.gif"
-            extensions="tld"
-            class="org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.TldEditor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            id="org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.TldEditor">
-      </editor>
-      <editor
-            default="true"
-            name="%org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.WebXmlEditor"
-            icon="icons/full/obj16/xml.gif"
-            filenames="web.xml"
-            class="org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.WebXmlEditor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            id="org.jboss.ide.eclipse.jdt.j2ee.xml.ui.editors.WebXmlEditor">
-      </editor>
-   </extension>
-   <extension
          point="org.eclipse.ui.newWizards">
       <wizard
             name="%org.jboss.ide.eclipse.jdt.j2ee.xml.ui.wizards.NewApplicationXml13PageWizard"
