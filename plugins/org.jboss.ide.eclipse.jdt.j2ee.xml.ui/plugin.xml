@@ -35,7 +35,6 @@
       <import plugin="org.eclipse.jdt.debug"/>
       <import plugin="org.eclipse.jdt.debug.ui"/>
       <import plugin="org.apache.ant"/>
-      <import plugin="org.jboss.ide.eclipse.jdt.j2ee.xml.core"/>
    </requires>
 
    <extension
