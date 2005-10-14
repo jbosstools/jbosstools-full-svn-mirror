@@ -114,12 +114,11 @@ public abstract class AbstractDeployAction extends ActionDelegate implements IOb
 
 
    /**
-    * Gets the deploymentTarget attribute of the AbstractDeployAction object
+    * Gets the Deployment targets associated with the passed in resources
     *
-    * @param resource  Description of the Parameter
     * @return          The deploymentTarget value
     */
-   protected abstract ITarget getDeploymentTarget(IResource resource);
+   protected abstract ITarget[] getDeploymentTargets(IResource[] resources);
 
 
    /**
@@ -138,15 +137,16 @@ public abstract class AbstractDeployAction extends ActionDelegate implements IOb
     */
    protected void process(Collection resources)
    {
-      Iterator it = resources.iterator();
-      while (it.hasNext())
-      {
-         final IResource resource = (IResource) it.next();
-         final ITarget target = this.getDeploymentTarget(resource);
-         if (target != null)
-         {
-            Job job =
-               new Job(this.getTitle(resource))
+	   IResource[] resourcesArray = (IResource[]) resources.toArray(new IResource[resources.size()]);
+	   ITarget[] targets = getDeploymentTargets(resourcesArray);
+	   for (int i = 0; i < resourcesArray.length; i++)
+	   {
+		   // If there is only 1 target, it should be the same for all resources
+		   final ITarget target = targets.length == 1 ? targets[0] : targets[i];
+		   final IResource resource = resourcesArray[i];
+		   
+           Job job =
+               new Job(this.getTitle(resourcesArray[i]))
                {
                   protected IStatus run(IProgressMonitor monitor)
                   {
@@ -157,9 +157,8 @@ public abstract class AbstractDeployAction extends ActionDelegate implements IOb
                };
             job.setRule(resource);
             job.setPriority(Job.BUILD);
-            job.schedule();
-         }
-      }
+            job.schedule();   
+	   }
    }
 
 
