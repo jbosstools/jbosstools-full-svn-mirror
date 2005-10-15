@@ -466,12 +466,6 @@ END OF TERMS AND CONDITIONS
          version="1.5.0"/>
 
    <plugin
-         id="org.apache.xalan"
-         download-size="0"
-         install-size="0"
-         version="2.6.0"/>
-
-   <plugin
          id="org.jboss.ide.eclipse.launcher.core"
          download-size="0"
          install-size="0"

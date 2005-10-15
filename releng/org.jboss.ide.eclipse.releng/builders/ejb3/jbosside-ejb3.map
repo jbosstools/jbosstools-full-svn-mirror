@@ -3,7 +3,7 @@ plugin@org.jboss.ide.eclipse.ejb3.wizards.core=HEAD,:pserver:anonymous@anoncvs.f
 plugin@org.jboss.ide.eclipse.ejb3.wizards.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/ejb3/plugins/org.jboss.ide.eclipse.ejb3.wizards.ui
 
 plugin@org.jboss.ide.eclipse.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.core
-plugin@org.apache.xalan=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.apache.xalan
+#plugin@org.apache.xalan=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.apache.xalan
 plugin@org.jboss.ide.eclipse.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.ui
 plugin@org.jboss.ide.eclipse.launcher.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.launcher.core
 plugin@org.jboss.ide.eclipse.launcher.ui=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.launcher.ui
