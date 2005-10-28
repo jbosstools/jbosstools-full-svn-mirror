@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.jboss.ide.eclipse.jdt.aop.feature"
-      label="org.jboss.ide.eclipse.jdt.aop.feature"
+      label="JBoss AOP Tools"
       version="1.1.0"
       provider-name="JBoss, Inc.">
 
-   <description url="http://www.yourdomain.com/description">
-      [Enter Feature Description here.]
+   <description url="http://www.jboss.com/products/jbosside">
+      Select &apos;More Info&apos;
    </description>
-
-   <copyright url="http://www.yourdomain.com/copyright">
-      [Enter Copyright Description here.]
-   </copyright>
 
    <license url="http://osdn.dl.sourceforge.net/sourceforge/jboss/LGPL.html">
       The JBoss-IDE is under the LGPL Licence
