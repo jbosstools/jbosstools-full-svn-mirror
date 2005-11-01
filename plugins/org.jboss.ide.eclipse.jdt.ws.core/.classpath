@@ -10,7 +10,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/wsi-1.0/jaxrpc-api.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/wsi-1.0/saaj-api.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/wsi-1.0/xml-api.jar"/>
-	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
