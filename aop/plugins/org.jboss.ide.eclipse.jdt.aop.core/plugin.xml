@@ -1,77 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
-<plugin
-   id="org.jboss.ide.eclipse.jdt.aop.core"
-   name="%plugin.name"
-   version="1.1.0"
-   provider-name="%plugin.provider"
-   class="org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin">
+<plugin>
 
-   <runtime>
-      <library name="jaxb-api.jar">
-         <export name="*"/>
-      </library>
-      <library name="namespace.jar">
-         <export name="*"/>
-      </library>
-      <library name="jax-qname.jar">
-         <export name="*"/>
-      </library>
-      <library name="jaxb-impl.jar">
-         <export name="*"/>
-      </library>
-      <library name="jaxb-libs.jar">
-         <export name="*"/>
-      </library>
-      <library name="relaxngDatatype.jar">
-         <export name="*"/>
-      </library>
-      <library name="org-jboss-ide-eclipse-jdt-aop-core.jar">
-         <export name="*"/>
-      </library>
-      <library name="jboss-aop.jar">
-         <export name="*"/>
-      </library>
-      <library name="jboss-common.jar">
-         <export name="*"/>
-      </library>
-      <library name="qdox.jar">
-         <export name="*"/>
-      </library>
-      <library name="concurrent.jar">
-         <export name="*"/>
-      </library>
-      <library name="trove.jar">
-         <export name="*"/>
-      </library>
-      <library name="javassist.jar">
-         <export name="*"/>
-      </library>
-      <library name="junit.jar">
-         <export name="*"/>
-      </library>
-      <library name="jboss-aspect-library.jar">
-         <export name="*"/>
-      </library>
-      <library name="bsh-1.3.0.jar">
-         <export name="*"/>
-      </library>
-      <library name="xsdlib.jar">
-         <export name="*"/>
-      </library>
-   </runtime>
-   <requires>
-      <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.ui.intro"/>
-      <import plugin="org.eclipse.jdt.core"/>
-      <import plugin="org.eclipse.jdt"/>
-      <import plugin="org.eclipse.jdt.ui"/>
-   </requires>
-
-
-   <extension
+     <extension
          id="AopProjectBuilder"
          name="AOP Project Builder"
          point="org.eclipse.core.resources.builders">

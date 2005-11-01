@@ -1,39 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
-<plugin
-   id="org.jboss.ide.eclipse.jdt.aop.ui"
-   name="%plugin.name"
-   version="1.1.0"
-   provider-name="%plugin.provider"
-   class="org.jboss.ide.eclipse.jdt.aop.ui.AopUiPlugin">
+<plugin>
 
-   <runtime>
-      <library name="org-jboss-ide-eclipse-jdt-aop-ui.jar">
-         <export name="*"/>
-      </library>
-   </runtime>
-   <requires>
-      <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="org.eclipse.ui.views"/>
-      <import plugin="org.eclipse.jface.text"/>
-      <import plugin="org.eclipse.ui.workbench.texteditor"/>
-      <import plugin="org.eclipse.ui.editors"/>
-      <import plugin="org.jboss.ide.eclipse.jdt.aop.core"/>
-      <import plugin="org.eclipse.jdt.ui"/>
-      <import plugin="org.eclipse.debug.core"/>
-      <import plugin="org.eclipse.jdt.debug"/>
-      <import plugin="org.eclipse.jdt.debug.ui"/>
-      <import plugin="org.eclipse.debug.ui"/>
-      <import plugin="org.eclipse.jdt.launching"/>
-      <import plugin="org.eclipse.ui.intro"/>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.jdt.core"/>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.core.resources"/>
-   </requires>
-
-
-   <extension
+     <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
             objectClass="org.eclipse.jdt.core.IJavaElement"
@@ -140,10 +109,11 @@
    <extension
          point="org.eclipse.debug.ui.launchGroups">
       <launchGroup
-            label="Run"
-            mode="run"
+            bannerImage="icons/launchicon.gif"
+            id="org.jboss.ide.eclipse.jdt.aop.ui.launchGroupRun"
             image="icons/launchicon.gif"
-            id="org.jboss.ide.eclipse.jdt.aop.ui.launchGroupRun"/>
+            label="Run"
+            mode="run"/>
    </extension>
    
    
