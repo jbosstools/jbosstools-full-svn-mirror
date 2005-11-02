@@ -18,6 +18,7 @@ if [ "$TARGET" = "product" ]; then
 		$ANT $@ -lib ../lib -f product/buildResults.xml publish.log
 	else
 		echo "\t[JBossIDE-Build ERROR] There was an error running the build"
+		exit -1
 	fi
 	
 else
