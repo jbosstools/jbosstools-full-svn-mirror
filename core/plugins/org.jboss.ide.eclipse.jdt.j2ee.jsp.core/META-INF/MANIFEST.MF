@@ -46,8 +46,7 @@ Require-Bundle: org.jboss.ide.eclipse.core,
  org.eclipse.jdt,
  org.eclipse.jdt.core,
  org.apache.ant,
- org.apache.xalan,
  org.jboss.ide.eclipse.jdt.j2ee.core,
  org.jboss.ide.eclipse.jdt.test.core,
- org.jboss.ide.eclipse.jdt.xml.core
+ org.apache.xerces
 Eclipse-AutoStart: true
