@@ -8,6 +8,7 @@ package org.jboss.ide.eclipse.jdt.j2ee.jsp.core.compiler.jasper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -38,6 +39,7 @@ import org.apache.jasper.compiler.PageInfo;
 import org.apache.jasper.compiler.ParserController;
 import org.apache.jasper.compiler.ScriptingVariabler;
 import org.apache.jasper.compiler.ServletWriter;
+import org.apache.jasper.compiler.SmapUtil;
 import org.apache.jasper.compiler.TagFileProcessor;
 import org.apache.jasper.compiler.TagPluginManager;
 import org.apache.jasper.compiler.TextOptimizer;
@@ -710,17 +712,19 @@ public class JSPProject implements IResourceChangeListener
       info.setContent(osw.toString());
       info.setPageInfo(pageInfo);
 
-      //        File outputFile = new File(info.getJavaFileName());
-      //        outputFile.getParentFile().mkdirs();
-      //        FileWriter fw = new FileWriter(outputFile);
-      //        fw.write(info.getContent());
-      //        fw.close();
+      File outputFile = new File(info.getJavaFileName());
+      outputFile.getParentFile().mkdirs();
+      FileWriter fw = new FileWriter(outputFile);
+      fw.write(info.getContent());
+      fw.close();
+      
+      
       //
-      //        // JSR45 Support
-      //        if (!jasperEnvironment.isSmapSuppressed()) {
-      //            smapStr = SmapUtil.generateSmap(clctxt, pageNodes);
-      //            info.setSmap(smapStr);
-      //        }
+      // JSR45 Support
+      if (!jasperEnvironment.isSmapSuppressed()) {
+          smapStr = SmapUtil.generateSmap(clctxt, pageNodes);
+          info.setSmap(smapStr);
+      }
 
       return info;
    }
