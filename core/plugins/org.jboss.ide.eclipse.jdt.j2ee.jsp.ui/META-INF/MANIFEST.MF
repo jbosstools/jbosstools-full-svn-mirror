@@ -8,18 +8,9 @@ Bundle-Activator: org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.JDTJ2EEJSPUIPlugin
 Bundle-Vendor: %plugin.provider
 Bundle-Localization: plugin
 Export-Package: org.jboss.ide.eclipse.jdt.j2ee.jsp.ui,
- org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.assist,
- org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.assist.contributor,
- org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.assist.tags,
+ org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.actions,
  org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.decorators,
- org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.editors,
- org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.editors.text,
- org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.editors.text.scanners,
- org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.pages,
- org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.preferences,
- org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.properties,
- org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.reconcilier,
- org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.wizards
+ org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.properties
 Require-Bundle: org.eclipse.ui.ide,
  org.eclipse.ui.views,
  org.eclipse.jface.text,
@@ -41,8 +32,6 @@ Require-Bundle: org.eclipse.ui.ide,
  org.jboss.ide.eclipse.jdt.j2ee.jsp.core,
  org.eclipse.jdt.debug,
  org.eclipse.jdt.debug.ui,
- org.apache.ant,
- org.jboss.ide.eclipse.jdt.xml.core,
- org.jboss.ide.eclipse.jdt.xml.ui
+ org.apache.ant
 Eclipse-AutoStart: true
 Import-Package: javax.servlet
