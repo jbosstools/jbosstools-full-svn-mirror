@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
-
      <extension
          point="org.eclipse.ui.propertyPages">
       <page
@@ -11,25 +10,6 @@
             class="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.properties.JSPProjectNaturePropertyPage"
             id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.properties.JSPProjectNaturePropertyPage">
       </page>
-   </extension>
-   <extension
-         point="org.eclipse.ui.ide.markerImageProviders">
-      <imageprovider
-            markertype="org.eclipse.jdt.debug.javaStratumLineBreakpointMarker"
-            icon="icons/full/obj16/brkp_obj.gif"
-            id="org.eclipse.jsp.breakpointMarkerProvider">
-      </imageprovider>
-   </extension>
-   <extension
-         id="org.jboss.ide.eclipse.jdt.j2ee.jsp.problem"
-         name="JSP Compilation Error"
-         point="org.eclipse.core.resources.markers">
-      <super
-            type="org.eclipse.core.resources.problemmarker">
-      </super>
-      <persistent
-            value="true">
-      </persistent>
    </extension>
    <extension
          point="org.eclipse.ui.decorators">
@@ -64,49 +44,6 @@
                id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.actions.JSPCompilationAction">
          </action>
       </objectContribution>
-   </extension>
-   <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            name="%org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.preferences.JSPSyntaxPreferencePage"
-            category="org.jboss.ide.eclipse.ui.MainPreferencePage"
-            class="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.preferences.JSPSyntaxPreferencePage"
-            id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.preferences.JSPSyntaxPreferencePage">
-      </page>
-   </extension>
-   <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            name="%org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.editors.JSPEditor"
-            icon="icons/full/obj16/jsp.gif"
-            extensions="jsp,jsf,jspf"
-            class="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.editors.JSPEditor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.editors.JSPEditor">
-      </editor>
-   </extension>
-   <extension
-         point="org.eclipse.ui.editorActions">
-      <editorContribution
-            targetID="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.editors.JSPEditor"
-            id="org.eclipse.jsp.BreakpointRulerActions">
-         <action
-               label="%org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.actions.ToggleJspBreakpointAction"
-               class="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.actions.ToggleJspBreakpointRulerActionDelegate"
-               actionID="RulerDoubleClick"
-               id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.actions.ToggleJspBreakpointAction">
-         </action>
-      </editorContribution>
-   </extension>
-   <extension
-         point="org.eclipse.ui.newWizards">
-      <wizard
-            name="%org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.wizards.NewJSPPageWizard"
-            icon="icons/full/ctool16/newjsp_wiz.gif"
-            category="org.jboss.ide.eclipse.ui.wizards/org.jboss.ide.eclipse.ui.wizards.web"
-            class="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.wizards.NewJSPPageWizard"
-            id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.wizards.NewJSPPageWizard">
-      </wizard>
    </extension>
 
 </plugin>
