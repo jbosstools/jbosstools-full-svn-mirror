@@ -170,12 +170,9 @@ include.plugins=\
 	org.eclipse.jem.util,\
 	org.eclipse.wst.common.frameworks,\
 	org.eclipse.wst.common.ui,\
-	org.eclipse.wst.commun.uriresolver,\
+	org.eclipse.wst.common.uriresolver,\
 	org.eclipse.wst.sse.core,\
 	org.eclipse.wst.sse.ui,\
 	org.eclipse.wst.validation,\
 	org.eclipse.wst.xml.core,\
-	org.eclipse.wst.xml.ui,\
-	org.eclipse.wst.xml.uriresolver.ui,\
-	org.eclipse.wst.xml.uriresolver,\
-	org.eclipse.wst.dtd.core
+	org.eclipse.wst.xml.ui
