@@ -80,8 +80,8 @@
 	<mkdir dir="${build.root}/temp-jdt-core"/>
 	
 	<unjar dest="${build.root}/temp-jdt-core">
-		<fileset>
-			<include name="${clean.eclipse.home}/plugins/org.eclipse.jdt.core_*.jar"/>
+		<fileset dir="${clean.eclipse.home}/plugins">
+			<include name="org.eclipse.jdt.core_*.jar"/>
 		</fileset>
    	</unjar>
    	
