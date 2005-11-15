@@ -46,4 +46,21 @@
 		</sequential>
 	</macrodef>
 	
+	<macrodef name="copyMapFile">
+		<attribute name="buildDirectory"/>
+		<attribute name="builder"/>
+		<attribute name="cvsTag"/>
+		
+		<sequential>
+			<mkdir dir="@{buildDirectory}/maps" />
+			<copy todir="@{buildDirectory}/maps">
+				<fileset dir="${build.root}/builders/@{builder}">
+					<include name="**/*.map"/>
+				</fileset>
+				<filterset begintoken="%" endtoken="%">
+					<filter token="cvsTag" value="@{cvsTag}"/>
+				</filterset>
+			</copy>
+		</sequential>
+	</macrodef>
 </project>

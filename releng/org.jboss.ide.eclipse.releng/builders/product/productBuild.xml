@@ -132,15 +132,18 @@
 		  			<equals arg1="${product.buildDesc}" arg2="release"/>
 		  			<then>
 		  				<propertycopy override="true" name="builder.version" from="versionTags.@{builder}"/>
+		  				<propertycopy override="true" name="cvsTag" from="versionTags.@{builder}.cvs"/>
 		  			</then>
 		  			<else>
 		  				<property name="builder.version" value="${product.versionTag}"/>
+		  				<property name="cvsTag" value="HEAD"/>
 		  			</else>
 		  		</if>
 		  	
 				<ant dir="${builder.root}" antfile="builder-wrap.xml" target="${product.buildDesc}" inheritAll="true">
 					<property name="builder" value="@{builder}"/>
 					<property name="versionTag" value="${builder.version}"/>
+					<property name="cvsTag" value="${cvsTag}"/>
 				</ant>
 
 				<property name="buildType" value="${product.buildType}"/>

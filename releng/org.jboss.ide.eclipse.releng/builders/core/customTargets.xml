@@ -32,16 +32,8 @@
 <!-- Replace values for cvsRoot, package and mapVersionTag as desired. -->
 <!-- ===================================================================== -->
 <target name="getMapFiles">
-	<!-- Notify recipients that build has started.-->
-	<!-- In real life we'll want to commit map files to CVS <property name="cvsRoot" value=":pserver:anonymous@cvs.sourceforge.net:/cvsroot/jboss/jbosside/core" />
-	<property name="mapVersionTag" value="HEAD" />
-	<cvs 
-		package="${cvsRoot}"
-		dest="${buildDirectory}/maps"
-		tag="${mapVersionTag}"
-		/> -->
-
-	<copy file="${build.root}/builders/core/jbosside-core.map" todir="${buildDirectory}/maps"/>
+	<!-- we need to export the map file w/ the correct CVS tags -->
+	<copyMapFile builder="core" buildDirectory="${buildDirectory}" cvsTag="${cvsTag}"/>
 </target>
 
 <!-- ===================================================================== -->
