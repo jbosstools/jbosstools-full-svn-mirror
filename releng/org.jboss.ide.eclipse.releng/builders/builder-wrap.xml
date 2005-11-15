@@ -76,18 +76,18 @@
    	
    	<buildRequirements requirements="${builder.requires}"/>
    	
-   	<if>
-   		<available file="${clean.eclipse.home}/plugins/org.eclipse.jdt.core_3.1.0.jar"/>
-   		<then>
-   			<mkdir dir="${build.root}/temp-jdt-core"/>
-   			<unjar src="${clean.eclipse.home}/plugins/org.eclipse.jdt.core_3.1.0.jar" dest="${build.root}/temp-jdt-core"/>
-   			<property name="jdt.core.path" value="${build.root}/temp-jdt-core"/>
-   		</then>
-   		<else>
-   			<property name="jdt.core.path" value="${clean.eclipse.home}/plugins/org.eclipse.jdt.core_3.1.0"/>
-   		</else>
-   	</if>
    	
+	<mkdir dir="${build.root}/temp-jdt-core"/>
+	
+	<unjar dest="${build.root}/temp-jdt-core">
+		<fileset>
+			<include name="${clean.eclipse.home}/plugins/org.eclipse.jdt.core_*.jar"/>
+		</fileset>
+   	</unjar>
+   	
+	<property name="jdt.core.path" value="${build.root}/temp-jdt-core"/>
+	<!--property name="jdt.core.path" value="${clean.eclipse.home}/plugins/org.eclipse.jdt.core_3.1.0"/-->
+
    	<property environment="env"/>
    	<echo>versionTag for this builder=${versionTag}</echo>
      <java classname="org.eclipse.core.launcher.Main" fork="true">
