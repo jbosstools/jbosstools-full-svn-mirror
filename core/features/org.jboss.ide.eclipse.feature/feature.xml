@@ -720,12 +720,12 @@ END OF TERMS AND CONDITIONS
          id="org.jboss.ide.eclipse.jdt.j2ee.jsp.core"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="1.5.0"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="1.5.0"/>
 
 </feature>
