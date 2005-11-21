@@ -46,7 +46,7 @@
 <!-- ===================================================================== -->
 <target name="getMapFiles">
 	<copyMapFile builder="jbpm" buildDirectory="${buildDirectory}" cvsTag="${cvsTag}"/>
-	<replace dir="${mapDir}" token="%jbpm-cvs-root%" value="${jbpm-cvs-root}" />
+	<replace dir="${buildDirectory}/maps" token="%jbpm-cvs-root%" value="${jbpm-cvs-root}" />
 </target>
 
 <!-- ===================================================================== -->
