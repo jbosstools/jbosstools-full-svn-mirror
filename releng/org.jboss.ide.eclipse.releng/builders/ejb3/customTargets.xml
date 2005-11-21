@@ -2,7 +2,7 @@
 		  
 	<taskdef classpath="../../bin" resource="org/jboss/ide/eclipse/releng/antlib.xml" />
 	<taskdef classpath="../../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
-
+	<import file="../common/common.xml"/>
 <!-- ===================================================================== -->
 <!-- Run a given ${target} on all elements being built -->
 <!-- Add on <ant> task for each top level element being built. -->

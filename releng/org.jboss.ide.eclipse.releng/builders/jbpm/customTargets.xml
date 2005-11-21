@@ -16,6 +16,7 @@
 	<property name="jbpm-db-plugin-dir" value="${build-dir}/plugins/org.jbpm.db" />
 	
 	<import file="../common/bundlePlugins.xml"/>
+	<import file="../common/common.xml"/>
 <!-- ===================================================================== -->
 <!-- Run a given ${target} on all elements being built -->
 <!-- Add on <ant> task for each top level element being built. -->

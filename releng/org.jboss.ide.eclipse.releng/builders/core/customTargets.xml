@@ -3,6 +3,7 @@
 	
 	<taskdef classpath="../../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
 	<import file="../common/bundlePlugins.xml"/>
+	<import file="../common/common.xml"/>
 	
 <!-- ===================================================================== -->
 <!-- Run a given ${target} on all elements being built -->
