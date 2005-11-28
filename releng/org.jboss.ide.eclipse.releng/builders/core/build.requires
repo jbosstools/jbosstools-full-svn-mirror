@@ -1,2 +1,0 @@
-# specific builder requirements
-builder.requires=eclipse,emf-sdo-xsd,gef,jem,webtools
