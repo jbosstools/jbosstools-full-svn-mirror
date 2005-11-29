@@ -59,15 +59,14 @@
          </action>
       </objectContribution>
    </extension>
-   <!--extension
+   <extension
          id="XDocletRunBuilder"
-         name="JBossIDE XDoclet Run Builder"
+         name="JBoss Eclipse IDE XDoclet Builder"
          point="org.eclipse.core.resources.builders">
       <builder
-            hasNature="true"
-            >
+            hasNature="false"
+            isConfigurable="true">
          <run class="org.jboss.ide.eclipse.xdoclet.run.builder.XDocletRunBuilder"/>
       </builder>
-   </extension-->
-
+   </extension>
 </plugin>
