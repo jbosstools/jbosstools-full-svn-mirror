@@ -157,7 +157,8 @@ public class PackagingRunAction extends ActionDelegate implements IObjectActionD
                      // Transform configuration to Ant build file
                      monitor.subTask(PackagingUIMessages.getString("PackagingRunAction.packaging.generate"));//$NON-NLS-1$
                      
-                     IFile buildFile = PackagingUIPlugin.getDefault().createBuildFile(project);
+                     // Building is now taken care of by the builder
+                     IFile buildFile = PackagingCorePlugin.getDefault().createBuildFile(project);
 
                      monitor.worked(10);
 
@@ -192,30 +193,33 @@ public class PackagingRunAction extends ActionDelegate implements IObjectActionD
 
                      // Refresh the project
                      monitor.subTask(PackagingUIMessages.getString("PackagingRunAction.packaging.refresh"));//$NON-NLS-1$
-                     project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
+                     
+                     try {
+                    	 project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
+                     } catch (IllegalArgumentException e) {
+                    	// BUG: JBAS-1218 we're swallowing a clearcase/vss - specific resource handling bug here... 
+                     }
+                     
                      monitor.worked(10);
-                  }
-                  catch (FileNotFoundException fnfe)
-                  {
-                     AbstractPlugin.logError("Cannot find XSL file", fnfe);//$NON-NLS-1$
-                     PackagingUIPlugin.getDefault().showErrorMessage(PackagingUIMessages.getString("PackagingRunAction.failed") + fnfe.getMessage());//$NON-NLS-1$
-                  }
-                  catch (IOException ioe)
-                  {
-                     AbstractPlugin.logError("Cannot open XSL file", ioe);//$NON-NLS-1$
-                     PackagingUIPlugin.getDefault().showErrorMessage(PackagingUIMessages.getString("PackagingRunAction.failed") + ioe.getMessage());//$NON-NLS-1$
-                  }
-                  catch (TransformerException te)
-                  {
-                     AbstractPlugin.logError("Error while building Ant file", te);//$NON-NLS-1$
-                     PackagingUIPlugin.getDefault().showErrorMessage(PackagingUIMessages.getString("PackagingRunAction.failed") + te.getMessage());//$NON-NLS-1$
                   }
                   catch (CoreException ce)
                   {
                      AbstractPlugin.logError("Error while running packaging", ce);//$NON-NLS-1$
                      PackagingUIPlugin.getDefault().showErrorMessage(PackagingUIMessages.getString("PackagingRunAction.failed") + ce.getMessage());//$NON-NLS-1$
                   }
-
+                  catch (IOException e)
+                  {
+                      AbstractPlugin.logError("Error while running packaging", e);//$NON-NLS-1$
+                      PackagingUIPlugin.getDefault().showErrorMessage(PackagingUIMessages.getString("PackagingRunAction.failed") + e.getMessage());//$NON-NLS-1$
+                	  
+                  }                  
+                  catch (TransformerException e)
+                  {
+                      AbstractPlugin.logError("Error while running packaging", e);//$NON-NLS-1$
+                      PackagingUIPlugin.getDefault().showErrorMessage(PackagingUIMessages.getString("PackagingRunAction.failed") + e.getMessage());//$NON-NLS-1$
+                	  
+                  }
+                  
                   return Status.OK_STATUS;
                }
             };
