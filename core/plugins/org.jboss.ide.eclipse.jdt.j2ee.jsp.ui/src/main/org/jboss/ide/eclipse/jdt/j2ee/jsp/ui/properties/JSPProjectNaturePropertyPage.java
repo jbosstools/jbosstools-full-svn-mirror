@@ -242,13 +242,16 @@ public class JSPProjectNaturePropertyPage extends PropertyPage
       JSPProjectManager.setPropertyToWorkspace(this.getProject(), JSPProjectManager.QNAME_WEBROOT, webapp);
 
       // Remove all the decoration
-      JSPNatureDecorator.getDeployedDecorator().refresh(jspProject.getUriRootFolder());
+      JSPNatureDecorator decorator = JSPNatureDecorator.getDeployedDecorator();
+      if (decorator != null)
+    	  decorator.refresh(jspProject.getUriRootFolder());
 
       // Reset the project
       jspProject.reset();
 
       // Refresh decoration
-      JSPNatureDecorator.getDeployedDecorator().refresh(jspProject.getUriRootFolder());
+      if (decorator != null)
+    	  decorator.refresh(jspProject.getUriRootFolder());
 
       if (enable)
       {

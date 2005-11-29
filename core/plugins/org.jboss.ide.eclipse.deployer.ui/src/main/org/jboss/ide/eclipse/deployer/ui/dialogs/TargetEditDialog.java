@@ -6,7 +6,7 @@
  */
 package org.jboss.ide.eclipse.deployer.ui.dialogs;
 
-import org.eclipse.jdt.internal.ui.dialogs.StatusDialog;
+import org.eclipse.jface.dialogs.StatusDialog;
 import org.eclipse.swt.widgets.Shell;
 
 /**

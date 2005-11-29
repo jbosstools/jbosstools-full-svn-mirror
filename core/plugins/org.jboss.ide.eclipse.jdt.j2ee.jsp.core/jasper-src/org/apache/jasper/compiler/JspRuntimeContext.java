@@ -92,13 +92,34 @@ public final class JspRuntimeContext implements Runnable {
         this.context = context;
         this.options = options;
 
-        // Get the parent class loader
-        parentClassLoader =
-            (URLClassLoader) Thread.currentThread().getContextClassLoader();
+        // Get the parent class loader   
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        if (cl instanceof URLClassLoader) {
+        	parentClassLoader = (URLClassLoader) cl;
+        } else if (cl.getParent() instanceof URLClassLoader){
+        	parentClassLoader = (URLClassLoader) cl.getParent();
+        }
+
         if (parentClassLoader == null) {
             parentClassLoader =
                 (URLClassLoader)this.getClass().getClassLoader();
         }
+//        	
+//        	if (cl != null)
+//        	{
+//        		if (cl instanceof URLClassLoader)
+//        		{
+//        			parentClassLoader = (URLClassLoader) cl;
+//        		}
+//        		else {
+//        			parentClassLoader = new URLClassLoader(new URL[0], Thread.currentThread().getContextClassLoader());
+//        		}
+//        	} else {
+//        		cl = getClass().getClassLoader();
+//        		if (cl != null && cl instanceof URLClassLoader) {
+//        			parentClassLoader = (URLClassLoader) cl;
+//        		}
+//        	}
 
 	if (log.isDebugEnabled()) {
 	    if (parentClassLoader != null) {

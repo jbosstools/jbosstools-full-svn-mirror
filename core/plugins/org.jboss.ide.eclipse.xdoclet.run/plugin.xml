@@ -1,45 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
-<plugin
-   id="org.jboss.ide.eclipse.xdoclet.run"
-   name="%plugin.name"
-   version="1.5.0.m1"
-   provider-name="%plugin.provider"
-   class="org.jboss.ide.eclipse.xdoclet.run.XDocletRunPlugin">
+<plugin>
 
-   <runtime>
-      <library name="org-jboss-ide-eclipse-xdoclet-run.jar">
-         <export name="*"/>
-      </library>
-   </runtime>
-
-   <requires>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="org.eclipse.ui.views"/>
-      <import plugin="org.eclipse.jface.text"/>
-      <import plugin="org.eclipse.ui.workbench.texteditor"/>
-      <import plugin="org.eclipse.ui.editors"/>
-      <import plugin="org.apache.ant"/>
-      <import plugin="org.eclipse.ant.core"/>
-      <import plugin="org.eclipse.ant.ui"/>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.debug.core"/>
-      <import plugin="org.eclipse.debug.ui"/>
-      <import plugin="org.eclipse.jdt"/>
-      <import plugin="org.eclipse.jdt.core"/>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.ui.externaltools"/>
-      <import plugin="org.jboss.ide.eclipse.core"/>
-      <import plugin="org.jboss.ide.eclipse.ui"/>
-      <import plugin="org.jboss.ide.eclipse.xdoclet.core"/>
-      <import plugin="org.jboss.ide.eclipse.xdoclet.ui"/>
-      <import plugin="org.apache.xalan"/>
-      <import plugin="org.eclipse.jdt.launching"/>
-   </requires>
-
-   <extension
+     <extension
          point="org.eclipse.ui.propertyPages">
       <page
             adaptable="true"
@@ -58,7 +21,7 @@
       </command>
       <keyBinding
             commandId="org.jboss.ide.eclipse.xdoclet.run.ui.commands.XDocletRunAction"
-            keySequence="Ctrl+Alt+9"
+            keySequence="Shift+Ctrl+F1"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
    </extension>
@@ -96,5 +59,14 @@
          </action>
       </objectContribution>
    </extension>
-
+   <extension
+         id="XDocletRunBuilder"
+         name="JBoss Eclipse IDE XDoclet Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="false"
+            isConfigurable="true">
+         <run class="org.jboss.ide.eclipse.xdoclet.run.builder.XDocletRunBuilder"/>
+      </builder>
+   </extension>
 </plugin>

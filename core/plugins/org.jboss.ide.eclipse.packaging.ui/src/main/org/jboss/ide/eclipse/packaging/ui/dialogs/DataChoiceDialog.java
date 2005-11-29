@@ -8,6 +8,7 @@ package org.jboss.ide.eclipse.packaging.ui.dialogs;
 
 import java.util.Collection;
 
+import org.eclipse.jdt.internal.ui.viewsupport.ListContentProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -27,7 +28,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.internal.dialogs.ListContentProvider;
 import org.jboss.ide.eclipse.packaging.core.model.PackagingArchive;
 import org.jboss.ide.eclipse.packaging.ui.PackagingUIMessages;
 import org.jboss.ide.eclipse.ui.util.StringViewSorter;

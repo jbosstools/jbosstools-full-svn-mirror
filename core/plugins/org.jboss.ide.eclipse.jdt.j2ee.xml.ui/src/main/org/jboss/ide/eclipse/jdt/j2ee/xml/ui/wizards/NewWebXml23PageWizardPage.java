@@ -8,8 +8,8 @@ package org.jboss.ide.eclipse.jdt.j2ee.xml.ui.wizards;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
-import org.jboss.ide.eclipse.jdt.j2ee.xml.core.JDTJ2EEXMLCorePlugin;
 import org.jboss.ide.eclipse.jdt.j2ee.xml.ui.JDTJ2EEXMLUIMessages;
+import org.jboss.ide.eclipse.jdt.j2ee.xml.ui.JDTJ2EEXMLUIPlugin;
 import org.jboss.ide.eclipse.jdt.ui.wizards.NewFileWizardPage;
 
 /**
@@ -42,7 +42,7 @@ public class NewWebXml23PageWizardPage extends NewFileWizardPage
     */
    protected AbstractPlugin getPlugin()
    {
-      return JDTJ2EEXMLCorePlugin.getDefault();
+      return JDTJ2EEXMLUIPlugin.getDefault();
    }
 
 

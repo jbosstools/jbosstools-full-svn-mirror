@@ -165,9 +165,9 @@ public class LauncherUIImages
       declareRegistryImage(ILauncherUIConstants.IMG_OBJS_LOGFILE, OBJECT
             + "logfile.gif");//$NON-NLS-1$
       declareRegistryImage(ILauncherUIConstants.IMG_OBJS_SERVER_NOT_RUNNING, OBJECT
-            + "servernotrunning.gif");//$NON-NLS-1$
+            + "jboss-configuration-stopped.gif");//$NON-NLS-1$
       declareRegistryImage(ILauncherUIConstants.IMG_OBJS_SERVER_RUNNING, OBJECT
-            + "serverrunning.gif");//$NON-NLS-1$
+            + "jboss-configuration-started.gif");//$NON-NLS-1$
    }
 
 

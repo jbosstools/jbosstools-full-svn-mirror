@@ -121,12 +121,12 @@ public class NewServletWizardPage extends DOMClassWizardPage
    protected void createContent()
    {
       // Constructors and inherited must be left as first elements
-      String[] buttonNames = new String[]{NewWizardMessages.getString("NewClassWizardPage.methods.constructors"), //$NON-NLS-1$
-      NewWizardMessages.getString("NewClassWizardPage.methods.inherited"), //$NON-NLS-1$
+      String[] buttonNames = new String[]{NewWizardMessages.NewClassWizardPage_methods_constructors, //$NON-NLS-1$
+      NewWizardMessages.NewClassWizardPage_methods_inherited, //$NON-NLS-1$
       JDTJ2EEUIMessages.getString("NewServletWizardPage.method.init"), JDTJ2EEUIMessages.getString("NewServletWizardPage.method.service"), JDTJ2EEUIMessages.getString("NewServletWizardPage.method.destroy"), JDTJ2EEUIMessages.getString("NewServletWizardPage.method.getServletInfo")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
       this.fMethodStubsButtons = new SelectionButtonDialogFieldGroup(SWT.CHECK, buttonNames, 2);
-      this.fMethodStubsButtons.setLabelText(NewWizardMessages.getString("NewClassWizardPage.methods.label"));//$NON-NLS-1$
+      this.fMethodStubsButtons.setLabelText(NewWizardMessages.NewClassWizardPage_methods_label);//$NON-NLS-1$
 
       // Constructors and inherited must be left as first elements
       buttonNames = new String[SERVICE_METHODS.length];

@@ -24,7 +24,7 @@ import org.eclipse.jdt.internal.corext.util.JavaModelUtil;
 import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.jdt.internal.ui.dialogs.StatusInfo;
 import org.eclipse.jdt.internal.ui.dialogs.StatusUtil;
-import org.eclipse.jdt.internal.ui.dialogs.TypeSelectionDialog;
+import org.eclipse.jdt.internal.ui.dialogs.TypeSelectionDialog2;
 import org.eclipse.jdt.internal.ui.viewsupport.IViewPartInputProvider;
 import org.eclipse.jdt.internal.ui.wizards.dialogfields.DialogField;
 import org.eclipse.jdt.internal.ui.wizards.dialogfields.Separator;
@@ -114,7 +114,7 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
       IJavaElement[] elements = new IJavaElement[]{root.getJavaProject()};
       IJavaSearchScope scope = SearchEngine.createJavaSearchScope(elements);
 
-      TypeSelectionDialog dialog = new TypeSelectionDialog(getShell(), getWizard().getContainer(), IJavaSearchConstants.TYPE, scope);
+      TypeSelectionDialog2 dialog = new TypeSelectionDialog2(getShell(), false, getWizard().getContainer(), scope, IJavaSearchConstants.TYPE);
       dialog.setTitle(JDTUIMessages.getString("ClassFragmentWizardPage.type.selection.title"));//$NON-NLS-1$
       dialog.setMessage(JDTUIMessages.getString("ClassFragmentWizardPage.type.selection.message"));//$NON-NLS-1$
       if (filter != null)

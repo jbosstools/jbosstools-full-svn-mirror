@@ -1,38 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
-<plugin
-   id="org.jboss.ide.eclipse.jdt.j2ee.core"
-   name="%plugin.name"
-   version="1.5.0.m1"
-   provider-name="%plugin.provider"
-   class="org.jboss.ide.eclipse.jdt.j2ee.core.JDTJ2EECorePlugin">
+<plugin>
 
-   <runtime>
-      <library name="org-jboss-ide-eclipse-jdt-j2ee-core.jar">
-         <export name="*"/>
-      </library>
-   </runtime>
-
-   <requires>
-      <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="org.eclipse.ui.views"/>
-      <import plugin="org.eclipse.jface.text"/>
-      <import plugin="org.eclipse.ui.workbench.texteditor"/>
-      <import plugin="org.eclipse.ui.editors"/>
-      <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.jboss.ide.eclipse.core"/>
-      <import plugin="org.jboss.ide.eclipse.ui"/>
-      <import plugin="org.eclipse.jdt"/>
-      <import plugin="org.eclipse.jdt.core"/>
-      <import plugin="org.eclipse.jdt.ui"/>
-      <import plugin="org.jboss.ide.eclipse.jdt.core"/>
-      <import plugin="org.jboss.ide.eclipse.jdt.test.core"/>
-      <import plugin="org.jboss.ide.eclipse.jdt.ws.core"/>
-      <import plugin="org.eclipse.core.runtime"/>
-   </requires>
-
-   <extension
+     <extension
          point="org.eclipse.jdt.core.classpathContainerInitializer">
       <classpathContainerInitializer
             class="org.jboss.ide.eclipse.jdt.j2ee.core.classpath.J2EE13ClasspathContainerInitializer"

@@ -145,19 +145,19 @@ public abstract class ServerLaunchConfigurationDelegate extends AbstractServerLa
          return;
       }
 
-      monitor.subTask(LaunchingMessages.getString("JavaLocalApplicationLaunchConfigurationDelegate.Verifying_launch_attributes..._1"));//$NON-NLS-1$
+      monitor.subTask(LaunchingMessages.JavaLocalApplicationLaunchConfigurationDelegate_Verifying_launch_attributes____1);//$NON-NLS-1$
 
       IVMRunner runner = vm.getVMRunner(mode);
       if (runner == null)
       {
          if (mode == ILaunchManager.DEBUG_MODE)
          {
-            abort(MessageFormat.format(LaunchingMessages.getString("JavaLocalApplicationLaunchConfigurationDelegate.JRE_{0}_does_not_support_debug_mode._1"), new String[]//$NON-NLS-1$
+            abort(MessageFormat.format(LaunchingMessages.JavaLocalApplicationLaunchConfigurationDelegate_0, new String[]//$NON-NLS-1$
             {vm.getName()}), null, IJavaLaunchConfigurationConstants.ERR_VM_RUNNER_DOES_NOT_EXIST);
          }
          else
          {
-            abort(MessageFormat.format(LaunchingMessages.getString("JavaLocalApplicationLaunchConfigurationDelegate.JRE_{0}_does_not_support_run_mode._2"), new String[]//$NON-NLS-1$
+            abort(MessageFormat.format(LaunchingMessages.JavaLocalApplicationLaunchConfigurationDelegate_1, new String[]//$NON-NLS-1$
             {vm.getName()}), null, IJavaLaunchConfigurationConstants.ERR_VM_RUNNER_DOES_NOT_EXIST);
          }
       }
@@ -190,7 +190,7 @@ public abstract class ServerLaunchConfigurationDelegate extends AbstractServerLa
          return;
       }
 
-      monitor.subTask(LaunchingMessages.getString("JavaLocalApplicationLaunchConfigurationDelegate.Creating_source_locator..._2"));//$NON-NLS-1$
+      monitor.subTask(LaunchingMessages.JavaLocalApplicationLaunchConfigurationDelegate_Creating_source_locator____2);//$NON-NLS-1$
       // set the default source locator if required
 //      launch.setSourceLocator(sourceLocator);
       monitor.worked(1);
