@@ -13,6 +13,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
 import org.jboss.ide.eclipse.launcher.core.ServerLaunchManager;
+import org.jboss.ide.eclipse.launcher.core.constants.IJBossConstants;
 import org.jboss.ide.eclipse.launcher.core.logfiles.LogFile;
 import org.jboss.ide.eclipse.launcher.core.util.LaunchStatus;
 import org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants;
@@ -69,6 +70,10 @@ public class ServerNavigatorLabelProvider extends LabelProvider
          {
             label = configuration.getType().getName() + ": " //$NON-NLS-1$
             + configuration.getName();
+            
+            String serverConfiguration = configuration.getAttribute(IJBossConstants.ATTR_SERVER_CONFIGURATION, "default");
+            label += " [" + serverConfiguration + "]";
+            
             // String suffix;
             if (ServerLaunchManager.getInstance().getStatusForStartLaunch(configuration) == LaunchStatus.RUNNING)
             {
