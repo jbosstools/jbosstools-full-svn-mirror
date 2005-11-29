@@ -30,12 +30,17 @@ buildTypeDescription.R=release
 # binary includes
 include.plugins=\
 	org.apache.xerces,\
+	org.eclipse.emf.common,\
 	org.eclipse.emf.ecore.xmi,\
 	org.eclipse.emf.ecore,\
+	org.eclipse.emf.edit,\
 	org.eclipse.jem.util,\
 	org.eclipse.jst.jsp.core,\
 	org.eclipse.jst.jsp.ui,\
 	org.eclipse.tomcat,\
+	org.eclipse.wst.common.emf,\
+	org.eclipse.wst.common.emfworkbench.integration,\
+	org.eclipse.wst.common.environment,\
 	org.eclipse.wst.common.frameworks,\
 	org.eclipse.wst.common.ui,\
 	org.eclipse.wst.common.uriresolver,\
@@ -50,4 +55,5 @@ include.plugins=\
 	org.eclipse.wst.sse.ui,\
 	org.eclipse.wst.validation,\
 	org.eclipse.wst.xml.core,\
-	org.eclipse.wst.xml.ui
+	org.eclipse.wst.xml.ui,\
+	org.eclipse.xsd
