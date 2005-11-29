@@ -6,11 +6,32 @@
  */
 package org.jboss.ide.eclipse.packaging.core;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Hashtable;
 import java.util.Map;
 
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
+import org.jboss.ide.eclipse.core.util.ProjectUtil;
+import org.jboss.ide.eclipse.packaging.core.builder.PackagingBuilder;
 import org.jboss.ide.eclipse.packaging.core.configuration.ProjectConfigurations;
 import org.jboss.ide.eclipse.packaging.core.configuration.StandardConfigurations;
 
@@ -104,4 +125,83 @@ public class PackagingCorePlugin extends AbstractPlugin
       }
       return getDefault().getBundle().getSymbolicName();
    }
+   
+   public IFile createBuildFile(IProject project) throws IOException, CoreException, TransformerException
+   {
+      IFile file = project.getFile(PackagingCorePlugin.PROJECT_FILE);
+      IFile buildFile = project.getFile(PackagingCorePlugin.BUILD_FILE);
+
+      // If the packaging project file exists, then process it
+      if (file.exists() && file.getModificationStamp() > buildFile.getModificationStamp())
+      {
+         TransformerFactory tFactory = TransformerFactory.newInstance();
+
+         InputStream is = null;
+         byte[] bytes;
+         try
+         {
+            // Gets the XSL file
+            URL xslFile = PackagingCorePlugin.getDefault().find(new Path(PackagingCorePlugin.XSL_FILE));
+            is = new BufferedInputStream(xslFile.openStream());
+            Source stylesheet = new StreamSource(is);
+
+            // Create a new transformer on the stylesheet
+            Transformer transformer = tFactory.newTransformer(stylesheet);
+
+            Source source = new StreamSource(file.getContents());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            Result result = new StreamResult(baos);
+
+            // Apply the XSL style
+            transformer.setOutputProperty("indent", "yes");//$NON-NLS-1$ //$NON-NLS-2$
+            transformer.transform(source, result);
+
+            bytes = baos.toByteArray();
+         }
+         finally
+         {
+            // Ensure that the input stream is closed.
+            if (is != null)
+            {
+               try
+               {
+                  is.close();
+               }
+               catch (Throwable ignore)
+               {
+               }
+            }
+         }
+
+         File buildFile2 = buildFile.getRawLocation().toFile();
+         FileOutputStream fos = new FileOutputStream(buildFile2);
+         fos.write(bytes);
+         fos.close();
+         
+         // Save the file
+//         if (!buildFile.exists())
+//         {
+//            buildFile.create(null, true, null);
+//         }
+//         buildFile.setContents(new ByteArrayInputStream(bytes), true, true, null);
+      }
+      return buildFile;
+   }
+   
+   public void enablePackagingBuilder(IJavaProject project, boolean enable) {
+	   if (enable)
+	   {
+		   if (! ProjectUtil.projectHasBuilder(project.getProject(), PackagingBuilder.BUILDER_ID))
+		   {
+			   ProjectUtil.addProjectBuilder(project.getProject(), PackagingBuilder.BUILDER_ID);
+		   }
+	   }
+	   else
+	   {
+		   if (ProjectUtil.projectHasBuilder(project.getProject(), PackagingBuilder.BUILDER_ID))
+		   {
+			   ProjectUtil.removeProjectBuilder(project.getProject(), PackagingBuilder.BUILDER_ID);
+		   }
+	   }
+	}
 }
