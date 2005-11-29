@@ -43,7 +43,7 @@ public class EJB3ClasspathContainer extends AopClasspathContainer {
 	public static final IPath[] jbossConfigRelativeJarPaths = new IPath [] {
 		ejb3DeployerPath.append("jboss-ejb3.jar"), ejb3DeployerPath.append("jboss-ejb3x.jar"),
 		ejb3DeployerPath.append("hibernate3.jar"), ejb3DeployerPath.append("ejb3-persistence.jar"),
-		serverConfigLibPath.append("jboss-remoting.jar")
+		ejb3DeployerPath.append("hibernate-annotations.jar"), serverConfigLibPath.append("jboss-remoting.jar")
 	};
 	
 	public EJB3ClasspathContainer (IPath path, IJavaProject project)
