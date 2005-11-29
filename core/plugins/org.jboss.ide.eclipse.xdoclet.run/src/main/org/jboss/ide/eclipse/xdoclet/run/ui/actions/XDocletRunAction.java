@@ -6,7 +6,6 @@
  */
 package org.jboss.ide.eclipse.xdoclet.run.ui.actions;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -188,28 +187,30 @@ public class XDocletRunAction extends ActionDelegate implements IObjectActionDel
 
                      // Refresh the project
                      monitor.subTask(XDocletRunMessages.getString("XDocletRunAction.xdoclet.refresh"));//$NON-NLS-1$
-                     project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
+                     
+                     try {
+                    	 project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
+                     } catch (IllegalArgumentException e) {
+                    	// BUG: JBAS-1218 we're swallowing a clearcase/vss - specific resource handling bug here... 
+                     }
+                     
                      monitor.worked(10);
-                  }
-                  catch (FileNotFoundException fnfe)
-                  {
-                     AbstractPlugin.logError("Cannot find XSL file", fnfe);//$NON-NLS-1$
-                     XDocletRunPlugin.getDefault().showErrorMessage(XDocletRunMessages.getString("XDocletRunAction.failed") + fnfe.getMessage());//$NON-NLS-1$
-                  }
-                  catch (IOException ioe)
-                  {
-                     AbstractPlugin.logError("Cannot open XSL file", ioe);//$NON-NLS-1$
-                     XDocletRunPlugin.getDefault().showErrorMessage(XDocletRunMessages.getString("XDocletRunAction.failed") + ioe.getMessage());//$NON-NLS-1$
-                  }
-                  catch (TransformerException te)
-                  {
-                     AbstractPlugin.logError("Error while building Ant file", te);//$NON-NLS-1$
-                     XDocletRunPlugin.getDefault().showErrorMessage(XDocletRunMessages.getString("XDocletRunAction.failed") + te.getMessage());//$NON-NLS-1$
                   }
                   catch (CoreException ce)
                   {
                      AbstractPlugin.logError("Error while running XDoclet", ce);//$NON-NLS-1$
                      XDocletRunPlugin.getDefault().showErrorMessage(XDocletRunMessages.getString("XDocletRunAction.failed") + ce.getMessage());//$NON-NLS-1$
+                  }
+                  catch (IOException e)
+                  {
+                      AbstractPlugin.logError("Error while running XDoclet", e);//$NON-NLS-1$
+                      XDocletRunPlugin.getDefault().showErrorMessage(XDocletRunMessages.getString("XDocletRunAction.failed") + e.getMessage());//$NON-NLS-1$
+                  }
+                  
+                  catch (TransformerException e)
+                  {
+                      AbstractPlugin.logError("Error while running XDoclet", e);//$NON-NLS-1$
+                      XDocletRunPlugin.getDefault().showErrorMessage(XDocletRunMessages.getString("XDocletRunAction.failed") + e.getMessage());//$NON-NLS-1$
                   }
                   finally
                   {
