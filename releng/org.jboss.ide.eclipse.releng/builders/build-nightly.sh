@@ -22,5 +22,5 @@ if [ "$TARGET" = "product" ]; then
 	fi
 	
 else
-	$ANT $@ -lib ../lib -f builder-wrap.xml nightly -Dbuilder=$TARGET
+	$ANT $@ -lib ../lib -f builder-wrap.xml nightly -Dbuilder=$TARGET -DcvsTag=HEAD
 fi
