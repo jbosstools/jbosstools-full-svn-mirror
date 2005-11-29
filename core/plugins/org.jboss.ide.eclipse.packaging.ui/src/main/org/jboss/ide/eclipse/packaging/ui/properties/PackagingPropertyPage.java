@@ -6,10 +6,6 @@
  */
 package org.jboss.ide.eclipse.packaging.ui.properties;
 
-import java.io.IOException;
-
-import javax.xml.transform.TransformerException;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -20,6 +16,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -27,13 +24,16 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.dialogs.PropertyPage;
+import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.packaging.core.PackagingCorePlugin;
+import org.jboss.ide.eclipse.packaging.core.builder.PackagingBuilder;
 import org.jboss.ide.eclipse.packaging.core.configuration.ProjectConfigurations;
 import org.jboss.ide.eclipse.packaging.core.model.PackagingArchive;
 import org.jboss.ide.eclipse.packaging.core.model.PackagingData;
 import org.jboss.ide.eclipse.packaging.ui.PackagingUIMessages;
 import org.jboss.ide.eclipse.packaging.ui.PackagingUIPlugin;
 import org.jboss.ide.eclipse.packaging.ui.util.ConfigurationViewer;
+import org.jboss.ide.eclipse.ui.util.UIUtil;
 
 /**
  * @author    Laurent Etiemble
@@ -60,6 +60,8 @@ public class PackagingPropertyPage extends PropertyPage
    /** Description of the Field */
    private ProjectConfigurations projectConfigurations;
 
+   private Button enablePackagingButton;
+   private Composite parentComposite;
 
    /**Constructor for the ConfigurationPropertyPage object */
    public PackagingPropertyPage()
@@ -80,20 +82,14 @@ public class PackagingPropertyPage extends PropertyPage
       {
          // Save the configurations
          this.projectConfigurations.storeConfigurations();
-         PackagingUIPlugin.getDefault().createBuildFile(this.project.getProject());
+         
+         PackagingCorePlugin.getDefault().enablePackagingBuilder(this.project, enablePackagingButton.getSelection());
+         //PackagingCorePlugin.getDefault().createBuildFile(this.project.getProject());
          return super.performOk();
       }
       catch (CoreException ce)
       {
          this.openErrorDialog(PackagingUIMessages.getString("PackagingPropertyPage.save.configuration.failed"), ce);//$NON-NLS-1$
-      }
-      catch (IOException e)
-      {
-         this.openErrorDialog(PackagingUIMessages.getString("PackagingPropertyPage.save.configuration.failed"), e);//$NON-NLS-1$
-      }
-      catch (TransformerException e)
-      {
-         this.openErrorDialog(PackagingUIMessages.getString("PackagingPropertyPage.save.configuration.failed"), e);//$NON-NLS-1$
       }
       return false;
    }
@@ -229,7 +225,7 @@ public class PackagingPropertyPage extends PropertyPage
     */
    protected Control createContents(Composite ancestor)
    {
-      Composite parent = new Composite(ancestor, SWT.NONE);
+      parentComposite = new Composite(ancestor, SWT.NONE);
 
       try
       {
@@ -239,15 +235,38 @@ public class PackagingPropertyPage extends PropertyPage
          this.projectConfigurations.loadConfigurations();
 
          GridLayout layout = new GridLayout(1, false);
-         parent.setLayout(layout);
+         parentComposite.setLayout(layout);
 
+         enablePackagingButton = new Button(parentComposite, SWT.CHECK);
+         enablePackagingButton.setText(PackagingUIMessages.getString("PackagingPropertyPage.enablePackagingLabel"));
+         
+         enablePackagingButton.addSelectionListener(new SelectionListener () {
+        	 public void widgetDefaultSelected(SelectionEvent e) {
+        		 widgetSelected(e);
+        	}
+        	 public void widgetSelected(SelectionEvent e) {
+        		 boolean enabled = enablePackagingButton.getSelection();
+        		UIUtil.setEnabledRecursive(parentComposite, enabled);
+        		enablePackagingButton.setEnabled(true);
+        		if (enabled)
+        		{
+        			enableButtons();
+        		}
+        	}
+         });
+         
+         boolean hasXDoclet = ProjectUtil.projectHasBuilder(this.project.getProject(), PackagingBuilder.BUILDER_ID);
+         UIUtil.setEnabledRecursive(parentComposite, hasXDoclet);
+         enablePackagingButton.setEnabled(true);
+         enablePackagingButton.setSelection(hasXDoclet);
+         
          // Description label
-         Label description = new Label(parent, SWT.NONE);
+         Label description = new Label(parentComposite, SWT.NONE);
          description.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
          description.setText(PackagingUIMessages.getString("PackagingPropertyPage.description"));//$NON-NLS-1$
 
          // The viewer composite (configuration list + buttons)
-         Composite viewer = new Composite(parent, SWT.NONE);
+         Composite viewer = new Composite(parentComposite, SWT.NONE);
          layout = new GridLayout(2, false);
          layout.marginHeight = 0;
          layout.marginWidth = 0;
@@ -256,7 +275,7 @@ public class PackagingPropertyPage extends PropertyPage
 
          // The configuration list
          this.configViewer = new ConfigurationViewer(viewer, this.project.getProject(), this.projectConfigurations.getConfigurations());
-
+         
          // The buttons composite
          createButtons(viewer);
 
@@ -267,7 +286,7 @@ public class PackagingPropertyPage extends PropertyPage
       {
          openErrorDialog(PackagingUIMessages.getString("PackagingPropertyPage.load.configuration.failed"), ce);//$NON-NLS-1$
       }
-      return parent;
+      return parentComposite;
    }
 
    /** Description of the Method */
