@@ -166,8 +166,12 @@ include.plugins=\
 	org.eclipse.emf.common,\
 	org.eclipse.emf.ecore.xmi,\
 	org.eclipse.emf.ecore,\
+	org.eclipse.emf.edit,\
 	org.eclipse.gef,\
 	org.eclipse.jem.util,\
+	org.eclipse.wst.common.emf,\
+	org.eclipse.wst.common.emfworkbench.integration,\
+	org.eclipse.wst.common.environment,\
 	org.eclipse.wst.common.frameworks,\
 	org.eclipse.wst.common.ui,\
 	org.eclipse.wst.common.uriresolver,\
@@ -175,4 +179,5 @@ include.plugins=\
 	org.eclipse.wst.sse.ui,\
 	org.eclipse.wst.validation,\
 	org.eclipse.wst.xml.core,\
-	org.eclipse.wst.xml.ui
+	org.eclipse.wst.xml.ui.\
+	org.eclipse.xsd
