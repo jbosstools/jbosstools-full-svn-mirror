@@ -9,8 +9,8 @@ eclipse.version=eclipse-SDK-3.1
 requirement.root=${build.root}/requirements
 builder.build.path=${product.build.root}/eclipse
 builder.root=..
-builders=hibernate-tools,core,aop,ejb3,jbpm
-
+#builders=hibernate-tools,core,aop,ejb3,jbpm
+builders=hibernate-tools,core,aop,ejb3
 
 eclipse.archive.path=%eclipse-archive-path%
 platform.names=win32,linux-gtk
