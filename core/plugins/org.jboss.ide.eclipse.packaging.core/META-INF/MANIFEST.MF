@@ -8,6 +8,7 @@ Bundle-Activator: org.jboss.ide.eclipse.packaging.core.PackagingCorePlugin
 Bundle-Vendor: %plugin.provider
 Bundle-Localization: plugin
 Export-Package: org.jboss.ide.eclipse.packaging.core,
+ org.jboss.ide.eclipse.packaging.core.builder,
  org.jboss.ide.eclipse.packaging.core.configuration,
  org.jboss.ide.eclipse.packaging.core.model
 Require-Bundle: org.eclipse.core.runtime,
