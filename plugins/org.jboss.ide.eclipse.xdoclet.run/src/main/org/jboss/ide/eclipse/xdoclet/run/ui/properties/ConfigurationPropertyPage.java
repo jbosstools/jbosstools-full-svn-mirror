@@ -6,10 +6,6 @@
  */
 package org.jboss.ide.eclipse.xdoclet.run.ui.properties;
 
-import java.io.IOException;
-
-import javax.xml.transform.TransformerException;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -20,6 +16,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -27,8 +24,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.dialogs.PropertyPage;
+import org.jboss.ide.eclipse.core.util.ProjectUtil;
+import org.jboss.ide.eclipse.ui.util.UIUtil;
 import org.jboss.ide.eclipse.xdoclet.run.XDocletRunMessages;
 import org.jboss.ide.eclipse.xdoclet.run.XDocletRunPlugin;
+import org.jboss.ide.eclipse.xdoclet.run.builder.XDocletRunBuilder;
 import org.jboss.ide.eclipse.xdoclet.run.configuration.ProjectConfigurations;
 import org.jboss.ide.eclipse.xdoclet.run.model.XDocletConfiguration;
 import org.jboss.ide.eclipse.xdoclet.run.ui.ConfigurationListViewer;
@@ -60,6 +60,9 @@ public class ConfigurationPropertyPage extends PropertyPage
    /** Description of the Field */
    private Button moveUpButton;
    /** Description of the Field */
+   private Button enableXDocletButton;
+   private Composite parentComposite;
+   
    private IJavaProject project;
    /** Description of the Field */
    private ProjectConfigurations projectConfigurations;
@@ -86,21 +89,23 @@ public class ConfigurationPropertyPage extends PropertyPage
       {
          // Save the configurations
          this.projectConfigurations.storeConfigurations();
-         XDocletRunPlugin.getDefault().createBuildFile(this.project);
+         XDocletRunPlugin.getDefault().enableXDocletBuilder(this.project, enableXDocletButton.getSelection());
+         
+         //XDocletRunPlugin.getDefault().createBuildFile(this.project);
          return super.performOk();
       }
       catch (CoreException ce)
       {
          this.openErrorDialog(XDocletRunMessages.getString("ConfigurationPropertyPage.failed.save.configuration"), ce);//$NON-NLS-1$
       }
-      catch (IOException e)
-      {
-         this.openErrorDialog(XDocletRunMessages.getString("ConfigurationPropertyPage.failed.save.configuration"), e);//$NON-NLS-1$
-      }
-      catch (TransformerException e)
-      {
-         this.openErrorDialog(XDocletRunMessages.getString("ConfigurationPropertyPage.failed.save.configuration"), e);//$NON-NLS-1$
-      }
+//      catch (IOException e)
+//      {
+//         this.openErrorDialog(XDocletRunMessages.getString("ConfigurationPropertyPage.failed.save.configuration"), e);//$NON-NLS-1$
+//      }
+//      catch (TransformerException e)
+//      {
+//         this.openErrorDialog(XDocletRunMessages.getString("ConfigurationPropertyPage.failed.save.configuration"), e);//$NON-NLS-1$
+//      }
       return false;
    }
 
@@ -236,8 +241,7 @@ public class ConfigurationPropertyPage extends PropertyPage
 
       return buttons;
    }
-
-
+   
    /**
     * Description of the Method
     *
@@ -247,7 +251,7 @@ public class ConfigurationPropertyPage extends PropertyPage
     */
    protected Control createContents(Composite ancestor)
    {
-      Composite parent = new Composite(ancestor, SWT.NONE);
+      parentComposite = new Composite(ancestor, SWT.NONE);
 
       try
       {
@@ -258,14 +262,37 @@ public class ConfigurationPropertyPage extends PropertyPage
 
          // The configuration list
          GridLayout layout = new GridLayout(1, false);
-         parent.setLayout(layout);
-
-         Label description = new Label(parent, SWT.NONE);
+         parentComposite.setLayout(layout);
+         
+         enableXDocletButton = new Button(parentComposite, SWT.CHECK);
+         enableXDocletButton.setText(XDocletRunMessages.getString("ConfigurationPropertyPage.enableXDocletLabel"));
+         
+         enableXDocletButton.addSelectionListener(new SelectionListener () {
+        	 public void widgetDefaultSelected(SelectionEvent e) {
+        		 widgetSelected(e);
+        	}
+        	 public void widgetSelected(SelectionEvent e) {
+        		 boolean enabled = enableXDocletButton.getSelection();
+        		UIUtil.setEnabledRecursive(parentComposite, enabled);
+        		enableXDocletButton.setEnabled(true);
+        		if (enabled)
+        		{
+        			enableButtons();
+        		}
+        	}
+         });
+         
+         boolean hasXDoclet = ProjectUtil.projectHasBuilder(this.project.getProject(), XDocletRunBuilder.BUILDER_ID);
+         UIUtil.setEnabledRecursive(parentComposite, hasXDoclet);
+         enableXDocletButton.setEnabled(true);
+         enableXDocletButton.setSelection(hasXDoclet);
+         
+         Label description = new Label(parentComposite, SWT.NONE);
          description.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
          description.setText(XDocletRunMessages.getString("ConfigurationPropertyPage.description"));//$NON-NLS-1$
 
          // The configuration list
-         Composite list = new Composite(parent, SWT.NONE);
+         Composite list = new Composite(parentComposite, SWT.NONE);
          layout = new GridLayout(2, false);
          layout.marginHeight = 0;
          layout.marginWidth = 0;
@@ -276,7 +303,7 @@ public class ConfigurationPropertyPage extends PropertyPage
          createButtons(list);
 
          // The configuration detail
-         Composite detail = new Composite(parent, SWT.NONE);
+         Composite detail = new Composite(parentComposite, SWT.NONE);
          GridLayout detailLayout = new GridLayout(2, true);
          detailLayout.marginHeight = 0;
          detailLayout.marginWidth = 0;
@@ -293,7 +320,7 @@ public class ConfigurationPropertyPage extends PropertyPage
       {
          openErrorDialog(XDocletRunMessages.getString("ConfigurationPropertyPage.failed.load.configuration"), ce);//$NON-NLS-1$
       }
-      return parent;
+      return parentComposite;
    }
 
 
