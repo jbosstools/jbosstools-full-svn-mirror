@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
 import org.jboss.aop.introduction.InterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aop;
@@ -15,6 +17,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
+import org.jboss.ide.eclipse.jdt.aop.core.util.JaxbAopUtil;
 
 /**
  * 
@@ -136,8 +139,49 @@ public class AopModelUtils {
 	
 	public static org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction 
 		toJaxb(JDTInterfaceIntroduction intro) {
+
+		org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction jaxbIntro = null;
+		try {
+				jaxbIntro = JaxbAopUtil.instance()
+					.getFactory().createAOPTypeIntroduction();
+				
+			List jaxbMixins = jaxbIntro.getMixin();
+			
+			// handle this part
+			String expr = intro.getClassExpr();
+			if( expr.indexOf('(') == -1 ) {
+				jaxbIntro.setClazz(expr);
+			} else {
+				jaxbIntro.setExpr(expr);				
+			}
+			
+			
+			if( intro.getInterfacesAsString() != "")
+				jaxbIntro.setInterfaces(intro.getInterfacesAsString());
+			
+			// Now this part
+			ArrayList jdtList = intro.getMixins();
+			for(Iterator i = jdtList.iterator();i.hasNext();) {
+				Object o = i.next();
+				if( o instanceof InterfaceIntroduction.Mixin ) {
+					InterfaceIntroduction.Mixin mixin = 
+						(InterfaceIntroduction.Mixin)o;
+					
+					org.jboss.ide.eclipse.jdt.aop.core.jaxb.Mixin jaxbMixin = 
+						JaxbAopUtil.instance().getFactory().createMixin();
+					
+					jaxbMixin.setClazz(mixin.getClassName());
+					jaxbMixin.setConstruction(mixin.getConstruction());
+					jaxbMixin.setInterfaces(intro.getMixinInterfacesAsString(mixin));
+					jaxbMixins.add(jaxbMixin);
+				}
+			}
+		} catch( JAXBException e ) {
+			e.printStackTrace();
+		}
+
 		
-		return null;
+		return jaxbIntro != null ? jaxbIntro : null;
 	}
 
 }

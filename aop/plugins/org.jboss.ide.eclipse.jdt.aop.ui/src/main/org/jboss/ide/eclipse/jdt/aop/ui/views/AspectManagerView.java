@@ -6,10 +6,7 @@
  */
 package org.jboss.ide.eclipse.jdt.aop.ui.views;
 
-import java.util.Iterator;
 import java.util.List;
-
-import javax.xml.bind.JAXBException;
 
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.action.Action;
@@ -33,7 +30,6 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.aop.AspectManager;
-import org.jboss.aop.introduction.InterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.AopDescriptor;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
@@ -45,6 +41,7 @@ import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Introduction;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Pointcut;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Typedef;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
+import org.jboss.ide.eclipse.jdt.aop.core.model.AopModelUtils;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTInterfaceIntroduction;
 import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTTypedefExpression;
 import org.jboss.ide.eclipse.jdt.aop.core.util.JaxbAopUtil;
@@ -419,38 +416,13 @@ public class AspectManagerView extends ViewPart {
     			IntroductionDialog dialog = new IntroductionDialog(getSite().getShell(), jaxbIntro);
     			if( dialog.open() == Dialog.OK) {
     				// TODO: Move this to AopModelUtils.toJaxb(JDTInterfaceIntroduction)
+    				
     				JDTInterfaceIntroduction jdtIntro = dialog.getIntroduction();
-    				if( jdtIntro.getClassExpr().indexOf('(') != -1 ) {
-    					jaxbIntro.setExpr(jdtIntro.getClassExpr());
-    					jaxbIntro.setClazz(null);
-    				} else {
-    					jaxbIntro.setClazz(jdtIntro.getClassExpr());
-    					jaxbIntro.setExpr(null);
-    				}
-    				
-    				String interfacesAsString = jdtIntro.getInterfacesAsString();
-    				if( interfacesAsString.equals("")) 
-    					jaxbIntro.setInterfaces(null);
-    				jaxbIntro.setInterfaces(interfacesAsString);
-    				
-    				// add the mixins
-    				jaxbIntro.getMixin().clear();
-    				for( Iterator i = jdtIntro.getMixins().iterator(); i.hasNext(); ) {
-    					try {
-	    					InterfaceIntroduction.Mixin jdtMixin = (InterfaceIntroduction.Mixin)i.next();
-	    					org.jboss.ide.eclipse.jdt.aop.core.jaxb.Mixin newJaxbMixin = 
-	    						JaxbAopUtil.instance().getFactory().createMixin();
-	    					newJaxbMixin.setClazz(jdtMixin.getClassName());
-	    					newJaxbMixin.setConstruction(jdtMixin.getConstruction());
-	    					String mixinInterfacesAsString =jdtIntro.getMixinInterfacesAsString(jdtMixin); 
-	    					newJaxbMixin.setInterfaces(mixinInterfacesAsString);
-	    					jaxbIntro.getMixin().add(newJaxbMixin);
-    					} catch( JAXBException jaxbe) {
-    						
-    					}
-    					
-    				}
+    				//Introduction newJaxbIntro = AopModelUtils.toJaxb(jdtIntro);
 					AopDescriptor descriptor = (AopDescriptor) getTreeViewer().getInput();
+
+					descriptor.remove(jaxbIntro);
+					descriptor.addInterfaceIntroduction(jdtIntro);
 					descriptor.save();
 
     			}
