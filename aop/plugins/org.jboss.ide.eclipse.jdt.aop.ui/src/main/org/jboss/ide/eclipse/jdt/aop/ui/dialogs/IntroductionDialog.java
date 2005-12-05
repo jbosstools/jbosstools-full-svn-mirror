@@ -1,7 +1,6 @@
 package org.jboss.ide.eclipse.jdt.aop.ui.dialogs;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
@@ -115,12 +114,27 @@ public class IntroductionDialog extends Dialog {
 		
 		
 		// TODO: Remove method and call upon fix for JBAOP-71
-		interfaceComposite.disableAddingInterfaces();
+		//interfaceComposite.disableAddingInterfaces();
 		
 			
 		return main;
 	}
 	
+	protected void okPressed() {
+		System.out.println("ok pressed");
+		try {
+			introduction.setClassExpression(expression.getText(), true);
+		} catch( Throwable t ) {
+			MessageBox error = new MessageBox(IntroductionDialog.this.getShell(), 
+					SWT.OK | SWT.ICON_ERROR);
+			error.setText("Invalid Class Expression");
+			error.setMessage("Your class expression, \"" + expression.getText() + "\" " +
+					"is not a valid class expression. ");
+			int ret = error.open();
+			return;
+		}
+		super.okPressed();
+	}
 	
 	protected void createWidgets() {
 		
@@ -195,6 +209,11 @@ public class IntroductionDialog extends Dialog {
 		wizardButtonData.right = new FormAttachment(100, -5);
 		wizardButtonData.top = new FormAttachment(0,6);
 		wizardButton.setLayoutData(wizardButtonData);
+		
+		// TODO REMOVE 
+		wizardButton.setEnabled(false);
+		wizardButton.setVisible(false);
+		
 
 		FormData interfaceCompositeData = new FormData();
 		interfaceCompositeData.top = new FormAttachment(expression, 10);
@@ -335,9 +354,32 @@ public class IntroductionDialog extends Dialog {
 						IType type = JavaModelUtil.findType(AopCorePlugin.getCurrentJavaProject(),
 								text.getText());
 						if( type != null && type.isInterface() ) {
-							IntroductionDialog.this.introduction.addInterface(text.getText());
-							text.setText("");
-							refreshViewer();							
+							/* 
+							 * If it's an empty interface, (like java.io.Serializable), 
+							 * let them proceed.
+							 * If it has methods, urge caution, suggest interceptors or mixins.
+							*/
+							int numMethods = type.getMethods().length;
+							if( numMethods > 0 ) {
+								MessageBox caution = new MessageBox(IntroductionDialog.this.getShell(), 
+										SWT.OK | SWT.CANCEL | SWT.ICON_WARNING);
+								caution.setText("Interface has methods");
+								caution.setMessage("The fully qualified type \"" + text.getText() + "\" " +
+										"is a valid interface, but contains methods.\nThis should be " + 
+										"implemented as a mixin, or the interface's methods should be " +
+										"intercepted with an interceptor or aspect advice. \n\n" + 
+										"Caution is urged.");
+								int ret = caution.open();
+								if( ret == SWT.OK ) {
+									IntroductionDialog.this.introduction.addInterface(text.getText());
+									text.setText("");
+									refreshViewer();
+								}
+							} else {
+								IntroductionDialog.this.introduction.addInterface(text.getText());
+								text.setText("");
+								refreshViewer();
+							}
 						} else {
 							// not valid
 							MessageBox error = new MessageBox(IntroductionDialog.this.getShell(), 

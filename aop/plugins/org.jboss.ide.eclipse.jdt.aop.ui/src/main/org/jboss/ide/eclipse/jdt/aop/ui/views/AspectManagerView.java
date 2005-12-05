@@ -418,6 +418,7 @@ public class AspectManagerView extends ViewPart {
     			Introduction jaxbIntro = (Introduction)getSelected();
     			IntroductionDialog dialog = new IntroductionDialog(getSite().getShell(), jaxbIntro);
     			if( dialog.open() == Dialog.OK) {
+    				// TODO: Move this to AopModelUtils.toJaxb(JDTInterfaceIntroduction)
     				JDTInterfaceIntroduction jdtIntro = dialog.getIntroduction();
     				if( jdtIntro.getClassExpr().indexOf('(') != -1 ) {
     					jaxbIntro.setExpr(jdtIntro.getClassExpr());
