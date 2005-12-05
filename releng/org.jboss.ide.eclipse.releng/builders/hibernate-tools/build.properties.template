@@ -1,5 +1,5 @@
 ################################
-#
+# 
 # This file contains MACHINE DEPENDENT values!
 # It will not work out of the box, and is also not intended to do so!
 # Adjust it according to the build machine and call the file build.properties
