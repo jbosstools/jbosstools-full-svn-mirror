@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>JBossIDE build results for %build-type% build %jbosside-build-name%</title>
+		<title>JBoss Eclipse IDE build results for %build-type% build %jbosside-build-name%</title>
 		<style>
 			div.section {
 				background-color: #0080C0;
@@ -22,7 +22,7 @@
 	</head>
 	
 	<body style="font-family: sans-serif">
-		<h1>JBossIDE %build-type% build: %jbosside-build-name%</h1>
+		<h2>JBoss Eclipse IDE %build-type% build: %jbosside-build-name%</h2>
 		%date% <a href="%jbosside-download-root%/build.log.zip">Download Build Log</a>
 		<hr/>
 		
@@ -37,15 +37,22 @@
 		 	<li>The JEM driver used in this build was <a href="%jem-download-url%">%jem-target%</a>.</li>
 		 </ul>
 		
-		<div class="section">JBossIDE Bundles</div>
+		<div class="section">Help & Information</div>
+		Here is a list of resources for JBoss Eclipse IDE and it's components:
+		<ul>
+			<li>JBoss Eclipse IDE: <a href="http://www.jboss.com/products/jbosside">Website</a> | <a href="http://www.jboss.com/index.html?module=bb&op=viewforum&f=201">User Forums</a> | <a href="http://jira.jboss.com/jira/secure/BrowseProject.jspa?id=10020">JIRA Issue Tracking</a> (Bugs & New Features)</li>
+			<li>Hibernate Tools: <a href="http://tools.hibernate.org">Website</a> | <a href="http://forum.hibernate.org/viewforum.php?f=6">User Forums</a> | <a href="http://opensource2.atlassian.com/projects/hibernate/browse/HBX">JIRA Issue Tracking</a> (Bugs & New Features)</li>
+		</ul>
+		
+		<div class="section">JBoss Eclipse IDE Bundles</div>
 		JBossIDE bundle builds include all plugins and components of JBossIDE as well as the entire Eclipse SDK. Please
 		choose the correct bundle for your platform.<br/>
 		
 		<table border="0" style="margin-left: 15px;"  cellspacing="5">
 			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
-			<tr><td class="platform">Windows</td><td><a href="%jbosside-download-root%/bundle/%jbosside-win32-bundle-filename%">%jbosside-win32-bundle-filename%</a></td></tr>
+			<tr><td class="platform">Windows</td><td><a href="%jbosside-download-root%/bundle/%jbosside-win32-bundle-filename%">%jbosside-win32-bundle-filename%</a> (<a href="%jbosside-download-root%/bundle/%jbosside-win32-bundle-filename%.md5">md5</a>)</td></tr>
 			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
-			<tr><td class="platform">Linux (x86/GTK2)</td><td><a href="%jbosside-download-root%/bundle/%jbosside-linux-gtk2-bundle-filename%">%jbosside-linux-gtk2-bundle-filename%</a></td></tr>
+			<tr><td class="platform">Linux (x86/GTK2)</td><td><a href="%jbosside-download-root%/bundle/%jbosside-linux-gtk2-bundle-filename%">%jbosside-linux-gtk2-bundle-filename%</a> (<a href="%jbosside-download-root%/bundle/%jbosside-linux-gtk2-bundle-filename%.md5">md5</a>)</td></tr>
 		</table>
 		
 		<div class="section">All JBossIDE Components</div>
@@ -53,7 +60,7 @@
 		
 		<table border="0" style="margin-left: 15px;"  cellspacing="5">
 			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
-			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/all/%jbosside-all-filename%">%jbosside-all-filename%</a></td></tr>
+			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/all/%jbosside-all-filename%">%jbosside-all-filename%</a> (<a href="%jbosside-download-root%/all/%jbosside-all-filename%.md5">md5</a>)</td></tr>
 		</table>
 		
 		<div class="section">Standalone JBossIDE Components</div>
@@ -61,15 +68,15 @@
 		
 		<table border="0" style="margin-left: 15px;"  cellspacing="5">
 			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
-			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/core/%jbosside-core-filename%">%jbosside-core-filename%</a> (<a href="http://www.jboss.com/products/jbosside">website</a>) (<a href="http://www.jboss.com/index.html?module=bb&op=viewforum&f=201">forum</a>)</td></tr>
+			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/core/%jbosside-core-filename%">%jbosside-core-filename%</a> (<a href="%jbosside-download-root%/core/%jbosside-core-filename%.md5">md5</a>)</td></tr>
 			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
-			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/aop/%jbosside-aop-filename%">%jbosside-aop-filename%</a></td></tr>
+			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/aop/%jbosside-aop-filename%">%jbosside-aop-filename%</a> (<a href="%jbosside-download-root%/aop/%jbosside-aop-filename%.md5">md5</a>)</td></tr>
 			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
-			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/hibernate-tools/%jbosside-hibernate-tools-filename%">%jbosside-hibernate-tools-filename%</a> (<a href="http://tools.hibernate.org">website</a>) (<a href="http://forum.hibernate.org/viewforum.php?f=6">forum</a>)</td></tr>
+			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/hibernate-tools/%jbosside-hibernate-tools-filename%">%jbosside-hibernate-tools-filename%</a> (<a href="%jbosside-download-root%/hibernate-tools/%jbosside-hibernate-tools-filename%.md5">md5</a>)</td></tr>
 			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
-			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/jbpm/%jbosside-jbpm-filename%">%jbosside-jbpm-filename%</a></td></tr>
+			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/jbpm/%jbosside-jbpm-filename%">%jbosside-jbpm-filename%</a> (<a href="%jbosside-download-root%/jbpm/%jbosside-jbpm-filename%.md5">md5</a>)</td></tr>
 			<tr><td class="platform"><b>Platform</b></td><td><b>Download</b></td></tr>
-			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/ejb3/%jbosside-ejb3-filename%">%jbosside-ejb3-filename%</a></td></tr>
+			<tr><td class="platform">ALL</td><td><a href="%jbosside-download-root%/ejb3/%jbosside-ejb3-filename%">%jbosside-ejb3-filename%</a> (<a href="%jbosside-download-root%/ejb3/%jbosside-ejb3-filename%.md5">md5</a>)</td></tr>
 		</table>
 	</body>
 </html>
