@@ -234,7 +234,7 @@
 		<scp.fileset.trusted todir="${product.buildDesc}">
 			<fileset dir="${product.build.directory}/builders">
 				<include name="**/*.zip"/>
-				<include name="**/*.md5"/>
+				<include name="**/*.MD5"/>
 			</fileset>
 		</scp.fileset.trusted>
 		<!--scp trust="true" todir="${ssh.username}@${ssh.host}:${scp.basedir}/${product.buildDesc}" keyfile="${ssh.key}" passphrase="${ssh.passphrase}">
