@@ -22,11 +22,21 @@ public class JDTInterfaceIntroduction extends InterfaceIntroduction{
 		super("", "", new String[] {});
 	}
 	
-	public void setClassExpression(String expr) {
+	public void setClassExpression(String expr, boolean throwThrowable) throws Throwable {
 		try {
 			this.classExpr = new ClassExpression(expr);
 			this.name = expr;
 		} catch( Throwable e ) {
+			if( throwThrowable ) {
+				throw e;
+			}
+		}
+	}
+	
+	public void setClassExpression( String expr ) {
+		try {
+			setClassExpression(expr, false);
+		} catch( Throwable t ) {
 		}
 	}
 	
