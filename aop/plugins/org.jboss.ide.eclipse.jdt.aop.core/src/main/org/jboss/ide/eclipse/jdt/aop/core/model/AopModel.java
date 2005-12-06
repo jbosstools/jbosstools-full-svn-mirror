@@ -830,7 +830,7 @@ public class AopModel {
 	public void removeInterfaceIntroduction(IJavaProject project, JDTInterfaceIntroduction intro) {
 		AspectManager.instance().removeInterfaceIntroduction(intro.getName());
 		ProjectAdvisors advisors = getProjectAdvisors(project);
-		AopInterfaceIntroduction aopIntro = advisors.getIntroduction(intro.getClassExpr());
+		AopInterfaceIntroduction aopIntro = advisors.getIntroduction(intro.getExpr());
 		IType[] matchedClasses = aopIntro.getMatched();
 		for( int i = 0; i < matchedClasses.length; i++ ) {
 			fireTypeMatchRemoved(matchedClasses[i], aopIntro);

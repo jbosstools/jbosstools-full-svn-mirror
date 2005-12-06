@@ -8,7 +8,9 @@ import java.util.Arrays;
 
 import org.eclipse.jdt.core.IType;
 import org.jboss.aop.introduction.InterfaceIntroduction;
+import org.jboss.aop.pointcut.ast.ASTStart;
 import org.jboss.aop.pointcut.ast.ClassExpression;
+import org.jboss.aop.pointcut.ast.ParseException;
 import org.jboss.aop.pointcut.ast.TypeExpressionParser;
 import org.jboss.ide.eclipse.jdt.aop.core.matchers.JDTTypeMatcher;
 
@@ -17,25 +19,42 @@ import org.jboss.ide.eclipse.jdt.aop.core.matchers.JDTTypeMatcher;
  */
 public class JDTInterfaceIntroduction extends InterfaceIntroduction{
 
+	public static boolean TYPE_CLASS = true;
+	public static boolean TYPE_EXPR = false;
+	
+	private boolean type;
+	private String clazzExpr = "";
 	
 	public JDTInterfaceIntroduction() {
 		super("", "", new String[] {});
 	}
 	
-	public void setClassExpression(String expr, boolean throwThrowable) throws Throwable {
+	public void setClassExpression(String expr, boolean type, boolean throwThrowable) throws Throwable {
+		
 		try {
-			this.classExpr = new ClassExpression(expr);
+			this.clazzExpr = expr;
 			this.name = expr;
+			this.type = type;
+
+			if( type == TYPE_CLASS ) {
+				this.classExpr = new ClassExpression(expr);
+				this.ast = null;
+			} else {
+		         ASTStart start = new TypeExpressionParser(new StringReader(expr)).Start();
+		         this.ast = start;
+		         this.classExpr = null;
+			}
 		} catch( Throwable e ) {
 			if( throwThrowable ) {
+				e.printStackTrace();
 				throw e;
 			}
 		}
 	}
 	
-	public void setClassExpression( String expr ) {
+	public void setClassExpression( String expr, boolean type ) {
 		try {
-			setClassExpression(expr, false);
+			setClassExpression(expr, type, false);
 		} catch( Throwable t ) {
 		}
 	}
@@ -104,18 +123,42 @@ public class JDTInterfaceIntroduction extends InterfaceIntroduction{
 	
 	public boolean matches (IType type)
 	{
-		try {
-			if( ast == null ) {
-				ast = new TypeExpressionParser(new StringReader(this.classExpr.getOriginal())).Start();
-			}
-		} catch( Throwable throwable ) {
-			return false;
+		if( this.classExpr != null ) {
+			System.out.println("we have a classExpr");
+//			try {
+//				
+//				ast = new TypeExpressionParser(new StringReader(this.classExpr.getOriginal())).Start();
+//				JDTTypeMatcher matcher = new JDTTypeMatcher(type);
+//				boolean tmp = ((Boolean) ast.jjtAccept(matcher, null)).booleanValue(); 
+//				return tmp;
+//
+//			} catch( ParseException pe ) {
+//				System.out.println("---- EXCEPTION");
+//			}
+		} else {
+			System.out.println("We have a regular expr");
+			JDTTypeMatcher matcher = new JDTTypeMatcher(type);
+			boolean tmp = ((Boolean) ast.jjtAccept(matcher, null)).booleanValue(); 
+			return tmp;
+			
 		}
-		
-		JDTTypeMatcher matcher = new JDTTypeMatcher(type);
-		return ((Boolean) ast.jjtAccept(matcher, null)).booleanValue();
+		return false;
+//		try {
+//			if( ast == null ) {
+//				ast = new TypeExpressionParser(new StringReader(this.classExpr.getOriginal())).Start();
+//			}
+//		} catch( Throwable throwable ) {
+//			return false;
+//		}
+//		
+//		JDTTypeMatcher matcher = new JDTTypeMatcher(type);
+//		return ((Boolean) ast.jjtAccept(matcher, null)).booleanValue();
 	}
 	
+	
+	public String getExpr() {
+		return this.clazzExpr;
+	}
 	/**
 	 * This class is only used temporarily. I would have liked
 	 * to have had it extend the Mixin class, but those fields are

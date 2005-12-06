@@ -117,8 +117,11 @@ public class AopModelUtils {
 
 		// make a copy of the provided jaxb-introduction into the aop's jdt type.
 		String expr = jaxbIntro.getClazz() == null ? jaxbIntro.getExpr() : jaxbIntro.getClazz();
+		boolean type = jaxbIntro.getClazz() == null ? 
+				JDTInterfaceIntroduction.TYPE_EXPR : JDTInterfaceIntroduction.TYPE_CLASS;
 		
-		jdtIntro.setClassExpression(expr);
+		jdtIntro.setClassExpression(expr, type);
+		
 		jdtIntro.setInterfaces(jaxbIntro.getInterfaces());
 		ArrayList introductionMixins = jdtIntro.getMixins();
 		java.util.List jaxbMixins = jaxbIntro.getMixin();
@@ -148,7 +151,7 @@ public class AopModelUtils {
 			List jaxbMixins = jaxbIntro.getMixin();
 			
 			// handle this part
-			String expr = intro.getClassExpr();
+			String expr = intro.getExpr();
 			if( expr.indexOf('(') == -1 ) {
 				jaxbIntro.setClazz(expr);
 			} else {

@@ -114,7 +114,7 @@ public class AdvisedMembersLabelProvider extends LabelProvider {
 			((AopTypedef)element).getTypedef().getExpr();
 		}
 		else if( element instanceof AopInterfaceIntroduction ) {
-			return ((AopInterfaceIntroduction)element).getIntroduction().getClassExpr();
+			return ((AopInterfaceIntroduction)element).getIntroduction().getExpr();
 		}
 
 

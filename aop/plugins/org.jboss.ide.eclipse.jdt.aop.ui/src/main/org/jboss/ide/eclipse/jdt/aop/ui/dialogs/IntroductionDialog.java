@@ -121,18 +121,20 @@ public class IntroductionDialog extends Dialog {
 	}
 	
 	protected void okPressed() {
-		System.out.println("ok pressed");
-		try {
-			introduction.setClassExpression(expression.getText(), true);
-		} catch( Throwable t ) {
-			MessageBox error = new MessageBox(IntroductionDialog.this.getShell(), 
-					SWT.OK | SWT.ICON_ERROR);
-			error.setText("Invalid Class Expression");
-			error.setMessage("Your class expression, \"" + expression.getText() + "\" " +
-					"is not a valid class expression. ");
-			int ret = error.open();
-			return;
-		}
+//		System.out.println("ok pressed");
+		
+//		
+//		try {
+//			introduction.setClassExpression(expression.getText(), true);
+//		} catch( Throwable t ) {
+//			MessageBox error = new MessageBox(IntroductionDialog.this.getShell(), 
+//					SWT.OK | SWT.ICON_ERROR);
+//			error.setText("Invalid Class Expression");
+//			error.setMessage("Your class expression, \"" + expression.getText() + "\" " +
+//					"is not a valid class expression. ");
+//			int ret = error.open();
+//			return;
+//		}
 		super.okPressed();
 	}
 	
@@ -172,23 +174,23 @@ public class IntroductionDialog extends Dialog {
 				String text = expression.getText();
 				if( text.indexOf('(') == -1 ) {
 					// its a class
-					introduction.setClassExpression(text);
+					introduction.setClassExpression(text, JDTInterfaceIntroduction.TYPE_CLASS);
 				} else {
 					// its an expression
-					introduction.setClassExpression(text);
+					introduction.setClassExpression(text, JDTInterfaceIntroduction.TYPE_EXPR);
 				}
 			} 
 			
 		} );
 
-		AopUICompletionProcessor processor = new AopUICompletionProcessor(expression, true, true, false, false); 
+		//AopUICompletionProcessor processor = new AopUICompletionProcessor(expression, true, true, false, false); 
 
 
 	}
 	protected void setWidgetText() {
 		expressionLabel.setText("Class Expression");
 		wizardButton.setText("Wizard...");
-		expression.setText(introduction.getClassExpr());
+		expression.setText(introduction.getExpr());
 		
 	}
 	
@@ -211,8 +213,8 @@ public class IntroductionDialog extends Dialog {
 		wizardButton.setLayoutData(wizardButtonData);
 		
 		// TODO REMOVE 
-		wizardButton.setEnabled(false);
-		wizardButton.setVisible(false);
+//		wizardButton.setEnabled(false);
+//		wizardButton.setVisible(false);
 		
 
 		FormData interfaceCompositeData = new FormData();
