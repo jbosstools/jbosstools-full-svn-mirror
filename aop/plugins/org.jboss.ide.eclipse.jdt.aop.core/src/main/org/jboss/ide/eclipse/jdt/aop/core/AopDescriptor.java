@@ -287,61 +287,8 @@ public class AopDescriptor {
 	
 
 	public void addInterfaceIntroduction(JDTInterfaceIntroduction intro) {
-		try {
-			Introduction jaxbIntro = 
-				JaxbAopUtil.instance().getFactory().createAOPTypeIntroduction();
-			List jaxbMixins = jaxbIntro.getMixin();
-			
-			// handle this part
-			String expr = intro.getClassExpr();
-			if( expr.indexOf('(') == -1 ) {
-				jaxbIntro.setClazz(expr);
-			} else {
-				jaxbIntro.setExpr(expr);				
-			}
-			
-			
-			if( intro.getInterfacesAsString() != "")
-				jaxbIntro.setInterfaces(intro.getInterfacesAsString());
-			
-			// Now this part
-			ArrayList jdtList = intro.getMixins();
-			for(Iterator i = jdtList.iterator();i.hasNext();) {
-				Object o = i.next();
-				if( o instanceof InterfaceIntroduction.Mixin ) {
-					InterfaceIntroduction.Mixin mixin = 
-						(InterfaceIntroduction.Mixin)o;
-					
-					org.jboss.ide.eclipse.jdt.aop.core.jaxb.Mixin jaxbMixin = 
-						JaxbAopUtil.instance().getFactory().createMixin();
-					
-					jaxbMixin.setClazz(mixin.getClassName());
-					jaxbMixin.setConstruction(mixin.getConstruction());
-					jaxbMixin.setInterfaces(intro.getMixinInterfacesAsString(mixin));
-					jaxbMixins.add(jaxbMixin);
-				}
-			}
-
-//			Introduction jaxbIntro = 
-//				JaxbAopUtil.instance().getFactory().createAOPTypeIntroduction();
-//			List jaxbMixins = jaxbIntro.getMixin();
-//
-//			jaxbIntro.setClazz("blsdfsad");
-//			jaxbIntro.setInterfaces("SDSFD, DFD");
-//
-//			org.jboss.ide.eclipse.jdt.aop.core.jaxb.Mixin jaxbMixin =
-//				JaxbAopUtil.instance().getFactory().createMixin();
-//			
-//			jaxbMixin.setInterfaces("thisthat, the otherthing");
-//			jaxbMixin.setClazz("AHH");
-//			jaxbMixin.setConstruction("ahdsafds");
-//			jaxbMixins.add(jaxbMixin);
-			
-			getAop().getTopLevelElements().add(jaxbIntro);
-			
-		} catch( JAXBException e ) {
-			e.printStackTrace();
-		}
+		Introduction jaxbIntro = AopModelUtils.toJaxb(intro);
+		getAop().getTopLevelElements().add(jaxbIntro);
 	}
 	
 	private List getParent (Interceptor interceptor)
