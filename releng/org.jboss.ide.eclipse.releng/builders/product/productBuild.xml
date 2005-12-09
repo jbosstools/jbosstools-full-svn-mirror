@@ -4,13 +4,15 @@
 	
 	<loadproperties srcFile="../global.properties"/>
 	<loadproperties srcFile="build.properties"/>
+	<loadproperties srcfile="build.requires"/>
 	
 	<import file="../common/scp.xml"/>
+	<import file="../common/buildRequirements.xml"/>
 	
 	<var name="build.dest" value=""/>
 	<var name="current.platform" value=""/>
 	<var name="keep.builder.zips" value="false"/>
-		
+	
   <target name="nightly">
 	<tstamp/>
 	<property name="product.versionTag" value="N${DSTAMP}${TSTAMP}"/>
@@ -38,9 +40,8 @@
    </target>
 	
    <target name="build">
-   	
    	<property name="jbosside.download.root" value="${jbosside.download.url}/builds/${product.buildDesc}/${product.versionTag}"/>
-   	<property name="product.build.directory" value="${product.build.root}/${product.versionTag}"/>
+   	<property name="product.build.directory" value="${product.build.root}/${product.versionTag}"/>		
    	
    	<mkdir dir="${product.build.directory}"/>
    	<mkdir dir="${product.build.directory}/all"/>
@@ -49,35 +50,41 @@
 	<delete includeemptydirs="true" failonerror="false">
 		<fileset dir="${product.build.root}" defaultexcludes="false">
 			<include name="**/*"/>
-			<exclude name="eclipse-SDK.zip"/>
+			<exclude name="**/eclipse-SDK.*"/>
 		</fileset>
 		<fileset dir="${requirement.root}" defaultexcludes="false">
 			  <include name="**/return.properties"/>	
 		</fileset>
 	</delete>
 
+   	<property file="build.requires"/>
+   	<buildRequirements requirements="${product.requires}"/>
+	
+	<echo file="${product.build.root}/buildData.properties">
+		upload.to=${product.buildDesc}/${product.versionTag}
+		product.build.directory=${product.build.directory}
+	</echo>
+
 	<for list="${build.types}" param="build.type">
 		<sequential>
-	
 			<echo>Building ${product.name} with build type '@{build.type}'</echo>
-		<if>
-
-			<equals arg1="@{build.type}" arg2="bundle.eclipse"/>
-			<then>
-				<foreach list="${eclipse.builds}" delimiter="," target="build.platform" param="platform.archive" inheritall="true"/>
-			</then>
-			<elseif>
-				<equals arg1="@{build.type}" arg2="standalone.product"/>
-				<then>
-		
-   				<var name="build.dest" value="${product.build.directory}/all/${product.name}-${product.versionTag}-ALL"/>
+			<switch value="@{build.type}">
+				<case value="bundle.eclipse">
+					<foreach list="${eclipse.builds}" delimiter="," target="build.platform" param="platform.archive" inheritall="true"/>
+				</case>
+				<case value="standalone.product">
+					<var name="build.dest" value="${product.build.directory}/all/${product.name}-${product.versionTag}-ALL"/>
 					<runtarget target="build.standalone.release"/>
-				</then>
-			</elseif>
-		</if>
-
+				</case>
+				<case value="tests">
+					<runBuilder builder="tests"/>
+					<ant target="testBuild" antfile="${builder.root}/tests/testBuild.xml" dir="${builder.root}/tests"/>
+				</case>
+			</switch>
 		</sequential>
 	</for>
+
+	<ant antfile="buildResults.xml" target="build.results" inheritall="true"/>
    	
    	<runtarget target="publish.results"/>
    	<runtarget target="send.notification.email"/>
@@ -124,57 +131,63 @@
 		<delete file="${build.dest}/temp.tar"/>
 	</target>
 	
+	<macrodef name="runBuilder">
+		<attribute name="builder"/>
+		<sequential>
+			<if>
+	  			<equals arg1="${product.buildDesc}" arg2="release"/>
+	  			<then>
+	  				<propertycopy override="true" name="builder.version" from="versionTags.@{builder}"/>
+	  				<propertycopy override="true" name="cvsTag" from="versionTags.@{builder}.cvs"/>
+	  			</then>
+	  			<else>
+	  				<property name="builder.version" value="${product.versionTag}"/>
+	  				<property name="cvsTag" value="HEAD"/>
+	  			</else>
+	  		</if>
+	  	
+			<ant dir="${builder.root}" antfile="builder-wrap.xml" target="${product.buildDesc}" inheritAll="true">
+				<property name="builder" value="@{builder}"/>
+				<property name="versionTag" value="${builder.version}"/>
+				<property name="cvsTag" value="${cvsTag}"/>
+			</ant>
+
+			<property name="buildType" value="${product.buildType}"/>
+	  	
+			<loadproperties srcFile="${builder.root}/@{builder}/build.properties">
+				<filterchain>
+					<linecontains>
+						<contains value="buildLabel"/>
+					</linecontains>
+				</filterchain>
+			</loadproperties>
+
+			<mkdir dir="${product.build.directory}/@{builder}"/>
+			<copy todir="${product.build.directory}/@{builder}">
+				<fileset dir="${builder.build.path}/${buildLabel}">
+					<include name="**/*"/>
+				</fileset>
+			</copy>
+	  	
+			<checksum>
+				<fileset dir="${product.build.directory}/@{builder}">
+					<include name="**/*.zip"/>
+				</fileset>
+			</checksum>
+	  	
+	 		<delete>
+			  <fileset dir="${builder.build.path}/${buildLabel}">
+					<include name="**/*.zip"/>
+				</fileset>
+			</delete>
+		</sequential>
+	</macrodef>
+	
 	<target name="run.builders" unless="builders.built">
 		<property name="builders.built" value="1"/>
 		<for list="${builders}" param="builder">
-		  <sequential>
-		  		<if>
-		  			<equals arg1="${product.buildDesc}" arg2="release"/>
-		  			<then>
-		  				<propertycopy override="true" name="builder.version" from="versionTags.@{builder}"/>
-		  				<propertycopy override="true" name="cvsTag" from="versionTags.@{builder}.cvs"/>
-		  			</then>
-		  			<else>
-		  				<property name="builder.version" value="${product.versionTag}"/>
-		  				<property name="cvsTag" value="HEAD"/>
-		  			</else>
-		  		</if>
-		  	
-				<ant dir="${builder.root}" antfile="builder-wrap.xml" target="${product.buildDesc}" inheritAll="true">
-					<property name="builder" value="@{builder}"/>
-					<property name="versionTag" value="${builder.version}"/>
-					<property name="cvsTag" value="${cvsTag}"/>
-				</ant>
-
-				<property name="buildType" value="${product.buildType}"/>
-		  	
-				<loadproperties srcFile="${builder.root}/@{builder}/build.properties">
-					<filterchain>
-						<linecontains>
-							<contains value="buildLabel"/>
-						</linecontains>
-					</filterchain>
-				</loadproperties>
-
-				<mkdir dir="${product.build.directory}/@{builder}"/>
-				<copy todir="${product.build.directory}/@{builder}">
-					<fileset dir="${builder.build.path}/${buildLabel}">
-						<include name="**/*"/>
-					</fileset>
-				</copy>
-		  	
-				<checksum>
-					<fileset dir="${product.build.directory}/@{builder}">
-						<include name="**/*.zip"/>
-					</fileset>
-				</checksum>
-		  	
-		 		<delete>
-				  <fileset dir="${builder.build.path}/${buildLabel}">
-						<include name="**/*.zip"/>
-					</fileset>
-				</delete>
-
+			<sequential>
+		  		<runBuilder builder="@{builder}"/>
 			</sequential>
 		</for>
 	</target>
@@ -185,6 +198,7 @@
 				<include name="**/*.zip"/>
 				<exclude name="all/**/*.zip"/>
 				<exclude name="bundle/**/*.zip"/>
+				<exclude name="tests/**/*.zip"/>
 			</fileset>
 		</unzip>
 	</target>
@@ -258,23 +272,29 @@
 			<fileset dir="${product.build.root}">
 				<exclude name="eclipse/**/*" />
 				<exclude name="eclipse-SDK.zip"/>
+				<exclude name="eclipse-SDK.tar.gz"/>
+				<exclude name="**/eclipse/**/*"/>
+				<exclude name="buildData.properties"/>
 			</fileset>
 		</scp.fileset.trusted>
-		
-		<ant antfile="buildResults.xml" target="build.results" inheritall="true"/>
 		
 		<scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}">
 			<fileset file="${product.build.directory}/buildResults.html"/>
 		</scp.fileset.trusted>
+		
+		<!--scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}/tests">
+			<fileset dir="${test-root}">
+				<include name="test-results/**/*"/>
+			</fileset>
+		</scp.fileset.trusted-->
 	</target>
 	
 	<target name="send.notification.email" if="enable.notification">
 		<property file="email.properties"/>
-			
-		<mail subject="${email.subject}">
+
+		<mail subject="${email.subject}" messagefile="emailBody.html" messagemimetype="text/html">
 			<from address="jbosside-build@jboss.org"/>
 			<to address="${email.list}"/>
-			<message>${email.body}</message>
 		</mail>
 	</target>
 </project>
