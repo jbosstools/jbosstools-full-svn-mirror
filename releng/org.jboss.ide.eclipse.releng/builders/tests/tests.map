@@ -1,0 +1,3 @@
+feature@org.jboss.ide.eclipse.test.feature=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/tests/org.jboss.ide.eclipse.test.feature
+plugin@org.jboss.ide.eclipse.core.test=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/tests/org.jboss.ide.eclipse.core.test
+
