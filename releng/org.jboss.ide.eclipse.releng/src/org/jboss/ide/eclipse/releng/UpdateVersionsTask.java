@@ -2,12 +2,15 @@ package org.jboss.ide.eclipse.releng;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -344,6 +347,8 @@ public class UpdateVersionsTask extends Task {
 		else throw new BuildException("Assemble script: " + assembleFile.getAbsolutePath() + " does not exist.");
 	}
 	
+	public static final Attributes.Name BUNDLE_VERSION = new Attributes.Name("Bundle-Version");
+	
 	private String getPluginVersion (File pluginBase) throws BuildException
 	{
 		try {
@@ -351,37 +356,46 @@ public class UpdateVersionsTask extends Task {
 			pluginName = pluginName.substring(pluginName.lastIndexOf(File.separator));
 			
 			File pluginFile = new File(pluginBase, "plugin.xml");
-			Document doc = parse(pluginFile);
-	        Attribute attr = (Attribute) doc.selectSingleNode( "//plugin/@version" );
-
-			if (attr != null)
+			File manifestFile = new File(pluginBase, "META-INF/MANIFEST.MF");
+			
+			if (pluginFile.exists())
 			{
-				return attr.getText();
+				Document doc = parse(pluginFile);
+		        Attribute attr = (Attribute) doc.selectSingleNode( "//plugin/@version" );
+	
+				if (attr != null)
+				{
+					return attr.getText();
+				}
 			}
 			
-			
-			// Some plugins have the version set in the MANIFEST.MF as well as the plugin.xml
-			File manifestFile = new File(pluginBase, "META-INF/MANIFEST.MF");
+			// Handle the new 3.1-style plugin metadata
 			if (manifestFile.exists())
 			{
-
-				String version = null;
-				BufferedReader reader = new BufferedReader(new FileReader(manifestFile));
-				for (String line = reader.readLine(); line != null; line = reader.readLine())
-				{
-					if (line.indexOf("Bundle-Version:") != -1)
-					{
-						String tokens[] = line.split(": *");
-						
-						if (tokens.length == 2)
-						{
-							version = tokens[1];
-						}
-					}
-				}
+				FileInputStream manifestStream = new FileInputStream(manifestFile);
+				Manifest manifest = new Manifest(manifestStream);
 				
-				reader.close();
-				return version;
+				String bundleVersion = (String) manifest.getMainAttributes().get(BUNDLE_VERSION);
+				manifestStream.close();
+				
+				return bundleVersion;
+//				String version = null;
+//				BufferedReader reader = new BufferedReader(new FileReader(manifestFile));
+//				for (String line = reader.readLine(); line != null; line = reader.readLine())
+//				{
+//					if (line.indexOf("Bundle-Version:") != -1)
+//					{
+//						String tokens[] = line.split(": *");
+//						
+//						if (tokens.length == 2)
+//						{
+//							version = tokens[1];
+//						}
+//					}
+//				}
+				
+//				reader.close();
+//				return version;
 			}
 			
 			return null;
@@ -400,18 +414,21 @@ public class UpdateVersionsTask extends Task {
 			
 			
 			File pluginFile = new File(pluginBase, "plugin.xml");
-			Document doc = parse(pluginFile);
-	        Attribute attr = (Attribute) doc.selectSingleNode( "//plugin/@version" );
-
-			if (attr != null)
+			if (pluginFile.exists())
 			{
-				System.out.println("updating version of plugin " + pluginName  + " to " + (append ? appendVersions(attr.getText(), version) : version) + "...");
-				String newVersion = append ? appendVersions(attr.getText(), version) : version;
-				
-				validateVersion(newVersion);
-				attr.setText(newVersion);
-				
-				write(doc, pluginFile);
+				Document doc = parse(pluginFile);
+		        Attribute attr = (Attribute) doc.selectSingleNode( "//plugin/@version" );
+	
+				if (attr != null)
+				{
+					System.out.println("updating version of plugin " + pluginName  + " to " + (append ? appendVersions(attr.getText(), version) : version) + "...");
+					String newVersion = append ? appendVersions(attr.getText(), version) : version;
+					
+					validateVersion(newVersion);
+					attr.setText(newVersion);
+					
+					write(doc, pluginFile);
+				}
 			}
 			
 			// Some plugins have the version set in the MANIFEST.MF as well as the plugin.xml
