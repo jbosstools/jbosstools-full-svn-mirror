@@ -2,6 +2,8 @@
 
 TARGET=$1
 shift
+CVSTAGPROPERTIES=$1
+shift
 ANT=$ANT_HOME/bin/ant
 
 echo target=$TARGET
@@ -14,15 +16,15 @@ fi
 $ANT $@ -lib ../lib -f common/buildRequirements.xml cleanRequirements
 
 if [ "$TARGET" = "product" ]; then
-	$ANT $@ -lib ../lib -f product/productBuild.xml integration > build.log
+	$ANT $@ -lib ../lib -propertyfile $CVSTAGPROPERTIES -f product/productBuild.xml integration > build.log
 	
 	if [ "$?" = "0" ]; then
-		$ANT $@ -lib ../lib -f product/buildResults.xml publish.log
+		$ANT $@ -lib ../lib -propertyfile $CVSTAGPROPERTIES -f product/buildResults.xml publish.log
 	else
 		echo "\t[JBossIDE-Build ERROR] There was an error running the build"
 		exit -1
 	fi
 	
 else
-	$ANT $@ -lib ../lib -f builder-wrap.xml integration -Dbuilder=$TARGET -DcvsTag=HEAD
+	$ANT $@ -lib ../lib -propertyfile $CVSTAGPROPERTIES -f builder-wrap.xml integration -Dbuilder=$TARGET
 fi
