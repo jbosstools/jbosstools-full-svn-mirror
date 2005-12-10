@@ -145,9 +145,9 @@
 	  			</then>
 	  			<else>
 	  				<if>
-	  					<isset property="versionTags.@{builder}.cvs"/>
+	  					<isset property="@{builder}.cvs"/>
 	  					<then>
-	  		  				<propertycopy override="true" name="cvsTag" from="versionTags.@{builder}.cvs"/>
+	  		  				<propertycopy override="true" name="cvsTag" from="@{builder}.cvs"/>
 	  					</then>
 	  					<else>
 		  					<propertycopy override="true" name="cvsTag" from="default.cvs.tag"/>
