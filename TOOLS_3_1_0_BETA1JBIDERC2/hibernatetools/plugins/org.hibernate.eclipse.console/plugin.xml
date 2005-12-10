@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            icon="icons/hibernate_small_icon.gif"
+            class="org.hibernate.eclipse.console.HibernateConsolePerspectiveFactory"
+            name="Hibernate Console"
+            id="org.hibernate.eclipse.console.HibernateConsolePerspective"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Hibernate"
+            id="hibernatecategory"/>
+     <view
+            icon="icons/hibernate_small_icon.gif"
+            class="org.hibernate.eclipse.console.views.KnownConfigurationsView"
+            category="hibernatecategory"
+            name="Hibernate Configurations"
+            id="org.hibernate.eclipse.console.views.KnownConfigurationsView"/>
+      <view
+            category="hibernatecategory"
+            class="org.hibernate.eclipse.graph.EntityGraphView"
+            icon="icons/hibernate_small_icon.gif"
+            id="org.hibernate.eclipse.graph.EntityGraphView"
+            name="Hibernate Entity Model"/>
+      <view
+            category="hibernatecategory"
+            class="org.hibernate.eclipse.graph.RelationalGraphView"
+            icon="icons/hibernate_small_icon.gif"
+            id="org.hibernate.eclipse.graph.RelationalGraphView"
+            name="Hibernate Relational Model"/>
+      <view
+            icon="icons/hibernate_small_icon.gif"
+            class="org.hibernate.eclipse.console.views.QueryPageTabView"
+            category="hibernatecategory"
+            name="Hibernate Query Result"
+            id="org.hibernate.eclipse.console.views.QueryPageTabView"/>
+      <view
+            category="hibernatecategory"
+            class="org.hibernate.eclipse.console.views.DynamicQueryTranslatorView"
+            icon="icons/images/hibernate_small_icon.jpg"
+            id="org.hibernate.eclipse.console.views.DynamicQueryTranslatorView"
+            name="Hibernate Dynamic Query Translator"/>
+      <view
+            category="hibernatecategory"
+            class="org.hibernate.eclipse.console.views.QueryParametersView"
+            icon="icons/images/parameter.gif"
+            id="org.hibernate.eclipse.console.views.QueryParametersView"
+            name="Query Parameters"/>
+            
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Hibernate"
+            id="hibernatewizards"/>
+      <wizard
+            category="hibernatewizards"
+            class="org.hibernate.eclipse.console.wizards.NewConfigurationWizard"
+            icon="icons/hibernate_small_icon.gif"
+            id="org.hibernate.eclipse.console.wizards.NewConfigurationWizard"
+            name="Hibernate Configuration File (cfg.xml)">
+         <description>Create a new hibernate.cfg.xml file (Helping with the initial JDBC setup etc.)</description>
+      </wizard>
+      <wizard
+            canFinishEarly="false"
+            category="hibernatewizards"
+            class="org.hibernate.eclipse.console.wizards.NewReverseEngineeringFileWizard"
+            icon="icons/hibernate_small_icon.gif"
+            id="org.hibernate.eclipse.console.wizards.NewReverseEngineeringFileWizard"
+            name="Hibernate Reverse Engineering File (reveng.xml)">
+         <description>Create a new hibernate.reveng.xml (Helping with the initial table and type filtering)</description>
+      </wizard>
+      <wizard
+            category="hibernatewizards"
+            class="org.hibernate.eclipse.console.wizards.ConsoleConfigurationCreationWizard"
+            descriptionImage="icons/hibernate_small_icon.gif"
+            finalPerspective="org.hibernate.eclipse.console.HibernateConsolePerspective"
+            icon="icons/hibernate_small_icon.gif"
+            id="org.hibernate.eclipse.console.wizards.ConsoleConfigurationCreationWizard"
+            name="Hibernate Console Configuration"
+            preferredPerspectives="org.hibernate.eclipse.console.HibernateConsolePerspective"
+            project="false">
+         <description>Creates a new Hibernate Console Configuration</description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.core.resources.IFile"
+            nameFilter="*.xml"
+            id="org.hibernate.eclipse.console.jtidyformat">
+         <menu
+               label="JTidy"
+               path="additions"
+               id="org.hibernate.eclipse.console.jtidymenu">
+            <separator name="group1"/>
+         </menu>
+         <action
+               label="Format with JTidy"
+               class="org.hibernate.eclipse.console.actions.JTidyFormatAction"
+               menubarPath="org.hibernate.eclipse.console.jtidymenu/group1"
+               id="org.hibernate.eclipse.console.jtidyformat"/>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="org.hibernate.eclipse.console.properties.HibernatePropertyPage"
+            id="org.hibernate.eclipse.console.properties.HibernatePropertyPage"
+            name="Hibernate Settings"
+            objectClass="org.eclipse.jdt.core.IJavaProject">
+             </page>
+   </extension>
+   <extension
+        id="hibernateNature"
+        name="Hibernate Nature"
+        point="org.eclipse.core.resources.natures">
+        <runtime>
+            <run
+                class="org.hibernate.eclipse.nature.HibernateNature">
+            </run>
+        </runtime>
+        <requires-nature
+            id="org.eclipse.jdt.core.javanature">
+        </requires-nature>
+    </extension>
+
+     <extension	
+         id="hibernateBuilder"
+         name="Hibernate Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder hasNature="false">
+         <run class="org.hibernate.eclipse.builder.HibernateBuilder"/>
+      </builder>
+   </extension> 
+   
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.hibernate.eclipse.hqleditor.HQLEditor"
+            contributorClass="org.hibernate.eclipse.hqleditor.HQLEditorActionContributor"
+            extensions="hql"
+            icon="icons/images/hql_editor.gif"
+            id="org.hibernate.eclipse.hqleditor.HQLEditor"
+            name="HQL Editor">
+      </editor>
+   </extension>
+    <extension
+          point="org.eclipse.ui.actionSets">
+       <actionSet
+             id="org.hibernate.eclipse.console.actionSet"
+             label="HQL"
+             visible="false">
+          <menu
+                id="HQL"
+                label="H&amp;QL">
+             <separator name="hqlGroup"/>
+          </menu>
+          <action
+                allowLabelUpdate="true"
+                class="org.hibernate.eclipse.console.actions.ExecuteHQLAction"                
+                icon="icons/images/execute.gif"
+                id="org.hibernate.eclipse.console.actions.ExecuteHQLAction"
+                definitionId="org.hibernate.eclipse.console.actions.ExecuteHQLActionCommand"
+                label="Run Query"
+                retarget="true"
+                style="pulldown"
+                toolbarPath="hqlGroup"
+                tooltip="Run HQL Query from current editor">
+         </action>         		  
+       </actionSet>
+        <actionSet 
+            label="Hibernate Code Generation" 
+            visible="true" 
+            id="org.hibernate.eclipse.launch.actionset"> 
+         <menu 
+               label="Hibernate Code Generation..." 
+               path="additions" 
+               id="org.hibernate.eclipse.launch.generate"> 
+            <separator 
+                  name="HibernateCodeGenerationGroup"> 
+            </separator> 
+         </menu> 
+         <action 
+               label="Hibernate Code Generation..." 
+               pulldown="true" 
+               icon="icons/hibernate_small_icon.gif" 
+               class="org.hibernate.eclipse.launch.LaunchMenuDelegate" 
+               menubarPath="org.eclipse.ui.run/HibernateToolsGroup" 
+               id="org.hibernate.eclipse.launch.LaunchMenuDelegateMenu"> 
+         </action> 
+         <action 
+               label="Hibernate Code Generation..." 
+               pulldown="true" 
+               icon="icons/hibernate_small_icon.gif" 
+               tooltip="Generate code via Hibernate Tools" 
+               class="org.hibernate.eclipse.launch.LaunchMenuDelegate" 
+               toolbarPath="org.eclipse.debug.ui.launchActionSet/hibernatetool" 
+               id="org.hibernate.eclipse.launch.LaunchMenuDelegateToolBar"> 
+         </action> 
+         <action
+               definitionId="org.hibernate.eclipse.launch.OpenHibernateToolsConfigurations"
+               label="Hibernate Tools ..."
+               class="org.hibernate.eclipse.launch.OpenHibernateToolsConfigurations"
+               id="org.hibernate.eclipse.launch.OpenHibernateToolsConfigurations">
+         </action>
+      </actionSet> 
+       
+    </extension>
+    
+    <extension
+      point="org.eclipse.ui.commands">
+   <command
+         category="org.eclipse.ui.category.edit"
+         id="org.hibernate.eclipse.console.actions.ExecuteHQLActionCommand"
+         name="Run Query command"/>
+</extension>
+<extension
+      point="org.eclipse.ui.bindings">
+   <key
+         commandId="org.hibernate.eclipse.console.actions.ExecuteHQLActionCommand"
+         contextId="org.hibernate.eclipse.console.hql"
+         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+         sequence="CTRL+ENTER"/>
+</extension>
+
+ <extension point="org.eclipse.ui.actionSetPartAssociations">
+  <actionSetPartAssociation targetID="org.hibernate.eclipse.console.actionSet">
+   <part id="org.hibernate.eclipse.hqleditor.HQLEditor"/>
+  </actionSetPartAssociation>
+ </extension>
+ <extension
+       point="org.eclipse.ui.editorActions">
+    <editorContribution
+          id="org.hibernate.eclipse.hqleditor.HQLEditorContributions"
+          targetID="org.hibernate.eclipse.hqleditor.HQLEditor">
+         <action
+                actionID="clearEditor"
+                class="org.hibernate.eclipse.console.actions.ClearHQLEditorAction"
+                icon="icons/images/clear.gif"
+                id="org.hibernate.eclipse.console.actions.ClearHQLEditorAction"
+                label="&amp;Clear HQL Editor"
+                menubarPath="HQL/hqlGroup"
+                style="push"
+                toolbarPath="hqlGroup"
+                tooltip="Clear HQL Editor"/>
+          <menu
+                id="HQL"
+                label="H&amp;QL">
+             <separator name="hqlGroup"/>
+          </menu>
+    </editorContribution>
+ </extension>
+ 
+   <extension 
+      point = "org.eclipse.ui.elementFactories"> 
+         <factory 
+            id ="org.hibernate.eclipse.hqleditor.HQLEditorInputFactory" 
+            class="org.hibernate.eclipse.hqleditor.HQLEditorInputFactory"> 
+         </factory> 
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="org.hibernate.eclipse.console.HibernateConsolePerspective">
+         <newWizardShortcut id="org.hibernate.eclipse.console.wizards.NewConfigurationWizard"/>
+         <newWizardShortcut id="org.hibernate.eclipse.console.wizards.ConsoleConfigurationCreationWizard"/>
+         <newWizardShortcut id="org.hibernate.eclipse.console.newWizardShortcut3"/>
+         <viewShortcut id="org.hibernate.eclipse.console.views.KnownConfigurationsView"/>
+         <viewShortcut id="org.hibernate.eclipse.graph.EntityGraphView"/>
+         <viewShortcut id="org.hibernate.eclipse.console.views.QueryPageTabView"/>
+         <viewShortcut id="org.hibernate.eclipse.console.views.DynamicQueryTranslatorView"/>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.contexts">
+      <context
+            id="org.hibernate.eclipse.console.hql"
+            name="Editing HQL"
+            parentId="org.eclipse.ui.textEditorScope"/>
+   </extension>
+
+  <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            category="org.hibernate.eclipse.launchcategory"
+            delegate="org.hibernate.eclipse.launch.CodeGenerationLaunchDelegate"
+            id="org.hibernate.eclipse.launch.CodeGenerationLaunchConfigurationType"
+            modes="run"
+            name="Hibernate Code Generation"
+            public="true"/>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            icon="icons/hibernate_small_icon.gif"
+            configTypeID="org.hibernate.eclipse.launch.CodeGenerationLaunchConfigurationType"
+            id="org.hibernate.eclipse.launch.CodeGenerationLaunchImage"/>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="org.hibernate.eclipse.launch.LaunchConfigurationTabGroup"
+            description="Select or configure a code generation"
+            id="org.hibernate.eclipse.launch.CodeGenerationLaunchTabGroup"
+            type="org.hibernate.eclipse.launch.CodeGenerationLaunchConfigurationType"/>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchGroups">
+      <launchGroup
+            bannerImage="icons/images/newhibernate_wiz.gif"
+            category="org.hibernate.eclipse.launchcategory"
+            id="org.hibernate.eclipse.launch.CodeGenerationLaunchGroup"
+            image="icons/hibernate_small_icon.gif"
+            label="Hibernate Code Generation..."
+            mode="run"
+            title="Select or configure a code generation to run"/>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.statusHandlers">
+      <statusHandler
+            class="org.hibernate.eclipse.launch.GeneralExceptionStatusHandler"
+            code="666"
+            id="org.hibernate.eclipse.launch.GeneralExceptionStatusHandler"
+            plugin="org.hibernate.eclipse.console"/>
+   </extension>
+  
+
+ 
+ <!--
+ <extension
+       point="org.eclipse.ui.console.consoleFactories">
+    <consoleFactory
+          class="org.hibernate.eclipse.console.sql.ConsoleSQLLogFactory"
+          label="Hibernate SQL Log"/>
+ </extension>
+ <extension
+       point="org.eclipse.ui.themes">
+    <themeElementCategory
+          id="org.hibernate.eclipse.console.theme.HQLColors"
+          label="HQL Colors"/>
+    <colorDefinition
+          categoryId="org.hibernate.eclipse.console.theme.HQLColors"
+          id="HQL_KEYWORD"
+          isEditable="true"
+          label="HQL Keyword"
+          value="123,45,3">
+       <description>Color for a HQL keyword</description>
+    </colorDefinition>
+ </extension>
+-->
+</plugin>
