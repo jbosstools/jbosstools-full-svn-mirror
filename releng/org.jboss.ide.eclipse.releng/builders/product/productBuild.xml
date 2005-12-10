@@ -131,9 +131,12 @@
 		<delete file="${build.dest}/temp.tar"/>
 	</target>
 	
+	<property name="default.cvs.tag" value="HEAD"/>
+	
 	<macrodef name="runBuilder">
 		<attribute name="builder"/>
 		<sequential>
+			<var name="cvsTag" unset="true"/>
 			<if>
 	  			<equals arg1="${product.buildDesc}" arg2="release"/>
 	  			<then>
@@ -141,8 +144,16 @@
 	  				<propertycopy override="true" name="cvsTag" from="versionTags.@{builder}.cvs"/>
 	  			</then>
 	  			<else>
+	  				<if>
+	  					<available property="versionTags.@{builder}.cvs"/>
+	  					<then>
+	  		  				<propertycopy override="true" name="cvsTag" from="versionTags.@{builder}.cvs"/>
+	  					</then>
+	  					<else>
+		  					<propertycopy override="true" name="cvsTag" from="default.cvs.tag"/>
+	  					</else>
+	  				</if>
 	  				<property name="builder.version" value="${product.versionTag}"/>
-	  				<property name="cvsTag" value="HEAD"/>
 	  			</else>
 	  		</if>
 	  	
