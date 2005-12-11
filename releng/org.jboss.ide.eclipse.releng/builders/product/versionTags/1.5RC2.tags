@@ -1,0 +1,13 @@
+#component versions
+aop=1.1.0.RC2
+ejb3=1.0.0.RC2
+core=1.5.0.RC2
+hibernate-tools=beta2
+jbpm=3.0.5.2
+
+#cvs tags
+hibernate-tools.cvs=TOOLS_3_1_0_BETA1JBIDERC2
+jbpm.cvs=jbpm_gpd_3_0_5_2
+core.cvs=IDE_CORE_1_5_RC2
+aop.cvs=IDE_AOP_DEVELOPER_1_1_0_RC2
+ejb3.cvs=IDE_EJB3_TOOLS_1_0_RC2
