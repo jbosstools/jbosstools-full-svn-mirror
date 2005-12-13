@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="JBoss Cache"
+            id="JBoss Cache">
+      </category>
+      <view
+            name="%cache.configuration.view.name"
+            icon="icons/sample.gif"
+            category="JBoss Cache"
+            class="org.jboss.ide.eclipse.jbosscache.views.config.TreeCacheView"
+            id="org.jboss.ide.eclipse.jbosscache.views.CacheContentView">
+      </view>
+      
+      <view
+            category="JBoss Cache"
+            class="org.jboss.ide.eclipse.jbosscache.views.content.NodeContentView"
+            icon="icons/sample.gif"
+            id="org.jboss.ide.eclipse.jbosscache.view.NodeContentView"
+            name="%cache.content.view.name"/>
+      <view
+            category="JBoss Cache"
+            class="org.jboss.ide.eclipse.jbosscache.views.gef.CacheGraphView"
+            icon="icons/sample.gif"
+            id="org.jboss.ide.eclipse.jbosscache.views.CacheGraphView"
+            name="%cache.graph.view.name"/>
+       
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.jboss.ide.eclipse.jbosscache.perspective.CachePerspective"
+            icon="icons/SGroup.gif"
+            id="org.jboss.ide.eclipse.jbosscache.perspective2"
+            name="JBoss Cache"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.jboss.ide.eclipse.jbosscache.category.newCacheWizard"
+            name="JBoss Cache"/>
+      <wizard
+            canFinishEarly="false"
+            category="org.jboss.ide.eclipse.jbosscache.category.newCacheWizard"
+            class="org.jboss.ide.eclipse.jbosscache.wizards.NewCacheConfigurationWizard"
+            hasPages="true"
+            icon="icons/sample.gif"
+            id="org.jboss.ide.eclipse.jbosscache.wizard1"
+            name="%cache.instance.wizard.name"
+            project="false"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.documentProviders">
+      <provider
+            class="org.eclipse.ui.editors.text.TextFileDocumentProvider"
+            id="org.jboss.ide.eclipse.jbosscache.ConfFileEditorProvider"
+            inputTypes="org.jboss.ide.eclipse.jbosscache.editors.input.CacheFileEditorInput"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="org.jboss.ide.eclipse.jbosscache.CachePropertyPage"
+            id="org.jboss.ide.eclipse.jbosscache.propertyPage"
+            name="%cache.property.page.name"
+            objectClass="org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance"/>
+   </extension>
+
+</plugin>
