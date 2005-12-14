@@ -59,7 +59,7 @@ public class JBossEJB3LibrariesPage extends JBossSelectionPage implements
 	}
 
 	public boolean isPageComplete () {
-		return configuration != null;
+		return configuration != null && isCurrentPage();
 	}
 	
 	public IClasspathEntry getSelection() {
@@ -69,5 +69,7 @@ public class JBossEJB3LibrariesPage extends JBossSelectionPage implements
 	public void setSelection(IClasspathEntry containerEntry) {
 		classpathEntry = containerEntry;
 	}
+	
+	
 	
 }
