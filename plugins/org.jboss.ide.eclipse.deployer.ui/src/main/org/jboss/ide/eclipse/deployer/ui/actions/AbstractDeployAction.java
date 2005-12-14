@@ -145,19 +145,22 @@ public abstract class AbstractDeployAction extends ActionDelegate implements IOb
 		   final ITarget target = targets.length == 1 ? targets[0] : targets[i];
 		   final IResource resource = resourcesArray[i];
 		   
-           Job job =
-               new Job(this.getTitle(resourcesArray[i]))
-               {
-                  protected IStatus run(IProgressMonitor monitor)
-                  {
-                     process(target, resource);
-                     refresh(resource);
-                     return Status.OK_STATUS;
-                  }
-               };
-            job.setRule(resource);
-            job.setPriority(Job.BUILD);
-            job.schedule();   
+		   if (target != null)
+		   {
+	           Job job =
+	               new Job(this.getTitle(resourcesArray[i]))
+	               {
+	                  protected IStatus run(IProgressMonitor monitor)
+	                  {
+	                     process(target, resource);
+	                     refresh(resource);
+	                     return Status.OK_STATUS;
+	                  }
+	               };
+	            job.setRule(resource);
+	            job.setPriority(Job.BUILD);
+	            job.schedule();
+		   }
 	   }
    }
 

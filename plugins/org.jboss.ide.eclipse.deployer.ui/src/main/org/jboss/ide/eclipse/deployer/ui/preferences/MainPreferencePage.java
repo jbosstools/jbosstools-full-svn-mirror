@@ -6,7 +6,7 @@
  */
 package org.jboss.ide.eclipse.deployer.ui.preferences;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.jdt.internal.ui.viewsupport.ListContentProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -242,7 +242,7 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
    protected void doAdd()
    {
       ITarget target = null;
-      Collection choices = TargetUIAdapter.getInstance().getAvailableTargets();
+      List choices = TargetUIAdapter.getInstance().getAvailableTargets();
       TargetChoiceDialog choiceDialog = new TargetChoiceDialog(AbstractPlugin.getShell(), choices);
 
       // Get the selected target and clone it

@@ -7,7 +7,7 @@
 package org.jboss.ide.eclipse.deployer.ui.actions;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -50,7 +50,7 @@ public class RedeployAction extends AbstractDeployAction
 			DeployerCorePlugin.getDefault().refreshDebugTargets();
 			DeployerCorePlugin.getDefault().refreshTargets();
 			
-			Collection choices = new ArrayList();
+			List choices = new ArrayList();
 			choices.addAll(DeployerCorePlugin.getDefault().getDebugTargets());
 			choices.addAll(DeployerCorePlugin.getDefault().getTargets());
 			

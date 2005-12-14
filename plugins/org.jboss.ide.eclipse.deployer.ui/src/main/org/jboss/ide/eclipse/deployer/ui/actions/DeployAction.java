@@ -7,10 +7,10 @@
 package org.jboss.ide.eclipse.deployer.ui.actions;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.window.Window;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
 import org.jboss.ide.eclipse.deployer.core.DeployerCorePlugin;
 import org.jboss.ide.eclipse.deployer.core.target.DeploymentException;
@@ -26,13 +26,14 @@ import org.jboss.ide.eclipse.deployer.ui.util.DeployedResourceUtil;
  */
 public class DeployAction extends AbstractDeployAction
 {
+	
+	
    /**Constructor for the XDocletRunAction object */
    public DeployAction()
    {
       super();
    }
-
-
+   
    /**
     * Gets the deploymentTarget attribute of the DeployAction object
     *
@@ -46,12 +47,13 @@ public class DeployAction extends AbstractDeployAction
       DeployerCorePlugin.getDefault().refreshDebugTargets();
       DeployerCorePlugin.getDefault().refreshTargets();
 
-      Collection choices = new ArrayList();
+      List choices = new ArrayList();
       choices.addAll(DeployerCorePlugin.getDefault().getDebugTargets());
       choices.addAll(DeployerCorePlugin.getDefault().getTargets());
 
       TargetChoiceDialog dialog = new TargetChoiceDialog(AbstractPlugin.getShell(), choices);
-      if (dialog.open() == IDialogConstants.OK_ID)
+      
+      if (dialog.open() == Window.OK)
       {
          target = dialog.getTarget();
       }
