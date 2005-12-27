@@ -36,7 +36,7 @@ fi
 case "$BUILD_TYPE" in
 	[rR]*) buildtype="R";;
 	[iI]*) buildtype="I";;
-	[nN]*) buildType="N";;
+	[nN]*) buildtype="N";;
 	*) buildtype="R";;
 esac
 
