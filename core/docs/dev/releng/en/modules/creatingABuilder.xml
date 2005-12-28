@@ -1,0 +1,126 @@
+<chapter id="creatingABuilder">
+	<title>Creating your JBossIDE releng builder</title>
+	
+	<section>
+		<title>Create Eclipse build files</title>
+		
+		<para>Create a customTargets.xml and map file using the <ulink url="http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.releng.basebuilder/readme.html?rev=HEAD#configs">Eclipse documentation</ulink>. It may help to copy from an already existing builder to get an idea of what your
+		customTargets.xml / map file should look like</para>
+				
+	</section>
+	
+	<section>
+		<title>Edit customTargets.xml and the map file</title>
+		If you have not already done so, you will need to make some further customization to your map and customTargets.xml.
+		<orderedlist>
+			<listitem>Map file customization:
+				<orderedlist>
+					<listitem>Change all cvs tags in your map file to %cvsTag% (They were probably <literal>HEAD</literal> in your tests). This will let the build system automatically
+							change to specified cvs tags when building against different versions. Here is an example before/after of a single plugin in a map file:
+<programlisting>
+# BEFORE
+plugin@org.jboss.ide.eclipse.ejb3.wizards.core=HEAD,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/ejb3/plugins/org.jboss.ide.eclipse.ejb3.wizards.core
+# AFTER
+plugin@org.jboss.ide.eclipse.ejb3.wizards.core=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/ejb3/plugins/org.jboss.ide.eclipse.ejb3.wizards.core</programlisting>
+					</listitem>
+				</orderedlist>
+				customTargets.xml customization:
+				<orderedlist>
+					<listitem>You will need to edit the <literal>postFetch</literal> target to run the <literal>updateVersions</literal> task which updates your plugin and feature versions to be in sync with the current build.
+						<orderedlist>
+							<listitem>Add the UpdateVersionsTask. At the top of your customTargets.xml, add the follow line of code:
+<programlisting>
+&lt;taskdef name="updateVersions" classname="org.jboss.ide.eclipse.releng.UpdateVersionsTask" classpath="../../bin"/&gt;</programlisting>
+							</listitem>
+							<listitem>At the end of your <literal>postFetch</literal> target, add a call to the updateVersions task. It will look something like:
+<programlisting>
+&lt;target name="postFetch"&gt;
+	&lt;!-- .... --&gt;
+	&lt;condition property="append" else="false"&gt;
+		&lt;not&gt;
+			&lt;equals arg1="${buildType}" arg2="R"/&gt;
+		&lt;/not&gt;
+	&lt;/condition&gt;
+	&lt;updateVersions type="feature" version="${versionTag}" append="${append}" updateAssembleScript="false" recursivePlugins="true"&gt;
+		&lt;fileset dir="${buildDirectory}/features"&gt;
+			&lt;include name="*aop*"/&gt;
+		&lt;/fileset&gt;
+	&lt;/updateVersions&gt;
+&lt;/target&gt;</programlisting>
+							You will need to change the fileset to include the features for your component.
+							
+							</listitem>
+						</orderedlist>
+					</listitem>
+					<listitem>
+						Update the <literal>getMapFiles</literal> target to use the <literal>copyMapFile</literal> macro (replaces %cvsTag%).
+						<orderedlist>
+							<listitem>Import the common.xml ant script. At the top of your customTargets.xml, add the following:
+<programlisting>
+	&lt;import file="../common/common.xml"/&gt;</programlisting>
+							</listitem>
+							<listitem>
+								At the end of your <literal>getMapFiles</literal> target, replace whatever <literal>copy</literal> task you've used with something like this:
+<programlisting>
+	&lt;target name="getMapFiles"&gt;
+		&lt;!-- ... --&gt;
+		&lt;copyMapFile builder="aop" buildDirectory="${buildDirectory}" cvsTag="${cvsTag}"/&gt;
+	&lt;/target&gt;</programlisting>
+							Replace the <literal>builder</literal> parameter with the name of your builder.
+							</listitem>
+						</orderedlist>
+					</listitem>
+				</orderedlist>
+			</listitem>
+			<listitem>
+				At this point you can run &amp; test your builder directly by using one of these three build scripts found under the builders directory.
+				<para>(Optional) To add your builder to the product build, you will need to edit the file <literal>build.properties.template</literal> under the <literal>builders/product</literal>
+				directory. Inside you will find a property called <literal>builders</literal> which is a comma-delimited list of builders that will be run. You should
+				add your builder to the end of this list.</para>
+				
+				<para>Keep in mind that running the <literal>product</literal> builder will invoke unit tests, and scp publishing / email notification if they are enabled
+				(a full run of the product build with everything enabled can easily take over an hour).</para>
+				<informaltable>
+					<tgroup cols="2" align="left" valign="top" colsep="0" rowsep="0">
+						<tbody>
+							<row>
+								<entry><literal>build-nightly</literal></entry>
+								<entry>
+									<para>requires 1 argument; the builder you are running, i.e.</para>
+									<programlisting>./build-nightly.sh product</programlisting>
+									<programlisting>./build-nightly.sh aop</programlisting>
+								</entry>
+							</row>
+							<row>
+								<entry><para><literal>build-integration</literal></para></entry>
+								<entry>
+									<para>requires 1 argument; the builder you are running, and also has an
+									optional 2nd argument, the location of a tags file, i.e.</para>
+									
+									<programlisting>./build-integration.sh aop</programlisting>
+									
+									<para>performs an integration build for the aop builder, and pulls all components from <literal>HEAD</literal></para>
+									
+									<programlisting>./build-integration.sh aop product/versionTags/1.5.tags</programlisting>
+									
+									<para>performs an integration build for the aop builder, and pulls all components
+									from the cvs tag specified in <literal>product/versionTags/1.5.tags</literal> (but still forces them to use the Ixxxxx version)</para>
+								</entry>
+							</row>
+							<row>
+								<entry><para><literal>build-release</literal></para></entry>
+								<entry>
+									<para>requires 2 arguments; the builder you are running, and the name of this release.
+									the release name will indicate which <literal>tags</literal> file the build uses to tag each specific
+									component's release version, as well as the cvs tags to pull each component from, i.e.</para>
+									<programlisting>./build-release.sh product 1.5</programlisting>
+									<para>will build the entire product using all of the tagging information found in <literal>product/versionTags/1.5.tags</literal></para>
+								</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</informaltable>
+			</listitem>
+		</orderedlist>
+	</section>
+</chapter>
