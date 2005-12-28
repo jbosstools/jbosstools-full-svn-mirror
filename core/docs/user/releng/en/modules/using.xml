@@ -1,0 +1,78 @@
+<chapter id="using">
+	<title>Using the JBossIDE Build System</title>
+	
+	<section>
+		<title>Quick Start</title>
+		<para>The quickest way to get started is to try a nightly build of the entire JBossIDE product. Be warned though, this can take upwards of 20-30 minutes on slower machines, and even longer if publishing is enabled.
+		To run a nightly build, from the builders directory, execute:</para>
+
+		<para>On Windows:</para>
+		<programlisting>build-nightly.bat product</programlisting>
+		<para>On Unix (or cygwin/mingw):</para>
+		<programlisting>./build-nightly.sh product</programlisting>
+		
+		<para>After the build is complete, you should see various zip files in various folders in your build output directory.</para>
+	</section>
+	
+	<section>
+		<title>Builders and Build Types</title>
+		<para>The JBossIDE Build system breaks down builds into 3 seperate types. Integration, Nightly, and Release builds.
+		Both integration and nightly builds will append the Ixxxx or Nxxxx string to the end of the current release version of each plugin and feature being built.</para>
+		
+		<section>
+			<title>Nightly builds</title>
+			
+			<para>Nightly builds will by default pull everything from the "HEAD" of the corresponding CVS repository for each builder. The built archives will all look something like
+			JBossIDE-Nxxxxxx.zip</para>
+		</section>
+
+		<section>
+			<title>Integration builds</title>
+			<para>An integration build is mainly used to do a final test of a release before it is deemed "release" quality. An integration build, like a release build, uses a properties file
+			that follows the same syntax as below.  Built archives will all look something like JBossIDE-Ixxxxxx.zip</para>
+			
+			<para>When building an integration build, the build-integration script requires an extra argument; the name of the tag properties file, i.e:</para>
+			<programlisting>./build-integration.sh product product/versionTags/1.5RC2.tags</programlisting>
+		</section>
+		
+		<section>
+			<title>Release builds</title>
+			
+			<para>Release builds are special in that they have a "tags" file which maps each builder to a specific sub-version. The name of the tags file is ${release-name}.tags,
+			and it lives under builders/product/versionTags. Here is an example from the JBossIDE 1.5RC2 release (1.5RC2.tags):</para>
+			
+			<programlisting>
+#component versions
+aop=1.1.0.RC2
+ejb3=1.0.0.RC2
+core=1.5.0.RC2
+hibernate-tools=beta2
+jbpm=3.0.5.2
+tests=1.0.0
+
+#cvs tags
+hibernate-tools.cvs=TOOLS_3_1_0_BETA1JBIDERC2
+jbpm.cvs=jbpm_gpd_3_0_5_2
+core.cvs=IDE_CORE_1_5_RC2
+aop.cvs=IDE_AOP_DEVELOPER_1_1_0_RC2
+ejb3.cvs=IDE_EJB3_TOOLS_1_0_RC2
+tests.cvs=HEAD</programlisting>
+		
+			<para>When building a release build, the build-release script requires an extra argument; the release name. i.e:</para>
+			<programlisting>./build-release.sh product 1.5RC2</programlisting>
+		
+		</section>
+		
+		<section>
+			<title>Builders</title>
+			
+			<para>The build system also supports building standalone builders seperately from the entire product.
+			It should be noted that building seperately does not currently support scp publishing, or email notification.
+			For example, to do an nightly build of Hibernate Tools:</para>
+			<programlisting>./build-nightly.sh hibernate-tools</programlisting>
+			
+			<para>You can find a list of builders by looking at the directories under the builders directory (everything except common).</para>
+		
+		</section>
+	</section>
+</chapter>
