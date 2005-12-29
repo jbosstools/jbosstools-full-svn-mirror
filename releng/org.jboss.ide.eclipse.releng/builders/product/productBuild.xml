@@ -131,8 +131,6 @@
 		<delete file="${build.dest}/temp.tar"/>
 	</target>
 	
-	<property name="default.cvs.tag" value="HEAD"/>
-	
 	<macrodef name="runBuilder">
 		<attribute name="builder"/>
 		<sequential>
