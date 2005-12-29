@@ -7,7 +7,6 @@
 package org.jboss.ide.eclipse.xdoclet.run;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,9 +25,13 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jdt.core.IJavaProject;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
@@ -38,6 +41,7 @@ import org.jboss.ide.eclipse.xdoclet.run.configuration.ProjectConfigurations;
 import org.jboss.ide.eclipse.xdoclet.run.configuration.StandardConfigurations;
 import org.jboss.ide.eclipse.xdoclet.run.model.XDocletDataRepository;
 import org.jboss.ide.eclipse.xdoclet.run.util.AntUtil;
+import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
@@ -63,6 +67,7 @@ public class XDocletRunPlugin extends AbstractPlugin
    /** Stylesheet to transform configuration file to Ant build file */
    public final static String XSL_FILE = "resources/configuration2xdoclet.xsl";//$NON-NLS-1$
 
+   public final static QualifiedName QNAME_XDOCLET_ENABLED = new QualifiedName("org.jboss.ide.eclipse.xdoclet", "enabled");
 
    /** The constructor. */
    public XDocletRunPlugin()
@@ -115,6 +120,28 @@ public class XDocletRunPlugin extends AbstractPlugin
          this.repository = new XDocletDataRepository();
       }
       return this.repository;
+   }
+   
+   public void start(BundleContext context) throws Exception {
+	   super.start(context);
+	   
+		IProject projects[] = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+
+		try {
+			for (int i = 0; i < projects.length; i++)
+			{
+				if (projects[i] != null && projects[i].isAccessible())
+				{
+					if (ProjectUtil.projectHasBuilder(projects[i], XDocletRunBuilder.BUILDER_ID))
+					{
+						projects[i].setSessionProperty(QNAME_XDOCLET_ENABLED, "true");
+					}
+				}
+			}
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
    }
 
 
@@ -203,6 +230,15 @@ public class XDocletRunPlugin extends AbstractPlugin
          fos.write(bytes);
          fos.close();
          
+         
+         try {
+			xdocletBuildFile.refreshLocal(IResource.DEPTH_ONE, null);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         
+         
          // Save the file
 //         if (!xdocletBuildFile.exists())
 //         {
@@ -216,19 +252,25 @@ public class XDocletRunPlugin extends AbstractPlugin
 
 
    public void enableXDocletBuilder(IJavaProject project, boolean enable) {
-	   if (enable)
-	   {
-		   if (! ProjectUtil.projectHasBuilder(project.getProject(), XDocletRunBuilder.BUILDER_ID))
+	   try {
+		   if (enable)
 		   {
-			   ProjectUtil.addProjectBuilder(project.getProject(), XDocletRunBuilder.BUILDER_ID);
+			   if (! ProjectUtil.projectHasBuilder(project.getProject(), XDocletRunBuilder.BUILDER_ID))
+			   {
+				   ProjectUtil.addProjectBuilder(project.getProject(), XDocletRunBuilder.BUILDER_ID);
+				   project.getProject().setSessionProperty(QNAME_XDOCLET_ENABLED, "true");
+			   }
 		   }
-	   }
-	   else
-	   {
-		   if (ProjectUtil.projectHasBuilder(project.getProject(), XDocletRunBuilder.BUILDER_ID))
+		   else
 		   {
-			   ProjectUtil.removeProjectBuilder(project.getProject(), XDocletRunBuilder.BUILDER_ID);
+			   if (ProjectUtil.projectHasBuilder(project.getProject(), XDocletRunBuilder.BUILDER_ID))
+			   {
+				   ProjectUtil.removeProjectBuilder(project.getProject(), XDocletRunBuilder.BUILDER_ID);
+				   project.getProject().setSessionProperty(QNAME_XDOCLET_ENABLED, null);
+			   }
 		   }
+	   } catch (CoreException e) {
+		   e.printStackTrace();
 	   }
 	}
 }
