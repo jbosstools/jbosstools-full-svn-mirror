@@ -39,6 +39,11 @@
                class="org.jboss.ide.eclipse.xdoclet.run.ui.actions.XDocletRunAction"
                menubarPath="project/additions"
                id="org.jboss.ide.eclipse.xdoclet.run.ui.actions.XDocletRunAction">
+            <enablement>
+               <objectState
+                     name="sessionProperty"
+                     value="org.jboss.ide.eclipse.xdoclet.enabled=true"/>
+            </enablement>
          </action>
       </actionSet>
    </extension>
@@ -56,6 +61,11 @@
                menubarPath="group.build"
                enablesFor="1"
                id="org.jboss.ide.eclipse.xdoclet.run.ui.popup.XDocletRunAction">
+            <enablement>
+               <objectState
+                     name="sessionProperty"
+                     value="org.jboss.ide.eclipse.xdoclet.enabled=true"/>
+            </enablement>
          </action>
       </objectContribution>
    </extension>

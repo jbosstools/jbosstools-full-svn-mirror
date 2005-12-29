@@ -8,6 +8,7 @@ Bundle-Activator: org.jboss.ide.eclipse.xdoclet.run.XDocletRunPlugin
 Bundle-Vendor: %plugin.provider
 Bundle-Localization: plugin
 Export-Package: org.jboss.ide.eclipse.xdoclet.run,
+ org.jboss.ide.eclipse.xdoclet.run.builder,
  org.jboss.ide.eclipse.xdoclet.run.configuration,
  org.jboss.ide.eclipse.xdoclet.run.model,
  org.jboss.ide.eclipse.xdoclet.run.ui,

@@ -7,6 +7,7 @@
 package org.jboss.ide.eclipse.packaging.ui;
 
 
+
 /**
  * @author    Laurent Etiemble
  * @version   $Revision$
@@ -21,4 +22,5 @@ public interface IPackagingUIConstants
    public final static String IMG_OBJS_JAR = "IMG_OBJS_JAR";//$NON-NLS-1$
    /** Shared Image */
    public final static String IMG_OBJS_EXPLODED_JAR = "IMG_OBJS_EXPLODED_JAR";//$NON-NLS-1$
+   
 }

@@ -39,6 +39,11 @@
                class="org.jboss.ide.eclipse.packaging.ui.actions.PackagingRunAction"
                menubarPath="project/additions"
                id="org.jboss.ide.eclipse.packaging.ui.actions.PackagingRunAction">
+            <enablement>
+               <objectState
+                     name="sessionProperty"
+                     value="org.jboss.ide.eclipse.packaging.enabled=true"/>
+            </enablement>
          </action>
       </actionSet>
    </extension>
@@ -56,6 +61,11 @@
                menubarPath="group.build"
                enablesFor="1"
                id="org.jboss.ide.eclipse.packaging.ui.popup.PackagingRunAction">
+            <enablement>
+               <objectState
+                     name="sessionProperty"
+                     value="org.jboss.ide.eclipse.packaging.enabled=true"/>
+            </enablement>
          </action>
       </objectContribution>
    </extension>

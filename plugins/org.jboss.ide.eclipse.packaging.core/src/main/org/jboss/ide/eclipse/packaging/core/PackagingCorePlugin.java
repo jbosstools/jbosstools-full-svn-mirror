@@ -26,14 +26,18 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jdt.core.IJavaProject;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.packaging.core.builder.PackagingBuilder;
 import org.jboss.ide.eclipse.packaging.core.configuration.ProjectConfigurations;
 import org.jboss.ide.eclipse.packaging.core.configuration.StandardConfigurations;
+import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
@@ -58,11 +62,34 @@ public class PackagingCorePlugin extends AbstractPlugin
    /** Stylesheet to transform configuration file to Ant build file */
    public final static String XSL_FILE = "resources/configuration2packaging.xsl";//$NON-NLS-1$
 
-
+   public final static QualifiedName QNAME_PACKAGING_ENABLED = new QualifiedName("org.jboss.ide.eclipse.packaging", "enabled");
+   
    /** The constructor. */
    public PackagingCorePlugin()
    {
       plugin = this;
+   }
+   
+   public void start(BundleContext context) throws Exception {
+	   super.start(context);
+	   
+		IProject projects[] = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+
+		try {
+			for (int i = 0; i < projects.length; i++)
+			{
+				if (projects[i] != null && projects[i].isAccessible())
+				{
+					if (ProjectUtil.projectHasBuilder(projects[i], PackagingBuilder.BUILDER_ID))
+					{
+						projects[i].setSessionProperty(QNAME_PACKAGING_ENABLED, "true");
+					}
+				}
+			}
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
    }
 
 
@@ -178,6 +205,13 @@ public class PackagingCorePlugin extends AbstractPlugin
          fos.write(bytes);
          fos.close();
          
+         try {
+        	 buildFile.refreshLocal(IResource.DEPTH_ONE, null);
+ 		} catch (CoreException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+ 		
          // Save the file
 //         if (!buildFile.exists())
 //         {
@@ -189,19 +223,26 @@ public class PackagingCorePlugin extends AbstractPlugin
    }
    
    public void enablePackagingBuilder(IJavaProject project, boolean enable) {
-	   if (enable)
-	   {
-		   if (! ProjectUtil.projectHasBuilder(project.getProject(), PackagingBuilder.BUILDER_ID))
+	   try {
+		   if (enable)
 		   {
-			   ProjectUtil.addProjectBuilder(project.getProject(), PackagingBuilder.BUILDER_ID);
+			   if (! ProjectUtil.projectHasBuilder(project.getProject(), PackagingBuilder.BUILDER_ID))
+			   {
+				   ProjectUtil.addProjectBuilder(project.getProject(), PackagingBuilder.BUILDER_ID);
+				   project.getProject().setSessionProperty(QNAME_PACKAGING_ENABLED, "true");
+			   }
 		   }
-	   }
-	   else
-	   {
-		   if (ProjectUtil.projectHasBuilder(project.getProject(), PackagingBuilder.BUILDER_ID))
+		   else
 		   {
-			   ProjectUtil.removeProjectBuilder(project.getProject(), PackagingBuilder.BUILDER_ID);
+			   if (ProjectUtil.projectHasBuilder(project.getProject(), PackagingBuilder.BUILDER_ID))
+			   {
+				   ProjectUtil.removeProjectBuilder(project.getProject(), PackagingBuilder.BUILDER_ID);
+				   project.getProject().setSessionProperty(QNAME_PACKAGING_ENABLED, null);
+			   }
 		   }
-	   }
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

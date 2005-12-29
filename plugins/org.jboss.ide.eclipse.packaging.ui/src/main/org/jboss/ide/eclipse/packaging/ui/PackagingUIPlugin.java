@@ -6,7 +6,13 @@
  */
 package org.jboss.ide.eclipse.packaging.ui;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
+import org.jboss.ide.eclipse.core.util.ProjectUtil;
+import org.jboss.ide.eclipse.packaging.core.builder.PackagingBuilder;
+import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
@@ -36,7 +42,6 @@ public class PackagingUIPlugin extends AbstractPlugin
    {
       return plugin;
    }
-
 
    /**
     * Convenience method which returns the unique identifier of this plugin.
