@@ -76,6 +76,22 @@
    	
    	<buildRequirements requirements="${builder.requires}"/>
    	
+   	<!-- get the cvs tag if it wasn't set (when being called standalone)-->
+   	<if>
+   		<not><isset property="${cvsTag}"/></not>
+   		<then>
+			<if>
+				<isset property="@{builder}.cvs"/>
+				<then>
+	  				<propertycopy override="true" name="cvsTag" from="@{builder}.cvs"/>
+				</then>
+				<else>
+					<propertycopy override="true" name="cvsTag" from="default.cvs.tag"/>
+				</else>
+			</if>
+   		</then>
+   	</if>
+   	
    	<!-- for some reason the "eclipse-hacked" ant will fail unless the jdt.core jars are in the classpath -->
 	<mkdir dir="${build.root}/temp-jdt-core"/>
 	<unjar dest="${build.root}/temp-jdt-core">
