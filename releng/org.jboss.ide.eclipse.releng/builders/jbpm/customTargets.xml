@@ -108,12 +108,19 @@
 		file="${build-dir}/plugins/org.jbpm.ui/src/org/jbpm/ui/PluginConstants.java" 
 		token="%default-jbpm-name%" value="${default-jbpm-name}" />
 	
-	<condition property="append" else="false">
+	<if>
 		<not>
 			<equals arg1="${buildType}" arg2="R"/>
 		</not>
-	</condition>
-	<updateVersions type="feature" version="${versionTag}" append="${append}"
+		<then>
+			<property name="jbpm-versionTag" value="${jbpm-ide-release}.${versionTag}"/>
+		</then>
+		<else>
+			<property name="jbpm-versionTag" value="${versionTag}"/>
+		</else>
+	</if>
+		
+	<updateVersions type="feature" version="${jbpm-versionTag}" append="false"
 		updateAssembleScript="false" recursivePlugins="true" failonrecursiveerror="false"
 		pluginRegex="org.jbpm.*">
 		<fileset dir="${buildDirectory}/features">

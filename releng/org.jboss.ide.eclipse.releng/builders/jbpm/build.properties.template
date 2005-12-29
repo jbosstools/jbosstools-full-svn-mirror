@@ -106,10 +106,13 @@ install-dir=${build-dir}/..
 workspace-dir=${build-dir}/workspace
 
 jbpm-core-module=jbpm.3
-jbpm-core-version-tag=jbpm_3_0
+jbpm-core-version-tag=jbpm_3_0_2
 jbpm-db-module=jbpm.db
-jbpm-db-version-tag=jbpm_3_0
+jbpm-db-version-tag=jbpm_3_0_2
 default-jbpm-name=jBPM 3.0
+
+# this is a special hack for nightly / integation builds so we can correctly append the Nxxx / Ixxxx
+jbpm-ide-release=3.0.5
 
 # include these plugins in the binary distribution
 include.plugins=\
