@@ -4,6 +4,7 @@ workspace=workspace
 verbose=-verbose
 build.root=%releng-root%
 
+default.cvs.tag=HEAD
 genericTargets=${pdescriptdir}/genericTargets.xml
 baseLocation=${clean.eclipse.home}/..
 #genericTargets=${build.root}/builders/genericTargets.xml

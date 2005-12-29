@@ -32,7 +32,7 @@
 			that follows the same syntax as below.  Built archives will all look something like JBossIDE-Ixxxxxx.zip</para>
 			
 			<para>When building an integration build, the build-integration script requires an extra argument; the name of the tag properties file, i.e:</para>
-			<programlisting>./build-integration.sh product product/versionTags/1.5RC2.tags</programlisting>
+			<programlisting>./build-integration.sh product -tags product/versionTags/1.5RC2.tags</programlisting>
 		</section>
 		
 		<section>
