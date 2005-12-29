@@ -101,7 +101,7 @@ plugin@org.jboss.ide.eclipse.ejb3.wizards.core=%cvsTag%,:pserver:anonymous@anonc
 									
 									<para>performs an integration build for the aop builder, and pulls all components from <literal>HEAD</literal></para>
 									
-									<programlisting>./build-integration.sh aop product/versionTags/1.5.tags</programlisting>
+									<programlisting>./build-integration.sh aop -tags product/versionTags/1.5.tags</programlisting>
 									
 									<para>performs an integration build for the aop builder, and pulls all components
 									from the cvs tag specified in <literal>product/versionTags/1.5.tags</literal> (but still forces them to use the Ixxxxx version)</para>
