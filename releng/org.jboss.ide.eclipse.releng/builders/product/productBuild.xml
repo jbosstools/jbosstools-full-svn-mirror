@@ -213,7 +213,7 @@
 	</target>
 
 	<target name="build.bundled.release" depends="run.builders,extract.features.and.plugins">
-		<copy file="${splash.path}" todir="${build.dest}\eclipse\plugins\org.eclipse.platform_3.1.0"/>
+		<copy file="${splash.path}" todir="${build.dest}\eclipse\plugins\org.eclipse.platform_3.1.1"/>
 	</target>
 	
 	<target name="build.standalone.release" depends="run.builders,extract.features.and.plugins">
