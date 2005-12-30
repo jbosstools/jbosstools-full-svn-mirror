@@ -26,3 +26,4 @@ plugin@org.jboss.ide.eclipse.xdoclet.assist=%cvsTag%,:pserver:anonymous@anoncvs.
 plugin@org.jboss.ide.eclipse.xdoclet.core=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.xdoclet.core
 plugin@org.jboss.ide.eclipse.xdoclet.run=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.xdoclet.run
 plugin@org.jboss.ide.eclipse.xdoclet.ui=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.xdoclet.ui
+plugin@org.jboss.ide.eclipse.firstrun=%cvsTag%;:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.firstrun
