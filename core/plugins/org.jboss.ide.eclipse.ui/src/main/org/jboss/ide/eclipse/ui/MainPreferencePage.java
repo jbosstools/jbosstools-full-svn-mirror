@@ -75,7 +75,7 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
 
       try
       {
-         URL url = new URL(UIPlugin.getDefault().getBundle().getEntry("/"), "resources/splash.jpg");//$NON-NLS-1$ //$NON-NLS-2$
+         URL url = new URL(UIPlugin.getDefault().getBundle().getEntry("/"), "resources/jbosside-logo.png");//$NON-NLS-1$ //$NON-NLS-2$
          ImageDescriptor descriptor = ImageDescriptor.createFromURL(url);
          this.image = descriptor.createImage();
 
