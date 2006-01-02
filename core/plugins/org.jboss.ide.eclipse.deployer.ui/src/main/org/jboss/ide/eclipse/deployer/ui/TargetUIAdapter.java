@@ -8,8 +8,8 @@ package org.jboss.ide.eclipse.deployer.ui;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.swt.graphics.Image;
@@ -26,7 +26,7 @@ public class TargetUIAdapter
 {
    private Map dialogs = new HashMap();
    private Map images = new HashMap();
-   private Collection targets = new ArrayList();
+   private List targets = new ArrayList();
    private static TargetUIAdapter adapter = new TargetUIAdapter();
 
 
@@ -54,7 +54,7 @@ public class TargetUIAdapter
     *
     * @return   The targets value
     */
-   public Collection getAvailableTargets()
+   public List getAvailableTargets()
    {
       return this.targets;
    }

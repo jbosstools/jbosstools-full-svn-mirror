@@ -43,7 +43,7 @@ public abstract class ProjectWizard extends BaseWizard implements IExecutableExt
       super();
       this.setDefaultPageImageDescriptor(JavaPluginImages.DESC_WIZBAN_NEWJPRJ);
       this.setDialogSettings(JavaPlugin.getDefault().getDialogSettings());
-      this.setWindowTitle(NewWizardMessages.getString("NewProjectCreationWizard.title"));//$NON-NLS-1$
+      this.setWindowTitle(NewWizardMessages.JavaProjectWizard_title);//$NON-NLS-1$
    }
 
 
@@ -52,8 +52,8 @@ public abstract class ProjectWizard extends BaseWizard implements IExecutableExt
    {
       super.addPages();
       this.fMainPage = new WizardNewProjectCreationPage("NewProjectCreationWizard");//$NON-NLS-1$
-      this.fMainPage.setTitle(NewWizardMessages.getString("NewProjectCreationWizard.MainPage.title"));//$NON-NLS-1$
-      this.fMainPage.setDescription(NewWizardMessages.getString("NewProjectCreationWizard.MainPage.description"));//$NON-NLS-1$
+      this.fMainPage.setTitle(NewWizardMessages.JavaProjectWizardFirstPage_page_title);//$NON-NLS-1$
+      this.fMainPage.setDescription(NewWizardMessages.JavaProjectWizardFirstPage_page_description);//$NON-NLS-1$
       this.addPage(fMainPage);
 
       this.fJavaPage = this.createProjectWizardPage(fMainPage);
@@ -119,8 +119,8 @@ public abstract class ProjectWizard extends BaseWizard implements IExecutableExt
     */
    protected void handleFinishException(Shell shell, InvocationTargetException e)
    {
-      String title = NewWizardMessages.getString("NewProjectCreationWizard.op_error.title");//$NON-NLS-1$
-      String message = NewWizardMessages.getString("NewProjectCreationWizard.op_error_create.message");//$NON-NLS-1$
+      String title = NewWizardMessages.JavaProjectWizard_op_error_title;//$NON-NLS-1$
+      String message = NewWizardMessages.JavaProjectWizard_op_error_create_message;//$NON-NLS-1$
       ExceptionHandler.handle(e, getShell(), title, message);
    }
 }

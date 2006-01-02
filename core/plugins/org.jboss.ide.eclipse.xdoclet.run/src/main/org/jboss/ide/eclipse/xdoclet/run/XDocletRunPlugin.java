@@ -7,8 +7,9 @@
 package org.jboss.ide.eclipse.xdoclet.run;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -24,16 +25,23 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jdt.core.IJavaProject;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
+import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.xdoclet.core.XDocletCorePlugin;
+import org.jboss.ide.eclipse.xdoclet.run.builder.XDocletRunBuilder;
 import org.jboss.ide.eclipse.xdoclet.run.configuration.ProjectConfigurations;
 import org.jboss.ide.eclipse.xdoclet.run.configuration.StandardConfigurations;
 import org.jboss.ide.eclipse.xdoclet.run.model.XDocletDataRepository;
 import org.jboss.ide.eclipse.xdoclet.run.util.AntUtil;
+import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
@@ -59,6 +67,7 @@ public class XDocletRunPlugin extends AbstractPlugin
    /** Stylesheet to transform configuration file to Ant build file */
    public final static String XSL_FILE = "resources/configuration2xdoclet.xsl";//$NON-NLS-1$
 
+   public final static QualifiedName QNAME_XDOCLET_ENABLED = new QualifiedName("org.jboss.ide.eclipse.xdoclet", "enabled");
 
    /** The constructor. */
    public XDocletRunPlugin()
@@ -112,6 +121,28 @@ public class XDocletRunPlugin extends AbstractPlugin
       }
       return this.repository;
    }
+   
+   public void start(BundleContext context) throws Exception {
+	   super.start(context);
+	   
+		IProject projects[] = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+
+		try {
+			for (int i = 0; i < projects.length; i++)
+			{
+				if (projects[i] != null && projects[i].isAccessible())
+				{
+					if (ProjectUtil.projectHasBuilder(projects[i], XDocletRunBuilder.BUILDER_ID))
+					{
+						projects[i].setSessionProperty(QNAME_XDOCLET_ENABLED, "true");
+					}
+				}
+			}
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+   }
 
 
    /**
@@ -145,11 +176,11 @@ public class XDocletRunPlugin extends AbstractPlugin
 
    public IFile createBuildFile(IJavaProject project) throws IOException, CoreException, TransformerException
    {
-      IFile file = project.getProject().getFile(XDocletRunPlugin.PROJECT_FILE);
-      IFile buildFile = project.getProject().getFile(XDocletRunPlugin.BUILD_FILE);
+      IFile xdocletProjectFile = project.getProject().getFile(XDocletRunPlugin.PROJECT_FILE);
+      IFile xdocletBuildFile = project.getProject().getFile(XDocletRunPlugin.BUILD_FILE);
    
       // If the xdoclet project file exists, then process it
-      if (file.exists() && file.getModificationStamp() > buildFile.getModificationStamp())
+      if (xdocletProjectFile.exists() && xdocletProjectFile.getModificationStamp() > xdocletBuildFile.getModificationStamp())
       {
          TransformerFactory tFactory = TransformerFactory.newInstance();
    
@@ -165,7 +196,7 @@ public class XDocletRunPlugin extends AbstractPlugin
             // Create a new transformer on the stylesheet
             Transformer transformer = tFactory.newTransformer(stylesheet);
    
-            Source source = new StreamSource(file.getContents());
+            Source source = new StreamSource(xdocletProjectFile.getContents());
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             Result result = new StreamResult(baos);
    
@@ -194,14 +225,52 @@ public class XDocletRunPlugin extends AbstractPlugin
             }
          }
    
+         File buildFile2 = xdocletBuildFile.getRawLocation().toFile();
+         FileOutputStream fos = new FileOutputStream(buildFile2);
+         fos.write(bytes);
+         fos.close();
+         
+         
+         try {
+			xdocletBuildFile.refreshLocal(IResource.DEPTH_ONE, null);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         
+         
          // Save the file
-         if (!buildFile.exists())
-         {
-            buildFile.create(null, true, null);
-         }
-         buildFile.setContents(new ByteArrayInputStream(bytes), true, true, null);
+//         if (!xdocletBuildFile.exists())
+//         {
+//            xdocletBuildFile.create(null, true, null);
+//         }
+//         xdocletBuildFile.setContents(new ByteArrayInputStream(bytes), true, true, null);
       }
       
-      return buildFile;
+      return xdocletBuildFile;
    }
+
+
+   public void enableXDocletBuilder(IJavaProject project, boolean enable) {
+	   try {
+		   if (enable)
+		   {
+			   if (! ProjectUtil.projectHasBuilder(project.getProject(), XDocletRunBuilder.BUILDER_ID))
+			   {
+				   ProjectUtil.addProjectBuilder(project.getProject(), XDocletRunBuilder.BUILDER_ID);
+				   project.getProject().setSessionProperty(QNAME_XDOCLET_ENABLED, "true");
+			   }
+		   }
+		   else
+		   {
+			   if (ProjectUtil.projectHasBuilder(project.getProject(), XDocletRunBuilder.BUILDER_ID))
+			   {
+				   ProjectUtil.removeProjectBuilder(project.getProject(), XDocletRunBuilder.BUILDER_ID);
+				   project.getProject().setSessionProperty(QNAME_XDOCLET_ENABLED, null);
+			   }
+		   }
+	   } catch (CoreException e) {
+		   e.printStackTrace();
+	   }
+	}
 }

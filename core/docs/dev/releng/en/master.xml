@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding="iso-8859-1"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+                      "../../../../docbook-support/support/docbook-dtd/docbookx.dtd"
+[
+<!ENTITY intro SYSTEM "modules/intro.xml">
+<!ENTITY concepts SYSTEM "modules/concepts.xml">
+<!ENTITY creatingABuilder SYSTEM "modules/creatingABuilder.xml">
+<!ENTITY updatingBuildResults SYSTEM "modules/updatingBuildResults.xml">
+<!ENTITY updateSite SYSTEM "modules/updateSite.xml">
+]>
+
+<book lang="en">
+    <bookinfo>
+        <title>JBossIDE releng developer guide</title>
+        <subtitle>A developer's guide to extending the JBossIDE releng system</subtitle>
+        <releaseinfo>1.0</releaseinfo>
+    </bookinfo>
+    
+    <toc/>
+    
+&intro;
+&concepts;
+&creatingABuilder;
+&updatingBuildResults;
+&updateSite;
+</book>

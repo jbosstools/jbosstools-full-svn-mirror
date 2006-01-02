@@ -39,10 +39,10 @@ public class UndeployAction extends AbstractDeployAction
     * @param resource  Description of the Parameter
     * @return          The deploymentTarget value
     */
-   protected ITarget getDeploymentTarget(IResource resource)
+   protected ITarget[] getDeploymentTargets(IResource[] resources)
    {
-      ITarget target = null;
-
+      ITarget[] targets = new ITarget[resources.length];
+      
       try
       {
          DeployerCorePlugin.getDefault().refreshDebugTargets();
@@ -52,10 +52,14 @@ public class UndeployAction extends AbstractDeployAction
          choices.addAll(DeployerCorePlugin.getDefault().getDebugTargets());
          choices.addAll(DeployerCorePlugin.getDefault().getTargets());
 
-         target = (ITarget) resource.getSessionProperty(IDeployerUIConstants.QNAME_TARGET);
-         if (target == null)
+         for (int i = 0; i < resources.length; i++)
          {
-            DeployerUIPlugin.getDefault().showWarningMessage(DeployerUIMessages.getString("UndeployAction.action.undeploy.not.text"));//$NON-NLS-1$
+	         ITarget target = (ITarget) resources[i].getSessionProperty(IDeployerUIConstants.QNAME_TARGET);
+	         if (target == null)
+	         {
+	            DeployerUIPlugin.getDefault().showWarningMessage(DeployerUIMessages.getString("UndeployAction.action.undeploy.not.text"));//$NON-NLS-1$
+	         }
+	         targets[i] = target;
          }
       }
       catch (CoreException ce)
@@ -63,7 +67,7 @@ public class UndeployAction extends AbstractDeployAction
          AbstractPlugin.logError("Unable to set session property with target", ce);//$NON-NLS-1$
       }
 
-      return target;
+      return targets;
    }
 
 

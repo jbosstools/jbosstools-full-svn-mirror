@@ -143,8 +143,8 @@ public abstract class BaseWizard extends Wizard implements INewWizard
     */
    protected void handleFinishException(Shell shell, InvocationTargetException e)
    {
-      String title = NewWizardMessages.getString("NewElementWizard.op_error.title");//$NON-NLS-1$
-      String message = NewWizardMessages.getString("NewElementWizard.op_error.message");//$NON-NLS-1$
+      String title = NewWizardMessages.NewElementWizard_op_error_title;//$NON-NLS-1$
+      String message = NewWizardMessages.NewElementWizard_op_error_message;//$NON-NLS-1$
       ExceptionHandler.handle(e, shell, title, message);
    }
 

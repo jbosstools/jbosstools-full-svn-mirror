@@ -1,42 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
-<plugin
-   id="org.jboss.ide.eclipse.packaging.ui"
-   name="%plugin.name"
-   version="1.5.0.m1"
-   provider-name="%plugin.provider"
-   class="org.jboss.ide.eclipse.packaging.ui.PackagingUIPlugin">
+<plugin>
 
-   <runtime>
-      <library name="org-jboss-ide-eclipse-packaging-ui.jar">
-         <export name="*"/>
-      </library>
-   </runtime>
-
-   <requires>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="org.eclipse.ui.views"/>
-      <import plugin="org.eclipse.jface.text"/>
-      <import plugin="org.eclipse.ui.workbench.texteditor"/>
-      <import plugin="org.eclipse.ui.editors"/>
-      <import plugin="org.apache.ant"/>
-      <import plugin="org.eclipse.ant.core"/>
-      <import plugin="org.eclipse.ant.ui"/>
-      <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.debug.core"/>
-      <import plugin="org.eclipse.debug.ui"/>
-      <import plugin="org.eclipse.jdt"/>
-      <import plugin="org.eclipse.jdt.core"/>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.ui.externaltools"/>
-      <import plugin="org.jboss.ide.eclipse.core"/>
-      <import plugin="org.jboss.ide.eclipse.packaging.core"/>
-      <import plugin="org.jboss.ide.eclipse.ui"/>
-   </requires>
-
-   <extension
+     <extension
          point="org.eclipse.ui.propertyPages">
       <page
             adaptable="true"
@@ -55,7 +21,7 @@
       </command>
       <keyBinding
             commandId="org.jboss.ide.eclipse.packaging.ui.commands.PackagingRunAction"
-            keySequence="Ctrl+Alt+0"
+            keySequence="Shift+Ctrl+F2"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
    </extension>
@@ -73,6 +39,11 @@
                class="org.jboss.ide.eclipse.packaging.ui.actions.PackagingRunAction"
                menubarPath="project/additions"
                id="org.jboss.ide.eclipse.packaging.ui.actions.PackagingRunAction">
+            <enablement>
+               <objectState
+                     name="sessionProperty"
+                     value="org.jboss.ide.eclipse.packaging.enabled=true"/>
+            </enablement>
          </action>
       </actionSet>
    </extension>
@@ -90,6 +61,11 @@
                menubarPath="group.build"
                enablesFor="1"
                id="org.jboss.ide.eclipse.packaging.ui.popup.PackagingRunAction">
+            <enablement>
+               <objectState
+                     name="sessionProperty"
+                     value="org.jboss.ide.eclipse.packaging.enabled=true"/>
+            </enablement>
          </action>
       </objectContribution>
    </extension>

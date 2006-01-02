@@ -7,10 +7,10 @@
 package org.jboss.ide.eclipse.deployer.ui.actions;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.window.Window;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
 import org.jboss.ide.eclipse.deployer.core.DeployerCorePlugin;
 import org.jboss.ide.eclipse.deployer.core.target.DeploymentException;
@@ -26,37 +26,39 @@ import org.jboss.ide.eclipse.deployer.ui.util.DeployedResourceUtil;
  */
 public class DeployAction extends AbstractDeployAction
 {
+	
+	
    /**Constructor for the XDocletRunAction object */
    public DeployAction()
    {
       super();
    }
-
-
+   
    /**
     * Gets the deploymentTarget attribute of the DeployAction object
     *
     * @param resource  Description of the Parameter
     * @return          The deploymentTarget value
     */
-   protected ITarget getDeploymentTarget(IResource resource)
+   protected ITarget[] getDeploymentTargets(IResource[] resources)
    {
       ITarget target = null;
 
       DeployerCorePlugin.getDefault().refreshDebugTargets();
       DeployerCorePlugin.getDefault().refreshTargets();
 
-      Collection choices = new ArrayList();
+      List choices = new ArrayList();
       choices.addAll(DeployerCorePlugin.getDefault().getDebugTargets());
       choices.addAll(DeployerCorePlugin.getDefault().getTargets());
 
       TargetChoiceDialog dialog = new TargetChoiceDialog(AbstractPlugin.getShell(), choices);
-      if (dialog.open() == IDialogConstants.OK_ID)
+      
+      if (dialog.open() == Window.OK)
       {
          target = dialog.getTarget();
       }
 
-      return target;
+      return new ITarget[] { target };
    }
 
 

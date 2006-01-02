@@ -6,12 +6,15 @@
  */
 package org.jboss.ide.eclipse.deployer.ui.dialogs;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -32,21 +35,22 @@ import org.jboss.ide.eclipse.ui.util.StringViewSorter;
  */
 public class TargetChoiceDialog extends Dialog
 {
+	private static Object lastUsed;
+	
    /** Description of the Field */
-   private Collection choices;
+   private List choices;
    /** Description of the Field */
    private ITarget data = null;
    /** Description of the Field */
    private StructuredViewer viewer;
-
-
+   
    /**
     *Constructor for the DataChoiceDialog object
     *
     * @param parentShell  Description of the Parameter
     * @param choices      Description of the Parameter
     */
-   public TargetChoiceDialog(Shell parentShell, Collection choices)
+   public TargetChoiceDialog(Shell parentShell, List choices)
    {
       super(parentShell);
       this.data = null;
@@ -91,12 +95,19 @@ public class TargetChoiceDialog extends Dialog
 
       Table dataList = new Table(composite, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
       dataList.setLayoutData(new GridData(GridData.FILL_BOTH));
-
+      
       this.viewer = new TableViewer(dataList);
       this.viewer.setContentProvider(new ListContentProvider());
       this.viewer.setLabelProvider(new TargetLabelProvider());
       this.viewer.setSorter(new StringViewSorter());
       this.viewer.setInput(this.choices);
+      this.viewer.addSelectionChangedListener(new ISelectionChangedListener () {
+    	public void selectionChanged(SelectionChangedEvent event) {	
+    		if (!viewer.getSelection().isEmpty()) {
+    			getButton(OK).setEnabled(true);
+    		}
+    	}
+      });
       this.viewer.addDoubleClickListener(new IDoubleClickListener()
          {
             public void doubleClick(DoubleClickEvent event)
@@ -104,8 +115,15 @@ public class TargetChoiceDialog extends Dialog
                okPressed();
             }
          });
-
+      
       return composite;
+   }
+   
+   protected void createButtonsForButtonBar(Composite parent) {
+	   super.createButtonsForButtonBar(parent);
+
+	   getButton(OK).setEnabled(false);
+	   setSelectedTarget(lastUsed);
    }
 
 
@@ -117,6 +135,21 @@ public class TargetChoiceDialog extends Dialog
       {
          this.data = (ITarget) selection.getFirstElement();
       }
+      
+      lastUsed = selection.getFirstElement();
+      
       super.okPressed();
+   }
+
+
+   private void setSelectedTarget (Object target)
+   {
+	   if (choices != null && choices.size() > 0)
+	   {
+		   if (target != null && choices.contains(target)) {
+			   viewer.setSelection(new StructuredSelection(target));
+			   getButton(OK).setEnabled(true);
+		   }
+	   }
    }
 }

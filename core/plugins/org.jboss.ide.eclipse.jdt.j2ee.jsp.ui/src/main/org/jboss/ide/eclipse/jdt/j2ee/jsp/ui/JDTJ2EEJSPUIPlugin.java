@@ -8,8 +8,6 @@ package org.jboss.ide.eclipse.jdt.j2ee.jsp.ui;
 
 import org.jboss.ide.eclipse.core.AbstractPlugin;
 import org.jboss.ide.eclipse.jdt.j2ee.jsp.core.JDTJ2EEJSPCorePlugin;
-import org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.editors.JSPTextTools;
-import org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.preferences.JSPSyntaxPreferencePage;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -20,7 +18,6 @@ import org.osgi.framework.BundleContext;
  */
 public class JDTJ2EEJSPUIPlugin extends AbstractPlugin
 {
-   private JSPTextTools jspTextTools;
    /** The shared instance */
    private static JDTJ2EEJSPUIPlugin plugin;
 
@@ -30,22 +27,6 @@ public class JDTJ2EEJSPUIPlugin extends AbstractPlugin
    {
       super();
       plugin = this;
-   }
-
-
-   /**
-    * Returns instance of text tools for JSP.
-    *
-    * @return   The jSPTextTools value
-    */
-   public JSPTextTools getJSPTextTools()
-   {
-      if (jspTextTools == null)
-      {
-         jspTextTools = new JSPTextTools(this.getPreferenceStore());
-      }
-
-      return jspTextTools;
    }
 
 
@@ -74,11 +55,6 @@ public class JDTJ2EEJSPUIPlugin extends AbstractPlugin
    public void stop(BundleContext context)
       throws Exception
    {
-      if (this.jspTextTools != null)
-      {
-         this.jspTextTools.dispose();
-      }
-
       super.stop(context);
    }
 
@@ -86,7 +62,6 @@ public class JDTJ2EEJSPUIPlugin extends AbstractPlugin
    /** Description of the Method */
    protected void initializeDefaultPluginPreferences()
    {
-      JSPSyntaxPreferencePage.initDefaults(getPreferenceStore());
    }
 
 
