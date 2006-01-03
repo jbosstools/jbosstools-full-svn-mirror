@@ -78,7 +78,7 @@
    	
    	<!-- get the cvs tag if it wasn't set (when being called standalone)-->
    	<if>
-   		<not><isset property="${cvsTag}"/></not>
+   		<not><isset property="cvsTag"/></not>
    		<then>
 			<if>
 				<isset property="@{builder}.cvs"/>
