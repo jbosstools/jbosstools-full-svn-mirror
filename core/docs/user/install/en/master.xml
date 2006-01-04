@@ -10,9 +10,9 @@
 
 <book lang="en">
     <bookinfo>
-        <title>JBossIDE Installation Guide</title>
-        <subtitle>A guide for installing JBossIDE</subtitle>
-        <releaseinfo>1.4</releaseinfo>
+        <title>JBoss Eclipse IDE 1.5 Installation Guide</title>
+        <subtitle>A guide for installing JBoss Eclipse IDE 1.5.</subtitle>
+        <releaseinfo>1.5</releaseinfo>
     </bookinfo>
     
     <toc/>
