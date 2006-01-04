@@ -2,7 +2,7 @@
 	<title>Deployment</title>
 	
 	<para>
-	The deployment within JBoss-IDE can be done in two ways:
+	The deployment within JBoss Eclipse IDE can be done in two ways:
 	<itemizedlist>
 		<listitem>A file-system copy: Copies a file from your project into any other location on your computer (including network drives, etc)</listitem>
 		<listitem>A local deployment through the MainDeployer MBean (Experimental). The URL of the resource is sent to the MainDeployer Mbean, which deploys and watches it.</listitem>

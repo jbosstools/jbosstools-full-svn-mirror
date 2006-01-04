@@ -3,7 +3,7 @@
 	
 	<para>
 		To generate the EJB related classes and descriptors, we need to create some XDoclet configurations.
-		With JBoss IDE, you can define several XDoclet generation configurations that will be run against the project.
+		With JBoss Eclipse IDE, you can define several XDoclet generation configurations that will be run against the project.
 	</para>
 	
 	<informaltable frame="none">
@@ -12,9 +12,24 @@
 			<row>
 				<entry>
 				<procedure>
-					<title>XDoclet EJB Configuration Creation</title>
+					<title>Enable XDoclet</title>
 					<step><para>Edit the project properties by right clicking on the project and select <literal>Properties</literal>.</para></step>
 					<step><para>In the property page, select <literal>XDoclet configurations</literal>.</para></step>
+					<step><para>At the top of the page there is a check-box labeld <literal>Enable XDoclet</literal>. Check this check-box.</para></step>
+				</procedure>
+				</entry>
+				<entry>
+					<mediaobject>
+						<imageobject>
+							<imagedata align="center" fileref="images/xdoclet-ejb-config-enable-xdoclet.jpg"></imagedata>
+						</imageobject>
+					</mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+				<procedure>
+					<title>XDoclet EJB Configuration Creation</title>
 					<step><para>Right-click in the upper area to pop-up the menu and choose <literal>Add</literal>. Type <literal>EJB</literal> in the dialog and click <literal>OK</literal>.</para></step>
 				</procedure>
 				<para>

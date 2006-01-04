@@ -2,7 +2,7 @@
 	<title>The Packaging</title>
 	
 	<para>
-		JBoss-IDE provides an easy way to configure the packaging of various archives. There is no restriction of what can be packaged.
+		JBoss Eclipse IDE provides an easy way to configure the packaging of various archives. There is no restriction of what can be packaged.
 		In this tutorial, four packaging configurations will be defined:
 		<itemizedlist>
 			<listitem><link linkend="ejb.jar">The EJB JAR</link>. It will contain the EJB classes and interfaces, as well as the ejb-jar.xml and jboss.xml deployment descriptors.</listitem>
@@ -22,9 +22,24 @@
 			<row>
 				<entry>
 					<procedure>
-						<title>Creating the EJB JAR</title>
+						<title>Enable Packaging</title>
 						<step>Edit the project properties by right clicking on the project and select <literal>Properties</literal>.</step>
 						<step>In the property page, select <literal>Packaging Configurations</literal>.</step>
+						<step>At the top of the page there is a check-box labeld <literal>Enable Packaging</literal>. Check this check-box.</step>
+					</procedure>
+				</entry>
+				<entry>
+					<mediaobject>
+						<imageobject>
+							<imagedata align="center" fileref="images/packaging-enable.jpg"/>
+						</imageobject>
+					</mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<procedure>
+						<title>Creating the EJB JAR</title>
 						<step>Right-click in the area to pop-up the menu and choose <literal>Add Archive</literal>. Type <literal>FiboEJB.jar</literal> in the dialog and click <literal>OK</literal>.</step>
 						<step>You have created a new packaging configuration that will produce the <literal>FiboEJB.jar</literal> file.</step>
 					</procedure>
@@ -168,7 +183,11 @@
 	
 	<section id="ejb.client.jar">
 		<title>FiboEJB-client.jar creation</title>
-	
+		<warning>
+			If you are running JBoss 4.0 or above, You will receive a ClassLoaderException if you attempt to package
+			your EJB interfaces in both the WAR and EJB-JAR because of the new Tomcat scoped classloading. To avoid
+			this issue, you should skip this section, and also skip adding FiboEJB-client.jar to FiboWeb.war below.
+		</warning>
 	<informaltable frame="none">
 	<tgroup cols="2" align="left" colsep="1" rowsep="1">
 		<tbody>
@@ -284,7 +303,13 @@
 			</row>
 			<row>
 				<entry>
-					<para>To add the EJB Client Jar, select the <literal>FiboWeb.war</literal> item and right-click in the area to pop-up the menu and choose <literal>Add File</literal>. A “File Selection” dialog appears.</para>
+					<para>
+						To add the EJB Client Jar, select the <literal>FiboWeb.war</literal> item and right-click in the area to pop-up the menu and choose <literal>Add File</literal>. A “File Selection” dialog appears.
+						
+						<warning>
+							If you are running JBoss 4.0 or above, you should skip this step (see explanation above).
+						</warning>
+					</para>
 					<para>
 						The file to choose is <literal>/Tutorial/FiboEJB-client.jar</literal>.
 						But it doesn’t exist yet as the packaging has not been run. Instead of selecting it, go in the text field and type the name of the file <literal>/Tutorial/FiboEJB-client.jar</literal>.

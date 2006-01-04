@@ -121,7 +121,7 @@ protected void doPost(HttpServletRequest request,
 			<row>
 				<entry>
 				<para>
-					Next, we will insert the missing XDoclet tags for the Servlet. In the Java editor go in the Javadoc class paragraph. Type “@web.” And press CTRL+Space. You should see JBossIDE's auto-completion in action.
+					Next, we will insert the missing XDoclet tags for the Servlet. In the Java editor go in the Javadoc class paragraph. Type “@web.” And press CTRL+Space. You should see JBoss Eclipse IDE's auto-completion in action.
 				</para>
 				</entry>
 				<entry>

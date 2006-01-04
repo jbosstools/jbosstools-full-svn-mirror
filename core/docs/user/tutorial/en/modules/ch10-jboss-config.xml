@@ -37,7 +37,7 @@
 					<para>
 						To specifiy a source lookup path, go into the JBoss launch configuration and select the <literal>Source</literal> tab.
 						Click on the <literal>Add</literal> button and select <literal>Java Project</literal>. Select your project and click <literal>OK</literal>.</para>
-					<para>NB : Older version of JBoss-IDE added all opened projects to the source lookup path, but it lead to source conflicts and was removed.</para>
+					<para>NB : Older version of JBoss Eclipse IDE added all opened projects to the source lookup path, but it lead to source conflicts and was removed.</para>
 				</entry>
 				<entry>
 		            <mediaobject>
