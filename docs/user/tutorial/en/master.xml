@@ -18,10 +18,11 @@
 ]>
 
 <book lang="en">
+
     <bookinfo>
-        <title>JBossIDE Tutorial</title>
-        <subtitle>An introduction and walkthrough of JBossIDE</subtitle>
-        <releaseinfo>1.4</releaseinfo>
+        <title>JBoss Eclipse IDE Tutorial</title>
+        <subtitle>An introduction and walkthrough of JBoss Eclipse IDE</subtitle>
+        <releaseinfo>1.5.0</releaseinfo>
     </bookinfo>
     
     <toc/>
@@ -55,6 +56,6 @@
 	<chapter id="conclusion">
 		<title>Conclusion</title>
 		
-		<para>This simple tutorial was intended to give an overview of what is possible with JBoss-IDE. We hope that it will be useful for developers who want to develop for JBoss in Eclipse</para>
+		<para>This simple tutorial was intended to give an overview of what is possible with JBoss Eclipse IDE. We hope that it will be useful for developers who want to develop for JBoss in Eclipse</para>
 	</chapter>
 </book>

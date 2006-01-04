@@ -6,15 +6,15 @@
     <property name="pdf.name"              value="JBossIDE-Tutorial.pdf" />
     <import file="../../../docbook-support/support.xml" />
 
-    <target name="tutorial.doc" depends="clean">
+    <!--target name="tutorial.doc" depends="clean">
         <antcall target="lang.all"><param name="lang" value="en"/></antcall>
-    </target>
+    </target-->
         
     <!-- Use this alternate target to enable uptodate checking, i.e.
-         don't generate docs if nothing has changed
-    <target name="all.doc">
+         don't generate docs if nothing has changed -->
+    <target name="tutorial.doc">
         <antcall target="lang.all.run"><param name="lang" value="en"/></antcall>
     </target>
-    -->
+
 
 </project>
