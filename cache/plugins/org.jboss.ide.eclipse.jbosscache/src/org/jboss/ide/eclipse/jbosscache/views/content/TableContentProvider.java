@@ -160,7 +160,7 @@ public class TableContentProvider implements IStructuredContentProvider
                                        isReferencing = true;
                                        key = "Referencing to --> ";
                                        value = TreeCacheManager.getValue_(manager, InternalDelegate.JBOSS_INTERNAL_MAP
-                                             .toString(), fieldValue.toString());
+                                             .toString()+"/"+fieldValue.toString(), fieldValue.toString());
                                        if(value == null)
                                           value = "";
                                        break;

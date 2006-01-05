@@ -42,9 +42,9 @@ public class TreeCacheViewNodeListener extends AbstractTreeCacheManagerListener
    {
       final Fqn fqn = fqnx;
 
-      if (fqnx.toString().equals(ICacheConstants.SEPERATOR + ICacheConstants.JBOSS_INTERNAL)
-            || fqnx.toString().equals(ICacheConstants.SEPERATOR + ICacheConstants.JBOSS_INTERNAL_REF_MAP))
-         return;
+//      if (fqnx.toString().equals(ICacheConstants.SEPERATOR + ICacheConstants.JBOSS_INTERNAL)
+//            || fqnx.toString().equals(ICacheConstants.SEPERATOR + ICacheConstants.JBOSS_INTERNAL_REF_MAP))
+//         return;
 
       //TODO New Thread creation required
       JBossCachePlugin.getDisplay().asyncExec(new Runnable()
@@ -81,12 +81,12 @@ public class TreeCacheViewNodeListener extends AbstractTreeCacheManagerListener
                      parentName.append(ICacheConstants.SEPERATOR).append(tokenize.nextToken());
                   }
 
-                  if (parentName.equals(ICacheConstants.SEPERATOR + ICacheConstants.JBOSS_INTERNAL))
-                     return;
+//                  if (parentName.equals(ICacheConstants.SEPERATOR + ICacheConstants.JBOSS_INTERNAL))
+//                     return;
 
                   name = tokenize.nextToken();
-                  if (name.equals(ICacheConstants.JBOSS_INTERNAL))
-                     return;
+//                  if (name.equals(ICacheConstants.JBOSS_INTERNAL))
+//                     return;
 
                   Iterator it = instanceChilds.iterator();
                   boolean found = false;
