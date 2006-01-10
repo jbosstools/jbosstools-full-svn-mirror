@@ -6,6 +6,7 @@
  */
 package org.jboss.ide.eclipse.launcher.ui.configuration.jboss;
 
+import org.jboss.ide.eclipse.launcher.core.constants.IJBossConstants;
 import org.jboss.ide.eclipse.launcher.ui.LauncherUIMessages;
 
 /**
@@ -27,8 +28,16 @@ public class JBoss40xHomeTab extends JBoss30xHomeTab
     *
     * @return   The missingJBossDirectory value
     */
-   protected String getMissingJBossDirectory()
+   protected String getMissingEntryErrorMessage (String entry)
    {
-      return LauncherUIMessages.getString("JBoss40xHomeTab.No_JBoss_4.0.x_Directory_2");//$NON-NLS-1$
+	   String message = super.getMissingEntryErrorMessage(entry);
+	   if (message == null)
+	   {
+		   if (entry.equals(IJBossConstants.JBOSSALL_CLIENT_RELATIVE_TO_JBOSS_HOME_4X))
+		   {
+			   message = LauncherUIMessages.getString("JBoss40xHomeTab.Missing_JBoss_All_Client_Jar");
+		   }
+	   }
+	   return message;
    }
 }

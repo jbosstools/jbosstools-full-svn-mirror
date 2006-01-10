@@ -6,9 +6,12 @@
  */
 package org.jboss.ide.eclipse.launcher.ui.configuration.jboss;
 
+import java.util.List;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
+import org.jboss.ide.eclipse.launcher.core.constants.IJBossConstants;
 import org.jboss.ide.eclipse.launcher.core.constants.IServerLaunchConfigurationConstants;
 import org.jboss.ide.eclipse.launcher.core.util.ServerLaunchUtil;
 import org.jboss.ide.eclipse.launcher.ui.LauncherUIMessages;
@@ -50,18 +53,27 @@ public class JBoss30xHomeTab extends HomeTab
       setMessage(null);
       try
       {
-         if (!ServerLaunchUtil.isValidDirectory(
+    	  List invalidEntries = ServerLaunchUtil.getInvalidEntries(
+                  launchConfig,
+                  homedirText.getText(),
+                  IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_HOMEDIR_CLASSPATH);
+    	  
+    	  if (invalidEntries.size() > 0)
+    	  {
+    		  setErrorMessage(getMissingEntryErrorMessage((String) invalidEntries.get(0)));
+    		  return false;
+    	  }
+    	  
+    	  invalidEntries = ServerLaunchUtil.getInvalidEntries(
                launchConfig,
                homedirText.getText(),
-               IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_HOMEDIR_CLASSPATH)
-               || !ServerLaunchUtil.isValidDirectory(
-               launchConfig,
-               homedirText.getText(),
-               IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_HOMEDIR_SHUTDOWN_CLASSPATH))
-         {
-            setErrorMessage(getMissingJBossDirectory());
-            return false;
-         }
+               IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_HOMEDIR_SHUTDOWN_CLASSPATH);
+    	  
+    	  if (invalidEntries.size() > 0)
+    	  {
+    		  setErrorMessage(getMissingEntryErrorMessage((String) invalidEntries.get(0)));
+    		  return false;
+    	  }
       }
       catch (CoreException e)
       {
@@ -69,15 +81,18 @@ public class JBoss30xHomeTab extends HomeTab
       }
       return true;
    }
-
-
-   /**
-    * Gets the missingJBossDirectory attribute of the JBoss30xHomeTab object
-    *
-    * @return   The missingJBossDirectory value
-    */
-   protected String getMissingJBossDirectory()
+   
+   protected String getMissingEntryErrorMessage (String entry)
    {
-      return LauncherUIMessages.getString("JBoss30xHomeTab.No_JBoss_3.0.x_Directory_2");//$NON-NLS-1$
+	   if (entry.equals(IJBossConstants.RUN_JAR_RELATIVE_TO_JBOSS_HOME))
+	   {
+		   return LauncherUIMessages.getString("JBoss30xHomeTab.Missing_Run_Jar");
+	   }
+	   else if (entry.equals(IJBossConstants.SHUTDOWN_JAR_RELATIVE_TO_JBOSS_HOME_3X))
+	   {
+		   return LauncherUIMessages.getString("JBoss30xHomeTab.Missing_Shutdown_Jar");
+	   }
+	   
+	   return null;
    }
 }
