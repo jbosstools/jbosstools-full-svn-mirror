@@ -85,16 +85,37 @@ public class ServerLaunchUtil
     */
    public static boolean isValidDirectory(ILaunchConfiguration configuration, String parentDir, String attribute) throws CoreException
    {
-      List list = configuration.getAttribute(attribute, Collections.EMPTY_LIST);
-      for (Iterator iter = list.iterator(); iter.hasNext(); )
-      {
-         File file = new File(parentDir + File.separator + (String) iter.next());
-         if (!file.isFile())
-         {
-            return false;
-         }
-      }
-      return true;
+	   List invalidEntries = getInvalidEntries(configuration, parentDir, attribute);
+	   if (invalidEntries.size() == 0)
+		   return false;
+	   else return true;
+   }
+   
+   /**
+    * Returns invalid entries (pulled from "attribute" of the configuration) under parentDir
+    * @param configuration
+    * @param parentDir
+    * @param attribute
+    * @return
+    * @throws CoreException
+    */
+   public static List getInvalidEntries (ILaunchConfiguration configuration, String parentDir, String attribute) throws CoreException
+   {
+	   List invalid = new ArrayList();
+	   List list = configuration.getAttribute(attribute, Collections.EMPTY_LIST);
+	   for (Iterator iter = list.iterator(); iter.hasNext(); )
+	   {
+		   String entry = (String) iter.next();
+		   String path = parentDir + File.separator + entry;
+		   File file = new File(path);
+		   
+		   if (! file.exists())
+		   {
+			   invalid.add(entry);
+		   }
+	   }
+	   
+	   return invalid;
    }
 
 
