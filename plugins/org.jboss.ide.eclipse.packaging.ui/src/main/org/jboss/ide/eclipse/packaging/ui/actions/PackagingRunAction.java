@@ -36,6 +36,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.actions.ActionDelegate;
 import org.eclipse.ui.externaltools.internal.model.IExternalToolConstants;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
+import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.packaging.core.PackagingCorePlugin;
 import org.jboss.ide.eclipse.packaging.ui.PackagingUIMessages;
 import org.jboss.ide.eclipse.packaging.ui.PackagingUIPlugin;
@@ -194,11 +195,7 @@ public class PackagingRunAction extends ActionDelegate implements IObjectActionD
                      // Refresh the project
                      monitor.subTask(PackagingUIMessages.getString("PackagingRunAction.packaging.refresh"));//$NON-NLS-1$
                      
-                     try {
-                    	 project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
-                     } catch (IllegalArgumentException e) {
-                    	// BUG: JBAS-1218 we're swallowing a clearcase/vss - specific resource handling bug here... 
-                     }
+                     ResourceUtil.safeRefresh(project, IResource.DEPTH_INFINITE);
                      
                      monitor.worked(10);
                   }
