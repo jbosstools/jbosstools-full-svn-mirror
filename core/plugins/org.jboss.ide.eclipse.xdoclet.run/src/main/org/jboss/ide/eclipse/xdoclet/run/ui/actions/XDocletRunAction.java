@@ -37,6 +37,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.actions.ActionDelegate;
 import org.eclipse.ui.externaltools.internal.model.IExternalToolConstants;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
+import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.xdoclet.run.XDocletRunMessages;
 import org.jboss.ide.eclipse.xdoclet.run.XDocletRunPlugin;
 
@@ -188,11 +189,7 @@ public class XDocletRunAction extends ActionDelegate implements IObjectActionDel
                      // Refresh the project
                      monitor.subTask(XDocletRunMessages.getString("XDocletRunAction.xdoclet.refresh"));//$NON-NLS-1$
                      
-                     try {
-                    	 project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
-                     } catch (IllegalArgumentException e) {
-                    	// BUG: JBAS-1218 we're swallowing a clearcase/vss - specific resource handling bug here... 
-                     }
+                     ResourceUtil.safeRefresh(project, IResource.DEPTH_INFINITE);
                      
                      monitor.worked(10);
                   }

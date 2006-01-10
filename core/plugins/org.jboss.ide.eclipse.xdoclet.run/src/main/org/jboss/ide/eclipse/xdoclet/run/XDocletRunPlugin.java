@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jdt.core.IJavaProject;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
+import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.xdoclet.core.XDocletCorePlugin;
 import org.jboss.ide.eclipse.xdoclet.run.builder.XDocletRunBuilder;
 import org.jboss.ide.eclipse.xdoclet.run.configuration.ProjectConfigurations;
@@ -230,14 +231,7 @@ public class XDocletRunPlugin extends AbstractPlugin
          fos.write(bytes);
          fos.close();
          
-         
-         try {
-			xdocletBuildFile.refreshLocal(IResource.DEPTH_ONE, null);
-		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-         
+         ResourceUtil.safeRefresh(xdocletBuildFile, IResource.DEPTH_INFINITE);
          
          // Save the file
 //         if (!xdocletBuildFile.exists())

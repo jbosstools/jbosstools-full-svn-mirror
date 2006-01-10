@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jdt.core.IJavaProject;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
+import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.packaging.core.builder.PackagingBuilder;
 import org.jboss.ide.eclipse.packaging.core.configuration.ProjectConfigurations;
 import org.jboss.ide.eclipse.packaging.core.configuration.StandardConfigurations;
@@ -205,13 +206,8 @@ public class PackagingCorePlugin extends AbstractPlugin
          fos.write(bytes);
          fos.close();
          
-         try {
-        	 buildFile.refreshLocal(IResource.DEPTH_ONE, null);
- 		} catch (CoreException e) {
- 			// TODO Auto-generated catch block
- 			e.printStackTrace();
- 		}
- 		
+         ResourceUtil.safeRefresh(buildFile, IResource.DEPTH_ONE);
+         
          // Save the file
 //         if (!buildFile.exists())
 //         {
