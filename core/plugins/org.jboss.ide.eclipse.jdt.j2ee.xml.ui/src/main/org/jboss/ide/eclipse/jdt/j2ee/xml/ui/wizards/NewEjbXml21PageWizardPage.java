@@ -53,7 +53,7 @@ public class NewEjbXml21PageWizardPage extends NewFileWizardPage
     */
    protected String getResource()
    {
-      return "ejb-jar_2.0.xml";//$NON-NLS-1$
+      return "ejb-jar_2.1.xml";//$NON-NLS-1$
    }
 
 
