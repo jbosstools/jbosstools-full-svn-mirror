@@ -23,6 +23,8 @@ import org.osgi.framework.BundleContext;
 public class JDTJ2EECorePlugin extends AbstractPlugin
 {
 
+	public static final String WST_VALIDATION_BUILDER_ID = "org.eclipse.wst.validation.validationbuilder";
+	
    /** The shared instance */
    private static JDTJ2EECorePlugin plugin;
 
