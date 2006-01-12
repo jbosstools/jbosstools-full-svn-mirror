@@ -48,5 +48,6 @@ Require-Bundle: org.jboss.ide.eclipse.core,
  org.apache.ant,
  org.jboss.ide.eclipse.jdt.j2ee.core,
  org.jboss.ide.eclipse.jdt.test.core,
- org.apache.xerces
+ org.apache.xerces,
+ org.eclipse.wst.validation
 Eclipse-AutoStart: true
