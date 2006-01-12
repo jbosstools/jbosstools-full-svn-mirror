@@ -52,7 +52,7 @@ public class NewTagLibXml20PageWizardPage extends NewFileWizardPage
     */
    protected String getResource()
    {
-      return "taglib_1.1.xml";//$NON-NLS-1$
+      return "taglib_2.0.xml";//$NON-NLS-1$
    }
 
 
