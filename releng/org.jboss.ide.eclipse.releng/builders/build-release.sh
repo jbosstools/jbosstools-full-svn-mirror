@@ -1,9 +1,12 @@
 #!/bin/sh
 
 TARGET=$1
-RELEASE=$2
+RELEASETYPE=$2
+RELEASE=$3
 shift
 shift
+shift
+
 ANT=$ANT_HOME/bin/ant
 
 if [ "$ANT_HOME" = "" ]; then
@@ -14,7 +17,7 @@ fi
 $ANT $@ -lib ../lib -f common/buildRequirements.xml cleanRequirements
 
 if [ "$TARGET" = "product" ]; then
-	$ANT $@ -lib ../lib -f product/productBuild.xml release -DreleaseNumber=$RELEASE > build.log
+	$ANT $@ -lib ../lib -f product/productBuild.xml release -DreleaseType=$RELEASETYPE -DreleaseNumber=$RELEASE > build.log
 
 	if [ "$?" = "0" ]; then
 		$ANT $@ -lib ../lib -f product/buildResults.xml publish.log
@@ -24,5 +27,5 @@ if [ "$TARGET" = "product" ]; then
 	fi
 
 else
-	$ANT $@ -lib ../lib -f builder-wrap.xml release -Dbuilder=$TARGET -DreleaseNumber=$RELEASE
+	$ANT $@ -lib ../lib -f builder-wrap.xml release -Dbuilder=$TARGET -DreleaseType=$RELEASETYPE -DreleaseNumber=$RELEASE
 fi
