@@ -2,6 +2,11 @@
 
 	<taskdef classpath="lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
 	
+	<taskdef name="antform" classname="com.sardak.antform.AntForm" 
+	            classpath="lib/antform.jar"/>
+	<taskdef name="antmenu" classname="com.sardak.antform.AntMenu" 
+	            classpath="lib/antform.jar"/>
+	
 	<target name="customize">
 		<property file="customize.properties"/>
 		
@@ -64,32 +69,69 @@
 	</target>
 	
 	<target name="customize.interactive">
-	    <taskdef name="Cheese" classname="org.jboss.cheese.CheeseTask" classpath="lib/jboss-cheese.jar"/>
-
-		<Cheese>
-			<Questions>
-				<DialogDescription>
-					JBossIDE Releng Customization
-				</DialogDescription>
-				
-				<fileSelectionQuestion type="directory" label="Location of eclipse zip binaries" propertyName="eclipse.archive.path" default="C:\Downloads"/>
-				<fileSelectionQuestion type="directory" label="Location for build binaries" propertyName="build.output.directory" default="C:\jbosside-build"/>
-				<fileSelectionQuestion type="directory" label="Location of a clean eclipse 3.1 installation (no external plugins)" propertyName="clean.eclipse.home"/>
-				<fileSelectionQuestion type="directory" label="Location of JBossIDE Releng Project Root" propertyName="releng.root" default="${basedir}"/>
-
-				<fileSelectionQuestion type="none" label="Location of SSH Private Key" propertyName="ssh.key"/>
-				<textQuestion label="SSH Passphrase" propertyName="ssh.passphrase" />
-				
-				<booleanQuestion label="Enable SCP Publishing?" propertyName="enable.publishing" default="false"/>
-				<booleanQuestion label="Enable Email Notification?" propertyName="enable.notification" default="false"/>
-			</Questions>
-		</Cheese>
-		
+		<if>
+			<available file="customize.properties"/>
+			<then>
+				<property file="customize.properties"/>
+			</then>
+		</if>
+			
+		<property name="releng.root" value="${basedir}"/>
+		<property name="enable.publishing" value="false"/>
+		<property name="enable.notification" value="false"/>
 		<condition property="build.script.ext" value="sh" else="bat" >
 			<os family="unix"/>
 		</condition>
 		
-		<antcall target="customize" inheritall="true"/>
+		<antform title="JBossIDE Build System Setup" 
+			save="customize.properties"
+			stylesheet="customize.style"
+			image="art/jbosside-logo.png"
+			nexttarget="ssh.customization">
+			
+			<radioselectionproperty label="Build script type" values="sh,bat" property="build.script.ext" />
+			
+			<fileselectionproperty label="Location of Eclipse binaries"
+				property="eclipse.archive.path"
+				required="true" directorychooser="true" editable="true"/>
+
+			<fileselectionproperty label="Location for build binaries"
+				property="build.output.directory"
+				required="true" directorychooser="true" editable="true"/>
+			
+			<fileselectionproperty label="Location of a clean eclipse 3.1.1 installation (no external plugins)"
+				property="clean.eclipse.home"
+				required="true" directorychooser="true" editable="true"/>
+			
+			<fileselectionproperty label="Location of JBossIDE Releng Project Root"
+				property="releng.root"
+				required="true" directorychooser="true" editable="true"/>
+			
+			<separator/>
+			
+			<booleanProperty label="Enable SCP Publishing" property="enable.publishing"/>
+			
+			<booleanProperty label="Enable Email Notification" property="enable.notification"/>
+		</antform>
+	</target>
+	
+	<target name="ssh.customization">
+		<if>
+			<equals arg1="${enable.publishing}" arg2="true"/>
+			<then>
+				<antform title="SSH Configuration" 
+					save="customize.properties"
+					stylesheet="customize.style"
+					image="art/jbosside-logo.png">
+		
+					<fileselectionproperty label="Location of SSH Private Key"
+						property="ssh.key" required="false" editable="true" if="enable.publishing"/>
+					<textproperty password="true" label="SSH Passphrase" property="ssh.passphrase" if="enable.publishing" />
+					
+				</antform>
+			</then>
+		</if>
+		<antcall target="customize"/>
 	</target>
 	
 </project>
