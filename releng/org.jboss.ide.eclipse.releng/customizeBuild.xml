@@ -29,7 +29,7 @@
 				<property name="comment.enable.notification" value=""/>
 			</else>
 		</if>
-					
+		
 		<copy todir="builders" overwrite="true">
 			<fileset dir="builders">
 				<include name="**/*.properties.template"/>
@@ -130,7 +130,14 @@
 					
 				</antform>
 			</then>
+			<else>
+				<echo file="customize.properties">
+ssh.key=
+ssh.passphrase=
+				</echo>
+			</else>
 		</if>
+
 		<antcall target="customize"/>
 	</target>
 	
