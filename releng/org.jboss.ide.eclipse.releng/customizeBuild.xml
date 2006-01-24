@@ -131,7 +131,7 @@
 				</antform>
 			</then>
 			<else>
-				<echo file="customize.properties">
+				<echo file="customize.properties" append="true">
 ssh.key=
 ssh.passphrase=
 				</echo>
