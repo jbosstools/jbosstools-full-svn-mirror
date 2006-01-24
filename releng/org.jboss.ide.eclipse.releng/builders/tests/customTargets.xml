@@ -14,6 +14,10 @@
 		<property name="type" value="feature" />
 		<property name="id" value="org.jboss.ide.eclipse.test.feature" />
 	</ant>
+    <ant antfile="${genericTargets}" target="${target}" >
+        <property name="type" value="feature" />
+        <property name="id" value="org.hibernate.eclipse.test.feature" />
+    </ant>
 </target>
 
 <!-- ===================================================================== -->
@@ -27,6 +31,11 @@
 	<property name="archiveName" value="JBossIDE-Tests-${versionTag}.zip"/>
 	<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/>
 </target>
+ 
+<target name="assemble.org.hibernate.eclipse.test.feature">
+    <property name="archiveName" value="HibernateTools-Tests-${versionTag}.zip"/>
+    <ant antfile="${assembleScriptName}" dir="${buildDirectory}"/>
+</target>   
 
 <!-- ===================================================================== -->
 <!-- Check out map files from correct repository -->

@@ -31,4 +31,5 @@ buildTypeDescription.R=release
 # pluginname2:testclass2...
 
 test.plugins=\
-	org.jboss.ide.eclipse.core.test:org.jboss.ide.eclipse.core.test.AllTests
+	org.jboss.ide.eclipse.core.test:org.jboss.ide.eclipse.core.test.AllTests,
+	org.hibernate.eclipse.console.test:org.hibernate.eclipse.console.test.ConsolePluginAllTests
