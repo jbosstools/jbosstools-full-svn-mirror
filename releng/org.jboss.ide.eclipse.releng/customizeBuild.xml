@@ -7,8 +7,22 @@
 	<taskdef name="antmenu" classname="com.sardak.antform.AntMenu" 
 	            classpath="lib/antform.jar"/>
 	
+	<macrodef name="convertpath">
+		<attribute name="path"/>
+		<attribute name="property"/>
+		<sequential>
+			<pathconvert property="@{property}" dirsep="/">
+				<path><pathelement path="@{path}"/></path>
+			</pathconvert>
+		</sequential>
+	</macrodef>
+	
 	<target name="customize">
 		<property file="customize.properties"/>
+		
+		<!-- fix referential bug -->
+		<property name="ssh.key" value=""/>
+		<property name="ssh.passphrase" value=""/>
 		
 		<if>
 			<equals arg1="${enable.publishing}" arg2="false"/>
@@ -30,18 +44,25 @@
 			</else>
 		</if>
 		
+		<!-- force unix like paths.. the windows escaping mess is unmanageable -->
+		<convertpath path="${eclipse.archive.path}" property="eclipse.archive.path.escaped"/>
+		<convertpath path="${ssh.key}" property="ssh.key.escaped"/>
+		<convertpath path="${build.output.directory}" property="build.output.directory.escaped"/>
+		<convertpath path="${clean.eclipse.home}" property="clean.eclipse.home.escaped"/>
+		<convertpath path="${releng.root}" property="releng.root.escaped"/>
+		
 		<copy todir="builders" overwrite="true">
 			<fileset dir="builders">
 				<include name="**/*.properties.template"/>
 			</fileset>
 			<mapper type="glob" from="*.properties.template" to="*.properties"/>
 			<filterset begintoken="%" endtoken="%">
-				<filter token="eclipse-archive-path" value="${eclipse.archive.path}"/>
-				<filter token="ssh-key" value="${ssh.key}"/>
+				<filter token="eclipse-archive-path" value="${eclipse.archive.path.escaped}"/>
+				<filter token="ssh-key" value="${ssh.key.escaped}"/>
 				<filter token="ssh-passphrase" value="${ssh.passphrase}"/>
-				<filter token="build-output-directory" value="${build.output.directory}"/>
-				<filter token="clean-eclipse-home" value="${clean.eclipse.home}"/>
-				<filter token="releng-root" value="${releng.root}"/>
+				<filter token="build-output-directory" value="${build.output.directory.escaped}"/>
+				<filter token="clean-eclipse-home" value="${clean.eclipse.home.escaped}"/>
+				<filter token="releng-root" value="${releng.root.escaped}"/>
 				
 				<filter token="comment-enable-publishing" value="${comment.enable.publishing}"/>
 				<filter token="enable-publishing" value="${enable.publishing}"/>
@@ -130,15 +151,9 @@
 					
 				</antform>
 			</then>
-			<else>
-				<echo file="customize.properties" append="true">
-ssh.key=
-ssh.passphrase=
-				</echo>
-			</else>
 		</if>
-
-		<antcall target="customize"/>
+		
+		<antcall target="customize" inheritall="true"/>
 	</target>
 	
 </project>
