@@ -27,9 +27,9 @@ buildTypeDescription.I=integration
 buildTypeDescription.R=release
 
 # this list has a special format, i.e.:
-# pluginname:testclass,
-# pluginname2:testclass2...
+# test-type:pluginname:testclass,
+# test-type:pluginname2:testclass2...
 
 test.plugins=\
-	org.jboss.ide.eclipse.core.test:org.jboss.ide.eclipse.core.test.AllTests,
-	org.hibernate.eclipse.console.test:org.hibernate.eclipse.console.test.ConsolePluginAllTests
+	core:org.jboss.ide.eclipse.core.test:org.jboss.ide.eclipse.core.test.AllTests,\
+	ui:org.hibernate.eclipse.console.test:org.hibernate.eclipse.console.test.ConsolePluginAllTests
