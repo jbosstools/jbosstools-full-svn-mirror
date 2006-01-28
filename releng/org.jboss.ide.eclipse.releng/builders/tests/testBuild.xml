@@ -1,8 +1,13 @@
 <project name="JBossIDE tests" default="testBuild">
+	<property name="builder.root" value="${build.root}/builders"/>
+	
 	<taskdef classpath="${builder.root}/../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
 	
 	<property file="${builder.root}/../global.properties"/>
 	<property file="${builder.root}/product/build.properties"/>
+	
+	<property name="product.build.directory" value="${product.build.root}/${product.versionTag}"/>
+	
 	<property file="${product.build.root}/buildData.properties"/>
 	<property file="${builder.root}/tests/build.properties"/>
 	
@@ -36,7 +41,7 @@
 		
 		<unzip dest="${test-eclipse-root}">
 			<fileset dir="${product.build.directory}/tests">
-				<include name="JBossIDE-Tests-*.zip"/>
+				<include name="*.zip"/>
 			</fileset>
 		</unzip>
 		
@@ -45,26 +50,30 @@
 		
 		<for list="${test.plugins}" param="test.plugin">
 			<sequential>
-				<propertyregex property="plugin-name"
+				<propertyregex override="true" property="test-type"
 					input="@{test.plugin}"
-					regexp="(.+):"
+					regexp="^([^:]+):"
 					select="\1"/>
-				<propertyregex property="classname"
+				<propertyregex override="true" property="plugin-name"
 					input="@{test.plugin}"
-					regexp=":(.+)"
+					regexp=":([^:]+):"
+					select="\1"/>
+				<propertyregex override="true" property="classname"
+					input="@{test.plugin}"
+					regexp=":([^:]+)$"
 					select="\1"/>
 			
-				<ant target="core-test" antfile="${test-library}" dir="${test-eclipse-root}" inheritall="true">
-					<property name="eclipse-home" value="${test-eclipse-root}"/>
-					<property name="data-dir" value="${build.root}"/>
-				</ant>
+				<property name="plugin-path" value="${test-eclipse-root}/plugins"/>
+					
+				<echo>performing "${test-type}" test on plugin "${plugin-name}" class "${classname}"</echo>
+				<runtarget target="${test-type}-test"/>
 			</sequential>
 		</for>
 		
 		<mkdir dir="${test-results-root}" />
 		
 		<ant target="collect" antfile="${test-library}" dir="${test-eclipse-root}">
-			<property name="includes" value="org.jboss.*.xml"/>
+			<property name="includes" value="org.*.xml"/>
 			<!-- for some reason junitreport requires this filename to be relative -->
 			<property name="output-file" value="../test-results/org.jboss.ide.eclipse.tests.xml"/>
 		</ant>
@@ -81,9 +90,33 @@
 			extension=".properties" style="${build.root}/builders/tests/junit-properties.xsl"/>
 	</target>
 	
+	<target name="core-test">
+		<antcall target="eclipse-test">
+			<param name="application" value="org.eclipse.test.coretestapplication"/>
+		</antcall>
+	</target>
+	
+	<target name="ui-test">
+		<antcall target="eclipse-test">
+			<param name="application" value="org.eclipse.test.uitestapplication"/>
+		</antcall>
+	</target>
+	
+	<target name="eclipse-test">
+		<java dir="${test-eclipse-root}" fork="true" classname="org.eclipse.core.launcher.Main">
+			<classpath><fileset file="${test-eclipse-root}/startup.jar"/></classpath>
+			<arg line="-application ${application} -dev bin -data ${test-root}/workspace"/>
+			<arg line="formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,${classname}.xml"/>
+			<arg line="-testPluginName ${plugin-name} -classname ${classname}"/>
+		</java>
+	</target>
+		
 	<target name="clean-test-eclipse">
 		<delete includeemptydirs="true">
 			<fileset defaultexcludes="false" dir="${test-eclipse-root}">
+				<include name="**/*"/>
+			</fileset>
+			<fileset defaultexcludes="false" dir="${test-root}/workspace">
 				<include name="**/*"/>
 			</fileset>
 		</delete>
