@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.ui.views;
 
@@ -57,17 +72,25 @@ import org.jboss.ide.eclipse.launcher.ui.util.ServerLaunchUIUtil;
  * @version   $Revision$
  * @created   18 mai 2003
  */
-public class ServerNavigator extends ViewPart implements ISelectionChangedListener, ILaunchConfigurationListener, IServerDebugEventListener, IDoubleClickListener
+public class ServerNavigator extends ViewPart
+      implements
+         ISelectionChangedListener,
+         ILaunchConfigurationListener,
+         IServerDebugEventListener,
+         IDoubleClickListener
 {
    private Action configurationAction;
+
    private Action openLogFileAction;
+
    //private Action selectionAction;
    private Action shutdownAction;
+
    private Action startAction;
+
    private Action terminateAction;
 
    private TreeViewer viewer;
-
 
    /**
     * Description of the Method
@@ -81,7 +104,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
          viewer.getControl().getDisplay().asyncExec(r);
       }
    }
-
 
    /**
     * This is a callback that will allow us to create the viewer and initialize
@@ -119,7 +141,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       }
    }
 
-
    /**
     * @see   org.eclipse.ui.IWorkbenchPart#dispose()
     */
@@ -129,7 +150,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       DebugPlugin.getDefault().getLaunchManager().removeLaunchConfigurationListener(this);
       ServerLaunchManager.getInstance().getDebugEventHandler().removeListener(this);
    }
-
 
    /** Description of the Method */
    public void doConfiguration()
@@ -157,11 +177,11 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       else
       {
          selection = null;
-         identifier = DebugUIPlugin.getDefault().getLaunchConfigurationManager().getDefaultLanuchGroup(ILaunchManager.DEBUG_MODE).getIdentifier();
+         identifier = DebugUIPlugin.getDefault().getLaunchConfigurationManager().getDefaultLanuchGroup(
+               ILaunchManager.DEBUG_MODE).getIdentifier();
       }
       DebugUITools.openLaunchConfigurationDialogOnGroup(AbstractPlugin.getShell(), selection, identifier);
    }
-
 
    /** Description of the Method */
    public void doShutdown()
@@ -177,7 +197,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       }
    }
 
-
    /** Description of the Method */
    public void doStart()
    {
@@ -191,7 +210,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
          showErrorMessage(e);
       }
    }
-
 
    /** Description of the Method */
    public void doTerminate()
@@ -207,7 +225,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       }
    }
 
-
    /**
     * Gets the viewer attribute of the ServerNavigator object
     *
@@ -217,7 +234,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
    {
       return viewer;
    }
-
 
    /**
     * Gets the available attribute of the ServerNavigator object
@@ -229,30 +245,27 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       return !(viewer == null || viewer.getControl() == null || viewer.getControl().isDisposed());
    }
 
-
    /**
     * @param configuration  Description of the Parameter
     * @see                  org.eclipse.debug.core.ILaunchConfigurationListener#launchConfigurationAdded(ILaunchConfiguration)
     */
    public void launchConfigurationAdded(final ILaunchConfiguration configuration)
    {
-      Runnable r =
-         new Runnable()
+      Runnable r = new Runnable()
+      {
+         public void run()
          {
-            public void run()
+            synchronized (viewer)
             {
-               synchronized (viewer)
+               if (isAvailable())
                {
-                  if (isAvailable())
-                  {
-                     viewer.refresh(false);
-                  }
+                  viewer.refresh(false);
                }
             }
-         };
+         }
+      };
       asynchExec(r);
    }
-
 
    /**
     * @param configuration  Description of the Parameter
@@ -260,23 +273,21 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
     */
    public void launchConfigurationChanged(ILaunchConfiguration configuration)
    {
-      Runnable r =
-         new Runnable()
+      Runnable r = new Runnable()
+      {
+         public void run()
          {
-            public void run()
+            synchronized (viewer)
             {
-               synchronized (viewer)
+               if (isAvailable())
                {
-                  if (isAvailable())
-                  {
-                     viewer.refresh(false);
-                  }
+                  viewer.refresh(false);
                }
             }
-         };
+         }
+      };
       asynchExec(r);
    }
-
 
    /**
     * @param configuration  Description of the Parameter
@@ -305,23 +316,21 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
          showErrorMessage(e);
       }
 
-      Runnable r =
-         new Runnable()
+      Runnable r = new Runnable()
+      {
+         public void run()
          {
-            public void run()
+            synchronized (viewer)
             {
-               synchronized (viewer)
+               if (isAvailable())
                {
-                  if (isAvailable())
-                  {
-                     viewer.refresh(false);
-                  }
+                  viewer.refresh(false);
                }
             }
-         };
+         }
+      };
       asynchExec(r);
    }
-
 
    /**
     * @param event  Description of the Parameter
@@ -342,7 +351,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       }
 
    }
-
 
    /* (non-Javadoc)
     * @see org.eclipse.jface.viewers.IDoubleClickListener#doubleClick(org.eclipse.jface.viewers.DoubleClickEvent)
@@ -382,7 +390,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
 
    }
 
-
    /**
     * @param event          Description of the Parameter
     * @param configuration  Description of the Parameter
@@ -394,13 +401,11 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       updateServerActionsAndLabel(configuration);
    }
 
-
    /** Passing the focus request to the viewer's control. */
    public void setFocus()
    {
       viewer.getControl().setFocus();
    }
-
 
    /**
     * The
@@ -432,7 +437,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       }
    }
 
-
    /**
     * Gets the view attribute of the ServerNavigator object
     *
@@ -453,7 +457,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       return null;
    }
 
-
    /** Method openLogFile. */
    protected void openSelectedLogFile()
    {
@@ -464,7 +467,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
          showLogFile((LogFile) selected, true);
       }
    }
-
 
    /**
     * Sets the logFileActions attribute of the ServerNavigator object
@@ -484,7 +486,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
          }
       }
    }
-
 
    /**
     * Sets the serverActions attribute of the ServerNavigator object
@@ -511,7 +512,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -524,7 +524,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
          LauncherPlugin.getDefault().showErrorMessage(e);
       }
    }
-
 
    /**
     * Description of the Method
@@ -543,7 +542,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       setServerActions(configuration);
    }
 
-
    /**
     * Description of the Method
     *
@@ -551,17 +549,15 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
     */
    protected void updateServerActionsAndLabelThread(final ILaunchConfiguration configuration)
    {
-      Runnable r =
-         new Runnable()
+      Runnable r = new Runnable()
+      {
+         public void run()
          {
-            public void run()
-            {
-               updateServerActionsAndLabel(configuration);
-            }
-         };
+            updateServerActionsAndLabel(configuration);
+         }
+      };
       asynchExec(r);
    }
-
 
    /** Description of the Method */
    private void contributeToActionBars()
@@ -569,7 +565,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       IActionBars bars = getViewSite().getActionBars();
       fillLocalToolBar(bars.getToolBarManager());
    }
-
 
    /**
     * Method fillContextMenu.
@@ -593,7 +588,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -610,7 +604,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       manager.add(openLogFileAction);
    }
 
-
    /**
     * Description of the Method
     *
@@ -625,7 +618,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       manager.add(new Separator("Additions"));//$NON-NLS-1$
    }
 
-
    /**
     * Description of the Method
     *
@@ -637,7 +629,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       // Other plug-ins can contribute there actions here
       manager.add(new Separator("Additions"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -655,7 +646,6 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       manager.add(new Separator("Additions"));//$NON-NLS-1$
    }
 
-
    /**
     * The sele
     *
@@ -670,115 +660,114 @@ public class ServerNavigator extends ViewPart implements ISelectionChangedListen
       return (ILaunchConfiguration) ((IStructuredSelection) viewer.getSelection()).getFirstElement();
    }
 
-
    /** Description of the Method */
    private void initContextMenu()
    {
       MenuManager menuMgr = new MenuManager("#PopupMenu");//$NON-NLS-1$
       menuMgr.setRemoveAllWhenShown(true);
-      menuMgr.addMenuListener(
-         new IMenuListener()
+      menuMgr.addMenuListener(new IMenuListener()
+      {
+         public void menuAboutToShow(IMenuManager manager)
          {
-            public void menuAboutToShow(IMenuManager manager)
-            {
-               ServerNavigator.this.fillContextMenu(manager);
-            }
-         });
+            ServerNavigator.this.fillContextMenu(manager);
+         }
+      });
       Menu menu = menuMgr.createContextMenu(viewer.getControl());
       viewer.getControl().setMenu(menu);
       getSite().registerContextMenu(menuMgr, viewer);
    }
 
-
    /** Description of the Method */
    private void initDoubleClickAction()
    {
-      viewer.addDoubleClickListener(
-         new IDoubleClickListener()
+      viewer.addDoubleClickListener(new IDoubleClickListener()
+      {
+         public void doubleClick(DoubleClickEvent event)
          {
-            public void doubleClick(DoubleClickEvent event)
-            {
-               openSelectedLogFile();
-            }
-         });
+            openSelectedLogFile();
+         }
+      });
    }
-
 
    /** Description of the Method */
    private void makeActions()
    {
-      startAction =
-         new Action()
+      startAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doStart();
-            }
-         };
+            doStart();
+         }
+      };
       startAction.setText(LauncherUIMessages.getString("ServerNavigator.start_8"));//$NON-NLS-1$
       startAction.setToolTipText(LauncherUIMessages.getString("ServerNavigator.start_9"));//$NON-NLS-1$
       startAction.setEnabled(false);
-      startAction.setImageDescriptor(LauncherUIImages.getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_CTOOL_START_SERVER));
-      startAction.setDisabledImageDescriptor(LauncherUIImages.getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_DTOOL_START_SERVER));
+      startAction.setImageDescriptor(LauncherUIImages
+            .getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_CTOOL_START_SERVER));
+      startAction.setDisabledImageDescriptor(LauncherUIImages
+            .getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_DTOOL_START_SERVER));
 
-      shutdownAction =
-         new Action()
+      shutdownAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doShutdown();
-            }
-         };
+            doShutdown();
+         }
+      };
       shutdownAction.setText(LauncherUIMessages.getString("ServerNavigator.shutdown_10"));//$NON-NLS-1$
       shutdownAction.setToolTipText(LauncherUIMessages.getString("ServerNavigator.shutdown_11"));//$NON-NLS-1$
       shutdownAction.setEnabled(false);
-      shutdownAction.setImageDescriptor(LauncherUIImages.getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_CTOOL_SHUTDOWN_SERVER));
-      shutdownAction.setDisabledImageDescriptor(LauncherUIImages.getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_DTOOL_SHUTDOWN_SERVER));
+      shutdownAction.setImageDescriptor(LauncherUIImages
+            .getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_CTOOL_SHUTDOWN_SERVER));
+      shutdownAction.setDisabledImageDescriptor(LauncherUIImages
+            .getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_DTOOL_SHUTDOWN_SERVER));
 
-      terminateAction =
-         new Action()
+      terminateAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doTerminate();
-            }
-         };
+            doTerminate();
+         }
+      };
       terminateAction.setText(LauncherUIMessages.getString("ServerNavigator.terminate_12"));//$NON-NLS-1$
       terminateAction.setToolTipText(LauncherUIMessages.getString("ServerNavigator.terminate_13"));//$NON-NLS-1$
       terminateAction.setEnabled(false);
-      terminateAction.setImageDescriptor(LauncherUIImages.getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_CTOOL_TERMINATE_SERVER));
-      terminateAction.setDisabledImageDescriptor(LauncherUIImages.getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_DTOOL_TERMINATE_SERVER));
+      terminateAction.setImageDescriptor(LauncherUIImages
+            .getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_CTOOL_TERMINATE_SERVER));
+      terminateAction.setDisabledImageDescriptor(LauncherUIImages
+            .getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_DTOOL_TERMINATE_SERVER));
 
-      configurationAction =
-         new Action()
+      configurationAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doConfiguration();
-            }
+            doConfiguration();
+         }
 
-         };
+      };
       configurationAction.setText(LauncherUIMessages.getString("ServerNavigator.configuration_14"));//$NON-NLS-1$
       configurationAction.setToolTipText(LauncherUIMessages.getString("ServerNavigator.configuration_15"));//$NON-NLS-1$
       configurationAction.setEnabled(true);
-      configurationAction.setImageDescriptor(LauncherUIImages.getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_CTOOL_CONFIGURATION));
-      configurationAction.setDisabledImageDescriptor(LauncherUIImages.getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_DTOOL_CONFIGURATION));
+      configurationAction.setImageDescriptor(LauncherUIImages
+            .getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_CTOOL_CONFIGURATION));
+      configurationAction.setDisabledImageDescriptor(LauncherUIImages
+            .getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_DTOOL_CONFIGURATION));
 
-      openLogFileAction =
-         new Action()
+      openLogFileAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               openSelectedLogFile();
-            }
-         };
+            openSelectedLogFile();
+         }
+      };
       openLogFileAction.setText(LauncherUIMessages.getString("ServerNavigator.open_16"));//$NON-NLS-1$
       openLogFileAction.setToolTipText(LauncherUIMessages.getString("ServerNavigator.open_17"));//$NON-NLS-1$
       openLogFileAction.setEnabled(false);
-      openLogFileAction.setImageDescriptor(LauncherUIImages.getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_CTOOL_OPEN_LOGFILE));
-      openLogFileAction.setDisabledImageDescriptor(LauncherUIImages.getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_DTOOL_OPEN_LOGFILE));
+      openLogFileAction.setImageDescriptor(LauncherUIImages
+            .getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_CTOOL_OPEN_LOGFILE));
+      openLogFileAction.setDisabledImageDescriptor(LauncherUIImages
+            .getImageDescriptor(org.jboss.ide.eclipse.launcher.ui.ILauncherUIConstants.IMG_DTOOL_OPEN_LOGFILE));
    }
-
 
    /**
     * Description of the Class

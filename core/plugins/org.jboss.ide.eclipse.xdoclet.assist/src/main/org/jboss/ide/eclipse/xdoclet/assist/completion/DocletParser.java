@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.completion;
 
@@ -26,37 +41,45 @@ public class DocletParser
 {
    /** Description of the Field */
    protected IsClass isClass = new IsClass();
+
    /** Description of the Field */
    protected IsMethod isMethod = new IsMethod();
+
    /** Description of the Field */
    protected Perl5Matcher matcher = new Perl5Matcher();
 
    private final static String CLASS_LEVEL = ":class";//$NON-NLS-1$
+
    private final static String CLASS_METHOD_LEVEL = ":class:method";//$NON-NLS-1$
+
    private final static String COMMAND_PATTERN = "^[\\w-]*";//$NON-NLS-1$
-   private final static String FIRST_WORD_LEFT_OF_EQUALS_PATTERN =
-         "^\\s*[*]?\\s*([\\w-]+)\\s*$";//$NON-NLS-1$
-   private final static String INCOMPLETE_NAMESPACE_OR_TEMPLATE_PATTERN =
-         "^[\\w-]*$";//$NON-NLS-1$
+
+   private final static String FIRST_WORD_LEFT_OF_EQUALS_PATTERN = "^\\s*[*]?\\s*([\\w-]+)\\s*$";//$NON-NLS-1$
+
+   private final static String INCOMPLETE_NAMESPACE_OR_TEMPLATE_PATTERN = "^[\\w-]*$";//$NON-NLS-1$
+
    private final static String METHOD_LEVEL = ":method";//$NON-NLS-1$
+
    private final static String NAME_SPACE_PATTERN = "^([\\w-]+)(:|\\.)";//$NON-NLS-1$
+
    // if there is a valid namespace-command and no equal-sign nothing but one * is allowed
    private final static String NOTHING_BUT_ONE_STAR_PATTERN = "^\\s*[*]?\\s*$";//$NON-NLS-1$
+
    // private final static String TEMPLATE_PATTERN = "^_([\\w-]+)";//$NON-NLS-1$
    // If the word after the last equals exists, it's an value. After that
    // one '*' is allowed. If the word doesn't exists no '*' is allowed the next
    // valid element is an value, and between attribute and value no '*' is allowed.
-   private final static String WORDS_AFTER_EQUALS_PATTERN =
-         "^[\\t\\f\\ ]*(\"(.*)\")\\s*[*]?\\s*$|^[\\t\\f\\ ]*$";//$NON-NLS-1$
-   private final static String WORDS_LEFT_OF_EQUALS_PATTERN =
-         "^\\s*\"(.*)\"\\s*[*]?\\s*([\\w-]*)\\s*$";//$NON-NLS-1$
+   private final static String WORDS_AFTER_EQUALS_PATTERN = "^[\\t\\f\\ ]*(\"(.*)\")\\s*[*]?\\s*$|^[\\t\\f\\ ]*$";//$NON-NLS-1$
+
+   private final static String WORDS_LEFT_OF_EQUALS_PATTERN = "^\\s*\"(.*)\"\\s*[*]?\\s*([\\w-]*)\\s*$";//$NON-NLS-1$
+
    private final static String WORD_OF_CURSOR_CHECK_PATTERN = "^\"?[\\w-.]*$";//$NON-NLS-1$
+
    // Finds the last word in the section (it might be of length 0).
    // This last word is what is adjacent to the cursor and has to be completed
    // The last word has to be separated from special character.
    // Examples: viewtype=rem ==> rem  *view ==> view
    private final static String WORD_OF_CURSOR_PATTERN = "[^\\s=*]*$";//$NON-NLS-1$
-
 
    /**
     * Gets the proposals attribute of the DocletParser object
@@ -67,8 +90,7 @@ public class DocletParser
     * @return                        The proposals value
     * @exception JavaModelException  Description of the Exception
     */
-   public DocletStructure getProposals(DocletTree docletTree, String section, IMember member)
-          throws JavaModelException
+   public DocletStructure getProposals(DocletTree docletTree, String section, IMember member) throws JavaModelException
    {
       //		logger.debug("Section: " + section);
       DocletStructure docletStructure = new DocletStructure();
@@ -92,9 +114,7 @@ public class DocletParser
       if (!matcher.contains(section, PatternStore.getPattern(NAME_SPACE_PATTERN)))
       {
          //			System.out.println("No complete namespace: " + section);
-         if (matcher.matches(
-               section,
-               PatternStore.getPattern(INCOMPLETE_NAMESPACE_OR_TEMPLATE_PATTERN)))
+         if (matcher.matches(section, PatternStore.getPattern(INCOMPLETE_NAMESPACE_OR_TEMPLATE_PATTERN)))
          {
             //				System.out.println("Incomplete namespace or template: " + section);
             docletStructure.wordLeftOfCursor = section;
@@ -103,7 +123,8 @@ public class DocletParser
          return null;
       }
       // It's a complete namespace, now check for the value-range
-      if (!docletTree.isNode(new String[]{matcher.getMatch().group(1)}, true))
+      if (!docletTree.isNode(new String[]
+      {matcher.getMatch().group(1)}, true))
       {
          //			System.out.println("Invalid namespace");
          return null;
@@ -119,17 +140,13 @@ public class DocletParser
       // find is always true
 
       // If there is word of cursor check the syntax, if invalid return null
-      if ((docletStructure.wordLeftOfCursor = matcher.getMatch().group(0))
-            .length()
-            == 0)
+      if ((docletStructure.wordLeftOfCursor = matcher.getMatch().group(0)).length() == 0)
       {
          docletStructure.wordLeftOfCursor = null;
       }
       else
       {
-         if (!matcher.matches(
-               docletStructure.wordLeftOfCursor,
-               PatternStore.getPattern(WORD_OF_CURSOR_CHECK_PATTERN)))
+         if (!matcher.matches(docletStructure.wordLeftOfCursor, PatternStore.getPattern(WORD_OF_CURSOR_CHECK_PATTERN)))
          {
             //				System.out.println(
             //					"Invalid word of Cursor#" + docletStructure.wordLeftOfCursor + "#");
@@ -139,13 +156,8 @@ public class DocletParser
       //		System.out.println(
       //			"Word of Cursor:" + docletStructure.wordLeftOfCursor + ":");
       // remove word of cursor from section
-      section =
-            section.substring(
-            0,
-            section.length()
-            - ((docletStructure.wordLeftOfCursor == null)
-            ? 0
-            : docletStructure.wordLeftOfCursor.length()));
+      section = section.substring(0, section.length()
+            - ((docletStructure.wordLeftOfCursor == null) ? 0 : docletStructure.wordLeftOfCursor.length()));
       //		System.out.println("Trimmed section:" + section + ":");
 
       // command-check
@@ -160,11 +172,8 @@ public class DocletParser
       {
          if (isClass.eval(member))
          {
-            if (docletTree.isNode(
-                  new String[]{
-                  docletStructure.namespace,
-                  command + CLASS_LEVEL},
-                  true))
+            if (docletTree.isNode(new String[]
+            {docletStructure.namespace, command + CLASS_LEVEL}, true))
             {
                command += CLASS_LEVEL;
                found = true;
@@ -172,11 +181,8 @@ public class DocletParser
          }
          else if (isMethod.eval(member))
          {
-            if (docletTree.isNode(
-                  new String[]{
-                  docletStructure.namespace,
-                  command + METHOD_LEVEL},
-                  true))
+            if (docletTree.isNode(new String[]
+            {docletStructure.namespace, command + METHOD_LEVEL}, true))
             {
                command += METHOD_LEVEL;
                found = true;
@@ -184,11 +190,8 @@ public class DocletParser
          }
          if (!found)
          {
-            if (docletTree.isNode(
-                  new String[]{
-                  docletStructure.namespace,
-                  command + CLASS_METHOD_LEVEL},
-                  true))
+            if (docletTree.isNode(new String[]
+            {docletStructure.namespace, command + CLASS_METHOD_LEVEL}, true))
             {
                command += CLASS_METHOD_LEVEL;
                found = true;
@@ -221,9 +224,7 @@ public class DocletParser
 
       if (equalsPosList.size() == 0)
       {
-         if (!matcher.matches(
-               section,
-               PatternStore.getPattern(NOTHING_BUT_ONE_STAR_PATTERN)))
+         if (!matcher.matches(section, PatternStore.getPattern(NOTHING_BUT_ONE_STAR_PATTERN)))
          {
             //				System.out.println("No content allowed: " + section + ":");
             return null;
@@ -233,17 +234,15 @@ public class DocletParser
 
       // Check attributes-value pairs
       // Check if there is one and only one word before the first equal char
-      if (!matcher.matches(
-            section.substring(0, ((Integer) equalsPosList.get(0)).intValue()),
-            PatternStore.getPattern(FIRST_WORD_LEFT_OF_EQUALS_PATTERN)))
+      if (!matcher.matches(section.substring(0, ((Integer) equalsPosList.get(0)).intValue()), PatternStore
+            .getPattern(FIRST_WORD_LEFT_OF_EQUALS_PATTERN)))
       {
          //			System.out.println("First word was invalid");
          return null;
       }
       //		System.out.println("First word:" + matcher.getMatch().group(1) + ":");
 
-      docletStructure.attributes.add(
-            new Property(matcher.getMatch().group(1), null));
+      docletStructure.attributes.add(new Property(matcher.getMatch().group(1), null));
 
       // Check if before the equal-chars after the first one there is a proper pair
       // example: @ejb:bean name = "x" view-type = "zzz" (here the proper pair is: "x" viewtype
@@ -251,13 +250,9 @@ public class DocletParser
       {
          for (int i = 1; i < equalsPosList.size(); i++)
          {
-            String matchString =
-                  section.substring(
-                  ((Integer) equalsPosList.get(i - 1)).intValue() + 1,
+            String matchString = section.substring(((Integer) equalsPosList.get(i - 1)).intValue() + 1,
                   ((Integer) equalsPosList.get(i)).intValue());
-            if (!matcher.matches(
-                  matchString,
-                  PatternStore.getPattern(WORDS_LEFT_OF_EQUALS_PATTERN)))
+            if (!matcher.matches(matchString, PatternStore.getPattern(WORDS_LEFT_OF_EQUALS_PATTERN)))
             {
                //					System.out.println("Pair was invalid");
                return null;
@@ -268,27 +263,20 @@ public class DocletParser
             //						+ " "
             //						+ matcher.getMatch().group(2));
             // Set value of last porperty
-            (
-                  (Property) docletStructure.attributes.get(
-                  docletStructure.attributes.size() - 1)).setValue(
-                  matcher.getMatch().group(1));
+            ((Property) docletStructure.attributes.get(docletStructure.attributes.size() - 1)).setValue(matcher
+                  .getMatch().group(1));
             // Set new Property
-            docletStructure.attributes.add(
-                  new Property(matcher.getMatch().group(2), null));
+            docletStructure.attributes.add(new Property(matcher.getMatch().group(2), null));
          }
       }// numberOfEqualCharacters > 1
 
       // Check what is right of the last equal-charcter. Only a value is allowed
 
-      String matchString =
-            section.substring(
-            ((Integer) equalsPosList.get(equalsPosList.size() - 1)).intValue() + 1,
+      String matchString = section.substring(((Integer) equalsPosList.get(equalsPosList.size() - 1)).intValue() + 1,
             section.length());
       //		System.out.println("Checked section:" + matchString + ":");
       if (matchString.length() > 0
-            && !matcher.matches(
-            matchString,
-            PatternStore.getPattern(WORDS_AFTER_EQUALS_PATTERN)))
+            && !matcher.matches(matchString, PatternStore.getPattern(WORDS_AFTER_EQUALS_PATTERN)))
       {
          //			System.out.println("Word after last equal was invalid");
          return null;
@@ -298,10 +286,8 @@ public class DocletParser
       if (matchString.length() > 0 && matcher.getMatch().group(1) != null)
       {
          // Set value of last property
-         (
-               (Property) docletStructure.attributes.get(
-               docletStructure.attributes.size() - 1)).setValue(
-               matcher.getMatch().group(2));
+         ((Property) docletStructure.attributes.get(docletStructure.attributes.size() - 1)).setValue(matcher.getMatch()
+               .group(2));
          //			System.out.println(
          //				"Word after last Equal:#" + matcher.getMatch().group(2) + "#");
          docletStructure.lastElementIsAttribute = false;
@@ -316,24 +302,14 @@ public class DocletParser
       for (int i = 0; i < docletStructure.attributes.size(); i++)
       {
          p = (Property) docletStructure.attributes.get(i);
-         if (!docletTree.isNode(
-               new String[]{
-               docletStructure.namespace,
-               docletStructure.command,
-               p.getName()},
-               true))
+         if (!docletTree.isNode(new String[]
+         {docletStructure.namespace, docletStructure.command, p.getName()}, true))
          {
             //				System.out.println("Invalid attribute: " + p.getName());
             return null;
          }
-         if (p.getValue() != null
-               && !docletTree.isNode(
-               new String[]{
-               docletStructure.namespace,
-               docletStructure.command,
-               p.getName(),
-               p.getValue()},
-               true))
+         if (p.getValue() != null && !docletTree.isNode(new String[]
+         {docletStructure.namespace, docletStructure.command, p.getName(), p.getValue()}, true))
          {
             //				System.out.println("Invalid value: " + p.getValue());
             return null;

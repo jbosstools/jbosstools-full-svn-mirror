@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.ui.util;
 
@@ -44,8 +59,9 @@ import org.jboss.ide.eclipse.launcher.core.util.LaunchStatus;
 public class ServerLaunchUIUtil
 {
    /** Constructor for the ServerLaunchUIUtil object */
-   private ServerLaunchUIUtil() { }
-
+   private ServerLaunchUIUtil()
+   {
+   }
 
    /**
     * Create some empty space.
@@ -61,7 +77,6 @@ public class ServerLaunchUIUtil
       label.setLayoutData(gd);
    }
 
-
    /**
     * Description of the Method
     *
@@ -71,7 +86,8 @@ public class ServerLaunchUIUtil
     * @param terminate          Description of the Parameter
     * @exception CoreException  Description of the Exception
     */
-   public static synchronized void enableServerActions(ILaunchConfiguration configuration, IAction start, IAction shutdown, IAction terminate) throws CoreException
+   public static synchronized void enableServerActions(ILaunchConfiguration configuration, IAction start,
+         IAction shutdown, IAction terminate) throws CoreException
    {
       if (configuration != null)
       {
@@ -85,8 +101,9 @@ public class ServerLaunchUIUtil
          }
          if (terminate != null)
          {
-            terminate.setEnabled(configuration != null
-                  && (ServerLaunchManager.getInstance().getStatusForStartLaunch(configuration) == LaunchStatus.RUNNING));
+            terminate
+                  .setEnabled(configuration != null
+                        && (ServerLaunchManager.getInstance().getStatusForStartLaunch(configuration) == LaunchStatus.RUNNING));
          }
       }
       else
@@ -105,7 +122,6 @@ public class ServerLaunchUIUtil
          }
       }
    }
-
 
    /**
     * Helper that opens the directory chooser dialog.
@@ -133,7 +149,6 @@ public class ServerLaunchUIUtil
       return null;
    }
 
-
    /**
     * Gets the file attribute of the ServerLaunchUIUtil class
     *
@@ -160,7 +175,6 @@ public class ServerLaunchUIUtil
       return null;
    }
 
-
    /**
     * Gets the name attribute of the ServerLaunchUIUtil class
     *
@@ -172,7 +186,7 @@ public class ServerLaunchUIUtil
       try
       {
          return configuration.getType().getName() + ": " //$NON-NLS-1$
-         + configuration.getName();
+               + configuration.getName();
       }
       catch (CoreException e)
       {
@@ -180,7 +194,6 @@ public class ServerLaunchUIUtil
          return null;
       }
    }
-
 
    /**
     * Gets the processConsole attribute of the ServerLaunchUIUtil class
@@ -209,15 +222,15 @@ public class ServerLaunchUIUtil
 
       if (console == null)
       {
-		 IConsoleColorProvider colorProvider = DebugUIPlugin.getDefault().getProcessConsoleManager().getColorProvider(null);
-         console = new ProcessConsole(process,colorProvider);
+         IConsoleColorProvider colorProvider = DebugUIPlugin.getDefault().getProcessConsoleManager().getColorProvider(
+               null);
+         console = new ProcessConsole(process, colorProvider);
          manager.addConsoles(new IConsole[]
-               {console});
+         {console});
       }
 
       return console;
    }
-
 
    /**
     * Returns a view by its id.
@@ -241,7 +254,6 @@ public class ServerLaunchUIUtil
       return view;
    }
 
-
    /**
     * Gets the fileExistent attribute of the ServerLaunchUIUtil class
     *
@@ -252,7 +264,6 @@ public class ServerLaunchUIUtil
    {
       return (new File(path)).isFile();
    }
-
 
    /**
     * Gets the launchable attribute of the ServerLaunchUIUtil class
@@ -265,9 +276,9 @@ public class ServerLaunchUIUtil
    {
 
       return (configuration != null
-            && (ServerLaunchManager.getInstance().getStatusForStartLaunch(configuration) == LaunchStatus.NOT_RUNNING) && ServerLaunchManager.getInstance().isValid(configuration));
+            && (ServerLaunchManager.getInstance().getStatusForStartLaunch(configuration) == LaunchStatus.NOT_RUNNING) && ServerLaunchManager
+            .getInstance().isValid(configuration));
    }
-
 
    /**
     * Gets the shutdownable attribute of the ServerLaunchUIUtil class
@@ -282,7 +293,6 @@ public class ServerLaunchUIUtil
             && (ServerLaunchManager.getInstance().getStatusForStartLaunch(configuration) == LaunchStatus.RUNNING)
             && ServerLaunchManager.getInstance().hasShutdown(configuration);
    }
-
 
    /**
     * A view is opened or brought to the front.

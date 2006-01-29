@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.assist.contributor;
 
@@ -39,7 +54,6 @@ public class XMLAttributeContributor implements IAttributeContributor
       return false;
    }
 
-
    /**
     * Gets the attributeProposals attribute of the XMLAttributeContributor object
     *
@@ -62,12 +76,14 @@ public class XMLAttributeContributor implements IAttributeContributor
          String attribute = (String) words.get(i);
          if (attribute.startsWith(start))
          {
-         	// generates attrib="<>" or attrib="<>defaultValue" where <> is cursorpos.
-         	String defaultValue = getDefaultValueFor(holder.getReconcilier().getDTDGrammar(), name, attribute);
-         	String insertion = attribute + (defaultValue==null?"=\"\"":"=\""+defaultValue+"\"");
-         	String display = (defaultValue==null?attribute:insertion);
-         	int cursorpos = attribute.length()+2;
-            ICompletionProposal proposal = new CompletionProposal(insertion, offset - start.length(), start.length(), cursorpos, JDTUIImages.getImage(IJDTUIConstants.IMG_OBJ_ATTRIBUTE), display, null, getAdditonalInfoFor(holder.getReconcilier().getDTDGrammar(), name, attribute));
+            // generates attrib="<>" or attrib="<>defaultValue" where <> is cursorpos.
+            String defaultValue = getDefaultValueFor(holder.getReconcilier().getDTDGrammar(), name, attribute);
+            String insertion = attribute + (defaultValue == null ? "=\"\"" : "=\"" + defaultValue + "\"");
+            String display = (defaultValue == null ? attribute : insertion);
+            int cursorpos = attribute.length() + 2;
+            ICompletionProposal proposal = new CompletionProposal(insertion, offset - start.length(), start.length(),
+                  cursorpos, JDTUIImages.getImage(IJDTUIConstants.IMG_OBJ_ATTRIBUTE), display, null,
+                  getAdditonalInfoFor(holder.getReconcilier().getDTDGrammar(), name, attribute));
             proposals.add(proposal);
          }
       }
@@ -75,49 +91,51 @@ public class XMLAttributeContributor implements IAttributeContributor
       return proposals;
    }
 
-
    /**
     * @param grammar
     * @param tag
     * @param attribute
     * @return default value for attribute if it exists
     */
-   private String getDefaultValueFor(Namespace grammar, String tag, String attribute) {
-   	return grammar.getDefaultAttributeValue(tag, attribute);	
+   private String getDefaultValueFor(Namespace grammar, String tag, String attribute)
+   {
+      return grammar.getDefaultAttributeValue(tag, attribute);
    }
 
+   /**
+    * @param grammar
+    * @param text
+    * @return
+    */
+   private String getAdditonalInfoFor(Namespace namespace, String tag, String attribute)
+   {
+      String comment = (String) namespace.getComments().get(tag + ">" + attribute);
 
-/**
- * @param grammar
- * @param text
- * @return
- */
-private String getAdditonalInfoFor(Namespace namespace, String tag, String attribute) {
-	String comment = (String) namespace.getComments().get(tag + ">" + attribute);
-	
-	StringBuffer result = new StringBuffer();
-	
-	result.append("<p>\n");
-	result.append("<b>Attribute:</b> " + attribute + "<br>\n");
-	result.append("<b>Data type:</b> " + namespace.getDataType(tag, attribute) + "<br>\n");
-	String[] attributeValues = namespace.getEnumeratedValues(tag, attribute);
-	if(attributeValues!=null && attributeValues.length!=0) {
-		result.append("<b>Enumerated values:</b><br>\n");
-		for (int i = 0; i < attributeValues.length; i++) {
-			String value = attributeValues[i];
-			//TODO: how do indent these ?
-			result.append(" - " + value + "<br>\n");
-		}
-	}
-	if(comment!=null) {
-		result.append("<br>"  + comment);
-		result.append("\n</p>");
-	}
-	return result.toString();
-}
+      StringBuffer result = new StringBuffer();
 
+      result.append("<p>\n");
+      result.append("<b>Attribute:</b> " + attribute + "<br>\n");
+      result.append("<b>Data type:</b> " + namespace.getDataType(tag, attribute) + "<br>\n");
+      String[] attributeValues = namespace.getEnumeratedValues(tag, attribute);
+      if (attributeValues != null && attributeValues.length != 0)
+      {
+         result.append("<b>Enumerated values:</b><br>\n");
+         for (int i = 0; i < attributeValues.length; i++)
+         {
+            String value = attributeValues[i];
+            //TODO: how do indent these ?
+            result.append(" - " + value + "<br>\n");
+         }
+      }
+      if (comment != null)
+      {
+         result.append("<br>" + comment);
+         result.append("\n</p>");
+      }
+      return result.toString();
+   }
 
-/**
+   /**
     * Gets the attributes attribute of the XMLAttributeContributor object
     *
     * @param h         Description of the Parameter
@@ -145,7 +163,7 @@ private String getAdditonalInfoFor(Namespace namespace, String tag, String attri
       // Add proposals from namespaces
       if (namespaces != null)
       {
-         for (Iterator it = namespaces.keySet().iterator(); it.hasNext(); )
+         for (Iterator it = namespaces.keySet().iterator(); it.hasNext();)
          {
             String key = (String) it.next();
             Namespace ns = (Namespace) namespaces.get(key);

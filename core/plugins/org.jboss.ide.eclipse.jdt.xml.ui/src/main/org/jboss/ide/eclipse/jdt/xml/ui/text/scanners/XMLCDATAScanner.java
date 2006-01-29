@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.text.scanners;
 
@@ -30,14 +45,16 @@ public class XMLCDATAScanner implements ITokenScanner
    private int begin;
 
    private IDocument document;
+
    private int end;
+
    private int length;
 
    private int offset;
 
    private int position;
-   private Map tokens;
 
+   private Map tokens;
 
    /**
     *Constructor for the XMLCDATAScanner object
@@ -48,7 +65,6 @@ public class XMLCDATAScanner implements ITokenScanner
    {
       this.tokens = tokens;
    }
-
 
    /*
     * @see org.eclipse.jface.text.rules.ITokenScanner#getTokenLength()
@@ -63,7 +79,6 @@ public class XMLCDATAScanner implements ITokenScanner
       return this.length;
    }
 
-
    /*
     * @see org.eclipse.jface.text.rules.ITokenScanner#getTokenOffset()
     */
@@ -76,7 +91,6 @@ public class XMLCDATAScanner implements ITokenScanner
    {
       return this.offset;
    }
-
 
    /*
     * @see org.eclipse.jface.text.rules.ITokenScanner#nextToken()
@@ -97,7 +111,7 @@ public class XMLCDATAScanner implements ITokenScanner
          try
          {
             if (document.get(position, 6).equals("CDATA[")//$NON-NLS-1$
-                    )
+            )
             {
                position += 6;
             }
@@ -118,7 +132,7 @@ public class XMLCDATAScanner implements ITokenScanner
       {
          int p = end - 3;
          if (document.get(p, 3).equals("]]>")//$NON-NLS-1$
-                 )
+         )
          {
             if (position == p)
             {
@@ -139,7 +153,6 @@ public class XMLCDATAScanner implements ITokenScanner
 
       return this.getToken(IXMLSyntaxConstants.XML_DEFAULT);
    }
-
 
    /*
     * @see org.eclipse.jface.text.rules.ITokenScanner#setRange(IDocument, int, int)
@@ -162,7 +175,6 @@ public class XMLCDATAScanner implements ITokenScanner
       this.position = offset;
       this.length = 0;
    }
-
 
    /**
     * Gets the token attribute of the XMLCDATAScanner object

@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model;
 
@@ -41,14 +56,13 @@ public class XTagsProvider
       {
          return null;
       }
-      File[] files = dir.listFiles(
-         new FilenameFilter()
+      File[] files = dir.listFiles(new FilenameFilter()
+      {
+         public boolean accept(File dir, String name)
          {
-            public boolean accept(File dir, String name)
-            {
-               return name.endsWith(".jar");//$NON-NLS-1$
-            }
-         });
+            return name.endsWith(".jar");//$NON-NLS-1$
+         }
+      });
       int stepSize = 1;
       try
       {
@@ -65,17 +79,14 @@ public class XTagsProvider
          JarEntry xtagsXml = jarFile.getJarEntry("META-INF/xtags.xml");//$NON-NLS-1$
          if (xtagsXml != null)
          {
-            xtagsURLList.add(
-                  new URL(
-                  new URL("jar:" + files[i].toURL() + "!/"), //$NON-NLS-1$ //$NON-NLS-2$
-            "META-INF/xtags.xml"));//$NON-NLS-1$
+            xtagsURLList.add(new URL(new URL("jar:" + files[i].toURL() + "!/"), //$NON-NLS-1$ //$NON-NLS-2$
+                  "META-INF/xtags.xml"));//$NON-NLS-1$
          }
          monitor.worked(stepSize);
          System.out.println(XDocletAssistMessages.getString("XTagsProvider.XTAGS___11") + files[i]);//$NON-NLS-1$
       }
       return (URL[]) xtagsURLList.toArray(new URL[xtagsURLList.size()]);
    }
-
 
    /**
     * Gets the additionalValuesDTDInputSource attribute of the XTagsProvider class
@@ -84,10 +95,8 @@ public class XTagsProvider
     */
    public static InputSource getAdditionalValuesDTDInputSource()
    {
-      return new InputSource(
-            XTagsProvider.class.getResourceAsStream("/jbosside_values_1_0.dtd"));//$NON-NLS-1$
+      return new InputSource(XTagsProvider.class.getResourceAsStream("/jbosside_values_1_0.dtd"));//$NON-NLS-1$
    }
-
 
    /**
     * Gets the templatesDTDInputSource attribute of the XTagsProvider class
@@ -96,10 +105,8 @@ public class XTagsProvider
     */
    public static InputSource getTemplatesDTDInputSource()
    {
-      return new InputSource(
-            XTagsProvider.class.getResourceAsStream("/jbosside_templates_1_0.dtd"));//$NON-NLS-1$
+      return new InputSource(XTagsProvider.class.getResourceAsStream("/jbosside_templates_1_0.dtd"));//$NON-NLS-1$
    }
-
 
    /**
     * Gets the variablesDTDInputSource attribute of the XTagsProvider class
@@ -108,10 +115,8 @@ public class XTagsProvider
     */
    public static InputSource getVariablesDTDInputSource()
    {
-      return new InputSource(
-            XTagsProvider.class.getResourceAsStream("/jbosside_variables_1_0.dtd"));//$NON-NLS-1$
+      return new InputSource(XTagsProvider.class.getResourceAsStream("/jbosside_variables_1_0.dtd"));//$NON-NLS-1$
    }
-
 
    /**
     * Gets the xTagsDTDInputSource attribute of the XTagsProvider class

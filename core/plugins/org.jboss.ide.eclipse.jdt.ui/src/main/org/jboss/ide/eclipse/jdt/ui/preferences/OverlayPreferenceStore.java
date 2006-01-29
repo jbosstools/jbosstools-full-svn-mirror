@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.preferences;
 
@@ -26,12 +41,13 @@ public class OverlayPreferenceStore implements IPreferenceStore
 {
    /** Description of the Field */
    protected IPreferenceStore parent;
+
    /** Description of the Field */
    protected IPreferenceStore store;
 
    private PropertyListener fPropertyListener;
-   private PreferenceDescriptor[] keys;
 
+   private PreferenceDescriptor[] keys;
 
    /**
     *Constructor for the OverlayPreferenceStore object
@@ -47,7 +63,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       store = new PreferenceStore();
    }
 
-
    /**
     * Adds a feature to the PropertyChangeListener attribute of the OverlayPreferenceStore object
     *
@@ -57,7 +72,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
    {
       store.addPropertyChangeListener(listener);
    }
-
 
    /**
     * Description of the Method
@@ -70,7 +84,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       return store.contains(name);
    }
 
-
    /**
     * Description of the Method
     *
@@ -78,13 +91,10 @@ public class OverlayPreferenceStore implements IPreferenceStore
     * @param oldValue  Description of the Parameter
     * @param newValue  Description of the Parameter
     */
-   public void firePropertyChangeEvent(
-      String name, Object oldValue, Object newValue
-      )
+   public void firePropertyChangeEvent(String name, Object oldValue, Object newValue)
    {
       store.firePropertyChangeEvent(name, oldValue, newValue);
    }
-
 
    /**
     * Gets the boolean attribute of the OverlayPreferenceStore object
@@ -97,7 +107,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       return store.getBoolean(name);
    }
 
-
    /**
     * Gets the defaultBoolean attribute of the OverlayPreferenceStore object
     *
@@ -108,7 +117,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
    {
       return store.getDefaultBoolean(name);
    }
-
 
    /**
     * Gets the defaultDouble attribute of the OverlayPreferenceStore object
@@ -121,7 +129,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       return store.getDefaultDouble(name);
    }
 
-
    /**
     * Gets the defaultFloat attribute of the OverlayPreferenceStore object
     *
@@ -132,7 +139,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
    {
       return store.getDefaultFloat(name);
    }
-
 
    /**
     * Gets the defaultInt attribute of the OverlayPreferenceStore object
@@ -145,7 +151,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       return store.getDefaultInt(name);
    }
 
-
    /**
     * Gets the defaultLong attribute of the OverlayPreferenceStore object
     *
@@ -156,7 +161,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
    {
       return store.getDefaultLong(name);
    }
-
 
    /**
     * Gets the defaultString attribute of the OverlayPreferenceStore object
@@ -169,7 +173,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       return store.getDefaultString(name);
    }
 
-
    /**
     * Gets the double attribute of the OverlayPreferenceStore object
     *
@@ -180,7 +183,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
    {
       return store.getDouble(name);
    }
-
 
    /**
     * Gets the float attribute of the OverlayPreferenceStore object
@@ -193,7 +195,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       return store.getFloat(name);
    }
 
-
    /**
     * Gets the int attribute of the OverlayPreferenceStore object
     *
@@ -204,7 +205,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
    {
       return store.getInt(name);
    }
-
 
    /**
     * Gets the long attribute of the OverlayPreferenceStore object
@@ -217,7 +217,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       return store.getLong(name);
    }
 
-
    /**
     * Gets the string attribute of the OverlayPreferenceStore object
     *
@@ -228,7 +227,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
    {
       return store.getString(name);
    }
-
 
    /**
     * Gets the default attribute of the OverlayPreferenceStore object
@@ -241,7 +239,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       return store.isDefault(name);
    }
 
-
    /** Description of the Method */
    public void load()
    {
@@ -251,7 +248,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       }
    }
 
-
    /** Description of the Method */
    public void loadDefaults()
    {
@@ -260,7 +256,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
          setToDefault(keys[i].key);
       }
    }
-
 
    /**
     * Description of the Method
@@ -272,7 +267,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       return store.needsSaving();
    }
 
-
    /** Description of the Method */
    public void propagate()
    {
@@ -281,7 +275,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
          propagateProperty(store, keys[i], parent);
       }
    }
-
 
    /**
     * Description of the Method
@@ -297,7 +290,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -307,7 +299,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
    {
       store.removePropertyChangeListener(listener);
    }
-
 
    /**
     * Sets the default attribute of the OverlayPreferenceStore object
@@ -323,7 +314,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       }
    }
 
-
    /**
     * Sets the default attribute of the OverlayPreferenceStore object
     *
@@ -337,7 +327,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
          store.setDefault(name, value);
       }
    }
-
 
    /**
     * Sets the default attribute of the OverlayPreferenceStore object
@@ -353,7 +342,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       }
    }
 
-
    /**
     * Sets the default attribute of the OverlayPreferenceStore object
     *
@@ -367,7 +355,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
          store.setDefault(name, value);
       }
    }
-
 
    /**
     * Sets the default attribute of the OverlayPreferenceStore object
@@ -383,7 +370,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       }
    }
 
-
    /**
     * Sets the default attribute of the OverlayPreferenceStore object
     *
@@ -398,7 +384,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       }
    }
 
-
    /**
     * Sets the toDefault attribute of the OverlayPreferenceStore object
     *
@@ -408,7 +393,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
    {
       store.setToDefault(name);
    }
-
 
    /**
     * Sets the value attribute of the OverlayPreferenceStore object
@@ -424,7 +408,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       }
    }
 
-
    /**
     * Sets the value attribute of the OverlayPreferenceStore object
     *
@@ -438,7 +421,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
          store.setValue(name, value);
       }
    }
-
 
    /**
     * Sets the value attribute of the OverlayPreferenceStore object
@@ -454,7 +436,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       }
    }
 
-
    /**
     * Sets the value attribute of the OverlayPreferenceStore object
     *
@@ -468,7 +449,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
          store.setValue(name, value);
       }
    }
-
 
    /**
     * Sets the value attribute of the OverlayPreferenceStore object
@@ -484,7 +464,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       }
    }
 
-
    /**
     * Sets the value attribute of the OverlayPreferenceStore object
     *
@@ -499,7 +478,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       }
    }
 
-
    /** Description of the Method */
    public void start()
    {
@@ -510,7 +488,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       }
    }
 
-
    /** Description of the Method */
    public void stop()
    {
@@ -520,7 +497,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
          fPropertyListener = null;
       }
    }
-
 
    /**
     * Description of the Method
@@ -541,7 +517,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       return null;
    }
 
-
    /**
     * Description of the Method
     *
@@ -549,10 +524,7 @@ public class OverlayPreferenceStore implements IPreferenceStore
     * @param key     Description of the Parameter
     * @param target  Description of the Parameter
     */
-   void propagateProperty(
-      IPreferenceStore orgin, PreferenceDescriptor key,
-      IPreferenceStore target
-      )
+   void propagateProperty(IPreferenceStore orgin, PreferenceDescriptor key, IPreferenceStore target)
    {
       if (orgin.isDefault(key.key))
       {
@@ -614,14 +586,12 @@ public class OverlayPreferenceStore implements IPreferenceStore
       {
          String originValue = orgin.getString(key.key);
          String targetValue = target.getString(key.key);
-         if (targetValue != null && originValue != null
-            && !targetValue.equals(originValue))
+         if (targetValue != null && originValue != null && !targetValue.equals(originValue))
          {
             target.setValue(key.key, originValue);
          }
       }
    }
-
 
    /**
     * Description of the Method
@@ -634,7 +604,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
       return (findOverlayKey(key) != null);
    }
 
-
    /**
     * Description of the Method
     *
@@ -643,10 +612,8 @@ public class OverlayPreferenceStore implements IPreferenceStore
     * @param target               Description of the Parameter
     * @param forceInitialization  Description of the Parameter
     */
-   private void loadProperty(
-      IPreferenceStore orgin, PreferenceDescriptor key,
-      IPreferenceStore target, boolean forceInitialization
-      )
+   private void loadProperty(IPreferenceStore orgin, PreferenceDescriptor key, IPreferenceStore target,
+         boolean forceInitialization)
    {
       PreferenceDescriptor.Type d = key.type;
       if (PreferenceDescriptor.BOOLEAN == d)
@@ -704,7 +671,6 @@ public class OverlayPreferenceStore implements IPreferenceStore
          target.setDefault(key.key, orgin.getDefaultString(key.key));
       }
    }
-
 
    /**
     * Description of the Class

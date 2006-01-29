@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model;
 
@@ -27,9 +42,7 @@ public class AdditionalValuesXMLManager
     * @param docletTree  The feature to be added to the DocumentToDocletTree attribute
     * @param document    The feature to be added to the DocumentToDocletTree attribute
     */
-   public void addDocumentToDocletTree(
-         DocletTree docletTree,
-         Document document)
+   public void addDocumentToDocletTree(DocletTree docletTree, Document document)
    {
 
       Element rootElement = document.getRootElement();
@@ -37,16 +50,12 @@ public class AdditionalValuesXMLManager
 
       DocletElement parentDocletElement;
       DocletElement additonalValueDocletElement;
-      for (Iterator valueIterator = valueElements.iterator();
-            valueIterator.hasNext();
-            )
+      for (Iterator valueIterator = valueElements.iterator(); valueIterator.hasNext();)
       {
          Element valueElement = (Element) valueIterator.next();
          Element pathElement = valueElement.getChild(IDocletConstants.PATH_TAG);
-         StringTokenizer pathTokenizer =
-               new StringTokenizer(
-               pathElement.getAttributeValue(IDocletConstants.NAME_ATTRIBUTE),
-               ".");//$NON-NLS-1$
+         StringTokenizer pathTokenizer = new StringTokenizer(pathElement
+               .getAttributeValue(IDocletConstants.NAME_ATTRIBUTE), ".");//$NON-NLS-1$
          String[] path = new String[pathTokenizer.countTokens()];
          for (int i = 0; pathTokenizer.hasMoreTokens(); i++)
          {
@@ -54,16 +63,13 @@ public class AdditionalValuesXMLManager
          }
          if ((parentDocletElement = docletTree.getNode(path)) != null)
          {
-            additonalValueDocletElement =
-                  parentDocletElement.addChild(
-                  valueElement.getAttributeValue(IDocletConstants.NAME_ATTRIBUTE));
-            additonalValueDocletElement.getNode().getAdditionalAttributes().put(
-                  IDocletConstants.ATTR_ADDITIONAL_VALUE,
+            additonalValueDocletElement = parentDocletElement.addChild(valueElement
+                  .getAttributeValue(IDocletConstants.NAME_ATTRIBUTE));
+            additonalValueDocletElement.getNode().getAdditionalAttributes().put(IDocletConstants.ATTR_ADDITIONAL_VALUE,
                   new Marker());
             if (valueElement.getChild(IDocletConstants.PARSING_TAG) != null)
             {
-               additonalValueDocletElement.getNode().getAdditionalAttributes().put(
-                     IDocletConstants.ATTR_PARSING,
+               additonalValueDocletElement.getNode().getAdditionalAttributes().put(IDocletConstants.ATTR_PARSING,
                      new Marker());
             }
          }

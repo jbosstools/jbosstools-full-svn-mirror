@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.ui.wizards.ejb;
 
@@ -33,11 +48,11 @@ public class NewEntityEJBWizardPage extends DOMClassWizardPage
 {
    /** Description of the Field */
    protected SelectionButtonDialogFieldGroup accessButtons;
+
    /** Description of the Field */
    protected SelectionButtonDialogFieldGroup typeButtons;
 
    private final static String PAGE_NAME = NewEntityEJBWizardPage.class.getName();
-
 
    /**
     *Constructor for the NewEntityEJBWizardPage object
@@ -50,7 +65,6 @@ public class NewEntityEJBWizardPage extends DOMClassWizardPage
       this.setTitle(JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.title"));//$NON-NLS-1$
       this.setDescription(JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.description"));//$NON-NLS-1$
    }
-
 
    /**
     * Adds a feature to the Content attribute of the NewEntityEJBWizardPage object
@@ -68,13 +82,15 @@ public class NewEntityEJBWizardPage extends DOMClassWizardPage
       if (isCMP11())
       {
          // Add the custom comment on top of the Servlet
-         String comment = manager.getString("wizards.ejb.entity.cmp11.class.comment", new Object[]{beanName, getAccessString()});//$NON-NLS-1$
+         String comment = manager.getString(
+               "wizards.ejb.entity.cmp11.class.comment", new Object[]{beanName, getAccessString()});//$NON-NLS-1$
          dType.setComment(comment);
       }
       else if (isCMP2x())
       {
          // Add the custom comment on top of the Servlet
-         String comment = manager.getString("wizards.ejb.entity.cmp2x.class.comment", new Object[]{beanName, getAccessString()});//$NON-NLS-1$
+         String comment = manager.getString(
+               "wizards.ejb.entity.cmp2x.class.comment", new Object[]{beanName, getAccessString()});//$NON-NLS-1$
          dType.setComment(comment);
 
          // Make sure type is abstract
@@ -83,11 +99,11 @@ public class NewEntityEJBWizardPage extends DOMClassWizardPage
       else
       {
          // Add the custom comment on top of the Servlet
-         String comment = manager.getString("wizards.ejb.entity.bmp.class.comment", new Object[]{beanName, getAccessString()});//$NON-NLS-1$
+         String comment = manager.getString(
+               "wizards.ejb.entity.bmp.class.comment", new Object[]{beanName, getAccessString()});//$NON-NLS-1$
          dType.setComment(comment);
       }
    }
-
 
    /**
     * Description of the Method
@@ -100,7 +116,6 @@ public class NewEntityEJBWizardPage extends DOMClassWizardPage
       FieldsUtil.createSelectionButtonDialogFieldGroupControls(this.accessButtons, composite, nColumns);
    }
 
-
    /** Description of the Method */
    protected void createContent()
    {
@@ -109,27 +124,31 @@ public class NewEntityEJBWizardPage extends DOMClassWizardPage
       String[] buttonNames;
 
       // Constructors and inherited must be left as first elements
-      buttonNames = new String[]{JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.Remote_6"), JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.Local_7"), JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.Both_8")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      buttonNames = new String[]
+      {
+            JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.Remote_6"), JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.Local_7"), JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.Both_8")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
       accessButtons = new SelectionButtonDialogFieldGroup(SWT.RADIO, buttonNames, 3);
       accessButtons.setLabelText(JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.Select_the_access_of_the_EJB_9"));//$NON-NLS-1$
 
       // Constructors and inherited must be left as first elements
-      buttonNames = new String[]{NewWizardMessages.NewClassWizardPage_methods_constructors, //$NON-NLS-1$
-      NewWizardMessages.NewClassWizardPage_methods_inherited,//$NON-NLS-1$
+      buttonNames = new String[]
+      {NewWizardMessages.NewClassWizardPage_methods_constructors, //$NON-NLS-1$
+            NewWizardMessages.NewClassWizardPage_methods_inherited,//$NON-NLS-1$
       };
 
       fMethodStubsButtons = new SelectionButtonDialogFieldGroup(SWT.CHECK, buttonNames, 2);
       fMethodStubsButtons.setLabelText(NewWizardMessages.NewClassWizardPage_methods_label);//$NON-NLS-1$
 
       // Constructors and inherited must be left as first elements
-      buttonNames = new String[]{JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.CMP_1.1_10"), JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.CMP_2.x_11"), JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.BMP_12")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      buttonNames = new String[]
+      {
+            JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.CMP_1.1_10"), JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.CMP_2.x_11"), JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.BMP_12")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
       typeButtons = new SelectionButtonDialogFieldGroup(SWT.RADIO, buttonNames, 3);
       typeButtons.setDialogFieldListener(this.getFieldsAdapter());
       typeButtons.setLabelText(JDTJ2EEUIMessages.getString("NewEntityEJBWizardPage.Select_the_type_of_the_EJB_13"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -154,10 +173,10 @@ public class NewEntityEJBWizardPage extends DOMClassWizardPage
       this.createSeparator(composite, nColumns);
       this.createMethodStubSelectionControls(composite, nColumns);
 
-      this.setSuperInterfaces(Arrays.asList(new String[]{"javax.ejb.EntityBean"}), //$NON-NLS-1$
-      true);//$NON-NLS-1$
+      this.setSuperInterfaces(Arrays.asList(new String[]
+      {"javax.ejb.EntityBean"}), //$NON-NLS-1$
+            true);//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -170,7 +189,6 @@ public class NewEntityEJBWizardPage extends DOMClassWizardPage
       FieldsUtil.createSelectionButtonDialogFieldGroupControls(this.fMethodStubsButtons, composite, nColumns);
    }
 
-
    /**
     * Description of the Method
     *
@@ -181,7 +199,6 @@ public class NewEntityEJBWizardPage extends DOMClassWizardPage
    {
       FieldsUtil.createSelectionButtonDialogFieldGroupControls(this.typeButtons, composite, nColumns);
    }
-
 
    /**
     * Gets the accessString attribute of the NewEntityEJBWizardPage object
@@ -208,7 +225,6 @@ public class NewEntityEJBWizardPage extends DOMClassWizardPage
       return access;
    }
 
-
    /** Description of the Method */
    protected void initContent()
    {
@@ -228,7 +244,6 @@ public class NewEntityEJBWizardPage extends DOMClassWizardPage
       this.accessButtons.setSelection(1, true);
    }
 
-
    /**
     * Gets the cMP11 attribute of the NewEntityEJBWizardPage object
     *
@@ -238,7 +253,6 @@ public class NewEntityEJBWizardPage extends DOMClassWizardPage
    {
       return typeButtons.isSelected(0);
    }
-
 
    /**
     * Gets the cMP2x attribute of the NewEntityEJBWizardPage object

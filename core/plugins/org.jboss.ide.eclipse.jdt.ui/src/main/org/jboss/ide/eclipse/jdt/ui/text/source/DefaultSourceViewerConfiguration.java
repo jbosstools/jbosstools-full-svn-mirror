@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.text.source;
 
@@ -25,9 +40,9 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration
 
    /** Preference key for inserting spaces rather than tabs. */
    public final static String PREFERENCE_SPACES_FOR_TABS = "org.jboss.ide.eclipse.jdt.ui.text.source.spacesForTabs";//$NON-NLS-1$
+
    /** Preference key used to look up display tab width. */
    public final static String PREFERENCE_TAB_WIDTH = "org.jboss.ide.eclipse.jdt.ui.text.source.tabWidth";//$NON-NLS-1$
-
 
    /**
     *Constructor for the DefaultSourceViewerConfiguration object
@@ -38,7 +53,6 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration
    {
       this.store = store;
    }
-
 
    /**
     * Gets the indentPrefixes attribute of the DefaultSourceViewerConfiguration object

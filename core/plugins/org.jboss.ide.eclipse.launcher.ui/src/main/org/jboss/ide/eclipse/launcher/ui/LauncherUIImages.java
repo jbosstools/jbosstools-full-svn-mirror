@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.ui;
 
@@ -24,30 +39,39 @@ public class LauncherUIImages
 {
    /** Declare Common paths */
    protected static URL ICON_BASE_URL = null;
+
    /** A table of all the <code>ImageDescriptor</code>s. */
    protected static HashMap imageDescriptors;
+
    /** The image registry containing <code>Image</code>s. */
    protected static ImageRegistry imageRegistry;
 
    /** basic colors - size 16x16 */
    protected final static String CTOOL = "ctool16/";//$NON-NLS-1$
+
    /** disabled - size 16x16 */
    protected final static String DLCL = "dlcl16/";//$NON-NLS-1$
+
    /** disable colors - size 16x16 */
    protected final static String DTOOL = "dtool16/";//$NON-NLS-1$
+
    /** basic colors - size 16x16 */
    protected final static String ELCL = "elcl16/";//$NON-NLS-1$
+
    /** enabled - size 16x16 */
    protected final static String LOCALTOOL = "clcl16/";//$NON-NLS-1$
+
    /** basic colors - size 16x16 */
    protected final static String OBJECT = "obj16/";//$NON-NLS-1$
+
    /** basic colors - size 7x8 */
    protected final static String OVR = "ovr16/";//$NON-NLS-1$
+
    /** basic colors - size 16x16 */
    protected final static String VIEW = "cview16/";//$NON-NLS-1$
+
    /** wizard banners */
    protected final static String WIZBAN = "wizban/";//$NON-NLS-1$
-
 
    /**
     * Returns the <code>Image<code> identified by the given key,
@@ -61,7 +85,6 @@ public class LauncherUIImages
    {
       return getImageRegistry().get(key);
    }
-
 
    /**
     * Returns the <code>ImageDescriptor<code> identified by the given key,
@@ -80,7 +103,6 @@ public class LauncherUIImages
       return (ImageDescriptor) imageDescriptors.get(key);
    }
 
-
    /**
     * Returns the ImageRegistry.
     *
@@ -94,7 +116,6 @@ public class LauncherUIImages
       }
       return imageRegistry;
    }
-
 
    /**
     * Initialize the image registry by declaring all of the required graphics.
@@ -121,55 +142,34 @@ public class LauncherUIImages
       return imageRegistry;
    }
 
-
    /** Declare all images */
    protected static void declareImages()
    {
       // Color Toolbar
-      declareRegistryImage(ILauncherUIConstants.IMG_CTOOL_CLOSE_LOGFILE, CTOOL
-            + "closelogfileaction.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_CTOOL_REFRESH_LOGFILE, CTOOL
-            + "refreshlogfileaction.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_CTOOL_SHUTDOWN_SERVER, CTOOL
-            + "shutdownserveraction.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_CTOOL_START_SERVER, CTOOL
-            + "startserveraction.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_CTOOL_TERMINATE_SERVER, CTOOL
-            + "terminateserveraction.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_CTOOL_CONFIGURATION, CTOOL
-            + "configurationaction.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_CTOOL_OPEN_LOGFILE, CTOOL
-            + "openlogfileaction.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_CTOOL_CLOSE_LOGFILE, CTOOL + "closelogfileaction.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_CTOOL_REFRESH_LOGFILE, CTOOL + "refreshlogfileaction.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_CTOOL_SHUTDOWN_SERVER, CTOOL + "shutdownserveraction.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_CTOOL_START_SERVER, CTOOL + "startserveraction.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_CTOOL_TERMINATE_SERVER, CTOOL + "terminateserveraction.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_CTOOL_CONFIGURATION, CTOOL + "configurationaction.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_CTOOL_OPEN_LOGFILE, CTOOL + "openlogfileaction.gif");//$NON-NLS-1$
 
       // Disabled Toolbar
-      declareRegistryImage(ILauncherUIConstants.IMG_DTOOL_CLOSE_LOGFILE, DTOOL
-            + "closelogfileaction.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_DTOOL_REFRESH_LOGFILE, DTOOL
-            + "refreshlogfileaction.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_DTOOL_SHUTDOWN_SERVER, DTOOL
-            + "shutdownserveraction.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_DTOOL_START_SERVER, DTOOL
-            + "startserveraction.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_DTOOL_TERMINATE_SERVER, DTOOL
-            + "terminateserveraction.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_DTOOL_CONFIGURATION, DTOOL
-            + "configurationaction.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_DTOOL_OPEN_LOGFILE, DTOOL
-            + "openlogfileaction.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_DTOOL_CLOSE_LOGFILE, DTOOL + "closelogfileaction.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_DTOOL_REFRESH_LOGFILE, DTOOL + "refreshlogfileaction.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_DTOOL_SHUTDOWN_SERVER, DTOOL + "shutdownserveraction.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_DTOOL_START_SERVER, DTOOL + "startserveraction.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_DTOOL_TERMINATE_SERVER, DTOOL + "terminateserveraction.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_DTOOL_CONFIGURATION, DTOOL + "configurationaction.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_DTOOL_OPEN_LOGFILE, DTOOL + "openlogfileaction.gif");//$NON-NLS-1$
 
       //Object
-      declareRegistryImage(ILauncherUIConstants.IMG_OBJS_JBOSSHOME_TAB, OBJECT
-            + "jbosshometab.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_OBJS_LOGFILE_TAB, OBJECT
-            + "logfiletab.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_OBJS_LOGFILE, OBJECT
-            + "logfile.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_OBJS_SERVER_NOT_RUNNING, OBJECT
-            + "jboss-configuration-stopped.gif");//$NON-NLS-1$
-      declareRegistryImage(ILauncherUIConstants.IMG_OBJS_SERVER_RUNNING, OBJECT
-            + "jboss-configuration-started.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_OBJS_JBOSSHOME_TAB, OBJECT + "jbosshometab.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_OBJS_LOGFILE_TAB, OBJECT + "logfiletab.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_OBJS_LOGFILE, OBJECT + "logfile.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_OBJS_SERVER_NOT_RUNNING, OBJECT + "jboss-configuration-stopped.gif");//$NON-NLS-1$
+      declareRegistryImage(ILauncherUIConstants.IMG_OBJS_SERVER_RUNNING, OBJECT + "jboss-configuration-started.gif");//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -187,7 +187,6 @@ public class LauncherUIImages
 
       return new URL(ICON_BASE_URL, iconPath);
    }
-
 
    /**
     * Declare an Image in the registry table.

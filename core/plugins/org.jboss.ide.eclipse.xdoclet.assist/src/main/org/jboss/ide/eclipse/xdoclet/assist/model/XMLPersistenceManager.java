@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model;
 
@@ -26,15 +41,18 @@ public class XMLPersistenceManager
 {
    /** Description of the Field */
    public Reader reader;
+
    /** Description of the Field */
    protected Document document;
+
    /** Description of the Field */
    protected InputSource inputSource;
+
    /** Description of the Field */
    protected XMLOutputter outputter = new XMLOutputter();
+
    /** Description of the Field */
    protected boolean validate;
-
 
    /**
     * Constructor for PersistenceManager.
@@ -43,10 +61,7 @@ public class XMLPersistenceManager
     * @param validate     Description of the Parameter
     * @param inputSource  Description of the Parameter
     */
-   public XMLPersistenceManager(
-         Reader reader,
-         boolean validate,
-         InputSource inputSource)
+   public XMLPersistenceManager(Reader reader, boolean validate, InputSource inputSource)
    {
       if (reader == null)
       {
@@ -62,7 +77,6 @@ public class XMLPersistenceManager
       outputter.setOmitEncoding(false);
       // outputter.setIndent()
    }
-
 
    /**
     * Returns the document.
@@ -81,14 +95,13 @@ public class XMLPersistenceManager
          if (inputSource != null && validate)
          {
             // int b;
-            builder.setEntityResolver(
-               new EntityResolver()
+            builder.setEntityResolver(new EntityResolver()
+            {
+               public InputSource resolveEntity(String s, String s1)
                {
-                  public InputSource resolveEntity(String s, String s1)
-                  {
-                     return inputSource;
-                  }
-               });
+                  return inputSource;
+               }
+            });
          }
          document = builder.build(reader);
 
@@ -96,7 +109,6 @@ public class XMLPersistenceManager
       }
       return document;
    }
-
 
    /**
     * Returns the inputSource.
@@ -107,7 +119,6 @@ public class XMLPersistenceManager
    {
       return inputSource;
    }
-
 
    /**
     * Returns the validate.
@@ -134,13 +145,11 @@ public class XMLPersistenceManager
     * @exception IOException    Description of the Exception
     * @exception JDOMException  Description of the Exception
     */
-   public void persistDocument(Writer writer)
-          throws IOException, JDOMException
+   public void persistDocument(Writer writer) throws IOException, JDOMException
    {
       outputter.output(getDocument(), writer);
       writer.close();
    }
-
 
    /** Description of the Method */
    public void toConsole()

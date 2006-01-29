@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.ui;
 
@@ -40,13 +55,15 @@ public class LauncherPreferencePage extends PreferencePage implements IWorkbench
 {
    /** Description of the Field */
    protected String defaultMemento = IServerLaunchConfigurationConstants.EMPTY_STRING;
+
    /** Description of the Field */
    protected Combo fDefaultServerCombo;
+
    /** Description of the Field */
    protected Label fDefaultServerLabel;
+
    /** Description of the Field */
    protected ILaunchConfiguration[] serverLaunchConfigurations = null;
-
 
    /**
     * @param workbench  Description of the Parameter
@@ -55,7 +72,6 @@ public class LauncherPreferencePage extends PreferencePage implements IWorkbench
    public void init(IWorkbench workbench)
    {
    }
-
 
    /**
     * @return   Description of the Return Value
@@ -73,7 +89,6 @@ public class LauncherPreferencePage extends PreferencePage implements IWorkbench
       }
       return true;
    }
-
 
    /**
     * @param parent  Description of the Parameter
@@ -101,31 +116,29 @@ public class LauncherPreferencePage extends PreferencePage implements IWorkbench
       fDefaultServerCombo = new Combo(topComp, SWT.READ_ONLY);
       gd = new GridData(GridData.FILL_HORIZONTAL);
       fDefaultServerCombo.setLayoutData(gd);
-      fDefaultServerCombo.addSelectionListener(
-         new SelectionAdapter()
+      fDefaultServerCombo.addSelectionListener(new SelectionAdapter()
+      {
+         /**
+          * @param e  Description of the Parameter
+          * @see      org.eclipse.swt.events.SelectionListener#widgetSelected(SelectionEvent)
+          */
+         public void widgetSelected(SelectionEvent e)
          {
-            /**
-             * @param e  Description of the Parameter
-             * @see      org.eclipse.swt.events.SelectionListener#widgetSelected(SelectionEvent)
-             */
-            public void widgetSelected(SelectionEvent e)
+            int index = ((Combo) e.getSource()).getSelectionIndex();
+            try
             {
-               int index = ((Combo) e.getSource()).getSelectionIndex();
-               try
-               {
-                  defaultMemento = serverLaunchConfigurations[index].getMemento();
-               }
-               catch (CoreException ex)
-               {
-                  AbstractPlugin.log(ex);
-               }
+               defaultMemento = serverLaunchConfigurations[index].getMemento();
             }
-         });
+            catch (CoreException ex)
+            {
+               AbstractPlugin.log(ex);
+            }
+         }
+      });
 
       initializeDefaults();
       return topComp;
    }
-
 
    /**
     * Create some empty space.
@@ -141,7 +154,6 @@ public class LauncherPreferencePage extends PreferencePage implements IWorkbench
       label.setLayoutData(gd);
    }
 
-
    /**
     * @return   Description of the Return Value
     * @see      org.eclipse.jface.preference.PreferencePage#doGetPreferenceStore()
@@ -153,16 +165,15 @@ public class LauncherPreferencePage extends PreferencePage implements IWorkbench
       return LauncherPlugin.getDefault().getPreferenceStore();
    }
 
-
    /**
     * @see   org.eclipse.jface.preference.PreferencePage#performDefaults()
     */
    protected void performDefaults()
    {
       fDefaultServerCombo.deselectAll();
-      defaultMemento = doGetPreferenceStore().getDefaultString(ILauncherConstants.ATTR_DEFAULT_LAUNCH_CONFIGURATION_MEMENTO);
+      defaultMemento = doGetPreferenceStore().getDefaultString(
+            ILauncherConstants.ATTR_DEFAULT_LAUNCH_CONFIGURATION_MEMENTO);
    }
-
 
    /** Method initializeDefaultServerComboBox. */
    private void initializeDefaults()

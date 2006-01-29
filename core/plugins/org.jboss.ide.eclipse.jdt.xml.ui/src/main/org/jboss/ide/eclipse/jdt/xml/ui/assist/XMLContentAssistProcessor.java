@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.assist;
 
@@ -45,17 +60,21 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
 {
    /** Description of the Field */
    protected List attributeContributors = new ArrayList();
+
    /** Description of the Field */
    protected List attributeValueContributors = new ArrayList();
+
    /** Description of the Field */
    protected IReconcilierHolder holder;
+
    /** Description of the Field */
    protected IPreferenceStore store;
+
    /** Description of the Field */
    protected List tagContributors = new ArrayList();
+
    /** Description of the Field */
    protected IPositionTranslator translator;
-
 
    /**
     *Constructor for the XMLContentAssistProcessor object
@@ -76,7 +95,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
       this.addAttributeValueContributor(new XMLAttributeValueContributor());
    }
 
-
    /**
     * Adds a feature to the AttributeContributor attribute of the XMLContentAssistProcessor object
     *
@@ -86,7 +104,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
    {
       this.attributeContributors.add(contributor);
    }
-
 
    /**
     * Adds a feature to the AttributeValueContributor attribute of the XMLContentAssistProcessor object
@@ -98,7 +115,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
       this.attributeValueContributors.add(contributor);
    }
 
-
    /**
     * Adds a feature to the TagContributor attribute of the XMLContentAssistProcessor object
     *
@@ -108,7 +124,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
    {
       this.tagContributors.add(contributor);
    }
-
 
    /**
     * Description of the Method
@@ -122,7 +137,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
       return null;
    }
 
-
    /**
     * Gets the contextInformationAutoActivationCharacters attribute of the XMLContentAssistProcessor object
     *
@@ -132,7 +146,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
    {
       return null;
    }
-
 
    /**
     * Gets the contextInformationValidator attribute of the XMLContentAssistProcessor object
@@ -144,7 +157,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
       return null;
    }
 
-
    /**
     * Gets the errorMessage attribute of the XMLContentAssistProcessor object
     *
@@ -154,7 +166,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
    {
       return JDTXMLUIMessages.getString("XMLContentAssistProcessor.error.message");//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -166,7 +177,8 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
     * @param quote       Description of the Parameter
     * @return            Description of the Return Value
     */
-   protected ICompletionProposal[] computeAttributeValues(IDocument doc, XMLNode node, int translated, int offset, char quote)
+   protected ICompletionProposal[] computeAttributeValues(IDocument doc, XMLNode node, int translated, int offset,
+         char quote)
    {
       // Get the attribute node
       XMLNode attribute = node.getAttributeAt(translated);
@@ -193,7 +205,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
       ICompletionProposal[] cp = (ICompletionProposal[]) proposals.toArray(new ICompletionProposal[proposals.size()]);
       return cp;
    }
-
 
    /**
     * Description of the Method
@@ -228,7 +239,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
       ICompletionProposal[] cp = (ICompletionProposal[]) proposals.toArray(new ICompletionProposal[proposals.size()]);
       return cp;
    }
-
 
    /**
     * Description of the Method
@@ -301,7 +311,8 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
       for (int i = 0; i < tagContributors.size(); i++)
       {
          ITagContributor contributor = (ITagContributor) tagContributors.get(i);
-         List result = contributor.getTagProposals(this.holder, doc, node, lastOpenTag, prevStartTag, nextEndTag, outerTag, start, translated, offset);
+         List result = contributor.getTagProposals(this.holder, doc, node, lastOpenTag, prevStartTag, nextEndTag,
+               outerTag, start, translated, offset);
          if (contributor.appendAtStart())
          {
             proposals.addAll(0, result);
@@ -315,7 +326,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
       ICompletionProposal[] cp = (ICompletionProposal[]) proposals.toArray(new ICompletionProposal[proposals.size()]);
       return cp;
    }
-
 
    /**
     * Gets the attributeStart attribute of the XMLContentAssistProcessor object
@@ -338,7 +348,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
 
       return start;
    }
-
 
    /**
     * Gets the attributeValueStart attribute of the XMLContentAssistProcessor object
@@ -374,7 +383,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
       return start;
    }
 
-
    /**
     * Gets the indexOf attribute of the XMLContentAssistProcessor object
     *
@@ -393,7 +401,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
       }
       return -1;
    }
-
 
    /**
     * Gets the nextEndTagNode attribute of the XMLContentAssistProcessor object
@@ -421,7 +428,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
       return null;
    }
 
-
    /**
     * Gets the nodeAt attribute of the XMLContentAssistProcessor object
     *
@@ -444,7 +450,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
       return null;
    }
 
-
    /**
     * Gets the positionCategory attribute of the XMLContentAssistProcessor object
     *
@@ -454,7 +459,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
    {
       return XMLDocumentPartitioner.CONTENT_TYPES_CATEGORY;
    }
-
 
    /**
     * Gets the positions attribute of the XMLContentAssistProcessor object
@@ -474,7 +478,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
       }
       return new Position[0];
    }
-
 
    /**
     * Gets the previousStartTagNode attribute of the XMLContentAssistProcessor object
@@ -502,7 +505,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
       return null;
    }
 
-
    /**
     * Gets the reconcilierHolder attribute of the XMLContentAssistProcessor object
     *
@@ -512,7 +514,6 @@ public abstract class XMLContentAssistProcessor implements IContentAssistProcess
    {
       return this.holder;
    }
-
 
    /**
     * Description of the Method

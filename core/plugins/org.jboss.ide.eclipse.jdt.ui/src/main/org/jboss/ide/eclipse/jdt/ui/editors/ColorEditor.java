@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.editors;
 
@@ -39,12 +54,14 @@ public class ColorEditor
 {
 
    Button button;
+
    Color color;
+
    Image image;
 
    RGB rgb;
-   private Point extent;
 
+   private Point extent;
 
    /**
     *Constructor for the ColorEditor object
@@ -66,43 +83,40 @@ public class ColorEditor
 
       button.setImage(image);
 
-      button.addSelectionListener(
-         new SelectionAdapter()
+      button.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent event)
          {
-            public void widgetSelected(SelectionEvent event)
+            ColorDialog colorDialog = new ColorDialog(button.getShell());
+            colorDialog.setRGB(rgb);
+
+            RGB newColor = colorDialog.open();
+            if (newColor != null)
             {
-               ColorDialog colorDialog = new ColorDialog(button.getShell());
-               colorDialog.setRGB(rgb);
-
-               RGB newColor = colorDialog.open();
-               if (newColor != null)
-               {
-                  rgb = newColor;
-                  updateColorImage();
-               }
+               rgb = newColor;
+               updateColorImage();
             }
-         });
+         }
+      });
 
-      button.addDisposeListener(
-         new DisposeListener()
+      button.addDisposeListener(new DisposeListener()
+      {
+         public void widgetDisposed(DisposeEvent event)
          {
-            public void widgetDisposed(DisposeEvent event)
+            if (image != null)
             {
-               if (image != null)
-               {
-                  image.dispose();
-                  image = null;
-               }
-
-               if (color != null)
-               {
-                  color.dispose();
-                  color = null;
-               }
+               image.dispose();
+               image = null;
             }
-         });
+
+            if (color != null)
+            {
+               color.dispose();
+               color = null;
+            }
+         }
+      });
    }
-
 
    /**
     * Gets the button attribute of the ColorEditor object
@@ -114,7 +128,6 @@ public class ColorEditor
       return button;
    }
 
-
    /**
     * Gets the colorValue attribute of the ColorEditor object
     *
@@ -124,7 +137,6 @@ public class ColorEditor
    {
       return rgb;
    }
-
 
    /**
     * Sets the colorValue attribute of the ColorEditor object
@@ -138,7 +150,6 @@ public class ColorEditor
       updateColorImage();
    }
 
-
    /**
     * Description of the Method
     *
@@ -147,8 +158,7 @@ public class ColorEditor
     */
    protected Point computeImageSize(Control control)
    {
-      Font f = JFaceResources.getFontRegistry()
-         .get(JFaceResources.DEFAULT_FONT);
+      Font f = JFaceResources.getFontRegistry().get(JFaceResources.DEFAULT_FONT);
 
       GC gc = new GC(control);
       gc.setFont(f);
@@ -159,7 +169,6 @@ public class ColorEditor
 
       return new Point(height * 3 - 6, height);
    }
-
 
    /** Description of the Method */
    protected void updateColorImage()

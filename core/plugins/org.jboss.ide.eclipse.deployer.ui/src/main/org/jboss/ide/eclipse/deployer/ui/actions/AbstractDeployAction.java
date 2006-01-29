@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.deployer.ui.actions;
 
@@ -30,15 +45,19 @@ import org.jboss.ide.eclipse.deployer.ui.decorators.DeployedDecorator;
  * @author    Laurent Etiemble
  * @version   $Revision$
  */
-public abstract class AbstractDeployAction extends ActionDelegate implements IObjectActionDelegate, IWorkbenchWindowActionDelegate
+public abstract class AbstractDeployAction extends ActionDelegate
+      implements
+         IObjectActionDelegate,
+         IWorkbenchWindowActionDelegate
 {
    /** Description of the Field */
    protected IWorkbenchPart part = null;
+
    /** Description of the Field */
    protected ISelection selection = null;
+
    /** Description of the Field */
    protected IWorkbenchWindow window = null;
-
 
    /**Constructor for the XDocletRunAction object */
    public AbstractDeployAction()
@@ -46,10 +65,10 @@ public abstract class AbstractDeployAction extends ActionDelegate implements IOb
       super();
    }
 
-
    /** Description of the Method */
-   public void dispose() { }
-
+   public void dispose()
+   {
+   }
 
    /**
     * Description of the Method
@@ -60,7 +79,6 @@ public abstract class AbstractDeployAction extends ActionDelegate implements IOb
    {
       this.window = window;
    }
-
 
    /**
     * Main processing method for the XDocletRunAction object
@@ -84,11 +102,12 @@ public abstract class AbstractDeployAction extends ActionDelegate implements IOb
             }
          }
          this.process(resources);
-      }else {
-      	
+      }
+      else
+      {
+
       }
    }
-
 
    /**
     * Description of the Method
@@ -101,7 +120,6 @@ public abstract class AbstractDeployAction extends ActionDelegate implements IOb
       this.selection = selection;
    }
 
-
    /**
     * @param action      The new ActivePart value
     * @param targetPart  The new ActivePart value
@@ -112,14 +130,12 @@ public abstract class AbstractDeployAction extends ActionDelegate implements IOb
       this.part = targetPart;
    }
 
-
    /**
     * Gets the Deployment targets associated with the passed in resources
     *
     * @return          The deploymentTarget value
     */
    protected abstract ITarget[] getDeploymentTargets(IResource[] resources);
-
 
    /**
     * Description of the Method
@@ -129,7 +145,6 @@ public abstract class AbstractDeployAction extends ActionDelegate implements IOb
     */
    protected abstract String getTitle(IResource resource);
 
-
    /**
     * Description of the Method
     *
@@ -137,33 +152,31 @@ public abstract class AbstractDeployAction extends ActionDelegate implements IOb
     */
    protected void process(Collection resources)
    {
-	   IResource[] resourcesArray = (IResource[]) resources.toArray(new IResource[resources.size()]);
-	   ITarget[] targets = getDeploymentTargets(resourcesArray);
-	   for (int i = 0; i < resourcesArray.length; i++)
-	   {
-		   // If there is only 1 target, it should be the same for all resources
-		   final ITarget target = targets.length == 1 ? targets[0] : targets[i];
-		   final IResource resource = resourcesArray[i];
-		   
-		   if (target != null)
-		   {
-	           Job job =
-	               new Job(this.getTitle(resourcesArray[i]))
-	               {
-	                  protected IStatus run(IProgressMonitor monitor)
-	                  {
-	                     process(target, resource);
-	                     refresh(resource);
-	                     return Status.OK_STATUS;
-	                  }
-	               };
-	            job.setRule(resource);
-	            job.setPriority(Job.BUILD);
-	            job.schedule();
-		   }
-	   }
-   }
+      IResource[] resourcesArray = (IResource[]) resources.toArray(new IResource[resources.size()]);
+      ITarget[] targets = getDeploymentTargets(resourcesArray);
+      for (int i = 0; i < resourcesArray.length; i++)
+      {
+         // If there is only 1 target, it should be the same for all resources
+         final ITarget target = targets.length == 1 ? targets[0] : targets[i];
+         final IResource resource = resourcesArray[i];
 
+         if (target != null)
+         {
+            Job job = new Job(this.getTitle(resourcesArray[i]))
+            {
+               protected IStatus run(IProgressMonitor monitor)
+               {
+                  process(target, resource);
+                  refresh(resource);
+                  return Status.OK_STATUS;
+               }
+            };
+            job.setRule(resource);
+            job.setPriority(Job.BUILD);
+            job.schedule();
+         }
+      }
+   }
 
    /**
     * Description of the Method
@@ -172,7 +185,6 @@ public abstract class AbstractDeployAction extends ActionDelegate implements IOb
     * @param resource  Description of the Parameter
     */
    protected abstract void process(ITarget target, IResource resource);
-
 
    /**
     * Description of the Method

@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.ui.logfiles;
 
@@ -48,17 +63,21 @@ public class LogFileViewer extends ViewPart
 {
    /** Description of the Field */
    protected Action closeAction;
+
    /** Description of the Field */
    protected IDocumentListener documentListener;
+
    /** Description of the Field */
    protected TabFolder fFolder;
+
    /** Description of the Field */
    protected TextViewer fViewer;
+
    /** Description of the Field */
    protected HashMap logTabs = new HashMap();
+
    /** Description of the Field */
    protected Action refreshAction;
-
 
    /**
     * @param parent  Description of the Parameter
@@ -69,20 +88,18 @@ public class LogFileViewer extends ViewPart
       fFolder = new TabFolder(parent, SWT.NONE);
       fViewer = new TextViewer(fFolder, SWT.H_SCROLL | SWT.V_SCROLL);
       fViewer.getTextWidget().setFont(JFaceResources.getTextFont());
-      fFolder.addSelectionListener(
-         new SelectionAdapter()
+      fFolder.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               e.doit = refreshDocument((TabItem) e.item);
-            }
-         });
+            e.doit = refreshDocument((TabItem) e.item);
+         }
+      });
       documentListener = new ViewDocumentListener();
       makeActions();
       initContextMenu();
       fillLocalToolBar(getViewSite().getActionBars().getToolBarManager());
    }
-
 
    /** Description of the Method */
    public void doClose()
@@ -117,7 +134,6 @@ public class LogFileViewer extends ViewPart
       }
    }
 
-
    /** Description of the Method */
    public void doRefresh()
    {
@@ -131,7 +147,6 @@ public class LogFileViewer extends ViewPart
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -144,11 +159,9 @@ public class LogFileViewer extends ViewPart
       {
          return false;
       }
-      String key =
-            logFile.getConfiguration().getName() + logFile.getFileName();
+      String key = logFile.getConfiguration().getName() + logFile.getFileName();
       return logTabs.containsKey(key);
    }
-
 
    /**
     * Gets the available attribute of the LogFileViewer object
@@ -157,11 +170,8 @@ public class LogFileViewer extends ViewPart
     */
    public boolean isAvailable()
    {
-      return !(fViewer == null
-            || fViewer.getControl() == null
-            || fViewer.getControl().isDisposed());
+      return !(fViewer == null || fViewer.getControl() == null || fViewer.getControl().isDisposed());
    }
-
 
    /**
     * Description of the Method
@@ -171,8 +181,7 @@ public class LogFileViewer extends ViewPart
    public void openLog(LogFile logFile)
    {
       boolean monitor = false;
-      String key =
-            logFile.getConfiguration().getName() + logFile.getFileName();
+      String key = logFile.getConfiguration().getName() + logFile.getFileName();
       if (!logTabs.containsKey(key))
       {
          LogFileDocument document;
@@ -199,7 +208,8 @@ public class LogFileViewer extends ViewPart
       try
       {
          showDocument(logTab.document, monitor);
-         fFolder.setSelection(new TabItem[]{logTab.item});
+         fFolder.setSelection(new TabItem[]
+         {logTab.item});
       }
       catch (Exception e)
       {
@@ -209,7 +219,6 @@ public class LogFileViewer extends ViewPart
       }
    }
 
-
    /**
     * @see   org.eclipse.ui.IWorkbenchPart#setFocus()
     */
@@ -217,7 +226,6 @@ public class LogFileViewer extends ViewPart
    {
       fFolder.setFocus();
    }
-
 
    /**
     * Description of the Method
@@ -232,7 +240,7 @@ public class LogFileViewer extends ViewPart
          return null;
       }
       LogTab logTab;
-      for (Iterator iter = logTabs.values().iterator(); iter.hasNext(); )
+      for (Iterator iter = logTabs.values().iterator(); iter.hasNext();)
       {
          logTab = (LogTab) iter.next();
          if (logTab.item == item)
@@ -242,7 +250,6 @@ public class LogFileViewer extends ViewPart
       }
       return null;
    }
-
 
    /**
     * Description of the Method
@@ -259,7 +266,6 @@ public class LogFileViewer extends ViewPart
       return null;
    }
 
-
    /**
     * Gets the selectedItem attribute of the LogFileViewer object
     *
@@ -274,7 +280,6 @@ public class LogFileViewer extends ViewPart
       }
       return null;
    }
-
 
    /**
     * Description of the Method
@@ -294,7 +299,6 @@ public class LogFileViewer extends ViewPart
       return true;
    }
 
-
    /**
     * Description of the Method
     *
@@ -306,7 +310,6 @@ public class LogFileViewer extends ViewPart
       fViewer.setDocument(document);
       fViewer.setTopIndex(document.getNumberOfLines());
    }
-
 
    /**
     * Method fillContextMenu.
@@ -321,7 +324,6 @@ public class LogFileViewer extends ViewPart
       manager.add(new Separator("Additions"));//$NON-NLS-1$
    }
 
-
    /**
     * Description of the Method
     *
@@ -333,57 +335,54 @@ public class LogFileViewer extends ViewPart
       manager.add(refreshAction);
    }
 
-
    /** Description of the Method */
    private void initContextMenu()
    {
       MenuManager manager = new MenuManager("#PopupMenu");//$NON-NLS-1$
       manager.setRemoveAllWhenShown(true);
-      manager.addMenuListener(
-         new IMenuListener()
+      manager.addMenuListener(new IMenuListener()
+      {
+         public void menuAboutToShow(IMenuManager manager)
          {
-            public void menuAboutToShow(IMenuManager manager)
-            {
-               LogFileViewer.this.fillContextMenu(manager);
-            }
-         });
+            LogFileViewer.this.fillContextMenu(manager);
+         }
+      });
       Menu menu = manager.createContextMenu(fViewer.getControl());
       fViewer.getControl().setMenu(menu);
       getSite().registerContextMenu(manager, null);
    }
 
-
    /** Method makeActions. */
    private void makeActions()
    {
-      closeAction =
-         new Action()
+      closeAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doClose();
-            }
-         };
+            doClose();
+         }
+      };
       closeAction.setText(LauncherUIMessages.getString("LogFileViewer.close_3"));//$NON-NLS-1$
       closeAction.setToolTipText(LauncherUIMessages.getString("LogFileViewer.close_4"));//$NON-NLS-1$
       closeAction.setEnabled(false);
       closeAction.setImageDescriptor(LauncherUIImages.getImageDescriptor(ILauncherUIConstants.IMG_CTOOL_CLOSE_LOGFILE));
-      closeAction.setDisabledImageDescriptor(LauncherUIImages.getImageDescriptor(ILauncherUIConstants.IMG_DTOOL_CLOSE_LOGFILE));
-      refreshAction =
-         new Action()
+      closeAction.setDisabledImageDescriptor(LauncherUIImages
+            .getImageDescriptor(ILauncherUIConstants.IMG_DTOOL_CLOSE_LOGFILE));
+      refreshAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doRefresh();
-            }
-         };
+            doRefresh();
+         }
+      };
       refreshAction.setText(LauncherUIMessages.getString("LogFileViewer.refresh_5"));//$NON-NLS-1$
       refreshAction.setToolTipText(LauncherUIMessages.getString("LogFileViewer.refresh_6"));//$NON-NLS-1$
       refreshAction.setEnabled(false);
-      refreshAction.setImageDescriptor(LauncherUIImages.getImageDescriptor(ILauncherUIConstants.IMG_CTOOL_REFRESH_LOGFILE));
-      refreshAction.setDisabledImageDescriptor(LauncherUIImages.getImageDescriptor(ILauncherUIConstants.IMG_DTOOL_REFRESH_LOGFILE));
+      refreshAction.setImageDescriptor(LauncherUIImages
+            .getImageDescriptor(ILauncherUIConstants.IMG_CTOOL_REFRESH_LOGFILE));
+      refreshAction.setDisabledImageDescriptor(LauncherUIImages
+            .getImageDescriptor(ILauncherUIConstants.IMG_DTOOL_REFRESH_LOGFILE));
    }
-
 
    /**
     * Description of the Class
@@ -399,8 +398,9 @@ public class LogFileViewer extends ViewPart
        *
        * @param event  Description of the Parameter
        */
-      public void documentAboutToBeChanged(DocumentEvent event) { }
-
+      public void documentAboutToBeChanged(DocumentEvent event)
+      {
+      }
 
       /**
        * Description of the Method
@@ -416,16 +416,13 @@ public class LogFileViewer extends ViewPart
          LogTab logTab = findLogTab(getSelectedItem());
          // When the first selection is done, the documentlistener is registered before the document is assigned
          // to the viewer. Therefore we have to check for the viewer-document.
-         if (logTab != null
-               && event.getDocument() == logTab.document
-               && fViewer.getDocument() != null)
+         if (logTab != null && event.getDocument() == logTab.document && fViewer.getDocument() != null)
          {
             fViewer.refresh();
             fViewer.setTopIndex(event.getDocument().getNumberOfLines());
          }
       }
    }
-
 
    /**
     * Description of the Class
@@ -438,11 +435,12 @@ public class LogFileViewer extends ViewPart
    {
       /** Description of the Field */
       protected LogFileDocument document;
+
       /** Description of the Field */
       protected TabItem item;
+
       /** Description of the Field */
       protected String key;
-
 
       /**
        *Constructor for the LogTab object
@@ -458,7 +456,6 @@ public class LogFileViewer extends ViewPart
          this.document = document;
          this.key = key;
       }
-
 
       /**
        * Description of the Method

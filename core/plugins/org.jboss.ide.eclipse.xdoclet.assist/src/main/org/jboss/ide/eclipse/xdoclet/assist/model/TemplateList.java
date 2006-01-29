@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model;
 
@@ -24,15 +39,18 @@ public class TemplateList implements Serializable
 {
    /** Description of the Field */
    protected DocletTree docletTree;
+
    /** Description of the Field */
    protected ListenerList listenerList = new ListenerList();
+
    /** Description of the Field */
    protected HashMap templates = new HashMap();
+
    /** Description of the Field */
    protected ListenerList treeListener = new ListenerList();
+
    /** Description of the Field */
    public final static String NEW_NAME = XDocletAssistMessages.getString("TemplateList.new_template_1");//$NON-NLS-1$
-
 
    /**
     * Constructor for TemplateList.
@@ -49,7 +67,6 @@ public class TemplateList implements Serializable
       this.docletTree = docletTree;
    }
 
-
    /**
     * @param name           The feature to be added to the Template attribute
     * @param conditionTree  The feature to be added to the Template attribute
@@ -58,9 +75,7 @@ public class TemplateList implements Serializable
     */
    public TemplateTree addTemplate(String name, ConditionTree conditionTree)
    {
-      if (name == null
-            || docletTree == null
-            || templates.keySet().contains(name))
+      if (name == null || docletTree == null || templates.keySet().contains(name))
       {
          throw new IllegalArgumentException();
       }
@@ -70,7 +85,7 @@ public class TemplateList implements Serializable
       {
          id = System.currentTimeMillis();
          notUnique = false;
-         for (Iterator iter = templates.values().iterator(); iter.hasNext(); )
+         for (Iterator iter = templates.values().iterator(); iter.hasNext();)
          {
             if (((TemplateTree) iter.next()).id == id)
             {
@@ -78,19 +93,16 @@ public class TemplateList implements Serializable
             }
          }
       }
-      TemplateTree templateTree =
-            new TemplateTree(name, docletTree, id);
+      TemplateTree templateTree = new TemplateTree(name, docletTree, id);
       templateTree.setConditionTree(conditionTree);
       templates.put(name, templateTree);
       for (int i = 0; i < treeListener.getListeners().length; i++)
       {
-         templateTree.addTemplateTreeListener(
-               (ITemplateTreeListener) treeListener.getListeners()[i]);
+         templateTree.addTemplateTreeListener((ITemplateTreeListener) treeListener.getListeners()[i]);
       }
       fireChange(templateTree);
       return templateTree;
    }
-
 
    /**
     * @param listener  The feature to be added to the TemplateListListener attribute
@@ -100,7 +112,6 @@ public class TemplateList implements Serializable
       listenerList.add(listener);
    }
 
-
    /**
     * Adds a feature to the TemplateTreeListener attribute of the TemplateList object
     *
@@ -109,13 +120,12 @@ public class TemplateList implements Serializable
    public void addTemplateTreeListener(ITemplateTreeListener listener)
    {
       treeListener.add(listener);
-      for (Iterator iter = templates.keySet().iterator(); iter.hasNext(); )
+      for (Iterator iter = templates.keySet().iterator(); iter.hasNext();)
       {
          String key = (String) iter.next();
          ((TemplateTree) templates.get(key)).addTemplateTreeListener(listener);
       }
    }
-
 
    /**
     * @param template  Description of the Parameter
@@ -128,14 +138,12 @@ public class TemplateList implements Serializable
       {
          for (int i = 0; i < treeListener.getListeners().length; i++)
          {
-            templateTree.removeTemplateTreeListener(
-                  (ITemplateTreeListener) treeListener.getListeners()[i]);
+            templateTree.removeTemplateTreeListener((ITemplateTreeListener) treeListener.getListeners()[i]);
          }
       }
       templates.remove(template);
       fireChange(templateTree);
    }
-
 
    /**
     * Gets the docletTree attribute of the TemplateList object
@@ -146,7 +154,6 @@ public class TemplateList implements Serializable
    {
       return docletTree;
    }
-
 
    /**
     * Gets the newName attribute of the TemplateList object
@@ -159,7 +166,7 @@ public class TemplateList implements Serializable
       {
          return NEW_NAME;
       }
-      for (int i = 1; ; i++)
+      for (int i = 1;; i++)
       {
          String newName = NEW_NAME + " (" + i + ")";//$NON-NLS-1$ //$NON-NLS-2$
          if (!templates.keySet().contains(newName))
@@ -169,7 +176,6 @@ public class TemplateList implements Serializable
       }
    }
 
-
    /**
     * Gets the templateListListener attribute of the TemplateList object
     *
@@ -177,10 +183,9 @@ public class TemplateList implements Serializable
     */
    public ITemplateListListener[] getTemplateListListener()
    {
-      return (ITemplateListListener[]) Arrays.asList(listenerList.getListeners())
-            .toArray(new ITemplateListListener[listenerList.size()]);
+      return (ITemplateListListener[]) Arrays.asList(listenerList.getListeners()).toArray(
+            new ITemplateListListener[listenerList.size()]);
    }
-
 
    /**
     * @param name  Description of the Parameter
@@ -192,17 +197,14 @@ public class TemplateList implements Serializable
       return (TemplateTree) templates.get(name);
    }
 
-
    /**
     * @return   The templateTrees value
     * @see      org.jboss.ide.eclipse.xdoclet.ITemplateList#getTemplates()
     */
    public TemplateTree[] getTemplateTrees()
    {
-      return (TemplateTree[]) templates.values().toArray(
-            new TemplateTree[templates.values().size()]);
+      return (TemplateTree[]) templates.values().toArray(new TemplateTree[templates.values().size()]);
    }
-
 
    /**
     * Gets the renameTreeOk attribute of the TemplateList object
@@ -220,7 +222,6 @@ public class TemplateList implements Serializable
       return true;
    }
 
-
    /**
     * @param name  Description of the Parameter
     * @return      The template value
@@ -231,7 +232,6 @@ public class TemplateList implements Serializable
       return templates.get(name) == null ? false : true;
    }
 
-
    /**
     * @param listener  Description of the Parameter
     */
@@ -239,7 +239,6 @@ public class TemplateList implements Serializable
    {
       listenerList.remove(listener);
    }
-
 
    /**
     * Description of the Method
@@ -249,13 +248,12 @@ public class TemplateList implements Serializable
    public void removeTemplateTreeListener(ITemplateTreeListener listener)
    {
       treeListener.remove(listener);
-      for (Iterator iter = templates.keySet().iterator(); iter.hasNext(); )
+      for (Iterator iter = templates.keySet().iterator(); iter.hasNext();)
       {
          String key = (String) iter.next();
          ((TemplateTree) templates.get(key)).removeTemplateTreeListener(listener);
       }
    }
-
 
    /**
     * Description of the Method
@@ -274,7 +272,6 @@ public class TemplateList implements Serializable
       templates.remove(oldName);
       templates.put(newName, tree);
    }
-
 
    /**
     * Description of the Method

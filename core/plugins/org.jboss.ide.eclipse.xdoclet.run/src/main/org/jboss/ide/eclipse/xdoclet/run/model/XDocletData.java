@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.run.model;
 
@@ -21,23 +36,24 @@ public abstract class XDocletData implements IXMLSerializable, Cloneable
 {
    /** Description of the Field */
    private String id = null;
+
    /** Description of the Field */
    private String name = null;
+
    /** Description of the Field */
    private ArrayList nodes = new ArrayList();
+
    /** Description of the Field */
    private XDocletData parent;
+
    /** Description of the Field */
    private boolean used = true;
-
-
 
    /**Constructor for the XDocletNode object */
    public XDocletData()
    {
       super();
    }
-
 
    /**
     * Adds a feature to the Task attribute of the XDocletConfiguration object
@@ -50,7 +66,6 @@ public abstract class XDocletData implements IXMLSerializable, Cloneable
       this.nodes.add(node);
    }
 
-
    /**
     * Description of the Method
     *
@@ -62,14 +77,12 @@ public abstract class XDocletData implements IXMLSerializable, Cloneable
       throw new UnsupportedOperationException("You should never see this");//$NON-NLS-1$
    }
 
-
    /**
     * Description of the Method
     *
     * @return   Description of the Return Value
     */
    public abstract XDocletData cloneData();
-
 
    /**
     * Gets the id attribute of the XDocletElement object
@@ -92,7 +105,6 @@ public abstract class XDocletData implements IXMLSerializable, Cloneable
       return this.id;
    }
 
-
    /**
     * @return   String
     */
@@ -100,7 +112,6 @@ public abstract class XDocletData implements IXMLSerializable, Cloneable
    {
       return this.name;
    }
-
 
    /**
     * Gets the nodes attribute of the XDocletNode object
@@ -112,7 +123,6 @@ public abstract class XDocletData implements IXMLSerializable, Cloneable
       return this.nodes;
    }
 
-
    /**
     * @return   XDocletNode
     */
@@ -120,7 +130,6 @@ public abstract class XDocletData implements IXMLSerializable, Cloneable
    {
       return this.parent;
    }
-
 
    /**
     * Gets the rootParent attribute of the XDocletData object
@@ -137,8 +146,6 @@ public abstract class XDocletData implements IXMLSerializable, Cloneable
       return current;
    }
 
-
-
    /**
     * Gets the empty attribute of the XDocletNode object
     *
@@ -149,7 +156,6 @@ public abstract class XDocletData implements IXMLSerializable, Cloneable
       return this.nodes.isEmpty();
    }
 
-
    /**
     * @return   boolean
     */
@@ -157,7 +163,6 @@ public abstract class XDocletData implements IXMLSerializable, Cloneable
    {
       return this.used;
    }
-
 
    /**
     * Description of the Method
@@ -169,7 +174,6 @@ public abstract class XDocletData implements IXMLSerializable, Cloneable
       this.nodes.remove(node);
    }
 
-
    /**
     * Sets the name.
     *
@@ -179,7 +183,6 @@ public abstract class XDocletData implements IXMLSerializable, Cloneable
    {
       this.name = name;
    }
-
 
    /**
     * Sets the parent.
@@ -191,7 +194,6 @@ public abstract class XDocletData implements IXMLSerializable, Cloneable
       this.parent = parent;
    }
 
-
    /**
     * Sets the used.
     *
@@ -201,7 +203,6 @@ public abstract class XDocletData implements IXMLSerializable, Cloneable
    {
       this.used = used;
    }
-
 
    /**
     * Description of the Method

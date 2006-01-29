@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist;
 
@@ -56,59 +71,75 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
 {
    /** Description of the Field */
    protected XDocletJavaDocCompletionProcessor completionProvider = new XDocletJavaDocCompletionProcessor();
+
    /** Description of the Field */
    protected Document docletDocument;
+
    /** Description of the Field */
    protected DocletTree docletTree;
+
    /** Description of the Field */
    protected DocletTreeXMLManager docletTreeXMLManager = new DocletTreeXMLManager();
+
    /** Description of the Field */
    protected TemplateList templateList;
+
    /** Description of the Field */
    protected TemplateListXMLManager templateListXMLManager = new TemplateListXMLManager();
+
    /** Description of the Field */
    protected VariableStore variableStore;
+
    /** Description of the Field */
    protected VariableStoreXMLManager variableStoreXMLManager = new VariableStoreXMLManager();
+
    /** Description of the Field */
    protected HashMap xmlPersistenceManager = new HashMap(3);
 
    /** Description of the Field */
    public static String ADDITIONAL_VALUES_FILE = "additional_values.xml";//$NON-NLS-1$
+
    /** Description of the Field */
    public static String ATTR_ADDITIONAL_VALUES = "additionalValues";//$NON-NLS-1$
+
    /** Description of the Field */
    public static String ATTR_TEMPLATES = "templates";//$NON-NLS-1$
+
    /** Description of the Field */
    public static String ATTR_VARIABLES = "variables";//$NON-NLS-1$
+
    /** Description of the Field */
    public static String DOCLETTREE_FILE = "doclettree.dat";//$NON-NLS-1$
+
    /** Description of the Field */
    public static String TEMPLATES_FILE = "templates.xml";//$NON-NLS-1$
+
    /** Description of the Field */
    public static String VARIABLES_FILE = "variables.xml";//$NON-NLS-1$
 
    /** Description of the Field */
    protected static HashMap filenames = new HashMap(3);
+
    /** Description of the Field */
    protected static URL iconPathURL = null;
+
    /** Description of the Field */
    protected static HashMap inputSources = new HashMap(3);
+
    /** Description of the Field */
    protected static HashMap originalFilenames = new HashMap(3);
+
    /** Description of the Field */
    protected static String testIconPath = null;
 
    /** The shared instance */
    private static XDocletAssistPlugin plugin;
 
-
    /** The constructor. */
    public XDocletAssistPlugin()
    {
       plugin = this;
    }
-
 
    /**
     * Adds a feature to the ValuesToDocletTree attribute of the XDocletPlugin
@@ -122,7 +153,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
       valuesPersistent.addDocumentToDocletTree(docletTree, getXMLDocument(ATTR_ADDITIONAL_VALUES));
    }
 
-
    /**
     * Gets the andSetRefreshedTemplateList attribute of the XDocletPlugin
     * object
@@ -131,10 +161,10 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
     */
    public TemplateList getAndSetRefreshedTemplateList()
    {
-      templateList = templateListXMLManager.setTemplateListFromDocument(getXMLDocument(ATTR_TEMPLATES, true), getDocletTree());
+      templateList = templateListXMLManager.setTemplateListFromDocument(getXMLDocument(ATTR_TEMPLATES, true),
+            getDocletTree());
       return templateList;
    }
-
 
    /**
     * Returns the docletTree.
@@ -169,7 +199,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
       return docletTree;
    }
 
-
    /**
     * Gets the refreshedDocletTree attribute of the XDocletPlugin object
     *
@@ -179,29 +208,29 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
    {
       try
       {
-         IRunnableWithProgress runnableWithProgress =
-            new IRunnableWithProgress()
+         IRunnableWithProgress runnableWithProgress = new IRunnableWithProgress()
+         {
+            public void run(IProgressMonitor monitor)
             {
-               public void run(IProgressMonitor monitor)
+               monitor.beginTask(XDocletAssistMessages
+                     .getString("XDocletPlugin.Reading_the_xtags.xml_of_the_XDoclet_modules_15"), 1000);//$NON-NLS-1$
+               URL[] urls = XDocletCorePlugin.getDefault().getXTagsXml();
+               docletTree = docletTreeXMLManager.initDocletTree(urls, monitor, 500);
+               if (docletTree == null)
                {
-                  monitor.beginTask(XDocletAssistMessages.getString("XDocletPlugin.Reading_the_xtags.xml_of_the_XDoclet_modules_15"), 1000);//$NON-NLS-1$
-                  URL[] urls = XDocletCorePlugin.getDefault().getXTagsXml();
-                  docletTree = docletTreeXMLManager.initDocletTree(urls, monitor, 500);
-                  if (docletTree == null)
-                  {
-                     return;
-                  }
-                  try
-                  {
-                     docletTreeXMLManager.writeDocletTreeToCache(new FileOutputStream(getDocletTreeFile()));
-                  }
-                  catch (IOException e)
-                  {
-                     log(e);
-                  }
-                  addValuesToDocletTree(docletTree);
+                  return;
                }
-            };
+               try
+               {
+                  docletTreeXMLManager.writeDocletTreeToCache(new FileOutputStream(getDocletTreeFile()));
+               }
+               catch (IOException e)
+               {
+                  log(e);
+               }
+               addValuesToDocletTree(docletTree);
+            }
+         };
          Shell activeShell = XDocletAssistPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell();
          if (activeShell == null)
          {
@@ -217,7 +246,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
       }
       return docletTree;
    }
-
 
    /**
     * Returns the templateList.
@@ -242,7 +270,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
       return templateList;
    }
 
-
    /**
     * Returns the variableStore.
     *
@@ -258,7 +285,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
       return variableStore;
    }
 
-
    /**
     * @param event  Description of the Parameter
     * @see          org.eclipse.jface.util.IPropertyChangeListener#propertyChange(org.eclipse.jface.util.PropertyChangeEvent)
@@ -268,14 +294,12 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
       setPatternToStore();
    }
 
-
    /** Description of the Method */
    public void saveTemplateList()
    {
       templateListXMLManager.writeToDocument(getXMLDocument(ATTR_TEMPLATES));
       saveXMLDocument(ATTR_TEMPLATES);
    }
-
 
    /**
     * Description of the Method
@@ -291,7 +315,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
       getPreferenceStore().addPropertyChangeListener(this);
    }
 
-
    /**
     * A unit test for JUnit
     *
@@ -301,7 +324,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
    {
       this.docletTree = docletTree;
    }
-
 
    /**
     * Gets the docletTreeFile attribute of the XDocletPlugin object
@@ -313,7 +335,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
       return new File(getStateLocation().toFile(), DOCLETTREE_FILE);
    }
 
-
    /**
     * Gets the xMLDocument attribute of the XDocletPlugin object
     *
@@ -324,7 +345,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
    {
       return getXMLDocument(key, false);
    }
-
 
    /**
     * Gets the xMLDocument attribute of the XDocletPlugin object
@@ -349,7 +369,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
       }
       return null;
    }
-
 
    /**
     * Gets the xMLPersistenceManager attribute of the XDocletPlugin object
@@ -382,7 +401,8 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
                   log(e);
                }
             }
-            xmlPersistenceManager.put(key, new XMLPersistenceManager(new FileReader(file), false, (InputSource) inputSources.get(key)));
+            xmlPersistenceManager.put(key, new XMLPersistenceManager(new FileReader(file), false,
+                  (InputSource) inputSources.get(key)));
 
          }
          catch (FileNotFoundException e)
@@ -394,7 +414,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
       return (XMLPersistenceManager) xmlPersistenceManager.get(key);
    }
 
-
    /** Description of the Method */
    protected void initDefaultPatterns()
    {
@@ -403,7 +422,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
       getPreferenceStore().setDefault(IXDocletConstants.VARIABLE_PACKAGE, "^(\\S*)$");//$NON-NLS-1$
       getPreferenceStore().setDefault(IXDocletConstants.VARIABLE_PARENT_PACKAGE, "^(\\S*)\\.\\w*$");//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -415,7 +433,7 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
       try
       {
          FileWriter writer = new FileWriter(getStateLocation().toString() + "/" //$NON-NLS-1$
-         + filenames.get(key));
+               + filenames.get(key));
          getXMLPersistenceManager(key, false).persistDocument(writer);
       }
       catch (IOException e)
@@ -435,22 +453,20 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
    protected void setPatternToStore()
    {
       getVariableStore().getVariable("classname").setPattern(//$NON-NLS-1$
-      getPreferenceStore().getString(IXDocletConstants.VARIABLE_CLASSNAME));
+            getPreferenceStore().getString(IXDocletConstants.VARIABLE_CLASSNAME));
       getVariableStore().getVariable("classnameWithoutSuffix").setPattern(//$NON-NLS-1$
-      getPreferenceStore().getString(IXDocletConstants.VARIABLE_CLASSNAME_WITHOUT_SUFFIX));
+            getPreferenceStore().getString(IXDocletConstants.VARIABLE_CLASSNAME_WITHOUT_SUFFIX));
       getVariableStore().getVariable("package").setPattern(//$NON-NLS-1$
-      getPreferenceStore().getString(IXDocletConstants.VARIABLE_PACKAGE));
+            getPreferenceStore().getString(IXDocletConstants.VARIABLE_PACKAGE));
       getVariableStore().getVariable("packageWithoutLast").setPattern(//$NON-NLS-1$
-      getPreferenceStore().getString(IXDocletConstants.VARIABLE_PARENT_PACKAGE));
+            getPreferenceStore().getString(IXDocletConstants.VARIABLE_PARENT_PACKAGE));
    }
-
 
    /** Method initIndentBehaviour */
    private void initCodeAssistPreferences()
    {
       getPreferenceStore().setDefault(IXDocletConstants.DEACTIVATE_XDOCLET_SUPPORT, false);
    }
-
 
    /**
     * Returns the shared instance.
@@ -461,7 +477,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
    {
       return plugin;
    }
-
 
    /**
     * Returns the string from the plugin's resource bundle, or 'key' if not
@@ -484,7 +499,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
 
    }
 
-
    /**
     * Returns the testIconPath.
     *
@@ -494,7 +508,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
    {
       return testIconPath;
    }
-
 
    /**
     * Convenience method which returns the unique identifier of this plugin.
@@ -513,7 +526,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
       return getDefault().getBundle().getSymbolicName();
    }
 
-
    /**
     * Returns the workspace instance.
     *
@@ -523,7 +535,6 @@ public class XDocletAssistPlugin extends AbstractPlugin implements IPropertyChan
    {
       return ResourcesPlugin.getWorkspace();
    }
-
 
    /**
     * Sets the testIconPath.

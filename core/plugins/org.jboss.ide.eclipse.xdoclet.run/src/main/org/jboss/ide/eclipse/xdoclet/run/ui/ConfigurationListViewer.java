@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.run.ui;
 
@@ -52,21 +67,27 @@ public class ConfigurationListViewer
 {
    /** Description of the Field */
    private Action addAction;
+
    /** Description of the Field */
    private Action addStandardAction;
+
    /** Description of the Field */
    private List configurations;
+
    /** Description of the Field */
    private Menu contextMenu;
+
    /** Description of the Field */
    private Composite parentComposite;
+
    /** Description of the Field */
    private Action removeAction;
+
    /** Description of the Field */
    private Action renameAction;
+
    /** Description of the Field */
    private CheckboxTableViewer viewer;
-
 
    /**
     *Constructor for the ConfigurationsViewer object
@@ -88,37 +109,33 @@ public class ConfigurationListViewer
 
       this.viewer = new CheckboxTableViewer(table);
       this.viewer.setContentProvider(new ListContentProvider());
-      this.viewer.setLabelProvider(
-         new DefaultLabelProvider()
+      this.viewer.setLabelProvider(new DefaultLabelProvider()
+      {
+         public Image getImage(Object element)
          {
-            public Image getImage(Object element)
-            {
-               return XDocletUIImages.getImage(IXDocletUIConstants.IMG_OBJS_XDOCLET_CONF);
-            }
+            return XDocletUIImages.getImage(IXDocletUIConstants.IMG_OBJS_XDOCLET_CONF);
+         }
 
-
-            public String getText(Object element)
-            {
-               return element.toString();
-            }
-         });
+         public String getText(Object element)
+         {
+            return element.toString();
+         }
+      });
 
       this.setInput(configurations);
 
-      this.viewer.addCheckStateListener(
-         new ICheckStateListener()
+      this.viewer.addCheckStateListener(new ICheckStateListener()
+      {
+         public void checkStateChanged(CheckStateChangedEvent event)
          {
-            public void checkStateChanged(CheckStateChangedEvent event)
-            {
-               XDocletConfiguration configuration = (XDocletConfiguration) event.getElement();
-               configuration.setUsed(event.getChecked());
-            }
-         });
+            XDocletConfiguration configuration = (XDocletConfiguration) event.getElement();
+            configuration.setUsed(event.getChecked());
+         }
+      });
 
       this.assign();
       this.initContextMenu();
    }
-
 
    /**
     * Adds a feature to the SelectionChangeListener attribute of the ConfigurationListViewer object
@@ -129,7 +146,6 @@ public class ConfigurationListViewer
    {
       this.viewer.addSelectionChangedListener(listener);
    }
-
 
    /**
     * Gets the current attribute of the ConfigurationListViewer object
@@ -147,13 +163,11 @@ public class ConfigurationListViewer
       return null;
    }
 
-
    /** Description of the Method */
    public void refresh()
    {
       this.viewer.refresh();
    }
-
 
    /**
     * Description of the Method
@@ -165,72 +179,66 @@ public class ConfigurationListViewer
       this.viewer.removeSelectionChangedListener(listener);
    }
 
-
    /** Description of the Method */
    private void assign()
    {
-      this.addAction =
-         new Action()
+      this.addAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doAdd();
-            }
+            doAdd();
+         }
 
-         };
+      };
       this.addAction.setText(XDocletRunMessages.getString("ConfigurationListViewer.action.add"));//$NON-NLS-1$
       this.addAction.setToolTipText(XDocletRunMessages.getString("ConfigurationListViewer.action.add.tip"));//$NON-NLS-1$
       this.addAction.setEnabled(true);
 
-      this.addStandardAction =
-         new Action()
+      this.addStandardAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doAddStandard();
-            }
+            doAddStandard();
+         }
 
-         };
+      };
       this.addStandardAction.setText(XDocletRunMessages.getString("ConfigurationListViewer.action.add.standard"));//$NON-NLS-1$
-      this.addStandardAction.setToolTipText(XDocletRunMessages.getString("ConfigurationListViewer.action.add.standard.tip"));//$NON-NLS-1$
+      this.addStandardAction.setToolTipText(XDocletRunMessages
+            .getString("ConfigurationListViewer.action.add.standard.tip"));//$NON-NLS-1$
       this.addStandardAction.setEnabled(true);
 
-      this.renameAction =
-         new Action()
+      this.renameAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doRename();
-            }
+            doRename();
+         }
 
-         };
+      };
       this.renameAction.setText(XDocletRunMessages.getString("ConfigurationListViewer.action.rename"));//$NON-NLS-1$
       this.renameAction.setToolTipText(XDocletRunMessages.getString("ConfigurationListViewer.action.rename.tip"));//$NON-NLS-1$
       this.renameAction.setEnabled(true);
 
-      this.removeAction =
-         new Action()
+      this.removeAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doRemove();
-            }
+            doRemove();
+         }
 
-         };
+      };
       this.removeAction.setText(XDocletRunMessages.getString("ConfigurationListViewer.action.remove"));//$NON-NLS-1$
       this.removeAction.setToolTipText(XDocletRunMessages.getString("ConfigurationListViewer.action.remove.tip"));//$NON-NLS-1$
       this.removeAction.setEnabled(true);
 
-      this.viewer.addDoubleClickListener(
-         new IDoubleClickListener()
+      this.viewer.addDoubleClickListener(new IDoubleClickListener()
+      {
+         public void doubleClick(DoubleClickEvent event)
          {
-            public void doubleClick(DoubleClickEvent event)
-            {
-               doRename();
-            }
-         });
+            doRename();
+         }
+      });
    }
-
 
    /** Description of the Method */
    public void doAdd()
@@ -248,11 +256,11 @@ public class ConfigurationListViewer
       }
    }
 
-
    /** Description of the Method */
    public void doAddStandard()
    {
-      ConfigurationChoiceDialog dialog = new ConfigurationChoiceDialog(this.parentComposite.getShell(), XDocletRunPlugin.getDefault().getStandardConfigurations().getConfigurations());
+      ConfigurationChoiceDialog dialog = new ConfigurationChoiceDialog(this.parentComposite.getShell(),
+            XDocletRunPlugin.getDefault().getStandardConfigurations().getConfigurations());
       if (dialog.open() == Window.OK)
       {
          XDocletData data = dialog.getXDocletData();
@@ -266,7 +274,6 @@ public class ConfigurationListViewer
       }
    }
 
-
    /** Description of the Method */
    public void doRemove()
    {
@@ -278,7 +285,6 @@ public class ConfigurationListViewer
          this.viewer.refresh();
       }
    }
-
 
    /** Description of the Method */
    public void doRename()
@@ -295,7 +301,6 @@ public class ConfigurationListViewer
          }
       }
    }
-
 
    /** Description of the Method */
    private void enableActions()
@@ -316,8 +321,6 @@ public class ConfigurationListViewer
       }
    }
 
-
-
    /**
     * Description of the Method
     *
@@ -331,7 +334,6 @@ public class ConfigurationListViewer
       manager.add(this.removeAction);
       manager.add(new Separator("Additions"));//$NON-NLS-1$
    }
-
 
    /**
     * @return   The usedConfiguration value
@@ -351,27 +353,23 @@ public class ConfigurationListViewer
       return result;
    }
 
-
    /** Description of the Method */
    private void initContextMenu()
    {
       MenuManager menuManager = new MenuManager("#PopupMenu");//$NON-NLS-1$
       menuManager.setRemoveAllWhenShown(true);
-      menuManager.addMenuListener(
-         new IMenuListener()
+      menuManager.addMenuListener(new IMenuListener()
+      {
+         public void menuAboutToShow(IMenuManager manager)
          {
-            public void menuAboutToShow(IMenuManager manager)
-            {
-               enableActions();
-               fillContextMenu(manager);
-            }
+            enableActions();
+            fillContextMenu(manager);
+         }
 
-         });
+      });
       this.contextMenu = menuManager.createContextMenu(this.viewer.getControl());
       this.viewer.getControl().setMenu(contextMenu);
    }
-
-
 
    /**
     * Sets the input attribute of the ConfigurationListViewer object

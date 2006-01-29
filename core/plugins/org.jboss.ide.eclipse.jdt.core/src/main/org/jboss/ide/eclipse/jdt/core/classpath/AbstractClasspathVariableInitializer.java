@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.core.classpath;
 
@@ -29,10 +44,10 @@ public abstract class AbstractClasspathVariableInitializer extends ClasspathVari
 {
    private IProgressMonitor fMonitor;
 
-
    /**Constructor for the AbstractClasspathVariableInitializer object */
-   public AbstractClasspathVariableInitializer() { }
-
+   public AbstractClasspathVariableInitializer()
+   {
+   }
 
    /**
     * Description of the Method
@@ -55,7 +70,6 @@ public abstract class AbstractClasspathVariableInitializer extends ClasspathVari
       }
    }
 
-
    /**
     * Gets the jarName attribute of the AbstractClasspathVariableInitializer object
     *
@@ -63,14 +77,12 @@ public abstract class AbstractClasspathVariableInitializer extends ClasspathVari
     */
    protected abstract String getJarName();
 
-
    /**
     * Gets the libFolder attribute of the AbstractClasspathVariableInitializer object
     *
     * @return   The libFolder value
     */
    protected abstract String getLibFolder();
-
 
    /**
     * Gets the monitor attribute of the AbstractClasspathVariableInitializer object
@@ -85,7 +97,6 @@ public abstract class AbstractClasspathVariableInitializer extends ClasspathVari
       }
       return fMonitor;
    }
-
 
    /**
     * Description of the Method
@@ -102,14 +113,13 @@ public abstract class AbstractClasspathVariableInitializer extends ClasspathVari
 
       // Search for the jar
       final String searchedJar = this.getJarName();
-      File[] jars = libDir.listFiles(
-         new FileFilter()
+      File[] jars = libDir.listFiles(new FileFilter()
+      {
+         public boolean accept(File file)
          {
-            public boolean accept(File file)
-            {
-               return (file.getName().equals(searchedJar));//$NON-NLS-1$
-            }
-         });
+            return (file.getName().equals(searchedJar));//$NON-NLS-1$
+         }
+      });
 
       if (jars.length == 1)
       {
@@ -119,7 +129,6 @@ public abstract class AbstractClasspathVariableInitializer extends ClasspathVari
       return result;
    }
 
-
    /**
     * Description of the Method
     *
@@ -128,13 +137,11 @@ public abstract class AbstractClasspathVariableInitializer extends ClasspathVari
     * @return                   Description of the Return Value
     * @exception CoreException  Description of the Exception
     */
-   private boolean changedJ2EEVariable(String variable, IPath newPath)
-      throws CoreException
+   private boolean changedJ2EEVariable(String variable, IPath newPath) throws CoreException
    {
       IPath oldPath = JavaCore.getClasspathVariable(variable);
       return !newPath.equals(oldPath);
    }
-
 
    /**
     * Sets the j2EEVariable attribute of the AbstractClasspathVariableInitializer object
@@ -143,8 +150,7 @@ public abstract class AbstractClasspathVariableInitializer extends ClasspathVari
     * @param newPath            The new j2EEVariable value
     * @exception CoreException  Description of the Exception
     */
-   private void setJ2EEVariable(String variable, IPath newPath)
-      throws CoreException
+   private void setJ2EEVariable(String variable, IPath newPath) throws CoreException
    {
       if (this.changedJ2EEVariable(variable, newPath))
       {

@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.run.util;
 
@@ -30,7 +45,7 @@ import org.jboss.ide.eclipse.core.AbstractPlugin;
 public class AntUtil
 {
    private static Map _substitutions;
-   
+
    /**
     * Gets the classPathAsXml attribute of the AntUtil class
     *
@@ -91,10 +106,10 @@ public class AntUtil
    {
       if (null == _substitutions)
       {
-	      _substitutions = new LinkedHashMap();
-	      _substitutions.put(getPattern(Platform.getInstallLocation()), escapeReplacement("${eclipse.home}"));
+         _substitutions = new LinkedHashMap();
+         _substitutions.put(getPattern(Platform.getInstallLocation()), escapeReplacement("${eclipse.home}"));
       }
-      
+
       return _substitutions;
    }
 
@@ -119,9 +134,9 @@ public class AntUtil
 
    private static String escapeRegex(String str)
    {
-      return "\\Q"+str+"\\E";
+      return "\\Q" + str + "\\E";
    }
-   
+
    private static String escapeReplacement(String str)
    {
       return str.replaceAll("\\$", "\\\\\\$");

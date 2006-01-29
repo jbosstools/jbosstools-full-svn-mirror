@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.deployer.ui.actions;
 
@@ -32,7 +47,6 @@ public class UndeployAction extends AbstractDeployAction
       super();
    }
 
-
    /**
     * Gets the deploymentTarget attribute of the DeployAction object
     *
@@ -42,7 +56,7 @@ public class UndeployAction extends AbstractDeployAction
    protected ITarget[] getDeploymentTargets(IResource[] resources)
    {
       ITarget[] targets = new ITarget[resources.length];
-      
+
       try
       {
          DeployerCorePlugin.getDefault().refreshDebugTargets();
@@ -54,12 +68,13 @@ public class UndeployAction extends AbstractDeployAction
 
          for (int i = 0; i < resources.length; i++)
          {
-	         ITarget target = (ITarget) resources[i].getSessionProperty(IDeployerUIConstants.QNAME_TARGET);
-	         if (target == null)
-	         {
-	            DeployerUIPlugin.getDefault().showWarningMessage(DeployerUIMessages.getString("UndeployAction.action.undeploy.not.text"));//$NON-NLS-1$
-	         }
-	         targets[i] = target;
+            ITarget target = (ITarget) resources[i].getSessionProperty(IDeployerUIConstants.QNAME_TARGET);
+            if (target == null)
+            {
+               DeployerUIPlugin.getDefault().showWarningMessage(
+                     DeployerUIMessages.getString("UndeployAction.action.undeploy.not.text"));//$NON-NLS-1$
+            }
+            targets[i] = target;
          }
       }
       catch (CoreException ce)
@@ -69,7 +84,6 @@ public class UndeployAction extends AbstractDeployAction
 
       return targets;
    }
-
 
    /**
     * Gets the title attribute of the UndeployAction object
@@ -82,7 +96,6 @@ public class UndeployAction extends AbstractDeployAction
       String title = DeployerUIMessages.getString("UndeployAction.title") + resource.getProjectRelativePath().toString();//$NON-NLS-1$
       return title;
    }
-
 
    /**
     * Description of the Method
@@ -101,7 +114,8 @@ public class UndeployAction extends AbstractDeployAction
       }
       catch (DeploymentException de)
       {
-         DeployerUIPlugin.getDefault().showErrorMessage(DeployerUIMessages.getString("UndeployAction.action.undeploy.failed.text") + de.getMessage());//$NON-NLS-1$
+         DeployerUIPlugin.getDefault().showErrorMessage(
+               DeployerUIMessages.getString("UndeployAction.action.undeploy.failed.text") + de.getMessage());//$NON-NLS-1$
       }
    }
 }

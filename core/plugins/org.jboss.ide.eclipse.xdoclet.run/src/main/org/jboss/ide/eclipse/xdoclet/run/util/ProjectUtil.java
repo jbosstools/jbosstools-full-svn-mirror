@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.run.util;
 
@@ -39,7 +54,7 @@ public class ProjectUtil
     * @exception CoreException  Description of the Exception
     */
    public static void populateClassPath(IJavaProject hostingProject, IJavaProject project, Collection cp)
-          throws CoreException
+         throws CoreException
    {
       IClasspathEntry entry;
 
@@ -54,7 +69,7 @@ public class ProjectUtil
 
          switch (entry.getEntryKind())
          {
-            case IClasspathEntry.CPE_CONTAINER:
+            case IClasspathEntry.CPE_CONTAINER :
                IClasspathEntry jre = JavaRuntime.getDefaultJREContainerEntry();
                if (!entry.equals(jre))
                {
@@ -63,7 +78,7 @@ public class ProjectUtil
                   allEntries.addAll(Arrays.asList(containerEntries));
                }
                break;
-            default:
+            default :
                allEntries.add(entry);
          }
       }
@@ -78,7 +93,7 @@ public class ProjectUtil
 
          switch (entry.getEntryKind())
          {
-            case IClasspathEntry.CPE_LIBRARY:
+            case IClasspathEntry.CPE_LIBRARY :
                String lib;
 
                IPath shrinkedPath = shrinkPathToProjectPath(homeProject, entryProject, entry.getPath());
@@ -89,12 +104,12 @@ public class ProjectUtil
                   cp.add(lib);
                }
                break;
-            case IClasspathEntry.CPE_PROJECT:
+            case IClasspathEntry.CPE_PROJECT :
                String base = entry.getPath().toString();
                IJavaProject p = project.getJavaModel().getJavaProject(base);
                populateClassPath(hostingProject, p, cp);
                break;
-            case IClasspathEntry.CPE_SOURCE:
+            case IClasspathEntry.CPE_SOURCE :
                IPath outputpath = entry.getOutputLocation();
                if (outputpath == null)
                {
@@ -109,10 +124,10 @@ public class ProjectUtil
                   cp.add(lib);
                }
                break;
-            case IClasspathEntry.CPE_CONTAINER:
+            case IClasspathEntry.CPE_CONTAINER :
                // Nothing to do
                break;
-            case IClasspathEntry.CPE_VARIABLE:
+            case IClasspathEntry.CPE_VARIABLE :
                entry = JavaCore.getResolvedClasspathEntry(entry);
                String var = entry.getPath().toString();
                if (!cp.contains(var))
@@ -120,12 +135,11 @@ public class ProjectUtil
                   cp.add(var);
                }
                break;
-            default:
-            // Nothing to do
+            default :
+         // Nothing to do
          }
       }
    }
-
 
    /**
     * Description of the Method

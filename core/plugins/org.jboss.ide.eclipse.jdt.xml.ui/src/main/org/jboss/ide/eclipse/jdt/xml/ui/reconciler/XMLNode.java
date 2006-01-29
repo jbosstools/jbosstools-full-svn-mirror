@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.reconciler;
 
@@ -35,28 +50,40 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
 {
 
    private boolean added = false;
+
    private List children = new ArrayList();
+
    private XMLNode correspondingNode = null;
+
    private IDocument document = null;
+
    private boolean modified = false;
+
    private XMLNode parent = null;
+
    /** Description of the Field */
    public final static int AFTER_ATTRIBUTE = 6;
+
    /** Description of the Field */
    public final static int AFTER_ATT_VALUE = 7;
+
    /** Description of the Field */
    public final static int ATTR = 1;
+
    /** Description of the Field */
    public final static int ATTRIBUTE = 4;
+
    /** Description of the Field */
    public final static int ATT_VALUE = 5;
+
    /** Description of the Field */
    public final static int DOUBLEQUOTE = 2;
+
    /** Description of the Field */
    public final static int SINGLEQUOTE = 3;
+
    /** Description of the Field */
    public final static int TAG = 0;
-
 
    /**
     *Constructor for the XMLNode object
@@ -73,7 +100,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       this.document = document;
    }
 
-
    /**
     *Constructor for the XMLNode object
     *
@@ -84,7 +110,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       super(region);
       added = true;
    }
-
 
    /**
     * Adds a feature to the Child attribute of the XMLNode object
@@ -103,7 +128,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       }
       children.add(child);
    }
-
 
    /**
     * Description of the Method
@@ -128,7 +152,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       return (getOffset() > n.getOffset()) ? 1 : ((getOffset() < n.getOffset()) ? -1 : 0);
    }
 
-
    /**
     * Description of the Method
     *
@@ -150,7 +173,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       return (content.trim().length() == 0);
    }
 
-
    /**
     * Gets the adapter attribute of the XMLNode object
     *
@@ -167,7 +189,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       return null;
    }
 
-
    /**
     * Gets the attributeAt attribute of the XMLNode object
     *
@@ -178,7 +199,7 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
    {
       List attrs = getAttributes();
 
-      for (Iterator it = attrs.iterator(); it.hasNext(); )
+      for (Iterator it = attrs.iterator(); it.hasNext();)
       {
          XMLNode node = (XMLNode) it.next();
 
@@ -190,7 +211,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
 
       return null;
    }
-
 
    /**
     * Gets the attributes attribute of the XMLNode object
@@ -257,10 +277,12 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
             //                }
             //                break;
             //
-            case '"':
+            case '"' :
                if (state == DOUBLEQUOTE)
                {
-                  attrs.add(new XMLNode(getOffset() + start, i - start + 1, XMLPartitionScanner.XML_ATTRIBUTE, document));
+                  attrs
+                        .add(new XMLNode(getOffset() + start, i - start + 1, XMLPartitionScanner.XML_ATTRIBUTE,
+                              document));
                   start = -1;
                   state = TAG;
                }
@@ -269,10 +291,12 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
                   state = DOUBLEQUOTE;
                }
                break;
-            case '\'':
+            case '\'' :
                if (state == SINGLEQUOTE)
                {
-                  attrs.add(new XMLNode(getOffset() + start, i - start + 1, XMLPartitionScanner.XML_ATTRIBUTE, document));
+                  attrs
+                        .add(new XMLNode(getOffset() + start, i - start + 1, XMLPartitionScanner.XML_ATTRIBUTE,
+                              document));
                   start = -1;
                   state = TAG;
                }
@@ -281,7 +305,7 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
                   state = SINGLEQUOTE;
                }
                break;
-            default:
+            default :
                if (!Character.isWhitespace(c) && state == TAG)
                {
                   start = i;
@@ -292,12 +316,12 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
 
       if (start != -1)
       {
-         attrs.add(new XMLNode(getOffset() + start, content.length() - startLength - start, XMLPartitionScanner.XML_ATTRIBUTE, document));
+         attrs.add(new XMLNode(getOffset() + start, content.length() - startLength - start,
+               XMLPartitionScanner.XML_ATTRIBUTE, document));
       }
 
       return attrs;
    }
-
 
    /**
     * Gets the children attribute of the XMLNode object
@@ -308,7 +332,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
    {
       return children;
    }
-
 
    /**
     * Gets the children attribute of the XMLNode object
@@ -322,19 +345,21 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       {
          List filteredChildren = new ArrayList();
 
-         for (Iterator it = ((XMLNode) o).getChildren().iterator(); it.hasNext(); )
+         for (Iterator it = ((XMLNode) o).getChildren().iterator(); it.hasNext();)
          {
             XMLNode n = (XMLNode) it.next();
 
-            if (!XMLPartitionScanner.XML_END_TAG.equals(n.getType()) && !XMLPartitionScanner.XML_END_DECL.equals(n.getType())
-               && (!XMLPartitionScanner.XML_TEXT.equals(n.getType()) || !n.containsOnlyWhitespaces()))
+            if (!XMLPartitionScanner.XML_END_TAG.equals(n.getType())
+                  && !XMLPartitionScanner.XML_END_DECL.equals(n.getType())
+                  && (!XMLPartitionScanner.XML_TEXT.equals(n.getType()) || !n.containsOnlyWhitespaces()))
             {
                filteredChildren.add(n);
             }
          }
 
-         if (XMLPartitionScanner.XML_TAG.equals(((XMLNode) o).getType()) || XMLPartitionScanner.XML_PI.equals(((XMLNode) o).getType())
-            || XMLPartitionScanner.XML_EMPTY_TAG.equals(((XMLNode) o).getType()))
+         if (XMLPartitionScanner.XML_TAG.equals(((XMLNode) o).getType())
+               || XMLPartitionScanner.XML_PI.equals(((XMLNode) o).getType())
+               || XMLPartitionScanner.XML_EMPTY_TAG.equals(((XMLNode) o).getType()))
          {
             filteredChildren.addAll(0, ((XMLNode) o).getAttributes());
          }
@@ -344,7 +369,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
 
       return null;
    }
-
 
    /**
     * Gets the childrenAfter attribute of the XMLNode object
@@ -366,7 +390,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       return result;
    }
 
-
    /**
     * Gets the content attribute of the XMLNode object
     *
@@ -386,7 +409,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
 
       return content;
    }
-
 
    /**
     * Gets the contentFrom attribute of the XMLNode object
@@ -408,7 +430,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
 
       return content;
    }
-
 
    /**
     * Gets the contentTo attribute of the XMLNode object
@@ -435,7 +456,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       return content;
    }
 
-
    /**
     * Gets the correspondingNode attribute of the XMLNode object
     *
@@ -445,7 +465,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
    {
       return correspondingNode == null ? this : correspondingNode;
    }
-
 
    /**
     * For !DOCTYPE:
@@ -536,7 +555,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       return location;
    }
 
-
    /**
     * Gets the document attribute of the XMLNode object
     *
@@ -546,7 +564,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
    {
       return document;
    }
-
 
    /**
     * Gets the imageDescriptor attribute of the XMLNode object
@@ -559,7 +576,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       return null;
    }
 
-
    /**
     * Gets the label attribute of the XMLNode object
     *
@@ -570,7 +586,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
    {
       return getName();
    }
-
 
    /**
     * Gets the name attribute of the XMLNode object
@@ -617,7 +632,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       return name;
    }
 
-
    /**
     * Gets the parent attribute of the XMLNode object
     *
@@ -627,7 +641,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
    {
       return parent;
    }
-
 
    /**
     * Gets the parent attribute of the XMLNode object
@@ -639,7 +652,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
    {
       return this;
    }
-
 
    /**
     * Gets the stateAt attribute of the XMLNode object
@@ -672,13 +684,13 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
          char c = content.charAt(i);
          switch (c)
          {
-            case '=':
+            case '=' :
                if (state == AFTER_ATTRIBUTE || state == ATTRIBUTE)
                {
                   state = ATT_VALUE;
                }
                break;
-            case '"':
+            case '"' :
                if (state == DOUBLEQUOTE)
                {
                   state = AFTER_ATT_VALUE;
@@ -688,7 +700,7 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
                   state = DOUBLEQUOTE;
                }
                break;
-            case '\'':
+            case '\'' :
                if (state == SINGLEQUOTE)
                {
                   state = AFTER_ATT_VALUE;
@@ -698,18 +710,18 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
                   state = SINGLEQUOTE;
                }
                break;
-            default:
+            default :
                if (Character.isWhitespace(c))
                {
                   switch (state)
                   {
-                     case TAG:
+                     case TAG :
                         state = ATTRIBUTE;
                         break;
-                     case ATTR:
+                     case ATTR :
                         state = AFTER_ATTRIBUTE;
                         break;
-                     case AFTER_ATT_VALUE:
+                     case AFTER_ATT_VALUE :
                         state = ATTRIBUTE;
                         break;
                   }
@@ -719,7 +731,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
 
       return state;
    }
-
 
    /**
     * Gets the value attribute of the XMLNode object
@@ -768,7 +779,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       return name;
    }
 
-
    /**
     * Gets the added attribute of the XMLNode object
     *
@@ -778,7 +788,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
    {
       return added;
    }
-
 
    /**
     * Gets the modified attribute of the XMLNode object
@@ -790,7 +799,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       return modified;
    }
 
-
    /**
     * Description of the Method
     *
@@ -800,7 +808,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
    {
       children.remove(child);
    }
-
 
    /**
     * Sets the added attribute of the XMLNode object
@@ -812,7 +819,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       added = b;
    }
 
-
    /**
     * Sets the correspondingNode attribute of the XMLNode object
     *
@@ -823,7 +829,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       correspondingNode = node;
    }
 
-
    /**
     * Sets the document attribute of the XMLNode object
     *
@@ -833,7 +838,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
    {
       this.document = document;
    }
-
 
    /**
     * Sets the length attribute of the XMLNode object
@@ -847,7 +851,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       modified = true;
    }
 
-
    /**
     * Sets the modified attribute of the XMLNode object
     *
@@ -857,7 +860,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
    {
       modified = b;
    }
-
 
    /**
     * Sets the offset attribute of the XMLNode object
@@ -870,7 +872,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       added = false;
       modified = true;
    }
-
 
    /**
     * Sets the parent attribute of the XMLNode object
@@ -885,7 +886,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
          parent.addChild(this);
       }
    }
-
 
    /**
     * Description of the Method
@@ -905,7 +905,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
 
       return s;
    }
-
 
    /**
     * Gets the attributeName attribute of the XMLNode object
@@ -943,7 +942,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
       return content.substring(0, index).trim();
    }
 
-
    /**
     * Gets the attributeValue attribute of the XMLNode object
     *
@@ -977,7 +975,6 @@ public class XMLNode extends TypedPosition implements IAdaptable, IWorkbenchAdap
 
       return content.substring(1, content.length() - 1);
    }
-
 
    /**
     * Gets the tagName attribute of the XMLNode object

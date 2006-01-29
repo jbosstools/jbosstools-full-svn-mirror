@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.jsp.core.compiler.jasper;
 
@@ -29,7 +44,6 @@ public class JSPServletContext extends JspCServletContext
    /** Map of the providers */
    private Map providers = new Hashtable();
 
-
    /**
     * Default constructor
     *
@@ -40,7 +54,6 @@ public class JSPServletContext extends JspCServletContext
    {
       super(aLogWriter, aResourceBaseURL);
    }
-
 
    /**
     * Add an alternate conetnt provider for the given path.
@@ -53,7 +66,6 @@ public class JSPServletContext extends JspCServletContext
    {
       this.providers.put(path, provider);
    }
-
 
    /**
     * Override to select an alternate content provider if there is one.
@@ -72,7 +84,6 @@ public class JSPServletContext extends JspCServletContext
       return super.getResourceAsStream(path);
    }
 
-
    /**
     * Remove the alternate content provider
     *
@@ -83,7 +94,6 @@ public class JSPServletContext extends JspCServletContext
    {
       this.providers.remove(path);
    }
-
 
    /**
     * Interface implemented by an alternate content provider.

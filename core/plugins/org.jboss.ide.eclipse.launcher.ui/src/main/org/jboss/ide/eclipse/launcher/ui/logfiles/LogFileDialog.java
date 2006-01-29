@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.ui.logfiles;
 
@@ -38,18 +53,22 @@ public class LogFileDialog extends Dialog
 {
    /** Description of the Field */
    protected String filterPath;
+
    /** Description of the Field */
    protected LogFile logFile;
 
    private Label fPollingIntervallLabel;
+
    private Text fPollingIntervallText;
+
    private Button logFileButton;//$NON-NLS-1$
+
    private Label logFileLabel;
+
    private Text logFileText;
 
    /** Description of the Field */
    protected final String EMPTY_STRING = "";//$NON-NLS-1$
-
 
    /**
     * Constructor for LogFileDialog.
@@ -69,7 +88,6 @@ public class LogFileDialog extends Dialog
       this.filterPath = filterPath;
    }
 
-
    /**
     * Description of the Method
     *
@@ -80,7 +98,6 @@ public class LogFileDialog extends Dialog
       super.configureShell(newShell);
       newShell.setText(LauncherUIMessages.getString("Log_File_6"));//$NON-NLS-1$
    }
-
 
    /**
     * @param parent  Description of the Parameter
@@ -112,17 +129,15 @@ public class LogFileDialog extends Dialog
 
       logFileButton = new Button(logFileComposite, SWT.PUSH);
       logFileButton.setText(LauncherUIMessages.getString("File_3"));//$NON-NLS-1$
-      logFileButton.addSelectionListener(
-         new SelectionAdapter()
+      logFileButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent evt)
          {
-            public void widgetSelected(SelectionEvent evt)
-            {
-               logFileButtonSelected();
-            }
-         });
+            logFileButtonSelected();
+         }
+      });
 
-      Composite pollingIntervallComposite =
-            new Composite(logFileComposite, SWT.NONE);
+      Composite pollingIntervallComposite = new Composite(logFileComposite, SWT.NONE);
       gd = new GridData(GridData.FILL_BOTH);
       pollingIntervallComposite.setLayoutData(gd);
       GridLayout pollingLayout = new GridLayout();
@@ -130,46 +145,42 @@ public class LogFileDialog extends Dialog
       pollingIntervallComposite.setLayout(pollingLayout);
       fPollingIntervallLabel = new Label(pollingIntervallComposite, SWT.NONE);
       fPollingIntervallLabel.setText(LauncherUIMessages.getString("Polling_Intervall_(sec)__4"));//$NON-NLS-1$
-//		gd = new GridData();
-//		gd.verticalAlignment = GridData.VERTICAL_ALIGN_CENTER;
-//		fPollingIntervallLabel.setLayoutData(gd);
-      fPollingIntervallText =
-            new Text(pollingIntervallComposite, SWT.SINGLE | SWT.BORDER);
+      //		gd = new GridData();
+      //		gd.verticalAlignment = GridData.VERTICAL_ALIGN_CENTER;
+      //		fPollingIntervallLabel.setLayoutData(gd);
+      fPollingIntervallText = new Text(pollingIntervallComposite, SWT.SINGLE | SWT.BORDER);
       fPollingIntervallText.setTextLimit(5);
       gd = new GridData(GridData.FILL_HORIZONTAL);
       fPollingIntervallText.setLayoutData(gd);
       initializeFrom();
-      fPollingIntervallText.addVerifyListener(
-         new VerifyListener()
+      fPollingIntervallText.addVerifyListener(new VerifyListener()
+      {
+         public void verifyText(VerifyEvent e)
          {
-            public void verifyText(VerifyEvent e)
-            {
-               e.doit = isAllowedVerification(e.text);
-            }
-         });
-      fPollingIntervallText.addModifyListener(
-         new ModifyListener()
+            e.doit = isAllowedVerification(e.text);
+         }
+      });
+      fPollingIntervallText.addModifyListener(new ModifyListener()
+      {
+         /**
+          * @param e  Description of the Parameter
+          * @see      org.eclipse.swt.events.ModifyListener#modifyText(ModifyEvent)
+          */
+         public void modifyText(ModifyEvent e)
          {
-            /**
-             * @param e  Description of the Parameter
-             * @see      org.eclipse.swt.events.ModifyListener#modifyText(ModifyEvent)
-             */
-            public void modifyText(ModifyEvent e)
+            if (fPollingIntervallText.getText().equals(EMPTY_STRING))
             {
-               if (fPollingIntervallText.getText().equals(EMPTY_STRING))
-               {
-                  getButton(IDialogConstants.OK_ID).setEnabled(false);
-               }
-               else
-               {
-                  getButton(IDialogConstants.OK_ID).setEnabled(true);
-               }
+               getButton(IDialogConstants.OK_ID).setEnabled(false);
             }
-         });
+            else
+            {
+               getButton(IDialogConstants.OK_ID).setEnabled(true);
+            }
+         }
+      });
 
       return logFileComposite;
    }
-
 
    /** Description of the Method */
    protected void initializeFrom()
@@ -177,7 +188,6 @@ public class LogFileDialog extends Dialog
       logFileText.setText(logFile.getFileName());
       fPollingIntervallText.setText("" + logFile.getPollingIntervall());//$NON-NLS-1$
    }
-
 
    /**
     * @see   org.eclipse.jface.dialogs.Dialog#okPressed()
@@ -195,7 +205,6 @@ public class LogFileDialog extends Dialog
       }
       super.okPressed();
    }
-
 
    /**
     * Method isAllowedVerification.
@@ -219,7 +228,6 @@ public class LogFileDialog extends Dialog
       }
       return true;
    }
-
 
    /** Method logFileButtonSelected. */
    private void logFileButtonSelected()

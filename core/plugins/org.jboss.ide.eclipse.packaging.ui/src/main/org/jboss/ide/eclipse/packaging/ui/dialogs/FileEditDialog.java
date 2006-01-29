@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.packaging.ui.dialogs;
 
@@ -41,13 +56,18 @@ import org.jboss.ide.eclipse.ui.util.ProjectLabelProvider;
 public class FileEditDialog extends Dialog
 {
    private PackagingArchive archive;
-   private Button externalBrowseButton;
-   private PackagingFile file;
-   private Text filenameText;
-   private Button localBrowseButton;
-   private Text prefixText;
-   private PackagingFile tempFile;
 
+   private Button externalBrowseButton;
+
+   private PackagingFile file;
+
+   private Text filenameText;
+
+   private Button localBrowseButton;
+
+   private Text prefixText;
+
+   private PackagingFile tempFile;
 
    /**
     *Constructor for the AttributeEditDialog object
@@ -64,7 +84,6 @@ public class FileEditDialog extends Dialog
       this.tempFile = (PackagingFile) this.file.clone();
    }
 
-
    /**
     * Gets the data attribute of the FileEditDialog object
     *
@@ -75,38 +94,33 @@ public class FileEditDialog extends Dialog
       return this.file;
    }
 
-
    /** Description of the Method */
    protected void assign()
    {
-      this.localBrowseButton.addSelectionListener(
-         new SelectionAdapter()
+      this.localBrowseButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               addSelectLocal();
-            }
-         });
+            addSelectLocal();
+         }
+      });
 
-      this.externalBrowseButton.addSelectionListener(
-         new SelectionAdapter()
+      this.externalBrowseButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               addSelectExternal();
-            }
-         });
+            addSelectExternal();
+         }
+      });
 
-      this.prefixText.addModifyListener(
-         new ModifyListener()
+      this.prefixText.addModifyListener(new ModifyListener()
+      {
+         public void modifyText(ModifyEvent e)
          {
-            public void modifyText(ModifyEvent e)
-            {
-               tempFile.setPrefix(((Text) e.widget).getText());
-            }
-         });
+            tempFile.setPrefix(((Text) e.widget).getText());
+         }
+      });
    }
-
 
    /**
     * Description of the Method
@@ -118,7 +132,6 @@ public class FileEditDialog extends Dialog
       super.configureShell(shell);
       shell.setText(PackagingUIMessages.getString("FileEditDialog.title"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -186,7 +199,6 @@ public class FileEditDialog extends Dialog
       return parent;
    }
 
-
    /** Description of the Method */
    protected void okPressed()
    {
@@ -205,7 +217,6 @@ public class FileEditDialog extends Dialog
       super.okPressed();
    }
 
-
    /** Adds a feature to the SelectExternalFile attribute of the FileEditDialog object */
    private void addSelectExternal()
    {
@@ -219,11 +230,11 @@ public class FileEditDialog extends Dialog
       }
    }
 
-
    /** Adds a feature to the SelectLocalFile attribute of the FileEditDialog object */
    private void addSelectLocal()
    {
-      FileSelectionDialog dialog = new FileSelectionDialog(AbstractPlugin.getShell(), new ProjectLabelProvider(), new ProjectContentProvider());
+      FileSelectionDialog dialog = new FileSelectionDialog(AbstractPlugin.getShell(), new ProjectLabelProvider(),
+            new ProjectContentProvider());
 
       // Select all projects as input
       dialog.setInput(ProjectUtil.getAllOpenedProjects());
@@ -250,7 +261,6 @@ public class FileEditDialog extends Dialog
          this.refresh();
       }
    }
-
 
    /** Description of the Method */
    private void refresh()

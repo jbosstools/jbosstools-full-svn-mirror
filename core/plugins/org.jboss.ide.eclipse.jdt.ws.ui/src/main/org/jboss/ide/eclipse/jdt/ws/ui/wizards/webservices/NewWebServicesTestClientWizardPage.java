@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ws.ui.wizards.webservices;
 
@@ -78,28 +93,37 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
 {
    /** Description of the Field */
    protected List mappings = new Vector();
+
    /** Description of the Field */
    protected StructuredViewer mappingsViewer;
+
    /** Description of the Field */
    protected SelectionButtonDialogFieldGroup optionsButtons;
+
    /** Description of the Field */
    protected StringDialogField passwordField;
+
    /** Description of the Field */
    protected SelectionButtonDialogFieldGroup typeVersionButtons;
+
    /** Description of the Field */
    protected StringDialogField usernameField;
+
    /** Description of the Field */
    protected Button wsdlExternalLocationBrowseButton;
+
    /** Description of the Field */
    protected Text wsdlLocationField;
+
    /** Description of the Field */
    protected StatusInfo wsdlStatus = new StatusInfo();
+
    /** Description of the Field */
    protected Button wsdlWorkspaceLocationBrowseButton;
 
    private IStructuredSelection selection;
-   private final static String PAGE_NAME = NewWebServicesTestClientWizardPage.class.getName();
 
+   private final static String PAGE_NAME = NewWebServicesTestClientWizardPage.class.getName();
 
    /**
     *Constructor for the NewWebServicesTestClientWizardPage object
@@ -112,7 +136,6 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       this.setTitle(JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.title"));//$NON-NLS-1$
       this.setDescription(JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.description"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -128,11 +151,14 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
          IJavaProject project = getPackageFragmentRoot().getJavaProject();
          IClasspathEntry[] entries = project.getRawClasspath();
 
-         entries = JavaProjectUtil.mergeClasspathEntry(entries, ClassPathContainerRepository.getInstance().getEntry(Axis12ClasspathContainer.CLASSPATH_CONTAINER));
-         entries = JavaProjectUtil.mergeClasspathEntry(entries, ClassPathContainerRepository.getInstance().getEntry(WSIBasicProfile10ClasspathContainer.CLASSPATH_CONTAINER));
+         entries = JavaProjectUtil.mergeClasspathEntry(entries, ClassPathContainerRepository.getInstance().getEntry(
+               Axis12ClasspathContainer.CLASSPATH_CONTAINER));
+         entries = JavaProjectUtil.mergeClasspathEntry(entries, ClassPathContainerRepository.getInstance().getEntry(
+               WSIBasicProfile10ClasspathContainer.CLASSPATH_CONTAINER));
          if (this.mustGenerateTestCase())
          {
-            entries = JavaProjectUtil.mergeClasspathEntry(entries, ClassPathContainerRepository.getInstance().getEntry(JUnitClasspathContainer.CLASSPATH_CONTAINER));
+            entries = JavaProjectUtil.mergeClasspathEntry(entries, ClassPathContainerRepository.getInstance().getEntry(
+                  JUnitClasspathContainer.CLASSPATH_CONTAINER));
          }
 
          project.setRawClasspath(entries, monitor);
@@ -140,13 +166,15 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       catch (JavaModelException jme)
       {
          AbstractPlugin.logError("Unable to compute classpath", jme);//$NON-NLS-1$
-         JDTWSUIPlugin.getDefault().showErrorMessage(JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.error.classpath.junit"));//$NON-NLS-1$
+         JDTWSUIPlugin.getDefault().showErrorMessage(
+               JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.error.classpath.junit"));//$NON-NLS-1$
          return;
       }
       catch (CoreException ce)
       {
          AbstractPlugin.logError("Unable to merge classpath entries", ce);//$NON-NLS-1$
-         JDTWSUIPlugin.getDefault().showErrorMessage(JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.error.classpath.axis"));//$NON-NLS-1$
+         JDTWSUIPlugin.getDefault().showErrorMessage(
+               JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.error.classpath.axis"));//$NON-NLS-1$
          return;
       }
 
@@ -189,10 +217,10 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       catch (Exception e)
       {
          AbstractPlugin.logError("Error while creating Web Services Test Client", e);//$NON-NLS-1$
-         JDTWSUIPlugin.getDefault().showErrorMessage(JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.error.generation"));//$NON-NLS-1$
+         JDTWSUIPlugin.getDefault().showErrorMessage(
+               JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.error.generation"));//$NON-NLS-1$
       }
    }
-
 
    /**
     * Gets the mappings attribute of the NewWebServicesTestClientWizardPage object
@@ -210,7 +238,6 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       return result;
    }
 
-
    /**
     * Gets the outputLocation attribute of the NewWebServicesTestClientWizardPage object
     *
@@ -220,7 +247,6 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
    {
       return this.getPackageFragmentRoot().getResource();
    }
-
 
    /**
     * Gets the typeVersion attribute of the NewWebServicesTestClientWizardPage object
@@ -237,7 +263,6 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       return result;
    }
 
-
    /**
     * Description of the Method
     *
@@ -249,7 +274,6 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       this.selection = selection;
    }
 
-
    /**
     * Description of the Method
     *
@@ -259,7 +283,6 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
    {
       return this.optionsButtons.isSelected(4);
    }
-
 
    /** Adds a feature to the SelectExternal attribute of the NewWebServicesTestClientWizardPage object */
    protected void addSelectExternal()
@@ -274,11 +297,11 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       this.validateWSDLLocation();
    }
 
-
    /** Adds a feature to the SelectLocal attribute of the NewWebServicesTestClientWizardPage object */
    protected void addSelectLocal()
    {
-      FileSelectionDialog dialog = new FileSelectionDialog(AbstractPlugin.getShell(), new ProjectLabelProvider(), new ProjectContentProvider());
+      FileSelectionDialog dialog = new FileSelectionDialog(AbstractPlugin.getShell(), new ProjectLabelProvider(),
+            new ProjectContentProvider());
 
       // Select all projects as input
       dialog.setInput(ProjectUtil.getAllOpenedProjects());
@@ -298,17 +321,21 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       this.validateWSDLLocation();
    }
 
-
    /** Description of the Method */
    protected void createContent()
    {
       String[] buttonNames;
 
-      buttonNames = new String[]{JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.version.11"), JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.version.12")};//$NON-NLS-1$ //$NON-NLS-2$
+      buttonNames = new String[]
+      {
+            JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.version.11"), JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.version.12")};//$NON-NLS-1$ //$NON-NLS-2$
       this.typeVersionButtons = new SelectionButtonDialogFieldGroup(SWT.RADIO, buttonNames, 2);
-      this.typeVersionButtons.setLabelText(JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.version"));//$NON-NLS-1$
+      this.typeVersionButtons.setLabelText(JDTWSUIMessages
+            .getString("NewWebServicesTestClientWizardPage.label.version"));//$NON-NLS-1$
 
-      buttonNames = new String[]{JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.options.import"), JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.options.unwrap"), JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.options.unreferenced"), JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.options.helper"), JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.options.junit")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+      buttonNames = new String[]
+      {
+            JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.options.import"), JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.options.unwrap"), JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.options.unreferenced"), JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.options.helper"), JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.options.junit")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
       this.optionsButtons = new SelectionButtonDialogFieldGroup(SWT.CHECK, buttonNames, 2);
       this.optionsButtons.setLabelText(JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.options"));//$NON-NLS-1$
 
@@ -319,7 +346,6 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       this.passwordField.setLabelText(JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.password"));//$NON-NLS-1$
    }
 
-
    /**
     * Description of the Method
     *
@@ -329,7 +355,8 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
    protected void createControls(Composite composite, int nColumns)
    {
       this.createWSDLControls(composite, nColumns);
-      FieldsUtil.createLabelControls(JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.credentials"), composite, nColumns);//$NON-NLS-1$
+      FieldsUtil.createLabelControls(
+            JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.label.credentials"), composite, nColumns);//$NON-NLS-1$
       this.createSeparator(composite, nColumns);
       this.createContainerControls(composite, nColumns);
       this.createPackageControls(composite, nColumns);
@@ -341,7 +368,6 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
 
       this.validateWSDLLocation();
    }
-
 
    /**
     * Description of the Method
@@ -377,29 +403,26 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       addButton.setText(JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.button.add"));//$NON-NLS-1$
       addButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-      addButton.addSelectionListener(
-         new SelectionAdapter()
+      addButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               doAddMapping();
-            }
-         });
+            doAddMapping();
+         }
+      });
 
       Button removeButton = new Button(buttonComposite, SWT.PUSH);
       removeButton.setText(JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.button.remove"));//$NON-NLS-1$
       removeButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-      removeButton.addSelectionListener(
-         new SelectionAdapter()
+      removeButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               doRemoveMapping();
-            }
-         });
+            doRemoveMapping();
+         }
+      });
    }
-
 
    /**
     * Description of the Method
@@ -423,28 +446,27 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       data = new GridData(GridData.FILL_HORIZONTAL);
       data.horizontalSpan = nColumns - 2;
       wsdlLocationField.setLayoutData(data);
-      wsdlLocationField.addModifyListener(
-         new ModifyListener()
+      wsdlLocationField.addModifyListener(new ModifyListener()
+      {
+         public void modifyText(ModifyEvent e)
          {
-            public void modifyText(ModifyEvent e)
-            {
-               validateWSDLLocation();
-            }
-         });
+            validateWSDLLocation();
+         }
+      });
 
       // Browse button
       this.wsdlWorkspaceLocationBrowseButton = new Button(composite, SWT.PUSH);
-      this.wsdlWorkspaceLocationBrowseButton.setText(JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.button.browse.workspace"));//$NON-NLS-1$
+      this.wsdlWorkspaceLocationBrowseButton.setText(JDTWSUIMessages
+            .getString("NewWebServicesTestClientWizardPage.button.browse.workspace"));//$NON-NLS-1$
       data = new GridData(GridData.FILL_HORIZONTAL);
       this.wsdlWorkspaceLocationBrowseButton.setLayoutData(data);
-      this.wsdlWorkspaceLocationBrowseButton.addSelectionListener(
-         new SelectionAdapter()
+      this.wsdlWorkspaceLocationBrowseButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent event)
          {
-            public void widgetSelected(SelectionEvent event)
-            {
-               addSelectLocal();
-            }
-         });
+            addSelectLocal();
+         }
+      });
 
       label = new Label(composite, SWT.NONE);
       label.setText("");//$NON-NLS-1$
@@ -454,21 +476,20 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
 
       // Browse button
       this.wsdlExternalLocationBrowseButton = new Button(composite, SWT.PUSH);
-      this.wsdlExternalLocationBrowseButton.setText(JDTWSUIMessages.getString("NewWebServicesTestClientWizardPage.button.browse.external"));//$NON-NLS-1$
+      this.wsdlExternalLocationBrowseButton.setText(JDTWSUIMessages
+            .getString("NewWebServicesTestClientWizardPage.button.browse.external"));//$NON-NLS-1$
       data = new GridData(GridData.FILL_HORIZONTAL);
       this.wsdlExternalLocationBrowseButton.setLayoutData(data);
-      this.wsdlExternalLocationBrowseButton.addSelectionListener(
-         new SelectionAdapter()
+      this.wsdlExternalLocationBrowseButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent event)
          {
-            public void widgetSelected(SelectionEvent event)
-            {
-               addSelectExternal();
-            }
-         });
+            addSelectExternal();
+         }
+      });
 
       this.initWsdlFile(this.selection);
    }
-
 
    /** Description of the Method */
    protected void doAddMapping()
@@ -483,7 +504,6 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       }
    }
 
-
    /** Description of the Method */
    protected void doRemoveMapping()
    {
@@ -496,7 +516,6 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -504,9 +523,9 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
     */
    protected IStatus findMostSevereStatus()
    {
-      return StatusUtil.getMostSevere(new IStatus[]{this.fContainerStatus, this.wsdlStatus});
+      return StatusUtil.getMostSevere(new IStatus[]
+      {this.fContainerStatus, this.wsdlStatus});
    }
-
 
    /** Description of the Method */
    protected void initContent()
@@ -518,7 +537,6 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       this.optionsButtons.setSelection(0, true);
       this.optionsButtons.setSelection(1, true);
    }
-
 
    /**
     * Description of the Method
@@ -541,13 +559,11 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       }
    }
 
-
    /** Sets the focus attribute of the NewWebServicesTestClientWizardPage object */
    protected void setFocus()
    {
       this.wsdlLocationField.setFocus();
    }
-
 
    /** Description of the Method */
    protected void validateWSDLLocation()
@@ -563,7 +579,6 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
       }
       this.updateStatus(this.findMostSevereStatus());
    }
-
 
    /**
     * Description of the Class
@@ -585,7 +600,6 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
          return null;
       }
 
-
       /**
        * Gets the columnText attribute of the ParameterLabelProvider object
        *
@@ -598,10 +612,10 @@ public class NewWebServicesTestClientWizardPage extends ClassWizardPage
          NameValuePair pair = (NameValuePair) element;
          switch (columnIndex)
          {
-            case 0:
+            case 0 :
                return pair.getName() + " [" + pair.getValue() + "]";//$NON-NLS-1$ //$NON-NLS-2$
-            default:
-            // Can't happen
+            default :
+         // Can't happen
          }
          return null;
       }

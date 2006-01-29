@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.properties;
 
@@ -50,13 +65,15 @@ import org.jboss.ide.eclipse.ui.util.ProjectLabelProvider;
 public class JSPProjectNaturePropertyPage extends PropertyPage
 {
    private Button natureEnableButton;
+
    private Button webappRootBrowseButton;
+
    private Text webappRootText;
 
-
    /**Constructor for the JSPProjectNaturePropertyPage object */
-   public JSPProjectNaturePropertyPage() { }
-
+   public JSPProjectNaturePropertyPage()
+   {
+   }
 
    /**
     * Description of the Method
@@ -68,30 +85,28 @@ public class JSPProjectNaturePropertyPage extends PropertyPage
       this.doAssignNature();
 
       final IProject p = this.getProject();
-      Job job =
-         new Job(JDTJ2EEJSPUIMessages.getString("JSPProjectNaturePropertyPage.title")//$NON-NLS-1$
-         )
-         {
+      Job job = new Job(JDTJ2EEJSPUIMessages.getString("JSPProjectNaturePropertyPage.title")//$NON-NLS-1$
+      )
+      {
 
-            protected IStatus run(IProgressMonitor monitor)
+         protected IStatus run(IProgressMonitor monitor)
+         {
+            try
             {
-               try
-               {
-                  p.build(IncrementalProjectBuilder.FULL_BUILD, JDTJ2EEJSPCorePlugin.JSP_BUILDER_ID, null, monitor);
-               }
-               catch (CoreException e)
-               {
-                  // Do nothing
-               }
-               return Status.OK_STATUS;
+               p.build(IncrementalProjectBuilder.FULL_BUILD, JDTJ2EEJSPCorePlugin.JSP_BUILDER_ID, null, monitor);
             }
-         };
+            catch (CoreException e)
+            {
+               // Do nothing
+            }
+            return Status.OK_STATUS;
+         }
+      };
       job.setPriority(Job.BUILD);
       job.schedule();
 
       return super.performOk();
    }
-
 
    /**
     * Description of the Method
@@ -143,25 +158,22 @@ public class JSPProjectNaturePropertyPage extends PropertyPage
       layoutData = new GridData(GridData.GRAB_HORIZONTAL);
       this.webappRootBrowseButton.setLayoutData(layoutData);
 
-      this.webappRootBrowseButton.addSelectionListener(
-         new SelectionAdapter()
+      this.webappRootBrowseButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               assignLocation();
-            }
-         });
+            assignLocation();
+         }
+      });
 
       return parent;
    }
-
 
    /** Description of the Method */
    protected void performApply()
    {
       this.doAssignNature();
    }
-
 
    /** Adds a feature to the Nature attribute of the JSPProjectNaturePropertyPage object */
    private void addNature()
@@ -188,11 +200,11 @@ public class JSPProjectNaturePropertyPage extends PropertyPage
       }
    }
 
-
    /** Description of the Method */
    private void assignLocation()
    {
-      FolderSelectionDialog dialog = new FolderSelectionDialog(AbstractPlugin.getShell(), new ProjectLabelProvider(), new ProjectContentProvider());
+      FolderSelectionDialog dialog = new FolderSelectionDialog(AbstractPlugin.getShell(), new ProjectLabelProvider(),
+            new ProjectContentProvider());
       dialog.setAcceptFolderOnly(true);
 
       // Select all projects as input
@@ -225,7 +237,6 @@ public class JSPProjectNaturePropertyPage extends PropertyPage
       }
    }
 
-
    /** Description of the Method */
    private void doAssignNature()
    {
@@ -244,14 +255,14 @@ public class JSPProjectNaturePropertyPage extends PropertyPage
       // Remove all the decoration
       JSPNatureDecorator decorator = JSPNatureDecorator.getDeployedDecorator();
       if (decorator != null)
-    	  decorator.refresh(jspProject.getUriRootFolder());
+         decorator.refresh(jspProject.getUriRootFolder());
 
       // Reset the project
       jspProject.reset();
 
       // Refresh decoration
       if (decorator != null)
-    	  decorator.refresh(jspProject.getUriRootFolder());
+         decorator.refresh(jspProject.getUriRootFolder());
 
       if (enable)
       {
@@ -263,7 +274,6 @@ public class JSPProjectNaturePropertyPage extends PropertyPage
       }
    }
 
-
    /**
     * Gets the project attribute of the JSPProjectNaturePropertyPage object
     *
@@ -274,7 +284,6 @@ public class JSPProjectNaturePropertyPage extends PropertyPage
       IProject project = (IProject) (this.getElement().getAdapter(IProject.class));
       return project;
    }
-
 
    /**
     * Description of the Method
@@ -294,7 +303,6 @@ public class JSPProjectNaturePropertyPage extends PropertyPage
       }
       return value;
    }
-
 
    /** Description of the Method */
    private void removeNature()

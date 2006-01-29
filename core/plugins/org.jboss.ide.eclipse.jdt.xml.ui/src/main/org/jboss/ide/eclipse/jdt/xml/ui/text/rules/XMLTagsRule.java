@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.text.rules;
 
@@ -28,24 +43,31 @@ public class XMLTagsRule implements IPredicateRule
 {
    /** Description of the Field */
    public final static IToken COMMENT = new Token(XMLPartitionScanner.XML_COMMENT);
+
    /** Description of the Field */
    public final static IToken DECLARATION = new Token(XMLPartitionScanner.XML_DECL);
+
    /** Description of the Field */
    public final static IToken EMPTYTAG = new Token(XMLPartitionScanner.XML_EMPTY_TAG);
+
    /** Description of the Field */
    public final static IToken ENDTAG = new Token(XMLPartitionScanner.XML_END_TAG);
+
    /** Description of the Field */
    public final static IToken END_DECLARATION = new Token(XMLPartitionScanner.XML_END_DECL);
+
    /** Description of the Field */
    public final static IToken PI = new Token(XMLPartitionScanner.XML_PI);
+
    /** Description of the Field */
    public final static IToken START_DECLARATION = new Token(XMLPartitionScanner.XML_START_DECL);
+
    /** Description of the Field */
    public final static IToken TAG = new Token(XMLPartitionScanner.XML_TAG);
+
    //public static final IToken TEXT = new Token(XMLPartitionScanner.XML_TEXT);
    /** Description of the Field */
    public final static IToken TEXT = new Token(IDocument.DEFAULT_CONTENT_TYPE);
-
 
    /**
     * Description of the Method
@@ -98,7 +120,7 @@ public class XMLTagsRule implements IPredicateRule
 
          switch (c)
          {
-            case '!':
+            case '!' :
                result = DECLARATION;
                c = scanner.read();
                if (c == '-')
@@ -125,7 +147,7 @@ public class XMLTagsRule implements IPredicateRule
                {
                   scanner.unread();
                   if (isNext(scanner, "[CDATA[")//$NON-NLS-1$
-                          )
+                  )
                   {
 
                      result = TEXT;
@@ -143,17 +165,17 @@ public class XMLTagsRule implements IPredicateRule
                   }
                }
                break;
-            case '?':
+            case '?' :
                result = PI;
                c = scanTo(scanner, "?>", false);//$NON-NLS-1$
                break;
-            case '>':
+            case '>' :
                break;
-            case '/':
+            case '/' :
                result = ENDTAG;
                c = scanTo(scanner, ">", true);//$NON-NLS-1$
                break;
-            default:
+            default :
                c = scanTo(scanner, ">", true);//$NON-NLS-1$
                if (c != -1)
                {
@@ -175,7 +197,6 @@ public class XMLTagsRule implements IPredicateRule
       return result;
    }
 
-
    /*
     * (non-Javadoc)
     * @see org.eclipse.jface.text.rules.IPredicateRule#evaluate(org.eclipse.jface.text.rules.ICharacterScanner, boolean)
@@ -192,7 +213,6 @@ public class XMLTagsRule implements IPredicateRule
       return evaluate(scanner);
    }
 
-
    /*
     * (non-Javadoc)
     * @see org.eclipse.jface.text.rules.IPredicateRule#getSuccessToken()
@@ -206,7 +226,6 @@ public class XMLTagsRule implements IPredicateRule
    {
       return Token.EOF;//TEXT;//DECLARATION;
    }
-
 
    /**
     * Description of the Method
@@ -245,11 +264,11 @@ public class XMLTagsRule implements IPredicateRule
                return c;
             }
          }
-      } while (c != -1);
+      }
+      while (c != -1);
 
       return c;
    }
-
 
    /**
     * @param scanner
@@ -276,7 +295,6 @@ public class XMLTagsRule implements IPredicateRule
 
       return true;
    }
-
 
    /**
     * Description of the Method
@@ -321,7 +339,8 @@ public class XMLTagsRule implements IPredicateRule
          {
             return c;
          }
-      } while (c != -1);
+      }
+      while (c != -1);
 
       return c;
    }

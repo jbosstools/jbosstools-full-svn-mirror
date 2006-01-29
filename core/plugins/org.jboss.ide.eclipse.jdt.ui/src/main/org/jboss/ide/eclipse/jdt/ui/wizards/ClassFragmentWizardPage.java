@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.wizards;
 
@@ -54,18 +69,23 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
 {
    /** Description of the Field */
    protected StringDialogField nameDialogField;
+
    /** Description of the Field */
    protected IStatus nameStatus;
+
    /** Description of the Field */
    protected StringButtonDialogField typeDialogField;
+
    /** Description of the Field */
    protected IStatus typeStatus;
 
    private FieldsAdapter adapter;
-   private IPackageFragment currPackage;
-   private IPackageFragmentRoot currRoot;
-   private IWorkspaceRoot root;
 
+   private IPackageFragment currPackage;
+
+   private IPackageFragmentRoot currRoot;
+
+   private IWorkspaceRoot root;
 
    /**
     *Constructor for the ClassFragmentWizardPage object
@@ -84,7 +104,6 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
       this.createContent();
    }
 
-
    /**
     *Constructor for the ClassFragmentWizardPage object
     *
@@ -95,7 +114,6 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
       this(ClassFragmentWizardPage.class.getName());
       this.root = root;
    }
-
 
    /**
     * Description of the Method
@@ -111,10 +129,12 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
          return null;
       }
 
-      IJavaElement[] elements = new IJavaElement[]{root.getJavaProject()};
+      IJavaElement[] elements = new IJavaElement[]
+      {root.getJavaProject()};
       IJavaSearchScope scope = SearchEngine.createJavaSearchScope(elements);
 
-      TypeSelectionDialog2 dialog = new TypeSelectionDialog2(getShell(), false, getWizard().getContainer(), scope, IJavaSearchConstants.TYPE);
+      TypeSelectionDialog2 dialog = new TypeSelectionDialog2(getShell(), false, getWizard().getContainer(), scope,
+            IJavaSearchConstants.TYPE);
       dialog.setTitle(JDTUIMessages.getString("ClassFragmentWizardPage.type.selection.title"));//$NON-NLS-1$
       dialog.setMessage(JDTUIMessages.getString("ClassFragmentWizardPage.type.selection.message"));//$NON-NLS-1$
       if (filter != null)
@@ -128,7 +148,6 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
       }
       return null;
    }
-
 
    /**
     * Description of the Method
@@ -149,7 +168,6 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
       this.setControl(composite);
    }
 
-
    /**
     * Gets the fieldsAdapter attribute of the ClassFragmentWizardPage object
     *
@@ -164,7 +182,6 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
       return this.adapter;
    }
 
-
    /**
     * Gets the fieldName attribute of the FieldWizardPage object
     *
@@ -174,7 +191,6 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
    {
       return this.nameDialogField.getText();
    }
-
 
    /**
     * Gets the fieldType attribute of the FieldWizardPage object
@@ -186,7 +202,6 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
       return this.typeDialogField.getText();
    }
 
-
    /**
     * Gets the packageFragment attribute of the ClassFragmentWizardPage object
     *
@@ -196,7 +211,6 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
    {
       return this.currPackage;
    }
-
 
    /**
     * Gets the packageFragmentRoot attribute of the ClassFragmentWizardPage object
@@ -208,7 +222,6 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
       return this.currRoot;
    }
 
-
    /**
     * Gets the workspaceRoot attribute of the ClassFragmentWizardPage object
     *
@@ -218,7 +231,6 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
    {
       return this.root;
    }
-
 
    /**
     * Description of the Method
@@ -236,14 +248,14 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
       this.updateStatus(this.findMostSevereStatus());
    }
 
-
    /**
     * Description of the Method
     *
     * @param field  Description of the Parameter
     */
-   public void pageChangeControlPressed(DialogField field) { }
-
+   public void pageChangeControlPressed(DialogField field)
+   {
+   }
 
    /**
     * Description of the Method
@@ -255,7 +267,6 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
       this.handleFieldChanged(field);
       this.updateStatus(this.findMostSevereStatus());
    }
-
 
    /**
     * Sets the visible attribute of the ClassFragmentWizardPage object
@@ -271,10 +282,8 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
       }
    }
 
-
    /** Description of the Method */
    protected abstract void createContent();
-
 
    /**
     * Description of the Method
@@ -284,7 +293,6 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
     */
    protected abstract void createControl(Composite composite, int nColumns);
 
-
    /**
     * Description of the Method
     *
@@ -293,9 +301,9 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
     */
    protected void createSeparator(Composite composite, int nColumns)
    {
-      (new Separator(SWT.SEPARATOR | SWT.HORIZONTAL)).doFillIntoGrid(composite, nColumns, convertHeightInCharsToPixels(1));
+      (new Separator(SWT.SEPARATOR | SWT.HORIZONTAL)).doFillIntoGrid(composite, nColumns,
+            convertHeightInCharsToPixels(1));
    }
-
 
    /**
     * Description of the Method
@@ -304,9 +312,9 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
     */
    protected IStatus findMostSevereStatus()
    {
-      return StatusUtil.getMostSevere(new IStatus[]{this.nameStatus, this.typeStatus});
+      return StatusUtil.getMostSevere(new IStatus[]
+      {this.nameStatus, this.typeStatus});
    }
-
 
    /**
     * Description of the Method
@@ -315,15 +323,12 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
     */
    protected abstract IStatus fragmentNameChanged();
 
-
    /**
     * Description of the Method
     *
     * @return   Description of the Return Value
     */
    protected abstract IStatus fragmentTypeChanged();
-
-
 
    /**
     * Gets the initialJavaElement attribute of the ClassFragmentWizardPage object
@@ -396,7 +401,6 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
       return jelem;
    }
 
-
    /**
     * Description of the Method
     *
@@ -413,7 +417,6 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
          this.typeStatus = this.fragmentTypeChanged();
       }
    }
-
 
    /**
     * Description of the Method
@@ -462,10 +465,8 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
       this.currPackage = (IPackageFragment) elem.getAncestor(IJavaElement.PACKAGE_FRAGMENT);
    }
 
-
    /** Description of the Method */
    protected abstract void initContent();
-
 
    /**
     * Description of the Method
@@ -475,8 +476,7 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
     * @return                        Description of the Return Value
     * @exception JavaModelException  Description of the Exception
     */
-   protected IType resolveTypeName(IJavaProject jproject, String sclassName)
-      throws JavaModelException
+   protected IType resolveTypeName(IJavaProject jproject, String sclassName) throws JavaModelException
    {
       if (!jproject.exists())
       {
@@ -506,13 +506,11 @@ public abstract class ClassFragmentWizardPage extends WizardPage implements Type
       return type;
    }
 
-
    /** Sets the focus attribute of the ClassFragmentWizardPage object */
    protected void setFocus()
    {
       this.nameDialogField.setFocus();
    }
-
 
    /**
     * Description of the Method

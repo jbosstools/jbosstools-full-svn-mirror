@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.run.ui;
 
@@ -50,19 +65,24 @@ public class ConfigurationViewer
 {
    /** Description of the Field */
    private Action addDocletAction;
+
    /** Description of the Field */
    private Action addElementAction;
+
    /** Description of the Field */
    private XDocletConfiguration configuration;
+
    /** Description of the Field */
    private Menu contextMenu;
+
    /** Description of the Field */
    private Composite parentComposite;
+
    /** Description of the Field */
    private Action removeElementAction;
+
    /** Description of the Field */
    private CheckboxTreeViewer viewer;
-
 
    /**
     *Constructor for the ConfigurationViewer object
@@ -79,38 +99,34 @@ public class ConfigurationViewer
       this.viewer.setContentProvider(new ConfigurationContentProvider());
       this.viewer.setSorter(new StringViewSorter());
       this.viewer.setAutoExpandLevel(AbstractTreeViewer.ALL_LEVELS);
-      this.viewer.setLabelProvider(
-         new DefaultLabelProvider()
+      this.viewer.setLabelProvider(new DefaultLabelProvider()
+      {
+         public Image getImage(Object element)
          {
-            public Image getImage(Object element)
+            if (element instanceof XDocletTask)
             {
-               if (element instanceof XDocletTask)
-               {
-                  return XDocletUIImages.getImage(IXDocletUIConstants.IMG_OBJS_XDOCLET_TASK);
-               }
-               return XDocletUIImages.getImage(IXDocletUIConstants.IMG_OBJS_XDOCLET_SUBTASK);
+               return XDocletUIImages.getImage(IXDocletUIConstants.IMG_OBJS_XDOCLET_TASK);
             }
+            return XDocletUIImages.getImage(IXDocletUIConstants.IMG_OBJS_XDOCLET_SUBTASK);
+         }
 
-
-            public String getText(Object element)
-            {
-               return element.toString();
-            }
-         });
-
-      this.viewer.addCheckStateListener(
-         new ICheckStateListener()
+         public String getText(Object element)
          {
-            public void checkStateChanged(CheckStateChangedEvent event)
-            {
-               XDocletElement element = (XDocletElement) event.getElement();
-               element.setUsed(event.getChecked());
-            }
-         });
+            return element.toString();
+         }
+      });
+
+      this.viewer.addCheckStateListener(new ICheckStateListener()
+      {
+         public void checkStateChanged(CheckStateChangedEvent event)
+         {
+            XDocletElement element = (XDocletElement) event.getElement();
+            element.setUsed(event.getChecked());
+         }
+      });
       this.prepareActions();
       this.initContextMenu();
    }
-
 
    /**
     * Adds a feature to the SelectionChangedListener attribute of the ConfigurationViewer object
@@ -121,7 +137,6 @@ public class ConfigurationViewer
    {
       this.viewer.addSelectionChangedListener(listener);
    }
-
 
    /**
     * Gets the current attribute of the ConfigurationListViewer object
@@ -139,7 +154,6 @@ public class ConfigurationViewer
       return null;
    }
 
-
    /**
     * Description of the Method
     *
@@ -149,7 +163,6 @@ public class ConfigurationViewer
    {
       this.viewer.removeSelectionChangedListener(listener);
    }
-
 
    /**
     * Sets the configuration attribute of the ConfigurationViewer object
@@ -162,7 +175,6 @@ public class ConfigurationViewer
       this.viewer.setInput(this.configuration);
       this.refresh();
    }
-
 
    /** Description of the Method */
    private void doAdd()
@@ -187,13 +199,13 @@ public class ConfigurationViewer
       }
    }
 
-
    /** Description of the Method */
    private void doAddDoclet()
    {
       if (this.configuration != null)
       {
-         DataChoiceDialog dialog = new DataChoiceDialog(this.parentComposite.getShell(), XDocletRunPlugin.getDefault().getXDocletDataRepository().getTasks());
+         DataChoiceDialog dialog = new DataChoiceDialog(this.parentComposite.getShell(), XDocletRunPlugin.getDefault()
+               .getXDocletDataRepository().getTasks());
          if (dialog.open() == Window.OK)
          {
             XDocletData data = dialog.getXDocletData();
@@ -206,10 +218,10 @@ public class ConfigurationViewer
       }
       else
       {
-         XDocletRunPlugin.getDefault().showInfoMessage(XDocletRunMessages.getString("ConfigurationViewer.add.doclet.failed"));//$NON-NLS-1$
+         XDocletRunPlugin.getDefault().showInfoMessage(
+               XDocletRunMessages.getString("ConfigurationViewer.add.doclet.failed"));//$NON-NLS-1$
       }
    }
-
 
    /** Description of the Method */
    private void doRemove()
@@ -221,7 +233,6 @@ public class ConfigurationViewer
          this.refresh();
       }
    }
-
 
    /** Description of the Method */
    private void enableAction()
@@ -241,7 +252,6 @@ public class ConfigurationViewer
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -255,7 +265,6 @@ public class ConfigurationViewer
       manager.add(this.addDocletAction);
       manager.add(new Separator("Additions"));//$NON-NLS-1$
    }
-
 
    /**
     * Gets the usedElements attribute of the ConfigurationViewer object
@@ -286,70 +295,63 @@ public class ConfigurationViewer
       return used;
    }
 
-
    /** Description of the Method */
    private void initContextMenu()
    {
       MenuManager menuManager = new MenuManager("#PopupMenu");//$NON-NLS-1$
       menuManager.setRemoveAllWhenShown(true);
-      menuManager.addMenuListener(
-         new IMenuListener()
+      menuManager.addMenuListener(new IMenuListener()
+      {
+         public void menuAboutToShow(IMenuManager manager)
          {
-            public void menuAboutToShow(IMenuManager manager)
-            {
-               enableAction();
-               fillContextMenu(manager);
-            }
+            enableAction();
+            fillContextMenu(manager);
+         }
 
-         });
+      });
       this.contextMenu = menuManager.createContextMenu(this.viewer.getControl());
       this.viewer.getControl().setMenu(contextMenu);
    }
 
-
    /** Description of the Method */
    private void prepareActions()
    {
-      this.addDocletAction =
-         new Action()
+      this.addDocletAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doAddDoclet();
-            }
+            doAddDoclet();
+         }
 
-         };
+      };
       this.addDocletAction.setText(XDocletRunMessages.getString("ConfigurationViewer.action.add.doclet"));//$NON-NLS-1$
       this.addDocletAction.setToolTipText(XDocletRunMessages.getString("ConfigurationViewer.action.add.doclet.tip"));//$NON-NLS-1$
       this.addDocletAction.setEnabled(true);
 
-      this.addElementAction =
-         new Action()
+      this.addElementAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doAdd();
-            }
+            doAdd();
+         }
 
-         };
+      };
       this.addElementAction.setText(XDocletRunMessages.getString("ConfigurationViewer.action.add"));//$NON-NLS-1$
       this.addElementAction.setToolTipText(XDocletRunMessages.getString("ConfigurationViewer.action.add.tip"));//$NON-NLS-1$
       this.addElementAction.setEnabled(true);
 
-      this.removeElementAction =
-         new Action()
+      this.removeElementAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doRemove();
-            }
+            doRemove();
+         }
 
-         };
+      };
       this.removeElementAction.setText(XDocletRunMessages.getString("ConfigurationViewer.action.remove"));//$NON-NLS-1$
       this.removeElementAction.setToolTipText(XDocletRunMessages.getString("ConfigurationViewer.action.remove.tip"));//$NON-NLS-1$
       this.removeElementAction.setEnabled(true);
    }
-
 
    /** Description of the Method */
    private void refresh()

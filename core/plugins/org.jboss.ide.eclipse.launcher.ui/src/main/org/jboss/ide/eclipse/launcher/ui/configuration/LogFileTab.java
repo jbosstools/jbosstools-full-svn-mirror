@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.ui.configuration;
 
@@ -56,21 +71,27 @@ public class LogFileTab extends JavaLaunchConfigurationTab implements ISelection
 {
    /** Description of the Field */
    protected Button addButton;
+
    /** Description of the Field */
    protected Composite buttonComposite;
+
    /** Description of the Field */
    protected Button editButton;
+
    /** Description of the Field */
    protected String filterPath;
+
    /** Description of the Field */
    protected Composite logFileComposite;
+
    /** Description of the Field */
    protected List logFiles = new ArrayList();
+
    /** Description of the Field */
    protected Button removeButton;
+
    /** Description of the Field */
    protected TableViewer viewer;
-
 
    /**
     * @param parent  Description of the Parameter
@@ -87,7 +108,6 @@ public class LogFileTab extends JavaLaunchConfigurationTab implements ISelection
       makeButtonComposite(logFileComposite);
    }
 
-
    /**
     * @return   The image value
     * @see      org.eclipse.debug.ui.ILaunchConfigurationTab#getImage()
@@ -97,7 +117,6 @@ public class LogFileTab extends JavaLaunchConfigurationTab implements ISelection
       return LauncherUIImages.getImage(ILauncherUIConstants.IMG_OBJS_LOGFILE_TAB);
    }
 
-
    /**
     * @return   The name value
     * @see      org.eclipse.debug.ui.ILaunchConfigurationTab#getName()
@@ -106,7 +125,6 @@ public class LogFileTab extends JavaLaunchConfigurationTab implements ISelection
    {
       return LauncherUIMessages.getString("LogFileTab.Log_Files_3");//$NON-NLS-1$
    }
-
 
    /**
     * @param configuration  Description of the Parameter
@@ -126,7 +144,6 @@ public class LogFileTab extends JavaLaunchConfigurationTab implements ISelection
       }
    }
 
-
    /**
     * @param configuration  Description of the Parameter
     * @see                  org.eclipse.debug.ui.ILaunchConfigurationTab#performApply(ILaunchConfigurationWorkingCopy)
@@ -134,14 +151,13 @@ public class LogFileTab extends JavaLaunchConfigurationTab implements ISelection
    public void performApply(ILaunchConfigurationWorkingCopy configuration)
    {
       HashMap map = new HashMap();
-      for (Iterator iter = logFiles.iterator(); iter.hasNext(); )
+      for (Iterator iter = logFiles.iterator(); iter.hasNext();)
       {
          LogFile logFile = (LogFile) iter.next();
          map.put(logFile.getFileName(), "" + logFile.getPollingIntervall());//$NON-NLS-1$
       }
       configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_LOG_FILES, map);
    }
-
 
    /**
     * @param event  Description of the Parameter
@@ -153,7 +169,6 @@ public class LogFileTab extends JavaLaunchConfigurationTab implements ISelection
       removeButton.setEnabled(true);
    }
 
-
    /**
     * @param configuration  The new defaults value
     * @see                  org.eclipse.debug.ui.ILaunchConfigurationTab#setDefaults(ILaunchConfigurationWorkingCopy)
@@ -161,7 +176,6 @@ public class LogFileTab extends JavaLaunchConfigurationTab implements ISelection
    public void setDefaults(ILaunchConfigurationWorkingCopy configuration)
    {
    }
-
 
    /**
     * Description of the Method
@@ -180,66 +194,62 @@ public class LogFileTab extends JavaLaunchConfigurationTab implements ISelection
       addButton = new Button(buttonComposite, SWT.PUSH);
       addButton.setText(LauncherUIMessages.getString("LogFileTab.add_6"));//$NON-NLS-1$
 
-      addButton.addSelectionListener(
-         new SelectionAdapter()
+      addButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
+            // We don't have to know the configuration here. A LogFile is
+            // persisted without this information
+            // as the information is contained in the embracing
+            // LaunchConfiguration. After creating a LogFile
+            // from the store it will be added. It's a bit of a hack.
+            LogFile logFile = new LogFile(null, "", LogFile.DEFAULT_POLLING_INTERVALL);//$NON-NLS-1$
+            LogFileDialog dialog = new LogFileDialog(LogFileTab.this.getShell(), logFile, filterPath);
+            int code = dialog.open();
+            if (code == Window.OK)
             {
-               // We don't have to know the configuration here. A LogFile is
-               // persisted without this information
-               // as the information is contained in the embracing
-               // LaunchConfiguration. After creating a LogFile
-               // from the store it will be added. It's a bit of a hack.
-               LogFile logFile = new LogFile(null, "", LogFile.DEFAULT_POLLING_INTERVALL);//$NON-NLS-1$
-               LogFileDialog dialog = new LogFileDialog(LogFileTab.this.getShell(), logFile, filterPath);
-               int code = dialog.open();
-               if (code == Window.OK)
-               {
-                  logFiles.add(logFile);
-                  filterPath = new File(logFile.getFileName()).getParent();
-                  viewer.refresh();
-                  setDirty(true);
-                  updateLaunchConfigurationDialog();
-               }
-            }
-         });
-
-      editButton = new Button(buttonComposite, SWT.PUSH);
-      editButton.setText(LauncherUIMessages.getString("LogFileTab.edit_8"));//$NON-NLS-1$
-      editButton.setEnabled(false);
-      editButton.addSelectionListener(
-         new SelectionAdapter()
-         {
-            public void widgetSelected(SelectionEvent e)
-            {
-               LogFile logFile = (LogFile) ((IStructuredSelection) viewer.getSelection()).getFirstElement();
-               LogFileDialog dialog = new LogFileDialog(LogFileTab.this.getShell(), logFile, logFile.getFileName());
-               int code = dialog.open();
-               if (code == Window.OK)
-               {
-                  viewer.refresh();
-                  setDirty(true);
-                  updateLaunchConfigurationDialog();
-               }
-            }
-         });
-      removeButton = new Button(buttonComposite, SWT.PUSH);
-      removeButton.setText(LauncherUIMessages.getString("LogFileTab.remove_9"));//$NON-NLS-1$
-      removeButton.setEnabled(false);
-      removeButton.addSelectionListener(
-         new SelectionAdapter()
-         {
-            public void widgetSelected(SelectionEvent e)
-            {
-               LogFile logFile = (LogFile) ((IStructuredSelection) viewer.getSelection()).getFirstElement();
-               logFiles.remove(logFile);
+               logFiles.add(logFile);
+               filterPath = new File(logFile.getFileName()).getParent();
                viewer.refresh();
                setDirty(true);
                updateLaunchConfigurationDialog();
             }
-         });
-   }
+         }
+      });
 
+      editButton = new Button(buttonComposite, SWT.PUSH);
+      editButton.setText(LauncherUIMessages.getString("LogFileTab.edit_8"));//$NON-NLS-1$
+      editButton.setEnabled(false);
+      editButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
+         {
+            LogFile logFile = (LogFile) ((IStructuredSelection) viewer.getSelection()).getFirstElement();
+            LogFileDialog dialog = new LogFileDialog(LogFileTab.this.getShell(), logFile, logFile.getFileName());
+            int code = dialog.open();
+            if (code == Window.OK)
+            {
+               viewer.refresh();
+               setDirty(true);
+               updateLaunchConfigurationDialog();
+            }
+         }
+      });
+      removeButton = new Button(buttonComposite, SWT.PUSH);
+      removeButton.setText(LauncherUIMessages.getString("LogFileTab.remove_9"));//$NON-NLS-1$
+      removeButton.setEnabled(false);
+      removeButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
+         {
+            LogFile logFile = (LogFile) ((IStructuredSelection) viewer.getSelection()).getFirstElement();
+            logFiles.remove(logFile);
+            viewer.refresh();
+            setDirty(true);
+            updateLaunchConfigurationDialog();
+         }
+      });
+   }
 
    /**
     * Description of the Method
@@ -269,7 +279,6 @@ public class LogFileTab extends JavaLaunchConfigurationTab implements ISelection
       viewer.addSelectionChangedListener(this);
    }
 
-
    /**
     * Description of the Class
     *
@@ -291,7 +300,6 @@ public class LogFileTab extends JavaLaunchConfigurationTab implements ISelection
          return null;
       }
 
-
       /**
        * Gets the columnText attribute of the ViewLabelProvider object
        *
@@ -304,11 +312,11 @@ public class LogFileTab extends JavaLaunchConfigurationTab implements ISelection
          LogFile logFile = (LogFile) element;
          switch (columnIndex)
          {
-            case 0:
+            case 0 :
                return logFile.getFileName();
-            case 1:
+            case 1 :
                return "" + logFile.getPollingIntervall();//$NON-NLS-1$
-            default:
+            default :
                return null;
          }
       }

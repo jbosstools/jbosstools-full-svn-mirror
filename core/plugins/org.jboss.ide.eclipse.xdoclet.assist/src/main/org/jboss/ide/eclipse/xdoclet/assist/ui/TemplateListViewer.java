@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.ui;
 
@@ -42,27 +57,27 @@ import org.jboss.ide.eclipse.xdoclet.assist.model.TemplateTree;
 public class TemplateListViewer extends Composite
 {
    /** Description of the Field */
-   public Action fAddAction,
-         fAddTreeAction,
-         fRemoveTreeAction,
-         fReplaceAction,
-         fRemoveAction,
-         fCopyAction,
+   public Action fAddAction, fAddTreeAction, fRemoveTreeAction, fReplaceAction, fRemoveAction, fCopyAction,
          fRenameAction;
+
    /** Description of the Field */
    protected AddProposalListener addProposalListener = null;
+
    /** Description of the Field */
    protected Menu contextMenu;//$NON-NLS-1$
+
    /** Description of the Field */
    protected TreeViewer fViewer;
+
    /** Description of the Field */
    protected CompletionProposalPopup popup;
+
    /** Description of the Field */
    protected ReplaceProposalListener replaceProposalListener = null;
 
    /** Description of the Field */
-   protected final static String CONTEXT_TREE_NAME = XDocletAssistMessages.getString(XDocletAssistMessages.getString("TemplateListViewer.TemplateListViewer.Contexts_1_1"));//$NON-NLS-1$
-
+   protected final static String CONTEXT_TREE_NAME = XDocletAssistMessages.getString(XDocletAssistMessages
+         .getString("TemplateListViewer.TemplateListViewer.Contexts_1_1"));//$NON-NLS-1$
 
    /**
     * Constructor for TemplateTreeViewer.
@@ -71,10 +86,7 @@ public class TemplateListViewer extends Composite
     * @param style
     * @param templateList  Description of the Parameter
     */
-   public TemplateListViewer(
-         TemplateList templateList,
-         Composite parent,
-         int style)
+   public TemplateListViewer(TemplateList templateList, Composite parent, int style)
    {
       super(parent, style);
       if (templateList == null)
@@ -83,7 +95,6 @@ public class TemplateListViewer extends Composite
       }
       init(templateList);
    }
-
 
    /**
     * Description of the Method
@@ -103,7 +114,6 @@ public class TemplateListViewer extends Composite
       }
       return findTemplateTree(item).computeChildren(null, true);
    }
-
 
    /**
     * Description of the Method
@@ -129,7 +139,6 @@ public class TemplateListViewer extends Composite
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -145,7 +154,6 @@ public class TemplateListViewer extends Composite
       return (TemplateTree) item.getData();
    }
 
-
    /**
     * Gets the contextMenu attribute of the TemplateListViewer object
     *
@@ -155,7 +163,6 @@ public class TemplateListViewer extends Composite
    {
       return contextMenu;
    }
-
 
    /**
     * Gets the popup attribute of the TemplateListViewer object
@@ -171,7 +178,6 @@ public class TemplateListViewer extends Composite
       return popup;
    }
 
-
    /**
     * Returns the viewer.
     *
@@ -182,7 +188,6 @@ public class TemplateListViewer extends Composite
       return fViewer;
    }
 
-
    /**
     * Adds a feature to the Elements attribute of the TemplateListViewer object
     *
@@ -191,22 +196,17 @@ public class TemplateListViewer extends Composite
     * @param docletElements           The feature to be added to the Elements attribute
     * @param onlyNotExistingElements  The feature to be added to the Elements attribute
     */
-   protected void addElements(
-         ArrayList objects,
-         TemplateElement templateElement,
-         DocletElement[] docletElements,
+   protected void addElements(ArrayList objects, TemplateElement templateElement, DocletElement[] docletElements,
          boolean onlyNotExistingElements)
    {
       for (int i = 0; i < docletElements.length; i++)
       {
-         if (!onlyNotExistingElements
-               || templateElement.getChild(docletElements[i].getName()) == null)
+         if (!onlyNotExistingElements || templateElement.getChild(docletElements[i].getName()) == null)
          {
             objects.add(docletElements[i]);
          }
       }
    }
-
 
    /** Description of the Method */
    protected void doAdd()
@@ -217,7 +217,6 @@ public class TemplateListViewer extends Composite
       showPopup(getSelectedElement(), proposals);
    }
 
-
    /** Description of the Method */
    protected void doReplace()
    {
@@ -227,7 +226,6 @@ public class TemplateListViewer extends Composite
       Object[] proposals = computeProposals(selectedItem.getParentItem());
       showPopup(selectedItem.getParentItem().getData(), proposals);
    }
-
 
    /**
     * Gets the addProposalListener attribute of the TemplateListViewer object
@@ -243,7 +241,6 @@ public class TemplateListViewer extends Composite
       return addProposalListener;
    }
 
-
    /**
     * Gets the replaceProposalListener attribute of the TemplateListViewer object
     *
@@ -258,7 +255,6 @@ public class TemplateListViewer extends Composite
       return replaceProposalListener;
    }
 
-
    /**
     * Gets the selectedElement attribute of the TemplateListViewer object
     *
@@ -266,15 +262,13 @@ public class TemplateListViewer extends Composite
     */
    protected Object getSelectedElement()
    {
-      IStructuredSelection selection =
-            (IStructuredSelection) fViewer.getSelection();
+      IStructuredSelection selection = (IStructuredSelection) fViewer.getSelection();
       if (selection.isEmpty())
       {
          return null;
       }
       return selection.getFirstElement();
    }
-
 
    /**
     * Gets the selectedItem attribute of the TemplateListViewer object
@@ -290,7 +284,6 @@ public class TemplateListViewer extends Composite
       return null;
    }
 
-
    /**
     * Gets the templateList attribute of the TemplateListViewer object
     *
@@ -298,10 +291,8 @@ public class TemplateListViewer extends Composite
     */
    protected TemplateList getTemplateList()
    {
-      return ((TemplateListContentProvider) fViewer.getContentProvider())
-            .getTemplateList();
+      return ((TemplateListContentProvider) fViewer.getContentProvider()).getTemplateList();
    }
-
 
    /**
     * Description of the Method
@@ -318,20 +309,18 @@ public class TemplateListViewer extends Composite
       fViewer.setContentProvider(new TemplateListContentProvider());
       fViewer.setInput(templateList);
       fViewer.setLabelProvider(new LocalLableProvider());
-      fViewer.getTree().addMouseListener(
-         new MouseAdapter()
+      fViewer.getTree().addMouseListener(new MouseAdapter()
+      {
+         public void mouseDoubleClick(MouseEvent e)
          {
-            public void mouseDoubleClick(MouseEvent e)
-            {
-               doAdd();
-            }
-         });
+            doAdd();
+         }
+      });
       fViewer.setAutoExpandLevel(AbstractTreeViewer.ALL_LEVELS);
       //
       makeActions();
       initContextMenu();
    }
-
 
    /**
     * Description of the Method
@@ -346,7 +335,6 @@ public class TemplateListViewer extends Composite
       return fViewer.getTree().toDisplay(new Point(x, y));
    }
 
-
    /** Sets the actionEnablement attribute of the TemplateListViewer object */
    protected void setActionEnablement()
    {
@@ -358,11 +346,9 @@ public class TemplateListViewer extends Composite
       fAddAction.setEnabled(proposals.length > 0);
       if (getSelectedItem().getParentItem() != null)
       {
-         fReplaceAction.setEnabled(
-               computeProposals(getSelectedItem().getParentItem()).length > 0);
+         fReplaceAction.setEnabled(computeProposals(getSelectedItem().getParentItem()).length > 0);
       }
    }
-
 
    /**
     * Description of the Method
@@ -385,18 +371,14 @@ public class TemplateListViewer extends Composite
       getPopup().showFreshPopup(proposals, null, location, sorter);
    }
 
-
    /** Description of the Method */
    private void doAddTree()
    {
-      TemplateTree tree =
-            getTemplateList().addTemplate(getTemplateList().getNewName(), null);
-      TreeNameDialog fTreeNameDialog =
-            new TreeNameDialog(fViewer.getControl().getShell(), tree, getTemplateList());
+      TemplateTree tree = getTemplateList().addTemplate(getTemplateList().getNewName(), null);
+      TreeNameDialog fTreeNameDialog = new TreeNameDialog(fViewer.getControl().getShell(), tree, getTemplateList());
       fTreeNameDialog.open();
       fViewer.refresh(false);
    }
-
 
    /** Description of the Method */
    private void doRemove()
@@ -406,33 +388,27 @@ public class TemplateListViewer extends Composite
       fViewer.refresh(tree, false);
    }
 
-
    /** Description of the Method */
    private void doRemoveTree()
    {
-      getTemplateList().deleteTemplate(
-            ((TemplateTree) getSelectedElement()).getName());
+      getTemplateList().deleteTemplate(((TemplateTree) getSelectedElement()).getName());
    }
-
 
    /** Description of the Method */
    private void doRename()
    {
       TemplateTree tree = (TemplateTree) getSelectedElement();
-      TreeNameDialog fTreeNameDialog =
-            new TreeNameDialog(fViewer.getControl().getShell(), tree, getTemplateList());
+      TreeNameDialog fTreeNameDialog = new TreeNameDialog(fViewer.getControl().getShell(), tree, getTemplateList());
       fTreeNameDialog.open();
       fViewer.refresh(false);
    }
 
-
-//   private void fillContextTreeContextMenu(IMenuManager manager)
-//   {
-//      manager.add(fAddAction);
-//      // Other plug-ins can contribute there actions here
-//      manager.add(new Separator("Additions"));//$NON-NLS-1$
-//   }
-
+   //   private void fillContextTreeContextMenu(IMenuManager manager)
+   //   {
+   //      manager.add(fAddAction);
+   //      // Other plug-ins can contribute there actions here
+   //      manager.add(new Separator("Additions"));//$NON-NLS-1$
+   //   }
 
    /**
     * Description of the Method
@@ -445,7 +421,6 @@ public class TemplateListViewer extends Composite
       // Other plug-ins can contribute there actions here
       manager.add(new Separator("Additions"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -460,7 +435,6 @@ public class TemplateListViewer extends Composite
       // Other plug-ins can contribute there actions here
       manager.add(new Separator("Additions"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -478,66 +452,60 @@ public class TemplateListViewer extends Composite
       manager.add(new Separator("Additions"));//$NON-NLS-1$
    }
 
-
    /** Description of the Method */
    private void initContextMenu()
    {
       MenuManager menuManager = new MenuManager("#PopupMenu");//$NON-NLS-1$
       menuManager.setRemoveAllWhenShown(true);
-      menuManager.addMenuListener(
-         new IMenuListener()
+      menuManager.addMenuListener(new IMenuListener()
+      {
+         public void menuAboutToShow(IMenuManager manager)
          {
-            public void menuAboutToShow(IMenuManager manager)
-            {
-               setActionEnablement();
-               TemplateListViewer.this.fillContextMenu(manager);
-            }
-         });
+            setActionEnablement();
+            TemplateListViewer.this.fillContextMenu(manager);
+         }
+      });
       contextMenu = menuManager.createContextMenu(fViewer.getControl());
       fViewer.getControl().setMenu(contextMenu);
       // getSite().registerContextMenu(menuMgr, fViewer);
    }
 
-
    /** Description of the Method */
    private void makeActions()
    {
-      fAddAction =
-         new Action()
+      fAddAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doAdd();
-            }
-         };
+            doAdd();
+         }
+      };
       fAddAction.setText(XDocletAssistMessages.getString("TemplateListViewer.Add_3"));//$NON-NLS-1$
       fAddAction.setToolTipText(XDocletAssistMessages.getString("TemplateListViewer.Add_4"));//$NON-NLS-1$
       //		fAddAction.setImageDescriptor(
       //			XDocletPluginImages.DESC_TEMPLATE_ADD_ACTION);
       fAddAction.setEnabled(true);
 
-      fReplaceAction =
-         new Action()
+      fReplaceAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doReplace();
-            }
-         };
+            doReplace();
+         }
+      };
       fReplaceAction.setText(XDocletAssistMessages.getString("TemplateListViewer.Replace_5"));//$NON-NLS-1$
       fReplaceAction.setToolTipText(XDocletAssistMessages.getString("TemplateListViewer.Replace_6"));//$NON-NLS-1$
       //		fReplaceAction.setImageDescriptor(
       //			XDocletPluginImages.DESC_TEMPLATE_REPLACE_ACTION);
       fReplaceAction.setEnabled(true);
 
-      fRemoveAction =
-         new Action()
+      fRemoveAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doRemove();
-            }
-         };
+            doRemove();
+         }
+      };
       fRemoveAction.setText(XDocletAssistMessages.getString("TemplateListViewer.Remove_7"));//$NON-NLS-1$
       fRemoveAction.setToolTipText(XDocletAssistMessages.getString("TemplateListViewer.Remove_8"));//$NON-NLS-1$
       fRemoveAction.setEnabled(true);
@@ -556,46 +524,42 @@ public class TemplateListViewer extends Composite
       //		fCopyAction.setImageDescriptor(
       //			XDocletPluginImages.DESC_TEMPLATETREE_COPY_ACTION);
 
-      fRenameAction =
-         new Action()
+      fRenameAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doRename();
-            }
-         };
+            doRename();
+         }
+      };
       fRenameAction.setText(XDocletAssistMessages.getString("TemplateListViewer.Rename_9"));//$NON-NLS-1$
       fRenameAction.setToolTipText(XDocletAssistMessages.getString("TemplateListViewer.Rename_10"));//$NON-NLS-1$
       fRenameAction.setEnabled(true);
       //		fRenameAction.setImageDescriptor(
       //			XDocletPluginImages.DESC_TEMPLATETREE_RENAME_ACTION);
 
-      fAddTreeAction =
-         new Action()
+      fAddTreeAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doAddTree();
-            }
-         };
+            doAddTree();
+         }
+      };
       fAddTreeAction.setText(XDocletAssistMessages.getString("TemplateListViewer.Add_Tree_11"));//$NON-NLS-1$
       fAddTreeAction.setToolTipText(XDocletAssistMessages.getString("TemplateListViewer.Add_Tree_12"));//$NON-NLS-1$
       fAddTreeAction.setEnabled(true);
       //		fAddTreeAction.setImageDescriptor(
       //			XDocletPluginImages.DESC_TEMPLATETREE_ADD_TREE_ACTION);
-      fRemoveTreeAction =
-         new Action()
+      fRemoveTreeAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doRemoveTree();
-            }
-         };
+            doRemoveTree();
+         }
+      };
       fRemoveTreeAction.setText(XDocletAssistMessages.getString("TemplateListViewer.Remove_13"));//$NON-NLS-1$
       fRemoveTreeAction.setToolTipText(XDocletAssistMessages.getString("TemplateListViewer.Remove_14"));//$NON-NLS-1$
       fRemoveTreeAction.setEnabled(true);
    }
-
 
    /**
     * Description of the Class
@@ -607,8 +571,9 @@ public class TemplateListViewer extends Composite
    protected class AddProposalListener implements IProposalListener
    {
       /** Description of the Method */
-      public void closedWithoutProposals() { }
-
+      public void closedWithoutProposals()
+      {
+      }
 
       /**
        * Description of the Method
@@ -650,8 +615,7 @@ public class TemplateListViewer extends Composite
             fViewer.expandToLevel(childItem.getData(), 1);
             if (childItem.getItemCount() > 0)
             {
-               fViewer.setSelection(
-                     new StructuredSelection(childItem.getItems()[0].getData()));
+               fViewer.setSelection(new StructuredSelection(childItem.getItems()[0].getData()));
                doReplace();
             }
             else
@@ -663,7 +627,6 @@ public class TemplateListViewer extends Composite
          }
       }
    }
-
 
    /**
     * Description of the Class
@@ -686,7 +649,6 @@ public class TemplateListViewer extends Composite
          return ImageStore.getImage(element);
       }
 
-
       /**
        * @param element  Description of the Parameter
        * @return         The text value
@@ -700,7 +662,6 @@ public class TemplateListViewer extends Composite
       }
    }
 
-
    /**
     * Description of the Class
     *
@@ -711,8 +672,9 @@ public class TemplateListViewer extends Composite
    protected class ReplaceProposalListener implements IProposalListener
    {
       /** Description of the Method */
-      public void closedWithoutProposals() { }
-
+      public void closedWithoutProposals()
+      {
+      }
 
       /**
        * Description of the Method
@@ -731,7 +693,6 @@ public class TemplateListViewer extends Composite
          fViewer.refresh(parentItem.getData(), false);
       }
    }
-
 
    /**
     * Description of the Class

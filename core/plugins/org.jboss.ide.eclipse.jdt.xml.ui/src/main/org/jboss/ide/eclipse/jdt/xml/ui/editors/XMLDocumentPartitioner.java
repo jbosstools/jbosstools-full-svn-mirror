@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.editors;
 
@@ -37,18 +52,25 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
 {
    /** Description of the Field */
    protected int fDeleteOffset;
+
    /** Description of the Field */
    protected IDocument fDocument;
+
    /** Description of the Field */
    protected int fEndOffset;
+
    /** Description of the Field */
    protected String fLegalContentTypes[];
+
    /** Description of the Field */
    protected DefaultPositionUpdater fPositionUpdater;
+
    /** Description of the Field */
    protected int fPreviousDocumentLength;//$NON-NLS-1$
+
    /** Description of the Field */
    protected IPartitionTokenScanner fScanner;
+
    /** Description of the Field */
    protected int fStartOffset;
 
@@ -56,7 +78,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
 
    /** Description of the Field */
    public final static String CONTENT_TYPES_CATEGORY = "__xml_content_types_category";//$NON-NLS-1$
-
 
    /**
     *Constructor for the XMLDocumentPartitioner object
@@ -71,7 +92,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       fPositionCategory = CONTENT_TYPES_CATEGORY;
       fPositionUpdater = new DefaultPositionUpdater(fPositionCategory);
    }
-
 
    /**
     * Description of the Method
@@ -138,7 +158,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       return result;
    }
 
-
    /**
     * Description of the Method
     *
@@ -153,7 +172,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       initialize();
    }
 
-
    /** Description of the Method */
    public void disconnect()
    {
@@ -166,7 +184,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       {
       }
    }
-
 
    /**
     * Description of the Method
@@ -182,7 +199,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       fDeleteOffset = -1;
    }
 
-
    /**
     * Description of the Method
     *
@@ -194,7 +210,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       IRegion region = documentChanged2(e);
       return region != null;
    }
-
 
    /**
     * Description of the Method
@@ -255,7 +270,7 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
          category = d.getPositions(this.getPositionCategory());
          fScanner.setPartialRange(d, reparseStart, d.getLength() - reparseStart, contentType, partitionStart);
          int lastScannedPosition = reparseStart;
-         for (IToken token = fScanner.nextToken(); !token.isEOF(); )
+         for (IToken token = fScanner.nextToken(); !token.isEOF();)
          {
             contentType = getTokenContentType(token);
             if (!isSupportedContentType(contentType))
@@ -271,8 +286,9 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
                {
                   TypedPosition p = (TypedPosition) category[first];
                   if (lastScannedPosition < ((Position) (p)).offset + ((Position) (p)).length
-                     && (!p.overlapsWith(start, length) || d.containsPosition(this.getPositionCategory(), start, length)
-                     && contentType.equals(p.getType())))
+                        && (!p.overlapsWith(start, length) || d.containsPosition(this.getPositionCategory(), start,
+                              length)
+                              && contentType.equals(p.getType())))
                   {
                      break;
                   }
@@ -311,7 +327,7 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
          {
             lastScannedPosition++;
          }
-         for (first = d.computeIndexInCategory(this.getPositionCategory(), lastScannedPosition); first < category.length; )
+         for (first = d.computeIndexInCategory(this.getPositionCategory(), lastScannedPosition); first < category.length;)
          {
             TypedPosition p = (TypedPosition) category[first++];
             p.delete();
@@ -329,7 +345,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       return createRegion();
    }
 
-
    /**
     * Gets the contentType attribute of the XMLDocumentPartitioner object
     *
@@ -346,7 +361,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       return IDocument.DEFAULT_CONTENT_TYPE;
    }
 
-
    /**
     * Gets the legalContentTypes attribute of the XMLDocumentPartitioner object
     *
@@ -357,7 +371,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       return fLegalContentTypes;
    }
 
-
    /**
     * Gets the managingPositionCategories attribute of the XMLDocumentPartitioner object
     *
@@ -365,9 +378,9 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
     */
    public String[] getManagingPositionCategories()
    {
-      return new String[]{fPositionCategory};
+      return new String[]
+      {fPositionCategory};
    }
-
 
    /**
     * Gets the partition attribute of the XMLDocumentPartitioner object
@@ -423,7 +436,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       return new TypedRegion(0, fDocument.getLength(), IDocument.DEFAULT_CONTENT_TYPE);
    }
 
-
    /**
     * Gets the positionCategory attribute of the XMLDocumentPartitioner object
     *
@@ -433,7 +445,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
    {
       return this.getManagingPositionCategories()[0];
    }
-
 
    /**
     * Description of the Method
@@ -470,7 +481,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       return null;
    }
 
-
    /**
     * Gets the tokenContentType attribute of the XMLDocumentPartitioner object
     *
@@ -487,7 +497,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       return null;
    }
 
-
    /** Description of the Method */
    protected void initialize()
    {
@@ -499,7 +508,8 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
             String contentType = getTokenContentType(token);
             if (isSupportedContentType(contentType))
             {
-               TypedPosition p = new XMLNode(fScanner.getTokenOffset(), fScanner.getTokenLength(), contentType, fDocument);
+               TypedPosition p = new XMLNode(fScanner.getTokenOffset(), fScanner.getTokenLength(), contentType,
+                     fDocument);
                fDocument.addPosition(this.getPositionCategory(), p);
             }
          }
@@ -511,7 +521,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       {
       }
    }
-
 
    /**
     * Gets the supportedContentType attribute of the XMLDocumentPartitioner object
@@ -534,7 +543,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       }
       return false;
    }
-
 
    /**
     * Description of the Method
@@ -561,7 +569,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
       return new Region(offset, endOffset - offset);
    }
 
-
    /**
     * Description of the Method
     *
@@ -571,7 +578,6 @@ public class XMLDocumentPartitioner implements IDocumentPartitioner, IDocumentPa
    {
       fDeleteOffset = offset;
    }
-
 
    /**
     * Description of the Method

@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model;
 
@@ -22,12 +37,16 @@ public class SortedKeyTreeNode implements Comparable, Serializable
 {
    /** Description of the Field */
    protected SortedKeyTree tree;
-   private HashMap additionalAttributes = new HashMap();
-   private TreeMap children = new TreeMap();
-   private String name;
-   private HashMap objects = new HashMap();
-   private SortedKeyTreeNode parentNode;
 
+   private HashMap additionalAttributes = new HashMap();
+
+   private TreeMap children = new TreeMap();
+
+   private String name;
+
+   private HashMap objects = new HashMap();
+
+   private SortedKeyTreeNode parentNode;
 
    /**
     *Constructor for the SortedKeyTreeNode object
@@ -36,16 +55,12 @@ public class SortedKeyTreeNode implements Comparable, Serializable
     * @param parentNode  Description of the Parameter
     * @param tree        Description of the Parameter
     */
-   protected SortedKeyTreeNode(
-         String name,
-         SortedKeyTreeNode parentNode,
-         SortedKeyTree tree)
+   protected SortedKeyTreeNode(String name, SortedKeyTreeNode parentNode, SortedKeyTree tree)
    {
       this.name = name;
       this.parentNode = parentNode;
       this.tree = tree;
    }
-
 
    /**
     * Adds a feature to the AdditionalAttribute attribute of the SortedKeyTreeNode object
@@ -58,7 +73,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
       additionalAttributes.put(name, value);
    }
 
-
    /**
     * Adds a feature to the Child attribute of the SortedKeyTreeNode object
     *
@@ -69,19 +83,16 @@ public class SortedKeyTreeNode implements Comparable, Serializable
    {
       if (name == null)
       {
-         throw new IllegalArgumentException(
-               "Can't add null to: " + getAbsoluteKey());//$NON-NLS-1$
+         throw new IllegalArgumentException("Can't add null to: " + getAbsoluteKey());//$NON-NLS-1$
       }
       if (children.containsKey(name))
       {
-         throw new NodeExistsException(
-               "element " + getAbsoluteKey() + " " + name + " exists already: ");//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+         throw new NodeExistsException("element " + getAbsoluteKey() + " " + name + " exists already: ");//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       }
       SortedKeyTreeNode child = new SortedKeyTreeNode(name, this, tree);
       this.children.put(child.getName(), child);
       return child;
    }
-
 
    /**
     * @param o  Description of the Parameter
@@ -93,7 +104,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
       return getAbsoluteKey().compareTo(((SortedKeyTreeNode) o).getAbsoluteKey());
    }
 
-
    /**
     * @param obj  Description of the Parameter
     * @return     Description of the Return Value
@@ -103,12 +113,10 @@ public class SortedKeyTreeNode implements Comparable, Serializable
    {
       if (obj instanceof SortedKeyTreeNode)
       {
-         return getAbsoluteKey().equals(
-               ((SortedKeyTreeNode) obj).getAbsoluteKey());
+         return getAbsoluteKey().equals(((SortedKeyTreeNode) obj).getAbsoluteKey());
       }
       return false;
    }
-
 
    /**
     * Returns the additionalAttributes.
@@ -120,7 +128,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
       return additionalAttributes;
    }
 
-
    /**
     * Returns the children.
     *
@@ -131,7 +138,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
    {
       return (SortedKeyTreeNode) children.get(name);
    }
-
 
    /**
     * Gets the childObject attribute of the SortedKeyTreeNode object
@@ -150,7 +156,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
       return null;
    }
 
-
    /**
     * Returns the children.
     *
@@ -158,10 +163,8 @@ public class SortedKeyTreeNode implements Comparable, Serializable
     */
    public SortedKeyTreeNode[] getChildren()
    {
-      return (SortedKeyTreeNode[]) children.values().toArray(
-            new SortedKeyTreeNode[children.values().size()]);
+      return (SortedKeyTreeNode[]) children.values().toArray(new SortedKeyTreeNode[children.values().size()]);
    }
-
 
    /**
     * Gets the childrenCount attribute of the SortedKeyTreeNode object
@@ -172,7 +175,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
    {
       return getChildren().length;
    }
-
 
    /**
     * Gets the childrenObjects attribute of the SortedKeyTreeNode object
@@ -193,7 +195,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
       return list;
    }
 
-
    /**
     * Returns the name.
     *
@@ -203,7 +204,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
    {
       return name;
    }
-
 
    /**
     * Returns the object.
@@ -216,7 +216,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
       return objects.get(key);
    }
 
-
    /**
     * Gets the parentCount attribute of the SortedKeyTreeNode object
     *
@@ -226,7 +225,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
    {
       return getPath().length - 1;
    }
-
 
    /**
     * Returns the parentNode.
@@ -246,7 +244,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
       }
       return parentNode;
    }
-
 
    /**
     * Gets the path attribute of the SortedKeyTreeNode object
@@ -270,7 +267,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
       return path;
    }
 
-
    /**
     * Returns the tree.
     *
@@ -280,7 +276,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
    {
       return tree;
    }
-
 
    /**
     * Description of the Method
@@ -292,7 +287,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
       return children.size() > 0;
    }
 
-
    /**
     * @return   Description of the Return Value
     * @see      java.lang.Object#hashCode()
@@ -302,13 +296,11 @@ public class SortedKeyTreeNode implements Comparable, Serializable
       return getAbsoluteKey().hashCode();
    }
 
-
    /** Method remove. */
    public void remove()
    {
       parentNode.children.remove(name);
    }
-
 
    /**
     * Description of the Method
@@ -319,7 +311,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
    {
       this.objects.remove(key);
    }
-
 
    /**
     * Sets the object.
@@ -336,7 +327,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
       this.objects.put(key, object);
    }
 
-
    /**
     * @return   Description of the Return Value
     * @see      java.lang.Object#toString()
@@ -345,7 +335,6 @@ public class SortedKeyTreeNode implements Comparable, Serializable
    {
       return name;
    }
-
 
    /**
     * Gets the absoluteKey attribute of the SortedKeyTreeNode object

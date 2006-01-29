@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.text;
 
@@ -28,7 +43,6 @@ public abstract class AbstractDocumentProvider extends I18NDocumentProvider
    /** Description of the Field */
    protected IWhitespaceDetector detector = new WhitespaceDetector();
 
-
    /**
     * Try to guess the encoding of the given stream.
     *
@@ -36,8 +50,7 @@ public abstract class AbstractDocumentProvider extends I18NDocumentProvider
     * @return                 The declaredEncoding value
     * @exception IOException  Description of the Exception
     */
-   public String getDeclaredEncoding(InputStream in)
-      throws IOException
+   public String getDeclaredEncoding(InputStream in) throws IOException
    {
       if (!in.markSupported())
       {
@@ -107,7 +120,6 @@ public abstract class AbstractDocumentProvider extends I18NDocumentProvider
       return buf.toString();
    }
 
-
    /**
     * Default encoding is UTF-8
     *
@@ -118,7 +130,6 @@ public abstract class AbstractDocumentProvider extends I18NDocumentProvider
       return "UTF-8";//$NON-NLS-1$
    }
 
-
    /**
     * Description of the Method
     *
@@ -126,8 +137,7 @@ public abstract class AbstractDocumentProvider extends I18NDocumentProvider
     * @return                 Description of the Return Value
     * @exception IOException  Description of the Exception
     */
-   private boolean skipEncoding(InputStream in)
-      throws IOException
+   private boolean skipEncoding(InputStream in) throws IOException
    {
       int ch = in.read();
 
@@ -165,8 +175,8 @@ public abstract class AbstractDocumentProvider extends I18NDocumentProvider
             continue;
          }
 
-         if ((ch = in.read()) == 'n' && (ch = in.read()) == 'c' && (ch = in.read()) == 'o' && (ch = in.read()) == 'd' && (ch = in.read()) == 'i'
-            && (ch = in.read()) == 'n' && (ch = in.read()) == 'g')
+         if ((ch = in.read()) == 'n' && (ch = in.read()) == 'c' && (ch = in.read()) == 'o' && (ch = in.read()) == 'd'
+               && (ch = in.read()) == 'i' && (ch = in.read()) == 'n' && (ch = in.read()) == 'g')
          {
             break;
          }
@@ -199,7 +209,6 @@ public abstract class AbstractDocumentProvider extends I18NDocumentProvider
       return true;
    }
 
-
    /**
     * Description of the Method
     *
@@ -207,8 +216,7 @@ public abstract class AbstractDocumentProvider extends I18NDocumentProvider
     * @return                 Description of the Return Value
     * @exception IOException  Description of the Exception
     */
-   private boolean skipXMLDecl(InputStream in)
-      throws IOException
+   private boolean skipXMLDecl(InputStream in) throws IOException
    {
       int ch = in.read();
       if (ch != '<')

@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.jsp.core.compiler.jasper;
 
@@ -20,20 +35,29 @@ import org.eclipse.core.resources.IFile;
 public class JSPElementInfo
 {
    private String content;
+
    private JSPErrorDispatcher errDispatcher;
+
    private IFile file;
+
    private String javaEncoding;
+
    private String javaFileName;
+
    private String jspFileName;
+
    private Node.Nodes nodes;
+
    private PageInfo pageInfo;
+
    private String[] smap;
+
    private JSPCompilationUnit unit;
 
-
    /** Default constuctor */
-   public JSPElementInfo() { }
-
+   public JSPElementInfo()
+   {
+   }
 
    /**
     * Full required featured constuctor
@@ -53,7 +77,6 @@ public class JSPElementInfo
       this.errDispatcher = new JSPErrorDispatcher(this);
    }
 
-
    /**
     * Return a cached CompilationUnit for both the Eclipse compiler
     * and the ContentAssist processor.
@@ -69,7 +92,6 @@ public class JSPElementInfo
       return this.unit;
    }
 
-
    /**
     * Gets the content attribute of the JSPElementInfo object
     *
@@ -79,7 +101,6 @@ public class JSPElementInfo
    {
       return this.content;
    }
-
 
    /**
     * Gets the errorDispatcher attribute of the JSPElementInfo object
@@ -91,7 +112,6 @@ public class JSPElementInfo
       return this.errDispatcher;
    }
 
-
    /**
     * Gets the file attribute of the JSPElementInfo object
     *
@@ -101,7 +121,6 @@ public class JSPElementInfo
    {
       return this.file;
    }
-
 
    /**
     * Gets the javaEncoding attribute of the JSPElementInfo object
@@ -113,7 +132,6 @@ public class JSPElementInfo
       return this.javaEncoding;
    }
 
-
    /**
     * Gets the javaFileName attribute of the JSPElementInfo object
     *
@@ -123,7 +141,6 @@ public class JSPElementInfo
    {
       return this.javaFileName;
    }
-
 
    /**
     * Gets the jspFileName attribute of the JSPElementInfo object
@@ -135,7 +152,6 @@ public class JSPElementInfo
       return this.jspFileName;
    }
 
-
    /**
     * Gets the nodes attribute of the JSPElementInfo object
     *
@@ -145,7 +161,6 @@ public class JSPElementInfo
    {
       return this.nodes;
    }
-
 
    /**
     * Gets the pageInfo attribute of the JSPElementInfo object
@@ -157,7 +172,6 @@ public class JSPElementInfo
       return pageInfo;
    }
 
-
    /**
     * Gets the smap attribute of the JSPElementInfo object
     *
@@ -167,7 +181,6 @@ public class JSPElementInfo
    {
       return this.smap;
    }
-
 
    /**
     * Sets the content attribute of the JSPElementInfo object
@@ -179,7 +192,6 @@ public class JSPElementInfo
       this.content = content;
    }
 
-
    /**
     * Sets the nodes attribute of the JSPElementInfo object
     *
@@ -190,7 +202,6 @@ public class JSPElementInfo
       this.nodes = nodes;
    }
 
-
    /**
     * Sets the pageInfo attribute of the JSPElementInfo object
     *
@@ -200,7 +211,6 @@ public class JSPElementInfo
    {
       this.pageInfo = pageInfo;
    }
-
 
    /**
     * Sets the smap attribute of the JSPElementInfo object

@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.core.event;
 
@@ -35,8 +50,8 @@ public class ServerDebugEventHandler implements IDebugEventSetListener, ILaunchC
 {
    /** Description of the Field */
    protected ListenerList listenerList = new ListenerList();
-   private HashMap lastTerminatedProcesses = new HashMap();
 
+   private HashMap lastTerminatedProcesses = new HashMap();
 
    /**
     * Adds a feature to the Listener attribute of the ServerDebugEventHandler
@@ -48,7 +63,6 @@ public class ServerDebugEventHandler implements IDebugEventSetListener, ILaunchC
    {
       listenerList.add(l);
    }
-
 
    /**
     * Method getLastTerminatedLaunch.
@@ -66,69 +80,66 @@ public class ServerDebugEventHandler implements IDebugEventSetListener, ILaunchC
       return (IProcess) lastTerminatedProcesses.get(configuration.getName());
    }
 
-
    /**
     * @param events  Description of the Parameter
     * @see           org.eclipse.debug.core.IDebugEventSetListener#handleDebugEvents(DebugEvent[])
     */
    public void handleDebugEvents(final DebugEvent[] events)
    {
-      Runnable r =
-         new Runnable()
+      Runnable r = new Runnable()
+      {
+         public void run()
          {
-            public void run()
+            IDebugTarget target;
+            for (int i = 0; i < events.length; i++)
             {
-               IDebugTarget target;
-               for (int i = 0; i < events.length; i++)
+               DebugEvent event = events[i];
+               // All our launches launch a debug-target. This is the parent
+               // for other elements
+               // like threads. We are only interested in events concerning the
+               // whole target.
+               // In our case a launch has zero ore one debug-targets.
+               // The create-event is handled by the launch-listener as it
+               // differentiates beetween
+               // a new launch and an existing launch where a debug-target has
+               // been started.
+               // For some reason only starting can be listened to via the
+               // launch-listener.
+               // So the other events have to be handled by the
+               // DebugEventListener
+               if (event.getSource() instanceof IDebugTarget)
                {
-                  DebugEvent event = events[i];
-                  // All our launches launch a debug-target. This is the parent
-                  // for other elements
-                  // like threads. We are only interested in events concerning the
-                  // whole target.
-                  // In our case a launch has zero ore one debug-targets.
-                  // The create-event is handled by the launch-listener as it
-                  // differentiates beetween
-                  // a new launch and an existing launch where a debug-target has
-                  // been started.
-                  // For some reason only starting can be listened to via the
-                  // launch-listener.
-                  // So the other events have to be handled by the
-                  // DebugEventListener
-                  if (event.getSource() instanceof IDebugTarget)
+                  target = (IDebugTarget) event.getSource();
+                  ILaunch launch = target.getLaunch();
+                  try
                   {
-                     target = (IDebugTarget) event.getSource();
-                     ILaunch launch = target.getLaunch();
-                     try
+                     if (!ServerLaunchManager.getInstance().isServerConfiguration(launch.getLaunchConfiguration())
+                           || launch.getAttribute(IServerLaunchConfigurationConstants.ATTR_LAUNCH_SHUTDOWN) != null)
                      {
-                        if (!ServerLaunchManager.getInstance().isServerConfiguration(launch.getLaunchConfiguration())
-                              || launch.getAttribute(IServerLaunchConfigurationConstants.ATTR_LAUNCH_SHUTDOWN) != null)
-                        {
-                           return;
-                        }
+                        return;
                      }
-                     catch (CoreException e)
-                     {
-                        AbstractPlugin.log(e);
-                     }
-                     switch (event.getKind())
-                     {
-                        case DebugEvent.TERMINATE:
-                           lastTerminatedProcesses.put(launch.getLaunchConfiguration().getName(), target.getProcess());
-                           break;
-                     }
-                     Object[] listeners = listenerList.getListeners();
-                     for (int j = 0; j < listeners.length; j++)
-                     {
-                        ((IServerDebugEventListener) listeners[j]).serverEvent(event, launch.getLaunchConfiguration());
-                     }
+                  }
+                  catch (CoreException e)
+                  {
+                     AbstractPlugin.log(e);
+                  }
+                  switch (event.getKind())
+                  {
+                     case DebugEvent.TERMINATE :
+                        lastTerminatedProcesses.put(launch.getLaunchConfiguration().getName(), target.getProcess());
+                        break;
+                  }
+                  Object[] listeners = listenerList.getListeners();
+                  for (int j = 0; j < listeners.length; j++)
+                  {
+                     ((IServerDebugEventListener) listeners[j]).serverEvent(event, launch.getLaunchConfiguration());
                   }
                }
             }
-         };
+         }
+      };
       Display.getDefault().asyncExec(r);
    }
-
 
    /**
     * @param configuration  Description of the Parameter
@@ -138,7 +149,6 @@ public class ServerDebugEventHandler implements IDebugEventSetListener, ILaunchC
    {
    }
 
-
    /**
     * @param configuration  Description of the Parameter
     * @see                  org.eclipse.debug.core.ILaunchConfigurationListener#launchConfigurationChanged(ILaunchConfiguration)
@@ -146,7 +156,6 @@ public class ServerDebugEventHandler implements IDebugEventSetListener, ILaunchC
    public void launchConfigurationChanged(ILaunchConfiguration configuration)
    {
    }
-
 
    /**
     * @param configuration  Description of the Parameter
@@ -156,7 +165,6 @@ public class ServerDebugEventHandler implements IDebugEventSetListener, ILaunchC
    {
       lastTerminatedProcesses.put(configuration.getName(), null);
    }
-
 
    /**
     * Description of the Method

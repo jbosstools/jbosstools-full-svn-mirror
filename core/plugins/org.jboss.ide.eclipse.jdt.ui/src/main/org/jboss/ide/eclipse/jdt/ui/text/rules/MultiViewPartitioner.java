@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.text.rules;
 
@@ -38,10 +53,10 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
 {
 
    private OuterDocumentView outerDocument;
+
    private DocumentEvent outerDocumentEvent;
 
    private ViewListener viewListener = new ViewListener();
-
 
    /**
     *Constructor for the MultiViewPartitioner object
@@ -52,7 +67,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
    {
       super(scanner);
    }
-
 
    /*
     * @see org.eclipse.jface.text.IDocumentPartitioner#computePartitioning(int, int)
@@ -106,7 +120,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
       return (TypedRegion[]) list.toArray(new TypedRegion[list.size()]);
    }
 
-
    /**
     * Description of the Method
     *
@@ -124,7 +137,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
       //		outerDocument.setDocumentPartitioner(partitioner);
       //		outerDocument.addDocumentPartitioningListener(viewListener);
    }
-
 
    /** Description of the Method */
    public void disconnect()
@@ -147,7 +159,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
          outerDocument = null;
       }
    }
-
 
    /*
     * @see org.eclipse.jface.text.IDocumentPartitioner#documentAboutToBeChanged(DocumentEvent)
@@ -190,7 +201,8 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
                {
                   // cahnge completely inside partition
                   int start = innerDocument.getLocalOffset(offset);
-                  innerDocument.fireDocumentAboutToBeChanged(new DocumentEvent(innerDocument, start, length, event.getText()));
+                  innerDocument.fireDocumentAboutToBeChanged(new DocumentEvent(innerDocument, start, length, event
+                        .getText()));
                }
 
                return;
@@ -200,7 +212,9 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
             {
                // cut partition at right
                int start = innerDocument.getLocalOffset(offset);
-               innerDocument.fireDocumentAboutToBeChanged(new DocumentEvent(innerDocument, start, innerDocument.getLength() - start, null));
+               innerDocument.fireDocumentAboutToBeChanged(new DocumentEvent(innerDocument, start, innerDocument
+                     .getLength()
+                     - start, null));
             }
          }
       }
@@ -244,7 +258,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
       }
    }
 
-
    /**
     * Gets the outerDocument attribute of the MultiViewPartitioner object
     *
@@ -254,7 +267,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
    {
       return outerDocument;
    }
-
 
    /*
     * @see org.eclipse.jface.text.IDocumentPartitioner#getPartition(int)
@@ -307,7 +319,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
       return getOuterPartition(offset, prev, null);
    }
 
-
    /**
     * Sets the outerPartitioner attribute of the MultiViewPartitioner object
     *
@@ -347,7 +358,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
       }
    }
 
-
    /**
     * Adds a feature to the InnerRegion attribute of the MultiViewPartitioner object
     *
@@ -357,7 +367,8 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
    {
       if (outerDocument != null)
       {
-         DocumentEvent event = new DocumentEvent(outerDocument, outerDocument.getLocalOffset(position.offset), position.length, null);
+         DocumentEvent event = new DocumentEvent(outerDocument, outerDocument.getLocalOffset(position.offset),
+               position.length, null);
 
          outerDocument.fireDocumentAboutToBeChanged(event);
          super.addInnerRegion(position);
@@ -385,7 +396,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
       }
    }
 
-
    /**
     * Create subpartitioner.
     *
@@ -394,7 +404,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
     * @return             Description of the Return Value
     */
    protected abstract IDocumentPartitioner createPartitioner(String contentType);
-
 
    /**
     * Description of the Method
@@ -419,7 +428,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
          }
       }
    }
-
 
    /**
     * Description of the Method
@@ -540,7 +548,8 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
          do
          {
             deleteInnerRegion((FlatNode) nodes.get(--last));
-         } while (first < last);
+         }
+         while (first < last);
 
          rememberRegion(offset, 0);
       }
@@ -554,7 +563,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
 
       return first;
    }
-
 
    /*
     * @see org.eclipse.jface.text.IDocumentPartitioner#computePartitioning(int, int)
@@ -580,7 +588,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
 
       return IDocument.DEFAULT_CONTENT_TYPE;
    }
-
 
    /**
     * Gets the innerPartition attribute of the MultiViewPartitioner object
@@ -618,7 +625,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
       // simple partition
       return new TypedRegion(position.offset, position.length, position.type);
    }
-
 
    /**
     * Gets the outerPartition attribute of the MultiViewPartitioner object
@@ -682,7 +688,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -694,8 +699,8 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
       {
          if (outerDocument != null)
          {
-            DocumentEvent event = new DocumentEvent(outerDocument, outerDocument.getLocalOffset(position.offset), 0, document.get(position.offset,
-               position.length));
+            DocumentEvent event = new DocumentEvent(outerDocument, outerDocument.getLocalOffset(position.offset), 0,
+                  document.get(position.offset, position.length));
 
             outerDocument.fireDocumentAboutToBeChanged(event);
             super.removeInnerRegion(position);
@@ -724,7 +729,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
       {
       }
    }
-
 
    /**
     * Adds a feature to the InnerPartitions attribute of the MultiViewPartitioner object
@@ -778,7 +782,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
       {
       }
    }
-
 
    /**
     * Adds a feature to the OuterPartitions attribute of the MultiViewPartitioner object
@@ -858,7 +861,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
       }
    }
 
-
    /**
     * Description of the Class
     *
@@ -884,7 +886,6 @@ public abstract class MultiViewPartitioner extends AbstractPartitioner
 
          rememberRegion(start, end - start);
       }
-
 
       /*
        * @see org.eclipse.jface.text.IDocumentPartitioningListenerExtension#documentPartitioningChanged(IDocument, IRegion)

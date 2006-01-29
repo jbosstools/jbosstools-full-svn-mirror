@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.editors;
 
@@ -41,7 +56,6 @@ public class I18NDocumentProvider extends FileDocumentProvider
 {
    private final static char BOM = 0xFEFF;
 
-
    /**
     * Tries to determine encoding from contents of the stream.
     * Returns <code>null</code> if encoding is unknown.
@@ -50,12 +64,10 @@ public class I18NDocumentProvider extends FileDocumentProvider
     * @return                 The declaredEncoding value
     * @exception IOException  Description of the Exception
     */
-   public String getDeclaredEncoding(InputStream in)
-      throws IOException
+   public String getDeclaredEncoding(InputStream in) throws IOException
    {
       return getBOMEncoding(in);
    }
-
 
    /**
     * Gets the encoding attribute of the I18NDocumentProvider object
@@ -105,7 +117,6 @@ public class I18NDocumentProvider extends FileDocumentProvider
       return encoding;
    }
 
-
    /*
     * @see org.eclipse.ui.editors.text.IStorageDocumentProvider#setEncoding(Object, String)
     */
@@ -125,8 +136,6 @@ public class I18NDocumentProvider extends FileDocumentProvider
       super.setEncoding(element, encoding);
    }
 
-   
-
    /*
     * @see org.eclipse.ui.texteditor.AbstractDocumentProvider#doSaveDocument(IProgressMonitor, Object, IDocument, boolean)
     */
@@ -140,7 +149,7 @@ public class I18NDocumentProvider extends FileDocumentProvider
     * @exception CoreException  Description of the Exception
     */
    protected void doSaveDocument(IProgressMonitor monitor, Object element, IDocument document, boolean overwrite)
-      throws CoreException
+         throws CoreException
    {
       if (!(element instanceof IFileEditorInput))
       {
@@ -160,14 +169,14 @@ public class I18NDocumentProvider extends FileDocumentProvider
          /*
           * || !encoding.startsWith("UTF-16")
           */
-            )
+         )
          {
             encoding = getDefaultEncoding();
          }
       }
       else
       {
-//            setEncoding(element, encoding);
+         //            setEncoding(element, encoding);
       }
 
       if (encoding.startsWith("UTF-16")//$NON-NLS-1$
@@ -183,7 +192,8 @@ public class I18NDocumentProvider extends FileDocumentProvider
       }
       catch (UnsupportedEncodingException e)
       {
-         IStatus s = new Status(IStatus.ERROR, PlatformUI.PLUGIN_ID, IStatus.OK, JDTUIMessages.getString("I18NDocumentProvider.error.encoding"), e);//$NON-NLS-1$
+         IStatus s = new Status(IStatus.ERROR, PlatformUI.PLUGIN_ID, IStatus.OK, JDTUIMessages
+               .getString("I18NDocumentProvider.error.encoding"), e);//$NON-NLS-1$
 
          throw new CoreException(s);
       }
@@ -249,7 +259,6 @@ public class I18NDocumentProvider extends FileDocumentProvider
       }
    }
 
-
    /**
     * Sets the documentContent attribute of the I18NDocumentProvider object
     *
@@ -259,7 +268,7 @@ public class I18NDocumentProvider extends FileDocumentProvider
     * @exception CoreException  Description of the Exception
     */
    protected void setDocumentContent(IDocument document, InputStream contentStream, String encoding)
-      throws CoreException
+         throws CoreException
    {
       Reader in = null;
 
@@ -316,7 +325,6 @@ public class I18NDocumentProvider extends FileDocumentProvider
       }
    }
 
-
    /**
     * Tries to determine encoding from the byte order mark.
     * Returns <code>null</code> if encoding is unknown.
@@ -325,8 +333,7 @@ public class I18NDocumentProvider extends FileDocumentProvider
     * @return                 The bOMEncoding value
     * @exception IOException  Description of the Exception
     */
-   private String getBOMEncoding(InputStream in)
-      throws IOException
+   private String getBOMEncoding(InputStream in) throws IOException
    {
       int first = in.read();
       if (first < 0)

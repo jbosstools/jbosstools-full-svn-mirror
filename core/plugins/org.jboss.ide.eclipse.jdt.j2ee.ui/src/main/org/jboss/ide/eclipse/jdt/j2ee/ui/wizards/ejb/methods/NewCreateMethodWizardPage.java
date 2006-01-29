@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.ui.wizards.ejb.methods;
 
@@ -26,7 +41,6 @@ public class NewCreateMethodWizardPage extends EJBMethodWizardPage
 
    private final static String PAGE_NAME = NewCreateMethodWizardPage.class.getName();
 
-
    /**Constructor for the NewCreateMethodWizardPage object */
    public NewCreateMethodWizardPage()
    {
@@ -34,7 +48,6 @@ public class NewCreateMethodWizardPage extends EJBMethodWizardPage
       this.setTitle(JDTJ2EEUIMessages.getString("NewCreateMethodWizardPage.title"));//$NON-NLS-1$
       this.setDescription(JDTJ2EEUIMessages.getString("NewCreateMethodWizardPage.description"));//$NON-NLS-1$
    }
-
 
    /**
     * Gets the entityBean attribute of the NewCreateMethodWizardPage object
@@ -46,7 +59,6 @@ public class NewCreateMethodWizardPage extends EJBMethodWizardPage
       return this.fEJBTypeButtons.isSelected(0);
    }
 
-
    /**
     * Gets the forMessageDrivenBean attribute of the NewCreateMethodWizardPage object
     *
@@ -56,7 +68,6 @@ public class NewCreateMethodWizardPage extends EJBMethodWizardPage
    {
       return this.fEJBTypeButtons.isSelected(2);
    }
-
 
    /**
     * Gets the forSessionBean attribute of the NewCreateMethodWizardPage object
@@ -68,20 +79,20 @@ public class NewCreateMethodWizardPage extends EJBMethodWizardPage
       return this.fEJBTypeButtons.isSelected(1);
    }
 
-
    /** Description of the Method */
    protected void createContent()
    {
       super.createContent();
 
       // Constructors and inherited must be left as first elements
-      String[] buttonNames = new String[]{JDTJ2EEUIMessages.getString("NewCreateMethodWizardPage.bean.entity"), JDTJ2EEUIMessages.getString("NewCreateMethodWizardPage.bean.session"), JDTJ2EEUIMessages.getString("NewCreateMethodWizardPage.bean.mdb")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      String[] buttonNames = new String[]
+      {
+            JDTJ2EEUIMessages.getString("NewCreateMethodWizardPage.bean.entity"), JDTJ2EEUIMessages.getString("NewCreateMethodWizardPage.bean.session"), JDTJ2EEUIMessages.getString("NewCreateMethodWizardPage.bean.mdb")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
       fEJBTypeButtons = new SelectionButtonDialogFieldGroup(SWT.RADIO, buttonNames, 3);
       fEJBTypeButtons.setDialogFieldListener(this.getFieldsAdapter());
       fEJBTypeButtons.setLabelText(JDTJ2EEUIMessages.getString("NewCreateMethodWizardPage.label.bean"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -96,7 +107,6 @@ public class NewCreateMethodWizardPage extends EJBMethodWizardPage
       this.createEJBTypeSelectionControls(composite, nColumns);
    }
 
-
    /**
     * Description of the Method
     *
@@ -107,7 +117,6 @@ public class NewCreateMethodWizardPage extends EJBMethodWizardPage
    {
       FieldsUtil.createSelectionButtonDialogFieldGroupControls(this.fEJBTypeButtons, composite, nColumns);
    }
-
 
    /**
     * Description of the Method
@@ -128,7 +137,6 @@ public class NewCreateMethodWizardPage extends EJBMethodWizardPage
          this.accessButtons.setEnabled(!this.isForMessageDrivenBean());
       }
    }
-
 
    /** Description of the Method */
    protected void initContent()

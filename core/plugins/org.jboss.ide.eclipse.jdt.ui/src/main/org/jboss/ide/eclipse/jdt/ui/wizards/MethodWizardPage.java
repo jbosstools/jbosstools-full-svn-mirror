@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.wizards;
 
@@ -53,16 +68,18 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
 {
    /** Description of the Field */
    protected List exceptions = new Vector();
+
    /** Description of the Field */
    protected StructuredViewer exceptionsViewer;
+
    /** Description of the Field */
    protected List parameters = new Vector();
+
    /** Description of the Field */
    protected StructuredViewer parametersViewer;
 
    /** Primitive type list */
    private static List PRIMITIVES = new ArrayList();
-
 
    /**
     *Constructor for the MethodWizardPage object
@@ -76,7 +93,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
       this.setDescription(JDTUIMessages.getString("MethodWizardPage.description"));//$NON-NLS-1$
    }
 
-
    /**
     * Gets the exceptions attribute of the NewBusinessMethodWizardPage object
     *
@@ -87,7 +103,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
       return (String[]) this.exceptions.toArray(new String[this.exceptions.size()]);
    }
 
-
    /**
     * Gets the methodName attribute of the MethodWizardPage object
     *
@@ -97,7 +112,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
    {
       return this.getFragmentName();
    }
-
 
    /**
     * Gets the parameterNames attribute of the MethodWizardPage object
@@ -115,7 +129,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
       return names;
    }
 
-
    /**
     * Gets the parameterValues attribute of the MethodWizardPage object
     *
@@ -132,7 +145,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
       return types;
    }
 
-
    /**
     * Gets the returnType attribute of the MethodWizardPage object
     *
@@ -142,7 +154,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
    {
       return this.getFragmentType();
    }
-
 
    /**
     * Description of the Method
@@ -163,7 +174,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
       }
    }
 
-
    /** Description of the Method */
    protected void createContent()
    {
@@ -178,7 +188,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
       this.typeDialogField.setLabelText(JDTUIMessages.getString("MethodWizardPage.label.returnType"));//$NON-NLS-1$
       this.typeDialogField.setButtonLabel(JDTUIMessages.getString("MethodWizardPage.button.browse"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -195,7 +204,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
       this.createSeparator(composite, nColumns);
       this.createExceptionsControls(composite, nColumns);
    }
-
 
    /**
     * Description of the Method
@@ -229,29 +237,26 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
       addButton.setText(JDTUIMessages.getString("MethodWizardPage.button.add"));//$NON-NLS-1$
       addButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-      addButton.addSelectionListener(
-         new SelectionAdapter()
+      addButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               doAddException();
-            }
-         });
+            doAddException();
+         }
+      });
 
       Button removeButton = new Button(buttonComposite, SWT.PUSH);
       removeButton.setText(JDTUIMessages.getString("MethodWizardPage.button.remove"));//$NON-NLS-1$
       removeButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-      removeButton.addSelectionListener(
-         new SelectionAdapter()
+      removeButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               doRemoveException();
-            }
-         });
+            doRemoveException();
+         }
+      });
    }
-
 
    /**
     * Description of the Method
@@ -263,7 +268,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
    {
       FieldsUtil.createStringDialogFieldControls(this.nameDialogField, composite, nColumns);
    }
-
 
    /**
     * Description of the Method
@@ -299,29 +303,26 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
       addButton.setText(JDTUIMessages.getString("MethodWizardPage.button.add"));//$NON-NLS-1$
       addButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-      addButton.addSelectionListener(
-         new SelectionAdapter()
+      addButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               doAddParameter();
-            }
-         });
+            doAddParameter();
+         }
+      });
 
       Button removeButton = new Button(buttonComposite, SWT.PUSH);
       removeButton.setText(JDTUIMessages.getString("MethodWizardPage.button.remove"));//$NON-NLS-1$
       removeButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-      removeButton.addSelectionListener(
-         new SelectionAdapter()
+      removeButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               doRemoveParameter();
-            }
-         });
+            doRemoveParameter();
+         }
+      });
    }
-
 
    /**
     * Description of the Method
@@ -334,7 +335,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
       FieldsUtil.createStringButtonDialogFieldControls(this.typeDialogField, composite, nColumns);
    }
 
-
    /** Description of the Method */
    protected void doAddException()
    {
@@ -346,7 +346,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
          this.exceptionsViewer.refresh();
       }
    }
-
 
    /** Description of the Method */
    protected void doAddParameter()
@@ -361,7 +360,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
       }
    }
 
-
    /** Description of the Method */
    protected void doRemoveException()
    {
@@ -374,7 +372,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
       }
    }
 
-
    /** Description of the Method */
    protected void doRemoveParameter()
    {
@@ -386,7 +383,6 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
          this.parametersViewer.refresh();
       }
    }
-
 
    /**
     * Description of the Method
@@ -407,17 +403,18 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
       IStatus val = JavaConventions.validateMethodName(name);
       if (val.getSeverity() == IStatus.ERROR)
       {
-         status.setError(MessageFormat.format(JDTUIMessages.getString("MethodWizardPage.error.method.name.invalid"), new Object[]{val.getMessage()}));//$NON-NLS-1$
+         status.setError(MessageFormat.format(
+               JDTUIMessages.getString("MethodWizardPage.error.method.name.invalid"), new Object[]{val.getMessage()}));//$NON-NLS-1$
          return status;
       }
       else if (val.getSeverity() == IStatus.WARNING)
       {
-         status.setWarning(MessageFormat.format(JDTUIMessages.getString("MethodWizardPage.error.method.name.discouraged"), new Object[]{val.getMessage()}));//$NON-NLS-1$
+         status.setWarning(MessageFormat.format(JDTUIMessages
+               .getString("MethodWizardPage.error.method.name.discouraged"), new Object[]{val.getMessage()}));//$NON-NLS-1$
       }
 
       return status;
    }
-
 
    /**
     * Description of the Method
@@ -427,51 +424,50 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
    protected IStatus fragmentTypeChanged()
    {
       StatusInfo status = new StatusInfo();
-//      IPackageFragmentRoot root = this.getPackageFragmentRoot();
-//
-//      String ftype = this.getFragmentType();
-//      // can be empty
-//      if (ftype.length() == 0)
-//      {
-//         return status;
-//      }
-//      if (PRIMITIVES.contains(ftype))
-//      {
-//         return status;
-//      }
-//      IStatus val = JavaConventions.validateJavaTypeName(ftype);
-//      if (val.getSeverity() == IStatus.ERROR)
-//      {
-//         status.setError(JDTUIMessages.getString("MethodWizardPage.error.method.type.invalid"));//$NON-NLS-1$
-//         return status;
-//      }
-//      if (root != null)
-//      {
-//         try
-//         {
-//            IType type = resolveTypeName(root.getJavaProject(), ftype);
-//            if (type == null)
-//            {
-//               status.setWarning(JDTUIMessages.getString("MethodWizardPage.error.method.type.inexistant"));//$NON-NLS-1$
-//               return status;
-//            }
-//            else
-//            {
-//            }
-//         }
-//         catch (JavaModelException e)
-//         {
-//            status.setError(JDTUIMessages.getString("MethodWizardPage.error.method.type.invalid"));//$NON-NLS-1$
-//            AbstractPlugin.logError("Error while checking method return type", e);//$NON-NLS-1$
-//         }
-//      }
-//      else
-//      {
-//         status.setError("");//$NON-NLS-1$
-//      }
+      //      IPackageFragmentRoot root = this.getPackageFragmentRoot();
+      //
+      //      String ftype = this.getFragmentType();
+      //      // can be empty
+      //      if (ftype.length() == 0)
+      //      {
+      //         return status;
+      //      }
+      //      if (PRIMITIVES.contains(ftype))
+      //      {
+      //         return status;
+      //      }
+      //      IStatus val = JavaConventions.validateJavaTypeName(ftype);
+      //      if (val.getSeverity() == IStatus.ERROR)
+      //      {
+      //         status.setError(JDTUIMessages.getString("MethodWizardPage.error.method.type.invalid"));//$NON-NLS-1$
+      //         return status;
+      //      }
+      //      if (root != null)
+      //      {
+      //         try
+      //         {
+      //            IType type = resolveTypeName(root.getJavaProject(), ftype);
+      //            if (type == null)
+      //            {
+      //               status.setWarning(JDTUIMessages.getString("MethodWizardPage.error.method.type.inexistant"));//$NON-NLS-1$
+      //               return status;
+      //            }
+      //            else
+      //            {
+      //            }
+      //         }
+      //         catch (JavaModelException e)
+      //         {
+      //            status.setError(JDTUIMessages.getString("MethodWizardPage.error.method.type.invalid"));//$NON-NLS-1$
+      //            AbstractPlugin.logError("Error while checking method return type", e);//$NON-NLS-1$
+      //         }
+      //      }
+      //      else
+      //      {
+      //         status.setError("");//$NON-NLS-1$
+      //      }
       return status;
    }
-
 
    /**
     * Description of the Class

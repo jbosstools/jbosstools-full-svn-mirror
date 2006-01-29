@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.ui.dialogs;
 
@@ -34,9 +49,10 @@ import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 public abstract class ResourceSelectionDialog extends ElementTreeSelectionDialog implements ISelectionChangedListener
 {
    private boolean completable = true;
-   private IResource initialSelection;
-   private Text text;
 
+   private IResource initialSelection;
+
+   private Text text;
 
    /**
     * Constructor
@@ -51,7 +67,6 @@ public abstract class ResourceSelectionDialog extends ElementTreeSelectionDialog
       this.setAllowMultiple(false);
       this.initialSelection = null;
    }
-
 
    /**
     * When the selection changed in the tree view, the text control is
@@ -70,7 +85,6 @@ public abstract class ResourceSelectionDialog extends ElementTreeSelectionDialog
       }
    }
 
-
    /**
     * Override to avoid multiple selection.
     *
@@ -85,7 +99,6 @@ public abstract class ResourceSelectionDialog extends ElementTreeSelectionDialog
       super.setAllowMultiple(allowMultiple);
    }
 
-
    /**
     * Sets whether or not the text area can edited to complete the resource
     * selection
@@ -96,7 +109,6 @@ public abstract class ResourceSelectionDialog extends ElementTreeSelectionDialog
    {
       this.completable = completable;
    }
-
 
    /**
     * Sets the initial selection of the dialog. Convenience method.
@@ -109,13 +121,11 @@ public abstract class ResourceSelectionDialog extends ElementTreeSelectionDialog
       this.initialSelection = (IResource) selection;
    }
 
-
    /** Overrides that does nothing */
    protected void computeResult()
    {
       // Do nothing
    }
-
 
    /**
     * Create the dialog content.
@@ -132,16 +142,15 @@ public abstract class ResourceSelectionDialog extends ElementTreeSelectionDialog
       this.text.setEditable(this.completable);
       this.text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-      this.text.addModifyListener(
-         new ModifyListener()
+      this.text.addModifyListener(new ModifyListener()
+      {
+         public void modifyText(ModifyEvent e)
          {
-            public void modifyText(ModifyEvent e)
-            {
-               String path = ((Text) e.widget).getText();
-               IResource resource = ResourceSelectionDialog.this.extractResource(path);
-               ResourceSelectionDialog.this.setResult(resource);
-            }
-         });
+            String path = ((Text) e.widget).getText();
+            IResource resource = ResourceSelectionDialog.this.extractResource(path);
+            ResourceSelectionDialog.this.setResult(resource);
+         }
+      });
 
       // Retrieve the initial selection and reveal each parent node
       if (this.initialSelection != null)
@@ -167,7 +176,6 @@ public abstract class ResourceSelectionDialog extends ElementTreeSelectionDialog
       return result;
    }
 
-
    /**
     * Extract a resource from the text area
     *
@@ -175,7 +183,6 @@ public abstract class ResourceSelectionDialog extends ElementTreeSelectionDialog
     * @return      A valid resource (may be inexistant in the workspace)
     */
    protected abstract IResource extractResource(String path);
-
 
    /** Overrides to update the resource */
    protected void okPressed()
@@ -185,7 +192,6 @@ public abstract class ResourceSelectionDialog extends ElementTreeSelectionDialog
       this.setResult(resource);
       super.okPressed();
    }
-
 
    /**
     * Sets the result of the dialog.

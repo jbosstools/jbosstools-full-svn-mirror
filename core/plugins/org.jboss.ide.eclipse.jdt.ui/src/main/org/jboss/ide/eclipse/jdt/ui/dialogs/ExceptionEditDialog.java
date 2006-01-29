@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.dialogs;
 
@@ -27,9 +42,10 @@ import org.jboss.ide.eclipse.jdt.ui.wizards.util.TypeChooser;
 public class ExceptionEditDialog extends Dialog implements FieldsAdapterListener
 {
    private TypeChooser chooser;
-   private String type = "";//$NON-NLS-1$
-   private StringButtonDialogField typeDialogField;
 
+   private String type = "";//$NON-NLS-1$
+
+   private StringButtonDialogField typeDialogField;
 
    /**
     *Constructor for the ExceptionEditDialog object
@@ -43,7 +59,6 @@ public class ExceptionEditDialog extends Dialog implements FieldsAdapterListener
       this.chooser = chooser;
    }
 
-
    /**
     * Gets the type attribute of the ExceptionEditDialog object
     *
@@ -53,7 +68,6 @@ public class ExceptionEditDialog extends Dialog implements FieldsAdapterListener
    {
       return this.type;
    }
-
 
    /**
     * Description of the Method
@@ -67,7 +81,6 @@ public class ExceptionEditDialog extends Dialog implements FieldsAdapterListener
       this.typeDialogField.setText(this.type);
    }
 
-
    /**
     * Description of the Method
     *
@@ -77,7 +90,6 @@ public class ExceptionEditDialog extends Dialog implements FieldsAdapterListener
    {
       this.type = this.typeDialogField.getText();
    }
-
 
    /**
     * Description of the Method
@@ -89,7 +101,6 @@ public class ExceptionEditDialog extends Dialog implements FieldsAdapterListener
       super.configureShell(newShell);
       newShell.setText(JDTUIMessages.getString("ExceptionEditDialog.title"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -116,7 +127,6 @@ public class ExceptionEditDialog extends Dialog implements FieldsAdapterListener
 
       return composite;
    }
-
 
    /** Description of the Method */
    protected void okPressed()

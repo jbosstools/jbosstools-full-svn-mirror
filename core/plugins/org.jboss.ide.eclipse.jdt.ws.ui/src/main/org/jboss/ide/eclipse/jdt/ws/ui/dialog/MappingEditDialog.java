@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ws.ui.dialog;
 
@@ -25,10 +40,12 @@ import org.jboss.ide.eclipse.jdt.ws.ui.JDTWSUIMessages;
 public class MappingEditDialog extends Dialog implements FieldsAdapterListener
 {//$NON-NLS-1$
    private StringDialogField nameDialogField;
-   private String namespace = "";//$NON-NLS-1$
-   private String pakkage = "";//$NON-NLS-1$
-   private StringDialogField typeDialogField;
 
+   private String namespace = "";//$NON-NLS-1$
+
+   private String pakkage = "";//$NON-NLS-1$
+
+   private StringDialogField typeDialogField;
 
    /**
     *Constructor for the ExceptionEditDialog object
@@ -40,7 +57,6 @@ public class MappingEditDialog extends Dialog implements FieldsAdapterListener
       super(parentShell);
    }
 
-
    /**
     * Gets the name attribute of the ParameterEditDialog object
     *
@@ -50,7 +66,6 @@ public class MappingEditDialog extends Dialog implements FieldsAdapterListener
    {
       return this.namespace;
    }
-
 
    /**
     * Gets the type attribute of the ParameterEditDialog object
@@ -62,7 +77,6 @@ public class MappingEditDialog extends Dialog implements FieldsAdapterListener
       return this.pakkage;
    }
 
-
    /**
     * Description of the Method
     *
@@ -71,7 +85,6 @@ public class MappingEditDialog extends Dialog implements FieldsAdapterListener
    public void pageChangeControlPressed(DialogField field)
    {
    }
-
 
    /**
     * Description of the Method
@@ -84,7 +97,6 @@ public class MappingEditDialog extends Dialog implements FieldsAdapterListener
       this.pakkage = this.typeDialogField.getText();
    }
 
-
    /**
     * Description of the Method
     *
@@ -95,7 +107,6 @@ public class MappingEditDialog extends Dialog implements FieldsAdapterListener
       super.configureShell(newShell);
       newShell.setText(JDTWSUIMessages.getString("MappingEditDialog.title"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -127,7 +138,6 @@ public class MappingEditDialog extends Dialog implements FieldsAdapterListener
 
       return composite;
    }
-
 
    /** Description of the Method */
    protected void okPressed()

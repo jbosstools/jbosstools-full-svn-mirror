@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.packaging.core.model;
 
@@ -24,16 +39,15 @@ public class PackagingFolder extends PackagingFile
 {
    /** Description of the Field */
    private String excludes = "";//$NON-NLS-1$
+
    /** Description of the Field */
    private String includes = "";//$NON-NLS-1$
-
 
    /**Constructor for the XDocletTask object */
    public PackagingFolder()
    {
       super();
    }
-
 
    /**
     * Description of the Method
@@ -62,7 +76,6 @@ public class PackagingFolder extends PackagingFile
       return folder;
    }
 
-
    /**
     * @return   String
     */
@@ -71,7 +84,6 @@ public class PackagingFolder extends PackagingFile
       return this.excludes;
    }
 
-
    /**
     * @return   String
     */
@@ -79,7 +91,6 @@ public class PackagingFolder extends PackagingFile
    {
       return this.includes;
    }
-
 
    /**
     * Description of the Method
@@ -95,7 +106,6 @@ public class PackagingFolder extends PackagingFile
       this.setIncludes(element.getAttribute("includes"));//$NON-NLS-1$
       this.setExcludes(element.getAttribute("excludes"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -119,7 +129,6 @@ public class PackagingFolder extends PackagingFile
       return resource;
    }
 
-
    /**
     * Sets the excludes.
     *
@@ -130,7 +139,6 @@ public class PackagingFolder extends PackagingFile
       this.excludes = excludes;
    }
 
-
    /**
     * Sets the includes.
     *
@@ -140,7 +148,6 @@ public class PackagingFolder extends PackagingFile
    {
       this.includes = includes;
    }
-
 
    /**
     * Description of the Method
@@ -170,7 +177,6 @@ public class PackagingFolder extends PackagingFile
       return buffer.toString();
    }
 
-
    /**
     * Description of the Method
     *
@@ -189,7 +195,9 @@ public class PackagingFolder extends PackagingFile
       {
          element.setAttribute("project", this.getProject());//$NON-NLS-1$
          element.setAttribute("projectLocation", this.getProjectLocation());//$NON-NLS-1$
-         element.setAttribute("name", this.getProjectLocation().substring(this.getProjectLocation().lastIndexOf("" + IPath.SEPARATOR) + 1));//$NON-NLS-1$ //$NON-NLS-2$
+         element
+               .setAttribute(
+                     "name", this.getProjectLocation().substring(this.getProjectLocation().lastIndexOf("" + IPath.SEPARATOR) + 1));//$NON-NLS-1$ //$NON-NLS-2$
 
          String projectName = ((PackagingArchive) this.getParent()).getProject().getName();
          String absLocation;
@@ -210,7 +218,6 @@ public class PackagingFolder extends PackagingFile
       }
       element.setAttribute("used", "" + this.isUsed());//$NON-NLS-1$ //$NON-NLS-2$
    }
-
 
    /**
     * Description of the Method

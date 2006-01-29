@@ -1,11 +1,25 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.outline;
-
 
 import org.eclipse.jface.util.ListenerList;
 import org.eclipse.jface.viewers.ISelection;
@@ -38,11 +52,12 @@ import org.jboss.ide.eclipse.jdt.xml.ui.reconciler.XMLNode;
 public class XMLOutlinePage extends Page implements IContentOutlinePage
 {
    private XMLEditor editor;
+
    private ElementFilterActionGroup filterActionGroup;
 
    private ListenerList selectionChangedListeners = new ListenerList();
-   private XMLTreeViewer treeViewer;
 
+   private XMLTreeViewer treeViewer;
 
    /**
     *Constructor for the XMLOutlinePage object
@@ -53,7 +68,6 @@ public class XMLOutlinePage extends Page implements IContentOutlinePage
    {
       this.editor = editor;
    }
-
 
    /**
     * Adds a feature to the SelectionChangedListener attribute of the XMLOutlinePage object
@@ -71,7 +85,6 @@ public class XMLOutlinePage extends Page implements IContentOutlinePage
          selectionChangedListeners.add(listener);
       }
    }
-
 
    /**
     * Description of the Method
@@ -103,7 +116,6 @@ public class XMLOutlinePage extends Page implements IContentOutlinePage
       // filterActionGroup.fillActionBars(getSite().getActionBars());
    }
 
-
    /**
     * Gets the control attribute of the XMLOutlinePage object
     *
@@ -118,7 +130,6 @@ public class XMLOutlinePage extends Page implements IContentOutlinePage
       return null;
    }
 
-
    /**
     * Gets the selection attribute of the XMLOutlinePage object
     *
@@ -132,7 +143,6 @@ public class XMLOutlinePage extends Page implements IContentOutlinePage
       }
       return treeViewer.getSelection();
    }
-
 
    /**
     * Description of the Method
@@ -151,7 +161,6 @@ public class XMLOutlinePage extends Page implements IContentOutlinePage
       }
    }
 
-
    /** Sets the focus attribute of the XMLOutlinePage object */
    public void setFocus()
    {
@@ -160,7 +169,6 @@ public class XMLOutlinePage extends Page implements IContentOutlinePage
          treeViewer.getControl().setFocus();
       }
    }
-
 
    /**
     * Sets the selection attribute of the XMLOutlinePage object
@@ -174,7 +182,6 @@ public class XMLOutlinePage extends Page implements IContentOutlinePage
          treeViewer.setSelection(selection);
       }
    }
-
 
    /**
     * Description of the Method

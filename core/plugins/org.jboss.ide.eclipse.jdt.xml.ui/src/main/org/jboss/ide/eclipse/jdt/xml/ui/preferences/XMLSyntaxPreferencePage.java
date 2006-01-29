@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.preferences;
 
@@ -76,11 +91,13 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
 {
 
    ColorEditor bgColorEditor;
+
    Button bgCustom;
 
    Button bgDefault;
 
    List colors;
+
    Button fgBold;
 
    ColorEditor fgColorEditor;
@@ -92,43 +109,76 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
    private Color bgColor;
 
    private XMLTextTools xmlTextTools;
+
    /** Description of the Field */
-   public final PreferenceDescriptor[] fKeys = new PreferenceDescriptor[]{
-      new PreferenceDescriptor(PreferenceDescriptor.BOOLEAN, AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND_SYSTEM_DEFAULT),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_DEFAULT + ITextStylePreferences.SUFFIX_FOREGROUND),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_DEFAULT + ITextStylePreferences.SUFFIX_STYLE),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_TAG + ITextStylePreferences.SUFFIX_FOREGROUND),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_TAG + ITextStylePreferences.SUFFIX_STYLE),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_ATT_NAME + ITextStylePreferences.SUFFIX_FOREGROUND),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_ATT_NAME + ITextStylePreferences.SUFFIX_STYLE),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_ATT_VALUE + ITextStylePreferences.SUFFIX_FOREGROUND),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_ATT_VALUE + ITextStylePreferences.SUFFIX_STYLE),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_ENTITY + ITextStylePreferences.SUFFIX_FOREGROUND),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_ENTITY + ITextStylePreferences.SUFFIX_STYLE),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_CDATA + ITextStylePreferences.SUFFIX_FOREGROUND),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_CDATA + ITextStylePreferences.SUFFIX_STYLE),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_PI + ITextStylePreferences.SUFFIX_FOREGROUND),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_PI + ITextStylePreferences.SUFFIX_STYLE),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_COMMENT + ITextStylePreferences.SUFFIX_FOREGROUND),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_COMMENT + ITextStylePreferences.SUFFIX_STYLE),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_DECL + ITextStylePreferences.SUFFIX_FOREGROUND),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_DECL + ITextStylePreferences.SUFFIX_STYLE),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.DTD_CONDITIONAL + ITextStylePreferences.SUFFIX_FOREGROUND),
-      new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.DTD_CONDITIONAL + ITextStylePreferences.SUFFIX_STYLE),};
+   public final PreferenceDescriptor[] fKeys = new PreferenceDescriptor[]
+   {
+         new PreferenceDescriptor(PreferenceDescriptor.BOOLEAN,
+               AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND_SYSTEM_DEFAULT),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_DEFAULT
+               + ITextStylePreferences.SUFFIX_FOREGROUND),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_DEFAULT
+               + ITextStylePreferences.SUFFIX_STYLE),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_TAG
+               + ITextStylePreferences.SUFFIX_FOREGROUND),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_TAG
+               + ITextStylePreferences.SUFFIX_STYLE),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_ATT_NAME
+               + ITextStylePreferences.SUFFIX_FOREGROUND),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_ATT_NAME
+               + ITextStylePreferences.SUFFIX_STYLE),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_ATT_VALUE
+               + ITextStylePreferences.SUFFIX_FOREGROUND),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_ATT_VALUE
+               + ITextStylePreferences.SUFFIX_STYLE),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_ENTITY
+               + ITextStylePreferences.SUFFIX_FOREGROUND),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_ENTITY
+               + ITextStylePreferences.SUFFIX_STYLE),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_CDATA
+               + ITextStylePreferences.SUFFIX_FOREGROUND),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_CDATA
+               + ITextStylePreferences.SUFFIX_STYLE),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_PI
+               + ITextStylePreferences.SUFFIX_FOREGROUND),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_PI
+               + ITextStylePreferences.SUFFIX_STYLE),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_COMMENT
+               + ITextStylePreferences.SUFFIX_FOREGROUND),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_COMMENT
+               + ITextStylePreferences.SUFFIX_STYLE),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_DECL
+               + ITextStylePreferences.SUFFIX_FOREGROUND),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.XML_DECL
+               + ITextStylePreferences.SUFFIX_STYLE),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.DTD_CONDITIONAL
+               + ITextStylePreferences.SUFFIX_FOREGROUND),
+         new PreferenceDescriptor(PreferenceDescriptor.STRING, IXMLSyntaxConstants.DTD_CONDITIONAL
+               + ITextStylePreferences.SUFFIX_STYLE),};
 
-   final String[][] fSyntaxColorListModel = new String[][]{{JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.others"), //$NON-NLS-1$
-   IXMLSyntaxConstants.XML_DEFAULT}, {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.Tag"), //$NON-NLS-1$
-   IXMLSyntaxConstants.XML_TAG}, {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.AttName"), //$NON-NLS-1$
-   IXMLSyntaxConstants.XML_ATT_NAME}, {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.AttValue"), //$NON-NLS-1$
-   IXMLSyntaxConstants.XML_ATT_VALUE}, {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.Entity"), //$NON-NLS-1$
-   IXMLSyntaxConstants.XML_ENTITY}, {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.CDATA"), //$NON-NLS-1$
-   IXMLSyntaxConstants.XML_CDATA}, {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.PI"), //$NON-NLS-1$
-   IXMLSyntaxConstants.XML_PI}, {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.Comment"), //$NON-NLS-1$
-   IXMLSyntaxConstants.XML_COMMENT}, {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.Declaration"), //$NON-NLS-1$
-   IXMLSyntaxConstants.XML_DECL}, {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.Conditional"), //$NON-NLS-1$
-   IXMLSyntaxConstants.DTD_CONDITIONAL},};
-
+   final String[][] fSyntaxColorListModel = new String[][]
+   {
+   {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.others"), //$NON-NLS-1$
+         IXMLSyntaxConstants.XML_DEFAULT},
+   {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.Tag"), //$NON-NLS-1$
+         IXMLSyntaxConstants.XML_TAG},
+   {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.AttName"), //$NON-NLS-1$
+         IXMLSyntaxConstants.XML_ATT_NAME},
+   {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.AttValue"), //$NON-NLS-1$
+         IXMLSyntaxConstants.XML_ATT_VALUE},
+   {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.Entity"), //$NON-NLS-1$
+         IXMLSyntaxConstants.XML_ENTITY},
+   {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.CDATA"), //$NON-NLS-1$
+         IXMLSyntaxConstants.XML_CDATA},
+   {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.PI"), //$NON-NLS-1$
+         IXMLSyntaxConstants.XML_PI},
+   {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.Comment"), //$NON-NLS-1$
+         IXMLSyntaxConstants.XML_COMMENT},
+   {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.Declaration"), //$NON-NLS-1$
+         IXMLSyntaxConstants.XML_DECL},
+   {JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.Conditional"), //$NON-NLS-1$
+         IXMLSyntaxConstants.DTD_CONDITIONAL},};
 
    /** Constructor for XMLSyntaxPreferencePage. */
    public XMLSyntaxPreferencePage()
@@ -137,7 +187,6 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
       this.setPreferenceStore(JDTXMLUIPlugin.getDefault().getPreferenceStore());
       this.overlay = new OverlayPreferenceStore(this.getPreferenceStore(), this.fKeys);
    }
-
 
    /*
     * @see org.eclipse.jface.dialogs.IDialogPage#dispose()
@@ -160,7 +209,6 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
       super.dispose();
    }
 
-
    /*
     * @see IWorkbenchPreferencePage#init(IWorkbench)
     */
@@ -172,7 +220,6 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
    public void init(IWorkbench workbench)
    {
    }
-
 
    /*
     * @see org.eclipse.jface.preference.IPreferencePage#performOk()
@@ -189,7 +236,6 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
 
       return true;
    }
-
 
    /**
     * Description of the Method
@@ -210,22 +256,20 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
       backgroundComposite.setLayout(new RowLayout());
       backgroundComposite.setText(JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.backgroundColor"));//$NON-NLS-1$
 
-      SelectionListener backgroundSelectionListener =
-         new SelectionListener()
+      SelectionListener backgroundSelectionListener = new SelectionListener()
+      {
+
+         public void widgetDefaultSelected(SelectionEvent e)
          {
+         }
 
-            public void widgetDefaultSelected(SelectionEvent e)
-            {
-            }
-
-
-            public void widgetSelected(SelectionEvent e)
-            {
-               boolean custom = bgCustom.getSelection();
-               bgColorEditor.getButton().setEnabled(custom);
-               overlay.setValue(AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND_SYSTEM_DEFAULT, !custom);
-            }
-         };
+         public void widgetSelected(SelectionEvent e)
+         {
+            boolean custom = bgCustom.getSelection();
+            bgColorEditor.getButton().setEnabled(custom);
+            overlay.setValue(AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND_SYSTEM_DEFAULT, !custom);
+         }
+      };
 
       bgDefault = new Button(backgroundComposite, SWT.RADIO | SWT.LEFT);
       bgDefault.setText(JDTXMLUIMessages.getString("XmlSyntaxPreferencePage.systemDefault"));//$NON-NLS-1$
@@ -297,77 +341,72 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
       gd.heightHint = convertHeightInCharsToPixels(5);
       previewer.setLayoutData(gd);
 
-      colors.addSelectionListener(
-         new SelectionListener()
+      colors.addSelectionListener(new SelectionListener()
+      {
+         public void widgetDefaultSelected(SelectionEvent e)
          {
-            public void widgetDefaultSelected(SelectionEvent e)
-            {
-            }
+         }
 
-
-            public void widgetSelected(SelectionEvent e)
-            {
-               handleSyntaxColorListSelection();
-            }
-         });
-
-      bgColorEditor.getButton().addSelectionListener(
-         new SelectionListener()
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetDefaultSelected(SelectionEvent e)
-            {
-            }
+            handleSyntaxColorListSelection();
+         }
+      });
 
-
-            public void widgetSelected(SelectionEvent e)
-            {
-               PreferenceConverter.setValue(overlay, AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND, bgColorEditor.getColorValue());
-            }
-         });
-
-      fgColorButton.addSelectionListener(
-         new SelectionListener()
+      bgColorEditor.getButton().addSelectionListener(new SelectionListener()
+      {
+         public void widgetDefaultSelected(SelectionEvent e)
          {
-            public void widgetDefaultSelected(SelectionEvent e)
-            {
-            }
+         }
 
-
-            public void widgetSelected(SelectionEvent e)
-            {
-               int i = colors.getSelectionIndex();
-
-               String key = fSyntaxColorListModel[i][1];
-
-               PreferenceConverter.setValue(overlay, key + ITextStylePreferences.SUFFIX_FOREGROUND, fgColorEditor.getColorValue());
-            }
-         });
-
-      fgBold.addSelectionListener(
-         new SelectionListener()
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetDefaultSelected(SelectionEvent e)
-            {
-            }
+            PreferenceConverter.setValue(overlay, AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND, bgColorEditor
+                  .getColorValue());
+         }
+      });
 
+      fgColorButton.addSelectionListener(new SelectionListener()
+      {
+         public void widgetDefaultSelected(SelectionEvent e)
+         {
+         }
 
-            public void widgetSelected(SelectionEvent e)
-            {
-               int i = colors.getSelectionIndex();
+         public void widgetSelected(SelectionEvent e)
+         {
+            int i = colors.getSelectionIndex();
 
-               String key = fSyntaxColorListModel[i][1];
+            String key = fSyntaxColorListModel[i][1];
 
-               String value = (fgBold.getSelection()) ? ITextStylePreferences.STYLE_BOLD : ITextStylePreferences.STYLE_NORMAL;
+            PreferenceConverter.setValue(overlay, key + ITextStylePreferences.SUFFIX_FOREGROUND, fgColorEditor
+                  .getColorValue());
+         }
+      });
 
-               overlay.setValue(key + ITextStylePreferences.SUFFIX_STYLE, value);
-            }
-         });
+      fgBold.addSelectionListener(new SelectionListener()
+      {
+         public void widgetDefaultSelected(SelectionEvent e)
+         {
+         }
+
+         public void widgetSelected(SelectionEvent e)
+         {
+            int i = colors.getSelectionIndex();
+
+            String key = fSyntaxColorListModel[i][1];
+
+            String value = (fgBold.getSelection())
+                  ? ITextStylePreferences.STYLE_BOLD
+                  : ITextStylePreferences.STYLE_NORMAL;
+
+            overlay.setValue(key + ITextStylePreferences.SUFFIX_STYLE, value);
+         }
+      });
 
       this.initialize();
 
       return colorComposite;
    }
-
 
    /*
     * @see PreferencePage#performDefaults()
@@ -384,7 +423,6 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
       preview.invalidateTextPresentation();
    }
 
-
    /** Description of the Method */
    void handleSyntaxColorListSelection()
    {
@@ -397,9 +435,9 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
       fgColorEditor.setColorValue(rgb);
 
       // REVISIT
-      fgBold.setSelection(overlay.getString(key + ITextStylePreferences.SUFFIX_STYLE).indexOf(ITextStylePreferences.STYLE_BOLD) >= 0);
+      fgBold.setSelection(overlay.getString(key + ITextStylePreferences.SUFFIX_STYLE).indexOf(
+            ITextStylePreferences.STYLE_BOLD) >= 0);
    }
-
 
    /**
     * Initializes the given viewer's colors.
@@ -429,7 +467,6 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
          bgColor = color;
       }
    }
-
 
    /**
     * Creates a color from the information stored in the given preference store.
@@ -464,7 +501,6 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
       return null;
    }
 
-
    /**
     * Description of the Method
     *
@@ -491,24 +527,23 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
 
       this.preview.setDocument(document);
 
-      this.overlay.addPropertyChangeListener(
-         new IPropertyChangeListener()
+      this.overlay.addPropertyChangeListener(new IPropertyChangeListener()
+      {
+         public void propertyChange(PropertyChangeEvent event)
          {
-            public void propertyChange(PropertyChangeEvent event)
+            String p = event.getProperty();
+            if (p.equals(AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND)
+                  || p.equals(AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND_SYSTEM_DEFAULT))
             {
-               String p = event.getProperty();
-               if (p.equals(AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND) || p.equals(AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND_SYSTEM_DEFAULT))
-               {
-                  initializeViewerColors(preview);
-               }
-
-               preview.invalidateTextPresentation();
+               initializeViewerColors(preview);
             }
-         });
+
+            preview.invalidateTextPresentation();
+         }
+      });
 
       return preview.getControl();
    }
-
 
    /** */
    private void initialize()
@@ -520,17 +555,15 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
          colors.add(fSyntaxColorListModel[i][0]);
       }
 
-      colors.getDisplay().asyncExec(
-         new Runnable()
+      colors.getDisplay().asyncExec(new Runnable()
+      {
+         public void run()
          {
-            public void run()
-            {
-               colors.select(0);
-               handleSyntaxColorListSelection();
-            }
-         });
+            colors.select(0);
+            handleSyntaxColorListSelection();
+         }
+      });
    }
-
 
    /** Description of the Method */
    private void initializeFields()
@@ -543,7 +576,6 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
       bgCustom.setSelection(!def);
       bgColorEditor.getButton().setEnabled(!def);
    }
-
 
    /**
     * Description of the Method
@@ -558,7 +590,8 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
       try
       {
          char[] buf = new char[512];
-         BufferedReader reader = new BufferedReader(new InputStreamReader(XMLSyntaxPreferencePage.class.getResourceAsStream(filename)));
+         BufferedReader reader = new BufferedReader(new InputStreamReader(XMLSyntaxPreferencePage.class
+               .getResourceAsStream(filename)));
 
          try
          {
@@ -585,7 +618,6 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
       return string.toString();
    }
 
-
    /**
     * Description of the Method
     *
@@ -595,13 +627,13 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
    {
       // REVISIT: start of common preferences
 
-      PreferenceConverter.setDefault(store, AbstractTextEditor.PREFERENCE_COLOR_FOREGROUND, Display.getDefault().getSystemColor(SWT.COLOR_LIST_FOREGROUND)
-         .getRGB());
+      PreferenceConverter.setDefault(store, AbstractTextEditor.PREFERENCE_COLOR_FOREGROUND, Display.getDefault()
+            .getSystemColor(SWT.COLOR_LIST_FOREGROUND).getRGB());
 
       store.setDefault(AbstractTextEditor.PREFERENCE_COLOR_FOREGROUND_SYSTEM_DEFAULT, true);
 
-      PreferenceConverter.setDefault(store, AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND, Display.getDefault().getSystemColor(SWT.COLOR_LIST_BACKGROUND)
-         .getRGB());
+      PreferenceConverter.setDefault(store, AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND, Display.getDefault()
+            .getSystemColor(SWT.COLOR_LIST_BACKGROUND).getRGB());
 
       store.setDefault(AbstractTextEditor.PREFERENCE_COLOR_BACKGROUND_SYSTEM_DEFAULT, true);
 
@@ -609,18 +641,19 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
 
       if (uiStore != null)
       {
-         Set keys = new HashSet(Arrays.asList(new String[]{//
-         AbstractTextEditor.PREFERENCE_NAVIGATION_SMART_HOME_END, //
-         AbstractTextEditor.PREFERENCE_COLOR_FIND_SCOPE, //
-         AbstractDecoratedTextEditorPreferenceConstants.EDITOR_CURRENT_LINE, //
-         AbstractDecoratedTextEditorPreferenceConstants.EDITOR_CURRENT_LINE_COLOR, //
-         AbstractDecoratedTextEditorPreferenceConstants.EDITOR_PRINT_MARGIN, //
-         AbstractDecoratedTextEditorPreferenceConstants.EDITOR_PRINT_MARGIN_COLOR, //
-         AbstractDecoratedTextEditorPreferenceConstants.EDITOR_PRINT_MARGIN_COLUMN, //
-         AbstractDecoratedTextEditorPreferenceConstants.EDITOR_OVERVIEW_RULER, //
-         AbstractDecoratedTextEditorPreferenceConstants.EDITOR_LINE_NUMBER_RULER, //
-         AbstractDecoratedTextEditorPreferenceConstants.EDITOR_LINE_NUMBER_RULER_COLOR,//
-         }));
+         Set keys = new HashSet(Arrays.asList(new String[]
+         {//
+               AbstractTextEditor.PREFERENCE_NAVIGATION_SMART_HOME_END, //
+                     AbstractTextEditor.PREFERENCE_COLOR_FIND_SCOPE, //
+                     AbstractDecoratedTextEditorPreferenceConstants.EDITOR_CURRENT_LINE, //
+                     AbstractDecoratedTextEditorPreferenceConstants.EDITOR_CURRENT_LINE_COLOR, //
+                     AbstractDecoratedTextEditorPreferenceConstants.EDITOR_PRINT_MARGIN, //
+                     AbstractDecoratedTextEditorPreferenceConstants.EDITOR_PRINT_MARGIN_COLOR, //
+                     AbstractDecoratedTextEditorPreferenceConstants.EDITOR_PRINT_MARGIN_COLUMN, //
+                     AbstractDecoratedTextEditorPreferenceConstants.EDITOR_OVERVIEW_RULER, //
+                     AbstractDecoratedTextEditorPreferenceConstants.EDITOR_LINE_NUMBER_RULER, //
+                     AbstractDecoratedTextEditorPreferenceConstants.EDITOR_LINE_NUMBER_RULER_COLOR,//
+               }));
 
          Iterator i = new MarkerAnnotationPreferences().getAnnotationPreferences().iterator();
 
@@ -639,7 +672,8 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
       IPreferenceStore wkStore = WorkbenchPlugin.getDefault().getPreferenceStore();
       if (wkStore != null)
       {
-         ChainedPreferenceStore.startPropagating(wkStore, store, new String[]{JFaceResources.TEXT_FONT});
+         ChainedPreferenceStore.startPropagating(wkStore, store, new String[]
+         {JFaceResources.TEXT_FONT});
       }
 
       setDefault(store, IXMLSyntaxConstants.XML_DEFAULT, "0,0,0", ITextStylePreferences.STYLE_NORMAL);//$NON-NLS-1$
@@ -653,7 +687,6 @@ public class XMLSyntaxPreferencePage extends PreferencePage implements IWorkbenc
       setDefault(store, IXMLSyntaxConstants.XML_DECL, "127,0,127", ITextStylePreferences.STYLE_BOLD);//$NON-NLS-1$
       setDefault(store, IXMLSyntaxConstants.DTD_CONDITIONAL, "127,127,0", ITextStylePreferences.STYLE_BOLD);//$NON-NLS-1$
    }
-
 
    /**
     * Sets the default attribute of the XMLSyntaxPreferencePage class

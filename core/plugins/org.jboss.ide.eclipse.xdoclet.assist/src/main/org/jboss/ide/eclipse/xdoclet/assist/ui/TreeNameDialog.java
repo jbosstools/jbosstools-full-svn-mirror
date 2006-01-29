@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.ui;
 
@@ -33,21 +48,24 @@ public class TreeNameDialog extends Dialog
 {
    /** Description of the Field */
    protected Label fMessageLabel;
+
    /** Description of the Field */
    protected Label fNameLabel;
+
    /** Description of the Field */
    protected Text fNameText;
+
    /** Description of the Field */
    protected TemplateList templateList;//$NON-NLS-1$
 
    /** Description of the Field */
    protected TemplateTree tree;
+
    /** Description of the Field */
    protected IInputValidator validator;
 
    /** Description of the Field */
    protected final static String ERROR_MESSAGE = XDocletAssistMessages.getString("TreeNameDialog.Illegal_Name_1");//$NON-NLS-1$
-
 
    /**
     * Constructor for TreeNameDialog.
@@ -56,10 +74,7 @@ public class TreeNameDialog extends Dialog
     * @param tree          Description of the Parameter
     * @param templateList  Description of the Parameter
     */
-   public TreeNameDialog(
-         Shell parentShell,
-         TemplateTree tree,
-         TemplateList templateList)
+   public TreeNameDialog(Shell parentShell, TemplateTree tree, TemplateList templateList)
    {
       super(parentShell);
       if (tree == null)
@@ -71,7 +86,6 @@ public class TreeNameDialog extends Dialog
       validator = new LocalValidator();
    }
 
-
    /**
     * Returns the templateList.
     *
@@ -82,7 +96,6 @@ public class TreeNameDialog extends Dialog
       return templateList;
    }
 
-
    /**
     * Returns the tree.
     *
@@ -92,7 +105,6 @@ public class TreeNameDialog extends Dialog
    {
       return tree;
    }
-
 
    /**
     * @param buttonId  Description of the Parameter
@@ -106,7 +118,6 @@ public class TreeNameDialog extends Dialog
       }
       super.buttonPressed(buttonId);
    }
-
 
    /**
     * @param parent  Description of the Parameter
@@ -131,28 +142,25 @@ public class TreeNameDialog extends Dialog
       fNameText.setText(tree.getName());
       gd = new GridData(GridData.FILL_HORIZONTAL);
       fNameText.setLayoutData(gd);
-      fNameText.addKeyListener(
-         new KeyAdapter()
+      fNameText.addKeyListener(new KeyAdapter()
+      {
+         /**
+          * @param e  Description of the Parameter
+          * @see      org.eclipse.swt.events.KeyListener#keyPressed(org.eclipse.swt.events.KeyEvent)
+          */
+         public void keyPressed(KeyEvent e)
          {
-            /**
-             * @param e  Description of the Parameter
-             * @see      org.eclipse.swt.events.KeyListener#keyPressed(org.eclipse.swt.events.KeyEvent)
-             */
-            public void keyPressed(KeyEvent e)
-            {
-               doKeyPressed();
-            }
-         });
+            doKeyPressed();
+         }
+      });
 
       fMessageLabel = new Label(topComposite, SWT.NONE);
       gd = new GridData(GridData.FILL_HORIZONTAL);
       gd.horizontalSpan = 2;
       fMessageLabel.setLayoutData(gd);
-      fMessageLabel.setForeground(
-            getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
+      fMessageLabel.setForeground(getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
       return topComposite;
    }
-
 
    /** Description of the Method */
    protected void doKeyPressed()
@@ -170,7 +178,6 @@ public class TreeNameDialog extends Dialog
       }
    }
 
-
    /**
     * @param id  Description of the Parameter
     * @return    Description of the Return Value
@@ -180,7 +187,6 @@ public class TreeNameDialog extends Dialog
    {
       return getButton(id);
    }
-
 
    /**
     * Description of the Class
@@ -199,8 +205,7 @@ public class TreeNameDialog extends Dialog
        */
       public String isValid(String newText)
       {
-         if (newText != null
-               && templateList.isRenameTreeOk(tree.getName(), newText))
+         if (newText != null && templateList.isRenameTreeOk(tree.getName(), newText))
          {
             return null;
          }

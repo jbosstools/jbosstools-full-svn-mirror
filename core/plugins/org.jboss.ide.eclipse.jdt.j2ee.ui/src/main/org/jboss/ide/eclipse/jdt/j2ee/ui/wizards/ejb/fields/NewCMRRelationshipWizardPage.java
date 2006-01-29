@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.ui.wizards.ejb.fields;
 
@@ -41,29 +56,38 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
 {
    /** Description of the Field */
    protected SelectionButtonDialogFieldGroup cardinalitySelectionButtons;
+
    /** Description of the Field */
    protected Label cmrLeft;
+
    /** Description of the Field */
    protected Image[] cmrPictures;
+
    /** Description of the Field */
    protected Label cmrRight;
+
    /** Description of the Field */
    protected SelectionButtonDialogFieldGroup collectionSelectionButtons;
+
    /** Description of the Field */
    protected SelectionButtonDialogFieldGroup directionalitySelectionButtons;
+
    /** Description of the Field */
    protected StringDialogField relationNameDialogField;
+
    /** Description of the Field */
    protected StringDialogField relationRoleNameDialogField;
+
    /** Description of the Field */
    protected IStatus relationStatus;
+
    /** Description of the Field */
    protected StringDialogField targetEJBDialogField;
+
    /** Description of the Field */
    protected StringDialogField targetRelationNameDialogField;
 
    private final static String PAGE_NAME = NewCMRRelationshipWizardPage.class.getName();
-
 
    /**Constructor for the NewCMRRelationshipWizardPage object */
    public NewCMRRelationshipWizardPage()
@@ -74,7 +98,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
 
       this.relationStatus = new StatusInfo();
    }
-
 
    /** Description of the Method */
    public void dispose()
@@ -88,7 +111,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
       }
       super.dispose();
    }
-
 
    /**
     * Gets the collectionType attribute of the NewCMRRelationshipWizardPage object
@@ -105,7 +127,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
       return result;
    }
 
-
    /**
     * Gets the relationName attribute of the NewCMRRelationshipWizardPage object
     *
@@ -115,7 +136,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
    {
       return this.relationNameDialogField.getText();
    }
-
 
    /**
     * Gets the relationRoleName attribute of the NewCMRRelationshipWizardPage object
@@ -127,7 +147,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
       return this.relationRoleNameDialogField.getText();
    }
 
-
    /**
     * Gets the targetEJBName attribute of the NewCMRRelationshipWizardPage object
     *
@@ -138,7 +157,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
       return this.targetEJBDialogField.getText();
    }
 
-
    /**
     * Gets the targetRelationName attribute of the NewCMRRelationshipWizardPage object
     *
@@ -148,7 +166,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
    {
       return this.targetRelationNameDialogField.getText();
    }
-
 
    /**
     * Description of the Method
@@ -163,7 +180,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
       this.updateStatus(this.findMostSevereStatus());
    }
 
-
    /**
     * Gets the bidirectional attribute of the NewCMRRelationshipWizardPage object
     *
@@ -173,7 +189,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
    {
       return this.directionalitySelectionButtons.isSelected(1);
    }
-
 
    /**
     * Gets the manyToMany attribute of the NewCMRRelationshipWizardPage object
@@ -185,7 +200,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
       return this.cardinalitySelectionButtons.isSelected(3);
    }
 
-
    /**
     * Gets the manyToOne attribute of the NewCMRRelationshipWizardPage object
     *
@@ -195,7 +209,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
    {
       return this.cardinalitySelectionButtons.isSelected(2);
    }
-
 
    /**
     * Gets the oneToMany attribute of the NewCMRRelationshipWizardPage object
@@ -207,7 +220,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
       return this.cardinalitySelectionButtons.isSelected(1);
    }
 
-
    /**
     * Gets the oneToOne attribute of the NewCMRRelationshipWizardPage object
     *
@@ -217,7 +229,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
    {
       return this.cardinalitySelectionButtons.isSelected(0);
    }
-
 
    /**
     * Description of the Method
@@ -297,7 +308,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
       lbl.setImage(this.cmrPictures[6]);
    }
 
-
    /** Description of the Method */
    protected void createContent()
    {
@@ -316,37 +326,50 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
       this.relationNameDialogField = new StringDialogField();
       this.relationNameDialogField.setDialogFieldListener(this.getFieldsAdapter());
       this.relationNameDialogField.setDialogFieldListener(this.getFieldsAdapter());
-      this.relationNameDialogField.setLabelText(JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.relation.name"));//$NON-NLS-1$
+      this.relationNameDialogField.setLabelText(JDTJ2EEUIMessages
+            .getString("NewCMRRelationshipWizardPage.label.relation.name"));//$NON-NLS-1$
 
       this.relationRoleNameDialogField = new StringDialogField();
       this.relationRoleNameDialogField.setDialogFieldListener(this.getFieldsAdapter());
       this.relationRoleNameDialogField.setDialogFieldListener(this.getFieldsAdapter());
-      this.relationRoleNameDialogField.setLabelText(JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.relation.role.name"));//$NON-NLS-1$
+      this.relationRoleNameDialogField.setLabelText(JDTJ2EEUIMessages
+            .getString("NewCMRRelationshipWizardPage.label.relation.role.name"));//$NON-NLS-1$
 
       this.targetEJBDialogField = new StringDialogField();
       this.targetEJBDialogField.setDialogFieldListener(this.getFieldsAdapter());
       this.targetEJBDialogField.setDialogFieldListener(this.getFieldsAdapter());
-      this.targetEJBDialogField.setLabelText(JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.target.ejb.name"));//$NON-NLS-1$
+      this.targetEJBDialogField.setLabelText(JDTJ2EEUIMessages
+            .getString("NewCMRRelationshipWizardPage.label.target.ejb.name"));//$NON-NLS-1$
 
       this.targetRelationNameDialogField = new StringDialogField();
       this.targetRelationNameDialogField.setDialogFieldListener(this.getFieldsAdapter());
       this.targetRelationNameDialogField.setDialogFieldListener(this.getFieldsAdapter());
-      this.targetRelationNameDialogField.setLabelText(JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.target.relation.name"));//$NON-NLS-1$
+      this.targetRelationNameDialogField.setLabelText(JDTJ2EEUIMessages
+            .getString("NewCMRRelationshipWizardPage.label.target.relation.name"));//$NON-NLS-1$
 
-      buttonNames = new String[]{JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.relation.11"), JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.relation.1N"), JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.relation.N1"), JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.relation.NM")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+      buttonNames = new String[]
+      {
+            JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.relation.11"), JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.relation.1N"), JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.relation.N1"), JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.relation.NM")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
       this.cardinalitySelectionButtons = new SelectionButtonDialogFieldGroup(SWT.RADIO, buttonNames, 2);
       this.cardinalitySelectionButtons.setDialogFieldListener(this.getFieldsAdapter());
-      this.cardinalitySelectionButtons.setLabelText(JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.relation"));//$NON-NLS-1$
+      this.cardinalitySelectionButtons.setLabelText(JDTJ2EEUIMessages
+            .getString("NewCMRRelationshipWizardPage.label.relation"));//$NON-NLS-1$
 
-      buttonNames = new String[]{JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.directionality.uni"), JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.directionality.bidi")};//$NON-NLS-1$ //$NON-NLS-2$
+      buttonNames = new String[]
+      {
+            JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.directionality.uni"), JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.directionality.bidi")};//$NON-NLS-1$ //$NON-NLS-2$
       this.directionalitySelectionButtons = new SelectionButtonDialogFieldGroup(SWT.RADIO, buttonNames, 2);
       this.directionalitySelectionButtons.setDialogFieldListener(this.getFieldsAdapter());
-      this.directionalitySelectionButtons.setLabelText(JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.directionality"));//$NON-NLS-1$
+      this.directionalitySelectionButtons.setLabelText(JDTJ2EEUIMessages
+            .getString("NewCMRRelationshipWizardPage.label.directionality"));//$NON-NLS-1$
 
-      buttonNames = new String[]{JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.type.collection"), JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.type.set")};//$NON-NLS-1$ //$NON-NLS-2$
+      buttonNames = new String[]
+      {
+            JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.type.collection"), JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.type.set")};//$NON-NLS-1$ //$NON-NLS-2$
       this.collectionSelectionButtons = new SelectionButtonDialogFieldGroup(SWT.RADIO, buttonNames, 2);
       this.collectionSelectionButtons.setDialogFieldListener(this.getFieldsAdapter());
-      this.collectionSelectionButtons.setLabelText(JDTJ2EEUIMessages.getString("NewCMRRelationshipWizardPage.label.type"));//$NON-NLS-1$
+      this.collectionSelectionButtons.setLabelText(JDTJ2EEUIMessages
+            .getString("NewCMRRelationshipWizardPage.label.type"));//$NON-NLS-1$
 
       try
       {
@@ -375,7 +398,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -387,7 +409,8 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
       this.createCMRPictureControls(composite, nColumns);
       this.createSeparator(composite, nColumns);
       FieldsUtil.createSelectionButtonDialogFieldGroupControls(this.cardinalitySelectionButtons, composite, nColumns);
-      FieldsUtil.createSelectionButtonDialogFieldGroupControls(this.directionalitySelectionButtons, composite, nColumns);
+      FieldsUtil
+            .createSelectionButtonDialogFieldGroupControls(this.directionalitySelectionButtons, composite, nColumns);
       this.createFieldNameControls(composite, nColumns);
       this.createFieldTypeControls(composite, nColumns);
       FieldsUtil.createSelectionButtonDialogFieldGroupControls(this.collectionSelectionButtons, composite, nColumns);
@@ -400,7 +423,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
       this.relationStatus = this.relationChanged();
    }
 
-
    /**
     * Description of the Method
     *
@@ -408,10 +430,9 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
     */
    protected IStatus findMostSevereStatus()
    {
-      return StatusUtil.getMostSevere(
-         new IStatus[]{this.nameStatus, this.typeStatus, this.relationStatus});
+      return StatusUtil.getMostSevere(new IStatus[]
+      {this.nameStatus, this.typeStatus, this.relationStatus});
    }
-
 
    /**
     * Description of the Method
@@ -465,7 +486,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
       this.relationStatus = this.relationChanged();
    }
 
-
    /** Description of the Method */
    protected void initContent()
    {
@@ -481,7 +501,6 @@ public class NewCMRRelationshipWizardPage extends FieldWizardPage
       // Unidirectional by default
       this.directionalitySelectionButtons.setSelection(0, true);
    }
-
 
    /**
     * Description of the Method

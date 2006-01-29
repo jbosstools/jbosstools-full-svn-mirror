@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.core.classpath;
 
@@ -31,7 +46,6 @@ public abstract class AbstractClasspathContainer implements IClasspathContainer
    /** Description of the Field */
    protected IPath path;
 
-
    /**
     *Constructor for the AbstractClasspathContainer object
     *
@@ -41,7 +55,6 @@ public abstract class AbstractClasspathContainer implements IClasspathContainer
    {
       this.path = path;
    }
-
 
    /**
     * Gets the classpathEntries attribute of the AbstractClasspathContainer object
@@ -57,14 +70,12 @@ public abstract class AbstractClasspathContainer implements IClasspathContainer
       return entries;
    }
 
-
    /**
     * Gets the description attribute of the AbstractClasspathContainer object
     *
     * @return   The description value
     */
    public abstract String getDescription();
-
 
    /**
     * Gets the kind attribute of the AbstractClasspathContainer object
@@ -76,7 +87,6 @@ public abstract class AbstractClasspathContainer implements IClasspathContainer
       return IClasspathContainer.K_APPLICATION;
    }
 
-
    /**
     * Gets the path attribute of the AbstractClasspathContainer object
     *
@@ -86,7 +96,6 @@ public abstract class AbstractClasspathContainer implements IClasspathContainer
    {
       return this.path;
    }
-
 
    /**
     * Description of the Method
@@ -102,14 +111,13 @@ public abstract class AbstractClasspathContainer implements IClasspathContainer
       File libSrcDir = new File(baseDir + "/" + ClassPathConstants.LIB_SOURCE_FOLDER + "/" + getLibFolder());//$NON-NLS-1$ //$NON-NLS-2$
 
       // Lists every modules in the lib dir
-      File[] jars = libDir.listFiles(
-         new FileFilter()
+      File[] jars = libDir.listFiles(new FileFilter()
+      {
+         public boolean accept(File file)
          {
-            public boolean accept(File file)
-            {
-               return (file.toString().endsWith(".jar"));//$NON-NLS-1$
-            }
-         });
+            return (file.toString().endsWith(".jar"));//$NON-NLS-1$
+         }
+      });
 
       if (jars != null)
       {
@@ -130,7 +138,8 @@ public abstract class AbstractClasspathContainer implements IClasspathContainer
                sourceAttachementRootPath = new Path("/");//$NON-NLS-1$
             }
 
-            IClasspathEntry entry = JavaCore.newLibraryEntry(entryPath, sourceAttachementPath, sourceAttachementRootPath, true);
+            IClasspathEntry entry = JavaCore.newLibraryEntry(entryPath, sourceAttachementPath,
+                  sourceAttachementRootPath, true);
             entries.add(entry);
          }
       }
@@ -138,14 +147,12 @@ public abstract class AbstractClasspathContainer implements IClasspathContainer
       return (IClasspathEntry[]) entries.toArray(new IClasspathEntry[entries.size()]);
    }
 
-
    /**
     * Gets the libFolder attribute of the AbstractClasspathContainer object
     *
     * @return   The libFolder value
     */
    protected abstract String getLibFolder();
-
 
    /**
     * Gets the plugin attribute of the AbstractClasspathContainer object

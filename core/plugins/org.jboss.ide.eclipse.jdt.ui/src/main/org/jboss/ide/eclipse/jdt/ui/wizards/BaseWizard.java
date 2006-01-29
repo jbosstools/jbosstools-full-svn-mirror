@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.wizards;
 
@@ -38,15 +53,14 @@ import org.jboss.ide.eclipse.core.AbstractPlugin;
 public abstract class BaseWizard extends Wizard implements INewWizard
 {
    private IStructuredSelection selection;
-   private IWorkbench workbench;
 
+   private IWorkbench workbench;
 
    /**Constructor for the BaseWizard object */
    public BaseWizard()
    {
       this.setNeedsProgressMonitor(true);
    }
-
 
    /**
     * Gets the selection attribute of the BaseWizard object
@@ -58,7 +72,6 @@ public abstract class BaseWizard extends Wizard implements INewWizard
       return this.selection;
    }
 
-
    /**
     * Gets the workbench attribute of the BaseWizard object
     *
@@ -68,7 +81,6 @@ public abstract class BaseWizard extends Wizard implements INewWizard
    {
       return this.workbench;
    }
-
 
    /**
     * Description of the Method
@@ -82,7 +94,6 @@ public abstract class BaseWizard extends Wizard implements INewWizard
       this.selection = currentSelection;
    }
 
-
    /**
     * Description of the Method
     *
@@ -90,22 +101,20 @@ public abstract class BaseWizard extends Wizard implements INewWizard
     */
    public boolean performFinish()
    {
-      IWorkspaceRunnable op =
-         new IWorkspaceRunnable()
+      IWorkspaceRunnable op = new IWorkspaceRunnable()
+      {
+         public void run(IProgressMonitor monitor) throws CoreException, OperationCanceledException
          {
-            public void run(IProgressMonitor monitor)
-               throws CoreException, OperationCanceledException
+            try
             {
-               try
-               {
-                  finishPage(monitor);
-               }
-               catch (InterruptedException e)
-               {
-                  throw new OperationCanceledException(e.getMessage());
-               }
+               finishPage(monitor);
             }
-         };
+            catch (InterruptedException e)
+            {
+               throw new OperationCanceledException(e.getMessage());
+            }
+         }
+      };
       try
       {
          this.getContainer().run(false, true, new WorkbenchRunnableAdapter(op));
@@ -122,7 +131,6 @@ public abstract class BaseWizard extends Wizard implements INewWizard
       return true;
    }
 
-
    /**
     * Subclasses should override to perform the actions of the wizard.
     * This method is run in the wizard container's context as a workspace runnable.
@@ -131,9 +139,9 @@ public abstract class BaseWizard extends Wizard implements INewWizard
     * @exception InterruptedException  Description of the Exception
     * @exception CoreException         Description of the Exception
     */
-   protected void finishPage(IProgressMonitor monitor)
-      throws InterruptedException, CoreException { }
-
+   protected void finishPage(IProgressMonitor monitor) throws InterruptedException, CoreException
+   {
+   }
 
    /**
     * Description of the Method
@@ -147,7 +155,6 @@ public abstract class BaseWizard extends Wizard implements INewWizard
       String message = NewWizardMessages.NewElementWizard_op_error_message;//$NON-NLS-1$
       ExceptionHandler.handle(e, shell, title, message);
    }
-
 
    /**
     * Description of the Method
@@ -169,7 +176,6 @@ public abstract class BaseWizard extends Wizard implements INewWizard
          }
       }
    }
-
 
    /**
     * Description of the Method

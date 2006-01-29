@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.core.configuration;
 
@@ -44,7 +59,6 @@ public abstract class ServerLaunchConfigurationDelegate extends AbstractServerLa
       super();
    }
 
-
    /**
     * This is copied, pasted and modified from
     * JavaLocalApplicationLaunchConfigurationDelegate.
@@ -57,7 +71,8 @@ public abstract class ServerLaunchConfigurationDelegate extends AbstractServerLa
     * @see                      org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(ILaunchConfiguration,
     *      String, ILaunch, IProgressMonitor)
     */
-   public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException
+   public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor)
+         throws CoreException
    {
 
       if (ServerLaunchManager.getInstance().getRunningStartLaunch(configuration) != null)
@@ -65,7 +80,8 @@ public abstract class ServerLaunchConfigurationDelegate extends AbstractServerLa
          abort(LauncherCoreMessages.getString("Server_is_already_running_1"), null, 0);//$NON-NLS-1$
       }
 
-      boolean configurationError = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_CONFIGURATION_ERROR, true);
+      boolean configurationError = configuration.getAttribute(
+            IServerLaunchConfigurationConstants.ATTR_CONFIGURATION_ERROR, true);
 
       String mainTypeName = verifyMainTypeName(configuration);
 
@@ -88,7 +104,8 @@ public abstract class ServerLaunchConfigurationDelegate extends AbstractServerLa
 
       // Classpath
       String[] userClasspath = getClasspath(configuration);
-      List classpathList = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_CLASSPATH, Collections.EMPTY_LIST);
+      List classpathList = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_CLASSPATH,
+            Collections.EMPTY_LIST);
 
       for (int i = 0; i < userClasspath.length; i++)
       {
@@ -103,9 +120,8 @@ public abstract class ServerLaunchConfigurationDelegate extends AbstractServerLa
       /*
        * getAllOpenProjects()
        */
-            , workingDirName, getBootpath(configuration), configurationError);
+      , workingDirName, getBootpath(configuration), configurationError);
    }
-
 
    /**
     * Description of the Method
@@ -125,7 +141,10 @@ public abstract class ServerLaunchConfigurationDelegate extends AbstractServerLa
     * @param configurationError  Description of the Parameter
     * @exception CoreException   Description of the Exception
     */
-   public void launchInternal(String mode, ILaunch launch, IProgressMonitor monitor, String mainTypeName, IVMInstall vm, String pgmArgs, String vmArgs, Map vmAttributesMap, String[] classpath, ISourceLocator sourceLocator, String workingDirectory, String[] bootpath, boolean configurationError) throws CoreException
+   public void launchInternal(String mode, ILaunch launch, IProgressMonitor monitor, String mainTypeName,
+         IVMInstall vm, String pgmArgs, String vmArgs, Map vmAttributesMap, String[] classpath,
+         ISourceLocator sourceLocator, String workingDirectory, String[] bootpath, boolean configurationError)
+         throws CoreException
    {
 
       if (configurationError)
@@ -145,20 +164,25 @@ public abstract class ServerLaunchConfigurationDelegate extends AbstractServerLa
          return;
       }
 
-      monitor.subTask(LaunchingMessages.JavaLocalApplicationLaunchConfigurationDelegate_Verifying_launch_attributes____1);//$NON-NLS-1$
+      monitor
+            .subTask(LaunchingMessages.JavaLocalApplicationLaunchConfigurationDelegate_Verifying_launch_attributes____1);//$NON-NLS-1$
 
       IVMRunner runner = vm.getVMRunner(mode);
       if (runner == null)
       {
          if (mode == ILaunchManager.DEBUG_MODE)
          {
-            abort(MessageFormat.format(LaunchingMessages.JavaLocalApplicationLaunchConfigurationDelegate_0, new String[]//$NON-NLS-1$
-            {vm.getName()}), null, IJavaLaunchConfigurationConstants.ERR_VM_RUNNER_DOES_NOT_EXIST);
+            abort(MessageFormat.format(LaunchingMessages.JavaLocalApplicationLaunchConfigurationDelegate_0,
+                  new String[]
+                  //$NON-NLS-1$
+                  {vm.getName()}), null, IJavaLaunchConfigurationConstants.ERR_VM_RUNNER_DOES_NOT_EXIST);
          }
          else
          {
-            abort(MessageFormat.format(LaunchingMessages.JavaLocalApplicationLaunchConfigurationDelegate_1, new String[]//$NON-NLS-1$
-            {vm.getName()}), null, IJavaLaunchConfigurationConstants.ERR_VM_RUNNER_DOES_NOT_EXIST);
+            abort(MessageFormat.format(LaunchingMessages.JavaLocalApplicationLaunchConfigurationDelegate_1,
+                  new String[]
+                  //$NON-NLS-1$
+                  {vm.getName()}), null, IJavaLaunchConfigurationConstants.ERR_VM_RUNNER_DOES_NOT_EXIST);
          }
       }
 
@@ -192,12 +216,11 @@ public abstract class ServerLaunchConfigurationDelegate extends AbstractServerLa
 
       monitor.subTask(LaunchingMessages.JavaLocalApplicationLaunchConfigurationDelegate_Creating_source_locator____2);//$NON-NLS-1$
       // set the default source locator if required
-//      launch.setSourceLocator(sourceLocator);
+      //      launch.setSourceLocator(sourceLocator);
       monitor.worked(1);
 
       monitor.done();
    }
-
 
    /**
     * Description of the Method
@@ -211,29 +234,37 @@ public abstract class ServerLaunchConfigurationDelegate extends AbstractServerLa
 
       if (!hasShutdown())
       {
-         abort(LauncherCoreMessages.getString("ServerLaunchConfigurationDelegatehasShutdown_must_not_be_null_1"), null, 0);//$NON-NLS-1$
+         abort(
+               LauncherCoreMessages.getString("ServerLaunchConfigurationDelegatehasShutdown_must_not_be_null_1"), null, 0);//$NON-NLS-1$
       }
 
-      String mainTypeName = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_SHUTDOWN_TYPE, IServerLaunchConfigurationConstants.EMPTY_STRING);
+      String mainTypeName = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_SHUTDOWN_TYPE,
+            IServerLaunchConfigurationConstants.EMPTY_STRING);
       IVMInstall vm = verifyVMInstall(configuration);
 
       // Program & VM args
-      String pgmArgs = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_SHUTDOWN_PROGRAM_ARGS, IServerLaunchConfigurationConstants.EMPTY_STRING);
-      String vmArgs = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_SHUTDOWN_VM_ARGS, IServerLaunchConfigurationConstants.EMPTY_STRING);
+      String pgmArgs = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_SHUTDOWN_PROGRAM_ARGS,
+            IServerLaunchConfigurationConstants.EMPTY_STRING);
+      String vmArgs = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_SHUTDOWN_VM_ARGS,
+            IServerLaunchConfigurationConstants.EMPTY_STRING);
 
       // VM-specific attributes
       Map vmAttributesMap = null;
 
       // Classpath
-      String[] classpath = ServerLaunchUtil.getArrayFromList(configuration, IServerLaunchConfigurationConstants.ATTR_SHUTDOWN_CLASSPATH);
+      String[] classpath = ServerLaunchUtil.getArrayFromList(configuration,
+            IServerLaunchConfigurationConstants.ATTR_SHUTDOWN_CLASSPATH);
 
       ILaunch launch = new Launch(configuration, ILaunchManager.RUN_MODE, null);
-      launch.setAttribute(IServerLaunchConfigurationConstants.ATTR_LAUNCH_SHUTDOWN, IServerLaunchConfigurationConstants.EMPTY_STRING);
+      launch.setAttribute(IServerLaunchConfigurationConstants.ATTR_LAUNCH_SHUTDOWN,
+            IServerLaunchConfigurationConstants.EMPTY_STRING);
 
-      boolean configurationError = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_CONFIGURATION_ERROR, true);
+      boolean configurationError = configuration.getAttribute(
+            IServerLaunchConfigurationConstants.ATTR_CONFIGURATION_ERROR, true);
 
       prepareStopInMain(configuration);
 
-      launchInternal(ILaunchManager.RUN_MODE, launch, monitor, mainTypeName, vm, pgmArgs, vmArgs, vmAttributesMap, classpath, null, null, getBootpath(configuration), configurationError);
+      launchInternal(ILaunchManager.RUN_MODE, launch, monitor, mainTypeName, vm, pgmArgs, vmArgs, vmAttributesMap,
+            classpath, null, null, getBootpath(configuration), configurationError);
    }
 }

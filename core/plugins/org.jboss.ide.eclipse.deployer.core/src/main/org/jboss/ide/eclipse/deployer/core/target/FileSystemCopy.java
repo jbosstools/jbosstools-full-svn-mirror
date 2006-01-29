@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.deployer.core.target;
 
@@ -23,15 +38,14 @@ import org.jboss.ide.eclipse.deployer.core.util.FileUtils;
 public class FileSystemCopy implements ITarget
 {
    private String name;
-   private URL url;
 
+   private URL url;
 
    /** Constructor for the DeploymentTarget object */
    public FileSystemCopy()
    {
       this.name = DeployerCoreMessages.getString("FileSystemCopy.target.name.default");//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -46,7 +60,6 @@ public class FileSystemCopy implements ITarget
       return target;
    }
 
-
    /**
     * Description of the Method
     *
@@ -57,15 +70,13 @@ public class FileSystemCopy implements ITarget
       return (ITarget) this.clone();
    }
 
-
    /**
     * Description of the Method
     *
     * @param resource                 Description of the Parameter
     * @exception DeploymentException  Description of the Exception
     */
-   public void deploy(IResource resource)
-      throws DeploymentException
+   public void deploy(IResource resource) throws DeploymentException
    {
       URL url = this.getURL();
       File directory = new File(url.getFile());
@@ -75,7 +86,7 @@ public class FileSystemCopy implements ITarget
 
       switch (resource.getType())
       {
-         case IResource.FILE:
+         case IResource.FILE :
             try
             {
                FileUtils.copyFile(source, dest);
@@ -83,12 +94,12 @@ public class FileSystemCopy implements ITarget
             catch (IOException ioe)
             {
                AbstractPlugin.logError("Cannot deploy resource " + resource, ioe);//$NON-NLS-1$
-               throw new DeploymentException(DeployerCoreMessages.getString("FileSystemCopy.action.deploy.failed.text1") //$NON-NLS-1$
-               + source.toString()
-                  + DeployerCoreMessages.getString("FileSystemCopy.action.deploy.failed.text2"));//$NON-NLS-1$
+               throw new DeploymentException(DeployerCoreMessages
+                     .getString("FileSystemCopy.action.deploy.failed.text1") //$NON-NLS-1$
+                     + source.toString() + DeployerCoreMessages.getString("FileSystemCopy.action.deploy.failed.text2"));//$NON-NLS-1$
             }
             break;
-         case IResource.FOLDER:
+         case IResource.FOLDER :
             try
             {
                FileUtils.copyDirectory(source, dest);
@@ -96,15 +107,14 @@ public class FileSystemCopy implements ITarget
             catch (IOException ioe)
             {
                AbstractPlugin.logError("Cannot deploy resource " + resource, ioe);//$NON-NLS-1$
-               throw new DeploymentException(DeployerCoreMessages.getString("FileSystemCopy.action.deploy.failed.text1") //$NON-NLS-1$
-               + source.toString()
-                  + DeployerCoreMessages.getString("FileSystemCopy.action.deploy.failed.text3"));//$NON-NLS-1$
+               throw new DeploymentException(DeployerCoreMessages
+                     .getString("FileSystemCopy.action.deploy.failed.text1") //$NON-NLS-1$
+                     + source.toString() + DeployerCoreMessages.getString("FileSystemCopy.action.deploy.failed.text3"));//$NON-NLS-1$
             }
             break;
-         default:
+         default :
       }
    }
-
 
    /**
     * Description of the Method
@@ -127,7 +137,6 @@ public class FileSystemCopy implements ITarget
       return false;
    }
 
-
    /**
     * Gets the description attribute of the FileSystemCopy object
     *
@@ -138,7 +147,6 @@ public class FileSystemCopy implements ITarget
       return DeployerCoreMessages.getString("FileSystemCopy.target.description");//$NON-NLS-1$
    }
 
-
    /**
     * Gets the name attribute of the DeploymentTarget object
     *
@@ -148,7 +156,6 @@ public class FileSystemCopy implements ITarget
    {
       return this.name;
    }
-
 
    /**
     * Description of the Method
@@ -164,7 +171,6 @@ public class FileSystemCopy implements ITarget
       return "";//$NON-NLS-1$
    }
 
-
    /**
     * Gets the uRL attribute of the DeploymentTarget object
     *
@@ -174,7 +180,6 @@ public class FileSystemCopy implements ITarget
    {
       return this.url;
    }
-
 
    /**
     * Description of the Method
@@ -188,15 +193,13 @@ public class FileSystemCopy implements ITarget
       return hashcode;
    }
 
-
    /**
     * Description of the Method
     *
     * @param resource                 Description of the Parameter
     * @exception DeploymentException  Description of the Exception
     */
-   public void redeploy(IResource resource)
-      throws DeploymentException
+   public void redeploy(IResource resource) throws DeploymentException
    {
       URL url = this.getURL();
       File directory = new File(url.getFile());
@@ -206,7 +209,7 @@ public class FileSystemCopy implements ITarget
 
       switch (resource.getType())
       {
-         case IResource.FILE:
+         case IResource.FILE :
             try
             {
                // TODO : overwrite must be part of preference
@@ -215,12 +218,13 @@ public class FileSystemCopy implements ITarget
             catch (IOException ioe)
             {
                AbstractPlugin.logError("Cannot redeploy resource " + resource, ioe);//$NON-NLS-1$
-               throw new DeploymentException(DeployerCoreMessages.getString("FileSystemCopy.action.redeploy.failed.text1") //$NON-NLS-1$
-               + source.toString()
-                  + DeployerCoreMessages.getString("FileSystemCopy.action.redeploy.failed.text2"));//$NON-NLS-1$
+               throw new DeploymentException(DeployerCoreMessages
+                     .getString("FileSystemCopy.action.redeploy.failed.text1") //$NON-NLS-1$
+                     + source.toString()
+                     + DeployerCoreMessages.getString("FileSystemCopy.action.redeploy.failed.text2"));//$NON-NLS-1$
             }
             break;
-         case IResource.FOLDER:
+         case IResource.FOLDER :
             try
             {
                // TODO : overwrite must be part of preference
@@ -229,15 +233,15 @@ public class FileSystemCopy implements ITarget
             catch (IOException ioe)
             {
                AbstractPlugin.logError("Cannot redeploy resource " + resource, ioe);//$NON-NLS-1$
-               throw new DeploymentException(DeployerCoreMessages.getString("FileSystemCopy.action.redeploy.failed.text1") //$NON-NLS-1$
-               + source.toString()
-                  + DeployerCoreMessages.getString("FileSystemCopy.action.redeploy.failed.text3"));//$NON-NLS-1$
+               throw new DeploymentException(DeployerCoreMessages
+                     .getString("FileSystemCopy.action.redeploy.failed.text1") //$NON-NLS-1$
+                     + source.toString()
+                     + DeployerCoreMessages.getString("FileSystemCopy.action.redeploy.failed.text3"));//$NON-NLS-1$
             }
             break;
-         default:
+         default :
       }
    }
-
 
    /**
     * Sets the name.
@@ -248,7 +252,6 @@ public class FileSystemCopy implements ITarget
    {
       this.name = name;
    }
-
 
    /**
     * Description of the Method
@@ -273,7 +276,6 @@ public class FileSystemCopy implements ITarget
       }
    }
 
-
    /**
     * Sets the url.
     *
@@ -283,7 +285,6 @@ public class FileSystemCopy implements ITarget
    {
       this.url = url;
    }
-
 
    /**
     * Description of the Method
@@ -303,15 +304,13 @@ public class FileSystemCopy implements ITarget
       return result.toString();
    }
 
-
    /**
     * Description of the Method
     *
     * @param resource                 Description of the Parameter
     * @exception DeploymentException  Description of the Exception
     */
-   public void undeploy(IResource resource)
-      throws DeploymentException
+   public void undeploy(IResource resource) throws DeploymentException
    {
       URL url = this.getURL();
       File directory = new File(url.getFile());
@@ -320,16 +319,17 @@ public class FileSystemCopy implements ITarget
 
       switch (resource.getType())
       {
-         case IResource.FILE:
+         case IResource.FILE :
             if (!source.delete())
             {
                AbstractPlugin.logError("Cannot undeploy resource " + resource);//$NON-NLS-1$
-               throw new DeploymentException(DeployerCoreMessages.getString("FileSystemCopy.action.undeploy.failed.text1") //$NON-NLS-1$
-               + source.toString()
-                  + DeployerCoreMessages.getString("FileSystemCopy.action.undeploy.failed.text2"));//$NON-NLS-1$
+               throw new DeploymentException(DeployerCoreMessages
+                     .getString("FileSystemCopy.action.undeploy.failed.text1") //$NON-NLS-1$
+                     + source.toString()
+                     + DeployerCoreMessages.getString("FileSystemCopy.action.undeploy.failed.text2"));//$NON-NLS-1$
             }
             break;
-         case IResource.FOLDER:
+         case IResource.FOLDER :
             try
             {
                FileUtils.deleteDirectory(source);
@@ -337,12 +337,13 @@ public class FileSystemCopy implements ITarget
             catch (IOException ioe)
             {
                AbstractPlugin.logError("Cannot undeploy resource " + resource, ioe);//$NON-NLS-1$
-               throw new DeploymentException(DeployerCoreMessages.getString("FileSystemCopy.action.undeploy.failed.text1") //$NON-NLS-1$
-               + source.toString()
-                  + DeployerCoreMessages.getString("FileSystemCopy.action.undeploy.failed.text3"));//$NON-NLS-1$
+               throw new DeploymentException(DeployerCoreMessages
+                     .getString("FileSystemCopy.action.undeploy.failed.text1") //$NON-NLS-1$
+                     + source.toString()
+                     + DeployerCoreMessages.getString("FileSystemCopy.action.undeploy.failed.text3"));//$NON-NLS-1$
             }
             break;
-         default:
+         default :
             AbstractPlugin.logError("Unknown resource type " + resource);//$NON-NLS-1$
       }
    }

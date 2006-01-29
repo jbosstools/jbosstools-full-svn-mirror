@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.editors;
 
@@ -36,26 +51,29 @@ import org.jboss.ide.eclipse.jdt.xml.ui.reconciler.XMLNode;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
-
 /**
  * Description of the Class
  *
  * @author    Laurent Etiemble
  * @version   $Revision$
  */
-public class XMLEditor extends I18NTextEditor implements ISelectionChangedListener, IReconcilierHolder, IResourceChangeListener
+public class XMLEditor extends I18NTextEditor
+      implements
+         ISelectionChangedListener,
+         IReconcilierHolder,
+         IResourceChangeListener
 {
    /** Description of the Field */
    protected XMLOutlinePage outline;
+
    /** Description of the Field */
    protected NodeReconciler reconciler;
 
-
    /**Constructor for the XMLEditor object */
-   public XMLEditor() {
-   	ResourcesPlugin.getWorkspace().addResourceChangeListener(this, IResourceChangeEvent.POST_CHANGE);
+   public XMLEditor()
+   {
+      ResourcesPlugin.getWorkspace().addResourceChangeListener(this, IResourceChangeEvent.POST_CHANGE);
    }
-
 
    /**
     * Gets the adapter attribute of the XMLEditor object
@@ -77,7 +95,6 @@ public class XMLEditor extends I18NTextEditor implements ISelectionChangedListen
       return super.getAdapter(adapter);
    }
 
-
    /**
     * Gets the outlinePage attribute of the XMLEditor object
     *
@@ -88,7 +105,6 @@ public class XMLEditor extends I18NTextEditor implements ISelectionChangedListen
       return (XMLOutlinePage) this.getAdapter(IContentOutlinePage.class);
    }
 
-
    /**
     * Gets the reconcilier attribute of the XMLEditor object
     *
@@ -98,7 +114,6 @@ public class XMLEditor extends I18NTextEditor implements ISelectionChangedListen
    {
       return this.reconciler;
    }
-
 
    /**
     * Description of the Method
@@ -121,7 +136,6 @@ public class XMLEditor extends I18NTextEditor implements ISelectionChangedListen
       this.selectAndReveal(start, length);
    }
 
-
    /**
     * Sets the reconcilier attribute of the XMLEditor object
     *
@@ -131,7 +145,6 @@ public class XMLEditor extends I18NTextEditor implements ISelectionChangedListen
    {
       this.reconciler = reconciler;
    }
-
 
    /**
     * Description of the Method
@@ -144,7 +157,6 @@ public class XMLEditor extends I18NTextEditor implements ISelectionChangedListen
       return JDTXMLUIPlugin.getDefault().getXMLTextTools().affectsBehavior(event);
    }
 
-
    /**
     * Gets the xMLConfiguration attribute of the XMLEditor object
     *
@@ -155,7 +167,6 @@ public class XMLEditor extends I18NTextEditor implements ISelectionChangedListen
    {
       return new XMLConfiguration(xmlTextTools);
    }
-
 
    /** Description of the Method */
    protected void initializeEditor()
@@ -169,7 +180,6 @@ public class XMLEditor extends I18NTextEditor implements ISelectionChangedListen
       this.setDocumentProvider(new XMLDocumentProvider(this));
    }
 
-
    /**
     * Description of the Method
     *
@@ -182,7 +192,6 @@ public class XMLEditor extends I18NTextEditor implements ISelectionChangedListen
       this.validateXML();
    }
 
-
    /**
     * Description of the Method
     *
@@ -193,7 +202,6 @@ public class XMLEditor extends I18NTextEditor implements ISelectionChangedListen
       super.performSaveAs(progressMonitor);
       this.validateXML();
    }
-
 
    /** Description of the Method */
    protected void validateXML()
@@ -221,7 +229,8 @@ public class XMLEditor extends I18NTextEditor implements ISelectionChangedListen
             SAXParser parser = factory.newSAXParser();
             if (hasNS)
             {
-               parser.setProperty("http://java.sun.com/xml/jaxp/properties/schemaLanguage", "http://www.w3.org/2001/XMLSchema");//$NON-NLS-1$ //$NON-NLS-2$
+               parser.setProperty(
+                     "http://java.sun.com/xml/jaxp/properties/schemaLanguage", "http://www.w3.org/2001/XMLSchema");//$NON-NLS-1$ //$NON-NLS-2$
             }
             XMLReader reader = parser.getXMLReader();
             reader.setErrorHandler(handler);
@@ -235,21 +244,22 @@ public class XMLEditor extends I18NTextEditor implements ISelectionChangedListen
          }
       }
    }
-   
+
    /**
     * Respond to resource change events on the file represented by this editor.
     */
-	public void resourceChanged(IResourceChangeEvent event) {
-		IResource resource = event.getResource();
-		if (resource != null)
-		{
-			IResource editorResource = (IResource) getEditorInput().getAdapter(IResource.class);
-			
-			System.out.println("Editor Resource=" +editorResource);
-			if (resource.equals(editorResource))
-			{
-				setInput(getEditorInput());
-			}
-		}
-	}
+   public void resourceChanged(IResourceChangeEvent event)
+   {
+      IResource resource = event.getResource();
+      if (resource != null)
+      {
+         IResource editorResource = (IResource) getEditorInput().getAdapter(IResource.class);
+
+         System.out.println("Editor Resource=" + editorResource);
+         if (resource.equals(editorResource))
+         {
+            setInput(getEditorInput());
+         }
+      }
+   }
 }

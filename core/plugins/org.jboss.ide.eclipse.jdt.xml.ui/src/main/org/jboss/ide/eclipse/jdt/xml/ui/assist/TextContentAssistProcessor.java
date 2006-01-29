@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.assist;
 
@@ -41,7 +56,6 @@ public class TextContentAssistProcessor extends XMLContentAssistProcessor
       super(holder, store, translator);
    }
 
-
    /**
     * Description of the Method
     *
@@ -68,13 +82,12 @@ public class TextContentAssistProcessor extends XMLContentAssistProcessor
       int translated = this.translator.translateParentOffset(viewer.getDocument(), offset);
       XMLNode node = this.getNodeAt(viewer.getDocument(), translated);
 
-//      if (node == null) {
-//         return new ICompletionProposal[0];
-//      }
+      //      if (node == null) {
+      //         return new ICompletionProposal[0];
+      //      }
 
       return this.computeTags(viewer.getDocument(), node, translated, offset);
    }
-
 
    /**
     * Description of the Method
@@ -88,7 +101,6 @@ public class TextContentAssistProcessor extends XMLContentAssistProcessor
       return null;
    }
 
-
    /**
     * Gets the completionProposalAutoActivationCharacters attribute of the TextContentAssistProcessor object
     *
@@ -96,10 +108,10 @@ public class TextContentAssistProcessor extends XMLContentAssistProcessor
     */
    public char[] getCompletionProposalAutoActivationCharacters()
    {
-      char[] c = new char[]{' ', ':', '<'};
+      char[] c = new char[]
+      {' ', ':', '<'};
       return c;
    }
-
 
    /**
     * Gets the contextInformationAutoActivationCharacters attribute of the TextContentAssistProcessor object
@@ -111,7 +123,6 @@ public class TextContentAssistProcessor extends XMLContentAssistProcessor
       return null;
    }
 
-
    /**
     * Gets the contextInformationValidator attribute of the TextContentAssistProcessor object
     *
@@ -121,7 +132,6 @@ public class TextContentAssistProcessor extends XMLContentAssistProcessor
    {
       return null;
    }
-
 
    /**
     * Gets the errorMessage attribute of the TextContentAssistProcessor object

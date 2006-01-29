@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.run.ui.properties;
 
@@ -45,37 +60,46 @@ public class ConfigurationPropertyPage extends PropertyPage
 {
    /** Description of the Field */
    private ConfigurationListViewer configListViewer;
+
    /** Description of the Field */
    private ConfigurationViewer configViewer;
+
    /** Description of the Field */
    private Button addButton;
+
    /** Description of the Field */
    private Button addStandardButton;
+
    /** Description of the Field */
    private Button renameButton;
+
    /** Description of the Field */
    private Button removeButton;
+
    /** Description of the Field */
    private Button moveDownButton;
+
    /** Description of the Field */
    private Button moveUpButton;
+
    /** Description of the Field */
    private Button enableXDocletButton;
+
    private Composite parentComposite;
-   
+
    private IJavaProject project;
+
    /** Description of the Field */
    private ProjectConfigurations projectConfigurations;
+
    /** Description of the Field */
    private ElementViewer properiesViewer;
-
 
    /**Constructor for the ConfigurationPropertyPage object */
    public ConfigurationPropertyPage()
    {
       super();
    }
-
 
    /**
     * Description of the Method
@@ -90,7 +114,7 @@ public class ConfigurationPropertyPage extends PropertyPage
          // Save the configurations
          this.projectConfigurations.storeConfigurations();
          XDocletRunPlugin.getDefault().enableXDocletBuilder(this.project, enableXDocletButton.getSelection());
-         
+
          //XDocletRunPlugin.getDefault().createBuildFile(this.project);
          return super.performOk();
       }
@@ -98,99 +122,89 @@ public class ConfigurationPropertyPage extends PropertyPage
       {
          this.openErrorDialog(XDocletRunMessages.getString("ConfigurationPropertyPage.failed.save.configuration"), ce);//$NON-NLS-1$
       }
-//      catch (IOException e)
-//      {
-//         this.openErrorDialog(XDocletRunMessages.getString("ConfigurationPropertyPage.failed.save.configuration"), e);//$NON-NLS-1$
-//      }
-//      catch (TransformerException e)
-//      {
-//         this.openErrorDialog(XDocletRunMessages.getString("ConfigurationPropertyPage.failed.save.configuration"), e);//$NON-NLS-1$
-//      }
+      //      catch (IOException e)
+      //      {
+      //         this.openErrorDialog(XDocletRunMessages.getString("ConfigurationPropertyPage.failed.save.configuration"), e);//$NON-NLS-1$
+      //      }
+      //      catch (TransformerException e)
+      //      {
+      //         this.openErrorDialog(XDocletRunMessages.getString("ConfigurationPropertyPage.failed.save.configuration"), e);//$NON-NLS-1$
+      //      }
       return false;
    }
-
 
    /** Description of the Method */
    protected void assign()
    {
       // Change configuration according to choices
-      this.configListViewer.addSelectionChangeListener(
-         new ISelectionChangedListener()
+      this.configListViewer.addSelectionChangeListener(new ISelectionChangedListener()
+      {
+         public void selectionChanged(SelectionChangedEvent event)
          {
-            public void selectionChanged(SelectionChangedEvent event)
-            {
-               enableButtons();
-               ConfigurationPropertyPage.this.configViewer.setConfiguration(ConfigurationPropertyPage.this.configListViewer.getCurrent());
-            }
+            enableButtons();
+            ConfigurationPropertyPage.this.configViewer
+                  .setConfiguration(ConfigurationPropertyPage.this.configListViewer.getCurrent());
          }
-            );
+      });
 
       // Change elements according to choices
-      this.configViewer.addSelectionChangedListener(
-         new ISelectionChangedListener()
+      this.configViewer.addSelectionChangedListener(new ISelectionChangedListener()
+      {
+         public void selectionChanged(SelectionChangedEvent event)
          {
-            public void selectionChanged(SelectionChangedEvent event)
-            {
-               ConfigurationPropertyPage.this.properiesViewer.setElement(ConfigurationPropertyPage.this.configViewer.getCurrent());
-            }
+            ConfigurationPropertyPage.this.properiesViewer.setElement(ConfigurationPropertyPage.this.configViewer
+                  .getCurrent());
          }
-            );
+      });
 
-      this.addButton.addSelectionListener(
-            new SelectionAdapter()
-            {
-               public void widgetSelected(SelectionEvent e)
-               {
-                  ConfigurationPropertyPage.this.configListViewer.doAdd();
-               }
-            });
-
-      this.addStandardButton.addSelectionListener(
-            new SelectionAdapter()
-            {
-               public void widgetSelected(SelectionEvent e)
-               {
-                  ConfigurationPropertyPage.this.configListViewer.doAddStandard();
-               }
-            });
-
-      this.renameButton.addSelectionListener(
-            new SelectionAdapter()
-            {
-               public void widgetSelected(SelectionEvent e)
-               {
-                  ConfigurationPropertyPage.this.configListViewer.doRename();
-               }
-            });
-
-      this.removeButton.addSelectionListener(
-            new SelectionAdapter()
-            {
-               public void widgetSelected(SelectionEvent e)
-               {
-                  ConfigurationPropertyPage.this.configListViewer.doRemove();
-               }
-            });
-
-      moveUpButton.addSelectionListener(
-         new SelectionAdapter()
+      this.addButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               doMoveUp();
-            }
-         });
+            ConfigurationPropertyPage.this.configListViewer.doAdd();
+         }
+      });
 
-      moveDownButton.addSelectionListener(
-         new SelectionAdapter()
+      this.addStandardButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               doMoveDown();
-            }
-         });
+            ConfigurationPropertyPage.this.configListViewer.doAddStandard();
+         }
+      });
+
+      this.renameButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
+         {
+            ConfigurationPropertyPage.this.configListViewer.doRename();
+         }
+      });
+
+      this.removeButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
+         {
+            ConfigurationPropertyPage.this.configListViewer.doRemove();
+         }
+      });
+
+      moveUpButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
+         {
+            doMoveUp();
+         }
+      });
+
+      moveDownButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
+         {
+            doMoveDown();
+         }
+      });
    }
-
 
    /**
     * Description of the Method
@@ -216,7 +230,8 @@ public class ConfigurationPropertyPage extends PropertyPage
 
       addStandardButton = new Button(buttons, SWT.PUSH);
       addStandardButton.setText(XDocletRunMessages.getString("ConfigurationPropertyPage.button.add.standard"));//$NON-NLS-1$
-      addStandardButton.setToolTipText(XDocletRunMessages.getString("ConfigurationPropertyPage.button.add.standard.tip"));//$NON-NLS-1$
+      addStandardButton.setToolTipText(XDocletRunMessages
+            .getString("ConfigurationPropertyPage.button.add.standard.tip"));//$NON-NLS-1$
       addStandardButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
       renameButton = new Button(buttons, SWT.PUSH);
@@ -241,7 +256,7 @@ public class ConfigurationPropertyPage extends PropertyPage
 
       return buttons;
    }
-   
+
    /**
     * Description of the Method
     *
@@ -263,30 +278,34 @@ public class ConfigurationPropertyPage extends PropertyPage
          // The configuration list
          GridLayout layout = new GridLayout(1, false);
          parentComposite.setLayout(layout);
-         
+
          enableXDocletButton = new Button(parentComposite, SWT.CHECK);
          enableXDocletButton.setText(XDocletRunMessages.getString("ConfigurationPropertyPage.enableXDocletLabel"));
-         
-         enableXDocletButton.addSelectionListener(new SelectionListener () {
-        	 public void widgetDefaultSelected(SelectionEvent e) {
-        		 widgetSelected(e);
-        	}
-        	 public void widgetSelected(SelectionEvent e) {
-        		 boolean enabled = enableXDocletButton.getSelection();
-        		UIUtil.setEnabledRecursive(parentComposite, enabled);
-        		enableXDocletButton.setEnabled(true);
-        		if (enabled)
-        		{
-        			enableButtons();
-        		}
-        	}
+
+         enableXDocletButton.addSelectionListener(new SelectionListener()
+         {
+            public void widgetDefaultSelected(SelectionEvent e)
+            {
+               widgetSelected(e);
+            }
+
+            public void widgetSelected(SelectionEvent e)
+            {
+               boolean enabled = enableXDocletButton.getSelection();
+               UIUtil.setEnabledRecursive(parentComposite, enabled);
+               enableXDocletButton.setEnabled(true);
+               if (enabled)
+               {
+                  enableButtons();
+               }
+            }
          });
-         
+
          boolean hasXDoclet = ProjectUtil.projectHasBuilder(this.project.getProject(), XDocletRunBuilder.BUILDER_ID);
          UIUtil.setEnabledRecursive(parentComposite, hasXDoclet);
          enableXDocletButton.setEnabled(true);
          enableXDocletButton.setSelection(hasXDoclet);
-         
+
          Label description = new Label(parentComposite, SWT.NONE);
          description.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
          description.setText(XDocletRunMessages.getString("ConfigurationPropertyPage.description"));//$NON-NLS-1$
@@ -323,7 +342,6 @@ public class ConfigurationPropertyPage extends PropertyPage
       return parentComposite;
    }
 
-
    /** Description of the Method */
    private void doMoveDown()
    {
@@ -335,7 +353,6 @@ public class ConfigurationPropertyPage extends PropertyPage
       }
    }
 
-
    /** Description of the Method */
    private void doMoveUp()
    {
@@ -346,7 +363,6 @@ public class ConfigurationPropertyPage extends PropertyPage
          this.configListViewer.refresh();
       }
    }
-
 
    /** Description of the Method */
    private void enableButtons()
@@ -367,7 +383,6 @@ public class ConfigurationPropertyPage extends PropertyPage
          this.moveDownButton.setEnabled(false);
       }
    }
-
 
    /**
     * Description of the Method

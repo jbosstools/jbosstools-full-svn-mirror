@@ -1,11 +1,25 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.deployer.core;
-
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -37,23 +51,24 @@ public class DeployerCorePlugin extends AbstractPlugin
 {
    /** Description of the Field */
    private Collection debugTargets = new ArrayList();
+
    /** Description of the Field */
    private Collection targets = new ArrayList();
 
    /** Description of the Field */
    private static String TARGET = "target";//$NON-NLS-1$
+
    /** Description of the Field */
    private static String TARGET_COUNT = "target.count";//$NON-NLS-1$
+
    /** Description of the Field */
    private static DeployerCorePlugin plugin;
-
 
    /** The constructor. */
    public DeployerCorePlugin()
    {
       plugin = this;
    }
-
 
    /**
     * Adds a feature to the Target attribute of the DeployerCorePlugin object
@@ -65,7 +80,6 @@ public class DeployerCorePlugin extends AbstractPlugin
       this.targets.add(target);
    }
 
-
    /**
     * Gets the debugTargets attribute of the DeployerCorePlugin object
     *
@@ -76,7 +90,6 @@ public class DeployerCorePlugin extends AbstractPlugin
       return this.debugTargets;
    }
 
-
    /**
     * Gets the targets attribute of the DeployerCorePlugin object
     *
@@ -86,7 +99,6 @@ public class DeployerCorePlugin extends AbstractPlugin
    {
       return this.targets;
    }
-
 
    /** Description of the Method */
    public void refreshDebugTargets()
@@ -103,7 +115,8 @@ public class DeployerCorePlugin extends AbstractPlugin
             if (ServerLaunchManager.getInstance().isServerConfiguration(configuration)
                   && configuration.getType().getDelegate(ILaunchManager.DEBUG_MODE) instanceof IJBossLaunchConfigurationDelegate)
             {
-               IJBossLaunchConfigurationDelegate delegate = (IJBossLaunchConfigurationDelegate) configuration.getType().getDelegate(ILaunchManager.DEBUG_MODE);
+               IJBossLaunchConfigurationDelegate delegate = (IJBossLaunchConfigurationDelegate) configuration.getType()
+                     .getDelegate(ILaunchManager.DEBUG_MODE);
                String homedir = configuration.getAttribute(IJBossConstants.ATTR_JBOSS_HOME_DIR, "");//$NON-NLS-1$
                String serverConfig = configuration.getAttribute(IJBossConstants.ATTR_SERVER_CONFIGURATION, "default");//$NON-NLS-1$
                try
@@ -152,7 +165,6 @@ public class DeployerCorePlugin extends AbstractPlugin
       }
    }
 
-
    /** Description of the Method */
    public void refreshTargets()
    {
@@ -167,7 +179,7 @@ public class DeployerCorePlugin extends AbstractPlugin
          String targetName = store.getString(TARGET + "." + i + ".name");//$NON-NLS-1$ //$NON-NLS-2$
          String targetClass = store.getString(TARGET + "." + i + ".class");//$NON-NLS-1$ //$NON-NLS-2$
          String targetParameters = store.getString(TARGET + "." + i //$NON-NLS-1$
-         + ".parameters");//$NON-NLS-1$
+               + ".parameters");//$NON-NLS-1$
 
          try
          {
@@ -180,11 +192,10 @@ public class DeployerCorePlugin extends AbstractPlugin
          catch (Exception e)
          {
             AbstractPlugin.logError("Can't create the target '" + targetName //$NON-NLS-1$
-            + "'", e);//$NON-NLS-1$
+                  + "'", e);//$NON-NLS-1$
          }
       }
    }
-
 
    /**
     * Description of the Method
@@ -196,13 +207,12 @@ public class DeployerCorePlugin extends AbstractPlugin
       this.targets.remove(target);
    }
 
-
    /** Description of the Method */
    public void saveTargets()
    {
       IPreferenceStore store = this.getPreferenceStore();
       int i = 0;
-      for (Iterator iterator = this.targets.iterator(); iterator.hasNext(); )
+      for (Iterator iterator = this.targets.iterator(); iterator.hasNext();)
       {
          ITarget target = (ITarget) iterator.next();
 
@@ -218,20 +228,17 @@ public class DeployerCorePlugin extends AbstractPlugin
       this.savePluginPreferences();
    }
 
-
    /**
     * Description of the Method
     *
     * @param context        Description of the Parameter
     * @exception Exception  Description of the Exception
     */
-   public void start(BundleContext context)
-      throws Exception
+   public void start(BundleContext context) throws Exception
    {
       super.start(context);
       this.refreshTargets();
    }
-
 
    /**
     * Returns the shared instance.
@@ -242,7 +249,6 @@ public class DeployerCorePlugin extends AbstractPlugin
    {
       return plugin;
    }
-
 
    /**
     * Convenience method which returns the unique identifier of this plugin.
@@ -261,4 +267,3 @@ public class DeployerCorePlugin extends AbstractPlugin
       return getDefault().getBundle().getSymbolicName();
    }
 }
-

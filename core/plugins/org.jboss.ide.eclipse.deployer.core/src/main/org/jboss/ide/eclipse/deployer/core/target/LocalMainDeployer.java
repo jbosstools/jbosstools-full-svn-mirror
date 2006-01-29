@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.deployer.core.target;
 
@@ -26,9 +41,9 @@ public class LocalMainDeployer implements ITarget
 {
    /** Description of the Field */
    protected String name;
+
    /** Description of the Field */
    protected String url;
-
 
    /** Constructor for the DeploymentTarget object */
    protected LocalMainDeployer()
@@ -36,7 +51,6 @@ public class LocalMainDeployer implements ITarget
       this.name = "";//$NON-NLS-1$
       this.url = "";//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -53,7 +67,6 @@ public class LocalMainDeployer implements ITarget
       return target;
    }
 
-
    /**
     * Description of the Method
     *
@@ -64,15 +77,13 @@ public class LocalMainDeployer implements ITarget
       return (ITarget) this.clone();
    }
 
-
    /**
     * Description of the Method
     *
     * @param resource                 Description of the Parameter
     * @exception DeploymentException  Description of the Exception
     */
-   public void deploy(IResource resource)
-      throws DeploymentException
+   public void deploy(IResource resource) throws DeploymentException
    {
       try
       {
@@ -85,25 +96,25 @@ public class LocalMainDeployer implements ITarget
          if (!response.startsWith("" + HttpURLConnection.HTTP_OK)//$NON-NLS-1$
          )
          {
-            throw new DeploymentException(DeployerCoreMessages.getString("LocalMainDeployer.action.deploy.failed.text1") //$NON-NLS-1$
-            + response);
+            throw new DeploymentException(DeployerCoreMessages
+                  .getString("LocalMainDeployer.action.deploy.failed.text1") //$NON-NLS-1$
+                  + response);
          }
       }
       catch (MalformedURLException mfue)
       {
          AbstractPlugin.logError("Cannot build URL " + resource, mfue);//$NON-NLS-1$
          throw new DeploymentException(DeployerCoreMessages.getString("LocalMainDeployer.action.deploy.failed.text2") //$NON-NLS-1$
-         + resource.getLocation().toFile()
-            + DeployerCoreMessages.getString("LocalMainDeployer.action.deploy.failed.text3"));//$NON-NLS-1$
+               + resource.getLocation().toFile()
+               + DeployerCoreMessages.getString("LocalMainDeployer.action.deploy.failed.text3"));//$NON-NLS-1$
       }
       catch (IOException ioe)
       {
          AbstractPlugin.logError("Cannot deploy resource " + resource, ioe);//$NON-NLS-1$
          throw new DeploymentException(DeployerCoreMessages.getString("LocalMainDeployer.action.deploy.failed.text4") //$NON-NLS-1$
-         + ioe.getMessage());
+               + ioe.getMessage());
       }
    }
-
 
    /**
     * Description of the Method
@@ -123,7 +134,6 @@ public class LocalMainDeployer implements ITarget
       return false;
    }
 
-
    /**
     * Gets the description attribute of the LocalMainDeployer object
     *
@@ -133,7 +143,6 @@ public class LocalMainDeployer implements ITarget
    {
       return DeployerCoreMessages.getString("LocalMainDeployer.target.description");//$NON-NLS-1$
    }
-
 
    /**
     * Gets the name attribute of the DeploymentTarget object
@@ -145,7 +154,6 @@ public class LocalMainDeployer implements ITarget
       return this.name;
    }
 
-
    /**
     * Description of the Method
     *
@@ -156,7 +164,6 @@ public class LocalMainDeployer implements ITarget
       return this.getUrl();
    }
 
-
    /**
     * @return
     */
@@ -164,7 +171,6 @@ public class LocalMainDeployer implements ITarget
    {
       return this.url;
    }
-
 
    /**
     * Description of the Method
@@ -178,15 +184,13 @@ public class LocalMainDeployer implements ITarget
       return hashcode;
    }
 
-
    /**
     * Description of the Method
     *
     * @exception DeploymentException  Description of the Exception
     * @deprecated
     */
-   public void ping()
-      throws DeploymentException
+   public void ping() throws DeploymentException
    {
       try
       {
@@ -198,15 +202,13 @@ public class LocalMainDeployer implements ITarget
       }
    }
 
-
    /**
     * Description of the Method
     *
     * @param resource                 Description of the Parameter
     * @exception DeploymentException  Description of the Exception
     */
-   public void redeploy(IResource resource)
-      throws DeploymentException
+   public void redeploy(IResource resource) throws DeploymentException
    {
       try
       {
@@ -219,25 +221,25 @@ public class LocalMainDeployer implements ITarget
          if (!response.startsWith("" + HttpURLConnection.HTTP_OK)//$NON-NLS-1$
          )
          {
-            throw new DeploymentException(DeployerCoreMessages.getString("LocalMainDeployer.action.redeploy.failed.text1") //$NON-NLS-1$
-            + response);
+            throw new DeploymentException(DeployerCoreMessages
+                  .getString("LocalMainDeployer.action.redeploy.failed.text1") //$NON-NLS-1$
+                  + response);
          }
       }
       catch (MalformedURLException mfue)
       {
          AbstractPlugin.logError("Cannot build URL " + resource, mfue);//$NON-NLS-1$
          throw new DeploymentException(DeployerCoreMessages.getString("LocalMainDeployer.action.redeploy.failed.text2") //$NON-NLS-1$
-         + resource.getLocation().toFile()
-            + DeployerCoreMessages.getString("LocalMainDeployer.action.redeploy.failed.text3"));//$NON-NLS-1$
+               + resource.getLocation().toFile()
+               + DeployerCoreMessages.getString("LocalMainDeployer.action.redeploy.failed.text3"));//$NON-NLS-1$
       }
       catch (IOException ioe)
       {
          AbstractPlugin.logError("Cannot redeploy resource " + resource, ioe);//$NON-NLS-1$
          throw new DeploymentException(DeployerCoreMessages.getString("LocalMainDeployer.action.redeploy.failed.text4") //$NON-NLS-1$
-         + ioe.getMessage());
+               + ioe.getMessage());
       }
    }
-
 
    /**
     * Sets the name.
@@ -248,7 +250,6 @@ public class LocalMainDeployer implements ITarget
    {
       this.name = name;
    }
-
 
    /**
     * Description of the Method
@@ -265,7 +266,6 @@ public class LocalMainDeployer implements ITarget
       this.setUrl(parameters);
    }
 
-
    /**
     * @param url  The new url value
     */
@@ -273,7 +273,6 @@ public class LocalMainDeployer implements ITarget
    {
       this.url = url;
    }
-
 
    /**
     * Description of the Method
@@ -303,15 +302,13 @@ public class LocalMainDeployer implements ITarget
       return result.toString();
    }
 
-
    /**
     * Description of the Method
     *
     * @param resource                 Description of the Parameter
     * @exception DeploymentException  Description of the Exception
     */
-   public void undeploy(IResource resource)
-      throws DeploymentException
+   public void undeploy(IResource resource) throws DeploymentException
    {
       try
       {
@@ -324,25 +321,25 @@ public class LocalMainDeployer implements ITarget
          if (!response.startsWith("" + HttpURLConnection.HTTP_OK)//$NON-NLS-1$
          )
          {
-            throw new DeploymentException(DeployerCoreMessages.getString("LocalMainDeployer.action.undeploy.failed.text1") //$NON-NLS-1$
-            + response);
+            throw new DeploymentException(DeployerCoreMessages
+                  .getString("LocalMainDeployer.action.undeploy.failed.text1") //$NON-NLS-1$
+                  + response);
          }
       }
       catch (MalformedURLException mfue)
       {
          AbstractPlugin.logError("Cannot build URL " + resource, mfue);//$NON-NLS-1$
          throw new DeploymentException(DeployerCoreMessages.getString("LocalMainDeployer.action.undeploy.failed.text2") //$NON-NLS-1$
-         + resource.getLocation().toFile()
-            + DeployerCoreMessages.getString("LocalMainDeployer.action.undeploy.failed.text3"));//$NON-NLS-1$
+               + resource.getLocation().toFile()
+               + DeployerCoreMessages.getString("LocalMainDeployer.action.undeploy.failed.text3"));//$NON-NLS-1$
       }
       catch (IOException ioe)
       {
          AbstractPlugin.logError("Cannot undeploy resource " + resource, ioe);//$NON-NLS-1$
          throw new DeploymentException(DeployerCoreMessages.getString("LocalMainDeployer.action.undeploy.failed.text4") //$NON-NLS-1$
-         + ioe.getMessage());
+               + ioe.getMessage());
       }
    }
-
 
    /**
     * Description of the Method
@@ -353,9 +350,8 @@ public class LocalMainDeployer implements ITarget
    private String buildRequest(String operation)
    {
       return MessageFormat.format(this.getUrl(), new Object[]
-         {operation});
+      {operation});
    }
-
 
    /**
     * Description of the Method
@@ -364,8 +360,7 @@ public class LocalMainDeployer implements ITarget
     * @return                 Description of the Return Value
     * @exception IOException  Description of the Exception
     */
-   private String sendHttpRequest(String request)
-      throws IOException
+   private String sendHttpRequest(String request) throws IOException
    {
       StringBuffer response = new StringBuffer();
 

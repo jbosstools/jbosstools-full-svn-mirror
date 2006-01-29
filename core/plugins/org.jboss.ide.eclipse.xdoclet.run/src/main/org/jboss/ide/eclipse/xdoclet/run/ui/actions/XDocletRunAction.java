@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.run.ui.actions;
 
@@ -50,11 +65,12 @@ public class XDocletRunAction extends ActionDelegate implements IObjectActionDel
 {
    /** Description of the Field */
    protected IWorkbenchPart part = null;
+
    /** Description of the Field */
    protected ISelection selection = null;
+
    /** Description of the Field */
    protected IWorkbenchWindow window = null;
-
 
    /**Constructor for the XDocletRunAction object */
    public XDocletRunAction()
@@ -62,10 +78,10 @@ public class XDocletRunAction extends ActionDelegate implements IObjectActionDel
       super();
    }
 
-
    /** Description of the Method */
-   public void dispose() { }
-
+   public void dispose()
+   {
+   }
 
    /**
     * Description of the Method
@@ -76,7 +92,6 @@ public class XDocletRunAction extends ActionDelegate implements IObjectActionDel
    {
       this.window = window;
    }
-
 
    /**
     * Main processing method for the XDocletRunAction object
@@ -96,13 +111,13 @@ public class XDocletRunAction extends ActionDelegate implements IObjectActionDel
             IProject project = ((IResource) o).getProject();
             this.process(project);
          }
-         if (o instanceof IJavaProject) {
-         	IProject project = ((IJavaProject)o).getProject();
-         	this.process(project);
+         if (o instanceof IJavaProject)
+         {
+            IProject project = ((IJavaProject) o).getProject();
+            this.process(project);
          }
       }
    }
-
 
    /**
     * Description of the Method
@@ -115,7 +130,6 @@ public class XDocletRunAction extends ActionDelegate implements IObjectActionDel
       this.selection = selection;
    }
 
-
    /**
     * @param action      The new ActivePart value
     * @param targetPart  The new ActivePart value
@@ -125,7 +139,6 @@ public class XDocletRunAction extends ActionDelegate implements IObjectActionDel
    {
       this.part = targetPart;
    }
-
 
    /**
     * Description of the Method
@@ -140,92 +153,94 @@ public class XDocletRunAction extends ActionDelegate implements IObjectActionDel
       // If the xdoclet build file exists, then process it
       if (projectFile.exists())
       {
-         Job job =
-            new Job(XDocletRunMessages.getString("XDocletRunAction.job.title")//$NON-NLS-1$
-            )
+         Job job = new Job(XDocletRunMessages.getString("XDocletRunAction.job.title")//$NON-NLS-1$
+         )
+         {
+            protected IStatus run(IProgressMonitor monitor)
             {
-               protected IStatus run(IProgressMonitor monitor)
+               InputStream is = null;
+               try
                {
-                  InputStream is = null;
-                  try
+                  monitor.beginTask(XDocletRunMessages.getString("XDocletRunAction.xdoclet.run"), 100);//$NON-NLS-1$
+
+                  // Transform configuration to Ant build file
+                  monitor.subTask(XDocletRunMessages.getString("XDocletRunAction.xdoclet.generate"));//$NON-NLS-1$
+
+                  IFile buildFile = XDocletRunPlugin.getDefault().createBuildFile(jProject);
+
+                  monitor.worked(10);
+
+                  // Run XDoclet Ant build file
+                  monitor.subTask(XDocletRunMessages.getString("XDocletRunAction.xdoclet.process"));//$NON-NLS-1$
+
+                  ILaunchConfiguration configuration = null;
+                  List cfgs = AntLaunchShortcut.findExistingLaunchConfigurations(buildFile);
+                  if (cfgs.size() > 0)
                   {
-                     monitor.beginTask(XDocletRunMessages.getString("XDocletRunAction.xdoclet.run"), 100);//$NON-NLS-1$
-
-                     // Transform configuration to Ant build file
-                     monitor.subTask(XDocletRunMessages.getString("XDocletRunAction.xdoclet.generate"));//$NON-NLS-1$
-
-                     IFile buildFile = XDocletRunPlugin.getDefault().createBuildFile(jProject);
-                     
-                     monitor.worked(10);
-
-                     // Run XDoclet Ant build file
-                     monitor.subTask(XDocletRunMessages.getString("XDocletRunAction.xdoclet.process"));//$NON-NLS-1$
-
-                     ILaunchConfiguration configuration = null;
-                     List cfgs = AntLaunchShortcut.findExistingLaunchConfigurations(buildFile);
-                     if (cfgs.size() > 0)
+                     // Take the first and remove the others
+                     for (int i = 0; i < cfgs.size(); i++)
                      {
-                        // Take the first and remove the others
-                        for (int i = 0; i < cfgs.size(); i++)
-                        {
-                           ((ILaunchConfiguration) cfgs.get(i)).delete();
-                        }
-                     }
-
-                     // Create a new one
-                     configuration = AntLaunchShortcut.createDefaultLaunchConfiguration(buildFile);
-                     ILaunchConfigurationWorkingCopy copy = configuration.getWorkingCopy();
-                     copy.setAttribute(IExternalToolConstants.ATTR_CAPTURE_OUTPUT, true);
-                     copy.setAttribute(IExternalToolConstants.ATTR_SHOW_CONSOLE, true);
-                     copy.setAttribute(IDebugUIConstants.ATTR_LAUNCH_IN_BACKGROUND, false);
-                     copy.setAttribute(IDebugUIConstants.ATTR_PRIVATE, true);
-                     configuration = copy.doSave();
-
-                     // Launch the generation
-                     configuration.launch(ILaunchManager.RUN_MODE, monitor);
-
-                     monitor.worked(80);
-
-                     // Refresh the project
-                     monitor.subTask(XDocletRunMessages.getString("XDocletRunAction.xdoclet.refresh"));//$NON-NLS-1$
-                     
-                     ResourceUtil.safeRefresh(project, IResource.DEPTH_INFINITE);
-                     
-                     monitor.worked(10);
-                  }
-                  catch (CoreException ce)
-                  {
-                     AbstractPlugin.logError("Error while running XDoclet", ce);//$NON-NLS-1$
-                     XDocletRunPlugin.getDefault().showErrorMessage(XDocletRunMessages.getString("XDocletRunAction.failed") + ce.getMessage());//$NON-NLS-1$
-                  }
-                  catch (IOException e)
-                  {
-                      AbstractPlugin.logError("Error while running XDoclet", e);//$NON-NLS-1$
-                      XDocletRunPlugin.getDefault().showErrorMessage(XDocletRunMessages.getString("XDocletRunAction.failed") + e.getMessage());//$NON-NLS-1$
-                  }
-                  
-                  catch (TransformerException e)
-                  {
-                      AbstractPlugin.logError("Error while running XDoclet", e);//$NON-NLS-1$
-                      XDocletRunPlugin.getDefault().showErrorMessage(XDocletRunMessages.getString("XDocletRunAction.failed") + e.getMessage());//$NON-NLS-1$
-                  }
-                  finally
-                  {
-                     // Ensure that the input stream is closed.
-                     if (is != null)
-                     {
-                        try
-                        {
-                           is.close();
-                        }
-                        catch (Throwable ignore)
-                        {
-                        }
+                        ((ILaunchConfiguration) cfgs.get(i)).delete();
                      }
                   }
-                  return Status.OK_STATUS;
+
+                  // Create a new one
+                  configuration = AntLaunchShortcut.createDefaultLaunchConfiguration(buildFile);
+                  ILaunchConfigurationWorkingCopy copy = configuration.getWorkingCopy();
+                  copy.setAttribute(IExternalToolConstants.ATTR_CAPTURE_OUTPUT, true);
+                  copy.setAttribute(IExternalToolConstants.ATTR_SHOW_CONSOLE, true);
+                  copy.setAttribute(IDebugUIConstants.ATTR_LAUNCH_IN_BACKGROUND, false);
+                  copy.setAttribute(IDebugUIConstants.ATTR_PRIVATE, true);
+                  configuration = copy.doSave();
+
+                  // Launch the generation
+                  configuration.launch(ILaunchManager.RUN_MODE, monitor);
+
+                  monitor.worked(80);
+
+                  // Refresh the project
+                  monitor.subTask(XDocletRunMessages.getString("XDocletRunAction.xdoclet.refresh"));//$NON-NLS-1$
+
+                  ResourceUtil.safeRefresh(project, IResource.DEPTH_INFINITE);
+
+                  monitor.worked(10);
                }
-            };
+               catch (CoreException ce)
+               {
+                  AbstractPlugin.logError("Error while running XDoclet", ce);//$NON-NLS-1$
+                  XDocletRunPlugin.getDefault().showErrorMessage(
+                        XDocletRunMessages.getString("XDocletRunAction.failed") + ce.getMessage());//$NON-NLS-1$
+               }
+               catch (IOException e)
+               {
+                  AbstractPlugin.logError("Error while running XDoclet", e);//$NON-NLS-1$
+                  XDocletRunPlugin.getDefault().showErrorMessage(
+                        XDocletRunMessages.getString("XDocletRunAction.failed") + e.getMessage());//$NON-NLS-1$
+               }
+
+               catch (TransformerException e)
+               {
+                  AbstractPlugin.logError("Error while running XDoclet", e);//$NON-NLS-1$
+                  XDocletRunPlugin.getDefault().showErrorMessage(
+                        XDocletRunMessages.getString("XDocletRunAction.failed") + e.getMessage());//$NON-NLS-1$
+               }
+               finally
+               {
+                  // Ensure that the input stream is closed.
+                  if (is != null)
+                  {
+                     try
+                     {
+                        is.close();
+                     }
+                     catch (Throwable ignore)
+                     {
+                     }
+                  }
+               }
+               return Status.OK_STATUS;
+            }
+         };
          job.setRule(project.getProject());
          job.setPriority(Job.BUILD);
          job.schedule();

@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.jsp.ui.actions;
 
@@ -41,10 +56,10 @@ public class JSPCompilationAction extends ActionDelegate implements IObjectActio
    /** Description of the Field */
    protected IWorkbenchPart part = null;
 
-
    /**Constructor for the JSPCompilationAction object */
-   public JSPCompilationAction() { }
-
+   public JSPCompilationAction()
+   {
+   }
 
    /**
     * Main processing method for the XDocletRunAction object
@@ -70,7 +85,8 @@ public class JSPCompilationAction extends ActionDelegate implements IObjectActio
          else if (o instanceof IFolder)
          {
             IFolder folder = (IFolder) o;
-            String webapp = JSPProjectManager.getPropertyFromWorkspace(folder.getProject(), JSPProjectManager.QNAME_WEBROOT);
+            String webapp = JSPProjectManager.getPropertyFromWorkspace(folder.getProject(),
+                  JSPProjectManager.QNAME_WEBROOT);
             if (folder.getProjectRelativePath().toString().equals(webapp))
             {
                projects.add(folder.getProject());
@@ -89,15 +105,15 @@ public class JSPCompilationAction extends ActionDelegate implements IObjectActio
       this.processFiles(files);
    }
 
-
    /**
     * Description of the Method
     *
     * @param action     Description of the Parameter
     * @param selection  Description of the Parameter
     */
-   public void selectionChanged(IAction action, ISelection selection) { }
-
+   public void selectionChanged(IAction action, ISelection selection)
+   {
+   }
 
    /**
     * @param action      The new ActivePart value
@@ -108,7 +124,6 @@ public class JSPCompilationAction extends ActionDelegate implements IObjectActio
    {
       this.part = targetPart;
    }
-
 
    /**
     * Description of the Method
@@ -140,7 +155,6 @@ public class JSPCompilationAction extends ActionDelegate implements IObjectActio
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -154,22 +168,20 @@ public class JSPCompilationAction extends ActionDelegate implements IObjectActio
          final IFile file = (IFile) it.next();
          String title = JDTJ2EEJSPUIMessages.getString("JSPCompilationAction.action") + file.getProjectRelativePath().toString();//$NON-NLS-1$
 
-         Job job =
-            new Job(title)
+         Job job = new Job(title)
+         {
+            protected IStatus run(IProgressMonitor monitor)
             {
-               protected IStatus run(IProgressMonitor monitor)
-               {
-                  JSPProject jspProject = JSPProjectManager.getJSPProject(file.getProject());
-                  jspProject.compileJSP(file);
-                  return Status.OK_STATUS;
-               }
-            };
+               JSPProject jspProject = JSPProjectManager.getJSPProject(file.getProject());
+               jspProject.compileJSP(file);
+               return Status.OK_STATUS;
+            }
+         };
          job.setRule(file);
          job.setPriority(Job.BUILD);
          job.schedule();
       }
    }
-
 
    /**
     * Description of the Method
@@ -182,24 +194,24 @@ public class JSPCompilationAction extends ActionDelegate implements IObjectActio
       while (it.hasNext())
       {
          final IProject project = (IProject) it.next();
-         Job job =
-            new Job(JDTJ2EEJSPUIMessages.getString("JSPCompilationAction.title")//$NON-NLS-1$
-            )
-            {
+         Job job = new Job(JDTJ2EEJSPUIMessages.getString("JSPCompilationAction.title")//$NON-NLS-1$
+         )
+         {
 
-               protected IStatus run(IProgressMonitor monitor)
+            protected IStatus run(IProgressMonitor monitor)
+            {
+               try
                {
-                  try
-                  {
-                     project.build(IncrementalProjectBuilder.FULL_BUILD, JDTJ2EEJSPCorePlugin.JSP_BUILDER_ID, null, monitor);
-                  }
-                  catch (CoreException e)
-                  {
-                     // Do nothing
-                  }
-                  return Status.OK_STATUS;
+                  project.build(IncrementalProjectBuilder.FULL_BUILD, JDTJ2EEJSPCorePlugin.JSP_BUILDER_ID, null,
+                        monitor);
                }
-            };
+               catch (CoreException e)
+               {
+                  // Do nothing
+               }
+               return Status.OK_STATUS;
+            }
+         };
          job.setPriority(Job.BUILD);
          job.schedule();
       }

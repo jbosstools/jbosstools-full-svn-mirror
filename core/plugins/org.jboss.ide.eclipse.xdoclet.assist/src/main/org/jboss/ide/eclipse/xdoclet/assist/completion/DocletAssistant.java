@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.completion;
 
@@ -44,32 +59,41 @@ public class DocletAssistant
 {
    /** Description of the Field */
    protected DocletTree internalDocletTree = null;
+
    /** Description of the Field */
    protected TemplateList internalTemplateList = null;
+
    /** Description of the Field */
    protected VariableStore internalVariableStore = null;
+
    /** Description of the Field */
    protected Perl5Matcher matcher = new Perl5Matcher();
+
    /** Description of the Field */
    protected TemplateTreeFormat templateTreeFormat;
 
    /** Description of the Field */
    DocletParser docletParser = new DocletParser();
+
    /** Description of the Field */
    boolean equalsAfterCursor;
+
    /** Description of the Field */
    boolean quoteAfterCursor;//$NON-NLS-1$
+
    /** Description of the Field */
    private final static String DEFAULT_NAMESPACE_SEPARATOR = ".";//$NON-NLS-1$
 
    /** Description of the Field */
    private final static String EMPTY_STRING = "";//$NON-NLS-1$
+
    /** Description of the Field */
    private final static String EQUALS_AFTER_CURSOR_PATTERN = "^[\\t\\f\\ ]*=";//$NON-NLS-1$
+
    /** Description of the Field */
    private final static String NEW_LINE = System.getProperty("line.separator");//$NON-NLS-1$
-   // private final static String QUOTE_AFTER_CURSOR_PATTERN = "^[\\s]{1}\"";//$NON-NLS-1$
 
+   // private final static String QUOTE_AFTER_CURSOR_PATTERN = "^[\\s]{1}\"";//$NON-NLS-1$
 
    /**Constructor for the DocletAssistant object */
    public DocletAssistant()
@@ -77,7 +101,6 @@ public class DocletAssistant
       templateTreeFormat = new TemplateTreeFormat();
       templateTreeFormat.setIndentFirstLine(false);
    }
-
 
    /**
     * Returns the docletTree.
@@ -97,7 +120,6 @@ public class DocletAssistant
       return null;
    }
 
-
    /**
     * Returns the proposals to autocomplete elements of a doclet-structure.
     * The attempt for an autocompletion is made if within the section a namespace
@@ -115,7 +137,7 @@ public class DocletAssistant
     * @exception JavaModelException  Description of the Exception
     */
    public JavaCompletionProposal[] getProposals(String sourceCode, int offSet, IMember member, HashMap variables)
-          throws JavaModelException
+         throws JavaModelException
    {
 
       // Check beginning of javadoc environemt
@@ -153,10 +175,9 @@ public class DocletAssistant
          }
       }
 
-      equalsAfterCursor = matcher.contains(sourceCode.substring(offSet), PatternStore.getPattern(EQUALS_AFTER_CURSOR_PATTERN));
-      if (!equalsAfterCursor
-            && sourceCode.length() > offSet
-            && sourceCode.charAt(offSet) == '"')
+      equalsAfterCursor = matcher.contains(sourceCode.substring(offSet), PatternStore
+            .getPattern(EQUALS_AFTER_CURSOR_PATTERN));
+      if (!equalsAfterCursor && sourceCode.length() > offSet && sourceCode.charAt(offSet) == '"')
       {
          quoteAfterCursor = true;
       }
@@ -173,7 +194,6 @@ public class DocletAssistant
       }
       return null;
    }
-
 
    /**
     * Returns the templateList.
@@ -193,7 +213,6 @@ public class DocletAssistant
       return null;
    }
 
-
    /**
     * Returns the variableStore.
     *
@@ -212,7 +231,6 @@ public class DocletAssistant
       return null;
    }
 
-
    /**
     * Returns the equalsAfterCursor.
     *
@@ -222,7 +240,6 @@ public class DocletAssistant
    {
       return equalsAfterCursor;
    }
-
 
    /**
     * Returns the quoteAfterCursor.
@@ -234,7 +251,6 @@ public class DocletAssistant
       return quoteAfterCursor;
    }
 
-
    /**
     * Sets the internalDocletTree.
     *
@@ -244,7 +260,6 @@ public class DocletAssistant
    {
       this.internalDocletTree = internalDocletTree;
    }
-
 
    /**
     * Sets the templateList.
@@ -256,7 +271,6 @@ public class DocletAssistant
       this.internalTemplateList = internalTemplateList;
    }
 
-
    /**
     * Sets the internalVariableStore.
     *
@@ -267,7 +281,6 @@ public class DocletAssistant
       this.internalVariableStore = internalVariableStore;
    }
 
-
    /**
     * Description of the Method
     *
@@ -277,10 +290,7 @@ public class DocletAssistant
     * @param documentOffset    Description of the Parameter
     * @return                  Description of the Return Value
     */
-   protected JavaCompletionProposal[] computeTemplates(
-         String wordLeftOfCursor,
-         HashMap variables,
-         String indent,
+   protected JavaCompletionProposal[] computeTemplates(String wordLeftOfCursor, HashMap variables, String indent,
          int documentOffset)
    {
 
@@ -292,19 +302,12 @@ public class DocletAssistant
          if (trees[i].getName().startsWith(wordLeftOfCursor))
          {
             treeIndex = i;
-            results.add(
-                  transformTreeIntoProposal(
-                  trees[treeIndex],
-                  variables,
-                  indent,
-                  wordLeftOfCursor,
-                  documentOffset));
+            results
+                  .add(transformTreeIntoProposal(trees[treeIndex], variables, indent, wordLeftOfCursor, documentOffset));
          }
       }
-      return (JavaCompletionProposal[]) results.toArray(
-            new JavaCompletionProposal[results.size()]);
+      return (JavaCompletionProposal[]) results.toArray(new JavaCompletionProposal[results.size()]);
    }
-
 
    /**
     * Gets the parsedChildren attribute of the DocletAssistant object
@@ -313,21 +316,15 @@ public class DocletAssistant
     * @param systemVariables  Description of the Parameter
     * @return                 The parsedChildren value
     */
-   protected String[] getParsedChildren(
-         DocletElement[] elements,
-         Map systemVariables)
+   protected String[] getParsedChildren(DocletElement[] elements, Map systemVariables)
    {
       String[] strings = new String[elements.length];
       for (int i = 0; i < elements.length; i++)
       {
-         strings[i] =
-               elements[i].replaceVariables(
-               systemVariables,
-               getVariableStore());
+         strings[i] = elements[i].replaceVariables(systemVariables, getVariableStore());
       }
       return strings;
    }
-
 
    /**
     * Description of the Method
@@ -339,12 +336,8 @@ public class DocletAssistant
     * @param documentOffset    Description of the Parameter
     * @return                  Description of the Return Value
     */
-   protected JavaCompletionProposal transformTreeIntoProposal(
-         TemplateTree tree,
-         HashMap variables,
-         String indent,
-         String wordLeftOfCursor,
-         int documentOffset)
+   protected JavaCompletionProposal transformTreeIntoProposal(TemplateTree tree, HashMap variables, String indent,
+         String wordLeftOfCursor, int documentOffset)
    {
       templateTreeFormat.setTree(tree);
       templateTreeFormat.setVariableStore(getVariableStore());
@@ -352,17 +345,12 @@ public class DocletAssistant
       templateTreeFormat.setIndent(indent);
       templateTreeFormat.setIndentFirstLine(false);
       String text = templateTreeFormat.format();
-      JavaCompletionProposal proposal =
-            new JavaCompletionProposal(
-            text,
-            documentOffset - wordLeftOfCursor.length() - 1,
-            wordLeftOfCursor.length() + 1,
-            XDocletUIImages.getImage(IXDocletUIConstants.IMG_OBJS_TEMPLATE),
-            tree.getName(),
+      JavaCompletionProposal proposal = new JavaCompletionProposal(text,
+            documentOffset - wordLeftOfCursor.length() - 1, wordLeftOfCursor.length() + 1, XDocletUIImages
+                  .getImage(IXDocletUIConstants.IMG_OBJS_TEMPLATE), tree.getName(),
             IXDocletConstants.PROPOSAL_RELEVANCE);
       return proposal;
    }
-
 
    /**
     * Returns for a given valueRange and the word that is to complete the proposals.
@@ -380,60 +368,36 @@ public class DocletAssistant
     * If the valueRange is null or empty or the word to complete doesn't fit to the
     * valueRange an empty array is returned.
     */
-   private JavaCompletionProposal[] computeProposals(
-         DocletElement[] valueRange,
-         HashMap variables,
-         String wordLeftOfCursor,
-         String prefix,
-         String postfix,
-         int replacementOffset,
-         int replacementLength,
-         int relativeCursorPosition,
-         boolean command)
+   private JavaCompletionProposal[] computeProposals(DocletElement[] valueRange, HashMap variables,
+         String wordLeftOfCursor, String prefix, String postfix, int replacementOffset, int replacementLength,
+         int relativeCursorPosition, boolean command)
    {
-      if (valueRange == null
-            || (valueRange = getSubset(valueRange, variables, wordLeftOfCursor))
-            == null)
+      if (valueRange == null || (valueRange = getSubset(valueRange, variables, wordLeftOfCursor)) == null)
       {
          return new JavaCompletionProposal[0];
       }
-      JavaCompletionProposal[] proposals =
-            new JavaCompletionProposal[valueRange.length];
+      JavaCompletionProposal[] proposals = new JavaCompletionProposal[valueRange.length];
       String replacementText;
       for (int i = 0; i < valueRange.length; i++)
       {
-         String variableOrCodename =
-               valueRange[i].replaceVariables(variables, getVariableStore());
+         String variableOrCodename = valueRange[i].replaceVariables(variables, getVariableStore());
 
-         replacementText =
-               (command
+         replacementText = (command
                ? EMPTY_STRING
-               + valueRange[i].getNode().getAdditionalAttributes().get(
-               IDocletConstants.ATTR_NAMESPACE_SEPARATOR)
+                     + valueRange[i].getNode().getAdditionalAttributes().get(IDocletConstants.ATTR_NAMESPACE_SEPARATOR)
                : EMPTY_STRING)
-               + prefix
-               + variableOrCodename
-               + postfix;
+               + prefix + variableOrCodename + postfix;
 
-         proposals[i] =
-               new JavaCompletionProposal(
-               replacementText,
-               replacementOffset,
-               replacementLength,
-               ImageStore.getImage(valueRange[i]),
-               valueRange[i].getType() == DocletType.VALUE_WITH_VARIABLE
+         proposals[i] = new JavaCompletionProposal(replacementText, replacementOffset, replacementLength, ImageStore
+               .getImage(valueRange[i]), valueRange[i].getType() == DocletType.VALUE_WITH_VARIABLE
                ? variableOrCodename
-               : valueRange[i].getName(),
-               IXDocletConstants.PROPOSAL_RELEVANCE);
-         proposals[i].setProposalInfo(
-               new XDocletProposalInfo(valueRange[i].getHelpText()));
-         proposals[i].setCursorPosition(
-               replacementText.length() + relativeCursorPosition);
+               : valueRange[i].getName(), IXDocletConstants.PROPOSAL_RELEVANCE);
+         proposals[i].setProposalInfo(new XDocletProposalInfo(valueRange[i].getHelpText()));
+         proposals[i].setCursorPosition(replacementText.length() + relativeCursorPosition);
       }
 
       return proposals;
    }
-
 
    /**
     * @param docletStructure
@@ -445,37 +409,23 @@ public class DocletAssistant
     * @return                     JavaCompletionProposal[]
     * @throws JavaModelException
     */
-   private JavaCompletionProposal[] getCompletionInternal(DocletStructure docletStructure, IMember member, HashMap variables, String indent, int documentOffset)
-          throws JavaModelException
+   private JavaCompletionProposal[] getCompletionInternal(DocletStructure docletStructure, IMember member,
+         HashMap variables, String indent, int documentOffset) throws JavaModelException
    {
-      int wordLeftOfCursorLength =
-            docletStructure.wordLeftOfCursor == null
-            ? 0
-            : docletStructure.wordLeftOfCursor.length();
+      int wordLeftOfCursorLength = docletStructure.wordLeftOfCursor == null ? 0 : docletStructure.wordLeftOfCursor
+            .length();
 
       if (docletStructure.namespace == null)
       {
-         JavaCompletionProposal[] templateProposals =
-               computeTemplates(
-               docletStructure.wordLeftOfCursor,
-               variables,
-               indent,
-               documentOffset);
+         JavaCompletionProposal[] templateProposals = computeTemplates(docletStructure.wordLeftOfCursor, variables,
+               indent, documentOffset);
 
-         JavaCompletionProposal[] namespaceProposals =
-               computeProposals(
-               getDocletTree().getChildrenElements(member),
-               variables,
-               docletStructure.wordLeftOfCursor,
-               EMPTY_STRING,
-               DEFAULT_NAMESPACE_SEPARATOR,
-               documentOffset - wordLeftOfCursorLength,
-               wordLeftOfCursorLength,
-               0,
-               false);
+         JavaCompletionProposal[] namespaceProposals = computeProposals(getDocletTree().getChildrenElements(member),
+               variables, docletStructure.wordLeftOfCursor, EMPTY_STRING, DEFAULT_NAMESPACE_SEPARATOR, documentOffset
+                     - wordLeftOfCursorLength, wordLeftOfCursorLength, 0, false);
 
-         JavaCompletionProposal[] results =
-               new JavaCompletionProposal[templateProposals.length + namespaceProposals.length];
+         JavaCompletionProposal[] results = new JavaCompletionProposal[templateProposals.length
+               + namespaceProposals.length];
 
          for (int i = 0; i < results.length; i++)
          {
@@ -493,23 +443,14 @@ public class DocletAssistant
       }
       else if (docletStructure.command == null)
       {
-         return computeProposals(
-               getDocletTree()
-               .getNode(new String[]{docletStructure.namespace})
-               .getChildrenElements(member),
-               variables,
-               docletStructure.wordLeftOfCursor,
-               EMPTY_STRING,
-               " ", //$NON-NLS-1$
-         documentOffset - wordLeftOfCursorLength - 1,
-               wordLeftOfCursorLength,
-               0,
-               true);
+         return computeProposals(getDocletTree().getNode(new String[]
+         {docletStructure.namespace}).getChildrenElements(member), variables, docletStructure.wordLeftOfCursor,
+               EMPTY_STRING, " ", //$NON-NLS-1$
+               documentOffset - wordLeftOfCursorLength - 1, wordLeftOfCursorLength, 0, true);
       }
       else if (docletStructure.lastElementIsAttribute)
       {
-         String attribute =
-               ((Property) docletStructure.attributes.get(docletStructure.attributes.size() - 1))
+         String attribute = ((Property) docletStructure.attributes.get(docletStructure.attributes.size() - 1))
                .getName();
          String wordLeftOfCursorTrimmed = null;
          ;
@@ -526,32 +467,16 @@ public class DocletAssistant
                wordLeftOfCursorTrimmed = docletStructure.wordLeftOfCursor;
             }
          }
-         return computeProposals(
-               getDocletTree()
-               .getNode(
-               new String[]{
-               docletStructure.namespace,
-               docletStructure.command,
-               attribute})
-               .getChildrenElements(member),
-               variables,
-               wordLeftOfCursorTrimmed,
-               "\"", //$NON-NLS-1$
-         quoteAfterCursor ? EMPTY_STRING : "\"", //$NON-NLS-1$
-         documentOffset - wordLeftOfCursorLength,
-               wordLeftOfCursorLength,
-               quoteAfterCursor ? 1 : 0,
-               false);
+         return computeProposals(getDocletTree().getNode(new String[]
+         {docletStructure.namespace, docletStructure.command, attribute}).getChildrenElements(member), variables,
+               wordLeftOfCursorTrimmed, "\"", //$NON-NLS-1$
+               quoteAfterCursor ? EMPTY_STRING : "\"", //$NON-NLS-1$
+               documentOffset - wordLeftOfCursorLength, wordLeftOfCursorLength, quoteAfterCursor ? 1 : 0, false);
       }
       else
       {
-         DocletElement[] attributes =
-               getDocletTree()
-               .getNode(
-               new String[]{
-               docletStructure.namespace,
-               docletStructure.command})
-               .getChildrenElements(member);
+         DocletElement[] attributes = getDocletTree().getNode(new String[]
+         {docletStructure.namespace, docletStructure.command}).getChildrenElements(member);
          if (attributes == null)
          {
             return new JavaCompletionProposal[0];
@@ -563,9 +488,7 @@ public class DocletAssistant
          for (int i = 0; i < docletStructure.attributes.size(); i++)
          {
             p = (Property) docletStructure.attributes.get(i);
-            for (Iterator iter = attributeList.iterator();
-                  iter.hasNext();
-                  )
+            for (Iterator iter = attributeList.iterator(); iter.hasNext();)
             {
                DocletElement docletElement = (DocletElement) iter.next();
                if (docletElement.getName().equals(p.getName()))
@@ -575,20 +498,11 @@ public class DocletAssistant
             }
          }
 
-         return computeProposals(
-               (DocletElement[]) attributeList.toArray(
-               new DocletElement[attributeList.size()]),
-               variables,
-               docletStructure.wordLeftOfCursor,
-               EMPTY_STRING,
-               equalsAfterCursor ? null : " = \"\"", //$NON-NLS-1$
-         documentOffset - wordLeftOfCursorLength,
-               wordLeftOfCursorLength,
-               equalsAfterCursor ? 0 : -1,
-               false);
+         return computeProposals((DocletElement[]) attributeList.toArray(new DocletElement[attributeList.size()]),
+               variables, docletStructure.wordLeftOfCursor, EMPTY_STRING, equalsAfterCursor ? null : " = \"\"", //$NON-NLS-1$
+               documentOffset - wordLeftOfCursorLength, wordLeftOfCursorLength, equalsAfterCursor ? 0 : -1, false);
       }
    }
-
 
    /**
     * Convenient Method that is only called by computeProposals. Returns a subset of
@@ -601,10 +515,7 @@ public class DocletAssistant
     * @param variables      Description of the Parameter
     * @return               String[] string of the array that matches the startSequence
     */
-   private DocletElement[] getSubset(
-         DocletElement[] elements,
-         HashMap variables,
-         String startSequence)
+   private DocletElement[] getSubset(DocletElement[] elements, HashMap variables, String startSequence)
    {
       if (startSequence == null)
       {
@@ -629,8 +540,6 @@ public class DocletAssistant
             list.add(elements[searchStart]);
          }
       }
-      return list.size() > 0
-            ? (DocletElement[]) list.toArray(new DocletElement[list.size()])
-            : null;
+      return list.size() > 0 ? (DocletElement[]) list.toArray(new DocletElement[list.size()]) : null;
    }
 }

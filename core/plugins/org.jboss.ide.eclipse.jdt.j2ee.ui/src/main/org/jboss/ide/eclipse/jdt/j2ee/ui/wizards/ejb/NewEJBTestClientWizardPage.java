@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.ui.wizards.ejb;
 
@@ -70,27 +85,35 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
 
    /** Description of the Field */
    protected StringButtonDialogField homeInterfaceField;
+
    /** Description of the Field */
    protected IStatus homeInterfaceStatus;
+
    /** Description of the Field */
    protected StringDialogField jndiNameField;
+
    /** Description of the Field */
    protected IStatus jndiNameStatus;
+
    /** Description of the Field */
    protected List methods = new Vector();
+
    /** Description of the Field */
    protected CheckboxTableViewer methodsViewer;
+
    /** Description of the Field */
    protected StringButtonDialogField remoteInterfaceField;
+
    /** Description of the Field */
    protected IStatus remoteInterfaceStatus;
+
    /** Description of the Field */
    protected List testedMethods = new Vector();
+
    /** Description of the Field */
    protected static Map VALUES = new HashMap();
 
    private final static String PAGE_NAME = NewEJBTestClientWizardPage.class.getName();
-
 
    /**
     *Constructor for the NewEJBTestClientWizardPage object
@@ -107,7 +130,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       this.remoteInterfaceStatus = new StatusInfo();
    }
 
-
    /**
     * Gets the homeInterface attribute of the NewEJBTestClientWizardPage object
     *
@@ -117,7 +139,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
    {
       return this.homeInterfaceField.getText();
    }
-
 
    /**
     * Gets the jNDIName attribute of the NewEJBTestClientWizardPage object
@@ -129,7 +150,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       return this.jndiNameField.getText();
    }
 
-
    /**
     * Gets the remoteInterface attribute of the NewEJBTestClientWizardPage object
     *
@@ -139,7 +159,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
    {
       return this.remoteInterfaceField.getText();
    }
-
 
    /**
     * Description of the Method
@@ -156,7 +175,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       this.updateStatus(this.findMostSevereStatus());
    }
 
-
    /**
     * Gets the createConstructors attribute of the NewEJBTestClientWizardPage object
     *
@@ -167,7 +185,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       return true;
    }
 
-
    /**
     * Gets the createInherited attribute of the NewEJBTestClientWizardPage object
     *
@@ -177,7 +194,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
    {
       return true;
    }
-
 
    /**
     * Description of the Method
@@ -207,7 +223,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       }
    }
 
-
    /**
     * Adds a feature to the Content attribute of the NewEJBTestClientWizardPage object
     *
@@ -224,14 +239,16 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
          IJavaProject project = getPackageFragmentRoot().getJavaProject();
          IClasspathEntry[] entries = project.getRawClasspath();
 
-         entries = JavaProjectUtil.mergeClasspathEntry(entries, ClassPathContainerRepository.getInstance().getEntry(JUnitClasspathContainer.CLASSPATH_CONTAINER));
+         entries = JavaProjectUtil.mergeClasspathEntry(entries, ClassPathContainerRepository.getInstance().getEntry(
+               JUnitClasspathContainer.CLASSPATH_CONTAINER));
 
          project.setRawClasspath(entries, monitor);
       }
       catch (CoreException ce)
       {
          AbstractPlugin.logError("Unable to compute classpath", ce);//$NON-NLS-1$
-         JDTJ2EEUIPlugin.getDefault().showErrorMessage(JDTJ2EEUIMessages.getString("NewEJBTestClientWizardPage.error.message.junit.classpath"));//$NON-NLS-1$
+         JDTJ2EEUIPlugin.getDefault().showErrorMessage(
+               JDTJ2EEUIMessages.getString("NewEJBTestClientWizardPage.error.message.junit.classpath"));//$NON-NLS-1$
          return;
       }
 
@@ -272,9 +289,12 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
             String name = "test" + ClassNamingUtil.capitalize(m.getElementName());//$NON-NLS-1$
             String returnType = Signature.toString(m.getReturnType());
             method.setName(name);
-            method.setExceptions(new String[]{"Exception"});//$NON-NLS-1$
+            method.setExceptions(new String[]
+            {"Exception"});//$NON-NLS-1$
 
-            comment = manager.getString("wizards.ejb.testclient.method.test.comment", new Object[]{remoteIntf, Signature.toString(m.getSignature(), m.getElementName(), m.getParameterNames(), false, false)});//$NON-NLS-1$
+            comment = manager
+                  .getString(
+                        "wizards.ejb.testclient.method.test.comment", new Object[]{remoteIntf, Signature.toString(m.getSignature(), m.getElementName(), m.getParameterNames(), false, false)});//$NON-NLS-1$
             method.setComment(comment);
 
             // Create the body;
@@ -357,7 +377,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       this.addImport(compUnit, "javax.naming.InitialContext");//$NON-NLS-1$
    }
 
-
    /** Description of the Method */
    protected void checkRemoteInterface()
    {
@@ -383,7 +402,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -397,10 +415,12 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
          return null;
       }
 
-      IJavaElement[] elements = new IJavaElement[]{root.getJavaProject()};
+      IJavaElement[] elements = new IJavaElement[]
+      {root.getJavaProject()};
       IJavaSearchScope scope = SearchEngine.createJavaSearchScope(elements);
 
-      TypeSelectionDialog2 dialog = new TypeSelectionDialog2(getShell(), false, getWizard().getContainer(), scope, IJavaSearchConstants.INTERFACE);
+      TypeSelectionDialog2 dialog = new TypeSelectionDialog2(getShell(), false, getWizard().getContainer(), scope,
+            IJavaSearchConstants.INTERFACE);
       dialog.setTitle(JDTJ2EEUIMessages.getString("NewEJBTestClientWizardPage.dialog.title"));//$NON-NLS-1$
       dialog.setMessage(JDTJ2EEUIMessages.getString("NewEJBTestClientWizardPage.dialog.message"));//$NON-NLS-1$
 
@@ -410,7 +430,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       }
       return null;
    }
-
 
    /** Description of the Method */
    protected void createContent()
@@ -423,15 +442,16 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
 
       this.remoteInterfaceField = new StringButtonDialogField(this.getFieldsAdapter());
       this.remoteInterfaceField.setDialogFieldListener(this.getFieldsAdapter());
-      this.remoteInterfaceField.setLabelText(JDTJ2EEUIMessages.getString("NewEJBTestClientWizardPage.label.remote.interface"));//$NON-NLS-1$
+      this.remoteInterfaceField.setLabelText(JDTJ2EEUIMessages
+            .getString("NewEJBTestClientWizardPage.label.remote.interface"));//$NON-NLS-1$
       this.remoteInterfaceField.setButtonLabel(JDTJ2EEUIMessages.getString("NewEJBTestClientWizardPage.button.browse"));//$NON-NLS-1$
 
       this.homeInterfaceField = new StringButtonDialogField(this.getFieldsAdapter());
       this.homeInterfaceField.setDialogFieldListener(this.getFieldsAdapter());
-      this.homeInterfaceField.setLabelText(JDTJ2EEUIMessages.getString("NewEJBTestClientWizardPage.label.home.interface"));//$NON-NLS-1$
+      this.homeInterfaceField.setLabelText(JDTJ2EEUIMessages
+            .getString("NewEJBTestClientWizardPage.label.home.interface"));//$NON-NLS-1$
       this.homeInterfaceField.setButtonLabel(JDTJ2EEUIMessages.getString("NewEJBTestClientWizardPage.button.browse"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -456,7 +476,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       this.setSuperClass("junit.framework.TestCase", false);//$NON-NLS-1$
    }
 
-
    /**
     * Description of the Method
     *
@@ -465,7 +484,8 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
     */
    protected void createMethodListControls(Composite composite, int nColumns)
    {
-      FieldsUtil.createLabelControls(JDTJ2EEUIMessages.getString("NewEJBTestClientWizardPage.label.methods"), composite, nColumns);//$NON-NLS-1$
+      FieldsUtil.createLabelControls(
+            JDTJ2EEUIMessages.getString("NewEJBTestClientWizardPage.label.methods"), composite, nColumns);//$NON-NLS-1$
       DialogField.createEmptySpace(composite);
 
       Table exceptionList = new Table(composite, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL | SWT.CHECK);
@@ -477,24 +497,22 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       this.methodsViewer.setContentProvider(new ListContentProvider());
       this.methodsViewer.setLabelProvider(new MethodLabelProvider());
       this.methodsViewer.setInput(this.methods);
-      this.methodsViewer.addCheckStateListener(
-         new ICheckStateListener()
+      this.methodsViewer.addCheckStateListener(new ICheckStateListener()
+      {
+         public void checkStateChanged(CheckStateChangedEvent event)
          {
-            public void checkStateChanged(CheckStateChangedEvent event)
+            IMethod m = (IMethod) event.getElement();
+            if (event.getChecked())
             {
-               IMethod m = (IMethod) event.getElement();
-               if (event.getChecked())
-               {
-                  testedMethods.add(m);
-               }
-               else
-               {
-                  testedMethods.remove(m);
-               }
+               testedMethods.add(m);
             }
-         });
+            else
+            {
+               testedMethods.remove(m);
+            }
+         }
+      });
    }
-
 
    /**
     * Description of the Method
@@ -503,10 +521,10 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
     */
    protected IStatus findMostSevereStatus()
    {
-      return StatusUtil.getMostSevere(
-         new IStatus[]{this.fContainerStatus, this.fPackageStatus, this.fTypeNameStatus, this.jndiNameStatus, this.remoteInterfaceStatus, this.homeInterfaceStatus});
+      return StatusUtil.getMostSevere(new IStatus[]
+      {this.fContainerStatus, this.fPackageStatus, this.fTypeNameStatus, this.jndiNameStatus,
+            this.remoteInterfaceStatus, this.homeInterfaceStatus});
    }
-
 
    /**
     * Description of the Method
@@ -516,8 +534,7 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
     * @return                        Description of the Return Value
     * @exception JavaModelException  Description of the Exception
     */
-   protected IType findType(IJavaProject project, String typeName)
-      throws JavaModelException
+   protected IType findType(IJavaProject project, String typeName) throws JavaModelException
    {
       if (project.exists())
       {
@@ -525,7 +542,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       }
       return null;
    }
-
 
    /**
     * Description of the Method
@@ -549,7 +565,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
          this.homeInterfaceStatus = this.homeInterfaceChanged();
       }
    }
-
 
    /**
     * Description of the Method
@@ -581,7 +596,8 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
             IType type = this.findType(root.getJavaProject(), ftype);
             if (type == null)
             {
-               status.setWarning(JDTJ2EEUIMessages.getString("NewEJBTestClientWizardPage.warning.home.interface.inexistant"));//$NON-NLS-1$
+               status.setWarning(JDTJ2EEUIMessages
+                     .getString("NewEJBTestClientWizardPage.warning.home.interface.inexistant"));//$NON-NLS-1$
                return status;
             }
             else
@@ -601,7 +617,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       return status;
    }
 
-
    /** Description of the Method */
    protected void initContent()
    {
@@ -614,7 +629,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       // Default prefix
       this.jndiNameField.setText("ejb/");//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -636,14 +650,12 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       return status;
    }
 
-
    /** Description of the Method */
    protected void refreshMethods()
    {
       this.methodsViewer.refresh();
       this.methodsViewer.setCheckedElements(this.testedMethods.toArray());
    }
-
 
    /**
     * Description of the Method
@@ -675,7 +687,8 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
             IType type = this.findType(root.getJavaProject(), ftype);
             if (type == null)
             {
-               status.setWarning(JDTJ2EEUIMessages.getString("NewEJBTestClientWizardPage.warning.remote.interface.inexistant"));//$NON-NLS-1$
+               status.setWarning(JDTJ2EEUIMessages
+                     .getString("NewEJBTestClientWizardPage.warning.remote.interface.inexistant"));//$NON-NLS-1$
                return status;
             }
             else
@@ -694,7 +707,6 @@ public class NewEJBTestClientWizardPage extends DOMClassWizardPage
       }
       return status;
    }
-
 
    /**
     * Description of the Class
