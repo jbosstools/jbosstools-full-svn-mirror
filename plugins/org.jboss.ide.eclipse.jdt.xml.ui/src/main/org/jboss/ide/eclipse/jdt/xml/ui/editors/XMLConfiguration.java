@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.editors;
 
@@ -48,14 +63,17 @@ public class XMLConfiguration extends SourceViewerConfiguration
 {
    /** Description of the Field */
    protected XMLEditor editor;
+
    /** Description of the Field */
    protected XMLTextTools xmlTextTools;
+
    private ITextDoubleClickStrategy dcsAttValue;
 
    private ITextDoubleClickStrategy dcsDefault;
-   private ITextDoubleClickStrategy dcsSimple;
-   private ITextDoubleClickStrategy dcsTag;
 
+   private ITextDoubleClickStrategy dcsSimple;
+
+   private ITextDoubleClickStrategy dcsTag;
 
    /**
     *Constructor for the XMLConfiguration object
@@ -72,7 +90,6 @@ public class XMLConfiguration extends SourceViewerConfiguration
       dcsAttValue = new AttValueDoubleClickStrategy();
    }
 
-
    /**
     * Gets the annotationHover attribute of the XMLConfiguration object
     *
@@ -84,7 +101,6 @@ public class XMLConfiguration extends SourceViewerConfiguration
       return new AnnotationHover();
    }
 
-
    /**
     * Gets the configuredContentTypes attribute of the XMLConfiguration object
     *
@@ -93,26 +109,26 @@ public class XMLConfiguration extends SourceViewerConfiguration
     */
    public String[] getConfiguredContentTypes(ISourceViewer sourceViewer)
    {
-      return new String[]{//
+      return new String[]
+      {//
       IDocument.DEFAULT_CONTENT_TYPE, //
-      XMLPartitionScanner.XML_ATTRIBUTE, //
-      XMLPartitionScanner.XML_CDATA, //
-      XMLPartitionScanner.XML_COMMENT, //
-      XMLPartitionScanner.XML_DECL, //
-      XMLPartitionScanner.XML_EMPTY_TAG, //
-      XMLPartitionScanner.XML_END_DECL, //
-      XMLPartitionScanner.XML_END_TAG, //
-      XMLPartitionScanner.XML_PI, //
-      XMLPartitionScanner.XML_START_DECL, //
-      XMLPartitionScanner.XML_TAG, //
-      XMLPartitionScanner.XML_TEXT, //
-      XMLPartitionScanner.DTD_INTERNAL, //
-      XMLPartitionScanner.DTD_INTERNAL_PI, //
-      XMLPartitionScanner.DTD_INTERNAL_COMMENT, //
-      XMLPartitionScanner.DTD_INTERNAL_DECL,//
+            XMLPartitionScanner.XML_ATTRIBUTE, //
+            XMLPartitionScanner.XML_CDATA, //
+            XMLPartitionScanner.XML_COMMENT, //
+            XMLPartitionScanner.XML_DECL, //
+            XMLPartitionScanner.XML_EMPTY_TAG, //
+            XMLPartitionScanner.XML_END_DECL, //
+            XMLPartitionScanner.XML_END_TAG, //
+            XMLPartitionScanner.XML_PI, //
+            XMLPartitionScanner.XML_START_DECL, //
+            XMLPartitionScanner.XML_TAG, //
+            XMLPartitionScanner.XML_TEXT, //
+            XMLPartitionScanner.DTD_INTERNAL, //
+            XMLPartitionScanner.DTD_INTERNAL_PI, //
+            XMLPartitionScanner.DTD_INTERNAL_COMMENT, //
+            XMLPartitionScanner.DTD_INTERNAL_DECL,//
       };
    }
-
 
    /**
     * Gets the contentAssistant attribute of the XMLConfiguration object
@@ -125,7 +141,7 @@ public class XMLConfiguration extends SourceViewerConfiguration
       if (this.getEditor() != null)
       {
          ContentAssistant assistant = new ContentAssistant();
-         
+
          XMLContentAssistProcessor contentAssistForText = this.getTextContentAssistProcessor();
          XMLContentAssistProcessor contentAssistForTags = this.getTagsContentAssistProcessor();
 
@@ -143,7 +159,6 @@ public class XMLConfiguration extends SourceViewerConfiguration
       }
       return null;
    }
-
 
    /**
     * Gets the doubleClickStrategy attribute of the XMLConfiguration object
@@ -187,7 +202,6 @@ public class XMLConfiguration extends SourceViewerConfiguration
       return dcsDefault;
    }
 
-
    /**
     * Gets the editor attribute of the XMLConfiguration object
     *
@@ -198,7 +212,6 @@ public class XMLConfiguration extends SourceViewerConfiguration
       return this.editor;
    }
 
-
    /**
     * Gets the informationControlCreator attribute of the XMLConfiguration object
     *
@@ -207,16 +220,14 @@ public class XMLConfiguration extends SourceViewerConfiguration
     */
    public IInformationControlCreator getInformationControlCreator(ISourceViewer sourceViewer)
    {
-      return
-         new IInformationControlCreator()
+      return new IInformationControlCreator()
+      {
+         public IInformationControl createInformationControl(Shell parent)
          {
-            public IInformationControl createInformationControl(Shell parent)
-            {
-               return new DefaultInformationControl(parent, SWT.NONE, new HTMLTextPresenter(true));
-            }
-         };
+            return new DefaultInformationControl(parent, SWT.NONE, new HTMLTextPresenter(true));
+         }
+      };
    }
-
 
    /**
     * Gets the overviewRulerAnnotationHover attribute of the XMLConfiguration object
@@ -228,7 +239,6 @@ public class XMLConfiguration extends SourceViewerConfiguration
    {
       return new AnnotationHover();
    }
-
 
    /**
     * Gets the presentationReconciler attribute of the XMLConfiguration object
@@ -291,7 +301,6 @@ public class XMLConfiguration extends SourceViewerConfiguration
       return reconciler;
    }
 
-
    /**
     * Sets the editor attribute of the XMLConfiguration object
     *
@@ -302,7 +311,6 @@ public class XMLConfiguration extends SourceViewerConfiguration
       this.editor = editor;
    }
 
-
    /**
     * Gets the tagsContentAssistProcessor attribute of the XMLConfiguration object
     *
@@ -310,9 +318,9 @@ public class XMLConfiguration extends SourceViewerConfiguration
     */
    protected XMLContentAssistProcessor getTagsContentAssistProcessor()
    {
-      return new TagContentAssistProcessor(this.getEditor(), this.xmlTextTools.getPreferenceStore(), IdentityTranslator.INSTANCE);
+      return new TagContentAssistProcessor(this.getEditor(), this.xmlTextTools.getPreferenceStore(),
+            IdentityTranslator.INSTANCE);
    }
-
 
    /**
     * Gets the textContentAssistProcessor attribute of the XMLConfiguration object
@@ -321,9 +329,9 @@ public class XMLConfiguration extends SourceViewerConfiguration
     */
    protected XMLContentAssistProcessor getTextContentAssistProcessor()
    {
-      return new TextContentAssistProcessor(this.getEditor(), this.xmlTextTools.getPreferenceStore(), IdentityTranslator.INSTANCE);
+      return new TextContentAssistProcessor(this.getEditor(), this.xmlTextTools.getPreferenceStore(),
+            IdentityTranslator.INSTANCE);
    }
-
 
    /**
     * Gets the informationPresenterControlCreator attribute of the XMLConfiguration object
@@ -333,15 +341,14 @@ public class XMLConfiguration extends SourceViewerConfiguration
     */
    private IInformationControlCreator getInformationPresenterControlCreator(ISourceViewer sourceViewer)
    {
-      return
-         new IInformationControlCreator()
+      return new IInformationControlCreator()
+      {
+         public IInformationControl createInformationControl(Shell parent)
          {
-            public IInformationControl createInformationControl(Shell parent)
-            {
-               int shellStyle = SWT.RESIZE;
-               int style = SWT.V_SCROLL | SWT.H_SCROLL;
-               return new DefaultInformationControl(parent, shellStyle, style, new HTMLTextPresenter(false));
-            }
-         };
+            int shellStyle = SWT.RESIZE;
+            int style = SWT.V_SCROLL | SWT.H_SCROLL;
+            return new DefaultInformationControl(parent, shellStyle, style, new HTMLTextPresenter(false));
+         }
+      };
    }
 }

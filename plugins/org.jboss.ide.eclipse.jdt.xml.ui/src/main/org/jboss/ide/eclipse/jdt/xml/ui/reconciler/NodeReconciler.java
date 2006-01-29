@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.reconciler;
 
@@ -42,25 +57,33 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
 {
    /** Description of the Field */
    protected ArrayList added;
+
    /** Description of the Field */
    protected ArrayList deleted;
+
    /** Description of the Field */
    protected IDocument document;
+
    /** Description of the Field */
    protected Namespace dtdGrammar;
+
    /** Description of the Field */
    protected ITextEditor editor;
+
    /** Description of the Field */
    protected boolean firstTime = true;
+
    /** Description of the Field */
    protected Map namespaces;
+
    /** Description of the Field */
    protected XMLNode root;
+
    /** Description of the Field */
    protected boolean sendOnlyAdditions = false;
+
    /** Description of the Field */
    protected ArrayList storedPos;
-
 
    /**
     *Constructor for the NodeReconciler object
@@ -72,7 +95,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
       this.editor = editor;
       this.namespaces = new TreeMap();
    }
-
 
    /**
     * Adds a feature to the AttributeTo attribute of the NodeReconciler object
@@ -93,7 +115,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -113,7 +134,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -125,16 +145,15 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
       try
       {
          Position[] pos = this.getPositions();
-         Arrays.sort(pos,
-            new Comparator()
+         Arrays.sort(pos, new Comparator()
+         {
+            public int compare(Object o1, Object o2)
             {
-               public int compare(Object o1, Object o2)
-               {
-                  int offset1 = ((XMLNode) o1).getOffset();
-                  int offset2 = ((XMLNode) o2).getOffset();
-                  return (offset1 > offset2) ? 1 : ((offset1 < offset2) ? -1 : 0);
-               }
-            });
+               int offset1 = ((XMLNode) o1).getOffset();
+               int offset2 = ((XMLNode) o2).getOffset();
+               return (offset1 > offset2) ? 1 : ((offset1 < offset2) ? -1 : 0);
+            }
+         });
          root = new XMLNode(0, 0, "/", doc);//$NON-NLS-1$
          storedPos = new ArrayList();
          root.setParent(null);
@@ -154,7 +173,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -163,7 +181,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
    public void documentAboutToBeChanged(DocumentEvent event)
    {
    }
-
 
    /**
     * Description of the Method
@@ -178,16 +195,15 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
       try
       {
          Position[] pos = this.getPositions();
-         Arrays.sort(pos,
-            new Comparator()
+         Arrays.sort(pos, new Comparator()
+         {
+            public int compare(Object o1, Object o2)
             {
-               public int compare(Object o1, Object o2)
-               {
-                  int offset1 = ((XMLNode) o1).getOffset();
-                  int offset2 = ((XMLNode) o2).getOffset();
-                  return (offset1 > offset2) ? 1 : ((offset1 < offset2) ? -1 : 0);
-               }
-            });
+               int offset1 = ((XMLNode) o1).getOffset();
+               int offset2 = ((XMLNode) o2).getOffset();
+               return (offset1 > offset2) ? 1 : ((offset1 < offset2) ? -1 : 0);
+            }
+         });
          if (root == null)
          {
             System.out.println("root is null!");//$NON-NLS-1$
@@ -254,7 +270,7 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
                      if (XMLPartitionScanner.XML_DECL.equals(n.getType()))
                      {
                         if (n.getName().equals("!DOCTYPE")//$NON-NLS-1$
-                                )
+                        )
                         {
                            String dtdLocation = n.getDTDLocation();
                            if (dtdLocation != null)
@@ -270,7 +286,8 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
                               }
                            }
                         }
-                        else if (n.getParent() != null && XMLPartitionScanner.XML_START_DECL.equals(n.getParent().getType()))
+                        else if (n.getParent() != null
+                              && XMLPartitionScanner.XML_START_DECL.equals(n.getParent().getType()))
                         {
                            if (n.getParent().getCorrespondingNode() != n.getParent())
                            {
@@ -279,7 +296,8 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
 
                               try
                               {
-                                 dtdGrammar = Namespace.createDTD(doc.get(start.getOffset(), end.getOffset() + end.getLength() - start.getOffset()));
+                                 dtdGrammar = Namespace.createDTD(doc.get(start.getOffset(), end.getOffset()
+                                       + end.getLength() - start.getOffset()));
                               }
                               catch (BadLocationException e1)
                               {
@@ -307,7 +325,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
       }
    }
 
-
    /**
     * Gets the dTDGrammar attribute of the NodeReconciler object
     *
@@ -317,7 +334,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
    {
       return dtdGrammar;
    }
-
 
    /**
     * Gets the namespaces attribute of the NodeReconciler object
@@ -329,7 +345,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
       return namespaces;
    }
 
-
    /**
     * Gets the root attribute of the NodeReconciler object
     *
@@ -340,7 +355,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
       return root;
    }
 
-
    /**
     * Gets the storedPos attribute of the NodeReconciler object
     *
@@ -350,7 +364,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
    {
       return storedPos;
    }
-
 
    /**
     * Description of the Method
@@ -373,7 +386,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -393,7 +405,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -403,7 +414,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
    public void reconcile(DirtyRegion dirtyRegion, IRegion subRegion)
    {
    }
-
 
    /**
     * Description of the Method
@@ -415,7 +425,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
       this.documentChanged(null);
    }
 
-
    /**
     * Sets the document attribute of the NodeReconciler object
     *
@@ -425,7 +434,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
    {
       this.document = document;
    }
-
 
    /**
     * Sets the root attribute of the NodeReconciler object
@@ -437,7 +445,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
       root = node;
    }
 
-
    /**
     * Description of the Method
     *
@@ -445,14 +452,14 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
     */
    public void updateTree(List deleted)
    {
-      for (Iterator it = deleted.iterator(); it.hasNext(); )
+      for (Iterator it = deleted.iterator(); it.hasNext();)
       {
          XMLNode node = (XMLNode) it.next();
 
          if (node.getType().equals(XMLPartitionScanner.XML_DECL))
          {
             if (node.getName() != null && node.getName().equals("!DOCTYPE")//$NON-NLS-1$
-                    )
+            )
             {
                dtdGrammar = null;
             }
@@ -469,7 +476,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
          storedPos.remove(node);
       }
    }
-
 
    /**
     * Description of the Method
@@ -494,7 +500,8 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
             continue;
          }
 
-         if (!XMLPartitionScanner.XML_END_TAG.equals(n.getType()) && !XMLPartitionScanner.XML_END_DECL.equals(n.getType()))
+         if (!XMLPartitionScanner.XML_END_TAG.equals(n.getType())
+               && !XMLPartitionScanner.XML_END_DECL.equals(n.getType()))
          {
             if (n.getParent() != parent)
             {
@@ -509,12 +516,12 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
          {
             List attrs = n.getAttributes();
             n.setCorrespondingNode(n);
-            for (Iterator it = attrs.iterator(); it.hasNext(); )
+            for (Iterator it = attrs.iterator(); it.hasNext();)
             {
                XMLNode element = (XMLNode) it.next();
                String name = element.getName();
                if (name.indexOf("xmlns") != -1 //$NON-NLS-1$
-                       )
+               )
                {
                   String value = element.getValue();
                   int index = name.indexOf(":");//$NON-NLS-1$
@@ -548,7 +555,7 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
                   }
                }
                else if ("xsi:schemaLocation".equals(name)//$NON-NLS-1$
-                       )
+               )
                {
                   String value = element.getValue();
                   String uri = null;
@@ -583,7 +590,7 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
                   }
                }
                else if ("xsi:noNamespaceSchemaLocation".equals(name)//$NON-NLS-1$
-                       )
+               )
                {
                   String value = element.getValue();
 
@@ -630,7 +637,7 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
          else if (XMLPartitionScanner.XML_DECL.equals(n.getType()))
          {
             if (n.getName() != null && n.getName().equals("!DOCTYPE")//$NON-NLS-1$
-                    )
+            )
             {
                String dtdLocation = n.getDTDLocation();
                if (dtdLocation != null)
@@ -658,7 +665,8 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
             if (parent != null)
             {
                XMLNode newParent = parent;
-               while (!XMLPartitionScanner.XML_START_DECL.equals(newParent.getType()) && newParent != root && newParent != null)
+               while (!XMLPartitionScanner.XML_START_DECL.equals(newParent.getType()) && newParent != root
+                     && newParent != null)
                {
                   newParent = newParent.getParent();
                }
@@ -669,7 +677,8 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
                   parent.setCorrespondingNode(n);
                   try
                   {
-                     dtdGrammar = Namespace.createDTD(document.get(parent.getOffset(), n.getOffset() + n.getLength() - parent.getOffset()));
+                     dtdGrammar = Namespace.createDTD(document.get(parent.getOffset(), n.getOffset() + n.getLength()
+                           - parent.getOffset()));
                   }
                   catch (BadLocationException e1)
                   {
@@ -695,7 +704,6 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
       }
    }
 
-
    /**
     * Gets the positionCategory attribute of the NodeReconciler object
     *
@@ -703,19 +711,16 @@ public abstract class NodeReconciler implements IReconcilingStrategy, IDocumentL
     */
    protected abstract String getPositionCategory();
 
-
    /**
     * Gets the positions attribute of the NodeReconciler object
     *
     * @return                                  The positions value
     * @exception BadPositionCategoryException  Description of the Exception
     */
-   protected Position[] getPositions()
-      throws BadPositionCategoryException
+   protected Position[] getPositions() throws BadPositionCategoryException
    {
       return this.document.getPositions(this.getPositionCategory());
    }
-
 
    /** Description of the Method */
    protected abstract void update();

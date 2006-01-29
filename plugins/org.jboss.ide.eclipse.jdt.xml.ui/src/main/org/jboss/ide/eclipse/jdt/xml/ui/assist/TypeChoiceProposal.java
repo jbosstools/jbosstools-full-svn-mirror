@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.assist;
 
@@ -41,30 +56,39 @@ public class TypeChoiceProposal implements ICompletionProposal
 
    /** Description of the Field */
    protected String chosenType;
+
    /** Description of the Field */
    protected int documentOffset;
+
    /** Description of the Field */
    protected String hierarchyRoot;
+
    /** Description of the Field */
    protected int inclusion;
+
    /** Description of the Field */
    protected String prefix;
 
    /** Description of the Field */
    protected IJavaProject project;
+
    /** Description of the Field */
    protected int replacementLength;
+
    /** Description of the Field */
    protected int replacementOffset;
+
    /** Description of the Field */
    protected String suffix;
+
    /** Description of the Field */
    public final static int SHOW_ALL = 3;
+
    /** Description of the Field */
    public final static int SHOW_CLASSES = 2;
+
    /** Description of the Field */
    public final static int SHOW_INTERFACES = 1;
-
 
    /**
     *Constructor for the TypeChoiceProposal object
@@ -75,11 +99,11 @@ public class TypeChoiceProposal implements ICompletionProposal
     * @param replacementOffset  Description of the Parameter
     * @param replacementLength  Description of the Parameter
     */
-   public TypeChoiceProposal(IJavaProject project, int inclusion, int documentOffset, int replacementOffset, int replacementLength)
+   public TypeChoiceProposal(IJavaProject project, int inclusion, int documentOffset, int replacementOffset,
+         int replacementLength)
    {
       this(project, inclusion, "", "", documentOffset, replacementOffset, replacementLength);//$NON-NLS-1$ //$NON-NLS-2$
    }
-
 
    /**
     *Constructor for the TypeChoiceProposal object
@@ -92,12 +116,11 @@ public class TypeChoiceProposal implements ICompletionProposal
     * @param replacementOffset  Description of the Parameter
     * @param replacementLength  Description of the Parameter
     */
-   public TypeChoiceProposal(IJavaProject project, int inclusion, String prefix, String suffix, int documentOffset, int replacementOffset,
-      int replacementLength)
+   public TypeChoiceProposal(IJavaProject project, int inclusion, String prefix, String suffix, int documentOffset,
+         int replacementOffset, int replacementLength)
    {
       this(project, null, inclusion, prefix, suffix, documentOffset, replacementOffset, replacementLength);
    }
-
 
    /**
     *Constructor for the TypeChoiceProposal object
@@ -111,8 +134,8 @@ public class TypeChoiceProposal implements ICompletionProposal
     * @param replacementOffset  Description of the Parameter
     * @param replacementLength  Description of the Parameter
     */
-   public TypeChoiceProposal(IJavaProject project, String hierarchyRoot, int inclusion, String prefix, String suffix, int documentOffset,
-      int replacementOffset, int replacementLength)
+   public TypeChoiceProposal(IJavaProject project, String hierarchyRoot, int inclusion, String prefix, String suffix,
+         int documentOffset, int replacementOffset, int replacementLength)
    {
       this.project = project;
       this.hierarchyRoot = hierarchyRoot;
@@ -123,7 +146,6 @@ public class TypeChoiceProposal implements ICompletionProposal
       this.replacementOffset = replacementOffset;
       this.replacementLength = replacementLength;
    }
-
 
    /**
     * Description of the Method
@@ -149,7 +171,6 @@ public class TypeChoiceProposal implements ICompletionProposal
 
    }
 
-
    /**
     * Gets the additionalProposalInfo attribute of the TypeChoiceProposal object
     *
@@ -159,7 +180,6 @@ public class TypeChoiceProposal implements ICompletionProposal
    {
       return null;
    }
-
 
    /**
     * Gets the contextInformation attribute of the TypeChoiceProposal object
@@ -171,7 +191,6 @@ public class TypeChoiceProposal implements ICompletionProposal
       return null;
    }
 
-
    /**
     * Gets the displayString attribute of the TypeChoiceProposal object
     *
@@ -182,7 +201,6 @@ public class TypeChoiceProposal implements ICompletionProposal
       return JDTXMLUIMessages.getString("TypeChoiceProposal.display");//$NON-NLS-1$
    }
 
-
    /**
     * Gets the image attribute of the TypeChoiceProposal object
     *
@@ -192,7 +210,6 @@ public class TypeChoiceProposal implements ICompletionProposal
    {
       return JDTUIImages.getImage(IJDTUIConstants.IMG_OBJ_CHOOSE_TYPE);
    }
-
 
    /**
     * Gets the selection attribute of the TypeChoiceProposal object
@@ -208,7 +225,6 @@ public class TypeChoiceProposal implements ICompletionProposal
       }
       return new Point(replacementOffset + chosenType.length(), 0);
    }
-
 
    /**
     * Description of the Method
@@ -237,7 +253,8 @@ public class TypeChoiceProposal implements ICompletionProposal
             types |= IJavaElementSearchConstants.CONSIDER_CLASSES;
          }
 
-         SelectionDialog dialog = JavaUI.createTypeDialog(shell, PlatformUI.getWorkbench().getProgressService(), scope, types, false);
+         SelectionDialog dialog = JavaUI.createTypeDialog(shell, PlatformUI.getWorkbench().getProgressService(), scope,
+               types, false);
          dialog.setTitle(JDTXMLUIMessages.getString("TypeChoiceProposal.title"));//$NON-NLS-1$
          dialog.setMessage(JDTXMLUIMessages.getString("TypeChoiceProposal.message"));//$NON-NLS-1$
          if (dialog.open() == Window.OK)
@@ -258,15 +275,13 @@ public class TypeChoiceProposal implements ICompletionProposal
       return null;
    }
 
-
    /**
     * Description of the Method
     *
     * @return                        Description of the Return Value
     * @exception JavaModelException  Description of the Exception
     */
-   protected IJavaSearchScope createSearchScope()
-      throws JavaModelException
+   protected IJavaSearchScope createSearchScope() throws JavaModelException
    {
       IJavaSearchScope result = null;
       IType rootElement = null;
@@ -287,7 +302,8 @@ public class TypeChoiceProposal implements ICompletionProposal
       }
       if (result == null)
       {
-         IJavaElement[] elements = new IJavaElement[]{project};
+         IJavaElement[] elements = new IJavaElement[]
+         {project};
          result = SearchEngine.createJavaSearchScope(elements);
       }
       return result;

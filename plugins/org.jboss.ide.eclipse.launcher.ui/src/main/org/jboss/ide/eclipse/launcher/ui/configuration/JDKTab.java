@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.ui.configuration;
 
@@ -40,7 +55,6 @@ public class JDKTab extends JavaJRETab
       super.createControl(parent);
    }
 
-
    /**
     * @return   The name value
     * @see      org.eclipse.jdt.debug.ui.launchConfigurations.JavaJRETab#getName()
@@ -49,7 +63,6 @@ public class JDKTab extends JavaJRETab
    {
       return LauncherUIMessages.getString("JDKTab.name"); //$NON-NLS-1$
    }
-
 
    /**
     * @param launchConfig  Description of the Parameter
@@ -72,11 +85,12 @@ public class JDKTab extends JavaJRETab
          List list;
          try
          {
-            list = launchConfig.getAttribute(IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_JDK_CLASSPATH, Collections.EMPTY_LIST);
-            for (Iterator iter = list.iterator(); iter.hasNext(); )
+            list = launchConfig.getAttribute(IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_JDK_CLASSPATH,
+                  Collections.EMPTY_LIST);
+            for (Iterator iter = list.iterator(); iter.hasNext();)
             {
-               if (!(new File(vm.getInstallLocation().getAbsolutePath()
-                     + File.separator + (String) iter.next())).exists())
+               if (!(new File(vm.getInstallLocation().getAbsolutePath() + File.separator + (String) iter.next()))
+                     .exists())
                {
                   setErrorMessage(LauncherUIMessages.getString("JBossJRETTab.JRE_does_not_belong_to_a_JDK_1")); //$NON-NLS-1$
                   break;
@@ -91,7 +105,6 @@ public class JDKTab extends JavaJRETab
       }
       return false;
    }
-
 
    /**
     * @param configuration  Description of the Parameter
@@ -111,15 +124,17 @@ public class JDKTab extends JavaJRETab
       }
       try
       {
-         List relativeStartClasspath = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_JDK_CLASSPATH, Collections.EMPTY_LIST);
-         configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_JDK_CLASSPATH, ServerLaunchUtil.appendListElementToString(vm.getInstallLocation().getAbsolutePath(), File.separator, relativeStartClasspath));
+         List relativeStartClasspath = configuration.getAttribute(
+               IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_JDK_CLASSPATH, Collections.EMPTY_LIST);
+         configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_JDK_CLASSPATH, ServerLaunchUtil
+               .appendListElementToString(vm.getInstallLocation().getAbsolutePath(), File.separator,
+                     relativeStartClasspath));
       }
       catch (CoreException e)
       {
          AbstractPlugin.log(e);
       }
    }
-
 
    /**
     * Find and return the VMStandin with the specified name.
@@ -146,7 +161,6 @@ public class JDKTab extends JavaJRETab
       return null;
    }
 
-
    /**
     * Gets the macOS attribute of the JDKTab object
     *
@@ -154,13 +168,12 @@ public class JDKTab extends JavaJRETab
     */
    protected boolean isMacOS()
    {
-      if (System.getProperty("os.name").startsWith("Mac OS"))  //$NON-NLS-1$//$NON-NLS-2$
+      if (System.getProperty("os.name").startsWith("Mac OS")) //$NON-NLS-1$//$NON-NLS-2$
       {
          return true;
       }
       return false;
    }
-
 
    /**
     * @param message  The new message value

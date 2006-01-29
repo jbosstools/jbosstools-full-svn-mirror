@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.deployer.ui.preferences;
 
@@ -48,11 +63,14 @@ import org.jboss.ide.eclipse.ui.util.StringViewSorter;
 public class MainPreferencePage extends PreferencePage implements IWorkbenchPreferencePage
 {
    private Button addButton;
-   private StructuredViewer debugViewer;
-   private Button editButton;
-   private Button removeButton;
-   private StructuredViewer viewer;
 
+   private StructuredViewer debugViewer;
+
+   private Button editButton;
+
+   private Button removeButton;
+
+   private StructuredViewer viewer;
 
    /** Constructor for the MainPreferencePage object */
    public MainPreferencePage()
@@ -62,14 +80,14 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
       this.setDescription(DeployerUIMessages.getString("MainPreferencePage.description"));//$NON-NLS-1$
    }
 
-
    /**
     * Description of the Method
     *
     * @param workbench  Description of the Parameter
     */
-   public void init(IWorkbench workbench) { }
-
+   public void init(IWorkbench workbench)
+   {
+   }
 
    /**
     * Description of the Method
@@ -83,7 +101,6 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
       return super.performCancel();
    }
 
-
    /**
     * Description of the Method
     *
@@ -96,47 +113,41 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
       return super.performOk();
    }
 
-
    /** Description of the Method */
    protected void assign()
    {
-      this.addButton.addSelectionListener(
-         new SelectionAdapter()
+      this.addButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               doAdd();
-            }
-         });
+            doAdd();
+         }
+      });
 
-      this.editButton.addSelectionListener(
-         new SelectionAdapter()
+      this.editButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               doEdit();
-            }
-         });
+            doEdit();
+         }
+      });
 
-      this.removeButton.addSelectionListener(
-         new SelectionAdapter()
+      this.removeButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               doRemove();
-            }
-         });
+            doRemove();
+         }
+      });
 
-      this.viewer.addDoubleClickListener(
-         new IDoubleClickListener()
+      this.viewer.addDoubleClickListener(new IDoubleClickListener()
+      {
+         public void doubleClick(DoubleClickEvent event)
          {
-            public void doubleClick(DoubleClickEvent event)
-            {
-               doEdit();
-            }
-         });
+            doEdit();
+         }
+      });
    }
-
 
    /**
     * Description of the Method
@@ -172,7 +183,6 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
       return composite;
    }
 
-
    /**
     * Description of the Method
     *
@@ -194,8 +204,7 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
       layoutData = new GridData(GridData.FILL_HORIZONTAL);
       descDebugTarget.setLayoutData(layoutData);
 
-      Table debugTargetList = new Table(composite, SWT.BORDER | SWT.SINGLE
-         | SWT.V_SCROLL);
+      Table debugTargetList = new Table(composite, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
       layoutData = new GridData(GridData.FILL_BOTH);
       debugTargetList.setLayoutData(layoutData);
       debugTargetList.setEnabled(false);
@@ -219,8 +228,7 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
       layoutData = new GridData(GridData.FILL_BOTH);
       userComposite.setLayoutData(layoutData);
 
-      Table targetList = new Table(userComposite, SWT.BORDER | SWT.SINGLE
-         | SWT.V_SCROLL);
+      Table targetList = new Table(userComposite, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
       layoutData = new GridData(GridData.FILL_BOTH);
       layoutData.grabExcessHorizontalSpace = true;
       targetList.setLayoutData(layoutData);
@@ -236,7 +244,6 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
 
       return composite;
    }
-
 
    /** Description of the Method */
    protected void doAdd()
@@ -262,7 +269,6 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
       }
    }
 
-
    /** Description of the Method */
    protected void doEdit()
    {
@@ -277,7 +283,6 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
       }
    }
 
-
    /** Description of the Method */
    protected void doRemove()
    {
@@ -288,7 +293,6 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
          this.viewer.refresh();
       }
    }
-
 
    /**
     * Gets the current attribute of the MainPreferencePage object

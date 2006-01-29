@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.run.configuration;
 
@@ -37,10 +52,10 @@ public abstract class Configurations
    /** Description of the Field */
    private ArrayList configurations = new ArrayList();
 
-
    /**Constructor for the StandardConfigurations object */
-   public Configurations() { }
-
+   public Configurations()
+   {
+   }
 
    /**
     * Gets the configurations attribute of the ProjectConfigurations object
@@ -52,15 +67,12 @@ public abstract class Configurations
       return this.configurations;
    }
 
-
    /**
     * Description of the Method
     *
     * @exception CoreException  Description of the Exception
     */
-   public abstract void loadConfigurations()
-          throws CoreException;
-
+   public abstract void loadConfigurations() throws CoreException;
 
    /**
     * Description of the Method
@@ -80,8 +92,6 @@ public abstract class Configurations
       }
    }
 
-
-
    /**
     * Description of the Method
     *
@@ -100,74 +110,69 @@ public abstract class Configurations
       }
    }
 
-
    /**
     * Gets the contents attribute of the StandardConfigurations object
     *
     * @return                   The contents value
     * @exception CoreException  Description of the Exception
     */
-   protected abstract InputStream getContents()
-          throws CoreException;
-
+   protected abstract InputStream getContents() throws CoreException;
 
    /**
     * Description of the Method
     *
     * @exception CoreException  Description of the Exception
     */
-   protected void load()
-          throws CoreException
+   protected void load() throws CoreException
    {
-      IRunnableWithProgress runnable =
-         new IRunnableWithProgress()
+      IRunnableWithProgress runnable = new IRunnableWithProgress()
+      {
+         public void run(IProgressMonitor monitor) throws InvocationTargetException
          {
-            public void run(IProgressMonitor monitor)
-                   throws InvocationTargetException
+            try
             {
-               try
+               monitor.beginTask(XDocletRunMessages.getString("Configurations.configuration.load"), 100);//$NON-NLS-1$
+
+               Configurations.this.getConfigurations().clear();
+
+               DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+               DocumentBuilder docBuilder = factory.newDocumentBuilder();
+
+               Document document = docBuilder.parse(getContents());
+               Node root = document.getDocumentElement();
+               NodeList children = root.getChildNodes();
+
+               // Compute the progress bar steps
+               int step = 1;
+               if (children.getLength() > 0)
                {
-                  monitor.beginTask(XDocletRunMessages.getString("Configurations.configuration.load"), 100);//$NON-NLS-1$
-
-                  Configurations.this.getConfigurations().clear();
-
-                  DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                  DocumentBuilder docBuilder = factory.newDocumentBuilder();
-
-                  Document document = docBuilder.parse(getContents());
-                  Node root = document.getDocumentElement();
-                  NodeList children = root.getChildNodes();
-
-                  // Compute the progress bar steps
-                  int step = 1;
-                  if (children.getLength() > 0)
-                  {
-                     step = 100 / children.getLength();
-                  }
-
-                  for (int i = 0; i < children.getLength(); i++)
-                  {
-                     Node child = children.item(i);
-
-                     monitor.subTask(MessageFormat.format(XDocletRunMessages.getString("Configurations.configuration.restore"), new Object[]{child.getNodeValue()}));//$NON-NLS-1$
-
-                     if (child.getNodeName().equals("configuration")//$NON-NLS-1$
-                     )
-                     {
-                        XDocletConfiguration configuration = new XDocletConfiguration();
-                        configuration.readFromXml(child);
-                        Configurations.this.configurations.add(configuration);
-                     }
-
-                     monitor.worked(step);
-                  }
+                  step = 100 / children.getLength();
                }
-               catch (Exception e)
+
+               for (int i = 0; i < children.getLength(); i++)
                {
-                  throw new InvocationTargetException(e);
+                  Node child = children.item(i);
+
+                  monitor.subTask(MessageFormat.format(XDocletRunMessages
+                        .getString("Configurations.configuration.restore"), new Object[]{child.getNodeValue()}));//$NON-NLS-1$
+
+                  if (child.getNodeName().equals("configuration")//$NON-NLS-1$
+                  )
+                  {
+                     XDocletConfiguration configuration = new XDocletConfiguration();
+                     configuration.readFromXml(child);
+                     Configurations.this.configurations.add(configuration);
+                  }
+
+                  monitor.worked(step);
                }
             }
-         };
+            catch (Exception e)
+            {
+               throw new InvocationTargetException(e);
+            }
+         }
+      };
 
       // Launch the task with progress
       try

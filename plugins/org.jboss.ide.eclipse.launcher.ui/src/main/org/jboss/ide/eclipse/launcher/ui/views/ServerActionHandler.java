@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.ui.views;
 
@@ -24,11 +39,12 @@ public class ServerActionHandler implements IServerDebugEventListener
 {
    /** Description of the Field */
    protected ArrayList shutdownActions = new ArrayList();
+
    /** Description of the Field */
    protected ArrayList startActions = new ArrayList();
+
    /** Description of the Field */
    protected ArrayList terminateActions = new ArrayList();
-
 
    /**
     * Adds a feature to the Action attribute of the ServerActionHandler object
@@ -52,7 +68,6 @@ public class ServerActionHandler implements IServerDebugEventListener
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -75,32 +90,28 @@ public class ServerActionHandler implements IServerDebugEventListener
       }
    }
 
-
    /**
     * @param event          Description of the Parameter
     * @param configuration  Description of the Parameter
     * @see                  org.rocklet.launcher.ui.IServerDebugEventListener#serverEvent(DebugEvent, ILaunchConfiguration)
     */
-   public void serverEvent(
-         DebugEvent event,
-         ILaunchConfiguration configuration)
+   public void serverEvent(DebugEvent event, ILaunchConfiguration configuration)
    {
       switch (event.getKind())
       {
-         case DebugEvent.CREATE:
+         case DebugEvent.CREATE :
             setEnablement(startActions, false);
             setEnablement(shutdownActions, true);
             setEnablement(terminateActions, true);
             break;
-         case DebugEvent.TERMINATE:
+         case DebugEvent.TERMINATE :
             setEnablement(startActions, true);
             setEnablement(shutdownActions, false);
             setEnablement(terminateActions, false);
-         default:
+         default :
             break;
       }
    }
-
 
    /**
     * Sets the enablement attribute of the ServerActionHandler object
@@ -110,11 +121,10 @@ public class ServerActionHandler implements IServerDebugEventListener
     */
    public void setEnablement(ArrayList actions, boolean enablement)
    {
-      for (Iterator iter = actions.iterator(); iter.hasNext(); )
+      for (Iterator iter = actions.iterator(); iter.hasNext();)
       {
          ((IAction) iter.next()).setEnabled(enablement);
       }
    }
 
 }
-

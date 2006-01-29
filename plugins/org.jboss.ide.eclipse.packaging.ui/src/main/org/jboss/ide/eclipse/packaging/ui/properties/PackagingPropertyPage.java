@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.packaging.ui.properties;
 
@@ -43,24 +58,33 @@ public class PackagingPropertyPage extends PropertyPage
 {
    /** Description of the Field */
    private ConfigurationViewer configViewer;
+
    /** Description of the Field */
    private Button addArchiveButton;
+
    /** Description of the Field */
    private Button addStandardArchiveButton;
+
    /** Description of the Field */
    private Button editButton;
+
    /** Description of the Field */
    private Button removeButton;
+
    /** Description of the Field */
    private Button moveDownButton;
+
    /** Description of the Field */
    private Button moveUpButton;
+
    /** Description of the Field */
    private IJavaProject project;
+
    /** Description of the Field */
    private ProjectConfigurations projectConfigurations;
 
    private Button enablePackagingButton;
+
    private Composite parentComposite;
 
    /**Constructor for the ConfigurationPropertyPage object */
@@ -68,7 +92,6 @@ public class PackagingPropertyPage extends PropertyPage
    {
       super();
    }
-
 
    /**
     * Description of the Method
@@ -82,7 +105,7 @@ public class PackagingPropertyPage extends PropertyPage
       {
          // Save the configurations
          this.projectConfigurations.storeConfigurations();
-         
+
          PackagingCorePlugin.getDefault().enablePackagingBuilder(this.project, enablePackagingButton.getSelection());
          //PackagingCorePlugin.getDefault().createBuildFile(this.project.getProject());
          return super.performOk();
@@ -94,77 +117,68 @@ public class PackagingPropertyPage extends PropertyPage
       return false;
    }
 
-
    /** Description of the Method */
    protected void assign()
    {
       // Change elements according to choices
-      this.configViewer.addSelectionChangedListener(
-         new ISelectionChangedListener()
+      this.configViewer.addSelectionChangedListener(new ISelectionChangedListener()
+      {
+         public void selectionChanged(SelectionChangedEvent event)
          {
-            public void selectionChanged(SelectionChangedEvent event)
-            {
-               enableButtons();
-            }
-         });
+            enableButtons();
+         }
+      });
 
-      this.addArchiveButton.addSelectionListener(
-            new SelectionAdapter()
-            {
-               public void widgetSelected(SelectionEvent e)
-               {
-                  PackagingPropertyPage.this.configViewer.doAddArchive();
-               }
-            });
+      this.addArchiveButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
+         {
+            PackagingPropertyPage.this.configViewer.doAddArchive();
+         }
+      });
 
-      this.addStandardArchiveButton.addSelectionListener(
-            new SelectionAdapter()
-            {
-               public void widgetSelected(SelectionEvent e)
-               {
-                  PackagingPropertyPage.this.configViewer.doAddStandardArchive();
-               }
-            });
+      this.addStandardArchiveButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
+         {
+            PackagingPropertyPage.this.configViewer.doAddStandardArchive();
+         }
+      });
 
-      this.editButton.addSelectionListener(
-            new SelectionAdapter()
-            {
-               public void widgetSelected(SelectionEvent e)
-               {
-                  PackagingPropertyPage.this.configViewer.doEdit();
-               }
-            });
+      this.editButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
+         {
+            PackagingPropertyPage.this.configViewer.doEdit();
+         }
+      });
 
-      this.removeButton.addSelectionListener(
-            new SelectionAdapter()
-            {
-               public void widgetSelected(SelectionEvent e)
-               {
-                  PackagingPropertyPage.this.configViewer.doRemove();
-               }
-            });
-      
+      this.removeButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
+         {
+            PackagingPropertyPage.this.configViewer.doRemove();
+         }
+      });
+
       // Up ordering
-      this.moveUpButton.addSelectionListener(
-         new SelectionAdapter()
+      this.moveUpButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               doMoveUp();
-            }
-         });
+            doMoveUp();
+         }
+      });
 
       // Down ordering
-      this.moveDownButton.addSelectionListener(
-         new SelectionAdapter()
+      this.moveDownButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent e)
          {
-            public void widgetSelected(SelectionEvent e)
-            {
-               doMoveDown();
-            }
-         });
+            doMoveDown();
+         }
+      });
    }
-
 
    /**
     * Description of the Method
@@ -188,8 +202,10 @@ public class PackagingPropertyPage extends PropertyPage
       addArchiveButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
       addStandardArchiveButton = new Button(buttons, SWT.PUSH);
-      addStandardArchiveButton.setText(PackagingUIMessages.getString("PackagingPropertyPage.button.add.standard.archive"));//$NON-NLS-1$
-      addStandardArchiveButton.setToolTipText(PackagingUIMessages.getString("PackagingPropertyPage.button.add.standard.archive.tip"));//$NON-NLS-1$
+      addStandardArchiveButton.setText(PackagingUIMessages
+            .getString("PackagingPropertyPage.button.add.standard.archive"));//$NON-NLS-1$
+      addStandardArchiveButton.setToolTipText(PackagingUIMessages
+            .getString("PackagingPropertyPage.button.add.standard.archive.tip"));//$NON-NLS-1$
       addStandardArchiveButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
       editButton = new Button(buttons, SWT.PUSH);
@@ -215,7 +231,6 @@ public class PackagingPropertyPage extends PropertyPage
       return buttons;
    }
 
-
    /**
     * Description of the Method
     *
@@ -239,27 +254,31 @@ public class PackagingPropertyPage extends PropertyPage
 
          enablePackagingButton = new Button(parentComposite, SWT.CHECK);
          enablePackagingButton.setText(PackagingUIMessages.getString("PackagingPropertyPage.enablePackagingLabel"));
-         
-         enablePackagingButton.addSelectionListener(new SelectionListener () {
-        	 public void widgetDefaultSelected(SelectionEvent e) {
-        		 widgetSelected(e);
-        	}
-        	 public void widgetSelected(SelectionEvent e) {
-        		 boolean enabled = enablePackagingButton.getSelection();
-        		UIUtil.setEnabledRecursive(parentComposite, enabled);
-        		enablePackagingButton.setEnabled(true);
-        		if (enabled)
-        		{
-        			enableButtons();
-        		}
-        	}
+
+         enablePackagingButton.addSelectionListener(new SelectionListener()
+         {
+            public void widgetDefaultSelected(SelectionEvent e)
+            {
+               widgetSelected(e);
+            }
+
+            public void widgetSelected(SelectionEvent e)
+            {
+               boolean enabled = enablePackagingButton.getSelection();
+               UIUtil.setEnabledRecursive(parentComposite, enabled);
+               enablePackagingButton.setEnabled(true);
+               if (enabled)
+               {
+                  enableButtons();
+               }
+            }
          });
-         
+
          boolean hasXDoclet = ProjectUtil.projectHasBuilder(this.project.getProject(), PackagingBuilder.BUILDER_ID);
          UIUtil.setEnabledRecursive(parentComposite, hasXDoclet);
          enablePackagingButton.setEnabled(true);
          enablePackagingButton.setSelection(hasXDoclet);
-         
+
          // Description label
          Label description = new Label(parentComposite, SWT.NONE);
          description.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -274,8 +293,9 @@ public class PackagingPropertyPage extends PropertyPage
          viewer.setLayoutData(new GridData(GridData.FILL_BOTH));
 
          // The configuration list
-         this.configViewer = new ConfigurationViewer(viewer, this.project.getProject(), this.projectConfigurations.getConfigurations());
-         
+         this.configViewer = new ConfigurationViewer(viewer, this.project.getProject(), this.projectConfigurations
+               .getConfigurations());
+
          // The buttons composite
          createButtons(viewer);
 
@@ -300,7 +320,6 @@ public class PackagingPropertyPage extends PropertyPage
       }
    }
 
-
    /** Description of the Method */
    private void doMoveUp()
    {
@@ -311,7 +330,6 @@ public class PackagingPropertyPage extends PropertyPage
          this.configViewer.refresh();
       }
    }
-
 
    /** Description of the Method */
    private void enableButtons()
@@ -340,7 +358,6 @@ public class PackagingPropertyPage extends PropertyPage
          this.moveDownButton.setEnabled(false);
       }
    }
-
 
    /**
     * Description of the Method

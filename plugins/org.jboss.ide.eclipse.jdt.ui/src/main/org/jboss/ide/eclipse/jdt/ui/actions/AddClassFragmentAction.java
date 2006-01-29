@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.actions;
 
@@ -26,15 +41,17 @@ public abstract class AddClassFragmentAction extends ActionDelegate implements I
 {
    /** Description of the Field */
    protected boolean enable = false;
+
    /** Description of the Field */
    protected IWorkbenchPart part = null;
+
    /** Description of the Field */
    protected ISelection selection = null;
 
-
    /**Constructor for the AddClassFragmentAction object */
-   public AddClassFragmentAction() { }
-
+   public AddClassFragmentAction()
+   {
+   }
 
    /**
     * Gets the selection attribute of the AddClassFragmentAction object
@@ -45,7 +62,6 @@ public abstract class AddClassFragmentAction extends ActionDelegate implements I
    {
       return this.selection;
    }
-
 
    /**
     * Main processing method for the AddClassFragmentAction object
@@ -71,7 +87,6 @@ public abstract class AddClassFragmentAction extends ActionDelegate implements I
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -85,7 +100,6 @@ public abstract class AddClassFragmentAction extends ActionDelegate implements I
       action.setEnabled(isEnabled());
    }
 
-
    /**
     * Sets the activePart attribute of the AddClassFragmentAction object
     *
@@ -97,7 +111,6 @@ public abstract class AddClassFragmentAction extends ActionDelegate implements I
       this.part = targetPart;
    }
 
-
    /**
     * Sets the enable attribute of the AddClassFragmentAction object
     *
@@ -108,10 +121,8 @@ public abstract class AddClassFragmentAction extends ActionDelegate implements I
       this.enable = enable;
    }
 
-
    /** Description of the Method */
    protected abstract void checkEnabled();
-
 
    /**
     * Description of the Method
@@ -119,7 +130,6 @@ public abstract class AddClassFragmentAction extends ActionDelegate implements I
     * @return   Description of the Return Value
     */
    protected abstract ClassFragmentWizard createFieldWizard();
-
 
    /**
     * Gets the enabled attribute of the AddClassFragmentAction object

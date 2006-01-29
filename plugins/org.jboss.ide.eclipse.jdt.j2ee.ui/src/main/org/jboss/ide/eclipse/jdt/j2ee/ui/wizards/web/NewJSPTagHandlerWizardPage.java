@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.ui.wizards.web;
 
@@ -33,7 +48,6 @@ public class NewJSPTagHandlerWizardPage extends DOMClassWizardPage
 
    private final static String PAGE_NAME = NewJSPTagHandlerWizardPage.class.getName();
 
-
    /**
     *Constructor for the NewJSPTagHandlerWizardPage object
     *
@@ -45,7 +59,6 @@ public class NewJSPTagHandlerWizardPage extends DOMClassWizardPage
       this.setTitle(JDTJ2EEUIMessages.getString("NewJSPTagHandlerWizardPage.title"));//$NON-NLS-1$
       this.setDescription(JDTJ2EEUIMessages.getString("NewJSPTagHandlerWizardPage.description"));//$NON-NLS-1$
    }
-
 
    /**
     * Gets the bodySupport attribute of the NewJSPTagHandlerWizardPage object
@@ -61,7 +74,6 @@ public class NewJSPTagHandlerWizardPage extends DOMClassWizardPage
       }
       return result;
    }
-
 
    /**
     * Adds a feature to the Content attribute of the NewFilterWizardPage object
@@ -81,7 +93,6 @@ public class NewJSPTagHandlerWizardPage extends DOMClassWizardPage
       dType.setComment(comment);
    }
 
-
    /**
     * Description of the Method
     *
@@ -93,18 +104,18 @@ public class NewJSPTagHandlerWizardPage extends DOMClassWizardPage
       FieldsUtil.createSelectionButtonDialogFieldGroupControls(this.bodySupportButtons, composite, nColumns);
    }
 
-
    /** Description of the Method */
    protected void createContent()
    {
       super.createContent();
 
-      String[] buttonNames = new String[]{JDTJ2EEUIMessages.getString("NewJSPTagHandlerWizardPage.label.body.without"), JDTJ2EEUIMessages.getString("NewJSPTagHandlerWizardPage.label.body.with")};//$NON-NLS-1$ //$NON-NLS-2$
+      String[] buttonNames = new String[]
+      {
+            JDTJ2EEUIMessages.getString("NewJSPTagHandlerWizardPage.label.body.without"), JDTJ2EEUIMessages.getString("NewJSPTagHandlerWizardPage.label.body.with")};//$NON-NLS-1$ //$NON-NLS-2$
       this.bodySupportButtons = new SelectionButtonDialogFieldGroup(SWT.RADIO, buttonNames, 1);
       this.bodySupportButtons.setDialogFieldListener(this.getFieldsAdapter());
       this.bodySupportButtons.setLabelText(JDTJ2EEUIMessages.getString("NewJSPTagHandlerWizardPage.label.body"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -119,7 +130,6 @@ public class NewJSPTagHandlerWizardPage extends DOMClassWizardPage
       this.createBodySupportSelectionControls(composite, nColumns);
       this.setSuperClass("javax.servlet.jsp.tagext.TagSupport", true);//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -142,7 +152,6 @@ public class NewJSPTagHandlerWizardPage extends DOMClassWizardPage
          }
       }
    }
-
 
    /** Description of the Method */
    protected void initContent()

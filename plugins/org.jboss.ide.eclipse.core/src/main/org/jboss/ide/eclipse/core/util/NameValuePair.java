@@ -1,11 +1,25 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.core.util;
-
 
 /**
  * Name/Value pair holder for general purpose
@@ -16,8 +30,8 @@ package org.jboss.ide.eclipse.core.util;
 public class NameValuePair
 {
    private String name = null;
-   private String value = null;
 
+   private String value = null;
 
    /**
     * Constructor
@@ -29,7 +43,6 @@ public class NameValuePair
       this.name = name;
       this.value = "";//$NON-NLS-1$
    }
-
 
    /**
     *Constructor for the NameValuePair object
@@ -43,7 +56,6 @@ public class NameValuePair
       this.value = value;
    }
 
-
    /**
     * @return   The pair name
     */
@@ -52,7 +64,6 @@ public class NameValuePair
       return this.name;
    }
 
-
    /**
     * @return   The pair value
     */
@@ -60,7 +71,6 @@ public class NameValuePair
    {
       return this.value;
    }
-
 
    /**
     * Sets the pair name
@@ -72,7 +82,6 @@ public class NameValuePair
       this.name = name;
    }
 
-
    /**
     * Sets the pair value
     *
@@ -82,7 +91,6 @@ public class NameValuePair
    {
       this.value = value;
    }
-
 
    /**
     * toString implementation

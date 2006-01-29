@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.core.configuration;
 
@@ -36,7 +51,6 @@ public class RemoteServerLaunchConfigurationDelegate extends AbstractServerLaunc
       return false;
    }
 
-
    /**
     * Description of the Method
     *
@@ -46,20 +60,24 @@ public class RemoteServerLaunchConfigurationDelegate extends AbstractServerLaunc
     * @param monitor            Description of the Parameter
     * @exception CoreException  Description of the Exception
     */
-   public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException
+   public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor)
+         throws CoreException
    {
       if (monitor == null)
       {
          monitor = new NullProgressMonitor();
       }
 
-      monitor.beginTask(MessageFormat.format(LaunchingMessages.JavaRemoteApplicationLaunchConfigurationDelegate_Attaching_to__0_____1, new String[]{configuration.getName()}), 3);//$NON-NLS-1$
+      monitor.beginTask(MessageFormat.format(
+            LaunchingMessages.JavaRemoteApplicationLaunchConfigurationDelegate_Attaching_to__0_____1, new String[]
+            {configuration.getName()}), 3);//$NON-NLS-1$
       // check for cancellation
       if (monitor.isCanceled())
       {
          return;
       }
-      monitor.subTask(LaunchingMessages.JavaRemoteApplicationLaunchConfigurationDelegate_Verifying_launch_attributes____1);//$NON-NLS-1$
+      monitor
+            .subTask(LaunchingMessages.JavaRemoteApplicationLaunchConfigurationDelegate_Verifying_launch_attributes____1);//$NON-NLS-1$
 
       String connectorId = getVMConnectorId(configuration);
       IVMConnector connector = null;
@@ -73,7 +91,8 @@ public class RemoteServerLaunchConfigurationDelegate extends AbstractServerLaunc
       }
       if (connector == null)
       {
-         abort(LaunchingMessages.JavaRemoteApplicationLaunchConfigurationDelegate_Connector_not_specified_2, null, IJavaLaunchConfigurationConstants.ERR_CONNECTOR_NOT_AVAILABLE);//$NON-NLS-1$
+         abort(LaunchingMessages.JavaRemoteApplicationLaunchConfigurationDelegate_Connector_not_specified_2, null,
+               IJavaLaunchConfigurationConstants.ERR_CONNECTOR_NOT_AVAILABLE);//$NON-NLS-1$
       }
 
       Map argMap = configuration.getAttribute(IJavaLaunchConfigurationConstants.ATTR_CONNECT_MAP, (Map) null);
@@ -91,11 +110,10 @@ public class RemoteServerLaunchConfigurationDelegate extends AbstractServerLaunc
          return;
       }
 
-//      launch.setSourceLocator(getAllOpenProjects());
+      //      launch.setSourceLocator(getAllOpenProjects());
 
       monitor.done();
    }
-
 
    /**
     * Description of the Method
@@ -103,5 +121,7 @@ public class RemoteServerLaunchConfigurationDelegate extends AbstractServerLaunc
     * @param configuration  Description of the Parameter
     * @param monitor        Description of the Parameter
     */
-   public void shutdown(ILaunchConfiguration configuration, IProgressMonitor monitor) { }
+   public void shutdown(ILaunchConfiguration configuration, IProgressMonitor monitor)
+   {
+   }
 }

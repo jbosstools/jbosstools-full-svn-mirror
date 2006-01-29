@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.core;
 
@@ -33,22 +48,21 @@ public class XDocletCorePlugin extends AbstractPlugin
    public static final String JBOSS_NET_VERSION_4_0 = "4.0";
 
    public static final String JBOSS_NET_VERSION_3_2 = "3.2";
-   
+
    public static final String JBOSS_NET_VERSION_DEFAULT = JBOSS_NET_VERSION_4_0;
 
    private URL[] modules;
+
    private URL[] xTagsXML;
 
    /** The shared instance */
    private static XDocletCorePlugin plugin;
-
 
    /** The constructor. */
    public XDocletCorePlugin()
    {
       XDocletCorePlugin.plugin = this;
    }
-
 
    /**
     * Gets the XDoclet modules installed in the XDoclet Core plugin
@@ -64,7 +78,6 @@ public class XDocletCorePlugin extends AbstractPlugin
       return this.modules;
    }
 
-
    /**
     * Gets the XDoclet XTagsXml files installed in the XDoclet Core plugin
     *
@@ -79,7 +92,6 @@ public class XDocletCorePlugin extends AbstractPlugin
       return this.xTagsXML;
    }
 
-
    /** Refresh the XDoclet modules installed in the XDoclet Core plugin */
    public void refreshModules()
    {
@@ -87,21 +99,18 @@ public class XDocletCorePlugin extends AbstractPlugin
       this.fetchXTagsXML();
    }
 
-
    /** Refresh the XDoclet XTagsXml files installed in the XDoclet Core plugin */
    public void refreshXtagsXML()
    {
       this.fetchXTagsXML();
    }
-   
-   
+
    public String getJBossNetVersion()
    {
       Preferences prefs = getPluginPreferences();
       return prefs.getString(XDocletCorePlugin.JBOSS_NET_VERSION);
    }
-   
-   
+
    public void setJBossNetVersion(String version)
    {
       if (!JBOSS_NET_VERSION_4_0.equals(version) && !JBOSS_NET_VERSION_3_2.equals(version))
@@ -112,7 +121,6 @@ public class XDocletCorePlugin extends AbstractPlugin
       prefs.setValue(XDocletCorePlugin.JBOSS_NET_VERSION, version);
       savePluginPreferences();
    }
-
 
    /**
     * Description of the Method
@@ -127,7 +135,6 @@ public class XDocletCorePlugin extends AbstractPlugin
       getPluginPreferences().setDefault(JBOSS_NET_VERSION, JBOSS_NET_VERSION_DEFAULT);
       this.fetchModules();
    }
-
 
    /** Fetchs the XDoclet modules installed in the XDoclet Core plugin */
    protected void fetchModules()
@@ -151,13 +158,11 @@ public class XDocletCorePlugin extends AbstractPlugin
       this.modules = (URL[]) result.toArray(new URL[result.size()]);
    }
 
-
    /** Fetchs the XDoclet XTagsXml files installed in the XDoclet Core plugin */
    protected void fetchXTagsXML()
    {
       this.xTagsXML = this.getURLs("META-INF/xtags.xml");//$NON-NLS-1$
    }
-
 
    /**
     * Gets the XDoclet modules installed in the XDoclet Core plugin
@@ -169,28 +174,26 @@ public class XDocletCorePlugin extends AbstractPlugin
       File dir = new File(this.getBaseDir());//$NON-NLS-1$
 
       // Lists every modules in the base dir
-      File[] modules = dir.listFiles(
-         new FileFilter()
+      File[] modules = dir.listFiles(new FileFilter()
+      {
+         public boolean accept(File file)
          {
-            public boolean accept(File file)
+            String fileName = file.getName();
+            if (fileName.endsWith(".jar"))//$NON-NLS-1
             {
-               String fileName = file.getName();
-               if (fileName.endsWith(".jar"))//$NON-NLS-1
+               if (fileName.startsWith("xdoclet-module-jboss-net"))
                {
-                  if (fileName.startsWith("xdoclet-module-jboss-net"))
-                  {
-                     String version = getJBossNetVersion();
-                     return (fileName.indexOf(version) != -1);
-                  }
-                  return true;
+                  String version = getJBossNetVersion();
+                  return (fileName.indexOf(version) != -1);
                }
-               return false;
+               return true;
             }
-         });
+            return false;
+         }
+      });
 
       return modules;
    }
-
 
    /**
     * Gets the URLs of files according to a given pattern
@@ -225,7 +228,6 @@ public class XDocletCorePlugin extends AbstractPlugin
       return (URL[]) result.toArray(new URL[result.size()]);
    }
 
-
    /**
     * Returns the shared instance.
     *
@@ -235,7 +237,6 @@ public class XDocletCorePlugin extends AbstractPlugin
    {
       return plugin;
    }
-
 
    /**
     * Convenience method which returns the unique identifier of this plugin.

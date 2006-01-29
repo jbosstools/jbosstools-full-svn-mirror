@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.ui.wizards.ejb.fields;
 
@@ -24,13 +39,14 @@ public class NewCMPFieldWizardPage extends FieldWizardPage
 {
    /** Description of the Field */
    protected SelectionButtonDialogFieldGroup accessButtons;
+
    /** Description of the Field */
    protected SelectionButtonDialogFieldGroup cMPVersionButtons;
+
    /** Description of the Field */
    protected SelectionButtonDialogFieldGroup primatyKeyButtons;
 
    private final static String PAGE_NAME = NewCMPFieldWizardPage.class.getName();
-
 
    /**Constructor for the NewCMPFieldWizardPage object */
    public NewCMPFieldWizardPage()
@@ -39,7 +55,6 @@ public class NewCMPFieldWizardPage extends FieldWizardPage
       this.setTitle(JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.title"));//$NON-NLS-1$
       this.setDescription(JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.description"));//$NON-NLS-1$
    }
-
 
    /**
     * Gets the viewType attribute of the NewCMPFieldWizardPage object
@@ -63,7 +78,6 @@ public class NewCMPFieldWizardPage extends FieldWizardPage
       return null;
    }
 
-
    /**
     * Gets the cMP2x attribute of the NewCMPFieldWizardPage object
     *
@@ -74,7 +88,6 @@ public class NewCMPFieldWizardPage extends FieldWizardPage
       return this.cMPVersionButtons.isSelected(1);
    }
 
-
    /**
     * Gets the primaryKey attribute of the NewCMPFieldWizardPage object
     *
@@ -84,7 +97,6 @@ public class NewCMPFieldWizardPage extends FieldWizardPage
    {
       return this.primatyKeyButtons.isSelected(0);
    }
-
 
    /**
     * Description of the Method
@@ -97,7 +109,6 @@ public class NewCMPFieldWizardPage extends FieldWizardPage
       FieldsUtil.createSelectionButtonDialogFieldGroupControls(this.accessButtons, composite, nColumns);
    }
 
-
    /**
     * Description of the Method
     *
@@ -109,29 +120,32 @@ public class NewCMPFieldWizardPage extends FieldWizardPage
       FieldsUtil.createSelectionButtonDialogFieldGroupControls(this.cMPVersionButtons, composite, nColumns);
    }
 
-
    /** Description of the Method */
    protected void createContent()
    {
       super.createContent();
       String[] buttonNames;
 
-      buttonNames = new String[]{JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.primkey.enable")};//$NON-NLS-1$
+      buttonNames = new String[]
+      {JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.primkey.enable")};//$NON-NLS-1$
       this.primatyKeyButtons = new SelectionButtonDialogFieldGroup(SWT.CHECK, buttonNames, 1);
       this.primatyKeyButtons.setDialogFieldListener(this.getFieldsAdapter());
       this.primatyKeyButtons.setLabelText(JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.label.primkey"));//$NON-NLS-1$
 
-      buttonNames = new String[]{JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.cmp.11"), JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.cmp.2x")};//$NON-NLS-1$ //$NON-NLS-2$
+      buttonNames = new String[]
+      {
+            JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.cmp.11"), JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.cmp.2x")};//$NON-NLS-1$ //$NON-NLS-2$
       this.cMPVersionButtons = new SelectionButtonDialogFieldGroup(SWT.RADIO, buttonNames, 2);
       this.cMPVersionButtons.setDialogFieldListener(this.getFieldsAdapter());
       this.cMPVersionButtons.setLabelText(JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.label.cmp"));//$NON-NLS-1$
 
-      buttonNames = new String[]{JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.access.remote"), JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.access.local"), JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.access.both")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      buttonNames = new String[]
+      {
+            JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.access.remote"), JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.access.local"), JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.access.both")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       this.accessButtons = new SelectionButtonDialogFieldGroup(SWT.RADIO, buttonNames, 3);
       this.accessButtons.setDialogFieldListener(this.getFieldsAdapter());
       this.accessButtons.setLabelText(JDTJ2EEUIMessages.getString("NewCMPFieldWizardPage.label.access"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -151,7 +165,6 @@ public class NewCMPFieldWizardPage extends FieldWizardPage
       this.createAccessSelectionControls(composite, nColumns);
    }
 
-
    /**
     * Description of the Method
     *
@@ -162,7 +175,6 @@ public class NewCMPFieldWizardPage extends FieldWizardPage
    {
       FieldsUtil.createSelectionButtonDialogFieldGroupControls(this.primatyKeyButtons, composite, nColumns);
    }
-
 
    /**
     * Description of the Method
@@ -178,7 +190,6 @@ public class NewCMPFieldWizardPage extends FieldWizardPage
          this.accessButtons.setEnabled(isCMP2x());
       }
    }
-
 
    /** Description of the Method */
    protected void initContent()

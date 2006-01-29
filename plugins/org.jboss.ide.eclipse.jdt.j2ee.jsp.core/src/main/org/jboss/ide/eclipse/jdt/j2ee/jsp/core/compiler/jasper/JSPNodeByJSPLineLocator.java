@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.jsp.core.compiler.jasper;
 
@@ -19,15 +34,18 @@ public class JSPNodeByJSPLineLocator extends Node.Visitor
 {
    /** JSP column number to be mapped */
    private int column;
+
    /** Min line offset */
    private int columnOffset;
+
    /** JSP node whose JSP source code range  contains the JSP source line number to be mapped */
    private Node found = null;
+
    /** JSP line number to be mapped */
    private int line;
+
    /** Min line offset */
    private int lineOffset;
-
 
    /**
     * Constructor.
@@ -43,15 +61,13 @@ public class JSPNodeByJSPLineLocator extends Node.Visitor
       this.columnOffset = Integer.MAX_VALUE;
    }
 
-
    /**
     * Callback visitor method.
     *
     * @param n                    Description of the Parameter
     * @exception JasperException  Description of the Exception
     */
-   public void doVisit(Node n)
-      throws JasperException
+   public void doVisit(Node n) throws JasperException
    {
       int lineNumber = n.getStart().getLineNumber();
       int lineOffset = this.line - lineNumber;
@@ -76,7 +92,6 @@ public class JSPNodeByJSPLineLocator extends Node.Visitor
       }
    }
 
-
    /**
     * Get the column offset to the node
     *
@@ -87,7 +102,6 @@ public class JSPNodeByJSPLineLocator extends Node.Visitor
       return this.columnOffset;
    }
 
-
    /**
     * Get the line offset to the node
     *
@@ -97,7 +111,6 @@ public class JSPNodeByJSPLineLocator extends Node.Visitor
    {
       return this.lineOffset;
    }
-
 
    /**
     * Gets the JSP node to which the source line number was mapped.

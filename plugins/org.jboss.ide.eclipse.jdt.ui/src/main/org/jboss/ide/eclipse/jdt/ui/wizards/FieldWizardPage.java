@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.wizards;
 
@@ -35,9 +50,9 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
 {
    /** Description of the Field */
    protected SelectionButtonDialogFieldGroup accessorStubsButtons;
+
    /** Description of the Field */
    protected SelectionButtonDialogFieldGroup modifiersButtons;
-
 
    /**
     *Constructor for the FieldWizardPage object
@@ -51,7 +66,6 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
       this.setDescription(JDTUIMessages.getString("FieldWizardPage.description"));//$NON-NLS-1$
    }
 
-
    /**
     * Gets the getterGenerated attribute of the FieldWizardPage object
     *
@@ -61,7 +75,6 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
    {
       return accessorStubsButtons.isSelected(0);
    }
-
 
    /**
     * Gets the private attribute of the FieldWizardPage object
@@ -73,7 +86,6 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
       return modifiersButtons.isSelected(3);
    }
 
-
    /**
     * Gets the protected attribute of the FieldWizardPage object
     *
@@ -83,7 +95,6 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
    {
       return modifiersButtons.isSelected(2);
    }
-
 
    /**
     * Gets the public attribute of the FieldWizardPage object
@@ -95,7 +106,6 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
       return modifiersButtons.isSelected(0);
    }
 
-
    /**
     * Gets the setterGenerated attribute of the FieldWizardPage object
     *
@@ -105,7 +115,6 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
    {
       return accessorStubsButtons.isSelected(0);
    }
-
 
    /**
     * Description of the Method
@@ -126,7 +135,6 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
       }
    }
 
-
    /** Description of the Method */
    protected void createContent()
    {
@@ -141,15 +149,18 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
       this.typeDialogField.setLabelText(JDTUIMessages.getString("FieldWizardPage.label.type"));//$NON-NLS-1$
       this.typeDialogField.setButtonLabel(JDTUIMessages.getString("FieldWizardPage.button.browse"));//$NON-NLS-1$
 
-      buttonNames = new String[]{JDTUIMessages.getString("FieldWizardPage.modifier.public"), JDTUIMessages.getString("FieldWizardPage.modifier.package"), JDTUIMessages.getString("FieldWizardPage.modifier.protected"), JDTUIMessages.getString("FieldWizardPage.modifier.private")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+      buttonNames = new String[]
+      {
+            JDTUIMessages.getString("FieldWizardPage.modifier.public"), JDTUIMessages.getString("FieldWizardPage.modifier.package"), JDTUIMessages.getString("FieldWizardPage.modifier.protected"), JDTUIMessages.getString("FieldWizardPage.modifier.private")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
       this.modifiersButtons = new SelectionButtonDialogFieldGroup(SWT.RADIO, buttonNames, 4);
       this.modifiersButtons.setLabelText(JDTUIMessages.getString("FieldWizardPage.label.modifiers"));//$NON-NLS-1$
 
-      buttonNames = new String[]{JDTUIMessages.getString("FieldWizardPage.method.getter"), JDTUIMessages.getString("FieldWizardPage.method.setter")};//$NON-NLS-1$ //$NON-NLS-2$
+      buttonNames = new String[]
+      {
+            JDTUIMessages.getString("FieldWizardPage.method.getter"), JDTUIMessages.getString("FieldWizardPage.method.setter")};//$NON-NLS-1$ //$NON-NLS-2$
       this.accessorStubsButtons = new SelectionButtonDialogFieldGroup(SWT.CHECK, buttonNames, 2);
       this.accessorStubsButtons.setLabelText(JDTUIMessages.getString("FieldWizardPage.label.accessor"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -167,7 +178,6 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
       this.createMethodStubSelectionControls(composite, nColumns);
    }
 
-
    /**
     * Description of the Method
     *
@@ -178,7 +188,6 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
    {
       FieldsUtil.createStringDialogFieldControls(this.nameDialogField, composite, nColumns);
    }
-
 
    /**
     * Description of the Method
@@ -191,7 +200,6 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
       FieldsUtil.createStringButtonDialogFieldControls(this.typeDialogField, composite, nColumns);
    }
 
-
    /**
     * Description of the Method
     *
@@ -203,7 +211,6 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
       FieldsUtil.createSelectionButtonDialogFieldGroupControls(this.accessorStubsButtons, composite, nColumns);
    }
 
-
    /**
     * Description of the Method
     *
@@ -214,7 +221,6 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
    {
       FieldsUtil.createSelectionButtonDialogFieldGroupControls(this.modifiersButtons, composite, nColumns);
    }
-
 
    /**
     * Description of the Method
@@ -235,17 +241,20 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
       IStatus val = JavaConventions.validateFieldName(name);
       if (val.getSeverity() == IStatus.ERROR)
       {
-         status.setError(MessageFormat.format(JDTUIMessages.getString("FieldWizardPage.error.field.name.invalid"), new Object[]{val.getMessage()}));//$NON-NLS-1$
+         status.setError(MessageFormat.format(
+               JDTUIMessages.getString("FieldWizardPage.error.field.name.invalid"), new Object[]{val.getMessage()}));//$NON-NLS-1$
          return status;
       }
       else if (val.getSeverity() == IStatus.WARNING)
       {
-         status.setWarning(MessageFormat.format(JDTUIMessages.getString("FieldWizardPage.error.field.name.discouraged"), new Object[]{val.getMessage()}));//$NON-NLS-1$
+         status
+               .setWarning(MessageFormat
+                     .format(
+                           JDTUIMessages.getString("FieldWizardPage.error.field.name.discouraged"), new Object[]{val.getMessage()}));//$NON-NLS-1$
       }
 
       return status;
    }
-
 
    /**
     * Description of the Method
@@ -296,7 +305,6 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
       }
       return status;
    }
-
 
    /** Description of the Method */
    protected void initContent()

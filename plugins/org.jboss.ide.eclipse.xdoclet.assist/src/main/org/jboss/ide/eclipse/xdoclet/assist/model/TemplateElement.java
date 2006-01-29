@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model;
 
@@ -19,11 +34,12 @@ public class TemplateElement implements Comparable, Serializable
 
    /** Description of the Field */
    protected DocletElement doclet;
+
    /** Description of the Field */
    protected SortedKeyTreeNode node;
+
    /** Description of the Field */
    protected TemplateTree tree;
-
 
    /**
     *Constructor for the TemplateElement object
@@ -31,9 +47,7 @@ public class TemplateElement implements Comparable, Serializable
     * @param doclet  Description of the Parameter
     * @param tree    Description of the Parameter
     */
-   public TemplateElement(
-         DocletElement doclet,
-         TemplateTree tree)
+   public TemplateElement(DocletElement doclet, TemplateTree tree)
    {
       super();
       if (doclet == null || tree == null)
@@ -46,7 +60,6 @@ public class TemplateElement implements Comparable, Serializable
       this.tree = tree;
    }
 
-
    /**
     * @param arg0  Description of the Parameter
     * @return      Description of the Return Value
@@ -56,7 +69,6 @@ public class TemplateElement implements Comparable, Serializable
    {
       return node.compareTo(((TemplateElement) arg0).getNode());
    }
-
 
    /**
     * DocletElements are equals if there nodes are equals. The latter is determined by the key. This makes sense
@@ -80,7 +92,6 @@ public class TemplateElement implements Comparable, Serializable
       return false;
    }
 
-
    /**
     * Gets the child attribute of the TemplateElement object
     *
@@ -92,7 +103,6 @@ public class TemplateElement implements Comparable, Serializable
       return (TemplateElement) node.getChildObject(name, getTree().getKey());
    }
 
-
    /**
     * Gets the childrenCount attribute of the TemplateElement object
     *
@@ -102,7 +112,6 @@ public class TemplateElement implements Comparable, Serializable
    {
       return getChildrenElements().length;
    }
-
 
    /**
     * Gets the childrenElements attribute of the TemplateElement object
@@ -115,7 +124,6 @@ public class TemplateElement implements Comparable, Serializable
       return (TemplateElement[]) list.toArray(new TemplateElement[list.size()]);
    }
 
-
    /**
     * Returns the doclet.
     *
@@ -125,7 +133,6 @@ public class TemplateElement implements Comparable, Serializable
    {
       return doclet;
    }
-
 
    /**
     * Gets the name attribute of the TemplateElement object
@@ -137,7 +144,6 @@ public class TemplateElement implements Comparable, Serializable
       return node.getName();
    }
 
-
    /**
     * Returns the node.
     *
@@ -147,7 +153,6 @@ public class TemplateElement implements Comparable, Serializable
    {
       return node;
    }
-
 
    /**
     * Gets the parent attribute of the TemplateElement object
@@ -163,7 +168,6 @@ public class TemplateElement implements Comparable, Serializable
       return null;
    }
 
-
    /**
     * Gets the tree attribute of the TemplateElement object
     *
@@ -173,7 +177,6 @@ public class TemplateElement implements Comparable, Serializable
    {
       return tree;
    }
-
 
    /**
     * Description of the Method
@@ -185,7 +188,6 @@ public class TemplateElement implements Comparable, Serializable
       return getChildrenElements().length > 0 ? true : false;
    }
 
-
    /**
     * See equals
     *
@@ -196,7 +198,6 @@ public class TemplateElement implements Comparable, Serializable
    {
       return (node.getAbsoluteKey() + getTree().getKey()).hashCode();
    }
-
 
    /**
     * @return   Description of the Return Value

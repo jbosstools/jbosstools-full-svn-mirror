@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.ui;
 
@@ -23,15 +38,13 @@ import org.jboss.ide.eclipse.xdoclet.assist.model.TemplateTree;
  * @version   $Revision$
  * @created   17 mai 2003
  */
-public class TemplateListContentProvider
-       implements ITreeContentProvider, ITemplateListListener, ITemplateTreeListener
+public class TemplateListContentProvider implements ITreeContentProvider, ITemplateListListener, ITemplateTreeListener
 {
 
    /** Description of the Field */
    protected TemplateList templateList;
 
    private TreeViewer fViewer;
-
 
    /**
     * @param event  Description of the Parameter
@@ -42,25 +55,28 @@ public class TemplateListContentProvider
       fViewer.refresh(false);
    }
 
-
    /**
     * @see   org.eclipse.jface.viewers.IContentProvider#dispose()
     */
-   public void dispose() { }
-
+   public void dispose()
+   {
+   }
 
    /**
     * @param event  Description of the Parameter
     * @see          org.jboss.ide.eclipse.xdoclet.model.ITemplateTreeListener#elementAdded(org.jboss.ide.eclipse.xdoclet.model.TemplateTreeEvent)
     */
-   public void elementAdded(TemplateEvent event) { }
-
+   public void elementAdded(TemplateEvent event)
+   {
+   }
 
    /**
     * @param event  Description of the Parameter
     * @see          org.jboss.ide.eclipse.xdoclet.model.ITemplateTreeListener#elementRemoved(org.jboss.ide.eclipse.xdoclet.model.TemplateTreeEvent)
     */
-   public void elementRemoved(TemplateEvent event) { }
+   public void elementRemoved(TemplateEvent event)
+   {
+   }
 
    // protected HashMap templatesForContexTrees = new HashMap();
 
@@ -86,17 +102,16 @@ public class TemplateListContentProvider
       {
          return ((TemplateElement) parentElement).getChildrenElements();
       }
-//		else if (parentElement instanceof ContextTree) {
-//			ContextTree contextTree = (ContextTree) parentElement;
-//			return contextTree.getElements();
-//		} else if (!(parentElement instanceof ContextElement)) {
-//			System.out.println("WHAT " + parentElement.getClass().getName());
-//			throw new IllegalArgumentException();
-//		}
+      //		else if (parentElement instanceof ContextTree) {
+      //			ContextTree contextTree = (ContextTree) parentElement;
+      //			return contextTree.getElements();
+      //		} else if (!(parentElement instanceof ContextElement)) {
+      //			System.out.println("WHAT " + parentElement.getClass().getName());
+      //			throw new IllegalArgumentException();
+      //		}
       // ContextElement
       return null;
    }
-
 
    /**
     * @param inputElement  Description of the Parameter
@@ -107,7 +122,6 @@ public class TemplateListContentProvider
    {
       return templateList.getTemplateTrees();
    }
-
 
    /**
     * @param element  Description of the Parameter
@@ -128,19 +142,18 @@ public class TemplateListContentProvider
             return templateElement.getTree();
          }
          return templateElement.getParent();
-//		else if (element instanceof ContextTree) {
-//			ContextTree contextTree = (ContextTree) element;
-//			return templatesForContexTrees.get(contextTree);
-//		} else if (element instanceof ContextElement) {
-//			ContextElement contextElement = (ContextElement) element;
-//			return contextElement.getContextTree();
+         //		else if (element instanceof ContextTree) {
+         //			ContextTree contextTree = (ContextTree) element;
+         //			return templatesForContexTrees.get(contextTree);
+         //		} else if (element instanceof ContextElement) {
+         //			ContextElement contextElement = (ContextElement) element;
+         //			return contextElement.getContextTree();
       }
       else
       {
          throw new IllegalArgumentException();
       }
    }
-
 
    /**
     * @param element  Description of the Parameter
@@ -157,14 +170,13 @@ public class TemplateListContentProvider
       {
          return ((TemplateElement) element).hasChildrenElements();
       }
-//		else if (element instanceof ContextTree) {
-//			ContextTree contextTree = (ContextTree) element;
-//			return contextTree.getElements().length > 0;
-//		}
+      //		else if (element instanceof ContextTree) {
+      //			ContextTree contextTree = (ContextTree) element;
+      //			return contextTree.getElements().length > 0;
+      //		}
 
       return false;
    }
-
 
    /**
     * @param viewer    Description of the Parameter
@@ -185,14 +197,13 @@ public class TemplateListContentProvider
          templateList = (TemplateList) newInput;
          ((TemplateList) newInput).addTemplateListListener(this);
          ((TemplateList) newInput).addTemplateTreeListener(this);
-//			for (int i = 0; i < templateList.getTemplateTrees().length; i++) {
-//				templatesForContexTrees.put(
-//					templateList.getTemplateTrees()[i].getContextTree(),
-//					templateList.getTemplateTrees()[i]);
-//			}
+         //			for (int i = 0; i < templateList.getTemplateTrees().length; i++) {
+         //				templatesForContexTrees.put(
+         //					templateList.getTemplateTrees()[i].getContextTree(),
+         //					templateList.getTemplateTrees()[i]);
+         //			}
       }
    }
-
 
    /**
     * @param event  Description of the Parameter
@@ -202,7 +213,6 @@ public class TemplateListContentProvider
    {
       fViewer.refresh(event.getTemplateTree());
    }
-
 
    /**
     * Returns the templateList.

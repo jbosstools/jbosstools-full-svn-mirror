@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.text;
 
@@ -33,16 +48,21 @@ public class AbstractTextTools
 {
    /** The color manager */
    protected ColorManager colorManager;
+
    /** The preference store */
    protected IPreferenceStore store;
 
    private String[] backgroundPropertyNames;
-   private String[] foregroundPropertyNames;
-   private IPropertyChangeListener listener;
-   private String[] properties;
-   private String[] stylePropertyNames;
-   private Map tokens;
 
+   private String[] foregroundPropertyNames;
+
+   private IPropertyChangeListener listener;
+
+   private String[] properties;
+
+   private String[] stylePropertyNames;
+
+   private Map tokens;
 
    /**
     * Creates a new text tools collection.
@@ -91,25 +111,20 @@ public class AbstractTextTools
             colorManager.bindColor(background, rgb);
          }
 
-         tokens.put(property, new Token(
-            new TextAttribute(
-            colorManager.getColor(foreground),
-            colorManager.getColor(background),
-            getStyle(store, style))));
+         tokens.put(property, new Token(new TextAttribute(colorManager.getColor(foreground), colorManager
+               .getColor(background), getStyle(store, style))));
       }
 
-      listener =
-         new IPropertyChangeListener()
+      listener = new IPropertyChangeListener()
+      {
+         public void propertyChange(PropertyChangeEvent event)
          {
-            public void propertyChange(PropertyChangeEvent event)
-            {
-               adaptToPreferenceChange(event);
-            }
-         };
+            adaptToPreferenceChange(event);
+         }
+      };
 
       store.addPropertyChangeListener(listener);
    }
-
 
    /**
     * Determines whether the preference change encoded by the given event
@@ -122,7 +137,6 @@ public class AbstractTextTools
    {
       return (indexOf(event.getProperty()) >= 0);
    }
-
 
    /** Disposes all the individual tools of this tools collection. */
    public void dispose()
@@ -150,7 +164,6 @@ public class AbstractTextTools
       stylePropertyNames = null;
    }
 
-
    /**
     * Returns the color manager which is used to manage any XML-specific
     * colors needed for such things like syntax highlighting.
@@ -161,7 +174,6 @@ public class AbstractTextTools
    {
       return colorManager;
    }
-
 
    /**
     * Adapts the behavior of the contained components to the change
@@ -176,8 +188,8 @@ public class AbstractTextTools
       Token token = getToken(property);
       if (token != null)
       {
-         if (property.endsWith(ITextStylePreferences.SUFFIX_FOREGROUND) ||
-            property.endsWith(ITextStylePreferences.SUFFIX_BACKGROUND))
+         if (property.endsWith(ITextStylePreferences.SUFFIX_FOREGROUND)
+               || property.endsWith(ITextStylePreferences.SUFFIX_BACKGROUND))
          {
             adaptToColorChange(token, event);
          }
@@ -187,7 +199,6 @@ public class AbstractTextTools
          }
       }
    }
-
 
    /**
     * Gets the token attribute of the AbstractTextTools object
@@ -206,7 +217,6 @@ public class AbstractTextTools
       return (Token) tokens.get(properties[index]);
    }
 
-
    /**
     * Gets the tokens attribute of the AbstractTextTools object
     *
@@ -216,7 +226,6 @@ public class AbstractTextTools
    {
       return tokens;
    }
-
 
    /**
     * Description of the Method
@@ -243,13 +252,10 @@ public class AbstractTextTools
 
          int i = indexOf(property);
 
-         token.setData(new TextAttribute(
-            colorManager.getColor(foregroundPropertyNames[i]),
-            colorManager.getColor(backgroundPropertyNames[i]),
-            old.getStyle()));
+         token.setData(new TextAttribute(colorManager.getColor(foregroundPropertyNames[i]), colorManager
+               .getColor(backgroundPropertyNames[i]), old.getStyle()));
       }
    }
-
 
    /**
     * Description of the Method
@@ -267,12 +273,10 @@ public class AbstractTextTools
          TextAttribute old = (TextAttribute) data;
          if (old.getStyle() != style)
          {
-            token.setData(new TextAttribute(
-               old.getForeground(), old.getBackground(), style));
+            token.setData(new TextAttribute(old.getForeground(), old.getBackground(), style));
          }
       }
    }
-
 
    /**
     * Gets the color attribute of the AbstractTextTools object
@@ -285,7 +289,6 @@ public class AbstractTextTools
    {
       return getColor(store.getString(key));
    }
-
 
    /**
     * Gets the color attribute of the AbstractTextTools object
@@ -309,7 +312,6 @@ public class AbstractTextTools
       return null;
    }
 
-
    /**
     * Gets the style attribute of the AbstractTextTools object
     *
@@ -321,7 +323,6 @@ public class AbstractTextTools
    {
       return getStyle(store.getString(key));
    }
-
 
    /**
     * Gets the style attribute of the AbstractTextTools object
@@ -339,7 +340,6 @@ public class AbstractTextTools
       return SWT.NORMAL;
    }
 
-
    /**
     * Description of the Method
     *
@@ -354,10 +354,8 @@ public class AbstractTextTools
 
          for (int i = 0; i < length; i++)
          {
-            if (property.equals(properties[i]) ||
-               property.equals(foregroundPropertyNames[i]) ||
-               property.equals(backgroundPropertyNames[i]) ||
-               property.equals(stylePropertyNames[i]))
+            if (property.equals(properties[i]) || property.equals(foregroundPropertyNames[i])
+                  || property.equals(backgroundPropertyNames[i]) || property.equals(stylePropertyNames[i]))
             {
                return i;
             }

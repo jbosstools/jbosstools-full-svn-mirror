@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.run.ui.dialogs;
 
@@ -38,13 +53,15 @@ import org.jboss.ide.eclipse.xdoclet.run.model.XDocletData;
 public class ConfigurationChoiceDialog extends Dialog
 {
    private Text nameText;
+
    /** Description of the Field */
    private Collection choices;
+
    /** Description of the Field */
    private XDocletData data = null;
+
    /** Description of the Field */
    private ListViewer viewer;
-
 
    /**
     *Constructor for the DataChoiceDialog object
@@ -59,7 +76,6 @@ public class ConfigurationChoiceDialog extends Dialog
       this.choices = choices;
    }
 
-
    /**
     * Gets the xDocletData attribute of the DataChoiceDialog object
     *
@@ -69,7 +85,6 @@ public class ConfigurationChoiceDialog extends Dialog
    {
       return this.data;
    }
-
 
    /**
     * Description of the Method
@@ -81,8 +96,6 @@ public class ConfigurationChoiceDialog extends Dialog
       super.configureShell(shell);
       shell.setText(XDocletRunMessages.getString("DataChoiceDialog.title"));//$NON-NLS-1$
    }
-
-
 
    /**
     * Description of the Method
@@ -104,14 +117,14 @@ public class ConfigurationChoiceDialog extends Dialog
 
       this.nameText = new Text(composite, SWT.BORDER);
       this.nameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-      
+
       this.nameText.addModifyListener(new ModifyListener()
+      {
+         public void modifyText(ModifyEvent e)
          {
-            public void modifyText(ModifyEvent e)
-            {
-               enableButtons();
-            }
-         });
+            enableButtons();
+         }
+      });
 
       List dataList = new List(composite, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
       GridData layoutData = new GridData(GridData.FILL_BOTH);
@@ -126,20 +139,17 @@ public class ConfigurationChoiceDialog extends Dialog
       return composite;
    }
 
-
    protected Control createContents(Composite parent)
    {
       Control control = super.createContents(parent);
       enableButtons();
       return control;
    }
-   
-   
+
    protected Point getInitialSize()
    {
       return getShell().computeSize(220, 300, true);
    }
-   
 
    /** Description of the Method */
    protected void okPressed()
@@ -153,7 +163,6 @@ public class ConfigurationChoiceDialog extends Dialog
       }
       super.okPressed();
    }
-
 
    /**
     * 

@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.text.rules;
 
@@ -34,8 +49,7 @@ import org.eclipse.jface.text.rules.IToken;
  * @author    Laurent Etiemble
  * @version   $Revision$
  */
-public abstract class AbstractPartitioner
-    implements IDocumentPartitioner, IDocumentPartitionerExtension
+public abstract class AbstractPartitioner implements IDocumentPartitioner, IDocumentPartitionerExtension
 {
 
    /** Connected document */
@@ -49,9 +63,9 @@ public abstract class AbstractPartitioner
 
    /** The offset at which the first changed partition starts */
    protected int regionStart;
+
    /** Partition scanner */
    protected IPartitionTokenScanner scanner;
-
 
    /**
     *Constructor for the AbstractPartitioner object
@@ -62,7 +76,6 @@ public abstract class AbstractPartitioner
    {
       this.scanner = scanner;
    }
-
 
    /*
     * @see org.eclipse.jface.text.IDocumentPartitioner#computePartitioning(int, int)
@@ -83,15 +96,13 @@ public abstract class AbstractPartitioner
       int index = computeFlatNodeIndex(offset);
       while (true)
       {
-         FlatNode prev = (index > 0)
-            ? (FlatNode) nodes.get(index - 1) : null;
+         FlatNode prev = (index > 0) ? (FlatNode) nodes.get(index - 1) : null;
 
          if (prev != null)
          {
             if (prev.overlapsWith(offset, length))
             {
-               list.add(new TypedRegion(
-                  prev.offset, prev.length, prev.type));
+               list.add(new TypedRegion(prev.offset, prev.length, prev.type));
             }
 
             if (end <= prev.offset + prev.length)
@@ -100,8 +111,7 @@ public abstract class AbstractPartitioner
             }
          }
 
-         FlatNode next = (index < nodes.size())
-            ? (FlatNode) nodes.get(index) : null;
+         FlatNode next = (index < nodes.size()) ? (FlatNode) nodes.get(index) : null;
 
          if (next == null || offset < next.offset)
          {
@@ -120,8 +130,7 @@ public abstract class AbstractPartitioner
 
             if (off0 < off1)
             {
-               list.add(new TypedRegion(
-                  off0, off1 - off0, IDocument.DEFAULT_CONTENT_TYPE));
+               list.add(new TypedRegion(off0, off1 - off0, IDocument.DEFAULT_CONTENT_TYPE));
             }
          }
 
@@ -135,7 +144,6 @@ public abstract class AbstractPartitioner
 
       return (TypedRegion[]) list.toArray(new TypedRegion[list.size()]);
    }
-
 
    /*
     * @see org.eclipse.jface.text.IDocumentPartitioner#connect(IDocument)
@@ -151,7 +159,6 @@ public abstract class AbstractPartitioner
 
       initialize();
    }
-
 
    /**
     * Description of the Method
@@ -194,7 +201,6 @@ public abstract class AbstractPartitioner
       return false;
    }
 
-
    /*
     * @see org.eclipse.jface.text.IDocumentPartitioner#disconnect()
     */
@@ -204,7 +210,6 @@ public abstract class AbstractPartitioner
       nodes.clear();
       document = null;
    }
-
 
    /*
     * @see org.eclipse.jface.text.IDocumentPartitioner#documentAboutToBeChanged(DocumentEvent)
@@ -219,7 +224,6 @@ public abstract class AbstractPartitioner
       regionStart = regionEnd = -1;
    }
 
-
    /*
     * @see org.eclipse.jface.text.IDocumentPartitioner#documentChanged(DocumentEvent)
     */
@@ -233,7 +237,6 @@ public abstract class AbstractPartitioner
    {
       return (documentChanged2(event) != null);
    }
-
 
    /*
     * @see org.eclipse.jface.text.IDocumentPartitionerExtension#documentChanged2(DocumentEvent)
@@ -286,8 +289,7 @@ public abstract class AbstractPartitioner
       // should not be changed since last conversion
       // category = (FlatNode[]) nodes.toArray(new FlatNode[nodes.size()]);
 
-      scanner.setPartialRange(document,
-         offset, document.getLength(), contentType, offset);
+      scanner.setPartialRange(document, offset, document.getLength(), contentType, offset);
 
       int lastScannedPosition = offset;
       IToken token = scanner.nextToken();
@@ -310,10 +312,9 @@ public abstract class AbstractPartitioner
          while (first < category.length)
          {
             FlatNode p = category[first];
-            if (p.offset + p.length < lastScannedPosition ||
-               (p.overlapsWith(offset, length) &&
-               (!containsPosition(offset, length) ||
-               !contentType.equals(p.type))))
+            if (p.offset + p.length < lastScannedPosition
+                  || (p.overlapsWith(offset, length) && (!containsPosition(offset, length) || !contentType
+                        .equals(p.type))))
             {
                removeInnerRegion(p);
                rememberRegion(p.offset, p.length);
@@ -349,7 +350,7 @@ public abstract class AbstractPartitioner
       // remove all positions behind lastScannedPosition
       // since there aren't any further types
 
-//		first = computeIndexInInnerDocuments(lastScannedPosition);
+      //		first = computeIndexInInnerDocuments(lastScannedPosition);
       while (first < category.length)
       {
          FlatNode p = category[first++];
@@ -359,7 +360,6 @@ public abstract class AbstractPartitioner
 
       return createRegion();
    }
-
 
    /*
     * @see org.eclipse.jface.text.IDocumentPartitioner#getContentType(int)
@@ -375,7 +375,6 @@ public abstract class AbstractPartitioner
       return getPartition(offset).getType();
    }
 
-
    /*
     * @see org.eclipse.jface.text.IDocumentPartitioner#getLegalContentTypes()
     */
@@ -390,7 +389,6 @@ public abstract class AbstractPartitioner
       return null;
    }
 
-
    /*
     * @see org.eclipse.jface.text.IDocumentPartitioner#getPartition(int)
     */
@@ -404,8 +402,7 @@ public abstract class AbstractPartitioner
    {
       if (nodes.size() == 0)
       {
-         return new TypedRegion(
-            0, document.getLength(), IDocument.DEFAULT_CONTENT_TYPE);
+         return new TypedRegion(0, document.getLength(), IDocument.DEFAULT_CONTENT_TYPE);
       }
 
       int index = computeFlatNodeIndex(offset);
@@ -420,8 +417,7 @@ public abstract class AbstractPartitioner
 
          if (index == 0)
          {
-            return new TypedRegion(
-               0, next.offset, IDocument.DEFAULT_CONTENT_TYPE);
+            return new TypedRegion(0, next.offset, IDocument.DEFAULT_CONTENT_TYPE);
          }
 
          FlatNode prev = (FlatNode) nodes.get(index - 1);
@@ -432,8 +428,7 @@ public abstract class AbstractPartitioner
          }
 
          int end = prev.offset + prev.length;
-         return new TypedRegion(
-            end, next.offset - end, IDocument.DEFAULT_CONTENT_TYPE);
+         return new TypedRegion(end, next.offset - end, IDocument.DEFAULT_CONTENT_TYPE);
       }
 
       FlatNode prev = (FlatNode) nodes.get(nodes.size() - 1);
@@ -445,10 +440,8 @@ public abstract class AbstractPartitioner
 
       int end = prev.offset + prev.length;
 
-      return new TypedRegion(
-         end, document.getLength() - end, IDocument.DEFAULT_CONTENT_TYPE);
+      return new TypedRegion(end, document.getLength() - end, IDocument.DEFAULT_CONTENT_TYPE);
    }
-
 
    /**
     * Adds a feature to the InnerRegion attribute of the AbstractPartitioner object
@@ -459,7 +452,6 @@ public abstract class AbstractPartitioner
    {
       nodes.add(computeFlatNodeIndex(position.offset), position);
    }
-
 
    /**
     * Computes the index in the list of flat nodes at which an
@@ -522,13 +514,13 @@ public abstract class AbstractPartitioner
                break;
             }
             p = (FlatNode) nodes.get(pos);
-         } while (offset == p.offset);
+         }
+         while (offset == p.offset);
          ++pos;
       }
 
       return pos;
    }
-
 
    /**
     * Description of the Method
@@ -546,7 +538,6 @@ public abstract class AbstractPartitioner
       return node;
    }
 
-
    /**
     * Description of the Method
     *
@@ -556,7 +547,6 @@ public abstract class AbstractPartitioner
    {
       nodes.remove(position);// TODO: Indexed remove?
    }
-
 
    /**
     * Description of the Method
@@ -643,14 +633,14 @@ public abstract class AbstractPartitioner
          do
          {
             deleteInnerRegion((FlatNode) nodes.get(--last));
-         } while (first < last);
+         }
+         while (first < last);
 
          rememberRegion(offset, 0);
       }
 
       return first;
    }
-
 
    /**
     * Returns a content type encoded in the given token. If the token's
@@ -671,7 +661,6 @@ public abstract class AbstractPartitioner
       return null;
    }
 
-
    /** Performs the initial partitioning of the partitioner's document. */
    protected void initialize()
    {
@@ -684,14 +673,12 @@ public abstract class AbstractPartitioner
 
          if (isSupportedContentType(contentType))
          {
-            addInnerRegion(createNode(contentType,
-               scanner.getTokenOffset(), scanner.getTokenLength()));
+            addInnerRegion(createNode(contentType, scanner.getTokenOffset(), scanner.getTokenLength()));
          }
 
          token = scanner.nextToken();
       }
    }
-
 
    /**
     * Returns whether the given type is one of the legal content types.
@@ -715,7 +702,6 @@ public abstract class AbstractPartitioner
       return (contentType != null);
    }
 
-
    /**
     * Description of the Method
     *
@@ -726,7 +712,6 @@ public abstract class AbstractPartitioner
       nodes.remove(position);// TODO: Indexed remove?
    }
 
-
    /**
     * Description of the Method
     *
@@ -735,7 +720,6 @@ public abstract class AbstractPartitioner
    protected void resizeInnerRegion(FlatNode position)
    {
    }
-
 
    /**
     * Creates the minimal region containing all partition changes using
@@ -752,7 +736,6 @@ public abstract class AbstractPartitioner
 
       return new Region(regionStart, regionEnd - regionStart);
    }
-
 
    /**
     * Helper method for tracking the minimal region containg all

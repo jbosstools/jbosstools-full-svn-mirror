@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.run.ui;
 
@@ -42,11 +57,12 @@ public class ElementViewer
 {
    /** Description of the Field */
    private XDocletElement element;
+
    /** Description of the Field */
    private Composite parentComposite;
+
    /** Description of the Field */
    private CheckboxTableViewer viewer;
-
 
    /**
     *Constructor for the ElementViewer object
@@ -78,34 +94,31 @@ public class ElementViewer
       this.viewer.setContentProvider(new ElementContentProvider());
       this.viewer.setSorter(new StringViewSorter());
 
-      this.viewer.addDoubleClickListener(
-         new IDoubleClickListener()
+      this.viewer.addDoubleClickListener(new IDoubleClickListener()
+      {
+         public void doubleClick(DoubleClickEvent event)
          {
-            public void doubleClick(DoubleClickEvent event)
+            IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+            if (!selection.isEmpty())
             {
-               IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-               if (!selection.isEmpty())
-               {
-                  XDocletAttribute attribute = (XDocletAttribute) selection.getFirstElement();
-                  AttributeEditDialog dialog = new AttributeEditDialog(parentComposite.getShell(), attribute);
-                  dialog.open();
-                  viewer.refresh();
-                  viewer.setCheckedElements(getUsedAttributes().toArray());
-               }
+               XDocletAttribute attribute = (XDocletAttribute) selection.getFirstElement();
+               AttributeEditDialog dialog = new AttributeEditDialog(parentComposite.getShell(), attribute);
+               dialog.open();
+               viewer.refresh();
+               viewer.setCheckedElements(getUsedAttributes().toArray());
             }
-         });
+         }
+      });
 
-      this.viewer.addCheckStateListener(
-         new ICheckStateListener()
+      this.viewer.addCheckStateListener(new ICheckStateListener()
+      {
+         public void checkStateChanged(CheckStateChangedEvent event)
          {
-            public void checkStateChanged(CheckStateChangedEvent event)
-            {
-               XDocletAttribute attribute = (XDocletAttribute) event.getElement();
-               attribute.setUsed(event.getChecked());
-            }
-         });
+            XDocletAttribute attribute = (XDocletAttribute) event.getElement();
+            attribute.setUsed(event.getChecked());
+         }
+      });
    }
-
 
    /**
     * Sets the element attribute of the ElementPropertiesViewer object
@@ -122,7 +135,6 @@ public class ElementViewer
          this.viewer.setCheckedElements(this.getUsedAttributes().toArray());
       }
    }
-
 
    /**
     * Gets the usedAttributes attribute of the XDocletElement object
@@ -143,7 +155,6 @@ public class ElementViewer
       }
       return result;
    }
-
 
    /**
     * Description of the Class
@@ -167,7 +178,6 @@ public class ElementViewer
          return null;
       }
 
-
       /**
        * Gets the columnText attribute of the TableLabelProviderImpl object
        *
@@ -180,12 +190,12 @@ public class ElementViewer
       {
          switch (columnIndex)
          {
-            case 0:
+            case 0 :
                return ((XDocletAttribute) element).getName();
-            case 1:
+            case 1 :
                return ((XDocletAttribute) element).getValue();
-            default:
-            // Can't happen
+            default :
+         // Can't happen
          }
          return null;
       }

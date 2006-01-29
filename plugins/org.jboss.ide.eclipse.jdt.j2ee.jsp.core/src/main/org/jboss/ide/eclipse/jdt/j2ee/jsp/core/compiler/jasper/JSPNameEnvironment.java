@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.jsp.core.compiler.jasper;
 
@@ -57,7 +72,6 @@ public class JSPNameEnvironment extends NameEnvironment
       super(new JavaProjectDecorator(javaProject));
    }
 
-
    /**
     * JavaProject decorator that returns hacked IClasspathEntry[] to
     * include the needed libraries.
@@ -68,9 +82,10 @@ public class JSPNameEnvironment extends NameEnvironment
    private static class JavaProjectDecorator extends JavaProject implements IJavaProject
    {
       private IClasspathEntry[] j2eeEntries;
-      private IClasspathEntry[] jasperEntries;
-      private JavaProject project;
 
+      private IClasspathEntry[] jasperEntries;
+
+      private JavaProject project;
 
       /**
        *Constructor for the JavaProjectDecorator object
@@ -81,22 +96,21 @@ public class JSPNameEnvironment extends NameEnvironment
       {
          this.project = (JavaProject) project;
 
-         this.j2eeEntries = new J2EE14ClasspathContainer(new Path(J2EE14ClasspathContainer.CLASSPATH_CONTAINER)).getClasspathEntries();
-         this.jasperEntries = new JasperClasspathContainer(new Path(JasperClasspathContainer.CLASSPATH_CONTAINER)).getClasspathEntries();
+         this.j2eeEntries = new J2EE14ClasspathContainer(new Path(J2EE14ClasspathContainer.CLASSPATH_CONTAINER))
+               .getClasspathEntries();
+         this.jasperEntries = new JasperClasspathContainer(new Path(JasperClasspathContainer.CLASSPATH_CONTAINER))
+               .getClasspathEntries();
       }
-
 
       /**
        * Description of the Method
        *
        * @exception JavaModelException  Description of the Exception
        */
-      public void close()
-         throws JavaModelException
+      public void close() throws JavaModelException
       {
          project.close();
       }
-
 
       /**
        * Description of the Method
@@ -109,7 +123,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.equals(obj);
       }
 
-
       /**
        * Description of the Method
        *
@@ -120,7 +133,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.exists();
       }
 
-
       /**
        * Description of the Method
        *
@@ -128,12 +140,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                        Description of the Return Value
        * @exception JavaModelException  Description of the Exception
        */
-      public IJavaElement findElement(IPath path)
-         throws JavaModelException
+      public IJavaElement findElement(IPath path) throws JavaModelException
       {
          return project.findElement(path);
       }
-
 
       /**
        * Description of the Method
@@ -143,13 +153,11 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                        Description of the Return Value
        * @exception JavaModelException  Description of the Exception
        */
-      public IJavaElement findElement(IPath path, WorkingCopyOwner owner)
-         throws JavaModelException
+      public IJavaElement findElement(IPath path, WorkingCopyOwner owner) throws JavaModelException
       {
          return project.findElement(path, owner);
       }
 
-
       /**
        * Description of the Method
        *
@@ -157,13 +165,11 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                        Description of the Return Value
        * @exception JavaModelException  Description of the Exception
        */
-      public IPackageFragment findPackageFragment(IPath path)
-         throws JavaModelException
+      public IPackageFragment findPackageFragment(IPath path) throws JavaModelException
       {
          return project.findPackageFragment(path);
       }
 
-
       /**
        * Description of the Method
        *
@@ -171,12 +177,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                        Description of the Return Value
        * @exception JavaModelException  Description of the Exception
        */
-      public IPackageFragmentRoot findPackageFragmentRoot(IPath path)
-         throws JavaModelException
+      public IPackageFragmentRoot findPackageFragmentRoot(IPath path) throws JavaModelException
       {
          return project.findPackageFragmentRoot(path);
       }
-
 
       /**
        * Description of the Method
@@ -189,7 +193,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.findPackageFragmentRoots(entry);
       }
 
-
       /**
        * Description of the Method
        *
@@ -197,12 +200,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                        Description of the Return Value
        * @exception JavaModelException  Description of the Exception
        */
-      public IType findType(String fullyQualifiedName)
-         throws JavaModelException
+      public IType findType(String fullyQualifiedName) throws JavaModelException
       {
          return project.findType(fullyQualifiedName);
       }
-
 
       /**
        * Description of the Method
@@ -212,12 +213,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                        Description of the Return Value
        * @exception JavaModelException  Description of the Exception
        */
-      public IType findType(String packageName, String typeQualifiedName)
-         throws JavaModelException
+      public IType findType(String packageName, String typeQualifiedName) throws JavaModelException
       {
          return project.findType(packageName, typeQualifiedName);
       }
-
 
       /**
        * Description of the Method
@@ -229,11 +228,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @exception JavaModelException  Description of the Exception
        */
       public IType findType(String packageName, String typeQualifiedName, WorkingCopyOwner owner)
-         throws JavaModelException
+            throws JavaModelException
       {
          return project.findType(packageName, typeQualifiedName, owner);
       }
-
 
       /**
        * Description of the Method
@@ -243,12 +241,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                        Description of the Return Value
        * @exception JavaModelException  Description of the Exception
        */
-      public IType findType(String fullyQualifiedName, WorkingCopyOwner owner)
-         throws JavaModelException
+      public IType findType(String fullyQualifiedName, WorkingCopyOwner owner) throws JavaModelException
       {
          return project.findType(fullyQualifiedName, owner);
       }
-
 
       /**
        * Gets the adapter attribute of the JavaProjectDecorator object
@@ -261,19 +257,16 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.getAdapter(adapter);
       }
 
-
       /**
        * Gets the allPackageFragmentRoots attribute of the JavaProjectDecorator object
        *
        * @return                        The allPackageFragmentRoots value
        * @exception JavaModelException  Description of the Exception
        */
-      public IPackageFragmentRoot[] getAllPackageFragmentRoots()
-         throws JavaModelException
+      public IPackageFragmentRoot[] getAllPackageFragmentRoots() throws JavaModelException
       {
          return project.getAllPackageFragmentRoots();
       }
-
 
       /**
        * Gets the ancestor attribute of the JavaProjectDecorator object
@@ -286,19 +279,16 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.getAncestor(ancestorType);
       }
 
-
       /**
        * Gets the buffer attribute of the JavaProjectDecorator object
        *
        * @return                        The buffer value
        * @exception JavaModelException  Description of the Exception
        */
-      public IBuffer getBuffer()
-         throws JavaModelException
+      public IBuffer getBuffer() throws JavaModelException
       {
          return project.getBuffer();
       }
-
 
       /**
        * Gets the children attribute of the JavaProjectDecorator object
@@ -306,12 +296,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                        The children value
        * @exception JavaModelException  Description of the Exception
        */
-      public IJavaElement[] getChildren()
-         throws JavaModelException
+      public IJavaElement[] getChildren() throws JavaModelException
       {
          return project.getChildren();
       }
-
 
       /**
        * Gets the correspondingResource attribute of the JavaProjectDecorator object
@@ -319,12 +307,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                        The correspondingResource value
        * @exception JavaModelException  Description of the Exception
        */
-      public IResource getCorrespondingResource()
-         throws JavaModelException
+      public IResource getCorrespondingResource() throws JavaModelException
       {
          return project.getCorrespondingResource();
       }
-
 
       /**
        * Gets the cycleMarker attribute of the JavaProjectDecorator object
@@ -336,7 +322,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return this.project.getCycleMarker();
       }
 
-
       /**
        * Gets the elementName attribute of the JavaProjectDecorator object
        *
@@ -346,7 +331,6 @@ public class JSPNameEnvironment extends NameEnvironment
       {
          return project.getElementName();
       }
-
 
       /**
        * Gets the elementType attribute of the JavaProjectDecorator object
@@ -358,7 +342,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.getElementType();
       }
 
-
       /**
        * Insert J2EE 1.4 and Jasper libraries before Project classpath
        *
@@ -369,12 +352,11 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                          The expandedClasspath value
        * @exception JavaModelException    Description of the Exception
        */
-      public IClasspathEntry[] getExpandedClasspath(boolean ignoreUnresolvedVariable, boolean generateMarkerOnError, Map preferredClasspaths,
-         Map preferredOutputs)
-         throws JavaModelException
+      public IClasspathEntry[] getExpandedClasspath(boolean ignoreUnresolvedVariable, boolean generateMarkerOnError,
+            Map preferredClasspaths, Map preferredOutputs) throws JavaModelException
       {
-         IClasspathEntry[] entries = this.project.getExpandedClasspath(ignoreUnresolvedVariable, generateMarkerOnError, preferredClasspaths,
-            preferredOutputs);
+         IClasspathEntry[] entries = this.project.getExpandedClasspath(ignoreUnresolvedVariable, generateMarkerOnError,
+               preferredClasspaths, preferredOutputs);
 
          IClasspathEntry[] newEntries = new IClasspathEntry[j2eeEntries.length + jasperEntries.length + entries.length];
          System.arraycopy(this.j2eeEntries, 0, newEntries, 0, this.j2eeEntries.length);
@@ -382,7 +364,6 @@ public class JSPNameEnvironment extends NameEnvironment
          System.arraycopy(entries, 0, newEntries, this.j2eeEntries.length + this.jasperEntries.length, entries.length);
          return newEntries;
       }
-
 
       /**
        * Gets the handleIdentifier attribute of the JavaProjectDecorator object
@@ -394,7 +375,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.getHandleIdentifier();
       }
 
-
       /**
        * Gets the javaModel attribute of the JavaProjectDecorator object
        *
@@ -404,7 +384,6 @@ public class JSPNameEnvironment extends NameEnvironment
       {
          return project.getJavaModel();
       }
-
 
       /**
        * Gets the javaProject attribute of the JavaProjectDecorator object
@@ -416,19 +395,16 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.getJavaProject();
       }
 
-
       /**
        * Gets the nonJavaResources attribute of the JavaProjectDecorator object
        *
        * @return                        The nonJavaResources value
        * @exception JavaModelException  Description of the Exception
        */
-      public Object[] getNonJavaResources()
-         throws JavaModelException
+      public Object[] getNonJavaResources() throws JavaModelException
       {
          return project.getNonJavaResources();
       }
-
 
       /**
        * Gets the openable attribute of the JavaProjectDecorator object
@@ -439,7 +415,6 @@ public class JSPNameEnvironment extends NameEnvironment
       {
          return project.getOpenable();
       }
-
 
       /**
        * Gets the option attribute of the JavaProjectDecorator object
@@ -453,7 +428,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.getOption(optionName, inheritJavaCoreOptions);
       }
 
-
       /**
        * Gets the options attribute of the JavaProjectDecorator object
        *
@@ -465,19 +439,16 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.getOptions(inheritJavaCoreOptions);
       }
 
-
       /**
        * Gets the outputLocation attribute of the JavaProjectDecorator object
        *
        * @return                        The outputLocation value
        * @exception JavaModelException  Description of the Exception
        */
-      public IPath getOutputLocation()
-         throws JavaModelException
+      public IPath getOutputLocation() throws JavaModelException
       {
          return project.getOutputLocation();
       }
-
 
       /**
        * Gets the packageFragmentRoot attribute of the JavaProjectDecorator object
@@ -490,7 +461,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.getPackageFragmentRoot(jarPath);
       }
 
-
       /**
        * Gets the packageFragmentRoot attribute of the JavaProjectDecorator object
        *
@@ -502,15 +472,13 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.getPackageFragmentRoot(resource);
       }
 
-
       /**
        * Gets the packageFragmentRoots attribute of the JavaProjectDecorator object
        *
        * @return                        The packageFragmentRoots value
        * @exception JavaModelException  Description of the Exception
        */
-      public IPackageFragmentRoot[] getPackageFragmentRoots()
-         throws JavaModelException
+      public IPackageFragmentRoot[] getPackageFragmentRoots() throws JavaModelException
       {
          return project.getPackageFragmentRoots();
       }
@@ -525,12 +493,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                        The packageFragments value
        * @exception JavaModelException  Description of the Exception
        */
-      public IPackageFragment[] getPackageFragments()
-         throws JavaModelException
+      public IPackageFragment[] getPackageFragments() throws JavaModelException
       {
          return project.getPackageFragments();
       }
-
 
       /**
        * Gets the parent attribute of the JavaProjectDecorator object
@@ -542,7 +508,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.getParent();
       }
 
-
       /**
        * Gets the path attribute of the JavaProjectDecorator object
        *
@@ -552,7 +517,6 @@ public class JSPNameEnvironment extends NameEnvironment
       {
          return project.getPath();
       }
-
 
       /**
        * Gets the primaryElement attribute of the JavaProjectDecorator object
@@ -564,7 +528,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.getPrimaryElement();
       }
 
-
       /**
        * Gets the project attribute of the JavaProjectDecorator object
        *
@@ -575,19 +538,16 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.getProject();
       }
 
-
       /**
        * Gets the rawClasspath attribute of the JavaProjectDecorator object
        *
        * @return                        The rawClasspath value
        * @exception JavaModelException  Description of the Exception
        */
-      public IClasspathEntry[] getRawClasspath()
-         throws JavaModelException
+      public IClasspathEntry[] getRawClasspath() throws JavaModelException
       {
          return project.getRawClasspath();
       }
-
 
       /**
        * Gets the requiredProjectNames attribute of the JavaProjectDecorator object
@@ -595,12 +555,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                        The requiredProjectNames value
        * @exception JavaModelException  Description of the Exception
        */
-      public String[] getRequiredProjectNames()
-         throws JavaModelException
+      public String[] getRequiredProjectNames() throws JavaModelException
       {
          return project.getRequiredProjectNames();
       }
-
 
       /**
        * Gets the resolvedClasspath attribute of the JavaProjectDecorator object
@@ -609,12 +567,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                        The resolvedClasspath value
        * @exception JavaModelException  Description of the Exception
        */
-      public IClasspathEntry[] getResolvedClasspath(boolean ignoreUnresolvedEntry)
-         throws JavaModelException
+      public IClasspathEntry[] getResolvedClasspath(boolean ignoreUnresolvedEntry) throws JavaModelException
       {
          return project.getResolvedClasspath(ignoreUnresolvedEntry);
       }
-
 
       /**
        * Gets the resource attribute of the JavaProjectDecorator object
@@ -626,7 +582,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.getResource();
       }
 
-
       /**
        * Gets the schedulingRule attribute of the JavaProjectDecorator object
        *
@@ -637,19 +592,16 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.getSchedulingRule();
       }
 
-
       /**
        * Gets the underlyingResource attribute of the JavaProjectDecorator object
        *
        * @return                        The underlyingResource value
        * @exception JavaModelException  Description of the Exception
        */
-      public IResource getUnderlyingResource()
-         throws JavaModelException
+      public IResource getUnderlyingResource() throws JavaModelException
       {
          return project.getUnderlyingResource();
       }
-
 
       /**
        * Description of the Method
@@ -661,19 +613,16 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.hasBuildState();
       }
 
-
       /**
        * Description of the Method
        *
        * @return                        Description of the Return Value
        * @exception JavaModelException  Description of the Exception
        */
-      public boolean hasChildren()
-         throws JavaModelException
+      public boolean hasChildren() throws JavaModelException
       {
          return project.hasChildren();
       }
-
 
       /**
        * Description of the Method
@@ -686,19 +635,16 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.hasClasspathCycle(entries);
       }
 
-
       /**
        * Description of the Method
        *
        * @return                        Description of the Return Value
        * @exception JavaModelException  Description of the Exception
        */
-      public boolean hasUnsavedChanges()
-         throws JavaModelException
+      public boolean hasUnsavedChanges() throws JavaModelException
       {
          return project.hasUnsavedChanges();
       }
-
 
       /**
        * Description of the Method
@@ -710,7 +656,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.hashCode();
       }
 
-
       /**
        * Gets the consistent attribute of the JavaProjectDecorator object
        *
@@ -720,7 +665,6 @@ public class JSPNameEnvironment extends NameEnvironment
       {
          return true;
       }
-
 
       /**
        * Gets the onClasspath attribute of the JavaProjectDecorator object
@@ -733,7 +677,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.isOnClasspath(resource);
       }
 
-
       /**
        * Gets the onClasspath attribute of the JavaProjectDecorator object
        *
@@ -745,7 +688,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.isOnClasspath(element);
       }
 
-
       /**
        * Gets the open attribute of the JavaProjectDecorator object
        *
@@ -755,7 +697,6 @@ public class JSPNameEnvironment extends NameEnvironment
       {
          return project.isOpen();
       }
-
 
       /**
        * Gets the readOnly attribute of the JavaProjectDecorator object
@@ -767,19 +708,16 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.isReadOnly();
       }
 
-
       /**
        * Gets the structureKnown attribute of the JavaProjectDecorator object
        *
        * @return                        The structureKnown value
        * @exception JavaModelException  Description of the Exception
        */
-      public boolean isStructureKnown()
-         throws JavaModelException
+      public boolean isStructureKnown() throws JavaModelException
       {
          return project.isStructureKnown();
       }
-
 
       /**
        * Description of the Method
@@ -787,12 +725,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @param progress                Description of the Parameter
        * @exception JavaModelException  Description of the Exception
        */
-      public void makeConsistent(IProgressMonitor progress)
-         throws JavaModelException
+      public void makeConsistent(IProgressMonitor progress) throws JavaModelException
       {
          project.makeConsistent(progress);
       }
-
 
       /**
        * Description of the Method
@@ -804,7 +740,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.newEvaluationContext();
       }
 
-
       /**
        * Description of the Method
        *
@@ -813,12 +748,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                        Description of the Return Value
        * @exception JavaModelException  Description of the Exception
        */
-      public ITypeHierarchy newTypeHierarchy(IRegion region, IProgressMonitor monitor)
-         throws JavaModelException
+      public ITypeHierarchy newTypeHierarchy(IRegion region, IProgressMonitor monitor) throws JavaModelException
       {
          return project.newTypeHierarchy(region, monitor);
       }
-
 
       /**
        * Description of the Method
@@ -830,11 +763,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @exception JavaModelException  Description of the Exception
        */
       public ITypeHierarchy newTypeHierarchy(IRegion region, WorkingCopyOwner owner, IProgressMonitor monitor)
-         throws JavaModelException
+            throws JavaModelException
       {
          return project.newTypeHierarchy(region, owner, monitor);
       }
-
 
       /**
        * Description of the Method
@@ -846,11 +778,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @exception JavaModelException  Description of the Exception
        */
       public ITypeHierarchy newTypeHierarchy(IType type, IRegion region, IProgressMonitor monitor)
-         throws JavaModelException
+            throws JavaModelException
       {
          return project.newTypeHierarchy(type, region, monitor);
       }
-
 
       /**
        * Description of the Method
@@ -862,12 +793,11 @@ public class JSPNameEnvironment extends NameEnvironment
        * @return                        Description of the Return Value
        * @exception JavaModelException  Description of the Exception
        */
-      public ITypeHierarchy newTypeHierarchy(IType type, IRegion region, WorkingCopyOwner owner, IProgressMonitor monitor)
-         throws JavaModelException
+      public ITypeHierarchy newTypeHierarchy(IType type, IRegion region, WorkingCopyOwner owner,
+            IProgressMonitor monitor) throws JavaModelException
       {
          return project.newTypeHierarchy(type, region, owner, monitor);
       }
-
 
       /**
        * Description of the Method
@@ -875,12 +805,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @param progress                Description of the Parameter
        * @exception JavaModelException  Description of the Exception
        */
-      public void open(IProgressMonitor progress)
-         throws JavaModelException
+      public void open(IProgressMonitor progress) throws JavaModelException
       {
          project.open(progress);
       }
-
 
       /**
        * Description of the Method
@@ -892,7 +820,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.readOutputLocation();
       }
 
-
       /**
        * Description of the Method
        *
@@ -903,7 +830,6 @@ public class JSPNameEnvironment extends NameEnvironment
          return project.readRawClasspath();
       }
 
-
       /**
        * Description of the Method
        *
@@ -911,12 +837,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @param force                   Description of the Parameter
        * @exception JavaModelException  Description of the Exception
        */
-      public void save(IProgressMonitor progress, boolean force)
-         throws JavaModelException
+      public void save(IProgressMonitor progress, boolean force) throws JavaModelException
       {
          project.save(progress, force);
       }
-
 
       /**
        * Sets the option attribute of the JavaProjectDecorator object
@@ -929,7 +853,6 @@ public class JSPNameEnvironment extends NameEnvironment
          project.setOption(optionName, optionValue);
       }
 
-
       /**
        * Sets the options attribute of the JavaProjectDecorator object
        *
@@ -940,7 +863,6 @@ public class JSPNameEnvironment extends NameEnvironment
          project.setOptions(newOptions);
       }
 
-
       /**
        * Sets the outputLocation attribute of the JavaProjectDecorator object
        *
@@ -948,12 +870,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @param monitor                 The new outputLocation value
        * @exception JavaModelException  Description of the Exception
        */
-      public void setOutputLocation(IPath path, IProgressMonitor monitor)
-         throws JavaModelException
+      public void setOutputLocation(IPath path, IProgressMonitor monitor) throws JavaModelException
       {
          project.setOutputLocation(path, monitor);
       }
-
 
       /**
        * Sets the rawClasspath attribute of the JavaProjectDecorator object
@@ -964,11 +884,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @exception JavaModelException  Description of the Exception
        */
       public void setRawClasspath(IClasspathEntry[] entries, IPath outputLocation, IProgressMonitor monitor)
-         throws JavaModelException
+            throws JavaModelException
       {
          project.setRawClasspath(entries, outputLocation, monitor);
       }
-
 
       /**
        * Sets the rawClasspath attribute of the JavaProjectDecorator object
@@ -977,12 +896,10 @@ public class JSPNameEnvironment extends NameEnvironment
        * @param monitor                 The new rawClasspath value
        * @exception JavaModelException  Description of the Exception
        */
-      public void setRawClasspath(IClasspathEntry[] entries, IProgressMonitor monitor)
-         throws JavaModelException
+      public void setRawClasspath(IClasspathEntry[] entries, IProgressMonitor monitor) throws JavaModelException
       {
          project.setRawClasspath(entries, monitor);
       }
-
 
       /**
        * Description of the Method

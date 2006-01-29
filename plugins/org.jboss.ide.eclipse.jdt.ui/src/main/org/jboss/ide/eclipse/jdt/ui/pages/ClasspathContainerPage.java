@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.pages;
 
@@ -28,7 +43,6 @@ public abstract class ClasspathContainerPage extends WizardPage implements IClas
 {
    private final static String PAGE_NAME = ClasspathContainerPage.class.getName();
 
-
    /**Constructor for the ClasspathContainerPage object */
    public ClasspathContainerPage()
    {
@@ -38,7 +52,6 @@ public abstract class ClasspathContainerPage extends WizardPage implements IClas
       this.setDescription(JDTUIMessages.getString("ClasspathContainerPage.description"));//$NON-NLS-1$
       this.setImageDescriptor(JavaPluginImages.DESC_WIZBAN_ADD_LIBRARY);
    }
-
 
    /**
     * Description of the Method
@@ -52,13 +65,13 @@ public abstract class ClasspathContainerPage extends WizardPage implements IClas
       top.setLayout(layout);
 
       Label lbl = new Label(top, SWT.NONE);
-      lbl.setText(JDTUIMessages.getString("ClasspathContainerPage.text.start") + this.getClasspathEntryDescription() + JDTUIMessages.getString("ClasspathContainerPage.text.end"));//$NON-NLS-1$ //$NON-NLS-2$
+      lbl
+            .setText(JDTUIMessages.getString("ClasspathContainerPage.text.start") + this.getClasspathEntryDescription() + JDTUIMessages.getString("ClasspathContainerPage.text.end"));//$NON-NLS-1$ //$NON-NLS-2$
       GridData gd = new GridData(GridData.FILL_HORIZONTAL);
       lbl.setLayoutData(gd);
 
       this.setControl(top);
    }
-
 
    /**
     * Description of the Method
@@ -70,7 +83,6 @@ public abstract class ClasspathContainerPage extends WizardPage implements IClas
       return true;
    }
 
-
    /**
     * Gets the selection attribute of the ClasspathContainerPage object
     *
@@ -81,14 +93,14 @@ public abstract class ClasspathContainerPage extends WizardPage implements IClas
       return this.getClasspathEntry();
    }
 
-
    /**
     * Sets the selection attribute of the ClasspathContainerPage object
     *
     * @param containerEntry  The new selection value
     */
-   public void setSelection(IClasspathEntry containerEntry) { }
-
+   public void setSelection(IClasspathEntry containerEntry)
+   {
+   }
 
    /**
     * Gets the classpathContainerId attribute of the ClasspathContainerPage object
@@ -96,7 +108,6 @@ public abstract class ClasspathContainerPage extends WizardPage implements IClas
     * @return   The classpathContainerId value
     */
    protected abstract String getClasspathContainerId();
-
 
    /**
     * Gets the classpathEntry attribute of the ClasspathContainerPage object
@@ -107,7 +118,6 @@ public abstract class ClasspathContainerPage extends WizardPage implements IClas
    {
       return ClassPathContainerRepository.getInstance().getEntry(this.getClasspathContainerId());
    }
-
 
    /**
     * Gets the classpathEntryDescription attribute of the ClasspathContainerPage object

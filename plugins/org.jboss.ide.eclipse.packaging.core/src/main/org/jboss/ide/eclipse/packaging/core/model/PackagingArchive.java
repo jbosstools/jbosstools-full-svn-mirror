@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.packaging.core.model;
 
@@ -22,17 +37,18 @@ import org.jboss.ide.eclipse.core.util.IXMLSerializable;
 public class PackagingArchive extends PackagingData
 {
    private String destination = "";//$NON-NLS-1$
-   private boolean exploded = false;//$NON-NLS-1$
-   private String name = "";//$NON-NLS-1$
-   private IProject project;
 
+   private boolean exploded = false;//$NON-NLS-1$
+
+   private String name = "";//$NON-NLS-1$
+
+   private IProject project;
 
    /**Constructor for the XDocletConfiguration object */
    public PackagingArchive()
    {
       super();
    }
-
 
    /**
     * Description of the Method
@@ -59,7 +75,6 @@ public class PackagingArchive extends PackagingData
       return config;
    }
 
-
    /**
     * Description of the Method
     *
@@ -69,7 +84,6 @@ public class PackagingArchive extends PackagingData
    {
       return (PackagingData) this.clone();
    }
-
 
    /**
     * Gets the destination attribute of the PackagingConfiguration object
@@ -81,7 +95,6 @@ public class PackagingArchive extends PackagingData
       return this.destination;
    }
 
-
    /**
     * @return   String
     */
@@ -89,7 +102,6 @@ public class PackagingArchive extends PackagingData
    {
       return this.name;
    }
-
 
    /**
     * @return   IProject
@@ -99,7 +111,6 @@ public class PackagingArchive extends PackagingData
       return project;
    }
 
-
    /**
     * @return   boolean
     */
@@ -107,7 +118,6 @@ public class PackagingArchive extends PackagingData
    {
       return exploded;
    }
-
 
    /**
     * Description of the Method
@@ -150,7 +160,6 @@ public class PackagingArchive extends PackagingData
       }
    }
 
-
    /**
     * Sets the destination attribute of the PackagingConfiguration object
     *
@@ -160,7 +169,6 @@ public class PackagingArchive extends PackagingData
    {
       this.destination = destination;
    }
-
 
    /**
     * Sets the exploded.
@@ -172,8 +180,6 @@ public class PackagingArchive extends PackagingData
       this.exploded = exploded;
    }
 
-
-
    /**
     * Sets the name.
     *
@@ -184,7 +190,6 @@ public class PackagingArchive extends PackagingData
       this.name = name;
    }
 
-
    /**
     * Sets the project.
     *
@@ -194,7 +199,6 @@ public class PackagingArchive extends PackagingData
    {
       this.project = project;
    }
-
 
    /**
     * Description of the Method
@@ -216,7 +220,6 @@ public class PackagingArchive extends PackagingData
 
       return buffer.toString();
    }
-
 
    /**
     * Description of the Method

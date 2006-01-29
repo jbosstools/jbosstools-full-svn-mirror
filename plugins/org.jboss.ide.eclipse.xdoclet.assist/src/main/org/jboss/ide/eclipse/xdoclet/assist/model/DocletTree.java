@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model;
 
@@ -21,12 +36,12 @@ public class DocletTree implements Serializable
 
    /** Description of the Field */
    protected SortedKeyTree keyTree;
+
    /** Description of the Field */
    protected DocletElement rootDoclet;
 
    // Depth of the value-attribute in regard to the tree-structure (index starts with 0)
    private static int VALUE_DEPTH = 3;
-
 
    /** Constructor for DocletDataTree. */
    public DocletTree()
@@ -47,7 +62,6 @@ public class DocletTree implements Serializable
       return rootDoclet.addChild(name);
    }
 
-
    /**
     * Gets the child attribute of the DocletTree object
     *
@@ -59,7 +73,6 @@ public class DocletTree implements Serializable
       return rootDoclet.getChild(name);
    }
 
-
    /**
     * Gets the child attribute of the DocletTree object
     *
@@ -68,12 +81,10 @@ public class DocletTree implements Serializable
     * @return                        The child value
     * @exception JavaModelException  Description of the Exception
     */
-   public DocletElement getChild(String name, IMember member)
-          throws JavaModelException
+   public DocletElement getChild(String name, IMember member) throws JavaModelException
    {
       return rootDoclet.getChild(name, member);
    }
-
 
    /**
     * Gets the childrenCount attribute of the DocletTree object
@@ -85,7 +96,6 @@ public class DocletTree implements Serializable
       return rootDoclet.getChildrenCount();
    }
 
-
    /**
     * Gets the childrenElements attribute of the DocletTree object
     *
@@ -93,12 +103,10 @@ public class DocletTree implements Serializable
     * @return                        The childrenElements value
     * @exception JavaModelException  Description of the Exception
     */
-   public DocletElement[] getChildrenElements(IMember member)
-          throws JavaModelException
+   public DocletElement[] getChildrenElements(IMember member) throws JavaModelException
    {
       return rootDoclet.getChildrenElements(member);
    }
-
 
    /**
     * Gets the childrenElements attribute of the DocletTree object
@@ -109,7 +117,6 @@ public class DocletTree implements Serializable
    {
       return rootDoclet.getChildrenElements();
    }
-
 
    /**
     * @param path
@@ -130,7 +137,6 @@ public class DocletTree implements Serializable
       return (DocletElement) node.getObject(getKey());
    }
 
-
    /**
     * @param path
     * @return      DocletElement the searched element of null if it does not exists
@@ -144,7 +150,6 @@ public class DocletTree implements Serializable
       return getNode(path, path.length - 1);
    }
 
-
    /**
     * Description of the Method
     *
@@ -157,7 +162,6 @@ public class DocletTree implements Serializable
       return rootDoclet.hasChildren(member);
    }
 
-
    /**
     * Description of the Method
     *
@@ -167,7 +171,6 @@ public class DocletTree implements Serializable
    {
       return rootDoclet.hasChildren();
    }
-
 
    /**
     * Returns whether a path points to an existing element or not.
@@ -189,10 +192,7 @@ public class DocletTree implements Serializable
          {
             return false;
          }
-         if (doclet.getNode()
-               .getAdditionalAttributes()
-               .get(IDocletConstants.ATTR_DISCRETE_VALUE_RANGE)
-               != null)
+         if (doclet.getNode().getAdditionalAttributes().get(IDocletConstants.ATTR_DISCRETE_VALUE_RANGE) != null)
          {
             if (doclet.getNode().getChild(path[VALUE_DEPTH]) == null)
             {
@@ -211,7 +211,6 @@ public class DocletTree implements Serializable
       return true;
    }
 
-
    /**
     * Gets the key attribute of the DocletTree object
     *
@@ -221,7 +220,6 @@ public class DocletTree implements Serializable
    {
       return DocletElement.class.getName();
    }
-
 
    /**
     * Gets the root attribute of the DocletTree object

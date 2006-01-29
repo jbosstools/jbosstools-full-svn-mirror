@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model;
 
@@ -17,37 +32,45 @@ public class TemplateTreeFormat
 {
    /** Description of the Field */
    protected boolean createCommentBlock = false;
+
    /** Description of the Field */
    protected String indent = "";//$NON-NLS-1$
+
    /** Description of the Field */
    protected boolean indentFirstLine = true;
 
    /** Description of the Field */
    protected TemplateTree tree;
+
    /** Description of the Field */
    protected VariableStore variableStore;
+
    /** Description of the Field */
    protected HashMap variables;
+
    /** Description of the Field */
    public static String COMMENT_BLOCK_FOOTER = "*/";//$NON-NLS-1$
+
    /** Description of the Field */
    public static String COMMENT_BLOCK_HEADER = "/**";//$NON-NLS-1$
+
    /** Description of the Field */
    public static char DEFAULT_NAMESPACE_SEPARATOR = '.';//$NON-NLS-1$
+
    /** Description of the Field */
    public static char NAMESPACE_MARKER = '@';//$NON-NLS-1$
+
    /** Description of the Field */
    public static String NON_DISCRETE_DEFAULT_VALUE = "value";//$NON-NLS-1$
+
    /** Description of the Field */
    public final static String NEW_LINE = System.getProperty("line.separator");//$NON-NLS-1$
-
 
    /**Constructor for the TemplateTreeFormat object */
    public TemplateTreeFormat()
    {
       super();
    }
-
 
    /**
     * Method TemplateTreeFormat.
@@ -59,7 +82,6 @@ public class TemplateTreeFormat
       super();
       setTree(tree);
    }
-
 
    /**
     * @return   String
@@ -89,7 +111,6 @@ public class TemplateTreeFormat
       return text.toString();
    }
 
-
    /**
     * Returns the indent.
     *
@@ -99,7 +120,6 @@ public class TemplateTreeFormat
    {
       return indent;
    }
-
 
    /**
     * Returns the tree.
@@ -111,7 +131,6 @@ public class TemplateTreeFormat
       return tree;
    }
 
-
    /**
     * Returns the variableStore.
     *
@@ -121,7 +140,6 @@ public class TemplateTreeFormat
    {
       return variableStore;
    }
-
 
    /**
     * Returns the variables.
@@ -133,7 +151,6 @@ public class TemplateTreeFormat
       return variables;
    }
 
-
    /**
     * Returns the createCommentBlock.
     *
@@ -143,7 +160,6 @@ public class TemplateTreeFormat
    {
       return createCommentBlock;
    }
-
 
    /**
     * Returns the indentFirstLine.
@@ -155,7 +171,6 @@ public class TemplateTreeFormat
       return indentFirstLine;
    }
 
-
    /**
     * Sets the createCommentBlock.
     *
@@ -165,7 +180,6 @@ public class TemplateTreeFormat
    {
       this.createCommentBlock = createCommentBlock;
    }
-
 
    /**
     * Sets the indent.
@@ -177,7 +191,6 @@ public class TemplateTreeFormat
       this.indent = indent;
    }
 
-
    /**
     * Sets the indentFirstLine.
     *
@@ -187,7 +200,6 @@ public class TemplateTreeFormat
    {
       this.indentFirstLine = indentFirstLine;
    }
-
 
    /**
     * Sets the tree.
@@ -199,7 +211,6 @@ public class TemplateTreeFormat
       this.tree = tree;
    }
 
-
    /**
     * Sets the variableStore.
     *
@@ -210,7 +221,6 @@ public class TemplateTreeFormat
       this.variableStore = variableStore;
    }
 
-
    /**
     * Sets the variables.
     *
@@ -220,7 +230,6 @@ public class TemplateTreeFormat
    {
       this.variables = variables;
    }
-
 
    /**
     * Description of the Method
@@ -234,7 +243,6 @@ public class TemplateTreeFormat
       text.append("*");//$NON-NLS-1$
       appendSpaces(text, 1);
    }
-
 
    /**
     * Description of the Method
@@ -250,7 +258,6 @@ public class TemplateTreeFormat
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -259,10 +266,7 @@ public class TemplateTreeFormat
     * @param indentFirstLine  Description of the Parameter
     * @return                 Description of the Return Value
     */
-   protected String appendTemplateText(
-         StringBuffer text,
-         String indent,
-         boolean indentFirstLine)
+   protected String appendTemplateText(StringBuffer text, String indent, boolean indentFirstLine)
    {
       TemplateElement namespace;
       TemplateElement command;
@@ -294,20 +298,14 @@ public class TemplateTreeFormat
             }
             text.append(NAMESPACE_MARKER);
             text.append(namespace.getDocletElement().getCodeName());
-            text.append(
-                  "" //$NON-NLS-1$
-            + command.getDocletElement()
-                  .getNode()
-                  .getAdditionalAttributes()
-                  .get(
-                  IDocletConstants.ATTR_NAMESPACE_SEPARATOR));
+            text.append("" //$NON-NLS-1$
+                  + command.getDocletElement().getNode().getAdditionalAttributes().get(
+                        IDocletConstants.ATTR_NAMESPACE_SEPARATOR));
             text.append(command.getDocletElement().getCodeName());
             appendSpaces(text, 1);
             // i.e. '@ejb:bean '
-            internalIndent =
-                  namespace.getDocletElement().getCodeName().length()
-                  + command.getDocletElement().getCodeName().length()
-                  + 3;
+            internalIndent = namespace.getDocletElement().getCodeName().length()
+                  + command.getDocletElement().getCodeName().length() + 3;
             for (int k = 0; k < command.getChildrenCount(); k++)
             {
                attribute = command.getChildrenElements()[k];
@@ -322,11 +320,7 @@ public class TemplateTreeFormat
                text.append('"');
                if (attribute.hasChildrenElements())
                {
-                  text.append(
-                        attribute.getChildrenElements()[0]
-                        .getDocletElement()
-                        .replaceVariables(
-                        variables,
+                  text.append(attribute.getChildrenElements()[0].getDocletElement().replaceVariables(variables,
                         variableStore));
                }
                else

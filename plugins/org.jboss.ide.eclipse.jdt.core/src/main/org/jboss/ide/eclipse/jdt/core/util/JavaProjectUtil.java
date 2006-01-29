@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.core.util;
 
@@ -26,8 +41,9 @@ import org.jboss.ide.eclipse.core.util.ProjectUtil;
 public class JavaProjectUtil
 {
    /** Avoid instantiation */
-   private JavaProjectUtil() { }
-
+   private JavaProjectUtil()
+   {
+   }
 
    /**
     * Description of the Method
@@ -38,11 +54,10 @@ public class JavaProjectUtil
     * @exception CoreException  Description of the Exception
     */
    public static IClasspathEntry createSourceClasspathEntry(IProject project, String srcFolderName)
-      throws CoreException
+         throws CoreException
    {
       return createSourceClasspathEntry(project, srcFolderName, null);
    }
-
 
    /**
     * Description of the Method
@@ -53,8 +68,8 @@ public class JavaProjectUtil
     * @return                   Description of the Return Value
     * @exception CoreException  Description of the Exception
     */
-   public static IClasspathEntry createSourceClasspathEntry(IProject project, String srcFolderName, String outputFolderName)
-      throws CoreException
+   public static IClasspathEntry createSourceClasspathEntry(IProject project, String srcFolderName,
+         String outputFolderName) throws CoreException
    {
       ProjectUtil.createFolder(project, srcFolderName);
       if (outputFolderName != null)
@@ -69,11 +84,11 @@ public class JavaProjectUtil
          outputFolderPath = new Path("/" + project.getName() + "/" + outputFolderName);//$NON-NLS-1$ //$NON-NLS-2$
       }
 
-      IClasspathEntry entry = JavaCore.newSourceEntry(new Path("/" + project.getName() + "/" + srcFolderName), new Path[]{}, outputFolderPath);//$NON-NLS-1$ //$NON-NLS-2$
+      IClasspathEntry entry = JavaCore.newSourceEntry(
+            new Path("/" + project.getName() + "/" + srcFolderName), new Path[]{}, outputFolderPath);//$NON-NLS-1$ //$NON-NLS-2$
 
       return entry;
    }
-
 
    /**
     * Description of the Method
@@ -84,7 +99,7 @@ public class JavaProjectUtil
     * @exception CoreException  Description of the Exception
     */
    public static IClasspathEntry[] mergeClasspathEntry(IClasspathEntry[] entries, IClasspathEntry cpEntry)
-      throws CoreException
+         throws CoreException
    {
       if (cpEntry == null)
       {
@@ -108,7 +123,6 @@ public class JavaProjectUtil
       return (IClasspathEntry[]) list.toArray(new IClasspathEntry[list.size()]);
    }
 
-
    /**
     * Description of the Method
     *
@@ -118,7 +132,7 @@ public class JavaProjectUtil
     * @exception CoreException  Description of the Exception
     */
    public static IClasspathEntry[] removeClasspathEntry(IClasspathEntry[] entries, IClasspathEntry cpEntry)
-      throws CoreException
+         throws CoreException
    {
       List list = new ArrayList();
       if (entries != null)

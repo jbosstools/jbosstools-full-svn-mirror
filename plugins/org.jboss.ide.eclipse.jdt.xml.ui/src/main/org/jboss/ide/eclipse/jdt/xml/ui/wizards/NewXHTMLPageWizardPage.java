@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.wizards;
 
@@ -22,7 +37,6 @@ public class NewXHTMLPageWizardPage extends NewFileWizardPage
 {
    private final static String PAGE_NAME = NewXHTMLPageWizardPage.class.getName();
 
-
    /**
     *Constructor for the NewXHTMLPageWizardPage object
     *
@@ -32,7 +46,6 @@ public class NewXHTMLPageWizardPage extends NewFileWizardPage
    {
       super(PAGE_NAME, selection);
    }
-
 
    /**
     * Gets the plugin attribute of the NewXHTMLPageWizardPage object
@@ -44,7 +57,6 @@ public class NewXHTMLPageWizardPage extends NewFileWizardPage
       return JDTXMLCorePlugin.getDefault();
    }
 
-
    /**
     * Gets the resource attribute of the NewXHTMLPageWizardPage object
     *
@@ -54,7 +66,6 @@ public class NewXHTMLPageWizardPage extends NewFileWizardPage
    {
       return "template.xhtml";//$NON-NLS-1$
    }
-
 
    /**
     * Gets the wizardPageDescription attribute of the NewXHTMLPageWizardPage object
@@ -66,7 +77,6 @@ public class NewXHTMLPageWizardPage extends NewFileWizardPage
       return JDTXMLUIMessages.getString("NewXHTMLPageWizardPage.description");//$NON-NLS-1$
    }
 
-
    /**
     * Gets the wizardPageTitle attribute of the NewXHTMLPageWizardPage object
     *
@@ -76,7 +86,6 @@ public class NewXHTMLPageWizardPage extends NewFileWizardPage
    {
       return JDTXMLUIMessages.getString("NewXHTMLPageWizardPage.title");//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method

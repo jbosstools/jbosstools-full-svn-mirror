@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model.conditions;
 
@@ -19,11 +34,12 @@ public class TagParameterEquals extends Condition
 {
    /** desired tag value */
    private final String requiredTagValue;
+
    /** tag to check */
    private final String tagName;
+
    /** tag parameter to check */
    private final String tagParameter;
-
 
    /**
     *Constructor for the TagParameterEquals object
@@ -32,16 +48,12 @@ public class TagParameterEquals extends Condition
     * @param tagParameter  Description of the Parameter
     * @param tagValue      Description of the Parameter
     */
-   public TagParameterEquals(
-         String tagName,
-         String tagParameter,
-         String tagValue)
+   public TagParameterEquals(String tagName, String tagParameter, String tagValue)
    {
       this.tagName = tagName;
       this.tagParameter = tagParameter;
       this.requiredTagValue = tagValue;
    }
-
 
    /**
     * check whether condition holds
@@ -52,11 +64,11 @@ public class TagParameterEquals extends Condition
    public boolean evalInternal(IMember member)
    {
       //	We need improved eclipse javadoc capabilities to implement that
-//		String actualTagValue = xprogramelement.getDoc().getTagAttributeValue( _tagName, _tagParameter );
-//
-//		_log.debug( "Tag : " + _tagName + " parameter " + _tagParameter + " value: " + actualTagValue +
-//			"  required: " + _requiredTagValue + " equals: " + _requiredTagValue.equals( actualTagValue ) );
-//		return _requiredTagValue.equals( actualTagValue );
+      //		String actualTagValue = xprogramelement.getDoc().getTagAttributeValue( _tagName, _tagParameter );
+      //
+      //		_log.debug( "Tag : " + _tagName + " parameter " + _tagParameter + " value: " + actualTagValue +
+      //			"  required: " + _requiredTagValue + " equals: " + _requiredTagValue.equals( actualTagValue ) );
+      //		return _requiredTagValue.equals( actualTagValue );
 
       try
       {
@@ -74,7 +86,6 @@ public class TagParameterEquals extends Condition
       return false;
    }
 
-
    /**
     * Description of the Method
     *
@@ -86,4 +97,3 @@ public class TagParameterEquals extends Condition
    }
 
 }
-

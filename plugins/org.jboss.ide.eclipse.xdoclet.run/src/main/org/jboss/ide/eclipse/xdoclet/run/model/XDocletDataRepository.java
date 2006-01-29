@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.run.model;
 
@@ -37,18 +52,18 @@ public class XDocletDataRepository
 {
    /** Description of the Field */
    private Hashtable elements = new Hashtable();
+
    /** Description of the Field */
    private ArrayList tasks = new ArrayList();
+
    /** Description of the Field */
    private final static String REFERENCE_FILE = "resources/reference.xml";//$NON-NLS-1$
-
 
    /**Constructor for the XDocletDataRepository object */
    public XDocletDataRepository()
    {
       this.refreshReference();
    }
-
 
    /**
     * Gets the elements attribute of the XDocletDataRepository object
@@ -66,7 +81,6 @@ public class XDocletDataRepository
       return null;
    }
 
-
    /**
     * Gets the tasks attribute of the XDocletDataRepository object
     *
@@ -77,71 +91,71 @@ public class XDocletDataRepository
       return this.tasks;
    }
 
-
    /** Description of the Method */
    public void refreshReference()
    {
-      IRunnableWithProgress runnable =
-         new IRunnableWithProgress()
+      IRunnableWithProgress runnable = new IRunnableWithProgress()
+      {
+         public void run(IProgressMonitor monitor)
          {
-            public void run(IProgressMonitor monitor)
+            try
             {
-               try
+               monitor.beginTask(XDocletRunMessages.getString("XDocletDataRepository.repository.load"), 100);//$NON-NLS-1$
+
+               XDocletDataRepository.this.tasks.clear();
+               XDocletDataRepository.this.elements.clear();
+
+               DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+               DocumentBuilder docBuilder = factory.newDocumentBuilder();
+
+               URL genericsFile = XDocletRunPlugin.getDefault().find(new Path(REFERENCE_FILE));
+               Document document = docBuilder.parse(genericsFile.openStream());
+               Node root = document.getDocumentElement();
+               NodeList children = root.getChildNodes();
+
+               // Compute the progress bar steps
+               int step = 1;
+               if (children.getLength() > 0)
                {
-                  monitor.beginTask(XDocletRunMessages.getString("XDocletDataRepository.repository.load"), 100);//$NON-NLS-1$
-
-                  XDocletDataRepository.this.tasks.clear();
-                  XDocletDataRepository.this.elements.clear();
-
-                  DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                  DocumentBuilder docBuilder = factory.newDocumentBuilder();
-
-                  URL genericsFile = XDocletRunPlugin.getDefault().find(new Path(REFERENCE_FILE));
-                  Document document = docBuilder.parse(genericsFile.openStream());
-                  Node root = document.getDocumentElement();
-                  NodeList children = root.getChildNodes();
-
-                  // Compute the progress bar steps
-                  int step = 1;
-                  if (children.getLength() > 0)
-                  {
-                     step = 100 / children.getLength();
-                  }
-
-                  for (int i = 0; i < children.getLength(); i++)
-                  {
-                     Node child = children.item(i);
-
-                     monitor.subTask(MessageFormat.format(XDocletRunMessages.getString("XDocletDataRepository.repository.restore"), new Object[]{child.getNodeValue()}));//$NON-NLS-1$
-
-                     if (child.getNodeName().equals("task")//$NON-NLS-1$
-                     )
-                     {
-
-                        // Parse the task
-                        XDocletTask task = new XDocletTask();
-                        task.readFromXml(child, false);
-                        XDocletDataRepository.this.tasks.add(task);
-                        XDocletDataRepository.this.elements.put(task.getId(), task);
-
-                        // Parse the element inside tasks
-                        XDocletDataRepository.this.parseElement(child, task);
-                     }
-
-                     monitor.worked(step);
-                  }
+                  step = 100 / children.getLength();
                }
-               catch (Exception e)
+
+               for (int i = 0; i < children.getLength(); i++)
                {
-                  new InvocationTargetException(e);
+                  Node child = children.item(i);
+
+                  monitor.subTask(MessageFormat.format(XDocletRunMessages
+                        .getString("XDocletDataRepository.repository.restore"), new Object[]{child.getNodeValue()}));//$NON-NLS-1$
+
+                  if (child.getNodeName().equals("task")//$NON-NLS-1$
+                  )
+                  {
+
+                     // Parse the task
+                     XDocletTask task = new XDocletTask();
+                     task.readFromXml(child, false);
+                     XDocletDataRepository.this.tasks.add(task);
+                     XDocletDataRepository.this.elements.put(task.getId(), task);
+
+                     // Parse the element inside tasks
+                     XDocletDataRepository.this.parseElement(child, task);
+                  }
+
+                  monitor.worked(step);
                }
             }
-         };
+            catch (Exception e)
+            {
+               new InvocationTargetException(e);
+            }
+         }
+      };
 
       // Launch the task with progress
       try
       {
-         Progress progress = new Progress(XDocletRunPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), runnable);
+         Progress progress = new Progress(XDocletRunPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow()
+               .getShell(), runnable);
          progress.run();
       }
       catch (InvocationTargetException ite)
@@ -153,7 +167,6 @@ public class XDocletDataRepository
          AbstractPlugin.logError("Can't load reference configurations", ie);//$NON-NLS-1$
       }
    }
-
 
    /**
     * Description of the Method

@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.deployer.ui.decorators;
 
@@ -29,16 +44,15 @@ import org.jboss.ide.eclipse.deployer.ui.IDeployerUIConstants;
 public class DeployedDecorator implements ILightweightLabelDecorator
 {
    private Collection listeners = new Vector();
+
    /** Plugin Id of the decorator */
    public final static String DECORATOR_ID = "org.jboss.ide.eclipse.deployer.ui.decorators.DeployedDecorator";//$NON-NLS-1$
-
 
    /**Constructor for the DeployedDecorator object */
    public DeployedDecorator()
    {
       super();
    }
-
 
    /**
     * Adds a feature to the Listener attribute of the DeployedDecorator object
@@ -49,7 +63,6 @@ public class DeployedDecorator implements ILightweightLabelDecorator
    {
       this.listeners.add(listener);
    }
-
 
    /**
     * Description of the Method
@@ -79,10 +92,10 @@ public class DeployedDecorator implements ILightweightLabelDecorator
       }
    }
 
-
    /** Description of the Method */
-   public void dispose() { }
-
+   public void dispose()
+   {
+   }
 
    /**
     * Gets the labelProperty attribute of the DeployedDecorator object
@@ -96,7 +109,6 @@ public class DeployedDecorator implements ILightweightLabelDecorator
       return false;
    }
 
-
    /**
     * Description of the Method
     *
@@ -104,13 +116,12 @@ public class DeployedDecorator implements ILightweightLabelDecorator
     */
    public void refresh(IResource resource)
    {
-      for (Iterator iterator = this.listeners.iterator(); iterator.hasNext(); )
+      for (Iterator iterator = this.listeners.iterator(); iterator.hasNext();)
       {
          ILabelProviderListener listener = (ILabelProviderListener) iterator.next();
          listener.labelProviderChanged(new LabelProviderChangedEvent(this, resource));
       }
    }
-
 
    /**
     * Description of the Method
@@ -121,7 +132,6 @@ public class DeployedDecorator implements ILightweightLabelDecorator
    {
       this.listeners.remove(listener);
    }
-
 
    /**
     * Returns the resource for the given input object, or
@@ -142,7 +152,6 @@ public class DeployedDecorator implements ILightweightLabelDecorator
       }
       return null;
    }
-
 
    /**
     * Gets the demoDecorator attribute of the DeployedDecorator class

@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.assist.contributor;
 
@@ -41,7 +56,6 @@ public class XMLTagContributor implements ITagContributor
       return false;
    }
 
-
    /**
     * Gets the tagProposals attribute of the XMLTagContributor object
     *
@@ -57,8 +71,8 @@ public class XMLTagContributor implements ITagContributor
     * @param offset            Description of the Parameter
     * @return                  The tagProposals value
     */
-   public List getTagProposals(IReconcilierHolder holder, IDocument doc, XMLNode node, XMLNode lastOpenTag, XMLNode previousStartTag, XMLNode nextEndTag,
-      String outerTag, String start, int translated, int offset)
+   public List getTagProposals(IReconcilierHolder holder, IDocument doc, XMLNode node, XMLNode lastOpenTag,
+         XMLNode previousStartTag, XMLNode nextEndTag, String outerTag, String start, int translated, int offset)
    {
       // Get possible values
       List words = this.getTags(holder, doc, outerTag);
@@ -86,16 +100,17 @@ public class XMLTagContributor implements ITagContributor
          {
             String tag = (String) words.get(i);
             Namespace grammar = holder.getReconcilier().getDTDGrammar();
-            
-			ICompletionProposal proposal = computeSingleElementProposal(grammar, offset, 0, isAfterLesserThan, tag);            
-			proposals.add(proposal);
+
+            ICompletionProposal proposal = computeSingleElementProposal(grammar, offset, 0, isAfterLesserThan, tag);
+            proposals.add(proposal);
          }
 
          // Additional proposal for content
          proposals.addAll(0, this.getTagBodyProposals(lastOpenTag, offset, 0));
-         
-         if(!isAfterLesserThan) {
-         	proposals.add(new CompletionProposal("<!--  -->", offset, 0, 5, null, "<!-- XML Comment", null, null));
+
+         if (!isAfterLesserThan)
+         {
+            proposals.add(new CompletionProposal("<!--  -->", offset, 0, 5, null, "<!-- XML Comment", null, null));
          }
       }
       else
@@ -106,10 +121,12 @@ public class XMLTagContributor implements ITagContributor
          )
          {
 
-            if (lastOpenTag != holder.getReconcilier().getRoot() && lastOpenTag.getName().startsWith(start.substring(1)))
+            if (lastOpenTag != holder.getReconcilier().getRoot()
+                  && lastOpenTag.getName().startsWith(start.substring(1)))
             {
-            	// TODO: add "close with" text
-               ICompletionProposal proposal = new CompletionProposal(lastOpenTag.getName() + ">", nodeOffset + 2, offset - nodeOffset - 2, lastOpenTag.getName().length() + 1, JDTUIImages.getImage(IJDTUIConstants.IMG_OBJ_TAG), lastOpenTag.getName(), null, null);//$NON-NLS-1$
+               // TODO: add "close with" text
+               ICompletionProposal proposal = new CompletionProposal(
+                     lastOpenTag.getName() + ">", nodeOffset + 2, offset - nodeOffset - 2, lastOpenTag.getName().length() + 1, JDTUIImages.getImage(IJDTUIConstants.IMG_OBJ_TAG), lastOpenTag.getName(), null, null);//$NON-NLS-1$
                proposals.add(proposal);
             }
          }
@@ -121,9 +138,10 @@ public class XMLTagContributor implements ITagContributor
                String text = (String) words.get(i);
                if (text.startsWith(start))
                {
-               	//ICompletionProposal proposal = new CompletionProposal(text + "></" + text + ">", nodeOffset + 1, offset - nodeOffset - 1, text.length() + 1, JDTUIImages.getImage(IJDTUIConstants.IMG_OBJ_TAG), "(old)" + text, null, null);//$NON-NLS-1$ //$NON-NLS-2$
-               	//proposals.add(proposal);
-               	proposals.add(computeSingleElementProposal(holder.getReconcilier().getDTDGrammar(), nodeOffset + 1, offset - nodeOffset - 1, true, text));
+                  //ICompletionProposal proposal = new CompletionProposal(text + "></" + text + ">", nodeOffset + 1, offset - nodeOffset - 1, text.length() + 1, JDTUIImages.getImage(IJDTUIConstants.IMG_OBJ_TAG), "(old)" + text, null, null);//$NON-NLS-1$ //$NON-NLS-2$
+                  //proposals.add(proposal);
+                  proposals.add(computeSingleElementProposal(holder.getReconcilier().getDTDGrammar(), nodeOffset + 1,
+                        offset - nodeOffset - 1, true, text));
                }
             }
 
@@ -133,59 +151,67 @@ public class XMLTagContributor implements ITagContributor
       }
 
       return proposals;
-   }   
-   
-   /**
- * @param grammar
- * @param offset
- * @param isAfterLesserThan
- * @param tag
- * @return
- */
-private ICompletionProposal computeSingleElementProposal(Namespace grammar, int offset, int replacementLength, boolean isAfterLesserThan, String tag) {
-	String insertion = tag;
-	int cursorpos = 0;
-	String additonalInfo = getAdditonalInfoFor(grammar, tag);
-	String requiredAttribs = grammar.getRequiredAttribsString(tag);
-	
-	if(requiredAttribs==null || requiredAttribs.length()==0) {
-		insertion = tag + "></" + tag + ">";
-		cursorpos = tag.length() + 1;
-	} else {
-		insertion = tag + requiredAttribs +"></" + tag + ">";
-		cursorpos = tag.length() + requiredAttribs.indexOf('"') + 1;
-		if(cursorpos<0) { // no req attrib found, so we calculate it 
-			cursorpos = tag.length() + requiredAttribs.length() + 1;
-		}		
-	}
-	
-	if (!isAfterLesserThan) {
-		insertion = "<" + insertion;
-		cursorpos = cursorpos + 1;
-	}	
-	ICompletionProposal proposal = new CompletionProposal(insertion, offset, replacementLength, cursorpos, JDTUIImages.getImage(IJDTUIConstants.IMG_OBJ_TAG), tag, null, additonalInfo);//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-
-	return proposal;
-}
-
-
-private String getAdditonalInfoFor(Namespace namespace, String tag) {   	
-   	String comment = (String) namespace.getComments().get(tag);
-   	
-   	StringBuffer result = new StringBuffer();
-   	
-   	result.append("<p>\n");
-   	result.append("<b>Element:</b> " + tag + "<br>\n");
-   	result.append("<b>Content model:</b> " + namespace.getContentModel(tag) + "<br>\n");
-   	if(comment!=null) {
-   		result.append("<br>"  + comment);
-   		result.append("\n</p>");
-   	}
-   	return result.toString();
    }
-   
 
-/**
+   /**
+    * @param grammar
+    * @param offset
+    * @param isAfterLesserThan
+    * @param tag
+    * @return
+    */
+   private ICompletionProposal computeSingleElementProposal(Namespace grammar, int offset, int replacementLength,
+         boolean isAfterLesserThan, String tag)
+   {
+      String insertion = tag;
+      int cursorpos = 0;
+      String additonalInfo = getAdditonalInfoFor(grammar, tag);
+      String requiredAttribs = grammar.getRequiredAttribsString(tag);
+
+      if (requiredAttribs == null || requiredAttribs.length() == 0)
+      {
+         insertion = tag + "></" + tag + ">";
+         cursorpos = tag.length() + 1;
+      }
+      else
+      {
+         insertion = tag + requiredAttribs + "></" + tag + ">";
+         cursorpos = tag.length() + requiredAttribs.indexOf('"') + 1;
+         if (cursorpos < 0)
+         { // no req attrib found, so we calculate it 
+            cursorpos = tag.length() + requiredAttribs.length() + 1;
+         }
+      }
+
+      if (!isAfterLesserThan)
+      {
+         insertion = "<" + insertion;
+         cursorpos = cursorpos + 1;
+      }
+      ICompletionProposal proposal = new CompletionProposal(insertion, offset, replacementLength, cursorpos,
+            JDTUIImages.getImage(IJDTUIConstants.IMG_OBJ_TAG), tag, null, additonalInfo);//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+      return proposal;
+   }
+
+   private String getAdditonalInfoFor(Namespace namespace, String tag)
+   {
+      String comment = (String) namespace.getComments().get(tag);
+
+      StringBuffer result = new StringBuffer();
+
+      result.append("<p>\n");
+      result.append("<b>Element:</b> " + tag + "<br>\n");
+      result.append("<b>Content model:</b> " + namespace.getContentModel(tag) + "<br>\n");
+      if (comment != null)
+      {
+         result.append("<br>" + comment);
+         result.append("\n</p>");
+      }
+      return result.toString();
+   }
+
+   /**
     * Gets the tagBodyProposals attribute of the XMLTagContributor object
     *
     * @param lastOpenTag        Description of the Parameter
@@ -197,7 +223,6 @@ private String getAdditonalInfoFor(Namespace namespace, String tag) {
    {
       return Collections.EMPTY_LIST;
    }
-
 
    /**
     * Gets the tags attribute of the XMLTagContributor object
@@ -227,7 +252,7 @@ private String getAdditonalInfoFor(Namespace namespace, String tag) {
       // Add proposals from namespaces
       if (namespaces != null)
       {
-         for (Iterator it = namespaces.keySet().iterator(); it.hasNext(); )
+         for (Iterator it = namespaces.keySet().iterator(); it.hasNext();)
          {
             String key = (String) it.next();
             Namespace ns = (Namespace) namespaces.get(key);

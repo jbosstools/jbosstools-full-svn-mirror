@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.core;
 
@@ -38,15 +53,17 @@ public class ServerLaunchManager
 {
    /** Description of the Field */
    protected ServerDebugEventHandler debugEventHandler = null;
+
    /** Description of the Field */
    protected ILaunchManager manager;
+
    /** Description of the Field */
    private static ServerLaunchManager instance = new ServerLaunchManager();
 
-
    /** Constructor for the ServerLaunchManager object */
-   private ServerLaunchManager() { }
-
+   private ServerLaunchManager()
+   {
+   }
 
    /**
     * Gets the debugEventHandler attribute of the ServerLaunchManager object
@@ -64,7 +81,6 @@ public class ServerLaunchManager
       return debugEventHandler;
    }
 
-
    /**
     * Method getDefaultLaunchConfiguration.
     *
@@ -72,7 +88,8 @@ public class ServerLaunchManager
     */
    public ILaunchConfiguration getDefaultLaunchConfiguration()
    {
-      String defaultServerMemento = LauncherPlugin.getDefault().getPreferenceStore().getString(ILauncherConstants.ATTR_DEFAULT_LAUNCH_CONFIGURATION_MEMENTO);
+      String defaultServerMemento = LauncherPlugin.getDefault().getPreferenceStore().getString(
+            ILauncherConstants.ATTR_DEFAULT_LAUNCH_CONFIGURATION_MEMENTO);
       if (defaultServerMemento.equals(IServerLaunchConfigurationConstants.EMPTY_STRING))
       {
          return null;
@@ -89,7 +106,6 @@ public class ServerLaunchManager
       }
       return configuration;
    }
-
 
    /**
     * Gets the lastStartProcess attribute of the ServerLaunchManager object
@@ -113,7 +129,6 @@ public class ServerLaunchManager
       }
       return ServerLaunchManager.getInstance().getDebugEventHandler().getProcessOfLastTerminatedLaunch(configuration);
    }
-
 
    /**
     * Method getLogFiles.
@@ -144,9 +159,10 @@ public class ServerLaunchManager
       List logFiles = new ArrayList();
       if (configuration != null)
       {
-         Map map = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_LOG_FILES, Collections.EMPTY_MAP);
+         Map map = configuration
+               .getAttribute(IServerLaunchConfigurationConstants.ATTR_LOG_FILES, Collections.EMPTY_MAP);
          String fileName;
-         for (Iterator iter = map.keySet().iterator(); iter.hasNext(); )
+         for (Iterator iter = map.keySet().iterator(); iter.hasNext();)
          {
             fileName = (String) iter.next();
             logFiles.add(new LogFile(configuration, fileName, Integer.parseInt((String) map.get(fileName))));
@@ -168,9 +184,10 @@ public class ServerLaunchManager
       List logFiles = new ArrayList();
       if (configuration != null)
       {
-         Map map = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_DEFAULT_LOG_FILES, Collections.EMPTY_MAP);
+         Map map = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_DEFAULT_LOG_FILES,
+               Collections.EMPTY_MAP);
          String fileName;
-         for (Iterator iter = map.keySet().iterator(); iter.hasNext(); )
+         for (Iterator iter = map.keySet().iterator(); iter.hasNext();)
          {
             fileName = (String) iter.next();
             logFiles.add(new LogFile(configuration, fileName, Integer.parseInt((String) map.get(fileName))));
@@ -178,7 +195,6 @@ public class ServerLaunchManager
       }
       return logFiles;
    }
-
 
    /**
     * Method getRunningStartLaunch.
@@ -208,7 +224,6 @@ public class ServerLaunchManager
       return null;
    }
 
-
    /**
     * Gets the serverConfigurations attribute of the ServerLaunchManager object
     *
@@ -226,9 +241,9 @@ public class ServerLaunchManager
             serverConfigurations.add(configurations[i]);
          }
       }
-      return (ILaunchConfiguration[]) serverConfigurations.toArray(new ILaunchConfiguration[serverConfigurations.size()]);
+      return (ILaunchConfiguration[]) serverConfigurations
+            .toArray(new ILaunchConfiguration[serverConfigurations.size()]);
    }
-
 
    /**
     * Gets the status attribute of the ServerLaunchManager object
@@ -239,14 +254,12 @@ public class ServerLaunchManager
     */
    public LaunchStatus getStatus(ILaunch launch) throws DebugException
    {
-      if (launch == null || launch.getDebugTarget() == null
-            || !launch.getDebugTarget().hasThreads())
+      if (launch == null || launch.getDebugTarget() == null || !launch.getDebugTarget().hasThreads())
       {
          return LaunchStatus.NOT_RUNNING;
       }
       return LaunchStatus.RUNNING;
    }
-
 
    /**
     * Gets the statusForStartLaunch attribute of the ServerLaunchManager object
@@ -260,7 +273,6 @@ public class ServerLaunchManager
       return getStatus(getRunningStartLaunch(configuration));
    }
 
-
    /**
     * Description of the Method
     *
@@ -270,9 +282,9 @@ public class ServerLaunchManager
     */
    public boolean hasShutdown(ILaunchConfiguration configuration) throws CoreException
    {
-      return ((IServerLaunchConfigurationDelegate) configuration.getType().getDelegate(ILaunchManager.DEBUG_MODE)).hasShutdown();
+      return ((IServerLaunchConfigurationDelegate) configuration.getType().getDelegate(ILaunchManager.DEBUG_MODE))
+            .hasShutdown();
    }
-
 
    /**
     * Gets the serverConfiguration attribute of the ServerLaunchManager object
@@ -294,7 +306,6 @@ public class ServerLaunchManager
       return false;
    }
 
-
    /**
     * Gets the valid attribute of the ServerLaunchManager object
     *
@@ -307,7 +318,6 @@ public class ServerLaunchManager
       return !configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_CONFIGURATION_ERROR, true);
    }
 
-
    /**
     * Sets the launchManager attribute of the ServerLaunchManager object
     *
@@ -318,7 +328,6 @@ public class ServerLaunchManager
       this.manager = manager;
    }
 
-
    /**
     * Description of the Method
     *
@@ -327,9 +336,9 @@ public class ServerLaunchManager
     */
    public void shutDown(ILaunchConfiguration configuration) throws CoreException
    {
-      ((IServerLaunchConfigurationDelegate) configuration.getType().getDelegate(ILaunchManager.DEBUG_MODE)).shutdown(configuration, null);
+      ((IServerLaunchConfigurationDelegate) configuration.getType().getDelegate(ILaunchManager.DEBUG_MODE)).shutdown(
+            configuration, null);
    }
-
 
    /**
     * Description of the Method
@@ -345,7 +354,6 @@ public class ServerLaunchManager
       }
       configuration.launch(ILaunchManager.DEBUG_MODE, null);
    }
-
 
    /**
     * Description of the Method
@@ -365,7 +373,6 @@ public class ServerLaunchManager
          launch.terminate();
       }
    }
-
 
    /**
     * Gets the instance attribute of the ServerLaunchManager class

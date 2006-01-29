@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.jsp.core.assist;
 
@@ -33,15 +48,17 @@ import org.jboss.ide.eclipse.jdt.j2ee.jsp.core.compiler.jasper.JSPProjectManager
 public class JSPTagLibRepository
 {
    private Map attributeValues = new Hashtable();
+
    private Map attributes = new Hashtable();
+
    private Map tags = new Hashtable();
 
    private static JSPTagLibRepository repository = new JSPTagLibRepository();
 
-
    /**Constructor for the JSPTagLibRepository object */
-   private JSPTagLibRepository() { }
-
+   private JSPTagLibRepository()
+   {
+   }
 
    /**
     * Description of the Method
@@ -52,7 +69,6 @@ public class JSPTagLibRepository
    {
       this.tags.remove(file);
    }
-
 
    /**
     * Gets the attributeValues attribute of the JSPTagLibRepository object
@@ -77,7 +93,6 @@ public class JSPTagLibRepository
       return attributeValueList;
    }
 
-
    /**
     * Gets the attributes attribute of the JSPTagLibRepository object
     *
@@ -100,7 +115,6 @@ public class JSPTagLibRepository
       return attributeList;
    }
 
-
    /**
     * Gets the tags attribute of the JSPTagLibRepository object
     *
@@ -116,7 +130,6 @@ public class JSPTagLibRepository
       }
       return tagList;
    }
-
 
    /**
     * Description of the Method
@@ -138,7 +151,7 @@ public class JSPTagLibRepository
          if (info != null)
          {
             Collection taglibs = info.getPageInfo().getTaglibs();
-            for (Iterator it = taglibs.iterator(); it.hasNext(); )
+            for (Iterator it = taglibs.iterator(); it.hasNext();)
             {
                TagLibraryInfo taglibInfo = (TagLibraryInfo) it.next();
                String prefix = taglibInfo.getPrefixString();
@@ -176,7 +189,6 @@ public class JSPTagLibRepository
       this.attributes.put(file, attributeMap);
       this.attributeValues.put(file, attributeValueMap);
    }
-
 
    /**
     * Gets the instance attribute of the JSPTagLibRepository class

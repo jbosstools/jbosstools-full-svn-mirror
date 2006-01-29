@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model;
 
@@ -25,21 +40,28 @@ public class TemplateTree implements IConditionTreeListener, Serializable
 {
    /** Description of the Field */
    protected String conditionDescription;
+
    /** Description of the Field */
    protected ConditionTree conditionTree;// Not for persistence
+
    /** Description of the Field */
    protected boolean deleted = false;
+
    /** Description of the Field */
    protected DocletTree docletTree;
+
    /** Description of the Field */
    protected String helptext;
+
    /** Description of the Field */
    protected long id;
+
    /** Description of the Field */
    protected SortedKeyTree keyTree;
 
    /** Description of the Field */
    protected ListenerList listenerList = new ListenerList();
+
    /** Description of the Field */
    protected String name;
 
@@ -48,11 +70,12 @@ public class TemplateTree implements IConditionTreeListener, Serializable
 
    /** Description of the Field */
    protected final static int ADDED = 0;
+
    /** Description of the Field */
    protected final static int REMOVED = 1;
+
    /** Description of the Field */
    protected final static int TREE_CHANGED = 2;
-
 
    /**
     * Constructor for TemplateTree.
@@ -76,7 +99,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       this.conditionTree.addConditionListener(this);
    }
 
-
    /**
     * Adds a feature to the Element attribute of the TemplateTree object
     *
@@ -94,9 +116,7 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       if (docletElement.getType() == DocletType.VALUE_WITHOUT_VARIABLE
             || docletElement.getType() == DocletType.VALUE_WITH_VARIABLE)
       {
-         TemplateElement parent =
-               (TemplateElement) docletElement.getParent().getNode().getObject(
-               getKey());
+         TemplateElement parent = (TemplateElement) docletElement.getParent().getNode().getObject(getKey());
          if (parent != null)
          {
             // There can be only zero or one child
@@ -124,8 +144,7 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       DocletElement parentDoclet = docletElement;
       TemplateElement parentTemplate = templateElement;
 
-      while ((parentDoclet = parentDoclet.getParent()) != null
-            && (parentTemplate = parentTemplate.getParent()) == null)
+      while ((parentDoclet = parentDoclet.getParent()) != null && (parentTemplate = parentTemplate.getParent()) == null)
       {
          parentTemplate = new TemplateElement(parentDoclet, this);
       }
@@ -133,7 +152,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       fireChange(templateElement, ADDED);
       return templateElement;
    }
-
 
    /**
     * Method addTemplateTreeListener.
@@ -144,7 +162,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
    {
       listenerList.add(templateTreeListener);
    }
-
 
    /**
     * Description of the Method
@@ -185,13 +202,13 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       }
    }
 
-
    /**
     * @param event  Description of the Parameter
     * @see          org.jboss.ide.eclipse.xdoclet.model.conditions.IConditionTreeListener#childAdded(java.util.EventObject)
     */
-   public void childAdded(EventObject event) { }
-
+   public void childAdded(EventObject event)
+   {
+   }
 
    /**
     * Description of the Method
@@ -200,9 +217,7 @@ public class TemplateTree implements IConditionTreeListener, Serializable
     * @param onlyNotExistingElements  Description of the Parameter
     * @return                         Description of the Return Value
     */
-   public Object[] computeChildren(
-         Object parentElement,
-         boolean onlyNotExistingElements)
+   public Object[] computeChildren(Object parentElement, boolean onlyNotExistingElements)
    {
       ArrayList objects = new ArrayList();
       if (parentElement == null)
@@ -212,11 +227,7 @@ public class TemplateTree implements IConditionTreeListener, Serializable
          //				rootElement,
          //				getDocletTree().getChildrenElements(getContextTree()),
          //				onlyNotExistingElements);
-         internalComputeChildren(
-               objects,
-               rootElement,
-               getDocletTree().getChildrenElements(),
-               onlyNotExistingElements);
+         internalComputeChildren(objects, rootElement, getDocletTree().getChildrenElements(), onlyNotExistingElements);
       }
       else if (parentElement instanceof TemplateElement)
       {
@@ -227,10 +238,7 @@ public class TemplateTree implements IConditionTreeListener, Serializable
          //				templateElement.getDocletElement().getChildrenElements(
          //					getContextTree()),
          //				onlyNotExistingElements);
-         internalComputeChildren(
-               objects,
-               templateElement,
-               templateElement.getDocletElement().getChildrenElements(),
+         internalComputeChildren(objects, templateElement, templateElement.getDocletElement().getChildrenElements(),
                onlyNotExistingElements);
       }
       // 		else if (parentElement instanceof ContextTree) {
@@ -247,7 +255,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       return objects.toArray();
    }
 
-
    /** Description of the Method */
    public void deleteTree()
    {
@@ -255,7 +262,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       rootElement.node.removeObject(getKey());
       deleted = true;
    }
-
 
    /**
     * Gets the allDocletElements attribute of the TemplateTree object
@@ -274,7 +280,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       return docletElements;
    }
 
-
    /**
     * Gets the child attribute of the TemplateTree object
     *
@@ -285,7 +290,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
    {
       return rootElement.getChild(name);
    }
-
 
    /**
     * Gets the childrenCount attribute of the TemplateTree object
@@ -309,7 +313,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       return rootElement.getChildrenElements();
    }
 
-
    /**
     * Returns the conditionDescription.
     *
@@ -319,7 +322,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
    {
       return conditionDescription;
    }
-
 
    /**
     * Returns the conditionTree.
@@ -331,7 +333,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       return conditionTree;
    }
 
-
    /**
     * Returns the docletTree.
     *
@@ -341,7 +342,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
    {
       return docletTree;
    }
-
 
    /**
     * Returns the helptext.
@@ -353,7 +353,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       return helptext;
    }
 
-
    /**
     * Returns the id.
     *
@@ -363,7 +362,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
    {
       return id;
    }
-
 
    /**
     * Gets the key attribute of the TemplateTree object
@@ -375,7 +373,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       return TemplateElement.class.getName() + id;
    }
 
-
    /**
     * Returns the name.
     *
@@ -385,7 +382,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
    {
       return name;
    }
-
 
    /**
     * Gets the root attribute of the TemplateTree object
@@ -397,7 +393,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       return rootElement;
    }
 
-
    /**
     * Gets the templateElement attribute of the TemplateTree object
     *
@@ -408,7 +403,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
    {
       return (TemplateElement) docletElement.getNode().getObject(getKey());
    }
-
 
    /**
     * Gets the templateElements attribute of the TemplateTree object
@@ -438,7 +432,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       return;
    }
 
-
    /**
     * Gets the templateTreeListener attribute of the TemplateTree object
     *
@@ -446,10 +439,9 @@ public class TemplateTree implements IConditionTreeListener, Serializable
     */
    public ITemplateTreeListener[] getTemplateTreeListener()
    {
-      return (ITemplateTreeListener[]) Arrays.asList(listenerList.getListeners())
-            .toArray(new ITemplateTreeListener[listenerList.size()]);
+      return (ITemplateTreeListener[]) Arrays.asList(listenerList.getListeners()).toArray(
+            new ITemplateTreeListener[listenerList.size()]);
    }
-
 
    /**
     * Description of the Method
@@ -461,7 +453,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       return rootElement.hasChildrenElements();
    }
 
-
    /**
     * Returns the deleted.
     *
@@ -472,7 +463,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       return deleted;
    }
 
-
    /**
     * Description of the Method
     *
@@ -481,8 +471,7 @@ public class TemplateTree implements IConditionTreeListener, Serializable
     */
    public boolean removeTemplateElement(DocletElement docletElement)
    {
-      if (docletElement == null
-            || !docletTree.isNode(docletElement.getNode().getPath(), false))
+      if (docletElement == null || !docletTree.isNode(docletElement.getNode().getPath(), false))
       {
          throw new IllegalArgumentException();
       }
@@ -503,13 +492,11 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       return true;
    }
 
-
    /** Description of the Method */
    public void removeTemplateElements()
    {
       removeTemplateElements(rootElement);
    }
-
 
    /**
     * Method removeTemplateTreeListener.
@@ -521,13 +508,13 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       listenerList.remove(templateTreeListener);
    }
 
-
    /**
     * @param event  Description of the Parameter
     * @see          org.jboss.ide.eclipse.xdoclet.model.conditions.IConditionTreeListener#removed(java.util.EventObject)
     */
-   public void removed(EventObject event) { }
-
+   public void removed(EventObject event)
+   {
+   }
 
    /**
     * Sets the conditionDescription.
@@ -538,7 +525,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
    {
       this.conditionDescription = conditionDescription;
    }
-
 
    /**
     * Sets the contextTree.
@@ -557,7 +543,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       adaptToContextTree();
    }
 
-
    /**
     * Sets the helptext.
     *
@@ -567,7 +552,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
    {
       this.helptext = helptext;
    }
-
 
    /**
     * Sets the name.
@@ -579,7 +563,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       this.name = name;
    }
 
-
    /**
     * @return   Description of the Return Value
     * @see      java.lang.Object#toString()
@@ -589,21 +572,19 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       return name;
    }
 
-
    /** Description of the Method */
    protected void adaptToContextTree()
    {
       ArrayList list = new ArrayList();
       getTemplateElements(rootElement, list);
       removeTemplateElements();
-      for (Iterator iter = list.iterator(); iter.hasNext(); )
+      for (Iterator iter = list.iterator(); iter.hasNext();)
       {
          TemplateElement element = (TemplateElement) iter.next();
          this.addElement(element.getDocletElement());
       }
       fireChange(null, TREE_CHANGED);
    }
-
 
    /**
     * Description of the Method
@@ -613,22 +594,17 @@ public class TemplateTree implements IConditionTreeListener, Serializable
     * @param docletElements           Description of the Parameter
     * @param onlyNotExistingElements  Description of the Parameter
     */
-   protected void internalComputeChildren(
-         ArrayList objects,
-         TemplateElement templateElement,
-         DocletElement[] docletElements,
-         boolean onlyNotExistingElements)
+   protected void internalComputeChildren(ArrayList objects, TemplateElement templateElement,
+         DocletElement[] docletElements, boolean onlyNotExistingElements)
    {
       for (int i = 0; i < docletElements.length; i++)
       {
-         if (!onlyNotExistingElements
-               || templateElement.getChild(docletElements[i].getName()) == null)
+         if (!onlyNotExistingElements || templateElement.getChild(docletElements[i].getName()) == null)
          {
             objects.add(docletElements[i]);
          }
       }
    }
-
 
    /**
     * Description of the Method
@@ -645,7 +621,6 @@ public class TemplateTree implements IConditionTreeListener, Serializable
       element.getNode().removeObject(getKey());
       return;
    }
-
 
    /**
     * Description of the Method
@@ -664,16 +639,16 @@ public class TemplateTree implements IConditionTreeListener, Serializable
             ITemplateTreeListener listener = (ITemplateTreeListener) listeners[i];
             switch (type)
             {
-               case ADDED:
+               case ADDED :
                   listener.elementAdded(event);
                   break;
-               case REMOVED:
+               case REMOVED :
                   listener.elementRemoved(event);
                   break;
-               case TREE_CHANGED:
+               case TREE_CHANGED :
                   listener.treeChanged(event);
                   break;
-               default:
+               default :
                   break;
             }
          }

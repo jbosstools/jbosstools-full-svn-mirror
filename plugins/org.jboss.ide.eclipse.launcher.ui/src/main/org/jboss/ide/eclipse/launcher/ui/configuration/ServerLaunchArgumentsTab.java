@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.ui.configuration;
 
@@ -36,22 +51,27 @@ public class ServerLaunchArgumentsTab extends AbstractLaunchConfigurationTab
 {
    /** Description of the Field */
    public Text fPrgmArgumentsText;
+
    /** Description of the Field */
    public Text fVMArgumentsText;
 
    /** Program arguments widgets */
    protected Label fPrgmArgumentsLabel;
+
    /** VM arguments widgets */
    protected Label fVMArgumentsLabel;
+
    /** Description of the Field */
    protected String name;
+
    /** Description of the Field */
    protected String programArgsAttribute;
+
    /** Description of the Field */
    protected String vmArgsAttribute;
+
    /** Description of the Field */
    protected final static String EMPTY_STRING = "";//$NON-NLS-1$
-
 
    /**
     * @param programArgsAttribute
@@ -65,7 +85,6 @@ public class ServerLaunchArgumentsTab extends AbstractLaunchConfigurationTab
       this.vmArgsAttribute = vmArgsAttribute;
       this.name = name;
    }
-
 
    /**
     * @param parent  Description of the Parameter
@@ -89,14 +108,13 @@ public class ServerLaunchArgumentsTab extends AbstractLaunchConfigurationTab
       gd = new GridData(GridData.FILL_BOTH);
       gd.heightHint = 40;
       fPrgmArgumentsText.setLayoutData(gd);
-      fPrgmArgumentsText.addModifyListener(
-         new ModifyListener()
+      fPrgmArgumentsText.addModifyListener(new ModifyListener()
+      {
+         public void modifyText(ModifyEvent evt)
          {
-            public void modifyText(ModifyEvent evt)
-            {
-               updateLaunchConfigurationDialog();
-            }
-         });
+            updateLaunchConfigurationDialog();
+         }
+      });
 
       fVMArgumentsLabel = new Label(comp, SWT.NONE);
       fVMArgumentsLabel.setText(LauncherMessages.JavaArgumentsTab_VM_ar_guments__6);//$NON-NLS-1$
@@ -105,22 +123,21 @@ public class ServerLaunchArgumentsTab extends AbstractLaunchConfigurationTab
       gd = new GridData(GridData.FILL_BOTH);
       gd.heightHint = 40;
       fVMArgumentsText.setLayoutData(gd);
-      fVMArgumentsText.addModifyListener(
-         new ModifyListener()
+      fVMArgumentsText.addModifyListener(new ModifyListener()
+      {
+         public void modifyText(ModifyEvent evt)
          {
-            public void modifyText(ModifyEvent evt)
-            {
-               updateLaunchConfigurationDialog();
-            }
-         });
+            updateLaunchConfigurationDialog();
+         }
+      });
    }
-
 
    /**
     * @see   ILaunchConfigurationTab#dispose()
     */
-   public void dispose() { }
-
+   public void dispose()
+   {
+   }
 
    /**
     * @return   The image value
@@ -131,7 +148,6 @@ public class ServerLaunchArgumentsTab extends AbstractLaunchConfigurationTab
       return JavaDebugImages.get(JavaDebugImages.IMG_VIEW_ARGUMENTS_TAB);
    }
 
-
    /**
     * @return   The name value
     * @see      ILaunchConfigurationTab#getName()
@@ -140,7 +156,6 @@ public class ServerLaunchArgumentsTab extends AbstractLaunchConfigurationTab
    {
       return name;
    }
-
 
    /**
     * @param configuration  Description of the Parameter
@@ -155,11 +170,11 @@ public class ServerLaunchArgumentsTab extends AbstractLaunchConfigurationTab
       }
       catch (CoreException e)
       {
-         setErrorMessage(LauncherMessages.JavaArgumentsTab_Exception_occurred_reading_configuration___15 + e.getStatus().getMessage());//$NON-NLS-1$
+         setErrorMessage(LauncherMessages.JavaArgumentsTab_Exception_occurred_reading_configuration___15
+               + e.getStatus().getMessage());//$NON-NLS-1$
          JDIDebugUIPlugin.log(e);
       }
    }
-
 
    /**
     * @param configuration  Description of the Parameter
@@ -171,15 +186,15 @@ public class ServerLaunchArgumentsTab extends AbstractLaunchConfigurationTab
       configuration.setAttribute(vmArgsAttribute, getAttributeValueFrom(fVMArgumentsText));
    }
 
-
    /**
     * Defaults are empty.
     *
     * @param config  The new defaults value
     * @see           ILaunchConfigurationTab#setDefaults(ILaunchConfigurationWorkingCopy)
     */
-   public void setDefaults(ILaunchConfigurationWorkingCopy config) { }
-
+   public void setDefaults(ILaunchConfigurationWorkingCopy config)
+   {
+   }
 
    /**
     * @param dialog  The new launchConfigurationDialog value
@@ -189,7 +204,6 @@ public class ServerLaunchArgumentsTab extends AbstractLaunchConfigurationTab
    {
       super.setLaunchConfigurationDialog(dialog);
    }
-
 
    /**
     * Retuns the string in the text widget, or <code>null</code> if empty.
@@ -207,4 +221,3 @@ public class ServerLaunchArgumentsTab extends AbstractLaunchConfigurationTab
       return null;
    }
 }
-

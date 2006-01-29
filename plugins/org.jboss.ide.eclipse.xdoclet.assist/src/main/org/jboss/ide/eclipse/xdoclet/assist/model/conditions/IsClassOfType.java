@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model.conditions;
 
@@ -21,7 +36,6 @@ public class IsClassOfType extends Condition
 {
    private final String className;
 
-
    /**
     *Constructor for the IsClassOfType object
     *
@@ -31,7 +45,6 @@ public class IsClassOfType extends Condition
    {
       this.className = className;
    }
-
 
    /**
     * Description of the Method
@@ -49,8 +62,7 @@ public class IsClassOfType extends Condition
          {
             return true;
          }
-         ITypeHierarchy hierarchy =
-               type.newSupertypeHierarchy(new NullProgressMonitor());
+         ITypeHierarchy hierarchy = type.newSupertypeHierarchy(new NullProgressMonitor());
          IType[] superTypes = hierarchy.getAllSupertypes(type);
          for (int i = 0; i < superTypes.length; i++)
          {
@@ -63,7 +75,6 @@ public class IsClassOfType extends Condition
       return false;
    }
 
-
    /**
     * Returns the className.
     *
@@ -73,7 +84,6 @@ public class IsClassOfType extends Condition
    {
       return className;
    }
-
 
    /**
     * Description of the Method

@@ -1,11 +1,25 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.packaging.ui;
-
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,16 +68,24 @@ import org.jboss.ide.eclipse.packaging.ui.util.ConfigurationLabelProvider;
 public class ConfigurationViewer implements IPropertyChangeListener
 {
    private Action addArchiveAction;
-   private Action addFileAction;
-   private Action addFolderAction;
-   private Action addStandardArchiveAction;
-   private List configurations;
-   private Menu contextMenu;
-   private Action editAction;
-   private IProject project;
-   private Action removeAction;
-   private CheckboxTreeViewer viewer;
 
+   private Action addFileAction;
+
+   private Action addFolderAction;
+
+   private Action addStandardArchiveAction;
+
+   private List configurations;
+
+   private Menu contextMenu;
+
+   private Action editAction;
+
+   private IProject project;
+
+   private Action removeAction;
+
+   private CheckboxTreeViewer viewer;
 
    /**
     * Constructor for the ConfigurationViewer object
@@ -88,20 +110,18 @@ public class ConfigurationViewer implements IPropertyChangeListener
 
       this.setInput(configurations);
 
-      this.viewer.addCheckStateListener(
-         new ICheckStateListener()
+      this.viewer.addCheckStateListener(new ICheckStateListener()
+      {
+         public void checkStateChanged(CheckStateChangedEvent event)
          {
-            public void checkStateChanged(CheckStateChangedEvent event)
-            {
-               PackagingData data = (PackagingData) event.getElement();
-               data.setUsed(event.getChecked());
-            }
-         });
+            PackagingData data = (PackagingData) event.getElement();
+            data.setUsed(event.getChecked());
+         }
+      });
 
       this.assign();
       this.initContextMenu();
    }
-
 
    /**
     * Adds a feature to the DoubleClickListener attribute of the
@@ -115,7 +135,6 @@ public class ConfigurationViewer implements IPropertyChangeListener
       this.viewer.addDoubleClickListener(listener);
    }
 
-
    /**
     * Adds a feature to the SelectionChangedListener attribute of the
     * ConfigurationViewer object
@@ -128,7 +147,6 @@ public class ConfigurationViewer implements IPropertyChangeListener
    {
       this.viewer.addSelectionChangedListener(listener);
    }
-
 
    /**
     * Gets the current attribute of the ConfigurationListViewer object
@@ -147,7 +165,6 @@ public class ConfigurationViewer implements IPropertyChangeListener
       return null;
    }
 
-
    /**
     * Description of the Method
     *
@@ -159,14 +176,12 @@ public class ConfigurationViewer implements IPropertyChangeListener
       this.refresh();
    }
 
-
    /** Description of the Method */
    public void refresh()
    {
       this.viewer.refresh();
       this.viewer.setCheckedElements(this.getUsedElements().toArray());
    }
-
 
    /**
     * Description of the Method
@@ -179,98 +194,91 @@ public class ConfigurationViewer implements IPropertyChangeListener
       this.viewer.removeSelectionChangedListener(listener);
    }
 
-
    /** Description of the Method */
    private void assign()
    {
-      this.addArchiveAction =
-         new Action()
+      this.addArchiveAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doAddArchive();
-            }
+            doAddArchive();
+         }
 
-         };
+      };
       this.addArchiveAction.setText(PackagingUIMessages.getString("ConfigurationViewer.action.add.archive"));//$NON-NLS-1$
       this.addArchiveAction.setToolTipText(PackagingUIMessages.getString("ConfigurationViewer.action.add.archive.tip"));//$NON-NLS-1$
       this.addArchiveAction.setEnabled(true);
 
-      this.addStandardArchiveAction =
-         new Action()
+      this.addStandardArchiveAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doAddStandardArchive();
-            }
+            doAddStandardArchive();
+         }
 
-         };
-      this.addStandardArchiveAction.setText(PackagingUIMessages.getString("ConfigurationViewer.action.add.standard.archive"));//$NON-NLS-1$
-      this.addStandardArchiveAction.setToolTipText(PackagingUIMessages.getString("ConfigurationViewer.action.add.standard.archive.tip"));//$NON-NLS-1$
+      };
+      this.addStandardArchiveAction.setText(PackagingUIMessages
+            .getString("ConfigurationViewer.action.add.standard.archive"));//$NON-NLS-1$
+      this.addStandardArchiveAction.setToolTipText(PackagingUIMessages
+            .getString("ConfigurationViewer.action.add.standard.archive.tip"));//$NON-NLS-1$
       this.addStandardArchiveAction.setEnabled(true);
 
-      this.addFileAction =
-         new Action()
+      this.addFileAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doAddFile();
-            }
+            doAddFile();
+         }
 
-         };
+      };
       this.addFileAction.setText(PackagingUIMessages.getString("ConfigurationViewer.action.add.file"));//$NON-NLS-1$
       this.addFileAction.setToolTipText(PackagingUIMessages.getString("ConfigurationViewer.action.add.file.tip"));//$NON-NLS-1$
       this.addFileAction.setEnabled(true);
 
-      this.addFolderAction =
-         new Action()
+      this.addFolderAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doAddFolder();
-            }
+            doAddFolder();
+         }
 
-         };
+      };
       this.addFolderAction.setText(PackagingUIMessages.getString("ConfigurationViewer.action.add.folder"));//$NON-NLS-1$
       this.addFolderAction.setToolTipText(PackagingUIMessages.getString("ConfigurationViewer.action.add.folder.tip"));//$NON-NLS-1$
       this.addFolderAction.setEnabled(true);
 
-      this.editAction =
-         new Action()
+      this.editAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doEdit();
-            }
+            doEdit();
+         }
 
-         };
+      };
       this.editAction.setText(PackagingUIMessages.getString("ConfigurationViewer.action.edit"));//$NON-NLS-1$
       this.editAction.setToolTipText(PackagingUIMessages.getString("ConfigurationViewer.action.edit.tip"));//$NON-NLS-1$
       this.editAction.setEnabled(true);
 
-      this.removeAction =
-         new Action()
+      this.removeAction = new Action()
+      {
+         public void run()
          {
-            public void run()
-            {
-               doRemove();
-            }
+            doRemove();
+         }
 
-         };
+      };
       this.removeAction.setText(PackagingUIMessages.getString("ConfigurationViewer.action.remove"));//$NON-NLS-1$
       this.removeAction.setToolTipText(PackagingUIMessages.getString("ConfigurationViewer.action.remove.tip"));//$NON-NLS-1$
       this.removeAction.setEnabled(true);
 
-      this.viewer.addDoubleClickListener(
-         new IDoubleClickListener()
+      this.viewer.addDoubleClickListener(new IDoubleClickListener()
+      {
+         public void doubleClick(DoubleClickEvent event)
          {
-            public void doubleClick(DoubleClickEvent event)
-            {
-               doEdit();
-            }
-         });
+            doEdit();
+         }
+      });
    }
-
 
    /** Description of the Method */
    private void doAddArchive()
@@ -286,7 +294,6 @@ public class ConfigurationViewer implements IPropertyChangeListener
       }
    }
 
-
    /** Description of the Method */
    private void doAddFile()
    {
@@ -300,7 +307,6 @@ public class ConfigurationViewer implements IPropertyChangeListener
       }
    }
 
-
    /** Description of the Method */
    private void doAddFolder()
    {
@@ -313,7 +319,6 @@ public class ConfigurationViewer implements IPropertyChangeListener
          this.refresh();
       }
    }
-
 
    /** Description of the Method */
    private void doAddStandardArchive()
@@ -333,7 +338,6 @@ public class ConfigurationViewer implements IPropertyChangeListener
       }
    }
 
-
    /** Description of the Method */
    private void doEdit()
    {
@@ -343,7 +347,8 @@ public class ConfigurationViewer implements IPropertyChangeListener
          if (data instanceof PackagingArchive)
          {
             PackagingArchive archive = (PackagingArchive) data;
-            ArchiveEditDialog dialog = new ArchiveEditDialog(AbstractPlugin.getShell(), this.project.getProject(), archive);
+            ArchiveEditDialog dialog = new ArchiveEditDialog(AbstractPlugin.getShell(), this.project.getProject(),
+                  archive);
             if (dialog.open() == IDialogConstants.OK_ID)
             {
                this.refresh();
@@ -375,7 +380,6 @@ public class ConfigurationViewer implements IPropertyChangeListener
       }
    }
 
-
    /** Description of the Method */
    private void doRemove()
    {
@@ -393,7 +397,6 @@ public class ConfigurationViewer implements IPropertyChangeListener
          this.refresh();
       }
    }
-
 
    /** Description of the Method */
    private void enableActions()
@@ -423,7 +426,6 @@ public class ConfigurationViewer implements IPropertyChangeListener
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -441,7 +443,6 @@ public class ConfigurationViewer implements IPropertyChangeListener
       manager.add(this.addStandardArchiveAction);
       manager.add(new Separator("Additions"));//$NON-NLS-1$
    }
-
 
    /**
     * Gets the usedElements attribute of the ConfigurationViewer object
@@ -472,7 +473,6 @@ public class ConfigurationViewer implements IPropertyChangeListener
       return used;
    }
 
-
    /**
     * Gets the usedElements attribute of the ConfigurationViewer object
     *
@@ -495,26 +495,23 @@ public class ConfigurationViewer implements IPropertyChangeListener
       return used;
    }
 
-
    /** Description of the Method */
    private void initContextMenu()
    {
       MenuManager menuManager = new MenuManager("#PopupMenu");//$NON-NLS-1$
       menuManager.setRemoveAllWhenShown(true);
-      menuManager.addMenuListener(
-         new IMenuListener()
+      menuManager.addMenuListener(new IMenuListener()
+      {
+         public void menuAboutToShow(IMenuManager manager)
          {
-            public void menuAboutToShow(IMenuManager manager)
-            {
-               enableActions();
-               fillContextMenu(manager);
-            }
+            enableActions();
+            fillContextMenu(manager);
+         }
 
-         });
+      });
       this.contextMenu = menuManager.createContextMenu(this.viewer.getControl());
       this.viewer.getControl().setMenu(contextMenu);
    }
-
 
    /**
     * Sets the input attribute of the ConfigurationViewer object

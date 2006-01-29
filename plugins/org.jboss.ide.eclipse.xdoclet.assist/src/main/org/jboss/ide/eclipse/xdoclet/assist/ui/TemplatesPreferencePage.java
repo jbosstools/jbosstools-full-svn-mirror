@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.ui;
 
@@ -27,21 +42,21 @@ public class TemplatesPreferencePage extends PreferencePage implements IWorkbenc
 {
    TemplateListViewer templateListViewer;
 
-
    /**Constructor for the TemplatesPreferencePage object */
    public TemplatesPreferencePage()
    {
       super();
-      this.setDescription(XDocletAssistMessages.getString("TemplatesPreferencePage.XDoclet_Tags_templates_available_for_completion_1"));//$NON-NLS-1$
+      this.setDescription(XDocletAssistMessages
+            .getString("TemplatesPreferencePage.XDoclet_Tags_templates_available_for_completion_1"));//$NON-NLS-1$
    }
-
 
    /**
     * @param workbench  Description of the Parameter
     * @see              org.eclipse.ui.IWorkbenchPreferencePage#init(IWorkbench)
     */
-   public void init(IWorkbench workbench) { }
-
+   public void init(IWorkbench workbench)
+   {
+   }
 
    /**
     * @return   Description of the Return Value
@@ -53,7 +68,6 @@ public class TemplatesPreferencePage extends PreferencePage implements IWorkbenc
       return true;
    }
 
-
    /**
     * @param parent  Description of the Parameter
     * @return        Description of the Return Value
@@ -63,14 +77,10 @@ public class TemplatesPreferencePage extends PreferencePage implements IWorkbenc
    {
       Composite topComp = new Composite(parent, SWT.NONE);
       topComp.setLayout(new FillLayout());
-      templateListViewer =
-            new TemplateListViewer(
-            XDocletAssistPlugin.getDefault().getTemplateList(),
-            topComp,
+      templateListViewer = new TemplateListViewer(XDocletAssistPlugin.getDefault().getTemplateList(), topComp,
             SWT.BORDER);
       return topComp;
    }
-
 
    /**
     * Create some empty space.
@@ -86,7 +96,6 @@ public class TemplatesPreferencePage extends PreferencePage implements IWorkbenc
       label.setLayoutData(gd);
    }
 
-
    /**
     * @see   org.eclipse.jface.preference.PreferencePage#performApply()
     */
@@ -95,7 +104,6 @@ public class TemplatesPreferencePage extends PreferencePage implements IWorkbenc
       super.performApply();
       templateListViewer.getViewer().refresh();
    }
-
 
    /**
     * @see   org.eclipse.jface.preference.PreferencePage#performDefaults()

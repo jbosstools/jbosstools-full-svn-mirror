@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.assist.contributor;
 
@@ -41,8 +56,7 @@ public class XMLAttributeValueContributor implements IAttributeValueContributor
       return false;
    }
 
-
-      /**
+   /**
     * Gets the attributeValueProposals attribute of the XMLAttributeValueContributor object
     *
     * @param holder     Description of the Parameter
@@ -54,67 +68,76 @@ public class XMLAttributeValueContributor implements IAttributeValueContributor
     * @param offset     Description of the Parameter
     * @return           The attributeValueProposals value
     */
-   public List getAttributeValueProposals(IReconcilierHolder holder, IDocument doc, XMLNode node, XMLNode attribute, char quote, String start, int offset)
+   public List getAttributeValueProposals(IReconcilierHolder holder, IDocument doc, XMLNode node, XMLNode attribute,
+         char quote, String start, int offset)
    {
-    // Get possible values
-    List words = this.getAttributeValues(holder, doc, node, attribute);
+      // Get possible values
+      List words = this.getAttributeValues(holder, doc, node, attribute);
 
-    // Build the completion proposals
-    List proposals = new ArrayList();
-    for (int i = 0; i < words.size(); i++)
-    {
-       String text = (String) words.get(i);
-       if (text.startsWith(start))
-       {
-          int replacementStart = offset - start.length();
-          String replacementString = text;
-          
-          if (quote == '\'' || quote == '"')
-          {                   	
-          	if(!endsWithQuote(doc, quote, start, replacementStart)) { // only place a quote if there already are one.
-          		replacementString = text + quote; 
-          	}
-  				
-			ICompletionProposal proposal = new CompletionProposal(replacementString, replacementStart, start.length(), replacementString.length(), JDTUIImages.getImage(IJDTUIConstants.IMG_OBJ_VALUE), text, null, null);
-             proposals.add(proposal);
-          }
-          else
-          {
-             ICompletionProposal proposal = new CompletionProposal('"' + text + '"', replacementStart, start.length(), text.length() + 2,
-                JDTUIImages.getImage(IJDTUIConstants.IMG_OBJ_VALUE), text, null, null);
-             proposals.add(proposal);
-          }
-       }
-    }
+      // Build the completion proposals
+      List proposals = new ArrayList();
+      for (int i = 0; i < words.size(); i++)
+      {
+         String text = (String) words.get(i);
+         if (text.startsWith(start))
+         {
+            int replacementStart = offset - start.length();
+            String replacementString = text;
 
-    return proposals;
+            if (quote == '\'' || quote == '"')
+            {
+               if (!endsWithQuote(doc, quote, start, replacementStart))
+               { // only place a quote if there already are one.
+                  replacementString = text + quote;
+               }
+
+               ICompletionProposal proposal = new CompletionProposal(replacementString, replacementStart, start
+                     .length(), replacementString.length(), JDTUIImages.getImage(IJDTUIConstants.IMG_OBJ_VALUE), text,
+                     null, null);
+               proposals.add(proposal);
+            }
+            else
+            {
+               ICompletionProposal proposal = new CompletionProposal('"' + text + '"', replacementStart,
+                     start.length(), text.length() + 2, JDTUIImages.getImage(IJDTUIConstants.IMG_OBJ_VALUE), text,
+                     null, null);
+               proposals.add(proposal);
+            }
+         }
+      }
+
+      return proposals;
    }
 
+   /**
+    * @param doc
+    * @param quote
+    * @param text
+    * @param replacementStart
+    * @param replacementString
+    * @return
+    */
+   private boolean endsWithQuote(IDocument doc, char quote, String text, int replacementStart)
+   {
+      try
+      {
+         if (doc.getLength() > (replacementStart + text.length() + 1))
+         {
+            if (quote == (doc.get(replacementStart + text.length(), 1).charAt(0)))
+            {
+               return true;
+            }
+         }
+      }
+      catch (BadLocationException bl)
+      {
+         // should not happen as we check for the length just before!
+         bl.printStackTrace();
+      }
+      return false;
+   }
 
    /**
- * @param doc
- * @param quote
- * @param text
- * @param replacementStart
- * @param replacementString
- * @return
- */
-private boolean endsWithQuote(IDocument doc, char quote, String text, int replacementStart) {
-	try {
-		if(doc.getLength()>(replacementStart+text.length()+1)) {
-			if(quote==(doc.get(replacementStart+text.length(),1).charAt(0))) {
-				return true; 
-			} 
-		}
-	} catch(BadLocationException bl) {
-		// should not happen as we check for the length just before!
-		bl.printStackTrace();
-	}
-	return false;
-}
-
-
-/**
     * Gets the attributeValues attribute of the XMLAttributeValueContributor object
     *
     * @param h          Description of the Parameter
@@ -143,7 +166,7 @@ private boolean endsWithQuote(IDocument doc, char quote, String text, int replac
       // Add the proposals from namespaces
       if (namespaces != null)
       {
-         for (Iterator it = namespaces.keySet().iterator(); it.hasNext(); )
+         for (Iterator it = namespaces.keySet().iterator(); it.hasNext();)
          {
             String key = (String) it.next();
             Namespace ns = (Namespace) namespaces.get(key);

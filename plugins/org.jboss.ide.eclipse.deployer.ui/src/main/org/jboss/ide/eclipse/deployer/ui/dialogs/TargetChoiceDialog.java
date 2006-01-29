@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.deployer.ui.dialogs;
 
@@ -35,15 +50,17 @@ import org.jboss.ide.eclipse.ui.util.StringViewSorter;
  */
 public class TargetChoiceDialog extends Dialog
 {
-	private static Object lastUsed;
-	
+   private static Object lastUsed;
+
    /** Description of the Field */
    private List choices;
+
    /** Description of the Field */
    private ITarget data = null;
+
    /** Description of the Field */
    private StructuredViewer viewer;
-   
+
    /**
     *Constructor for the DataChoiceDialog object
     *
@@ -57,7 +74,6 @@ public class TargetChoiceDialog extends Dialog
       this.choices = choices;
    }
 
-
    /**
     * Gets the xDocletData attribute of the DataChoiceDialog object
     *
@@ -67,7 +83,6 @@ public class TargetChoiceDialog extends Dialog
    {
       return this.data;
    }
-
 
    /**
     * Description of the Method
@@ -79,8 +94,6 @@ public class TargetChoiceDialog extends Dialog
       super.configureShell(shell);
       shell.setText(DeployerUIMessages.getString("TargetChoiceDialog.title"));//$NON-NLS-1$
    }
-
-
 
    /**
     * Description of the Method
@@ -95,37 +108,40 @@ public class TargetChoiceDialog extends Dialog
 
       Table dataList = new Table(composite, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
       dataList.setLayoutData(new GridData(GridData.FILL_BOTH));
-      
+
       this.viewer = new TableViewer(dataList);
       this.viewer.setContentProvider(new ListContentProvider());
       this.viewer.setLabelProvider(new TargetLabelProvider());
       this.viewer.setSorter(new StringViewSorter());
       this.viewer.setInput(this.choices);
-      this.viewer.addSelectionChangedListener(new ISelectionChangedListener () {
-    	public void selectionChanged(SelectionChangedEvent event) {	
-    		if (!viewer.getSelection().isEmpty()) {
-    			getButton(OK).setEnabled(true);
-    		}
-    	}
+      this.viewer.addSelectionChangedListener(new ISelectionChangedListener()
+      {
+         public void selectionChanged(SelectionChangedEvent event)
+         {
+            if (!viewer.getSelection().isEmpty())
+            {
+               getButton(OK).setEnabled(true);
+            }
+         }
       });
       this.viewer.addDoubleClickListener(new IDoubleClickListener()
+      {
+         public void doubleClick(DoubleClickEvent event)
          {
-            public void doubleClick(DoubleClickEvent event)
-            {
-               okPressed();
-            }
-         });
-      
+            okPressed();
+         }
+      });
+
       return composite;
    }
-   
-   protected void createButtonsForButtonBar(Composite parent) {
-	   super.createButtonsForButtonBar(parent);
 
-	   getButton(OK).setEnabled(false);
-	   setSelectedTarget(lastUsed);
+   protected void createButtonsForButtonBar(Composite parent)
+   {
+      super.createButtonsForButtonBar(parent);
+
+      getButton(OK).setEnabled(false);
+      setSelectedTarget(lastUsed);
    }
-
 
    /** Description of the Method */
    protected void okPressed()
@@ -135,21 +151,21 @@ public class TargetChoiceDialog extends Dialog
       {
          this.data = (ITarget) selection.getFirstElement();
       }
-      
+
       lastUsed = selection.getFirstElement();
-      
+
       super.okPressed();
    }
 
-
-   private void setSelectedTarget (Object target)
+   private void setSelectedTarget(Object target)
    {
-	   if (choices != null && choices.size() > 0)
-	   {
-		   if (target != null && choices.contains(target)) {
-			   viewer.setSelection(new StructuredSelection(target));
-			   getButton(OK).setEnabled(true);
-		   }
-	   }
+      if (choices != null && choices.size() > 0)
+      {
+         if (target != null && choices.contains(target))
+         {
+            viewer.setSelection(new StructuredSelection(target));
+            getButton(OK).setEnabled(true);
+         }
+      }
    }
 }

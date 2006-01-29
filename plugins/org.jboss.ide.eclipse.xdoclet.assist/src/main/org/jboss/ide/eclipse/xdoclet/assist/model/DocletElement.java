@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model;
 
@@ -28,18 +43,22 @@ public class DocletElement implements Serializable
 {
    /** Description of the Field */
    protected String codename = null;
+
    /** Description of the Field */
    protected String conditionDescription;
+
    /** Description of the Field */
    protected SortedKeyTreeNode node;
+
    /** Description of the Field */
    protected DocletTree tree;
+
    private ConditionTree conditionTree;
 
    private String helpText;
+
    // The pattern to search a string like "${classname}HomeRemote" for ${classname}
    private final static String VALUE_PARSER_PATTERN = "\\$\\{\\w+\\}";//$NON-NLS-1$
-
 
    /**
     *Constructor for the DocletElement object
@@ -55,7 +74,6 @@ public class DocletElement implements Serializable
       conditionTree = new ConditionTree(null);
    }
 
-
    /**
     * Adds a feature to the Child attribute of the DocletElement object
     *
@@ -68,7 +86,6 @@ public class DocletElement implements Serializable
       DocletElement child = new DocletElement(childNode, tree);
       return child;
    }
-
 
    /**
     * DocletElements are equals if there nodes are equals. The latter is determined by the key. This makes sense
@@ -88,7 +105,6 @@ public class DocletElement implements Serializable
       return this.node.equals(element.node);
    }
 
-
    /**
     * Gets the child attribute of the DocletElement object
     *
@@ -100,7 +116,6 @@ public class DocletElement implements Serializable
       return (DocletElement) node.getChildObject(name, tree.getKey());
    }
 
-
    /**
     * Gets the child attribute of the DocletElement object
     *
@@ -109,8 +124,7 @@ public class DocletElement implements Serializable
     * @return                        The child value
     * @exception JavaModelException  Description of the Exception
     */
-   public DocletElement getChild(String name, IMember member)
-          throws JavaModelException
+   public DocletElement getChild(String name, IMember member) throws JavaModelException
    {
       DocletElement child = getChild(name);
       if (child != null && child.getConditionTree().eval(member))
@@ -119,7 +133,6 @@ public class DocletElement implements Serializable
       }
       return null;
    }
-
 
    /**
     * Gets the childrenCount attribute of the DocletElement object
@@ -130,7 +143,6 @@ public class DocletElement implements Serializable
    {
       return getChildrenElements().length;
    }
-
 
    /**
     * Gets the childrenCount attribute of the DocletElement object
@@ -144,7 +156,6 @@ public class DocletElement implements Serializable
       return getChildrenElements(member).length;
    }
 
-
    /**
     * Returns the children.
     *
@@ -152,8 +163,7 @@ public class DocletElement implements Serializable
     * @return                        TreeMap
     * @exception JavaModelException  Description of the Exception
     */
-   public DocletElement[] getChildrenElements(IMember member)
-          throws JavaModelException
+   public DocletElement[] getChildrenElements(IMember member) throws JavaModelException
    {
       if (member == null)
       {
@@ -171,7 +181,6 @@ public class DocletElement implements Serializable
       return (DocletElement[]) list.toArray(new DocletElement[list.size()]);
    }
 
-
    /**
     * Gets the childrenElements attribute of the DocletElement object
     *
@@ -181,7 +190,6 @@ public class DocletElement implements Serializable
    {
       return getChildrenElements(DocletElement.class.getName());
    }
-
 
    /**
     * Gets the childrenElements attribute of the DocletElement object
@@ -194,7 +202,6 @@ public class DocletElement implements Serializable
       List list = node.getChildrenObjects(key);
       return (DocletElement[]) list.toArray(new DocletElement[list.size()]);
    }
-
 
    /**
     * Gets the codeName attribute of the DocletElement object
@@ -210,7 +217,6 @@ public class DocletElement implements Serializable
       return codename;
    }
 
-
    /**
     * Returns the conditionDescription.
     *
@@ -220,7 +226,6 @@ public class DocletElement implements Serializable
    {
       return conditionDescription;
    }
-
 
    /**
     * Returns the conditionTree.
@@ -232,7 +237,6 @@ public class DocletElement implements Serializable
       return conditionTree;
    }
 
-
    /**
     * Returns the helpText.
     *
@@ -242,7 +246,6 @@ public class DocletElement implements Serializable
    {
       return helpText;
    }
-
 
    /**
     * Gets the name attribute of the DocletElement object
@@ -254,7 +257,6 @@ public class DocletElement implements Serializable
       return node.getName();
    }
 
-
    /**
     * Returns the node.
     *
@@ -265,7 +267,6 @@ public class DocletElement implements Serializable
       return node;
    }
 
-
    /**
     * Gets the parent attribute of the DocletElement object
     *
@@ -275,12 +276,10 @@ public class DocletElement implements Serializable
    {
       if (node.getParentNode() != null)
       {
-         return (DocletElement) node.getParentNode().getObject(
-               DocletElement.class.getName());
+         return (DocletElement) node.getParentNode().getObject(DocletElement.class.getName());
       }
       return null;
    }
-
 
    /**
     * Gets the tree attribute of the DocletElement object
@@ -292,7 +291,6 @@ public class DocletElement implements Serializable
       return tree;
    }
 
-
    /**
     * Gets the type attribute of the DocletElement object
     *
@@ -303,31 +301,26 @@ public class DocletElement implements Serializable
       final int parentcount = node.getParentCount();
       switch (parentcount)
       {
-         case 0:
+         case 0 :
             return DocletType.NAMESPACE;
-         case 1:
+         case 1 :
             return DocletType.COMMAND;
-         case 2:
-            if (node.getAdditionalAttributes()
-                  .get(IDocletConstants.ATTR_DISCRETE_VALUE_RANGE)
-                  != null)
+         case 2 :
+            if (node.getAdditionalAttributes().get(IDocletConstants.ATTR_DISCRETE_VALUE_RANGE) != null)
             {
                return DocletType.DISCRETE_ATTRIBUTE;
             }
             return DocletType.NON_DISCRETE_ATTRIBUTE;
-         case 3:
-            if (node.getAdditionalAttributes()
-                  .get(IDocletConstants.ATTR_PARSING)
-                  != null)
+         case 3 :
+            if (node.getAdditionalAttributes().get(IDocletConstants.ATTR_PARSING) != null)
             {
                return DocletType.VALUE_WITH_VARIABLE;
             }
             return DocletType.VALUE_WITHOUT_VARIABLE;
-         default:
+         default :
             return null;
       }
    }
-
 
    /**
     * Description of the Method
@@ -341,7 +334,6 @@ public class DocletElement implements Serializable
       return getChildrenElements(member).length > 0;
    }
 
-
    /**
     * Description of the Method
     *
@@ -351,7 +343,6 @@ public class DocletElement implements Serializable
    {
       return getChildrenElements().length > 0;
    }
-
 
    /**
     * See equals
@@ -363,7 +354,6 @@ public class DocletElement implements Serializable
    {
       return node.hashCode();
    }
-
 
    /**
     * Method replaceVariables.
@@ -380,9 +370,7 @@ public class DocletElement implements Serializable
          throw new IllegalArgumentException();
       }
       String name = getCodeName();
-      if ((node.getAdditionalAttributes().get(IDocletConstants.ATTR_PARSING)
-            == null)
-            || systemVariables == null)
+      if ((node.getAdditionalAttributes().get(IDocletConstants.ATTR_PARSING) == null) || systemVariables == null)
       {
          return getCodeName();
       }
@@ -408,9 +396,7 @@ public class DocletElement implements Serializable
       String transformed = name;
       while (valueParserMatcher.contains(nameInput, PatternStore.getPattern(VALUE_PARSER_PATTERN)))
       {
-         variable =
-               valueParserMatcher.getMatch().group(0).substring(
-               2,
+         variable = valueParserMatcher.getMatch().group(0).substring(2,
                valueParserMatcher.getMatch().group(0).length() - 1);
          // if in the xml the variable used in the value-attribute name is defined in the
          // variables-section get the attributes for this variable otherwise it's null
@@ -418,14 +404,11 @@ public class DocletElement implements Serializable
          {
             // if the system-variable for the variable-tag in the xml is passed by the client,
             // then get the value passed by the client for that variable otherwise it's null
-            if ((systemVariableValue =
-                  (String) systemVariables.get(variablePattern.getSystemVariable()))
-                  != null)
+            if ((systemVariableValue = (String) systemVariables.get(variablePattern.getSystemVariable())) != null)
             {
                // i.e. AdressBean to Adress
-               if (variableMatcher.contains(
-                     new PatternMatcherInput(systemVariableValue),
-                     variablePattern.getCompiledPattern()))
+               if (variableMatcher.contains(new PatternMatcherInput(systemVariableValue), variablePattern
+                     .getCompiledPattern()))
                {
                   replacement = variableMatcher.getMatch().group(1);
                }
@@ -433,42 +416,28 @@ public class DocletElement implements Serializable
                {
                   replacement = "";//$NON-NLS-1$
                }
-               Util.substitute(
-                     parsedName = new StringBuffer(),
-                     valueParserMatcher,
-                     PatternStore.getPattern(VALUE_PARSER_PATTERN),
-                     new StringSubstitution(replacement),
-                     transformed,
-                     1);
+               Util.substitute(parsedName = new StringBuffer(), valueParserMatcher, PatternStore
+                     .getPattern(VALUE_PARSER_PATTERN), new StringSubstitution(replacement), transformed, 1);
                transformed = parsedName.toString();
             }
             else
             {
-               Util.substitute(
-                     parsedName = new StringBuffer(),
-                     valueParserMatcher,
-                     PatternStore.getPattern(VALUE_PARSER_PATTERN),
-                     new StringSubstitution(""), //$NON-NLS-1$
-               transformed,
-                     1);
+               Util.substitute(parsedName = new StringBuffer(), valueParserMatcher, PatternStore
+                     .getPattern(VALUE_PARSER_PATTERN), new StringSubstitution(""), //$NON-NLS-1$
+                     transformed, 1);
                transformed = parsedName.toString();
             }
          }
          else
          {
-            Util.substitute(
-                  parsedName = new StringBuffer(),
-                  valueParserMatcher,
-                  PatternStore.getPattern(VALUE_PARSER_PATTERN),
-                  new StringSubstitution(""), //$NON-NLS-1$
-            transformed,
-                  1);
+            Util.substitute(parsedName = new StringBuffer(), valueParserMatcher, PatternStore
+                  .getPattern(VALUE_PARSER_PATTERN), new StringSubstitution(""), //$NON-NLS-1$
+                  transformed, 1);
          }
          transformed = parsedName.toString();
       }
       return transformed;
    }
-
 
    /**
     * Sets the codename.
@@ -480,7 +449,6 @@ public class DocletElement implements Serializable
       this.codename = codename;
    }
 
-
    /**
     * Sets the conditionDescription.
     *
@@ -491,7 +459,6 @@ public class DocletElement implements Serializable
       this.conditionDescription = conditionDescription;
    }
 
-
    /**
     * Sets the helpText.
     *
@@ -501,7 +468,6 @@ public class DocletElement implements Serializable
    {
       this.helpText = helpText;
    }
-
 
    /**
     * @return   Description of the Return Value

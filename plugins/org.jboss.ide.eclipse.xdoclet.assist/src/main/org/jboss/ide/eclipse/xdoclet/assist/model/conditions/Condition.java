@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model.conditions;
 
@@ -27,29 +42,32 @@ public abstract class Condition implements Serializable
 {
    /** Description of the Field */
    protected IMember cachedMember;
+
    /** Description of the Field */
    protected boolean cachedResult;
+
    /** Description of the Field */
    protected int maximumNumberOfChildren = 0;
+
    /** Description of the Field */
    protected Condition parent;
+
    /** Description of the Field */
    protected ConditionTree tree;
 
    private final ArrayList childConditions = new ArrayList();
+
    /** Description of the Field */
    public static int UNLIMITED_NUMBER_OF_CHILDREN = -1;
 
    /** for debugging */
    private static String indent = "                                  ";//$NON-NLS-1$
 
-
    /**Constructor for the Condition object */
    public Condition()
    {
       super();
    }
-
 
    /**
     * Adds a feature to the ChildCondition attribute of the Condition object
@@ -76,7 +94,6 @@ public abstract class Condition implements Serializable
       }
    }
 
-
    /**
     * @param member                  Description of the Parameter
     * @return                        boolean
@@ -88,14 +105,13 @@ public abstract class Condition implements Serializable
       {
          return true;
       }
-//		if (member.equals(cachedMember)) {
-//			System.out.println("cach");
-//			return cachedResult;
-//		}
-//		cachedMember = member;
+      //		if (member.equals(cachedMember)) {
+      //			System.out.println("cach");
+      //			return cachedResult;
+      //		}
+      //		cachedMember = member;
       return (cachedResult = evalInternal(member));
    }
-
 
    /**
     * Gets the childConditions attribute of the Condition object
@@ -107,7 +123,6 @@ public abstract class Condition implements Serializable
       return childConditions;
    }
 
-
    /**
     * Gets the childConditionsCount attribute of the Condition object
     *
@@ -117,7 +132,6 @@ public abstract class Condition implements Serializable
    {
       return childConditions.size();
    }
-
 
    /**
     * Returns the maximumNumberOfChildren.
@@ -129,7 +143,6 @@ public abstract class Condition implements Serializable
       return maximumNumberOfChildren;
    }
 
-
    /**
     * Returns the parent.
     *
@@ -140,7 +153,6 @@ public abstract class Condition implements Serializable
       return parent;
    }
 
-
    /**
     * Returns the tree.
     *
@@ -150,7 +162,6 @@ public abstract class Condition implements Serializable
    {
       return tree;
    }
-
 
    /**
     * Description of the Method
@@ -173,7 +184,6 @@ public abstract class Condition implements Serializable
       }
    }
 
-
    /** Description of the Method */
    public void remove()
    {
@@ -187,7 +197,6 @@ public abstract class Condition implements Serializable
       }
    }
 
-
    /**
     * Sets the maximumNumberOfChildren.
     *
@@ -197,7 +206,6 @@ public abstract class Condition implements Serializable
    {
       this.maximumNumberOfChildren = maximumNumberOfChildren;
    }
-
 
    /**
     * Sets the parent.
@@ -209,7 +217,6 @@ public abstract class Condition implements Serializable
       this.parent = parent;
    }
 
-
    /**
     * Sets the tree.
     *
@@ -220,7 +227,6 @@ public abstract class Condition implements Serializable
       this.tree = tree;
    }
 
-
    /**
     * Method evalInternal.
     *
@@ -228,7 +234,6 @@ public abstract class Condition implements Serializable
     * @return                        boolean
     * @exception JavaModelException  Description of the Exception
     */
-   protected abstract boolean evalInternal(IMember member)
-          throws JavaModelException;
+   protected abstract boolean evalInternal(IMember member) throws JavaModelException;
 
 }

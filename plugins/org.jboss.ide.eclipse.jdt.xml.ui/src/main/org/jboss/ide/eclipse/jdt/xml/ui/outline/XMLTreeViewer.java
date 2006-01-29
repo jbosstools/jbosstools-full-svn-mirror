@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.outline;
 
@@ -37,7 +52,6 @@ public class XMLTreeViewer extends TreeViewer
     */
    private Item fReusedExpandedItem;
 
-
    /**
     *Constructor for the XMLTreeViewer object
     *
@@ -49,7 +63,6 @@ public class XMLTreeViewer extends TreeViewer
       setAutoExpandLevel(2);
    }
 
-
    /**
     * Description of the Method
     *
@@ -60,31 +73,29 @@ public class XMLTreeViewer extends TreeViewer
       if (getSorter() == null)
       {
          Display d = getTree().getDisplay();
-         d.asyncExec(
-            new Runnable()
+         d.asyncExec(new Runnable()
+         {
+            public void run()
             {
-               public void run()
+               /*
+                * if (getTree().getData() != null) {
+                * update(getTree(), (XMLElementList) getTree().getData());
+                * }
+                */
+               //System.out.println("CCC: found for doc:"+getTree().getData());
+               Widget w = findItem(delta);
+               if (w != null)
                {
-                  /*
-                   * if (getTree().getData() != null) {
-                   * update(getTree(), (XMLElementList) getTree().getData());
-                   * }
-                   */
-                  //System.out.println("CCC: found for doc:"+getTree().getData());
-                  Widget w = findItem(delta);
-                  if (w != null)
-                  {
-                     update(w, delta);
-                  }
+                  update(w, delta);
                }
-            });
+            }
+         });
       }
       else
       {
          refresh();
       }
    }
-
 
    /**
     * Description of the Method
@@ -126,7 +137,6 @@ public class XMLTreeViewer extends TreeViewer
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -136,7 +146,8 @@ public class XMLTreeViewer extends TreeViewer
     */
    protected boolean filtered(XMLNode parent, XMLNode child)
    {
-      Object[] result = new Object[]{child};
+      Object[] result = new Object[]
+      {child};
       ViewerFilter[] filters = getFilters();
       for (int i = 0; i < filters.length; i++)
       {
@@ -149,7 +160,6 @@ public class XMLTreeViewer extends TreeViewer
 
       return false;
    }
-
 
    /**
     * Description of the Method
@@ -187,7 +197,6 @@ public class XMLTreeViewer extends TreeViewer
       fReusedExpandedItem = null;
    }
 
-
    /**
     * Description of the Method
     *
@@ -222,7 +231,8 @@ public class XMLTreeViewer extends TreeViewer
                {
                   if (item.getData() != null)
                   {
-                     if ((affectedElement.getLabel(null) != null) && affectedElement.getLabel(null).equals(item.getText()))
+                     if ((affectedElement.getLabel(null) != null)
+                           && affectedElement.getLabel(null).equals(item.getText()))
                      {
                         item.setData(affectedElement);
                      }

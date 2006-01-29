@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model;
 
@@ -22,10 +37,12 @@ public class Variable implements Serializable
    private Pattern compiledPattern;
 
    private Perl5Compiler compiler = new Perl5Compiler();
-   private String pattern;
-   private String systemVariable;
-   private String variable;
 
+   private String pattern;
+
+   private String systemVariable;
+
+   private String variable;
 
    /**
     *Constructor for the Variable object
@@ -41,7 +58,6 @@ public class Variable implements Serializable
       setVariable(variable);
    }
 
-
    /**
     * Gets the compiledPattern attribute of the Variable object
     *
@@ -51,7 +67,6 @@ public class Variable implements Serializable
    {
       return compiledPattern;
    }
-
 
    /**
     * Returns the pattern.
@@ -63,7 +78,6 @@ public class Variable implements Serializable
       return pattern;
    }
 
-
    /**
     * Returns the systemVariable.
     *
@@ -74,7 +88,6 @@ public class Variable implements Serializable
       return systemVariable;
    }
 
-
    /**
     * Returns the variable.
     *
@@ -84,7 +97,6 @@ public class Variable implements Serializable
    {
       return variable;
    }
-
 
    /**
     * Sets the pattern.
@@ -108,7 +120,6 @@ public class Variable implements Serializable
       this.pattern = pattern;
    }
 
-
    /**
     * Sets the systemVariable.
     *
@@ -122,7 +133,6 @@ public class Variable implements Serializable
       }
       this.systemVariable = systemVariable;
    }
-
 
    /**
     * Sets the variable.

@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.ui;
 
@@ -41,21 +56,27 @@ public class CompletionProposalPopup
 {
    /** Description of the Field */
    protected Shell fParentShell, fProposalShell;
+
    /** Description of the Field */
    protected TableViewer fProposalTableViewer;
+
    /** Description of the Field */
    protected String[] helptexts;
+
    /** Description of the Field */
    protected ListenerList listenerList = new ListenerList();
+
    /** Description of the Field */
    protected Object[] proposals = new Object[0];
+
    /** Description of the Field */
    public final static int HEIGHT_IN_ITEMS = 5;
+
    /** Description of the Field */
    public final static char KEY_ACTION_CHAR = 13;
+
    /** Description of the Field */
    public final static int WIDTH_IN_PIXELS = 150;
-
 
    /**
     * Constructor for CompletionProposalPopup.
@@ -71,7 +92,6 @@ public class CompletionProposalPopup
       this.fParentShell = parentShell;
    }
 
-
    /**
     * Adds a feature to the ProposalListener attribute of the CompletionProposalPopup object
     *
@@ -81,7 +101,6 @@ public class CompletionProposalPopup
    {
       listenerList.add(listener);
    }
-
 
    /**
     * Returns the helptexts.
@@ -93,7 +112,6 @@ public class CompletionProposalPopup
       return helptexts;
    }
 
-
    /**
     * Returns the parentShell.
     *
@@ -104,7 +122,6 @@ public class CompletionProposalPopup
       return fParentShell;
    }
 
-
    /**
     * Gets the proposalListener attribute of the CompletionProposalPopup object
     *
@@ -112,11 +129,9 @@ public class CompletionProposalPopup
     */
    public IProposalListener[] getProposalListener()
    {
-      return (IProposalListener[]) Arrays.asList(
-            listenerList.getListeners()).toArray(
+      return (IProposalListener[]) Arrays.asList(listenerList.getListeners()).toArray(
             new IProposalListener[listenerList.size()]);
    }
-
 
    /**
     * Method getProposalShell.
@@ -128,7 +143,6 @@ public class CompletionProposalPopup
       return fProposalShell;
    }
 
-
    /**
     * Returns the proposals.
     *
@@ -138,7 +152,6 @@ public class CompletionProposalPopup
    {
       return proposals;
    }
-
 
    /**
     * Method getViewer.
@@ -150,13 +163,11 @@ public class CompletionProposalPopup
       return fProposalTableViewer;
    }
 
-
    /** Description of the Method */
    public void removeAllProposalListeners()
    {
       listenerList.clear();
    }
-
 
    /**
     * Description of the Method
@@ -168,7 +179,6 @@ public class CompletionProposalPopup
       listenerList.remove(listener);
    }
 
-
    /**
     * Description of the Method
     *
@@ -177,11 +187,7 @@ public class CompletionProposalPopup
     * @param point      Description of the Parameter
     * @param sorter     Description of the Parameter
     */
-   public void showFreshPopup(
-         Object[] proposals,
-         String[] helptexts,
-         Point point,
-         ViewerSorter sorter)
+   public void showFreshPopup(Object[] proposals, String[] helptexts, Point point, ViewerSorter sorter)
    {
       if (proposals == null || proposals.length == 0)
       {
@@ -202,10 +208,8 @@ public class CompletionProposalPopup
       this.proposals = proposals;
       this.helptexts = helptexts;
       fProposalTableViewer.refresh();
-      fProposalTableViewer.setSelection(
-            new StructuredSelection(fProposalTableViewer.getElementAt(0)));
+      fProposalTableViewer.setSelection(new StructuredSelection(fProposalTableViewer.getElementAt(0)));
    }
-
 
    /** Description of the Method */
    protected void doCloseWithoutProposal()
@@ -214,19 +218,16 @@ public class CompletionProposalPopup
       fProposalShell.dispose();
    }
 
-
    /** Description of the Method */
    protected void doSelection()
    {
-      IStructuredSelection selection =
-            ((IStructuredSelection) fProposalTableViewer.getSelection());
+      IStructuredSelection selection = ((IStructuredSelection) fProposalTableViewer.getSelection());
       if (!selection.isEmpty())
       {
          fProposalShell.dispose();
          fireChange(selection.toArray());
       }
    }
-
 
    /** Description of the Method */
    protected void init()
@@ -236,13 +237,9 @@ public class CompletionProposalPopup
       layout.marginWidth = 0;
       layout.marginHeight = 0;
       fProposalShell.setLayout(layout);
-      fProposalTableViewer =
-            new TableViewer(
-            fProposalShell,
-            SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI);
+      fProposalTableViewer = new TableViewer(fProposalShell, SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI);
       GridData data = new GridData(GridData.FILL_BOTH);
-      data.heightHint =
-            fProposalTableViewer.getTable().getItemHeight() * HEIGHT_IN_ITEMS;
+      data.heightHint = fProposalTableViewer.getTable().getItemHeight() * HEIGHT_IN_ITEMS;
       data.widthHint = WIDTH_IN_PIXELS;
       fProposalTableViewer.getTable().setLayoutData(data);
       fProposalTableViewer.setLabelProvider(new LocalLableProvider());
@@ -250,50 +247,46 @@ public class CompletionProposalPopup
       fProposalTableViewer.setInput(new Object());
       fProposalShell.pack();
       fProposalShell.open();
-      fProposalTableViewer.getTable().addMouseListener(
-         new MouseAdapter()
+      fProposalTableViewer.getTable().addMouseListener(new MouseAdapter()
+      {
+         public void mouseDoubleClick(MouseEvent e)
          {
-            public void mouseDoubleClick(MouseEvent e)
+            doSelection();
+         }
+      });
+      fProposalTableViewer.getTable().addFocusListener(new FocusListener()
+      {
+         public void focusGained(FocusEvent e)
+         {
+         }
+
+         public void focusLost(FocusEvent e)
+         {
+            doCloseWithoutProposal();
+         }
+      });
+      fProposalTableViewer.getTable().addKeyListener(new KeyAdapter()
+      {
+         public void keyPressed(KeyEvent e)
+         {
+            if (e.character == KEY_ACTION_CHAR)
             {
                doSelection();
             }
-         });
-      fProposalTableViewer.getTable().addFocusListener(
-         new FocusListener()
+         }
+      });
+      fProposalShell.addDisposeListener(new DisposeListener()
+      {
+         /**
+          * @param e  Description of the Parameter
+          * @see      org.eclipse.swt.events.DisposeListener#widgetDisposed(org.eclipse.swt.events.DisposeEvent)
+          */
+         public void widgetDisposed(DisposeEvent e)
          {
-            public void focusGained(FocusEvent e) { }
-
-
-            public void focusLost(FocusEvent e)
-            {
-               doCloseWithoutProposal();
-            }
-         });
-      fProposalTableViewer.getTable().addKeyListener(
-         new KeyAdapter()
-         {
-            public void keyPressed(KeyEvent e)
-            {
-               if (e.character == KEY_ACTION_CHAR)
-               {
-                  doSelection();
-               }
-            }
-         });
-      fProposalShell.addDisposeListener(
-         new DisposeListener()
-         {
-            /**
-             * @param e  Description of the Parameter
-             * @see      org.eclipse.swt.events.DisposeListener#widgetDisposed(org.eclipse.swt.events.DisposeEvent)
-             */
-            public void widgetDisposed(DisposeEvent e)
-            {
-               // System.out.println("DISP " + proposals[0]);
-            }
-         });
+            // System.out.println("DISP " + proposals[0]);
+         }
+      });
    }
-
 
    /**
     * Description of the Method
@@ -312,8 +305,7 @@ public class CompletionProposalPopup
          }
          for (int i = 0; i < listeners.length; i++)
          {
-            IProposalListener listener =
-                  (IProposalListener) listeners[i];
+            IProposalListener listener = (IProposalListener) listeners[i];
             if (proposals != null)
             {
                listener.handleProposal(event);
@@ -326,7 +318,6 @@ public class CompletionProposalPopup
       }
    }
 
-
    /**
     * Description of the Class
     *
@@ -334,12 +325,12 @@ public class CompletionProposalPopup
     * @version   $Revision$
     * @created   17 mai 2003
     */
-   protected class LocalContentProvider
-          implements IStructuredContentProvider
+   protected class LocalContentProvider implements IStructuredContentProvider
    {
       /** Description of the Method */
-      public void dispose() { }
-
+      public void dispose()
+      {
+      }
 
       /**
        * Gets the elements attribute of the LocalContentProvider object
@@ -352,7 +343,6 @@ public class CompletionProposalPopup
          return proposals;
       }
 
-
       /**
        * Description of the Method
        *
@@ -360,12 +350,10 @@ public class CompletionProposalPopup
        * @param oldInput  Description of the Parameter
        * @param newInput  Description of the Parameter
        */
-      public void inputChanged(
-            Viewer viewer,
-            Object oldInput,
-            Object newInput) { }
+      public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
+      {
+      }
    }
-
 
    /**
     * Description of the Class
@@ -381,12 +369,14 @@ public class CompletionProposalPopup
        *
        * @param listener  The feature to be added to the Listener attribute
        */
-      public void addListener(ILabelProviderListener listener) { }
-
+      public void addListener(ILabelProviderListener listener)
+      {
+      }
 
       /** Description of the Method */
-      public void dispose() { }
-
+      public void dispose()
+      {
+      }
 
       /**
        * Gets the columnImage attribute of the LocalLableProvider object
@@ -400,7 +390,6 @@ public class CompletionProposalPopup
          return ImageStore.getImage(element);
       }
 
-
       /**
        * Gets the columnText attribute of the LocalLableProvider object
        *
@@ -412,7 +401,6 @@ public class CompletionProposalPopup
       {
          return element.toString();
       }
-
 
       /**
        * Gets the labelProperty attribute of the LocalLableProvider object
@@ -426,13 +414,14 @@ public class CompletionProposalPopup
          return false;
       }
 
-
       /**
        * Description of the Method
        *
        * @param listener  Description of the Parameter
        */
-      public void removeListener(ILabelProviderListener listener) { }
+      public void removeListener(ILabelProviderListener listener)
+      {
+      }
    }
 
 }

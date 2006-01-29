@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.jsp.core.compiler.jasper;
 
@@ -29,19 +44,27 @@ import org.apache.jasper.servlet.JspCServletContext;
 public class JSPCompilationEnvironment implements Options
 {
    private ServletContext context;
+
    private ErrorDispatcher errDispatcher;
+
    private String javaEncoding = "UTF-8";//$NON-NLS-1$
+
    private JspConfig jspConfig;
+
    private JspRuntimeContext rctxt;
+
    private File scratchDir;
+
    private TagPluginManager tagPluginManager;
+
    private TldLocationsCache tldLocationsCache;
+
    private String uriRoot;
 
-
    /**Constructor for the JSPCompilationEnvironment object */
-   public JSPCompilationEnvironment() { }
-
+   public JSPCompilationEnvironment()
+   {
+   }
 
    /**
     * Description of the Method
@@ -53,7 +76,6 @@ public class JSPCompilationEnvironment implements Options
       return false;
    }
 
-
    /**
     * Gets the checkInterval attribute of the JSPCompilationEnvironment object
     *
@@ -63,7 +85,6 @@ public class JSPCompilationEnvironment implements Options
    {
       return 0;
    }
-
 
    /**
     * Gets the classDebugInfo attribute of the JSPCompilationEnvironment object
@@ -75,7 +96,6 @@ public class JSPCompilationEnvironment implements Options
       return true;
    }
 
-
    /**
     * Gets the classPath attribute of the JSPCompilationEnvironment object
     *
@@ -85,7 +105,6 @@ public class JSPCompilationEnvironment implements Options
    {
       return null;
    }
-
 
    /**
     * Gets the compiler attribute of the JSPCompilationEnvironment object
@@ -97,7 +116,6 @@ public class JSPCompilationEnvironment implements Options
       return null;
    }
 
-
    /**
     * Gets the context attribute of the JSPCompilationEnvironment object
     *
@@ -107,7 +125,6 @@ public class JSPCompilationEnvironment implements Options
    {
       return context;
    }
-
 
    /**
     * Gets the development attribute of the JSPCompilationEnvironment object
@@ -119,7 +136,6 @@ public class JSPCompilationEnvironment implements Options
       return false;
    }
 
-
    /**
     * Gets the errDispatcher attribute of the JSPCompilationEnvironment object
     *
@@ -129,7 +145,6 @@ public class JSPCompilationEnvironment implements Options
    {
       return errDispatcher;
    }
-
 
    /**
     * Gets the errorOnUseBeanInvalidClassAttribute attribute of the JSPCompilationEnvironment object
@@ -141,7 +156,6 @@ public class JSPCompilationEnvironment implements Options
       return true;
    }
 
-
    /**
     * Gets the fork attribute of the JSPCompilationEnvironment object
     *
@@ -151,7 +165,6 @@ public class JSPCompilationEnvironment implements Options
    {
       return false;
    }
-
 
    /**
     * Gets the ieClassId attribute of the JSPCompilationEnvironment object
@@ -163,7 +176,6 @@ public class JSPCompilationEnvironment implements Options
       return null;
    }
 
-
    /**
     * Gets the javaEncoding attribute of the JSPCompilationEnvironment object
     *
@@ -173,7 +185,6 @@ public class JSPCompilationEnvironment implements Options
    {
       return javaEncoding;
    }
-
 
    /**
     * Gets the jspConfig attribute of the JSPCompilationEnvironment object
@@ -185,7 +196,6 @@ public class JSPCompilationEnvironment implements Options
       return jspConfig;
    }
 
-
    /**
     * Gets the keepGenerated attribute of the JSPCompilationEnvironment object
     *
@@ -195,7 +205,6 @@ public class JSPCompilationEnvironment implements Options
    {
       return false;
    }
-
 
    /**
     * Gets the mappedFile attribute of the JSPCompilationEnvironment object
@@ -207,7 +216,6 @@ public class JSPCompilationEnvironment implements Options
       return false;
    }
 
-
    /**
     * Gets the reloading attribute of the JSPCompilationEnvironment object
     *
@@ -217,7 +225,6 @@ public class JSPCompilationEnvironment implements Options
    {
       return false;
    }
-
 
    /**
     * Gets the runtimeContext attribute of the JSPCompilationEnvironment object
@@ -229,7 +236,6 @@ public class JSPCompilationEnvironment implements Options
       return rctxt;
    }
 
-
    /**
     * Gets the scratchDir attribute of the JSPCompilationEnvironment object
     *
@@ -239,7 +245,6 @@ public class JSPCompilationEnvironment implements Options
    {
       return scratchDir;
    }
-
 
    /**
     * Gets the sendErrorToClient attribute of the JSPCompilationEnvironment object
@@ -251,7 +256,6 @@ public class JSPCompilationEnvironment implements Options
       return false;
    }
 
-
    /**
     * Gets the tagPluginManager attribute of the JSPCompilationEnvironment object
     *
@@ -261,7 +265,6 @@ public class JSPCompilationEnvironment implements Options
    {
       return tagPluginManager;
    }
-
 
    /**
     * Gets the tldLocationsCache attribute of the JSPCompilationEnvironment object
@@ -273,7 +276,6 @@ public class JSPCompilationEnvironment implements Options
       return tldLocationsCache;
    }
 
-
    /**
     * Gets the trimSpaces attribute of the JSPCompilationEnvironment object
     *
@@ -283,7 +285,6 @@ public class JSPCompilationEnvironment implements Options
    {
       return false;
    }
-
 
    /**
     * Gets the uriRoot attribute of the JSPCompilationEnvironment object
@@ -295,7 +296,6 @@ public class JSPCompilationEnvironment implements Options
       return uriRoot;
    }
 
-
    /**
     * Gets the poolingEnabled attribute of the JSPCompilationEnvironment object
     *
@@ -305,7 +305,6 @@ public class JSPCompilationEnvironment implements Options
    {
       return false;
    }
-
 
    /**
     * Gets the smapDumped attribute of the JSPCompilationEnvironment object
@@ -317,7 +316,6 @@ public class JSPCompilationEnvironment implements Options
       return false;
    }
 
-
    /**
     * Gets the smapSuppressed attribute of the JSPCompilationEnvironment object
     *
@@ -327,7 +325,6 @@ public class JSPCompilationEnvironment implements Options
    {
       return false;
    }
-
 
    /**
     * Gets the xpoweredBy attribute of the JSPCompilationEnvironment object
@@ -339,7 +336,6 @@ public class JSPCompilationEnvironment implements Options
       return false;
    }
 
-
    /**
     * Sets the context attribute of the JSPCompilationEnvironment object
     *
@@ -349,7 +345,6 @@ public class JSPCompilationEnvironment implements Options
    {
       this.context = context;
    }
-
 
    /**
     * Sets the errDispatcher attribute of the JSPCompilationEnvironment object
@@ -361,7 +356,6 @@ public class JSPCompilationEnvironment implements Options
       this.errDispatcher = errDispatcher;
    }
 
-
    /**
     * Sets the javaEncoding attribute of the JSPCompilationEnvironment object
     *
@@ -371,7 +365,6 @@ public class JSPCompilationEnvironment implements Options
    {
       this.javaEncoding = javaEncoding;
    }
-
 
    /**
     * Sets the jspConfig attribute of the JSPCompilationEnvironment object
@@ -383,7 +376,6 @@ public class JSPCompilationEnvironment implements Options
       this.jspConfig = jspConfig;
    }
 
-
    /**
     * Sets the runtimeContext attribute of the JSPCompilationEnvironment object
     *
@@ -393,7 +385,6 @@ public class JSPCompilationEnvironment implements Options
    {
       this.rctxt = rctxt;
    }
-
 
    /**
     * Sets the scratchDir attribute of the JSPCompilationEnvironment object
@@ -405,7 +396,6 @@ public class JSPCompilationEnvironment implements Options
       this.scratchDir = scratchDir;
    }
 
-
    /**
     * Sets the tagPluginManager attribute of the JSPCompilationEnvironment object
     *
@@ -415,7 +405,6 @@ public class JSPCompilationEnvironment implements Options
    {
       this.tagPluginManager = tagPluginManager;
    }
-
 
    /**
     * Sets the tldLocationsCache attribute of the JSPCompilationEnvironment object
@@ -427,7 +416,6 @@ public class JSPCompilationEnvironment implements Options
       this.tldLocationsCache = tldLocationsCache;
    }
 
-
    /**
     * Sets the uriRoot attribute of the JSPCompilationEnvironment object
     *
@@ -437,7 +425,6 @@ public class JSPCompilationEnvironment implements Options
    {
       this.uriRoot = uriRoot;
    }
-
 
    /** Description of the Method */
    private void initServletContext()

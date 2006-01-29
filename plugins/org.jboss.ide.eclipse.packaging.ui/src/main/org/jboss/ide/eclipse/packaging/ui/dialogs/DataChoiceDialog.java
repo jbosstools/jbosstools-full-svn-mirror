@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.packaging.ui.dialogs;
 
@@ -39,13 +54,15 @@ import org.jboss.ide.eclipse.ui.util.StringViewSorter;
 public class DataChoiceDialog extends Dialog
 {
    private Text nameText;
+
    /** Description of the Field */
    private Collection choices;
+
    /** Description of the Field */
    private PackagingArchive archive = null;
+
    /** Description of the Field */
    private ListViewer viewer;
-
 
    /**
     *Constructor for the DataChoiceDialog object
@@ -60,7 +77,6 @@ public class DataChoiceDialog extends Dialog
       this.choices = choices;
    }
 
-
    /**
     * Gets the xDocletData attribute of the DataChoiceDialog object
     *
@@ -70,7 +86,6 @@ public class DataChoiceDialog extends Dialog
    {
       return this.archive;
    }
-
 
    /**
     * Description of the Method
@@ -82,8 +97,6 @@ public class DataChoiceDialog extends Dialog
       super.configureShell(shell);
       shell.setText(PackagingUIMessages.getString("DataChoiceDialog.title"));//$NON-NLS-1$
    }
-
-
 
    /**
     * Description of the Method
@@ -106,14 +119,14 @@ public class DataChoiceDialog extends Dialog
       this.nameText = new Text(composite, SWT.BORDER);
       this.nameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
       this.nameText.setText("Untitled.jar");
-      
+
       this.nameText.addModifyListener(new ModifyListener()
+      {
+         public void modifyText(ModifyEvent e)
          {
-            public void modifyText(ModifyEvent e)
-            {
-               enableButtons();
-            }
-         });
+            enableButtons();
+         }
+      });
 
       List dataList = new List(composite, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
       GridData layoutData = new GridData(GridData.FILL_BOTH);
@@ -125,36 +138,35 @@ public class DataChoiceDialog extends Dialog
       this.viewer.setSorter(new StringViewSorter());
       this.viewer.setInput(this.choices);
       this.viewer.addSelectionChangedListener(new ISelectionChangedListener()
+      {
+         public void selectionChanged(SelectionChangedEvent event)
          {
-            public void selectionChanged(SelectionChangedEvent event)
+            IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+            if (!selection.isEmpty())
             {
-                IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-                if (!selection.isEmpty())
-                {
-                   PackagingArchive tempArchive = (PackagingArchive) selection.getFirstElement();
-                   String name = nameText.getText();
-                   String ext = tempArchive.getName().substring(tempArchive.getName().lastIndexOf('.'));
-                   
-                   int i = name.lastIndexOf('.');
-                   if (i == -1)
-                   {
-                      name = name + ext;
-                   }
-                   else
-                   {
-                      name = name.substring(0, i) + ext;
-                   }
-                   
-                   enableButtons();
-                   nameText.setText(name);
-                }
+               PackagingArchive tempArchive = (PackagingArchive) selection.getFirstElement();
+               String name = nameText.getText();
+               String ext = tempArchive.getName().substring(tempArchive.getName().lastIndexOf('.'));
+
+               int i = name.lastIndexOf('.');
+               if (i == -1)
+               {
+                  name = name + ext;
+               }
+               else
+               {
+                  name = name.substring(0, i) + ext;
+               }
+
+               enableButtons();
+               nameText.setText(name);
             }
-         });
+         }
+      });
 
       return composite;
    }
 
-   
    protected Control createContents(Composite parent)
    {
       Control control = super.createContents(parent);
@@ -163,14 +175,12 @@ public class DataChoiceDialog extends Dialog
       getButton(IDialogConstants.OK_ID).setEnabled(false);
       return control;
    }
-   
-   
+
    protected Point getInitialSize()
    {
       return getShell().computeSize(220, 300, true);
    }
-   
-   
+
    /** Description of the Method */
    protected void okPressed()
    {
@@ -183,7 +193,6 @@ public class DataChoiceDialog extends Dialog
       }
       super.okPressed();
    }
-
 
    /**
     * 

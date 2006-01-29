@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.ui.configuration;
 
@@ -53,25 +68,28 @@ import org.jboss.ide.eclipse.launcher.core.constants.IServerLaunchConfigurationC
  * @version   $Revision$
  * @created   18 mai 2003
  */
-public class RemoteServerConnectTab
-       extends JavaLaunchConfigurationTab
-       implements IPropertyChangeListener
+public class RemoteServerConnectTab extends JavaLaunchConfigurationTab implements IPropertyChangeListener
 {
    /** Description of the Field */
    protected Composite fArgumentComposite;
+
    /** Connector attributes for selected connector */
    protected Map fArgumentMap;
+
    /** The selected connector */
    protected IVMConnector fConnector;
+
    /** Connector combo */
    protected Combo fConnectorCombo;
+
    /** Description of the Field */
    protected IVMConnector[] fConnectors = JavaRuntime.getVMConnectors();
+
    /** Description of the Field */
    protected Map fFieldEditorMap = new HashMap();
+
    /** Description of the Field */
    protected final static String EMPTY_STRING = "";//$NON-NLS-1$
-
 
    /**
     * @param parent  Description of the Parameter
@@ -114,14 +132,13 @@ public class RemoteServerConnectTab
          names[i] = fConnectors[i].getName();
       }
       fConnectorCombo.setItems(names);
-      fConnectorCombo.addModifyListener(
-         new ModifyListener()
+      fConnectorCombo.addModifyListener(new ModifyListener()
+      {
+         public void modifyText(ModifyEvent evt)
          {
-            public void modifyText(ModifyEvent evt)
-            {
-               handleConnectorComboModified();
-            }
-         });
+            handleConnectorComboModified();
+         }
+      });
 
       createVerticalSpacer(comp, 2);
 
@@ -144,12 +161,12 @@ public class RemoteServerConnectTab
       createVerticalSpacer(comp, 2);
    }
 
-
    /**
     * @see   ILaunchConfigurationTab#dispose()
     */
-   public void dispose() { }
-
+   public void dispose()
+   {
+   }
 
    /**
     * @return   The image value
@@ -160,7 +177,6 @@ public class RemoteServerConnectTab
       return DebugUITools.getImage(IDebugUIConstants.IMG_LCL_DISCONNECT);
    }
 
-
    /**
     * @return   The name value
     * @see      ILaunchConfigurationTab#getName()
@@ -170,7 +186,6 @@ public class RemoteServerConnectTab
       return LauncherMessages.JavaConnectTab_Conn_ect_20;//$NON-NLS-1$
    }
 
-
    /**
     * @param config  Description of the Parameter
     * @see           ILaunchConfigurationTab#initializeFrom(ILaunchConfiguration)
@@ -179,7 +194,6 @@ public class RemoteServerConnectTab
    {
       updateConnectionFromConfig(config);
    }
-
 
    /**
     * @param config  Description of the Parameter
@@ -212,7 +226,6 @@ public class RemoteServerConnectTab
       return true;
    }
 
-
    /**
     * @param config  Description of the Parameter
     * @see           ILaunchConfigurationTab#performApply(ILaunchConfigurationWorkingCopy)
@@ -234,8 +247,7 @@ public class RemoteServerConnectTab
          }
          Connector.Argument arg = (Connector.Argument) fArgumentMap.get(key);
          editor.store();
-         if (arg instanceof Connector.StringArgument
-               || arg instanceof Connector.SelectedArgument)
+         if (arg instanceof Connector.StringArgument || arg instanceof Connector.SelectedArgument)
          {
             String value = editor.getPreferenceStore().getString(key);
             attrMap.put(key, value);
@@ -254,7 +266,6 @@ public class RemoteServerConnectTab
       config.setAttribute(IJavaLaunchConfigurationConstants.ATTR_CONNECT_MAP, attrMap);
    }
 
-
    /**
     * @param event  Description of the Parameter
     * @see          IPropertyChangeListener#propertyChange(PropertyChangeEvent)
@@ -264,7 +275,6 @@ public class RemoteServerConnectTab
       updateLaunchConfigurationDialog();
    }
 
-
    /**
     * @param config  The new defaults value
     * @see           ILaunchConfigurationTab#setDefaults(ILaunchConfigurationWorkingCopy)
@@ -272,9 +282,9 @@ public class RemoteServerConnectTab
    public void setDefaults(ILaunchConfigurationWorkingCopy config)
    {
       initializeHardCodedDefaults(config);
-      config.setAttribute(IServerLaunchConfigurationConstants.ATTR_POLLING_INTERVALL, IServerLaunchConfigurationConstants.DEFAULT_POLLING_INTERVALL);
+      config.setAttribute(IServerLaunchConfigurationConstants.ATTR_POLLING_INTERVALL,
+            IServerLaunchConfigurationConstants.DEFAULT_POLLING_INTERVALL);
    }
-
 
    /**
     * Adds a colon to the label if required
@@ -293,7 +303,6 @@ public class RemoteServerConnectTab
       return label;
    }
 
-
    /**
     * Returns the selected connector
     *
@@ -303,7 +312,6 @@ public class RemoteServerConnectTab
    {
       return fConnector;
    }
-
 
    /** Update the argument area to show the selected connector's arguments */
    protected void handleConnectorComboModified()
@@ -325,7 +333,8 @@ public class RemoteServerConnectTab
       }
       catch (CoreException e)
       {
-         JDIDebugUIPlugin.errorDialog(LauncherMessages.JavaConnectTab_Unable_to_display_connection_arguments__2, e.getStatus());//$NON-NLS-1$
+         JDIDebugUIPlugin.errorDialog(LauncherMessages.JavaConnectTab_Unable_to_display_connection_arguments__2, e
+               .getStatus());//$NON-NLS-1$
          return;
       }
 
@@ -363,32 +372,17 @@ public class RemoteServerConnectTab
                count++;
             }
             store.setDefault(arg.name(), arg.value());
-            field =
-                  new ComboFieldEditor(
-                  arg.name(),
-                  getLabel(arg.label()),
-                  namesAndValues,
-                  fArgumentComposite);
+            field = new ComboFieldEditor(arg.name(), getLabel(arg.label()), namesAndValues, fArgumentComposite);
          }
          else if (arg instanceof Connector.StringArgument)
          {
             store.setDefault(arg.name(), arg.value());
-            field =
-                  new StringFieldEditor(
-                  arg.name(),
-                  getLabel(arg.label()),
-                  fArgumentComposite);
+            field = new StringFieldEditor(arg.name(), getLabel(arg.label()), fArgumentComposite);
          }
          else if (arg instanceof Connector.BooleanArgument)
          {
-            store.setDefault(
-                  arg.name(),
-                  ((Connector.BooleanArgument) arg).booleanValue());
-            field =
-                  new BooleanFieldEditor(
-                  arg.name(),
-                  getLabel(arg.label()),
-                  fArgumentComposite);
+            store.setDefault(arg.name(), ((Connector.BooleanArgument) arg).booleanValue());
+            field = new BooleanFieldEditor(arg.name(), getLabel(arg.label()), fArgumentComposite);
          }
          field.setPreferenceStore(store);
          field.loadDefault();
@@ -400,7 +394,6 @@ public class RemoteServerConnectTab
       fArgumentComposite.layout();
    }
 
-
    /**
     * Initialize those attributes whose default values are independent of any context.
     *
@@ -408,10 +401,9 @@ public class RemoteServerConnectTab
     */
    protected void initializeHardCodedDefaults(ILaunchConfigurationWorkingCopy config)
    {
-      config.setAttribute(IJavaLaunchConfigurationConstants.ATTR_VM_CONNECTOR, JavaRuntime.getDefaultVMConnector().getIdentifier());
+      config.setAttribute(IJavaLaunchConfigurationConstants.ATTR_VM_CONNECTOR, JavaRuntime.getDefaultVMConnector()
+            .getIdentifier());
    }
-
-
 
    /**
     * Description of the Method
@@ -423,7 +415,8 @@ public class RemoteServerConnectTab
       String id = null;
       try
       {
-         id = config.getAttribute(IJavaLaunchConfigurationConstants.ATTR_VM_CONNECTOR, JavaRuntime.getDefaultVMConnector().getIdentifier());
+         id = config.getAttribute(IJavaLaunchConfigurationConstants.ATTR_VM_CONNECTOR, JavaRuntime
+               .getDefaultVMConnector().getIdentifier());
          fConnectorCombo.setText(JavaRuntime.getVMConnector(id).getName());
 
          Map attrMap = config.getAttribute(IJavaLaunchConfigurationConstants.ATTR_CONNECT_MAP, (Map) null);
@@ -435,14 +428,12 @@ public class RemoteServerConnectTab
          while (keys.hasNext())
          {
             String key = (String) keys.next();
-            Connector.Argument arg =
-                  (Connector.Argument) fArgumentMap.get(key);
+            Connector.Argument arg = (Connector.Argument) fArgumentMap.get(key);
             FieldEditor editor = (FieldEditor) fFieldEditorMap.get(key);
             if (arg != null && editor != null)
             {
                String value = (String) attrMap.get(key);
-               if (arg instanceof Connector.StringArgument
-                     || arg instanceof Connector.SelectedArgument)
+               if (arg instanceof Connector.StringArgument || arg instanceof Connector.SelectedArgument)
                {
                   editor.getPreferenceStore().setValue(key, value);
                }

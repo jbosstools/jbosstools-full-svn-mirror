@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.assist.model;
 
@@ -24,16 +39,15 @@ public class TemplateListXMLManager
 {
    /** Description of the Field */
    protected TemplateList list;
+
    /** Description of the Field */
    public static String LEAVE_PATH_SEPARATOR = ".";//$NON-NLS-1$
-
 
    /** Constructor for TemplateListPersistent. */
    public TemplateListXMLManager()
    {
       super();
    }
-
 
    /**
     * Returns the list.
@@ -45,7 +59,6 @@ public class TemplateListXMLManager
       return list;
    }
 
-
    /**
     * Sets the list.
     *
@@ -56,7 +69,6 @@ public class TemplateListXMLManager
       this.list = list;
    }
 
-
    /**
     * Sets the templateListFromDocument attribute of the TemplateListXMLManager object
     *
@@ -64,55 +76,38 @@ public class TemplateListXMLManager
     * @param docletTree  The new templateListFromDocument value
     * @return            Description of the Return Value
     */
-   public TemplateList setTemplateListFromDocument(
-         Document document,
-         DocletTree docletTree)
+   public TemplateList setTemplateListFromDocument(Document document, DocletTree docletTree)
    {
       TemplateList templateList = new TemplateList(docletTree);
 
       Element rootElement = document.getRootElement();
-      List templateElements =
-            rootElement.getChildren(IDocletConstants.TEMPLATE_TAG);
+      List templateElements = rootElement.getChildren(IDocletConstants.TEMPLATE_TAG);
 
       DocletElement templateDocletElement;
       TemplateTree templateTree;
       ConditionTree conditionTree;
 
-      for (Iterator templateIterator = templateElements.iterator();
-            templateIterator.hasNext();
-            )
+      for (Iterator templateIterator = templateElements.iterator(); templateIterator.hasNext();)
       {
          Element templateElement = (Element) templateIterator.next();
          conditionTree = new ConditionTree(null);
-         templateTree =
-               templateList.addTemplate(
-               templateElement.getAttributeValue(IDocletConstants.NAME_ATTRIBUTE),
+         templateTree = templateList.addTemplate(templateElement.getAttributeValue(IDocletConstants.NAME_ATTRIBUTE),
                conditionTree);
-         templateTree.setHelptext(
-               templateElement.getChild(IDocletConstants.USAGE_DESCRIPTION_TAG)
-               .getTextTrim());
+         templateTree.setHelptext(templateElement.getChild(IDocletConstants.USAGE_DESCRIPTION_TAG).getTextTrim());
          //
          String conditionDescription = "";//$NON-NLS-1$
-         if (templateElement.getChild(IDocletConstants.CONDITION_DESCRIPTION_TAG)
-               != null)
+         if (templateElement.getChild(IDocletConstants.CONDITION_DESCRIPTION_TAG) != null)
          {
-            conditionDescription =
-                  templateElement.getChild(IDocletConstants.CONDITION_DESCRIPTION_TAG)
-                  .getTextTrim();
+            conditionDescription = templateElement.getChild(IDocletConstants.CONDITION_DESCRIPTION_TAG).getTextTrim();
          }
          templateTree.setConditionDescription(conditionDescription);
          //
-         List leaveElements =
-               templateElement.getChildren(IDocletConstants.LEAVE_TAG);
-         for (Iterator leaveElementsIterator = leaveElements.iterator();
-               leaveElementsIterator.hasNext();
-               )
+         List leaveElements = templateElement.getChildren(IDocletConstants.LEAVE_TAG);
+         for (Iterator leaveElementsIterator = leaveElements.iterator(); leaveElementsIterator.hasNext();)
          {
             Element leaveElement = (Element) leaveElementsIterator.next();
-            StringTokenizer pathTokenizer =
-                  new StringTokenizer(
-                  leaveElement.getAttributeValue(IDocletConstants.NAME_ATTRIBUTE),
-                  ".");//$NON-NLS-1$
+            StringTokenizer pathTokenizer = new StringTokenizer(leaveElement
+                  .getAttributeValue(IDocletConstants.NAME_ATTRIBUTE), ".");//$NON-NLS-1$
             String[] path = new String[pathTokenizer.countTokens()];
             for (int i = 0; pathTokenizer.hasMoreTokens(); i++)
             {
@@ -127,7 +122,6 @@ public class TemplateListXMLManager
       setList(templateList);
       return templateList;
    }
-
 
    /**
     * The document must match the structure of the templates dtd
@@ -154,23 +148,18 @@ public class TemplateListXMLManager
          usageDescription = new Element(IDocletConstants.USAGE_DESCRIPTION_TAG);
          usageDescription.addContent(new CDATA(tree.getHelptext()));
          template.addContent(usageDescription);
-         conditionDescription =
-               new Element(IDocletConstants.CONDITION_DESCRIPTION_TAG);
-         conditionDescription.addContent(
-               new CDATA(tree.getConditionDescription()));
+         conditionDescription = new Element(IDocletConstants.CONDITION_DESCRIPTION_TAG);
+         conditionDescription.addContent(new CDATA(tree.getConditionDescription()));
          template.addContent(conditionDescription);
          //
          DocletElement[] leaveDocletElements = tree.getAllDocletElements();
          for (int j = 0; j < leaveDocletElements.length; j++)
          {
-            if (tree.getTemplateElement(leaveDocletElements[j]).getChildrenCount()
-                  == 0)
+            if (tree.getTemplateElement(leaveDocletElements[j]).getChildrenCount() == 0)
             {
                leave = new Element(IDocletConstants.LEAVE_TAG);
                leaveName = "";//$NON-NLS-1$
-               for (int k = 0;
-                     k < leaveDocletElements[j].getNode().getPath().length;
-                     k++)
+               for (int k = 0; k < leaveDocletElements[j].getNode().getPath().length; k++)
                {
                   if (k != 0)
                   {

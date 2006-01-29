@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.core.util;
 
@@ -27,8 +42,9 @@ import org.jboss.ide.eclipse.launcher.core.constants.IServerLaunchConfigurationC
 public class ServerLaunchUtil
 {
    /** Constructor for the ServerLaunchUtil object */
-   private ServerLaunchUtil() { }
-
+   private ServerLaunchUtil()
+   {
+   }
 
    /**
     * Description of the Method
@@ -47,7 +63,6 @@ public class ServerLaunchUtil
       }
       return newList;
    }
-
 
    /**
     * Gets the arrayFromList attribute of the ServerLaunchUtil object
@@ -73,7 +88,6 @@ public class ServerLaunchUtil
       return (String[]) list.toArray(new String[list.size()]);
    }
 
-
    /**
     * Gets the validDirectory attribute of the ServerLaunchUtil object
     *
@@ -83,14 +97,16 @@ public class ServerLaunchUtil
     * @return                   The validDirectory value
     * @exception CoreException  Description of the Exception
     */
-   public static boolean isValidDirectory(ILaunchConfiguration configuration, String parentDir, String attribute) throws CoreException
+   public static boolean isValidDirectory(ILaunchConfiguration configuration, String parentDir, String attribute)
+         throws CoreException
    {
-	   List invalidEntries = getInvalidEntries(configuration, parentDir, attribute);
-	   if (invalidEntries.size() == 0)
-		   return false;
-	   else return true;
+      List invalidEntries = getInvalidEntries(configuration, parentDir, attribute);
+      if (invalidEntries.size() == 0)
+         return false;
+      else
+         return true;
    }
-   
+
    /**
     * Returns invalid entries (pulled from "attribute" of the configuration) under parentDir
     * @param configuration
@@ -99,25 +115,25 @@ public class ServerLaunchUtil
     * @return
     * @throws CoreException
     */
-   public static List getInvalidEntries (ILaunchConfiguration configuration, String parentDir, String attribute) throws CoreException
+   public static List getInvalidEntries(ILaunchConfiguration configuration, String parentDir, String attribute)
+         throws CoreException
    {
-	   List invalid = new ArrayList();
-	   List list = configuration.getAttribute(attribute, Collections.EMPTY_LIST);
-	   for (Iterator iter = list.iterator(); iter.hasNext(); )
-	   {
-		   String entry = (String) iter.next();
-		   String path = parentDir + File.separator + entry;
-		   File file = new File(path);
-		   
-		   if (! file.exists())
-		   {
-			   invalid.add(entry);
-		   }
-	   }
-	   
-	   return invalid;
-   }
+      List invalid = new ArrayList();
+      List list = configuration.getAttribute(attribute, Collections.EMPTY_LIST);
+      for (Iterator iter = list.iterator(); iter.hasNext();)
+      {
+         String entry = (String) iter.next();
+         String path = parentDir + File.separator + entry;
+         File file = new File(path);
 
+         if (!file.exists())
+         {
+            invalid.add(entry);
+         }
+      }
+
+      return invalid;
+   }
 
    /**
     * Precondition: The elements of a single list where attributesForLists
@@ -129,7 +145,8 @@ public class ServerLaunchUtil
     * @return                    Description of the Return Value
     * @throws CoreException
     */
-   public static List setAttributeFromListAttributes(ILaunchConfigurationWorkingCopy configuration, String attribute, String[] attributesForLists)
+   public static List setAttributeFromListAttributes(ILaunchConfigurationWorkingCopy configuration, String attribute,
+         String[] attributesForLists)
    {
       ArrayList target = new ArrayList();
       List source;
@@ -139,7 +156,7 @@ public class ServerLaunchUtil
          {
             if ((source = configuration.getAttribute(attributesForLists[i], (List) null)) != null)
             {
-               for (Iterator iter = source.iterator(); iter.hasNext(); )
+               for (Iterator iter = source.iterator(); iter.hasNext();)
                {
                   target.add(iter.next());
                }
@@ -155,7 +172,6 @@ public class ServerLaunchUtil
       return target;
    }
 
-
    /**
     * Sets the attributeFromStringAttributes attribute of the ServerLaunchUtil
     * object
@@ -165,7 +181,8 @@ public class ServerLaunchUtil
     * @param attributesForLists  The new attributeFromStringAttributes value
     * @return                    Description of the Return Value
     */
-   public static String setAttributeFromStringAttributes(ILaunchConfigurationWorkingCopy configuration, String attribute, String[] attributesForLists)
+   public static String setAttributeFromStringAttributes(ILaunchConfigurationWorkingCopy configuration,
+         String attribute, String[] attributesForLists)
    {
       String s = null;
       String result = "";//$NON-NLS-1$
@@ -173,8 +190,7 @@ public class ServerLaunchUtil
       {
          try
          {
-            if ((s = configuration.getAttribute(attributesForLists[i], (String) null)) != null
-                  && s.length() > 0)
+            if ((s = configuration.getAttribute(attributesForLists[i], (String) null)) != null && s.length() > 0)
             {
                result += " " + s;//$NON-NLS-1$
                result = result.trim();
@@ -190,7 +206,6 @@ public class ServerLaunchUtil
       return result;
    }
 
-
    /**
     * Sets the classpath attribute of the ServerLaunchUtil object
     *
@@ -201,10 +216,10 @@ public class ServerLaunchUtil
    public static void setClasspath(LaunchType type, ILaunchConfigurationWorkingCopy configuration, String[] attributes)
    {
       // List list =
-      setAttributeFromListAttributes(configuration, type == LaunchType.START ? IServerLaunchConfigurationConstants.ATTR_CLASSPATH
+      setAttributeFromListAttributes(configuration, type == LaunchType.START
+            ? IServerLaunchConfigurationConstants.ATTR_CLASSPATH
             : IServerLaunchConfigurationConstants.ATTR_SHUTDOWN_CLASSPATH, attributes);
    }
-
 
    /**
     * Sets the listAttributeFromArray attribute of the ServerLaunchUtil object
@@ -213,7 +228,8 @@ public class ServerLaunchUtil
     * @param array          The new listAttributeFromArray value
     * @param attribute      The new listAttributeFromArray value
     */
-   public static void setListAttributeFromArray(ILaunchConfigurationWorkingCopy configuration, String[] array, String attribute)
+   public static void setListAttributeFromArray(ILaunchConfigurationWorkingCopy configuration, String[] array,
+         String attribute)
    {
       ArrayList list = new ArrayList();
       for (int i = 0; i < array.length; i++)
@@ -222,7 +238,6 @@ public class ServerLaunchUtil
       }
       configuration.setAttribute(attribute, list);
    }
-
 
    /**
     * Sets the mainType attribute of the ServerLaunchUtil object
@@ -233,10 +248,10 @@ public class ServerLaunchUtil
     */
    public static void setMainType(LaunchType type, ILaunchConfigurationWorkingCopy configuration, String typeName)
    {
-      configuration.setAttribute(type == LaunchType.START ? IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME
+      configuration.setAttribute(type == LaunchType.START
+            ? IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME
             : IServerLaunchConfigurationConstants.ATTR_SHUTDOWN_TYPE, typeName);
    }
-
 
    /**
     * Sets the programArgs attribute of the ServerLaunchUtil object
@@ -247,10 +262,10 @@ public class ServerLaunchUtil
     */
    public static void setProgramArgs(LaunchType type, ILaunchConfigurationWorkingCopy configuration, String[] attributes)
    {
-      setAttributeFromStringAttributes(configuration, type == LaunchType.START ? IJavaLaunchConfigurationConstants.ATTR_PROGRAM_ARGUMENTS
+      setAttributeFromStringAttributes(configuration, type == LaunchType.START
+            ? IJavaLaunchConfigurationConstants.ATTR_PROGRAM_ARGUMENTS
             : IServerLaunchConfigurationConstants.ATTR_SHUTDOWN_PROGRAM_ARGS, attributes);
    }
-
 
    /**
     * Sets the relativeToHomedirClasspath attribute of the ServerLaunchUtil
@@ -260,12 +275,13 @@ public class ServerLaunchUtil
     * @param configuration  The new relativeToHomedirClasspath value
     * @param classpath      The new relativeToHomedirClasspath value
     */
-   public static void setRelativeToHomedirClasspath(LaunchType type, ILaunchConfigurationWorkingCopy configuration, String[] classpath)
+   public static void setRelativeToHomedirClasspath(LaunchType type, ILaunchConfigurationWorkingCopy configuration,
+         String[] classpath)
    {
-      setListAttributeFromArray(configuration, classpath, type == LaunchType.START ? IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_HOMEDIR_CLASSPATH
+      setListAttributeFromArray(configuration, classpath, type == LaunchType.START
+            ? IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_HOMEDIR_CLASSPATH
             : IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_HOMEDIR_SHUTDOWN_CLASSPATH);
    }
-
 
    /**
     * Sets the relativeToJDKClasspath attribute of the ServerLaunchUtil object
@@ -274,12 +290,13 @@ public class ServerLaunchUtil
     * @param configuration  The new relativeToJDKClasspath value
     * @param classpath      The new relativeToJDKClasspath value
     */
-   public static void setRelativeToJDKClasspath(LaunchType type, ILaunchConfigurationWorkingCopy configuration, String[] classpath)
+   public static void setRelativeToJDKClasspath(LaunchType type, ILaunchConfigurationWorkingCopy configuration,
+         String[] classpath)
    {
-      setListAttributeFromArray(configuration, classpath, type == LaunchType.START ? IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_JDK_CLASSPATH
+      setListAttributeFromArray(configuration, classpath, type == LaunchType.START
+            ? IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_JDK_CLASSPATH
             : null);
    }
-
 
    /**
     * Sets the userProgramArgs attribute of the ServerLaunchUtil object
@@ -288,12 +305,13 @@ public class ServerLaunchUtil
     * @param configuration  The new userProgramArgs value
     * @param attribute      The new userProgramArgs value
     */
-   public static void setUserProgramArgs(LaunchType type, ILaunchConfigurationWorkingCopy configuration, String attribute)
+   public static void setUserProgramArgs(LaunchType type, ILaunchConfigurationWorkingCopy configuration,
+         String attribute)
    {
-      configuration.setAttribute(type == LaunchType.START ? IServerLaunchConfigurationConstants.ATTR_USER_PROGRAM_ARGS
+      configuration.setAttribute(type == LaunchType.START
+            ? IServerLaunchConfigurationConstants.ATTR_USER_PROGRAM_ARGS
             : IServerLaunchConfigurationConstants.ATTR_USER_SHUTDOWN_PROGRAM_ARGS, attribute);
    }
-
 
    /**
     * Sets the vMArgs attribute of the ServerLaunchUtil object
@@ -304,7 +322,8 @@ public class ServerLaunchUtil
     */
    public static void setVMArgs(LaunchType type, ILaunchConfigurationWorkingCopy configuration, String[] attributes)
    {
-      setAttributeFromStringAttributes(configuration, type == LaunchType.START ? IJavaLaunchConfigurationConstants.ATTR_VM_ARGUMENTS
+      setAttributeFromStringAttributes(configuration, type == LaunchType.START
+            ? IJavaLaunchConfigurationConstants.ATTR_VM_ARGUMENTS
             : IServerLaunchConfigurationConstants.ATTR_SHUTDOWN_VM_ARGS, attributes);
    }
 }

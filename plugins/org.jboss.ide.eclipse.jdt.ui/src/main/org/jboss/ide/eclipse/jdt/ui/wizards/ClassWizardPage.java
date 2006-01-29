@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ui.wizards;
 
@@ -32,9 +47,10 @@ public abstract class ClassWizardPage extends NewTypeWizardPage implements Field
 {
    /** Description of the Field */
    protected SelectionButtonDialogFieldGroup fMethodStubsButtons;
-   private FieldsAdapter adapter;
-   private final static String PAGE_NAME = ClassWizardPage.class.getName();
 
+   private FieldsAdapter adapter;
+
+   private final static String PAGE_NAME = ClassWizardPage.class.getName();
 
    /**
     *Constructor for the ClassWizardPage object
@@ -48,7 +64,6 @@ public abstract class ClassWizardPage extends NewTypeWizardPage implements Field
       this.createContent();
    }
 
-
    /**
     *Constructor for the ClassWizardPage object
     *
@@ -58,7 +73,6 @@ public abstract class ClassWizardPage extends NewTypeWizardPage implements Field
    {
       this(true, PAGE_NAME);
    }
-
 
    /**
     * Description of the Method
@@ -81,7 +95,6 @@ public abstract class ClassWizardPage extends NewTypeWizardPage implements Field
       this.setControl(composite);
    }
 
-
    /**
     * Description of the Method
     *
@@ -89,7 +102,6 @@ public abstract class ClassWizardPage extends NewTypeWizardPage implements Field
     * @param monitor  Description of the Parameter
     */
    public abstract void generate(IGenerationEngine engine, IProgressMonitor monitor);
-
 
    /**
     * Gets the fieldsAdapter attribute of the ClassFragmentWizardPage object
@@ -104,7 +116,6 @@ public abstract class ClassWizardPage extends NewTypeWizardPage implements Field
       }
       return adapter;
    }
-
 
    /**
     * Description of the Method
@@ -122,14 +133,14 @@ public abstract class ClassWizardPage extends NewTypeWizardPage implements Field
       this.initContent();
    }
 
-
    /**
     * Description of the Method
     *
     * @param field  Description of the Parameter
     */
-   public void pageChangeControlPressed(DialogField field) { }
-
+   public void pageChangeControlPressed(DialogField field)
+   {
+   }
 
    /**
     * Description of the Method
@@ -141,7 +152,6 @@ public abstract class ClassWizardPage extends NewTypeWizardPage implements Field
       this.handleFieldChanged(field);
       this.updateStatus(this.findMostSevereStatus());
    }
-
 
    /**
     * Sets the visible attribute of the ClassWizardPage object
@@ -157,10 +167,8 @@ public abstract class ClassWizardPage extends NewTypeWizardPage implements Field
       }
    }
 
-
    /** Description of the Method */
    protected abstract void createContent();
-
 
    /**
     * Description of the Method
@@ -179,7 +187,6 @@ public abstract class ClassWizardPage extends NewTypeWizardPage implements Field
       this.createSuperInterfacesControls(composite, nColumns);
    }
 
-
    /**
     * Description of the Method
     *
@@ -187,18 +194,18 @@ public abstract class ClassWizardPage extends NewTypeWizardPage implements Field
     */
    protected IStatus findMostSevereStatus()
    {
-      return StatusUtil.getMostSevere(
-         new IStatus[]{fContainerStatus, fPackageStatus, fTypeNameStatus, fModifierStatus, fSuperClassStatus, fSuperInterfacesStatus});
+      return StatusUtil.getMostSevere(new IStatus[]
+      {fContainerStatus, fPackageStatus, fTypeNameStatus, fModifierStatus, fSuperClassStatus, fSuperInterfacesStatus});
    }
-
 
    /**
     * Description of the Method
     *
     * @param field  Description of the Parameter
     */
-   protected void handleFieldChanged(DialogField field) { }
-
+   protected void handleFieldChanged(DialogField field)
+   {
+   }
 
    /**
     * Description of the Method
@@ -210,7 +217,6 @@ public abstract class ClassWizardPage extends NewTypeWizardPage implements Field
       super.handleFieldChanged(fieldName);
       this.updateStatus(this.findMostSevereStatus());
    }
-
 
    /** Description of the Method */
    protected abstract void initContent();

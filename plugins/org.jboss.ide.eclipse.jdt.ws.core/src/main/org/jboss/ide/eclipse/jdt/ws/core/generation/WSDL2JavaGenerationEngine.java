@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.ws.core.generation;
 
@@ -24,15 +39,14 @@ import org.jboss.ide.eclipse.jdt.core.wizards.generation.IGenerationEngine;
 public class WSDL2JavaGenerationEngine implements IGenerationEngine
 {
    private Emitter emitter;
-   private String uri;
 
+   private String uri;
 
    /**Constructor for the WSDL2JavaGenerationEngine object */
    public WSDL2JavaGenerationEngine()
    {
       this.emitter = new Emitter();
    }
-
 
    /**
     * Description of the Method
@@ -53,7 +67,6 @@ public class WSDL2JavaGenerationEngine implements IGenerationEngine
       }
    }
 
-
    /**
     * Sets the allWanted attribute of the WSDL2JavaGenerationEngine object
     *
@@ -63,7 +76,6 @@ public class WSDL2JavaGenerationEngine implements IGenerationEngine
    {
       this.emitter.setAllWanted(value);
    }
-
 
    /**
     * Sets the helperWanted attribute of the WSDL2JavaGenerationEngine object
@@ -75,7 +87,6 @@ public class WSDL2JavaGenerationEngine implements IGenerationEngine
       this.emitter.setHelperWanted(value);
    }
 
-
    /**
     * Sets the imports attribute of the WSDL2JavaGenerationEngine object
     *
@@ -85,7 +96,6 @@ public class WSDL2JavaGenerationEngine implements IGenerationEngine
    {
       this.emitter.setImports(value);
    }
-
 
    /**
     * Sets the nStoPkg attribute of the WSDL2JavaGenerationEngine object
@@ -97,7 +107,6 @@ public class WSDL2JavaGenerationEngine implements IGenerationEngine
       this.emitter.setNStoPkg(value);
    }
 
-
    /**
     * Sets the namespaceMap attribute of the WSDL2JavaGenerationEngine object
     *
@@ -107,7 +116,6 @@ public class WSDL2JavaGenerationEngine implements IGenerationEngine
    {
       this.emitter.setNamespaceMap(value);
    }
-
 
    /**
     * Sets the nowrap attribute of the WSDL2JavaGenerationEngine object
@@ -119,7 +127,6 @@ public class WSDL2JavaGenerationEngine implements IGenerationEngine
       this.emitter.setNowrap(value);
    }
 
-
    /**
     * Sets the outputDir attribute of the WSDL2JavaGenerationEngine object
     *
@@ -129,7 +136,6 @@ public class WSDL2JavaGenerationEngine implements IGenerationEngine
    {
       this.emitter.setOutputDir(value);
    }
-
 
    /**
     * Sets the packageName attribute of the WSDL2JavaGenerationEngine object
@@ -141,7 +147,6 @@ public class WSDL2JavaGenerationEngine implements IGenerationEngine
       this.emitter.setPackageName(value);
    }
 
-
    /**
     * Sets the password attribute of the WSDL2JavaGenerationEngine object
     *
@@ -151,7 +156,6 @@ public class WSDL2JavaGenerationEngine implements IGenerationEngine
    {
       this.emitter.setPassword(value);
    }
-
 
    /**
     * Sets the testCaseWanted attribute of the WSDL2JavaGenerationEngine object
@@ -163,7 +167,6 @@ public class WSDL2JavaGenerationEngine implements IGenerationEngine
       this.emitter.setTestCaseWanted(value);
    }
 
-
    /**
     * Sets the typeMappingVersion attribute of the WSDL2JavaGenerationEngine object
     *
@@ -174,7 +177,6 @@ public class WSDL2JavaGenerationEngine implements IGenerationEngine
       this.emitter.setTypeMappingVersion(version);
    }
 
-
    /**
     * Sets the username attribute of the WSDL2JavaGenerationEngine object
     *
@@ -184,7 +186,6 @@ public class WSDL2JavaGenerationEngine implements IGenerationEngine
    {
       this.emitter.setUsername(value);
    }
-
 
    /**
     * Sets the wSDL attribute of the WSDL2JavaGenerationEngine object

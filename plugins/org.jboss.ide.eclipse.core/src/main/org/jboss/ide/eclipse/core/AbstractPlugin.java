@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.core;
 
@@ -34,16 +49,15 @@ public class AbstractPlugin extends AbstractUIPlugin
 {
    /** Resource bundle */
    protected ResourceBundle resourceBundle;
+
    /** The shared instance */
    private static AbstractPlugin plugin;
-
 
    /** The constructor */
    public AbstractPlugin()
    {
       plugin = this;
    }
-
 
    /**
     * Gets the base installation dir of the plugin
@@ -64,7 +78,6 @@ public class AbstractPlugin extends AbstractUIPlugin
       return null;
    }
 
-
    /**
     * Returns the plugin's resource bundle,
     *
@@ -74,7 +87,6 @@ public class AbstractPlugin extends AbstractUIPlugin
    {
       return resourceBundle;
    }
-
 
    /**
     * Shows a message dialog with the given message
@@ -86,10 +98,10 @@ public class AbstractPlugin extends AbstractUIPlugin
       IWorkbenchWindow window = getDefault().getWorkbench().getActiveWorkbenchWindow();
       if (window != null)
       {
-         MessageDialog.openError(window.getShell().getShell(), CoreMessages.getString("AbstractPlugin.level.error"), message);//$NON-NLS-1$
+         MessageDialog.openError(window.getShell().getShell(),
+               CoreMessages.getString("AbstractPlugin.level.error"), message);//$NON-NLS-1$
       }
    }
-
 
    /**
     * Shows a message dialog with the given throwable
@@ -101,7 +113,6 @@ public class AbstractPlugin extends AbstractUIPlugin
       showErrorMessage(throwable.getClass().getName() + " " + throwable.getMessage());//$NON-NLS-1$
    }
 
-
    /**
     * Description of the Method
     *
@@ -112,10 +123,10 @@ public class AbstractPlugin extends AbstractUIPlugin
       IWorkbenchWindow window = getDefault().getWorkbench().getActiveWorkbenchWindow();
       if (window != null)
       {
-         MessageDialog.openInformation(window.getShell().getShell(), CoreMessages.getString("AbstractPlugin.level.info"), message);//$NON-NLS-1$
+         MessageDialog.openInformation(window.getShell().getShell(), CoreMessages
+               .getString("AbstractPlugin.level.info"), message);//$NON-NLS-1$
       }
    }
-
 
    /**
     * Description of the Method
@@ -127,10 +138,10 @@ public class AbstractPlugin extends AbstractUIPlugin
       IWorkbenchWindow window = getDefault().getWorkbench().getActiveWorkbenchWindow();
       if (window != null)
       {
-         MessageDialog.openWarning(window.getShell().getShell(), CoreMessages.getString("AbstractPlugin.level.warning"), message);//$NON-NLS-1$
+         MessageDialog.openWarning(window.getShell().getShell(),
+               CoreMessages.getString("AbstractPlugin.level.warning"), message);//$NON-NLS-1$
       }
    }
-
 
    /**
     * Returns the string from the plugin's resource bundle,
@@ -152,7 +163,6 @@ public class AbstractPlugin extends AbstractUIPlugin
       }
    }
 
-
    /**
     * Gets the current Shell for the plugin
     *
@@ -162,7 +172,6 @@ public class AbstractPlugin extends AbstractUIPlugin
    {
       return getDefault().getWorkbench().getActiveWorkbenchWindow().getShell();
    }
-
 
    /**
     * Returns the standard display to be used. The method first checks, if
@@ -181,7 +190,6 @@ public class AbstractPlugin extends AbstractUIPlugin
       return display;
    }
 
-
    /**
     * Convenience method which returns the unique identifier of this plugin.
     *
@@ -199,7 +207,6 @@ public class AbstractPlugin extends AbstractUIPlugin
       return getDefault().getBundle().getSymbolicName();
    }
 
-
    /**
     * Returns the workspace instance.
     *
@@ -209,7 +216,6 @@ public class AbstractPlugin extends AbstractUIPlugin
    {
       return ResourcesPlugin.getWorkspace();
    }
-
 
    /**
     * Logs the specified status with this plug-in's log.
@@ -221,7 +227,6 @@ public class AbstractPlugin extends AbstractUIPlugin
       getDefault().getLog().log(status);
    }
 
-
    /**
     * Logs an internal error with the specified throwable
     *
@@ -231,7 +236,6 @@ public class AbstractPlugin extends AbstractUIPlugin
    {
       log(new Status(IStatus.ERROR, getUniqueIdentifier(), 0, "Internal Error", e));//$NON-NLS-1$
    }
-
 
    /**
     * Logs an internal error with the specified message.
@@ -243,7 +247,6 @@ public class AbstractPlugin extends AbstractUIPlugin
       logError(message, null);
    }
 
-
    /**
     * Logs a throwable with the specified message.
     *
@@ -254,7 +257,6 @@ public class AbstractPlugin extends AbstractUIPlugin
    {
       log(new Status(IStatus.ERROR, getUniqueIdentifier(), 0, message, throwable));
    }
-
 
    /**
     * Wrap a throwable and add plugin identification
@@ -268,7 +270,6 @@ public class AbstractPlugin extends AbstractUIPlugin
       logError(message, throwable);
       return new CoreException(new Status(IStatus.ERROR, getUniqueIdentifier(), 0, message, throwable));
    }
-
 
    /**
     * Returns the shared instance.

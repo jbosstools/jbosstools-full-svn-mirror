@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.xdoclet.run.ui.dialogs;
 
@@ -42,13 +57,15 @@ import org.jboss.ide.eclipse.xdoclet.run.model.XDocletData;
 public class DataChoiceDialog extends Dialog
 {
    private Text filterText;
+
    /** Description of the Field */
    private Collection choices;
+
    /** Description of the Field */
    private XDocletData data = null;
+
    /** Description of the Field */
    private ListViewer viewer;
-
 
    /**
     *Constructor for the DataChoiceDialog object
@@ -63,7 +80,6 @@ public class DataChoiceDialog extends Dialog
       this.choices = choices;
    }
 
-
    /**
     * Gets the xDocletData attribute of the DataChoiceDialog object
     *
@@ -73,7 +89,6 @@ public class DataChoiceDialog extends Dialog
    {
       return this.data;
    }
-
 
    /**
     * Description of the Method
@@ -85,8 +100,6 @@ public class DataChoiceDialog extends Dialog
       super.configureShell(shell);
       shell.setText(XDocletRunMessages.getString("DataChoiceDialog.title"));//$NON-NLS-1$
    }
-
-
 
    /**
     * Description of the Method
@@ -108,20 +121,23 @@ public class DataChoiceDialog extends Dialog
 
       this.filterText = new Text(composite, SWT.BORDER);
       this.filterText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-      
+
       this.filterText.addModifyListener(new ModifyListener()
+      {
+         public void modifyText(ModifyEvent e)
          {
-            public void modifyText(ModifyEvent e)
+            viewer.refresh();
+            if (viewer.getList().getItems().length == 1)
             {
-               viewer.refresh();
-               if(viewer.getList().getItems().length == 1 ) {
-                   viewer.getList().setSelection(0);
-               } else {
-                   viewer.getList().deselectAll();
-               }
-               enableButtons();               
+               viewer.getList().setSelection(0);
             }
-         });
+            else
+            {
+               viewer.getList().deselectAll();
+            }
+            enableButtons();
+         }
+      });
 
       List dataList = new List(composite, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
       GridData layoutData = new GridData(GridData.FILL_BOTH);
@@ -133,26 +149,24 @@ public class DataChoiceDialog extends Dialog
       this.viewer.setSorter(new StringViewSorter());
       this.viewer.setInput(this.choices);
       this.viewer.addFilter(new ViewerFilter()
+      {
+         public boolean select(Viewer viewer, Object parentElement, Object element)
          {
-            public boolean select(Viewer viewer, Object parentElement,
-                  Object element)
-            {
-               String name = ((XDocletData) element).getName();
-               String filter = filterText.getText().toLowerCase();
-               return "".equals(filter) || name.toLowerCase().startsWith(filter);
-            }
-         });
+            String name = ((XDocletData) element).getName();
+            String filter = filterText.getText().toLowerCase();
+            return "".equals(filter) || name.toLowerCase().startsWith(filter);
+         }
+      });
       this.viewer.addSelectionChangedListener(new ISelectionChangedListener()
+      {
+         public void selectionChanged(SelectionChangedEvent event)
          {
-            public void selectionChanged(SelectionChangedEvent event)
-            {
-               enableButtons();
-            }
-         });
+            enableButtons();
+         }
+      });
 
       return composite;
    }
-
 
    protected Control createContents(Composite parent)
    {
@@ -160,13 +174,11 @@ public class DataChoiceDialog extends Dialog
       enableButtons();
       return control;
    }
-   
-   
+
    protected Point getInitialSize()
    {
       return getShell().computeSize(220, 300, true);
    }
-   
 
    /** Description of the Method */
    protected void okPressed()
@@ -178,7 +190,6 @@ public class DataChoiceDialog extends Dialog
       }
       super.okPressed();
    }
-
 
    /**
     * 
@@ -196,5 +207,5 @@ public class DataChoiceDialog extends Dialog
          okButton.setEnabled(false);
       }
    }
-   
+
 }

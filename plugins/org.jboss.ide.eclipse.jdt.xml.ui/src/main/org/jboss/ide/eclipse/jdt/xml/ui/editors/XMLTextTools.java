@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.xml.ui.editors;
 
@@ -58,38 +73,39 @@ public class XMLTextTools extends AbstractTextTools
 
    /** The XML text scanner */
    private TextScanner xmlTextScanner;
+
    /** Text Attributes for XML editors */
-   private final static String[] TOKENS = {//
+   private final static String[] TOKENS =
+   {//
    IXMLSyntaxConstants.XML_DEFAULT, //
-   IXMLSyntaxConstants.XML_TAG, //
-   IXMLSyntaxConstants.XML_ATT_NAME, //
-   IXMLSyntaxConstants.XML_ATT_VALUE, //
-   IXMLSyntaxConstants.XML_ENTITY, //
-   IXMLSyntaxConstants.XML_PI, //
-   IXMLSyntaxConstants.XML_CDATA,
-      IXMLSyntaxConstants.XML_COMMENT, //
-   IXMLSyntaxConstants.XML_DECL,//
+         IXMLSyntaxConstants.XML_TAG, //
+         IXMLSyntaxConstants.XML_ATT_NAME, //
+         IXMLSyntaxConstants.XML_ATT_VALUE, //
+         IXMLSyntaxConstants.XML_ENTITY, //
+         IXMLSyntaxConstants.XML_PI, //
+         IXMLSyntaxConstants.XML_CDATA, IXMLSyntaxConstants.XML_COMMENT, //
+         IXMLSyntaxConstants.XML_DECL,//
    };
 
    /** Content types for XML editors */
-   private final static String[] TYPES = {//
+   private final static String[] TYPES =
+   {//
    XMLPartitionScanner.XML_ATTRIBUTE, //
-   XMLPartitionScanner.XML_CDATA, //
-   XMLPartitionScanner.XML_COMMENT, //
-   XMLPartitionScanner.XML_DECL, //
-   XMLPartitionScanner.XML_EMPTY_TAG, //
-   XMLPartitionScanner.XML_END_DECL, //
-   XMLPartitionScanner.XML_END_TAG, //
-   XMLPartitionScanner.XML_PI, //
-   XMLPartitionScanner.XML_START_DECL, //
-   XMLPartitionScanner.XML_TAG, //
-   XMLPartitionScanner.XML_TEXT, //
-   XMLPartitionScanner.DTD_INTERNAL, //
-   XMLPartitionScanner.DTD_INTERNAL_PI, //
-   XMLPartitionScanner.DTD_INTERNAL_COMMENT, //
-   XMLPartitionScanner.DTD_INTERNAL_DECL,//
+         XMLPartitionScanner.XML_CDATA, //
+         XMLPartitionScanner.XML_COMMENT, //
+         XMLPartitionScanner.XML_DECL, //
+         XMLPartitionScanner.XML_EMPTY_TAG, //
+         XMLPartitionScanner.XML_END_DECL, //
+         XMLPartitionScanner.XML_END_TAG, //
+         XMLPartitionScanner.XML_PI, //
+         XMLPartitionScanner.XML_START_DECL, //
+         XMLPartitionScanner.XML_TAG, //
+         XMLPartitionScanner.XML_TEXT, //
+         XMLPartitionScanner.DTD_INTERNAL, //
+         XMLPartitionScanner.DTD_INTERNAL_PI, //
+         XMLPartitionScanner.DTD_INTERNAL_COMMENT, //
+         XMLPartitionScanner.DTD_INTERNAL_DECL,//
    };
-
 
    /**
     * Creates a new XML text tools collection.
@@ -113,7 +129,6 @@ public class XMLTextTools extends AbstractTextTools
       xmlCDATAScanner = new XMLCDATAScanner(tokens);
    }
 
-
    /**
     * Description of the Method
     *
@@ -123,7 +138,6 @@ public class XMLTextTools extends AbstractTextTools
    {
       return new XMLDocumentPartitioner(xmlPartitionScanner, TYPES);
    }
-
 
    /**
     * Returns a scanner which is configured to scan DTD text.
@@ -135,7 +149,6 @@ public class XMLTextTools extends AbstractTextTools
       return dtdTextScanner;
    }
 
-
    /**
     * Gets the preferenceStore attribute of the XMLTextTools object
     *
@@ -145,7 +158,6 @@ public class XMLTextTools extends AbstractTextTools
    {
       return this.store;
    }
-
 
    /**
     * Returns a scanner which is configured to scan XML tag attributes.
@@ -157,7 +169,6 @@ public class XMLTextTools extends AbstractTextTools
       return xmlAttributeScanner;
    }
 
-
    /**
     * Returns a scanner which is configured to scan XML CDATA sections.
     *
@@ -167,7 +178,6 @@ public class XMLTextTools extends AbstractTextTools
    {
       return xmlCDATAScanner;
    }
-
 
    /**
     * Returns a scanner which is configured to scan XML comments.
@@ -179,7 +189,6 @@ public class XMLTextTools extends AbstractTextTools
       return xmlCommentScanner;
    }
 
-
    /**
     * Returns a scanner which is configured to scan XML declarations.
     *
@@ -189,7 +198,6 @@ public class XMLTextTools extends AbstractTextTools
    {
       return xmlDeclScanner;
    }
-
 
    /**
     * Returns a scanner which is configured to scan XML
@@ -202,7 +210,6 @@ public class XMLTextTools extends AbstractTextTools
       return xmlPIScanner;
    }
 
-
    /**
     * Gets the xMLPartitionScanner attribute of the XMLTextTools object
     *
@@ -213,7 +220,6 @@ public class XMLTextTools extends AbstractTextTools
       return xmlPartitionScanner;
    }
 
-
    /**
     * Returns a scanner which is configured to scan XML tags.
     *
@@ -223,7 +229,6 @@ public class XMLTextTools extends AbstractTextTools
    {
       return xmlTagScanner;
    }
-
 
    /**
     * Returns a scanner which is configured to scan XML text.

@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.ui.wizards.web;
 
@@ -33,8 +48,9 @@ public class NewServletWizardPage extends DOMClassWizardPage
    protected SelectionButtonDialogFieldGroup serviceMethodStubsButtons;
 
    private final static String PAGE_NAME = NewServletWizardPage.class.getName();
-   private final static String[] SERVICE_METHODS = new String[]{"doGet", "doPost", "doPut", "doDelete", "doOptions", "doHead", "doTrace"};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
 
+   private final static String[] SERVICE_METHODS = new String[]
+   {"doGet", "doPost", "doPut", "doDelete", "doOptions", "doHead", "doTrace"};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
 
    /**
     *Constructor for the NewServletWizardPage object
@@ -47,7 +63,6 @@ public class NewServletWizardPage extends DOMClassWizardPage
       this.setTitle(JDTJ2EEUIMessages.getString("NewServletWizardPage.title"));//$NON-NLS-1$
       this.setDescription(JDTJ2EEUIMessages.getString("NewServletWizardPage.description"));//$NON-NLS-1$
    }
-
 
    /**
     * Adds a feature to the Content attribute of the NewServletWizardPage object
@@ -116,14 +131,15 @@ public class NewServletWizardPage extends DOMClassWizardPage
       }
    }
 
-
    /** Description of the Method */
    protected void createContent()
    {
       // Constructors and inherited must be left as first elements
-      String[] buttonNames = new String[]{NewWizardMessages.NewClassWizardPage_methods_constructors, //$NON-NLS-1$
-      NewWizardMessages.NewClassWizardPage_methods_inherited, //$NON-NLS-1$
-      JDTJ2EEUIMessages.getString("NewServletWizardPage.method.init"), JDTJ2EEUIMessages.getString("NewServletWizardPage.method.service"), JDTJ2EEUIMessages.getString("NewServletWizardPage.method.destroy"), JDTJ2EEUIMessages.getString("NewServletWizardPage.method.getServletInfo")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+      String[] buttonNames = new String[]
+      {
+            NewWizardMessages.NewClassWizardPage_methods_constructors, //$NON-NLS-1$
+            NewWizardMessages.NewClassWizardPage_methods_inherited, //$NON-NLS-1$
+            JDTJ2EEUIMessages.getString("NewServletWizardPage.method.init"), JDTJ2EEUIMessages.getString("NewServletWizardPage.method.service"), JDTJ2EEUIMessages.getString("NewServletWizardPage.method.destroy"), JDTJ2EEUIMessages.getString("NewServletWizardPage.method.getServletInfo")};//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
       this.fMethodStubsButtons = new SelectionButtonDialogFieldGroup(SWT.CHECK, buttonNames, 2);
       this.fMethodStubsButtons.setLabelText(NewWizardMessages.NewClassWizardPage_methods_label);//$NON-NLS-1$
@@ -132,13 +148,14 @@ public class NewServletWizardPage extends DOMClassWizardPage
       buttonNames = new String[SERVICE_METHODS.length];
       for (int i = 0; i < SERVICE_METHODS.length; i++)
       {
-         buttonNames[i] = SERVICE_METHODS[i] + JDTJ2EEUIMessages.getString("NewServletWizardPage.method.generic.extension");//$NON-NLS-1$
+         buttonNames[i] = SERVICE_METHODS[i]
+               + JDTJ2EEUIMessages.getString("NewServletWizardPage.method.generic.extension");//$NON-NLS-1$
       }
 
       this.serviceMethodStubsButtons = new SelectionButtonDialogFieldGroup(SWT.CHECK, buttonNames, 2);
-      this.serviceMethodStubsButtons.setLabelText(JDTJ2EEUIMessages.getString("NewServletWizardPage.label.service.method"));//$NON-NLS-1$
+      this.serviceMethodStubsButtons.setLabelText(JDTJ2EEUIMessages
+            .getString("NewServletWizardPage.label.service.method"));//$NON-NLS-1$
    }
-
 
    /**
     * Description of the Method
@@ -154,7 +171,6 @@ public class NewServletWizardPage extends DOMClassWizardPage
       this.setSuperClass("javax.servlet.http.HttpServlet", true);//$NON-NLS-1$
    }
 
-
    /**
     * Description of the Method
     *
@@ -165,7 +181,6 @@ public class NewServletWizardPage extends DOMClassWizardPage
    {
       FieldsUtil.createSelectionButtonDialogFieldGroupControls(this.serviceMethodStubsButtons, composite, nColumns);
    }
-
 
    /** Description of the Method */
    protected void initContent()

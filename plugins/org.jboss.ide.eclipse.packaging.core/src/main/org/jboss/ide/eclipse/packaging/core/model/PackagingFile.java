@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.packaging.core.model;
 
@@ -27,22 +42,24 @@ public class PackagingFile extends PackagingData
 {
    /** Description of the Field */
    private boolean local = false;
+
    /** Description of the Field */
    private String location = "";//$NON-NLS-1$
+
    /** Description of the Field */
    private String prefix = "";//$NON-NLS-1$
+
    /** Description of the Field */
    private String project = "";//$NON-NLS-1$
+
    /** Description of the Field */
    private String projectLocation = "";//$NON-NLS-1$
-
 
    /** Constructor for the XDocletTask object */
    public PackagingFile()
    {
       super();
    }
-
 
    /**
     * Description of the Method
@@ -69,7 +86,6 @@ public class PackagingFile extends PackagingData
       return file;
    }
 
-
    /**
     * Description of the Method
     *
@@ -79,7 +95,6 @@ public class PackagingFile extends PackagingData
    {
       return (PackagingData) this.clone();
    }
-
 
    /**
     * Gets the destination attribute of the PackagingConfiguration object
@@ -91,7 +106,6 @@ public class PackagingFile extends PackagingData
       return this.location;
    }
 
-
    /**
     * Gets the destination attribute of the PackagingConfiguration object
     *
@@ -102,7 +116,6 @@ public class PackagingFile extends PackagingData
       return this.prefix;
    }
 
-
    /**
     * @return   String
     */
@@ -111,7 +124,6 @@ public class PackagingFile extends PackagingData
       return project;
    }
 
-
    /**
     * @return   String
     */
@@ -119,7 +131,6 @@ public class PackagingFile extends PackagingData
    {
       return projectLocation;
    }
-
 
    /**
     * Gets the local attribute of the PackagingFile object
@@ -130,7 +141,6 @@ public class PackagingFile extends PackagingData
    {
       return this.local;
    }
-
 
    /**
     * Description of the Method
@@ -148,8 +158,7 @@ public class PackagingFile extends PackagingData
 
       String aProject = element.getAttribute("project");//$NON-NLS-1$
       String aProjectLocation = element.getAttribute("projectLocation");//$NON-NLS-1$
-      if ((aProjectLocation != null) && (aProject != null)
-         && (!"".equals(aProjectLocation))//$NON-NLS-1$
+      if ((aProjectLocation != null) && (aProject != null) && (!"".equals(aProjectLocation))//$NON-NLS-1$
       )
       {
          this.setProjectLocation(aProjectLocation);
@@ -166,7 +175,6 @@ public class PackagingFile extends PackagingData
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -180,17 +188,14 @@ public class PackagingFile extends PackagingData
       )
       {
          String prj = archive.getProject().getName();
-         resource = ProjectUtil.getFile(prj + IPath.SEPARATOR
-            + this.getProjectLocation());
+         resource = ProjectUtil.getFile(prj + IPath.SEPARATOR + this.getProjectLocation());
       }
       else
       {
-         resource = ProjectUtil.getFile(this.getProject() + IPath.SEPARATOR
-            + this.getProjectLocation());
+         resource = ProjectUtil.getFile(this.getProject() + IPath.SEPARATOR + this.getProjectLocation());
       }
       return resource;
    }
-
 
    /**
     * Sets the local attribute of the PackagingFile object
@@ -201,7 +206,6 @@ public class PackagingFile extends PackagingData
    {
       this.local = local;
    }
-
 
    /**
     * Sets the name.
@@ -216,7 +220,6 @@ public class PackagingFile extends PackagingData
       this.setLocal(false);
    }
 
-
    /**
     * Sets the prefix attribute of the PackagingFile object
     *
@@ -227,7 +230,6 @@ public class PackagingFile extends PackagingData
       this.prefix = prefix;
    }
 
-
    /**
     * Sets the project.
     *
@@ -237,7 +239,6 @@ public class PackagingFile extends PackagingData
    {
       this.project = project;
    }
-
 
    /**
     * Sets the projectLocation.
@@ -250,7 +251,6 @@ public class PackagingFile extends PackagingData
       this.location = "";//$NON-NLS-1$
       this.setLocal(true);
    }
-
 
    /**
     * Description of the Method
@@ -280,7 +280,6 @@ public class PackagingFile extends PackagingData
       return buffer.toString();
    }
 
-
    /**
     * Description of the Method
     *
@@ -298,7 +297,7 @@ public class PackagingFile extends PackagingData
          element.setAttribute("project", this.getProject());//$NON-NLS-1$
          element.setAttribute("projectLocation", this.getProjectLocation());//$NON-NLS-1$
          element.setAttribute("name", this.getProjectLocation().substring(this.getProjectLocation().lastIndexOf("" //$NON-NLS-1$ //$NON-NLS-2$
-         + IPath.SEPARATOR) + 1));
+               + IPath.SEPARATOR) + 1));
 
          String projectName = ((PackagingArchive) this.getParent()).getProject().getName();
          String absLocation;
@@ -317,11 +316,10 @@ public class PackagingFile extends PackagingData
       {
          element.setAttribute("location", this.getLocation());//$NON-NLS-1$
          element.setAttribute("name", this.getLocation().substring(this.getLocation().lastIndexOf("" //$NON-NLS-1$ //$NON-NLS-2$
-         + IPath.SEPARATOR) + 1));
+               + IPath.SEPARATOR) + 1));
       }
       element.setAttribute("used", "" + this.isUsed());//$NON-NLS-1$ //$NON-NLS-2$
    }
-
 
    /**
     * Description of the Method

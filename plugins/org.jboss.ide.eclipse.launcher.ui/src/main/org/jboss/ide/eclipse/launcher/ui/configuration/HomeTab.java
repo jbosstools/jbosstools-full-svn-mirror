@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.launcher.ui.configuration;
 
@@ -61,16 +76,21 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
 {
    /** Description of the Field */
    public Text homedirText;
+
    /** Description of the Field */
    protected String homeDirLabelText;
 
    private Button homedirButton;
-   private Label homedirLabel;
-   private JBossType type;
-   private List serverConfigurations = new ArrayList();
-   private ComboViewer comboViewer;
-   private boolean hasServerConfig;
 
+   private Label homedirLabel;
+
+   private JBossType type;
+
+   private List serverConfigurations = new ArrayList();
+
+   private ComboViewer comboViewer;
+
+   private boolean hasServerConfig;
 
    /**
     * Constructor for JBossHomeTab.
@@ -79,7 +99,8 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
     */
    public HomeTab(String homeDirLabelText)
    {
-      this(homeDirLabelText, true);;
+      this(homeDirLabelText, true);
+      ;
    }
 
    /**
@@ -93,7 +114,6 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
       this.homeDirLabelText = homeDirLabelText;
       this.hasServerConfig = hasServerConfig;
    }
-
 
    /**
     * @param parent  Description of the Parameter
@@ -129,56 +149,52 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
       homedirText = new Text(homedirComposite, SWT.SINGLE | SWT.BORDER);
       gd = new GridData(GridData.FILL_HORIZONTAL);
       homedirText.setLayoutData(gd);
-      homedirText.addModifyListener(
-         new ModifyListener()
+      homedirText.addModifyListener(new ModifyListener()
+      {
+         public void modifyText(ModifyEvent evt)
          {
-            public void modifyText(ModifyEvent evt)
-            {
-               updateLaunchConfigurationDialog();
-               updateServerConfigurations();
-            }
-         });
+            updateLaunchConfigurationDialog();
+            updateServerConfigurations();
+         }
+      });
 
       homedirButton = createPushButton(homedirComposite, LauncherUIMessages.getString("JBossHomeTab.Directory_1"), //$NON-NLS-1$
-      null);
-      homedirButton.addSelectionListener(
-         new SelectionAdapter()
+            null);
+      homedirButton.addSelectionListener(new SelectionAdapter()
+      {
+         public void widgetSelected(SelectionEvent evt)
          {
-            public void widgetSelected(SelectionEvent evt)
-            {
-               homedirButtonSelected();
-            }
-         });
-      
+            homedirButtonSelected();
+         }
+      });
+
       if (hasServerConfig)
       {
-	      Label configLabel = new Label(homedirComposite, SWT.NONE);
-	      configLabel.setText("Server Configuration:");
-	      gd = new GridData();
-	      gd.horizontalSpan = 2;
-	      configLabel.setLayoutData(gd);
-	      
-	      Combo configCombo = new Combo(homedirComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
-	      gd = new GridData();
-	      gd.horizontalSpan = 2;
-	      gd.grabExcessHorizontalSpace = false;
-	      configCombo.setLayoutData(gd);
-	
-	      comboViewer = new ComboViewer(configCombo);
-	      comboViewer.setContentProvider(new ListContentProvider());
-	      comboViewer.setLabelProvider(new LabelProvider());
-	      comboViewer.setInput(serverConfigurations);
-	      comboViewer.addSelectionChangedListener(
-	         new ISelectionChangedListener()
-	         {
-				public void selectionChanged(SelectionChangedEvent event)
-				{
-	               updateLaunchConfigurationDialog();
-			    }
-			 });
-      }
-}
+         Label configLabel = new Label(homedirComposite, SWT.NONE);
+         configLabel.setText("Server Configuration:");
+         gd = new GridData();
+         gd.horizontalSpan = 2;
+         configLabel.setLayoutData(gd);
 
+         Combo configCombo = new Combo(homedirComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+         gd = new GridData();
+         gd.horizontalSpan = 2;
+         gd.grabExcessHorizontalSpace = false;
+         configCombo.setLayoutData(gd);
+
+         comboViewer = new ComboViewer(configCombo);
+         comboViewer.setContentProvider(new ListContentProvider());
+         comboViewer.setLabelProvider(new LabelProvider());
+         comboViewer.setInput(serverConfigurations);
+         comboViewer.addSelectionChangedListener(new ISelectionChangedListener()
+         {
+            public void selectionChanged(SelectionChangedEvent event)
+            {
+               updateLaunchConfigurationDialog();
+            }
+         });
+      }
+   }
 
    /**
     * @return   The image value
@@ -189,7 +205,6 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
       return LauncherUIImages.getImage(ILauncherUIConstants.IMG_OBJS_JBOSSHOME_TAB);
    }
 
-
    /**
     * @return   The name value
     * @see      org.eclipse.debug.ui.ILaunchConfigurationTab#getName()
@@ -199,7 +214,6 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
       return LauncherUIMessages.getString("JBossHomeTab.Home_2");//$NON-NLS-1$
    }
 
-
    /**
     * @param configuration  Description of the Parameter
     * @see                  org.eclipse.debug.ui.ILaunchConfigurationTab#initializeFrom(ILaunchConfiguration)
@@ -208,18 +222,18 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
    {
       try
       {
-         IJBossLaunchConfigurationDelegate delegate = (IJBossLaunchConfigurationDelegate) configuration.getType().getDelegate(ILaunchManager.DEBUG_MODE);
+         IJBossLaunchConfigurationDelegate delegate = (IJBossLaunchConfigurationDelegate) configuration.getType()
+               .getDelegate(ILaunchManager.DEBUG_MODE);
          type = delegate.getType();
       }
       catch (CoreException e)
       {
          AbstractPlugin.log(e);
       }
-      
+
       updateHomedirFromConfig(configuration);
       updateServerConfigurationFromConfig(configuration);
    }
-
 
    /**
     * @param configuration  Description of the Parameter
@@ -231,40 +245,50 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
       String serverConfig = null;
       if (hasServerConfig)
       {
-	      serverConfig = (String)((IStructuredSelection)comboViewer.getSelection()).getFirstElement();
-	      configuration.setAttribute(IJBossConstants.ATTR_SERVER_CONFIGURATION, serverConfig);
+         serverConfig = (String) ((IStructuredSelection) comboViewer.getSelection()).getFirstElement();
+         configuration.setAttribute(IJBossConstants.ATTR_SERVER_CONFIGURATION, serverConfig);
       }
-      
+
       try
       {
          // set working dir
          configuration.setAttribute(IJavaLaunchConfigurationConstants.ATTR_WORKING_DIRECTORY, homedirText.getText()
                + File.separator + IJBossConstants.RELATIVE_WORKING_DIR);
-         List relativeStartClasspath = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_HOMEDIR_CLASSPATH, Collections.EMPTY_LIST);
-         configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_HOMEDIR_CLASSPATH, ServerLaunchUtil.appendListElementToString(homedirText.getText(), File.separator, relativeStartClasspath));
-         List relativeShutdownClasspath = configuration.getAttribute(IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_HOMEDIR_SHUTDOWN_CLASSPATH, Collections.EMPTY_LIST);
-         configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_HOMEDIR_SHUTDOWN_CLASSPATH, ServerLaunchUtil.appendListElementToString(homedirText.getText(), File.separator, relativeShutdownClasspath));
-         
+         List relativeStartClasspath = configuration.getAttribute(
+               IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_HOMEDIR_CLASSPATH, Collections.EMPTY_LIST);
+         configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_HOMEDIR_CLASSPATH, ServerLaunchUtil
+               .appendListElementToString(homedirText.getText(), File.separator, relativeStartClasspath));
+         List relativeShutdownClasspath = configuration.getAttribute(
+               IServerLaunchConfigurationConstants.ATTR_RELATIVE_TO_HOMEDIR_SHUTDOWN_CLASSPATH, Collections.EMPTY_LIST);
+         configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_HOMEDIR_SHUTDOWN_CLASSPATH,
+               ServerLaunchUtil.appendListElementToString(homedirText.getText(), File.separator,
+                     relativeShutdownClasspath));
+
          String jbossHomeProperty = IJBossConstants.JBOSS_HOME_OPTION;
          String homedir = homedirText.getText();
-         
+
          if (homedir.indexOf(" ") != -1)
          {
-        	 jbossHomeProperty += "\"" + homedir + "\"";
-         } else {
-        	 jbossHomeProperty += homedir;
+            jbossHomeProperty += "\"" + homedir + "\"";
          }
-         
+         else
+         {
+            jbossHomeProperty += homedir;
+         }
+
          configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_DEFAULT_VM_ARGS, jbossHomeProperty);
-         
-         configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_DEFAULT_PROGRAM_ARGS, IJBossConstants.JBOSS_CONFIGURATION_OPTION + " " + serverConfig);
-         
+
+         configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_DEFAULT_PROGRAM_ARGS,
+               IJBossConstants.JBOSS_CONFIGURATION_OPTION + " " + serverConfig);
+
          Map logFiles = new HashMap();
          if (serverConfig != null)
          {
-	         File logDir = new File(new File(new File(homedirText.getText(), "server"), serverConfig), "log");
-	         logFiles.put(new File(logDir, "boot.log").getAbsolutePath(), String.valueOf(LogFile.DEFAULT_POLLING_INTERVALL));
-	         logFiles.put(new File(logDir, "server.log").getAbsolutePath(), String.valueOf(LogFile.DEFAULT_POLLING_INTERVALL));
+            File logDir = new File(new File(new File(homedirText.getText(), "server"), serverConfig), "log");
+            logFiles.put(new File(logDir, "boot.log").getAbsolutePath(), String
+                  .valueOf(LogFile.DEFAULT_POLLING_INTERVALL));
+            logFiles.put(new File(logDir, "server.log").getAbsolutePath(), String
+                  .valueOf(LogFile.DEFAULT_POLLING_INTERVALL));
          }
          configuration.setAttribute(IServerLaunchConfigurationConstants.ATTR_DEFAULT_LOG_FILES, logFiles);
       }
@@ -274,7 +298,6 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
       }
    }
 
-
    /**
     * @param configuration  The new defaults value
     * @see                  org.eclipse.debug.ui.ILaunchConfigurationTab#setDefaults(ILaunchConfigurationWorkingCopy)
@@ -282,7 +305,6 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
    public void setDefaults(ILaunchConfigurationWorkingCopy configuration)
    {
    }
-
 
    /**
     * Description of the Method
@@ -293,7 +315,8 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
    {
       try
       {
-         String homedirName = config.getAttribute(IJBossConstants.ATTR_JBOSS_HOME_DIR, IServerLaunchConfigurationConstants.EMPTY_STRING);
+         String homedirName = config.getAttribute(IJBossConstants.ATTR_JBOSS_HOME_DIR,
+               IServerLaunchConfigurationConstants.EMPTY_STRING);
          homedirText.setText(homedirName);
       }
       catch (CoreException ce)
@@ -301,7 +324,6 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
          AbstractPlugin.log(ce);
       }
    }
-
 
    /** Method homedirButtonSelected. */
    private void homedirButtonSelected()
@@ -318,45 +340,43 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
       }
       homedirText.setText(d.getAbsolutePath());
    }
-   
+
    private void updateServerConfigurations()
    {
       if (hasServerConfig)
       {
-	      ISelection sel = comboViewer.getSelection();
-	      
-	      serverConfigurations.clear();
-	      String homedir = homedirText.getText();
-	      if (!"".equals(homedir))//$NON-NLS-1$
-	      {
-	         if (type.equals(JBossType.JBoss_3_0_X)
-	          || type.equals(JBossType.JBoss_3_2_X)
-	          || type.equals(JBossType.JBoss_4_0_X))
-	         {
-	            File dir = new File(homedir);
-	            File server = new File(dir, "server");//$NON-NLS-1$
-	            File[] configs = server.listFiles();
-	            
-	            if (configs != null)
-	            {
-		            for (int j = 0; j < configs.length; j++)
-		            {
-		               File config = configs[j];
-		               File deploy = new File(config, "deploy");//$NON-NLS-1$
-		               if (deploy.exists() && deploy.isDirectory())
-		               {
-		                  serverConfigurations.add(config.getName());
-		               }
-		            }
-	            }
-	         }
-	      }
-	      
-	      comboViewer.refresh();
-	      comboViewer.setSelection(sel);
+         ISelection sel = comboViewer.getSelection();
+
+         serverConfigurations.clear();
+         String homedir = homedirText.getText();
+         if (!"".equals(homedir))//$NON-NLS-1$
+         {
+            if (type.equals(JBossType.JBoss_3_0_X) || type.equals(JBossType.JBoss_3_2_X)
+                  || type.equals(JBossType.JBoss_4_0_X))
+            {
+               File dir = new File(homedir);
+               File server = new File(dir, "server");//$NON-NLS-1$
+               File[] configs = server.listFiles();
+
+               if (configs != null)
+               {
+                  for (int j = 0; j < configs.length; j++)
+                  {
+                     File config = configs[j];
+                     File deploy = new File(config, "deploy");//$NON-NLS-1$
+                     if (deploy.exists() && deploy.isDirectory())
+                     {
+                        serverConfigurations.add(config.getName());
+                     }
+                  }
+               }
+            }
+         }
+
+         comboViewer.refresh();
+         comboViewer.setSelection(sel);
       }
    }
-
 
    /**
     * @param configuration
@@ -365,15 +385,15 @@ public abstract class HomeTab extends AbstractLaunchConfigurationTab
    {
       if (hasServerConfig)
       {
-	      try
-	      {
-	         String serverConfig = configuration.getAttribute(IJBossConstants.ATTR_SERVER_CONFIGURATION, "default");
-	         comboViewer.setSelection(new StructuredSelection(serverConfig));
-	      }
-	      catch (CoreException e)
-	      {
-	         AbstractPlugin.log(e);
-	      }
+         try
+         {
+            String serverConfig = configuration.getAttribute(IJBossConstants.ATTR_SERVER_CONFIGURATION, "default");
+            comboViewer.setSelection(new StructuredSelection(serverConfig));
+         }
+         catch (CoreException e)
+         {
+            AbstractPlugin.log(e);
+         }
       }
    }
 }

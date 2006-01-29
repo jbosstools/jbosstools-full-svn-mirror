@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.deployer.ui;
 
@@ -25,14 +40,17 @@ import org.jboss.ide.eclipse.deployer.ui.dialogs.TargetEditDialog;
 public class TargetUIAdapter
 {
    private Map dialogs = new HashMap();
+
    private Map images = new HashMap();
+
    private List targets = new ArrayList();
+
    private static TargetUIAdapter adapter = new TargetUIAdapter();
 
-
    /**Constructor for the TargetInfo object */
-   private TargetUIAdapter() { }
-
+   private TargetUIAdapter()
+   {
+   }
 
    /**
     * Adds a feature to the Info attribute of the TargetUIAdapter object
@@ -48,7 +66,6 @@ public class TargetUIAdapter
       this.images.put(target.getClass(), image);
    }
 
-
    /**
     * Gets the targets attribute of the TargetUIAdapter object
     *
@@ -58,7 +75,6 @@ public class TargetUIAdapter
    {
       return this.targets;
    }
-
 
    /**
     * Gets the dialog attribute of the TargetInfo object
@@ -73,8 +89,10 @@ public class TargetUIAdapter
       try
       {
          Class dialogClass = (Class) this.dialogs.get(target.getClass());
-         Constructor constructor = dialogClass.getConstructor(new Class[]{Shell.class, ITarget.class});
-         dialog = (TargetEditDialog) constructor.newInstance(new Object[]{shell, target});
+         Constructor constructor = dialogClass.getConstructor(new Class[]
+         {Shell.class, ITarget.class});
+         dialog = (TargetEditDialog) constructor.newInstance(new Object[]
+         {shell, target});
       }
       catch (Exception e)
       {
@@ -82,7 +100,6 @@ public class TargetUIAdapter
       }
       return dialog;
    }
-
 
    /**
     * Gets the image attribute of the TargetInfo object
@@ -96,7 +113,6 @@ public class TargetUIAdapter
       return DeployerUIImages.getImage(name);
    }
 
-
    /**
     * Gets the instance attribute of the TargetUIAdapter class
     *
@@ -107,4 +123,3 @@ public class TargetUIAdapter
       return adapter;
    }
 }
-

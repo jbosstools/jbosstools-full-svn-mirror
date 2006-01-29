@@ -1,8 +1,23 @@
 /*
- * JBoss-IDE, Eclipse plugins for JBoss
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * Distributable under LGPL license.
- * See terms of license at www.gnu.org.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.j2ee.jsp.core.compiler.jasper;
 
@@ -77,19 +92,30 @@ import org.jboss.ide.eclipse.jdt.j2ee.jsp.core.compiler.JSPMarkerFactory;
 public class JSPProject implements IResourceChangeListener
 {
    private boolean active = false;
-   private int classpathHashcode = -1;
-   private Compiler compiler;
-   private JSPCompilationEnvironment jasperEnvironment;
-   private IJavaProject javaProject;
-   private Map jspInfos = new Hashtable();
-   private INameEnvironment nameEnvironment;
-   private IProject project;
-   private URLClassLoader projectLoader;
-   private JSPCompilerRequestor requestor;
-   private JSPServletContext servletContext;
-   private String uriRoot;
-   private IFolder uriRootFolder;
 
+   private int classpathHashcode = -1;
+
+   private Compiler compiler;
+
+   private JSPCompilationEnvironment jasperEnvironment;
+
+   private IJavaProject javaProject;
+
+   private Map jspInfos = new Hashtable();
+
+   private INameEnvironment nameEnvironment;
+
+   private IProject project;
+
+   private URLClassLoader projectLoader;
+
+   private JSPCompilerRequestor requestor;
+
+   private JSPServletContext servletContext;
+
+   private String uriRoot;
+
+   private IFolder uriRootFolder;
 
    /**
     *Constructor for the JSPProject object
@@ -103,7 +129,6 @@ public class JSPProject implements IResourceChangeListener
 
       this.reset();
    }
-
 
    /**
     * Description of the Method
@@ -126,7 +151,6 @@ public class JSPProject implements IResourceChangeListener
       return info;
    }
 
-
    /**
     * Gets the classLoader attribute of the JSPProject object
     *
@@ -148,30 +172,33 @@ public class JSPProject implements IResourceChangeListener
          {
             for (int i = 0; i < entries.length; i++)
             {
-            	IClasspathEntry entry = entries[i];
-            	switch(entry.getEntryKind()) {
-            	case IClasspathEntry.CPE_SOURCE:
-            		path = entry.getOutputLocation();
-            		if(path == null) {
-            			path = jProject.getOutputLocation();
-            		}
-            		break;
-            	case IClasspathEntry.CPE_LIBRARY:
-                    path = entry.getPath();
-            		break;
-            	}
-            	if (path != null) {
-            		IResource res = AbstractPlugin.getWorkspace().getRoot().findMember(path);
-	                if (res != null)
-	                {
-	                   u = res.getLocation().toFile().toURL();
-	                }
-	                else
-	                {
-	                   u = path.toFile().toURL();
-	                }
-	                urls.add(u);
-            	}
+               IClasspathEntry entry = entries[i];
+               switch (entry.getEntryKind())
+               {
+                  case IClasspathEntry.CPE_SOURCE :
+                     path = entry.getOutputLocation();
+                     if (path == null)
+                     {
+                        path = jProject.getOutputLocation();
+                     }
+                     break;
+                  case IClasspathEntry.CPE_LIBRARY :
+                     path = entry.getPath();
+                     break;
+               }
+               if (path != null)
+               {
+                  IResource res = AbstractPlugin.getWorkspace().getRoot().findMember(path);
+                  if (res != null)
+                  {
+                     u = res.getLocation().toFile().toURL();
+                  }
+                  else
+                  {
+                     u = path.toFile().toURL();
+                  }
+                  urls.add(u);
+               }
             }
             URL[] result = (URL[]) urls.toArray(new URL[urls.size()]);
             this.projectLoader = new JSPClassLoader(result, JSPProject.class.getClassLoader());
@@ -183,7 +210,6 @@ public class JSPProject implements IResourceChangeListener
       }
       return this.projectLoader;
    }
-
 
    /**
     * Gets the compilerRequestor attribute of the JSPProject object
@@ -199,7 +225,6 @@ public class JSPProject implements IResourceChangeListener
       return this.requestor;
    }
 
-
    /**
     * Gets the environment attribute of the JSPProject object
     *
@@ -214,7 +239,6 @@ public class JSPProject implements IResourceChangeListener
       return this.jasperEnvironment;
    }
 
-
    /**
     * Gets the jSPInfo attribute of the JSPProject object
     *
@@ -226,7 +250,6 @@ public class JSPProject implements IResourceChangeListener
       String key = file.getProjectRelativePath().toString();
       return (JSPElementInfo) this.jspInfos.get(key);
    }
-
 
    /**
     * Gets the jSPURI attribute of the JSPProject object
@@ -243,7 +266,6 @@ public class JSPProject implements IResourceChangeListener
       return jspUri;
    }
 
-
    /**
     * Gets the javaProject attribute of the JSPProject object
     *
@@ -253,7 +275,6 @@ public class JSPProject implements IResourceChangeListener
    {
       return this.javaProject;
    }
-
 
    /**
     * Gets the nameEnvironment attribute of the JSPProject object
@@ -269,7 +290,6 @@ public class JSPProject implements IResourceChangeListener
       return this.nameEnvironment;
    }
 
-
    /**
     * Gets the project attribute of the JSPProject object
     *
@@ -279,7 +299,6 @@ public class JSPProject implements IResourceChangeListener
    {
       return this.project;
    }
-
 
    /**
     * Gets the servletContext attribute of the JSPProject object
@@ -291,7 +310,6 @@ public class JSPProject implements IResourceChangeListener
       return this.servletContext;
    }
 
-
    /**
     * Gets the uriRoot attribute of the JSPProject object
     *
@@ -301,7 +319,6 @@ public class JSPProject implements IResourceChangeListener
    {
       return this.uriRoot;
    }
-
 
    /**
     * Gets the uriRootFolder attribute of the JSPProject object
@@ -313,7 +330,6 @@ public class JSPProject implements IResourceChangeListener
 
       return this.uriRootFolder;
    }
-
 
    /**
     * Description of the Method
@@ -350,7 +366,6 @@ public class JSPProject implements IResourceChangeListener
       return changed;
    }
 
-
    /**
     * @return   Returns the active.
     */
@@ -358,7 +373,6 @@ public class JSPProject implements IResourceChangeListener
    {
       return active;
    }
-
 
    /** Description of the Method */
    public void reset()
@@ -396,7 +410,6 @@ public class JSPProject implements IResourceChangeListener
       }
    }
 
-
    /**
     * Description of the Method
     *
@@ -409,20 +422,19 @@ public class JSPProject implements IResourceChangeListener
       {
          switch (event.getType())
          {
-            case IResourceChangeEvent.PRE_CLOSE:
-            case IResourceChangeEvent.PRE_DELETE:
+            case IResourceChangeEvent.PRE_CLOSE :
+            case IResourceChangeEvent.PRE_DELETE :
                AbstractPlugin.getWorkspace().removeResourceChangeListener(this);
                JSPProjectManager.removeJSPProject(this.getProject());
                break;
-            case IResourceChangeEvent.POST_CHANGE:
+            case IResourceChangeEvent.POST_CHANGE :
                this.reset();
                break;
-            default:
-            // Do nothing
+            default :
+         // Do nothing
          }
       }
    }
-
 
    /**
     * Sets the scratchDir attribute of the JSPProject object
@@ -434,7 +446,6 @@ public class JSPProject implements IResourceChangeListener
       IFolder folder = this.getProject().getFolder(scratchDir);
       this.getEnvironment().setScratchDir(folder.getLocation().toFile());
    }
-
 
    /**
     * Sets the uriRoot attribute of the JSPProject object
@@ -449,7 +460,6 @@ public class JSPProject implements IResourceChangeListener
       this.uriRootFolder = this.getProject().getFolder(this.uriRoot);
       this.getEnvironment().setUriRoot(this.uriRootFolder.getLocation().toString());
    }
-
 
    /**
     * Description of the Method
@@ -468,9 +478,9 @@ public class JSPProject implements IResourceChangeListener
       Compiler compiler = this.getCompiler();
 
       JSPCompilationUnit unit = info.getCompilationUnit();
-      compiler.compile(new ICompilationUnit[]{unit});
+      compiler.compile(new ICompilationUnit[]
+      {unit});
    }
-
 
    /**
     * Gets the compiler attribute of the JSPProject object
@@ -482,12 +492,11 @@ public class JSPProject implements IResourceChangeListener
       if (this.compiler == null)
       {
          Main bc = new Main(null, null, false);
-         this.compiler = new Compiler(this.getNameEnvironment(), DefaultErrorHandlingPolicies.exitAfterAllProblems(), bc.options, this
-            .getCompilerRequestor(), new DefaultProblemFactory(Locale.getDefault()));
+         this.compiler = new Compiler(this.getNameEnvironment(), DefaultErrorHandlingPolicies.exitAfterAllProblems(),
+               bc.options, this.getCompilerRequestor(), new DefaultProblemFactory(Locale.getDefault()));
       }
       return this.compiler;
    }
-
 
    /**
     * Gets the jspCompilationContext attribute of the JSPProject object
@@ -499,10 +508,10 @@ public class JSPProject implements IResourceChangeListener
    {
       ServletContext context = this.getEnvironment().getContext();
       JspRuntimeContext rctxt = this.getEnvironment().getRuntimeContext();
-      JspCompilationContext clctxt = new JspCompilationContext(jspUri, false, this.getEnvironment(), context, null, rctxt);
+      JspCompilationContext clctxt = new JspCompilationContext(jspUri, false, this.getEnvironment(), context, null,
+            rctxt);
       return clctxt;
    }
-
 
    /**
     * Description of the Method
@@ -531,7 +540,6 @@ public class JSPProject implements IResourceChangeListener
       return false;
    }
 
-
    /** Description of the Method */
    private void initializeServletContext()
    {
@@ -559,7 +567,6 @@ public class JSPProject implements IResourceChangeListener
          AbstractPlugin.log(mfue);
       }
    }
-
 
    /**
     * Description of the Method
@@ -609,7 +616,6 @@ public class JSPProject implements IResourceChangeListener
       return info;
    }
 
-
    /**
     * Gets the inDocroot attribute of the JSPProject object
     *
@@ -623,7 +629,6 @@ public class JSPProject implements IResourceChangeListener
       return (rootPath.isPrefixOf(path));
    }
 
-
    /**
     * Description of the Method
     *
@@ -636,9 +641,8 @@ public class JSPProject implements IResourceChangeListener
     * @exception IllegalArgumentException  Description of the Exception
     * @exception NullPointerException      Description of the Exception
     */
-   private JSPElementInfo parseJSP(IFile file, URLClassLoader loader)
-      throws FileNotFoundException, JasperException, IOException, IllegalArgumentException,
-      NullPointerException
+   private JSPElementInfo parseJSP(IFile file, URLClassLoader loader) throws FileNotFoundException, JasperException,
+         IOException, IllegalArgumentException, NullPointerException
    {
       Node.Nodes pageNodes = null;
       String[] smapStr = null;
@@ -717,13 +721,13 @@ public class JSPProject implements IResourceChangeListener
       FileWriter fw = new FileWriter(outputFile);
       fw.write(info.getContent());
       fw.close();
-      
-      
+
       //
       // JSR45 Support
-      if (!jasperEnvironment.isSmapSuppressed()) {
-          smapStr = SmapUtil.generateSmap(clctxt, pageNodes);
-          info.setSmap(smapStr);
+      if (!jasperEnvironment.isSmapSuppressed())
+      {
+         smapStr = SmapUtil.generateSmap(clctxt, pageNodes);
+         info.setSmap(smapStr);
       }
 
       return info;
