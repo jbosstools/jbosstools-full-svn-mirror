@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.jboss.ide.eclipse.feature"
-      label="JBoss-IDE"
-      version="1.5.0"
-      provider-name="JBoss Team"
+      label="JBoss Eclipse IDE"
+      version="1.5.1"
+      provider-name="JBoss, Inc."
       image="splash.jpg">
 
    <description url="http://www.jboss.com/products/jbosside">
@@ -447,121 +447,121 @@ END OF TERMS AND CONDITIONS
          id="org.jboss.ide.eclipse.core"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.deployer.core"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.deployer.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.core"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.j2ee.core"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.j2ee.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.test.core"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.test.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.ws.core"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.ws.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.launcher.core"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.launcher.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.packaging.core"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.packaging.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.xdoclet.assist"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.xdoclet.core"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.xdoclet.run"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.xdoclet.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.eclipse.wst.xml.core"
@@ -714,19 +714,19 @@ END OF TERMS AND CONDITIONS
          id="org.jboss.ide.eclipse.jdt.j2ee.xml.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.j2ee.jsp.core"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.jboss.ide.eclipse.jdt.j2ee.jsp.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
 
    <plugin
          id="org.eclipse.wst.common.environment"
@@ -781,6 +781,12 @@ END OF TERMS AND CONDITIONS
          id="org.jboss.ide.eclipse.firstrun"
          download-size="0"
          install-size="0"
-         version="1.5.0"/>
+         version="1.5.1"/>
+
+   <plugin
+         id="org.jboss.ide.eclipse.help"
+         download-size="0"
+         install-size="0"
+         version="1.5.1"/>
 
 </feature>
