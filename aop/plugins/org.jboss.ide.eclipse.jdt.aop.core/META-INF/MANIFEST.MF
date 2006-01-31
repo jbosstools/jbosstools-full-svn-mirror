@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.jboss.ide.eclipse.jdt.aop.core; singleton:=true
-Bundle-Version: 1.1.0
+Bundle-Version: 1.1.1
 Bundle-ClassPath: jaxb-api.jar,
  namespace.jar,
  jax-qname.jar,
