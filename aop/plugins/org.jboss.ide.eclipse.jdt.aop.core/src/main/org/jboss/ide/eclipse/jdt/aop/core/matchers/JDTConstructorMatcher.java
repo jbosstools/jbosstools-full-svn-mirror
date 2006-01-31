@@ -1,8 +1,23 @@
 /*
- * Created on Jan 11, 2005
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.aop.core.matchers;
 
@@ -49,169 +64,206 @@ import com.thoughtworks.qdox.model.JavaParameter;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class JDTConstructorMatcher extends MatcherHelper {
+public class JDTConstructorMatcher extends MatcherHelper
+{
 
-	protected IMethod constructor;
-	
-	public JDTConstructorMatcher (IMethod constructor, ASTStart start) throws NotFoundException
-	{
-		super (start, AspectManager.instance());
-		this.start = start;
-		this.constructor = constructor;
-	}
-	
-	protected Boolean resolvePointcut(Pointcut p) {
-		throw new RuntimeException("SHOULD NOT BE CALLED");
-	}
+   protected IMethod constructor;
 
-	public Object visit(ASTConstructor node, Object data) {
-		return matches(node);
-	}
-	
-	public Boolean matches (ASTConstructor node)
-	{
-		try {
-			if (node.getAttributes().size() > 0)
-			{
-				for (int i = 0; i < node.getAttributes().size(); i++)
-				{
-					ASTAttribute attr = (ASTAttribute) node.getAttributes().get(i);
-					if (! JDTPointcutUtil.matchModifiers(attr, constructor.getFlags())) return Boolean.FALSE;
-				}
-			}
-				
-			if (! JDTPointcutUtil.matchesClassExpr(node.getClazz(), constructor.getDeclaringType())) return Boolean.FALSE;
-			
-			if (node.getConstructorAnnotation() !=  null)
-			{
-				if( AopCorePlugin.getDefault().hasJava50CompilerCompliance(constructor.getJavaProject())) {
-				    ASTParser c = ASTParser.newParser(AST.JLS3);
-				    c.setSource(constructor.getCompilationUnit().getSource().toCharArray());
-				    c.setResolveBindings(true);
-			        CompilationUnit beanAstUnit = (CompilationUnit) c.createAST(null);
-			        AST ast = beanAstUnit.getAST();
-			        
-			        final String targetAnnot = node.getConstructorAnnotation().getOriginal().substring(1);
-			        final String targetMethodName = constructor.getElementName();
-			        
-			        final TempBool tempBool = new TempBool(false);
-			        
+   public JDTConstructorMatcher(IMethod constructor, ASTStart start) throws NotFoundException
+   {
+      super(start, AspectManager.instance());
+      this.start = start;
+      this.constructor = constructor;
+   }
 
-			        beanAstUnit.accept(new ASTVisitor () {
-			            public boolean visit(MarkerAnnotation node) {
-			                Name name = node.getTypeName();
-			                String annotationName = name.getFullyQualifiedName();
-			                if( annotationName.equals(targetAnnot)) {
-			                	tempBool.setValue(true);
-			                } else {
-			                }
-			                return true;
-			            }
-			            
-			            public boolean visit(FieldDeclaration node ) {
-			            	return false;
-			            }
+   protected Boolean resolvePointcut(Pointcut p)
+   {
+      throw new RuntimeException("SHOULD NOT BE CALLED");
+   }
 
-			            public boolean visit(MethodDeclaration node) {
-			            	if( node.getName().getFullyQualifiedName().equals(targetMethodName)) {
-			            		return true;
-			            	} else {
-			            		return false;
-			            	}
-			            }
-			        });
-			        return tempBool.getBool();
-				} else {
+   public Object visit(ASTConstructor node, Object data)
+   {
+      return matches(node);
+   }
 
-					JavaMethod qDoxMethod = QDoxMatcher.matchMethod(constructor, QDoxMatcher.CONSTRUCTOR);
-					// qDoxMethod will be null if there's an exception, such as a compile exception.
-					//System.out.println(qDoxMethod);
-					if( qDoxMethod == null ) return Boolean.FALSE;
-					DocletTag[] tags = qDoxMethod.getTags();
-					//System.out.println("node: " + node.getConstructorAnnotation().getOriginal());
-					for( int k = 0; k < tags.length; k++ ) {
-						//System.out.println("   tags: " + tags[k].getName() );
-						if( node.getConstructorAnnotation().getOriginal().equals( 
-								tags[k].getName()))
-							return Boolean.TRUE;
-					}
-			        return Boolean.FALSE;
-				}
-			}
-			
-			ArrayList nodeExceptions = node.getExceptions();
-			if (! JDTPointcutUtil.matchExceptions(nodeExceptions, constructor, constructor.getExceptionTypes())) return Boolean.FALSE;
-			
-			if (node.isAnyParameters()) return Boolean.TRUE;
-			if (node.getParameters().size() != constructor.getParameterNames().length) return Boolean.FALSE;
-			
-			String jdtMethodParameterTypes[] = constructor.getParameterTypes();
-			
-			String paramTypeNames[] = new String[jdtMethodParameterTypes.length];
-			System.arraycopy(jdtMethodParameterTypes, 0, paramTypeNames, 0, jdtMethodParameterTypes.length);
-			IType paramTypes[] = new IType[paramTypeNames.length];
-			
-			for (int i = 0; i < paramTypeNames.length; i++)
-			{
-				String fqParamTypeName = JavaModelUtil.getResolvedTypeName(paramTypeNames[i], constructor.getDeclaringType());
-				IType paramType = null;
-				try {
-					paramType = JavaModelUtil.findType(constructor.getJavaProject(), fqParamTypeName);
-				} catch( JavaModelException jme ) {
-				} finally {
-					if (paramType == null) // Probably a primitive
-						paramTypeNames[i] = fqParamTypeName;
-				}
-				paramTypes[i] = paramType;
-			}
-			
-			for (int i = 0; i < paramTypes.length; i++)
-			{
-				ASTParameter ast = (ASTParameter) node.getParameters().get(i);
-				ClassExpression expr = ast.getType();
-				if (paramTypes[i] == null)
-				{
-					if (!JDTPointcutUtil.matchesClassExprPrimitive(ast.getType(), paramTypeNames[i])) 
-						return Boolean.FALSE;
-				}
-				else {
-					if (! JDTPointcutUtil.matchesClassExpr(expr, paramTypes[i])) return Boolean.FALSE;
-				}
-			}
-		} catch (JavaModelException e) {
-			return Boolean.FALSE;
-		}
-		
-		return Boolean.TRUE;
-	}
-	
-	public Object visit(ASTAll node, Object data) {
-		if (node.getClazz().isAnnotation())
-		{
-			JavaMethod qDoxMethod = QDoxMatcher.matchMethod(constructor, QDoxMatcher.CONSTRUCTOR);
-			// qDoxMethod will be null if there's an exception, such as a compile exception.
-			if( qDoxMethod == null ) return Boolean.FALSE;
+   public Boolean matches(ASTConstructor node)
+   {
+      try
+      {
+         if (node.getAttributes().size() > 0)
+         {
+            for (int i = 0; i < node.getAttributes().size(); i++)
+            {
+               ASTAttribute attr = (ASTAttribute) node.getAttributes().get(i);
+               if (!JDTPointcutUtil.matchModifiers(attr, constructor.getFlags()))
+                  return Boolean.FALSE;
+            }
+         }
 
-			DocletTag[] tags = qDoxMethod.getTags();
-			for( int k = 0; k < tags.length; k++ ) {
-				if( node.getClasseExpression().equals(tags[k].getName())) {
-					//System.out.println("match on " + node.getClasseExpression());
-					return Boolean.TRUE;
-				}
-			}
-			return Boolean.FALSE;
-		}
-		else if (node.getClazz().isInstanceOf())
-		{
-			if (! JDTPointcutUtil.subtypeOf(constructor.getDeclaringType(), node.getClazz())) return Boolean.FALSE;
-		}
-		else if (node.getClazz().isTypedef())
-		{
-			if (! JDTPointcutUtil.matchesTypedef(constructor.getDeclaringType(), node.getClazz())) return Boolean.FALSE;
-		}
-		
-		return Boolean.TRUE;
-	}
-	
-	
+         if (!JDTPointcutUtil.matchesClassExpr(node.getClazz(), constructor.getDeclaringType()))
+            return Boolean.FALSE;
+
+         if (node.getConstructorAnnotation() != null)
+         {
+            if (AopCorePlugin.getDefault().hasJava50CompilerCompliance(constructor.getJavaProject()))
+            {
+               ASTParser c = ASTParser.newParser(AST.JLS3);
+               c.setSource(constructor.getCompilationUnit().getSource().toCharArray());
+               c.setResolveBindings(true);
+               CompilationUnit beanAstUnit = (CompilationUnit) c.createAST(null);
+               AST ast = beanAstUnit.getAST();
+
+               final String targetAnnot = node.getConstructorAnnotation().getOriginal().substring(1);
+               final String targetMethodName = constructor.getElementName();
+
+               final TempBool tempBool = new TempBool(false);
+
+               beanAstUnit.accept(new ASTVisitor()
+               {
+                  public boolean visit(MarkerAnnotation node)
+                  {
+                     Name name = node.getTypeName();
+                     String annotationName = name.getFullyQualifiedName();
+                     if (annotationName.equals(targetAnnot))
+                     {
+                        tempBool.setValue(true);
+                     }
+                     else
+                     {
+                     }
+                     return true;
+                  }
+
+                  public boolean visit(FieldDeclaration node)
+                  {
+                     return false;
+                  }
+
+                  public boolean visit(MethodDeclaration node)
+                  {
+                     if (node.getName().getFullyQualifiedName().equals(targetMethodName))
+                     {
+                        return true;
+                     }
+                     else
+                     {
+                        return false;
+                     }
+                  }
+               });
+               return tempBool.getBool();
+            }
+            else
+            {
+
+               JavaMethod qDoxMethod = QDoxMatcher.matchMethod(constructor, QDoxMatcher.CONSTRUCTOR);
+               // qDoxMethod will be null if there's an exception, such as a compile exception.
+               //System.out.println(qDoxMethod);
+               if (qDoxMethod == null)
+                  return Boolean.FALSE;
+               DocletTag[] tags = qDoxMethod.getTags();
+               //System.out.println("node: " + node.getConstructorAnnotation().getOriginal());
+               for (int k = 0; k < tags.length; k++)
+               {
+                  //System.out.println("   tags: " + tags[k].getName() );
+                  if (node.getConstructorAnnotation().getOriginal().equals(tags[k].getName()))
+                     return Boolean.TRUE;
+               }
+               return Boolean.FALSE;
+            }
+         }
+
+         ArrayList nodeExceptions = node.getExceptions();
+         if (!JDTPointcutUtil.matchExceptions(nodeExceptions, constructor, constructor.getExceptionTypes()))
+            return Boolean.FALSE;
+
+         if (node.isAnyParameters())
+            return Boolean.TRUE;
+         if (node.getParameters().size() != constructor.getParameterNames().length)
+            return Boolean.FALSE;
+
+         String jdtMethodParameterTypes[] = constructor.getParameterTypes();
+
+         String paramTypeNames[] = new String[jdtMethodParameterTypes.length];
+         System.arraycopy(jdtMethodParameterTypes, 0, paramTypeNames, 0, jdtMethodParameterTypes.length);
+         IType paramTypes[] = new IType[paramTypeNames.length];
+
+         for (int i = 0; i < paramTypeNames.length; i++)
+         {
+            String fqParamTypeName = JavaModelUtil.getResolvedTypeName(paramTypeNames[i], constructor
+                  .getDeclaringType());
+            IType paramType = null;
+            try
+            {
+               paramType = JavaModelUtil.findType(constructor.getJavaProject(), fqParamTypeName);
+            }
+            catch (JavaModelException jme)
+            {
+            }
+            finally
+            {
+               if (paramType == null) // Probably a primitive
+                  paramTypeNames[i] = fqParamTypeName;
+            }
+            paramTypes[i] = paramType;
+         }
+
+         for (int i = 0; i < paramTypes.length; i++)
+         {
+            ASTParameter ast = (ASTParameter) node.getParameters().get(i);
+            ClassExpression expr = ast.getType();
+            if (paramTypes[i] == null)
+            {
+               if (!JDTPointcutUtil.matchesClassExprPrimitive(ast.getType(), paramTypeNames[i]))
+                  return Boolean.FALSE;
+            }
+            else
+            {
+               if (!JDTPointcutUtil.matchesClassExpr(expr, paramTypes[i]))
+                  return Boolean.FALSE;
+            }
+         }
+      }
+      catch (JavaModelException e)
+      {
+         return Boolean.FALSE;
+      }
+
+      return Boolean.TRUE;
+   }
+
+   public Object visit(ASTAll node, Object data)
+   {
+      if (node.getClazz().isAnnotation())
+      {
+         JavaMethod qDoxMethod = QDoxMatcher.matchMethod(constructor, QDoxMatcher.CONSTRUCTOR);
+         // qDoxMethod will be null if there's an exception, such as a compile exception.
+         if (qDoxMethod == null)
+            return Boolean.FALSE;
+
+         DocletTag[] tags = qDoxMethod.getTags();
+         for (int k = 0; k < tags.length; k++)
+         {
+            if (node.getClasseExpression().equals(tags[k].getName()))
+            {
+               //System.out.println("match on " + node.getClasseExpression());
+               return Boolean.TRUE;
+            }
+         }
+         return Boolean.FALSE;
+      }
+      else if (node.getClazz().isInstanceOf())
+      {
+         if (!JDTPointcutUtil.subtypeOf(constructor.getDeclaringType(), node.getClazz()))
+            return Boolean.FALSE;
+      }
+      else if (node.getClazz().isTypedef())
+      {
+         if (!JDTPointcutUtil.matchesTypedef(constructor.getDeclaringType(), node.getClazz()))
+            return Boolean.FALSE;
+      }
+
+      return Boolean.TRUE;
+   }
+
 }

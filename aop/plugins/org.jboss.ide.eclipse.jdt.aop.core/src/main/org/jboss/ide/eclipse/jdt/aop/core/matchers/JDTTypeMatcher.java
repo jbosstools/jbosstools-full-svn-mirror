@@ -1,8 +1,23 @@
 /*
- * Created on Jan 10, 2005
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.aop.core.matchers;
 
@@ -35,37 +50,41 @@ import org.jboss.aop.pointcut.ast.TypeExpressionParserVisitor;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class JDTTypeMatcher extends TypeMatcher implements TypeExpressionParserVisitor {
+public class JDTTypeMatcher extends TypeMatcher implements TypeExpressionParserVisitor
+{
 
-	//private TypeMatcher matcherDelegate;
-	private IType type;
-	
-	public JDTTypeMatcher (IType type)
-	{
-		//matcherDelegate = new TypeMatcher(null, (Class) null);
-		super(null, (Class)null);
-		this.type = type;
-	}
-	
-	public Object visit(ASTClass node, Object data) {
-		return new Boolean(JDTPointcutUtil.matchesClassExpr(node.getClazz(), type));
-	}
-	
-	public Object visit(ASTHas node, Object data) {
-		Node n = node.jjtGetChild(0);
-		if (n instanceof ASTMethod)
-		{
-			return new Boolean(JDTPointcutUtil.has(type, (ASTMethod) n));
-		}
-		else
-		{
-			return new Boolean(JDTPointcutUtil.has(type, (ASTConstructor) n));
-		}
-	}
-	
-	public Object visit(ASTHasField node, Object data) {
-		ASTField f = (ASTField) node.jjtGetChild(0);
-		return new Boolean(JDTPointcutUtil.has(type, f));
-	}
-	
+   //private TypeMatcher matcherDelegate;
+   private IType type;
+
+   public JDTTypeMatcher(IType type)
+   {
+      //matcherDelegate = new TypeMatcher(null, (Class) null);
+      super(null, (Class) null);
+      this.type = type;
+   }
+
+   public Object visit(ASTClass node, Object data)
+   {
+      return new Boolean(JDTPointcutUtil.matchesClassExpr(node.getClazz(), type));
+   }
+
+   public Object visit(ASTHas node, Object data)
+   {
+      Node n = node.jjtGetChild(0);
+      if (n instanceof ASTMethod)
+      {
+         return new Boolean(JDTPointcutUtil.has(type, (ASTMethod) n));
+      }
+      else
+      {
+         return new Boolean(JDTPointcutUtil.has(type, (ASTConstructor) n));
+      }
+   }
+
+   public Object visit(ASTHasField node, Object data)
+   {
+      ASTField f = (ASTField) node.jjtGetChild(0);
+      return new Boolean(JDTPointcutUtil.has(type, f));
+   }
+
 }

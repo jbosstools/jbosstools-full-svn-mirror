@@ -1,5 +1,23 @@
 /*
- * Created on Jan 18, 2005
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.aop.core.matchers;
 
@@ -19,43 +37,52 @@ import org.jboss.ide.eclipse.jdt.aop.core.pointcut.JDTPointcutExpression;
 /**
  * @author Marshall
  */
-public class JDTExecutionMethodMatcher extends JDTMethodMatcher {
+public class JDTExecutionMethodMatcher extends JDTMethodMatcher
+{
 
-	public JDTExecutionMethodMatcher(IMethod method, ASTStart start) {
-		super(method, start);
-	}
-	
-	public Object visit(ASTExecution node, Object data) {
-		return node.jjtGetChild(0).jjtAccept(this, data);
-	}
+   public JDTExecutionMethodMatcher(IMethod method, ASTStart start)
+   {
+      super(method, start);
+   }
 
-	protected Boolean resolvePointcut(Pointcut p) {
-		
-		try {
-			JDTPointcutExpression expr = new JDTPointcutExpression(p);
-			
-			return new Boolean(expr.matchesExecution(jdtMethod));
-		} catch (ParseException e) {
-			throw new RuntimeException (e);
-		}
-	}
-	
-	public Object visit(ASTHas node, Object data) {
-	
-		Node n = node.jjtGetChild(0);
-		if (n instanceof ASTMethod)
-		{
-			return new Boolean(JDTPointcutUtil.has(jdtMethod.getDeclaringType(), (ASTMethod) n));
-		}
-		else
-		{
-			return new Boolean(JDTPointcutUtil.has(jdtMethod.getDeclaringType(), (ASTConstructor) n));
-		}
-	}
-	
-	public Object visit(ASTHasField node, Object data) {
-		ASTField f = (ASTField) node.jjtGetChild(0);
-		
-		return new Boolean(JDTPointcutUtil.has(jdtMethod.getDeclaringType(), f));
-	}
+   public Object visit(ASTExecution node, Object data)
+   {
+      return node.jjtGetChild(0).jjtAccept(this, data);
+   }
+
+   protected Boolean resolvePointcut(Pointcut p)
+   {
+
+      try
+      {
+         JDTPointcutExpression expr = new JDTPointcutExpression(p);
+
+         return new Boolean(expr.matchesExecution(jdtMethod));
+      }
+      catch (ParseException e)
+      {
+         throw new RuntimeException(e);
+      }
+   }
+
+   public Object visit(ASTHas node, Object data)
+   {
+
+      Node n = node.jjtGetChild(0);
+      if (n instanceof ASTMethod)
+      {
+         return new Boolean(JDTPointcutUtil.has(jdtMethod.getDeclaringType(), (ASTMethod) n));
+      }
+      else
+      {
+         return new Boolean(JDTPointcutUtil.has(jdtMethod.getDeclaringType(), (ASTConstructor) n));
+      }
+   }
+
+   public Object visit(ASTHasField node, Object data)
+   {
+      ASTField f = (ASTField) node.jjtGetChild(0);
+
+      return new Boolean(JDTPointcutUtil.has(jdtMethod.getDeclaringType(), f));
+   }
 }

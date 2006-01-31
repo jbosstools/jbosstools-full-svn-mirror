@@ -1,5 +1,23 @@
 /*
- * Created on Jan 11, 2005
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.aop.core.matchers;
 
@@ -44,176 +62,206 @@ import com.thoughtworks.qdox.model.JavaField;
 /**
  * @author Marshall
  */
-public class JDTFieldMatcher extends MatcherHelper {
+public class JDTFieldMatcher extends MatcherHelper
+{
 
-	protected IField jdtField;
-	protected ASTStart start;
-	
-	public JDTFieldMatcher (IField field, ASTStart start) throws NotFoundException
-	{
-		super (start, AspectManager.instance());
-		this.jdtField = field;
-		this.start = start;
-	}
-	
-	protected Boolean resolvePointcut(Pointcut p) {
-		throw new RuntimeException("SHOULD NOT BE CALLED");
-	}
+   protected IField jdtField;
 
-	public Object visit(ASTField node, Object data) {
+   protected ASTStart start;
 
-		try {
-			if (node.getAttributes().size() > 0)
-			{
-				for (int i = 0; i < node.getAttributes().size(); i++)
-				{
-					ASTAttribute attr = (ASTAttribute) node.getAttributes().get(i);
-					if (! JDTPointcutUtil.matchModifiers(attr, jdtField.getFlags()));
-				}
-			}
-			
-			ClassExpression type = node.getType();
-			
-			String typeSig = JavaModelUtil.getResolvedTypeName(jdtField.getTypeSignature(), jdtField.getDeclaringType());
-			IType fieldType = null;
-			try {
-				fieldType = JavaModelUtil.findType(jdtField.getJavaProject(), typeSig);
-			} catch( JavaModelException jme ) {
-			}
-			if (fieldType == null)
-			{
-				if (! JDTPointcutUtil.matchesClassExprPrimitive(type, typeSig)) return Boolean.FALSE;
-			}
-			else {
-				if (! JDTPointcutUtil.matchesClassExpr(type, fieldType)) return Boolean.FALSE;
-			}
-			if (! JDTPointcutUtil.matchesClassExpr(node.getClazz(), jdtField.getDeclaringType())) return Boolean.FALSE;
-			
-		
-		
-			if (node.getFieldIdentifier().isAnnotation())
-			{
-				if( AopCorePlugin.getDefault().hasJava50CompilerCompliance(jdtField.getJavaProject())) {
-				    ASTParser c = ASTParser.newParser(AST.JLS3);
-				    c.setSource(jdtField.getCompilationUnit().getSource().toCharArray());
-				    c.setResolveBindings(true);
-			        CompilationUnit beanAstUnit = (CompilationUnit) c.createAST(null);
-			        AST ast = beanAstUnit.getAST();
-			        
-			        final String targetAnnot = node.getFieldIdentifier().getOriginal().substring(1);
-			        final String targetMethodName = jdtField.getElementName();
-			        
-			        final TempBool tempBool = new TempBool(false);
-			        
+   public JDTFieldMatcher(IField field, ASTStart start) throws NotFoundException
+   {
+      super(start, AspectManager.instance());
+      this.jdtField = field;
+      this.start = start;
+   }
 
-			        beanAstUnit.accept(new ASTVisitor () {
-			            public boolean visit(MarkerAnnotation node) {
-			                Name name = node.getTypeName();
-			                String annotationName = name.getFullyQualifiedName();
-			                if( annotationName.equals(targetAnnot)) {
-			                	tempBool.setValue(true);
-			                } 
-			                return true;
-			            }
-			            
-			            public boolean visit(MethodDeclaration node ) {
-			            	return false;
-			            }
+   protected Boolean resolvePointcut(Pointcut p)
+   {
+      throw new RuntimeException("SHOULD NOT BE CALLED");
+   }
 
-			            public boolean visit(FieldDeclaration node) {
-			            	List list = node.fragments();
-			            	for( Iterator i = list.iterator(); i.hasNext(); ) {
-			            		VariableDeclarationFragment frag = (VariableDeclarationFragment)i.next();
-			            		String name = frag.getName().getFullyQualifiedName();
-			            		if( name.equals(targetMethodName)) {
-			            			return true;
-			            		} 
-			            	}
-			            	return false;
-			            }
-			        });
-			        return tempBool.getBool();
+   public Object visit(ASTField node, Object data)
+   {
 
-				} else {
-	
-					//TODO implement annotation code here
-					JavaField qDoxField = QDoxMatcher.matchField(jdtField);
-					// qDoxField will be null if there's an exception, such as a compile exception.
-					//System.out.println("QDOXFIELD: " + qDoxField);
-					if( qDoxField == null ) return Boolean.FALSE;
-					DocletTag[] tags = qDoxField.getTags();
-					for( int k = 0; k < tags.length; k++ ) {
-						if( node.getFieldIdentifier().getOriginal().equals(tags[k].getName())) 
-							return Boolean.TRUE;
-					}
-			        return Boolean.FALSE;
-				}
-			}
-			else
-			{
-				if (node.getFieldIdentifier().matches(jdtField.getElementName()))
-				{
-					return Boolean.TRUE;
-				}
-			}
-			
-			return Boolean.FALSE;
-		} catch (JavaModelException e) {
-			return Boolean.FALSE;
-		}
-	}
-	
-	public Object visit(ASTFieldExecution node, Object data) {
-		return node.jjtGetChild(0).jjtAccept(this, null);
-	}
-	
-	public Object visit(ASTAll node, Object data) {
-		if (node.getClazz().isAnnotation())
-		{
-			JavaField qDoxField = QDoxMatcher.matchField(jdtField);
-			// qDoxField will be null if there's an exception, such as a compile exception.
-			if( qDoxField == null ) return Boolean.FALSE;
-			DocletTag[] tags = qDoxField.getTags();
-			for( int k = 0; k < tags.length; k++ ) {
-				if( node.getClasseExpression().equals(tags[k].getName()))
-					return Boolean.TRUE;
-			}
-	        return Boolean.FALSE;
-		}
-		else if (node.getClazz().isInstanceOf())
-		{
-			if (! JDTPointcutUtil.subtypeOf(jdtField.getDeclaringType(), node.getClazz())) return Boolean.FALSE;
-		}
-		else if (node.getClazz().isTypedef())
-		{
-			if (! JDTPointcutUtil.matchesTypedef(jdtField.getDeclaringType(), node.getClazz())) return Boolean.FALSE;
-		}
-		else if (! node.getClazz().matches(jdtField.getDeclaringType().getFullyQualifiedName()))
-		{
-			return Boolean.FALSE;
-		}
-		
-		return Boolean.TRUE;
-	}
-	
-	public Object visit(ASTHasField node, Object data) {
-		ASTField field = (ASTField) node.jjtGetChild(0);
-		
-		return new Boolean(JDTPointcutUtil.has(jdtField.getDeclaringType(), field));
-	}
-	
-	public Object visit(ASTHas node, Object data) {
-		Node n = node.jjtGetChild(0);
-		if (n instanceof ASTMethod)
-		{
-			return new Boolean(JDTPointcutUtil.has(jdtField.getDeclaringType(), (ASTMethod) n));
-		}
-		else
-		{
-			return new Boolean(JDTPointcutUtil.has(jdtField.getDeclaringType(), (ASTConstructor) n));
-		}
-	}
-	
+      try
+      {
+         if (node.getAttributes().size() > 0)
+         {
+            for (int i = 0; i < node.getAttributes().size(); i++)
+            {
+               ASTAttribute attr = (ASTAttribute) node.getAttributes().get(i);
+               if (!JDTPointcutUtil.matchModifiers(attr, jdtField.getFlags()))
+                  ;
+            }
+         }
 
+         ClassExpression type = node.getType();
+
+         String typeSig = JavaModelUtil.getResolvedTypeName(jdtField.getTypeSignature(), jdtField.getDeclaringType());
+         IType fieldType = null;
+         try
+         {
+            fieldType = JavaModelUtil.findType(jdtField.getJavaProject(), typeSig);
+         }
+         catch (JavaModelException jme)
+         {
+         }
+         if (fieldType == null)
+         {
+            if (!JDTPointcutUtil.matchesClassExprPrimitive(type, typeSig))
+               return Boolean.FALSE;
+         }
+         else
+         {
+            if (!JDTPointcutUtil.matchesClassExpr(type, fieldType))
+               return Boolean.FALSE;
+         }
+         if (!JDTPointcutUtil.matchesClassExpr(node.getClazz(), jdtField.getDeclaringType()))
+            return Boolean.FALSE;
+
+         if (node.getFieldIdentifier().isAnnotation())
+         {
+            if (AopCorePlugin.getDefault().hasJava50CompilerCompliance(jdtField.getJavaProject()))
+            {
+               ASTParser c = ASTParser.newParser(AST.JLS3);
+               c.setSource(jdtField.getCompilationUnit().getSource().toCharArray());
+               c.setResolveBindings(true);
+               CompilationUnit beanAstUnit = (CompilationUnit) c.createAST(null);
+               AST ast = beanAstUnit.getAST();
+
+               final String targetAnnot = node.getFieldIdentifier().getOriginal().substring(1);
+               final String targetMethodName = jdtField.getElementName();
+
+               final TempBool tempBool = new TempBool(false);
+
+               beanAstUnit.accept(new ASTVisitor()
+               {
+                  public boolean visit(MarkerAnnotation node)
+                  {
+                     Name name = node.getTypeName();
+                     String annotationName = name.getFullyQualifiedName();
+                     if (annotationName.equals(targetAnnot))
+                     {
+                        tempBool.setValue(true);
+                     }
+                     return true;
+                  }
+
+                  public boolean visit(MethodDeclaration node)
+                  {
+                     return false;
+                  }
+
+                  public boolean visit(FieldDeclaration node)
+                  {
+                     List list = node.fragments();
+                     for (Iterator i = list.iterator(); i.hasNext();)
+                     {
+                        VariableDeclarationFragment frag = (VariableDeclarationFragment) i.next();
+                        String name = frag.getName().getFullyQualifiedName();
+                        if (name.equals(targetMethodName))
+                        {
+                           return true;
+                        }
+                     }
+                     return false;
+                  }
+               });
+               return tempBool.getBool();
+
+            }
+            else
+            {
+
+               //TODO implement annotation code here
+               JavaField qDoxField = QDoxMatcher.matchField(jdtField);
+               // qDoxField will be null if there's an exception, such as a compile exception.
+               //System.out.println("QDOXFIELD: " + qDoxField);
+               if (qDoxField == null)
+                  return Boolean.FALSE;
+               DocletTag[] tags = qDoxField.getTags();
+               for (int k = 0; k < tags.length; k++)
+               {
+                  if (node.getFieldIdentifier().getOriginal().equals(tags[k].getName()))
+                     return Boolean.TRUE;
+               }
+               return Boolean.FALSE;
+            }
+         }
+         else
+         {
+            if (node.getFieldIdentifier().matches(jdtField.getElementName()))
+            {
+               return Boolean.TRUE;
+            }
+         }
+
+         return Boolean.FALSE;
+      }
+      catch (JavaModelException e)
+      {
+         return Boolean.FALSE;
+      }
+   }
+
+   public Object visit(ASTFieldExecution node, Object data)
+   {
+      return node.jjtGetChild(0).jjtAccept(this, null);
+   }
+
+   public Object visit(ASTAll node, Object data)
+   {
+      if (node.getClazz().isAnnotation())
+      {
+         JavaField qDoxField = QDoxMatcher.matchField(jdtField);
+         // qDoxField will be null if there's an exception, such as a compile exception.
+         if (qDoxField == null)
+            return Boolean.FALSE;
+         DocletTag[] tags = qDoxField.getTags();
+         for (int k = 0; k < tags.length; k++)
+         {
+            if (node.getClasseExpression().equals(tags[k].getName()))
+               return Boolean.TRUE;
+         }
+         return Boolean.FALSE;
+      }
+      else if (node.getClazz().isInstanceOf())
+      {
+         if (!JDTPointcutUtil.subtypeOf(jdtField.getDeclaringType(), node.getClazz()))
+            return Boolean.FALSE;
+      }
+      else if (node.getClazz().isTypedef())
+      {
+         if (!JDTPointcutUtil.matchesTypedef(jdtField.getDeclaringType(), node.getClazz()))
+            return Boolean.FALSE;
+      }
+      else if (!node.getClazz().matches(jdtField.getDeclaringType().getFullyQualifiedName()))
+      {
+         return Boolean.FALSE;
+      }
+
+      return Boolean.TRUE;
+   }
+
+   public Object visit(ASTHasField node, Object data)
+   {
+      ASTField field = (ASTField) node.jjtGetChild(0);
+
+      return new Boolean(JDTPointcutUtil.has(jdtField.getDeclaringType(), field));
+   }
+
+   public Object visit(ASTHas node, Object data)
+   {
+      Node n = node.jjtGetChild(0);
+      if (n instanceof ASTMethod)
+      {
+         return new Boolean(JDTPointcutUtil.has(jdtField.getDeclaringType(), (ASTMethod) n));
+      }
+      else
+      {
+         return new Boolean(JDTPointcutUtil.has(jdtField.getDeclaringType(), (ASTConstructor) n));
+      }
+   }
 
 }

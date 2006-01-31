@@ -1,5 +1,23 @@
-/**
- * 
+/*
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.ide.eclipse.jdt.aop.ui.dialogs.pieces;
 
@@ -43,406 +61,481 @@ import org.eclipse.swt.widgets.Text;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class AopUICompletionProcessor implements IContentAssistProcessor, ISubjectControlContentAssistProcessor {
-	
-	public static final int CLAZZ = 0;
-	public static final int ANNOTATION = 1;
-	public static final int TYPEDEF = 2;
-	public static final int INSTANCEOF = 3;
-	
-	
-	
-	private Text text;
-	protected String textBoxString, packageName, remainder;
-	protected ArrayList packageMatches, typeMatches;
+public class AopUICompletionProcessor implements IContentAssistProcessor, ISubjectControlContentAssistProcessor
+{
 
-	protected boolean allowsClasses, allowsInterfaces, 
-					  allowsAnnotations, hasPackageWildcards;
-	
-	
-	
-	public AopUICompletionProcessor(Text text) {
-		this(text, true, true, false, false);
-	}
+   public static final int CLAZZ = 0;
 
-	public AopUICompletionProcessor(Text text, boolean allowsClasses, boolean allowsInterfaces, 
-				boolean allowsAnnotations, boolean hasPackageWildcards) {
-		this.text = text;
-		this.allowsAnnotations = allowsAnnotations;
-		this.allowsClasses = allowsClasses;
-		this.allowsInterfaces = allowsInterfaces;
-		this.hasPackageWildcards = hasPackageWildcards;
-		ControlContentAssistHelper.createTextContentAssistant(text, this);
+   public static final int ANNOTATION = 1;
 
-	}
-	
-	public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer, int offset) {
-		return null;
-	}
+   public static final int TYPEDEF = 2;
 
-	public IContextInformation[] computeContextInformation(ITextViewer viewer, int offset) {
-		return null;
-	}
+   public static final int INSTANCEOF = 3;
 
-	public char[] getCompletionProposalAutoActivationCharacters() {
-		return null;
-	}
+   private Text text;
 
-	public char[] getContextInformationAutoActivationCharacters() {
-		return null;
-	}
+   protected String textBoxString, packageName, remainder;
 
-	public String getErrorMessage() {
-		return null;
-	}
+   protected ArrayList packageMatches, typeMatches;
 
-	public IContextInformationValidator getContextInformationValidator() {
-		return null;
-	}
+   protected boolean allowsClasses, allowsInterfaces, allowsAnnotations, hasPackageWildcards;
 
-	public IContextInformation[] computeContextInformation(IContentAssistSubjectControl contentAssistSubjectControl, int documentOffset) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public ICompletionProposal[] computeCompletionProposals(IContentAssistSubjectControl contentAssistSubjectControl, int documentOffset) {
-		
-		parseTextboxString();
-		
-		packageMatches = getPackageProposals(packageName, textBoxString, remainder);
-		IPackageFragment packageMatch = getPackageMatch(packageName, textBoxString);
-		typeMatches = getTypeMatches(packageMatch, remainder);
-		
-		filterMatches();
-		
-		AopUICompletionProposal[] proposals = generateProposals(packageMatches, typeMatches, textBoxString);
-		ICompletionProposal[] processedProposals = postProcessProposals(proposals);
-		return proposals;
-	}
-	
-	
-	protected void filterMatches() {
-		String lastName = "";
-		for(Iterator i = typeMatches.iterator(); i.hasNext();) {
-			try {
-				IType type = (IType)i.next();
-				if( type.getFullyQualifiedName().equals(lastName)) { i.remove(); continue; }
-				if( type.isAnnotation() && !allowsAnnotations ) { i.remove(); continue; }
-				if( type.isInterface() && !allowsInterfaces ) { i.remove(); continue; }
-				if( type.isClass() && !allowsClasses ) { i.remove(); continue; }
-				lastName = type.getFullyQualifiedName();
-			} catch( JavaModelException jme ) {
-			}
-		}
+   public AopUICompletionProcessor(Text text)
+   {
+      this(text, true, true, false, false);
+   }
 
-		lastName = "";
-		for(Iterator i = packageMatches.iterator(); i.hasNext();) {
-			IPackageFragment type = (IPackageFragment)i.next();
-			if( type.getElementName().equals(lastName)) { i.remove(); continue; }
-			lastName = type.getElementName();
-		}
+   public AopUICompletionProcessor(Text text, boolean allowsClasses, boolean allowsInterfaces,
+         boolean allowsAnnotations, boolean hasPackageWildcards)
+   {
+      this.text = text;
+      this.allowsAnnotations = allowsAnnotations;
+      this.allowsClasses = allowsClasses;
+      this.allowsInterfaces = allowsInterfaces;
+      this.hasPackageWildcards = hasPackageWildcards;
+      ControlContentAssistHelper.createTextContentAssistant(text, this);
 
-		
-		
-		
-	}
+   }
 
-	protected void parseTextboxString() {
-		textBoxString = text.getText();
+   public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer, int offset)
+   {
+      return null;
+   }
 
+   public IContextInformation[] computeContextInformation(ITextViewer viewer, int offset)
+   {
+      return null;
+   }
 
-		
+   public char[] getCompletionProposalAutoActivationCharacters()
+   {
+      return null;
+   }
 
-		int lastDot = textBoxString.lastIndexOf('.');
-		if( lastDot == -1 ) {
-			packageName = textBoxString;
-			remainder = null;				
-		} else {
-			packageName = textBoxString.substring(0, lastDot);
-			remainder = textBoxString.substring(lastDot+1);
-		}
-		
-	}
-	
-	protected ArrayList getTypeMatches(IPackageFragment packageElement, String remainder ) {
-		if( packageElement != null && remainder != null ) {
-			try {
-				IClassFile[] classFiles = packageElement.getClassFiles();
-				ICompilationUnit[] compUnits = packageElement.getCompilationUnits();
-				ArrayList returnList = new ArrayList();
-				
-				for( int i = 0; i < classFiles.length; i++ ) {
-					String typeName = classFiles[i].getType().getElementName();
-					if( typeName.equals("")) continue;
-					if( typeName.toLowerCase().startsWith(remainder.toLowerCase()))
-						returnList.add(classFiles[i].getType());
-				}
+   public char[] getContextInformationAutoActivationCharacters()
+   {
+      return null;
+   }
 
-				for( int i = 0; i < compUnits.length; i++ ) {
-					IType type = compUnits[i].findPrimaryType();
-					String typeName = type.getElementName();
-					if( typeName.toLowerCase().startsWith(remainder.toLowerCase()))
-						returnList.add(type);
-				}
+   public String getErrorMessage()
+   {
+      return null;
+   }
 
-				
-				return returnList;
-			} catch( JavaModelException jme ) {
-				
-			}
-		} 
+   public IContextInformationValidator getContextInformationValidator()
+   {
+      return null;
+   }
 
-		return new ArrayList();
-	}
-	
-	protected IPackageFragment getPackageMatch(String packageName, String textBoxString) {
-		IJavaSearchScope scope = SearchEngine.createWorkspaceScope();
-		SearchPattern packagePattern = SearchPattern.createPattern(packageName, 
-				IJavaSearchConstants.PACKAGE, IJavaSearchConstants.DECLARATIONS,
-				SearchPattern.R_EXACT_MATCH );
-		
-		if( packagePattern == null ) return null;
-		
-		SearchEngine searchEngine = new SearchEngine();
-		
-		LocalTextfieldSearchRequestor requestor = new LocalTextfieldSearchRequestor(this);
-		try {
-			searchEngine.search(packagePattern, new SearchParticipant[] {SearchEngine.getDefaultSearchParticipant()}, 
-					scope, requestor, new NullProgressMonitor());
-			
-			ArrayList results = requestor.getResults();
-			if( results.size() != 1 ) return null;
-			
-			return (IPackageFragment)results.get(0);
-			
-		} catch ( CoreException ce ) {
-			
-		}
-		return null;
-	}
-	
-	protected ArrayList getPackageProposals( String packageName, String textBoxString, String remainder ) {
-		
-		IJavaSearchScope scope = SearchEngine.createWorkspaceScope();
-		SearchPattern packagePattern = SearchPattern.createPattern(textBoxString, 
-				IJavaSearchConstants.PACKAGE, IJavaSearchConstants.DECLARATIONS,
-				SearchPattern.R_PREFIX_MATCH);
-		
-		if( packagePattern == null ) return new ArrayList();
-		
-		
-		
-		SearchEngine searchEngine = new SearchEngine();
-		
-		LocalTextfieldSearchRequestor requestor = new LocalTextfieldSearchRequestor(this);
-		try {
-			searchEngine.search(packagePattern, new SearchParticipant[] {SearchEngine.getDefaultSearchParticipant()}, 
-					scope, requestor, new NullProgressMonitor());
-			
-			ArrayList results = requestor.getResults();
-			Collections.sort(results, new Comparator() {
+   public IContextInformation[] computeContextInformation(IContentAssistSubjectControl contentAssistSubjectControl,
+         int documentOffset)
+   {
+      // TODO Auto-generated method stub
+      return null;
+   }
 
-				public int compare(Object o1, Object o2) {
-					if( !(o1 instanceof IPackageFragment)) return 0;
-					if( !(o2 instanceof IPackageFragment)) return 0;
-					
-					IPackageFragment o1a = (IPackageFragment)o1;
-					IPackageFragment o2a = (IPackageFragment)o2;
-					return o1a.getElementName().compareTo(o2a.getElementName());
-				} 
-				
-			});
+   public ICompletionProposal[] computeCompletionProposals(IContentAssistSubjectControl contentAssistSubjectControl,
+         int documentOffset)
+   {
 
+      parseTextboxString();
 
-			return results;
+      packageMatches = getPackageProposals(packageName, textBoxString, remainder);
+      IPackageFragment packageMatch = getPackageMatch(packageName, textBoxString);
+      typeMatches = getTypeMatches(packageMatch, remainder);
 
-		} catch( CoreException ce) {
-			
-		}
-		return new ArrayList();
-	}
-	
-	
-	public AopUICompletionProposal[] generateProposals(ArrayList packages, ArrayList types, String textboxString) {
-		JavaUILabelProvider imageDelegate = new JavaUILabelProvider();
+      filterMatches();
 
-		ArrayList list = new ArrayList();
-		
-//		int size = packages.size() + types.size();
-//		AopUICompletionProposal[] props = new AopUICompletionProposal[size];
-		
-//		int index = 0;
-		
+      AopUICompletionProposal[] proposals = generateProposals(packageMatches, typeMatches, textBoxString);
+      ICompletionProposal[] processedProposals = postProcessProposals(proposals);
+      return proposals;
+   }
 
-		for( Iterator i = types.iterator(); i.hasNext();) {
-			IType type  = (IType)i.next();
-			CompletionProposal p = new CompletionProposal(
-					type.getFullyQualifiedName(), 0, textboxString.length(), 
-					type.getFullyQualifiedName().length(), imageDelegate.getImage(type), type.getElementName(), null, null);
-//			props[index++] = new AopUICompletionProposal(AopUICompletionProposal.TYPE, p);
-			list.add( new AopUICompletionProposal(AopUICompletionProposal.TYPE, p));
-		}
-		
-		for( Iterator i = packages.iterator(); i.hasNext();) {
-			IPackageFragment fragment = (IPackageFragment)i.next();
-			CompletionProposal p= new CompletionProposal(
-					fragment.getElementName(), 0, textboxString.length(), 
-					fragment.getElementName().length(), imageDelegate.getImage(fragment), null, null, null);
-			list.add( new AopUICompletionProposal(AopUICompletionProposal.TYPE, p));
-			
-			// if we allow .*, also add that as a suggestion.
-			if( hasPackageWildcards ) {
-				CompletionProposal p2 = new CompletionProposal(
-						fragment.getElementName() + ".*", 0, textboxString.length(), 
-						fragment.getElementName().length()+2, imageDelegate.getImage(fragment), null, null, null);
-				list.add( new AopUICompletionProposal(AopUICompletionProposal.TYPE, p2));
-			}
-		}
-		
-		
-		AopUICompletionProposal props[] = new AopUICompletionProposal[list.size()];
-		// Finally convert to array
-		for( int i = 0; i < list.size(); i++ ) {
-			props[i] = (AopUICompletionProposal)list.get(i);
-		}
-		return props;
-	}
-		
-	public ICompletionProposal[] postProcessProposals(AopUICompletionProposal[] proposals) {
-//		ArrayList newVals = new ArrayList();
-//		
-//		for( int i = 0; i < proposals.length; i++ ) {
-//			newVals.add(proposals[i]);
-//			if( proposals[i].getType() == AopUICompletionProposal.PACKAGE ) {
-//				if( hasPackageWildcards ) {
-//					
-//				}
-//			}
-//		}
-		return proposals;
-	}
+   protected void filterMatches()
+   {
+      String lastName = "";
+      for (Iterator i = typeMatches.iterator(); i.hasNext();)
+      {
+         try
+         {
+            IType type = (IType) i.next();
+            if (type.getFullyQualifiedName().equals(lastName))
+            {
+               i.remove();
+               continue;
+            }
+            if (type.isAnnotation() && !allowsAnnotations)
+            {
+               i.remove();
+               continue;
+            }
+            if (type.isInterface() && !allowsInterfaces)
+            {
+               i.remove();
+               continue;
+            }
+            if (type.isClass() && !allowsClasses)
+            {
+               i.remove();
+               continue;
+            }
+            lastName = type.getFullyQualifiedName();
+         }
+         catch (JavaModelException jme)
+         {
+         }
+      }
 
-	
-	private static class LocalTextfieldSearchRequestor extends SearchRequestor {
+      lastName = "";
+      for (Iterator i = packageMatches.iterator(); i.hasNext();)
+      {
+         IPackageFragment type = (IPackageFragment) i.next();
+         if (type.getElementName().equals(lastName))
+         {
+            i.remove();
+            continue;
+         }
+         lastName = type.getElementName();
+      }
 
-		private AopUICompletionProcessor processor;
-		private ArrayList results;
-		
-		public LocalTextfieldSearchRequestor ( AopUICompletionProcessor processor) {
-			this.processor = processor;
-			results = new ArrayList();
-		}
+   }
 
-		public void acceptSearchMatch(SearchMatch match) throws CoreException {
-			results.add(match.getElement());			
-		}
-		
-		public void endReporting() {
-		}
-		
-		public ArrayList getResults() {
-			return results;
-		}
+   protected void parseTextboxString()
+   {
+      textBoxString = text.getText();
 
-		
-	}
+      int lastDot = textBoxString.lastIndexOf('.');
+      if (lastDot == -1)
+      {
+         packageName = textBoxString;
+         remainder = null;
+      }
+      else
+      {
+         packageName = textBoxString.substring(0, lastDot);
+         remainder = textBoxString.substring(lastDot + 1);
+      }
 
-	public void setType(int type) {
-		switch(type) {
-			case CLAZZ:
-				allowsAnnotations = false;
-				allowsClasses = allowsInterfaces = hasPackageWildcards = true;
-				break;
-			case ANNOTATION:
-				allowsAnnotations = allowsInterfaces = true;
-				hasPackageWildcards = allowsClasses = false;
-				break;
-			case INSTANCEOF:
-				allowsInterfaces = allowsClasses = true;
-				allowsAnnotations = hasPackageWildcards = false;
-				break;
-			case TYPEDEF:
-				allowsInterfaces = allowsClasses = 
-					allowsAnnotations = hasPackageWildcards = false;
-				break;
-		
-		}
-	}
+   }
 
-	
-	protected static class AopUICompletionProposal implements ICompletionProposal {
-		public static final int PACKAGE = 0;
-		public static final int TYPE = 1;
-		
-		private int type;
-		private CompletionProposal delegate;
-		
-		public AopUICompletionProposal(int type, CompletionProposal delegate) {
-			this.type = type;
-			this.delegate = delegate;
-		}
+   protected ArrayList getTypeMatches(IPackageFragment packageElement, String remainder)
+   {
+      if (packageElement != null && remainder != null)
+      {
+         try
+         {
+            IClassFile[] classFiles = packageElement.getClassFiles();
+            ICompilationUnit[] compUnits = packageElement.getCompilationUnits();
+            ArrayList returnList = new ArrayList();
 
-		public void apply(IDocument document) {
-			delegate.apply(document);
-		}
+            for (int i = 0; i < classFiles.length; i++)
+            {
+               String typeName = classFiles[i].getType().getElementName();
+               if (typeName.equals(""))
+                  continue;
+               if (typeName.toLowerCase().startsWith(remainder.toLowerCase()))
+                  returnList.add(classFiles[i].getType());
+            }
 
-		public Point getSelection(IDocument document) {
-			return delegate.getSelection(document);
-		}
+            for (int i = 0; i < compUnits.length; i++)
+            {
+               IType type = compUnits[i].findPrimaryType();
+               String typeName = type.getElementName();
+               if (typeName.toLowerCase().startsWith(remainder.toLowerCase()))
+                  returnList.add(type);
+            }
 
-		public String getAdditionalProposalInfo() {
-			return delegate.getAdditionalProposalInfo();
-		}
+            return returnList;
+         }
+         catch (JavaModelException jme)
+         {
 
-		public String getDisplayString() {
-			return delegate.getDisplayString();
-		}
+         }
+      }
 
-		public Image getImage() {
-			return delegate.getImage();
-		}
+      return new ArrayList();
+   }
 
-		public IContextInformation getContextInformation() {
-			return delegate.getContextInformation();
-		}
-		
-		public int getType() {
-			return this.type;
-		}
-		
-	}
+   protected IPackageFragment getPackageMatch(String packageName, String textBoxString)
+   {
+      IJavaSearchScope scope = SearchEngine.createWorkspaceScope();
+      SearchPattern packagePattern = SearchPattern.createPattern(packageName, IJavaSearchConstants.PACKAGE,
+            IJavaSearchConstants.DECLARATIONS, SearchPattern.R_EXACT_MATCH);
 
+      if (packagePattern == null)
+         return null;
 
-	public boolean allowsAnnotations() {
-		return allowsAnnotations;
-	}
+      SearchEngine searchEngine = new SearchEngine();
 
-	public void setAllowsAnnotations(boolean allowAnnotations) {
-		this.allowsAnnotations = allowAnnotations;
-	}
+      LocalTextfieldSearchRequestor requestor = new LocalTextfieldSearchRequestor(this);
+      try
+      {
+         searchEngine.search(packagePattern, new SearchParticipant[]
+         {SearchEngine.getDefaultSearchParticipant()}, scope, requestor, new NullProgressMonitor());
 
-	public boolean allowsClasses() {
-		return allowsClasses;
-	}
+         ArrayList results = requestor.getResults();
+         if (results.size() != 1)
+            return null;
 
-	public void setAllowsClasses(boolean allowsClasses) {
-		this.allowsClasses = allowsClasses;
-	}
+         return (IPackageFragment) results.get(0);
 
-	public boolean allowsInterfaces() {
-		return allowsInterfaces;
-	}
+      }
+      catch (CoreException ce)
+      {
 
-	public void setAllowsInterfaces(boolean allowsInterfaces) {
-		this.allowsInterfaces = allowsInterfaces;
-	}
+      }
+      return null;
+   }
 
-	public boolean hasPackageWildcards() {
-		return hasPackageWildcards;
-	}
+   protected ArrayList getPackageProposals(String packageName, String textBoxString, String remainder)
+   {
 
-	public void setHasPackageWildcards(boolean hasPackageWildcards) {
-		this.hasPackageWildcards = hasPackageWildcards;
-	}
+      IJavaSearchScope scope = SearchEngine.createWorkspaceScope();
+      SearchPattern packagePattern = SearchPattern.createPattern(textBoxString, IJavaSearchConstants.PACKAGE,
+            IJavaSearchConstants.DECLARATIONS, SearchPattern.R_PREFIX_MATCH);
+
+      if (packagePattern == null)
+         return new ArrayList();
+
+      SearchEngine searchEngine = new SearchEngine();
+
+      LocalTextfieldSearchRequestor requestor = new LocalTextfieldSearchRequestor(this);
+      try
+      {
+         searchEngine.search(packagePattern, new SearchParticipant[]
+         {SearchEngine.getDefaultSearchParticipant()}, scope, requestor, new NullProgressMonitor());
+
+         ArrayList results = requestor.getResults();
+         Collections.sort(results, new Comparator()
+         {
+
+            public int compare(Object o1, Object o2)
+            {
+               if (!(o1 instanceof IPackageFragment))
+                  return 0;
+               if (!(o2 instanceof IPackageFragment))
+                  return 0;
+
+               IPackageFragment o1a = (IPackageFragment) o1;
+               IPackageFragment o2a = (IPackageFragment) o2;
+               return o1a.getElementName().compareTo(o2a.getElementName());
+            }
+
+         });
+
+         return results;
+
+      }
+      catch (CoreException ce)
+      {
+
+      }
+      return new ArrayList();
+   }
+
+   public AopUICompletionProposal[] generateProposals(ArrayList packages, ArrayList types, String textboxString)
+   {
+      JavaUILabelProvider imageDelegate = new JavaUILabelProvider();
+
+      ArrayList list = new ArrayList();
+
+      //		int size = packages.size() + types.size();
+      //		AopUICompletionProposal[] props = new AopUICompletionProposal[size];
+
+      //		int index = 0;
+
+      for (Iterator i = types.iterator(); i.hasNext();)
+      {
+         IType type = (IType) i.next();
+         CompletionProposal p = new CompletionProposal(type.getFullyQualifiedName(), 0, textboxString.length(), type
+               .getFullyQualifiedName().length(), imageDelegate.getImage(type), type.getElementName(), null, null);
+         //			props[index++] = new AopUICompletionProposal(AopUICompletionProposal.TYPE, p);
+         list.add(new AopUICompletionProposal(AopUICompletionProposal.TYPE, p));
+      }
+
+      for (Iterator i = packages.iterator(); i.hasNext();)
+      {
+         IPackageFragment fragment = (IPackageFragment) i.next();
+         CompletionProposal p = new CompletionProposal(fragment.getElementName(), 0, textboxString.length(), fragment
+               .getElementName().length(), imageDelegate.getImage(fragment), null, null, null);
+         list.add(new AopUICompletionProposal(AopUICompletionProposal.TYPE, p));
+
+         // if we allow .*, also add that as a suggestion.
+         if (hasPackageWildcards)
+         {
+            CompletionProposal p2 = new CompletionProposal(fragment.getElementName() + ".*", 0, textboxString.length(),
+                  fragment.getElementName().length() + 2, imageDelegate.getImage(fragment), null, null, null);
+            list.add(new AopUICompletionProposal(AopUICompletionProposal.TYPE, p2));
+         }
+      }
+
+      AopUICompletionProposal props[] = new AopUICompletionProposal[list.size()];
+      // Finally convert to array
+      for (int i = 0; i < list.size(); i++)
+      {
+         props[i] = (AopUICompletionProposal) list.get(i);
+      }
+      return props;
+   }
+
+   public ICompletionProposal[] postProcessProposals(AopUICompletionProposal[] proposals)
+   {
+      //		ArrayList newVals = new ArrayList();
+      //		
+      //		for( int i = 0; i < proposals.length; i++ ) {
+      //			newVals.add(proposals[i]);
+      //			if( proposals[i].getType() == AopUICompletionProposal.PACKAGE ) {
+      //				if( hasPackageWildcards ) {
+      //					
+      //				}
+      //			}
+      //		}
+      return proposals;
+   }
+
+   private static class LocalTextfieldSearchRequestor extends SearchRequestor
+   {
+
+      private AopUICompletionProcessor processor;
+
+      private ArrayList results;
+
+      public LocalTextfieldSearchRequestor(AopUICompletionProcessor processor)
+      {
+         this.processor = processor;
+         results = new ArrayList();
+      }
+
+      public void acceptSearchMatch(SearchMatch match) throws CoreException
+      {
+         results.add(match.getElement());
+      }
+
+      public void endReporting()
+      {
+      }
+
+      public ArrayList getResults()
+      {
+         return results;
+      }
+
+   }
+
+   public void setType(int type)
+   {
+      switch (type)
+      {
+         case CLAZZ :
+            allowsAnnotations = false;
+            allowsClasses = allowsInterfaces = hasPackageWildcards = true;
+            break;
+         case ANNOTATION :
+            allowsAnnotations = allowsInterfaces = true;
+            hasPackageWildcards = allowsClasses = false;
+            break;
+         case INSTANCEOF :
+            allowsInterfaces = allowsClasses = true;
+            allowsAnnotations = hasPackageWildcards = false;
+            break;
+         case TYPEDEF :
+            allowsInterfaces = allowsClasses = allowsAnnotations = hasPackageWildcards = false;
+            break;
+
+      }
+   }
+
+   protected static class AopUICompletionProposal implements ICompletionProposal
+   {
+      public static final int PACKAGE = 0;
+
+      public static final int TYPE = 1;
+
+      private int type;
+
+      private CompletionProposal delegate;
+
+      public AopUICompletionProposal(int type, CompletionProposal delegate)
+      {
+         this.type = type;
+         this.delegate = delegate;
+      }
+
+      public void apply(IDocument document)
+      {
+         delegate.apply(document);
+      }
+
+      public Point getSelection(IDocument document)
+      {
+         return delegate.getSelection(document);
+      }
+
+      public String getAdditionalProposalInfo()
+      {
+         return delegate.getAdditionalProposalInfo();
+      }
+
+      public String getDisplayString()
+      {
+         return delegate.getDisplayString();
+      }
+
+      public Image getImage()
+      {
+         return delegate.getImage();
+      }
+
+      public IContextInformation getContextInformation()
+      {
+         return delegate.getContextInformation();
+      }
+
+      public int getType()
+      {
+         return this.type;
+      }
+
+   }
+
+   public boolean allowsAnnotations()
+   {
+      return allowsAnnotations;
+   }
+
+   public void setAllowsAnnotations(boolean allowAnnotations)
+   {
+      this.allowsAnnotations = allowAnnotations;
+   }
+
+   public boolean allowsClasses()
+   {
+      return allowsClasses;
+   }
+
+   public void setAllowsClasses(boolean allowsClasses)
+   {
+      this.allowsClasses = allowsClasses;
+   }
+
+   public boolean allowsInterfaces()
+   {
+      return allowsInterfaces;
+   }
+
+   public void setAllowsInterfaces(boolean allowsInterfaces)
+   {
+      this.allowsInterfaces = allowsInterfaces;
+   }
+
+   public boolean hasPackageWildcards()
+   {
+      return hasPackageWildcards;
+   }
+
+   public void setHasPackageWildcards(boolean hasPackageWildcards)
+   {
+      this.hasPackageWildcards = hasPackageWildcards;
+   }
 
 }
