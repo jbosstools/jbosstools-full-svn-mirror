@@ -3,6 +3,7 @@
 	<property name="output-dir" value="${basedir}/docs"/>
 	<property name="install-dir" value="${output-dir}/jbosside/core/docs/user/install"/>
 	<property name="tutorial-dir" value="${output-dir}/jbosside/core/docs/user/tutorial"/>
+	<property name="docbook-support-dir" value="${output-dir}/jbosside/core/docbook-support"/>
 	
 	<target name="checkout-docs">	
 		<mkdir dir="docs"/>
