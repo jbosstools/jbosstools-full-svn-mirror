@@ -789,4 +789,10 @@ END OF TERMS AND CONDITIONS
          install-size="0"
          version="1.5.1"/>
 
+	<plugin
+		id="org.jboss.ide.eclipse.source"
+		download-size="0"
+		install-size="0"
+		version="1.5.1"/>
+		6
 </feature>
