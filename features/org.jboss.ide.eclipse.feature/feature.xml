@@ -11,7 +11,7 @@
    </description>
 
    <license url="http://osdn.dl.sourceforge.net/sourceforge/jboss/LGPL.html">
-      The JBoss-IDE is under the LGPL Licence
+      JBoss Eclipse IDE is under the LGPL Licence
 GNU LESSER GENERAL PUBLIC LICENSE
 Version 2.1, February 1999 
 Copyright (C) 1991, 1999 Free Software Foundation, Inc.
@@ -415,7 +415,7 @@ END OF TERMS AND CONDITIONS
    </license>
 
    <url>
-      <update label="JBoss IDE Update Site" url="http://download.jboss.org/jbosside/updates/stable"/>
+      <update label="JBoss Eclipse IDE Update Site" url="http://download.jboss.org/jbosside/updates/stable"/>
    </url>
 
    <requires>
@@ -789,10 +789,4 @@ END OF TERMS AND CONDITIONS
          install-size="0"
          version="1.5.1"/>
 
-	<plugin
-		id="org.jboss.ide.eclipse.source"
-		download-size="0"
-		install-size="0"
-		version="1.5.1"/>
-		
 </feature>
