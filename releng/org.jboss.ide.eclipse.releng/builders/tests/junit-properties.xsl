@@ -3,5 +3,6 @@
 	<xsl:template match="testsuites">
 junit.errorCount=<xsl:value-of select="sum(testsuite[*]/@errors)"/>
 junit.failureCount=<xsl:value-of select="sum(testsuite[*]/@failures)"/>
+junit.testCount=<xsl:value-of select="sum(testsuite/@tests)"/>
 	</xsl:template>
 </xsl:stylesheet>
