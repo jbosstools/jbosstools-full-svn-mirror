@@ -1,5 +1,4 @@
 <project default="build.results">
-
 	<import file="../common/scp.xml"/>
 	<import file="../common/common.xml"/>
 
@@ -31,6 +30,12 @@
 		<load.property file="../../requirements/webtools/build.properties" property="build.uri" dest="webtools.build.uri"/>
 		<load.property file="../../requirements/webtools/build.properties" property="build.archive" dest="webtools.build.archive"/>
 
+		<propertyregex property="webtoolsBuildID"
+			input="${webtools.build.archive}"
+			regexp="wtp-(.+).zip"
+			select="\1"
+			casesensitive="false" />
+		
 		<get.version.tag builder="aop" property="aop.versionTag"/>
 		<get.version.tag builder="ejb3" property="ejb3.versionTag"/>
 		<get.version.tag builder="core" property="core.versionTag"/>
@@ -48,19 +53,81 @@
 		<property name="jbosside-hibernate-tools-filename" value="HibernateTools-${hibernate.tools.release}.${hibernate-tools.versionTag}.zip"/>
 		<property name="jbosside-jbpm-filename" value="jBPM-Designer-${jbpm.versionTag}.zip"/>
 		<property name="jbosside-ejb3-filename" value="JBossIDE-EJB3-Tools-${ejb3.versionTag}.zip"/>
+	
+		<property name="all-file" value="${product.build.directory}/all/${jbosside-all-filename}" />
+		<property name="win32-bundle-file" value="${product.build.directory}/bundle/${jbosside-win32-bundle-filename}" />
+		<property name="linux-gtk2-bundle-file" value="${product.build.directory}/bundle/${jbosside-linux-gtk2-bundle-filename}" />
+		<property name="core-file" value="${product.build.directory}/core/${jbosside-core-filename}" />
+		<property name="aop-file" value="${product.build.directory}/aop/${jbosside-aop-filename}" />
+		<property name="hibernate-tools-file" value="${product.build.directory}/hibernate-tools/${jbosside-hibernate-tools-filename}" />
+		<property name="jbpm-file" value="${product.build.directory}/jbpm/${jbosside-jbpm-filename}" />
+		<property name="ejb3-file" value="${product.build.directory}/ejb3/${jbosside-ejb3-filename}" />
 		
-		<get.status file="${product.build.directory}/all/${jbosside-all-filename}" property="jbosside-all-status"/>
-		<get.status file="${product.build.directory}/bundle/${jbosside-win32-bundle-filename}" property="jbosside-win32-bundle-status"/>
-		<get.status file="${product.build.directory}/bundle/${jbosside-linux-gtk2-bundle-filename}" property="jbosside-linux-gtk2-bundle-status"/>
-		<get.status file="${product.build.directory}/core/${jbosside-core-filename}" property="jbosside-core-status"/>
-		<get.status file="${product.build.directory}/aop/${jbosside-aop-filename}" property="jbosside-aop-status"/>
-		<get.status file="${product.build.directory}/hibernate-tools/${jbosside-hibernate-tools-filename}" property="jbosside-hibernate-tools-status"/>
-		<get.status file="${product.build.directory}/jbpm/${jbosside-jbpm-filename}" property="jbosside-jbpm-status"/>
-		<get.status file="${product.build.directory}/ejb3/${jbosside-ejb3-filename}" property="jbosside-ejb3-status"/>
+		<get.status file="${all-file}" property="jbosside-all-status"/>
+		<get.status file="${win32-bundle-file}" property="jbosside-win32-bundle-status"/>
+		<get.status file="${linux-gtk2-bundle-file}" property="jbosside-linux-gtk2-bundle-status"/>
+		<get.status file="${core-file}" property="jbosside-core-status"/>
+		<get.status file="${aop-file}" property="jbosside-aop-status"/>
+		<get.status file="${hibernate-tools-file}" property="jbosside-hibernate-tools-status"/>
+		<get.status file="${jbpm-file}" property="jbosside-jbpm-status"/>
+		<get.status file="${ejb3-file}" property="jbosside-ejb3-status"/>
+		
+		<length file="${all-file}" property="all-file-size"  />
+		<length file="${win32-bundle-file}" property="win32-bundle-file-size"  />
+		<length file="${linux-gtk2-bundle-file}" property="linux-gtk2-bundle-file-size"  />
+		<length file="${core-file}" property="core-file-size"  />
+		<length file="${aop-file}" property="aop-file-size"  />
+		<length file="${hibernate-tools-file}" property="hibernate-tools-file-size"  />
+		<length file="${jbpm-file}" property="jbpm-file-size"  />
+		<length file="${ejb3-file}" property="ejb3-file-size"  />
+		
+		<loadfile srcfile="${all-file}.MD5" property="all-file-md5" failonerror="false" />
+		<loadfile srcfile="${win32-bundle-file}.MD5" property="win32-bundle-file-md5" failonerror="false" />
+		<loadfile srcfile="${linux-gtk2-bundle-file}.MD5" property="linux-gtk2-bundle-file-md5" failonerror="false" />
+		<loadfile srcfile="${core-file}.MD5" property="core-file-md5" failonerror="false" />
+		<loadfile srcfile="${aop-file}.MD5" property="aop-file-md5" failonerror="false" />
+		<loadfile srcfile="${hibernate-tools-file}.MD5" property="hibernate-tools-file-md5" failonerror="false" />
+		<loadfile srcfile="${jbpm-file}.MD5" property="jbpm-file-md5" failonerror="false" />
+		<loadfile srcfile="${ejb3-file}.MD5" property="ejb3-file-md5" failonerror="false" />
+		
+		<tstamp>
+			<format pattern="MM/dd/yyyy HH:mm" property="build-date"/>
+		</tstamp>
+		
+		<!-- load test results -->
 		<property file="${product.build.directory}/tests/test-results/org.jboss.ide.eclipse.tests.properties"/>
-	</target>
 		
-	<target name="build.results" depends="get.build.properties">
+	</target>
+	
+	<target name="update.builds.xml" depends="get.build.properties">
+		<get src="${jbosside.download.url}/builds/builds.xml" dest="builds.xml"/>
+		
+		<loadfile property="builds-xml" srcfile="builds.xml" >
+			<filterchain><expandproperties/></filterchain>
+		</loadfile>
+		<loadfile property="token" srcfile="labs.jboss.com/builds-token.xml">
+			<filterchain><expandproperties/></filterchain>
+		</loadfile>
+		<loadfile property="build-xml" srcfile="labs.jboss.com/builds-build.xml">
+			<filterchain><expandproperties/></filterchain>
+		</loadfile>
+		
+		<propertyregex property="new-builds-xml"
+			input="${builds-xml}"
+			regexp="(${token})"
+			replace="${build-xml}"
+			casesensitive="false" />
+		
+		<echo file="builds.xml" message="${new-builds-xml}"/>
+		
+		<scp.fileset.trusted>
+			<fileset file="builds.xml"/>
+		</scp.fileset.trusted>
+		
+		<delete file="builds.xml"/>
+	</target>
+			
+	<target name="build.results" depends="get.build.properties,update.builds.xml">
 		<tstamp>
 			<format property="date" pattern="MMMM d yyyy"/>
 		</tstamp>
@@ -102,6 +169,7 @@
 			
 			<filter token="junit-error-count" value="${junit.errorCount}"/>
 			<filter token="junit-failure-count" value="${junit.failureCount}"/>
+			<filter token="junit-test-count" value="${junit.totalTests}"/>
 		</filterset>
 			
 		<copy todir="${product.build.directory}" overwrite="true">
