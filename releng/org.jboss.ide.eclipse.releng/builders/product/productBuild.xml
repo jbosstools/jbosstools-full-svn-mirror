@@ -15,17 +15,19 @@
 	
   <target name="nightly">
 	<tstamp/>
-	<property name="product.versionTag" value="N${DSTAMP}${TSTAMP}"/>
+	<property name="product.versionTag" value="${DSTAMP}${TSTAMP}-nightly"/>
 	<property name="product.buildType" value="N"/>
 	<property name="product.buildDesc" value="nightly"/>
-	<runtarget target="build"/>
+	<property name="product.expandedBuildDesc" value="nightly"/>
+  	<runtarget target="build"/>
    </target>
 
    <target name="integration">
 	<tstamp/>
-	<property name="product.versionTag" value="I${DSTAMP}${TSTAMP}"/>
+	<property name="product.versionTag" value="${DSTAMP}${TSTAMP}-integration"/>
    	<property name="product.buildType" value="I"/>
 	<property name="product.buildDesc" value="integration"/>
+   	<property name="product.expandedBuildDesc" value="integration"/>
 	<runtarget target="build"/>
    </target>
 
@@ -33,7 +35,7 @@
 	<property name="product.versionTag" value="${releaseNumber}"/>
 	<property name="product.buildType" value="R"/>
 	<property name="product.buildDesc" value="release"/>
-
+   	<property name="product.expandedBuildDesc" value="${releaseType}"/>
    	<property file="versionTags/${releaseNumber}.tags" prefix="versionTags"/>
    	
 	<runtarget target="build"/>
