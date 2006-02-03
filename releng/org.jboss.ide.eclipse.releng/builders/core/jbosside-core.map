@@ -1,4 +1,6 @@
 feature@org.jboss.ide.eclipse.feature=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/features/org.jboss.ide.eclipse.feature
+#feature@org.jboss.ide.eclipse.source=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/features/org.jboss.ide.eclipse.source
+
 ## plugin@org.apache.xalan=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.apache.xalan
 plugin@org.jboss.ide.eclipse.core=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.core
 plugin@org.jboss.ide.eclipse.deployer.core=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.deployer.core
@@ -27,3 +29,4 @@ plugin@org.jboss.ide.eclipse.xdoclet.core=%cvsTag%,:pserver:anonymous@anoncvs.fo
 plugin@org.jboss.ide.eclipse.xdoclet.run=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.xdoclet.run
 plugin@org.jboss.ide.eclipse.xdoclet.ui=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.xdoclet.ui
 plugin@org.jboss.ide.eclipse.firstrun=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.firstrun
+plugin@org.jboss.ide.eclipse.help=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.help

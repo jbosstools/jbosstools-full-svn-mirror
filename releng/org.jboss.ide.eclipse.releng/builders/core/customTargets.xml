@@ -14,6 +14,10 @@
 		<property name="type" value="feature" />
 		<property name="id" value="org.jboss.ide.eclipse.feature" />
 	</ant>
+	<!--ant antfile="${genericTargets}" target="${target}" >
+		<property name="type" value="feature" />
+		<property name="id" value="org.jboss.ide.eclipse.source" />
+	</ant-->
 </target>
 
 <!-- ===================================================================== -->
@@ -24,10 +28,15 @@
 <!-- ===================================================================== -->
 
 <target name="assemble.org.jboss.ide.eclipse.feature">
-	<property name="archiveName" value="JBossIDE-CORE-${versionTag}.zip"/>
+	<property name="archiveName" value="JBossIDE-Core-${versionTag}.zip"/>
 	<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/>
 </target>
 
+<!--target name="assemble.org.jboss.ide.eclipse.source">
+	<property name="archiveName" value="JBossIDE-Core-Source-${versionTag}.zip"/>
+	<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/>
+</target-->
+	
 <!-- ===================================================================== -->
 <!-- Check out map files from correct repository -->
 <!-- Replace values for cvsRoot, package and mapVersionTag as desired. -->
@@ -72,9 +81,7 @@
 		updateAssembleScript="false" recursivePlugins="true"
 		pluginRegex="org.jboss.ide.*">
 		<fileset dir="${buildDirectory}/features">
-			<include name="*org.jboss.ide*"/>
-			<exclude name="*aop*"/>
-			<exclude name="*ejb3*"/>
+			<include name="*org.jboss.ide.eclipse.feature"/>
 		</fileset>
 	</updateVersions>
 </target>
@@ -83,6 +90,11 @@
 <!-- Steps to do before generating the build scripts. -->
 <!-- ===================================================================== -->
 <target name="preGenerate">
+	<mkdir dir="${buildDirectory}/plugins/org.jboss.ide.eclipse.help/docs/jbosside/core/docbook-support"/>
+	<copy todir="${buildDirectory}/plugins/org.jboss.ide.eclipse.help/docs/jbosside/core/docbook-support">
+		<fileset dir="${docbook-support-dir}" includes="**/*"/>
+	</copy>
+	<ant dir="${buildDirectory}/plugins/org.jboss.ide.eclipse.help" antfile="build.xml" target="jbosside-docs-build"/>
 </target>
 
 <!-- ===================================================================== -->
