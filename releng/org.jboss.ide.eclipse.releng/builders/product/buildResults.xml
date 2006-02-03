@@ -99,7 +99,7 @@
 		
 	</target>
 	
-	<target name="update.builds.xml" depends="get.build.properties">
+	<target name="update.builds.xml" depends="get.build.properties" if="enable.publishing">
 		<get src="${jbosside.download.url}/builds/builds.xml" dest="builds.xml"/>
 		
 		<loadfile property="builds-xml" srcfile="builds.xml" >
