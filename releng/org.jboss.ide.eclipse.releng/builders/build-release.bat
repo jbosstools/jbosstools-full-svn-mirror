@@ -3,10 +3,10 @@
 set target=%1
 shift
 
-set releaseName=%2
+set releaseType=%1
 shift
 
-set releaseType=%3
+set releaseName=%1
 shift
 
 if "%target%"=="" goto usage
@@ -32,6 +32,6 @@ echo ANT_HOME is not set, please set ANT_HOME before calling this script
 
 :usage
 echo Usage:
-echo         build-release [builder-name] [release name] [release type (stable or development)] (ant options)
+echo         build-release [builder-name] [release type (stable or development)] [release name] (ant options)
 
 :end
