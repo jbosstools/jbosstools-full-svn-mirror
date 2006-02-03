@@ -44,7 +44,7 @@
 	
    <target name="nightly">
 		<tstamp/>
-		<property name="versionTag" value="N${DSTAMP}${TSTAMP}"/>
+		<property name="versionTag" value="${DSTAMP}${TSTAMP}-nightly"/>
 		<property name="buildType" value="N"/>
 		<property name="uploadBuildDirectory"
 			value="${buildTypeDescription.N}"/>
@@ -53,7 +53,7 @@
 
    <target name="integration">
 		<tstamp/>
-		<property name="versionTag" value="I${DSTAMP}${TSTAMP}"/>
+		<property name="versionTag" value="${DSTAMP}${TSTAMP}-integration"/>
    		<property name="buildType" value="I"/>
 		<property name="uploadBuildDirectory"
 			value="${buildTypeDescription.I}"/>
@@ -113,6 +113,7 @@
      	  <propertyref prefix="xerces"/>
      	  <propertyref prefix="junit"/>
 		  <propertyref prefix="eclipse"/>
+     	  <propertyref prefix="docbook"/>
 		</syspropertyset>
      
     <classpath path="${env.JAVA_HOME}/lib/tools.jar"/>
