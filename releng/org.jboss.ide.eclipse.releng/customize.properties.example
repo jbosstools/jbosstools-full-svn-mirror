@@ -53,3 +53,20 @@ enable.notification=false
 ## In unix this should be sh, in windows this should be bat
 ##############################
 build.script.ext=sh
+
+##############################
+## Whether or not to generate the JBossLabs downloads page
+##############################
+enable.downloads.update=false
+
+##############################
+## The Subversion username to use for committing the generated
+## JBossLabs downloads page
+##############################
+svn.username=username
+
+##############################
+## The Subversion password to use for committing the generated
+## JBossLabs downloads page
+##############################
+svn.password=password

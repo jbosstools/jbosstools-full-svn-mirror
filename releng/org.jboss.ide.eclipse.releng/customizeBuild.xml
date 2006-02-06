@@ -23,6 +23,9 @@
 		<!-- fix referential bug -->
 		<property name="ssh.key" value=""/>
 		<property name="ssh.passphrase" value=""/>
+		<property name="svn.username" value=""/>
+		<property name="svn.password" value=""/>
+		<property name="enable.downloads.update" value="false"/>
 		
 		<if>
 			<equals arg1="${enable.publishing}" arg2="false"/>
@@ -41,6 +44,16 @@
 			</then>
 			<else>
 				<property name="comment.enable.notification" value=""/>
+			</else>
+		</if>
+		
+		<if>
+			<equals arg1="${enable.downloads.update}" arg2="false"/>
+			<then>
+				<property name="comment.enable.downloads.update" value="#"/>
+			</then>
+			<else>
+				<property name="comment.enable.downloads.update" value=""/>
 			</else>
 		</if>
 		
@@ -68,6 +81,12 @@
 				<filter token="enable-publishing" value="${enable.publishing}"/>
 				<filter token="comment-enable-notification" value="${comment.enable.notification}"/>
 				<filter token="enable-notification" value="${enable.notification}"/>
+				
+				<filter token="comment-enable-downloads-update" value="${comment.enable.downloads.update}"/>
+				<filter token="enable-downloads-update" value="${enable.downloads.update}"/>
+				<filter token="svn-username" value="${svn.username}"/>
+				<filter token="svn-password" value="${svn.password}"/>
+				
 				<filter token="build-script-ext" value="${build.script.ext}"/>
 			</filterset>
 		</copy>
@@ -133,6 +152,8 @@
 			<booleanProperty label="Enable SCP Publishing" property="enable.publishing"/>
 			
 			<booleanProperty label="Enable Email Notification" property="enable.notification"/>
+			
+			<booleanProperty label="Enable Downloads Page Update" property="enable.downloads.update"/>
 		</antform>
 	</target>
 	
@@ -143,7 +164,8 @@
 				<antform title="SSH Configuration" 
 					save="customize.properties"
 					stylesheet="customize.style"
-					image="art/jbosside-logo.png">
+					image="art/jbosside-logo.png"
+					nexttarget="downloads.customization">
 		
 					<fileselectionproperty label="Location of SSH Private Key"
 						property="ssh.key" required="false" editable="true" if="enable.publishing"/>
@@ -152,8 +174,24 @@
 				</antform>
 			</then>
 		</if>
+	</target>
+	
+	<target name="downloads.customization">
+		<if>
+			<equals arg1="${enable.downloads.update}" arg2="true"/>
+			<then>
+				<antform title="Labs Downloads Page Configuration" 
+					save="customize.properties"
+					stylesheet="customize.style"
+					image="art/jbosside-logo.png">
+		
+					<textproperty label="JBossLabs/SVN Username" property="svn.username" if="enable.downloads.update" />
+					<textproperty password="true" label="JBossLabs/SVN Password" property="svn.password" if="enable.downloads.update" />
+					
+				</antform>
+			</then>
+		</if>
 		
 		<antcall target="customize" inheritall="true"/>
 	</target>
-	
 </project>
