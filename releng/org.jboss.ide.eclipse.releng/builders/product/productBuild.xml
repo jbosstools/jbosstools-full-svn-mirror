@@ -90,6 +90,8 @@
    	
    	<runtarget target="publish.results"/>
    	<runtarget target="send.notification.email"/>
+   	
+   	<ant antfile="labsBuild.xml" target="update-labs-downloads" inheritall="true"/>
    </target>
 	
 	<target name="build.platform">
