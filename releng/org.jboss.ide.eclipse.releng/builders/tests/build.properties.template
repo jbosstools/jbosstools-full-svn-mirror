@@ -32,4 +32,5 @@ buildTypeDescription.R=release
 
 test.plugins=\
 	core:org.jboss.ide.eclipse.core.test:org.jboss.ide.eclipse.core.test.AllTests,\
+	ui:org.jboss.ide.eclipse.xdoclet.test:org.jboss.ide.eclipse.xdoclet.test.AllTests,\
 	ui:org.hibernate.eclipse.console.test:org.hibernate.eclipse.console.test.ConsolePluginAllTests
