@@ -25,5 +25,10 @@ ssh.key=%ssh-key%
 ssh.passphrase=%ssh-passphrase%
 scp.basedir=/htdocs/jbosside/builds
 
+# JBossLabs / SVN properties
+svn.username=%svn-username%
+svn.password=%svn-password%
+labs.url=https://cms.labs.jboss.com/prod/forge/portal-content/default/members/jbosside/downloads
+
 # HTTP Download URL
 jbosside.download.url=http://download.jboss.org/jbosside
