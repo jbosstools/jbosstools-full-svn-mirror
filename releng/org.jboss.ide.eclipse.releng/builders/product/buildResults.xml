@@ -169,7 +169,7 @@
 			
 			<filter token="junit-error-count" value="${junit.errorCount}"/>
 			<filter token="junit-failure-count" value="${junit.failureCount}"/>
-			<filter token="junit-test-count" value="${junit.totalTests}"/>
+			<filter token="junit-test-count" value="${junit.testCount}"/>
 		</filterset>
 			
 		<copy todir="${product.build.directory}" overwrite="true">
