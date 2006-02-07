@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JBoss Eclipse IDE Help Plug-in
+Bundle-SymbolicName: org.jboss.ide.eclipse.help; singleton:=true
+Bundle-Version: 1.5.1
+Bundle-Activator: org.jboss.ide.eclipse.help.HelpPlugin
+Bundle-Vendor: JBoss, Inc
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.help,
+ org.eclipse.help.ui
+Eclipse-AutoStart: true
+Bundle-ClassPath: jbossidehelp.jar
