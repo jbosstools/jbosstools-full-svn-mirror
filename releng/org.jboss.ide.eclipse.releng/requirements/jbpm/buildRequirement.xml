@@ -14,6 +14,8 @@
 		<runtarget target="getJbpm"/>
 		<runtarget target="unzipJbpm"/>
 		
+		<echo message="build root dir : ${build.root.dir}"></echo>
+		
 		<echo file="return.properties">
 			jbpmInstallDir=${jbpmInstallDir}
 		</echo>
