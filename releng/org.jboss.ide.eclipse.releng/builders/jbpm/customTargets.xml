@@ -66,9 +66,9 @@
 <!-- ===================================================================== -->
 <!-- Steps to do before fetching the build elements -->
 <!-- ===================================================================== -->
-<target name="preFetch" depends="stage-docbook">
+<target name="preFetch">
 	<echo message="doing preFetch"/>
-	<mkdir dir="${site-stage-dir}" />
+<!--	<mkdir dir="${site-stage-dir}" />
 	<cvs 
 		cvsRoot="${jbpm-cvs-root}"
 		package="jbpm.ide/org.jbpm.site"
@@ -80,10 +80,10 @@
 			<include name="site.xml"/>
 		</fileset>
 	</copy>
-	<delete dir="${site-stage-dir}/jbpm.ide" />
+	<delete dir="${site-stage-dir}/jbpm.ide" /> -->
 </target>
 
-<target name="fetch-docbook-support">
+<!-- <target name="fetch-docbook-support">
 	<cvs
 		cvsRoot="${jboss-cvs-root}"
 		package="docbook-support"
@@ -96,7 +96,7 @@
 	<copy todir="${docbook-dir}">
 		<fileset dir="${docbook-download-dir}" />
 	</copy>
-</target>
+</target> -->
 	
 <!-- ===================================================================== -->
 <!-- Steps to do after fetching the build elements -->
@@ -142,12 +142,6 @@
 </target>
 	
 <target name="getJbpmDB">
-	<cvs
-		cvsRoot="${jbpm-cvs-root}"
-		package="${jbpm-db-module}"
-		dest="${jbpm-db-download-dir}"
-		tag="${jbpm-db-version-tag}"
-		/>
 </target>
 	
 <target name="buildJbpmCoreFiles" depends="getJbpmCore">

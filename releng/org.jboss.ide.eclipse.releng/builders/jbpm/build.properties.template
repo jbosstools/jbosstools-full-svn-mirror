@@ -19,7 +19,7 @@
 # them on the command line (e.g., -DbaseLocation=d:/eclipse
 
 builder=%releng-root%/builders/jbpm
-jbpm-cvs-root=:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jbpm
+jbpm-cvs-root=:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jbpm
 jboss-cvs-root=:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss
 
 ############# CVS CONTROL ################

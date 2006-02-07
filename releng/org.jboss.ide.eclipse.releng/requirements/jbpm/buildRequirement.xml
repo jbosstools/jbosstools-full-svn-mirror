@@ -1,0 +1,29 @@
+<project>
+	<loadproperties srcFile="build.properties"/>
+
+	<property name="jbpmDownloadTo" value="${jbpmInstallDir}"/>
+		
+	<target name="build.requirement">
+		
+		<property name="jbpmArchiveName"
+			value="jbpm-${jbpmBuildID}.zip"/>
+				
+		<available file="${jbpmDownloadTo}/${jbpmArchiveName}" property="archiveExists"/>
+		<available file="${jbpmInstallDir}/jbpm-${jbpmBuildID}" property="isUnzipped"/>
+		
+		<runtarget target="getJbpm"/>
+		<runtarget target="unzipJbpm"/>
+		
+		<echo file="return.properties">
+			jbpmInstallDir=${jbpmInstallDir}
+		</echo>
+	</target>
+	
+	<target name="getJbpm" unless="archiveExists">
+		<get src="${jbpmURL}/${jbpmArchiveName}" dest="${jbpmInstallDir}/${jbpmArchiveName}"/>
+	</target>
+
+	<target name="unzipJbpm" unless="isUnzipped">
+		<unzip src="${jbpmDownloadTo}/${jbpmArchiveName}" dest="${jbpmInstallDir}"/>	
+	</target>
+</project>
