@@ -17,7 +17,7 @@
 		<echo message="build root dir : ${build.root.dir}"></echo>
 		
 		<echo file="return.properties">
-			jbpmInstallDir=${jbpmInstallDir}
+			jbpm-core-dir=${jbpmInstallDir}/jbpm-{jbpmBuildID}
 		</echo>
 	</target>
 	
