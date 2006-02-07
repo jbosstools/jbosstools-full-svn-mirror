@@ -14,11 +14,10 @@
 		<runtarget target="getJbpm"/>
 		<runtarget target="unzipJbpm"/>
 		
-		<echo message="build root dir : ${build.root.dir}"></echo>
-		
 		<echo file="return.properties">
-			jbpm-core-dir=${jbpmInstallDir}/jbpm-{jbpmBuildID}
+			jbpm-core-dir=${jbpmInstallDir}/jbpm-${jbpmBuildID}
 		</echo>
+		
 	</target>
 	
 	<target name="getJbpm" unless="archiveExists">

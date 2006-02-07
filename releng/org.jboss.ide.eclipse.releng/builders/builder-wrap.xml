@@ -113,7 +113,8 @@
      	  <propertyref prefix="xerces"/>
      	  <propertyref prefix="junit"/>
 		  <propertyref prefix="eclipse"/>
-     	  <propertyref prefix="docbook"/>
+       	  <propertyref prefix="docbook"/>
+       	  <propertyref prefix="jbpm"/>
 		</syspropertyset>
      
     <classpath path="${env.JAVA_HOME}/lib/tools.jar"/>
