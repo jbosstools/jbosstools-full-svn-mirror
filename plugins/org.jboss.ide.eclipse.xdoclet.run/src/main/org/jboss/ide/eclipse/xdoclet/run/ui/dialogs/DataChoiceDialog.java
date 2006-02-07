@@ -181,7 +181,7 @@ public class DataChoiceDialog extends Dialog
    }
 
    /** Description of the Method */
-   protected void okPressed()
+   public void okPressed()
    {
       IStructuredSelection selection = (IStructuredSelection) this.viewer.getSelection();
       if (!selection.isEmpty())
@@ -208,4 +208,8 @@ public class DataChoiceDialog extends Dialog
       }
    }
 
+   public ListViewer getListViewer ()
+   {
+      return viewer;
+   }
 }

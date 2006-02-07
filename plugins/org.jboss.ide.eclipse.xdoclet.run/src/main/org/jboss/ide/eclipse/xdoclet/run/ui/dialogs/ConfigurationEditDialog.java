@@ -137,4 +137,9 @@ public class ConfigurationEditDialog extends Dialog
 
       super.okPressed();
    }
+   
+   public Text getNameText ()
+   {
+      return nameText;
+   }
 }
