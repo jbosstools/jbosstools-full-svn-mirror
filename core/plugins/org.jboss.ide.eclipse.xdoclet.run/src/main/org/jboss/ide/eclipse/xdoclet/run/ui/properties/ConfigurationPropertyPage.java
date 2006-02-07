@@ -58,6 +58,14 @@ import org.jboss.ide.eclipse.xdoclet.run.ui.ElementViewer;
  */
 public class ConfigurationPropertyPage extends PropertyPage
 {
+   public static final int BUTTON_ADD = 0;
+   public static final int BUTTON_ADD_STANDARD = 1;
+   public static final int BUTTON_RENAME = 2;
+   public static final int BUTTON_REMOVE = 3;
+   public static final int BUTTON_MOVE_DOWN = 4;
+   public static final int BUTTON_MOVE_UP = 5;
+   public static final int BUTTON_ENABLE_XDOCLET = 6;
+   
    /** Description of the Field */
    private ConfigurationListViewer configListViewer;
 
@@ -398,5 +406,35 @@ public class ConfigurationPropertyPage extends PropertyPage
          status = ((CoreException) e).getStatus();
       }
       ErrorDialog.openError(this.getShell(), msg, null, status);
+   }
+
+   public Button getButton (int buttonId)
+   {
+      switch (buttonId) {
+         case BUTTON_ADD: return addButton;
+         case BUTTON_ADD_STANDARD: return addStandardButton;
+         case BUTTON_ENABLE_XDOCLET: return enableXDocletButton;
+         case BUTTON_MOVE_DOWN: return moveDownButton;
+         case BUTTON_MOVE_UP: return moveUpButton;
+         case BUTTON_REMOVE: return removeButton;
+         case BUTTON_RENAME: return renameButton;
+      }
+      return null;
+   }
+   
+   
+   public ConfigurationListViewer getConfigurationListViewer ()
+   {
+      return configListViewer;
+   }
+   
+   public ConfigurationViewer getConfigurationViewer ()
+   {
+      return configViewer;
+   }
+   
+   public ProjectConfigurations getProjectConfigurations()
+   {
+      return projectConfigurations;
    }
 }

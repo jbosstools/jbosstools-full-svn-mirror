@@ -33,6 +33,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -89,6 +90,9 @@ public class ConfigurationListViewer
    /** Description of the Field */
    private CheckboxTableViewer viewer;
 
+   /** The current dialog being displayed (mostly used in unit tests) */
+   private Dialog currentDialog;
+   
    /**
     *Constructor for the ConfigurationsViewer object
     *
@@ -244,6 +248,7 @@ public class ConfigurationListViewer
    public void doAdd()
    {
       ConfigurationEditDialog dialog = new ConfigurationEditDialog(this.parentComposite.getShell());
+      currentDialog = dialog;
       if (dialog.open() == Window.OK)
       {
          XDocletConfiguration configuration = dialog.getXDocletConfiguration();
@@ -261,6 +266,7 @@ public class ConfigurationListViewer
    {
       ConfigurationChoiceDialog dialog = new ConfigurationChoiceDialog(this.parentComposite.getShell(),
             XDocletRunPlugin.getDefault().getStandardConfigurations().getConfigurations());
+      currentDialog = dialog;
       if (dialog.open() == Window.OK)
       {
          XDocletData data = dialog.getXDocletData();
@@ -380,5 +386,20 @@ public class ConfigurationListViewer
    {
       this.viewer.setInput(input);
       this.viewer.setCheckedElements(this.getUsedConfiguration().toArray());
+   }
+   
+   public Dialog getCurrentDialog ()
+   {
+      return currentDialog;
+   }
+   
+   public CheckboxTableViewer getTableViewer ()
+   {
+      return viewer;
+   }
+   
+   public List getConfigurations ()
+   {
+      return configurations;
    }
 }

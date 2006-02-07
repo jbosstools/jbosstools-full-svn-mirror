@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
@@ -187,7 +188,7 @@ public class XDocletRunAction extends ActionDelegate implements IObjectActionDel
                   // Create a new one
                   configuration = AntLaunchShortcut.createDefaultLaunchConfiguration(buildFile);
                   ILaunchConfigurationWorkingCopy copy = configuration.getWorkingCopy();
-                  copy.setAttribute(IExternalToolConstants.ATTR_CAPTURE_OUTPUT, true);
+                  copy.setAttribute(DebugPlugin.ATTR_CAPTURE_OUTPUT, true);
                   copy.setAttribute(IExternalToolConstants.ATTR_SHOW_CONSOLE, true);
                   copy.setAttribute(IDebugUIConstants.ATTR_LAUNCH_IN_BACKGROUND, false);
                   copy.setAttribute(IDebugUIConstants.ATTR_PRIVATE, true);
@@ -195,7 +196,7 @@ public class XDocletRunAction extends ActionDelegate implements IObjectActionDel
 
                   // Launch the generation
                   configuration.launch(ILaunchManager.RUN_MODE, monitor);
-
+                  
                   monitor.worked(80);
 
                   // Refresh the project

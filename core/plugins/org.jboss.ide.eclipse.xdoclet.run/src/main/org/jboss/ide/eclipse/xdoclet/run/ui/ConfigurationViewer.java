@@ -31,6 +31,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
@@ -84,6 +85,9 @@ public class ConfigurationViewer
    /** Description of the Field */
    private CheckboxTreeViewer viewer;
 
+   /** The currently displayed dialog */
+   private Dialog currentDialog;
+   
    /**
     *Constructor for the ConfigurationViewer object
     *
@@ -177,7 +181,7 @@ public class ConfigurationViewer
    }
 
    /** Description of the Method */
-   private void doAdd()
+   public void doAdd()
    {
       XDocletElement element = this.getCurrent();
       if (element != null)
@@ -186,6 +190,8 @@ public class ConfigurationViewer
          if ((choices != null) && (!choices.isEmpty()))
          {
             DataChoiceDialog dialog = new DataChoiceDialog(this.parentComposite.getShell(), choices);
+            currentDialog = dialog;
+            
             if (dialog.open() == Window.OK)
             {
                XDocletData data = dialog.getXDocletData();
@@ -200,12 +206,14 @@ public class ConfigurationViewer
    }
 
    /** Description of the Method */
-   private void doAddDoclet()
+   public void doAddDoclet()
    {
       if (this.configuration != null)
       {
          DataChoiceDialog dialog = new DataChoiceDialog(this.parentComposite.getShell(), XDocletRunPlugin.getDefault()
                .getXDocletDataRepository().getTasks());
+         currentDialog = dialog;
+         
          if (dialog.open() == Window.OK)
          {
             XDocletData data = dialog.getXDocletData();
@@ -224,7 +232,7 @@ public class ConfigurationViewer
    }
 
    /** Description of the Method */
-   private void doRemove()
+   public void doRemove()
    {
       XDocletElement element = this.getCurrent();
       if (element != null)
@@ -354,9 +362,24 @@ public class ConfigurationViewer
    }
 
    /** Description of the Method */
-   private void refresh()
+   public void refresh()
    {
       this.viewer.refresh();
       this.viewer.setCheckedElements(this.getUsedElements(this.configuration).toArray());
+   }
+   
+   public Dialog getCurrentDialog ()
+   {
+      return currentDialog;
+   }
+   
+   public CheckboxTreeViewer getTreeViewer ()
+   {
+      return viewer;
+   }
+   
+   public XDocletConfiguration getXDocletConfiguration ()
+   {
+      return configuration;
    }
 }
