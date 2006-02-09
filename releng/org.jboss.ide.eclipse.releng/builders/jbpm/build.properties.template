@@ -100,19 +100,19 @@ archivesFormat = *,*,*-zip & macosx,carbon,ppc-tar
 
 # Custom jBPM Properties
 
-build-dir=${buildDirectory}
-download-dir=${build-dir}/downloads
-install-dir=${build-dir}/..
-workspace-dir=${build-dir}/workspace
+#build-dir=${buildDirectory}
+#download-dir=${build-dir}/downloads
+#install-dir=${build-dir}/..
+#workspace-dir=${build-dir}/workspace
 
-jbpm-core-module=jbpm.3
-jbpm-core-version-tag=jbpm_3_0_2
-jbpm-db-module=jbpm.db
-jbpm-db-version-tag=jbpm_3_0_2
-default-jbpm-name=jBPM 3.0
+#jbpm-core-module=jbpm.3
+#jbpm-core-version-tag=jbpm_3_0_2
+#jbpm-db-module=jbpm.db
+#jbpm-db-version-tag=jbpm_3_0_2
+#default-jbpm-name=jBPM 3.1-beta3
 
 # this is a special hack for nightly / integation builds so we can correctly append the Nxxx / Ixxxx
-jbpm-ide-release=3.0.5
+jbpm-ide-release=3.0.8
 
 # include these plugins in the binary distribution
 include.plugins=\

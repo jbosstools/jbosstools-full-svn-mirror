@@ -1,10 +1,10 @@
-build-dir=%build-output-directory%
-download-dir=${build-dir}/builders/jbpm/downloads
-install-dir=${build-dir}/builders/jbpm/installation
-workspace-dir=${build-dir}/builders/jbpm/workspace
+#build-dir=%build-output-directory%
+#download-dir=${build-dir}/builders/jbpm/downloads
+#install-dir=${build-dir}/builders/jbpm/installation
+#workspace-dir=${build-dir}/builders/jbpm/workspace
 
-jbpm-core-module=jbpm.3
-jbpm-core-version-tag=jbpm_3_0
-jbpm-db-module=jbpm.db
-jbpm-db-version-tag=jbpm_3_0
-default-jbpm-name=jBPM 3.0
+#jbpm-core-module=jbpm.3
+#jbpm-core-version-tag=jbpm_3_0
+#jbpm-db-module=jbpm.db
+#jbpm-db-version-tag=jbpm_3_0
+#default-jbpm-name=jBPM 3.0

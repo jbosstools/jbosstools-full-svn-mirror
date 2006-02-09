@@ -16,6 +16,7 @@
 		
 		<echo file="return.properties">
 			jbpm-core-dir=${jbpmInstallDir}/jbpm-${jbpmBuildID}
+			jbpm.version=${jbpmBuildID}
 		</echo>
 		
 	</target>

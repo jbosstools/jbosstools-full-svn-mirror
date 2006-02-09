@@ -4,7 +4,7 @@
 	
 	<property file="custom.properties" />
 	<!--property name="archiveName" value="jbpm-gpd-3.0-${buildId}.zip" /-->
-	<property name="site-dir" value="${workspace-dir}/site" />
+<!--	<property name="site-dir" value="${workspace-dir}/site" />
 	<property name="site-stage-dir" value="${site-dir}/temp" />
 	<property name="docbook-dir" value="${build-dir}/plugins/docbook-support" />
 	<property name="docbook-download-dir" value="${download-dir}/docbook-support" />
@@ -13,7 +13,7 @@
 	<property name="jbpm-core-plugin-dir" value="${build-dir}/plugins/org.jbpm.core" />
 	<property name="jbpm-db-dir" value="${build-dir}/plugins/${jbpm-db-module}.${jbpm-db-version-tag}" />
 	<property name="jbpm-db-download-dir" value="${download-dir}/${jbpm-db-module}.${jbpm-db-version-tag}" />
-	<property name="jbpm-db-plugin-dir" value="${build-dir}/plugins/org.jbpm.db" />
+	<property name="jbpm-db-plugin-dir" value="${build-dir}/plugins/org.jbpm.db" /> -->
 	
 	<import file="../common/bundlePlugins.xml"/>
 	<import file="../common/common.xml"/>
@@ -101,12 +101,16 @@
 <!-- ===================================================================== -->
 <!-- Steps to do after fetching the build elements -->
 <!-- ===================================================================== -->
-<target name="postFetch" depends="buildJbpmCoreFiles"> <!--,buildJbpmDatabaseFiles"> -->
-<!--	<property name="jbpm-help-dir" value="${build-dir}/plugins/org.jbpm.help" />
-	<ant antfile="${jbpm-help-dir}/build/build.xml" dir="${jbpm-help-dir}" /> -->
+<target name="postFetch" depends="buildJbpmCoreFiles,buildPluginDocs"> <!--,buildJbpmDatabaseFiles"> -->
+	<property name="jbpm-help-dir" value="${buildDirectory}/plugins/org.jbpm.help" />
+	<ant antfile="${jbpm-help-dir}/build/build.xml" dir="${jbpm-help-dir}" inheritall="false">
+	  	<property name="jbpm.3.dir" value="${jbpm-core-dir}" />
+	  	<property name="userguide.dir" value="${jbpm-core-dir}/doc/userguide" />
+	  	<property name="jbpm.ide.docs.dir" value="${jbpm.ide.docs.dir}" />
+	</ant>
 	<replace 
-		file="${build-dir}/plugins/org.jbpm.ui/src/org/jbpm/ui/PluginConstants.java" 
-		token="%default-jbpm-name%" value="${default-jbpm-name}" />
+		file="${buildDirectory}/plugins/org.jbpm.ui/src/org/jbpm/ui/PluginConstants.java" 
+		token="%jbpm.version%" value="${jbpm.version}" />
 	
 	<if>
 		<not>
@@ -128,25 +132,42 @@
 		</fileset>
 	</updateVersions>
 </target>
-
-<target name="initPostFetch" >
+	
+<target name="buildPluginDocs" depends="getPluginDocs">
+    <ant antfile="build.xml" target="all.doc" dir="${jbpm.ide.docs.dir}/gpd.userguide" inheritall="false" />
+</target>
+	
+<target name="getPluginDocs">
+	<property name="jbpm.ide.docs.dir" value="${docbook-support-dir}/../jbpm.ide.docs" />
+	<echo message="checking out the plugin docs to ${jbpm.ide.docs.dir}; tag = ${cvsTag}" />
+    <mkdir dir="${jbpm.ide.docs.dir}" />
+    <cvs cvsRoot="${jbpm-cvs-root}" 
+         command="checkout -d ${jbpm.ide.docs.dir} -r ${cvsTag} jbpm.ide/jbpm.ide.docs" 
+         quiet="${quiet}" />  
 </target>
 
-<target name="getJbpmCore">
+<!-- <target name="initPostFetch" >
+</target> -->
+	
+	
+
+<!-- <target name="getJbpmCore">
 	<cvs
 		cvsRoot="${jbpm-cvs-root}"
 		package="${jbpm-core-module}"
 		dest="${jbpm-core-download-dir}"
 		tag="${jbpm-core-version-tag}"
 		/>
-</target>
+</target> 
 	
 <target name="getJbpmDB">
-</target>
+</target> -->
 	
 <target name="buildJbpmCoreFiles">
 	<echo message="building core jbpm plugin"/>
 	<echo message="jbpm-core-dir : ${jbpm-core-dir}" />
+	<property name="jbpm-core-plugin-dir" value="${buildDirectory}/plugins/org.jbpm.core" />
+	<echo message="jbpm-core-plugin-dir : ${jbpm-core-plugin-dir}" />
 <!--	<copy todir="${jbpm-core-dir}">
 		<fileset dir="${jbpm-core-download-dir}/${jbpm-core-module}" />
 	</copy>
