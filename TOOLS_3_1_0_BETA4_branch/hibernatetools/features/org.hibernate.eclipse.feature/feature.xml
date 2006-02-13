@@ -2,7 +2,7 @@
 <feature
       id="org.hibernate.eclipse.feature"
       label="Hibernate Tools"
-      version="3.1.0.beta4"
+      version="3.1.0.beta4a"
       provider-name="Hibernate Team">
 
    <description url="http://tools.hibernate.org">
@@ -452,116 +452,110 @@ END OF TERMS AND CONDITIONS
          id="org.eclipse.gef"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="3.1.1"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.sse.core"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.sse.ui"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.xml.core"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.xml.ui"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.emf.common"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="2.1.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.common.frameworks"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.common.ui"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.common.uriresolver"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.validation"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.xerces"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="2.7.0"/>
 
    <plugin
          id="org.eclipse.jem.util"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="1.1.0.1"/>
 
    <plugin
          id="org.eclipse.emf.ecore"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="2.1.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.emf.ecore.xmi"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="2.1.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.dtd.core"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
 
    <plugin
          id="org.hibernate.eclipse"
          download-size="0"
          install-size="0"
-         version="3.1.0.beta4"/>
-
-   <plugin
-         id="org.hibernate.eclipse.console"
-         download-size="0"
-         install-size="0"
-         version="3.1.0.beta4"/>
+         version="3.1.0.beta4a"/>
 
    <plugin
          id="org.hibernate.eclipse.help"
@@ -579,28 +573,34 @@ END OF TERMS AND CONDITIONS
          id="org.eclipse.draw2d"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="3.1.1"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.validation.ui"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.common.environment"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.wst.common.frameworks.ui"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
+
+   <plugin
+         id="org.hibernate.eclipse.console"
+         download-size="0"
+         install-size="0"
+         version="3.1.0.beta4"/>
 
 </feature>
