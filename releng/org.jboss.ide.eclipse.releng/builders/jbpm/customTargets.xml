@@ -141,9 +141,20 @@
 	<property name="jbpm.ide.docs.dir" value="${docbook-support-dir}/../jbpm.ide.docs" />
 	<echo message="checking out the plugin docs to ${jbpm.ide.docs.dir}; tag = ${cvsTag}" />
     <mkdir dir="${jbpm.ide.docs.dir}" />
-    <cvs cvsRoot="${jbpm-cvs-root}" 
+
+	<cvs cvsRoot="${jbpm-cvs-root}"
+		package="jbpm.ide/jbpm.ide.docs" tag="${cvsTag}"
+		dest="${docbook-support-dir}/.." quiet="${quiet}"/>
+	
+	<move todir="${jbpm.docs.dir}">
+		<fileset dir="${docbook-support-dir}/../jbpm.ide/jbpm.ide.docs" includes="**/*"/>
+	</move>
+			
+	<delete dir="${docbook-support-dir}/../jbpm.ide"/>
+	
+	<!--cvs cvsRoot="${jbpm-cvs-root}" 
          command="checkout -d ${jbpm.ide.docs.dir} -r ${cvsTag} jbpm.ide/jbpm.ide.docs" 
-         quiet="${quiet}" />  
+         quiet="${quiet}" /-->  
 </target>
 
 <!-- <target name="initPostFetch" >
