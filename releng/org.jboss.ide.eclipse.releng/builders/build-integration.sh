@@ -24,7 +24,7 @@ if [ "$TARGET" = "product" ]; then
 	if [ "$CVSTAGPROPERTIES" = "" ]; then
 		$ANT $@ -lib ../lib -f product/productBuild.xml integration > build.log
 	else
-		$ANT $@ -lib ../lib -propertyfile $CVSTAGPROPERTIES -f product/productBuild.xml integration > build.log
+		$ANT $@ -lib ../lib -propertyfile $CVSTAGPROPERTIES -f product/productBuild.xml integration | tee build.log
 	fi
 	
 	

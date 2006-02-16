@@ -12,7 +12,7 @@ fi
 $ANT $@ -lib ../lib -f common/buildRequirements.xml cleanRequirements
 
 if [ "$TARGET" = "product" ]; then
-	$ANT $@ -lib ../lib -f product/productBuild.xml nightly > build.log
+	$ANT $@ -lib ../lib -f product/productBuild.xml nightly | tee build.log
 
 	if [ "$?" = "0" ]; then
 		$ANT $@ -lib ../lib -f product/buildResults.xml publish.log
