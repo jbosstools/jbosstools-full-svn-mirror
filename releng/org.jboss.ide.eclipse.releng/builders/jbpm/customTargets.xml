@@ -146,7 +146,7 @@
 		package="jbpm.ide/jbpm.ide.docs" tag="${cvsTag}"
 		dest="${docbook-support-dir}/.." quiet="${quiet}"/>
 	
-	<move todir="${jbpm.docs.dir}">
+	<move todir="${jbpm.ide.docs.dir}">
 		<fileset dir="${docbook-support-dir}/../jbpm.ide/jbpm.ide.docs" includes="**/*"/>
 	</move>
 			
