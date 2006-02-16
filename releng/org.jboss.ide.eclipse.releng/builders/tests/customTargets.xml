@@ -43,7 +43,27 @@
 <!-- ===================================================================== -->
 <target name="getMapFiles">
 	<!-- we need to export the map file w/ the correct CVS tags -->
-	<copyMapFile builder="tests" buildDirectory="${buildDirectory}" cvsTag="${cvsTag}"/>
+	<if>
+		<or>
+			<equals arg1="${buildType}" arg2="R"/>
+			<equals arg1="${buildType}" arg2="I"/>
+		</or>
+		<then>
+			<property name="hibernate-tools-cvsTag" value="${hibernate-tools.cvs}"/>
+			<property name="core-cvsTag" value="${core.cvs}"/>
+		</then>
+		<else>
+			<property name="hibernate-tools-cvsTag" value="${cvsTag}"/>
+			<property name="core-cvsTag" value="${cvsTag}"/>
+		</else>
+	</if>
+	
+	<copyMapFile builder="tests" buildDirectory="${buildDirectory}" cvsTag="${cvsTag}">
+		<filterset begintoken="%" endtoken="%">
+			<filter token="core-cvsTag" value="${core-cvsTag}"/>
+			<filter token="hibernate-tools-cvsTag" value="${hibernate-tools-cvsTag}"/>
+		</filterset>
+	</copyMapFile>
 </target>
 
 <!-- ===================================================================== -->
