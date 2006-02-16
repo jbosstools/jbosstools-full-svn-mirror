@@ -115,6 +115,7 @@
 		  <propertyref prefix="eclipse"/>
        	  <propertyref prefix="docbook"/>
        	  <propertyref prefix="jbpm"/>
+     	  <propertyref regex=".cvs$"/>
 		</syspropertyset>
      
     <classpath path="${env.JAVA_HOME}/lib/tools.jar"/>
