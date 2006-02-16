@@ -22,7 +22,7 @@
 	</target>
 	
 	<target name="getJbpm" unless="archiveExists">
-		<get src="${jbpmURL}/${jbpmArchiveName}" dest="${jbpmInstallDir}/${jbpmArchiveName}"/>
+		<get src="${jbpmURL}/${jbpmArchiveName}" dest="${jbpmDownloadTo}/${jbpmArchiveName}"/>
 	</target>
 
 	<target name="unzipJbpm" unless="isUnzipped">
