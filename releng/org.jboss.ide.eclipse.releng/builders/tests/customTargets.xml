@@ -44,14 +44,18 @@
 <target name="getMapFiles">
 	<!-- we need to export the map file w/ the correct CVS tags -->
 	<if>
-		<or>
-			<equals arg1="${buildType}" arg2="R"/>
-			<equals arg1="${buildType}" arg2="I"/>
-		</or>
+		<equals arg1="${buildType}" arg2="I"/>
 		<then>
 			<property name="hibernate-tools-cvsTag" value="${hibernate-tools.cvs}"/>
 			<property name="core-cvsTag" value="${core.cvs}"/>
 		</then>
+		<elseif>
+			<equals arg1="${buildType}" arg2="R"/>
+			<then>
+				<property name="hibernate-tools-cvsTag" value="${versionTags.hibernate-tools.cvs}"/>
+				<property name="core-cvsTag" value="${versionTags.core.cvs}"/>
+			</then>
+		</elseif>
 		<else>
 			<property name="hibernate-tools-cvsTag" value="${cvsTag}"/>
 			<property name="core-cvsTag" value="${cvsTag}"/>
