@@ -103,8 +103,18 @@
 	</target>
 	
 	<target name="eclipse-test">
+		<if>
+			<equals arg1="${debug-tests}" arg2="true"/>
+			<then>
+				<property name="debug-params" value="-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=y"/>
+			</then>
+			<else>
+				<property name="debug-params" value=""/>
+			</else>
+		</if>
 		<java dir="${test-eclipse-root}" fork="true" classname="org.eclipse.core.launcher.Main">
 			<classpath><fileset file="${test-eclipse-root}/startup.jar"/></classpath>
+			<jvmarg line="${debug-params}"/>
 			<arg line="-application ${application} -dev bin -data ${test-root}/workspace"/>
 			<arg line="formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,${classname}.xml"/>
 			<arg line="-testPluginName ${plugin-name} -classname ${classname}"/>
@@ -116,9 +126,9 @@
 			<fileset defaultexcludes="false" dir="${test-eclipse-root}">
 				<include name="**/*"/>
 			</fileset>
-			<fileset defaultexcludes="false" dir="${test-root}/workspace">
+			<!--fileset defaultexcludes="false" dir="${test-root}/workspace">
 				<include name="**/*"/>
-			</fileset>
+			</fileset-->
 		</delete>
 	</target>
 </project>
