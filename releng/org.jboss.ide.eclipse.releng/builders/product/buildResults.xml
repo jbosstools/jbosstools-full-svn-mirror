@@ -90,6 +90,21 @@
 		<loadfile srcfile="${jbpm-file}.MD5" property="jbpm-file-md5" failonerror="false" />
 		<loadfile srcfile="${ejb3-file}.MD5" property="ejb3-file-md5" failonerror="false" />
 		
+		<!-- load bundle html (if necessary) -->
+		<load.property file="build.properties" property="${product.buildDesc}.build.steps"/>
+		<propertycopy name="build.steps" from="${product.buildDesc}.build.steps"/>
+		<if>
+			<contains string="${build.steps}" substring="bundle.eclipse"/>
+			<then>
+				<loadfile property="bundle.information" srcfile="buildInfo/bundles.html">
+					<filterchain><expandproperties/></filterchain>
+				</loadfile>
+			</then>
+			<else>
+				<property name="bundle.information" value=""/>
+			</else>
+		</if>
+		
 		<tstamp>
 			<format pattern="MM/dd/yyyy HH:mm" property="build-date"/>
 		</tstamp>
@@ -166,7 +181,8 @@
 			<filter token="jbosside-ejb3-status" value="${jbosside-ejb3-status}"/>
 			<filter token="jbosside-ejb3-filename" value="${jbosside-ejb3-filename}"/>
 			<filter token="build-information" value="${build.information}"/>
-			
+			<filter token="bundle-information" value="${bundle.information}"/>
+				
 			<filter token="junit-error-count" value="${junit.errorCount}"/>
 			<filter token="junit-failure-count" value="${junit.failureCount}"/>
 			<filter token="junit-test-count" value="${junit.testCount}"/>
