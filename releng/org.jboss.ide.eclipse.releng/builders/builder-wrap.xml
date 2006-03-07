@@ -116,6 +116,7 @@
        	  <propertyref prefix="docbook"/>
        	  <propertyref prefix="jbpm"/>
      	  <propertyref regex=".cvs$"/>
+     	  <propertyref prefix="versionTags."/>
 		</syspropertyset>
      
     <classpath path="${env.JAVA_HOME}/lib/tools.jar"/>
