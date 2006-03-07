@@ -66,11 +66,13 @@
 		upload.to=${product.buildDesc}/${product.versionTag}
 		product.build.directory=${product.build.directory}
 	</echo>
-
-	<for list="${build.types}" param="build.type">
+	
+   	<propertycopy name="build.steps" from="${product.buildDesc}.build.steps"/>
+   	
+	<for list="${build.steps}" param="build.step">
 		<sequential>
-			<echo>Building ${product.name} with build type '@{build.type}'</echo>
-			<switch value="@{build.type}">
+			<echo>Building ${product.name} with build type '@{build.step}'</echo>
+			<switch value="@{build.step}">
 				<case value="bundle.eclipse">
 					<foreach list="${eclipse.builds}" delimiter="," target="build.platform" param="platform.archive" inheritall="true"/>
 				</case>
