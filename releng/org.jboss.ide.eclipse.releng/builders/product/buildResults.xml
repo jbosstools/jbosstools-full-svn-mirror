@@ -30,6 +30,7 @@
 		<load.property file="../../requirements/webtools/build.properties" property="build.uri" dest="webtools.build.uri"/>
 		<load.property file="../../requirements/webtools/build.properties" property="build.archive" dest="webtools.build.archive"/>
 
+		
 		<propertyregex property="webtoolsBuildID"
 			input="${webtools.build.archive}"
 			regexp="wtp-(.+).zip"
@@ -44,6 +45,9 @@
 		<get.version.tag builder="jbpm" property="jbpm.versionTag"/>
 		
 		<loadfile property="build.information" srcfile="buildInfo/${product.buildDesc}.html"/>
+		
+		<load.property file="build.properties" property="${product.buildDesc}.build.steps"/>
+		<propertycopy name="build.steps" from="${product.buildDesc}.build.steps"/>
 		
 		<property name="jbosside-all-filename" value="${product.name}-${product.versionTag}-ALL.zip"/>
 		<property name="jbosside-win32-bundle-filename" value="${product.name}-${product.versionTag}-Bundle-win32.zip"/>
@@ -73,8 +77,13 @@
 		<get.status file="${ejb3-file}" property="jbosside-ejb3-status"/>
 		
 		<length file="${all-file}" property="all-file-size"  />
-		<length file="${win32-bundle-file}" property="win32-bundle-file-size"  />
-		<length file="${linux-gtk2-bundle-file}" property="linux-gtk2-bundle-file-size"  />
+		<if>
+			<contains string="${build.steps}" substring="bundle.eclipse"/>
+			<then>
+				<length file="${win32-bundle-file}" property="win32-bundle-file-size"  />
+				<length file="${linux-gtk2-bundle-file}" property="linux-gtk2-bundle-file-size"  />
+			</then>
+		</if>
 		<length file="${core-file}" property="core-file-size"  />
 		<length file="${aop-file}" property="aop-file-size"  />
 		<length file="${hibernate-tools-file}" property="hibernate-tools-file-size"  />
@@ -91,8 +100,6 @@
 		<loadfile srcfile="${ejb3-file}.MD5" property="ejb3-file-md5" failonerror="false" />
 		
 		<!-- load bundle html (if necessary) -->
-		<load.property file="build.properties" property="${product.buildDesc}.build.steps"/>
-		<propertycopy name="build.steps" from="${product.buildDesc}.build.steps"/>
 		<if>
 			<contains string="${build.steps}" substring="bundle.eclipse"/>
 			<then>
