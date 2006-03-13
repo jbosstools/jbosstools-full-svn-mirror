@@ -1,5 +1,14 @@
 #!/bin/sh
 
+
+#### This is a temporary change to see if we can make UI unit tests work w/ XVFB
+
+
+/usr/X11R6/bin/Xvfb :99 &
+export DISPLAY=:99
+
+##########################################################
+
 TARGET=$1
 shift
 ANT=$ANT_HOME/bin/ant
