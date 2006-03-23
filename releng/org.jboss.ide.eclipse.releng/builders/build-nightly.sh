@@ -4,8 +4,8 @@
 #### This is a temporary change to see if we can make UI unit tests work w/ XVFB
 
 
-/usr/X11R6/bin/Xvfb :99 -auth /etc/Xvfb.xauth &
-export DISPLAY=:99
+# /usr/X11R6/bin/Xvfb :99 -auth /etc/Xvfb.xauth &
+# export DISPLAY=:99
 
 ##########################################################
 
