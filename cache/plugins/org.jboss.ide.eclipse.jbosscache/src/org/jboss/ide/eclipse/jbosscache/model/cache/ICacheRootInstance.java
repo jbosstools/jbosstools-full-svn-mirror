@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigParams;
+import org.jboss.ide.eclipse.jbosscache.model.config.RemoteCacheConfigParams;
+import org.jboss.ide.eclipse.jbosscache.model.internal.RemoteCacheManager;
 import org.jboss.ide.eclipse.jbosscache.model.internal.TreeCacheManager;
 
 /**
@@ -133,6 +135,19 @@ public interface ICacheRootInstance
     * @param treeCache
     */
    void setTreeCacheManager(TreeCacheManager treeCache);
+   
+   /**
+    * Return this root instance's TreeCache
+    * @return
+    */
+   RemoteCacheManager getRemoteCacheManager();
+
+   /**
+    * Sets this root instance's TreeCache
+    * @param treeCache
+    */
+   void setRemoteCacheManager(RemoteCacheManager treeCache);
+
 
    /**
     * Root instance is connected to cache with its configuration
@@ -159,6 +174,10 @@ public interface ICacheRootInstance
     * @param jarFiles
     */
    void setCacheConfigParams(CacheConfigParams params);
+   
+   RemoteCacheConfigParams getRemoteCacheConfigParams();
+   
+   void setRemoteCacheConfigParams(RemoteCacheConfigParams params);
 
    void setCacheViewNodeListener(AbstractTreeCacheManagerListener listener);
 
@@ -179,5 +198,9 @@ public interface ICacheRootInstance
    boolean getIsDirty();
 
    void setIsDirty(boolean isDirty);
+   
+   boolean isRemoteCache();
+   
+   void setRemoteCache(boolean isRemote);
 
 }//end of interface

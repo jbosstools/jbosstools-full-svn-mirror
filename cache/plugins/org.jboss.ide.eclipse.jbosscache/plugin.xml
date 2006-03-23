@@ -10,7 +10,7 @@
       </category>
       <view
             name="%cache.configuration.view.name"
-            icon="icons/sample.gif"
+            icon="icons/jboss.gif"
             category="JBoss Cache"
             class="org.jboss.ide.eclipse.jbosscache.views.config.TreeCacheView"
             id="org.jboss.ide.eclipse.jbosscache.views.CacheContentView">
@@ -19,13 +19,13 @@
       <view
             category="JBoss Cache"
             class="org.jboss.ide.eclipse.jbosscache.views.content.NodeContentView"
-            icon="icons/sample.gif"
+            icon="icons/jboss.gif"
             id="org.jboss.ide.eclipse.jbosscache.view.NodeContentView"
             name="%cache.content.view.name"/>
       <view
             category="JBoss Cache"
             class="org.jboss.ide.eclipse.jbosscache.views.gef.CacheGraphView"
-            icon="icons/sample.gif"
+            icon="icons/jboss.gif"
             id="org.jboss.ide.eclipse.jbosscache.views.CacheGraphView"
             name="%cache.graph.view.name"/>
        
@@ -40,7 +40,7 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             class="org.jboss.ide.eclipse.jbosscache.perspective.CachePerspective"
-            icon="icons/SGroup.gif"
+            icon="icons/jboss.gif"
             id="org.jboss.ide.eclipse.jbosscache.perspective2"
             name="JBoss Cache"/>
    </extension>
@@ -54,9 +54,25 @@
             category="org.jboss.ide.eclipse.jbosscache.category.newCacheWizard"
             class="org.jboss.ide.eclipse.jbosscache.wizards.NewCacheConfigurationWizard"
             hasPages="true"
-            icon="icons/sample.gif"
+            icon="icons/jboss.gif"
             id="org.jboss.ide.eclipse.jbosscache.wizard1"
             name="%cache.instance.wizard.name"
+            project="false"/>
+      <wizard
+            category="org.jboss.ide.eclipse.jbosscache.category.newCacheWizard"
+            class="org.jboss.ide.eclipse.jbosscache.wizards.NewCacheProjectWizard"
+            icon="icons/jboss.gif"
+            id="org.jboss.ide.eclipse.jbosscache.wizard2"
+            name="Create New Cache Project"
+            project="true"/>
+      <wizard
+            canFinishEarly="false"
+            category="org.jboss.ide.eclipse.jbosscache.category.newCacheWizard"
+            class="org.jboss.ide.eclipse.jbosscache.wizards.RemoteConfigurationWizard"
+            hasPages="true"
+            icon="icons/jboss.gif"
+            id="org.jboss.ide.eclipse.jbosscache.wizard3"
+            name="Create New Remote Cache Instance"
             project="false"/>
    </extension>
    <extension
@@ -70,9 +86,16 @@
          point="org.eclipse.ui.propertyPages">
       <page
             class="org.jboss.ide.eclipse.jbosscache.CachePropertyPage"
+            icon="icons/jboss.gif"
             id="org.jboss.ide.eclipse.jbosscache.propertyPage"
             name="%cache.property.page.name"
             objectClass="org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance"/>
+   </extension>
+   <extension
+         point="org.eclipse.jdt.core.classpathContainerInitializer">
+      <classpathContainerInitializer
+            class="org.jboss.ide.eclipse.jbosscache.classpath.CacheClassPathContainerInitializer"
+            id="org.jboss.ide.eclipse.jbosscache.classpath.CACHE_124"/>
    </extension>
 
 </plugin>

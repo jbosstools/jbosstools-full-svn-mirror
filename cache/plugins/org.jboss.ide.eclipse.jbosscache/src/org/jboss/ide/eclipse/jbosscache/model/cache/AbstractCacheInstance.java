@@ -12,6 +12,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.ui.PlatformUI;
+import org.jboss.ide.eclipse.jbosscache.JBossCachePlugin;
+
 /**
  *  Abstract class relating with the <code>ICacheInstance</code>
  * <p>
@@ -134,7 +137,7 @@ public abstract class AbstractCacheInstance implements ICacheInstance
    /**
     * @see ICacheInstance#addInstanceChild(ICacheInstance)
     */
-   public void addInstanceChild(ICacheInstance child)
+   public void addInstanceChild(final ICacheInstance child)
    {
       if (instanceChilds == null)
       {
@@ -145,7 +148,16 @@ public abstract class AbstractCacheInstance implements ICacheInstance
       {
          instanceChilds.add(child);
       }
-      fireNewCacheInstanceAdded(child);
+      
+      JBossCachePlugin.getDisplay().asyncExec(new Runnable(){
+
+         public void run()
+         {
+            fireNewCacheInstanceAdded(child);
+            
+         }
+         
+      });
    }
 
    /**

@@ -45,25 +45,34 @@ public class DisConnectAction extends AbstractCacheAction
    public void run()
    {
       ICacheRootInstance rootInstance = (ICacheRootInstance) getTreeViewer().getSelection();
-      TreeCacheManager manager = rootInstance.getTreeCacheManager();
 
       rootInstance.disconnect();
-
-      if (manager != null)
+      
+      TreeCacheManager manager = rootInstance.getTreeCacheManager();
+      
+      if(rootInstance.isRemoteCache())
       {
-         ProgressMonitorDialog monitorDialog = new ProgressMonitorDialog(getTreeViewer().getShell());
-         try{
-            monitorDialog.run(true,false,getRunnable(manager));
-         }catch(Exception e){
-            e.printStackTrace();
-            IStatus status = new Status(IStatus.ERROR, ICacheConstants.CACHE_PLUGIN_UNIQUE_ID, IStatus.OK, e
-                  .getMessage(), e);
-            JBossCachePlugin.getDefault().getLog().log(status);            
-         }
-         
-         rootInstance.setTreeCacheManager(null);
-
+         rootInstance.setRemoteCacheManager(null);
       }
+      else
+      {
+         if (manager != null)
+         {
+            ProgressMonitorDialog monitorDialog = new ProgressMonitorDialog(getTreeViewer().getShell());
+            try{
+               monitorDialog.run(true,false,getRunnable(manager));
+            }catch(Exception e){
+               e.printStackTrace();
+               IStatus status = new Status(IStatus.ERROR, ICacheConstants.CACHE_PLUGIN_UNIQUE_ID, IStatus.OK, e
+                     .getMessage(), e);
+               JBossCachePlugin.getDefault().getLog().log(status);            
+            }
+            
+            rootInstance.setTreeCacheManager(null);
+
+         }         
+      }
+
    }//end of method
    
    

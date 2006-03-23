@@ -35,6 +35,7 @@ import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigurationModel;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigurationModel.CacheLoaderConfigInternal;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigurationModel.ClusterConfigInternal;
+import org.jboss.ide.eclipse.jbosscache.model.factory.CacheInstanceFactory;
 
 /**
  * This class is used for utility
@@ -568,5 +569,27 @@ public class CacheUtil
          return true;
       return false;
    }
+   
+   public static boolean checkCacheName(String cacheName)
+   {
+      ICacheRootInstance mainRootInstance = CacheInstanceFactory.getCacheRootMainInstance();
+      if (mainRootInstance != null)
+      {
+         if (mainRootInstance.getRootInstanceChilds() != null)
+         {
+            List childList = mainRootInstance.getRootInstanceChilds();
+            for (int i = 0, j = childList.size(); i < j; i++)
+            {
+               ICacheRootInstance rootInstance = (ICacheRootInstance) childList.get(i);
+               if (rootInstance.getRootName().equals(cacheName))
+               {
+                  return false;
+               }
+            }
+         }
+      }
+      return true;
+   }
+
 
 }//end of class

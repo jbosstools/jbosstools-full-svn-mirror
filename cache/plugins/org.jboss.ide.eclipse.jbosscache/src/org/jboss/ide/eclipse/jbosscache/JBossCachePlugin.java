@@ -9,6 +9,7 @@ package org.jboss.ide.eclipse.jbosscache;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigParams;
+import org.jboss.ide.eclipse.jbosscache.model.config.RemoteCacheConfigParams;
 import org.jboss.ide.eclipse.jbosscache.model.factory.CacheInstanceFactory;
 import org.jboss.ide.eclipse.jbosscache.utils.BundleWrapperClassLoader;
 import org.osgi.framework.Bundle;
@@ -62,6 +64,12 @@ public class JBossCachePlugin extends AbstractUIPlugin
    private static final String NAME = "name";
 
    private static final String CACHE_TYPE = "type";
+   
+   private static final String CACHE_CONNECTION = "connection";//local or remote
+   
+   private static final String CACHE_REMOTE_URL = "url";
+   private static final String CACHE_REMOTE_PORT = "port";
+   private static final String CACHE_REMOTE_JNDI = "jndi";
 
    private static int numberOfInstance;
 
@@ -245,6 +253,48 @@ public class JBossCachePlugin extends AbstractUIPlugin
          imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
                + ICacheConstants.IMAGE_KEY_FILE_OBJ));
          getImageRegistry().put(ICacheConstants.IMAGE_KEY_FILE_OBJ, imageDesc);
+         
+         imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
+               + ICacheConstants.IMAGE_KEY_SERVER));
+         getImageRegistry().put(ICacheConstants.IMAGE_KEY_SERVER, imageDesc);
+         
+         imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
+               + ICacheConstants.IMAGE_KEY_SERVER_RUNNING));
+         getImageRegistry().put(ICacheConstants.IMAGE_KEY_SERVER_RUNNING, imageDesc);
+
+         imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
+               + ICacheConstants.IMAGE_KEY_SERVER_NOT_RUNNING));
+         getImageRegistry().put(ICacheConstants.IMAGE_KEY_SERVER_NOT_RUNNING, imageDesc);
+
+
+         imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
+               + ICacheConstants.IMAGE_KEY_SERVER_NAVIGATOR));
+         getImageRegistry().put(ICacheConstants.IMAGE_KEY_SERVER_NAVIGATOR, imageDesc);
+
+         imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
+               + ICacheConstants.IMAGE_KEY_SERVER_START_ACTION));
+         getImageRegistry().put(ICacheConstants.IMAGE_KEY_SERVER_START_ACTION, imageDesc);
+
+         imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
+               + ICacheConstants.IMAGE_KEY_SERVER_SHUT_DOWN_ACTOIN));
+         getImageRegistry().put(ICacheConstants.IMAGE_KEY_SERVER_SHUT_DOWN_ACTOIN, imageDesc);
+
+         imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
+               + ICacheConstants.IMAGE_KEY_REMOTE_CONNECT_ACTION));
+         getImageRegistry().put(ICacheConstants.IMAGE_KEY_REMOTE_CONNECT_ACTION, imageDesc);
+         
+         imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
+               + ICacheConstants.IMAGE_KEY_REFRESH_NAV_ACTION));
+         getImageRegistry().put(ICacheConstants.IMAGE_KEY_REFRESH_NAV_ACTION, imageDesc);
+         
+         imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
+               + ICacheConstants.IMAGE_KEY_JBOSS_GIF));
+         getImageRegistry().put(ICacheConstants.IMAGE_KEY_JBOSS_GIF, imageDesc);
+         
+         imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
+               + ICacheConstants.IMAGE_KEY_DB16_GIF));
+         getImageRegistry().put(ICacheConstants.IMAGE_KEY_DB16_GIF, imageDesc);         
+         
 
       }
       catch (MalformedURLException e)
@@ -292,28 +342,61 @@ public class JBossCachePlugin extends AbstractUIPlugin
             for (int i = 0; i < childs.length; i++)
             {
                IMemento child = childs[i];
+               String connectionType = child.getString(CACHE_CONNECTION);
                String cacheType = child.getString(CACHE_TYPE);
-               IMemento childXmlFileLocation = child.getChild(CACHE_SERVICE_XML_FILE);
-               String directoryName = childXmlFileLocation.getString(LOCATION);
-
-               ICacheRootInstance rootInstance = CacheInstanceFactory.getCacheRootInstance(child.getString(NAME),
-                     directoryName);
-               rootInstance.setCacheType(cacheType);
-               CacheInstanceFactory.getCacheRootMainInstance().addRootInstanceChild(rootInstance);
-
-               IMemento[] childJarFileLocation = child.getChildren(CACHE_SERVICE_JAR_FILE);
-               CacheConfigParams configParams = new CacheConfigParams();
-               configParams.setConfDirectoryPath(directoryName);
-               List jarPath = new ArrayList();
-               for (int j = 0, k = childJarFileLocation.length; j < k; j++)
+               
+               if(connectionType.equals("local"))
                {
-                  childXmlFileLocation = childJarFileLocation[j];
-                  String jarLocation = childXmlFileLocation.getString(LOCATION);
-                  jarPath.add(jarLocation);
-               }
+                  IMemento childXmlFileLocation = child.getChild(CACHE_SERVICE_XML_FILE);
+                  String directoryName = childXmlFileLocation.getString(LOCATION);
 
-               configParams.setConfJarUrls(jarPath);
-               rootInstance.setCacheConfigParams(configParams);
+                  ICacheRootInstance rootInstance = CacheInstanceFactory.getCacheRootInstance(child.getString(NAME),
+                        directoryName);
+                  rootInstance.setCacheType(cacheType);
+                  CacheInstanceFactory.getCacheRootMainInstance().addRootInstanceChild(rootInstance);
+
+                  IMemento[] childJarFileLocation = child.getChildren(CACHE_SERVICE_JAR_FILE);
+                  CacheConfigParams configParams = new CacheConfigParams();
+                  configParams.setConfDirectoryPath(directoryName);
+                  List jarPath = new ArrayList();
+                  for (int j = 0, k = childJarFileLocation.length; j < k; j++)
+                  {
+                     childXmlFileLocation = childJarFileLocation[j];
+                     String jarLocation = childXmlFileLocation.getString(LOCATION);
+                     jarPath.add(jarLocation);
+                  }
+
+                  configParams.setConfJarUrls(jarPath);
+                  rootInstance.setCacheConfigParams(configParams);
+               }
+               else
+               {
+                  ICacheRootInstance rootInstance = CacheInstanceFactory.getCacheRootInstance(child.getString(NAME),null);
+                  rootInstance.setCacheType(cacheType);
+                  rootInstance.setRemoteCache(true);
+                  CacheInstanceFactory.getCacheRootMainInstance().addRootInstanceChild(rootInstance);
+                  
+                  RemoteCacheConfigParams params = new RemoteCacheConfigParams();
+                  IMemento remMemonto = child.getChild(CACHE_REMOTE_URL);
+                  params.setUrl(remMemonto.getString(NAME));
+                  remMemonto =  child.getChild(CACHE_REMOTE_PORT);
+                  params.setPort(remMemonto.getString(NAME));
+                  remMemonto =  child.getChild(CACHE_REMOTE_JNDI);
+                  params.setJndi(remMemonto.getString(NAME));
+                  
+                  IMemento[] childJarFileLocation = child.getChildren(CACHE_SERVICE_JAR_FILE);
+                  
+                  List jarPath = new ArrayList();
+                  for (int j = 0, k = childJarFileLocation.length; j < k; j++)
+                  {
+                     remMemonto = childJarFileLocation[j];
+                     String jarLocation = remMemonto.getString(LOCATION);
+                     jarPath.add(jarLocation);
+                  }                  
+                  
+                  params.setJarList(jarPath);
+                  rootInstance.setRemoteCacheConfigParams(params);
+               }
             }
          }
 
@@ -351,20 +434,50 @@ public class JBossCachePlugin extends AbstractUIPlugin
                IMemento childMemento = memonto.createChild(CACHE_NODE);
                childMemento.putString(NAME, rootInstance.getRootName());
                childMemento.putString(CACHE_TYPE, rootInstance.getCacheType());
-
-               IMemento nodeChildMemonto = childMemento.createChild(CACHE_SERVICE_XML_FILE);
-               nodeChildMemonto.putString(LOCATION, rootInstance.getRootConfigurationFileName());
-
-               List jarFiles = rootInstance.getCacheConfigParams().getConfJarUrls();
-               if (jarFiles != null)
+               
+               
+               if(!rootInstance.isRemoteCache())
                {
-                  for (int j = 0; j < jarFiles.size(); j++)
+                  childMemento.putString(CACHE_CONNECTION,"local");
+                  IMemento nodeChildMemonto = childMemento.createChild(CACHE_SERVICE_XML_FILE);
+                  nodeChildMemonto.putString(LOCATION, rootInstance.getRootConfigurationFileName());
+   
+                  List jarFiles = rootInstance.getCacheConfigParams().getConfJarUrls();
+                  if (jarFiles != null)
                   {
-                     String jarFileLocation = (String) jarFiles.get(j);
-                     nodeChildMemonto = childMemento.createChild(CACHE_SERVICE_JAR_FILE);
-                     nodeChildMemonto.putString(LOCATION, jarFileLocation);
+                     for (int j = 0; j < jarFiles.size(); j++)
+                     {
+                        String jarFileLocation = (String) jarFiles.get(j);
+                        nodeChildMemonto = childMemento.createChild(CACHE_SERVICE_JAR_FILE);
+                        nodeChildMemonto.putString(LOCATION, jarFileLocation);
+                     }
                   }
-               }
+              }else
+              {
+                 RemoteCacheConfigParams params = rootInstance.getRemoteCacheConfigParams();
+                 childMemento.putString(CACHE_CONNECTION,"remote");
+                 
+                 IMemento nodeChildMemonto = childMemento.createChild(CACHE_REMOTE_URL);
+                 nodeChildMemonto.putString(NAME,params.getUrl());
+                 
+                 nodeChildMemonto = childMemento.createChild(CACHE_REMOTE_PORT);
+                 nodeChildMemonto.putString(NAME,params.getPort());
+                 
+                 nodeChildMemonto = childMemento.createChild(CACHE_REMOTE_JNDI);
+                 nodeChildMemonto.putString(NAME,params.getJndi());   
+                 
+                 List jarFiles = rootInstance.getRemoteCacheConfigParams().getJarList();
+                 if (jarFiles != null)
+                 {
+                    for (int j = 0; j < jarFiles.size(); j++)
+                    {
+                       String jarFileLocation = (String) jarFiles.get(j);
+                       nodeChildMemonto = childMemento.createChild(CACHE_SERVICE_JAR_FILE);
+                       nodeChildMemonto.putString(LOCATION, jarFileLocation);
+                    }
+                 }
+                 
+              }
 
             }//end of for
 
@@ -382,5 +495,23 @@ public class JBossCachePlugin extends AbstractUIPlugin
    {
       return numberOfInstance;
    }
+   
+   /**
+    * Get the base directory of this plugin
+    */
+   public String getBaseDir()
+   {
+      try
+      {
+         URL installURL = Platform.asLocalURL(JBossCachePlugin.getDefault().getBundle().getEntry("/"));//$NON-NLS-1$
+         return installURL.getFile().toString();
+      }
+      catch (IOException ioe)
+      {
+         ioe.printStackTrace();
+      }
+      return null;
+   }
+
 
 }//end of class

@@ -23,6 +23,8 @@ import org.jboss.cache.aop.TreeCacheAop;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
 import org.jboss.ide.eclipse.jbosscache.JBossCachePlugin;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheInstance;
+import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance;
+import org.jboss.ide.eclipse.jbosscache.model.internal.RemoteCacheManager;
 import org.jboss.ide.eclipse.jbosscache.model.internal.TreeCacheManager;
 import org.jboss.ide.eclipse.jbosscache.utils.CacheUtil;
 
@@ -38,6 +40,8 @@ public class TableContentProvider implements IStructuredContentProvider
    public static class TableContentModel
    {
       private static TreeCacheManager cacheManager;
+      private static RemoteCacheManager remoteCacheManager;
+      private static boolean isRemoteCache;
       
       private String parentFqn;
 
@@ -104,6 +108,27 @@ public class TableContentProvider implements IStructuredContentProvider
       {
          TableContentModel.cacheManager = cacheManager;
       }
+      
+      public static RemoteCacheManager getRemoteCacheManager()
+      {
+         return remoteCacheManager;
+      }
+
+      public static void setRemoteCacheManager(RemoteCacheManager cacheManager)
+      {
+         TableContentModel.remoteCacheManager = cacheManager;
+      }
+
+      public static boolean isRemoteCache()
+      {
+         return isRemoteCache;
+      }
+
+      public static void setRemoteCache(boolean isRemoteCache)
+      {
+         TableContentModel.isRemoteCache = isRemoteCache;
+      }
+      
    }
 
    public Object[] getElements(Object inputElement)
@@ -112,15 +137,34 @@ public class TableContentProvider implements IStructuredContentProvider
       if (inputElement instanceof ICacheInstance)
       {
          ICacheInstance cacheInstance = (ICacheInstance) inputElement;
-         TreeCacheManager manager = cacheInstance.getRootInstance().getTreeCacheManager();
-         TableContentModel.setCacheManager(manager);
+         ICacheRootInstance rootInstance = cacheInstance.getRootInstance();
+         
+         
+         TreeCacheManager manager = null;
+         RemoteCacheManager remoteManager = null;
+         
+         if(!rootInstance.isRemoteCache()){
+            manager = cacheInstance.getRootInstance().getTreeCacheManager();
+            TableContentModel.setCacheManager(manager);
+            TableContentModel.setRemoteCache(false);
+         }else{
+            remoteManager = rootInstance.getRemoteCacheManager();
+            TableContentModel.setRemoteCacheManager(remoteManager);
+            TableContentModel.setRemoteCache(true);
+         }
          
          boolean isTreeCacheAop = false;
-         if (manager.getTreeCache() instanceof TreeCacheAop)
+         if (rootInstance.getCacheType().equals(ICacheConstants.JBOSS_CACHE_TREE_CACHE_AOP))
             isTreeCacheAop = true;
          try
          {
-            Set set = TreeCacheManager.getKeys_(manager, cacheInstance.getFqnName());
+            Set set = null;
+            
+            if(!rootInstance.isRemoteCache())
+               set = TreeCacheManager.getKeys_(manager, cacheInstance.getFqnName());
+            else
+               set = remoteManager.getKeys_(cacheInstance.getFqnName());
+               
             if (set != null)
             {
                Iterator it = set.iterator();
@@ -129,7 +173,13 @@ public class TableContentProvider implements IStructuredContentProvider
                   while (it.hasNext())
                   {
                      Object key = it.next();
-                     Object value = TreeCacheManager.getValue_(manager, cacheInstance.getFqnName(), key);
+                     Object value = null;
+                     
+                     if(!rootInstance.isRemoteCache())
+                        value = TreeCacheManager.getValue_(manager, cacheInstance.getFqnName(), key);
+                     else
+                        value = remoteManager.getValue_(cacheInstance.getFqnName(),key);
+                               
 
                      if (value == null)
                         value = "";
@@ -159,8 +209,12 @@ public class TableContentProvider implements IStructuredContentProvider
                                     {
                                        isReferencing = true;
                                        key = "Referencing to --> ";
-                                       value = TreeCacheManager.getValue_(manager, InternalDelegate.JBOSS_INTERNAL_MAP
-                                             .toString()+"/"+fieldValue.toString(), fieldValue.toString());
+                                       
+                                       if(!rootInstance.isRemoteCache())
+                                       value = TreeCacheManager.getValue_(manager, InternalDelegate.JBOSS_INTERNAL_MAP.toString()+"/"+fieldValue.toString(), fieldValue.toString());
+                                       else
+                                          value = remoteManager.getValue_(InternalDelegate.JBOSS_INTERNAL_MAP.toString()+"/"+fieldValue.toString(), fieldValue.toString());
+                                       
                                        if(value == null)
                                           value = "";
                                        break;

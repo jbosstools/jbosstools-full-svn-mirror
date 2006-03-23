@@ -172,17 +172,23 @@ public class CacheGraphView extends ViewPart
 
    public void cacheInstanceAdded(ICacheInstance instance)
    {
-      if (rootInstance != null)
-      {
-         if (instance.getRootInstance().equals(rootInstance))
+      try{
+         if (rootInstance != null)
          {
-            clearGraphAction.run();
-            showObjectGraph(rootInstance);
-            if ((rootInstance.getRootChilds() != null) && (rootInstance.getRootChilds().size() > 0))
+            if (instance.getRootInstance().equals(rootInstance))
             {
-               clearGraphAction.setEnabled(true);
+               clearGraphAction.run();
+               
+               showObjectGraph(rootInstance);
+               
+               if ((rootInstance.getRootChilds() != null) && (rootInstance.getRootChilds().size() > 0))
+               {
+                  clearGraphAction.setEnabled(true);
+               }
             }
          }
+      }catch(Exception e){
+         e.printStackTrace();
       }
    }
 

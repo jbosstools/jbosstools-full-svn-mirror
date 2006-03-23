@@ -15,7 +15,10 @@ import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.cache.TreeCache;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
+import org.jboss.ide.eclipse.jbosscache.JBossCachePlugin;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigParams;
+import org.jboss.ide.eclipse.jbosscache.model.config.RemoteCacheConfigParams;
+import org.jboss.ide.eclipse.jbosscache.model.internal.RemoteCacheManager;
 import org.jboss.ide.eclipse.jbosscache.model.internal.TreeCacheManager;
 
 /**
@@ -33,7 +36,9 @@ public abstract class AbstractCacheRootInstance extends PlatformObject implement
 
    protected String configFileName;
 
-   protected CacheConfigParams cacheConfigParams;
+   protected CacheConfigParams cacheConfigParams;//for local cache
+   
+   protected RemoteCacheConfigParams remoteCacheConfigParams;//for remote cache
 
    protected List rootChilds;
 
@@ -46,6 +51,8 @@ public abstract class AbstractCacheRootInstance extends PlatformObject implement
    protected static List cacheConnectionListeners;
 
    protected boolean isConnected = false;
+   
+   protected boolean isRemoteCache= false;
 
    protected boolean isDirty = false;
 
@@ -54,8 +61,10 @@ public abstract class AbstractCacheRootInstance extends PlatformObject implement
 
    private String rootLabel;
 
-   /**TreeCache instance with this root instance configuration*/
+   /**TreeCache instance with this root instance configuration*///local cache
    protected TreeCacheManager treeCacheManager;
+   
+   protected RemoteCacheManager remoteCacheManager;//remote cache
 
    /**Related Listener with this root instance*/
    protected AbstractTreeCacheManagerListener cacheNodeListener;
@@ -105,7 +114,7 @@ public abstract class AbstractCacheRootInstance extends PlatformObject implement
    /**
     * @see ICacheRootInstance#addRootChild(ICacheInstance)
     */
-   public void addRootChild(ICacheInstance cacheInstance)
+   public void addRootChild(final ICacheInstance cacheInstance)
    {
       if (this.rootChilds == null)
       {
@@ -117,8 +126,19 @@ public abstract class AbstractCacheRootInstance extends PlatformObject implement
 
       cacheInstance.setRootNode(true);
       cacheInstance.setRootInstance(this);
-      fireNewInstanceToRootAdded(cacheInstance);
+      
+      JBossCachePlugin.getDisplay().asyncExec(new Runnable(){
 
+         public void run()
+         {
+            fireNewInstanceToRootAdded(cacheInstance);
+            
+         }
+         
+         
+      });
+
+     
    }
 
    /**
@@ -139,16 +159,12 @@ public abstract class AbstractCacheRootInstance extends PlatformObject implement
       if (rootChilds != null)
          rootChilds = null;
 
-      cacheConfigParams = null;
-
-      File file = new File(configFileName);
-      if (file.exists())
+      if(!isRemoteCache)
       {
-         file.delete();
+         cacheConfigParams = null;   
+         configFileName = null;  
       }
-
-      configFileName = null;
-
+      
       fireNewRootInstanceRemoved(this);
    }
 
@@ -456,6 +472,18 @@ public abstract class AbstractCacheRootInstance extends PlatformObject implement
    {
       return this.cacheConfigParams;
    }
+   
+   public RemoteCacheConfigParams getRemoteCacheConfigParams(){
+      return this.remoteCacheConfigParams;
+   }
+   
+   public void setRemoteCacheConfigParams(RemoteCacheConfigParams params){
+      if(!isRemoteCache)
+         throw new UnsupportedOperationException();
+   
+      this.remoteCacheConfigParams = params;
+   }
+
 
    /**
     * Set cache instance related params
@@ -494,19 +522,26 @@ public abstract class AbstractCacheRootInstance extends PlatformObject implement
 
    public boolean equals(Object obj)
    {
-      if (!(obj instanceof ICacheRootInstance))
-         return false;
-      ICacheRootInstance rootInstance = (ICacheRootInstance) obj;
-
-      if (rootInstance.getRootName() == null)
-      {
-         if (getRootName() == null)
-            return true;
-         else
+      try{
+         if (!(obj instanceof ICacheRootInstance))
             return false;
+         ICacheRootInstance rootInstance = (ICacheRootInstance) obj;
+   
+         if (rootInstance.getRootName() == null)
+         {
+            if (getRootName() == null)
+               return true;
+            else
+               return false;
+         }
+   
+         return rootInstance.getRootName().equals(getRootName());
+      }catch(Exception e){
+         System.out.println("In Equals method");
+         e.printStackTrace();
+         
       }
-
-      return rootInstance.getRootName().equals(getRootName());
+      return true;
    }
 
    public int hashCode()
@@ -538,5 +573,32 @@ public abstract class AbstractCacheRootInstance extends PlatformObject implement
    {
       this.isDirty = isDirty;
    }
+
+   public boolean isRemoteCache()
+   {
+      return isRemoteCache;
+   }
+
+   public void setRemoteCache(boolean isRemoteCache)
+   {
+      this.isRemoteCache = isRemoteCache;
+   }
+   
+   /**
+    * Return this root instance's TreeCache
+    * @return
+    */
+   public RemoteCacheManager getRemoteCacheManager(){
+      return this.remoteCacheManager;
+   }
+
+   /**
+    * Sets this root instance's TreeCache
+    * @param treeCache
+    */
+   public void setRemoteCacheManager(RemoteCacheManager treeCache){
+      this.remoteCacheManager = treeCache;
+   }
+
 
 }//end of class

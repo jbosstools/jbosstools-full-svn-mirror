@@ -6,6 +6,7 @@
  */
 package org.jboss.ide.eclipse.jbosscache.views.config;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
@@ -31,7 +32,18 @@ public class TreeCacheViewLabelProvider implements ILabelProvider
    public Image getImage(Object element)
    {
       if (element instanceof ICacheRootInstance)
-         return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER);
+      {
+         ICacheRootInstance instance = (ICacheRootInstance)element;
+         if(!instance.isRemoteCache())
+            return JBossCachePlugin.getDefault().getImageRegistry().get(ICacheConstants.IMAGE_KEY_DB16_GIF);
+         else
+         {
+            if(instance.isConnected())
+               return JBossCachePlugin.getDefault().getImageRegistry().get(ICacheConstants.IMAGE_KEY_SERVER_RUNNING);
+            else
+               return JBossCachePlugin.getDefault().getImageRegistry().get(ICacheConstants.IMAGE_KEY_SERVER_NOT_RUNNING);
+         }
+      }
       else if (element instanceof ICacheInstance)
          return JBossCachePlugin.getDefault().getImageRegistry().get(ICacheConstants.IMAGE_KEY_NEWPACK_WIZ);
 

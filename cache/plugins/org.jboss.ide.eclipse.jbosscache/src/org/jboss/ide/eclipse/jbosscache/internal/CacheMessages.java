@@ -103,4 +103,14 @@ public class CacheMessages extends NLS
    
    public static String ConnectAction_Dialog_Title;
 
+   public static String NewCacheProjectWizard_Title;
+
+   public static String NewCacheProjectWizard_Description;
+
+   public static String RefreshDialog_0;
+
+   public static String RefreshDialog_Content_Error;
+
+   public static String RefreshDialog_Content_Error_Message;
+
 }

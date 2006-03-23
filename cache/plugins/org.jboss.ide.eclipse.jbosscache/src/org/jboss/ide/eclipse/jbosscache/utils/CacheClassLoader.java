@@ -21,7 +21,6 @@ import org.eclipse.core.runtime.adaptor.EclipseClassLoader;
 public final class CacheClassLoader
 {
 
-   private static URLClassLoader classLoader;
 
    /**
     * Return URLClassLoader
@@ -31,27 +30,18 @@ public final class CacheClassLoader
     */
    public static URLClassLoader getCacheClassLoaderInstance(List jarPaths, ClassLoader parent) throws Exception
    {
+      URLClassLoader classLoader = null;
 
-      if (classLoader == null)
+      List urls = new ArrayList();
+      for (int i = 0; i < jarPaths.size(); i++)
       {
-         List urls = new ArrayList();
-         for (int i = 0; i < jarPaths.size(); i++)
-         {
-            File file = new File(jarPaths.get(i).toString());
-            urls.add(file.toURL());
-         }
+         File file = new File(jarPaths.get(i).toString());
+         urls.add(file.toURL());
+      }
 
          classLoader = new URLClassLoader((URL[]) urls.toArray(new URL[urls.size()]), parent);
-      }
 
       return classLoader;
    }
 
-   public static URLClassLoader getSingletonClassLoader()
-   {
-      if (classLoader == null)
-         throw new RuntimeException();
-      else
-         return classLoader;
-   }
 }

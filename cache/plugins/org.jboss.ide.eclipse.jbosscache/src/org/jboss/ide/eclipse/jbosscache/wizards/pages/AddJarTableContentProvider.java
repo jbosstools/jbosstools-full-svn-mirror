@@ -6,6 +6,8 @@
  */
 package org.jboss.ide.eclipse.jbosscache.wizards.pages;
 
+import java.util.List;
+
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigParams;
@@ -25,7 +27,12 @@ public class AddJarTableContentProvider implements IStructuredContentProvider
       {
          CacheConfigParams params = (CacheConfigParams) inputElement;
          return params.getConfJarUrls().toArray();
+      }else if(inputElement instanceof List)
+      {
+         List list = (List)inputElement;
+         return list.toArray();
       }
+      
       return EMPTY;
    }
 

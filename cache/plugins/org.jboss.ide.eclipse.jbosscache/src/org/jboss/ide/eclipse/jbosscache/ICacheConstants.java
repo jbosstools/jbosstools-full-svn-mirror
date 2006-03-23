@@ -194,6 +194,29 @@ public interface ICacheConstants
    String IMAGE_KEY_EXPORT_WIZ = "export_wiz.gif";
 
    String IMAGE_KEY_FILE_OBJ = "file_obj.gif";
+   
+   String IMAGE_KEY_SERVER = "server.gif";
+   
+   String IMAGE_KEY_SERVER_RUNNING = "serverrunning.gif";
+   
+   String IMAGE_KEY_SERVER_NOT_RUNNING = "servernotrunning.gif";
+   
+   String IMAGE_KEY_SERVER_NAVIGATOR = "servernavigator.gif";
+   
+   String IMAGE_KEY_SERVER_START_ACTION = "startserveraction.gif";
+   
+   String IMAGE_KEY_SERVER_SHUT_DOWN_ACTOIN = "shutdowservernaction.gif";
+   
+   String IMAGE_KEY_REMOTE_CONNECT_ACTION = "disconnect_co.gif";
+   
+   String IMAGE_KEY_REFRESH_NAV_ACTION = "refresh_nav.gif";
+   
+   String IMAGE_KEY_JBOSS_GIF = "jboss.gif";
+   
+   String IMAGE_KEY_DB16_GIF = "jdbc_16.gif";
+   
+   
+   
 
    /**Resource Bundle Keys*/
    String CONFIGURATION_MONITOR_TASK_NAME = "configuration.monitor.task.name";

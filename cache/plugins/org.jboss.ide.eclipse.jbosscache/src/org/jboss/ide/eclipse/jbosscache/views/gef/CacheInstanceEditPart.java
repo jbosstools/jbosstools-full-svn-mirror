@@ -17,6 +17,7 @@ import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
 import org.jboss.ide.eclipse.jbosscache.JBossCachePlugin;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheInstance;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance;
+import org.jboss.ide.eclipse.jbosscache.model.internal.RemoteCacheManager;
 import org.jboss.ide.eclipse.jbosscache.model.internal.TreeCacheManager;
 
 /**
@@ -55,10 +56,24 @@ public class CacheInstanceEditPart extends AbstractTreeEditPart
          else
          {
             ICacheInstance cacheInstance = (ICacheInstance) getModel();
-            TreeCacheManager treeCacheManager = cacheInstance.getRootInstance().getTreeCacheManager();
+            
+            TreeCacheManager treeCacheManager = null;
+            RemoteCacheManager remoteManager = null;
+            
+            if(!cacheInstance.getRootInstance().isRemoteCache())
+               treeCacheManager = cacheInstance.getRootInstance().getTreeCacheManager();
+            else
+               remoteManager = cacheInstance.getRootInstance().getRemoteCacheManager();
+            
             String fqn = cacheInstance.getFqnName();
 
-            Class clazz = (Class) TreeCacheManager.getValue_(treeCacheManager, fqn, "__jboss:internal:class__");
+            
+            Class clazz = null;
+            
+            if(!cacheInstance.getRootInstance().isRemoteCache())
+               clazz = (Class) TreeCacheManager.getValue_(treeCacheManager, fqn, "__jboss:internal:class__");
+            else
+               clazz = (Class) remoteManager.getValue_(fqn, "__jboss:internal:class__");
             //Object value = TreeCacheManager.getObject_(treeCacheManager,fqn);
 
             if (clazz != null)
@@ -73,6 +88,7 @@ public class CacheInstanceEditPart extends AbstractTreeEditPart
       }
       catch (Exception e)
       {
+         e.printStackTrace();
          IStatus status = new Status(IStatus.ERROR, ICacheConstants.CACHE_PLUGIN_UNIQUE_ID, IStatus.OK, e.getMessage(),
                e);
          JBossCachePlugin.getDefault().getLog().log(status);

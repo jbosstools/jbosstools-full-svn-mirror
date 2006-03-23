@@ -30,6 +30,7 @@ import org.eclipse.ui.dialogs.PropertyPage;
 import org.jboss.ide.eclipse.jbosscache.internal.CacheMessages;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigParams;
+import org.jboss.ide.eclipse.jbosscache.model.config.RemoteCacheConfigParams;
 import org.jboss.ide.eclipse.jbosscache.utils.CacheUtil;
 import org.jboss.ide.eclipse.jbosscache.wizards.pages.AddJarTableContentProvider;
 import org.jboss.ide.eclipse.jbosscache.wizards.pages.AddJarTableLabelProvider;
@@ -40,29 +41,28 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
    private static final String CachePropoerty_Page_LblConfDirectory = CacheMessages.CachePropertyPage_CachePropoerty_Page_LblConfDirectory;
 
    private ICacheRootInstance rootInstance;
-
+   
    private Label lblCacheName;
-
    private Text txtCacheName;
-
    private Label lblConfDirectory;
-
    private Text txtConfDirectory;
-
    private Group grpAddJars;
-
    private Button btnAddJar;
-
    private Button btnRemoveJar;
-
    private TableViewer jarTableViewer;
-
    private ISelection selection;
-
    private CacheConfigParams configParams = new CacheConfigParams();
-
    private CacheConfigParams defaultConfigParams = new CacheConfigParams();
-
+   private RemoteCacheConfigParams remoteParams = null; 
+   private RemoteCacheConfigParams defaultRemoteParams = new RemoteCacheConfigParams();
+   
+   private Label lblDefaultUrl;
+   private Text txtDefaultUrl;
+   private Label lblDefaultPort;
+   private Text txtDefaultPort;
+   private Label lblDefaultJndi;
+   private Text txtDefaultJndi; 
+   
    public CachePropertyPage()
    {
       super();
@@ -71,11 +71,30 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
    protected Control createContents(Composite parent)
    {
       this.rootInstance = (ICacheRootInstance) getElement();
+      
+      if(!rootInstance.isRemoteCache())
+         return createContentsForLocal(parent);
+      else{
+         remoteParams = rootInstance.getRemoteCacheConfigParams();
+         
+         defaultRemoteParams.setJarList(new ArrayList(remoteParams.getJarList()));
+         defaultRemoteParams.setJndi(remoteParams.getJndi());
+         defaultRemoteParams.setPort(remoteParams.getPort());
+         defaultRemoteParams.setUrl(remoteParams.getUrl());
+         
+         return createContentsForRemote(parent);  
+      }
 
+   }
+   
+   private Control createContentsForLocal(Composite parent)
+   {
       if (rootInstance.getCacheConfigParams() != null)
       {
-         configParams.setConfDirectoryPath(rootInstance.getCacheConfigParams().getConfDirectoryPath());
-         configParams.setConfJarUrls(new ArrayList(rootInstance.getCacheConfigParams().getConfJarUrls()));
+         defaultConfigParams.setConfDirectoryPath(rootInstance.getCacheConfigParams().getConfDirectoryPath());
+         defaultConfigParams.setConfJarUrls(new ArrayList(rootInstance.getCacheConfigParams().getConfJarUrls()));
+         
+         configParams = rootInstance.getCacheConfigParams();
 
       }
 
@@ -100,6 +119,13 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
       txtConfDirectory.setEditable(false);
       txtConfDirectory.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
+      addJarViewer(comp);
+
+
+      return comp;      
+   }
+   
+   private void addJarViewer(Composite comp){
       grpAddJars = new Group(comp, SWT.SHADOW_ETCHED_IN);
       grpAddJars.setText(CacheMessages.CachePropertyPage_grpText);
       GridData grpData = new GridData(GridData.FILL_BOTH);
@@ -112,7 +138,11 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
       jarTableViewer.setContentProvider(new AddJarTableContentProvider());
       jarTableViewer.setLabelProvider(new AddJarTableLabelProvider());
       jarTableViewer.addSelectionChangedListener(this);
-      jarTableViewer.setInput(this.configParams);
+      
+      if(!rootInstance.isRemoteCache())
+         jarTableViewer.setInput(this.configParams);
+      else
+         jarTableViewer.setInput(this.remoteParams.getJarList());
 
       GridData gridForTable = new GridData(GridData.FILL_BOTH);
       gridForTable.horizontalSpan = 2;
@@ -146,8 +176,8 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
          {
             handleRemoveJarSelected();
          }
-      });
-
+      });    
+      
       if (this.rootInstance.isConnected())
       {
          noDefaultAndApplyButton();
@@ -155,8 +185,46 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
          btnRemoveJar.setEnabled(false);
          jarTableViewer.getTable().setEnabled(false);
       }
+   }
+   
+   private Control createContentsForRemote(Composite parent)
+   {
+      Composite container = new Composite(parent, SWT.NONE);
+      GridLayout gridLayout = new GridLayout(2, false);
+      container.setLayout(gridLayout);
+      
+      
+      lblCacheName = new Label(container, SWT.NONE);
+      lblCacheName.setText(CacheMessages.CachePropertyPage_lblCacheName);
 
-      return comp;
+      GridData lblGridData = new GridData(GridData.FILL_HORIZONTAL);
+      txtCacheName = new Text(container, SWT.BORDER);
+      txtCacheName.setText(rootInstance.getRootName());
+      txtCacheName.setLayoutData(lblGridData);
+      txtCacheName.setEditable(false);
+
+      
+      lblDefaultUrl = new Label(container,SWT.NONE);
+      lblDefaultUrl.setText("Server Url");
+      txtDefaultUrl = new Text(container,SWT.BORDER);
+      txtDefaultUrl.setText(remoteParams.getUrl());
+      txtDefaultUrl.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+      lblDefaultPort = new Label(container,SWT.NONE);
+      lblDefaultPort.setText("Jndi Port");
+      txtDefaultPort = new Text(container,SWT.BORDER);
+      txtDefaultPort.setText(remoteParams.getPort());
+      txtDefaultPort.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+      lblDefaultJndi = new Label(container,SWT.NONE);
+      lblDefaultJndi.setText("Cache Jndi Name");
+      txtDefaultJndi = new Text(container,SWT.BORDER);
+      txtDefaultJndi.setText(remoteParams.getJndi());
+      txtDefaultJndi.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+      
+      addJarViewer(container);
+
+      return container;
    }
 
    protected void handleRemoveJarSelected()
@@ -172,7 +240,10 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
             while (it.hasNext())
             {
                obj = it.next().toString();
-               configParams.getConfJarUrls().remove(obj);
+               if(!rootInstance.isRemoteCache())
+                  configParams.getConfJarUrls().remove(obj);
+               else
+                  remoteParams.getJarList().remove(obj);
                //this.rootInstance.getCacheConfigParams().getConfJarUrls().remove(obj);
             }
          }
@@ -195,7 +266,11 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
       {
 
          //this.rootInstance.getCacheConfigParams().getConfJarUrls().add(file);
-         configParams.getConfJarUrls().add(file);
+         if(!rootInstance.isRemoteCache())
+            configParams.getConfJarUrls().add(file);
+         else
+            remoteParams.getJarList().add(file);
+         
          jarTableViewer.refresh();
       }
 
@@ -212,25 +287,71 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
 
    protected void performApply()
    {
-      defaultConfigParams.setConfDirectoryPath(rootInstance.getCacheConfigParams().getConfDirectoryPath());
-      defaultConfigParams.setConfJarUrls(new ArrayList(rootInstance.getCacheConfigParams().getConfJarUrls()));
-
-      rootInstance.getCacheConfigParams().setConfDirectoryPath(configParams.getConfDirectoryPath());
-      rootInstance.getCacheConfigParams().setConfJarUrls(new ArrayList(configParams.getConfJarUrls()));
-      rootInstance.setIsDirty(true);
+      if(!rootInstance.isRemoteCache())
+         performApplyForLocal();
+      else
+         performApplyForRemote();
    }
 
    protected void performDefaults()
    {
+      if(!rootInstance.isRemoteCache())
+         performDefaultsForLocal();
+      else
+         performDefaultsForRemote();      
 
-      rootInstance.getCacheConfigParams().setConfDirectoryPath(defaultConfigParams.getConfDirectoryPath());
-      rootInstance.getCacheConfigParams().setConfJarUrls(new ArrayList(defaultConfigParams.getConfJarUrls()));
-      rootInstance.setIsDirty(false);
+   }
+   
+   private void performApplyForLocal(){
+      rootInstance.setIsDirty(true);
 
-      configParams.setConfDirectoryPath(defaultConfigParams.getConfDirectoryPath());
+   }
+   
+   private void performApplyForRemote(){
+    
+      remoteParams.setJndi(txtDefaultJndi.getText().trim());
+      remoteParams.setPort(txtDefaultPort.getText().trim());
+      remoteParams.setUrl(txtDefaultUrl.getText().trim());
+      rootInstance.setIsDirty(true);
+   }
+   
+   private void performDefaultsForLocal(){
+
       configParams.setConfJarUrls(new ArrayList(defaultConfigParams.getConfJarUrls()));
-
+      rootInstance.setIsDirty(false);
       jarTableViewer.refresh();
+      
+   }
+   
+   private void performDefaultsForRemote(){
+      
+      remoteParams.setJarList(new ArrayList(defaultRemoteParams.getJarList()));
+      remoteParams.setJndi(defaultRemoteParams.getJndi());
+      remoteParams.setPort(defaultRemoteParams.getPort());
+      remoteParams.setUrl(defaultRemoteParams.getUrl());
+      rootInstance.setIsDirty(false);
+      
+      txtDefaultJndi.setText(remoteParams.getJndi());
+      txtDefaultPort.setText(remoteParams.getPort());
+      txtDefaultUrl.setText(remoteParams.getUrl());
+      
+      jarTableViewer.setInput(remoteParams.getJarList());
+      
+   }
+
+   public boolean performCancel()
+   {
+      if(rootInstance.isRemoteCache())
+         performDefaultsForRemote();
+      else
+         performDefaultsForLocal();
+      
+      return true;
+   }
+
+   public boolean performOk()
+   {
+      return true;
    }
 
 }

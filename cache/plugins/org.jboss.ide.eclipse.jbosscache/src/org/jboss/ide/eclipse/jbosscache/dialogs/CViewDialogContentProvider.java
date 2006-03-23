@@ -135,7 +135,10 @@ public class CViewDialogContentProvider implements ITreeContentProvider
       
       try      
       {
-         classLoader = TableContentModel.getCacheManager().getManagerClassLoader();
+         if(!TableContentModel.isRemoteCache())
+            classLoader = TableContentModel.getCacheManager().getManagerClassLoader();
+         else
+            classLoader = TableContentModel.getRemoteCacheManager().getManagerLoader();
          
          if (parentElement == null)
             return new Object[0];
@@ -151,23 +154,6 @@ public class CViewDialogContentProvider implements ITreeContentProvider
                                              
                ParentModel parentModel = new ParentModel(parentName, contentModel.getValue());
                
-//               Map fieldsMap = new HashMap();
-//               fieldsMap = CacheUtil.getAllFields(parentModel.getValue().getClass());
-//
-//               Map tempSuperMap = CacheUtil.getAllFields(parentModel.getValue().getClass().getSuperclass());
-//
-//               if (fieldsMap != null)
-//               {
-//                  if (tempSuperMap != null)
-//                     fieldsMap.putAll(tempSuperMap);
-//               }
-//               else
-//               {
-//                  fieldsMap = tempSuperMap;
-//               }
-//
-//               if (fieldsMap != null)
-//                  if (!fieldsMap.isEmpty())
                parentModel.setChildren(new ArrayList());
                listModel.add(parentModel);
 

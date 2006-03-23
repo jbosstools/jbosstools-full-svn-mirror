@@ -36,6 +36,7 @@ import org.jboss.ide.eclipse.jbosscache.internal.CacheMessages;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheInstance;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance;
 import org.jboss.ide.eclipse.jbosscache.model.factory.CacheInstanceFactory;
+import org.jboss.ide.eclipse.jbosscache.model.internal.RemoteCacheManager;
 import org.jboss.ide.eclipse.jbosscache.model.internal.TreeCacheManager;
 import org.jboss.ide.eclipse.jbosscache.utils.CacheClassLoader;
 import org.jboss.ide.eclipse.jbosscache.utils.CacheUtil;
@@ -79,23 +80,18 @@ public class ConnectAction extends AbstractCacheAction
       }
       catch (Exception e)
       {
-         IStatus status = new Status(IStatus.ERROR, ICacheConstants.CACHE_PLUGIN_UNIQUE_ID, IStatus.OK, e.getMessage(),
+         IStatus status = new Status(IStatus.ERROR, ICacheConstants.CACHE_PLUGIN_UNIQUE_ID, IStatus.ERROR, e.getMessage(),
                e);
          ErrorDialog.openError(getTreeViewer().getShell(), CacheUtil
                .getResourceBundleValue(ICacheConstants.TREECACHEVIEW_CONNECT_ACTION_ERROR_DIALOG_TITLE), CacheUtil
                .getResourceBundleValue(ICacheConstants.TREECACHEVIEW_CONNECT_ACTION_ERROR_DIALOG_MESSAGE), status);
+         
          JBossCachePlugin.getDefault().getLog().log(status);
       }
 
    }//end of run
-
-   /**
-    * Conifgure the TreeCache with this root instances configuration file
-    *
-    */
-   private boolean configureCache(final ICacheRootInstance rootInstance) throws Exception
-   {
-
+   
+   private boolean configureLocalCache(final ICacheRootInstance rootInstance) throws Exception{
       final ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
       final List jarPaths = rootInstance.getCacheConfigParams().getConfJarUrls();
@@ -218,6 +214,83 @@ public class ConnectAction extends AbstractCacheAction
           }
       
       return true;
+      
+   }
+   
+   private boolean configureRemoteCache(final ICacheRootInstance rootInstance) throws Exception{
+   
+      ProgressMonitorDialog monitorDialog = new ProgressMonitorDialog(getTreeViewer().getShell());
+      monitorDialog.setCancelable(true);
+      
+      final RemoteCacheManager remoteCacheManager = new RemoteCacheManager(rootInstance);
+      
+      ClassLoader classLoader = CacheClassLoader.getCacheClassLoaderInstance(rootInstance.getRemoteCacheConfigParams().getJarList(),Thread.currentThread().getContextClassLoader());
+      remoteCacheManager.setManagerLoader(classLoader);
+      
+      try{
+         
+         IRunnableWithProgress runnable = new IRunnableWithProgress(){
+
+            public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
+            {
+               try{
+                  
+                  monitor.beginTask("Connecting to the remote cache instance",5);
+                  monitor.worked(1);
+                  
+                  if(monitor.isCanceled())
+                     throw new InterruptedException();
+                  
+                  remoteCacheManager.initiliazeContenxt();
+                  
+                  if(monitor.isCanceled())
+                     throw new InterruptedException();
+
+                  monitor.worked(4);
+                  
+                  rootInstance.setRemoteCacheManager(remoteCacheManager);
+                  
+                  if(monitor.isCanceled())
+                     throw new InterruptedException();
+                  
+                  monitor.done();
+                  
+               }catch(Exception e){
+                  throw new InvocationTargetException(e);
+               }
+               
+            }
+            
+         };
+         
+         try
+         {
+            monitorDialog.run(true, true, runnable);
+         }
+         catch (InvocationTargetException e)
+         {
+            throw new Exception(e);
+         }
+
+                           
+      }catch(Exception e){
+         throw e;
+      }
+
+      return true;
+   }
+
+   /**
+    * Conifgure the TreeCache with this root instances configuration file
+    *
+    */
+   private boolean configureCache(final ICacheRootInstance rootInstance) throws Exception
+   {
+      if(rootInstance.isRemoteCache())
+         return configureRemoteCache(rootInstance);
+      else
+         return configureLocalCache(rootInstance);
+
    }
 
    /**
@@ -235,6 +308,7 @@ public class ConnectAction extends AbstractCacheAction
       Set childSet = null;
       Iterator it = null;
       String childName = null;
+
       //We add tree cache node roots below the CacheRootInstance
       if (obj instanceof ICacheRootInstance)
       {

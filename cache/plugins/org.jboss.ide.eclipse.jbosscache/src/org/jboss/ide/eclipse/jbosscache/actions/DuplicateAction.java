@@ -16,6 +16,7 @@ import org.jboss.ide.eclipse.jbosscache.JBossCachePlugin;
 import org.jboss.ide.eclipse.jbosscache.internal.CacheMessages;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigParams;
+import org.jboss.ide.eclipse.jbosscache.model.config.RemoteCacheConfigParams;
 import org.jboss.ide.eclipse.jbosscache.model.factory.CacheInstanceFactory;
 import org.jboss.ide.eclipse.jbosscache.views.config.TreeCacheView;
 
@@ -49,19 +50,47 @@ public class DuplicateAction extends AbstractCacheAction
             originalRootInstance.getRootConfigurationFileName());
       newRootInstance.setCacheType(originalRootInstance.getCacheType());
       newRootInstance.setIsDirty(true);
-      CacheConfigParams configParams = new CacheConfigParams();
-      newRootInstance.setCacheConfigParams(configParams);
-      configParams.setConfDirectoryPath(originalRootInstance.getCacheConfigParams().getConfDirectoryPath());
+      CacheConfigParams configParams = null;
+      RemoteCacheConfigParams remParams = null;
 
+
+      List originalJarList = null;
+      if(!originalRootInstance.isRemoteCache()){
+         
+         originalJarList = originalRootInstance.getCacheConfigParams().getConfJarUrls();
+         configParams = new CacheConfigParams();         
+         
+         newRootInstance.setCacheConfigParams(configParams);                  
+         
+         configParams.setConfDirectoryPath(originalRootInstance.getCacheConfigParams().getConfDirectoryPath());
+
+      }
+      else{
+         newRootInstance.setRemoteCache(true);
+         
+         originalJarList = originalRootInstance.getRemoteCacheConfigParams().getJarList();
+         
+         remParams = new RemoteCacheConfigParams();
+         remParams.setJndi(originalRootInstance.getRemoteCacheConfigParams().getJndi());
+         remParams.setPort(originalRootInstance.getRemoteCacheConfigParams().getPort());
+         remParams.setUrl(originalRootInstance.getRemoteCacheConfigParams().getUrl());
+         
+         newRootInstance.setRemoteCacheConfigParams(remParams);
+      }
+      
       List list = new ArrayList();
-
-      List originalJarList = originalRootInstance.getCacheConfigParams().getConfJarUrls();
       if (originalJarList != null)
       {
-         Collections.copy(list, originalJarList);
+         for(int i=0;i<originalJarList.size();i++){
+            list.add(originalJarList.get(i));
+         }
       }
 
-      configParams.setConfJarUrls(list);
+      if(!originalRootInstance.isRemoteCache())
+         configParams.setConfJarUrls(list);
+      else
+         remParams.setJarList(list);
+      
       CacheInstanceFactory.getCacheRootMainInstance().addRootInstanceChild(newRootInstance);
 
    }

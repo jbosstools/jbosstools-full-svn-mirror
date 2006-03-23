@@ -6,7 +6,10 @@
  */
 package org.jboss.ide.eclipse.jbosscache.wizards;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -22,10 +25,13 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.ui.part.ViewPart;
+import org.hibernate.tool.hbm2x.XMLPrettyPrinter;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
 import org.jboss.ide.eclipse.jbosscache.JBossCachePlugin;
+import org.jboss.ide.eclipse.jbosscache.editors.input.CacheFileEditorInput;
 import org.jboss.ide.eclipse.jbosscache.internal.CacheMessages;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigurationModel;
@@ -81,10 +87,10 @@ public class NewCacheConfigurationWizard extends Wizard implements INewWizard
 
       setWindowTitle("New Cache Configuration");
       stdConfPage = new StandardConfigurationPage("stdConfPage", "Base Cache Configuration", JBossCachePlugin
-            .getImageDescriptor("icons/sample.gif"));
+            .getImageDescriptor("icons/new_wiz.gif"));
       addPage(stdConfPage);
       cacheLoaderConfPage = new CacheLoaderConfigurationPage("cachConfPage", "Cache Loader Configuration",
-            JBossCachePlugin.getImageDescriptor("icons/sample.gif"));
+            JBossCachePlugin.getImageDescriptor("icons/new_wiz.gif"));
       addPage(cacheLoaderConfPage);
 
    }
@@ -114,7 +120,7 @@ public class NewCacheConfigurationWizard extends Wizard implements INewWizard
          }
 
          //Name of the Cache Instance Check
-         if (!checkCacheName(cacheName))
+         if (!CacheUtil.checkCacheName(cacheName))
          {
             MessageDialog.openError(getShell(),
                   CacheMessages.NewCacheConfigurationWizard_Same_Cache_Instance_Name_ErrorDialog_Title, CacheMessages
@@ -169,6 +175,22 @@ public class NewCacheConfigurationWizard extends Wizard implements INewWizard
             workBench.getActiveWorkbenchWindow().getActivePage().setPerspective(desc);
             System.out.println("Not in active perspective");
          }
+         
+         FileInputStream inStream = new FileInputStream(file);         
+         ByteArrayOutputStream os = new ByteArrayOutputStream();
+         
+         XMLPrettyPrinter.prettyPrint(inStream,os);
+         
+         FileOutputStream outStream = new FileOutputStream(file);
+         
+         outStream.write(os.toByteArray());
+         outStream.flush();
+         outStream.close();
+                  
+         
+         CacheFileEditorInput edInput = new CacheFileEditorInput(file);
+
+         PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(edInput,"org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart");         
 
       }
       catch (Exception e)
@@ -273,27 +295,6 @@ public class NewCacheConfigurationWizard extends Wizard implements INewWizard
       cacheConfigModel = new CacheConfigurationModel();
       setNeedsProgressMonitor(true);
       initializeWizard();
-   }
-
-   private boolean checkCacheName(String cacheName)
-   {
-      ICacheRootInstance mainRootInstance = CacheInstanceFactory.getCacheRootMainInstance();
-      if (mainRootInstance != null)
-      {
-         if (mainRootInstance.getRootInstanceChilds() != null)
-         {
-            List childList = mainRootInstance.getRootInstanceChilds();
-            for (int i = 0, j = childList.size(); i < j; i++)
-            {
-               ICacheRootInstance rootInstance = (ICacheRootInstance) childList.get(i);
-               if (rootInstance.getRootName().equals(cacheName))
-               {
-                  return false;
-               }
-            }
-         }
-      }
-      return true;
    }
 
 }//end of class

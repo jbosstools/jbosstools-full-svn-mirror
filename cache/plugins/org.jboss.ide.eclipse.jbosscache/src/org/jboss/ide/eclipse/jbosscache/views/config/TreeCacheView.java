@@ -46,6 +46,8 @@ import org.jboss.ide.eclipse.jbosscache.actions.EditConfigurationAction;
 import org.jboss.ide.eclipse.jbosscache.actions.ExportAction;
 import org.jboss.ide.eclipse.jbosscache.actions.ImportAction;
 import org.jboss.ide.eclipse.jbosscache.actions.NewCacheConfigurationAction;
+import org.jboss.ide.eclipse.jbosscache.actions.NewRemoteCacheConfigurationAction;
+import org.jboss.ide.eclipse.jbosscache.actions.RemoteRefreshAction;
 import org.jboss.ide.eclipse.jbosscache.actions.RenameAction;
 import org.jboss.ide.eclipse.jbosscache.actions.ShowContentAction;
 import org.jboss.ide.eclipse.jbosscache.actions.ShowObjectGraphAction;
@@ -105,9 +107,6 @@ public class TreeCacheView extends ViewPart
    /**Remove node to the cache*/
    private Action removeNodeAction;
 
-   /**Show Contents of the cache node*/
-   private Action showContentAction;
-
    /**Show object graph of the selected cache node*/
    private Action showObjectGraphAction;
 
@@ -120,8 +119,18 @@ public class TreeCacheView extends ViewPart
    /**Duplicate Action*/
    private Action duplicateAction;
 
+   /**
+    * Show Contents of the cache node
+    */
+   private Action showContentAction;
+
    /**Rename Action*/
    private Action renameAction;
+   
+   /**New Remote Cache Configuration*/
+   private Action newRemoteCacheConfigurationAction;
+   
+   private Action refreshAction;
 
    private PropertyDialogAction propDialogAction;
 
@@ -198,9 +207,20 @@ public class TreeCacheView extends ViewPart
 
       if (obj instanceof ICacheRootInstance)
       {
-         editCacheConfigurationAction.setEnabled(true);
-         deleteCacheConfigurationAction.setEnabled(true);
-         exportAction.setEnabled(true);
+         ICacheRootInstance rootInstance = (ICacheRootInstance)obj;
+         if(rootInstance.isRemoteCache())
+         {
+            editCacheConfigurationAction.setEnabled(false);
+            exportAction.setEnabled(false);
+         }
+         else
+         {
+            editCacheConfigurationAction.setEnabled(true);
+            exportAction.setEnabled(true);
+         }
+         
+         
+         deleteCacheConfigurationAction.setEnabled(true);         
          duplicateAction.setEnabled(true);
       }
       else
@@ -286,6 +306,7 @@ public class TreeCacheView extends ViewPart
    private void fillLocalPullDown(IMenuManager manager)
    {
       manager.add(newCacheConfigurationAction);
+      manager.add(newRemoteCacheConfigurationAction);
       //manager.add(editCacheConfigurationAction);
       //manager.add(deleteCacheConfigurationAction);
       manager.add(new Separator());
@@ -301,12 +322,15 @@ public class TreeCacheView extends ViewPart
    private void fillContextMenu(IMenuManager manager)
    {
       manager.add(newCacheConfigurationAction);
+      manager.add(newRemoteCacheConfigurationAction);
+      manager.add(new Separator());
 
       if (getSelection() != null)
       {
          if (getSelection() instanceof ICacheRootInstance)
          {
             ICacheRootInstance rootInstance = (ICacheRootInstance) getSelection();
+            
             manager.add(editCacheConfigurationAction);
             manager.add(deleteCacheConfigurationAction);
             manager.add(new Separator());
@@ -316,7 +340,7 @@ public class TreeCacheView extends ViewPart
             manager.add(renameAction);
             manager.add(new Separator());
             manager.add(connectAction);
-            manager.add(disconnectAction);
+            manager.add(disconnectAction);                        
 
             if (!rootInstance.isConnected())
             {
@@ -330,31 +354,75 @@ public class TreeCacheView extends ViewPart
                connectAction.setEnabled(false);
                renameAction.setEnabled(false);
             }
+            
             editCacheConfigurationAction.setEnabled(true);
             deleteCacheConfigurationAction.setEnabled(true);
             exportAction.setEnabled(true);
             duplicateAction.setEnabled(true);
             
+            if(rootInstance.isRemoteCache())
+            {
+               manager.add(refreshAction);
+               
+               if(rootInstance.isConnected())
+                  refreshAction.setEnabled(true);
+               else
+                  refreshAction.setEnabled(false);
+               
+               connectAction.setText("Connect to Remote");
+               connectAction.setToolTipText("Connect to Remote");
+               connectAction.setImageDescriptor(JBossCachePlugin.getDefault().getImageRegistry().getDescriptor(ICacheConstants.IMAGE_KEY_REMOTE_CONNECT_ACTION));
+               
+               disconnectAction.setText("DisConnect from Remote");
+               disconnectAction.setText("DisConnect from Remote");
+               disconnectAction.setImageDescriptor(null);
+               
+               exportAction.setEnabled(false);
+               editCacheConfigurationAction.setEnabled(false);               
+            }else
+            {
+               connectAction.setText(CacheUtil.getResourceBundleValue(ICacheConstants.TREECACHEVIEW_CONNECT_ACTION));
+               connectAction.setToolTipText(CacheUtil.getResourceBundleValue(ICacheConstants.TREECACHEVIEW_CONNECT_ACTION));
+               connectAction.setImageDescriptor(JBossCachePlugin.getDefault().getImageRegistry().getDescriptor(
+                     ICacheConstants.IMAGE_KEY_RUN_EXC));
+
+               disconnectAction
+                     .setToolTipText(CacheUtil.getResourceBundleValue(ICacheConstants.TREECACHEVIEW_DISCONNECT_ACTION));
+               disconnectAction.setText(CacheUtil.getResourceBundleValue(ICacheConstants.TREECACHEVIEW_DISCONNECT_ACTION));
+               disconnectAction.setImageDescriptor(JBossCachePlugin.getDefault().getImageRegistry().getDescriptor(
+                     ICacheConstants.IMAGE_KEY_TERM_SBOOK));               
+            }
+            
 
          }
 
          manager.add(new Separator());
+         
          if (getSelection() instanceof ICacheInstance)
          {
+            ICacheRootInstance rootInstance = ((ICacheInstance)getSelection()).getRootInstance();
+            
             addNodeAction.setEnabled(true);
             removeNodeAction.setEnabled(true);
             editCacheConfigurationAction.setEnabled(false);
             deleteCacheConfigurationAction.setEnabled(false);
             exportAction.setEnabled(false);
             duplicateAction.setEnabled(false);
-            manager.add(addNodeAction);
-            manager.add(removeNodeAction);
+            
+            if(!rootInstance.isRemoteCache()){
+               manager.add(addNodeAction);
+               manager.add(removeNodeAction);
+            }
+            
             manager.add(showContentAction);
          }
          else if (getSelection() instanceof ICacheRootInstance)
          {
             ICacheRootInstance rootInstance = (ICacheRootInstance) getSelection();
-            manager.add(addNodeAction);
+            
+            if(!rootInstance.isRemoteCache())
+               manager.add(addNodeAction);
+            
             manager.add(showObjectGraphAction);
             if (rootInstance.isConnected())
             {
@@ -390,6 +458,8 @@ public class TreeCacheView extends ViewPart
    private void fillLocalToolBar(IToolBarManager manager)
    {
       manager.add(newCacheConfigurationAction);
+      manager.add(newRemoteCacheConfigurationAction);
+      manager.add(new Separator());
       manager.add(editCacheConfigurationAction);
       manager.add(deleteCacheConfigurationAction);
       manager.add(new Separator());
@@ -485,16 +555,12 @@ public class TreeCacheView extends ViewPart
 
       renameAction = new RenameAction(this, "renameAction");
       renameAction.setEnabled(false);
+      
+      newRemoteCacheConfigurationAction = new NewRemoteCacheConfigurationAction(this,"remoteCache");
+      
+      refreshAction = new RemoteRefreshAction(this,"refAction");
+      
 
-      doubleClickAction = new Action()
-      {
-         public void run()
-         {
-            ISelection selection = treeViewer.getSelection();
-            Object obj = ((IStructuredSelection) selection).getFirstElement();
-            showMessage("Double-click detected on " + obj.toString());
-         }
-      };
    }
 
    private void hookDoubleClickAction()
@@ -526,26 +592,6 @@ public class TreeCacheView extends ViewPart
    }
 
    /**
-    * When new cache root instance added, refresh tree view
-    * @param Newly added cache root instance (New Cache Configuration)
-    * @return 
-    */
-   public void cacheRootInstanceAdded(ICacheRootInstance cacheRootInstance)
-   {
-      if (cacheRootInstanceMap == null)
-      {
-         cacheRootInstanceMap = new HashMap();
-         cacheRootInstanceMap.put(cacheRootInstance.getRootName(), cacheRootInstance);
-      }
-      else
-      {
-         cacheRootInstanceMap.put(cacheRootInstance.getRootName(), cacheRootInstance);
-      }
-      treeViewer.refresh(cacheRootInstance.getMainRootCacheInstance(), false);
-
-   }
-
-   /**
     * When existing cache root instance removed, refresh tree view
     * @param Removed cache root instance (Existing configuration removed)
     */
@@ -553,10 +599,13 @@ public class TreeCacheView extends ViewPart
    {
       if (cacheRootInstance.isConnected())
       {
-         TreeCacheManager treeCacheManager = cacheRootInstance.getTreeCacheManager();
-         TreeCacheManager.removeTreeCacheManagerListener(treeCacheManager,
-               (ITreeCacheManagerListener) cacheNodeListenerMap.get(cacheRootInstance.getRootName()));
-         cacheNodeListenerMap.remove(cacheRootInstance.getRootName());
+         if(!cacheRootInstance.isRemoteCache())
+         {
+            TreeCacheManager treeCacheManager = cacheRootInstance.getTreeCacheManager();
+            TreeCacheManager.removeTreeCacheManagerListener(treeCacheManager,
+                  (ITreeCacheManagerListener) cacheNodeListenerMap.get(cacheRootInstance.getRootName()));
+            cacheNodeListenerMap.remove(cacheRootInstance.getRootName());            
+         }
       }
 
       cacheRootInstanceMap.remove(cacheRootInstance.getRootName());
@@ -685,6 +734,26 @@ public class TreeCacheView extends ViewPart
    }
 
    /**
+    * When new cache root instance added, refresh tree view
+    * @param Newly added cache root instance (New Cache Configuration)
+    * @return 
+    */
+   public void cacheRootInstanceAdded(ICacheRootInstance cacheRootInstance)
+   {
+      if (cacheRootInstanceMap == null)
+      {
+         cacheRootInstanceMap = new HashMap();
+         cacheRootInstanceMap.put(cacheRootInstance.getRootName(), cacheRootInstance);
+      }
+      else
+      {
+         cacheRootInstanceMap.put(cacheRootInstance.getRootName(), cacheRootInstance);
+      }
+      treeViewer.refresh(cacheRootInstance.getMainRootCacheInstance(), false);
+   
+   }
+
+   /**
     * When new node removed from the root instance
     */
    public void cacheInstanceToRootRemoved(ICacheInstance cacheInstance)
@@ -699,19 +768,18 @@ public class TreeCacheView extends ViewPart
     */
    public void cacheRootInstanceConnected(ICacheRootInstance rootInstance)
    {
-      TreeCacheManager treeCacheManager = rootInstance.getTreeCacheManager();
-      TreeCacheViewNodeListener listener = new TreeCacheViewNodeListener(rootInstance);
-      if (cacheNodeListenerMap == null)
+      if(!rootInstance.isRemoteCache())
       {
-         cacheNodeListenerMap = new HashMap();
+         TreeCacheManager treeCacheManager = rootInstance.getTreeCacheManager();
+         TreeCacheViewNodeListener listener = new TreeCacheViewNodeListener(rootInstance);
+         if (cacheNodeListenerMap == null)
+         {
+            cacheNodeListenerMap = new HashMap();
+         }
+         cacheNodeListenerMap.put(rootInstance.getRootName(), listener);
+         TreeCacheManager.addTreeCacheManagerListener(treeCacheManager, listener);
+  
       }
-      cacheNodeListenerMap.put(rootInstance.getRootName(), listener);
-      TreeCacheManager.addTreeCacheManagerListener(treeCacheManager, listener);
-
-      //		if(rootInstance.getRootLabel().indexOf("[") == -1)
-      //			rootInstance.setRootLabel(rootInstance.getRootLabel()+"[Connected]");
-      //		else
-      //			rootInstance.setRootLabel(rootInstance.getRootLabel().substring(0,rootInstance.getRootLabel().indexOf("["))+"[Connected]");
       treeViewer.refresh(rootInstance, true);
    }
 
@@ -721,10 +789,13 @@ public class TreeCacheView extends ViewPart
     */
    public void cacheRootInstanceDisConnected(ICacheRootInstance rootInstance)
    {
-      TreeCacheManager treeCacheManager = rootInstance.getTreeCacheManager();
-      TreeCacheManager.removeTreeCacheManagerListener(treeCacheManager,
-            (ITreeCacheManagerListener) cacheNodeListenerMap.get(rootInstance.getRootName()));
-      //		rootInstance.setRootLabel(rootInstance.getRootLabel().substring(0,rootInstance.getRootLabel().indexOf("["))+"[Disconnected]");
+      if(!rootInstance.isRemoteCache())
+      {
+         TreeCacheManager treeCacheManager = rootInstance.getTreeCacheManager();
+         TreeCacheManager.removeTreeCacheManagerListener(treeCacheManager,
+         (ITreeCacheManagerListener) cacheNodeListenerMap.get(rootInstance.getRootName()));         
+      }
+      
       treeViewer.refresh(rootInstance, true);
 
    }
