@@ -20,7 +20,12 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.EditorPart;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
+import org.jboss.ide.eclipse.jbosscache.editors.input.CacheFileEditorInput;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance;
 import org.jboss.ide.eclipse.jbosscache.model.internal.TreeCacheManager;
 import org.jboss.ide.eclipse.jbosscache.utils.CacheUtil;
@@ -129,10 +134,17 @@ public class DeleteConfigurationAction extends AbstractCacheAction
             
             boolean isCheck = msgDialog.isCheck();
             if(isCheck)
-            {
+            {                              
                File file = new File(rootInstance.getRootConfigurationFileName());
+               IEditorPart part = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findEditor(new CacheFileEditorInput(file));
+               
+               if(part != null){
+                  PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeEditor(part,false);
+               }
+               
                if(file.exists())
                   file.delete();
+               
             }
          }
                   

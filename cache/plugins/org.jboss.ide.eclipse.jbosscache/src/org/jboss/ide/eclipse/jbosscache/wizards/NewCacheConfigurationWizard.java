@@ -186,6 +186,8 @@ public class NewCacheConfigurationWizard extends Wizard implements INewWizard
          outStream.write(os.toByteArray());
          outStream.flush();
          outStream.close();
+         
+         inStream.close();
                   
          
          CacheFileEditorInput edInput = new CacheFileEditorInput(file);
@@ -249,6 +251,7 @@ public class NewCacheConfigurationWizard extends Wizard implements INewWizard
       {
          case 0 :
 
+            cacheLoaderConfig.setUseDataSource(cacheLoaderConfPage.getBtnUseDataSource().getSelection());
             cacheLoaderConfig.setJdbcCacheLoader(true);
             cacheLoaderConfig.setDataSource(cacheLoaderConfPage.getTxtDataSource().getText().trim());
             cacheLoaderConfig.setDriver(cacheLoaderConfPage.getCmbDriver().getText().trim());

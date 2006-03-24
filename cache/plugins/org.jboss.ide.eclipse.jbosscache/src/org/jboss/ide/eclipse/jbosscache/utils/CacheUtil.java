@@ -115,20 +115,31 @@ public class CacheUtil
          monitor.worked(2);
 
          childServerMemonto = memonto.createChild(ICacheConstants.MBEAN);
-         childServerMemonto.putString(ICacheConstants.CODE, "org.jboss.cache.TreeCache");
-         childServerMemonto.putString(ICacheConstants.NAME, "jboss.cache:service=TreeCache");
-
+         
+         if(cacheConfigModel.getCacheMode().equals(ICacheConstants.JBOSS_CACHE_TREE_CACHE))
+         {
+            childServerMemonto.putString(ICacheConstants.CODE, "org.jboss.cache.TreeCache");
+            childServerMemonto.putString(ICacheConstants.NAME, "jboss.cache:service=TreeCache");            
+         }
+         else
+         {
+            childServerMemonto.putString(ICacheConstants.CODE, "org.jboss.cache.aop.TreeCacheAop");
+            childServerMemonto.putString(ICacheConstants.NAME, "jboss.cache:service=TreeCacheAop");                        
+         }
+         
          IMemento childMBeanMemonto = null;
          childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.DEPENDS);
          childMBeanMemonto.putTextData("jboss:service=Naming");
 
          childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.DEPENDS);
          childMBeanMemonto.putTextData("jboss:service=TransactionManager");
-
-         childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
-         childMBeanMemonto.putString(ICacheConstants.NAME, "TransactionManagerLookupClass");
-         childMBeanMemonto.putTextData(cacheConfigModel.getTransManagerLookUpClass());
-
+         
+         if(!cacheConfigModel.getTransManagerLookUpClass().equals(ICacheConstants.TRANSACTION_MANAGER_LOOKUP_CLASSES[0]))
+         {
+            childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
+            childMBeanMemonto.putString(ICacheConstants.NAME, "TransactionManagerLookupClass");         
+            childMBeanMemonto.putTextData(cacheConfigModel.getTransManagerLookUpClass());
+         }
          monitor.worked(3);
 
          childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
@@ -288,7 +299,7 @@ public class CacheUtil
          childMBeanMemonto.putString(ICacheConstants.NAME, "UseMarshalling");
          childMBeanMemonto.putTextData(Boolean.toString(cacheConfigModel.isUseMarshalling()));
 
-         if (!cacheConfigModel.getCacheLoaderConfig().getCacheLoaderClass().equals(""))
+         if (!cacheConfigModel.getCacheLoaderConfig().getCacheLoaderClass().equals("None"))
          {
             childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
             childMBeanMemonto.putString(ICacheConstants.NAME, "CacheLoaderClass");
@@ -299,7 +310,7 @@ public class CacheUtil
 
             if (cacheLoaderConfig.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[0]))
             {
-               if (cacheLoaderConfig.getDataSource().equals(""))
+               if (!cacheLoaderConfig.isUseDataSource())
                {
                   childMBeanMemonto.putTextData("\n\t" + "cache.jdbc.table.name=" + cacheLoaderConfig.getTableName()
                         + "\n" + "\t" + "cache.jdbc.table.create="
@@ -322,7 +333,8 @@ public class CacheUtil
                }
 
             }
-            else if (cacheLoaderConfig.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[1]))
+            else if (cacheLoaderConfig.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[1]) || 
+                     cacheLoaderConfig.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[2]))
             {
                childMBeanMemonto.putTextData("location=" + cacheLoaderConfig.getFileLocation());
             }

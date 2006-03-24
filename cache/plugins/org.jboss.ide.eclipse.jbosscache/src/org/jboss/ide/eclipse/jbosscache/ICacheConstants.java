@@ -135,7 +135,7 @@ public interface ICacheConstants
    /**Cache Loader Class */
    String CACHE_LOADER_CLASSES[] = new String[]
    {"org.jboss.cache.loader.JDBCCacheLoader", "org.jboss.cache.loader.FileCacheLoader",
-         "org.jboss.cache.loader.BdbjeCacheLoader"};
+         "org.jboss.cache.loader.BdbjeCacheLoader","None"};
 
    /**JDBC Drivers*/
    String JDBC_DRIVERS[] = new String[]
@@ -147,7 +147,7 @@ public interface ICacheConstants
 
    /**TRANSACTION_MANAGER_LOOK_UP CLASSES*/
    String TRANSACTION_MANAGER_LOOKUP_CLASSES[] = new String[]
-   {"org.jboss.cache.DummyTransactionManagerLookup", "org.jboss.cache.JBossTransactionManagerLookup"};
+   {"None","org.jboss.cache.GenericTransactionManagerLookup","org.jboss.cache.DummyTransactionManagerLookup", "org.jboss.cache.JBossTransactionManagerLookup"};
 
    /**CACHE MODES*/
    String CACHE_MODES[] = new String[]

@@ -9,6 +9,7 @@ package org.jboss.ide.eclipse.jbosscache.wizards.pages;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -102,6 +103,8 @@ public class CacheLoaderConfigurationPage extends WizardPage
    private Label lblLocation;
 
    private Text txtLocation;
+   
+   private Button btnUseDataSource;
 
    /**
     * Constructor
@@ -174,7 +177,7 @@ public class CacheLoaderConfigurationPage extends WizardPage
       lblCacheLoaderClass.setText("Cache Loader Class:");
       cmbCacheLoaderClass = new Combo(grpContainer, SWT.READ_ONLY);
       cmbCacheLoaderClass.setItems(ICacheConstants.CACHE_LOADER_CLASSES);
-      cmbCacheLoaderClass.setText("");
+      cmbCacheLoaderClass.select(3);
       cmbCacheLoaderClass.setLayoutData(gridData);
       cmbCacheLoaderClass.addSelectionListener(new SelectionListener()
       {
@@ -193,7 +196,8 @@ public class CacheLoaderConfigurationPage extends WizardPage
                }
 
             }
-            else
+            else if(((Combo)e.widget).getText().equals(ICacheConstants.CACHE_LOADER_CLASSES[1]) || 
+                    ((Combo)e.widget).getText().equals(ICacheConstants.CACHE_LOADER_CLASSES[2]))
             {
                grpForJdbc.setEnabled(false);
                Control[] childs = grpForJdbc.getChildren();
@@ -203,6 +207,17 @@ public class CacheLoaderConfigurationPage extends WizardPage
                }
                lblLocation.setEnabled(true);
                txtLocation.setEnabled(true);
+            }
+            else
+            {
+               grpForJdbc.setEnabled(false);
+               Control[] childs = grpForJdbc.getChildren();
+               for (int i = 0; i < childs.length; i++)
+               {
+                  childs[i].setEnabled(false);
+               }
+               lblLocation.setEnabled(false);
+               txtLocation.setEnabled(false);               
             }
          }
 
@@ -235,6 +250,45 @@ public class CacheLoaderConfigurationPage extends WizardPage
       grpForJdbc.setLayoutData(gDataForJdbc);
       grpForJdbc.setLayout(new GridLayout(2, false));
 
+      btnUseDataSource = new Button(grpForJdbc,SWT.CHECK);
+      btnUseDataSource.setText("Use DataSource");
+      //btnUseDataSource.setLayoutData(new GridData);
+      btnUseDataSource.addSelectionListener(new SelectionAdapter(){
+         public void widgetSelected(SelectionEvent e){
+            Control[] childs = grpForJdbc.getChildren();
+            
+            if(((Button)e.widget).getSelection()){
+               
+               for (int i = 0; i < childs.length; i++)
+               {
+                  Control child = childs[i];
+                  if(!child.equals(btnUseDataSource))
+                     child.setEnabled(false);
+               }
+               
+               txtDataSource.setEnabled(true);
+               txtDataSource.setEditable(true);
+               
+            }else{
+               for (int i = 0; i < childs.length; i++)
+               {
+                  Control child = childs[i];
+                     child.setEnabled(true);
+               }
+               
+               txtDataSource.setEditable(false);
+            }
+         }
+      });
+      
+//      lblDataSource = new Label(grpForJdbc, SWT.NONE);
+//      lblDataSource.setText("Data Source:");
+
+      txtDataSource = new Text(grpForJdbc, SWT.BORDER);
+      txtDataSource.setLayoutData(gridData);
+      txtDataSource.setText("java:/");
+      txtDataSource.setEditable(false);
+      
       lblTableName = new Label(grpForJdbc, SWT.NONE);
       lblTableName.setText("Table Name:");
       txtTableName = new Text(grpForJdbc, SWT.BORDER);
@@ -278,12 +332,6 @@ public class CacheLoaderConfigurationPage extends WizardPage
       txtParentColumn = new Text(grpForJdbc, SWT.BORDER);
       txtParentColumn.setLayoutData(gridData);
       txtParentColumn.setText("parent");
-
-      lblDataSource = new Label(grpForJdbc, SWT.NONE);
-      lblDataSource.setText("Data Source:");
-      txtDataSource = new Text(grpForJdbc, SWT.BORDER);
-      txtDataSource.setLayoutData(gridData);
-      txtDataSource.setText("java:/");
 
       lblDriver = new Label(grpForJdbc, SWT.NONE);
       lblDriver.setText("Driver Class:");
@@ -701,5 +749,10 @@ public class CacheLoaderConfigurationPage extends WizardPage
    public void setTxtUser(Text txtUser)
    {
       this.txtUser = txtUser;
+   }
+
+   public Button getBtnUseDataSource()
+   {
+      return btnUseDataSource;
    }
 }//end of class

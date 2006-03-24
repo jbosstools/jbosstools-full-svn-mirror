@@ -51,8 +51,10 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
 {
 
    private static final String DEFAULT_CACHE_NAME = "Default";
+   
+   private static final String DEFAULT_CACHE_XML_FILE_NAME = "treecache_generated_by_jbosscache_ide";
 
-   private static final String DEFAULT_CACHE_GROUP = "Default_Group";
+   private static final String DEFAULT_CACHE_GROUP = "GENERATED_BY_JBOSSCACHE_IDE";
 
    private static final String DEFAULT_REPL_QUEUE_INTERVAL = "0";
 
@@ -214,7 +216,7 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       lblConfFileName = new Label(filePath, SWT.NONE);
       lblConfFileName.setText(CacheMessages.StandartConfigurationPage_lblConfFileName);
       txtConfFileName = new Text(filePath, SWT.BORDER);
-      txtConfFileName.setText(DEFAULT_CACHE_NAME);
+      txtConfFileName.setText(DEFAULT_CACHE_XML_FILE_NAME);
       txtConfFileName.addModifyListener(this);
       GridData gDataForConfText = new GridData(GridData.FILL_HORIZONTAL);
       gDataForConfText.horizontalSpan = 2;
@@ -264,9 +266,9 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       lblTransactionManager = new Label(grpConfGroup, SWT.NONE);
       lblTransactionManager.setText("Transaction Manager:");/*TODO Internationalize for this and remainder !!!*/
 
-      cmbTransactionManager = new Combo(grpConfGroup, SWT.READ_ONLY);
+      cmbTransactionManager = new Combo(grpConfGroup, SWT.NONE);
       cmbTransactionManager.setItems(ICacheConstants.TRANSACTION_MANAGER_LOOKUP_CLASSES);
-      cmbTransactionManager.select(0);
+      cmbTransactionManager.select(1);
       cmbTransactionManager.setLayoutData(gridData);
 
       lblIsolationLevel = new Label(grpConfGroup, SWT.NONE);

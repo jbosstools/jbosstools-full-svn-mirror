@@ -84,6 +84,8 @@ public class CacheConfigurationModel
    public class CacheLoaderConfigInternal
    {
       private boolean isFileCacheLoader;
+      
+      private boolean isUseDataSource;
 
       private boolean isJdbcCacheLoader;
 
@@ -357,6 +359,16 @@ public class CacheConfigurationModel
       public void setUserName(String userName)
       {
          this.userName = userName;
+      }
+
+      public boolean isUseDataSource()
+      {
+         return isUseDataSource;
+      }
+
+      public void setUseDataSource(boolean isUseDataSource)
+      {
+         this.isUseDataSource = isUseDataSource;
       }
 
    }
