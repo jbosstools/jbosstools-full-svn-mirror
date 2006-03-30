@@ -1,0 +1,7 @@
+bin
+build.xml
+org.jboss.ide.eclipse*zip
+org.jboss.ide.eclipse*jar
+org-jboss-ide-eclipse*zip
+org-jboss-ide-eclipse*jar
+temp.folder

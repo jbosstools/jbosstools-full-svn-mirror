@@ -1,0 +1,52 @@
+<project>
+	<loadproperties srcFile="build.properties"/>
+
+	<property name="eclipseDownloadTo" value="${eclipseInstallDir}"/>
+		
+	<target name="build.requirement">
+		
+		<condition property="ext" value="tar.gz" else="zip">
+			<os family="unix"/>
+		</condition>
+		
+		<condition property="os" value="linux-gtk" else="win32">
+			<os family="unix"/>
+		</condition>
+		
+		<condition property="arch" value="-x86_64" else="">
+			<os arch="amd64"/>
+		</condition>
+		
+		<property name="eclipseArchiveName"
+			value="eclipse-SDK-${eclipseBuildID}-${os}${arch}.${ext}"/>
+				
+		<available file="${eclipseDownloadTo}/eclipse-SDK.${ext}" property="archiveExists"/>
+		<available file="${eclipseInstallDir}/eclipse/startup.jar" property="isUnzipped"/>
+		
+		<runtarget target="getBaseEclipse"/>
+		<runtarget target="unzipEclipse"/>
+		
+		<echo file="return.properties">
+			eclipseInstallDir=${eclipseInstallDir}
+		</echo>
+	</target>
+	
+	<target name="getBaseEclipse" unless="archiveExists">
+		<get src="${eclipseURL}/${eclipseArchiveName}" dest="${eclipseInstallDir}/eclipse-SDK.${ext}"/>
+	</target>
+
+	<target name="unzipEclipse" unless="isUnzipped">
+		<if>
+			<os family="unix"/>
+			<then>
+				<echo>eclipseInstallDir=${eclipseInstallDir}</echo>
+				<gunzip dest="temp.tar" src="${eclipseDownloadTo}/eclipse-SDK.tar.gz"/>
+				<untar src="temp.tar" dest="${eclipseInstallDir}"/>
+				<delete file="temp.tar"/>
+			</then>
+			<else>
+				<unzip src="${eclipseDownloadTo}/eclipse-SDK.zip" dest="${eclipseInstallDir}"/>	
+			</else>
+		</if>
+	</target>
+</project>
