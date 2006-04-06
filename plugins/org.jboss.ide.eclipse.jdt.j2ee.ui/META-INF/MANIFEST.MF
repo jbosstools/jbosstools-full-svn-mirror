@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.jboss.ide.eclipse.jdt.j2ee.ui; singleton:=true
-Bundle-Version: 1.5.1
+Bundle-Version: 1.5.2.GA
 Bundle-ClassPath: org-jboss-ide-eclipse-jdt-j2ee-ui.jar
 Bundle-Activator: org.jboss.ide.eclipse.jdt.j2ee.ui.JDTJ2EEUIPlugin
 Bundle-Vendor: %plugin.provider
