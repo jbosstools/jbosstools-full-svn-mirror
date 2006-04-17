@@ -173,6 +173,9 @@
 					
 				</antform>
 			</then>
+			<else>
+				<antcall target="downloads.customization" inheritall="true"/>
+			</else>
 		</if>
 	</target>
 	
