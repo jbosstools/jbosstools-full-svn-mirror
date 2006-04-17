@@ -1,5 +1,5 @@
 clean.eclipse.home=%clean-eclipse-home%
-pdescriptdir=${clean.eclipse.home}/plugins/org.eclipse.pde.build_3.1.0/scripts
+pdescriptdir=${clean.eclipse.home}/plugins/org.eclipse.pde.build_3.1.2/scripts
 workspace=workspace
 verbose=-verbose
 build.root=%releng-root%
