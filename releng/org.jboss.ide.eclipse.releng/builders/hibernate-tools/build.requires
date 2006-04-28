@@ -1,1 +1,1 @@
-builder.requires=xerces,junit,eclipse,emf-sdo-xsd,gef,jem,webtools
+builder.requires=xerces,junit,eclipse,emf-sdo-xsd,gef,jem,webtools,freemarker-ide
