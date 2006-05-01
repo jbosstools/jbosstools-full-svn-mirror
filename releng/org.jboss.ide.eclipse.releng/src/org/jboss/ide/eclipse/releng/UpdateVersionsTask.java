@@ -238,90 +238,105 @@ public class UpdateVersionsTask extends Task {
 	
 
 	
-	private void changeFeatureVersion(File featureBase) throws BuildException
+	private void changeFeatureVersion(File featureBase)
+		throws BuildException
 	{
+		String featureName = featureBase.getAbsolutePath();
+		featureName = featureName.substring(featureName.lastIndexOf(File.separator));
+		featureName = featureName.substring(1);
+		
+		File featureFile = new File(featureBase, "feature.xml");
+		Document doc = null;
+		
 		try {
-			String featureName = featureBase.getAbsolutePath();
-			featureName = featureName.substring(featureName.lastIndexOf(File.separator));
-			featureName = featureName.substring(1);
-			
-			File featureFile = new File(featureBase, "feature.xml");
-			Document doc = parse(featureFile);
-	        
-			Attribute featureVersionAttr = (Attribute) doc.selectSingleNode( "//feature/@version" );
-			System.out.println("updating version of feature " + featureName + " to " + (append ? appendVersions(featureVersionAttr.getText(), version) : version) + "...");
-			
-			String newVersion = append ? appendVersions(featureVersionAttr.getText(), version) : version;
-			validateVersion(newVersion);
-			
-			featureVersionAttr.setText(newVersion);
-			
-			if (updatePluginRefs)
+			doc = parse(featureFile);
+		} catch (DocumentException e) {
+			e.printStackTrace();
+			throw new BuildException(e);
+		}
+		
+		Attribute featureVersionAttr = (Attribute) doc.selectSingleNode( "//feature/@version" );
+		System.out.println("updating version of feature " + featureName + " to " + (append ? appendVersions(featureVersionAttr.getText(), version) : version) + "...");
+		
+		String newVersion = append ? appendVersions(featureVersionAttr.getText(), version) : version;
+		validateVersion(newVersion);
+		
+		featureVersionAttr.setText(newVersion);
+		
+		if (updatePluginRefs)
+		{
+			List pluginVersions = doc.selectNodes( "//feature/plugin/@version");
+			for (Iterator iter = pluginVersions.iterator(); iter.hasNext(); )
 			{
-				List pluginVersions = doc.selectNodes( "//feature/plugin/@version");
-				for (Iterator iter = pluginVersions.iterator(); iter.hasNext(); )
+				Attribute pluginVersionAttr = (Attribute) iter.next();
+				String pluginId = pluginVersionAttr.getParent().attributeValue("id");
+				File pluginBase = new File(featureBase, "../../plugins/" + pluginId);
+				
+				if (pluginId.matches(pluginRegex))
 				{
-					Attribute pluginVersionAttr = (Attribute) iter.next();
-					String pluginId = pluginVersionAttr.getParent().attributeValue("id");
-					File pluginBase = new File(featureBase, "../../plugins/" + pluginId);
-					
-					if (pluginId.matches(pluginRegex))
+					if (isReverseUpdatePlugin(pluginId))
 					{
-						if (isReverseUpdatePlugin(pluginId))
-						{
-							String pluginVersion = getPluginVersion(pluginBase);
-							pluginVersionAttr.setText(pluginVersion);
-						}
-						else {
-							String newPluginVersion = append ? appendVersions(pluginVersionAttr.getText() , version) : version;
-							validateVersion(newPluginVersion);
-							
-							pluginVersionAttr.setText(newPluginVersion);	
+						String pluginVersion = getPluginVersion(pluginBase);
+						pluginVersionAttr.setText(pluginVersion);
+					}
+					else {
+						String newPluginVersion = append ? appendVersions(pluginVersionAttr.getText() , version) : version;
+						validateVersion(newPluginVersion);
 						
-							if (recursivePlugins && pluginId.matches(recursivePluginRegex))
-							{
-								System.out.println("recursively updating plugin " + pluginId + "...");
-								
-								
-								try {
-									changePluginVersion(pluginBase);
-								} catch (BuildException e) {
-									if (failOnRecursiveError)
-										throw e;
-									else e.printStackTrace();
-								}
+						pluginVersionAttr.setText(newPluginVersion);	
+					
+						if (recursivePlugins && pluginId.matches(recursivePluginRegex))
+						{
+							System.out.println("recursively updating plugin " + pluginId + "...");
+							
+							
+							try {
+								changePluginVersion(pluginBase);
+							} catch (BuildException e) {
+								if (failOnRecursiveError)
+									throw e;
+								else e.printStackTrace();
 							}
 						}
 					}
 				}
 			}
-			
-			write(doc, featureFile);
-			
-			if (updateAssembleScript)
-			{
-				try {
-					updateAssembleScript(featureBase, featureName);
-				} catch (Exception e) {
-					e.printStackTrace();
-					throw e;
-				}
-			}
 		}
-		catch (Exception e)
+		
+		try {
+			write(doc, featureFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new BuildException(e);
+		}
+		
+		if (updateAssembleScript)
 		{
-			throw new BuildException("Exception occured when trying to replace version in " + featureBase.getAbsolutePath(), e);
+			try {
+				updateAssembleScript(featureBase, featureName);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new BuildException(e);
+			}
 		}
 	}
 	
-	private void updateAssembleScript (File featureBase, String featureName) throws Exception
+	private void updateAssembleScript (File featureBase, String featureName)
+		throws BuildException
 	{
 		File assembleFile = new File(featureBase, "../../assemble." + featureName + ".xml");
 		if (assembleFile.exists())
 		{
 			System.out.println("updating assemble script @ " + assembleFile.getAbsolutePath() + "...");
 			
-			Document assembleDoc = parse(assembleFile);
+			Document assembleDoc = null;
+			
+			try {
+				assembleDoc = parse(assembleFile);
+			} catch (DocumentException e) {
+				e.printStackTrace();
+				throw new BuildException(e);
+			}
 			
 			List argNodes = assembleDoc.selectNodes("//arg[contains(@line,'${pluginArchivePrefix}') or contains(@line, '${featureArchivePrefix}')]");
 			for (Iterator iter = argNodes.iterator(); iter.hasNext(); )
@@ -342,7 +357,12 @@ public class UpdateVersionsTask extends Task {
 				argElement.attribute("line").setValue(line);
 			}
 		
-			write(assembleDoc, assembleFile);
+			try {
+				write(assembleDoc, assembleFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new BuildException(e);
+			}
 		}
 		else throw new BuildException("Assemble script: " + assembleFile.getAbsolutePath() + " does not exist.");
 	}
@@ -379,23 +399,6 @@ public class UpdateVersionsTask extends Task {
 				manifestStream.close();
 				
 				return bundleVersion;
-//				String version = null;
-//				BufferedReader reader = new BufferedReader(new FileReader(manifestFile));
-//				for (String line = reader.readLine(); line != null; line = reader.readLine())
-//				{
-//					if (line.indexOf("Bundle-Version:") != -1)
-//					{
-//						String tokens[] = line.split(": *");
-//						
-//						if (tokens.length == 2)
-//						{
-//							version = tokens[1];
-//						}
-//					}
-//				}
-				
-//				reader.close();
-//				return version;
 			}
 			
 			return null;
