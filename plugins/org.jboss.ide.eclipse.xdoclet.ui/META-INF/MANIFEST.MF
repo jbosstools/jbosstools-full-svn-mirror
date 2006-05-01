@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.jboss.ide.eclipse.xdoclet.ui
-Bundle-Version: 1.5.2.GA
+Bundle-Version: 1.6.0
 Bundle-ClassPath: org-jboss-ide-eclipse-xdoclet-ui.jar
 Bundle-Activator: org.jboss.ide.eclipse.xdoclet.ui.XDocletUIPlugin
 Bundle-Vendor: %plugin.provider

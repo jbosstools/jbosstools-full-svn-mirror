@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.jboss.ide.eclipse.jdt.j2ee.core; singleton:=true
-Bundle-Version: 1.5.2.GA
+Bundle-Version: 1.6.0
 Bundle-ClassPath: org-jboss-ide-eclipse-jdt-j2ee-core.jar
 Bundle-Activator: org.jboss.ide.eclipse.jdt.j2ee.core.JDTJ2EECorePlugin
 Bundle-Vendor: %plugin.provider
