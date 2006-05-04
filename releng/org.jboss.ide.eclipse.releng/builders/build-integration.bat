@@ -21,6 +21,7 @@ shift
 if "%ANT_HOME%"=="" goto noAnt
 
 call %ant% %1 %2 %3 %4 %5 %6 -lib ..\lib -f common/buildRequirements.xml cleanRequirements
+call %ant% %1 %2 %3 %4 %5 %6 -lib ..\lib -f common/buildRequirements.xml getBaseRequirements
 
 if "%target%"=="product" goto productBuild
 if "%cvstagproperties%"=="" goto builderBuildNoTags

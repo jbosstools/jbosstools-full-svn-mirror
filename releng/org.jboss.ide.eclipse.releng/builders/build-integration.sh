@@ -19,6 +19,7 @@ if [ "$ANT_HOME" = "" ]; then
 fi
 
 $ANT $@ -lib ../lib -f common/buildRequirements.xml cleanRequirements
+$ANT $@ -lib ../lib -f common/buildRequirements.xml getBaseRequirements
 
 if [ "$TARGET" = "product" ]; then
 	if [ "$CVSTAGPROPERTIES" = "" ]; then

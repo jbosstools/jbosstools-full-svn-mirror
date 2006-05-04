@@ -58,10 +58,8 @@
 		</if>
 		
 		<!-- force unix like paths.. the windows escaping mess is unmanageable -->
-		<convertpath path="${eclipse.archive.path}" property="eclipse.archive.path.escaped"/>
 		<convertpath path="${ssh.key}" property="ssh.key.escaped"/>
 		<convertpath path="${build.output.directory}" property="build.output.directory.escaped"/>
-		<convertpath path="${clean.eclipse.home}" property="clean.eclipse.home.escaped"/>
 		<convertpath path="${releng.root}" property="releng.root.escaped"/>
 		
 		<copy todir="builders" overwrite="true">
@@ -70,11 +68,9 @@
 			</fileset>
 			<mapper type="glob" from="*.properties.template" to="*.properties"/>
 			<filterset begintoken="%" endtoken="%">
-				<filter token="eclipse-archive-path" value="${eclipse.archive.path.escaped}"/>
 				<filter token="ssh-key" value="${ssh.key.escaped}"/>
 				<filter token="ssh-passphrase" value="${ssh.passphrase}"/>
 				<filter token="build-output-directory" value="${build.output.directory.escaped}"/>
-				<filter token="clean-eclipse-home" value="${clean.eclipse.home.escaped}"/>
 				<filter token="releng-root" value="${releng.root.escaped}"/>
 				
 				<filter token="comment-enable-publishing" value="${comment.enable.publishing}"/>
@@ -130,17 +126,9 @@
 			nexttarget="ssh.customization">
 			
 			<radioselectionproperty label="Build script type" values="sh,bat" property="build.script.ext" />
-			
-			<fileselectionproperty label="Location of Eclipse binaries"
-				property="eclipse.archive.path"
-				required="true" directorychooser="true" editable="true"/>
 
-			<fileselectionproperty label="Location for build binaries"
+			<fileselectionproperty label="Location for build output (zips, bundles, etc)"
 				property="build.output.directory"
-				required="true" directorychooser="true" editable="true"/>
-			
-			<fileselectionproperty label="Location of a clean eclipse 3.1.1 installation (no external plugins)"
-				property="clean.eclipse.home"
 				required="true" directorychooser="true" editable="true"/>
 			
 			<fileselectionproperty label="Location of JBossIDE Releng Project Root"

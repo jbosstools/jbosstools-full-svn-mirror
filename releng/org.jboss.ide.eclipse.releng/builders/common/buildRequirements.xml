@@ -37,6 +37,18 @@
 		</sequential>
 	</macrodef>
 	
+	<target name="getBaseRequirements">
+		<property file="build.requires"/>
+		<buildRequirements requirements="${build.requires}"/>
+		
+		<available file="${eclipseInstallDir}/eclipse/startup.jar" property="isUnzipped"/>
+		<echo>Extracting clean Eclipse directory for building...</echo>
+		<ant target="unzipEclipse" antfile="../../requirements/eclipse/buildRequirement.xml" inheritall="true">
+			<property name="eclipseInstallDir" value="${product.build.root}/clean-eclipse"/>
+			<property name="eclipseDownloadTo" value="${product.build.root}"/>
+		</ant>
+	</target>
+	
 	<target name="cleanRequirements">
 		<delete failonerror="false" includeemptydirs="true">
 			<fileset dir="${requirement.root}" defaultexcludes="false">

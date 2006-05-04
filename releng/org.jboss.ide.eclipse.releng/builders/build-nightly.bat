@@ -9,6 +9,7 @@ set ant=%ANT_HOME%\bin\ant
 
 if "%ANT_HOME%"=="" goto noAnt
 call %ant% %1 %2 %3 %4 %5 %6 -lib ..\lib -f common/buildRequirements.xml cleanRequirements
+call %ant% %1 %2 %3 %4 %5 %6 -lib ..\lib -f common/buildRequirements.xml getBaseRequirements
 
 if "%target%"=="product" goto productBuild
 call %ant% %1 %2 %3 %4 %5 %6 -lib ..\lib -f builder-wrap.xml nightly -Dbuilder=%target%

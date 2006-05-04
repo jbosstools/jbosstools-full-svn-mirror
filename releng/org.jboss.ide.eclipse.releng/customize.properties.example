@@ -1,10 +1,4 @@
 ##############################
-## A directory that contains various builds of eclipse
-## e.g. /home/marshall/eclipse/builds contains eclipse-3.1-SDK-linux-gtk.tar.gz and eclipse-3.1-SDK-win32.zip
-##############################
-eclipse.archive.path=/home/marshall/eclipse/builds
-
-##############################
 ## A absolute filename of a ssh private key for the jboss download server (download.jboss.org)
 ## This is disabled by default. You will need to enable publishing and uncomment this.
 ##############################
@@ -21,13 +15,6 @@ eclipse.archive.path=/home/marshall/eclipse/builds
 ## e.g. /home/marshall/jbosside-build will contain JBossIDE-ALL.zip, builders/aop/JBossIDE-AOP-Developer.zip etc..
 ##############################
 build.output.directory=/home/marshall/jbosside-build
-
-##############################
-## A directory that contains a _completely clean_ copy of eclipse.
-## This should point to the top level eclipse folder.
-## e.g. /home/marshall/eclipse/builds/eclipse-3.1-clean/eclipse
-##############################
-clean.eclipse.home=/home/marshall/eclipse/builds/eclipse-3.1-clean/eclipse
 
 ##############################
 ## The absolute path to the root of the JBossIDE releng project (where this file is located)

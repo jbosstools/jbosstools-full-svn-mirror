@@ -1,4 +1,4 @@
-clean.eclipse.home=%clean-eclipse-home%
+clean.eclipse.home=%build-output-directory%/clean-eclipse/eclipse
 pdescriptdir=${clean.eclipse.home}/plugins/org.eclipse.pde.build_3.1.2/scripts
 workspace=workspace
 verbose=-verbose

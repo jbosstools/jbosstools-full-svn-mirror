@@ -15,6 +15,7 @@ if [ "$ANT_HOME" = "" ]; then
 fi
 
 $ANT $@ -lib ../lib -f common/buildRequirements.xml cleanRequirements
+$ANT $@ -lib ../lib -f common/buildRequirements.xml getBaseRequirements
 
 if [ "$TARGET" = "product" ]; then
 	$ANT $@ -lib ../lib -f product/productBuild.xml release -DreleaseType=$RELEASETYPE -DreleaseNumber=$RELEASE | tee build.log
