@@ -112,7 +112,7 @@ archivesFormat = *,*,*-zip & macosx,carbon,ppc-tar
 #default-jbpm-name=jBPM 3.1-beta3
 
 # this is a special hack for nightly / integation builds so we can correctly append the Nxxx / Ixxxx
-jbpm-ide-release=3.0.8
+jbpm-ide-release=3.0.9.1
 
 # include these plugins in the binary distribution
 include.plugins=\
