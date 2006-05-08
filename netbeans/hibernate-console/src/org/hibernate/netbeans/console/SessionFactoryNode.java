@@ -274,6 +274,10 @@ public class SessionFactoryNode extends AbstractNode implements SessionFactoryCo
         return descriptor.getName();
     }
 
+    public String getDisplayName() {
+        return descriptor.getName();
+    }
+
     public String getActiveContent() {
         MultiViewHandler mvh = MultiViews.findMultiViewHandler(editorTopComponent);
         if (mvh.getSelectedPerspective().preferredID().equals(hqlDescription.preferredID())) {
