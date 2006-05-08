@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Configuring a Session Factory</title>
+        <link rel="stylesheet" href="ide.css" type="text/css">
+        <link rel="stylesheet" href="hc.css" type="text/css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h2>Configuring a Session Factory</h2>
+        <p>
+            In order to use the Hibernate Console, you will need to create a session factory. This is done
+            by using the <b>new</b> button from the <a href="hc-sf-window.html">Session Factory's Window</a> toolbar.<br>
+            The configuration dialog will pop up, and you will need to fill in:<br>
+            <dl>
+                <dt>Display Name</dt>
+                <dd>Name under which the session factory will be identified in the system. Can be choosen freely.</dd>
+                <dt>Mapping Locations & Files</dt>
+                <dd>Hibernate mapping files or directories under which these files are located.
+                Directories will be scanned recursively for mapping files (by default files ending with <b>.hbm.xml</b> or <b>.hbm</b>).
+                Mapping file extensions can be configured in the options dialog (Tools | Options | hc)</dd>
+                <dt>Classpath Entries</dt>
+                <dd>JAR files and directories defining your application's classpath. The classpath typically includes
+                your mapped objects (with dependencies) and the JDBC driver.</dd>
+                <dt>Configuration tab</dt>
+                <dd>Database related information. Includes the hibernate dialect, the database URL, user and password.</dd>
+                <dt>Advanced tab</dt>
+                <dd>Contains advanced hibernate properties. They should be enterd in a properties like syntax (the same as in hibernate.properties).</dd>
+            </dl>
+        </p>
+    </body>
+</html>

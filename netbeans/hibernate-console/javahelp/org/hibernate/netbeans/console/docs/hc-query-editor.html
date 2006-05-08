@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Query Editor</title>
+        <link rel="stylesheet" href="ide.css" type="text/css">
+        <link rel="stylesheet" href="hc.css" type="text/css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h2>Query Editor</h2>
+        <p>
+        The Query Editor is used to edit and execute HQL queries. May be opened by double-clicking the session factory node from the <a href="hc-sf-window.html">Session Factories Window</a>
+        </p>
+        <p>
+        To execute a query you have to place th caret inside the query and then press the execution toolbar button.
+        If you'd like to execute just a part of a query (maybe a subquery), you can select that part and press the toolbar button (or use corresponding shortcut)
+        Other actions are available from the editor's context menu, or by using the keyboard shortcuts.
+        </p>
+        <p>
+        The result of a query execution depends on the currently selected <a href="hc-sf-output.html">Output Window</a>
+        view.
+        </p>
+        <p>
+        The Query Editor offers code completion on mapped objects and their properties.
+        It can be invoked by using CTRL+Space.
+        <br><br><img src="img/code-completion.png">
+        </p>
+        <h3>Keyboard shortcuts</h3>
+        <dl>
+            <dt>Execute query</dt><dd>CTRL-J X</dd>
+            <dt>Convert query to java string</dt><dd>CTRL-J J</dd>
+            <dt>Convert java string to query</dt><dd>CTRL-J H</dd>
+        </dl>
+    </body>
+</html>
