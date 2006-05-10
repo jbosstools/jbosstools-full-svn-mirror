@@ -233,16 +233,20 @@
 
     <folder name="Menu">
         <folder name="Window">
-            <attr name="Debugging/Hibernate Console" boolvalue="true"/>
-            <folder name="Hibernate Console">
+            <attr name="Debug/HibernateConsole" boolvalue="true"/>
+            <folder name="HibernateConsole">
+                <attr name="SystemFileSystem.localizingBundle" stringvalue="org.hibernate.netbeans.console.Bundle"/>
                 <file name="SessionFactoriesAction.shadow">
+                    <attr name="SystemFileSystem.localizingBundle" stringvalue="org.hibernate.netbeans.console.Bundle"/>
                     <attr name="originalFile" stringvalue="Actions/Window/org-hibernate-netbeans-console-explorer-ShowSessionFactoriesExplorerAction.instance"/>
                 </file>
                 <attr name="SessionFactoriesAction.shadow/LoggingAction.shadow" boolvalue="true"/>
                 <file name="LoggingAction.shadow">
+                    <attr name="SystemFileSystem.localizingBundle" stringvalue="org.hibernate.netbeans.console.Bundle"/>
                     <attr name="originalFile" stringvalue="Actions/Window/org-hibernate-netbeans-console-output-ShowLoggingOutputAction.instance"/>
                 </file>
             </folder>
+            <attr name="HibernateConsole/Separator3.instance" boolvalue="true"/>
         </folder>
     </folder>
 
