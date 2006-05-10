@@ -3,17 +3,13 @@ package org.hibernate.netbeans.console.model;
 /**
  * @author leon
  */
-public class Store {
+public class StoreCity {
 
     private Long id;
-
-    private String name;
-
-    private String name2;
     
-    private StoreCity city;
-
-    public Store() {
+    private String name;
+    
+    public StoreCity() {
     }
 
     public Long getId() {
@@ -30,22 +26,6 @@ public class Store {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setName2(String name2) {
-        this.name2 = name2;
-    }
-
-    public String getName2() {
-        return name2;
-    }
-
-    public StoreCity getCity() {
-        return city;
-    }
-
-    public void setCity(StoreCity city) {
-        this.city = city;
     }
     
 }

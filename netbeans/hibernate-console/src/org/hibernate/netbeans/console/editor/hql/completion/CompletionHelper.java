@@ -34,16 +34,16 @@ public class CompletionHelper {
         for (QueryTable qt : qts) {
             alias2Type.put(qt.getAlias(), qt.getType());
         }
-        if (qts.size() == 1) {
+        if (qts.size() == 1) { 
             QueryTable visible = qts.get(0);
-            if (name.equals(visible.getAlias())) {
+            String alias = visible.getAlias();
+            if (name.equals(alias)) {
                 return visible.getType();
-            } else {
+            } else if (alias == null || alias.length() == 0 || alias.equals(visible.getType())) {
                 return visible.getType() + "/" + name;
             }
-        } else {
-            return getCanonicalPath(new HashSet<String>(), alias2Type, name);
         }
+        return getCanonicalPath(new HashSet<String>(), alias2Type, name);
     }
     
     public static List<HqlResultItem> getMappedClasses(SessionFactory sf, String prefix) {
@@ -138,26 +138,77 @@ public class CompletionHelper {
                 addPropertiesToList(sf, (ComponentType) idType, prefix, props);
             }
         } else {
+            String baseTypeName = canonicalPath.substring(0, idx);
+            String attributeList = canonicalPath.substring(idx + 1);
             Type type = unwrapType(
                     sf,
-                    getAttributeType(
-                    sf,
-                    canonicalPath.substring(0, idx),
-                    canonicalPath.substring(idx + 1)));
+                    getNextAttributeType(sf, baseTypeName, attributeList));
             if (type == null) {
                 return;
             }
-            int nextIdx = canonicalPath.indexOf('/', idx + 1);
-            if (nextIdx == -1 || type == null) {
+            // Go to the next property
+            idx = attributeList.indexOf('/');
+            if (idx == -1) {
+                canonicalPath = "";
+            } else {
+                canonicalPath = attributeList.substring(idx + 1);
+            }
+            if (canonicalPath.length() == 0) {
+                // No properties left
                 if (type instanceof ComponentType) {
                     addPropertiesToList(sf, (ComponentType) type, prefix, props);
                 } else {
-                    addProperties(sf, getDisplayableTypeName(sf, type, false), prefix, props);
+                    addProperties(sf, getJavaTypeName(sf, type, false), prefix, props);
                 }
             } else {
-                addProperties(sf, getDisplayableTypeName(sf, type, false) + canonicalPath.substring(nextIdx), prefix, props);
+                // Nested properties
+                if (type instanceof ComponentType) {
+                    // We need to find the first non-component type 
+                    while (type instanceof ComponentType && canonicalPath.length() > 0) {
+                        type = getNextAttributeType((ComponentType) type, canonicalPath);
+                        if (type != null) {
+                            // Consume part of the canonical path
+                            idx = canonicalPath.indexOf('/');
+                            if (idx != -1) {
+                                canonicalPath = canonicalPath.substring(idx + 1);
+                            } else {
+                                canonicalPath = "";
+                            }
+                        }
+                    }
+                    if (type instanceof ComponentType) {
+                        addPropertiesToList(sf, (ComponentType) type, prefix, props);
+                    } else if (type != null) {
+                        if (canonicalPath.length() > 0) {
+                            canonicalPath = getJavaTypeName(sf, type, false) + "/" + canonicalPath;
+                        } else {
+                            canonicalPath = getJavaTypeName(sf, type, false);
+                        }
+                        addProperties(sf, canonicalPath, prefix, props);
+                    }
+                } else {
+                    // Just call the method recursively to add our new type
+                    addProperties(sf, getJavaTypeName(sf, type, false) + "/" + canonicalPath, prefix, props);
+                }
             }
         }
+    }
+    
+    private static Type getNextAttributeType(ComponentType t, String attributeName) {
+        int idx = attributeName.indexOf('/');
+        if (idx != -1) {
+            attributeName = attributeName.substring(0, idx);
+        }
+        String[] names = t.getPropertyNames();
+        Type[] types = t.getSubtypes();
+        int i = 0;
+        for (String name : names) {
+            if (attributeName.equals(name)) {
+                return types[i];
+            }
+            i++;
+        }
+        return null;
     }
     
     private static Type unwrapType(SessionFactory sf, Type t) {
@@ -187,10 +238,10 @@ public class CompletionHelper {
         
     }
     
-    private static String getDisplayableTypeName(SessionFactory sf, Type t, boolean simple) {
+    private static String getJavaTypeName(SessionFactory sf, Type t, boolean simple) {
         String name;
         if (t instanceof CollectionType) {
-            name = getDisplayableTypeName(sf, unwrapType(sf, t), simple);
+            name = getJavaTypeName(sf, unwrapType(sf, t), simple);
         } else if (t instanceof AssociationType) {
             name = ((AssociationType) t).getAssociatedEntityName((SessionFactoryImplementor) sf);
         } else {
@@ -229,8 +280,8 @@ public class CompletionHelper {
                 l.add(new HqlResultItem(
                         HqlResultItem.PROPERTY_ICON,
                         candidate,
-                        prefix.length(),
-                        getDisplayableTypeName(sf, types[i], true)));
+                        prefix != null ? prefix.length() : 0,
+                        getJavaTypeName(sf, types[i], true)));
             }
             i++;
         }
@@ -240,17 +291,20 @@ public class CompletionHelper {
         if (cmd == null) {
             return;
         }
+        if (prefix == null) {
+            prefix = "";
+        }
         String[] props = cmd.getPropertyNames();
         for (String candidate : props) {
-            if (prefix == null || prefix.length() == 0 || candidate.startsWith(prefix)) {
+            if (prefix.length() == 0 || candidate.startsWith(prefix)) {
                 l.add(new HqlResultItem(
-                        HqlResultItem.PROPERTY_ICON, candidate, prefix.length(), getDisplayableTypeName(sf, cmd.getPropertyType(candidate), true)));
+                        HqlResultItem.PROPERTY_ICON, candidate, prefix.length(), getJavaTypeName(sf, cmd.getPropertyType(candidate), true)));
             }
         }
         String identPropName = cmd.getIdentifierPropertyName();
         if (identPropName != null && (prefix == null || prefix.length() == 0 || identPropName.startsWith(prefix))) {
             l.add(new HqlResultItem(
-                    HqlResultItem.PROPERTY_ICON, identPropName, prefix.length(), getDisplayableTypeName(sf, cmd.getIdentifierType(), true)));
+                    HqlResultItem.PROPERTY_ICON, identPropName, prefix.length(), getJavaTypeName(sf, cmd.getIdentifierType(), true)));
         }
     }
     
@@ -260,7 +314,7 @@ public class CompletionHelper {
         return l;
     }
     
-    private static Type getAttributeType(SessionFactory sf, String type, String attributeList) {
+    private static Type getNextAttributeType(SessionFactory sf, String type, String attributeList) {
         ClassMetadata cmd = getClassMeta(sf, type);
         if (cmd == null) {
             return null;

@@ -18,8 +18,10 @@ public class Model {
         Configuration cfg = new Configuration();
         cfg.setProperty(Environment.DIALECT, HSQLDialect.class.getName());
         cfg.addInputStream(
-                ModelCompletionTest.class.getResourceAsStream("org/hibernate/netbeans/console/model/Product.hbm.xml")).
-                addInputStream(ModelCompletionTest.class.getResourceAsStream("org/hibernate/netbeans/console/model/Store.hbm.xml"));
+                Model.class.getResourceAsStream("Product.hbm.xml")).
+                addInputStream(Model.class.getResourceAsStream("Store.hbm.xml")).
+                addInputStream(Model.class.getResourceAsStream("ProductOwnerAddress.hbm.xml")).
+                addInputStream(Model.class.getResourceAsStream("StoreCity.hbm.xml"));
         return cfg.buildSessionFactory();
     }
     

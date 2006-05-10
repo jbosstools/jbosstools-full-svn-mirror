@@ -5,7 +5,6 @@ import java.util.List;
 import junit.framework.TestCase;
 import org.hibernate.netbeans.console.model.Model;
 import org.hibernate.SessionFactory;
-import org.hibernate.netbeans.console.editor.hql.completion.HqlResultItem;
 
 /**
  * @author leon
@@ -21,11 +20,17 @@ public class ModelCompletionTest extends TestCase {
     public void testGetMappedClasses() {
         List<HqlResultItem> mappedClasses = CompletionHelper.getMappedClasses(sf, "");
         Collections.sort(mappedClasses, new CompletionComparator());
-        assertEquals("Invalid mapped classes count", 2, mappedClasses.size());
+        assertEquals("Invalid mapped classes count", 4, mappedClasses.size());
+        
         HqlResultItem i1 = mappedClasses.get(0);
         assertEquals("Invalid completion item", "Product", i1.getText());
         HqlResultItem i2 = mappedClasses.get(1);
-        assertEquals("Invalid completion item", "Store", i2.getText());
+        assertEquals("Invalid completion item", "ProductOwnerAddress", i2.getText());
+        HqlResultItem i3 = mappedClasses.get(2);
+        assertEquals("Invalid completion item", "Store", i3.getText());
+        HqlResultItem i4 = mappedClasses.get(3);
+        assertEquals("Invalid completion item", "StoreCity", i4.getText());
+        
         mappedClasses = CompletionHelper.getMappedClasses(sf, " ");
         assertTrue("Space prefix should have no classes", mappedClasses.isEmpty());
         mappedClasses = CompletionHelper.getMappedClasses(sf, "pro");
@@ -48,7 +53,7 @@ public class ModelCompletionTest extends TestCase {
 
     public void testGetStoreFields() {
         List<HqlResultItem> attrs = CompletionHelper.getProperties(sf, "Store", "");
-        doTestFiels(attrs, "id", "name", "name2");
+        doTestFiels(attrs, "city", "id", "name", "name2");
         attrs = CompletionHelper.getProperties(sf, "Store", "name");
         doTestFiels(attrs, "name", "name2");
         attrs = CompletionHelper.getProperties(sf, "Store", "name2");
@@ -73,6 +78,24 @@ public class ModelCompletionTest extends TestCase {
         }
     }
     
+    public void testProductOwnerAddress() {
+        String query = "select p from Product p where p.owner.";
+        List<QueryTable> visible = HqlAnalyzer.getVisibleTables(query.toCharArray(), query.length());
+        List<HqlResultItem> items = CompletionHelper.getProperties(sf, CompletionHelper.getCanonicalPath(visible, "p.owner"), null);
+        doTestFiels(items, "address", "firstName", "lastName");
+        query = "select p from Product p where p.owner.address.";
+        visible = HqlAnalyzer.getVisibleTables(query.toCharArray(), query.length());
+        items = CompletionHelper.getProperties(sf, CompletionHelper.getCanonicalPath(visible, "p.owner.address"), null);
+        doTestFiels(items, "id", "number", "street");
+    }
+    
+    public void testStoreCity() {
+        String query = "select p from Product p join p.stores store where store";
+        List<QueryTable> visible = HqlAnalyzer.getVisibleTables(query.toCharArray(), query.length());
+        List<HqlResultItem> items = CompletionHelper.getProperties(sf, CompletionHelper.getCanonicalPath(visible, "store.city"), null);
+        doTestFiels(items, "id", "name");
+    }
+    
     public void testUnaliasedProductQuery() {
         doTestUnaliasedProductQuery("delete Product where owner.");
         doTestUnaliasedProductQuery("update Product where owner.");
@@ -91,7 +114,8 @@ public class ModelCompletionTest extends TestCase {
         assertEquals("lastName", items.get(0).getText());
         //
         items = CompletionHelper.getProperties(sf, CompletionHelper.getCanonicalPath(visible, "owner"), "");
-        assertEquals(2, items.size());
+        // firstname, lastname, owner
+        assertEquals(3, items.size());
         //
         items = CompletionHelper.getProperties(sf, CompletionHelper.getCanonicalPath(visible, "owner"), "g");
         assertEquals(0, items.size());

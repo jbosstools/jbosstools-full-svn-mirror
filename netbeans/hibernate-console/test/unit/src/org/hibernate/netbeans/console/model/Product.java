@@ -18,7 +18,7 @@ public class Product {
 
     private Set<Store> stores;
 
-    private Owner owner;
+    private ProductOwner owner;
 
     public Product() {
     }
@@ -63,11 +63,11 @@ public class Product {
         this.stores = stores;
     }
 
-    public void setOwner(Owner owner) {
+    public void setOwner(ProductOwner owner) {
         this.owner = owner;
     }
 
-    public Owner getOwner() {
+    public ProductOwner getOwner() {
         return owner;
     }
 

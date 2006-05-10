@@ -96,7 +96,10 @@ public final class SessionFactoryOutput {
             descr.addPropertyChangeListener(nameChangeListener);
         }
         if (!comp.isOpened()) {
-            Mode m = WindowManager.getDefault().findMode("sessionFactoryOutput");
+            Mode m = WindowManager.getDefault().findMode("output");
+            if (m == null) {
+                m = WindowManager.getDefault().findMode("sessionFactoryOutput");
+            }
             if (m != null) {
                 m.dockInto(comp);
             }

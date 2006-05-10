@@ -3,13 +3,11 @@
           "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     
-    <class name="org.hibernate.netbeans.console.model.Store" table="hc_store">
+    <class name="org.hibernate.netbeans.console.model.StoreCity" table="hc_store_city">
         <id name="id">
             <generator class="native"/>
         </id>
         <property name="name"/>
-        <property name="name2"/>
-        <many-to-one name="city" class="org.hibernate.netbeans.console.model.StoreCity"/>
     </class>
         
 </hibernate-mapping>
