@@ -77,7 +77,7 @@
 				<case value="bundle.eclipse">
 					<foreach target="build.platform" param="platform.archive" inheritall="true">
 						<path>
-							<fileset dir="${product.build.root}" includes="eclipse-SDK*"/>
+							<fileset dir="${eclipse.archive.path}" includes="eclipse-SDK*"/>
 						</path>
 					</foreach>
 				</case>
@@ -133,11 +133,11 @@
 	</target>
 
 	<target name="extract.platform.zip">
-		<unzip dest="${build.dest}" src="${eclipse.archive.path}/${platform.archive}"/>
+		<unzip dest="${build.dest}" src="${platform.archive}"/>
 	</target>
 	
 	<target name="extract.platform.tar.gz">
-		<gunzip dest="${build.dest}/temp.tar" src="${eclipse.archive.path}/${platform.archive}"/>
+		<gunzip dest="${build.dest}/temp.tar" src="${platform.archive}"/>
 		<untar src="${build.dest}/temp.tar" dest="${build.dest}"/>
 		<delete file="${build.dest}/temp.tar"/>
 	</target>
