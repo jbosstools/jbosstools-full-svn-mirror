@@ -465,7 +465,12 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
 
     private void fillDriverCombo() {
         ConnectionDescriptor cd = (ConnectionDescriptor) dialectComboBox.getSelectedItem();
+        ComboBoxEditor editor = driverComboBox.getEditor();
+        Object item = editor.getItem();
         driverComboBox.setModel(new DefaultComboBoxModel(cd.drivers));
+        if (item != null) {
+            editor.setItem(item);
+        }
     }
 
     private void removeClassPathButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeClassPathButtonActionPerformed
