@@ -41,6 +41,10 @@ public class EditorContentHelper {
     }
 
     public String getCurrentQuery() {
+        String text = comp.getSelectedText();
+        if (text != null) {
+            return text;
+        }
         Document doc = comp.getDocument();
         if (!(doc instanceof BaseDocument)) {
             return null;
