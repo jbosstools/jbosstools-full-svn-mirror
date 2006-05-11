@@ -37,6 +37,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
+import org.openide.util.NbBundle;
     
 /**
  * @author  leon
@@ -210,20 +211,13 @@ public class QueryResultPanel extends javax.swing.JPanel {
 
     private void setLabels(int itemCount, long time) {
         String queryResult;
-        if (itemCount == 0) {
-            queryResult = "0 Items";
-        } else if (itemCount == 1) {
-            queryResult = "1 Item";
-        } else if (itemCount > 1) {
-            queryResult = itemCount + " Items";
+        String label;
+        if (itemCount >= 0) {
+            label = NbBundle.getMessage(QueryResultPanel.class, "LBL_ExecutionTime", String.valueOf(time), String.valueOf(itemCount));
         } else {
-            queryResult = " ";
-            classNameLabel.setText(" ");
-        }
-        if (time >= 0 && itemCount >= 0) {
-            queryResult += " loaded in " + time + " ms";
-        }
-        itemCountLabel.setText(queryResult);
+            label = " ";
+        }    
+        itemCountLabel.setText(label);
     }
     
     private void setResults(final Session s, final String hql, final Collection results, final ShowOldResultAction showOldResultAction, final long time) {
@@ -233,7 +227,7 @@ public class QueryResultPanel extends javax.swing.JPanel {
             return;
         }
         QueryResultPanel.this.session = s;
-        final ProgressHandle ph = ProgressHandleFactory.createHandle("Preparing results");
+        final ProgressHandle ph = ProgressHandleFactory.createHandle(NbBundle.getMessage(QueryResultPanel.class, "LBL_PreparingResults"));
         ph.start();
         HibernateExecutor.execute(new Runnable() {
             public void run() {
@@ -445,20 +439,22 @@ public class QueryResultPanel extends javax.swing.JPanel {
                 detailsTable.setEnabled(false);
                 elementsList.setEnabled(false);
                 try {
+                    long start = System.currentTimeMillis();
                     final Object value = ri.getPropertyValue(row);
                     if (value instanceof Collection) {
                         // Call this method as a lazy collection might need initializing
                         ((Collection) value).size();
                     }
+                    final long time = System.currentTimeMillis() - start;
                     String name = ri.getPropertyName(row);
                     final ShowOldResultAction action = new ShowOldResultAction(name);
                     try {
                         EventQueue.invokeAndWait(new Runnable() {
                             public void run() {
                                 if (value instanceof Collection) {
-                                    setResults(session, null, (Collection) value, action, -1);
+                                    setResults(session, null, (Collection) value, action, time);
                                 } else {
-                                    setResults(session, null, Collections.singleton(value), action, -1);
+                                    setResults(session, null, Collections.singleton(value), action, time);
                                 }
                                 int selTableRow = detailsTable.getSelectedRow();
                                 if (selTableRow != -1) {
@@ -542,7 +538,7 @@ public class QueryResultPanel extends javax.swing.JPanel {
             elementsList.ensureIndexIsVisible(listIndex);
             detailsTable.setRowSelectionInterval(tableRow, tableRow);
             detailsTable.scrollRectToVisible(detailsTable.getCellRect(tableRow, 0, true));
-            setLabels(elementsList.getModel().getSize(), -1);
+            setLabels(elementsList.getModel().getSize(), 0);
         }
         
     }
