@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="%org.jboss.ide.eclipse.ui.MainPreferencePage"
+            class="org.jboss.ide.eclipse.ui.MainPreferencePage"
+            id="org.jboss.ide.eclipse.ui.MainPreferencePage">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="%org.jboss.ide.eclipse.ui.views"
+            id="org.jboss.ide.eclipse.ui.views">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%org.jboss.ide.eclipse.ui.wizards"
+            id="org.jboss.ide.eclipse.ui.wizards">
+      </category>
+   </extension>
+
+</plugin>
