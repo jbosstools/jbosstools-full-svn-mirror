@@ -49,6 +49,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jdt.core.IJavaProject;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
+import org.jboss.ide.eclipse.core.ProjectChangeListener;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.xdoclet.core.XDocletCorePlugin;
@@ -145,33 +146,42 @@ public class XDocletRunPlugin extends AbstractPlugin
    {
       super.start(context);
 
-      IProject projects[] = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-
-      try
-      {
-         for (int i = 0; i < projects.length; i++)
-         {
-            if (projects[i] != null && projects[i].isAccessible())
-            {
-               if (ProjectUtil.projectHasBuilder(projects[i], XDocletRunBuilder.BUILDER_ID))
-               {
-                  projects[i].setSessionProperty(QNAME_XDOCLET_ENABLED, "true");
-               }
-            }
-         }
-      }
-      catch (CoreException e)
-      {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
-      }
+      initializeXDocletProjects();
    }
+   
+   private void testAndSetXDocletEnabled(IProject project) {
+		try {
+			if (project != null && project.isAccessible()) {
+				if (ProjectUtil.projectHasBuilder(project,
+						XDocletRunBuilder.BUILDER_ID)) {
+					project.setSessionProperty(QNAME_XDOCLET_ENABLED, "true");
+				}
+			}
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+   
+   private void initializeXDocletProjects() {
+		IProject projects[] = ResourcesPlugin.getWorkspace().getRoot()
+				.getProjects();
+		for (int i = 0; i < projects.length; i++) {
+			testAndSetXDocletEnabled(projects[i]);
+		}
+
+		new ProjectChangeListener() {
+			public void projectChanged(IProject project, int kind) {
+				testAndSetXDocletEnabled(project);
+			}
+		}.register();
+	}
 
    /**
-    * Returns the shared instance.
-    *
-    * @return   The default value
-    */
+	 * Returns the shared instance.
+	 * 
+	 * @return The default value
+	 */
    public static XDocletRunPlugin getDefault()
    {
       return XDocletRunPlugin.plugin;
