@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="%org.jboss.ide.eclipse.jdt.xml.ui.preferences.XMLSyntaxPreferencePage"
+            category="org.jboss.ide.eclipse.ui.MainPreferencePage"
+            class="org.jboss.ide.eclipse.jdt.xml.ui.preferences.XMLSyntaxPreferencePage"
+            id="org.jboss.ide.eclipse.jdt.xml.ui.preferences.XMLSyntaxPreferencePage">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="%org.jboss.ide.eclipse.jdt.xml.ui.editors.XMLEditor"
+            icon="icons/full/obj16/xml.gif"
+            extensions="xml,xsd"
+            class="org.jboss.ide.eclipse.jdt.xml.ui.editors.XMLEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            id="org.jboss.ide.eclipse.jdt.xml.ui.editors.XMLEditor">
+      </editor>
+      <editor
+            name="%org.jboss.ide.eclipse.jdt.xml.ui.editors.WMLEditor"
+            icon="icons/full/obj16/xml.gif"
+            extensions="wml"
+            class="org.jboss.ide.eclipse.jdt.xml.ui.editors.XMLEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            id="org.jboss.ide.eclipse.jdt.xml.ui.editors.WMLEditor">
+      </editor>
+      <editor
+            name="%org.jboss.ide.eclipse.jdt.xml.ui.editors.HTMLEditor"
+            icon="icons/full/obj16/xml.gif"
+            extensions="html"
+            class="org.jboss.ide.eclipse.jdt.xml.ui.editors.XMLEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            id="org.jboss.ide.eclipse.jdt.xml.ui.editors.HTMLEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            name="%org.jboss.ide.eclipse.jdt.xml.ui.wizards.NewHTMLPageWizard"
+            icon="icons/full/ctool16/newxml_wiz.gif"
+            category="org.jboss.ide.eclipse.ui.wizards/org.jboss.ide.eclipse.ui.wizards.web"
+            class="org.jboss.ide.eclipse.jdt.xml.ui.wizards.NewHTMLPageWizard"
+            id="org.jboss.ide.eclipse.jdt.xml.ui.wizards.NewHTMLPageWizard">
+      </wizard>
+      <wizard
+            name="%org.jboss.ide.eclipse.jdt.xml.ui.wizards.NewXHTMLPageWizard"
+            icon="icons/full/ctool16/newxml_wiz.gif"
+            category="org.jboss.ide.eclipse.ui.wizards/org.jboss.ide.eclipse.ui.wizards.web"
+            class="org.jboss.ide.eclipse.jdt.xml.ui.wizards.NewXHTMLPageWizard"
+            id="org.jboss.ide.eclipse.jdt.xml.ui.wizards.NewXHTMLPageWizard">
+      </wizard>
+      <wizard
+            name="%org.jboss.ide.eclipse.jdt.xml.ui.wizards.NewWMLPageWizard"
+            icon="icons/full/ctool16/newxml_wiz.gif"
+            category="org.jboss.ide.eclipse.ui.wizards/org.jboss.ide.eclipse.ui.wizards.web"
+            class="org.jboss.ide.eclipse.jdt.xml.ui.wizards.NewWMLPageWizard"
+            id="org.jboss.ide.eclipse.jdt.xml.ui.wizards.NewWMLPageWizard">
+      </wizard>
+   </extension>
+
+</plugin>
