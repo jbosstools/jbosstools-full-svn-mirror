@@ -78,6 +78,8 @@ import org.eclipse.jdt.internal.compiler.batch.Main;
 import org.eclipse.jdt.internal.compiler.env.ICompilationUnit;
 import org.eclipse.jdt.internal.compiler.env.INameEnvironment;
 import org.eclipse.jdt.internal.compiler.problem.DefaultProblemFactory;
+import org.eclipse.jdt.internal.core.JavaProject;
+import org.eclipse.jdt.internal.core.builder.JavaBuilder;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
 import org.jboss.ide.eclipse.jdt.j2ee.jsp.core.compiler.JSPClassLoader;
 import org.jboss.ide.eclipse.jdt.j2ee.jsp.core.compiler.JSPMarkerFactory;
@@ -491,9 +493,11 @@ public class JSPProject implements IResourceChangeListener
    {
       if (this.compiler == null)
       {
-         Main bc = new Main(null, null, false);
-         this.compiler = new Compiler(this.getNameEnvironment(), DefaultErrorHandlingPolicies.exitAfterAllProblems(),
-               bc.options, this.getCompilerRequestor(), new DefaultProblemFactory(Locale.getDefault()));
+    	  IProject project = getProject();
+    	  IJavaProject javaProject = JavaCore.create(project);
+    	           
+    	  this.compiler = new Compiler(this.getNameEnvironment(), DefaultErrorHandlingPolicies.exitAfterAllProblems(),
+               javaProject.getOptions(true), this.getCompilerRequestor(), new DefaultProblemFactory(Locale.getDefault()));
       }
       return this.compiler;
    }
