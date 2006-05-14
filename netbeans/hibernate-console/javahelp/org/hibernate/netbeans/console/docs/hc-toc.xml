@@ -4,7 +4,9 @@
     <tocitem text="Hibernate Console" target="org.hibernate.netbeans.console.about">
         <tocitem text="Session Factories Window" target="org.hibernate.netbeans.console.sf-window"/>
         <tocitem text="Creating a Session Factory" target="org.hibernate.netbeans.console.sf-config"/>
-        <tocitem text="Executing HQL queries" target="org.hibernate.netbeans.console.query-editor"/>
+        <tocitem text="Executing HQL queries" target="org.hibernate.netbeans.console.hql-editor"/>
+        <tocitem text="Executing BeanShell queries" target="org.hibernate.netbeans.console.bsh-editor"/>
         <tocitem text="Output Window" target="org.hibernate.netbeans.console.sf-output"/>
+        <tocitem text="Logging Window" target="org.hibernate.netbeans.console.sf-logging"/>
     </tocitem>
 </toc>

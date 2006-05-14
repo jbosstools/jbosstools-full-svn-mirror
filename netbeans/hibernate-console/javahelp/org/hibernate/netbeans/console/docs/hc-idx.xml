@@ -4,6 +4,8 @@
     <indexitem text="Hibernate Console" target="org.hibernate.netbeans.console.about"/>
     <indexitem text="Session Factories Window" target="org.hibernate.netbeans.console.sf-window"/>
     <indexitem text="Creating a Session Factory" target="org.hibernate.netbeans.console.sf-config"/>
-    <indexitem text="Query Editor" target="org.hibernate.netbeans.console.query-editor"/>
-    <indexitem text="Output Window" target="org.hibernate.netbeans.console.sf-output"/>
+    <indexitem text="HQL Editor" target="org.hibernate.netbeans.console.hql-editor"/>
+    <indexitem text="BeanShell Editor" target="org.hibernate.netbeans.console.bsh-editor"/>
+    <indexitem text="Session Factory Output" target="org.hibernate.netbeans.console.sf-output"/>
+    <indexitem text="Session Factory Logging" target="org.hibernate.netbeans.console.sf-logging"/>
 </index>

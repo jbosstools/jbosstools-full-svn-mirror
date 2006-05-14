@@ -29,7 +29,7 @@ import org.openide.util.actions.CookieAction;
 /**
  * @author leon
  */
-public class EditorContentAction extends CookieAction {
+public class ExecuteContentAction extends CookieAction {
     
     protected void initialize() {
         super.initialize();
@@ -66,7 +66,7 @@ public class EditorContentAction extends CookieAction {
     }
 
     public String getName() {
-        return NbBundle.getMessage(EditorContentAction.class, "CTL_Execute");
+        return NbBundle.getMessage(ExecuteContentAction.class, "CTL_Execute");
     }
 
     public HelpCtx getHelpCtx() {

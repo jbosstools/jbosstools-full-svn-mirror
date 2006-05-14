@@ -6,7 +6,7 @@
         <folder name="Edit">
             <file name="org-hibernate-netbeans-console-editor-hql-Hql2JavaStringAction.instance"/>
             <file name="org-hibernate-netbeans-console-editor-hql-JavaString2HqlAction.instance"/>
-            <file name="org-hibernate-netbeans-console-editor-EditorContentAction.instance"/>
+            <file name="org-hibernate-netbeans-console-editor-ExecuteContentAction.instance"/>
         </folder>
         <folder name="Window">
             <file name="org-hibernate-netbeans-console-explorer-ShowSessionFactoriesExplorerAction.instance"/>
@@ -16,7 +16,7 @@
 
     <folder name="Shortcuts">
         <file name="C-J X.shadow">
-            <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-EditorContentAction.instance"/>
+            <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-ExecuteContentAction.instance"/>
         </file>
         <file name="C-J J.shadow">
             <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-hql-Hql2JavaStringAction.instance"/>
@@ -37,7 +37,7 @@
                 </file>
                 <folder name="Popup">
                     <file name="ExecuteBshAction.shadow">
-                        <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-EditorContentAction.instance"/>
+                        <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-ExecuteContentAction.instance"/>
                     </file>
                     <attr name="ExecuteBshAction.shadow/sep-1.instance" boolvalue="true"/>
                     <file name="sep-1.instance">
@@ -52,7 +52,7 @@
                         </file>
                         <attr name="SeparatorBeforeOwnButtons.instance/ExecuteBshAction.shadow" boolvalue="true"/>
                         <file name="ExecuteBshAction.shadow">
-                            <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-EditorContentAction.instance"/>
+                            <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-ExecuteContentAction.instance"/>
                         </file>
                         <attr name="ExecuteBshAction.shadow/Separator0.instance" boolvalue="true"/>
                     </folder>
@@ -79,7 +79,7 @@
                 </file>
                 <folder name="Popup">
                     <file name="ExecuteHqlAction.shadow">
-                        <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-EditorContentAction.instance"/>
+                        <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-ExecuteContentAction.instance"/>
                     </file>
                     <attr name="ExecuteHqlAction.shadow/Hql2JavaStringAction.shadow" boolvalue="true"/>
                     <file name="Hql2JavaStringAction.shadow">
@@ -102,7 +102,7 @@
                         </file>
                         <attr name="SeparatorBeforeOwnButtons.instance/ExecuteHqlAction.shadow" boolvalue="true"/>
                         <file name="ExecuteHqlAction.shadow">
-                            <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-EditorContentAction.instance"/>
+                            <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-ExecuteContentAction.instance"/>
                         </file>
                         <attr name="ExecuteHqlAction.shadow/Separator0.instance" boolvalue="true"/>
                     </folder>
@@ -133,7 +133,7 @@
             -->
             <folder name="Hibernate Tools Suite">
                 <file name="ExecuteHql.shadow">
-                    <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-EditorContentAction.instance"/>
+                    <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-ExecuteContentAction.instance"/>
                 </file>
                 <file name="Hql2JavaString.shadow">
                     <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-hql-Hql2JavaStringAction.instance"/>
