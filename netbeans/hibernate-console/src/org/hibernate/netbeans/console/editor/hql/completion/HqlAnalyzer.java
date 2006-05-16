@@ -96,7 +96,7 @@ public class HqlAnalyzer {
                 // We check if we have a query on the current depth.
                 // If yes, we'll have to close it
                 if (currentDepthQuery != null && currentDepthQuery.depth == depth) {
-                    currentDepthQuery.endOffset = syntax.getOffset();
+                    currentDepthQuery.endOffset = syntax.getTokenOffset();
                     currentDepthQuery.numericIds.add(numericId);
                     currentDepthQuery.tokens.add(String.valueOf(chars, syntax.getTokenOffset(), syntax.getTokenLength()));
                     subQueries.add(currentDepthQuery);
