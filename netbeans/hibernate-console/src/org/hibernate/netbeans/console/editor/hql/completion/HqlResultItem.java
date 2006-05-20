@@ -1,4 +1,9 @@
 /*
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation; either version 2.1 of
@@ -14,6 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+
 
 package org.hibernate.netbeans.console.editor.hql.completion;
 
@@ -34,25 +40,41 @@ import org.openide.util.Utilities;
 
 class HqlResultItem implements CompletionItem {
 
-    public final static ImageIcon CLASS_ICON =
+    public static final ImageIcon CLASS_ICON =
             new ImageIcon(Utilities.loadImage(Icons.CLASS_ICON));
 
-    public final static ImageIcon PROPERTY_ICON =
+    public static final ImageIcon PROPERTY_ICON =
             new ImageIcon(Utilities.loadImage(Icons.PROPERTY_ICON));
+    
+    public static final int PRIORITY_SIMPLE_NAME = 0;
+    
+    public static final int PRIORITY_QUALIFIED_NAME = 100;
+    
+    public static final int PRIORITY_PROPERTY = 200;
+    
+    public static final int PRIORITY_ALIAS = 300;
+    
+    public static final int PRIORITY_OTHER = 400;
 
     private String text;
 
-    private int prefixLength;
-
+    private String displayText;
+    
     private ImageIcon icon;
 
     private String type;
 
-    public HqlResultItem(ImageIcon icon, String text, int prefixLength, String type) {
+    private int prefixLength;
+    
+    private int sortPriority;
+
+    public HqlResultItem(ImageIcon icon, String text, String displayText, String type, int priority) {
         this.text = text;
-        this.prefixLength = prefixLength;
+        this.displayText = displayText;
+        this.prefixLength = 0;
         this.icon = icon;
         this.type = type;
+        this.sortPriority = priority;
     }
 
     public void defaultAction(JTextComponent component) {
@@ -74,11 +96,11 @@ class HqlResultItem implements CompletionItem {
     }
 
     public int getPreferredWidth(Graphics g, Font defaultFont) {
-        return CompletionUtilities.getPreferredWidth(text, type, g, defaultFont) + 204;
+        return CompletionUtilities.getPreferredWidth(displayText, type, g, defaultFont) + 204;
     }
 
     public void render(Graphics g, Font defaultFont, Color defaultColor, Color backgroundColor, int width, int height, boolean selected) {
-        CompletionUtilities.renderHtml(icon, text, type, g, defaultFont, defaultColor, width, height, selected);
+        CompletionUtilities.renderHtml(icon, displayText, type, g, defaultFont, defaultColor, width, height, selected);
     }
 
     public CompletionTask createDocumentationTask() {
@@ -94,11 +116,11 @@ class HqlResultItem implements CompletionItem {
     }
 
     public int getSortPriority() {
-        return 100;
+        return sortPriority;
     }
 
     public CharSequence getSortText() {
-        return text;
+        return displayText;
     }
 
     public CharSequence getInsertPrefix() {

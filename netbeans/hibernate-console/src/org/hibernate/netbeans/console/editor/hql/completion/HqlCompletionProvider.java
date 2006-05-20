@@ -1,4 +1,9 @@
 /*
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation; either version 2.1 of
@@ -14,19 +19,21 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.hibernate.netbeans.console.editor.hql.completion;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.JTextComponent;
 import org.hibernate.netbeans.console.editor.hql.HqlDocument;
 import org.hibernate.netbeans.console.editor.EditorContentHelper;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.tool.ide.completion.HQLCodeAssist;
+import org.hibernate.tool.ide.completion.HQLCompletionProposal;
+import org.hibernate.tool.ide.completion.IHQLCodeAssist;
+import org.hibernate.tool.ide.completion.IHQLCompletionRequestor;
 import org.netbeans.api.editor.completion.Completion;
 import org.netbeans.spi.editor.completion.CompletionProvider;
 import org.netbeans.spi.editor.completion.CompletionResultSet;
@@ -53,95 +60,74 @@ public class HqlCompletionProvider implements CompletionProvider {
     public int getAutoQueryTypes(JTextComponent component, String typedText) {
         return 0;
     }
+    
+    private static class HqlCompletionRequestor implements IHQLCompletionRequestor {
+        
+        private Collection<HqlResultItem> items;
+        
+        public HqlCompletionRequestor(Collection<HqlResultItem> items) {
+            this.items = items;
+        }
+        
+        public boolean accept(HQLCompletionProposal proposal) {
+            int kind = proposal.getCompletionKind();
+            String completion = proposal.getCompletion();
+            if (completion == null || completion.length() == 0) {
+                return false;
+            }
+            if (kind == HQLCompletionProposal.ENTITY_NAME || kind == HQLCompletionProposal.ALIAS_REF) {
+                if (proposal.getEntityName().equals(proposal.getShortEntityName())) {
+                    // it's most probably the FQN of the entity
+                    items.add(new HqlResultItem(HqlResultItem.CLASS_ICON, completion, proposal.getEntityName(), null, HqlResultItem.PRIORITY_QUALIFIED_NAME));
+                } else {
+                    items.add(new HqlResultItem(HqlResultItem.CLASS_ICON, completion, proposal.getSimpleName(), null, HqlResultItem.PRIORITY_SIMPLE_NAME));
+                }
+                return true;
+            } else if (kind == HQLCompletionProposal.PROPERTY) {
+                items.add(new HqlResultItem(HqlResultItem.PROPERTY_ICON, completion, proposal.getPropertyName(), null, HqlResultItem.PRIORITY_PROPERTY));
+                return true;
+            }
+            return false;
+        }
+
+        public void completionFailure(String string) {
+        }
+        
+    }
 
     private static class HqlCompletionQuery extends AsyncCompletionQuery {
 
         private String filterPrefix;
 
-        private int queryOffset;
-
         private int anchorOffset;
 
         private List<HqlResultItem> queryResult;
-
+        
         protected void query(CompletionResultSet resultSet, Document doc, int caretOffset) {
             try {
-                queryOffset = -1;
                 anchorOffset = -1;
                 queryResult = null;
                 if (!(doc instanceof HqlDocument)) {
                     return;
                 }
                 HqlDocument bd = (HqlDocument) doc;
+                Configuration cfg = bd.getSessionFactoryNode().getDescriptor().getConfiguration();
+                if (cfg == null) {
+                    return;
+                }
                 int[] bounds = EditorContentHelper.getCurrentQueryBounds(bd, caretOffset);
                 if (bounds == null) {
                     return;
                 }
-                char[] chars = bd.getChars(bounds);
+                String query = String.valueOf(bd.getChars(bounds));
+                IHQLCodeAssist assist = new HQLCodeAssist(bd.getSessionFactoryNode().getDescriptor().getConfiguration());
                 int statementOffset = caretOffset - bounds[0];
-                Session s = bd.getSessionFactoryNode().getDescriptor().getSession();
-                SessionFactory sessionFactory = null;
-                if (s != null) {
-                    sessionFactory = s.getSessionFactory();
+                queryResult = new ArrayList<HqlResultItem>();
+                assist.codeComplete(query, statementOffset, new HqlCompletionRequestor(queryResult));
+                if (queryResult.size() > 0) {
+                    anchorOffset = caretOffset;
                 }
-                if (sessionFactory == null) {
-                    return;
-                }
-                String prefix = HqlAnalyzer.getTableNamePrefix(chars, statementOffset);
-                if (HqlAnalyzer.shouldShowTables(chars, statementOffset)) {
-                    // Show tables
-                    List<HqlResultItem> tables = CompletionHelper.getMappedClasses(sessionFactory, prefix);
-                    if (tables.size() == 1 && tables.get(0).getText().equals(prefix)) {
-                        Completion.get().hideAll();
-                    } else {
-                        anchorOffset = caretOffset - prefix.length();
-                        queryOffset = caretOffset;
-                        queryResult = tables;
-                        resultSet.addAllItems(tables);
-                    }
-                } else {
-                    // Show attributes
-                    List<QueryTable> visible = HqlAnalyzer.getVisibleTables(chars, statementOffset);
-                    int dotIndex = prefix.lastIndexOf(".");
-                    if (dotIndex == -1) {
-                        // It's a simple path, not a dot separated one
-                        queryResult = new ArrayList<HqlResultItem>();
-                        boolean hide = true;
-                        for (QueryTable qt : visible) {
-                            String alias = qt.getAlias();
-                            if (!alias.equals(prefix)) {
-                                if (alias.equals(qt.getType()) && visible.size() == 1) {
-                                    hide = false;
-                                    queryResult = CompletionHelper.getProperties(sessionFactory, alias, prefix);
-                                    resultSet.addAllItems(queryResult);
-                                } else if (!alias.equals(qt.getType())) {
-                                    hide = false;
-                                    HqlResultItem ri = new HqlResultItem(HqlResultItem.CLASS_ICON, qt.getAlias(), prefix.length(), null);
-                                    queryResult.add(ri);
-                                    resultSet.addItem(ri);
-                                }
-                            }
-                            if (hide) {
-                                Completion.get().hideAll();
-                            } else {
-                                anchorOffset = caretOffset - prefix.length();
-                                queryOffset = caretOffset;
-                            }
-                        }
-                    } else {
-                        String object = CompletionHelper.getCanonicalPath(visible, prefix.substring(0, dotIndex));
-                        String propertyPrefix = prefix.substring(dotIndex + 1);
-                        List<HqlResultItem> results = CompletionHelper.getProperties(sessionFactory, object, propertyPrefix);
-                        if (results.size() == 1 && results.get(0).getText().equals(propertyPrefix)) {
-                            Completion.get().hideAll();
-                        } else {
-                            queryResult = results;
-                            resultSet.addAllItems(results);
-                            anchorOffset = caretOffset - propertyPrefix.length();
-                            queryOffset = caretOffset;
-                        }
-                    }
-                }
+                resultSet.addAllItems(queryResult);
             } catch (BadLocationException ex) {
                 ErrorManager.getDefault().notify(ex);
             } finally {
@@ -170,7 +156,7 @@ public class HqlCompletionProvider implements CompletionProvider {
         protected void filter(CompletionResultSet resultSet) {
             try {
                 if (filterPrefix != null && queryResult != null) {
-                    resultSet.setAnchorOffset(queryOffset);
+                    resultSet.setAnchorOffset(anchorOffset);
                     List<HqlResultItem> l = filter(queryResult);
                     if (l.size() == 1 && l.get(0).getText().equals(filterPrefix)) {
                         Completion.get().hideAll();

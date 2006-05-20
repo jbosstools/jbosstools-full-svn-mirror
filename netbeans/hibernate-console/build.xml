@@ -2,14 +2,7 @@
 <!-- You may freely edit this file. See harness/README in the NetBeans platform -->
 <!-- for some information/et on what you could do (e.g. targets to override). -->
 <!-- If you delete this file and reopen the project it will be recreated. -->
-<project name="net.java.dev.hts" default="netbeans" basedir=".">
-    <description>Builds, tests, and runs the project net.java.dev.hts.</description>
+<project name="org.hibernate.netbeans.console" default="netbeans" basedir=".">
+    <description>Builds, tests, and runs the project org.hibernate.netbeans.console.</description>
     <import file="nbproject/build-impl.xml"/>
-    
-    <target name="netbeans-extra">
-        <copy todir="build/cluster/modules/ext">
-            <fileset dir="lib" includes="*.jar"/>
-        </copy>
-    </target>    
-    
 </project>

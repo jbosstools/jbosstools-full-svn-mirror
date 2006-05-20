@@ -1,4 +1,9 @@
 /*
+ * JBoss, Home of Professional Open Source
+ * Copyright 2005, JBoss Inc., and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation; either version 2.1 of
@@ -14,6 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+
 package org.hibernate.netbeans.console;
 
 import java.awt.EventQueue;
@@ -135,8 +141,10 @@ public class SessionFactoryDescriptor implements Serializable {
     private String userImports;
     
     private Properties extraProperties;
+    
     private transient Connection connection;
-
+    
+    private Configuration configuration;
     
     private static FileObject ensureFolderExists() throws Exception {
         FileSystem fs = Repository.getDefault().getDefaultFileSystem();
@@ -488,9 +496,8 @@ public class SessionFactoryDescriptor implements Serializable {
         SessionFactory sf = null;
         try {
             currentThread.setContextClassLoader(classLoader);
-            Configuration cfg = createConfiguration(props, ph, classLoader);
-            ph.progress("Building session factory"); // TODO
-            sf = cfg.buildSessionFactory();
+            configuration = createConfiguration(props, ph, classLoader);
+            sf = configuration.buildSessionFactory();
             // Open the connection
             ph.progress("Opening database connection");
             connection = openConnection(props, classLoader);
@@ -612,6 +619,7 @@ public class SessionFactoryDescriptor implements Serializable {
             }
             connection = null;
         }
+        configuration = null;
         propertyChangeSupport.firePropertyChange(new PropertyChangeEvent(this, PROPERTY_SESSION_OPEN, Boolean.TRUE, Boolean.FALSE));
     }
     
@@ -804,5 +812,9 @@ public class SessionFactoryDescriptor implements Serializable {
     public String getUserImports() {
         return userImports;
     }
-    
+
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
 }
