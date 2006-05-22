@@ -23,9 +23,9 @@ package org.jboss.ide.eclipse.deployer.ui.preferences;
 
 import java.util.List;
 
-import org.eclipse.jdt.internal.ui.viewsupport.ListContentProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -52,6 +52,7 @@ import org.jboss.ide.eclipse.deployer.ui.TargetUIAdapter;
 import org.jboss.ide.eclipse.deployer.ui.dialogs.TargetChoiceDialog;
 import org.jboss.ide.eclipse.deployer.ui.dialogs.TargetEditDialog;
 import org.jboss.ide.eclipse.deployer.ui.util.TargetLabelProvider;
+import org.jboss.ide.eclipse.ui.util.ListContentProvider;
 import org.jboss.ide.eclipse.ui.util.StringViewSorter;
 
 /**
@@ -210,7 +211,7 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
       debugTargetList.setEnabled(false);
 
       this.debugViewer = new TableViewer(debugTargetList);
-      this.debugViewer.setContentProvider(new ListContentProvider());
+      this.debugViewer.setContentProvider(new ArrayContentProvider());
       this.debugViewer.setLabelProvider(new TargetLabelProvider());
       this.debugViewer.setSorter(new StringViewSorter());
       this.debugViewer.setInput(DeployerCorePlugin.getDefault().getDebugTargets());

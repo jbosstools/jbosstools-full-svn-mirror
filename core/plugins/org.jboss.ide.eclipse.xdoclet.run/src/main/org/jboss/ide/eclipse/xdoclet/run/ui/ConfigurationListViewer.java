@@ -27,13 +27,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.debug.internal.ui.DefaultLabelProvider;
-import org.eclipse.jdt.internal.ui.viewsupport.ListContentProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -112,7 +112,7 @@ public class ConfigurationListViewer
       table.setLayout(tableLayout);
 
       this.viewer = new CheckboxTableViewer(table);
-      this.viewer.setContentProvider(new ListContentProvider());
+      this.viewer.setContentProvider(new ArrayContentProvider());
       this.viewer.setLabelProvider(new DefaultLabelProvider()
       {
          public Image getImage(Object element)

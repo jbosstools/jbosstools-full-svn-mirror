@@ -23,9 +23,9 @@ package org.jboss.ide.eclipse.xdoclet.run.ui.dialogs;
 
 import java.util.Collection;
 
-import org.eclipse.jdt.internal.ui.viewsupport.ListContentProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ListViewer;
@@ -145,7 +145,7 @@ public class DataChoiceDialog extends Dialog
       dataList.setLayoutData(layoutData);
 
       this.viewer = new ListViewer(dataList);
-      this.viewer.setContentProvider(new ListContentProvider());
+      this.viewer.setContentProvider(new ArrayContentProvider());
       this.viewer.setSorter(new StringViewSorter());
       this.viewer.setInput(this.choices);
       this.viewer.addFilter(new ViewerFilter()
