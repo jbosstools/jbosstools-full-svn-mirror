@@ -26,18 +26,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.jdi.connect.Connector;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.IDebugUIConstants;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
+import org.eclipse.jdt.debug.ui.launchConfigurations.JavaLaunchTab;
 import org.eclipse.jdt.internal.debug.ui.IJavaDebugHelpContextIds;
 import org.eclipse.jdt.internal.debug.ui.JDIDebugUIPlugin;
 import org.eclipse.jdt.internal.debug.ui.launcher.ComboFieldEditor;
-import org.eclipse.jdt.internal.debug.ui.launcher.JavaLaunchConfigurationTab;
 import org.eclipse.jdt.internal.debug.ui.launcher.LauncherMessages;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jdt.launching.IVMConnector;
@@ -63,12 +61,14 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.help.WorkbenchHelp;
 import org.jboss.ide.eclipse.launcher.core.constants.IServerLaunchConfigurationConstants;
 
+import com.sun.jdi.connect.Connector;
+
 /**
  * @author    Hans Dockter
  * @version   $Revision$
  * @created   18 mai 2003
  */
-public class RemoteServerConnectTab extends JavaLaunchConfigurationTab implements IPropertyChangeListener
+public class RemoteServerConnectTab extends JavaLaunchTab implements IPropertyChangeListener
 {
    /** Description of the Field */
    protected Composite fArgumentComposite;

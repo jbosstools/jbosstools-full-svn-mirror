@@ -30,7 +30,7 @@ import java.util.List;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
-import org.eclipse.jdt.internal.debug.ui.launcher.JavaLaunchConfigurationTab;
+import org.eclipse.jdt.debug.ui.launchConfigurations.JavaLaunchTab;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -67,7 +67,7 @@ import org.jboss.ide.eclipse.ui.util.ListContentProvider;
  * @version   $Revision$
  * @created   18 mai 2003
  */
-public class LogFileTab extends JavaLaunchConfigurationTab implements ISelectionChangedListener
+public class LogFileTab extends JavaLaunchTab implements ISelectionChangedListener
 {
    /** Description of the Field */
    protected Button addButton;
