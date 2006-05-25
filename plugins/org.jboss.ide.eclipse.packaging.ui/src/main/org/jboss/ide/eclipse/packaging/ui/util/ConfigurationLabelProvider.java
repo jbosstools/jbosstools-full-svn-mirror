@@ -22,14 +22,16 @@
 package org.jboss.ide.eclipse.packaging.ui.util;
 
 import org.eclipse.debug.internal.ui.DefaultLabelProvider;
+import org.eclipse.jdt.internal.ui.viewsupport.JavaUILabelProvider;
+import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
 import org.jboss.ide.eclipse.packaging.core.model.PackagingArchive;
 import org.jboss.ide.eclipse.packaging.core.model.PackagingFile;
 import org.jboss.ide.eclipse.packaging.core.model.PackagingFolder;
 import org.jboss.ide.eclipse.packaging.ui.IPackagingUIConstants;
 import org.jboss.ide.eclipse.packaging.ui.PackagingUIImages;
-import org.jboss.ide.eclipse.ui.IUIConstants;
-import org.jboss.ide.eclipse.ui.UIImages;
 
 /**
  * @author    letiemble
@@ -55,7 +57,7 @@ public class ConfigurationLabelProvider extends DefaultLabelProvider
       {
          if (((PackagingFolder) element).isLocal())
          {
-            return UIImages.getImage(IUIConstants.IMG_OBJS_FOLDER);
+        	return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER);
          }
          return PackagingUIImages.getImage(IPackagingUIConstants.IMG_OBJS_EXT_FOLDER);
       }
@@ -63,7 +65,7 @@ public class ConfigurationLabelProvider extends DefaultLabelProvider
       {
          if (((PackagingFile) element).isLocal())
          {
-            return UIImages.getImage(IUIConstants.IMG_OBJS_FILE);
+            return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FILE);
          }
          return PackagingUIImages.getImage(IPackagingUIConstants.IMG_OBJS_EXT_FILE);
       }
@@ -73,7 +75,7 @@ public class ConfigurationLabelProvider extends DefaultLabelProvider
          {
             return PackagingUIImages.getImage(IPackagingUIConstants.IMG_OBJS_EXPLODED_JAR);
          }
-         return PackagingUIImages.getImage(IPackagingUIConstants.IMG_OBJS_JAR);
+         return JavaUI.getSharedImages().getImage(org.eclipse.jdt.ui.ISharedImages.IMG_OBJS_JAR);
       }
       return null;
    }
