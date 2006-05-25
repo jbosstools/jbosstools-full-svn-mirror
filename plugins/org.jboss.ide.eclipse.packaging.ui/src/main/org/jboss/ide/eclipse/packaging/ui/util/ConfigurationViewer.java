@@ -43,6 +43,7 @@ import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -298,6 +299,8 @@ public class ConfigurationViewer implements IPropertyChangeListener
          this.getCurrent().addNode(file);
          this.refresh();
       }
+      
+      this.viewer.setExpandedState(archive, true);
    }
 
    /** Description of the Method */
@@ -311,6 +314,7 @@ public class ConfigurationViewer implements IPropertyChangeListener
          this.getCurrent().addNode(folder);
          this.refresh();
       }
+      this.viewer.setExpandedState(archive, true);
    }
 
    /** Description of the Method */
