@@ -2,7 +2,7 @@
 core=1.6.0.GA
 aop=1.1.2.GA
 ejb3=1.0.2.GA
-jbpm=3.0.9
+jbpm=3.0.10
 hibernate-tools=beta5
 tests=1.0.0.GA
 
@@ -10,6 +10,6 @@ tests=1.0.0.GA
 core.cvs=IDE_CORE_1_6_0 
 aop.cvs=IDE_AOP_DEVELOPER_1_1_2
 ejb3.cvs=IDE_EJB3_TOOLS_1_0_2
-jbpm.cvs=jbpm_gpd_3_0_9_1
+jbpm.cvs=jbpm_gpd_3_0_10
 hibernate-tools.cvs=TOOLS_3_1_0_BETA5a
 tests.cvs=HEAD
