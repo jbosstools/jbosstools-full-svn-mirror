@@ -10,7 +10,10 @@
 <!-- Add on <ant> task for each top level element being built. -->
 <!-- ===================================================================== -->
 <target name="allElements">
+ 
 	<ant antfile="${genericTargets}" target="${target}" >
+      <!-- required, otherwise the build suddenly tries to get the customtargets.xml from the root of the eclipse install -->
+      <property name="customTargets" value="${builderDirectory}/customTargets.xml"/>
 		<property name="type" value="feature" />
 		<property name="id" value="org.hibernate.eclipse.feature" />
 	</ant>
