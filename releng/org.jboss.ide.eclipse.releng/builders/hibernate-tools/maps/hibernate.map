@@ -3,3 +3,4 @@ plugin@org.hibernate.eclipse=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com
 plugin@org.hibernate.eclipse.console=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/hibernatetools/plugins/org.hibernate.eclipse.console
 plugin@org.hibernate.eclipse.mapper=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/hibernatetools/plugins/org.hibernate.eclipse.mapper
 plugin@org.hibernate.eclipse.help=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/hibernatetools/plugins/org.hibernate.eclipse.help
+plugin@org.hibernate.eclipse.jdt.apt.ui=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/hibernatetools/plugins/org.hibernate.eclipse.jdt.apt.ui
