@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.debug.core.ILaunchConfiguration;
+import org.jboss.ide.eclipse.as.core.server.JBossServer;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -42,7 +42,7 @@ public class EJB3WizardsCorePlugin extends Plugin
    //Resource bundle.
    private ResourceBundle resourceBundle;
 
-   private ILaunchConfiguration selectedLaunchConfiguration;
+   private JBossServer selectedServer;
 
    /**
     * The constructor.
@@ -131,13 +131,13 @@ public class EJB3WizardsCorePlugin extends Plugin
       return null;
    }
 
-   public ILaunchConfiguration getSelectedLaunchConfiguration()
+   public JBossServer getSelectedServer()
    {
-      return selectedLaunchConfiguration;
+      return selectedServer;
    }
 
-   public void setSelectedLaunchConfiguration(ILaunchConfiguration selectedLaunchConfiguration)
+   public void setSelectedServer(JBossServer selectedServer)
    {
-      this.selectedLaunchConfiguration = selectedLaunchConfiguration;
+      this.selectedServer = selectedServer;
    }
 }

@@ -29,9 +29,10 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.wst.server.core.IServer;
+import org.eclipse.wst.server.core.ServerCore;
+import org.jboss.ide.eclipse.as.core.server.JBossServer;
 import org.jboss.ide.eclipse.jdt.aop.core.classpath.AopClasspathContainer;
-import org.jboss.ide.eclipse.launcher.core.ServerLaunchManager;
-import org.jboss.ide.eclipse.launcher.core.constants.IJBossConstants;
 
 /**
  * @author Marshall
@@ -47,7 +48,7 @@ public class EJB3ClasspathContainer extends AopClasspathContainer
 
    protected IJavaProject javaProject;
 
-   protected ILaunchConfiguration jbossConfig;
+   protected JBossServer jbossServer;
 
    protected String jbossConfigurationName;
 
@@ -80,7 +81,7 @@ public class EJB3ClasspathContainer extends AopClasspathContainer
       try
       {
          String configName = path.segment(1);
-         ILaunchConfiguration[] configurations = ServerLaunchManager.getInstance().getServerConfigurations();
+         IServer servers[] = ServerCore.getServers();
 
          if (configName == null)
          {
@@ -93,18 +94,18 @@ public class EJB3ClasspathContainer extends AopClasspathContainer
             }
          }
 
-         for (int i = 0; i < configurations.length; i++)
+         for (int i = 0; i < servers.length; i++)
          {
-            if (configurations[i].getName().equals(configName))
+            if (servers[i].getName().equals(configName))
             {
-               jbossConfig = configurations[i];
-               break;
+            	jbossServer = (JBossServer) servers[i].getAdapter(JBossServer.class);
+            	break;
             }
          }
 
-         if (jbossConfig != null)
+         if (jbossServer != null)
          {
-            jbossConfigurationName = jbossConfig.getName();
+            jbossConfigurationName = jbossServer.getRuntimeConfiguration().getJbossConfiguration();
          }
 
       }
@@ -118,21 +119,11 @@ public class EJB3ClasspathContainer extends AopClasspathContainer
 
    public IPath[] getAopJarPaths()
    {
-      if (jbossConfig == null)
+      if (jbossServer == null)
          return new IPath[0];
 
-      String jbossBaseDir = null;
-      String jbossConfigDir = null;
-
-      try
-      {
-         jbossBaseDir = jbossConfig.getAttribute(IJBossConstants.ATTR_JBOSS_HOME_DIR, "");
-         jbossConfigDir = jbossConfig.getAttribute(IJBossConstants.ATTR_SERVER_CONFIGURATION, "default");
-      }
-      catch (CoreException e)
-      {
-
-      }
+      String jbossBaseDir = jbossServer.getRuntimeConfiguration().getServerHome();
+      String jbossConfigDir = jbossServer.getRuntimeConfiguration().getJbossConfiguration();
 
       ArrayList paths = new ArrayList();
 
@@ -173,7 +164,7 @@ public class EJB3ClasspathContainer extends AopClasspathContainer
 
    public String getDescription()
    {
-      return DESCRIPTION + " [" + (jbossConfig == null ? "error" : jbossConfigurationName) + "]";
+      return DESCRIPTION + " [" + (jbossServer == null ? "error" : jbossConfigurationName) + "]";
    }
 
    public String getJBossConfigurationName()
@@ -186,14 +177,14 @@ public class EJB3ClasspathContainer extends AopClasspathContainer
       this.jbossConfigurationName = jbossConfigurationName;
    }
 
-   public ILaunchConfiguration getJBossConfiguration()
+   public JBossServer getJBossServer()
    {
-      return jbossConfig;
+      return jbossServer;
    }
 
-   public void setJBossConfiguration(ILaunchConfiguration jbossConfig)
+   public void setJBossServer(JBossServer jbossServer)
    {
-      this.jbossConfig = jbossConfig;
+      this.jbossServer = jbossServer;
    }
 
 }

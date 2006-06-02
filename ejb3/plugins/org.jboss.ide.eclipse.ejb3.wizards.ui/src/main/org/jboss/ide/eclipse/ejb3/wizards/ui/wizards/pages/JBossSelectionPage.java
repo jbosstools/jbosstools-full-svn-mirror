@@ -21,15 +21,10 @@
  */
 package org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.pages;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.debug.core.ILaunchConfiguration;
-import org.eclipse.debug.internal.ui.DebugUIPlugin;
-import org.eclipse.debug.ui.DebugUITools;
-import org.eclipse.debug.ui.IDebugUIConstants;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -41,19 +36,23 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.wst.server.core.IServer;
+import org.eclipse.wst.server.core.ServerCore;
+import org.eclipse.wst.server.ui.ServerUICore;
+import org.eclipse.wst.server.ui.internal.ServerUIPlugin;
+import org.eclipse.wst.server.ui.internal.actions.NewServerAction;
+import org.jboss.ide.eclipse.as.core.server.JBossServer;
 import org.jboss.ide.eclipse.ejb3.wizards.core.EJB3WizardsCorePlugin;
-import org.jboss.ide.eclipse.launcher.core.ServerLaunchManager;
-import org.jboss.ide.eclipse.launcher.ui.views.ServerNavigatorContentProvider;
-import org.jboss.ide.eclipse.launcher.ui.views.ServerNavigatorLabelProvider;
 
 public class JBossSelectionPage extends WizardPage
 {
 
-   protected TableViewer configurations;
+   protected TableViewer servers;
 
-   protected ILaunchConfiguration configuration;
+   protected JBossServer jbossServer;
 
-   protected Button newConfiguration, editConfiguration;
+   protected Button newServer;
 
    public JBossSelectionPage()
    {
@@ -71,14 +70,15 @@ public class JBossSelectionPage extends WizardPage
 
       configurationComposite.setLayout(new FillLayout());
 
-      configurations = new TableViewer(configurationComposite);
-      configurations.setContentProvider(new ServerNavigatorContentProvider());
-      configurations.setLabelProvider(new ServerNavigatorLabelProvider());
-      configurations.addSelectionChangedListener(new ISelectionChangedListener()
+      servers = new TableViewer(configurationComposite);
+      
+      servers.setContentProvider(new ArrayContentProvider());
+      servers.setLabelProvider(ServerUICore.getLabelProvider());
+      servers.addSelectionChangedListener(new ISelectionChangedListener()
       {
          public void selectionChanged(SelectionChangedEvent event)
          {
-            configurationSelected();
+            serverSelected();
          }
       });
 
@@ -87,9 +87,9 @@ public class JBossSelectionPage extends WizardPage
       Composite links = new Composite(main, SWT.NONE);
       links.setLayout(new RowLayout());
 
-      newConfiguration = new Button(links, SWT.NONE);
-      newConfiguration.setText("Create a JBoss configuration");
-      newConfiguration.addSelectionListener(new SelectionListener()
+      newServer = new Button(links, SWT.NONE);
+      newServer.setText("Create a JBoss Server");
+      newServer.addSelectionListener(new SelectionListener()
       {
          public void widgetDefaultSelected(SelectionEvent e)
          {
@@ -98,70 +98,70 @@ public class JBossSelectionPage extends WizardPage
 
          public void widgetSelected(SelectionEvent e)
          {
-            createJBossConfiguration();
+            createJBossServer();
          }
       });
 
-      editConfiguration = new Button(links, SWT.NONE);
-      editConfiguration.setText("Edit JBoss Configuration");
-      editConfiguration.addSelectionListener(new SelectionListener()
-      {
-         public void widgetDefaultSelected(SelectionEvent e)
-         {
-            widgetSelected(e);
-         }
+//      editServer = new Button(links, SWT.NONE);
+//      editServer.setText("Edit JBoss Server");
+//      editServer.addSelectionListener(new SelectionListener()
+//      {
+//         public void widgetDefaultSelected(SelectionEvent e)
+//         {
+//            widgetSelected(e);
+//         }
+//
+//         public void widgetSelected(SelectionEvent e)
+//         {
+//            editJBossServer();
+//         }
+//      });
 
-         public void widgetSelected(SelectionEvent e)
-         {
-            editJBossConfiguration();
-         }
-      });
-
-      editConfiguration.setEnabled(false);
+//      editServer.setEnabled(false);
 
       setControl(main);
    }
 
    private void refreshConfigurations()
    {
-      try
-      {
-         configurations.setInput(ServerLaunchManager.getInstance().getServerConfigurations());
-      }
-      catch (CoreException e)
-      {
-         e.printStackTrace();
-      }
+	   servers.setInput(ServerCore.getServers());
    }
 
-   private void createJBossConfiguration()
+   private void createJBossServer()
    {
-      int status = DebugUITools.openLaunchConfigurationDialogOnGroup(DebugUIPlugin.getShell(),
-            new StructuredSelection(), IDebugUIConstants.ID_DEBUG_LAUNCH_GROUP);
+	   NewServerAction action = new NewServerAction();
+	   action.init(PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+	   action.run(null);
+	   
+//      int status = DebugUITools.openLaunchConfigurationDialogOnGroup(DebugUIPlugin.getShell(),
+//            new StructuredSelection(), IDebugUIConstants.ID_DEBUG_LAUNCH_GROUP);
 
       refreshConfigurations();
    }
 
-   private void editJBossConfiguration()
+   private void editJBossServer()
    {
-      int status = DebugUITools.openLaunchConfigurationDialogOnGroup(DebugUIPlugin.getShell(), new StructuredSelection(
-            configuration), IDebugUIConstants.ID_DEBUG_LAUNCH_GROUP);
+	   
+	   ServerUIPlugin.editServer(jbossServer.getServer());
+//      int status = DebugUITools.openLaunchConfigurationDialogOnGroup(DebugUIPlugin.getShell(), new StructuredSelection(
+//            configuration), IDebugUIConstants.ID_DEBUG_LAUNCH_GROUP);
 
       refreshConfigurations();
    }
 
-   protected void configurationSelected()
+   protected void serverSelected()
    {
-      IStructuredSelection selection = (IStructuredSelection) configurations.getSelection();
-      configuration = (ILaunchConfiguration) selection.getFirstElement();
-
+      IStructuredSelection selection = (IStructuredSelection) servers.getSelection();
+      IServer server = (IServer) selection.getFirstElement();
+      jbossServer = (JBossServer) server.getAdapter(JBossServer.class);
+      
       getWizard().getContainer().updateButtons();
-      EJB3WizardsCorePlugin.getDefault().setSelectedLaunchConfiguration(configuration);
-      editConfiguration.setEnabled(true);
+      EJB3WizardsCorePlugin.getDefault().setSelectedServer(jbossServer);
+//      editServer.setEnabled(true);
    }
 
-   public ILaunchConfiguration getLaunchConfiguration()
+   public JBossServer getServer()
    {
-      return configuration;
+      return jbossServer;
    }
 }

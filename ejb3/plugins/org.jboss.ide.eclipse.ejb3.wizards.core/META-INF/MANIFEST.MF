@@ -15,6 +15,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jdt,
  org.eclipse.jdt.core,
  org.jboss.ide.eclipse.jdt.aop.core,
- org.jboss.ide.eclipse.launcher.core,
- org.eclipse.debug.core
+ org.eclipse.debug.core,
+ org.jboss.ide.eclipse.as.core,
+ org.eclipse.wst.server.core
 Eclipse-AutoStart: true

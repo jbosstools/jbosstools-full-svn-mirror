@@ -22,8 +22,10 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.ide.eclipse.jdt.aop.core,
  org.eclipse.ui.ide,
  org.eclipse.jdt.launching,
- org.jboss.ide.eclipse.launcher.core,
- org.jboss.ide.eclipse.launcher.ui,
  org.eclipse.debug.core,
- org.eclipse.debug.ui
+ org.eclipse.debug.ui,
+ org.jboss.ide.eclipse.as.core,
+ org.jboss.ide.eclipse.as.ui,
+ org.eclipse.wst.server.core,
+ org.eclipse.wst.server.ui
 Eclipse-AutoStart: true

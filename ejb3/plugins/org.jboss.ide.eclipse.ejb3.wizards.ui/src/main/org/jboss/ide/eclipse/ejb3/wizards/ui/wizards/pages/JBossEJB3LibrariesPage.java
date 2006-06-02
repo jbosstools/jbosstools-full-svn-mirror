@@ -21,17 +21,15 @@
  */
 package org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.pages;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.ui.wizards.IClasspathContainerPage;
+import org.jboss.ide.eclipse.as.core.server.JBossServer;
 import org.jboss.ide.eclipse.ejb3.wizards.core.EJB3WizardsCorePlugin;
 import org.jboss.ide.eclipse.ejb3.wizards.core.classpath.EJB3ClasspathContainer;
 import org.jboss.ide.eclipse.ejb3.wizards.ui.EJB3WizardsUIPlugin;
-import org.jboss.ide.eclipse.launcher.core.constants.IJBossConstants;
 
 public class JBossEJB3LibrariesPage extends JBossSelectionPage implements IClasspathContainerPage
 {
@@ -43,20 +41,12 @@ public class JBossEJB3LibrariesPage extends JBossSelectionPage implements IClass
       super();
    }
 
-   private boolean jbossConfigurationHasEJB3(ILaunchConfiguration jbossConfiguration)
+   private boolean jbossServerHasEJB3(JBossServer jbossServer)
    {
-      String jbossBaseDir = null, jbossConfigDir = null;
-
       IPath jarToCheck = EJB3ClasspathContainer.jbossConfigRelativeJarPaths[0];
-      try
-      {
-         jbossBaseDir = jbossConfiguration.getAttribute(IJBossConstants.ATTR_JBOSS_HOME_DIR, "");
-         jbossConfigDir = jbossConfiguration.getAttribute(IJBossConstants.ATTR_SERVER_CONFIGURATION, "default");
-      }
-      catch (CoreException e)
-      {
-         return false;
-      }
+
+      String jbossBaseDir = jbossServer.getRuntimeConfiguration().getServerHome();
+      String jbossConfigDir = jbossServer.getRuntimeConfiguration().getJbossConfiguration();
 
       IPath absoluteJarPath = new Path(jbossBaseDir).append("server").append(jbossConfigDir).append(jarToCheck);
 
@@ -66,20 +56,20 @@ public class JBossEJB3LibrariesPage extends JBossSelectionPage implements IClass
    public boolean finish()
    {
 
-      if (configuration != null)
+      if (jbossServer != null)
       {
-         ILaunchConfiguration jbossConfiguration = EJB3WizardsCorePlugin.getDefault().getSelectedLaunchConfiguration();
-         if (jbossConfigurationHasEJB3(jbossConfiguration))
+         JBossServer jbossServer = EJB3WizardsCorePlugin.getDefault().getSelectedServer();
+         if (jbossServerHasEJB3(jbossServer))
          {
             classpathEntry = JavaCore.newContainerEntry(new Path(EJB3ClasspathContainer.CONTAINER_ID)
-                  .append(jbossConfiguration.getName()), true);
+                  .append(jbossServer.getServer().getName()), true);
             return true;
          }
          else
          {
             EJB3WizardsUIPlugin
                   .error("The selected configuration (\""
-                        + jbossConfiguration.getName()
+                        + jbossServer.getServer().getName()
                         + "\")"
                         + " does not contain the expected EJB3 libraries. Please install JBoss with EJB3 enabled, or try another configuration. ");
          }
@@ -90,7 +80,7 @@ public class JBossEJB3LibrariesPage extends JBossSelectionPage implements IClass
 
    public boolean isPageComplete()
    {
-      return configuration != null && isCurrentPage();
+      return jbossServer != null && isCurrentPage();
    }
 
    public IClasspathEntry getSelection()

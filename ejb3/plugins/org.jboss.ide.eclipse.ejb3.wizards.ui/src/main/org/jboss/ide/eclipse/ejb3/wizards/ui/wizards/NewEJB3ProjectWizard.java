@@ -196,7 +196,7 @@ public class NewEJB3ProjectWizard extends Wizard implements INewWizard
 
       classpathEntries.add(JavaCore.newContainerEntry(new Path(AopJdk15ClasspathContainer.CONTAINER_ID)));
       classpathEntries.add(JavaCore.newContainerEntry(new Path(EJB3ClasspathContainer.CONTAINER_ID).append(page2
-            .getLaunchConfiguration().getName())));
+            .getServer().getServer().getName())));
 
       return (IClasspathEntry[]) classpathEntries.toArray(new IClasspathEntry[classpathEntries.size()]);
    }
@@ -367,7 +367,7 @@ public class NewEJB3ProjectWizard extends Wizard implements INewWizard
       if (page2 == null)
          return false;
 
-      return page2.getLaunchConfiguration() != null;
+      return page2.getServer() != null;
    }
 
 }
