@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JBossIDE First Run Plug-in
 Bundle-SymbolicName: org.jboss.ide.eclipse.firstrun; singleton:=true
-Bundle-Version: 1.6.0
+Bundle-Version: 2.0.0
 Bundle-Activator: org.jboss.ide.eclipse.firstrun.FirstRunPlugin
 Bundle-Vendor: JBoss, Inc
 Bundle-Localization: plugin
