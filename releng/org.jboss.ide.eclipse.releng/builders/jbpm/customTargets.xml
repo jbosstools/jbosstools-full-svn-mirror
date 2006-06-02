@@ -12,6 +12,7 @@
 <!-- ===================================================================== -->
 <target name="allElements">
 	 <ant antfile="${genericTargets}" target="${target}" >
+	 	<property name="customTargets" value="${builderDirectory}/customTargets.xml"/>
 		<property name="type" value="feature" />
 		<property name="id" value="org.jbpm.gd.jpdl.feature" /> 
 	</ant>
@@ -24,7 +25,7 @@
 <!-- Add one target for each root element and each configuration -->
 <!-- ===================================================================== -->
 
-<target name="assemble.org.jbpm.feature">
+<target name="assemble.org.jbpm.gd.jpdl.feature">
 	<property name="archiveName" value="jBPM-Designer-${versionTag}.zip"/>
 	<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/>
 </target>
@@ -72,7 +73,7 @@
 	</ant>
 -->
 	<replace 
-		file="${buildDirectory}/plugins/org.jbpm.ui/src/org/jbpm/ui/PluginConstants.java" 
+		file="${buildDirectory}/plugins/org.jbpm.gd.jpdl.ui/src/org/jbpm/ui/PluginConstants.java" 
 		token="%jbpm.version%" value="${jbpm.version}" />
 	
 	<if>
