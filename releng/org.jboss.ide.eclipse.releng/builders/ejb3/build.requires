@@ -1,1 +1,1 @@
-builder.requires=eclipse,jwsdp
+builder.requires=eclipse,jwsdp,emf-sdo-xsd,gef,jem,webtools
