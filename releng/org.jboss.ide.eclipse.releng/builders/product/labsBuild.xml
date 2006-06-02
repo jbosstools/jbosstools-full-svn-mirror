@@ -18,17 +18,17 @@
 	<property name="labs-dir" value="labs.jboss.com"/>
 	<property name="downloads-dir" value="${labs-dir}/downloads"/>
 	
-	<target name="fetch-builds-xml">
+	<target name="fetch-builds-xml" if="enable.downloads.update">
 		<get src="${jbosside.download.url}/builds/builds.xml" dest="${labs-dir}/builds.xml"/>
 	</target>
 	
-	<target name="generate-top-level-downloads-xml" depends="fetch-builds-xml">
+	<target name="generate-top-level-downloads-xml" depends="fetch-builds-xml" if="enable.downloads.update">
 		<style destdir="." includes="${labs-dir}/builds.xml" extension=".downloads.xml" style="${labs-dir}/downloads.xsl" force="true"/>
 		
 		<move file="${labs-dir}/builds.downloads.xml" tofile="${labs-dir}/downloads/downloads.xml"/>
 	</target>
 	
-	<target name="generate-sections-downloads-xml" depends="generate-top-level-downloads-xml">
+	<target name="generate-sections-downloads-xml" depends="generate-top-level-downloads-xml" if="enable.downloads.update">
 		<for list="nightly,integration,development-release,stable-release" param="build-type">
 			<sequential>
 				<style destdir="." includes="${labs-dir}/builds.xml" extension=".@{build-type}.xml" style="${labs-dir}/downloads-section.xsl" force="true">
