@@ -9,6 +9,7 @@
 <!-- ===================================================================== -->
 <target name="allElements">
 	<ant antfile="${genericTargets}" target="${target}" >
+		<property name="customTargets" value="${builderDirectory}/customTargets.xml"/>
 		<property name="type" value="feature" />
 		<property name="id" value="org.jboss.ide.eclipse.ejb3.feature" />
 	</ant>
@@ -66,7 +67,7 @@
 <!-- Steps to do after fetching the build elements -->
 <!-- ===================================================================== -->
 <target name="postFetch">
-	<condition property="append" else="false">
+	<!--condition property="append" else="false">
 		<not>
 			<equals arg1="${buildType}" arg2="R"/>
 		</not>
@@ -84,6 +85,24 @@
 			<plugin>org.jboss.ide.eclipse.launcher.core</plugin>
 			<plugin>org.jboss.ide.eclipse.launcher.ui</plugin>
 		</reverseUpdatePlugins>
+	</updateVersions-->
+	
+	<condition property="append" else="false">
+		<not>
+			<equals arg1="${buildType}" arg2="R"/>
+		</not>
+	</condition>
+	<updateVersions type="plugin" version="${versionTag}" append="${append}"
+		failonerror="false" failonrecursiveerror="false">
+		<fileset dir="${buildDirectory}/plugins">
+			<include name="*ejb3*"/>
+		</fileset>
+	</updateVersions>
+	<updateVersions type="feature" version="${versionTag}" append="${append}"
+		failonerror="false" failonrecursiveerror="false" updatePluginRefs="false">
+		<fileset dir="${buildDirectory}/features">
+			<include name="*ejb3*"/>
+		</fileset>
 	</updateVersions>
 </target>
 

@@ -11,10 +11,12 @@
 <!-- ===================================================================== -->
 <target name="allElements">
 	<ant antfile="${genericTargets}" target="${target}" >
+		<property name="customTargets" value="${builderDirectory}/customTargets.xml"/>
 		<property name="type" value="feature" />
 		<property name="id" value="org.jboss.ide.eclipse.test.feature" />
 	</ant>
     <ant antfile="${genericTargets}" target="${target}" >
+    	<property name="customTargets" value="${builderDirectory}/customTargets.xml"/>
         <property name="type" value="feature" />
         <property name="id" value="org.hibernate.eclipse.test.feature" />
     </ant>

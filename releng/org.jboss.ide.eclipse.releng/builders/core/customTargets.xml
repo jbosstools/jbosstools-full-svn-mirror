@@ -11,6 +11,7 @@
 <!-- ===================================================================== -->
 <target name="allElements">
 	<ant antfile="${genericTargets}" target="${target}" >
+		<property name="customTargets" value="${builderDirectory}/customTargets.xml"/>
 		<property name="type" value="feature" />
 		<property name="id" value="org.jboss.ide.eclipse.feature" />
 	</ant>
@@ -77,11 +78,20 @@
 			<equals arg1="${buildType}" arg2="R"/>
 		</not>
 	</condition>
+	<updateVersions type="plugin" version="${versionTag}" append="${append}"
+		failonerror="false" failonrecursiveerror="false">
+		<fileset dir="${buildDirectory}/plugins">
+			<include name="org.jboss.ide.eclipse.*"/>
+			<exclude name="org.jboss.ide.eclipse.jdt.aop.*"/>
+			<exclude name="org.jboss.ide.eclipse.as.*"/>
+			<exclude name="org.jboss.ide.eclipse.freemarker.*"/>
+			<exclude name="org.jboss.ide.eclipse.ejb3.*"/>
+		</fileset>
+	</updateVersions>
 	<updateVersions type="feature" version="${versionTag}" append="${append}"
-		updateAssembleScript="false" recursivePlugins="true"
-		pluginRegex="org.jboss.ide.*">
+		failonerror="false" failonrecursiveerror="false" updatePluginRefs="false">
 		<fileset dir="${buildDirectory}/features">
-			<include name="*org.jboss.ide.eclipse.feature"/>
+			<include name="org.jboss.ide.eclipse.feature"/>
 		</fileset>
 	</updateVersions>
 </target>
@@ -129,7 +139,7 @@
 <target name="postAssemble">
 	
 	<bundlePlugins pluginList="${include.plugins}" buildDirectory="${buildDirectory}"
-		archivePath="${buildDirectory}/${buildLabel}/JBossIDE-CORE-${versionTag}.zip" />
+		archivePath="${buildDirectory}/${buildLabel}/JBossIDE-Core-${versionTag}.zip" />
 	
 	<!--property name="tmp.dir" value="${buildDirectory}/../tmp"/>
 	<property name="plugins.dir" value="${buildDirectory}/plugins"/>

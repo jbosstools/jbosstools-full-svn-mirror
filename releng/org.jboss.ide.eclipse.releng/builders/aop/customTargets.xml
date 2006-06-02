@@ -11,6 +11,7 @@
 <!-- ===================================================================== -->
 <target name="allElements">
 	<ant antfile="${genericTargets}" target="${target}" >
+		<property name="customTargets" value="${builderDirectory}/customTargets.xml"/>
 		<property name="type" value="feature" />
 		<property name="id" value="org.jboss.ide.eclipse.jdt.aop.feature" />
 	</ant>
