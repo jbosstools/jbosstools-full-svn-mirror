@@ -42,6 +42,7 @@
    </target>
 	
    <target name="build">
+   	<stopwatch name="buildTimer"/>
    	<property name="jbosside.download.root" value="${jbosside.download.url}/builds/${product.buildDesc}/${product.versionTag}"/>
    	<property name="product.build.directory" value="${product.build.root}/${product.versionTag}"/>		
    	

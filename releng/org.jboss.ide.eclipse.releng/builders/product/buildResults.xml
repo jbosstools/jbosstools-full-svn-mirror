@@ -128,6 +128,8 @@
 			<format pattern="MM/dd/yyyy HH:mm" property="build-date"/>
 		</tstamp>
 		
+		<stopwatch watch="buildTimer" action="total"/>
+		
 		<!-- load test results -->
 		<property file="${product.build.directory}/tests/test-results/org.jboss.ide.eclipse.tests.properties"/>
 		
@@ -214,6 +216,7 @@
 			<filter token="jbosside-freemarker-filename" value="${jbosside-freemarker-filename}"/>
 			<filter token="freemarker-file-size" value="${freemarker-file-size}"/>
 			
+			<filter token="build-time" value="${buildTimer}"/>
 			<filter token="build-information" value="${build.information}"/>
 			<filter token="bundle-information" value="${bundle.information}"/>
 				
