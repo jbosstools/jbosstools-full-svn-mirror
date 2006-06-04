@@ -227,7 +227,6 @@
 			
 		<copy todir="${product.build.directory}" overwrite="true">
 			<fileset file="buildResults.html.template"/>
-			<fileset file="buildResults.css"/>
 			<mapper type="glob" from="*.html.template" to="*.html"/>
 			<filterset refid="results-filter-set"/>
 		</copy>
@@ -236,6 +235,10 @@
 			<fileset file="emailBody.html.template"/>
 			<mapper type="glob" from="*.html.template" to="*.html"/>
 			<filterset refid="results-filter-set"/>
+		</copy>
+		
+		<copy todir="${product.build.directory}" overwrite="true">
+			<fileset file="buildResults.css"/>	
 		</copy>
 		
 		<copy todir="${product.build.directory}/images">
