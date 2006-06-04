@@ -128,7 +128,7 @@
 			<format pattern="MM/dd/yyyy HH:mm" property="build-date"/>
 		</tstamp>
 		
-		<stopwatch watch="buildTimer" action="total"/>
+		<stopwatch name="buildTimer" action="total"/>
 		
 		<!-- load test results -->
 		<property file="${product.build.directory}/tests/test-results/org.jboss.ide.eclipse.tests.properties"/>
