@@ -10,7 +10,7 @@
 	<tr>
 		<td width="50%">
 			<span id="title">JBoss Eclipse IDE Build</span><br/>
-			<span id="buildName">%built-type% build %jbosside-build-name%</span>
+			<span id="buildName">%build-type% build %jbosside-build-name%</span>
 		</td>
 		<td width="50%" align="right">
 			<span id="buildDate">%date%</span><br/>
