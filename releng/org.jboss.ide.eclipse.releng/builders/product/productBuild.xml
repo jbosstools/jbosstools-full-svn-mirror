@@ -292,8 +292,8 @@
 		<scp.fileset.trusted todir="${product.buildDesc}">
 			<fileset dir="${product.build.root}">
 				<exclude name="eclipse/**/*" />
-				<exclude name="eclipse-SDK.zip"/>
-				<exclude name="eclipse-SDK.tar.gz"/>
+				<exclude name="eclipse-SDK-win32.zip"/>
+				<exclude name="eclipse-SDK-linux-gtk.tar.gz"/>
 				<exclude name="**/eclipse/**/*"/>
 				<exclude name="buildData.properties"/>
 			</fileset>
@@ -301,6 +301,7 @@
 		
 		<scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}">
 			<fileset file="${product.build.directory}/buildResults.html"/>
+			<fileset file="${product.build.directory}/buildResults.css"/>
 		</scp.fileset.trusted>
 		
 		<!--scp.fileset.trusted todir="${product.buildDesc}/${product.versionTag}/tests">
