@@ -43,6 +43,8 @@
 		<load.property file="../hibernate-tools/build.properties" property="hibernate.tools.release"/>
 		<get.version.tag builder="hibernate-tools" property="hibernate-tools.versionTag"/>
 		<get.version.tag builder="jbpm" property="jbpm.versionTag"/>
+		<get.version.tag builder="as" property="as.versionTag"/>
+		<get.version.tag builder="freemarker" property="freemarker.versionTag"/>
 		
 		<loadfile property="build.information" srcfile="buildInfo/${product.buildDesc}.html"/>
 		
@@ -52,12 +54,14 @@
 		<property name="jbosside-all-filename" value="${product.name}-${product.versionTag}-ALL.zip"/>
 		<property name="jbosside-win32-bundle-filename" value="${product.name}-${product.versionTag}-Bundle-win32.zip"/>
 		<property name="jbosside-linux-gtk2-bundle-filename" value="${product.name}-${product.versionTag}-Bundle-linux-gtk.tar.gz"/>
-		<property name="jbosside-core-filename" value="JBossIDE-CORE-${core.versionTag}.zip"/>
+		<property name="jbosside-core-filename" value="JBossIDE-Core-${core.versionTag}.zip"/>
 		<property name="jbosside-aop-filename" value="JBossIDE-AOP-Developer-${aop.versionTag}.zip"/>
 		<property name="jbosside-hibernate-tools-filename" value="HibernateTools-${hibernate.tools.release}.${hibernate-tools.versionTag}.zip"/>
 		<property name="jbosside-jbpm-filename" value="jBPM-Designer-${jbpm.versionTag}.zip"/>
 		<property name="jbosside-ejb3-filename" value="JBossIDE-EJB3-Tools-${ejb3.versionTag}.zip"/>
-	
+		<property name="jbosside-as-filename" value="JBossIDE-JBossAS-Tools-${as.versionTag}.zip"/>
+		<property name="jbosside-freemarker-filename" value="JBossIDE-FreeMarker-${freemarker.versionTag}.zip"/>
+		
 		<property name="all-file" value="${product.build.directory}/all/${jbosside-all-filename}" />
 		<property name="win32-bundle-file" value="${product.build.directory}/bundle/${jbosside-win32-bundle-filename}" />
 		<property name="linux-gtk2-bundle-file" value="${product.build.directory}/bundle/${jbosside-linux-gtk2-bundle-filename}" />
@@ -66,6 +70,8 @@
 		<property name="hibernate-tools-file" value="${product.build.directory}/hibernate-tools/${jbosside-hibernate-tools-filename}" />
 		<property name="jbpm-file" value="${product.build.directory}/jbpm/${jbosside-jbpm-filename}" />
 		<property name="ejb3-file" value="${product.build.directory}/ejb3/${jbosside-ejb3-filename}" />
+		<property name="as-file" value="${product.build.directory}/as/${jbosside-as-filename}"/>
+		<property name="freemarker-file" value="${product.build.directory}/freemarker/${jbosside-freemarker-filename}"/>
 		
 		<get.status file="${all-file}" property="jbosside-all-status"/>
 		<get.status file="${win32-bundle-file}" property="jbosside-win32-bundle-status"/>
@@ -75,6 +81,8 @@
 		<get.status file="${hibernate-tools-file}" property="jbosside-hibernate-tools-status"/>
 		<get.status file="${jbpm-file}" property="jbosside-jbpm-status"/>
 		<get.status file="${ejb3-file}" property="jbosside-ejb3-status"/>
+		<get.status file="${as-file}" property="jbosside-as-status"/>
+		<get.status file="${freemarker-file}" property="jbosside-freemarker-status"/>
 		
 		<length file="${all-file}" property="all-file-size"  />
 		<if>
@@ -89,6 +97,8 @@
 		<length file="${hibernate-tools-file}" property="hibernate-tools-file-size"  />
 		<length file="${jbpm-file}" property="jbpm-file-size"  />
 		<length file="${ejb3-file}" property="ejb3-file-size"  />
+		<length file="${as-file}" property="as-file-size" />
+		<length file="${freemarker-file}" property="freemarker-file-size"/>
 		
 		<loadfile srcfile="${all-file}.MD5" property="all-file-md5" failonerror="false" />
 		<loadfile srcfile="${win32-bundle-file}.MD5" property="win32-bundle-file-md5" failonerror="false" />
@@ -98,6 +108,8 @@
 		<loadfile srcfile="${hibernate-tools-file}.MD5" property="hibernate-tools-file-md5" failonerror="false" />
 		<loadfile srcfile="${jbpm-file}.MD5" property="jbpm-file-md5" failonerror="false" />
 		<loadfile srcfile="${ejb3-file}.MD5" property="ejb3-file-md5" failonerror="false" />
+		<loadfile srcfile="${as-file}.MD5" property="as-file-md5" failonerror="false"/>
+		<loadfile srcfile="${freemarker-file}.MD5" property="freemarker-file-md5" failonerror="false"/>
 		
 		<!-- load bundle html (if necessary) -->
 		<if>
@@ -173,20 +185,35 @@
 			
 			<filter token="jbosside-all-status" value="${jbosside-all-status}"/>
 			<filter token="jbosside-all-filename" value="${jbosside-all-filename}"/>
+			<filter token="all-file-size" value="${all-file-size}"/>
 			<filter token="jbosside-win32-bundle-status" value="${jbosside-win32-bundle-status}"/>
 			<filter token="jbosside-win32-bundle-filename" value="${jbosside-win32-bundle-filename}"/>
+			<filter token="win32-bundle-file-size" value="${win32-bundle-file-size}"/>
 			<filter token="jbosside-linux-gtk2-bundle-status" value="${jbosside-linux-gtk2-bundle-status}"/>
 			<filter token="jbosside-linux-gtk2-bundle-filename" value="${jbosside-linux-gtk2-bundle-filename}"/>
+			<filter token="linux-gtk2-bundle-file-size" value="${linux-gtk2-bundle-file-size}"/>
 			<filter token="jbosside-core-status" value="${jbosside-core-status}"/>
 			<filter token="jbosside-core-filename" value="${jbosside-core-filename}"/>
+			<filter token="core-file-size" value="${core-file-size}"/>
 			<filter token="jbosside-aop-status" value="${jbosside-aop-status}"/>
 			<filter token="jbosside-aop-filename" value="${jbosside-aop-filename}"/>
+			<filter token="aop-file-size" value="${aop-file-size}"/>
 			<filter token="jbosside-hibernate-tools-status" value="${jbosside-hibernate-tools-status}"/>
 			<filter token="jbosside-hibernate-tools-filename" value="${jbosside-hibernate-tools-filename}"/>
+			<filter token="hibernate-tools-file-size" value="${hibernate-tools-file-size}"/>
 			<filter token="jbosside-jbpm-status" value="${jbosside-jbpm-status}"/>
 			<filter token="jbosside-jbpm-filename" value="${jbosside-jbpm-filename}"/>
+			<filter token="jbpm-file-size" value="${jbpm-file-size}"/>
 			<filter token="jbosside-ejb3-status" value="${jbosside-ejb3-status}"/>
 			<filter token="jbosside-ejb3-filename" value="${jbosside-ejb3-filename}"/>
+			<filter token="ejb3-file-size" value="${ejb3-file-size}"/>
+			<filter token="jbosside-as-status" value="${jbosside-as-status}"/>
+			<filter token="jbosside-as-filename" value="${jbosside-as-filename}"/>
+			<filter token="as-file-size" value="${as-file-size}"/>
+			<filter token="jbosside-freemarker-status" value="${jbosside-freemarker-status}"/>
+			<filter token="jbosside-freemarker-filename" value="${jbosside-freemarker-filename}"/>
+			<filter token="freemarker-file-size" value="${freemarker-file-size}"/>
+			
 			<filter token="build-information" value="${build.information}"/>
 			<filter token="bundle-information" value="${bundle.information}"/>
 				
@@ -197,6 +224,7 @@
 			
 		<copy todir="${product.build.directory}" overwrite="true">
 			<fileset file="buildResults.html.template"/>
+			<fileset file="buildResults.css"/>
 			<mapper type="glob" from="*.html.template" to="*.html"/>
 			<filterset refid="results-filter-set"/>
 		</copy>
