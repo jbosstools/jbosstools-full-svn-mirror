@@ -421,14 +421,6 @@ END OF TERMS AND CONDITIONS
       <update url="http://download.jboss.org/jbosside/updates/stable"/>
    </url>
 
-   <includes
-         id="org.eclipse.wst.server_core.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.wst.server_ui.feature"
-         version="0.0.0"/>
-
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.core.resources"/>
