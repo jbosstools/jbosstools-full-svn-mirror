@@ -122,6 +122,8 @@
 <!-- Steps to do after  running assemble. -->
 <!-- ===================================================================== -->
 <target name="postAssemble">
+	<bundlePlugins pluginList="${include.plugins}" buildDirectory="${buildDirectory}"
+				archivePath="${buildDirectory}/${buildLabel}/JBossIDE-JBossAS-Tools-${versionTag}.zip" />
 </target>
 
 <!-- ===================================================================== -->
