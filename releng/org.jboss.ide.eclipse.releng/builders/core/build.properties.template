@@ -70,6 +70,7 @@ include.plugins=\
 	org.eclipse.emf.ecore.xmi,\
 	org.eclipse.emf.edit,\
 	org.eclipse.emf.edit.ui,\
+	org.eclipse.equinox.servlet.api,\
 	org.eclipse.gef,\
 	org.eclipse.jem,\
 	org.eclipse.jem.proxy,\
