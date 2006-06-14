@@ -155,8 +155,15 @@ public class SessionFactoryNode extends AbstractNode implements SessionFactoryCo
 
     public boolean configure() {
         SessionFactoryConfigurationPanel cfgPanel = new SessionFactoryConfigurationPanel(descriptor);
-        DialogDescriptor dialDesc = new DialogDescriptor(cfgPanel, NbBundle.getMessage(SessionFactoryNode.class, "LBL_ConfigureSessionFactory"), true, // NOI18N
-                DialogDescriptor.OK_CANCEL_OPTION, null, null);
+        DialogDescriptor dialDesc = new DialogDescriptor(
+                cfgPanel, 
+                NbBundle.getMessage(SessionFactoryNode.class, "LBL_ConfigureSessionFactory"), // NOI18N
+                true, 
+                DialogDescriptor.OK_CANCEL_OPTION, 
+                null, 
+                DialogDescriptor.DEFAULT_ALIGN, 
+                SessionFactoryConfigurationPanel.HELP_CTX, 
+                null);
         Dialog dial = DialogDisplayer.getDefault().createDialog(dialDesc);
         dial.setVisible(true);
         if (DialogDescriptor.OK_OPTION.equals(dialDesc.getValue())) {

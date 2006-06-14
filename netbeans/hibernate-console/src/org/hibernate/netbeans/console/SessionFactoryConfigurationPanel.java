@@ -38,12 +38,15 @@ import javax.swing.JFileChooser;
 import javax.swing.JList;
 import org.hibernate.netbeans.console.option.Options;
 import org.hibernate.netbeans.console.util.DelegatingListModel;
+import org.openide.util.HelpCtx;
 
 /**
  * @author  leon
  */
 public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
 
+    public static final HelpCtx HELP_CTX = new HelpCtx("org.hibernate.netbeans.console.sf-config");
+    
     private List<File> mappingLocations;
     
     private List<File> classPathEntries;

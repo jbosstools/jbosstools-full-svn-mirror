@@ -121,17 +121,7 @@
             </folder>
         </folder>
         <folder name="Actions">
-            <!-- Doesn't seem to work, folders are always sorted alphabetically
-            <attr name="Hibernate Tools Suite/Edit" boolvalue="true"/>
-            <attr name="Edit/File" boolvalue="true"/>
-            <attr name="File/Go To" boolvalue="true"/>
-            <attr name="Go To/Help" boolvalue="true"/>
-            <attr name="Help/Other" boolvalue="true"/>
-            <attr name="Other/System" boolvalue="true"/>
-            <attr name="System/Tools" boolvalue="true"/>
-            <attr name="Tools/Window" boolvalue="true"/>
-            -->
-            <folder name="Hibernate Tools Suite">
+            <folder name="Hibernate Console">
                 <file name="ExecuteHql.shadow">
                     <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-ExecuteContentAction.instance"/>
                 </file>

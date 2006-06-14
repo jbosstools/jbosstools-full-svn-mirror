@@ -8,47 +8,50 @@
     <body>
         <h2>BeanShell Editor</h2>
         <p>
-        The BeanShell Editor is used to edit and execute custom java code. 
-        It will be showed alongside the <a href="hc-hql-editor.html">HQL Editor</a> when a session factory is opened.
+            The BeanShell Editor is used to edit and execute custom java code. 
+            It will be showed alongside the <a href="hc-hql-editor.html">HQL Editor</a> when a session factory is opened.
         </p>
         <p>
-        Inside the BeanShell Editor you can execute custom java code. It's most probably that
-        you will test java code accessing the hibernate session, whose name is <i>session</i>
+            Inside the BeanShell Editor you can execute custom java code. It's most probably that
+            you will test java code accessing the hibernate session, whose name is <i>session</i>
         </p>
         <p>
-        In order to get the results shown in <a href="hc-sf-output.html">Output Window</a> 
-        the last statement of the executed code must return something.
+            In order to get the results shown in <a href="hc-sf-output.html">Output Window</a> 
+            the last statement of the executed code must return something.
         </p>
         <p>
-        To be correctly interpreted, the java code will need to import some classes.
-        You can write down the imports in the editor, or can specify them in the session factory's configuration dialog.<br>
-        The last option is more comfortable, as those packages and classes will be imported before every execution.
-        <br><br><img src="img/beanshell-imports.png"><br><br>
-        The packages <i>org.hibernate</i> and <i>org.hibernate.criterion</i> are automatically imported.
+            To be correctly interpreted, the java code will need to import some classes.
+            You can write down the imports in the editor, or can specify them in the session factory's configuration dialog.<br>
+            The last option is more comfortable, as those packages and classes will be imported before every execution.
+            <br><br><img src="img/beanshell-imports.png"><br><br>
+            The packages <i>org.hibernate</i> and <i>org.hibernate.criterion</i> are automatically imported.
         </p>
         <p>
-        Here are some simple examples of how the code may look:
+            Here are some simple examples of how the code may look:
         </p>
         <p style="color: green; white-space: nowrap;">
-        <code>
-            Criteria c = session.createCriteria(<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;MyBusinessObject.class);<br>
-            c.list();
-        </code>
+            <code>
+                Criteria c = session.createCriteria(<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;MyBusinessObject.class);<br>
+                c.list();
+            </code>
         </p>
         <p style="color: green; white-space: nowrap;">
-        <code>
-            Query q = session.createQuery(<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;"select bo from MyBusinessObject bo " +<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;"join bo.relation rel " +<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;"where rel.id = ?");<br>
-            q.setParameter(0, new Long(1));<br>
-            q.list();
-        </code>
+            <code>
+                Query q = session.createQuery(<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"select bo from MyBusinessObject bo " +<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"join bo.relation rel " +<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"where rel.id = ?");<br>
+                q.setParameter(0, new Long(1));<br>
+                q.list();
+            </code>
         </p>
         <h3>Keyboard shortcuts</h3>
         <dl>
             <dt>Execute query</dt><dd>CTRL-J X</dd>
         </dl>
+        <p>
+            The shortcut keys can be customized in the options dialog (<b>Tools | Options | Keymap | Hibernate Console</b>)
+        </p>
     </body>
 </html>

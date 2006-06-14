@@ -76,7 +76,7 @@ public class SessionFactoryDescriptor implements Serializable {
     
     private final static long serialVersionUID = -1;
 
-    private final static String DEFAULT_IMPORTS = "import org.hibernate.*;\nimport org.hibernate.criterion.*;\n";
+    private transient static final String DEFAULT_IMPORTS = "import org.hibernate.*;\nimport org.hibernate.criterion.*;\n";
             
     // TODO - get them from the options
     private transient static final int MAX_HISTORY_ENTRIES = 50;
@@ -120,6 +120,10 @@ public class SessionFactoryDescriptor implements Serializable {
     
     private transient Session session;
 
+    private transient Connection connection;
+    
+    private transient Configuration configuration;
+    
     private LinkedList<HistoryEntry> historyEntries;
     
     private String name;
@@ -141,10 +145,6 @@ public class SessionFactoryDescriptor implements Serializable {
     private String userImports;
     
     private Properties extraProperties;
-    
-    private transient Connection connection;
-    
-    private Configuration configuration;
     
     private static FileObject ensureFolderExists() throws Exception {
         FileSystem fs = Repository.getDefault().getDefaultFileSystem();

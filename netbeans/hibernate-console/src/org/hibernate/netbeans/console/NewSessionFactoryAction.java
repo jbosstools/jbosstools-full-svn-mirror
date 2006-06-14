@@ -50,7 +50,15 @@ public class NewSessionFactoryAction extends CallableSystemAction {
     public void performAction() {
         try {
             SessionFactoryConfigurationPanel cfgPanel = new SessionFactoryConfigurationPanel(null);
-            DialogDescriptor dialDesc = new DialogDescriptor(cfgPanel, "New Session Factory", true, DialogDescriptor.OK_CANCEL_OPTION, null, null);
+            DialogDescriptor dialDesc = new DialogDescriptor(
+                    cfgPanel, 
+                    "New Session Factory", 
+                    true, 
+                    DialogDescriptor.OK_CANCEL_OPTION, 
+                    null,
+                    DialogDescriptor.DEFAULT_ALIGN,
+                    SessionFactoryConfigurationPanel.HELP_CTX,
+                    null);
             Dialog dial = DialogDisplayer.getDefault().createDialog(dialDesc);
             dial.setVisible(true);
             if (DialogDescriptor.OK_OPTION.equals(dialDesc.getValue())) {
