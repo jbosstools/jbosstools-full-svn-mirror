@@ -28,4 +28,4 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.ide.eclipse.as.ui,
  org.eclipse.wst.server.core,
  org.eclipse.wst.server.ui
-Eclipse-AutoStart: true
+Eclipse-LazyStart: true

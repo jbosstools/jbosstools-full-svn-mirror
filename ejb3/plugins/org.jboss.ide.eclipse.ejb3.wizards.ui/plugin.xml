@@ -35,9 +35,5 @@
             id="org.jboss.ide.eclipse.jdt.ejb3.wizards.core.classpath.EJB3_CONTAINER"
             name="JBoss EJB3 Libraries"/>
    </extension>
-   <extension
-         point="org.eclipse.ui.startup">
-      <startup class="org.jboss.ide.eclipse.ejb3.wizards.ui.EJB3WizardsUIPlugin"/>
-   </extension>
 
 </plugin>
