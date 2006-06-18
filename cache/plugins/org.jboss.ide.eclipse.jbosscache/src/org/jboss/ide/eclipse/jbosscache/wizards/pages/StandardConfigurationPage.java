@@ -127,6 +127,8 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
    private Combo cmbCacheType;
 
    private Button chkFetchStateOnStartup;
+   
+   private Button chkUseInterceptorMBean;
 
    private CacheConfigParams configParams;
 
@@ -328,8 +330,13 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       txtLockAcquisitionTimeout.addModifyListener(this);
 
       chkFetchStateOnStartup = new Button(grpConfGroup, SWT.CHECK);
-      chkFetchStateOnStartup.setText("FetchState On Startup");
+      chkFetchStateOnStartup.setText("Fetch In Memory State");
       chkFetchStateOnStartup.setLayoutData(gDataForReplicationQueue);
+      
+      chkUseInterceptorMBean = new Button(grpConfGroup,SWT.CHECK);
+      chkUseInterceptorMBean.setText("Use Interceptor MBeans");
+      chkUseInterceptorMBean.setLayoutData(gDataForReplicationQueue);
+      chkUseInterceptorMBean.setSelection(true);
 
       //		lblNodeLockingScheme = new Label(grpConfGroup,SWT.NONE);
       //		lblNodeLockingScheme.setText("Node Locking Scheme:");/*TODO Internationalize for this and remainder !!!*/

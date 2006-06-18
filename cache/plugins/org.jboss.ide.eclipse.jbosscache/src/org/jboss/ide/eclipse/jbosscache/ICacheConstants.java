@@ -147,11 +147,11 @@ public interface ICacheConstants
 
    /**TRANSACTION_MANAGER_LOOK_UP CLASSES*/
    String TRANSACTION_MANAGER_LOOKUP_CLASSES[] = new String[]
-   {"None","org.jboss.cache.GenericTransactionManagerLookup","org.jboss.cache.DummyTransactionManagerLookup", "org.jboss.cache.JBossTransactionManagerLookup"};
+   {"None","org.jboss.cache.GenericTransactionManagerLookup","org.jboss.cache.DummyTransactionManagerLookup", "org.jboss.cache.JBossTransactionManagerLookup","org.jboss.cache.BatchModeTransactionManagerLookup"};
 
    /**CACHE MODES*/
    String CACHE_MODES[] = new String[]
-   {"LOCAL", "REPL_SYNC", "REPL_ASYNC"};
+   {"LOCAL", "REPL_SYNC", "REPL_ASYNC","INVALIDATION_ASYNC","INVALIDATION_SYNC"};
 
    /**TRANSACTION ISOLATION LEVELS*/
    String ISOLATION_LEVELS[] = new String[]

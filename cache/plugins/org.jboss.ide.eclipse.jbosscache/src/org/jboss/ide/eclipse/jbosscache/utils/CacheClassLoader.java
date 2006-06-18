@@ -12,7 +12,6 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.runtime.adaptor.EclipseClassLoader;
 
 /**
  * This class represents class loader that will be used for marshalling in cache
