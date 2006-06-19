@@ -55,7 +55,7 @@ final class HCOptionsPanel extends javax.swing.JPanel {
         extensionsLabel.setLabelFor(extensionsTextField);
         org.openide.awt.Mnemonics.setLocalizedText(extensionsLabel, org.openide.util.NbBundle.getBundle(HCOptionsPanel.class).getString("LBL_Extensions")); // NOI18N
 
-        extensionsTextField.setText("hbm.xml, hbm");
+        extensionsTextField.setText(org.openide.util.NbBundle.getMessage(HCOptionsPanel.class, "HCOptionsPanel.extensionsTextField.text")); // NOI18N
 
         maxResultsLabel.setLabelFor(maxResultsSpinner);
         org.openide.awt.Mnemonics.setLocalizedText(maxResultsLabel, org.openide.util.NbBundle.getBundle(HCOptionsPanel.class).getString("LBL_MaxResults")); // NOI18N

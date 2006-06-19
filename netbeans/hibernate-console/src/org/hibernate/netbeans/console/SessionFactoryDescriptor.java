@@ -551,7 +551,12 @@ public class SessionFactoryDescriptor implements Serializable {
     
     private Properties buildProperties() {
         Properties props = new Properties();
-        // TODO - load the advanced properties
+        // Load the advanced properties
+        for (Enumeration propNames = extraProperties.propertyNames(); propNames.hasMoreElements();) {
+            String propName = (String) propNames.nextElement();
+            props.setProperty(propName, extraProperties.getProperty(propName));
+        }
+        // Add connection data
         props.setProperty(Environment.USER, databaseUser);
         props.setProperty(Environment.PASS, databasePassword);
         props.setProperty(Environment.DIALECT, hibernateDialect);
