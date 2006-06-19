@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+OpenIDE-Module: org.hibernate.netbeans.console
+OpenIDE-Module-Install: org/hibernate/netbeans/console/Installer.class
+OpenIDE-Module-Layer: org/hibernate/netbeans/console/layer.xml
+OpenIDE-Module-Localizing-Bundle: org/hibernate/netbeans/console/Bundle.properties
+OpenIDE-Module-Requires: org.netbeans.api.javahelp.Help
+OpenIDE-Module-Specification-Version: 0.8.43
+
+Name: org/hibernate/netbeans/console/editor/bsh/BshDataLoader.class
+OpenIDE-Module-Class: Loader
+
+Name: org/hibernate/netbeans/console/editor/hql/HqlDataLoader.class
+OpenIDE-Module-Class: Loader
+
