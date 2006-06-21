@@ -729,6 +729,7 @@ public class SessionFactoryDescriptor implements Serializable {
                     Dialect dialect = Dialect.getDialect(props);
                     Connection conn = openConnection(props, sfClassLoader);
                     try {
+                        ph.progress("Creating SQL script");
                         String[] updates = cfg.generateSchemaUpdateScript(dialect, new DatabaseMetadata(conn, dialect));
                         Statement stm = conn.createStatement();
                         for (int i = 0; i < updates.length; i++) {
