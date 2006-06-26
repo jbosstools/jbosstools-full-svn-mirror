@@ -156,7 +156,7 @@ javacTarget=1.4
 
 
 # The release prefix for this release
-hibernate.tools.release=3.1.0
+hibernate.tools.release=3.2.0
 
 ####
 # These  are plugins that will be bundled in the binary build of this builder's zip/update site
