@@ -26,7 +26,10 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.internal.ui.JavaPluginImages;
 import org.eclipse.jdt.internal.ui.wizards.NewElementWizard;
+import org.eclipse.jdt.ui.ISharedImages;
+import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.pages.NewSessionBeanWizardPage;
@@ -41,11 +44,18 @@ public class NewSessionBeanWizard extends NewElementWizard
 
    private IStructuredSelection selection;
 
+   public NewSessionBeanWizard ()
+   {
+	   super();
+	   setDefaultPageImageDescriptor(JavaPluginImages.DESC_WIZBAN_NEWCLASS);
+	   setWindowTitle("New Session Bean");
+   }
+   
    public void init(IWorkbench workbench, IStructuredSelection selection)
    {
       page = new NewSessionBeanWizardPage();
       this.selection = selection;
-
+      
       super.init(workbench, selection);
    }
 

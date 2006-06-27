@@ -112,6 +112,9 @@ public class NewSessionBeanWizardPage extends NewTypeWizardPage
    public NewSessionBeanWizardPage()
    {
       super(true, EJB3WizardsUIPlugin.getResourceString("NewSessionBeanWizard.title"));
+      setTitle(EJB3WizardsUIPlugin.getResourceString("NewSessionBeanWizard.message"));
+      setDescription(EJB3WizardsUIPlugin.getResourceString("NewSessionBeanWizard.description"));
+      
       packageCompletionProcessor = new JavaPackageCompletionProcessor();
       beanClass = "";
    }
