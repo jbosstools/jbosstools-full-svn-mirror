@@ -26,11 +26,13 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.core.resources.ICommand;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -310,5 +312,52 @@ public class ProjectUtil
       IPath path = new Path(null, pathRelativeToWorkspace);
       IResource resource = AbstractPlugin.getWorkspace().getRoot().findMember(path);
       return resource;
+   }
+   
+   /**
+    * This method will try a number of known methods for determining the project
+    * that corresponds with the passed in object. 
+    * @param object
+    * @return an IProject or null if one could not be found
+    */
+   public static IProject getProject (Object element )
+   {
+	   if (element instanceof IProject)
+		{
+		   return (IProject)element;
+		}
+		
+		if (element instanceof IAdaptable)
+		{
+			IAdaptable adaptable = (IAdaptable)element;
+			IProject project = (IProject) adaptable.getAdapter(IProject.class);
+			if (project != null) {
+				return project;
+			}
+		}
+		
+		if (element instanceof IResource)
+		{
+			IResource resource = (IResource) element;
+			return resource.getProject();
+		}
+		
+		if (element instanceof IContainer)
+		{
+			IContainer container = (IContainer) element;
+			return container.getProject();
+		}
+		
+		return null;
+   }
+   
+   public static IPath getProjectLocation(IProject project)
+   {
+      if (project.getRawLocation() == null)
+      {
+         return project.getLocation();
+      }
+      else
+         return project.getRawLocation();
    }
 }
