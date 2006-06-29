@@ -43,6 +43,8 @@ public abstract class ProjectChangeListener implements IResourceChangeListener {
 	
 	public void resourceChanged(IResourceChangeEvent event)
 	{
+		if (event == null || event.getDelta() == null) return;
+			
 		IResourceDelta deltas[] = event.getDelta().getAffectedChildren();
 		
 		for (int i = 0; i < deltas.length; i++)
