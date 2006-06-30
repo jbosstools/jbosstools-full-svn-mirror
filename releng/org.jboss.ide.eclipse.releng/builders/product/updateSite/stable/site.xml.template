@@ -18,6 +18,12 @@
    <feature url="features/%ejb3-feature-jar%" id="org.jboss.ide.eclipse.ejb3.feature" version="%ejb3-feature-version%">
       <category name="JBossIDE %jbosside-build-name%"/>
    </feature>
+      <feature url="features/%as-feature-jar%" id="org.jboss.ide.eclipse.as.feature" version="%as-feature-version%">
+   	  <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
+   <feature url="features/%freemarker-feature-jar%" id="org.jboss.ide.eclipse.freemarker.feature" version="%freemarker-feature-version%">
+   	  <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
    
    <category-def name="JBossIDE %jbosside-build-name%" label="JBoss Eclipse IDE Stable Release: %jbosside-build-name%"/>
 </site>

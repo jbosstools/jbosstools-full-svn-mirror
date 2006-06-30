@@ -23,6 +23,8 @@
 		<load.property file="../hibernate-tools/build.properties" property="hibernate.tools.release"/>
 		<get.version.tag builder="hibernate-tools" property="hibernate-tools.versionTag"/>
 		<get.version.tag builder="jbpm" property="jbpm.versionTag"/>
+		<get.version.tag builder="as" property="as.versionTag"/>
+		<get.version.tag builder="freemarker" property="freemarker.versionTag"/>
 	</target>
 	
 	<target name="build.site">
@@ -81,6 +83,10 @@
 				<filter token="hibernate-tools-feature-jar" value="org.hibernate.eclipse.feature_${hibernate.tools.release}.${hibernate-tools.versionTag}.jar"/>
 				<filter token="ejb3-feature-version" value="${ejb3.versionTag}"/>
 				<filter token="ejb3-feature-jar" value="org.jboss.ide.eclipse.ejb3.feature_${ejb3.versionTag}.jar"/>
+				<filter token="as-feature-version" value="${as.versionTag}"/>
+				<filter token="as-feature-jar" value="org.jboss.ide.eclipse.as.feature_${as.versionTag}.jar"/>
+				<filter token="freemarker-feature-version" value="${freemarker.versionTag}"/>
+				<filter token="freemarker-feature-jar" value="org.jboss.ide.eclipse.freemarker.feature_${freemarker.versionTag}.jar"/>
 				<filter token="jbosside-build-name" value="${product.versionTag}"/>
 			</filterset>
 		</copy>
