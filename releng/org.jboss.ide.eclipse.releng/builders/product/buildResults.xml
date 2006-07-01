@@ -51,6 +51,7 @@
 		<load.property file="build.properties" property="${product.buildDesc}.build.steps"/>
 		<propertycopy name="build.steps" from="${product.buildDesc}.build.steps"/>
 		
+		<property name="jbosside-download-root" value="${jbosside.download.root}"/>
 		<property name="jbosside-all-filename" value="${product.name}-${product.versionTag}-ALL.zip"/>
 		<property name="jbosside-win32-bundle-filename" value="${product.name}-${product.versionTag}-Bundle-win32.zip"/>
 		<property name="jbosside-linux-gtk2-bundle-filename" value="${product.name}-${product.versionTag}-Bundle-linux-gtk.tar.gz"/>
