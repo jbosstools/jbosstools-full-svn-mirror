@@ -727,6 +727,7 @@ public class SessionFactoryDescriptor implements Serializable {
                     currentThread.setContextClassLoader(sfClassLoader);
                     Configuration cfg = createConfiguration(props, ph, sfClassLoader);
                     Dialect dialect = Dialect.getDialect(props);
+                    ph.progress("Opening database connection");
                     Connection conn = openConnection(props, sfClassLoader);
                     try {
                         ph.progress("Creating SQL script");

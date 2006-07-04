@@ -23,6 +23,7 @@
 
 package org.hibernate.netbeans.console.output.result;
 
+import bsh.EvalError;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -149,15 +150,26 @@ public class QueryResultMultiViewElement extends OutputMultiViewElement implemen
                             requestVisible(false, false);
                         }
                     });
+                    final long l = System.currentTimeMillis();
                     final List<Object> results = JavaCodeInterpreter.getInterpreter().getResults(code, desc);
                     if (results != null) {
                         EventQueue.invokeAndWait(new Runnable() {
                             public void run() {
-                                resultPanel.setResults(desc.getSession(), null, results, 0);
+                                resultPanel.setResults(desc.getSession(), null, results, System.currentTimeMillis() - l);
                                 requestVisible(true, true);
                             }
                         });
                     }
+                } catch (final EvalError err) {
+                    EventQueue.invokeLater(new Runnable() {
+                        public void run() {
+                            Throwable t = err.getCause();
+                            if (t == null) {
+                                t = err;
+                            }
+                            SessionFactoryOutput.showError(desc, t);
+                        }
+                    });
                 } catch (final Exception ex) {
                     EventQueue.invokeLater(new Runnable() {
                         public void run() {
