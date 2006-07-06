@@ -6,18 +6,21 @@ Bundle-Version: 1.0.0
 Bundle-Activator: org.jboss.ide.eclipse.jbosscache.JBossCachePlugin
 Bundle-Vendor: JBoss
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.core.resources,
+Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
+ org.eclipse.jface.text,
+ org.eclipse.core.resources,
  org.eclipse.gef,
- org.eclipse.jface,
- org.eclipse.ui,
  org.eclipse.ui.console,
- org.eclipse.ui.editors,
  org.eclipse.ui.ide,
- org.eclipse.ui.workbench.texteditor,
  org.eclipse.jdt.core,
  org.eclipse.jdt.ui,
- org.eclipse.jdt.launching
+ org.eclipse.jdt.launching,
+ org.eclipse.ui.forms,
+ org.eclipse.wst.xml.core,
+ org.eclipse.wst.sse.core,
+ org.eclipse.wst.xml.ui,
+ org.eclipse.wst.sse.ui
 Eclipse-AutoStart: true
 Bundle-ClassPath: lib/bsh-2.0b4.jar,
  lib/commons-logging.jar,
@@ -39,4 +42,7 @@ Bundle-ClassPath: lib/bsh-2.0b4.jar,
  org.jboss.ide.eclipse.jbosscache.jar,
  lib/jbossall-client.jar,
  lib/hibernate-tools.jar,
- lib/jtidy-r8-21122004.jar
+ lib/jtidy-r8-21122004.jar,
+ lib/derby.jar,
+ lib/jboss-serialization.jar,
+ lib/jdbm-1.0.jar
