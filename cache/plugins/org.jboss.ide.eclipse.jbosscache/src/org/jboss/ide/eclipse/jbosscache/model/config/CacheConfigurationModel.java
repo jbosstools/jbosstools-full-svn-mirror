@@ -25,12 +25,16 @@ public class CacheConfigurationModel
    private String directoryName;
 
    private String cacheName;
+   
+   private String cacheType;
 
    private String cacheMode;
 
    private String clusterName;
 
    private String transManagerLookUpClass;
+   
+   private String nodeLockingSchema; /*IDE 2.0 version Optimistic/Pessimistic*/
 
    private String isolationLevel;
 
@@ -46,11 +50,19 @@ public class CacheConfigurationModel
 
    private String lockAcquisitionTimeOut;
 
-   private boolean fetchStateOnStartup;
+   private boolean fetchStateOnStartup; /*FetchInMemoryState*/
 
    private boolean useMarshalling = false;
+   
+   private boolean bodyReplicationEnabled; /*IDE 2.0 version*/
+   
+   private boolean useInterceptorMBeans; /*IDE 2.0 version*/
 
    private String evictionPolicyClass;
+   
+   private String cacheLoaderClass; /*IDE 2.0 version*/
+   
+   
 
    /**Model instance */
    private CacheConfigurationModel cachConfModel;
@@ -1078,4 +1090,52 @@ public class CacheConfigurationModel
    {
       this.directoryName = directoryName;
    }
+
+public boolean isBodyReplicationEnabled() {
+	return bodyReplicationEnabled;
+}
+
+public void setBodyReplicationEnabled(boolean bodyReplicationEnabled) {
+	this.bodyReplicationEnabled = bodyReplicationEnabled;
+}
+
+public String getCacheLoaderClass() {
+	return cacheLoaderClass;
+}
+
+public void setCacheLoaderClass(String cacheLoaderClass) {
+	this.cacheLoaderClass = cacheLoaderClass;
+}
+
+public String getNodeLockingSchema() {
+	return nodeLockingSchema;
+}
+
+public void setNodeLockingSchema(String nodeLockingSchema) {
+	this.nodeLockingSchema = nodeLockingSchema;
+}
+
+public boolean isUseInterceptorMBeans() {
+	return useInterceptorMBeans;
+}
+
+public void setUseInterceptorMBeans(boolean useInterceptorMBeans) {
+	this.useInterceptorMBeans = useInterceptorMBeans;
+}
+
+public CacheConfigurationModel getCachConfModel() {
+	return cachConfModel;
+}
+
+public void setCachConfModel(CacheConfigurationModel cachConfModel) {
+	this.cachConfModel = cachConfModel;
+}
+
+public String getCacheType() {
+	return cacheType;
+}
+
+public void setCacheType(String cacheType) {
+	this.cacheType = cacheType;
+}
 }

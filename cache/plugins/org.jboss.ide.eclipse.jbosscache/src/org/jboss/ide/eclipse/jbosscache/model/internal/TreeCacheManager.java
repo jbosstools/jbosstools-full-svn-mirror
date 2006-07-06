@@ -203,7 +203,7 @@ public class TreeCacheManager
 
    public static Map getListeners(TreeCacheManager manager)
    {
-      return manager.getTreeCache().getTreeCacheListeners();
+      return (Map)manager.getTreeCache().getTreeCacheListeners();
    }
 
    public static void registerClassLoader(TreeCacheManager manager, String region, ClassLoader loader) throws Exception

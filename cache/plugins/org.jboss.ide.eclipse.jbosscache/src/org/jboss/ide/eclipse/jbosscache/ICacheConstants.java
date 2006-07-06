@@ -133,10 +133,39 @@ public interface ICacheConstants
    String CACHE_PERSPECTIVE_ID = "org.jboss.ide.eclipse.jbosscache.perspective2";
 
    /**Cache Loader Class */
-   String CACHE_LOADER_CLASSES[] = new String[]
-   {"org.jboss.cache.loader.JDBCCacheLoader", "org.jboss.cache.loader.FileCacheLoader",
-         "org.jboss.cache.loader.BdbjeCacheLoader","None"};
+   String CACHE_LOADER_CLASSES[] = new String[]{"None",
+		   										"org.jboss.cache.loader.JDBCCacheLoader", 
+		   										"org.jboss.cache.loader.JDBCExtendedCacheLoader",
+		   										"org.jboss.cache.loader.FileCacheLoader",
+		   										"org.jboss.cache.loader.bdbje.BdbjeCacheLoader",
+		   										"org.jboss.cache.loader.jdbm.JdbmCacheLoader",
+		   										"org.jboss.cache.loader.ClusteredCacheLoader",
+		   										"org.jboss.cache.loader.tcp.TcpDelegatingCacheLoader",
+		   										"org.jboss.cache.loader.RmiDelegatingCacheLoader",
+		   										"org.jboss.cache.loader.RpcDelegatingCacheLoader"};
 
+   
+
+   String CACHE_LOADER_JDBC_TABLE_PARAMS[][] = new String[][]{{"cache.jdbc.table.name", "jbosscache"},
+		   													  {"cache.jdbc.table.primarykey", "jbosscache_pk"},
+		   													{"cache.jdbc.fqn.column", "fqn"},
+		   													{"cache.jdbc.fqn.type", "varchar(255)"},
+		   													{"cache.jdbc.node.column", "node"},
+		   													{"cache.jdbc.node.type", "blob"},
+		   													{"cache.jdbc.parent.column", "parent"}
+		   													
+   };
+   
+
+   String CACHE_LOADER_JDBC_PROPERTIES[][] = new String[][]{{"cache.jdbc.driver", "jdbc_driver"},
+		   													{"cache.jdbc.url", "url"},
+		   													{"cache.jdbc.user", "user"},
+		   													{"cache.jdbc.password", "password"}
+			
+};
+
+   
+   
    /**JDBC Drivers*/
    String JDBC_DRIVERS[] = new String[]
    {"oracle.jdbc.OracleDriver"};
@@ -156,6 +185,15 @@ public interface ICacheConstants
    /**TRANSACTION ISOLATION LEVELS*/
    String ISOLATION_LEVELS[] = new String[]
    {"NONE", "READ_UNCOMMITTED", "READ_COMMITTED", "REPEATABLE_READ", "SERIALIZABLE"};
+   
+   /**DEFAULT EVICTION POLICY CLASSES*/
+   String EVICTION_POLICY_CLASSES [] = new String[]{"None","org.jboss.cache.TreeCache.LRUPolicy",
+   													"org.jboss.cache.TreeCache.FIFOPolicy",
+   													"org.jboss.cache.TreeCache.MRUPolicy",
+   													"org.jboss.cache.TreeCache.LFUPolicy"};
+   
+   /**NODE LOCKING SCHEME*/
+   String NODE_LOCKING_SCHEME []= new String[]{"OPTIMISTIC","PESSIMISTIC"}; 
 
    /**IMAGE PATHS*/
    String PLUGIN_IMAGE_PATH = "icons/";
@@ -297,5 +335,19 @@ public interface ICacheConstants
 
    String[] CACHE_TYPE_MODE = new String[]
    {JBOSS_CACHE_TREE_CACHE, JBOSS_CACHE_TREE_CACHE_AOP};
+
+ String REGION = "region";
+
+String POLICY_CLASS = "policyClass";
+
+String PASSIVATION = "passivation";
+
+String PRELOAD = "preload";
+
+String SHARED ="shared";
+
+String CACHELOADER = "cacheloader";
+
+String CLASS = "class";
 
 }//end of interface

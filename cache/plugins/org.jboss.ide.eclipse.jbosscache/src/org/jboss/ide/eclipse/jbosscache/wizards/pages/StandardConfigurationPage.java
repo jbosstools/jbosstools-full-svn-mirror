@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
 import org.jboss.ide.eclipse.jbosscache.internal.CacheMessages;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigParams;
@@ -52,7 +53,7 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
 
    private static final String DEFAULT_CACHE_NAME = "Default";
    
-   private static final String DEFAULT_CACHE_XML_FILE_NAME = "treecache_generated_by_jbosscache_ide";
+   private static final String DEFAULT_CACHE_XML_FILE_NAME = "cache.cfg";
 
    private static final String DEFAULT_CACHE_GROUP = "GENERATED_BY_JBOSSCACHE_IDE";
 
@@ -117,18 +118,28 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
    private Label lblLockAcquisitionTimeout;
 
    private Text txtLockAcquisitionTimeout;
-
-   //	private Label lblEvictionPolicyClass;
-   //	private Text txtEvictionPolicyClass;
-   //	private Label lblNodeLockingScheme;
-   //	private Combo cmbNodeLockingScheme;
+   
+   private Label lblDefaultEvixctionPolicy;
+   
+   private Combo cmbDefaultEvcitionPolicy;/*New in 1.4.0*/
+   
+   private Label lblCacheLoaderClass;
+   
+   private Combo cmbCacheLoaderClass;
+       
+   private Label lblNodeLockingScheme;
+   
+   private Combo cmbNodeLockingScheme;/*New in 1.4.0*/
+   
+   private Button chkBuddyReplicationEnabled;/*New For 1.4.0*/
+   
    private Label lblCacheType;
 
    private Combo cmbCacheType;
 
    private Button chkFetchStateOnStartup;
    
-   private Button chkUseInterceptorMBean;
+   private Button chkUseInterceptorMBean;/*New in 1.4.0*/
 
    private CacheConfigParams configParams;
 
@@ -191,7 +202,7 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       filePath.setLayout(new GridLayout(3, false));
 
       lblDirectoryName = new Label(filePath, SWT.NONE);
-      lblDirectoryName.setText("Directory Name");
+      lblDirectoryName.setText("Directory Name :");
       txtDirectoryName = new Text(filePath, SWT.BORDER);
       txtDirectoryName.setText(System.getProperty("user.home"));
       txtDirectoryName.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -225,7 +236,7 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       txtConfFileName.setLayoutData(gDataForConfText);
 
       grpConfGroup = new Group(container, SWT.SHADOW_ETCHED_IN);
-      grpConfGroup.setText("New Cache Configuration");
+      grpConfGroup.setText("New Cache Configuration :");
 
       grpConfGroup.setLayoutData(new GridData(GridData.FILL_BOTH));
 
@@ -235,7 +246,7 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       grpConfGroup.setLayout(gridLayout);
 
       lblCacheType = new Label(grpConfGroup, SWT.NONE);
-      lblCacheType.setText("Cache Type");
+      lblCacheType.setText("Cache Type :");
 
       cmbCacheType = new Combo(grpConfGroup, SWT.READ_ONLY);
       cmbCacheType.setItems(ICacheConstants.CACHE_TYPE_MODE);
@@ -243,14 +254,14 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       cmbCacheType.setLayoutData(gridData);
 
       lblCacheName = new Label(grpConfGroup, SWT.NONE);
-      lblCacheName.setText("Cache Name");
+      lblCacheName.setText("Cache Name :");
       txtCacheName = new Text(grpConfGroup, SWT.BORDER);
       txtCacheName.setText(DEFAULT_CACHE_NAME);
       txtCacheName.addModifyListener(this);
       txtCacheName.setLayoutData(gridData);
 
       lblCacheMode = new Label(grpConfGroup, SWT.NONE);
-      lblCacheMode.setText("Cache Mode:");/*TODO Internationalize for this and remainder !!!*/
+      lblCacheMode.setText("Cache Mode :");/*TODO Internationalize for this and remainder !!!*/
 
       cmbCacheMode = new Combo(grpConfGroup, SWT.READ_ONLY);
       cmbCacheMode.setItems(ICacheConstants.CACHE_MODES);
@@ -258,7 +269,7 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       cmbCacheMode.setLayoutData(gridData);
 
       lblClusterName = new Label(grpConfGroup, SWT.NONE);
-      lblClusterName.setText("Cluster Name:");/*TODO Internationalize for this and remainder !!!*/
+      lblClusterName.setText("Cluster Name :");/*TODO Internationalize for this and remainder !!!*/
 
       txtClusterName = new Text(grpConfGroup, SWT.BORDER);
       txtClusterName.setText(DEFAULT_CACHE_GROUP);
@@ -266,15 +277,30 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       txtClusterName.addModifyListener(this);
 
       lblTransactionManager = new Label(grpConfGroup, SWT.NONE);
-      lblTransactionManager.setText("Transaction Manager:");/*TODO Internationalize for this and remainder !!!*/
+      lblTransactionManager.setText("Transaction Manager :");/*TODO Internationalize for this and remainder !!!*/
 
       cmbTransactionManager = new Combo(grpConfGroup, SWT.NONE);
       cmbTransactionManager.setItems(ICacheConstants.TRANSACTION_MANAGER_LOOKUP_CLASSES);
-      cmbTransactionManager.select(1);
+      cmbTransactionManager.select(0);
       cmbTransactionManager.setLayoutData(gridData);
 
+      lblNodeLockingScheme = new Label(grpConfGroup, SWT.NONE);
+      lblNodeLockingScheme.setText("Node Locking Scheme :");
+      
+      cmbNodeLockingScheme = new Combo(grpConfGroup, SWT.READ_ONLY);
+      cmbNodeLockingScheme.setItems(ICacheConstants.NODE_LOCKING_SCHEME);
+      cmbNodeLockingScheme.select(1);
+      cmbNodeLockingScheme.setLayoutData(gridData);
+      
+      cmbNodeLockingScheme.addSelectionListener(new SelectionAdapter(){
+    	  public void widgetSelected(SelectionEvent e) {
+    		  handleNodeSchemeSelected(e);
+    	  }
+    	  
+      });
+      
       lblIsolationLevel = new Label(grpConfGroup, SWT.NONE);
-      lblIsolationLevel.setText("Isolation Level:");/*TODO Internationalize for this and remainder !!!*/
+      lblIsolationLevel.setText("Isolation Level :");/*TODO Internationalize for this and remainder !!!*/
 
       cmbIsolationLevel = new Combo(grpConfGroup, SWT.READ_ONLY);
       cmbIsolationLevel.setItems(ICacheConstants.ISOLATION_LEVELS);
@@ -297,7 +323,7 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       txtReplicationQueueInterval.addModifyListener(this);
 
       lblReplQueueMaxElements = new Label(grpConfGroup, SWT.NONE);
-      lblReplQueueMaxElements.setText("Replication Queue Max Number:");/*TODO Internationalize for this and remainder !!!*/
+      lblReplQueueMaxElements.setText("Replication Queue Max Number :");/*TODO Internationalize for this and remainder !!!*/
 
       txtReplQueueMaxElements = new Text(grpConfGroup, SWT.BORDER);
       txtReplQueueMaxElements.setText(DEFAULT_REPL_QUEUE_MAX_NUMBER);
@@ -305,7 +331,7 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       txtReplQueueMaxElements.addModifyListener(this);
 
       lblInitialStateRetrievalTimeout = new Label(grpConfGroup, SWT.NONE);
-      lblInitialStateRetrievalTimeout.setText("Initial State Retrival Timeout:");/*TODO Internationalize for this and remainder !!!*/
+      lblInitialStateRetrievalTimeout.setText("Initial State Retrival Timeout :");/*TODO Internationalize for this and remainder !!!*/
 
       txtInitialStateRetrievalTimeout = new Text(grpConfGroup, SWT.BORDER);
       txtInitialStateRetrievalTimeout.setText(DEFAULT_INIT_STATE_RETRV_TIMEOUT);
@@ -314,7 +340,7 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       txtInitialStateRetrievalTimeout.addModifyListener(this);
 
       lblSyncReplTimeout = new Label(grpConfGroup, SWT.NONE);
-      lblSyncReplTimeout.setText("Sync Repl Timeout:");/*TODO Internationalize for this and remainder !!!*/
+      lblSyncReplTimeout.setText("Sync Repl Timeout :");/*TODO Internationalize for this and remainder !!!*/
 
       txtSyncReplTimeout = new Text(grpConfGroup, SWT.BORDER);
       txtSyncReplTimeout.setText(DEFAULT_SYNC_REPL_TIMEOUT);
@@ -328,7 +354,27 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       txtLockAcquisitionTimeout.setText(DEFAULT_LOCK_ACK_TIMEOUT);
       txtLockAcquisitionTimeout.setLayoutData(gridData);
       txtLockAcquisitionTimeout.addModifyListener(this);
+      
+      lblDefaultEvixctionPolicy = new Label(grpConfGroup, SWT.NONE);
+      lblDefaultEvixctionPolicy.setText("Default Eviction Policy :");
+      
+      cmbDefaultEvcitionPolicy = new Combo(grpConfGroup,SWT.DROP_DOWN);
+      cmbDefaultEvcitionPolicy.setItems(ICacheConstants.EVICTION_POLICY_CLASSES);
+      cmbDefaultEvcitionPolicy.select(0);
+      cmbDefaultEvcitionPolicy.setLayoutData(gridData);
+      
+      lblCacheLoaderClass = new Label(grpConfGroup, SWT.NONE);
+      lblCacheLoaderClass.setText("Default Cache Loader :");
+      cmbCacheLoaderClass = new Combo(grpConfGroup, SWT.DROP_DOWN);
+      cmbCacheLoaderClass.setItems(ICacheConstants.CACHE_LOADER_CLASSES);
+      cmbCacheLoaderClass.select(0);
+      cmbCacheLoaderClass.setLayoutData(gridData);
 
+      
+      chkBuddyReplicationEnabled = new Button(grpConfGroup,SWT.CHECK);
+      chkBuddyReplicationEnabled.setText("Buddy Replication Enabled");
+      chkBuddyReplicationEnabled.setLayoutData(gDataForReplicationQueue);
+            
       chkFetchStateOnStartup = new Button(grpConfGroup, SWT.CHECK);
       chkFetchStateOnStartup.setText("Fetch In Memory State");
       chkFetchStateOnStartup.setLayoutData(gDataForReplicationQueue);
@@ -337,28 +383,8 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       chkUseInterceptorMBean.setText("Use Interceptor MBeans");
       chkUseInterceptorMBean.setLayoutData(gDataForReplicationQueue);
       chkUseInterceptorMBean.setSelection(true);
-
-      //		lblNodeLockingScheme = new Label(grpConfGroup,SWT.NONE);
-      //		lblNodeLockingScheme.setText("Node Locking Scheme:");/*TODO Internationalize for this and remainder !!!*/
-      //		
-      //		cmbNodeLockingScheme = new Combo(grpConfGroup,SWT.READ_ONLY);
-      //		cmbNodeLockingScheme.setItems(new String[]{"Pessimistic","Optimistic"});
-      //		cmbNodeLockingScheme.select(0);
-      //		cmbNodeLockingScheme.setEnabled(false);
-      //		cmbNodeLockingScheme.setLayoutData(gridData);		
-      //		
-      //		lblEvictionPolicyClass = new Label(grpConfGroup,SWT.NONE);
-      //		lblEvictionPolicyClass.setText("Eviction Policy Class:");/*TODO Internationalize for this and remainder !!!*/		
-      //		
-      //		txtEvictionPolicyClass = new Text(grpConfGroup,SWT.BORDER);
-      //		txtEvictionPolicyClass.setLayoutData(gridData);
-
-      //		chkUseMarshalling = new Button(grpConfGroup,SWT.CHECK);
-      //		chkUseMarshalling.setText("Use Marshalling");
-      //		chkUseMarshalling.setLayoutData(gDataForReplicationQueue);
-      //		chkUseMarshalling.setEnabled(false);
-      //		chkUseMarshalling.setSelection(true);
-
+      
+      
       grpAddJars = new Group(grpConfGroup, SWT.SHADOW_ETCHED_IN);
       grpAddJars.setLayout(new GridLayout(3, true));
       grpAddJars.setText(CacheUtil
@@ -608,6 +634,17 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
 
       return txtDirectoryName.getText().trim();
    }
+   
+   private void handleNodeSchemeSelected(SelectionEvent e){
+	   Combo nodeScheme = (Combo)e.widget;
+	   if(nodeScheme.getSelectionIndex() == 1){
+		   lblIsolationLevel.setEnabled(true);
+		   cmbIsolationLevel.setEnabled(true);
+	   }else{
+		   lblIsolationLevel.setEnabled(false);
+		   cmbIsolationLevel.setEnabled(false);		   
+	   }
+   }
 
    public Text getTxtDirectoryName()
    {
@@ -707,5 +744,45 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
    {
       return txtConfFileName;
    }
+
+public Button getChkBuddyReplicationEnabled() {
+	return chkBuddyReplicationEnabled;
+}
+
+public Combo getCmbNodeLockingScheme() {
+	return cmbNodeLockingScheme;
+}
+
+public void setCmbNodeLockingScheme(Combo cmbNodeLockingScheme) {
+	this.cmbNodeLockingScheme = cmbNodeLockingScheme;
+}
+
+public Combo getCmbCacheLoaderClass() {
+	return cmbCacheLoaderClass;
+}
+
+public void setCmbCacheLoaderClass(Combo cmbCacheLoaderClass) {
+	this.cmbCacheLoaderClass = cmbCacheLoaderClass;
+}
+
+public Combo getCmbDefaultEvcitionPolicy() {
+	return cmbDefaultEvcitionPolicy;
+}
+
+public void setCmbDefaultEvcitionPolicy(Combo cmbDefaultEvcitionPolicy) {
+	this.cmbDefaultEvcitionPolicy = cmbDefaultEvcitionPolicy;
+}
+
+public Button getChkUseInterceptorMBean() {
+	return chkUseInterceptorMBean;
+}
+
+public void setChkUseInterceptorMBean(Button chkUseInterceptorMBean) {
+	this.chkUseInterceptorMBean = chkUseInterceptorMBean;
+}
+
+public void setChkBuddyReplicationEnabled(Button chkBuddyReplicationEnabled) {
+	this.chkBuddyReplicationEnabled = chkBuddyReplicationEnabled;
+}
 
 }//end of class

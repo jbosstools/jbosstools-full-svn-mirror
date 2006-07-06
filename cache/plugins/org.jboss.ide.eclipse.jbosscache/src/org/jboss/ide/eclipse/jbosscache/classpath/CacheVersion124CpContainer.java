@@ -12,7 +12,7 @@ import org.eclipse.core.runtime.Path;
 public class CacheVersion124CpContainer extends CacheClassPathContainer
 {
    public static final String CONTAINER_ID = "org.jboss.ide.eclipse.jbosscache.classpath.CACHE_124";
-   public static final String DESCRIPTION = "JBoss Cache 1.2.4 Libraries";
+   public static final String DESCRIPTION = "JBoss Cache Libraries";
    
    protected static final IPath[] cacheJars = new IPath[]{new Path("lib/bsh-2.0b4.jar"),
                                                           new Path("lib/commons-logging.jar"),

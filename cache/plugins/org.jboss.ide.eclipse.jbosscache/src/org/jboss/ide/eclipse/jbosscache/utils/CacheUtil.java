@@ -6,8 +6,14 @@
  */
 package org.jboss.ide.eclipse.jbosscache.utils;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -95,12 +101,7 @@ public class CacheUtil
       CacheLoaderConfigInternal cacheLoaderConfig = cacheConfigModel.getCacheLoaderConfig();
       ClusterConfigInternal clusterConfig = cacheConfigModel.getClusterConfig();
 
-      File file = fileLoc;//createNewFile(cacheConfigModel.getCacheName()+ICacheConstants.XML_FILEEXTENSION);
-      //		if(file.exists()){
-      //			MessageDialog.openError(shell,getResourceBundleValue(ICacheConstants.CONFIGURATION_ERROR_MESSAGE_CACHEEXIST_TITLE),getResourceBundleValue(ICacheConstants.CONFIGURATION_ERROR_MESSAGE_CACHEEXIST));
-      //			return;
-      //		}
-
+      File file = fileLoc;
       FileWriter writer = null;
 
       try
@@ -142,9 +143,11 @@ public class CacheUtil
          }
          monitor.worked(3);
 
-         childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
-         childMBeanMemonto.putString(ICacheConstants.NAME, "IsolationLevel");
-         childMBeanMemonto.putTextData(cacheConfigModel.getIsolationLevel());
+         if(cacheConfigModel.getNodeLockingSchema().equals(ICacheConstants.NODE_LOCKING_SCHEME[1])){
+	         childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
+	         childMBeanMemonto.putString(ICacheConstants.NAME, "IsolationLevel");
+	         childMBeanMemonto.putTextData(cacheConfigModel.getIsolationLevel());
+         }
 
          childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
          childMBeanMemonto.putString(ICacheConstants.NAME, "CacheMode");
@@ -274,7 +277,7 @@ public class CacheUtil
          monitor.subTask(ICacheConstants.CONFIGURATION_MONITOR_SUBTASK_CACHE_LOADER_CONFIG_NAME);
 
          childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
-         childMBeanMemonto.putString(ICacheConstants.NAME, "FetchStateOnStartup");
+         childMBeanMemonto.putString(ICacheConstants.NAME, "FetchInMemoryState");
          childMBeanMemonto.putTextData(Boolean.toString(cacheConfigModel.isFetchStateOnStartup()));
 
          childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
@@ -291,79 +294,153 @@ public class CacheUtil
 
          monitor.worked(9);
 
-         //			childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
-         //			childMBeanMemonto.putString(ICacheConstants.NAME,"EvictionPolicyClass");
-         //			childMBeanMemonto.putTextData(cacheConfigModel.getEvictionPolicyClass());
+         
+         //Default Eviction Policy
+         if(!cacheConfigModel.getEvictionPolicyClass().equals("None")){
+	         childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
+	         childMBeanMemonto.putString(ICacheConstants.NAME,"EvictionPolicyConfig");
+	         
+	         childMBeanMemonto = childMBeanMemonto.createChild(ICacheConstants.CONFIG);
+	         
+	         childConfigMemento = childMBeanMemonto.createChild(ICacheConstants.ATTRIBUTE);
+	         childConfigMemento.putString(ICacheConstants.NAME,"wakeUpIntervalSeconds");
+	         childConfigMemento.putTextData("5");
+	         
+	         childConfigMemento = childMBeanMemonto.createChild(ICacheConstants.REGION);
+	         childConfigMemento.putString(ICacheConstants.NAME, "/_default_");
+	         childConfigMemento.putString(ICacheConstants.POLICY_CLASS, cacheConfigModel.getEvictionPolicyClass());
+	         
+	         childMBeanMemonto = childConfigMemento.createChild(ICacheConstants.ATTRIBUTE);
+	         childMBeanMemonto.putString(ICacheConstants.NAME, "maxNodes");
+	         childMBeanMemonto.putTextData("5000");
+	         
+	         childMBeanMemonto = childConfigMemento.createChild(ICacheConstants.ATTRIBUTE);
+	         childMBeanMemonto.putString(ICacheConstants.NAME, "timeToLiveSeconds");
+	         childMBeanMemonto.putTextData("1000");	         
+         }
+         
+         
 
          childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
-         childMBeanMemonto.putString(ICacheConstants.NAME, "UseMarshalling");
+         childMBeanMemonto.putString(ICacheConstants.NAME, "UseRegionBasedMarshalling");
          childMBeanMemonto.putTextData(Boolean.toString(cacheConfigModel.isUseMarshalling()));
+         
 
-         if (!cacheConfigModel.getCacheLoaderConfig().getCacheLoaderClass().equals("None"))
+         if (!cacheConfigModel.getCacheLoaderClass().equals("None"))
          {
             childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
-            childMBeanMemonto.putString(ICacheConstants.NAME, "CacheLoaderClass");
-            childMBeanMemonto.putTextData(cacheConfigModel.getCacheLoaderConfig().getCacheLoaderClass());
+            childMBeanMemonto.putString(ICacheConstants.NAME, "CacheLoaderConfiguration");
+            
+            childConfigMemento = childMBeanMemonto.createChild(ICacheConstants.CONFIG);
+            
+            childMBeanMemonto = childConfigMemento.createChild(ICacheConstants.PASSIVATION);
+            childMBeanMemonto.putTextData("false");
+            
+            childMBeanMemonto = childConfigMemento.createChild(ICacheConstants.PRELOAD);
+            childMBeanMemonto.putTextData("/");
 
-            childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
-            childMBeanMemonto.putString(ICacheConstants.NAME, "CacheLoaderConfig");
-
-            if (cacheLoaderConfig.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[0]))
+            childMBeanMemonto = childConfigMemento.createChild(ICacheConstants.SHARED);
+            childMBeanMemonto.putTextData("false");
+            
+            childConfigMemento = childConfigMemento.createChild(ICacheConstants.CACHELOADER);
+            childMBeanMemonto  = childConfigMemento.createChild(ICacheConstants.CLASS);
+            childMBeanMemonto.putTextData(cacheConfigModel.getCacheLoaderClass());
+            
+            childMBeanMemonto= childConfigMemento.createChild("properties");
+                        
+            if (cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[1]) || cacheLoaderConfig.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[2]))
             {
-               if (!cacheLoaderConfig.isUseDataSource())
-               {
-                  childMBeanMemonto.putTextData("\n\t" + "cache.jdbc.table.name=" + cacheLoaderConfig.getTableName()
+                  childMBeanMemonto.putTextData("\n\t" + "cache.jdbc.table.name=" + "jbosscache"
                         + "\n" + "\t" + "cache.jdbc.table.create="
-                        + Boolean.toString(cacheLoaderConfig.isTableCreate()) + "\n" + "\t" + "cache.jdbc.table.drop="
-                        + Boolean.toString(cacheLoaderConfig.isTableDrop()) + "\n" + "\t" + "cache.jdbc.fqn.column="
-                        + cacheLoaderConfig.getFqnColumn() + "\n" + "\t" + "cache.jdbc.fqn.type="
-                        + cacheLoaderConfig.getFqnType() + "\n" + "\t" + "cache.jdbc.node.column="
-                        + cacheLoaderConfig.getNodeColumn() + "\n" + "\t" + "cache.jdbc.node.type="
-                        + cacheLoaderConfig.getNodeType() + "\n" + "\t" + "cache.jdbc.parent.column="
-                        + cacheLoaderConfig.getParentColumn() + "\n" + "\t" + "cache.jdbc.driver="
-                        + cacheLoaderConfig.getDriver() + "\n" + "\t" + "cache.jdbc.url="
-                        + cacheLoaderConfig.getDriverUrl() + "\n" + "\t" + "cache.jdbc.user="
-                        + cacheLoaderConfig.getUserName() + "\n" + "\t" + "cache.jdbc.password="
-                        + cacheLoaderConfig.getPassword() + "\n");
-               }
-               else
-               {
-                  StringBuffer buffer = new StringBuffer("\n");
-                  childMBeanMemonto.putTextData("cache.jdbc.datasource=" + cacheLoaderConfig.getDataSource());
-               }
+                        + "false" + "\n" + "\t" + "cache.jdbc.table.drop="
+                        + "false" + "\n" + "\t" + "cache.jdbc.fqn.column="
+                        + "fqn" + "\n" + "\t" + "cache.jdbc.fqn.type="
+                        + "varchar(255)" + "\n" + "\t" + "cache.jdbc.node.column="
+                        + "node" + "\n" + "\t" + "cache.jdbc.node.type="
+                        + "blob" + "\n" + "\t" + "cache.jdbc.parent.column="
+                        + "parent" + "\n" + "\t" + "cache.jdbc.driver="
+                        + "driver" + "\n" + "\t" + "cache.jdbc.url="
+                        + "url" + "\n" + "\t" + "cache.jdbc.user="
+                        + "username" + "\n" + "\t" + "cache.jdbc.password="
+                        + "password" + "\n");
 
             }
-            else if (cacheLoaderConfig.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[1]) || 
-                     cacheLoaderConfig.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[2]))
+            else if (cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[3]) || 
+            		cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[4]) ||
+            		cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[5]))
             {
-               childMBeanMemonto.putTextData("location=" + cacheLoaderConfig.getFileLocation());
+               childMBeanMemonto.putTextData("location=" + "location");
             }
+            else if(cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[6]))
+            {
+            	 childMBeanMemonto.putTextData("timeout=" + "timeout");
+            }
+            else if(cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[7]))
+            {
+                childMBeanMemonto.putTextData("\n\t" + "host=" + "host"
+                        + "\n" + "\t" + "port=port"+"\n");
+            }
+            else if(cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[8]))
+            {
+                childMBeanMemonto.putTextData("\n\t" + "host=" + "host"
+                        					 +"\n\t" + "port=port"
+                        					 +"\n\t" + "bindname=bindname"+"/n");
+            }else{
+            	 childMBeanMemonto.putTextData("timeout=" + "timeout");
+            }
+
+
+	         childMBeanMemonto = childConfigMemento.createChild("async");
+	         childMBeanMemonto.putTextData("false");
+	         
+	         childMBeanMemonto = childConfigMemento.createChild("fetchPersistentState");
+	         childMBeanMemonto.putTextData("false");
+	
+	         childMBeanMemonto = childConfigMemento.createChild("ignoreModifications");
+	         childMBeanMemonto.putTextData("false");
+	
+	         childMBeanMemonto = childConfigMemento.createChild("purgeOnStartup");
+	         childMBeanMemonto.putTextData("false");
          }
+         
+         if(cacheConfigModel.isBodyReplicationEnabled()){
+             
+        	 childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
+             childMBeanMemonto.putString(ICacheConstants.NAME, "BuddyReplicationConfig");
+             
+             childConfigMemento = childMBeanMemonto.createChild(ICacheConstants.CONFIG);
+             
+             childMBeanMemonto = childConfigMemento.createChild("buddyReplicationEnabled");
+             childMBeanMemonto.putTextData("false");
+             
+             childMBeanMemonto = childConfigMemento.createChild("buddyLocatorClass");
+             childMBeanMemonto.putTextData("org.jboss.cache.buddyreplication.NextMemberBuddyLocator");
+             
+             childMBeanMemonto = childConfigMemento.createChild("buddyLocatorProperties");
+             childMBeanMemonto.putTextData("\n\t" + "numBuddies=" + "1"
+					 						+"\n\t" + "ignoreColocatedBuddies=true"+"\n");
+             
+             childMBeanMemonto = childConfigMemento.createChild("buddyPoolName");
+             childMBeanMemonto.putTextData("myBuddyPoolReplicationGroup");
+             
+             childMBeanMemonto = childConfigMemento.createChild("buddyCommunicationTimeout");
+             childMBeanMemonto.putTextData("2000");
+             
+             childMBeanMemonto = childConfigMemento.createChild("autoDataGravitation");
+             childMBeanMemonto.putTextData("true");
+             
+             childMBeanMemonto = childConfigMemento.createChild("dataGravitationRemoveOnFind");
+             childMBeanMemonto.putTextData("false");
 
+             childMBeanMemonto = childConfigMemento.createChild("dataGravitationSearchBackupTrees");
+             childMBeanMemonto.putTextData("true");                     	        	         	 
+        	 
+         }
+         
          childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
-         childMBeanMemonto.putString(ICacheConstants.NAME, "CacheLoaderShared");
-         childMBeanMemonto.putTextData(Boolean.toString(cacheLoaderConfig.isCacheLoaderShared()));
-
-         childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
-         childMBeanMemonto.putString(ICacheConstants.NAME, "CacheLoaderPreload");
-         childMBeanMemonto.putTextData(cacheLoaderConfig.getCacheLoaderPreload());
-
-         childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
-         childMBeanMemonto.putString(ICacheConstants.NAME, "CacheLoaderPassivation");
-         childMBeanMemonto.putTextData(Boolean.toString(cacheLoaderConfig.isCacheLoaderPassivation()));
-
-         childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
-         childMBeanMemonto.putString(ICacheConstants.NAME, "CacheLoaderFetchPersistentState");
-         childMBeanMemonto.putTextData(Boolean.toString(cacheLoaderConfig.isCacheLoaderFetchPersistentState()));
-
-         childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
-         childMBeanMemonto.putString(ICacheConstants.NAME, "CacheLoaderFetchTransientState");
-         childMBeanMemonto.putTextData(Boolean.toString(cacheLoaderConfig.isCacheLoaderFetchTransientState()));
-
-         childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
-         childMBeanMemonto.putString(ICacheConstants.NAME, "CacheLoaderAsynchronous");
-         childMBeanMemonto.putTextData(Boolean.toString(cacheLoaderConfig.isCacheLoaderAsynchronous()));
-
+         childMBeanMemonto.putString(ICacheConstants.NAME, "UseInterceptorMbeans");
+         childMBeanMemonto.putTextData(Boolean.toString(cacheConfigModel.isUseInterceptorMBeans()));
+         
          memonto.save(writer);
 
          monitor.worked(10);
@@ -602,6 +679,71 @@ public class CacheUtil
       }
       return true;
    }
+
+ 
+   public static String[][] getPropertiesForJdbc(boolean isDs) {
+	
+	   if(isDs){
+		   //return only table create
+		   return ICacheConstants.CACHE_LOADER_JDBC_TABLE_PARAMS;
+		   
+	   }else{
+		   //all paramters
+		   
+		   String[][] temp= new String[11][2];
+		   
+		   System.arraycopy(ICacheConstants.CACHE_LOADER_JDBC_TABLE_PARAMS, 0, temp, 0,ICacheConstants.CACHE_LOADER_JDBC_TABLE_PARAMS.length);
+		   System.arraycopy(ICacheConstants.CACHE_LOADER_JDBC_PROPERTIES, 0, temp, 7,ICacheConstants.CACHE_LOADER_JDBC_PROPERTIES.length);
+		   
+		   return temp;
+	   }
+	   
+   }
+   
+   public static void main(String[] args) throws Exception{
+		File f = new File("C:/Documents and Settings/Gürkan Erdoðdu/cache.cfg.xml");
+		File f1 = new File("C:/Documents and Settings/Gürkan Erdoðdu/cache1.cfg.xml");
+		
+		FileInputStream st = new FileInputStream(f);
+		
+		FileOutputStream stro = new FileOutputStream(f1);
+		
+		String xx = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+		byte[] b = new byte[xx.getBytes().length];
+		st.read(b);
+		
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		
+		
+		PrintWriter wr = new PrintWriter(stro);
+		wr.println(xx);
+		wr.println("<!DOCTYPE mbean PUBLIC \"-//Cache/Cache Configuration DTD 1.0//EN\" \"http://localhost/cache-configuration-1.0.dtd\">");
+		
+		int avail = st.available();
+		byte[] x = new byte[avail];
+		
+		while(st.read(x) != -1){
+			os.write(x);
+		}
+		
+		
+		
+		
+		wr.print(os.toString().toCharArray());
+		
+		wr.flush();
+		wr.close();
+		st.close();
+		os.close();
+		stro.close();
+		
+		
+		
+		
+		
+
+	}
+
 
 
 }//end of class

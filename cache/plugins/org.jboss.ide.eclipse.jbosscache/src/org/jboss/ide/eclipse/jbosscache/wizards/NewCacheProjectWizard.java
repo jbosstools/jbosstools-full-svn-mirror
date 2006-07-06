@@ -68,9 +68,9 @@ import org.jboss.ide.eclipse.jbosscache.internal.CacheMessages;
 public class NewCacheProjectWizard extends Wizard implements INewWizard
 {
    private WizardNewProjectCreationPage page = null;
-   private Button btnCache124 = null;
-   private Button btnCache130 = null;
-   private boolean is124 = true;
+//   private Button btnCache124 = null;
+//   private Button btnCache130 = null;
+//   private boolean is124 = true;
 
    public void init(IWorkbench workbench, IStructuredSelection selection)
    {
@@ -89,35 +89,35 @@ public class NewCacheProjectWizard extends Wizard implements INewWizard
 
    private void addCacheVersionGroup(Composite pageContainer)
    {
-      Group group = new Group(pageContainer,SWT.SHADOW_ETCHED_IN);
-      group.setText("Cache Version");
-      GridLayout gridLayout = new GridLayout(2,false);
-      group.setLayout(gridLayout);
-      group.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-      
-      btnCache124 = new Button(group,SWT.RADIO | SWT.RIGHT);
-      btnCache124.setText("Cache 1.2.4");
-      btnCache124.setSelection(true);//default
-      
-      btnCache130 = new Button(group,SWT.RADIO | SWT.RIGHT);
-      btnCache130.setText("Cache 1.3.0");
-      btnCache130.setEnabled(false);
-      
-      btnCache124.addSelectionListener(new SelectionAdapter(){
-
-         public void widgetSelected(SelectionEvent e)
-         {
-            is124 = true;
-         }         
-      });
-      
-      btnCache130.addSelectionListener(new SelectionAdapter(){
-         public void widgetSelected(SelectionEvent e)
-         {
-            is124 = false;
-         }                  
-      });
-      
+//      Group group = new Group(pageContainer,SWT.SHADOW_ETCHED_IN);
+//      group.setText("Cache Version");
+//      GridLayout gridLayout = new GridLayout(2,false);
+//      group.setLayout(gridLayout);
+//      group.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+//      
+//      btnCache124 = new Button(group,SWT.RADIO | SWT.RIGHT);
+//      btnCache124.setText("Cache 1.2.4");
+//      btnCache124.setSelection(true);//default
+//      
+//      btnCache130 = new Button(group,SWT.RADIO | SWT.RIGHT);
+//      btnCache130.setText("Cache 1.3.0");
+//      btnCache130.setEnabled(false);
+//      
+//      btnCache124.addSelectionListener(new SelectionAdapter(){
+//
+//         public void widgetSelected(SelectionEvent e)
+//         {
+//            is124 = true;
+//         }         
+//      });
+//      
+//      btnCache130.addSelectionListener(new SelectionAdapter(){
+//         public void widgetSelected(SelectionEvent e)
+//         {
+//            is124 = false;
+//         }                  
+//      });
+//      
    }
    
    private void createSrcAndBin(IJavaProject project, IProgressMonitor monitor) throws CoreException
@@ -147,7 +147,7 @@ public class NewCacheProjectWizard extends Wizard implements INewWizard
    private IClasspathEntry[] configureClasspathEntries(ArrayList classpathEntries) throws CoreException
    {
       classpathEntries.add(JavaRuntime.getDefaultJREContainerEntry());
-      if (is124)
+      if (true)
       {
          classpathEntries.add(JavaCore.newContainerEntry(new Path(CacheVersion124CpContainer.CONTAINER_ID)));
       }
@@ -237,7 +237,7 @@ public class NewCacheProjectWizard extends Wizard implements INewWizard
          
          
          IPath path = page.getProjectHandle().getLocation();
-         path = path.append(new Path("default_tree_cache-service.xml"));
+         path = path.append(new Path("cache.cfg.xml"));
          File file = path.toFile();
          
          CacheFileEditorInput edInput = new CacheFileEditorInput(file);
@@ -356,13 +356,13 @@ public class NewCacheProjectWizard extends Wizard implements INewWizard
 
    private void addDefaultXml(IProject project) throws Exception{
       IPath location = project.getLocation();
-      IPath fileLocation = location.append(new Path("default_tree_cache-service.xml"));
+      IPath fileLocation = location.append(new Path("cache.cfg.xml"));
       
       File crFile = fileLocation.toFile();
       try{
          crFile.createNewFile();
          
-         String path = Platform.asLocalURL(JBossCachePlugin.getDefault().getBundle().getResource("org/jboss/ide/eclipse/jbosscache/default_tree_cache-service.xml")).getFile().toString();
+         String path = Platform.asLocalURL(JBossCachePlugin.getDefault().getBundle().getResource("org/jboss/ide/eclipse/jbosscache/cache.cfg.xml")).getFile().toString();
                                    
          File file = new File(path);
          

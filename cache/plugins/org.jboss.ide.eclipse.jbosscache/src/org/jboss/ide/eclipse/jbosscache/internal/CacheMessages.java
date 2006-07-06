@@ -17,11 +17,17 @@ public class CacheMessages extends NLS
 {
    private static final String BUNDLE_NAME = "org.jboss.ide.eclipse.jbosscache.internal.messages";//$NON-NLS-1$
 
-   public static String ContentViewDialog_titleForObjectType;
+   public static String Column_Properties;
+
+public static String Column_Value;
+
+public static String ContentViewDialog_titleForObjectType;
 
    public static String ContentViewDialog_fieldName;
 
    public static String ContentViewDialog_valueName;
+
+public static String Dialog_Title;
 
    public static String NodeContentView_showObjectsFieldActionText;
 

@@ -7,7 +7,6 @@
 package org.jboss.ide.eclipse.jbosscache.wizards.pages;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -28,13 +27,12 @@ import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
 import org.jboss.ide.eclipse.jbosscache.JBossCachePlugin;
-import org.jboss.ide.eclipse.jbosscache.dialogs.CacheLoaderDefDialog;
 
 /**
  * This wizard page configures the class loader of the cache
  * @author Gurkaner
  */
-public class CacheLoaderConfigurationPage extends WizardPage
+public class CopyOfCacheLoaderConfigurationPage extends WizardPage
 {
 
    private Label lblCacheLoaderClass;
@@ -127,7 +125,11 @@ public class CacheLoaderConfigurationPage extends WizardPage
    private Group grpRpcDel;
    private Label lblRpcDelTimeout;
    private Text txtRpcDelTimeout;   
-      
+
+   
+   
+   
+   
    private Button btnUseDataSource;
 
    /**
@@ -136,7 +138,7 @@ public class CacheLoaderConfigurationPage extends WizardPage
     * @param title
     * @param imageDesc
     */
-   public CacheLoaderConfigurationPage(String name, String title, ImageDescriptor imageDesc)
+   public CopyOfCacheLoaderConfigurationPage(String name, String title, ImageDescriptor imageDesc)
    {
       super(name, title, imageDesc);
       setDescription("Cache loader configuration informations");
@@ -285,8 +287,6 @@ public class CacheLoaderConfigurationPage extends WizardPage
 
 		public void linkActivated(HyperlinkEvent e) {
 			//Dialog open
-			CacheLoaderDefDialog dialog = new CacheLoaderDefDialog(getShell(),cmbCacheLoaderClass.getText());
-			dialog.open();
 		}
 
 		public void linkEntered(HyperlinkEvent e) {
