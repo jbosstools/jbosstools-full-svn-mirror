@@ -418,7 +418,7 @@ END OF TERMS AND CONDITIONS
    </url>
 
    <requires>
-      <import feature="org.jboss.ide.eclipse.feature" version="1.5.1"/>
+      <import feature="org.jboss.ide.eclipse.feature" version="0.0.0"/>
    </requires>
 
    <plugin
