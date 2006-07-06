@@ -19,7 +19,6 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.jboss.cache.aop.AOPInstance;
 import org.jboss.cache.aop.InternalDelegate;
-import org.jboss.cache.aop.TreeCacheAop;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
 import org.jboss.ide.eclipse.jbosscache.JBossCachePlugin;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheInstance;

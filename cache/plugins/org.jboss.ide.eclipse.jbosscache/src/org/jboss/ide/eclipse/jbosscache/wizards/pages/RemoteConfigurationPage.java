@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
-import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigParams;
 import org.jboss.ide.eclipse.jbosscache.utils.CacheUtil;
 
 public class RemoteConfigurationPage extends WizardPage implements ModifyListener,ISelectionChangedListener

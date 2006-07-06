@@ -7,7 +7,6 @@
 package org.jboss.ide.eclipse.jbosscache.actions;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.ui.part.ViewPart;

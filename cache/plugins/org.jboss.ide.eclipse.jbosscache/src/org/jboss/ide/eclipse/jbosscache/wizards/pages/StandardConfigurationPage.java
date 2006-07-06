@@ -34,7 +34,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
 import org.jboss.ide.eclipse.jbosscache.internal.CacheMessages;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigParams;

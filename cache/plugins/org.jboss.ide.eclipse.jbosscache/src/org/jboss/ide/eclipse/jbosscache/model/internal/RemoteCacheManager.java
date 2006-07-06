@@ -12,7 +12,6 @@ import java.util.Set;
 
 import javax.naming.InitialContext;
 
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.jboss.cache.Fqn;
 import org.jboss.cache.TreeCacheMBean;
 import org.jboss.cache.aop.TreeCacheAopMBean;

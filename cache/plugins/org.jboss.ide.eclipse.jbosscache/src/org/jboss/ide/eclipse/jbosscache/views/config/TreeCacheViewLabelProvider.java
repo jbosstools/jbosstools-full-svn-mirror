@@ -6,12 +6,9 @@
  */
 package org.jboss.ide.eclipse.jbosscache.views.config;
 
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
 import org.jboss.ide.eclipse.jbosscache.JBossCachePlugin;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheInstance;

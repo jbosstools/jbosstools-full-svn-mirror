@@ -21,7 +21,6 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
 import org.jboss.ide.eclipse.jbosscache.JBossCachePlugin;
-import org.jboss.ide.eclipse.jbosscache.utils.CacheClassLoader;
 import org.jboss.ide.eclipse.jbosscache.utils.CacheUtil;
 import org.jboss.ide.eclipse.jbosscache.views.content.TableContentProvider.TableContentModel;
 

@@ -12,7 +12,6 @@ import java.util.StringTokenizer;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.swt.custom.BusyIndicator;
 import org.jboss.cache.Fqn;
 import org.jboss.cache.TreeCache;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;

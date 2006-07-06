@@ -7,7 +7,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.text.contentassist.CompletionProposal;
+import org.eclipse.wst.sse.ui.internal.contentassist.CustomCompletionProposal;
 import org.eclipse.wst.xml.ui.internal.contentassist.ContentAssistRequest;
+import org.eclipse.wst.xml.ui.internal.editor.CMImageUtil;
+import org.eclipse.wst.xml.ui.internal.editor.XMLEditorPluginImageHelper;
+import org.eclipse.wst.xml.ui.internal.editor.XMLEditorPluginImages;
 
 public class CacheXMLContentAssistProcessor extends CacheContentAssistProcessor {
 
@@ -50,6 +54,37 @@ public class CacheXMLContentAssistProcessor extends CacheContentAssistProcessor 
 		}
 		
 		return Collections.EMPTY_LIST;
+	}
+
+
+	@Override
+	protected List getTagValueProposals(String parentName,String matchString, int offset, ContentAssistRequest contentAssistRequest) {
+		
+		if(parentName == null || parentName.equals(""))
+			return null;
+		
+		List types = null;
+		if(matchString.equals("")){
+			//Add all possible tags
+			
+			types = this.extractor.findTagMatcher(parentName);			
+
+		}else{
+			//Get Match String
+			types = this.extractor.findTagMatcher(parentName,matchString);
+		}
+			
+			List proposals = new ArrayList(types.size() );
+			for (int i=0;i<types.size();i++) {
+				String element = getEndTag((String) types.get(i));
+				proposals.add(new CustomCompletionProposal(element,offset,matchString.length(),element.length(),XMLEditorPluginImageHelper.getInstance().getImage(XMLEditorPluginImages.IMG_OBJ_TAG_GENERIC),(String) types.get(i),null,null,0,false));
+			}
+			return proposals;			
+						
+	}
+	
+	private String getEndTag(String tag){
+		return tag+">"+"</"+tag+">";
 	}
 
 	

@@ -10,11 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.PrintWriter;
-import java.io.StringReader;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -38,10 +34,8 @@ import org.jboss.ide.eclipse.jbosscache.editors.input.CacheFileEditorInput;
 import org.jboss.ide.eclipse.jbosscache.internal.CacheMessages;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigurationModel;
-import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigurationModel.CacheLoaderConfigInternal;
 import org.jboss.ide.eclipse.jbosscache.model.factory.CacheInstanceFactory;
 import org.jboss.ide.eclipse.jbosscache.utils.CacheUtil;
-import org.jboss.ide.eclipse.jbosscache.wizards.pages.CacheLoaderConfigurationPage;
 import org.jboss.ide.eclipse.jbosscache.wizards.pages.StandardConfigurationPage;
 
 /**

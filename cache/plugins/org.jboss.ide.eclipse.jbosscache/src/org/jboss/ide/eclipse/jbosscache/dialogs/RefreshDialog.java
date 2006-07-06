@@ -7,13 +7,11 @@
 package org.jboss.ide.eclipse.jbosscache.dialogs;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -30,9 +28,7 @@ import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
 import org.jboss.ide.eclipse.jbosscache.JBossCachePlugin;
 import org.jboss.ide.eclipse.jbosscache.internal.CacheMessages;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance;
-import org.jboss.ide.eclipse.jbosscache.model.factory.CacheInstanceFactory;
 import org.jboss.ide.eclipse.jbosscache.model.internal.RemoteCacheManager;
-import org.jboss.ide.eclipse.jbosscache.utils.CacheUtil;
 import org.jboss.ide.eclipse.jbosscache.views.config.TreeCacheView;
 
 /**

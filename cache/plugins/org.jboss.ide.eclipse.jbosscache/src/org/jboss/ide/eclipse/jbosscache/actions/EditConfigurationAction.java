@@ -6,15 +6,10 @@
  */
 package org.jboss.ide.eclipse.jbosscache.actions;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.hibernate.tool.hbm2x.XMLPrettyPrinter;
 import org.jboss.ide.eclipse.jbosscache.editors.input.CacheFileEditorInput;
 import org.jboss.ide.eclipse.jbosscache.internal.CacheMessages;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance;

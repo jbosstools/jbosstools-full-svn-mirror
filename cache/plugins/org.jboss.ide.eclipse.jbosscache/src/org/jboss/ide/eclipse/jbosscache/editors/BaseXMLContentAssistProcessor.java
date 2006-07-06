@@ -26,6 +26,67 @@ import org.eclipse.wst.xml.ui.internal.contentassist.XMLContentAssistProcessor;
 
 public abstract class BaseXMLContentAssistProcessor extends XMLContentAssistProcessor {
 	
+	@Override
+	protected void addTagNameProposals(ContentAssistRequest contentAssistRequest, int arg1){
+		// TODO Auto-generated method stub
+		
+		//super.addTagNameProposals(contentAssistRequest, arg1);
+		
+		IDOMNode node = (IDOMNode) contentAssistRequest.getNode();
+		IDOMNode parentNode = (IDOMNode) contentAssistRequest.getParent();
+		
+		String parentNodeName = parentNode.getNodeName();				
+		
+		// Find the attribute region and name for which this position should have a value proposed
+		IStructuredDocumentRegion open = node.getFirstStructuredDocumentRegion();
+		ITextRegionList openRegions = open.getRegions();
+		int i = openRegions.indexOf(contentAssistRequest.getRegion());
+		
+		//No text
+		if(i == -1){
+			//Show All Elements with parent
+			List attributeValueProposals = getTagValueProposals(parentNodeName,"", contentAssistRequest.getReplacementBeginPosition(), contentAssistRequest);
+			if(attributeValueProposals!=null) {
+				for (Iterator iter = attributeValueProposals.iterator(); iter.hasNext();) {
+					ICompletionProposal element = (ICompletionProposal) iter.next();				
+					contentAssistRequest.addProposal(element);					
+				}
+			}
+		}
+		
+		else{
+			
+			ITextRegion nameRegion = null;
+			while (i >= 0) {
+				nameRegion = openRegions.get(i--);
+				
+				if (nameRegion.getType() == DOMRegionContext.XML_TAG_NAME)
+					break;
+			}
+		
+			String matchString = contentAssistRequest.getMatchString();				
+			
+			int offset = contentAssistRequest.getReplacementBeginPosition();
+					
+							
+			List attributeValueProposals = getTagValueProposals(parentNodeName, matchString, offset, contentAssistRequest);
+			if(attributeValueProposals!=null) {
+				for (Iterator iter = attributeValueProposals.iterator(); iter.hasNext();) {
+					ICompletionProposal element = (ICompletionProposal) iter.next();				
+					contentAssistRequest.addProposal(element);					
+				}
+			}
+				
+			
+		}				
+		
+	}
+	
+	
+	
+	abstract protected List getTagValueProposals(String parentName, String matchString, int offset, ContentAssistRequest contentAssistRequest);
+	
+
 	protected void addAttributeValueProposals(ContentAssistRequest contentAssistRequest) {
 		super.addAttributeValueProposals(contentAssistRequest);
 		
