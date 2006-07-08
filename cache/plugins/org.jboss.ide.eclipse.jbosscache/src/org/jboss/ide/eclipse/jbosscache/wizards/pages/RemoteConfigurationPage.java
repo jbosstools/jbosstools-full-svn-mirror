@@ -41,6 +41,7 @@ public class RemoteConfigurationPage extends WizardPage implements ModifyListene
    private static final String DEFAULT_URL = "localhost";
    private static final String DEFAULT_PORT = "1099";
    private static final String DEFAULT_JNDI_NAME = "jndi_name";
+   private static final String [] DEFAULT_CACHE_SERVICE_NAME = {"jboss.cache:service=TreeCache","jboss.cache:service=TreeCacheAop"};
    
    private Label lblDefaultConfigName;
    private Text txtDefaultConfigName; 
@@ -52,6 +53,9 @@ public class RemoteConfigurationPage extends WizardPage implements ModifyListene
    private Text txtDefaultJndi;
    private Label lblCacheType;
    private Combo cmbCacheType;
+   
+   private Label lblCacheServiceName;
+   private Text txtCacheServiceName;
    
    private TableViewer jarTableViewer;
    private Group grpAddJars;
@@ -87,6 +91,12 @@ public class RemoteConfigurationPage extends WizardPage implements ModifyListene
       cmbCacheType.setItems(ICacheConstants.CACHE_TYPE_MODE);
       cmbCacheType.select(0);
       cmbCacheType.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+      cmbCacheType.addSelectionListener(new SelectionAdapter(){
+    	 
+    	  public void widgetSelected(SelectionEvent e){
+    		  handleCacheTypeSelected(e);
+    	  }
+      });
       
       
       lblDefaultConfigName = new Label(container,SWT.NONE);
@@ -116,6 +126,14 @@ public class RemoteConfigurationPage extends WizardPage implements ModifyListene
       txtDefaultJndi.setText(DEFAULT_JNDI_NAME);
       txtDefaultJndi.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
       txtDefaultJndi.addModifyListener(this);
+      
+      lblCacheServiceName = new Label(container,SWT.NONE);
+      lblCacheServiceName.setText("Cache Service Name");
+      txtCacheServiceName = new Text(container,SWT.BORDER);
+      txtCacheServiceName.setText(DEFAULT_CACHE_SERVICE_NAME[0]);
+      txtCacheServiceName.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+      txtCacheServiceName.addModifyListener(this);
+      
       
       grpAddJars = new Group(container, SWT.SHADOW_ETCHED_IN);
       grpAddJars.setLayout(new GridLayout(3, true));
@@ -169,7 +187,15 @@ public class RemoteConfigurationPage extends WizardPage implements ModifyListene
       
    }
 
-   /**
+   protected void handleCacheTypeSelected(SelectionEvent e) {
+	   cmbCacheType = (Combo)e.widget;
+	   if(cmbCacheType.getText().equals(ICacheConstants.CACHE_TYPE_MODE[0])){
+		   txtCacheServiceName.setText(DEFAULT_CACHE_SERVICE_NAME[0]);
+	   }else
+		   txtCacheServiceName.setText(DEFAULT_CACHE_SERVICE_NAME[1]);
+   }
+
+/**
     * Jar selection
     */
    private void handleAddJarSelected()
@@ -251,7 +277,16 @@ public class RemoteConfigurationPage extends WizardPage implements ModifyListene
             updatePage(null);
          }
 
-      }            
+      }else if(widget == txtCacheServiceName){
+          if(txtCacheServiceName.getText().equals(""))
+          {
+             updatePage("Please give the cache service name");
+          }
+          else{
+             updatePage(null);
+          }
+
+       }            
       
    }
    
@@ -266,7 +301,8 @@ public class RemoteConfigurationPage extends WizardPage implements ModifyListene
       if(!txtDefaultConfigName.getText().equals("") &&
          !txtDefaultJndi.getText().equals("") && 
          !txtDefaultPort.getText().equals("") &&
-         !txtDefaultUrl.getText().equals(""))
+         !txtDefaultUrl.getText().equals("") &&
+         !txtCacheServiceName.getText().equals(""))
       {
          setPageComplete(true);
       }
@@ -312,6 +348,10 @@ public class RemoteConfigurationPage extends WizardPage implements ModifyListene
    {
       return jarList;
    }
+
+public Text getTxtCacheServiceName() {
+	return txtCacheServiceName;
+}
 
 
    

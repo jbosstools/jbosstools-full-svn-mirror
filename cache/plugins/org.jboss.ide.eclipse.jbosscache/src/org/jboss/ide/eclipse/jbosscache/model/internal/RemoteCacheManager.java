@@ -227,12 +227,14 @@ public class RemoteCacheManager
 	   try{
 		    if(con == null)
 		    	con = (MBeanServerConnection)ctx.lookup("jmx/invoker/RMIAdaptor");
+		    
 		   String [] names = ICacheConstants.STAT_INTERCEPTOR_NAMES;
+		   String serviceName = rootInstance.getCacheServiceName();
 		   
 		   for(int i=0;i<names.length;i++){
 			   String tmp = names[i];
 			   try{
-				   ObjectInstance instance = con.getObjectInstance(new ObjectName("jboss.cache:service=TreeCache,treecache-interceptor="+tmp));
+				   ObjectInstance instance = con.getObjectInstance(new ObjectName(serviceName+",treecache-interceptor="+tmp));
 				   map.put(instance.getClassName().substring(29),con.invoke(instance.getObjectName(),"dumpStatistics", new Object[]{},new String[]{}));
 			   }catch(Exception e){
 				   continue;

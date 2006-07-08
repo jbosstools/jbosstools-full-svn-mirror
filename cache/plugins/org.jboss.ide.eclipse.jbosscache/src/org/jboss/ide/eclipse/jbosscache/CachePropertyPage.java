@@ -55,6 +55,7 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
    private CacheConfigParams defaultConfigParams = new CacheConfigParams();
    private RemoteCacheConfigParams remoteParams = null; 
    private RemoteCacheConfigParams defaultRemoteParams = new RemoteCacheConfigParams();
+   private String defaultCacheServiceName;
    
    private Label lblDefaultUrl;
    private Text txtDefaultUrl;
@@ -62,6 +63,8 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
    private Text txtDefaultPort;
    private Label lblDefaultJndi;
    private Text txtDefaultJndi; 
+   private Label lblCacheServiceName;
+   private Text txtCacheServiceName;
    
    public CachePropertyPage()
    {
@@ -77,6 +80,7 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
       else{
          remoteParams = rootInstance.getRemoteCacheConfigParams();
          
+         defaultCacheServiceName = rootInstance.getCacheServiceName();
          defaultRemoteParams.setJarList(new ArrayList(remoteParams.getJarList()));
          defaultRemoteParams.setJndi(remoteParams.getJndi());
          defaultRemoteParams.setPort(remoteParams.getPort());
@@ -222,6 +226,13 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
       txtDefaultJndi.setText(remoteParams.getJndi());
       txtDefaultJndi.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
       
+      lblCacheServiceName = new Label(container,SWT.NONE);
+      lblCacheServiceName.setText("Cache Service Name");
+      txtCacheServiceName = new Text(container,SWT.BORDER);
+      txtCacheServiceName.setText(defaultCacheServiceName);
+      txtCacheServiceName.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+      
+      
       addJarViewer(container);
 
       return container;
@@ -312,6 +323,7 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
       remoteParams.setJndi(txtDefaultJndi.getText().trim());
       remoteParams.setPort(txtDefaultPort.getText().trim());
       remoteParams.setUrl(txtDefaultUrl.getText().trim());
+      rootInstance.setCacheServiceName(txtCacheServiceName.getText().trim());
       rootInstance.setIsDirty(true);
    }
    
@@ -329,11 +341,13 @@ public class CachePropertyPage extends PropertyPage implements ISelectionChanged
       remoteParams.setJndi(defaultRemoteParams.getJndi());
       remoteParams.setPort(defaultRemoteParams.getPort());
       remoteParams.setUrl(defaultRemoteParams.getUrl());
+      rootInstance.setCacheServiceName(defaultCacheServiceName);
       rootInstance.setIsDirty(false);
       
       txtDefaultJndi.setText(remoteParams.getJndi());
       txtDefaultPort.setText(remoteParams.getPort());
       txtDefaultUrl.setText(remoteParams.getUrl());
+      txtCacheServiceName.setText(defaultCacheServiceName);
       
       jarTableViewer.setInput(remoteParams.getJarList());
       

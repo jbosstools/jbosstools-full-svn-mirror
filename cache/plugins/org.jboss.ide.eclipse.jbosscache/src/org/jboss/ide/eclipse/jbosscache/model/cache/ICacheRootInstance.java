@@ -202,5 +202,8 @@ public interface ICacheRootInstance
    boolean isRemoteCache();
    
    void setRemoteCache(boolean isRemote);
+   
+   void setCacheServiceName(String serviceName);
+   String getCacheServiceName();
 
 }//end of interface

@@ -54,11 +54,23 @@ public abstract class AbstractCacheRootInstance extends PlatformObject implement
    protected boolean isRemoteCache= false;
 
    protected boolean isDirty = false;
+   
+   protected String cacheServiceName;
 
-   /**Cache type is TreeCache or TreeCacheAOP*/
+   public String getCacheServiceName() {
+	   return this.cacheServiceName;
+   }
+
+	public void setCacheServiceName(String serviceName) {
+		this.cacheServiceName = serviceName;
+		
+	}
+
+/**Cache type is TreeCache or TreeCacheAOP*/
    private String cacheType = ICacheConstants.JBOSS_CACHE_TREE_CACHE;//Default as TreeCache
 
    private String rootLabel;
+   
 
    /**TreeCache instance with this root instance configuration*///local cache
    protected TreeCacheManager treeCacheManager;

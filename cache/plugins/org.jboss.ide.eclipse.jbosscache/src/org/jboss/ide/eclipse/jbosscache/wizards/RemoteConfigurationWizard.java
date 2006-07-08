@@ -65,6 +65,7 @@ public class RemoteConfigurationWizard extends Wizard implements INewWizard
          rootInstance.setRemoteCache(true);
          rootInstance.setIsDirty(true);
          rootInstance.setRemoteCacheConfigParams(remoteConfigParams);
+         rootInstance.setCacheServiceName(remoteConfigPage.getTxtCacheServiceName().getText().trim());
          CacheInstanceFactory.getCacheRootMainInstance().addRootInstanceChild(rootInstance);
 
          if(workbench == null)
