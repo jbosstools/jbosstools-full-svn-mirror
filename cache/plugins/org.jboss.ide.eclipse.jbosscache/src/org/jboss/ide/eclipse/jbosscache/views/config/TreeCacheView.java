@@ -51,6 +51,7 @@ import org.jboss.ide.eclipse.jbosscache.actions.RemoteRefreshAction;
 import org.jboss.ide.eclipse.jbosscache.actions.RenameAction;
 import org.jboss.ide.eclipse.jbosscache.actions.ShowContentAction;
 import org.jboss.ide.eclipse.jbosscache.actions.ShowObjectGraphAction;
+import org.jboss.ide.eclipse.jbosscache.actions.ShowStatisticsAction;
 import org.jboss.ide.eclipse.jbosscache.model.cache.AbstractCacheInstance;
 import org.jboss.ide.eclipse.jbosscache.model.cache.AbstractCacheRootInstance;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheInstance;
@@ -117,7 +118,7 @@ public class TreeCacheView extends ViewPart
    private Action importAction;
 
    /**Duplicate Action*/
-   private Action duplicateAction;
+   private Action duplicateAction;   
 
    /**
     * Show Contents of the cache node
@@ -143,6 +144,8 @@ public class TreeCacheView extends ViewPart
    private Action doubleClickAction;
 
    private IMemento memento;
+   
+   private Action cacheStatAction;
 
    /**
     * The constructor.
@@ -363,11 +366,17 @@ public class TreeCacheView extends ViewPart
             if(rootInstance.isRemoteCache())
             {
                manager.add(refreshAction);
+               manager.add(cacheStatAction);
                
-               if(rootInstance.isConnected())
+               
+               if(rootInstance.isConnected()){
                   refreshAction.setEnabled(true);
-               else
+                  cacheStatAction.setEnabled(true);
+               }
+               else{
                   refreshAction.setEnabled(false);
+                  cacheStatAction.setEnabled(false);
+               }
                
                connectAction.setText("Connect to Remote");
                connectAction.setToolTipText("Connect to Remote");
@@ -560,6 +569,11 @@ public class TreeCacheView extends ViewPart
       
       refreshAction = new RemoteRefreshAction(this,"refAction");
       
+      cacheStatAction = new ShowStatisticsAction(this, "showStatAction");
+      cacheStatAction.setText("Show Statistics");
+      cacheStatAction.setToolTipText("Show Statistics");
+      cacheStatAction.setImageDescriptor(JBossCachePlugin.getDefault().getImageRegistry().getDescriptor(
+            ICacheConstants.IMAGE_KEY_SEARCH_GIF));
 
    }
 

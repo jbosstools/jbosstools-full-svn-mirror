@@ -124,6 +124,8 @@ public interface ICacheConstants
    String CACHE_QUERY_EDITOR_ID = "org.jboss.ide.eclipse.jbosscache.editor.CacheQueryEditor";
 
    String CACHE_NODE_CONTENT_VIEW_ID = "org.jboss.ide.eclipse.jbosscache.view.NodeContentView";
+   
+   String CACHE_STATISTIC_VIEW_ID = "org.jboss.ide.eclipse.jbosscache.view.StatisticContentView";
 
    String CACHE_GRAPH_VIEW_ID = "org.jboss.ide.eclipse.jbosscache.views.CacheGraphView";
 
@@ -253,6 +255,12 @@ public interface ICacheConstants
    
    String IMAGE_KEY_DB16_GIF = "jdbc_16.gif";
    
+   String IMAGE_KEY_SEARCH_GIF = "search.gif";
+   
+   String IMAGE_KEY_STAT_ATTRIBUTE = "property_obj.gif";
+   
+   String IMAGE_KEY_STAT_PARENT_ATTRIBUTE = "prop_ps.gif";
+   
    
    
 
@@ -349,5 +357,8 @@ String SHARED ="shared";
 String CACHELOADER = "cacheloader";
 
 String CLASS = "class";
+
+String[] STAT_INTERCEPTOR_NAMES = {"ActivationInterceptor","CacheLoaderInterceptor","CacheMgmtInterceptor","CacheStoreInterceptor","InvalidationInterceptor","PassivationInterceptor","TxInterceptor"};
+
 
 }//end of interface

@@ -115,7 +115,7 @@ public class CacheUtil
 
          childServerMemonto = memonto.createChild(ICacheConstants.MBEAN);
          
-         if(cacheConfigModel.getCacheMode().equals(ICacheConstants.JBOSS_CACHE_TREE_CACHE))
+         if(cacheConfigModel.getCacheType().equals(ICacheConstants.JBOSS_CACHE_TREE_CACHE))
          {
             childServerMemonto.putString(ICacheConstants.CODE, "org.jboss.cache.TreeCache");
             childServerMemonto.putString(ICacheConstants.NAME, "jboss.cache:service=TreeCache");            
@@ -741,6 +741,15 @@ public class CacheUtil
 		
 
 	}
+   
+   public static boolean isNameInStatInterceptor(String name){
+	   for(int i=0;i<ICacheConstants.STAT_INTERCEPTOR_NAMES.length;i++){
+		   if(name.equals(ICacheConstants.STAT_INTERCEPTOR_NAMES[i]))
+			   return true;
+	   }
+	   
+	   return false;
+   }
 
 
 

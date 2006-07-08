@@ -293,7 +293,20 @@ public class JBossCachePlugin extends AbstractUIPlugin
          
          imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
                + ICacheConstants.IMAGE_KEY_DB16_GIF));
-         getImageRegistry().put(ICacheConstants.IMAGE_KEY_DB16_GIF, imageDesc);         
+         getImageRegistry().put(ICacheConstants.IMAGE_KEY_DB16_GIF, imageDesc);
+         
+         imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
+                 + ICacheConstants.IMAGE_KEY_SEARCH_GIF));
+           getImageRegistry().put(ICacheConstants.IMAGE_KEY_SEARCH_GIF, imageDesc);
+           
+         imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
+                 + ICacheConstants.IMAGE_KEY_STAT_ATTRIBUTE));
+           getImageRegistry().put(ICacheConstants.IMAGE_KEY_STAT_ATTRIBUTE, imageDesc);
+           
+           imageDesc = ImageDescriptor.createFromURL(new URL(url, ICacheConstants.PLUGIN_IMAGE_PATH
+                   + ICacheConstants.IMAGE_KEY_STAT_PARENT_ATTRIBUTE));
+             getImageRegistry().put(ICacheConstants.IMAGE_KEY_STAT_PARENT_ATTRIBUTE, imageDesc);                             
+           
          
 
       }

@@ -36,6 +36,7 @@ public class CachePerspective implements IPerspectiveFactory
       //BOTTOM
       folderLayoutNext = layout.createFolder("bottom", IPageLayout.BOTTOM, (float) 0.75, layout.getEditorArea());
       folderLayoutNext.addView(ICacheConstants.CACHE_NODE_CONTENT_VIEW_ID);
+      folderLayoutNext.addView(ICacheConstants.CACHE_STATISTIC_VIEW_ID);
       folderLayoutNext.addView(IConsoleConstants.ID_CONSOLE_VIEW);
 
       //RIGHT

@@ -6,30 +6,40 @@
  */
 package org.jboss.ide.eclipse.jbosscache.model.internal;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.management.MBeanServerConnection;
+import javax.management.ObjectInstance;
+import javax.management.ObjectName;
 import javax.naming.InitialContext;
 
 import org.jboss.cache.Fqn;
+import org.jboss.cache.TreeCache;
 import org.jboss.cache.TreeCacheMBean;
 import org.jboss.cache.aop.TreeCacheAopMBean;
+import org.jboss.cache.interceptors.Interceptor;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheInstance;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance;
 import org.jboss.ide.eclipse.jbosscache.model.config.RemoteCacheConfigParams;
 import org.jboss.ide.eclipse.jbosscache.model.factory.CacheInstanceFactory;
+import org.jboss.ide.eclipse.jbosscache.utils.CacheUtil;
 
 public class RemoteCacheManager
 {
-   private InitialContext ctx;
+   private static InitialContext ctx;
    private ICacheRootInstance rootInstance;
    private RemoteCacheConfigParams params;
    private TreeCacheMBean treeCacheMBean;
    private TreeCacheAopMBean treeCacheAopMBean;
    private boolean isAop = false;
    private ClassLoader managerLoader;
+   private static MBeanServerConnection con;  
    
    public RemoteCacheManager(ICacheRootInstance rootInstance){
       this.rootInstance = rootInstance;
@@ -48,7 +58,9 @@ public class RemoteCacheManager
          prop.put("java.naming.provider.url","jnp://"+params.getUrl()+":"+params.getPort());
          prop.put("java.naming.factory.url.pkgs","org.jboss.naming:org.jnp.interfaces");
          
-         ctx = new InitialContext(prop);
+         if(ctx == null)
+        	 ctx = new InitialContext(prop);
+         
          connectToRemoteCache();
          
       }catch(Exception e){
@@ -200,5 +212,42 @@ public class RemoteCacheManager
    {
       this.managerLoader = managerLoader;
    }
+   
+   public boolean isUseMbeanAttributes(){
+	   TreeCacheMBean mbean = getTreeCacheMBean();
+	   
+	   return mbean.getUseInterceptorMbeans();
+   }
+   
+      
+   public Map getStatisticsAttribute(){
+
+	   Map map = new HashMap();
+	   
+	   try{
+		    if(con == null)
+		    	con = (MBeanServerConnection)ctx.lookup("jmx/invoker/RMIAdaptor");
+		   String [] names = ICacheConstants.STAT_INTERCEPTOR_NAMES;
+		   
+		   for(int i=0;i<names.length;i++){
+			   String tmp = names[i];
+			   try{
+				   ObjectInstance instance = con.getObjectInstance(new ObjectName("jboss.cache:service=TreeCache,treecache-interceptor="+tmp));
+				   map.put(instance.getClassName().substring(29),con.invoke(instance.getObjectName(),"dumpStatistics", new Object[]{},new String[]{}));
+			   }catch(Exception e){
+				   continue;
+			   }
+		   }
+	   }catch(Exception e){
+		   
+	   }	   
+	   
+	   return map;
+	   
+   }
+   
+   public static void main(String[] args) {
+	System.out.println("org.jboss.cache.interceptors.CacheLoaderInterceptor".substring(29));
+}
    
 }
