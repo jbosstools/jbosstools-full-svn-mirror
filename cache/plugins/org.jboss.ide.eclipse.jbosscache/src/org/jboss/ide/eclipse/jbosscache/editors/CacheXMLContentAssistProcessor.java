@@ -57,7 +57,6 @@ public class CacheXMLContentAssistProcessor extends CacheContentAssistProcessor 
 	}
 
 
-	@Override
 	protected List getTagValueProposals(String parentName,String matchString, int offset, ContentAssistRequest contentAssistRequest) {
 		
 		if(parentName == null || parentName.equals(""))

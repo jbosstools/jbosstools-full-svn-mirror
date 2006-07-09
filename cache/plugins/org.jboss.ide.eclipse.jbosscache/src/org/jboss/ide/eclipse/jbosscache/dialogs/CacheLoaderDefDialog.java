@@ -83,7 +83,6 @@ public class CacheLoaderDefDialog extends Dialog {
 	
 	
 	
-	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,true);
 	}
@@ -221,7 +220,6 @@ public class CacheLoaderDefDialog extends Dialog {
 		return txtDataSource;
 	}
 
-	@Override
 	protected void okPressed() {
 		// TODO Auto-generated method stub
 		if(txtDataSource.getText() != null && !txtDataSource.getText().trim().equals(""))

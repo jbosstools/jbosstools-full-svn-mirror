@@ -26,7 +26,6 @@ import org.eclipse.wst.xml.ui.internal.contentassist.XMLContentAssistProcessor;
 
 public abstract class BaseXMLContentAssistProcessor extends XMLContentAssistProcessor {
 	
-	@Override
 	protected void addTagNameProposals(ContentAssistRequest contentAssistRequest, int arg1){
 		// TODO Auto-generated method stub
 		

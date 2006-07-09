@@ -201,10 +201,10 @@ public class TreeCacheManager
       manager.getTreeCache().remove(fqn);
    }
 
-   public static Map getListeners(TreeCacheManager manager)
-   {
-      return (Map)manager.getTreeCache().getTreeCacheListeners();
-   }
+//   public static Map getListeners(TreeCacheManager manager)
+//   {
+//      return (Map)manager.getTreeCache().getTreeCacheListeners();
+//   }
 
    public static void registerClassLoader(TreeCacheManager manager, String region, ClassLoader loader) throws Exception
    {
