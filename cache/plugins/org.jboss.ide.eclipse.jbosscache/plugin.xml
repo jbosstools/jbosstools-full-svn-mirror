@@ -28,6 +28,13 @@
             icon="icons/jboss.gif"
             id="org.jboss.ide.eclipse.jbosscache.views.CacheGraphView"
             name="%cache.graph.view.name"/>
+      <view
+            allowMultiple="false"
+            category="JBoss Cache"
+            class="org.jboss.ide.eclipse.jbosscache.views.statistic.CacheStatView"
+            icon="icons/jboss.gif"
+            id="org.jboss.ide.eclipse.jbosscache.view.StatisticContentView"
+            name="Cache Statistics"/>
        
    </extension>
    <extension
@@ -70,7 +77,7 @@
             category="org.jboss.ide.eclipse.jbosscache.category.newCacheWizard"
             class="org.jboss.ide.eclipse.jbosscache.wizards.RemoteConfigurationWizard"
             hasPages="true"
-            icon="icons/jboss.gif"
+            icon="icons/server.gif"
             id="org.jboss.ide.eclipse.jbosscache.wizard3"
             name="Create New Remote Cache Instance"
             project="false"/>
