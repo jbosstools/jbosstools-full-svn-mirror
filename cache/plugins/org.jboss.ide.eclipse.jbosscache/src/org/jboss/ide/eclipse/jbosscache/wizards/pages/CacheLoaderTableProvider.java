@@ -1,6 +1,7 @@
 package org.jboss.ide.eclipse.jbosscache.wizards.pages;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -12,14 +13,8 @@ public class CacheLoaderTableProvider implements IStructuredContentProvider{
 		
 		if(inputElement == null || inputElement.equals(""))
 			return Collections.EMPTY_LIST.toArray();
-
-		String[] params = (String[])inputElement;
 		
-		String element = params[0];
-		boolean isDs = Boolean.parseBoolean(params[1]);
-		
-				
-		return new CacheLoaderPropModel().getPropertyModels(element,isDs).toArray();
+		return ((List)inputElement).toArray();
 	}
 
 	public void dispose() {

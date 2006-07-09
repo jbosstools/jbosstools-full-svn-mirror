@@ -1,13 +1,17 @@
 package org.jboss.ide.eclipse.jbosscache.dialogs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -23,25 +27,35 @@ import org.jboss.ide.eclipse.jbosscache.internal.CacheMessages;
 import org.jboss.ide.eclipse.jbosscache.model.CacheLoaderPropModel;
 import org.jboss.ide.eclipse.jbosscache.wizards.pages.CacheLoaderLableProvider;
 import org.jboss.ide.eclipse.jbosscache.wizards.pages.CacheLoaderTableProvider;
+import org.jboss.ide.eclipse.jbosscache.wizards.pages.StandardConfigurationPage;
 
 public class CacheLoaderDefDialog extends Dialog {
 	
 	private TableViewer tableViewer;
 	
-	private Button chkUseDataSource;
+	//private Button chkUseDataSource;
 	private Label lblUseDataSource;
 	private Text txtDataSource;
-	private Button chkTableCreate;
-	private Button chkTableDelete;
+	//private Button chkTableCreate;
+	//private Button chkTableDelete;
+	private Button addButton;
 	
 	private String[] COLUMN_NAMES = new String[]{CacheMessages.Column_Properties,CacheMessages.Column_Value};
 	
-	private String cacheLoaderType;
-
-	public CacheLoaderDefDialog(Shell parentShell,String cacheLoaderString) {
+	//private String cacheLoaderType;
+	private List model = new ArrayList();
+	private StandardConfigurationPage page;
+	
+	public CacheLoaderDefDialog(Shell parentShell,String cacheLoaderString,StandardConfigurationPage page) {
 		super(parentShell);
 		setShellStyle(SWT.SHELL_TRIM);
-		this.cacheLoaderType = cacheLoaderString;
+		
+		this.page = page;
+		if(page.getCacheLoaderCustomModel() != null){
+			this.model = page.getCacheLoaderCustomModel();
+		}
+		
+		//this.cacheLoaderType = cacheLoaderString;
 	}
 
 	protected void configureShell(Shell newShell) {
@@ -66,7 +80,15 @@ public class CacheLoaderDefDialog extends Dialog {
 		return outer;
 	}
 
-	private boolean useDs = false;
+	
+	
+	
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,true);
+	}
+
+	//private boolean useDs = false;
 	/**
 	 * Create tree table
 	 * 
@@ -77,56 +99,23 @@ public class CacheLoaderDefDialog extends Dialog {
 		outer.setLayout(new GridLayout(2,false));
 		
 		GridData data = new GridData(GridData.FILL_HORIZONTAL);
-		
-		GridData dChekc = new GridData(GridData.FILL_HORIZONTAL);
-		dChekc.horizontalSpan = 2;
-		
-		chkUseDataSource = new Button(outer,SWT.CHECK);
-		chkUseDataSource.setText("Use DataSource");
-		chkUseDataSource.setLayoutData(dChekc);
-		
-		chkUseDataSource.addSelectionListener(new SelectionAdapter(){
-			public void widgetSelected(SelectionEvent e){
-				
-				String [] params = new String[2];
-				params[0] = cacheLoaderType;
-				
-
-				chkUseDataSource = (Button)e.widget;
-				if(chkUseDataSource.getSelection()){
-					lblUseDataSource.setEnabled(true);
-					txtDataSource.setEnabled(true);
-					txtDataSource.setEnabled(true);
-					useDs = true;
-				}else{
-					lblUseDataSource.setEnabled(false);
-					txtDataSource.setEnabled(false);
-					txtDataSource.setEnabled(false);
-					useDs = false;
-					
-				}
-				params[1] = Boolean.toString(useDs);
-				tableViewer.setInput(params);
-			}
-		});
 								
 		lblUseDataSource = new Label(outer,SWT.NONE);
-		lblUseDataSource.setText("Data Source Name: ");
-		lblUseDataSource.setEnabled(false);
+		lblUseDataSource.setText("Custom Qualified Class Name: ");
 		
 		txtDataSource = new Text(outer,SWT.BORDER);
 		txtDataSource.setLayoutData(data);
-		txtDataSource.setEnabled(false);
+		txtDataSource.setText(page.getCacheLoaderCustomClassName());
 		
-		chkTableCreate = new Button(outer,SWT.CHECK);
-		chkTableCreate.setText("Create DB Table");
-		chkTableCreate.setLayoutData(dChekc);	
+		addButton = new Button(outer,SWT.PUSH);
+		addButton.setText("Add Property");
 		
-		chkTableDelete = new Button(outer,SWT.CHECK);
-		chkTableDelete.setText("Delete DB Table");
-		chkTableDelete.setLayoutData(dChekc);
-		
-		
+		addButton.addMouseListener(new MouseAdapter(){
+			public void mouseDown(MouseEvent e) {
+				handleMouseClick(e);
+			}			
+		});
+
 		tableViewer = new TableViewer(outer,SWT.FULL_SELECTION | SWT.BORDER);
 		tableViewer.setContentProvider(new CacheLoaderTableProvider());
 		tableViewer.setLabelProvider(new CacheLoaderLableProvider());
@@ -140,7 +129,7 @@ public class CacheLoaderDefDialog extends Dialog {
 
 		Table table = tableViewer.getTable();
 		table.setLayoutData(gridData);
-		
+				
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
 		
@@ -156,54 +145,89 @@ public class CacheLoaderDefDialog extends Dialog {
 		valCol.setResizable(true);
 		valCol.setWidth(150);
 		
-		
-		
+
 		TextCellEditor editor = new TextCellEditor(table);
+		TextCellEditor editorProperty = new TextCellEditor(table);
 		
-		tableViewer.setCellEditors(new CellEditor[]{null,editor});
+		
+		 
+		tableViewer.setCellEditors(new CellEditor[]{editorProperty,editor});
 		
 		ICellModifier modif = new ICellModifier(){
 
 			public boolean canModify(Object element, String property) {
-				if(property.equals("property"))
-				return false;
 				
 				return true;
 			}
 
 			public Object getValue(Object element, String property) {
-				if(property.equals("value")){
-					CacheLoaderPropModel model = (CacheLoaderPropModel)element;
+				CacheLoaderPropModel model = (CacheLoaderPropModel)element;
+				if(property.equals("value")){					
 					return model.getValue();
 				}
+
+				if(property.equals("property")){					
+					return model.getProperty();
+				}
+
 				return null;
 			}
 
 			public void modify(Object element, String property, Object value) {
 				
-				if(property.equals("value")){
-				
 				CacheLoaderPropModel model = null;
 				if(element instanceof Item){
 					model = (CacheLoaderPropModel)((Item)element).getData();
 				}else
-					model = (CacheLoaderPropModel)element;
+					model = (CacheLoaderPropModel)element;				
 				
-				model.setValue(value.toString());
+				if(property.equals("value")){
+								
+					model.setValue(value.toString());
+				}else
+					model.setProperty(value.toString());
 				
-				tableViewer.refresh(model);
-				}
+				tableViewer.refresh();
 			}
 			
 		};
 		
-		String [] params = new String[2];
-		params[0] = cacheLoaderType;
-		params[1] = Boolean.toString(useDs);
+//		String [] params = new String[2];
+//		params[0] = cacheLoaderType;
+//		params[1] = Boolean.toString(useDs);
 		
 		tableViewer.setCellModifier(modif);
-		tableViewer.setInput(params);
+		tableViewer.setInput(model);
 		
+	}
+
+	private void handleMouseClick(MouseEvent e) {
+		
+		List list = (List)tableViewer.getInput();
+		CacheLoaderPropModel model = new CacheLoaderPropModel();
+		model.setProperty("property");
+		model.setValue("value");
+		list.add(model);
+		
+		tableViewer.refresh();
+		
+	}
+	
+	public List getLoaderDialogModel(){
+		return model;
+	}
+
+	public Text getTxtDataSource() {
+		return txtDataSource;
+	}
+
+	@Override
+	protected void okPressed() {
+		// TODO Auto-generated method stub
+		if(txtDataSource.getText() != null && !txtDataSource.getText().trim().equals(""))
+			page.setCacheLoaderCustomClassName(txtDataSource.getText().trim());
+		
+		super.okPressed();
 	}
 	
 	

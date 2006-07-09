@@ -262,6 +262,11 @@ public class NewCacheConfigurationWizard extends Wizard implements INewWizard {
 				.getTxtSyncReplTimeout().getText().trim());
 		cacheConfigModel.setUseReplQueue(stdConfPage
 				.getChkUseReplicationQueue().getSelection());
+		
+		if(stdConfPage.getCmbCacheLoaderClass().getSelectionIndex() == 1){
+			cacheConfigModel.setCacheLoaderCustomParams(stdConfPage.getCacheLoaderDialog().getLoaderDialogModel());
+			cacheConfigModel.setCacheLoaderCustomName(stdConfPage.getCacheLoaderCustomClassName());
+		}
 	}
 
 	/**

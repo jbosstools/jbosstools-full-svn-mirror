@@ -70,6 +70,7 @@ public class JBossCachePlugin extends AbstractUIPlugin
    private static final String CACHE_REMOTE_URL = "url";
    private static final String CACHE_REMOTE_PORT = "port";
    private static final String CACHE_REMOTE_JNDI = "jndi";
+   private static final String CACHE_REMOTE_SERVICE_NAME = "service-name";
 
    private static int numberOfInstance;
 
@@ -390,12 +391,16 @@ public class JBossCachePlugin extends AbstractUIPlugin
                   CacheInstanceFactory.getCacheRootMainInstance().addRootInstanceChild(rootInstance);
                   
                   RemoteCacheConfigParams params = new RemoteCacheConfigParams();
+                  
                   IMemento remMemonto = child.getChild(CACHE_REMOTE_URL);
                   params.setUrl(remMemonto.getString(NAME));
                   remMemonto =  child.getChild(CACHE_REMOTE_PORT);
                   params.setPort(remMemonto.getString(NAME));
                   remMemonto =  child.getChild(CACHE_REMOTE_JNDI);
                   params.setJndi(remMemonto.getString(NAME));
+                  
+                  remMemonto =  child.getChild(CACHE_REMOTE_SERVICE_NAME);
+                  String cacheServiceName = remMemonto.getString(NAME);
                   
                   IMemento[] childJarFileLocation = child.getChildren(CACHE_SERVICE_JAR_FILE);
                   
@@ -409,6 +414,7 @@ public class JBossCachePlugin extends AbstractUIPlugin
                   
                   params.setJarList(jarPath);
                   rootInstance.setRemoteCacheConfigParams(params);
+                  rootInstance.setCacheServiceName(cacheServiceName);
                }
             }
          }
@@ -477,7 +483,10 @@ public class JBossCachePlugin extends AbstractUIPlugin
                  nodeChildMemonto.putString(NAME,params.getPort());
                  
                  nodeChildMemonto = childMemento.createChild(CACHE_REMOTE_JNDI);
-                 nodeChildMemonto.putString(NAME,params.getJndi());   
+                 nodeChildMemonto.putString(NAME,params.getJndi());
+                 
+                 nodeChildMemonto = childMemento.createChild(CACHE_REMOTE_SERVICE_NAME);
+                 nodeChildMemonto.putString(NAME,rootInstance.getCacheServiceName());                 
                  
                  List jarFiles = rootInstance.getRemoteCacheConfigParams().getJarList();
                  if (jarFiles != null)

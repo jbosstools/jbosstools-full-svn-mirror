@@ -136,6 +136,7 @@ public interface ICacheConstants
 
    /**Cache Loader Class */
    String CACHE_LOADER_CLASSES[] = new String[]{"None",
+		   										"Custom Configuration...",
 		   										"org.jboss.cache.loader.JDBCCacheLoader", 
 		   										"org.jboss.cache.loader.JDBCExtendedCacheLoader",
 		   										"org.jboss.cache.loader.FileCacheLoader",
@@ -189,7 +190,7 @@ public interface ICacheConstants
    {"NONE", "READ_UNCOMMITTED", "READ_COMMITTED", "REPEATABLE_READ", "SERIALIZABLE"};
    
    /**DEFAULT EVICTION POLICY CLASSES*/
-   String EVICTION_POLICY_CLASSES [] = new String[]{"None","org.jboss.cache.TreeCache.LRUPolicy",
+   String EVICTION_POLICY_CLASSES [] = new String[]{"None","Custom Configuration...","org.jboss.cache.TreeCache.LRUPolicy",
    													"org.jboss.cache.TreeCache.FIFOPolicy",
    													"org.jboss.cache.TreeCache.MRUPolicy",
    													"org.jboss.cache.TreeCache.LFUPolicy"};

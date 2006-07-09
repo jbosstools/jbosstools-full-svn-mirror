@@ -6,6 +6,8 @@
  */
 package org.jboss.ide.eclipse.jbosscache.model.config;
 
+import java.util.List;
+
 /**
  * This model holds all the configuration related information
  * @author Gurkaner
@@ -61,6 +63,14 @@ public class CacheConfigurationModel
    private String evictionPolicyClass;
    
    private String cacheLoaderClass; /*IDE 2.0 version*/
+   
+   private List cacheLoaderCustomParams;
+   
+   private String cacheLoaderCustomName;
+      
+   private List evictionPolicyCustomParams;
+   
+   private String evcitionPolicyCustomName;
    
    
 
@@ -1137,5 +1147,37 @@ public String getCacheType() {
 
 public void setCacheType(String cacheType) {
 	this.cacheType = cacheType;
+}
+
+public List getCacheLoaderCustomParams() {
+	return cacheLoaderCustomParams;
+}
+
+public List getEvictionPolicyCustomParams() {
+	return evictionPolicyCustomParams;
+}
+
+public void setCacheLoaderCustomParams(List cacheLoaderCustomParams) {
+	this.cacheLoaderCustomParams = cacheLoaderCustomParams;
+}
+
+public void setEvictionPolicyCustomParams(List evictionPolicyCustomParams) {
+	this.evictionPolicyCustomParams = evictionPolicyCustomParams;
+}
+
+public String getCacheLoaderCustomName() {
+	return cacheLoaderCustomName;
+}
+
+public void setCacheLoaderCustomName(String cacheLoaderCustomName) {
+	this.cacheLoaderCustomName = cacheLoaderCustomName;
+}
+
+public String getEvcitionPolicyCustomName() {
+	return evcitionPolicyCustomName;
+}
+
+public void setEvcitionPolicyCustomName(String evcitionPolicyCustomName) {
+	this.evcitionPolicyCustomName = evcitionPolicyCustomName;
 }
 }

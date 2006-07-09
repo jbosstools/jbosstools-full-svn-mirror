@@ -283,7 +283,7 @@ public class CacheLoaderConfigurationPage extends WizardPage
 
 		public void linkActivated(HyperlinkEvent e) {
 			//Dialog open
-			CacheLoaderDefDialog dialog = new CacheLoaderDefDialog(getShell(),cmbCacheLoaderClass.getText());
+			CacheLoaderDefDialog dialog = new CacheLoaderDefDialog(getShell(),cmbCacheLoaderClass.getText(),null);
 			dialog.open();
 		}
 

@@ -34,6 +34,7 @@ import org.eclipse.ui.XMLMemento;
 import org.jboss.cache.Fqn;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
 import org.jboss.ide.eclipse.jbosscache.JBossCachePlugin;
+import org.jboss.ide.eclipse.jbosscache.model.CacheLoaderPropModel;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheInstance;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigurationModel;
@@ -342,11 +343,16 @@ public class CacheUtil
             
             childConfigMemento = childConfigMemento.createChild(ICacheConstants.CACHELOADER);
             childMBeanMemonto  = childConfigMemento.createChild(ICacheConstants.CLASS);
-            childMBeanMemonto.putTextData(cacheConfigModel.getCacheLoaderClass());
             
+            
+            if(cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[1])){
+                childMBeanMemonto.putTextData(cacheConfigModel.getCacheLoaderCustomName());
+            }else            	
+            	childMBeanMemonto.putTextData(cacheConfigModel.getCacheLoaderClass());
+                        
             childMBeanMemonto= childConfigMemento.createChild("properties");
                         
-            if (cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[1]) || cacheLoaderConfig.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[2]))
+            if (cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[2]) || cacheLoaderConfig.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[3]))
             {
                   childMBeanMemonto.putTextData("\n\t" + "cache.jdbc.table.name=" + "jbosscache"
                         + "\n" + "\t" + "cache.jdbc.table.create="
@@ -362,28 +368,44 @@ public class CacheUtil
                         + "username" + "\n" + "\t" + "cache.jdbc.password="
                         + "password" + "\n");
 
+            }else if(cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[1])){
+                
+            	List list = cacheConfigModel.getCacheLoaderCustomParams();
+            	
+            	StringBuffer buffer = new StringBuffer();
+            	
+            	for(int i=0;i<list.size();i++){
+            		CacheLoaderPropModel model = (CacheLoaderPropModel)list.get(i);
+            		
+            		if(i<list.size()-1)
+            			buffer.append("\n\t"+model.getProperty()+"="+model.getValue());
+            		else
+            			buffer.append("\n\t"+model.getProperty()+"="+model.getValue()+"\n");
+            	}
+            	
+            	childMBeanMemonto.putTextData(buffer.toString());            	
             }
-            else if (cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[3]) || 
-            		cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[4]) ||
-            		cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[5]))
+            else if (cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[4]) || 
+            		cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[5]) ||
+            		cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[6]))
             {
                childMBeanMemonto.putTextData("location=" + "location");
             }
-            else if(cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[6]))
-            {
-            	 childMBeanMemonto.putTextData("timeout=" + "timeout");
-            }
             else if(cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[7]))
             {
-                childMBeanMemonto.putTextData("\n\t" + "host=" + "host"
-                        + "\n" + "\t" + "port=port"+"\n");
+            	 childMBeanMemonto.putTextData("timeout=" + "timeout");
             }
             else if(cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[8]))
             {
                 childMBeanMemonto.putTextData("\n\t" + "host=" + "host"
+                        + "\n" + "\t" + "port=port"+"\n");
+            }
+            else if(cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[9]))
+            {
+                childMBeanMemonto.putTextData("\n\t" + "host=" + "host"
                         					 +"\n\t" + "port=port"
                         					 +"\n\t" + "bindname=bindname"+"/n");
-            }else{
+            }else if(cacheConfigModel.getCacheLoaderClass().equals(ICacheConstants.CACHE_LOADER_CLASSES[10])){
             	 childMBeanMemonto.putTextData("timeout=" + "timeout");
             }
 

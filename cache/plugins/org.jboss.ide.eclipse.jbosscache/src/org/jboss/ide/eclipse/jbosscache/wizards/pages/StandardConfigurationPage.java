@@ -9,6 +9,7 @@ package org.jboss.ide.eclipse.jbosscache.wizards.pages;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -34,7 +35,10 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
+import org.jboss.ide.eclipse.jbosscache.JBossCachePlugin;
+import org.jboss.ide.eclipse.jbosscache.dialogs.CacheLoaderDefDialog;
 import org.jboss.ide.eclipse.jbosscache.internal.CacheMessages;
 import org.jboss.ide.eclipse.jbosscache.model.config.CacheConfigParams;
 import org.jboss.ide.eclipse.jbosscache.utils.CacheUtil;
@@ -65,7 +69,9 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
    private static final String DEFAULT_SYNC_REPL_TIMEOUT = "20000";
 
    private static final String DEFAULT_LOCK_ACK_TIMEOUT = "15000";
-
+   
+   private CacheLoaderDefDialog cacheLoaderDialog;
+   
    private Label lblCacheName;
 
    private Text txtCacheName;
@@ -152,10 +158,12 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
    private Button btnRemoveJar;
 
    private ISelection selection;
-
-   //TODO : Eviction Policy Configuration must be added;
-
+   
    private Group grpConfGroup;
+   
+   private List cacheLoaderCustomModel = new ArrayList();
+   
+   private String cacheLoaderCustomClassName = "";
 
    //	private Button btnClusterConfig; /*Show new wizard for cluster configuration*/
    //	private Button btnCacheLoaderClass;/*Show new wizard for cache loader configuration*/
@@ -193,6 +201,7 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       container.setLayout(new GridLayout(1, false));
 
       GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+      
 
       Group filePath = new Group(container, SWT.SHADOW_ETCHED_IN);
       filePath.setText("File Location");
@@ -230,6 +239,7 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       txtConfFileName = new Text(filePath, SWT.BORDER);
       txtConfFileName.setText(DEFAULT_CACHE_XML_FILE_NAME);
       txtConfFileName.addModifyListener(this);
+      
       GridData gDataForConfText = new GridData(GridData.FILL_HORIZONTAL);
       gDataForConfText.horizontalSpan = 2;
       txtConfFileName.setLayoutData(gDataForConfText);
@@ -353,22 +363,31 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       txtLockAcquisitionTimeout.setText(DEFAULT_LOCK_ACK_TIMEOUT);
       txtLockAcquisitionTimeout.setLayoutData(gridData);
       txtLockAcquisitionTimeout.addModifyListener(this);
-      
+            
       lblDefaultEvixctionPolicy = new Label(grpConfGroup, SWT.NONE);
       lblDefaultEvixctionPolicy.setText("Default Eviction Policy :");
-      
+            
       cmbDefaultEvcitionPolicy = new Combo(grpConfGroup,SWT.DROP_DOWN);
       cmbDefaultEvcitionPolicy.setItems(ICacheConstants.EVICTION_POLICY_CLASSES);
       cmbDefaultEvcitionPolicy.select(0);
-      cmbDefaultEvcitionPolicy.setLayoutData(gridData);
+      cmbDefaultEvcitionPolicy.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+      
       
       lblCacheLoaderClass = new Label(grpConfGroup, SWT.NONE);
       lblCacheLoaderClass.setText("Default Cache Loader :");
-      cmbCacheLoaderClass = new Combo(grpConfGroup, SWT.DROP_DOWN);
+      
+      cmbCacheLoaderClass = new Combo(grpConfGroup, SWT.READ_ONLY);
       cmbCacheLoaderClass.setItems(ICacheConstants.CACHE_LOADER_CLASSES);
       cmbCacheLoaderClass.select(0);
-      cmbCacheLoaderClass.setLayoutData(gridData);
-
+      cmbCacheLoaderClass.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+      cmbCacheLoaderClass.addSelectionListener(new SelectionAdapter(){
+    	  
+    	  public void widgetSelected(SelectionEvent e){
+    		handleCustomCacheLoader(e);  
+    	  }
+      });
+      
+      
       
       chkBuddyReplicationEnabled = new Button(grpConfGroup,SWT.CHECK);
       chkBuddyReplicationEnabled.setText("Buddy Replication Enabled");
@@ -434,7 +453,16 @@ public class StandardConfigurationPage extends WizardPage implements ModifyListe
       setControl(container);
    }//end of method
 
-   /**
+   private void handleCustomCacheLoader(SelectionEvent e) {
+	   Combo combo = (Combo)e.widget;
+	   
+	   if(combo.getSelectionIndex() == 1){//Custom
+		   cacheLoaderDialog = new CacheLoaderDefDialog(getShell(),"Custom Cache Loader Configuration",this);
+ 		   cacheLoaderDialog.open();
+	   }
+   }
+
+/**
     * Jar selection
     */
    private void handleAddJarSelected()
@@ -782,6 +810,26 @@ public void setChkUseInterceptorMBean(Button chkUseInterceptorMBean) {
 
 public void setChkBuddyReplicationEnabled(Button chkBuddyReplicationEnabled) {
 	this.chkBuddyReplicationEnabled = chkBuddyReplicationEnabled;
+}
+
+public  CacheLoaderDefDialog getCacheLoaderDialog() {
+	return cacheLoaderDialog;
+}
+
+public List getCacheLoaderCustomModel() {
+	return cacheLoaderCustomModel;
+}
+
+public void setCacheLoaderCustomModel(List cacheLoaderCustomModel) {
+	this.cacheLoaderCustomModel = cacheLoaderCustomModel;
+}
+
+public String getCacheLoaderCustomClassName() {
+	return cacheLoaderCustomClassName;
+}
+
+public void setCacheLoaderCustomClassName(String cacheLoaderCustomClassName) {
+	this.cacheLoaderCustomClassName = cacheLoaderCustomClassName;
 }
 
 }//end of class
