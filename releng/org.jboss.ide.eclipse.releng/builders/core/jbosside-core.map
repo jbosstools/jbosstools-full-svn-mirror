@@ -1,5 +1,5 @@
 feature@org.jboss.ide.eclipse.feature=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/features/org.jboss.ide.eclipse.feature
-feature@org.jboss.ide.eclipse.source=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/features/org.jboss.ide.eclipse.source
+#feature@org.jboss.ide.eclipse.source=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/features/org.jboss.ide.eclipse.source
 
 ## plugin@org.apache.xalan=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.apache.xalan
 plugin@org.jboss.ide.eclipse.core=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.core

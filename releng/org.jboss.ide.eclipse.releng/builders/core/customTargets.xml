@@ -15,11 +15,11 @@
 		<property name="type" value="feature" />
 		<property name="id" value="org.jboss.ide.eclipse.feature" />
 	</ant>
-	<ant antfile="${genericTargets}" target="${target}" >
+	<!--ant antfile="${genericTargets}" target="${target}" >
 		<property name="customTargets" value="${builderDirectory}/customTargets.xml"/>
 		<property name="type" value="feature" />
 		<property name="id" value="org.jboss.ide.eclipse.source" />
-	</ant>
+	</ant-->
 </target>
 
 <!-- ===================================================================== -->
@@ -34,10 +34,10 @@
 	<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/>
 </target>
 
-<target name="assemble.org.jboss.ide.eclipse.source">
+<!--target name="assemble.org.jboss.ide.eclipse.source">
 	<property name="archiveName" value="JBossIDE-Core-Source-${versionTag}.zip"/>
 	<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/>
-</target>
+</target-->
 	
 <!-- ===================================================================== -->
 <!-- Check out map files from correct repository -->
@@ -83,7 +83,6 @@
 		failonerror="false" failonrecursiveerror="false">
 		<fileset dir="${buildDirectory}/plugins">
 			<include name="org.jboss.ide.eclipse.*"/>
-			<exclude name="org.jboss.ide.eclipse.source"/>
 			<exclude name="org.jboss.ide.eclipse.jdt.aop.*"/>
 			<exclude name="org.jboss.ide.eclipse.as.*"/>
 			<exclude name="org.jboss.ide.eclipse.freemarker.*"/>
@@ -94,6 +93,7 @@
 		failonerror="false" failonrecursiveerror="false" updatePluginRefs="false">
 		<fileset dir="${buildDirectory}/features">
 			<include name="org.jboss.ide.eclipse.feature"/>
+			<!--include name="org.jboss.ide.eclipse.source"/-->
 		</fileset>
 	</updateVersions>
 </target>
