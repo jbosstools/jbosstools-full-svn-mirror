@@ -105,7 +105,7 @@ public class EJB3ClasspathContainer extends AopClasspathContainer
 
          if (jbossServer != null)
          {
-            jbossConfigurationName = jbossServer.getRuntimeConfiguration().getJbossConfiguration();
+            jbossConfigurationName = jbossServer.getAttributeHelper().getJbossConfiguration();
          }
 
       }
@@ -122,8 +122,8 @@ public class EJB3ClasspathContainer extends AopClasspathContainer
       if (jbossServer == null)
          return new IPath[0];
 
-      String jbossBaseDir = jbossServer.getRuntimeConfiguration().getServerHome();
-      String jbossConfigDir = jbossServer.getRuntimeConfiguration().getJbossConfiguration();
+      String jbossBaseDir = jbossServer.getAttributeHelper().getServerHome();
+      String jbossConfigDir = jbossServer.getAttributeHelper().getJbossConfiguration();
 
       ArrayList paths = new ArrayList();
 

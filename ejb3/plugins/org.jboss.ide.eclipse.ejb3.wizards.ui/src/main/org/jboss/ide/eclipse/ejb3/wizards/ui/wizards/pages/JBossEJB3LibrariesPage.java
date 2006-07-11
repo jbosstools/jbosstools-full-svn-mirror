@@ -45,8 +45,8 @@ public class JBossEJB3LibrariesPage extends JBossSelectionPage implements IClass
    {
       IPath jarToCheck = EJB3ClasspathContainer.jbossConfigRelativeJarPaths[0];
 
-      String jbossBaseDir = jbossServer.getRuntimeConfiguration().getServerHome();
-      String jbossConfigDir = jbossServer.getRuntimeConfiguration().getJbossConfiguration();
+      String jbossBaseDir = jbossServer.getAttributeHelper().getServerHome();
+      String jbossConfigDir = jbossServer.getAttributeHelper().getJbossConfiguration();
 
       IPath absoluteJarPath = new Path(jbossBaseDir).append("server").append(jbossConfigDir).append(jarToCheck);
 
