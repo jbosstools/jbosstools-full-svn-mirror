@@ -142,6 +142,12 @@ public class CacheUtil
          }
          monitor.worked(3);
 
+
+         childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
+         childMBeanMemonto.putString(ICacheConstants.NAME, "NodeLockingScheme");
+         childMBeanMemonto.putTextData(cacheConfigModel.getNodeLockingSchema());
+
+         
          if(cacheConfigModel.getNodeLockingSchema().equals(ICacheConstants.NODE_LOCKING_SCHEME[1])){
 	         childMBeanMemonto = childServerMemonto.createChild(ICacheConstants.ATTRIBUTE);
 	         childMBeanMemonto.putString(ICacheConstants.NAME, "IsolationLevel");
