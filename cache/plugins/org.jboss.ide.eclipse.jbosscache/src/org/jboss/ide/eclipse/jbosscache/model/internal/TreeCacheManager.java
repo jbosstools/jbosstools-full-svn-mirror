@@ -12,7 +12,7 @@ import java.util.Set;
 
 import org.jboss.cache.PropertyConfigurator;
 import org.jboss.cache.TreeCache;
-import org.jboss.cache.aop.TreeCacheAop;
+import org.jboss.cache.aop.PojoCache;
 
 /**
  * Internal class for TreeCache related operations
@@ -21,7 +21,7 @@ import org.jboss.cache.aop.TreeCacheAop;
 public class TreeCacheManager
 {
 
-   private TreeCacheAop treeCacheAopInstance;
+   private PojoCache treeCacheAopInstance;
 
    private TreeCache treeCache;
    
@@ -44,7 +44,7 @@ public class TreeCacheManager
    {
       if (isTreeCacheAop)
       {
-         treeCacheAopInstance = new TreeCacheAop();
+         treeCacheAopInstance = new PojoCache();
       }
       else
          treeCache = new TreeCache();

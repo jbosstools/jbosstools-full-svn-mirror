@@ -21,7 +21,7 @@ import javax.naming.InitialContext;
 import org.jboss.cache.Fqn;
 import org.jboss.cache.TreeCache;
 import org.jboss.cache.TreeCacheMBean;
-import org.jboss.cache.aop.TreeCacheAopMBean;
+import org.jboss.cache.aop.PojoCacheMBean;
 import org.jboss.cache.interceptors.Interceptor;
 import org.jboss.ide.eclipse.jbosscache.ICacheConstants;
 import org.jboss.ide.eclipse.jbosscache.model.cache.ICacheInstance;
@@ -36,7 +36,7 @@ public class RemoteCacheManager
    private ICacheRootInstance rootInstance;
    private RemoteCacheConfigParams params;
    private TreeCacheMBean treeCacheMBean;
-   private TreeCacheAopMBean treeCacheAopMBean;
+   private PojoCacheMBean treeCacheAopMBean;
    private boolean isAop = false;
    private ClassLoader managerLoader;
    private static MBeanServerConnection con;  
@@ -78,7 +78,7 @@ public class RemoteCacheManager
          }
          else
          {
-            treeCacheAopMBean = (TreeCacheAopMBean)remoteCacheMBean;
+            treeCacheAopMBean = (PojoCacheMBean)remoteCacheMBean;
          }
          
       }catch(Exception e){

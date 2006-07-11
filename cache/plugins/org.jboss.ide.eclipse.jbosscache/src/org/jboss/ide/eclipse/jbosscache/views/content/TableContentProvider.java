@@ -229,6 +229,8 @@ public class TableContentProvider implements IStructuredContentProvider
                         {
                            //Not show internal class
                            continue;
+                        }else if(key.toString().equals("_lock_")){
+                        	continue;
                         }
                      }
 
