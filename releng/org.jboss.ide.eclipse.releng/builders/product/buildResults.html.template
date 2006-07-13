@@ -148,15 +148,15 @@
 		<table>
 		<tr>
 			<td><img src="images/test.gif"/> Tests</td>
-			<td align="right">&nbsp;&nbsp;&nbsp;%junit-error-count%</td>
+			<td align="right">&nbsp;&nbsp;&nbsp;%junit-test-count%</td>
 		</tr>
 		<tr>
 			<td><img src="images/testerr.gif"/> Errors</td>
-			<td align="right">%junit-failure-count%</td>
+			<td align="right">%junit-error-count%</td>
 		</tr>
 		<tr>
 			<td><img src="images/testfail.gif"/> Failures</td>
-			<td align="right">%junit-test-count%</td>
+			<td align="right">%junit-failure-count%</td>
 		</tr>
 		</table>
 		<div align="right"><a style="align: right;" href="%jbosside-download-root%/tests/test-results/org.jboss.ide.eclipse.tests.html">See full unit test results</a></div>
