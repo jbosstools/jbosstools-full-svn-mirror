@@ -21,6 +21,9 @@
  */
 package org.jboss.ide.eclipse.jdt.aop.ui.launch;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup;
 import org.eclipse.debug.ui.CommonTab;
 import org.eclipse.debug.ui.EnvironmentTab;
@@ -42,6 +45,22 @@ public class AopLaunchTabGroup extends AbstractLaunchConfigurationTabGroup
       super();
    }
 
+	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
+		super.setDefaults(configuration);
+		try {
+			String type = configuration.getAttribute(ILaunchConfiguration.ATTR_SOURCE_LOCATOR_ID, (String)null);
+			if (type == null) {
+				type = configuration.getType().getSourceLocatorId();
+				if( type == null ) {
+					// set the default:
+					configuration.setAttribute(ILaunchConfiguration.ATTR_SOURCE_LOCATOR_ID, "org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector");
+				}
+			}
+
+		} catch( CoreException ce ) {}
+	}
+
+   
    public void createTabs(ILaunchConfigurationDialog dialog, String mode)
    {
       ILaunchConfigurationTab[] tabs = new ILaunchConfigurationTab[]
