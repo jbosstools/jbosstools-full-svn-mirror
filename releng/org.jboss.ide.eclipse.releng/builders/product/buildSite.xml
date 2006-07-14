@@ -92,7 +92,7 @@
 		</copy>
 	</target>
 	
-	<target name="publish.site" depends="build.metadata">
+	<target name="publish.site" depends="build.metadata" unless="noPublish">
 		<scp.fileset.trusted relative="false" todir="/htdocs/jbosside/updates/${update.site.type}">
 			<fileset dir="${product.build.root}/site/eclipse">
 				<include name="**/*"/>
