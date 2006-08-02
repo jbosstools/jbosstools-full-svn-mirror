@@ -97,6 +97,14 @@
 	</td>
 </tr>
 <tr>
+	<!-- Drools IDE -->
+	<td><img src="images/%jbosside-drools-ide-status%-small.png"/></td>
+	<td class="downloadInfo">
+		<a class="pluginLink" href="%jbosside-download-root%/drools-ide/%jbosside-drools-ide-filename%">%jbosside-drools-ide-filename%</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/drools-ide/%jbosside-drools-ide-filename%.MD5">md5</a> | filesize: %drools-ide-file-size% bytes
+	</td>
+</tr>
+<tr>
 	<!-- AOP Developer -->
 	<td><img src="images/%jbosside-aop-status%-small.png"/></td>
 	<td class="downloadInfo">

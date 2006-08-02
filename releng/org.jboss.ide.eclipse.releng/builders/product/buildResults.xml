@@ -46,6 +46,7 @@
 		<get.version.tag builder="as" property="as.versionTag"/>
 		<get.version.tag builder="freemarker" property="freemarker.versionTag"/>
 		<get.version.tag builder="cache" property="cache.versionTag"/>
+		<get.version.tag builder="drools-ide" property="drools-ide.versionTag"/>
 		
 		<loadfile property="build.information" srcfile="buildInfo/${product.buildDesc}.html"/>
 		
@@ -64,6 +65,7 @@
 		<property name="jbosside-as-filename" value="JBossIDE-JBossAS-Tools-${as.versionTag}.zip"/>
 		<property name="jbosside-freemarker-filename" value="JBossIDE-FreeMarker-${freemarker.versionTag}.zip"/>
 		<property name="jbosside-cache-filename" value="JBossIDE-JBossCacheIDE-${cache.versionTag}.zip"/>
+		<property name="jbosside-drools-ide-filename" value="JBossIDE-Drools-${drools-ide.versionTag}.zip"/>
 		
 		<property name="all-file" value="${product.build.directory}/all/${jbosside-all-filename}" />
 		<property name="win32-bundle-file" value="${product.build.directory}/bundle/${jbosside-win32-bundle-filename}" />
@@ -76,6 +78,7 @@
 		<property name="as-file" value="${product.build.directory}/as/${jbosside-as-filename}"/>
 		<property name="freemarker-file" value="${product.build.directory}/freemarker/${jbosside-freemarker-filename}"/>
 		<property name="cache-file" value="${product.build.directory}/cache/${jbosside-cache-filename}"/>
+		<property name="drools-ide-file" value="${product.build.directory}/drools-ide/${jbosside-drools-ide-filename}"/>
 		
 		<get.status file="${all-file}" property="jbosside-all-status"/>
 		<get.status file="${win32-bundle-file}" property="jbosside-win32-bundle-status"/>
@@ -88,6 +91,7 @@
 		<get.status file="${as-file}" property="jbosside-as-status"/>
 		<get.status file="${freemarker-file}" property="jbosside-freemarker-status"/>
 		<get.status file="${cache-file}" property="jbosside-cache-status"/>
+		<get.status file="${drools-ide-file}" property="jbosside-drools-ide-status"/>
 		
 		<length file="${all-file}" property="all-file-size"  />
 		<if>
@@ -105,6 +109,7 @@
 		<length file="${as-file}" property="as-file-size" />
 		<length file="${freemarker-file}" property="freemarker-file-size"/>
 		<length file="${cache-file}" property="cache-file-size"/>
+		<length file="${drools-ide-file}" property="drools-ide-file-size"/>
 		
 		<loadfile srcfile="${all-file}.MD5" property="all-file-md5" failonerror="false" />
 		<loadfile srcfile="${win32-bundle-file}.MD5" property="win32-bundle-file-md5" failonerror="false" />
@@ -117,6 +122,7 @@
 		<loadfile srcfile="${as-file}.MD5" property="as-file-md5" failonerror="false"/>
 		<loadfile srcfile="${freemarker-file}.MD5" property="freemarker-file-md5" failonerror="false"/>
 		<loadfile srcfile="${cache-file}.MD5" property="cache-file-md5" failonerror="false"/>
+		<loadfile srcfile="${drools-ide-file}.MD5" property="drools-ide-file-md5" failonerror="false"/>
 		
 		<!-- load bundle html (if necessary) -->
 		<if>
@@ -225,6 +231,9 @@
 			<filter token="jbosside-cache-status" value="${jbosside-cache-status}"/>
 			<filter token="jbosside-cache-filename" value="${jbosside-cache-filename}"/>
 			<filter token="cache-file-size" value="${cache-file-size}"/>
+			<filter token="jbosside-drools-ide-status" value="${jbosside-drools-ide-status}"/>
+			<filter token="jbosside-drools-ide-filename" value="${jbosside-drools-ide-filename}"/>
+			<filter token="drools-ide-file-size" value="${drools-ide-file-size}"/>
 			
 			<filter token="build-time" value="${buildTimer}"/>
 			<filter token="build-information" value="${build.information}"/>

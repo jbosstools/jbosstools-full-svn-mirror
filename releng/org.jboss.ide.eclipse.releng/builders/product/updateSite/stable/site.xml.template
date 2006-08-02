@@ -24,6 +24,12 @@
    <feature url="features/%freemarker-feature-jar%" id="org.jboss.ide.eclipse.freemarker.feature" version="%freemarker-feature-version%">
    	  <category name="JBossIDE %jbosside-build-name%"/>
    </feature>
+   <feature url="features/%cache-feature-jar%" id="org.jboss.ide.eclipse.jbosscache.feature" version="%cache-feature-version%">
+   	  <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
+   <feature url="features/%drools-ide-feature-jar%" id="org.drools.ide.feature" version="%drools-ide-feature-version%">
+   	  <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
    
    <category-def name="JBossIDE %jbosside-build-name%" label="JBoss Eclipse IDE Stable Release: %jbosside-build-name%"/>
 </site>
