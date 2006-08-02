@@ -24,7 +24,7 @@
 <!-- ===================================================================== -->
 
 <target name="assemble.org.jboss.ide.eclipse.jbosscache.feature">
-	<property name="archiveName" value="JBossIDE-JBossCache-Tools-${versionTag}.zip"/>
+	<property name="archiveName" value="JBossIDE-JBossCacheIDE-${versionTag}.zip"/>
 	<ant antfile="${assembleScriptName}" dir="${buildDirectory}"/>
 </target>
 
@@ -124,7 +124,7 @@
 <!-- ===================================================================== -->
 <target name="postAssemble">
 	<bundlePlugins pluginList="${include.plugins}" buildDirectory="${buildDirectory}"
-				archivePath="${buildDirectory}/${buildLabel}/JBossIDE-JBossCache-Tools-${versionTag}.zip" />
+				archivePath="${buildDirectory}/${buildLabel}/JBossIDE-JBossCacheIDE-${versionTag}.zip" />
 </target>
 
 <!-- ===================================================================== -->
