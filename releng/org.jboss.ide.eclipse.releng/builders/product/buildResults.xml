@@ -45,6 +45,7 @@
 		<get.version.tag builder="jbpm" property="jbpm.versionTag"/>
 		<get.version.tag builder="as" property="as.versionTag"/>
 		<get.version.tag builder="freemarker" property="freemarker.versionTag"/>
+		<get.version.tag builder="cache" property="cache.versionTag"/>
 		
 		<loadfile property="build.information" srcfile="buildInfo/${product.buildDesc}.html"/>
 		
@@ -62,6 +63,7 @@
 		<property name="jbosside-ejb3-filename" value="JBossIDE-EJB3-Tools-${ejb3.versionTag}.zip"/>
 		<property name="jbosside-as-filename" value="JBossIDE-JBossAS-Tools-${as.versionTag}.zip"/>
 		<property name="jbosside-freemarker-filename" value="JBossIDE-FreeMarker-${freemarker.versionTag}.zip"/>
+		<property name="jbosside-cache-filename" value="JBossIDE-JBossCacheIDE-${cache.versionTag}.zip"/>
 		
 		<property name="all-file" value="${product.build.directory}/all/${jbosside-all-filename}" />
 		<property name="win32-bundle-file" value="${product.build.directory}/bundle/${jbosside-win32-bundle-filename}" />
@@ -73,6 +75,7 @@
 		<property name="ejb3-file" value="${product.build.directory}/ejb3/${jbosside-ejb3-filename}" />
 		<property name="as-file" value="${product.build.directory}/as/${jbosside-as-filename}"/>
 		<property name="freemarker-file" value="${product.build.directory}/freemarker/${jbosside-freemarker-filename}"/>
+		<property name="cache-file" value="${product.build.directory}/cache/${jbosside-cache-filename}"/>
 		
 		<get.status file="${all-file}" property="jbosside-all-status"/>
 		<get.status file="${win32-bundle-file}" property="jbosside-win32-bundle-status"/>
@@ -84,6 +87,7 @@
 		<get.status file="${ejb3-file}" property="jbosside-ejb3-status"/>
 		<get.status file="${as-file}" property="jbosside-as-status"/>
 		<get.status file="${freemarker-file}" property="jbosside-freemarker-status"/>
+		<get.status file="${cache-file}" property="jbosside-cache-status"/>
 		
 		<length file="${all-file}" property="all-file-size"  />
 		<if>
@@ -100,6 +104,7 @@
 		<length file="${ejb3-file}" property="ejb3-file-size"  />
 		<length file="${as-file}" property="as-file-size" />
 		<length file="${freemarker-file}" property="freemarker-file-size"/>
+		<length file="${cache-file}" property="cache-file-size"/>
 		
 		<loadfile srcfile="${all-file}.MD5" property="all-file-md5" failonerror="false" />
 		<loadfile srcfile="${win32-bundle-file}.MD5" property="win32-bundle-file-md5" failonerror="false" />
@@ -111,6 +116,7 @@
 		<loadfile srcfile="${ejb3-file}.MD5" property="ejb3-file-md5" failonerror="false" />
 		<loadfile srcfile="${as-file}.MD5" property="as-file-md5" failonerror="false"/>
 		<loadfile srcfile="${freemarker-file}.MD5" property="freemarker-file-md5" failonerror="false"/>
+		<loadfile srcfile="${cache-file}.MD5" property="cache-file-md5" failonerror="false"/>
 		
 		<!-- load bundle html (if necessary) -->
 		<if>
@@ -216,6 +222,9 @@
 			<filter token="jbosside-freemarker-status" value="${jbosside-freemarker-status}"/>
 			<filter token="jbosside-freemarker-filename" value="${jbosside-freemarker-filename}"/>
 			<filter token="freemarker-file-size" value="${freemarker-file-size}"/>
+			<filter token="jbosside-cache-status" value="${jbosside-cache-status}"/>
+			<filter token="jbosside-cache-filename" value="${jbosside-cache-filename}"/>
+			<filter token="cache-file-size" value="${cache-file-size}"/>
 			
 			<filter token="build-time" value="${buildTimer}"/>
 			<filter token="build-information" value="${build.information}"/>

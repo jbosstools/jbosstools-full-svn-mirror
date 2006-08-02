@@ -10,7 +10,7 @@ product.build.root=%build-output-directory%
 requirement.root=${build.root}/requirements
 builder.build.path=${product.build.root}/eclipse
 builder.root=..
-builders=freemarker,hibernate-tools,core,as,aop,ejb3,jbpm
+builders=freemarker,hibernate-tools,core,as,aop,ejb3,jbpm,cache
 
 eclipse.archive.path=${product.build.root}
 platform.names=win32,linux-gtk

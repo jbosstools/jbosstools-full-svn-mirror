@@ -112,6 +112,14 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/freemarker/%jbosside-freemarker-filename%.MD5">md5</a> | filesize: %freemarker-file-size% bytes
 	</td>
 </tr>
+<tr>
+	<!-- JBossCache IDE -->
+	<td><img src="images/%jbosside-cache-status%-small.png"/></td>
+	<td class="downloadInfo">
+		<a class="pluginLink" href="%jbosside-download-root%/cache/%jbosside-cache-filename%">%jbosside-cache-filename%</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/cache/%jbosside-cache-filename%.MD5">md5</a> | filesize: %cache-file-size% bytes
+	</td>
+</tr>
 </table>
 
 </div>
