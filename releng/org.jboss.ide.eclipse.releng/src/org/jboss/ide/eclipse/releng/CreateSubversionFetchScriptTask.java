@@ -44,10 +44,11 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.tigris.subversion.svnclientadapter.ISVNClientAdapter;
+import org.tigris.subversion.svnclientadapter.SVNClientAdapterFactory;
 import org.tigris.subversion.svnclientadapter.SVNClientException;
 import org.tigris.subversion.svnclientadapter.SVNRevision;
 import org.tigris.subversion.svnclientadapter.SVNUrl;
-import org.tigris.subversion.svnclientadapter.commandline.CmdLineClientAdapterFactory;
+import org.tigris.subversion.svnclientadapter.javahl.JavaSvnClientAdapterFactory;
 /**
  * @author Marshall
  * 
@@ -221,11 +222,16 @@ public class CreateSubversionFetchScriptTask extends Task {
 	private void createFetchPluginsTarget (Element project) throws BuildException
 	{
 		Element fetchPluginsTarget = addTargetElement(project, "fetch.plugins");
-		ISVNClientAdapter svnAdapter =
-			CmdLineClientAdapterFactory.createSVNClient(
-					CmdLineClientAdapterFactory.COMMANDLINE_CLIENT);
 		
-		String url = getRepositoryInfo(id).svnUrl;
+		try {
+			JavaSvnClientAdapterFactory.setup();
+		} catch (SVNClientException e1) {
+			// FIXME
+			e1.printStackTrace();
+		}
+		ISVNClientAdapter svnAdapter = SVNClientAdapterFactory.createSVNClient(JavaSvnClientAdapterFactory.JAVASVN_CLIENT);
+
+		String url = getRepositoryInfo(id).svnUrl + "/feature.xml";
 		String revision = getRepositoryInfo(id).revision;
 		
 		InputStream featureXmlStream = null;
