@@ -27,3 +27,9 @@ repositoryType=subversion
 buildTypeDescription.N=nightly
 buildTypeDescription.I=integration
 buildTypeDescription.R=release
+
+# binary plugins to include
+include.plugins=\
+	org.jboss.ide.eclipse.core,\
+	org.jboss.ide.eclipse.packaging.core,\
+	org.jboss.ide.eclipse.packaging.ui
