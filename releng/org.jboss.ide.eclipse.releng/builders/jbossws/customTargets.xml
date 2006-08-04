@@ -69,7 +69,7 @@
 			</fileset>
 		</updateVersions>
 	<updateVersions type="feature" version="${versionTag}" append="${append}"
-			failonerror="false" failonrecursiveerror="false" updatePluginRefs="true">
+			failonerror="false" failonrecursiveerror="false" updatePluginRefs="false">
 			<fileset dir="${buildDirectory}/features">
 				<include name="*com.eviware*"/>
 			</fileset>
