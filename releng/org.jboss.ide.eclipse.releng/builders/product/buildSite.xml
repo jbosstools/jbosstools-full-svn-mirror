@@ -27,6 +27,7 @@
 		<get.version.tag builder="freemarker" property="freemarker.versionTag"/>
 		<get.version.tag builder="cache" property="cache.versionTag"/>
 		<get.version.tag builder="drools-ide" property="drools-ide.versionTag"/>
+		<get.version.tag builder="jbossws" property="jbossws.versionTag"/>
 	</target>
 	
 	<target name="build.site">
@@ -93,6 +94,7 @@
 				<filter token="cache-feature-jar" value="org.jboss.ide.eclipse.jbosscache.feature_${cache.versionTag}.jar"/>
 				<filter token="drools-ide-feature-version" value="${drools-ide.versionTag}"/>
 				<filter token="drools-ide-feature-jar" value="org.drools.ide.feature_${drools-ide.versionTag}.jar"/>
+				<filter token="jbossws-feature-jar" value="com.eviware.soapui.jbosside_feature_${jbossws.versionTag}.jar"/>
 				<filter token="jbosside-build-name" value="${product.versionTag}"/>
 			</filterset>
 		</copy>

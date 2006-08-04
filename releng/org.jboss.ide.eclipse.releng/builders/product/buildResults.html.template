@@ -105,6 +105,14 @@
 	</td>
 </tr>
 <tr>
+	<!-- JBossWS -->
+	<td><img src="images/%jbosside-jbossws-ide-status%-small.png"/></td>
+	<td class="downloadInfo">
+		<a class="pluginLink" href="%jbosside-download-root%/jbossws/%jbosside-jbossws-filename%">%jbosside-jbossws-filename%</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/jbossws/%jbosside-jbossws-filename%.MD5">md5</a> | filesize: %jbossws-file-size% bytes
+	</td>
+</tr>
+<tr>
 	<!-- AOP Developer -->
 	<td><img src="images/%jbosside-aop-status%-small.png"/></td>
 	<td class="downloadInfo">

@@ -30,6 +30,9 @@
    <feature url="features/%drools-ide-feature-jar%" id="org.drools.ide.feature" version="%drools-ide-feature-version%">
    	  <category name="JBossIDE %jbosside-build-name%"/>
    </feature>
+   <feature url="features/%jbossws-feature-jar%" id="com.eviware.soapui.jbosside_feature" version="%jbossws-feature-version%">
+   	  <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
    
    <category-def name="JBossIDE %jbosside-build-name%" label="JBoss Eclipse IDE Stable Release: %jbosside-build-name%"/>
 </site>
