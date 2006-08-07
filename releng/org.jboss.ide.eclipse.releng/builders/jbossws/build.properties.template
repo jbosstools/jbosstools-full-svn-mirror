@@ -9,11 +9,11 @@ collPlace=
 collBase=.
 configs=*,*,*
 archivesFormat=*,*,* - zip
-bootclasspath=${java.home}/lib/rt.jar
-javacFailOnError=false
+bootclasspath=${java.home}/lib/rt.jar:${java.home}/lib/jsse.jar
+javacFailOnError=true
 javacDebugInfo=on
 javacVerbose=true
-javaSource=1.5
+javacSource=1.5
 javacTarget=1.5
 
 collectingFolder=
