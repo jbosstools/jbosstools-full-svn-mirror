@@ -429,7 +429,6 @@ END OF TERMS AND CONDITIONS
       <import plugin="org.eclipse.debug.core"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.jdt.ui"/>
-      <import plugin="org.eclipse.jdt.source"/>
       <import plugin="org.eclipse.jface.text"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.jdt.launching"/>
