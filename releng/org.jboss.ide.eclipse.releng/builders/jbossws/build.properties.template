@@ -31,5 +31,6 @@ buildTypeDescription.R=release
 # binary plugins to include
 include.plugins=\
 	org.jboss.ide.eclipse.core,\
+	org.jboss.ide.eclipse.ui,\
 	org.jboss.ide.eclipse.packaging.core,\
 	org.jboss.ide.eclipse.packaging.ui
