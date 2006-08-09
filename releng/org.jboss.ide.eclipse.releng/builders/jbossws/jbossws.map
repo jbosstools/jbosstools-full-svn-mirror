@@ -1,5 +1,0 @@
-plugin@com.eviware.soapui.core=HEAD,anonymous,,https://svn.sourceforge.net/svnroot/soapui/trunk/core
-plugin@com.eviware.soapui.eclipse.ui=HEAD,anonymous,,https://svn.sourceforge.net/svnroot/soapui/trunk/eclipse/plugins/com.eviware.soapui.eclipse.ui
-plugin@com.eviware.soapui.jbosside.wstools=HEAD,anonymous,,https://svn.sourceforge.net/svnroot/soapui/trunk/jbosside/plugins/com.eviware.soapui.jbosside.wstools
-plugin@com.eviware.soapui.libs=HEAD,anonymous,,https://svn.sourceforge.net/svnroot/soapui/trunk/libs
-feature@com.eviware.soapui.jbosside_feature=HEAD,anonymous,,https://svn.sourceforge.net/svnroot/soapui/trunk/jbosside/features/com.eviware.soapui.jbosside-feature
