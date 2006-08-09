@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="org.eclipse.jdt.core.classpathContainerInitializer">
+      <classpathContainerInitializer
+            class="org.jboss.ide.eclipse.jdt.ws.core.classpath.WSIBasicProfile10ClasspathContainerInitializer"
+            id="org.jboss.ide.eclipse.jdt.core.classpath.wsi-1.0">
+      </classpathContainerInitializer>
+      <classpathContainerInitializer
+            class="org.jboss.ide.eclipse.jdt.ws.core.classpath.Axis12ClasspathContainerInitializer"
+            id="org.jboss.ide.eclipse.jdt.core.classpath.axis-1.2">
+      </classpathContainerInitializer>
+   </extension>
+
+</plugin>
