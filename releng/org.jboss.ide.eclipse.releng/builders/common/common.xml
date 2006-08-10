@@ -49,11 +49,12 @@
 	<macrodef name="copyMapFile">
 		<attribute name="buildDirectory"/>
 		<attribute name="builder"/>
-		<attribute name="cvsTag"/>
+		<attribute name="cvsTag" default="NONE"/>
+		<attribute name="svnURL" default="NONE"/>
 		<element name="extra-filtersets" implicit="true" optional="true"/>
 		
 		<sequential>
-			<echo>copyMapFile builder=@{builder}, buildDirectory=@{buildDirectory},cvsTag=@{cvsTag}</echo>
+			<echo>copyMapFile builder=@{builder}, buildDirectory=@{buildDirectory},cvsTag=@{cvsTag},svnURL=@{svnURL}</echo>
 			<mkdir dir="@{buildDirectory}/maps" />
 			<copy todir="@{buildDirectory}/maps">
 				<fileset dir="${build.root}/builders/@{builder}">
@@ -61,6 +62,7 @@
 				</fileset>
 				<filterset begintoken="%" endtoken="%">
 					<filter token="cvsTag" value="@{cvsTag}"/>
+					<filter token="svnURL" value="@{svnURL}"/>
 				</filterset>
 				<extra-filtersets/>
 			</copy>

@@ -120,6 +120,7 @@
 		</syspropertyset>
      
     <classpath path="${env.JAVA_HOME}/lib/tools.jar"/>
+     <classpath path="${env.JAVA_HOME}/lib/jsse.jar"/>
 	<classpath path="${clean.eclipse.home}/startup.jar" />
 	<classpath>
 		<fileset dir="${build.root}/lib">
@@ -170,6 +171,7 @@
 		  <arg value="-DbaseLocation=${baseLocation}" />
      	<arg value="-DbuildScriptExt=${buildScriptExt}" />
 		<arg value="-DcvsTag=${cvsTag}"/>
+     	<arg value="-DsvnURL=${svnURL}"/>
 	<!--arg value="-debug"/-->
      </java>
 

@@ -147,11 +147,18 @@
 		<attribute name="builder"/>
 		<sequential>
 			<var name="cvsTag" unset="true"/>
+			<var name="svnURL" unset="true"/>
 			<if>
 	  			<equals arg1="${product.buildDesc}" arg2="release"/>
 	  			<then>
 	  				<propertycopy override="true" name="builder.version" from="versionTags.@{builder}"/>
 	  				<propertycopy override="true" name="cvsTag" from="versionTags.@{builder}.cvs"/>
+	  				<if>
+	  					<isset property="versiontags.@{builder}.svn"/>
+	  					<then>
+	  						<propertycopy override="true" name="svnURL" from="versionTags.@{builder}.svn"/>
+	  					</then>
+	  				</if>
 	  			</then>
 	  			<else>
 	  				<if>
@@ -161,6 +168,26 @@
 	  					</then>
 	  					<else>
 		  					<propertycopy override="true" name="cvsTag" from="default.cvs.tag"/>
+	  						<loadproperties srcFile="${builder.root}/@{builder}/build.properties">
+								<filterchain>
+									<linecontains>
+										<contains value="defaultSvnUrl"/>
+									</linecontains>
+									<prefixlines prefix="@{builder}"/>
+								</filterchain>
+							</loadproperties>
+	  						<if>
+	  							<isset property="@{builder}.svn"/>
+	  							<then>
+	  								<propertycopy override="true" name="svnURL" from="@{builder}.svn"/>
+	  							</then>
+	  							<elseif>
+	  								<isset property="@{builder}.defaultSvnUrl"/>
+	  								<then>
+		  								<propertycopy override="true" name="svnURL" from="@{builder}.defaultSvnUrl"/>
+	  								</then>
+	  							</elseif>
+	  						</if>
 	  					</else>
 	  				</if>
 	  				<property name="builder.version" value="${product.versionTag}"/>
