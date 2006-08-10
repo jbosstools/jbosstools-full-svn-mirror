@@ -40,7 +40,7 @@ include.plugins=\
 	org.eclipse.wst.common.frameworks,\
 	org.eclipse.wst.common.frameworks.ui,\
 	org.eclipse.wst.common.project.facet.core,\
-	org.eclipse.wst.common.ui,\	
+	org.eclipse.wst.common.ui,\
 	org.eclipse.wst.common.uriresolver,\
 	org.eclipse.wst.sse.core,\
 	org.eclipse.wst.sse.ui,\
