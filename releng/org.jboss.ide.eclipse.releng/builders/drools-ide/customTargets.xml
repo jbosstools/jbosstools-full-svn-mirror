@@ -33,7 +33,7 @@
 <!-- ===================================================================== -->
 <target name="getMapFiles">
 	<!-- we need to export the map file w/ the correct CVS tags -->
-	<copyMapFile builder="drools-ide" buildDirectory="${buildDirectory}" cvsTag="${cvsTag}"/>
+	<copyMapFile builder="drools-ide" buildDirectory="${buildDirectory}" svnURL="${svnURL}"/>
 </target>
 
 <!-- ===================================================================== -->

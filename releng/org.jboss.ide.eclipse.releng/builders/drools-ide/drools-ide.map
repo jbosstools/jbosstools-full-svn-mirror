@@ -1,2 +1,2 @@
-plugin@org.drools.ide=HEAD,anonymous,,http://anonsvn.labs.jboss.com/labs/jbossrules/trunk/drools-ide
-feature@org.drools.ide.feature=HEAD,anonymous,,http://anonsvn.labs.jboss.com/labs/jbossrules/trunk/drools-ide-feature
+plugin@org.drools.ide=HEAD,anonymous,,%svnURL%/drools-ide
+feature@org.drools.ide.feature=HEAD,anonymous,,%svnURL%/drools-ide-feature

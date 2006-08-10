@@ -28,6 +28,8 @@ buildTypeDescription.N=nightly
 buildTypeDescription.I=integration
 buildTypeDescription.R=release
 
+defaultSvnUrl=https://svn.sourceforge.net/svnroot/soapui/trunk
+
 # binary plugins to include
 include.plugins=\
 	org.jboss.ide.eclipse.core,\
