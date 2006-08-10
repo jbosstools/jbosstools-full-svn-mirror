@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="JBoss Cache"
+            id="JBoss Cache">
+      </category>
+      <view
+            name="%cache.configuration.view.name"
+            icon="icons/jboss.gif"
+            category="JBoss Cache"
+            class="org.jboss.ide.eclipse.jbosscache.views.config.TreeCacheView"
+            id="org.jboss.ide.eclipse.jbosscache.views.CacheContentView">
+      </view>
+      
+      <view
+            category="JBoss Cache"
+            class="org.jboss.ide.eclipse.jbosscache.views.content.NodeContentView"
+            icon="icons/jboss.gif"
+            id="org.jboss.ide.eclipse.jbosscache.view.NodeContentView"
+            name="%cache.content.view.name"/>
+      <view
+            category="JBoss Cache"
+            class="org.jboss.ide.eclipse.jbosscache.views.gef.CacheGraphView"
+            icon="icons/jboss.gif"
+            id="org.jboss.ide.eclipse.jbosscache.views.CacheGraphView"
+            name="%cache.graph.view.name"/>
+      <view
+            allowMultiple="false"
+            category="JBoss Cache"
+            class="org.jboss.ide.eclipse.jbosscache.views.statistic.CacheStatView"
+            icon="icons/jboss.gif"
+            id="org.jboss.ide.eclipse.jbosscache.view.StatisticContentView"
+            name="Cache Statistics"/>
+       
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.jboss.ide.eclipse.jbosscache.perspective.CachePerspective"
+            icon="icons/jboss.gif"
+            id="org.jboss.ide.eclipse.jbosscache.perspective2"
+            name="JBoss Cache"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.jboss.ide.eclipse.jbosscache.category.newCacheWizard"
+            name="JBoss Cache"/>
+      <wizard
+            canFinishEarly="false"
+            category="org.jboss.ide.eclipse.jbosscache.category.newCacheWizard"
+            class="org.jboss.ide.eclipse.jbosscache.wizards.NewCacheConfigurationWizard"
+            hasPages="true"
+            icon="icons/jboss.gif"
+            id="org.jboss.ide.eclipse.jbosscache.wizard1"
+            name="%cache.instance.wizard.name"
+            project="false"/>
+      <wizard
+            category="org.jboss.ide.eclipse.jbosscache.category.newCacheWizard"
+            class="org.jboss.ide.eclipse.jbosscache.wizards.NewCacheProjectWizard"
+            icon="icons/jboss.gif"
+            id="org.jboss.ide.eclipse.jbosscache.wizard2"
+            name="Create New Cache Project"
+            project="true"/>
+      <wizard
+            canFinishEarly="false"
+            category="org.jboss.ide.eclipse.jbosscache.category.newCacheWizard"
+            class="org.jboss.ide.eclipse.jbosscache.wizards.RemoteConfigurationWizard"
+            hasPages="true"
+            icon="icons/server.gif"
+            id="org.jboss.ide.eclipse.jbosscache.wizard3"
+            name="Create New Remote Cache Instance"
+            project="false"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.documentProviders">
+      <provider
+            class="org.eclipse.ui.editors.text.TextFileDocumentProvider"
+            id="org.jboss.ide.eclipse.jbosscache.ConfFileEditorProvider"
+            inputTypes="org.jboss.ide.eclipse.jbosscache.editors.input.CacheFileEditorInput"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="org.jboss.ide.eclipse.jbosscache.CachePropertyPage"
+            icon="icons/jboss.gif"
+            id="org.jboss.ide.eclipse.jbosscache.propertyPage"
+            name="%cache.property.page.name"
+            objectClass="org.jboss.ide.eclipse.jbosscache.model.cache.ICacheRootInstance"/>
+   </extension>
+   <extension
+         point="org.eclipse.jdt.core.classpathContainerInitializer">
+      <classpathContainerInitializer
+            class="org.jboss.ide.eclipse.jbosscache.classpath.CacheClassPathContainerInitializer"
+            id="org.jboss.ide.eclipse.jbosscache.classpath.CACHE_124"/>
+   </extension>
+<extension point="org.eclipse.core.runtime.contentTypes">
+	<content-type
+            base-type="org.eclipse.core.runtime.xml"
+            file-extensions="xml"
+            file-names="cache.cfg.xml"
+            id="cfgxmlsource"
+            name="Cache Configuration Content-type"
+            priority="low">
+            <describer class="org.eclipse.core.runtime.content.XMLRootElementContentDescriber">
+            <parameter
+                  name="element"
+                  value="server"/>
+         </describer>
+      </content-type>
+      </extension>
+	
+	   <extension
+         point="org.eclipse.wst.sse.core.modelHandler">
+         <modelHandler
+               associatedContentTypeId="org.jboss.ide.eclipse.jbosscache.cfgxmlsource"
+               class="org.jboss.ide.eclipse.jbosscache.editors.ModelHandlerForCacheXML"
+               default="false"
+               id="org.jboss.ide.eclipse.jbosscache.cfg.xml">
+         </modelHandler>
+   </extension>
+	
+	
+	   <extension
+         point="org.eclipse.wst.sse.ui.editorConfiguration">
+	  <sourceViewerConfiguration
+            target="org.jboss.ide.eclipse.jbosscache.cfgxmlsource"
+            class="org.jboss.ide.eclipse.jbosscache.editors.CacheXMLStructuredTextViewerConfiguration"
+            />
+      <contentOutlineConfiguration
+            target="org.jboss.ide.eclipse.jbosscache.cfgxmlsource" 
+            class="org.jboss.ide.eclipse.jbosscache.editors.CacheXMLContentOutlineConfiguration"            
+            />                       
+   </extension>
+   
+   
+       <extension point = "org.eclipse.wst.xml.core.catalogContributions">
+     <catalogContribution>
+           <uri
+                 name="cache"
+                 uri="dtd/cache-configuration.dtd"/>
+     </catalogContribution>
+    </extension>   
+    
+        <extension
+		point="org.eclipse.wst.sse.ui.adapterFactoryDescription">
+		<adapterFactoryDescription
+			class="org.jboss.ide.eclipse.jbosscache.editors.AdapterFactoryProviderForCacheXML">
+		</adapterFactoryDescription>
+	</extension>
+    
+   
+	
+	
+	
+	
+    
+
+</plugin>
