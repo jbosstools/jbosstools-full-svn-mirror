@@ -160,8 +160,14 @@ public class TreeCacheManager
    }
 
    public static Set getChildrenNames_(TreeCacheManager manager, String fqn) throws Exception
-   {
-      return manager.getTreeCache().getChildrenNames(fqn);
+   {  
+	  ClassLoader cl = Thread.currentThread().getContextClassLoader();
+	  try{
+		  Thread.currentThread().setContextClassLoader(manager.getManagerClassLoader());
+		  return manager.getTreeCache().getChildrenNames(fqn);
+	  }finally{
+		  Thread.currentThread().setContextClassLoader(cl);
+	  }
    }
 
    /**
