@@ -1,0 +1,27 @@
+# component versions 
+core=2.0.0.Beta1
+aop=1.2.0.Beta1
+as=1.0.0.Beta1
+ejb3=1.1.0.Beta1
+freemarker=1.0.0.Beta1
+jbpm=3.0.11
+hibernate-tools=beta7
+cache=2.0.0.Beta1
+drools-ide=3.0.4
+jbossws=0.3.2
+tests=2.0.0.Beta1
+
+# cvs tags 
+core.cvs=IDE_CORE_2_0_0_BETA1
+aop.cvs=IDE_AOP_DEVELOPER_1_2_BETA1
+as.cvs=IDE_ASBRIDGE_1_0_BETA1
+ejb3.cvs=IDE_EJB3_TOOLS_1_1_BETA1
+freemarker.cvs=IDE_FREEMARKER_1_0_BETA1
+jbpm.cvs=jbpm_gpd_3_0_11
+hibernate-tools.cvs=HEAD
+cache.cvs=IDE_CACHE_2_0_0_BETA1
+tests.cvs=HEAD
+
+# svn tags
+drools-ide.svn=http://anonsvn.labs.jboss.com/labs/jbossrules/branches/3.0.x
+jbossws.svn=https://svn.sourceforge.net/svnroot/soapui/tags/jbosside-2.0.0-beta1
