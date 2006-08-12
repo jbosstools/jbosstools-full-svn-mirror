@@ -1,3 +1,0 @@
-feature@org.jboss.ide.eclipse.as.feature=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/as/features/org.jboss.ide.eclipse.as.feature
-plugin@org.jboss.ide.eclipse.as.core=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/as/plugins/org.jboss.ide.eclipse.as.core
-plugin@org.jboss.ide.eclipse.as.ui=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/as/plugins/org.jboss.ide.eclipse.as.ui
