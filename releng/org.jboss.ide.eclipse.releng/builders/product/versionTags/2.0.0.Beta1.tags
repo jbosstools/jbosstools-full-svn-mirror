@@ -18,7 +18,7 @@ as.cvs=IDE_ASBRIDGE_1_0_BETA1
 ejb3.cvs=IDE_EJB3_TOOLS_1_1_BETA1
 freemarker.cvs=IDE_FREEMARKER_1_0_BETA1
 jbpm.cvs=jbpm_gpd_3_0_11
-hibernate-tools.cvs=HEAD
+hibernate-tools.cvs=TOOLS_3_2_0_beta7
 cache.cvs=IDE_CACHE_2_0_0_BETA1
 tests.cvs=HEAD
 
