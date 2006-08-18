@@ -32,7 +32,7 @@ call %ant% %1 %2 %3 %4 %5 %6 -lib ..\lib -f builder-wrap.xml integration -Dbuild
 goto end
 
 :builderBuildWithTags
-call %ant% %1 %2 %3 %4 %5 %6 -lib ..\lib -propertyfile %cvstagsproperties% -f builder-wrap.xml integration -Dbuilder=%target%
+call %ant% %1 %2 %3 %4 %5 %6 -lib ..\lib -propertyfile %cvstagproperties% -f builder-wrap.xml integration -Dbuilder=%target%
 goto end
 
 :productBuild
@@ -45,8 +45,8 @@ call %ant% %1 %2 %3 %4 %5 %6 -lib ..\lib -f product/buildResults.xml publish.log
 goto end
 
 :productBuildWithTags
-call %ant% %1 %2 %3 %4 %5 %6 -lib ..\lib -propertyfile %cvstagsproperties -f product/productBuild.xml integration > build.log
-call %ant% %1 %2 %3 %4 %5 %6 -lib ..\lib -propertyfile %cvstagsproperties -f product/buildResults.xml publish.log
+call %ant% %1 %2 %3 %4 %5 %6 -lib ..\lib -propertyfile %cvstagproperties% -f product/productBuild.xml integration > build.log
+call %ant% %1 %2 %3 %4 %5 %6 -lib ..\lib -propertyfile %cvstagproperties% -f product/buildResults.xml publish.log
 goto end
 
 :noAnt
