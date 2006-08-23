@@ -154,7 +154,7 @@
 	  				<propertycopy override="true" name="builder.version" from="versionTags.@{builder}"/>
 	  				<propertycopy override="true" name="cvsTag" from="versionTags.@{builder}.cvs"/>
 	  				<if>
-	  					<isset property="versiontags.@{builder}.svn"/>
+	  					<isset property="versionTags.@{builder}.svn"/>
 	  					<then>
 	  						<propertycopy override="true" name="svnURL" from="versionTags.@{builder}.svn"/>
 	  					</then>
