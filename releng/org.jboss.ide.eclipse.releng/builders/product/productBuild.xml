@@ -173,7 +173,7 @@
 									<linecontains>
 										<contains value="defaultSvnUrl"/>
 									</linecontains>
-									<prefixlines prefix="@{builder}"/>
+									<prefixlines prefix="@{builder}."/>
 								</filterchain>
 							</loadproperties>
 	  						<if>
