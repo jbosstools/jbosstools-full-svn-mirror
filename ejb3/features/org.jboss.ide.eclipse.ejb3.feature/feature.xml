@@ -432,6 +432,12 @@ END OF TERMS AND CONDITIONS
       <import plugin="org.eclipse.jface.text"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.jdt.launching"/>
+      <import plugin="org.jboss.ide.eclipse.jdt.aop.core"/>
+      <import plugin="org.jboss.ide.eclipse.as.core"/>
+      <import plugin="org.eclipse.wst.server.core"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.jboss.ide.eclipse.as.ui"/>
+      <import plugin="org.eclipse.wst.server.ui"/>
    </requires>
 
    <plugin
@@ -442,24 +448,6 @@ END OF TERMS AND CONDITIONS
 
    <plugin
          id="org.jboss.ide.eclipse.ejb3.wizards.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.jboss.ide.eclipse.jdt.aop.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.jboss.ide.eclipse.as.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.jboss.ide.eclipse.as.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
