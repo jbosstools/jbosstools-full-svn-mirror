@@ -10,12 +10,12 @@
 	<tr>
 		<td width="50%">
 			<span id="title">JBoss Eclipse IDE Build</span><br/>
-			<span id="buildName">%build-type% build %jbosside-build-name%</span>
+			<span id="buildName">${build-type} build ${jbosside-build-name}</span>
 		</td>
 		<td width="50%" align="right">
-			<span id="buildDate">%date%</span><br/>
-			<span id="buildExecTime">%build-time%</span><br/>
-			<a id="buildLog" href="%jbosside-download-root%/build.log.zip">Download Build Log (zip)</a>
+			<span id="buildDate">${date}</span><br/>
+			<span id="buildExecTime">${build-time}</span><br/>
+			<a id="buildLog" href="${jbosside-download-root}/build.log.zip">Download Build Log (zip)</a>
 		</td>
 	</tr>
 	</table>
@@ -44,96 +44,186 @@
 
 <table>
 
-%bundle-information%
+${bundle-information}
 
 <tr><td colspan="2"><h1>All plugins:</h1></td></tr>
 <tr>
 	<!-- ALL plugins -->
-	<td><img src="images/%jbosside-all-status%.png"/></td>
+	<td><img src="images/${jbosside-all-status}.png"/></td>
 	<td class="downloadInfo">
-		<a id="allLink" href="%jbosside-download-root%/all/%jbosside-all-filename%">%jbosside-all-filename%</a><br/>
-		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/all/%jbosside-all-filename%.MD5">md5</a> | filesize: %all-file-size% bytes
+		<a id="allLink" href="${jbosside-download-root}/all/${jbosside-all-filename}">${jbosside-all-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/all/${jbosside-all-filename}.MD5">md5</a> | filesize: ${all-file-size} bytes
 	</td>
 </tr>
-<tr><td colspan="2"><h1>Standalone plugins:</h1></td></tr>
+</table>
+<table>
+<tr>
+	<td colspan="2"><h1>Standalone plugins:</h1></td>
+</tr>
 <tr>
 	<!-- Core -->
-	<td><img src="images/%jbosside-core-status%-small.png"/></td>
+	<td><img src="images/${jbosside-core-status}-small.png"/></td>
 	<td class="downloadInfo">
-		<a class="pluginLink" href="%jbosside-download-root%/core/%jbosside-core-filename%">%jbosside-core-filename%</a><br/>
-		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/core/%jbosside-core-filename%.MD5">md5</a> | filesize: %core-file-size% bytes
+		<a class="pluginLink" href="${jbosside-download-root}/core/${jbosside-core-filename}">${jbosside-core-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/core/${jbosside-core-filename}.MD5">md5</a> | filesize: ${core-file-size} MB
 	</td>
 </tr>
 <tr>
 	<!-- JBossAS Tools -->
-	<td><img src="images/%jbosside-as-status%-small.png"/></td>
+	<td><img src="images/${jbosside-as-status}-small.png"/></td>
 	<td class="downloadInfo">
-		<a class="pluginLink" href="%jbosside-download-root%/as/%jbosside-as-filename%">%jbosside-as-filename%</a><br/>
-		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/as/%jbosside-as-filename%.MD5">md5</a> | filesize: %as-file-size% bytes
+		<a class="pluginLink" href="${jbosside-download-root}/as/${jbosside-as-filename}">${jbosside-as-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/as/${jbosside-as-filename}.MD5">md5</a> | filesize: ${as-file-size} MB
 	</td>
 </tr>
 <tr>
 	<!-- Hibernate Tools -->
-	<td><img src="images/%jbosside-hibernate-tools-status%-small.png"/></td>
+	<td><img src="images/${jbosside-hibernate-tools-status}-small.png"/></td>
 	<td class="downloadInfo">
-		<a class="pluginLink" href="%jbosside-download-root%/hibernate-tools/%jbosside-hibernate-tools-filename%">%jbosside-hibernate-tools-filename%</a><br/>
-		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/hibernate-tools/%jbosside-hibernate-tools-filename%.MD5">md5</a> | filesize: %hibernate-tools-file-size% bytes
+		<a class="pluginLink" href="${jbosside-download-root}/hibernate-tools/${jbosside-hibernate-tools-filename}">${jbosside-hibernate-tools-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/hibernate-tools/${jbosside-hibernate-tools-filename}.MD5">md5</a> | filesize: ${hibernate-tools-file-size} MB
 	</td>
 </tr>
 <tr>
 	<!-- jBPM Designer -->
-	<td><img src="images/%jbosside-jbpm-status%-small.png"/></td>
+	<td><img src="images/${jbosside-jbpm-status}-small.png"/></td>
 	<td class="downloadInfo">
-		<a class="pluginLink" href="%jbosside-download-root%/jbpm/%jbosside-jbpm-filename%">%jbosside-jbpm-filename%</a><br/>
-		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/jbpm/%jbosside-jbpm-filename%.MD5">md5</a> | filesize: %jbpm-file-size% bytes
+		<a class="pluginLink" href="${jbosside-download-root}/jbpm/${jbosside-jbpm-filename}">${jbosside-jbpm-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/jbpm/${jbosside-jbpm-filename}.MD5">md5</a> | filesize: ${jbpm-file-size} MB
 	</td>
 </tr>
 <tr>
 	<!-- EJB3 Tools -->
-	<td><img src="images/%jbosside-ejb3-status%-small.png"/></td>
+	<td><img src="images/${jbosside-ejb3-status}-small.png"/></td>
 	<td class="downloadInfo">
-		<a class="pluginLink" href="%jbosside-download-root%/ejb3/%jbosside-ejb3-filename%">%jbosside-ejb3-filename%</a><br/>
-		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/ejb3/%jbosside-ejb3-filename%.MD5">md5</a> | filesize: %ejb3-file-size% bytes
+		<a class="pluginLink" href="${jbosside-download-root}/ejb3/${jbosside-ejb3-filename}">${jbosside-ejb3-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/ejb3/${jbosside-ejb3-filename}.MD5">md5</a> | filesize: ${ejb3-file-size} MB
 	</td>
 </tr>
 <tr>
 	<!-- Drools IDE -->
-	<td><img src="images/%jbosside-drools-ide-status%-small.png"/></td>
+	<td><img src="images/${jbosside-drools-ide-status}-small.png"/></td>
 	<td class="downloadInfo">
-		<a class="pluginLink" href="%jbosside-download-root%/drools-ide/%jbosside-drools-ide-filename%">%jbosside-drools-ide-filename%</a><br/>
-		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/drools-ide/%jbosside-drools-ide-filename%.MD5">md5</a> | filesize: %drools-ide-file-size% bytes
+		<a class="pluginLink" href="${jbosside-download-root}/drools-ide/${jbosside-drools-ide-filename}">${jbosside-drools-ide-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/drools-ide/${jbosside-drools-ide-filename}.MD5">md5</a> | filesize: ${drools-ide-file-size} MB
 	</td>
 </tr>
 <tr>
 	<!-- JBossWS -->
-	<td><img src="images/%jbosside-jbossws-status%-small.png"/></td>
+	<td><img src="images/${jbosside-jbossws-status}-small.png"/></td>
 	<td class="downloadInfo">
-		<a class="pluginLink" href="%jbosside-download-root%/jbossws/%jbosside-jbossws-filename%">%jbosside-jbossws-filename%</a><br/>
-		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/jbossws/%jbosside-jbossws-filename%.MD5">md5</a> | filesize: %jbossws-file-size% bytes
+		<a class="pluginLink" href="${jbosside-download-root}/jbossws/${jbosside-jbossws-filename}">${jbosside-jbossws-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/jbossws/${jbosside-jbossws-filename}.MD5">md5</a> | filesize: ${jbossws-file-size} MB
 	</td>
 </tr>
 <tr>
 	<!-- AOP Developer -->
-	<td><img src="images/%jbosside-aop-status%-small.png"/></td>
+	<td><img src="images/${jbosside-aop-status}-small.png"/></td>
 	<td class="downloadInfo">
-		<a class="pluginLink" href="%jbosside-download-root%/aop/%jbosside-aop-filename%">%jbosside-aop-filename%</a><br/>
-		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/aop/%jbosside-aop-filename%.MD5">md5</a> | filesize: %aop-file-size% bytes
+		<a class="pluginLink" href="${jbosside-download-root}/aop/${jbosside-aop-filename}">${jbosside-aop-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/aop/${jbosside-aop-filename}.MD5">md5</a> | filesize: ${aop-file-size} MB
 	</td>
 </tr>
 <tr>
 	<!-- FreeMarker -->
-	<td><img src="images/%jbosside-freemarker-status%-small.png"/></td>
+	<td><img src="images/${jbosside-freemarker-status}-small.png"/></td>
 	<td class="downloadInfo">
-		<a class="pluginLink" href="%jbosside-download-root%/freemarker/%jbosside-freemarker-filename%">%jbosside-freemarker-filename%</a><br/>
-		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/freemarker/%jbosside-freemarker-filename%.MD5">md5</a> | filesize: %freemarker-file-size% bytes
+		<a class="pluginLink" href="${jbosside-download-root}/freemarker/${jbosside-freemarker-filename}">${jbosside-freemarker-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/freemarker/${jbosside-freemarker-filename}.MD5">md5</a> | filesize: ${freemarker-file-size} MB
 	</td>
 </tr>
 <tr>
 	<!-- JBossCache IDE -->
-	<td><img src="images/%jbosside-cache-status%-small.png"/></td>
+	<td><img src="images/${jbosside-cache-status}-small.png"/></td>
 	<td class="downloadInfo">
-		<a class="pluginLink" href="%jbosside-download-root%/cache/%jbosside-cache-filename%">%jbosside-cache-filename%</a><br/>
-		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="%jbosside-download-root%/cache/%jbosside-cache-filename%.MD5">md5</a> | filesize: %cache-file-size% bytes
+		<a class="pluginLink" href="${jbosside-download-root}/cache/${jbosside-cache-filename}">${jbosside-cache-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/cache/${jbosside-cache-filename}.MD5">md5</a> | filesize: ${cache-file-size} MB
+	</td>
+</tr>
+</table>
+
+<table>
+<tr>
+	<td class="downloadInfo" colspan="2"><h1>Standalone plugins (no dependencies):</h1><br/>The AOP, DroolsIDE, and Freemarker components do not contain dependencies outside of the Eclipse SDK</td>
+</tr>
+<tr>
+	<!-- Core (nodeps) -->
+	<td><img src="images/${jbosside-core-nodeps-status}-small.png"/></td>
+	<td class="downloadInfo">
+		<a class="pluginLink" href="${jbosside-download-root}/core/${jbosside-core-nodeps-filename}">${jbosside-core-nodeps-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/core/${jbosside-core-nodeps-filename}.MD5">md5</a> | filesize: ${core-nodeps-file-size} MB
+	</td>
+</tr>
+<tr>
+	<!-- JBossAS Tools (nodeps) -->
+	<td><img src="images/${jbosside-as-nodeps-status}-small.png"/></td>
+	<td class="downloadInfo">
+		<a class="pluginLink" href="${jbosside-download-root}/as/${jbosside-as-nodeps-filename}">${jbosside-as-nodeps-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/as/${jbosside-as-nodeps-filename}.MD5">md5</a> | filesize: ${as-nodeps-file-size} MB
+	</td>
+</tr>
+<tr>
+	<!-- Hibernate Tools (nodeps) -->
+	<td><img src="images/${jbosside-hibernate-tools-nodeps-status}-small.png"/></td>
+	<td class="downloadInfo">
+		<a class="pluginLink" href="${jbosside-download-root}/hibernate-tools/${jbosside-hibernate-tools-nodeps-filename}">${jbosside-hibernate-tools-nodeps-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/hibernate-tools/${jbosside-hibernate-tools-nodeps-filename}.MD5">md5</a> | filesize: ${hibernate-tools-nodeps-file-size} MB
+	</td>
+</tr>
+<tr>
+	<!-- jBPM Designer (nodeps) -->
+	<td><img src="images/${jbosside-jbpm-nodeps-status}-small.png"/></td>
+	<td class="downloadInfo">
+		<a class="pluginLink" href="${jbosside-download-root}/jbpm/${jbosside-jbpm-nodeps-filename}">${jbosside-jbpm-nodeps-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/jbpm/${jbosside-jbpm-nodeps-filename}.MD5">md5</a> | filesize: ${jbpm-nodeps-file-size} MB
+	</td>
+</tr>
+<tr>
+	<!-- EJB3 Tools (nodeps) -->
+	<td><img src="images/${jbosside-ejb3-nodeps-status}-small.png"/></td>
+	<td class="downloadInfo">
+		<a class="pluginLink" href="${jbosside-download-root}/ejb3/${jbosside-ejb3-nodeps-filename}">${jbosside-ejb3-nodeps-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/ejb3/${jbosside-ejb3-nodeps-filename}.MD5">md5</a> | filesize: ${ejb3-nodeps-file-size} MB
+	</td>
+</tr>
+<tr>
+	<!-- Drools IDE (nodeps) -->
+	<!--<td><img src="images/${jbosside-drools-ide-nodeps-status}-small.png"/></td>
+	<td class="downloadInfo">
+		<a class="pluginLink" href="${jbosside-download-root}/drools-ide/${jbosside-drools-ide-nodeps-filename}">${jbosside-drools-ide-nodeps-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/drools-ide/${jbosside-drools-ide-nodeps-filename}.MD5">md5</a> | filesize: ${drools-ide-nodeps-file-size} MB
+	</td>-->
+</tr>
+<tr>
+	<!-- JBossWS (nodeps) -->
+	<td><img src="images/${jbosside-jbossws-nodeps-status}-small.png"/></td>
+	<td class="downloadInfo">
+		<a class="pluginLink" href="${jbosside-download-root}/jbossws/${jbosside-jbossws-nodeps-filename}">${jbosside-jbossws-nodeps-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/jbossws/${jbosside-jbossws-nodeps-filename}.MD5">md5</a> | filesize: ${jbossws-nodeps-file-size} MB
+	</td>
+</tr>
+<tr>
+	<!-- AOP Developer (nodeps) -->
+	<!--<td><img src="images/${jbosside-aop-nodeps-status}-small.png"/></td>
+	<td class="downloadInfo">
+		<a class="pluginLink" href="${jbosside-download-root}/aop/${jbosside-aop-nodeps-filename}">${jbosside-aop-nodeps-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/aop/${jbosside-aop-nodeps-filename}.MD5">md5</a> | filesize: ${aop-nodeps-file-size} MB
+	</td>-->
+</tr>
+<tr>
+	<!-- FreeMarker (nodeps) -->
+	<!--<td><img src="images/${jbosside-freemarker-nodeps-status}-small.png"/></td>
+	<td class="downloadInfo">
+		<a class="pluginLink" href="${jbosside-download-root}/freemarker/${jbosside-freemarker-nodeps-filename}">${jbosside-freemarker-nodeps-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/freemarker/${jbosside-freemarker-nodeps-filename}.MD5">md5</a> | filesize: ${freemarker-nodeps-file-size} MB
+	</td>-->
+</tr>
+<tr>
+	<!-- JBossCache IDE (nodeps) -->
+	<td><img src="images/${jbosside-cache-nodeps-status}-small.png"/></td>
+	<td class="downloadInfo">
+		<a class="pluginLink" href="${jbosside-download-root}/cache/${jbosside-cache-nodeps-filename}">${jbosside-cache-nodeps-filename}</a><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/cache/${jbosside-cache-nodeps-filename}.MD5">md5</a> | filesize: ${cache-nodeps-file-size} MB
 	</td>
 </tr>
 </table>
@@ -146,23 +236,23 @@
 		<table>
 		<tr>
 			<td>Eclipse</td>
-			<td><a href="%eclipse-download-url%">%eclipse-target%</a></td>
+			<td><a href="${eclipse-download-url}">${eclipse-target}</a></td>
 		</tr>
 		<tr>
 			<td>Webtools</td>
-			<td><a href="%webtools-download-url%">%webtools-target%</a></td>
+			<td><a href="${webtools-download-url}">${webtools-target}</a></td>
 		</tr>
 		<tr>
 			<td>GEF</td>
-			<td><a href="%gef-download-url%">%gef-target%</a></td>
+			<td><a href="${gef-download-url}">${gef-target}</a></td>
 		</tr>
 		<tr>
 			<td>EMF/XSD/SDO</td>
-			<td><a href="%emf-sdo-xsd-download-url%">%emf-sdo-xsd-target%</a></td>
+			<td><a href="${emf-sdo-xsd-download-url}">${emf-sdo-xsd-target}</a></td>
 		</tr>
 		<tr>
 			<td>JEM</td>
-			<td><a href="%jem-download-url%">%jem-target%</a></td>
+			<td><a href="${jem-download-url}">${jem-target}</a></td>
 		</tr>
 		</table>
 	</div>
@@ -172,22 +262,22 @@
 		<table>
 		<tr>
 			<td><img src="images/test.gif"/> Tests</td>
-			<td align="right">&nbsp;&nbsp;&nbsp;%junit-test-count%</td>
+			<td align="right">&nbsp;&nbsp;&nbsp;${junit-test-count}</td>
 		</tr>
 		<tr>
 			<td><img src="images/testerr.gif"/> Errors</td>
-			<td align="right">%junit-error-count%</td>
+			<td align="right">${junit-error-count}</td>
 		</tr>
 		<tr>
 			<td><img src="images/testfail.gif"/> Failures</td>
-			<td align="right">%junit-failure-count%</td>
+			<td align="right">${junit-failure-count}</td>
 		</tr>
 		</table>
-		<div align="right"><a style="align: right;" href="%jbosside-download-root%/tests/test-results/org.jboss.ide.eclipse.tests.html">See full unit test results</a></div>
+		<div align="right"><a style="align: right;" href="${jbosside-download-root}/tests/test-results/org.jboss.ide.eclipse.tests.html">See full unit test results</a></div>
 	</div>
 	
 	<div id="buildInfo">
-		%build-information%
+		${build-information}
 	</div>
 
 </div>
