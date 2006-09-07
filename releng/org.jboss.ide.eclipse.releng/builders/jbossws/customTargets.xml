@@ -2,6 +2,7 @@
 		  
 	<taskdef classpath="../../bin" resource="org/jboss/ide/eclipse/releng/antlib.xml" />
 	<taskdef classpath="../../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
+	<import file="../common/bundleDependencies.xml"/>
 	<import file="../common/common.xml"/>
 <!-- ===================================================================== -->
 <!-- Run a given ${target} on all elements being built -->
@@ -112,6 +113,13 @@
 <!-- Steps to do after  running assemble. -->
 <!-- ===================================================================== -->
 <target name="postAssemble">
+	
+	<copy file="${buildDirectory}/${buildLabel}/JBossIDE-JBossWS-${versionTag}.zip"
+		tofile="${buildDirectory}/${buildLabel}/JBossIDE-JBossWS-nodeps-${versionTag}.zip"/>
+	
+	<bundleDependencies feature="com.eviware.soapui.jbosside_feature" buildDirectory="${buildDirectory}"
+		archivePath="${buildDirectory}/${buildLabel}/JBossIDE-JBossWS-${versionTag}.zip" />
+	
 </target>
 
 <!-- ===================================================================== -->

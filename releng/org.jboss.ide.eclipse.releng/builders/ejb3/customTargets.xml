@@ -2,6 +2,7 @@
 		  
 	<taskdef classpath="../../bin" resource="org/jboss/ide/eclipse/releng/antlib.xml" />
 	<taskdef classpath="../../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
+	<import file="../common/bundleDependencies.xml"/>
 	<import file="../common/common.xml"/>
 <!-- ===================================================================== -->
 <!-- Run a given ${target} on all elements being built -->
@@ -158,6 +159,10 @@
 <!-- Steps to do after  running assemble. -->
 <!-- ===================================================================== -->
 <target name="postAssemble">
+	<copy file="${buildDirectory}/${buildLabel}/JBossIDE-EJB3-Tools-${versionTag}.zip" tofile="${buildDirectory}/${buildLabel}/JBossIDE-EJB3-Tools-nodeps-${versionTag}.zip"/>
+	
+	<bundleDependencies feature="org.jboss.ide.eclipse.ejb3.feature" buildDirectory="${buildDirectory}"
+		archivePath="${buildDirectory}/${buildLabel}/JBossIDE-EJB3-Tools-${versionTag}.zip" />
 </target>
 
 <!-- ===================================================================== -->

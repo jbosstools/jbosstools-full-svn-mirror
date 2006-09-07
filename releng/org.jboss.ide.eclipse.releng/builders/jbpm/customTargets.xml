@@ -4,7 +4,7 @@
 	
 	<property file="custom.properties" />
 	
-	<import file="../common/bundlePlugins.xml"/>
+	<import file="../common/bundleDependencies.xml"/>
 	<import file="../common/common.xml"/>
 <!-- ===================================================================== -->
 <!-- Run a given ${target} on all elements being built -->
@@ -183,7 +183,9 @@
 <target name="postAssemble">
 	<echo message="doing postAssemble"/>
 	
-	<bundlePlugins pluginList="${include.plugins}" buildDirectory="${buildDirectory}"
+	<copy file="${buildDirectory}/${buildLabel}/jBPM-Designer-${versionTag}.zip" tofile="${buildDirectory}/${buildLabel}/jBPM-Designer-nodeps-${versionTag}.zip"/>
+	
+	<bundleDependencies feature="org.jbpm.gd.jpdl.feature" buildDirectory="${buildDirectory}"
 			archivePath="${buildDirectory}/${buildLabel}/jBPM-Designer-${versionTag}.zip" />
 	
 </target>

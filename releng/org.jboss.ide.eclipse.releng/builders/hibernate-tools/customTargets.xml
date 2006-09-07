@@ -2,7 +2,7 @@
 	<taskdef name="updateVersions" classname="org.jboss.ide.eclipse.releng.UpdateVersionsTask" classpath="../../bin"/>
 	
 	<taskdef classpath="../../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
-	<import file="../common/bundlePlugins.xml"/>
+	<import file="../common/bundleDependencies.xml"/>
 	<import file="../common/common.xml"/>
 	
 <!-- ===================================================================== -->
@@ -147,7 +147,10 @@
 <!-- Steps to do after  running assemble. -->
 <!-- ===================================================================== -->
 <target name="postAssemble">
-	<bundlePlugins pluginList="${include.plugins}" buildDirectory="${buildDirectory}"
+	<copy file="${buildDirectory}/${buildLabel}/HibernateTools-${hibernate.tools.release}.${versionTag}.zip"
+		tofile="${buildDirectory}/${buildLabel}/HibernateTools-nodeps-${hibernate.tools.release}.${versionTag}.zip"/>
+	
+	<bundleDependencies feature="org.hibernate.eclipse.feature" buildDirectory="${buildDirectory}"
 		archivePath="${buildDirectory}/${buildLabel}/HibernateTools-${hibernate.tools.release}.${versionTag}.zip" />
 </target>
 
