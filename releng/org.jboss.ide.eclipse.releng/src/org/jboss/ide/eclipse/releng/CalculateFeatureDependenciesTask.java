@@ -143,19 +143,19 @@ public class CalculateFeatureDependenciesTask extends Task {
 	{
 		// simplified re-implementation of Platform.getOS() so we don't have to rely on eclipse classes
 		String osName = System.getProperty("os.name");
-		if (osName.contains("Windows"))
+		if (osName.indexOf("Windows") != -1)
 			return "win32";
-		else if (osName.contains("Linux"))
+		else if (osName.indexOf("Linux") != -1)
 			return "linux";
-		else if (osName.contains("Mac OS X"))
+		else if (osName.indexOf("Mac OS X") != -1)
 			return "macosx";
-		else if (osName.contains("AIX"))
+		else if (osName.indexOf("AIX") != -1)
 			return "aix";
-		else if (osName.contains("HP-UX"))
+		else if (osName.indexOf("HP-UX") != -1)
 			return "hpux";
-		else if (osName.contains("Solaris"))
+		else if (osName.indexOf("Solaris") != -1)
 			return "solaris";
-		else if (osName.contains("QNX"))
+		else if (osName.indexOf("QNX") != -1)
 			return "qnx";
 		else return "unknown";
 	}
@@ -190,7 +190,7 @@ public class CalculateFeatureDependenciesTask extends Task {
 				String pluginId = tokens[i];
 				if (tokens[i].indexOf(';') != -1) 
 				{
-					if (tokens[i].contains("resolution:=optional") && !addOptional)
+					if (tokens[i].indexOf("resolution:=optional") != -1 && !addOptional)
 					{
 						continue;
 					}
