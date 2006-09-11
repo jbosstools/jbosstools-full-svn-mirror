@@ -21,12 +21,13 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 /**
- * This task's purpose is to calculate the set of dependencies for the passed-in feature. This task is recurisve and will look at each plugin.xml/MANIFEST.MF whether inside JAR or folder.
+ * This task's purpose is to calculate the set of dependencies for the passed-in feature.
+ * This task is recursive and will look at each plugin.xml/MANIFEST.MF whether inside JAR or folder.
  * After calculating the dependencies, the given property will be filled with a comma-delimited list of dependencies (usable with ant-contrib).
  * Note that this task will exclude any plugins found to be included with the standard Eclipse SDK distribution.
  * Usage:
  * <code>
- * &lt;calculateFeatureDependencies feature="org.jboss.ide.eclipse.feature" eclipseInstallDir="C:/eclipse" pluginList="dependencyList"/&gt;
+ * &lt;calculateFeatureDependencies feature="org.jboss.ide.eclipse.feature" eclipseInstallDir="C:/eclipse" pluginList="pluginList" featureList="featureList"/&gt;
  * </code>
  * 
  * Optional attribute: addOptional.
@@ -128,20 +129,28 @@ public class CalculateFeatureDependenciesTask extends Task {
 			Element pluginElement = (Element) iter.next();
 			String pluginName = pluginElement.attributeValue("id");
 			String os = pluginElement.attributeValue("os");
+			String arch = pluginElement.attributeValue("arch");
+			String ws = pluginElement.attributeValue("ws");
 			
 			if (os == null || os.equals(getPlatformOS()))
 			{
-				if (!pluginSet.contains(pluginName)) {
-//					System.out.println("adding feature plugin \"" + pluginName + "\" to feature \"" + featureName + "\" dependency set");
-					addPluginDependenciesToSet(pluginName, pluginSet);
+				if (arch == null || arch.equals(getPlatformArch()))
+				{
+					if (ws == null || ws.equals(getPlatformWS()))
+					{
+						if (!pluginSet.contains(pluginName)) {
+		//					System.out.println("adding feature plugin \"" + pluginName + "\" to feature \"" + featureName + "\" dependency set");
+							addPluginDependenciesToSet(pluginName, pluginSet);
+						}
+					}
 				}
 			}
 		}		
 	}
-	
-	private static String getPlatformOS()
+
+	// Emulation of org.eclipse.core.resources.Platform.getOS() (so we can run standalone)
+	private static String getPlatformOS ()
 	{
-		// simplified re-implementation of Platform.getOS() so we don't have to rely on eclipse classes
 		String osName = System.getProperty("os.name");
 		if (osName.indexOf("Windows") != -1)
 			return "win32";
@@ -157,6 +166,32 @@ public class CalculateFeatureDependenciesTask extends Task {
 			return "solaris";
 		else if (osName.indexOf("QNX") != -1)
 			return "qnx";
+		else return "unknown";
+	}
+	
+	// Emulation of org.eclipse.core.resources.Platform.getOSArch() (so we can run standalone)
+	private static String getPlatformArch ()
+	{
+		String archName = System.getProperty("os.arch");
+		if (archName.equals("i386") || archName.equals("i686") || archName.equals("x86") || archName.equals("Pentium"))
+			return "x86";
+		else if (archName.equals("ppc"))
+			return "ppc";
+		else if (archName.equals("sparc"))
+			return "sparc";
+		else return "unknown";
+	}
+	
+	// Emulation of org.eclipse.resources.Platform.getWS() (so we can run standalone)
+	private static String getPlatformWS ()
+	{
+		String osName = System.getProperty("os.name");
+		if (osName.indexOf("Windows") != -1)
+			return "win32";
+		else if (osName.indexOf("Linux") != -1)
+			return "gtk";
+		else if (osName.indexOf("Mac OS X") != -1)
+			return "carbon";
 		else return "unknown";
 	}
 	
