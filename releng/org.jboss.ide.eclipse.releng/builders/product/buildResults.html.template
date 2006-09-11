@@ -52,7 +52,7 @@ ${bundle-information}
 	<td><img src="images/${jbosside-all-status}.png"/></td>
 	<td class="downloadInfo">
 		<a id="allLink" href="${jbosside-download-root}/all/${jbosside-all-filename}">${jbosside-all-filename}</a><br/>
-		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/all/${jbosside-all-filename}.MD5">md5</a> | filesize: ${all-file-size} bytes
+		&nbsp;&nbsp;&nbsp;&nbsp;<a class="md5" href="${jbosside-download-root}/all/${jbosside-all-filename}.MD5">md5</a> | filesize: ${all-file-size} MB
 	</td>
 </tr>
 </table>

@@ -154,12 +154,12 @@
 		<get.status file="${jbossws-file}" property="jbosside-jbossws-status"/>
 		<get.status file="${jbossws-nodeps-file}" property="jbosside-jbossws-nodeps-status"/>
 		
-		<length file="${all-file}" property="all-file-size"  />
+		<get.size file="${all-file}" property="all-file-size"  />
 		<if>
 			<contains string="${build.steps}" substring="bundle.eclipse"/>
 			<then>
-				<length file="${win32-bundle-file}" property="win32-bundle-file-size"  />
-				<length file="${linux-gtk2-bundle-file}" property="linux-gtk2-bundle-file-size"  />
+				<get.size file="${win32-bundle-file}" property="win32-bundle-file-size"  />
+				<get.size file="${linux-gtk2-bundle-file}" property="linux-gtk2-bundle-file-size"  />
 			</then>
 		</if>
 		<get.size file="${core-file}" property="core-file-size"  />
