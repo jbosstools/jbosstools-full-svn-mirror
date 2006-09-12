@@ -25,55 +25,71 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IStartup;
+import org.jboss.ide.eclipse.core.CorePlugin;
 import org.jboss.ide.eclipse.firstrun.wizard.FirstRunWizard;
 import org.jboss.ide.eclipse.packaging.core.PackagingCorePlugin;
 import org.jboss.ide.eclipse.xdoclet.run.XDocletRunPlugin;
 
-public class FirstRunStartup implements IStartup
-{
+public class FirstRunStartup implements IStartup {
 
-   public void earlyStartup()
-   {
+   public void earlyStartup() {
 
-      try
-      {
-         Display.getDefault().asyncExec(new Runnable()
-         {
-            public void run()
-            {
-               try
-               {
-                  // force initialization
-                  PackagingCorePlugin.getDefault();
-                  XDocletRunPlugin.getDefault();
+      try {
+         Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+               try {
+            	   // legacyMethod();
+                   IPreferenceStore store = FirstRunPlugin.getDefault().getPreferenceStore();
 
-                  IPreferenceStore store = FirstRunPlugin.getDefault().getPreferenceStore();
-
-                  if (!store.contains(FirstRunPlugin.FIRST_RUN_PROPERTY)
-                        || !store.getBoolean(FirstRunPlugin.FIRST_RUN_PROPERTY))
-                  {
-                     FirstRunWizard wizard = new FirstRunWizard();
-                     WizardDialog dialog = new WizardDialog(null, wizard);
-
-                     dialog.open();
-
-                     // TODO UNCOMMENT ME
-                     store.setValue(FirstRunPlugin.FIRST_RUN_PROPERTY, true);
-                  }
-               }
-               catch (Exception e)
-               {
+            	   String currentVersion = CorePlugin.getCurrentVersion();
+            	   String workspaceLatest = store.getString(FirstRunPlugin.FIRST_RUN_PROPERTY_LATEST_VERSION);
+            	   
+            	   // TODO: uncomment
+            	   // short circuit if already done
+            	   //int compare = CorePlugin.compare(currentVersion, workspaceLatest);
+            	   //if( workspaceLatest != null && compare <= 0) return; 
+            	   
+            	   if( workspaceLatest == null ) {
+            		   // this isn't set... are we at least at 1.6?
+            		   boolean at16 = false;
+            	       if (store.contains(FirstRunPlugin.FIRST_RUN_PROPERTY)) {
+            	    	   at16 = store.getBoolean(FirstRunPlugin.FIRST_RUN_PROPERTY);
+            	       }
+            	       
+            	       if( at16 ) {
+            	    	   workspaceLatest = "1.6.0.GA";
+            	       } else {
+            	    	   // we're either pre-1.6, or its a new workspace
+            	    	   workspaceLatest = FirstRunPlugin.NEW_WORKSPACE;
+            	       }
+            	   }
+            	   
+            	   // Temp
+            	   workspaceLatest = "1.6.0.GA";
+            	   showWizard(workspaceLatest);
+            	   
+            	   store.setValue(FirstRunPlugin.FIRST_RUN_PROPERTY_LATEST_VERSION, currentVersion);
+            	   
+               } catch (Exception e) {
                   e.printStackTrace();
                }
             }
          });
       }
-      catch (Exception e)
-      {
+      catch (Exception e) {
          // TODO Auto-generated catch block
          e.printStackTrace();
       }
-
    }
 
+   
+   private void showWizard(String workspaceLatest) {
+       FirstRunWizard wizard = new FirstRunWizard(workspaceLatest);
+       
+       // short circuit if no pages
+       if( wizard.numPages() == 0 ) return;
+       
+       WizardDialog dialog = new WizardDialog(null, wizard);
+       dialog.open();
+   }
 }

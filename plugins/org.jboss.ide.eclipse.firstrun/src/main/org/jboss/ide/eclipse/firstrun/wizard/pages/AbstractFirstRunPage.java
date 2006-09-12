@@ -21,45 +21,18 @@
  */
 package org.jboss.ide.eclipse.firstrun.wizard.pages;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.jboss.ide.eclipse.firstrun.FirstRunMessages;
-import org.jboss.ide.eclipse.firstrun.FirstRunPlugin;
 
-public class FirstRunFinalPage extends AbstractFirstRunPage { 
+public abstract class AbstractFirstRunPage extends WizardPage {
 
-   public FirstRunFinalPage()
-   {
-      super(FirstRunMessages.getString("FinalPage.title"), FirstRunMessages.getString("FirstRunWizard.title"),
-            FirstRunPlugin.getImageDescriptor(FirstRunPlugin.ICON_JBOSSIDE_LOGO));
-   }
-
-   public void createControl(Composite parent)
-   {
-      setTitle(FirstRunMessages.getString("FinalPage.title"));
-
-      Composite main = new Composite(parent, SWT.NONE);
-      main.setLayout(new FillLayout());
-
-      Label label = new Label(main, SWT.WRAP);
-
-      label.setText(FirstRunMessages.getString("FinalPage.info"));
-
-      setControl(main);
-   }
-
-   public boolean isPageComplete()
-   {
-      return isCurrentPage();
-   }
-
-   public void initialize() {
-	}
-
-   public void performFinish() {
-	}
+    protected AbstractFirstRunPage(String pageName, String title,
+            ImageDescriptor titleImage) {
+    	super(pageName, title, titleImage);
+    }
+	public abstract void createControl(Composite parent);
+	public abstract void initialize();
+	public abstract void performFinish();
 
 }

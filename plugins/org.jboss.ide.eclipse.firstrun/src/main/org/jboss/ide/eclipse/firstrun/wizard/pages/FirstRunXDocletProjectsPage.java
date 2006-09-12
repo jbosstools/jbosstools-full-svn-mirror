@@ -24,6 +24,7 @@ package org.jboss.ide.eclipse.firstrun.wizard.pages;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -43,8 +44,7 @@ import org.jboss.ide.eclipse.firstrun.providers.ProjectLabelProvider;
 import org.jboss.ide.eclipse.xdoclet.run.XDocletRunPlugin;
 import org.jboss.ide.eclipse.xdoclet.run.builder.XDocletRunBuilder;
 
-public class FirstRunXDocletProjectsPage extends WizardPage
-{
+public class FirstRunXDocletProjectsPage extends AbstractFirstRunPage {
 
    private CheckboxTableViewer projectTable;
 
@@ -126,4 +126,16 @@ public class FirstRunXDocletProjectsPage extends WizardPage
       System.arraycopy(elements, 0, projects, 0, elements.length);
       return projects;
    }
+
+	public void initialize() {
+		// force initialization
+		XDocletRunPlugin.getDefault();
+	}
+	
+	public void performFinish() {
+		IProject xdocletProjectsToConvert[] = getSelectedProjects();
+		for (int i = 0; i < xdocletProjectsToConvert.length; i++) {
+			XDocletRunPlugin.getDefault().enableXDocletBuilder(JavaCore.create(xdocletProjectsToConvert[i]), true);
+		}
+	}
 }

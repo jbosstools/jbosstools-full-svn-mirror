@@ -21,65 +21,144 @@
  */
 package org.jboss.ide.eclipse.firstrun.wizard;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.jdt.core.JavaCore;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.wizard.Wizard;
-import org.jboss.ide.eclipse.firstrun.wizard.pages.FirstRunFinalPage;
-import org.jboss.ide.eclipse.firstrun.wizard.pages.FirstRunInfoPage;
-import org.jboss.ide.eclipse.firstrun.wizard.pages.FirstRunPackagingProjectsPage;
-import org.jboss.ide.eclipse.firstrun.wizard.pages.FirstRunXDocletProjectsPage;
-import org.jboss.ide.eclipse.packaging.core.PackagingCorePlugin;
-import org.jboss.ide.eclipse.xdoclet.run.XDocletRunPlugin;
+import org.jboss.ide.eclipse.core.CorePlugin;
+import org.jboss.ide.eclipse.firstrun.FirstRunPlugin;
+import org.jboss.ide.eclipse.firstrun.wizard.pages.AbstractFirstRunPage;
 
-public class FirstRunWizard extends Wizard
-{
+public class FirstRunWizard extends Wizard {
 
-   private FirstRunInfoPage page1;
+	private String workspaceLatest;
+	private FirstRunWizardPageConfigElement[] pageObjects;
+	
+	public FirstRunWizard(String workspaceLatest) {
+		this.workspaceLatest = workspaceLatest;
+		pageObjects = getExtensions();
+	}
 
-   private FirstRunPackagingProjectsPage page2;
+	public int numPages() {
+		return pageObjects.length;
+	}
 
-   private FirstRunXDocletProjectsPage page3;
-
-   private FirstRunFinalPage page4;
-
-   public boolean performFinish()
-   {
-
-      IProject packagingProjectsToConvert[] = page2.getSelectedProjects();
-      IProject xdocletProjectsToConvert[] = page3.getSelectedProjects();
-
-      for (int i = 0; i < packagingProjectsToConvert.length; i++)
-      {
-         PackagingCorePlugin.getDefault().enablePackagingBuilder(JavaCore.create(packagingProjectsToConvert[i]), true);
-      }
-
-      for (int i = 0; i < xdocletProjectsToConvert.length; i++)
-      {
-         XDocletRunPlugin.getDefault().enableXDocletBuilder(JavaCore.create(xdocletProjectsToConvert[i]), true);
-      }
-
+   public boolean performFinish() {
+	   System.out.println(": Performing finish");
+	   for( int i = 0; i < pageObjects.length; i++ ) {
+		   pageObjects[i].getPage().performFinish();
+	   }
       return true;
    }
 
-   public boolean canFinish()
-   {
-      if (page4 == null)
-         return false;
-
-      return page4.isPageComplete();
+   public boolean canFinish() {
+	   for( int i = 0; i < pageObjects.length; i++ ) {
+		   if( pageObjects[i].getPage().isPageComplete() == false ) return false;
+	   }
+	   return true;
    }
 
-   public void addPages()
-   {
-      page1 = new FirstRunInfoPage();
-      page2 = new FirstRunPackagingProjectsPage();
-      page3 = new FirstRunXDocletProjectsPage();
-      page4 = new FirstRunFinalPage();
+   public void addPages() {
+	   for( int i = 0; i < pageObjects.length; i++ ) {
+		   AbstractFirstRunPage page = pageObjects[i].getPage();
+		   page.initialize();
+		   addPage(page);
+	   }
+   }
+   
+   protected FirstRunWizardPageConfigElement[] getExtensions() {
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IConfigurationElement[] cf = registry.getConfigurationElementsFor(FirstRunPlugin.PLUGIN_ID, FirstRunPlugin.EXTENSION_WIZARD_PAGE);
 
-      addPage(page1);
-      addPage(page2);
-      addPage(page3);
-      addPage(page4);
+		ArrayList tmp = new ArrayList();
+		for( int i = 0; i < cf.length; i++ ) {
+			FirstRunWizardPageConfigElement frwpce = new FirstRunWizardPageConfigElement(cf[i]);
+			tmp.add(frwpce);
+		}
+		
+		
+		// Get rid of any that do not match the current workspace / previous workspace combo
+		Iterator i = tmp.iterator();
+		String currentVersion = CorePlugin.getCurrentVersion();
+		while( i.hasNext()) {
+			FirstRunWizardPageConfigElement e = (FirstRunWizardPageConfigElement)i.next();
+			int previousMatch = CorePlugin.compare(workspaceLatest, e.getFromVersion());
+			int currentMatch = CorePlugin.compare(currentVersion, e.getToVersion());
+			if( previousMatch != 0 || currentMatch != 0 ) {
+				i.remove();
+			}
+		}
+		
+		// Now sort them based on weight
+		Collections.sort(tmp, new Comparator() {
+			public int compare(Object o1, Object o2) {
+				if( o1 instanceof FirstRunWizardPageConfigElement 
+						&& o2 instanceof FirstRunWizardPageConfigElement ) {
+					return ((FirstRunWizardPageConfigElement)o1).getWeight() - ((FirstRunWizardPageConfigElement)o2).getWeight();
+				}
+				return 0;
+			} 
+		} );
+		
+	   return (FirstRunWizardPageConfigElement[]) tmp.toArray(new FirstRunWizardPageConfigElement[tmp.size()]);
+   }
+   
+   private class FirstRunWizardPageConfigElement {
+	   private static final String PAGE_KEY = "WizardPage";
+	   private static final String FROM_KEY = "fromVersion";
+	   private static final String TO_KEY = "toVersion";
+	   private static final String WEIGHT_KEY = "weight";
+	   
+	   
+	   private String fromVersion;
+	   private String toVersion;
+	   private int weight;
+	   private AbstractFirstRunPage page;
+	   
+	   private IConfigurationElement element;
+	   
+	   public FirstRunWizardPageConfigElement(IConfigurationElement element) {
+		   this.element = element;
+		   fromVersion = element.getAttribute(FROM_KEY);
+		   toVersion = element.getAttribute(TO_KEY);
+
+		   try {
+			   String weightString = element.getAttribute(WEIGHT_KEY);
+			   if( weightString == null ) weight = 50;
+			   else weight = Integer.parseInt(element.getAttribute(WEIGHT_KEY));
+		   } catch( NumberFormatException nfe ) {
+			   weight = 50;
+		   }
+	   }
+	   
+	   public AbstractFirstRunPage getPage() {
+		   if( page == null ) {
+			   try {
+			   page = (AbstractFirstRunPage)element.createExecutableExtension(PAGE_KEY);
+			   } catch( CoreException ce) {
+				   ce.printStackTrace();
+			   }
+		   }
+		   return page;
+	   }
+
+	public String getFromVersion() {
+		return fromVersion;
+	}
+
+	public String getToVersion() {
+		return toVersion;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
    }
 
 }

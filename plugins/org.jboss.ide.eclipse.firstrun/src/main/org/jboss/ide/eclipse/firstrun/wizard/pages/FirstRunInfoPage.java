@@ -29,8 +29,7 @@ import org.eclipse.swt.widgets.Label;
 import org.jboss.ide.eclipse.firstrun.FirstRunMessages;
 import org.jboss.ide.eclipse.firstrun.FirstRunPlugin;
 
-public class FirstRunInfoPage extends WizardPage
-{
+public class FirstRunInfoPage extends AbstractFirstRunPage {
 
    public FirstRunInfoPage()
    {
@@ -50,6 +49,12 @@ public class FirstRunInfoPage extends WizardPage
       label.setText(FirstRunMessages.getString("InfoPage.info"));
 
       setControl(main);
+   }
+
+   public void initialize() {
+   }
+
+   public void performFinish() {
    }
 
 }

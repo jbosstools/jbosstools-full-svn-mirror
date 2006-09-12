@@ -19,47 +19,42 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.ide.eclipse.firstrun.wizard.pages;
+package org.jboss.ide.eclipse.firstrun.wizard.pages.upgrade20;
 
-import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jboss.ide.eclipse.firstrun.FirstRunMessages;
 import org.jboss.ide.eclipse.firstrun.FirstRunPlugin;
+import org.jboss.ide.eclipse.firstrun.wizard.pages.AbstractFirstRunPage;
 
-public class FirstRunFinalPage extends AbstractFirstRunPage { 
+public class FirstRunInfoPage20 extends AbstractFirstRunPage {
 
-   public FirstRunFinalPage()
+   public FirstRunInfoPage20()
    {
-      super(FirstRunMessages.getString("FinalPage.title"), FirstRunMessages.getString("FirstRunWizard.title"),
+      super(FirstRunMessages.getString("InfoPage20.title"), FirstRunMessages.getString("FirstRunWizard.title"),
             FirstRunPlugin.getImageDescriptor(FirstRunPlugin.ICON_JBOSSIDE_LOGO));
    }
 
    public void createControl(Composite parent)
    {
-      setTitle(FirstRunMessages.getString("FinalPage.title"));
+      setTitle(FirstRunMessages.getString("InfoPage20.title"));
 
       Composite main = new Composite(parent, SWT.NONE);
       main.setLayout(new FillLayout());
 
       Label label = new Label(main, SWT.WRAP);
 
-      label.setText(FirstRunMessages.getString("FinalPage.info"));
+      label.setText(FirstRunMessages.getString("InfoPage20.info"));
 
       setControl(main);
    }
 
-   public boolean isPageComplete()
-   {
-      return isCurrentPage();
+   public void initialize() {
    }
 
-   public void initialize() {
-	}
-
    public void performFinish() {
-	}
+   }
 
 }

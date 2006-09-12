@@ -24,6 +24,7 @@ package org.jboss.ide.eclipse.firstrun.wizard.pages;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -42,9 +43,9 @@ import org.jboss.ide.eclipse.firstrun.providers.AbstractProjectProvider;
 import org.jboss.ide.eclipse.firstrun.providers.ProjectLabelProvider;
 import org.jboss.ide.eclipse.packaging.core.PackagingCorePlugin;
 import org.jboss.ide.eclipse.packaging.core.builder.PackagingBuilder;
+import org.jboss.ide.eclipse.xdoclet.run.XDocletRunPlugin;
 
-public class FirstRunPackagingProjectsPage extends WizardPage
-{
+public class FirstRunPackagingProjectsPage extends AbstractFirstRunPage {
 
    private CheckboxTableViewer projectTable;
 
@@ -125,4 +126,16 @@ public class FirstRunPackagingProjectsPage extends WizardPage
       System.arraycopy(elements, 0, projects, 0, elements.length);
       return projects;
    }
+
+   public void initialize() {
+       // force initialization
+       PackagingCorePlugin.getDefault();
+   }
+
+	public void performFinish() {
+		IProject packagingProjectsToConvert[] = getSelectedProjects();
+		for (int i = 0; i < packagingProjectsToConvert.length; i++) {
+			PackagingCorePlugin.getDefault().enablePackagingBuilder(JavaCore.create(packagingProjectsToConvert[i]), true);
+		}
+	}
 }
