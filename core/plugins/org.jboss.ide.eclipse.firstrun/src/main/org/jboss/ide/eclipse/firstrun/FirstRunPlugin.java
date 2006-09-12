@@ -35,6 +35,19 @@ public class FirstRunPlugin extends AbstractUIPlugin
    private static FirstRunPlugin plugin;
 
    public static final String FIRST_RUN_PROPERTY = "org.jboss.ide.eclipse.firstrun";
+   public static final String PLUGIN_ID = "org.jboss.ide.eclipse.firstrun";
+   public static final String EXTENSION_WIZARD_PAGE = "FirstRunWizardPage";
+   
+   
+   public static final String NEW_WORKSPACE = "NEW_WORKSPACE";
+   
+   // The largest JBoss IDE version used in this workspace
+   public static final String FIRST_RUN_PROPERTY_LATEST_VERSION = 
+	   "org.jboss.ide.eclipse.firstrun.latest.version";
+   
+   public static final String FIRST_RUN_VERSION_PREFIX = 
+	   "org.jboss.ide.eclipse.firstrun.version";
+   
 
    public static final String ICON_JBOSSIDE_LOGO = "icons/jbosside-logo.png";
 
