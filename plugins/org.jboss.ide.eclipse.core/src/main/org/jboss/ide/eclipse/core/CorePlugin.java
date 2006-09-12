@@ -31,7 +31,41 @@ public class CorePlugin extends AbstractPlugin
 {
    /** The shared instance */
    private static CorePlugin plugin;
-
+   
+   
+   public static final String ALPHA = "alpha";
+   public static final String BETA = "beta";
+   public static final String GA = "GA";
+   
+   /**
+    * This variable will need to be updated at every release point.
+    * Whether alpha, beta, major, minor, revision, etc. 
+    */
+   private static final String JBOSS_IDE_RELEASE_VERSION = "2.0.0." + BETA + ".2";
+   
+   public static final String getCurrentVersion() {
+	   return JBOSS_IDE_RELEASE_VERSION;
+   }
+   
+   
+   /**
+    *  Returns 0 on a match, -1 if id is below target, 1 if id is above target
+    */
+   public static final int compare(String id, String targetId) {
+	   String[] targetAsArray = targetId.split("\\.");
+	   String[] idAsArray = id.split("\\.");
+	   
+	   for( int i = 0; i < targetAsArray.length; i++ ) {
+		   if( targetAsArray[i].equals("*")) 
+			   return 0;
+		   if( !idAsArray[i].equals(targetAsArray[i])) 
+			   return idAsArray[i].compareTo(targetAsArray[i]);
+	   }
+	   
+	   return 0;
+   }
+   
+   
    /** The constructor. */
    public CorePlugin()
    {
