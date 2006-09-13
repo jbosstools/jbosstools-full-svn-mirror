@@ -23,10 +23,10 @@ package org.jboss.ide.eclipse.firstrun.wizard.pages;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
-import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -132,10 +132,13 @@ public class FirstRunXDocletProjectsPage extends AbstractFirstRunPage {
 		XDocletRunPlugin.getDefault();
 	}
 	
-	public void performFinish() {
+	public void performFinishWithProgress(IProgressMonitor monitor) {
 		IProject xdocletProjectsToConvert[] = getSelectedProjects();
+		monitor.beginTask("", xdocletProjectsToConvert.length);
 		for (int i = 0; i < xdocletProjectsToConvert.length; i++) {
 			XDocletRunPlugin.getDefault().enableXDocletBuilder(JavaCore.create(xdocletProjectsToConvert[i]), true);
+			monitor.worked(1);
 		}
+		monitor.done();
 	}
 }

@@ -21,6 +21,7 @@
  */
 package org.jboss.ide.eclipse.firstrun.wizard.pages;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
@@ -33,6 +34,5 @@ public abstract class AbstractFirstRunPage extends WizardPage {
     }
 	public abstract void createControl(Composite parent);
 	public abstract void initialize();
-	public abstract void performFinish();
-
+	public abstract void performFinishWithProgress(IProgressMonitor monitor);
 }
