@@ -21,6 +21,7 @@
  */
 package org.jboss.ide.eclipse.firstrun.wizard;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -29,9 +30,15 @@ import java.util.Iterator;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.swt.widgets.Shell;
 import org.jboss.ide.eclipse.core.CorePlugin;
+import org.jboss.ide.eclipse.firstrun.FirstRunMessages;
 import org.jboss.ide.eclipse.firstrun.FirstRunPlugin;
 import org.jboss.ide.eclipse.firstrun.wizard.pages.AbstractFirstRunPage;
 
@@ -50,10 +57,35 @@ public class FirstRunWizard extends Wizard {
 	}
 
    public boolean performFinish() {
-	   System.out.println(": Performing finish");
-	   for( int i = 0; i < pageObjects.length; i++ ) {
-		   pageObjects[i].getPage().performFinish();
-	   }
+		IRunnableWithProgress op = new IRunnableWithProgress() {
+			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+				int totalWork = pageObjects.length * 1000;
+				String mainTaskName = FirstRunMessages.getString("ProgressMonitor.TaskName");
+				monitor.beginTask(mainTaskName, totalWork);
+				
+				for( int i = 0; i < pageObjects.length; i++ ) {
+					AbstractFirstRunPage page = pageObjects[i].getPage();
+					monitor.setTaskName(mainTaskName); // reset task name
+					try {
+						SubProgressMonitor sub = new SubProgressMonitor(monitor, 1000);
+						page.performFinishWithProgress(sub);
+					} catch( Exception e ) {
+						// do nothing and let the next page finish
+					}
+					
+					// checking for cancelation
+					if( monitor.isCanceled() ) 
+						throw new InterruptedException();
+				}
+			}
+		};
+		try {
+			new ProgressMonitorDialog(new Shell()).run(false, true, op);
+		} catch( Exception e) {
+			e.printStackTrace();
+		}
+
+	   
       return true;
    }
 
@@ -114,8 +146,9 @@ public class FirstRunWizard extends Wizard {
 	   private static final String FROM_KEY = "fromVersion";
 	   private static final String TO_KEY = "toVersion";
 	   private static final String WEIGHT_KEY = "weight";
+	   private static final String ID_KEY = "id";
 	   
-	   
+	   private String id;
 	   private String fromVersion;
 	   private String toVersion;
 	   private int weight;
@@ -127,6 +160,7 @@ public class FirstRunWizard extends Wizard {
 		   this.element = element;
 		   fromVersion = element.getAttribute(FROM_KEY);
 		   toVersion = element.getAttribute(TO_KEY);
+		   id  = element.getAttribute(ID_KEY);
 
 		   try {
 			   String weightString = element.getAttribute(WEIGHT_KEY);
@@ -140,7 +174,7 @@ public class FirstRunWizard extends Wizard {
 	   public AbstractFirstRunPage getPage() {
 		   if( page == null ) {
 			   try {
-			   page = (AbstractFirstRunPage)element.createExecutableExtension(PAGE_KEY);
+				   page = (AbstractFirstRunPage)element.createExecutableExtension(PAGE_KEY);
 			   } catch( CoreException ce) {
 				   ce.printStackTrace();
 			   }

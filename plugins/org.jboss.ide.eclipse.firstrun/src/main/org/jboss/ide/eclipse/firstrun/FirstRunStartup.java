@@ -46,8 +46,8 @@ public class FirstRunStartup implements IStartup {
             	   
             	   // TODO: uncomment
             	   // short circuit if already done
-            	   int compare = CorePlugin.compare(currentVersion, workspaceLatest);
-            	   if( workspaceLatest != null && compare <= 0) return; 
+            	   //int compare = CorePlugin.compare(currentVersion, workspaceLatest);
+            	   //if( workspaceLatest != null && compare <= 0) return; 
             	   
             	   if( workspaceLatest == null ) {
             		   // this isn't set... are we at least at 1.6?

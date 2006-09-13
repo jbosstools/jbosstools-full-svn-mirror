@@ -21,7 +21,7 @@
  */
 package org.jboss.ide.eclipse.firstrun.wizard.pages;
 
-import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -31,14 +31,12 @@ import org.jboss.ide.eclipse.firstrun.FirstRunPlugin;
 
 public class FirstRunFinalPage extends AbstractFirstRunPage { 
 
-   public FirstRunFinalPage()
-   {
+   public FirstRunFinalPage() {
       super(FirstRunMessages.getString("FinalPage.title"), FirstRunMessages.getString("FirstRunWizard.title"),
             FirstRunPlugin.getImageDescriptor(FirstRunPlugin.ICON_JBOSSIDE_LOGO));
    }
 
-   public void createControl(Composite parent)
-   {
+   public void createControl(Composite parent) {
       setTitle(FirstRunMessages.getString("FinalPage.title"));
 
       Composite main = new Composite(parent, SWT.NONE);
@@ -51,15 +49,17 @@ public class FirstRunFinalPage extends AbstractFirstRunPage {
       setControl(main);
    }
 
-   public boolean isPageComplete()
-   {
+   public boolean isPageComplete() {
       return isCurrentPage();
    }
 
    public void initialize() {
-	}
+   }
 
-   public void performFinish() {
-	}
+   public void performFinishWithProgress(IProgressMonitor monitor) {
+	   monitor.beginTask("", 1);
+	   monitor.worked(1);
+	   monitor.done();
+   }
 
 }

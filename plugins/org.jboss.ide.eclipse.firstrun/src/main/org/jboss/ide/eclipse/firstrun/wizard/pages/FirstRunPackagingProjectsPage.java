@@ -23,6 +23,7 @@ package org.jboss.ide.eclipse.firstrun.wizard.pages;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -132,10 +133,14 @@ public class FirstRunPackagingProjectsPage extends AbstractFirstRunPage {
        PackagingCorePlugin.getDefault();
    }
 
-	public void performFinish() {
+	public void performFinishWithProgress(IProgressMonitor monitor) {
 		IProject packagingProjectsToConvert[] = getSelectedProjects();
+		monitor.beginTask("", packagingProjectsToConvert.length);
 		for (int i = 0; i < packagingProjectsToConvert.length; i++) {
 			PackagingCorePlugin.getDefault().enablePackagingBuilder(JavaCore.create(packagingProjectsToConvert[i]), true);
+			monitor.worked(1);
 		}
+		monitor.done();
+
 	}
 }

@@ -21,6 +21,7 @@
  */
 package org.jboss.ide.eclipse.firstrun.wizard.pages.upgrade20;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -54,7 +55,9 @@ public class FirstRunInfoPage20 extends AbstractFirstRunPage {
    public void initialize() {
    }
 
-   public void performFinish() {
+   public void performFinishWithProgress(IProgressMonitor monitor) {
+	   monitor.beginTask(getClass().getName(), 1);
+	   monitor.worked(1);
+	   monitor.done();
    }
-
 }
