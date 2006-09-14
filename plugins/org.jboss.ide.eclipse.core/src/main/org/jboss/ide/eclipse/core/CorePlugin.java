@@ -21,6 +21,8 @@
  */
 package org.jboss.ide.eclipse.core;
 
+import java.util.Dictionary;
+
 /**
  * Core plugin.
  *
@@ -33,18 +35,11 @@ public class CorePlugin extends AbstractPlugin
    private static CorePlugin plugin;
    
    
-   public static final String ALPHA = "alpha";
-   public static final String BETA = "beta";
-   public static final String GA = "GA";
-   
-   /**
-    * This variable will need to be updated at every release point.
-    * Whether alpha, beta, major, minor, revision, etc. 
-    */
-   private static final String JBOSS_IDE_RELEASE_VERSION = "2.0.0." + BETA + ".2";
-   
    public static final String getCurrentVersion() {
-	   return JBOSS_IDE_RELEASE_VERSION;
+	   Dictionary d = plugin.getBundle().getHeaders();
+	   Object o = d.get("Bundle-Version");
+	   if( o != null && o instanceof String ) return (String)o;
+	   return null;
    }
    
    
