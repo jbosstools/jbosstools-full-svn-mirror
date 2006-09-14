@@ -3,7 +3,7 @@
       id="org.jboss.ide.eclipse.feature"
       label="JBoss Eclipse IDE"
       version="0.0.0"
-      provider-name="JBoss, Inc."
+      provider-name="JBoss, a division of Red Hat"
       image="splash.jpg">
 
    <description url="http://www.jboss.com/products/jbosside">
