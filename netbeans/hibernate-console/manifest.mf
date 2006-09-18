@@ -4,7 +4,7 @@ OpenIDE-Module-Install: org/hibernate/netbeans/console/Installer.class
 OpenIDE-Module-Layer: org/hibernate/netbeans/console/layer.xml
 OpenIDE-Module-Localizing-Bundle: org/hibernate/netbeans/console/Bundle.properties
 OpenIDE-Module-Requires: org.netbeans.api.javahelp.Help
-OpenIDE-Module-Specification-Version: 0.8.52
+OpenIDE-Module-Specification-Version: 0.8.54
 
 Name: org/hibernate/netbeans/console/editor/bsh/BshDataLoader.class
 OpenIDE-Module-Class: Loader

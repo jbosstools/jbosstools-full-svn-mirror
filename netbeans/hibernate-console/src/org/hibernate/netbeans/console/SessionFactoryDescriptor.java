@@ -146,6 +146,8 @@ public class SessionFactoryDescriptor implements Serializable {
     
     private Properties extraProperties;
     
+    private File configurationFile;
+    
     private static FileObject ensureFolderExists() throws Exception {
         FileSystem fs = Repository.getDefault().getDefaultFileSystem();
         FileObject folder = fs.findResource(SESSION_FACTORIES_FOLDER);

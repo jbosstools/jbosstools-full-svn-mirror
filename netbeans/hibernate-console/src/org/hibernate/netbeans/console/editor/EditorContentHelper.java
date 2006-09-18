@@ -228,7 +228,10 @@ public class EditorContentHelper {
             int numId = token.getNumericID();
             String img = query.substring(tof, tof + tl);
             if (numId == HqlTokenContext.WHITESPACE_ID) {
-                int lastChar = sb.charAt(sb.length() - 1);
+                int lastChar = -1;
+                if (sb.length() > 0) {
+                    lastChar = sb.charAt(sb.length() - 1);
+                }
                 if (lastChar == ' ' || lastChar == '\n' || lastChar == '(') {
                     // Remove trailing whitespace
                     img = img.replaceAll("^ +", "");
@@ -246,47 +249,9 @@ public class EditorContentHelper {
         query = sb.toString().replaceAll(" $", "");
         // Now we have an despaceified string, but we still need to replace
         // the .class.getName() stuff
-        sb = new StringBuilder();
-        syntax.load(null, query.toCharArray(), 0, query.length(), true, query.length());
-        boolean wasClassGetName = false;
-        StringBuilder parens = null;
-        do {
-            token = syntax.nextToken();
-            int tof = syntax.getTokenOffset();
-            int tl = syntax.getTokenLength();
-            if (token == null) {
-                break;
-            }
-            int numId = token.getNumericID();
-            String img = query.substring(tof, tof + tl);
-            if (numId == HqlTokenContext.WHITESPACE_ID) {
-                if (!(wasClassGetName && parens != null && parens.toString().equals("("))) {
-                    sb.append(img);
-                }
-            } else if (numId == HqlTokenContext.LEFT_PAREN_ID) {
-                if (wasClassGetName && parens == null) {
-                    parens = new StringBuilder("(");
-                } else {
-                    wasClassGetName = false;
-                    parens = null;
-                    sb.append("(");
-                }
-            } else if (numId == HqlTokenContext.RIGHT_PAREN_ID) {
-                wasClassGetName = false;
-                parens = null;
-                if (!(wasClassGetName && parens != null && parens.toString().equals("("))) {
-                    if (parens != null) {
-                        sb.append(parens);
-                        sb.append(")");
-                    }
-                }
-            } else {
-                sb.append(img.replaceAll("(.*)\\.class\\.getName", "$1"));
-                wasClassGetName = img.indexOf(".class.getName") != -1;
-                parens = null;
-            }
-        } while (true);
-        return sb.toString();
+        String str = query.toString();
+        str = str.replaceAll("\\s*\\.\\s*class\\s*\\.\\s*getName\\s*\\(\\s*\\s*\\)\\s*", "");
+        return str;
     }
 
 

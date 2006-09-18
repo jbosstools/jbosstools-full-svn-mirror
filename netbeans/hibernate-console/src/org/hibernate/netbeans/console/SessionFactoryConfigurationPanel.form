@@ -2,8 +2,8 @@
 
 <Form version="1.3" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <AuxValues>
-    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="2"/>
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
@@ -14,19 +14,26 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="mappingLocationsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="classPathScrollPane" pref="374" max="32767" attributes="0"/>
-                          <Component id="mappingLocationsScrollPane" alignment="1" pref="374" max="32767" attributes="0"/>
+                          <Component id="classPathScrollPane" pref="379" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="classPathLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="mappingLocationsScrollPane" alignment="1" pref="379" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="nameLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="nameField" pref="276" max="32767" attributes="0"/>
+                              <Component id="nameField" pref="281" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="extraConfigurationTabbedPane" alignment="0" pref="374" max="32767" attributes="0"/>
+                          <Component id="extraConfigurationTabbedPane" alignment="0" pref="379" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -42,7 +49,6 @@
                           </Group>
                       </Group>
                   </Group>
-                  <Component id="classPathLabel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -69,15 +75,20 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="downMappingLocationButton" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="mappingLocationsScrollPane" alignment="0" max="32767" attributes="0"/>
+                  <Component id="mappingLocationsScrollPane" alignment="0" pref="139" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="classPathLabel" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="classPathLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="classPathScrollPane" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="classPathScrollPane" pref="139" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="extraConfigurationTabbedPane" min="-2" pref="180" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -90,7 +101,7 @@
                       <Component id="downClassPathButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -308,11 +319,11 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="dialectComboBox" pref="226" max="32767" attributes="0"/>
-                          <Component id="driverComboBox" pref="226" max="32767" attributes="0"/>
-                          <Component id="userField" alignment="0" pref="226" max="32767" attributes="0"/>
-                          <Component id="connectionUrlCombo" alignment="0" pref="226" max="32767" attributes="0"/>
-                          <Component id="passwordField" alignment="0" pref="226" max="32767" attributes="0"/>
+                          <Component id="dialectComboBox" pref="231" max="32767" attributes="0"/>
+                          <Component id="driverComboBox" pref="231" max="32767" attributes="0"/>
+                          <Component id="userField" alignment="0" pref="231" max="32767" attributes="0"/>
+                          <Component id="connectionUrlCombo" alignment="0" pref="231" max="32767" attributes="0"/>
+                          <Component id="passwordField" alignment="0" pref="231" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -346,7 +357,7 @@
                           <Component id="passwordLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="passwordField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -409,6 +420,9 @@
               </AuxValues>
             </Component>
             <Component class="javax.swing.JComboBox" name="dialectComboBox">
+              <Properties>
+                <Property name="editable" type="boolean" value="true"/>
+              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dialectComboBoxActionPerformed"/>
               </Events>
@@ -451,7 +465,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="propertiesScrollPane" pref="345" max="32767" attributes="0"/>
+                      <Component id="propertiesScrollPane" pref="350" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -500,7 +514,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="importsScrollPane" pref="345" max="32767" attributes="0"/>
+                      <Component id="importsScrollPane" pref="350" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -535,5 +549,26 @@
         </Container>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/org/hibernate/netbeans/console/resources/warning.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="org/hibernate/netbeans/console/Bundle.properties" key="SessionFactoryConfigurationPanel.jLabel1.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
+        <Property name="iconTextGap" type="int" value="6"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/org/hibernate/netbeans/console/resources/warning.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="org/hibernate/netbeans/console/Bundle.properties" key="SessionFactoryConfigurationPanel.jLabel2.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>
