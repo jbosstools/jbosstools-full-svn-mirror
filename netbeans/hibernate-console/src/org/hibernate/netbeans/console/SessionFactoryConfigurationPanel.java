@@ -98,6 +98,7 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
             if (dialectIndex != -1) {
                 dialectComboBox.setSelectedIndex(dialectIndex);
             }
+            dialectComboBox.getEditor().setItem(descriptor.getHibernateDialect());
             nameField.setText(descriptor.getName());
             userField.setText(descriptor.getDatabaseUser());
             passwordField.setText(descriptor.getDatabasePassword());
@@ -193,6 +194,8 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
         importsPanel = new javax.swing.JPanel();
         importsScrollPane = new javax.swing.JScrollPane();
         importsTextArea = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         nameLabel.setLabelFor(nameField);
         org.openide.awt.Mnemonics.setLocalizedText(nameLabel, org.openide.util.NbBundle.getBundle(SessionFactoryConfigurationPanel.class).getString("LBL_DisplayName")); // NOI18N
@@ -294,6 +297,7 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
         dialectLabel.setLabelFor(dialectComboBox);
         org.openide.awt.Mnemonics.setLocalizedText(dialectLabel, org.openide.util.NbBundle.getBundle(SessionFactoryConfigurationPanel.class).getString("LBL_HibernateDialect")); // NOI18N
 
+        dialectComboBox.setEditable(true);
         dialectComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dialectComboBoxActionPerformed(evt);
@@ -321,11 +325,11 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
                             .add(connectionUrlLabel))))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(simpleConfigurationPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(dialectComboBox, 0, 226, Short.MAX_VALUE)
-                    .add(driverComboBox, 0, 226, Short.MAX_VALUE)
-                    .add(userField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                    .add(connectionUrlCombo, 0, 226, Short.MAX_VALUE)
-                    .add(passwordField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
+                    .add(dialectComboBox, 0, 231, Short.MAX_VALUE)
+                    .add(driverComboBox, 0, 231, Short.MAX_VALUE)
+                    .add(userField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                    .add(connectionUrlCombo, 0, 231, Short.MAX_VALUE)
+                    .add(passwordField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE))
                 .addContainerGap())
         );
         simpleConfigurationPanelLayout.setVerticalGroup(
@@ -351,7 +355,7 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
                 .add(simpleConfigurationPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(passwordLabel)
                     .add(passwordField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(11, 11, 11))
+                .addContainerGap())
         );
         extraConfigurationTabbedPane.addTab(org.openide.util.NbBundle.getBundle(SessionFactoryConfigurationPanel.class).getString("LBL_SimpleConfiguration"), simpleConfigurationPanel); // NOI18N
 
@@ -365,7 +369,7 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
             advancedConfigurationPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(advancedConfigurationPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(propertiesScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+                .add(propertiesScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
                 .addContainerGap())
         );
         advancedConfigurationPanelLayout.setVerticalGroup(
@@ -387,7 +391,7 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
             importsPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(importsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(importsScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+                .add(importsScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
                 .addContainerGap())
         );
         importsPanelLayout.setVerticalGroup(
@@ -399,6 +403,13 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
         );
         extraConfigurationTabbedPane.addTab(org.openide.util.NbBundle.getBundle(SessionFactoryConfigurationPanel.class).getString("LBL_BshImports"), importsPanel); // NOI18N
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/hibernate/netbeans/console/resources/warning.png")));
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(SessionFactoryConfigurationPanel.class, "SessionFactoryConfigurationPanel.jLabel1.text")); // NOI18N
+        jLabel1.setIconTextGap(6);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/hibernate/netbeans/console/resources/warning.png")));
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(SessionFactoryConfigurationPanel.class, "SessionFactoryConfigurationPanel.jLabel2.text")); // NOI18N
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -407,15 +418,21 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(mappingLocationsLabel)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                    .add(layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(classPathScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, mappingLocationsScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                            .add(classPathScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                            .add(layout.createSequentialGroup()
+                                .add(classPathLabel)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jLabel1)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jLabel2))
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, mappingLocationsScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
                             .add(layout.createSequentialGroup()
                                 .add(nameLabel)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(nameField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE))
-                            .add(extraConfigurationTabbedPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE))
+                                .add(nameField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE))
+                            .add(extraConfigurationTabbedPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(downClassPathButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -426,8 +443,7 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
                                 .add(org.jdesktop.layout.GroupLayout.TRAILING, addMappingLocationButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .add(org.jdesktop.layout.GroupLayout.TRAILING, removeMappingLocationButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .add(org.jdesktop.layout.GroupLayout.TRAILING, upMappingLocationButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .add(org.jdesktop.layout.GroupLayout.TRAILING, downMappingLocationButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .add(classPathLabel))
+                                .add(org.jdesktop.layout.GroupLayout.TRAILING, downMappingLocationButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
 
@@ -452,13 +468,17 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
                         .add(upMappingLocationButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(downMappingLocationButton))
-                    .add(mappingLocationsScrollPane))
+                    .add(mappingLocationsScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(classPathLabel)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(classPathLabel)
+                    .add(jLabel1)
+                    .add(jLabel2))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(layout.createSequentialGroup()
-                        .add(classPathScrollPane)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(classPathScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(extraConfigurationTabbedPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 180, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(layout.createSequentialGroup()
@@ -474,7 +494,11 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fillConnectionCombo() {
-        ConnectionDescriptor desc = (ConnectionDescriptor) dialectComboBox.getSelectedItem();
+        Object dialect = dialectComboBox.getSelectedItem();
+        if (!(dialect instanceof ConnectionDescriptor)) {
+            return;
+        }
+        ConnectionDescriptor desc = (ConnectionDescriptor) dialect;
         ComboBoxEditor cbEditor = connectionUrlCombo.getEditor();
         String currentValue = (String) cbEditor.getItem();
         connectionUrlCombo.setModel(new DefaultComboBoxModel(desc.connectionUrls));
@@ -489,10 +513,14 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_dialectComboBoxActionPerformed
 
     private void fillDriverCombo() {
-        ConnectionDescriptor cd = (ConnectionDescriptor) dialectComboBox.getSelectedItem();
+        Object dialect = dialectComboBox.getSelectedItem();
+        if (!(dialect instanceof ConnectionDescriptor)) {
+            return;
+        }
+        ConnectionDescriptor desc = (ConnectionDescriptor) dialect;
         ComboBoxEditor editor = driverComboBox.getEditor();
         Object item = editor.getItem();
-        driverComboBox.setModel(new DefaultComboBoxModel(cd.drivers));
+        driverComboBox.setModel(new DefaultComboBoxModel(desc.drivers));
         if (item != null) {
             editor.setItem(item);
         }
@@ -599,6 +627,8 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
     private javax.swing.JPanel importsPanel;
     private javax.swing.JScrollPane importsScrollPane;
     private javax.swing.JTextArea importsTextArea;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel mappingLocationsLabel;
     private javax.swing.JList mappingLocationsList;
     private javax.swing.JScrollPane mappingLocationsScrollPane;
@@ -628,7 +658,7 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
         descriptor.setDatabasePassword(String.valueOf(passwordField.getPassword()));
         descriptor.setDatabaseDriverName((String) driverComboBox.getEditor().getItem());
         descriptor.setDatabaseUrl((String) connectionUrlCombo.getEditor().getItem());
-        descriptor.setHibernateDialect(((ConnectionDescriptor) dialectComboBox.getSelectedItem()).dialect);
+        descriptor.setHibernateDialect(String.valueOf(dialectComboBox.getEditor().getItem()));
         descriptor.setUserImports(importsTextArea.getText());
         // TODO - set the extra properties
         Properties props = new Properties();
@@ -637,7 +667,7 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
         descriptor.setExtraProperties(props);
         return descriptor;
     }
-    
+
     private static class ConnectionDescriptor {
 
         private final static List<ConnectionDescriptor> ALL_DESCRIPTORS;
@@ -837,6 +867,10 @@ public class SessionFactoryConfigurationPanel extends javax.swing.JPanel {
                 }
             }
             return -1;
+        }
+        
+        public String toString() {
+            return dialect;
         }
         
     }

@@ -22,7 +22,7 @@
             <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-hql-Hql2JavaStringAction.instance"/>
         </file>
         <file name="C-J H.shadow">
-            <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-hql-JavaString2HqlyAction.instance"/>
+            <attr name="originalFile" stringvalue="Actions/Edit/org-hibernate-netbeans-console-editor-hql-JavaString2HqlAction.instance"/>
         </file>
     </folder>
 
