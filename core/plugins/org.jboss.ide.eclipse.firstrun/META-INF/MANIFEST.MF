@@ -8,12 +8,9 @@ Bundle-Vendor: JBoss, Inc
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.jboss.ide.eclipse.xdoclet.run,
- org.jboss.ide.eclipse.packaging.ui,
  org.eclipse.ui.intro,
  org.eclipse.core.resources,
  org.jboss.ide.eclipse.core,
- org.jboss.ide.eclipse.packaging.core,
  org.eclipse.ui.ide,
  org.eclipse.jdt,
  org.eclipse.jdt.core
