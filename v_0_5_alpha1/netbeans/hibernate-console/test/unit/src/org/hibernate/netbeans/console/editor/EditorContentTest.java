@@ -42,6 +42,7 @@ public class EditorContentTest extends TestCase {
         assertEquals("from A", EditorContentHelper.convertJava2Hql("from A.class.getName()"));
         assertEquals("from A", EditorContentHelper.convertJava2Hql("from A.class.getName(  )"));
         assertEquals("from A", EditorContentHelper.convertJava2Hql("from A.class.getName(  \n)"));
+        assertEquals("from A a where a.id in ((1, 2, 3, 4))", EditorContentHelper.convertJava2Hql("from A a where a.id in ((1, 2, 3, 4))"));
     }
     
 }

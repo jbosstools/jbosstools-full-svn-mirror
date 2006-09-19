@@ -43,6 +43,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import org.hibernate.HibernateException;
 import org.hibernate.netbeans.console.BshCode;
 import org.hibernate.netbeans.console.Icons;
 import org.hibernate.netbeans.console.util.HibernateExecutor;
@@ -56,6 +57,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
+import org.openide.util.Cancellable;
 import org.openide.util.Utilities;
 
 /**
@@ -189,7 +191,16 @@ public class QueryResultMultiViewElement extends OutputMultiViewElement implemen
         final Session s = desc.getSession();
         HibernateExecutor.execute(new Runnable() {
             public void run() {
-                ProgressHandle ph = ProgressHandleFactory.createHandle("Executing Query"); // TODO - i18n
+                ProgressHandle ph = ProgressHandleFactory.createHandle("Executing Query", new Cancellable() {
+                    public boolean cancel() {
+                        try {
+                            s.cancelQuery();
+                        } catch (HibernateException ex) {
+                            // Ignore it
+                        }
+                        return true;
+                    }
+                });
                 Thread currentThread = Thread.currentThread();
                 ClassLoader currentClassLoader = currentThread.getContextClassLoader();
                 boolean success = false;
