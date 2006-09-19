@@ -22,18 +22,6 @@
             name="org.jboss.ide.eclipse.firstrun.UpgradeWizard2"
             toVersion="1.6.*"
             weight="100"/>
-      <UpgradeWizard
-            WizardPage="org.jboss.ide.eclipse.firstrun.wizard.pages.FirstRunPackagingProjectsPage"
-            fromVersion="1.5.*"
-            id="org.jboss.ide.eclipse.firstrun.Packaging16"
-            name="org.jboss.ide.eclipse.firstrun.UpgradeWizard3"
-            toVersion="1.6.*"/>
-      <UpgradeWizard
-            WizardPage="org.jboss.ide.eclipse.firstrun.wizard.pages.FirstRunXDocletProjectsPage"
-            fromVersion="1.5.*"
-            id="org.jboss.ide.eclipse.firstrun.XDoclet16"
-            name="org.jboss.ide.eclipse.firstrun.UpgradeWizard4"
-            toVersion="1.6.*"/>
    </extension>
    <extension
          point="org.jboss.ide.eclipse.firstrun.FirstRunWizardPage">

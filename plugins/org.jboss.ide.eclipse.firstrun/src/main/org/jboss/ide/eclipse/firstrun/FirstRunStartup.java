@@ -27,8 +27,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IStartup;
 import org.jboss.ide.eclipse.core.CorePlugin;
 import org.jboss.ide.eclipse.firstrun.wizard.FirstRunWizard;
-import org.jboss.ide.eclipse.packaging.core.PackagingCorePlugin;
-import org.jboss.ide.eclipse.xdoclet.run.XDocletRunPlugin;
 
 public class FirstRunStartup implements IStartup {
 
