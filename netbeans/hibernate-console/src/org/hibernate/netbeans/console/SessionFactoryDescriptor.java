@@ -471,7 +471,7 @@ public class SessionFactoryDescriptor implements Serializable {
         Configuration cfg = (Configuration) clazz.newInstance();
         cfg.setProperties(props);
         for (File f : getMappingFiles(ph)) {
-            ph.progress("Adding mapping file " + f.getAbsolutePath());
+            ph.progress("Adding mapping file " + f.getName() + " from " + f.getParentFile().getAbsolutePath());
             cfg.addFile(f);
         }
         return cfg;
