@@ -61,8 +61,6 @@ import org.eclipse.jdt.internal.corext.util.JavaModelUtil;
 import org.jboss.ide.eclipse.jdt.aop.core.classpath.AopClasspathContainer;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aop;
-import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AopReport;
-import org.jboss.ide.eclipse.jdt.aop.core.jaxb.ReportAdvice;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
 import org.jboss.ide.eclipse.jdt.aop.core.util.JaxbAopUtil;
 import org.osgi.framework.BundleContext;
@@ -555,10 +553,6 @@ public class AopCorePlugin extends Plugin
       AopModel.instance().updateModel(project, monitor);
    }
 
-   public AopReport getProjectReport(IJavaProject project)
-   {
-      return (AopReport) projectReports.get(project);
-   }
 
    public IPath getProjectLocation(IProject project)
    {
@@ -578,35 +572,6 @@ public class AopCorePlugin extends Plugin
    public static void setCurrentJavaProject(IJavaProject currentJavaProject)
    {
       AopCorePlugin.currentJavaProject = currentJavaProject;
-   }
-
-   public IMethod findAdviceMethod(ReportAdvice advice)
-   {
-      try
-      {
-         int lastPeriod = advice.getName().lastIndexOf(".");
-         String aspectClass = advice.getName().substring(0, lastPeriod);
-         String adviceName = advice.getName().substring(lastPeriod + 1);
-
-         IType type = currentJavaProject.findType(aspectClass);
-         if (type != null)
-         {
-            IMethod methods[] = type.getMethods();
-            for (int i = 0; i < methods.length; i++)
-            {
-               if (methods[i].getElementName().equals(adviceName))
-               {
-                  return methods[i];
-               }
-            }
-         }
-      }
-      catch (JavaModelException e)
-      {
-         e.printStackTrace();
-      }
-
-      return null;
    }
 
    public IMethod findAdviceMethod(IType type, String methodName)

@@ -36,8 +36,6 @@ import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Advice;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Aspect;
 import org.jboss.ide.eclipse.jdt.aop.core.jaxb.Interceptor;
-import org.jboss.ide.eclipse.jdt.aop.core.jaxb.ReportAdvice;
-import org.jboss.ide.eclipse.jdt.aop.core.jaxb.ReportInterceptor;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
 
 /**
@@ -81,16 +79,6 @@ public class JumpToCodeUtil
       {
          Aspect dblClickedAspect = (Aspect) object;
          openClassInEditor(dblClickedAspect.getClazz());
-      }
-      else if (object instanceof ReportAdvice)
-      {
-         ReportAdvice advice = (ReportAdvice) object;
-         jumpToAdvice(advice);
-      }
-      else if (object instanceof ReportInterceptor)
-      {
-         ReportInterceptor interceptor = (ReportInterceptor) object;
-         openClassInEditor(interceptor.getClazz());
       }
       else if (object instanceof IJavaElement)
       {
@@ -168,12 +156,6 @@ public class JumpToCodeUtil
       {
          e.printStackTrace();
       }
-   }
-
-   public static void jumpToAdvice(ReportAdvice advice)
-   {
-      IMethod method = AopCorePlugin.getDefault().findAdviceMethod(advice);
-      jumpToJavaElement(method);
    }
 
    public static void jumpToAdvice(Advice advice)

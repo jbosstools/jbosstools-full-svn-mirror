@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.part.ViewPart;
-import org.jboss.ide.eclipse.jdt.aop.core.jaxb.AopReport;
 import org.jboss.ide.eclipse.jdt.aop.core.model.AopModel;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvised;
 import org.jboss.ide.eclipse.jdt.aop.core.model.interfaces.IAopAdvisor;
@@ -58,8 +57,6 @@ public class AdvisedMembersView extends ViewPart implements IAopModelChangeListe
    private Composite main;
 
    private StackLayout stackLayout;
-
-   private AopReport report;
 
    private AdvisedMembersContentProvider contentProvider;
 
