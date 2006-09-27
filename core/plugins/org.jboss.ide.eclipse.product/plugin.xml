@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.jboss.ide.eclipse.product.application"
+            name="JBossIDE for Eclipse">
+         <property
+               name="startupProgressRect"
+               value="18,282,417,15"/>
+         <property
+               name="startupMessageRect"
+               value="18,260,417,20"/>
+         <property
+               name="startupForegroundColor"
+               value="293259"/>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini"/>
+         <property
+               name="windowImages"
+               value="ico_16_jbosside_v3.gif,ico_32_jbosside_v3.gif"/>
+      </product>
+   </extension>
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run class="org.eclipse.ui.internal.ide.IDEApplication"/>
+      </application>
+   </extension>
+
+</plugin>
