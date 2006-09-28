@@ -62,12 +62,8 @@ public class FirstRunStartup implements IStartup {
             	       }
             	   }
             	   
-            	   // Temp
-            	   workspaceLatest = "1.6.0.GA";
             	   showWizard(workspaceLatest);
-            	   
             	   store.setValue(FirstRunPlugin.FIRST_RUN_PROPERTY_LATEST_VERSION, currentVersion);
-            	   
                } catch (Exception e) {
                   e.printStackTrace();
                }
