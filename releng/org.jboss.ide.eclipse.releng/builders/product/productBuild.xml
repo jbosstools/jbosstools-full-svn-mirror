@@ -253,8 +253,19 @@
 
 	<target name="build.bundled.release" depends="run.builders,extract.features.and.plugins">
 		<property file="${build.root}/requirements/eclipse/build.properties"/>
-		<!-- find the org.eclipse.platform directory -->
-	      <for param="dirname">
+		<!-- copy the necessary configuration product configuration files -->
+		<copy file="${product.build.root}/eclipse/plugins/org.jboss.ide.eclipse.product/.eclipseproduct" todir="${build.dest}/eclipse" overwrite="true">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</copy>
+		<copy file="${product.build.root}/eclipse/plugins/org.jboss.ide.eclipse.product/config.ini" todir="${build.dest}/eclipse/configuration" overwrite="true">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</copy>
+		
+	      <!--for param="dirname">
 	         <path>  
 	            <dirset dir="${build.dest}/eclipse/plugins" includes="org.eclipse.platform_*"/>
 	         </path> 
@@ -263,8 +274,8 @@
 	               input="@{dirname}" regexp="(org.eclipse.platform_.+)"
 	               select="\1"/>
 	         </sequential>
-	      </for>
-		<copy file="${splash.path}"  todir="${build.dest}\eclipse\plugins\${platform.plugin}"/>
+	      </for-->
+		<!--copy file="${splash.path}"  todir="${build.dest}\eclipse\plugins\${platform.plugin}"/-->
 	</target>
 	
 	<target name="build.standalone.release" depends="run.builders,extract.features.and.plugins">
