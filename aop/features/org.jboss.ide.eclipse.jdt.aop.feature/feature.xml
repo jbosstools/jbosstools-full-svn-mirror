@@ -3,7 +3,7 @@
       id="org.jboss.ide.eclipse.jdt.aop.feature"
       label="JBoss AOP Tools"
       version="1.1.1"
-      provider-name="JBoss, Inc.">
+      provider-name="JBoss, a division of Red Hat">
 
    <description url="http://www.jboss.com/products/jbosside">
       Select &apos;More Info&apos;
