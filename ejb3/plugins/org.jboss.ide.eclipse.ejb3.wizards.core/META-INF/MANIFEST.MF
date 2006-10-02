@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.jboss.ide.eclipse.ejb3.wizards.core; singleton:=true
 Bundle-Version: 1.0.0
 Bundle-ClassPath: ejb3-wizards-core.jar
 Bundle-Activator: org.jboss.ide.eclipse.ejb3.wizards.core.EJB3WizardsCorePlugin
-Bundle-Vendor: JBoss Inc.
+Bundle-Vendor: JBoss, a division of Red Hat
 Bundle-Localization: plugin
 Export-Package: org.jboss.ide.eclipse.ejb3.wizards.core,
  org.jboss.ide.eclipse.ejb3.wizards.core.classpath,
