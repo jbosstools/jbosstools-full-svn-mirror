@@ -30,3 +30,4 @@ plugin@org.jboss.ide.eclipse.xdoclet.run=%cvsTag%,:pserver:anonymous@anoncvs.for
 plugin@org.jboss.ide.eclipse.xdoclet.ui=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.xdoclet.ui
 plugin@org.jboss.ide.eclipse.firstrun=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.firstrun
 plugin@org.jboss.ide.eclipse.help=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.help
+plugin@org.jboss.ide.eclipse.product=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/plugins/org.jboss.ide.eclipse.product
