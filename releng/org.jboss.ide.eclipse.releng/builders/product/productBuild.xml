@@ -152,7 +152,7 @@
 	  			<equals arg1="${product.buildDesc}" arg2="release"/>
 	  			<then>
 	  				<propertycopy override="true" name="builder.version" from="versionTags.@{builder}"/>
-	  				<propertycopy override="true" name="cvsTag" from="versionTags.@{builder}.cvs"/>
+	  				<propertycopy override="true" name="cvsTag" from="versionTags.@{builder}.cvs" silent="true"/>
 	  				<if>
 	  					<isset property="versionTags.@{builder}.svn"/>
 	  					<then>
