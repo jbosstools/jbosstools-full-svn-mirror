@@ -53,11 +53,8 @@ public class CorePlugin extends AbstractPlugin
 	   for( int i = 0; i < targetAsArray.length; i++ ) {
 		   if( targetAsArray[i].equals("*")) 
 			   return 0;
-		   if( i < idAsArray.length ) {
-			   if( !idAsArray[i].equals(targetAsArray[i])) {
-				   return idAsArray[i].compareTo(targetAsArray[i]);
-			   }
-		   }
+		   if( !idAsArray[i].equals(targetAsArray[i])) 
+			   return idAsArray[i].compareTo(targetAsArray[i]);
 	   }
 	   
 	   return 0;
