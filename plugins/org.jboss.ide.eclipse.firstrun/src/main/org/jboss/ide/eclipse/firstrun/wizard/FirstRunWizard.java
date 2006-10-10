@@ -120,7 +120,9 @@ public class FirstRunWizard extends Wizard {
 		String currentVersion = CorePlugin.getCurrentVersion();
 		while( i.hasNext()) {
 			FirstRunWizardPageConfigElement e = (FirstRunWizardPageConfigElement)i.next();
-			int previousMatch = CorePlugin.compare(workspaceLatest, e.getFromVersion());
+			int previousMatch = 0;
+			if( !workspaceLatest.equals(FirstRunPlugin.NEW_WORKSPACE)) 
+				previousMatch = CorePlugin.compare(workspaceLatest, e.getFromVersion());
 			int currentMatch = CorePlugin.compare(currentVersion, e.getToVersion());
 			if( previousMatch != 0 || currentMatch != 0 ) {
 				i.remove();
