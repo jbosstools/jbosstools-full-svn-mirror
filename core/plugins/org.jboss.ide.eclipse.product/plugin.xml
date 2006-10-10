@@ -22,6 +22,12 @@
          <property
                name="windowImages"
                value="ico_16_jbosside_v3.gif,ico_32_jbosside_v3.gif"/>
+         <property
+               name="aboutText"
+               value="%aboutText"/>
+         <property
+               name="aboutImage"
+               value="jbosside-about.gif"/>
       </product>
    </extension>
    <extension
