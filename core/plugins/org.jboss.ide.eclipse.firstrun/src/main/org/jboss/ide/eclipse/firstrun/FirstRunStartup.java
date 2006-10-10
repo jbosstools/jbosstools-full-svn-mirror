@@ -47,7 +47,7 @@ public class FirstRunStartup implements IStartup {
             	   int compare = CorePlugin.compare(currentVersion, workspaceLatest);
             	   if( workspaceLatest != null && compare <= 0) return; 
             	   
-            	   if( workspaceLatest == null ) {
+            	   if( workspaceLatest.equals("") ) {
             		   // this isn't set... are we at least at 1.6?
             		   boolean at16 = false;
             	       if (store.contains(FirstRunPlugin.FIRST_RUN_PROPERTY)) {
