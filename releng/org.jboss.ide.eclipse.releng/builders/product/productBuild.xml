@@ -265,12 +265,6 @@
 				<expandproperties/>
 			</filterchain>
 		</copy>
-		<move file="${product.plugin.dir}/plugin.properties" tofile="${product.plugin.dir}/plugin.properties2" overwrite="true">
-			<filterchain>
-				<expandproperties/>
-			</filterchain>
-		</move>
-		<move file="${product.plugin.dir}/plugin.properties2" tofile="${product.plugin.dir}/plugin.properties" overwrite="true"/>
 		
 	      <!--for param="dirname">
 	         <path>  
