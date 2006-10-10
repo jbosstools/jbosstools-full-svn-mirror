@@ -253,17 +253,24 @@
 
 	<target name="build.bundled.release" depends="run.builders,extract.features.and.plugins">
 		<property file="${build.root}/requirements/eclipse/build.properties"/>
+		<property name="product.plugin.dir" value="${product.build.root}/eclipse/plugins/org.jboss.ide.eclipse.product"/>
 		<!-- copy the necessary configuration product configuration files -->
-		<copy file="${product.build.root}/eclipse/plugins/org.jboss.ide.eclipse.product/.eclipseproduct" todir="${build.dest}/eclipse" overwrite="true">
+		<copy file="${product.plugin.dir}/.eclipseproduct" todir="${build.dest}/eclipse" overwrite="true">
 			<filterchain>
 				<expandproperties/>
 			</filterchain>
 		</copy>
-		<copy file="${product.build.root}/eclipse/plugins/org.jboss.ide.eclipse.product/config.ini" todir="${build.dest}/eclipse/configuration" overwrite="true">
+		<copy file="${product.plugin.dir}/config.ini" todir="${build.dest}/eclipse/configuration" overwrite="true">
 			<filterchain>
 				<expandproperties/>
 			</filterchain>
 		</copy>
+		<move file="${product.plugin.dir}/plugin.properties" tofile="${product.plugin.dir}/plugin.properties2" overwrite="true">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</move>
+		<move file="${product.plugin.dir}/plugin.properties2" tofile="${product.plugin.dir}/plugin.properties" overwrite="true"/>
 		
 	      <!--for param="dirname">
 	         <path>  
