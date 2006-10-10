@@ -166,6 +166,7 @@
 	<arg value="-DversionTag=${versionTag}" />
 	<arg value="-DuploadBuildDirectory=${uploadBuildDirectory}" />
     <arg value="-Dbuild.root=${build.root}"/>
+    <arg value="-Dproduct.versionTag=${product.versionTag}"/>
         <!-- arg value="-DbuildId=${buildId}" / -->
         <!-- arg value="-DbuildLabel=${buildLabel}" / -->
 		  <arg value="-DbaseLocation=${baseLocation}" />
