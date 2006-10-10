@@ -1,0 +1,5 @@
+#Eclipse Product File
+
+version=${product.versionTag}
+name=JBossIDE for Eclipse
+id=org.jboss.ide.eclipse.product.product
