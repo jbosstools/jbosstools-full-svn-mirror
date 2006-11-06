@@ -44,8 +44,8 @@ public class Ejb30ProjectFirstPage extends J2EEComponentFacetCreationWizardPage 
 
 	public Ejb30ProjectFirstPage(IDataModel model, String pageName) {
 		super(model, pageName);
-		setTitle("JBIDE EJB30");
-		setDescription("JBIDE EJB30 DESC");
+		setTitle("Create a EJB3 Project");
+		setDescription("Create a EJB3 Project in the workspace");
 	}
 	
 	

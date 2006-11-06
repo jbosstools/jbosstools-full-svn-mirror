@@ -9,13 +9,13 @@
             icon="icons/full/ctool16/newclass_wiz.gif"
             class="org.jboss.ide.eclipse.ejb3.ui.wizards.NewSessionBeanWizard"
             category="org.eclipse.jst.ejb.ui"
-            name="Session Bean"
+            name="EJB3 Session Bean"
             id="org.jboss.ide.eclipse.ejb3.wizards.ui.NewEJB3ProjectWizard"/>
       <wizard
             icon="icons/full/ctool16/newclass_wiz.gif"
             class="org.jboss.ide.eclipse.ejb3.ui.wizards.NewMessageDrivenBeanWizard"
             category="org.eclipse.jst.ejb.ui"
-            name="Message Driven Bean"
+            name="EJB3 Message Driven Bean"
             id="org.jboss.ide.eclipse.ejb3.wizards.ui.NewMessageDrivenBeanWizard"/>
    </extension>
    
@@ -24,8 +24,9 @@
    <wizard
          category="org.eclipse.jst.ejb.ui"
          class="org.jboss.ide.eclipse.ejb3.ui.wizards.Ejb30ProjectWizard"
+         icon="icons/full/ctool16/newjprj_wiz.gif"
          id="org.jboss.ide.eclipse.ejb3.ui.wizards.NewEjb30Wizard"
-         name="JBoss IDE EJB 3.0 Project"
+         name="JBoss EJB 3.0 Project"
          project="true"/>
 </extension>
 

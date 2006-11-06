@@ -16,8 +16,8 @@
 <extension point="org.eclipse.wst.common.project.facet.core.facets">
 
     <project-facet id="jboss.ejb30" version="1.0">
-      <label>JBIDE EJB30</label>
-      <description>JBIDE EJB30 DESCRIPTION</description>
+      <label>JBoss EJB3</label>
+      <description>JBoss EJB3 implementation</description>
       <icon></icon>
     </project-facet>
 
@@ -25,10 +25,8 @@
       <constraint>
         <and>
           <requires facet="jst.java" version="[5.0"/>
-          <conflicts group="modules"/>
         </and>
       </constraint>
-      <group-member id="modules"/>
     </project-facet-version>
 
     <action facet="jboss.ejb30" version="1.0" type="INSTALL" id="jboss.ejb30.install">

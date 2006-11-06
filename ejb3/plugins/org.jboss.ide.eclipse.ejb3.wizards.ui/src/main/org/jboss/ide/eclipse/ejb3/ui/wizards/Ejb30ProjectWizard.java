@@ -19,12 +19,12 @@ public class Ejb30ProjectWizard extends NewProjectDataModelFacetWizard
 
 	public Ejb30ProjectWizard(IDataModel model){
 		super(model);
-		setWindowTitle("JBIDE EJB 3.0");
+		setWindowTitle("Create a EJB3 Project");
 	}
 	
 	public Ejb30ProjectWizard(){
 		super();
-		setWindowTitle("JBIDE EJB 3.0");
+		setWindowTitle("Create a EJB3 Project");
 	}
 	
 	protected IDataModel createDataModel() {
