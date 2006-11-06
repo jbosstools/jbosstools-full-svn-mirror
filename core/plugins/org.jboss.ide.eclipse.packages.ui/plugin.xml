@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.jboss.ide.eclipse.ui.views"
+            class="org.jboss.ide.eclipse.packages.ui.views.ProjectPackagesView"
+            icon="icons/jar_obj.gif"
+            id="org.jboss.ide.eclipse.packages.ui.ProjectPackagesView"
+            name="Project Packages"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <primaryWizard id="org.jboss.ide.eclipse.packages.ui.NewJARWizard"/>
+      <wizard
+            class="org.jboss.ide.eclipse.packages.ui.wizards.NewJARWizard"
+            hasPages="true"
+            icon="icons/new_package.gif"
+            id="org.jboss.ide.eclipse.packages.ui.NewJARWizard"
+            name="JAR"
+            project="false"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <viewerContribution
+            id="org.jboss.ide.eclipse.packages.ui.jbossContribution"
+            targetID="org.jboss.ide.eclipse.packages.ui.newPackageMenu">
+         <action
+               class="org.jboss.ide.eclipse.packages.ui.actions.NewWARAction"
+               icon="icons/war.gif"
+               id="org.jboss.ide.eclipse.packages.ui.newWARAction"
+               label="WAR"
+               menubarPath="additions"
+               style="push"/>
+         <action
+               class="org.jboss.ide.eclipse.packages.ui.actions.NewEJBJARAction"
+               icon="icons/EJBJar.gif"
+               id="org.jboss.ide.eclipse.packages.ui.newEJBJARAction"
+               label="EJB JAR"
+               menubarPath="additions"
+               style="push"/>
+         <action
+               class="org.jboss.ide.eclipse.packages.ui.actions.NewEARAction"
+               icon="icons/ear.gif"
+               id="org.jboss.ide.eclipse.packages.ui.newEARAction"
+               label="EAR"
+               menubarPath="additions"
+               style="push"/>
+         <action
+               class="org.jboss.ide.eclipse.packages.ui.actions.NewSARAction"
+               icon="icons/sar.gif"
+               id="org.jboss.ide.eclipse.packages.ui.newSARAction"
+               label="SAR"
+               menubarPath="additions"
+               style="push"/>
+      </viewerContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.eclipse.ui.category.project"
+            id="org.jboss.ide.eclipse.packages.ui.commands.buildPackagesCommand"
+            name="Build Packages"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.jboss.ide.eclipse.packages.ui.actions.Packages"
+            label="Packages"
+            visible="true">
+         <action
+               class="org.jboss.ide.eclipse.packages.ui.actions.BuildPackagesAction"
+               definitionId="org.jboss.ide.eclipse.packages.ui.actions.BuildPackagesAction"
+               icon="icons/build_packages.gif"
+               id="org.jboss.ide.eclipse.packages.ui.actions.BuildPackagesAction"
+               label="Build Packages"
+               menubarPath="project/additions"
+               style="push">
+            <enablement>
+               <and>
+               	<objectState
+                     name="projectNature"
+                     value="org.jboss.ide.eclipse.packages.core.packagesNature"/>
+               </and>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="org.jboss.ide.eclipse.packages.ui.properties.PackagesPropertyPage"
+            id="org.jboss.ide.eclipse.packages.ui.packagesPropertyPge"
+            name="Packages"
+            objectClass="org.eclipse.core.resources.IProject"/>
+   </extension>
+
+</plugin>
