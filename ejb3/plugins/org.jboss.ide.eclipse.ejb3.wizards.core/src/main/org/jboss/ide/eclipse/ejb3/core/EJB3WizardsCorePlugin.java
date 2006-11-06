@@ -19,33 +19,36 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.ide.eclipse.ejb3.wizards.ui;
+package org.jboss.ide.eclipse.ejb3.core;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Plugin;
+import org.jboss.ide.eclipse.as.core.server.JBossServer;
 import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
  */
-public class EJB3WizardsUIPlugin extends AbstractUIPlugin
+public class EJB3WizardsCorePlugin extends Plugin
 {
    //The shared instance.
-   private static EJB3WizardsUIPlugin plugin;
+   private static EJB3WizardsCorePlugin plugin;
+   public static final String PLUGIN_ID = "org.jboss.ide.eclipse.ejb3.core";
 
    //Resource bundle.
    private ResourceBundle resourceBundle;
 
+   private JBossServer selectedServer;
+
    /**
     * The constructor.
     */
-   public EJB3WizardsUIPlugin()
+   public EJB3WizardsCorePlugin()
    {
       super();
       plugin = this;
@@ -72,7 +75,7 @@ public class EJB3WizardsUIPlugin extends AbstractUIPlugin
    /**
     * Returns the shared instance.
     */
-   public static EJB3WizardsUIPlugin getDefault()
+   public static EJB3WizardsCorePlugin getDefault()
    {
       return plugin;
    }
@@ -83,7 +86,7 @@ public class EJB3WizardsUIPlugin extends AbstractUIPlugin
     */
    public static String getResourceString(String key)
    {
-      ResourceBundle bundle = EJB3WizardsUIPlugin.getDefault().getResourceBundle();
+      ResourceBundle bundle = EJB3WizardsCorePlugin.getDefault().getResourceBundle();
       try
       {
          return (bundle != null) ? bundle.getString(key) : key;
@@ -103,7 +106,7 @@ public class EJB3WizardsUIPlugin extends AbstractUIPlugin
       {
          if (resourceBundle == null)
             resourceBundle = ResourceBundle
-                  .getBundle("org.jboss.ide.eclipse.ejb3.wizards.ui.EJB3WizardsUIPluginResources");
+                  .getBundle("org.jboss.ide.eclipse.ejb3.wizards.core.EJB3WizardsCorePluginResources");
       }
       catch (MissingResourceException x)
       {
@@ -112,40 +115,30 @@ public class EJB3WizardsUIPlugin extends AbstractUIPlugin
       return resourceBundle;
    }
 
-   public static void alert(String string)
+   /**
+    * Get the base directory of this plugin
+    */
+   public String getBaseDir()
    {
-      MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-            "EJB3 Tools - Alert", Display.getDefault().getSystemImage(SWT.ICON_INFORMATION), string,
-            MessageDialog.INFORMATION, new String[]
-            {"OK",}, 0);
-
-      dialog.setBlockOnOpen(true);
-
-      dialog.open();
+      try
+      {
+         URL installURL = Platform.asLocalURL(this.getBundle().getEntry("/"));//$NON-NLS-1$
+         return installURL.getFile().toString();
+      }
+      catch (IOException ioe)
+      {
+         ioe.printStackTrace();
+      }
+      return null;
    }
 
-   public static void error(String string)
+   public JBossServer getSelectedServer()
    {
-      MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-            "EJB3 Tools - Error", Display.getDefault().getSystemImage(SWT.ICON_ERROR), string, MessageDialog.ERROR,
-            new String[]
-            {"OK",}, 0);
-
-      dialog.setBlockOnOpen(true);
-
-      dialog.open();
+      return selectedServer;
    }
 
-   public static void warn(String string)
+   public void setSelectedServer(JBossServer selectedServer)
    {
-      MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-            "EJB3 Tools - Warning", Display.getDefault().getSystemImage(SWT.ICON_WARNING), string,
-            MessageDialog.WARNING, new String[]
-            {"OK",}, 0);
-
-      dialog.setBlockOnOpen(true);
-
-      dialog.open();
+      this.selectedServer = selectedServer;
    }
-
 }

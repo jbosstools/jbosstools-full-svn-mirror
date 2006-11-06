@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.pages;
+package org.jboss.ide.eclipse.ejb3.ui.wizards.pages;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -27,9 +27,9 @@ import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.ui.wizards.IClasspathContainerPage;
 import org.jboss.ide.eclipse.as.core.server.JBossServer;
-import org.jboss.ide.eclipse.ejb3.wizards.core.EJB3WizardsCorePlugin;
-import org.jboss.ide.eclipse.ejb3.wizards.core.classpath.EJB3ClasspathContainer;
-import org.jboss.ide.eclipse.ejb3.wizards.ui.EJB3WizardsUIPlugin;
+import org.jboss.ide.eclipse.ejb3.core.EJB3WizardsCorePlugin;
+import org.jboss.ide.eclipse.ejb3.core.classpath.EJB3ClasspathContainer;
+import org.jboss.ide.eclipse.ejb3.ui.EJB3WizardsUIPlugin;
 
 public class JBossEJB3LibrariesPage extends JBossSelectionPage implements IClasspathContainerPage
 {

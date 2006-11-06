@@ -5,35 +5,30 @@
      <extension
          id="org.jboss.ide.eclipse.ejb3.wizards.ui.NewStatelessSessionBeanWizard"
          point="org.eclipse.ui.newWizards">
-      <category
-            name="EJB 3.0"
-            id="org.jboss.ide.eclipse.ejb3.wizards.ui.ejb3Category"/>
-      <wizard
-            icon="icons/full/ctool16/newjprj_wiz.gif"
-            class="org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.NewEJB3ProjectWizard"
-            category="org.jboss.ide.eclipse.ejb3.wizards.ui.ejb3Category"
-            project="true"
-            name="EJB 3.0 Project"
-            id="org.jboss.ide.eclipse.ejb3.wizards.ui.NewEJB3ProjectWizard"/>
       <wizard
             icon="icons/full/ctool16/newclass_wiz.gif"
-            class="org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.NewSessionBeanWizard"
-            category="org.jboss.ide.eclipse.ejb3.wizards.ui.ejb3Category"
+            class="org.jboss.ide.eclipse.ejb3.ui.wizards.NewSessionBeanWizard"
+            category="org.eclipse.jst.ejb.ui"
             name="Session Bean"
             id="org.jboss.ide.eclipse.ejb3.wizards.ui.NewEJB3ProjectWizard"/>
       <wizard
             icon="icons/full/ctool16/newclass_wiz.gif"
-            class="org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.NewMessageDrivenBeanWizard"
-            category="org.jboss.ide.eclipse.ejb3.wizards.ui.ejb3Category"
+            class="org.jboss.ide.eclipse.ejb3.ui.wizards.NewMessageDrivenBeanWizard"
+            category="org.eclipse.jst.ejb.ui"
             name="Message Driven Bean"
             id="org.jboss.ide.eclipse.ejb3.wizards.ui.NewMessageDrivenBeanWizard"/>
    </extension>
-   <extension
-         point="org.eclipse.jdt.ui.classpathContainerPage">
-      <classpathContainerPage
-            class="org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.pages.JBossEJB3LibrariesPage"
-            id="org.jboss.ide.eclipse.jdt.ejb3.wizards.core.classpath.EJB3_CONTAINER"
-            name="JBoss EJB3 Libraries"/>
-   </extension>
+   
+
+<extension point="org.eclipse.ui.newWizards">
+   <wizard
+         category="org.eclipse.jst.ejb.ui"
+         class="org.jboss.ide.eclipse.ejb3.ui.wizards.Ejb30ProjectWizard"
+         id="org.jboss.ide.eclipse.ejb3.ui.wizards.NewEjb30Wizard"
+         name="JBoss IDE EJB 3.0 Project"
+         project="true"/>
+</extension>
+
+
 
 </plugin>

@@ -19,43 +19,36 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.ide.eclipse.ejb3.wizards.ui.wizards;
+package org.jboss.ide.eclipse.ejb3.ui.wizards;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.internal.ui.JavaPluginImages;
 import org.eclipse.jdt.internal.ui.wizards.NewElementWizard;
-import org.eclipse.jdt.ui.ISharedImages;
-import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
-import org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.pages.NewSessionBeanWizardPage;
+import org.jboss.ide.eclipse.ejb3.ui.wizards.pages.NewMessageDrivenBeanWizardPage;
 
 /**
  * @author Marshall
+ *
+ * TODO To change the template for this generated type comment go to
+ * Window - Preferences - Java - Code Style - Code Templates
  */
-public class NewSessionBeanWizard extends NewElementWizard
+public class NewMessageDrivenBeanWizard extends NewElementWizard
 {
 
-   NewSessionBeanWizardPage page;
+   NewMessageDrivenBeanWizardPage page;
 
    private IStructuredSelection selection;
 
-   public NewSessionBeanWizard ()
-   {
-	   super();
-	   setDefaultPageImageDescriptor(JavaPluginImages.DESC_WIZBAN_NEWCLASS);
-	   setWindowTitle("New Session Bean");
-   }
-   
    public void init(IWorkbench workbench, IStructuredSelection selection)
    {
-      page = new NewSessionBeanWizardPage();
+      page = new NewMessageDrivenBeanWizardPage();
       this.selection = selection;
-      
+
       super.init(workbench, selection);
    }
 
@@ -90,4 +83,5 @@ public class NewSessionBeanWizard extends NewElementWizard
    {
       return page.getCreatedType();
    }
+
 }

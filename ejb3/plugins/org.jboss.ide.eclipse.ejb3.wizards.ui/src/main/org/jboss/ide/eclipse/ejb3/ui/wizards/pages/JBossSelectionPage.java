@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.pages;
+package org.jboss.ide.eclipse.ejb3.ui.wizards.pages;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -43,7 +43,7 @@ import org.eclipse.wst.server.ui.ServerUICore;
 import org.eclipse.wst.server.ui.internal.ServerUIPlugin;
 import org.eclipse.wst.server.ui.internal.actions.NewServerAction;
 import org.jboss.ide.eclipse.as.core.server.JBossServer;
-import org.jboss.ide.eclipse.ejb3.wizards.core.EJB3WizardsCorePlugin;
+import org.jboss.ide.eclipse.ejb3.core.EJB3WizardsCorePlugin;
 
 public class JBossSelectionPage extends WizardPage
 {

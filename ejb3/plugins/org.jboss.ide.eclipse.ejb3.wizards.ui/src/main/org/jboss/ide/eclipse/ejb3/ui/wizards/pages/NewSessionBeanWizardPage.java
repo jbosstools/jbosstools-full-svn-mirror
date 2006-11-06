@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.pages;
+package org.jboss.ide.eclipse.ejb3.ui.wizards.pages;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -65,10 +65,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 import org.eclipse.text.edits.UndoEdit;
 import org.eclipse.ui.help.WorkbenchHelp;
-import org.jboss.ide.eclipse.ejb3.wizards.ui.EJB3WizardsUIPlugin;
+import org.jboss.ide.eclipse.ejb3.ui.EJB3WizardsUIPlugin;
 
 public class NewSessionBeanWizardPage extends NewTypeWizardPage
 {
@@ -341,11 +342,13 @@ public class NewSessionBeanWizardPage extends NewTypeWizardPage
          beanUnit.getBuffer().setContents(source);
          beanUnit.getBuffer().save(monitor, true);
 
-      }
-      catch (BadLocationException e)
-      {
-         e.printStackTrace();
-      }
+      } catch (MalformedTreeException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (BadLocationException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
    }
 
    public ICompilationUnit createRemoteInterface(IProgressMonitor monitor) throws CoreException, InterruptedException

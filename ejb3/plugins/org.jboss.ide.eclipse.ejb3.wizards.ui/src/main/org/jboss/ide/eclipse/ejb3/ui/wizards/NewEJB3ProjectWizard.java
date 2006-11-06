@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.ide.eclipse.ejb3.wizards.ui.wizards;
+package org.jboss.ide.eclipse.ejb3.ui.wizards;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -54,10 +54,9 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
-import org.jboss.ide.eclipse.ejb3.wizards.core.classpath.EJB3ClasspathContainer;
-import org.jboss.ide.eclipse.ejb3.wizards.core.project.EJB3ProjectNature;
-import org.jboss.ide.eclipse.ejb3.wizards.ui.EJB3WizardsUIPlugin;
-import org.jboss.ide.eclipse.ejb3.wizards.ui.wizards.pages.JBossEJB3LibrariesPage;
+import org.jboss.ide.eclipse.ejb3.core.classpath.EJB3ClasspathContainer;
+import org.jboss.ide.eclipse.ejb3.ui.EJB3WizardsUIPlugin;
+import org.jboss.ide.eclipse.ejb3.ui.wizards.pages.JBossEJB3LibrariesPage;
 import org.jboss.ide.eclipse.jdt.aop.core.AopCorePlugin;
 import org.jboss.ide.eclipse.jdt.aop.core.classpath.AopJdk15ClasspathContainer;
 
@@ -274,7 +273,7 @@ public class NewEJB3ProjectWizard extends Wizard implements INewWizard
                   return;
                }
 
-               EJB3ProjectNature.ensureAopProjectNature(javaProject);
+               //EJB3ProjectNature.ensureAopProjectNature(javaProject);
                AopCorePlugin.getDefault().setJava50CompilerCompliance(javaProject);
 
                ArrayList sourcePaths = findSourcePaths(project);
