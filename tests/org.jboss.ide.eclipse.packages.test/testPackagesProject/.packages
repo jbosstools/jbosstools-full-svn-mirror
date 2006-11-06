@@ -1,0 +1,32 @@
+<packages xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<properties>
+		<property name="test-property" value="test-value"/>
+		<property name="project-root" value="C:/Workspaces/jbosside-runtime-workspace/testPackagesProject"/>
+	</properties>
+	<package type="j2ee.ear" name="MyApp.ear" todir=".">
+		<folder name="packages">
+			<package type="j2ee.ejbjar" name="MyEJBs.jar" exploded="false">
+				<fileset dir="bin" includes="com/myapp/ejb/**/*.class"/>
+				<folder name="META-INF">
+					<fileset file="descriptors/jboss.xml"/>
+					<fileset file="descriptors/ejb-jar.xml"/>
+				</folder>
+			</package>
+			<package type="j2ee.war" name="MyApp.war" exploded="false" todir=".">
+				<folder name="WEB-INF">
+					<fileset dir="descriptors" includes="*web.xml"/>
+					<folder name="lib">
+						<fileset dir="lib" includes="**/*.jar"/>
+					</folder>
+					<folder name="classes">
+						<fileset dir="bin" includes="com/myapp/web/**/*.class"/>
+					</folder>
+				</folder>
+			</package>
+		</folder>
+		<folder name="META-INF">
+			<fileset file="descriptors/application.xml"/>
+		</folder>
+	</package>
+
+</packages>
