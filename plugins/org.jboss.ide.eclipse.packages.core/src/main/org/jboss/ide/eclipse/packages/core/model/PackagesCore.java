@@ -60,7 +60,7 @@ public class PackagesCore {
 				packages = PackagesModel.instance().getProjectPackages(project);
 			}
 			
-			if (packages == null) return null;
+			if (packages == null) return new IPackage[0];
 		}
 
 		monitor.worked(1);
