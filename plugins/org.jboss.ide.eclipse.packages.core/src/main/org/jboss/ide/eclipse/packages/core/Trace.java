@@ -43,7 +43,7 @@ public class Trace {
 				return;
 		}
 		
-		System.out.println("[" + caller.getSimpleName() + "] " + message);
+		System.out.println("[" + caller.getName() + "] " + message);
 		
 		if (t != null)
 		{
