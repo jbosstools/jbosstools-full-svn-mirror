@@ -22,21 +22,19 @@ public class FilesetWizard extends Wizard {
 	}
 	
 	public boolean performFinish() {
-		IPackageFileSetWorkingCopy filesetWC;
+		boolean createFileset = this.fileset == null;
 		
-		if (this.fileset == null) {
-			filesetWC = PackagesCore.createPackageFileSet(parentNode.getProject());
-		} else {
-			filesetWC = fileset.createFileSetWorkingCopy();
-		}
+		if (createFileset)
+			this.fileset = PackagesCore.createPackageFileSet(parentNode.getProject());
+		
+		IPackageFileSetWorkingCopy filesetWC = fileset.createFileSetWorkingCopy();
 		
 		fillFilesetFromPage(filesetWC);
 		
-		page1.getRootNode().addChild(filesetWC);
-		if (this.fileset != null)
-			page1.getRootNode().removeChild(this.fileset);
+		if (createFileset)
+			page1.getRootNode().addChild(this.fileset);
 		
-		this.fileset = filesetWC.saveFileSet();
+		filesetWC.save();
 		
 		return true;
 	}

@@ -37,7 +37,11 @@ public class XbPackage extends XbPackageNodeWithProperties {
 	public XbPackage (XbPackage pkg)
 	{
 		super(pkg);
-		
+		copyFrom (pkg);
+	}
+	
+	public void copyFrom (XbPackage pkg)
+	{
 		this.ref = pkg.ref == null ? null : new String(pkg.ref);
 		this.name = pkg.name == null ? null: new String(pkg.name);
 		this.packageType = pkg.packageType == null ? null : new String(pkg.packageType);

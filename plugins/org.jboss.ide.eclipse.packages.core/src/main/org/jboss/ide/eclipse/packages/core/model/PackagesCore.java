@@ -246,17 +246,17 @@ public class PackagesCore {
 		delegate.buildSinglePackage(pkg, monitor);
 	}
 	
-	public static IPackageWorkingCopy createPackage (IProject project)
+	public static IPackage createPackage (IProject project)
 	{
 		return PackagesModel.instance().createPackage(project);
 	}
 	
-	public static IPackageFolderWorkingCopy createPackageFolder (IProject project)
+	public static IPackageFolder createPackageFolder (IProject project)
 	{
 		return PackagesModel.instance().createPackageFolder(project);
 	}
 	
-	public static IPackageFileSetWorkingCopy createPackageFileSet (IProject project)
+	public static IPackageFileSet createPackageFileSet (IProject project)
 	{
 		return PackagesModel.instance().createPackageFileSet(project);
 	}

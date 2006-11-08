@@ -132,7 +132,10 @@ public class PackagesLabelProvider implements ILabelProvider {
 					text += " : " + fileset.getIncludesPattern();
 				return text;
 			} else {
-				return fileset.getIncludesPattern();
+				String text = fileset.getSourceFolder().lastSegment();
+				if (fileset.getIncludesPattern() != null)
+					text += " : " + fileset.getIncludesPattern();
+				return text;
 			}
 		}
 		

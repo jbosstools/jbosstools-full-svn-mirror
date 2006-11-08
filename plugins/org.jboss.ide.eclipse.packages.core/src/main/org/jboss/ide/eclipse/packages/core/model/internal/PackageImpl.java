@@ -56,6 +56,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 		super(project, delegate);
 		
 		this.packageDelegate = delegate;
+		this.hasWorkingCopy = false;
 	}
 	
 	public int getNodeType() {
@@ -159,7 +160,12 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 	public IPackageWorkingCopy createPackageWorkingCopy() {
 		PackageImpl copy = new PackageImpl(project, new XbPackage(packageDelegate));
 		copy.original = this;
+		hasWorkingCopy = true;
 		return copy;
+	}
+
+	public boolean hasWorkingCopy() {
+		return hasWorkingCopy;
 	}
 	
 	public IPackageNode save() {
@@ -167,10 +173,13 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 	}
 	
 	public IPackage savePackage() {
-		PackagesModel.instance().saveAndRegister(this, original);
-		saveChildren();
-		original = null;
-		return this;
+		PackageImpl originalImpl = (PackageImpl) original;
+		originalImpl.getPackageDelegate().copyFrom(packageDelegate);
+		
+		PackagesModel.instance().saveAndRegister(original);
+		PackagesModel.instance().fireNodeChanged(original);
+		original.hasWorkingCopy = false;
+		return original;
 	}
 
 	public void addFileSet(IPackageFileSet fileset) {
@@ -188,7 +197,6 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 	public void setDestinationFolder(IPath path) {
 		packageDelegate.setInWorkspace(false);
 		packageDelegate.setToDir(path.toString());
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 	
 	public void setDestinationContainer(IContainer container) {
@@ -196,28 +204,23 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 		if (!container.equals(getProject()))
 		{
 			packageDelegate.setToDir(container.getFullPath().toString());
-			PackagesModel.instance().fireNodeChanged(this);
 		}
 	}
 
 	public void setExploded(boolean exploded) {
 		packageDelegate.setExploded(exploded);
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 
 	public void setManifest(IFile manifestFile) {
 		packageDelegate.setManifest(manifestFile.getProjectRelativePath().toString());
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 
 	public void setName(String name) {
 		packageDelegate.setName(name);
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 
 	public void setPackageType(String type) {
 		packageDelegate.setPackageType(type);
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 	
 	public IPackageNode getOriginal() {
@@ -249,6 +252,11 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 		}
 		
 		return new Path(path);
+	}
+	
+	protected XbPackage getPackageDelegate ()
+	{
+		return packageDelegate;
 	}
 	
 	public String toString() {

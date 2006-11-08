@@ -21,6 +21,9 @@
  */
 package org.jboss.ide.eclipse.packages.core.model.internal.xb;
 
+import java.util.Iterator;
+import java.util.Properties;
+
 public abstract class XbPackageNodeWithProperties extends XbPackageNode {
 
 	protected XbProperties properties;
@@ -33,6 +36,19 @@ public abstract class XbPackageNodeWithProperties extends XbPackageNode {
 	public XbPackageNodeWithProperties (XbPackageNodeWithProperties node)
 	{
 		super(node);
+	}
+	
+	public void copyFrom (XbPackageNodeWithProperties node)
+	{
+		properties.getProperties().clear();
+		
+		Properties props = node.getProperties().getProperties();
+		for (Iterator iter = props.keySet().iterator(); iter.hasNext(); )
+		{
+			String key = (String) iter.next();
+			
+			properties.getProperties().setProperty(key, (String) props.get(key));
+		}
 	}
 	
 	public XbProperties getProperties ()

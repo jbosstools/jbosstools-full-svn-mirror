@@ -206,12 +206,10 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 
 	public void setExcludesPattern(String excludes) {
 		filesetDelegate.setExcludes(excludes);
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 
 	public void setIncludesPattern(String includes) {
 		filesetDelegate.setIncludes(includes);
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 
 	public void setSingleFile(IFile file, String destinationFilename) {
@@ -223,8 +221,6 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 		if (destinationFilename != null) {
 			filesetDelegate.setToFile(destinationFilename);
 		}
-		
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 	
 	public void setSingleFile(IPath path, String destinationFilename) {
@@ -239,13 +235,10 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 				filesetDelegate.setToFile(destinationFilename);
 			}	
 		}
-		
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 	
 	public void setInWorkspace(boolean isInWorkspace) {
 		filesetDelegate.setInWorkspace(isInWorkspace);
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 	
 	public void setSingleFile(IFile file) {
@@ -261,7 +254,6 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 		
 		filesetDelegate.setDir(container.getProjectRelativePath().toString());
 		filesetDelegate.setInWorkspace(true);
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 	
 	public void setSourceFolder (IPath path) {
@@ -269,14 +261,12 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 		
 		filesetDelegate.setDir(path.toString());
 		filesetDelegate.setInWorkspace(false);
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 	
 	public void setSourceProject(IProject project) {
 		Assert.isNotNull(project);
 		
 		filesetDelegate.setProject(project.getName());
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 
 	public IPackageNodeWorkingCopy createWorkingCopy() {
@@ -286,7 +276,12 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 	public IPackageFileSetWorkingCopy createFileSetWorkingCopy() {
 		PackageFileSetImpl copy = new PackageFileSetImpl(project, new XbFileSet(filesetDelegate));
 		copy.original = this;
+		hasWorkingCopy = true;
 		return copy;
+	}
+	
+	public boolean hasWorkingCopy() {
+		return hasWorkingCopy;
 	}
 	
 	public IPackageNode save() {
@@ -294,10 +289,13 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 	}
 	
 	public IPackageFileSet saveFileSet() {
-		PackagesModel.instance().saveAndRegister(this, original);
-		saveChildren();
-		original = null;
-		return this;
+		PackageFileSetImpl originalImpl = (PackageFileSetImpl) original;
+		originalImpl.getFileSetDelegate().copyFrom(filesetDelegate);
+		
+		PackagesModel.instance().saveAndRegister(original);
+		PackagesModel.instance().fireNodeChanged(original);
+		original.hasWorkingCopy = false;
+		return original;
 	}
 	
 	public IPackageNode getOriginal() {
@@ -308,6 +306,10 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 		return original;
 	}
 
+	protected XbFileSet getFileSetDelegate () {
+		return filesetDelegate;
+	}
+	
 	public String toString() {
 		String includes = filesetDelegate.getIncludes();
 		if (includes == null) includes = "";
