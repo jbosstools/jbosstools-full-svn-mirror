@@ -42,6 +42,7 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 	protected XbPackageNodeWithProperties nodeDelegate;
 	protected IProject project;
 	protected ArrayList childrenToRegister, childrenToUnregister;
+	protected boolean hasWorkingCopy;
 	
 	protected static int nodeTypeToIntType (Class type)
 	{
@@ -70,6 +71,7 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 		this.project = project;
 		childrenToRegister = new ArrayList();
 		childrenToUnregister = new ArrayList();
+		hasWorkingCopy = false;
 	}
 	
 	public PackageNodeImpl ()
@@ -134,7 +136,6 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 	
 	public void setProperty(String property, String value) {
 		getProperties().setProperty(property, value);
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 
 	public Properties getProperties() {
@@ -169,11 +170,14 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 	}
 	
 	public void addChild(IPackageNode node) {
+		Assert.isNotNull(node);
+		
 		PackageNodeImpl impl = (PackageNodeImpl) node;
 		
 		nodeDelegate.addChild(impl.nodeDelegate);
-		childrenToRegister.add(node);
-		save();
+		
+		PackagesModel.instance().saveModel(node.getProject());
+		PackagesModel.instance().fireNodeAdded(node);
 	}
 	
 	public void removeChild(IPackageNode node) {
@@ -185,30 +189,8 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 			nodeDelegate.removeChild(impl.nodeDelegate);
 		}
 		
-		if (childrenToRegister.contains(node))
-		{
-			childrenToRegister.remove(node);
-		}
-		else {
-			childrenToUnregister.add(node);
-		}
-		save();
-	}
-	
-	protected void saveChildren ()
-	{
-		for (Iterator iter = childrenToRegister.iterator(); iter.hasNext(); )
-		{
-			PackageNodeImpl node = (PackageNodeImpl) iter.next();
-			PackagesModel.instance().registerPackageNode(node, node.getNodeDelegate());
-		}
-		for (Iterator iter = childrenToUnregister.iterator(); iter.hasNext(); )
-		{
-			PackageNodeImpl node = (PackageNodeImpl) iter.next();
-			PackagesModel.instance().unregisterPackageNode(node, node.getNodeDelegate());
-		}
-		childrenToRegister.clear();
-		childrenToUnregister.clear();
+		PackagesModel.instance().saveModel(node.getProject());
+		PackagesModel.instance().fireNodeRemoved(node);
 	}
 	
 	public Object getAdapter(Class adapter) {
@@ -222,5 +204,9 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 	public boolean isWorkingCopy ()
 	{
 		return getOriginal() != null;
+	}
+	
+	protected void finalize() throws Throwable {
+		if (getOriginal() != null) ((PackageNodeImpl)getOriginal()).hasWorkingCopy = false;
 	}
 }

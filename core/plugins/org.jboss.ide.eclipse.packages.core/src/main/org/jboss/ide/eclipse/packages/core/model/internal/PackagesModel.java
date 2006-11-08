@@ -42,10 +42,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
-import org.jboss.ide.eclipse.packages.core.model.IPackageFileSetWorkingCopy;
-import org.jboss.ide.eclipse.packages.core.model.IPackageFolderWorkingCopy;
+import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
+import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
-import org.jboss.ide.eclipse.packages.core.model.IPackageWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.IPackagesBuildListener;
 import org.jboss.ide.eclipse.packages.core.model.IPackagesModelListener;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XMLBinding;
@@ -67,7 +66,6 @@ public class PackagesModel {
 	private Hashtable xbPackages;
 	private ArrayList buildListeners;
 	private ArrayList modelListeners;
-	private Hashtable deferredEvents;
 	
 	private PackagesModel ()
 	{
@@ -76,7 +74,6 @@ public class PackagesModel {
 		xbPackages = new Hashtable();
 		buildListeners = new ArrayList();
 		modelListeners = new ArrayList();
-		deferredEvents = new Hashtable();
 	}
 	
 	public static PackagesModel instance ()
@@ -109,20 +106,20 @@ public class PackagesModel {
 		}
 	}
 	
-	public IPackageWorkingCopy createPackage(IProject project)
+	public IPackage createPackage(IProject project)
 	{
 		Assert.isNotNull(project);
 		
 		return new PackageImpl(project, new XbPackage());
 	}
 	
-	public IPackageFolderWorkingCopy createPackageFolder(IProject project) {
+	public IPackageFolder createPackageFolder(IProject project) {
 		Assert.isNotNull(project);
 		
 		return new PackageFolderImpl(project, new XbFolder());
 	}
 
-	public IPackageFileSetWorkingCopy createPackageFileSet(IProject project) {
+	public IPackageFileSet createPackageFileSet(IProject project) {
 		Assert.isNotNull(project);
 		
 		return new PackageFileSetImpl(project, new XbFileSet());
@@ -145,6 +142,9 @@ public class PackagesModel {
 			XbPackages packages = getXbPackages(pkg.getProject());
 			packages.removeChild(packageImpl.getNodeDelegate());
 		}
+		
+		saveModel(pkg.getProject());
+		fireNodeRemoved(pkg);
 	}
 	
 	public XbPackages getXbPackages(IProject project)
@@ -235,33 +235,9 @@ public class PackagesModel {
 		return scanner;
 	}
 	
-	protected void saveAndRegister (PackageNodeImpl node, PackageNodeImpl original)
+	protected void saveAndRegister (PackageNodeImpl node)
 	{
-		XbPackageNode parent = null;
-		
-		if (original != null)
-		{
-			unregisterPackageNode(original, original.getNodeDelegate());
-			
-			parent = original.getNodeDelegate().getParent();
-			
-			if (parent != null)
-				parent.removeChild(original.getNodeDelegate());
-			
-			if (original.getNodeType() == IPackageNode.TYPE_PACKAGE)
-			{
-				IPackage pkg = (IPackage) original;
-				removePackage(pkg);
-			}
-			
-			original = null;
-		}
-		
-		if (parent != null)
-		{
-			parent.addChild(node.getNodeDelegate());
-		}
-		else if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
+		if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
 		{
 			XbPackages packages = getXbPackages(node.getProject());
 			if (packages == null) {
@@ -275,19 +251,10 @@ public class PackagesModel {
 			}
 		}
 		
-		registerPackageNode(node, node.getNodeDelegate());
+		if (!isPackageNodeRegistered(node))
+			registerPackageNode(node, node.getNodeDelegate());
 		
 		saveModel(node.getProject());
-		
-		if (deferredEvents.containsKey(node))
-		{
-			ArrayList events = (ArrayList) deferredEvents.get(node);
-			for (Iterator iter = events.iterator(); iter.hasNext(); )
-			{
-				Runnable runnable = (Runnable) iter.next();
-				runnable.run();
-			}
-		}
 	}
 	
 	protected void saveModel (IProject project)
@@ -354,7 +321,7 @@ public class PackagesModel {
 	
 	protected void fireNodeAdded (final IPackageNode added)
 	{
-		fireEventMaybeDeferred(added, new Runnable() {
+		fireEventUnlessWorkingCopy(added, new Runnable() {
 			public void run() {
 				for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
 				{
@@ -367,7 +334,7 @@ public class PackagesModel {
 	
 	protected void fireNodeRemoved (final IPackageNode removed)
 	{
-		fireEventMaybeDeferred(removed, new Runnable() {
+		fireEventUnlessWorkingCopy(removed, new Runnable() {
 			public void run() {
 				for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
 				{
@@ -380,7 +347,7 @@ public class PackagesModel {
 	
 	protected void fireNodeChanged (final IPackageNode changed)
 	{
-		fireEventMaybeDeferred(changed, new Runnable() {
+		fireEventUnlessWorkingCopy(changed, new Runnable() {
 			public void run() {
 				for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
 				{
@@ -391,21 +358,18 @@ public class PackagesModel {
 		});
 	}
 	
-	protected void fireEventMaybeDeferred (IPackageNode source, Runnable runnable)
+	protected void fireEventUnlessWorkingCopy (IPackageNode source, Runnable runnable)
 	{
 		PackageNodeImpl nodeImpl = (PackageNodeImpl) source;
-		if (nodeImpl.isWorkingCopy())
+		if (!nodeImpl.isWorkingCopy())
 		{
-			if (!deferredEvents.containsKey(source))
-			{
-				deferredEvents.put(source, new ArrayList());
-			}
-			
-			((ArrayList)deferredEvents.get(source)).add(runnable);
-		}
-		else {
 			runnable.run();
 		}
+	}
+	
+	public boolean isPackageNodeRegistered (IPackageNode node)
+	{
+		return modelBridge.containsKey(node);
 	}
 	
 	protected void registerPackageNode(PackageNodeImpl nodeImpl, XbPackageNode node)

@@ -35,7 +35,11 @@ public class XbFolder extends XbPackageNodeWithProperties {
 	public XbFolder (XbFolder folder)
 	{
 		super(folder);
-		
+		copyFrom(folder);
+	}
+	
+	public void copyFrom (XbFolder folder)
+	{
 		this.name = folder.name == null ? null : new String(folder.name);
 	}
 	

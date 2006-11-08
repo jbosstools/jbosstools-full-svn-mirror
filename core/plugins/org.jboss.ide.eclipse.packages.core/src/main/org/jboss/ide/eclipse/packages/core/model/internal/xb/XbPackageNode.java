@@ -38,7 +38,7 @@ public abstract class XbPackageNode implements Cloneable {
 	
 	public XbPackageNode(XbPackageNode node)
 	{
-		children = new Hashtable(node.children);
+//		children = new Hashtable(node.children);
 	}
 	
 	public void addChild (Object object)

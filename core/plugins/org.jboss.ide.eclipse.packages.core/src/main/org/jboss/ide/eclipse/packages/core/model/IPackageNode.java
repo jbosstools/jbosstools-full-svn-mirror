@@ -58,4 +58,6 @@ public interface IPackageNode extends IAdaptable {
 	public void addChild(IPackageNode child);
 	
 	public void removeChild(IPackageNode child);
+	
+	public boolean hasWorkingCopy();
 }

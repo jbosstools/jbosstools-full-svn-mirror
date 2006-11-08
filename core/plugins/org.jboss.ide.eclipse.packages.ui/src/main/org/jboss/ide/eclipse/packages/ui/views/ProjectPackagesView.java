@@ -282,8 +282,10 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		if (response == Dialog.OK)
 		{
 			IPackageNode selected = getSelectedNode();
-			IPackageFolderWorkingCopy folder = PackagesCore.createPackageFolder(selected.getProject());
-			folder.setName(dialog.getValue());
+			IPackageFolder folder = PackagesCore.createPackageFolder(selected.getProject());
+			IPackageFolderWorkingCopy folderWC = folder.createFolderWorkingCopy();
+			folderWC.setName(dialog.getValue());
+			folderWC.save();
 			
 			selected.addChild(folder);
 		}
@@ -371,8 +373,8 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 				packageTree.refresh();
 			}
 			else {
-//				packageTree.add(added.getParent(), added);
-				packageTree.refresh();
+				packageTree.add(added.getParent(), added);
+//				packageTree.refresh();
 				packageTree.expandToLevel(added.getParent(), 1);
 			}
 			
@@ -385,6 +387,13 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	
 	public void packageNodeChanged(IPackageNode changed) {
 		if (!packageTree.getTree().isDisposed()) {
+			
+			if (changed.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
+			{
+				IPackageFileSet fileset = (IPackageFileSet) changed;
+				contentProvider.addFilesetProperties(fileset.getProject(), fileset);
+			}
+			
 			packageTree.refresh(changed);
 		}
 	}

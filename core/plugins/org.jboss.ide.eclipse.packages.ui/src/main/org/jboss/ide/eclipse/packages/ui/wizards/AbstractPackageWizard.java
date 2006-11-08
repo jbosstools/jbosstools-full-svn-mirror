@@ -10,6 +10,7 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
+import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.IPackageWorkingCopy;
@@ -48,7 +49,8 @@ public abstract class AbstractPackageWizard extends Wizard implements INewWizard
 	}
 	
 	public boolean performFinish() {
-		IPackageWorkingCopy packageWC = PackagesCore.createPackage(project);
+		IPackage pkg = PackagesCore.createPackage(project);
+		IPackageWorkingCopy packageWC = pkg.createPackageWorkingCopy();
 		
 		packageWC.setName(firstPage.getPackageName());
 		packageWC.setExploded(firstPage.isPackageExploded());

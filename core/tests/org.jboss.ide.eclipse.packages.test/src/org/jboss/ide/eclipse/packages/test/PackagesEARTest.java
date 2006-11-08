@@ -292,61 +292,17 @@ public class PackagesEARTest extends TestCase {
 	public void testWorkingCopies ()
 	{
 		List packages = PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
+		assertEquals(packages.size(), 1);
 		
 		IPackage pkg = (IPackage) packages.get(0);
-		IPackageFolder packagesFolder = pkg.getFolders()[0];
-		IPackage oldPackage = pkg;
+		assertNotNull(pkg);
 		
 		IPackageWorkingCopy wc = pkg.createPackageWorkingCopy();
-		wc.removeChild(packagesFolder);
-		pkg = wc.savePackage();
 		
-		assertTrue(pkg != oldPackage);
-		assertFalse(pkg.hasChild(packagesFolder));
-		assertEquals(pkg.getFolders().length, 1);
-		
-		packages =PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
-		
-		assertEquals(packages.size(), 1);
-		
-		wc = pkg.createPackageWorkingCopy();
-		wc.addChild(packagesFolder);
-		pkg = wc.savePackage();
-		
-		assertTrue(pkg.hasChild(packagesFolder));
-		assertEquals(pkg.getFolders().length, 2);
-		assertEquals(packagesFolder.getParent(), pkg);
-		
-		packages = PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
-		assertEquals(packages.size(), 1);
-		
-		IPackageFolderWorkingCopy testFolder = PackagesCore.createPackageFolder(testPackagesProject.getProject());
-		testFolder.setName("testFolder");
-		
-		wc = pkg.createPackageWorkingCopy();
-		wc.addChild(testFolder);
-		pkg = wc.savePackage();
-		
-		assertTrue(pkg.hasChild(testFolder));
-		assertEquals(pkg.getFolders().length, 3);
-		assertEquals(testFolder.getParent(), pkg);
-		
-		packages = PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
-		assertEquals(packages.size(), 1);
-		
-		IPackageFolderWorkingCopy testFolder2 = PackagesCore.createPackageFolder(testPackagesProject.getProject());
-		testFolder2.setName("testFolder2");
-		
-		wc = pkg.createPackageWorkingCopy();
-		wc.addChild(testFolder2);
-		pkg = wc.savePackage();
-		
-		assertTrue(pkg.hasChild(testFolder2));
-		assertEquals(pkg.getFolders().length, 4);
-		assertEquals(testFolder2.getParent(), pkg);
-		
-		packages = PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
-		assertEquals(packages.size(), 1);
+		wc.setName("MyApp2.ear");	
+		assertEquals(pkg.getName(), "MyApp.ear");
+		wc.save();
+		assertEquals(pkg.getName(), "MyApp2.ear");
 		
 	}
 	

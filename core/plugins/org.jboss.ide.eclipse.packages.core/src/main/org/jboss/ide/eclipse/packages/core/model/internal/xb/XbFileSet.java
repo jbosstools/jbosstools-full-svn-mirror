@@ -35,7 +35,11 @@ public class XbFileSet extends XbPackageNodeWithProperties {
 	public XbFileSet (XbFileSet fileset)
 	{
 		super(fileset);
-		
+		copyFrom(fileset);
+	}
+	
+	public void copyFrom (XbFileSet fileset)
+	{
 		this.dir = fileset.dir == null ? null : new String(fileset.dir);
 		this.file = fileset.file == null ? null : new String(fileset.file);
 		this.toFile = fileset.toFile == null ? null : new String(fileset.toFile);

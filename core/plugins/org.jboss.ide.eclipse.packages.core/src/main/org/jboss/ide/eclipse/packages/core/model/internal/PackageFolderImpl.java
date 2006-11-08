@@ -93,7 +93,6 @@ public class PackageFolderImpl extends PackageNodeImpl implements
 
 	public void setName(String name) {
 		folderDelegate.setName(name);
-		PackagesModel.instance().fireNodeChanged(this);
 	}
 
 	public IPackageNodeWorkingCopy createWorkingCopy() {
@@ -103,7 +102,13 @@ public class PackageFolderImpl extends PackageNodeImpl implements
 	public IPackageFolderWorkingCopy createFolderWorkingCopy() {
 		PackageFolderImpl copy = new PackageFolderImpl(project, new XbFolder(folderDelegate));
 		copy.original = this;
+		hasWorkingCopy = true;
+		
 		return copy;
+	}
+	
+	public boolean hasWorkingCopy() {
+		return hasWorkingCopy;
 	}
 
 	public IPackageNode save() {
@@ -111,10 +116,13 @@ public class PackageFolderImpl extends PackageNodeImpl implements
 	}
 	
 	public IPackageFolder saveFolder() {
-		PackagesModel.instance().saveAndRegister(this, original);
-		saveChildren();
-		original = null;
-		return this;
+		PackageFolderImpl originalImpl = (PackageFolderImpl) original;
+		originalImpl.getFolderDelegate().copyFrom(folderDelegate);
+
+		PackagesModel.instance().saveAndRegister(original);		
+		PackagesModel.instance().fireNodeChanged(original);
+		original.hasWorkingCopy = false;
+		return original;
 	}
 
 	public IPackageNode getOriginal() {
@@ -144,6 +152,11 @@ public class PackageFolderImpl extends PackageNodeImpl implements
 		}
 		
 		return new Path(path);
+	}
+	
+	protected XbFolder getFolderDelegate ()
+	{
+		return folderDelegate;
 	}
 	
 	public String toString() {
