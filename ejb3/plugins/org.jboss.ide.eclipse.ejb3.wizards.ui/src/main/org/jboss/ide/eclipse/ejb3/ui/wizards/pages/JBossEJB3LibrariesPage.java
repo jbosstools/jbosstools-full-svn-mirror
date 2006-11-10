@@ -22,12 +22,10 @@
 package org.jboss.ide.eclipse.ejb3.ui.wizards.pages;
 
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.ui.wizards.IClasspathContainerPage;
-import org.jboss.ide.eclipse.as.core.runtime.server.AbstractJBossServerRuntime;
 import org.jboss.ide.eclipse.as.core.server.JBossServer;
 import org.jboss.ide.eclipse.ejb3.core.EJB3WizardsCorePlugin;
 import org.jboss.ide.eclipse.ejb3.core.classpath.EJB3ClasspathContainer;
@@ -47,11 +45,11 @@ public class JBossEJB3LibrariesPage extends JBossSelectionPage implements IClass
    {
       IPath jarToCheck = EJB3ClasspathContainer.jbossConfigRelativeJarPaths[0];
 
-      String jbossBaseDir = jbossServer.getServer().getRuntime().getLocation().toOSString();
-      AbstractJBossServerRuntime rt = (AbstractJBossServerRuntime)jbossServer.getServer()
-      			.getRuntime().loadAdapter(AbstractJBossServerRuntime.class, new NullProgressMonitor());
-      String jbossConfigDir = rt.getJBossConfiguration();
+      String jbossBaseDir = jbossServer.getAttributeHelper().getServerHome();
+      String jbossConfigDir = jbossServer.getAttributeHelper().getJbossConfiguration();
+
       IPath absoluteJarPath = new Path(jbossBaseDir).append("server").append(jbossConfigDir).append(jarToCheck);
+
       return absoluteJarPath.toFile().exists();
    }
 
