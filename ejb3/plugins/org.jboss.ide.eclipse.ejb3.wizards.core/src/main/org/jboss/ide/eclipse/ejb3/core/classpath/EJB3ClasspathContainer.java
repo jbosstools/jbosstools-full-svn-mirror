@@ -30,7 +30,7 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.wst.server.core.IRuntime;
 import org.eclipse.wst.server.core.ServerCore;
-import org.jboss.ide.eclipse.as.core.server.runtime.JBossServerRuntime;
+import org.jboss.ide.eclipse.as.core.runtime.server.AbstractJBossServerRuntime;
 import org.jboss.ide.eclipse.jdt.aop.core.classpath.AopClasspathContainer;
 
 /**
@@ -68,7 +68,7 @@ public class EJB3ClasspathContainer extends AopClasspathContainer
    
    
    protected IJavaProject javaProject;
-   protected JBossServerRuntime jbsRuntime;
+   protected AbstractJBossServerRuntime jbsRuntime;
    
    public EJB3ClasspathContainer(IPath path, IJavaProject project) {
       super(path);
@@ -77,7 +77,7 @@ public class EJB3ClasspathContainer extends AopClasspathContainer
       String runtimeName = path.segment(1);
       IRuntime runtime = ServerCore.findRuntime(runtimeName);
       if( runtime != null ) 
-    	  jbsRuntime = (JBossServerRuntime)runtime.loadAdapter(JBossServerRuntime.class, new NullProgressMonitor());
+    	  jbsRuntime = (AbstractJBossServerRuntime)runtime.loadAdapter(AbstractJBossServerRuntime.class, new NullProgressMonitor());
    }
 
    public IPath[] getAopJarPaths() {
@@ -85,7 +85,7 @@ public class EJB3ClasspathContainer extends AopClasspathContainer
          return new IPath[0];
 
       String jbossBaseDir = jbsRuntime.getRuntime().getLocation().toOSString();
-      String jbossConfigDir = jbsRuntime.getConfigName();
+      String jbossConfigDir = jbsRuntime.getJBossConfiguration();
 
       ArrayList paths = new ArrayList();
 
