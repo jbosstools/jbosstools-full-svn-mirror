@@ -45,6 +45,7 @@
     </template>
 </extension>
 
+  <!--
 
 <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
   <runtime-component-type id="org.jboss.ide.eclipse.ejb30.component.10"/>
@@ -57,7 +58,6 @@
     <facet id="jboss.ejb30" version="1.0"/>
     <facet id="jst.java" version="5.0"/>
   </supported>
-  <!--
   <adapter>
       <runtime-component
             id="org.jboss.ide.eclipse.ejb30.component.10"
@@ -67,8 +67,8 @@
       <type
          class="org.eclipse.jst.common.project.facet.core.IClasspathProvider"/>
     </adapter>
-    -->
 </extension>
+    -->
 
 
 
@@ -98,6 +98,7 @@
    </extension>
 
 
+<!--
    <extension
          point="org.eclipse.jst.server.core.runtimeFacetMappings">
       <runtimeFacetMapping
@@ -105,7 +106,7 @@
             runtimeTypeId="org.jboss.ide.eclipse.as.runtime.40"
             version="1.0"/>
    </extension>
-
+-->
 
 
 </plugin>
