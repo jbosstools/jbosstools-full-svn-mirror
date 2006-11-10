@@ -22,8 +22,7 @@ import org.eclipse.wst.common.project.facet.core.IProjectFacet;
 import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
 import org.eclipse.wst.common.project.facet.core.runtime.IRuntime;
 import org.eclipse.wst.server.core.ServerCore;
-import org.jboss.ide.eclipse.as.core.server.JBossServer;
-import org.jboss.ide.eclipse.as.core.server.runtime.JBossServerRuntime;
+import org.jboss.ide.eclipse.as.core.runtime.server.AbstractJBossServerRuntime;
 import org.jboss.ide.eclipse.ejb3.core.classpath.EJB3ClasspathContainer;
 
 public class Ejb30FacetProjectCreationDataModelProvider extends J2EEFacetProjectCreationDataModelProvider {
@@ -79,7 +78,7 @@ public class Ejb30FacetProjectCreationDataModelProvider extends J2EEFacetProject
 				String id = (String)properties.get("id");
 				org.eclipse.wst.server.core.IRuntime wstRuntime = ServerCore.findRuntime(id);
 				try {
-					JBossServerRuntime jbrt = (JBossServerRuntime) wstRuntime.getAdapter(JBossServerRuntime.class);
+					AbstractJBossServerRuntime jbrt = (AbstractJBossServerRuntime) wstRuntime.getAdapter(AbstractJBossServerRuntime.class);
 					if( hasEJB3(jbrt)) {
 						list.add(descriptors[i]);
 					}
@@ -96,11 +95,11 @@ public class Ejb30FacetProjectCreationDataModelProvider extends J2EEFacetProject
 		return super.getValidPropertyDescriptors(propertyName);
 	}
 	
-	protected boolean hasEJB3(JBossServerRuntime jbrt) {
+	protected boolean hasEJB3(AbstractJBossServerRuntime jbrt) {
 	      IPath jarToCheck = EJB3ClasspathContainer.jbossConfigRelativeJarPaths[0];
 
 	      String jbossBaseDir = jbrt.getRuntime().getLocation().toOSString();
-	      String jbossConfigDir = jbrt.getConfigName();
+	      String jbossConfigDir = jbrt.getJBossConfiguration();
 	      IPath absoluteJarPath = new Path(jbossBaseDir).append("server").append(jbossConfigDir).append(jarToCheck);
 	      return absoluteJarPath.toFile().exists();
 	}
