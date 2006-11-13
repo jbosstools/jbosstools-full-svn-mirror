@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.jboss.ide.eclipse.feature"
-      label="JBoss Eclipse IDE"
+      label="JBossIDE for Eclipse"
       version="0.0.0"
       provider-name="JBoss, a division of Red Hat"
       image="splash.jpg">
@@ -11,7 +11,7 @@
    </description>
 
    <license url="http://osdn.dl.sourceforge.net/sourceforge/jboss/LGPL.html">
-      JBoss Eclipse IDE is under the LGPL Licence
+      JBossIDE for Eclipse is under the LGPL Licence
 GNU LESSER GENERAL PUBLIC LICENSE
 Version 2.1, February 1999 
 Copyright (C) 1991, 1999 Free Software Foundation, Inc.
@@ -415,7 +415,7 @@ END OF TERMS AND CONDITIONS
    </license>
 
    <url>
-      <update label="JBoss Eclipse IDE Update Site" url="http://download.jboss.org/jbosside/updates/stable"/>
+      <update label="JBossIDE for Eclipse Update Site" url="http://download.jboss.org/jbosside/updates/stable"/>
    </url>
 
    <includes

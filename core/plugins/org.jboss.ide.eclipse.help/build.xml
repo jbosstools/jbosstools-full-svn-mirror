@@ -34,11 +34,11 @@
 	<target name="build-toc">
 		<style basedir="${install-dir}/en" destdir="${install-dir}/en" style="eclipse-docbook-toc.xsl" includes="master.xml" extension=".toc.xml" force="true">
 			<param name="build-dir" expression="install"/>
-			<param name="label" expression="JBoss Eclipse IDE Installation Guide"/>
+			<param name="label" expression="JBossIDE for Eclipse Installation Guide"/>
 		</style>
 		<style basedir="${tutorial-dir}/en" destdir="${tutorial-dir}/en" style="eclipse-docbook-toc.xsl" includes="master.xml" extension=".toc.xml" force="true">
 			<param name="build-dir" expression="tutorial"/>
-			<param name="label" expression="JBoss Eclipse IDE Tutorial"/>
+			<param name="label" expression="JBossIDE for Eclipse Tutorial"/>
 		</style>
 		<move file="${install-dir}/en/master.toc.xml" tofile="install-toc.xml"/>
 		<move file="${tutorial-dir}/en/master.toc.xml" tofile="tutorial-toc.xml"/>

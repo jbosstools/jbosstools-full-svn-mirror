@@ -71,7 +71,7 @@
    </extension>
    <extension
          id="XDocletRunBuilder"
-         name="JBoss Eclipse IDE XDoclet Builder"
+         name="JBossIDE for Eclipse XDoclet Builder"
          point="org.eclipse.core.resources.builders">
       <builder
             hasNature="false"
