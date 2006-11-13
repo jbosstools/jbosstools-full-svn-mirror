@@ -60,6 +60,10 @@ public class FirstRunFinalPage20 extends AbstractFirstRunPage {
    public void initialize() {
 	}
 
+	public boolean hasPossibleChanges() {
+		return false;
+	}
+
    public void performFinishWithProgress(IProgressMonitor monitor) {
 	   monitor.beginTask(getClass().getName(), 1);
 	   monitor.worked(1);

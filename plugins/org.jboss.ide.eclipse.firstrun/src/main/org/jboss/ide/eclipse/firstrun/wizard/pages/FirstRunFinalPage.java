@@ -62,4 +62,8 @@ public class FirstRunFinalPage extends AbstractFirstRunPage {
 	   monitor.done();
    }
 
+	public boolean hasPossibleChanges() {
+		return false;
+	}
+
 }

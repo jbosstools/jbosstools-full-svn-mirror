@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.ide.eclipse.core.CorePlugin;
@@ -57,14 +58,20 @@ public class FirstRunWizard extends Wizard {
 	}
 
    public boolean performFinish() {
+	   
+	   if( getPageCount() == 0 ) 
+		   return true;
+	   
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-				int totalWork = pageObjects.length * 1000;
+				int totalWork = getPageCount() * 1000;
 				String mainTaskName = FirstRunMessages.getString("ProgressMonitor.TaskName");
 				monitor.beginTask(mainTaskName, totalWork);
 				
-				for( int i = 0; i < pageObjects.length; i++ ) {
-					AbstractFirstRunPage page = pageObjects[i].getPage();
+				int length = getPageCount();
+				IWizardPage[] pages = getPages();
+				for( int i = 0; i < length; i++ ) {
+					AbstractFirstRunPage page = (AbstractFirstRunPage)pages[i];
 					monitor.setTaskName(mainTaskName); // reset task name
 					try {
 						SubProgressMonitor sub = new SubProgressMonitor(monitor, 1000);
@@ -90,18 +97,44 @@ public class FirstRunWizard extends Wizard {
    }
 
    public boolean canFinish() {
-	   for( int i = 0; i < pageObjects.length; i++ ) {
-		   if( pageObjects[i].getPage().isPageComplete() == false ) return false;
+	   IWizardPage[] pages = getPages();
+	   for( int i = 0; i < pages.length; i++ ) {
+		   if( pages[i].isPageComplete() == false ) return false;
 	   }
 	   return true;
    }
 
    public void addPages() {
+	   int num = getNumPagesWithChanges();
+	   if( num != 0 ) {
+		   // there are pages that need to be shown... 
+		   for( int i = 0; i < pageObjects.length; i++ ) {
+			   AbstractFirstRunPage page = pageObjects[i].getPage();
+			   if( page.shouldShow() ) {
+				   // If it demands to be shown, show it
+				   page.initialize();
+				   addPage(page);
+			   }
+		   }
+	   } else {
+		   // no pages have changes... so now only show default pages. 
+		   for( int i = 0; i < pageObjects.length; i++ ) {
+			   AbstractFirstRunPage page = pageObjects[i].getPage();
+			   if( page.isDefaultPage() ) {
+				   page.initialize();
+				   addPage(page);
+			   }
+		   }
+	   }
+   }
+   
+   public int getNumPagesWithChanges() {
+	   int total = 0;
 	   for( int i = 0; i < pageObjects.length; i++ ) {
 		   AbstractFirstRunPage page = pageObjects[i].getPage();
-		   page.initialize();
-		   addPage(page);
+		   if( page.hasPossibleChanges() ) total++;
 	   }
+	   return total;
    }
    
    protected FirstRunWizardPageConfigElement[] getExtensions() {
