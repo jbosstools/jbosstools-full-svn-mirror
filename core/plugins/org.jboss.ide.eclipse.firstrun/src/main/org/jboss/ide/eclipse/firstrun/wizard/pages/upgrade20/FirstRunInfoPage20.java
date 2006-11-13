@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jboss.ide.eclipse.firstrun.FirstRunMessages;
 import org.jboss.ide.eclipse.firstrun.FirstRunPlugin;
+import org.jboss.ide.eclipse.firstrun.wizard.FirstRunWizard;
 import org.jboss.ide.eclipse.firstrun.wizard.pages.AbstractFirstRunPage;
 
 public class FirstRunInfoPage20 extends AbstractFirstRunPage {
@@ -47,17 +48,28 @@ public class FirstRunInfoPage20 extends AbstractFirstRunPage {
 
       Label label = new Label(main, SWT.WRAP);
 
-      label.setText(FirstRunMessages.getString("InfoPage20.info"));
-
+      if( ((FirstRunWizard)getWizard()).getNumPagesWithChanges() != 0 )
+    	  label.setText(FirstRunMessages.getString("InfoPage20.info"));
+      else 
+    	  label.setText(FirstRunMessages.getString("InfoPage20.welcomeOnly"));
+    	  
       setControl(main);
    }
 
    public void initialize() {
    }
 
+	public boolean hasPossibleChanges() {
+		return false;
+	}
+
    public void performFinishWithProgress(IProgressMonitor monitor) {
 	   monitor.beginTask(getClass().getName(), 1);
 	   monitor.worked(1);
 	   monitor.done();
+   }
+   
+   public boolean isDefaultPage() {
+	   return true;
    }
 }

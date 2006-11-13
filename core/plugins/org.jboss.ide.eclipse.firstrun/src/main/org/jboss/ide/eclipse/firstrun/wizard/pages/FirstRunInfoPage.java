@@ -53,6 +53,11 @@ public class FirstRunInfoPage extends AbstractFirstRunPage {
 
    public void initialize() {
    }
+   
+	public boolean hasPossibleChanges() {
+		return false;
+	}
+
 
    public void performFinishWithProgress(IProgressMonitor monitor) {
 	   monitor.beginTask("", 1);
