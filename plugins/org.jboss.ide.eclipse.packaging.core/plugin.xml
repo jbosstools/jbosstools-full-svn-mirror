@@ -11,7 +11,7 @@
    </extension>
      <extension
            id="PackagingBuilder"
-           name="JBoss Eclipse IDE Packaging Script Builder"
+           name="JBossIDE for Eclipse Packaging Script Builder"
            point="org.eclipse.core.resources.builders">
         <builder hasNature="false">
            <run class="org.jboss.ide.eclipse.packaging.core.builder.PackagingBuilder"/>

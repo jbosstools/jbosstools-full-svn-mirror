@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: JBoss Eclipse IDE Help Plug-in
+Bundle-Name: JBossIDE for Eclipse Help Plug-in
 Bundle-SymbolicName: org.jboss.ide.eclipse.help; singleton:=true
 Bundle-Version: 2.0.0
 Bundle-Activator: org.jboss.ide.eclipse.help.HelpPlugin
