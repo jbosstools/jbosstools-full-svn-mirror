@@ -402,7 +402,5 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		if (!packageTree.getTree().isDisposed()) {
 			packageTree.remove(removed);
 		}
-		
-		packageTree.refresh();
 	}
 }
