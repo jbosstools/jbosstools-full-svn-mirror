@@ -43,9 +43,17 @@
       <fixed facet="jst.java"/>
       <fixed facet="jboss.ejb30"/>
     </template>
+    
+    <preset id="jboss.ejb30.preset">
+	    <label>JBoss EJB 3.0 Project</label>
+	    <description>Creates a JBoss EJB 3.0 Project.</description>
+    	<facet id="jst.java" version="5.0"/>
+    	<facet id="jboss.ejb30" version="1.0"/>
+	  </preset>
+    
 </extension>
 
-
+<!--
 <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
   <runtime-component-type id="org.jboss.ide.eclipse.ejb30.component.10"/>
   <runtime-component-version
@@ -57,7 +65,6 @@
     <facet id="jboss.ejb30" version="1.0"/>
     <facet id="jst.java" version="5.0"/>
   </supported>
-  <!--
   <adapter>
       <runtime-component
             id="org.jboss.ide.eclipse.ejb30.component.10"
@@ -67,9 +74,18 @@
       <type
          class="org.eclipse.jst.common.project.facet.core.IClasspathProvider"/>
     </adapter>
-    -->
 </extension>
+    -->
 
+<!--
+   <extension
+         point="org.eclipse.jst.server.core.runtimeFacetMappings">
+      <runtimeFacetMapping
+            runtime-component="org.jboss.ide.eclipse.ejb30.component.10"
+            runtimeTypeId="org.jboss.ide.eclipse.as.runtime.40"
+            version="1.0"/>
+   </extension>
+-->
 
 
    <extension
@@ -95,15 +111,6 @@
          		types="jboss.ejb30">
             </moduleType>
       </moduleFactory>
-   </extension>
-
-
-   <extension
-         point="org.eclipse.jst.server.core.runtimeFacetMappings">
-      <runtimeFacetMapping
-            runtime-component="org.jboss.ide.eclipse.ejb30.component.10"
-            runtimeTypeId="org.jboss.ide.eclipse.as.runtime.40"
-            version="1.0"/>
    </extension>
 
 
