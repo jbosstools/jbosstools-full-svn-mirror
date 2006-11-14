@@ -46,20 +46,21 @@ import org.jboss.ide.eclipse.firstrun.wizard.pages.AbstractFirstRunPage;
 public class FirstRunWizard extends Wizard {
 
 	private String workspaceLatest;
-	private FirstRunWizardPageConfigElement[] pageObjects;
+	private FirstRunWizardPageConfigElement[] pages = null;
+	private int numPagesWithChanges = -1;
 	
 	public FirstRunWizard(String workspaceLatest) {
 		this.workspaceLatest = workspaceLatest;
-		pageObjects = getExtensions();
+		fillAcceptablePages();
 	}
 
 	public int numPages() {
-		return pageObjects.length;
+		return pages.length;
 	}
 
    public boolean performFinish() {
 	   
-	   if( getPageCount() == 0 ) 
+	   if( numPagesWithChanges == 0 ) 
 		   return true;
 	   
 		IRunnableWithProgress op = new IRunnableWithProgress() {
@@ -105,15 +106,24 @@ public class FirstRunWizard extends Wizard {
    }
 
    public void addPages() {
-	   int num = getNumPagesWithChanges();
-	   if( num != 0 ) {
+	   AbstractFirstRunPage page;
+	   for( int i = 0; i < pages.length; i++ ) {
+		   page = pages[i].getPage();
+		   page.initialize();
+		   addPage(page);
+	   }
+   }
+   
+   protected void fillAcceptablePages() {
+	   ArrayList list = new ArrayList();
+	   FirstRunWizardPageConfigElement[] pageObjects = getExtensions();
+	   numPagesWithChanges = getNumPagesWithChanges(pageObjects);
+	   if( numPagesWithChanges != 0 ) {
 		   // there are pages that need to be shown... 
 		   for( int i = 0; i < pageObjects.length; i++ ) {
 			   AbstractFirstRunPage page = pageObjects[i].getPage();
 			   if( page.shouldShow() ) {
-				   // If it demands to be shown, show it
-				   page.initialize();
-				   addPage(page);
+				   list.add(pageObjects[i]);
 			   }
 		   }
 	   } else {
@@ -121,14 +131,18 @@ public class FirstRunWizard extends Wizard {
 		   for( int i = 0; i < pageObjects.length; i++ ) {
 			   AbstractFirstRunPage page = pageObjects[i].getPage();
 			   if( page.isDefaultPage() ) {
-				   page.initialize();
-				   addPage(page);
+				   list.add(pageObjects[i]);
 			   }
 		   }
 	   }
+	   pages = (FirstRunWizardPageConfigElement[]) list.toArray(new FirstRunWizardPageConfigElement[list.size()]);
    }
    
    public int getNumPagesWithChanges() {
+	   return numPagesWithChanges;
+   }
+   
+   protected int getNumPagesWithChanges(FirstRunWizardPageConfigElement[] pageObjects) {
 	   int total = 0;
 	   for( int i = 0; i < pageObjects.length; i++ ) {
 		   AbstractFirstRunPage page = pageObjects[i].getPage();
