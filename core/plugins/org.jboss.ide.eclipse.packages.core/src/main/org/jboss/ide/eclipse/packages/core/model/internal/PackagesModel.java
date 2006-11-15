@@ -347,6 +347,9 @@ public class PackagesModel {
 	
 	protected void fireNodeChanged (final IPackageNode changed)
 	{
+		if (changed.getParent() == null) //not registered in the model, no "change" occurred
+			return;
+		
 		fireEventUnlessWorkingCopy(changed, new Runnable() {
 			public void run() {
 				for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )

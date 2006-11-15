@@ -165,7 +165,7 @@ public class PackageNodeDestinationDialog extends ElementTreeSelectionDialog {
 			if (inputElement instanceof Collection)
 				return ((Collection)inputElement).toArray();
 			
-			return new Object[0];
+			return NO_CHILDREN;
 		}
 
 		public void dispose() {}

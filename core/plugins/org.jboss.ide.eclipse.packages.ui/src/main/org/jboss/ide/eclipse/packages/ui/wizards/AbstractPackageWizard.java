@@ -12,7 +12,6 @@ import org.eclipse.ui.IWorkbench;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
-import org.jboss.ide.eclipse.packages.core.model.IPackageNodeWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.IPackageWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.ui.wizards.pages.PackageInfoWizardPage;
@@ -63,10 +62,6 @@ public abstract class AbstractPackageWizard extends Wizard implements INewWizard
 		if (!destContainer.equals(project) && destContainer instanceof IContainer) {
 			packageWC.setDestinationContainer((IContainer)destContainer);
 		}
-		else if (destContainer instanceof IPackageNodeWorkingCopy) {
-			IPackageNodeWorkingCopy node = (IPackageNodeWorkingCopy) destContainer;
-			node.addChild(packageWC);
-		}
 		else if (destContainer instanceof IPath)
 		{
 			packageWC.setDestinationFolder((IPath) destContainer);
@@ -76,7 +71,11 @@ public abstract class AbstractPackageWizard extends Wizard implements INewWizard
 		
 		if (performed)
 		{
-			packageWC.save();
+			pkg = packageWC.savePackage();
+			if (destContainer instanceof IPackageNode) {
+				IPackageNode node = (IPackageNode) destContainer;
+				node.addChild(pkg);
+			}
 		}
 		return performed;
 	}
