@@ -28,4 +28,4 @@ buildTypeDescription.N=nightly
 buildTypeDescription.I=integration
 buildTypeDescription.R=release
 drools.version=3.0.3
-defaultSvnUrl=http://anonsvn.labs.jboss.com/labs/jbossrules/trunk
+defaultSvnUrl=http://anonsvn.labs.jboss.com/labs/jbossrules/branches/3.0.x
