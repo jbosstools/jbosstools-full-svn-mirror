@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.ant,
  org.jboss.ide.eclipse.core,
  org.eclipse.ant.core,
- org.apache.jakarta_log4j
+ org.apache.jakarta_log4j,
+ org.eclipse.core.commands
 Eclipse-LazyStart: true
 Export-Package: org.jboss.ide.eclipse.packages.core,
  org.jboss.ide.eclipse.packages.core.model,

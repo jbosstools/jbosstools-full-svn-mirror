@@ -44,6 +44,7 @@ import org.jboss.ide.eclipse.packages.ui.actions.NewJARAction;
 import org.jboss.ide.eclipse.packages.ui.providers.PackagesContentProvider;
 import org.jboss.ide.eclipse.packages.ui.providers.PackagesLabelProvider;
 import org.jboss.ide.eclipse.packages.ui.providers.PackagesContentProvider.FileSetProperty;
+import org.jboss.ide.eclipse.packages.ui.util.PackagesListenerProxy;
 import org.jboss.ide.eclipse.packages.ui.wizards.FilesetWizard;
 import org.jboss.ide.eclipse.ui.IProjectSelectionListener;
 import org.jboss.ide.eclipse.ui.util.ProjectSelectionService;
@@ -101,7 +102,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		
 		getViewSite().setSelectionProvider(packageTree);
 		
-		PackagesCore.addPackagesModelListener(this);
+		PackagesCore.addPackagesModelListener(new PackagesListenerProxy(this));
 //		new PackageNodeDragSource(packageTree);
 //		new PackageDropTarget(packageTree);
 	}
@@ -387,7 +388,6 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	
 	public void packageNodeChanged(IPackageNode changed) {
 		if (!packageTree.getTree().isDisposed()) {
-			
 			if (changed.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
 			{
 				IPackageFileSet fileset = (IPackageFileSet) changed;

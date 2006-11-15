@@ -31,6 +31,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.jboss.ide.eclipse.packages.core.PackagesCorePlugin;
+import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.xb.binding.JBossXBException;
 import org.jboss.xb.binding.Unmarshaller;
 import org.jboss.xb.binding.UnmarshallerFactory;
@@ -67,7 +68,7 @@ public class XMLBinding {
 		element = null;
 		
 		binderSandbox(new Runnable() {
-			public void run () {
+			public void run ()  {
 				try {	
 					InputStream stream = schema.openStream();
 					monitor.worked(1);
@@ -86,13 +87,10 @@ public class XMLBinding {
 					monitor.worked(1);
 					
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Trace.trace(XMLBinding.class, e);
 				} catch (JBossXBException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Trace.trace(XMLBinding.class, e);
 				}
-		
 			}
 		});
 		
@@ -102,7 +100,7 @@ public class XMLBinding {
 	public static void marshal (final XbPackages element, final Writer writer, final IProgressMonitor monitor)
 	{
 		binderSandbox(new Runnable() {
-			public void run () {
+			public void run ()  {
 				try {
 					InputStream stream = schema.openStream();
 					monitor.worked(1);

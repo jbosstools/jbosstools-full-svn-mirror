@@ -30,11 +30,11 @@ public class FilesetWizard extends Wizard {
 		IPackageFileSetWorkingCopy filesetWC = fileset.createFileSetWorkingCopy();
 		
 		fillFilesetFromPage(filesetWC);
+
+		filesetWC.save();
 		
 		if (createFileset)
 			page1.getRootNode().addChild(this.fileset);
-		
-		filesetWC.save();
 		
 		return true;
 	}
