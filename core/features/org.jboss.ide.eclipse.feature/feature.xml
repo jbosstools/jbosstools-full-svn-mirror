@@ -418,30 +418,6 @@ END OF TERMS AND CONDITIONS
       <update label="JBossIDE for Eclipse Update Site" url="http://download.jboss.org/jbosside/updates/stable"/>
    </url>
 
-   <includes
-         id="org.eclipse.emf"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.gef"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.jem"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.jst"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.wst"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.xsd"
-         version="0.0.0"/>
-
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.ui.ide"/>
@@ -466,6 +442,12 @@ END OF TERMS AND CONDITIONS
       <import plugin="org.eclipse.ui.intro"/>
       <import plugin="org.eclipse.help"/>
       <import plugin="org.eclipse.help.ui"/>
+      <import feature="org.eclipse.emf"/>
+      <import feature="org.eclipse.gef"/>
+      <import feature="org.eclipse.jem"/>
+      <import feature="org.eclipse.jst"/>
+      <import feature="org.eclipse.wst"/>
+      <import feature="org.eclipse.xsd"/>
    </requires>
 
    <plugin
