@@ -48,7 +48,10 @@ public abstract class AbstractPackageWizard extends Wizard implements INewWizard
 	}
 	
 	public boolean performFinish() {
-		IPackage pkg = PackagesCore.createPackage(project);
+		Object destContainer = firstPage.getPackageDestination();
+		
+		boolean isTopLevel = (destContainer == null || (!(destContainer instanceof IPackageNode)));
+		IPackage pkg = PackagesCore.createPackage(project, isTopLevel);
 		IPackageWorkingCopy packageWC = pkg.createPackageWorkingCopy();
 		
 		packageWC.setName(firstPage.getPackageName());
@@ -58,7 +61,6 @@ public abstract class AbstractPackageWizard extends Wizard implements INewWizard
 			packageWC.setManifest(firstPage.getManifestFile());
 		}
 		
-		Object destContainer = firstPage.getPackageDestination();
 		if (!destContainer.equals(project) && destContainer instanceof IContainer) {
 			packageWC.setDestinationContainer((IContainer)destContainer);
 		}
