@@ -106,11 +106,14 @@ public class PackagesModel {
 		}
 	}
 	
-	public IPackage createPackage(IProject project)
+	public IPackage createPackage(IProject project, boolean isTopLevel)
 	{
 		Assert.isNotNull(project);
 		
-		return new PackageImpl(project, new XbPackage());
+		PackageImpl pkg = new PackageImpl(project, new XbPackage());
+		pkg.setParentShouldBeNull(isTopLevel);
+		
+		return pkg;
 	}
 	
 	public IPackageFolder createPackageFolder(IProject project) {
@@ -239,20 +242,25 @@ public class PackagesModel {
 	{
 		if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
 		{
-			XbPackages packages = getXbPackages(node.getProject());
-			if (packages == null) {
-				packages = new XbPackages();
-				xbPackages.put(node.getProject(), packages);
-			}
-			
-			if (packages.getChildren(XbPackage.class) == null || !packages.getChildren(XbPackage.class).contains(node.getNodeDelegate()))
-			{	
-				packages.addChild(node.getNodeDelegate());
+			PackageImpl pkg = (PackageImpl) node;
+			if (pkg.isTopLevel())
+			{
+				XbPackages packages = getXbPackages(node.getProject());
+				if (packages == null) {
+					packages = new XbPackages();
+					xbPackages.put(node.getProject(), packages);
+				}
+				
+				if (packages.getChildren(XbPackage.class) == null || !packages.getChildren(XbPackage.class).contains(node.getNodeDelegate()))
+				{	
+					packages.addChild(node.getNodeDelegate());
+				}
 			}
 		}
 		
-		if (!isPackageNodeRegistered(node))
+		if (!isPackageNodeRegistered(node)) {
 			registerPackageNode(node, node.getNodeDelegate());
+		}
 		
 		saveModel(node.getProject());
 	}
@@ -321,7 +329,28 @@ public class PackagesModel {
 	
 	protected void fireNodeAdded (final IPackageNode added)
 	{
-		fireEventUnlessWorkingCopy(added, new Runnable() {
+		// need to make sure if this is a package or folder node that we don't fire the "added" event prematurely
+		// basically we need to check if the node has been properly added to it's parent or not.
+		// since a package can be top level (i.e. no parent), i've added a special "shouldParentBeNull" flag (internal)
+		// to see if we can trigger the "added" event or not for packages. folders are only children of each other and packages
+		if (added.getNodeType() == IPackageNode.TYPE_PACKAGE)
+		{
+			PackageImpl pkg = (PackageImpl) added;
+			if (!pkg.shouldParentBeNull() && pkg.isTopLevel())
+			{
+				return;
+			}
+		}
+		else if (added.getNodeType() == IPackageNode.TYPE_PACKAGE_FOLDER)
+		{
+			PackageFolderImpl folder = (PackageFolderImpl) added;
+			if (folder.getParent() == null)
+			{
+				return;
+			}
+		}
+		
+		fireEvent(added, new Runnable() {
 			public void run() {
 				for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
 				{
@@ -334,7 +363,7 @@ public class PackagesModel {
 	
 	protected void fireNodeRemoved (final IPackageNode removed)
 	{
-		fireEventUnlessWorkingCopy(removed, new Runnable() {
+		fireEvent(removed, new Runnable() {
 			public void run() {
 				for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
 				{
@@ -347,10 +376,7 @@ public class PackagesModel {
 	
 	protected void fireNodeChanged (final IPackageNode changed)
 	{
-		if (changed.getParent() == null) //not registered in the model, no "change" occurred
-			return;
-		
-		fireEventUnlessWorkingCopy(changed, new Runnable() {
+		fireEvent(changed, new Runnable() {
 			public void run() {
 				for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
 				{
@@ -361,8 +387,11 @@ public class PackagesModel {
 		});
 	}
 	
-	protected void fireEventUnlessWorkingCopy (IPackageNode source, Runnable runnable)
+	protected void fireEvent (IPackageNode source, Runnable runnable)
 	{
+		if (!modelBridge.containsKey(source)) //not registered in the model, no event should be broadcast
+			return;
+		
 		PackageNodeImpl nodeImpl = (PackageNodeImpl) source;
 		if (!nodeImpl.isWorkingCopy())
 		{
@@ -381,10 +410,10 @@ public class PackagesModel {
 		{
 			modelBridge.put(nodeImpl, node);
 			
-			if (nodeImpl instanceof IPackage)
+			if (nodeImpl.getNodeType() == IPackageNode.TYPE_PACKAGE)
 			{
-				IPackage pkg = (IPackage) nodeImpl;
-				if (pkg.isTopLevel()) {
+				PackageImpl pkg = (PackageImpl) nodeImpl;
+				if (pkg.isTopLevel() && pkg.shouldParentBeNull()) {
 					if (!projectPackages.containsKey(pkg.getProject()))
 					{
 						projectPackages.put(pkg.getProject(), new ArrayList());
@@ -402,7 +431,7 @@ public class PackagesModel {
 		{
 			modelBridge.remove(nodeImpl);
 		
-			if (nodeImpl instanceof IPackage)
+			if (nodeImpl.getNodeType() == IPackageNode.TYPE_PACKAGE)
 			{
 				IPackage pkg = (IPackage) nodeImpl;
 				if (pkg.isTopLevel()) {

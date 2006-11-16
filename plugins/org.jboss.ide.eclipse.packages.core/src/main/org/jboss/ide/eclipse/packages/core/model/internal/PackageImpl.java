@@ -50,6 +50,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 
 	private XbPackage packageDelegate;
 	private PackageImpl original;
+	private boolean parentShouldBeNull;
 	
 	public PackageImpl(IProject project, XbPackage delegate)
 	{
@@ -57,6 +58,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 		
 		this.packageDelegate = delegate;
 		this.hasWorkingCopy = false;
+		this.parentShouldBeNull = false;
 	}
 	
 	public int getNodeType() {
@@ -130,7 +132,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 	}
 	
 	public boolean isTopLevel() {
-		return packageDelegate.getParent() instanceof XbPackages;
+		return (packageDelegate.getParent() instanceof XbPackages || packageDelegate.getParent() == null);
 	}
 	
 	public Manifest getManifest() {
@@ -261,5 +263,15 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 	
 	public String toString() {
 		return getName();
+	}
+
+	protected boolean shouldParentBeNull ()
+	{
+		return parentShouldBeNull;
+	}
+	
+	public void setParentShouldBeNull (boolean parentShouldBeNull)
+	{
+		this.parentShouldBeNull = parentShouldBeNull;
 	}
 }

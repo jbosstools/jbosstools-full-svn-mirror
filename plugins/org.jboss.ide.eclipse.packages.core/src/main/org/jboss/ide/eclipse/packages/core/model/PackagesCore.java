@@ -246,9 +246,9 @@ public class PackagesCore {
 		delegate.buildSinglePackage(pkg, monitor);
 	}
 	
-	public static IPackage createPackage (IProject project)
+	public static IPackage createPackage (IProject project, boolean isTopLevel)
 	{
-		return PackagesModel.instance().createPackage(project);
+		return PackagesModel.instance().createPackage(project, isTopLevel);
 	}
 	
 	public static IPackageFolder createPackageFolder (IProject project)

@@ -11,7 +11,9 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.ProgressMonitorPart;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -19,7 +21,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -94,7 +95,13 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		packageTree.setContentProvider(contentProvider);
 		packageTree.setLabelProvider(new PackagesLabelProvider());
 		pageBook.showPage(noProjectSelectedComposite);
-		
+		packageTree.addSelectionChangedListener(new ISelectionChangedListener () {
+			public void selectionChanged(SelectionChangedEvent event) {
+				Object selected = ((IStructuredSelection)packageTree.getSelection()).getFirstElement();
+				if (selected instanceof IPackageNode)
+					packageNodeSelected((IPackageNode) selected);
+			}
+		});
 		createActions();
 		createToolbar();
 		createMenu();
@@ -105,6 +112,11 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		PackagesCore.addPackagesModelListener(new PackagesListenerProxy(this));
 //		new PackageNodeDragSource(packageTree);
 //		new PackageDropTarget(packageTree);
+	}
+	
+	private void packageNodeSelected (IPackageNode node)
+	{
+		
 	}
 	
 	private ImageDescriptor platformDescriptor(String desc)
@@ -286,7 +298,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 			IPackageFolder folder = PackagesCore.createPackageFolder(selected.getProject());
 			IPackageFolderWorkingCopy folderWC = folder.createFolderWorkingCopy();
 			folderWC.setName(dialog.getValue());
-			folderWC.save();
+			folder = folderWC.saveFolder();
 			
 			selected.addChild(folder);
 		}
