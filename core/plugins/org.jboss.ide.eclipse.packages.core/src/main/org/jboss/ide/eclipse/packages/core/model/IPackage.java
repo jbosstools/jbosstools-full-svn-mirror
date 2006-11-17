@@ -43,37 +43,93 @@ public interface IPackage extends IPackageNode {
 	 */
 	public String getPackageType();
 
+	/**
+	 * @return The name (with extension) of this package.
+	 */
 	public String getName();
 	
+	/**
+	 * @return Whether or not this package is a reference to another package.
+	 */
 	public boolean isReference();
 	
+	/**
+	 * @return Whether or not this package will be build exploded, or as a directory instead of a ZIP/JAR
+	 */
 	public boolean isExploded();
 	
+	/**
+	 * @return Whether or not this package is a "top-level" package aka, not a child of another folder or package
+	 */
 	public boolean isTopLevel();
 	
+	/**
+	 * @return If this package has a custom Manifest (necessary for runnable JARs etc)
+	 */
 	public boolean hasManifest();
 	
+	/**
+	 * @return The custom Manifest for this package
+	 */
 	public Manifest getManifest();
 	
+	/**
+	 * If this package is top-level, there are two types of destinations it can have. "Inside" the workspace, and "outside" the workspace.
+	 * If the destination is inside the workspace, you will need to call getDestinationContainer()
+	 * Otherwise you will need to call getDestinationFolder()
+	 * @return Wheter or not the destination of this package is in the workspace
+	 * @see IPackage.getDestinationFolder()
+	 * @see IPackage.getDestinationContainer()
+	 */
 	public boolean isDestinationInWorkspace();
 	
+	/**
+	 * If this package's destination is external (and not in the workspace), this will
+	 * return a file-system IPath to that destination. Otherwise this will return null
+	 * @return The absolute IPath in the file-system to this package's external destination
+	 */
 	public IPath getDestinationFolder();
 	
+	/**
+	 * If this package's destination is in the workspace (and not external), this will
+	 * return an IContainer representing the package's destination. This container
+	 * could be either an IFolder or IProject. Otherwise, this will return null
+	 * @return The IContainer in the workspace where this package will be built
+	 */
 	public IContainer getDestinationContainer();
 	
+	/**
+	 * @return A list of sub-packages contained in this package
+	 */
 	public IPackage[] getPackages();
 	
+	/**
+	 * @return A list of folders contained in this package
+	 */
 	public IPackageFolder[] getFolders();
 	
+	/**
+	 * @return A list of filesets contained in this package
+	 */
 	public IPackageFileSet[] getFileSets();
 	
+	/**
+	 * Create a working copy of this IPackage. This will allow you to work on a disconnected model object until
+	 * you are ready to make the changes live, at which point you can use workingCopy.save()
+	 * @return A working copy of this package
+	 */
 	public IPackageWorkingCopy createPackageWorkingCopy();
 
 	/**
-	 * Get the IFile that corresponds with this package.
+	 * Get the IFile that corresponds with this package. Note that this method only works for in-workspace packages (null will be returned otherwise)
 	 * @return The corresponding IFile in the workspace (note that this file may not exist)
 	 */
 	public IFile getPackageFile();
 
+	/**
+	 * If this package is not top-level, this will return a relative path to this package from within it's parent, i.e.
+	 * my.ear/web/my.war/WEB-INF/lib. Otherwise, this will return null
+	 * @return a relative IPath to this package's top level parent
+	 */
 	public IPath getPackageRelativePath();
 }
