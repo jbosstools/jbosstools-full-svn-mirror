@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
+import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
@@ -87,12 +88,14 @@ public class PackagesModel {
 	public void registerProject(IProject project, IProgressMonitor monitor)
 	{
 		monitor.beginTask("Loading configuration...", XMLBinding.NUM_UNMARSHAL_MONITOR_STEPS + 2);
+		
 		IFile packagesFile = project.getFile(PROJECT_PACKAGES_FILE);
 		if (packagesFile.exists())
 		{
 			try {
-				if (!project.hasNature(PackagesNature.NATURE_ID))
+				if (!project.hasNature(PackagesNature.NATURE_ID)) {
 					ProjectUtil.addProjectNature(project, PackagesNature.NATURE_ID);
+				}
 				
 				XbPackages packages = XMLBinding.unmarshal(packagesFile.getContents(), monitor);
 				monitor.worked(1);
@@ -101,7 +104,7 @@ public class PackagesModel {
 				createPackageNodeImpl(project, packages);
 				monitor.worked(1);
 			} catch (CoreException e) {
-				e.printStackTrace();
+				Trace.trace(PackagesModel.class, e);
 			}
 		}
 	}
@@ -265,6 +268,16 @@ public class PackagesModel {
 		saveModel(node.getProject());
 	}
 	
+	protected void clearModel (IProject project)
+	{
+		List packages = getProjectPackages(project);
+		for (Iterator iter = packages.iterator(); iter.hasNext(); )
+		{
+			PackageImpl pkg = (PackageImpl) iter.next();
+			unregisterPackageNode(pkg, pkg.getNodeDelegate());
+		}
+	}
+	
 	protected void saveModel (IProject project)
 	{
 		try {
@@ -284,6 +297,11 @@ public class PackagesModel {
 			
 			bytesIn.close();
 			bytesOut.close();
+			
+			if (!project.hasNature(PackagesNature.NATURE_ID)) {
+				ProjectUtil.addProjectNature(project, PackagesNature.NATURE_ID);
+			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -291,6 +309,8 @@ public class PackagesModel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 	}
 	
 	protected PackageNodeImpl createPackageNodeImpl (IProject project, XbPackageNode node)
