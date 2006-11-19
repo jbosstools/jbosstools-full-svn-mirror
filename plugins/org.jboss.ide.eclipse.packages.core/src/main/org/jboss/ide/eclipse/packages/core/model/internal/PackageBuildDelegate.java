@@ -41,6 +41,7 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.packages.core.Trace;
@@ -137,6 +138,12 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			((IPackagesBuildListener)iter.next()).finishedBuild(project);
 	}
 
+	private void fireBuildFailed (IPackage pkg, IStatus status)
+	{
+		for (Iterator iter = PackagesModel.instance().getBuildListeners().iterator(); iter.hasNext(); )
+			((IPackagesBuildListener)iter.next()).buildFailed(pkg, status);
+	}
+	
 	private void createScannerCache ()
 	{
 		scannerCache = new Hashtable();
@@ -241,10 +248,13 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		});
 		
 		IFile file = pkg.getPackageFile();
-		try {
-			file.refreshLocal(IResource.DEPTH_ONE, monitor);
-		} catch (CoreException e) {
-			Trace.trace(getClass(), e);
+		if (file != null)
+		{
+			try {
+				file.refreshLocal(IResource.DEPTH_ONE, monitor);
+			} catch (CoreException e) {
+				Trace.trace(getClass(), e);
+			}
 		}
 		
 		monitor.done();
