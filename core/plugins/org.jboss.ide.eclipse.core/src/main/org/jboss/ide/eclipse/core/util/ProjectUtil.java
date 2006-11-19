@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.jboss.ide.eclipse.core.AbstractPlugin;
 
 /**
@@ -320,7 +321,7 @@ public class ProjectUtil
     * @param object
     * @return an IProject or null if one could not be found
     */
-   public static IProject getProject (Object element )
+   public static IProject getProject (Object element)
    {
 	   if (element instanceof IProject)
 		{
@@ -346,6 +347,12 @@ public class ProjectUtil
 		{
 			IContainer container = (IContainer) element;
 			return container.getProject();
+		}
+		
+		if (element instanceof IStructuredSelection)
+		{
+			IStructuredSelection selection = (IStructuredSelection) element;
+			return getProject(selection.getFirstElement());
 		}
 		
 		return null;
