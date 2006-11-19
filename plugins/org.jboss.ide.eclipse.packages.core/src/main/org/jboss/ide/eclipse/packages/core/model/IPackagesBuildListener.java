@@ -51,10 +51,10 @@ public interface IPackagesBuildListener {
 	
 	/**
 	 * The build for the given project has failed
-	 * @param project The project who's packages build failed
+	 * @param pkg The package that failed to build
 	 * @param status The status/exception that occurred
 	 */
-	public void buildFailed (IProject project, IStatus status);
+	public void buildFailed (IPackage pkg, IStatus status);
 	
 	/**
 	 * A fileset has finished being collected for copying into a package
