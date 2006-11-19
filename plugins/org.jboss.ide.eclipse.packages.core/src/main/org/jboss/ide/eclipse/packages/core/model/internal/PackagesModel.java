@@ -319,7 +319,12 @@ public class PackagesModel {
 		
 		if (node instanceof XbPackage)
 		{
-			nodeImpl = new PackageImpl(project, (XbPackage)node);
+			PackageImpl packageImpl = new PackageImpl(project, (XbPackage)node);
+			if (node.getParent() == null || node.getParent() instanceof XbPackages)
+			{
+				packageImpl.setParentShouldBeNull(true);
+			}
+			nodeImpl = packageImpl;
 		}
 		else if (node instanceof XbFolder)
 		{
