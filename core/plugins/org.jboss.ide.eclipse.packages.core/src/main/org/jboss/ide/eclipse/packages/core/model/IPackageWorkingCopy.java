@@ -3,9 +3,10 @@ package org.jboss.ide.eclipse.packages.core.model;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
+import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
 
 public interface IPackageWorkingCopy extends IPackage, IPackageNodeWorkingCopy {
-	public void setPackageType(String type);
+	public void setPackageType(IPackageType type);
 
 	public void setName(String name);
 	
