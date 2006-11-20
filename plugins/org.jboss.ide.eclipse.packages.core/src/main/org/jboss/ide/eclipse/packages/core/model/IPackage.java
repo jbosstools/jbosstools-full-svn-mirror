@@ -26,6 +26,7 @@ import java.util.jar.Manifest;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
+import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
 
 /** 
  * <p>
@@ -41,7 +42,7 @@ public interface IPackage extends IPackageNode {
 	/**
 	 * @return The package type of this package.
 	 */
-	public String getPackageType();
+	public IPackageType getPackageType();
 
 	/**
 	 * @return The name (with extension) of this package.

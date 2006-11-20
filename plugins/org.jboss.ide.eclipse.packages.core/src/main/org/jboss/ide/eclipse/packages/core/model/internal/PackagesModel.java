@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
+import org.jboss.ide.eclipse.packages.core.ExtensionManager;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
@@ -54,6 +55,7 @@ import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFolder;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackages;
+import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
 import org.jboss.ide.eclipse.packages.core.project.PackagesNature;
 
 public class PackagesModel {
@@ -64,6 +66,7 @@ public class PackagesModel {
 	
 	private Hashtable modelBridge;
 	private Hashtable projectPackages;
+	private Hashtable packageTypes;
 	private Hashtable xbPackages;
 	private ArrayList buildListeners;
 	private ArrayList modelListeners;
@@ -73,8 +76,11 @@ public class PackagesModel {
 		modelBridge = new Hashtable();
 		projectPackages = new Hashtable();
 		xbPackages = new Hashtable();
+		packageTypes = new Hashtable();
 		buildListeners = new ArrayList();
 		modelListeners = new ArrayList();
+		
+		loadPackageTypes();
 	}
 	
 	public static PackagesModel instance ()
@@ -239,6 +245,16 @@ public class PackagesModel {
 			scanner.scan();
 		
 		return scanner;
+	}
+	
+	protected void loadPackageTypes ()
+	{
+		IPackageType[] packageTypes = ExtensionManager.findPackageTypes();
+		
+		for (int i = 0; i < packageTypes.length; i++)
+		{
+			this.packageTypes.put(packageTypes[i].getId(), packageTypes[i]);
+		}
 	}
 	
 	protected void saveAndRegister (PackageNodeImpl node)
@@ -491,5 +507,10 @@ public class PackagesModel {
 	protected XbPackageNode getPackageNode(PackageNodeImpl nodeImpl)
 	{
 		return (XbPackageNode) modelBridge.get(nodeImpl);
+	}
+
+	public IPackageType getPackageType(String packageType)
+	{
+		return (IPackageType) packageTypes.get(packageType);
 	}
 }

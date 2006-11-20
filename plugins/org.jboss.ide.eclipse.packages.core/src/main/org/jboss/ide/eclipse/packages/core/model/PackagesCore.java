@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageBuildDelegate;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
+import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
 
 public class PackagesCore {
 
@@ -196,6 +197,16 @@ public class PackagesCore {
 		if (top instanceof IPackage)
 			return (IPackage)top;
 		else return null;
+	}
+	
+	/**
+	 * This will return an IPackageType instance for the passed-in packageType ID.
+	 * @param packageType The ID of the package type
+	 * @return A package type
+	 */
+	public static IPackageType getPackageType (String packageType)
+	{
+		return PackagesModel.instance().getPackageType(packageType);
 	}
 	
 	/**

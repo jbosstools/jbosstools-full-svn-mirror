@@ -39,6 +39,7 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageNodeWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.IPackageWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackages;
+import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
 
 /**
  * A Package.
@@ -112,8 +113,8 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 		return pkgs;
 	}
 
-	public String getPackageType() {
-		return packageDelegate.getPackageType();
+	public IPackageType  getPackageType() {
+		return PackagesModel.instance().getPackageType(packageDelegate.getPackageType());
 	}
 	
 	public IFile getPackageFile() {
@@ -221,8 +222,8 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 		packageDelegate.setName(name);
 	}
 
-	public void setPackageType(String type) {
-		packageDelegate.setPackageType(type);
+	public void setPackageType(IPackageType type) {
+		packageDelegate.setPackageType(type.getId());
 	}
 	
 	public IPackageNode getOriginal() {
