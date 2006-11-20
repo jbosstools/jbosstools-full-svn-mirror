@@ -21,5 +21,12 @@
          <run class="org.jboss.ide.eclipse.packages.core.project.PackagesBuilder"/>
       </builder>
    </extension>
+   <extension
+         point="org.jboss.ide.eclipse.packages.core.packageTypes">
+      <packageType
+            class="org.jboss.ide.eclipse.packages.core.model.types.JARPackageType"
+            id="jar"
+            label="JAR"/>
+   </extension>
 
 </plugin>

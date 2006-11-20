@@ -13,12 +13,14 @@ Require-Bundle: org.eclipse.core.runtime,
  org.jboss.ide.eclipse.core,
  org.eclipse.ant.core,
  org.apache.jakarta_log4j,
- org.eclipse.core.commands
+ org.eclipse.core.commands,
+ org.eclipse.jdt.core
 Eclipse-LazyStart: true
 Export-Package: org.jboss.ide.eclipse.packages.core,
  org.jboss.ide.eclipse.packages.core.model,
  org.jboss.ide.eclipse.packages.core.model.internal,
  org.jboss.ide.eclipse.packages.core.model.internal.xb,
+ org.jboss.ide.eclipse.packages.core.model.types,
  org.jboss.ide.eclipse.packages.core.project,
  org.jboss.ide.eclipse.packages.core.util
 Bundle-ClassPath: packagescore.jar,
