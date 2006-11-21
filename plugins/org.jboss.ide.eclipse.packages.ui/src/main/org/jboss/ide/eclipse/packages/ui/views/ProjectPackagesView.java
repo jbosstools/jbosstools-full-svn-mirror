@@ -233,6 +233,9 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 					manager.add(editAction);
 					manager.add(deleteAction);
 				}
+				else {
+					manager.add(newPackageManager);
+				}
 			}
 		});
 		
