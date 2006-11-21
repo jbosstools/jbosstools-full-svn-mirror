@@ -45,7 +45,8 @@ public class JARPackageType extends AbstractPackageType {
 			return null;
 		}
 		
-		IContainer outputContainer = ResourcesPlugin.getWorkspace().getRoot().getContainerForLocation(outputPath);
+		outputPath = outputPath.removeFirstSegments(1);
+		IContainer outputContainer = project.getFolder(outputPath);
 		
 		IPackage jar = PackagesCore.createPackage(project, true);
 		IPackageWorkingCopy jarWC = jar.createPackageWorkingCopy();
