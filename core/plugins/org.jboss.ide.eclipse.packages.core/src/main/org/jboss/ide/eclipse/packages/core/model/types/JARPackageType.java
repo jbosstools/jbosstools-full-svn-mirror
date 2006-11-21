@@ -24,7 +24,7 @@ import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
  */
 public class JARPackageType extends AbstractPackageType {
 
-	public static final String TYPE_ID = "org.jboss.ide.eclipse.packages.core.jar";
+	public static final String TYPE_ID = "jar";
 
 	public IPackage createDefaultConfiguration(IProject project, IProgressMonitor monitor)
 	{
