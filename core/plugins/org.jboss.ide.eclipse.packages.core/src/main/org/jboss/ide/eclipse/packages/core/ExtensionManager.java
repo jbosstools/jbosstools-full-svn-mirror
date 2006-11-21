@@ -12,7 +12,7 @@ import org.jboss.ide.eclipse.packages.core.model.types.AbstractPackageType;
 import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
 
 public class ExtensionManager {
-	public static final String PACKAGE_TYPES_EXTENSION_ID = "org.jboss.ide.eclilpse.packages.core.packageTypes";
+	public static final String PACKAGE_TYPES_EXTENSION_ID = "org.jboss.ide.eclipse.packages.core.packageTypes";
 	
 	public static IExtension[] findExtension (String extensionId)
 	{
