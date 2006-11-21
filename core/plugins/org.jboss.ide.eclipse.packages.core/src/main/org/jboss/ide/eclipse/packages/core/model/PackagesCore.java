@@ -256,7 +256,7 @@ public class PackagesCore {
 		
 		PackageBuildDelegate delegate = new PackageBuildDelegate(project);
 		try {
-			delegate.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, null, monitor);
+			delegate.build(IncrementalProjectBuilder.FULL_BUILD, null, monitor);
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
