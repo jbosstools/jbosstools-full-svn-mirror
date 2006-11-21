@@ -28,6 +28,7 @@ import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -242,6 +243,24 @@ public class PackagesCore {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Builds all of a project's packages
+	 * @param project The project to build
+	 * @param monitor A progress monitor
+	 */
+	public static void buildProject (IProject project, IProgressMonitor monitor)
+	{
+		if (monitor == null) monitor = new NullProgressMonitor();
+		
+		PackageBuildDelegate delegate = new PackageBuildDelegate(project);
+		try {
+			delegate.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, null, monitor);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
