@@ -27,19 +27,19 @@ public class PackageDestinationComposite extends PackageNodeDestinationComposite
 		Composite browseComposite = new Composite(parent, SWT.NONE);
 		browseComposite.setLayout(new GridLayout(2, false));
 		
-		filesystemBrowseButton = new Button(browseComposite, SWT.PUSH);
-		filesystemBrowseButton.setText(PackagesUIMessages.PackageDestinationComposite_filesystemBrowseButton_label);
-		filesystemBrowseButton.addSelectionListener(new SelectionAdapter () {
-			public void widgetSelected(SelectionEvent e) {
-				browseFilesystem();
-			}
-		});
-		
 		workspaceBrowseButton = new Button(browseComposite, SWT.PUSH);
 		workspaceBrowseButton.setText(PackagesUIMessages.PackageDestinationComposite_workspaceBrowseButton_label);
 		workspaceBrowseButton.addSelectionListener(new SelectionAdapter () {
 			public void widgetSelected(SelectionEvent e) {
 				openDestinationDialog();
+			}
+		});
+		
+		filesystemBrowseButton = new Button(browseComposite, SWT.PUSH);
+		filesystemBrowseButton.setText(PackagesUIMessages.PackageDestinationComposite_filesystemBrowseButton_label);
+		filesystemBrowseButton.addSelectionListener(new SelectionAdapter () {
+			public void widgetSelected(SelectionEvent e) {
+				browseFilesystem();
 			}
 		});
 	}
