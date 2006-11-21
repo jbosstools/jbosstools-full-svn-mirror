@@ -42,6 +42,7 @@ public class BuildPackagesAction extends ActionWithDelegate implements IWorkbenc
 		if (getSelection() != null)
 		{
 			IProject project = ProjectUtil.getProject(getSelection());
+			
 			if (project != null)
 			{
 				ProgressMonitorDialog dialog = new ProgressMonitorDialog(window.getShell());
@@ -49,11 +50,7 @@ public class BuildPackagesAction extends ActionWithDelegate implements IWorkbenc
 				//dialog.setBlockOnOpen(false);
 				dialog.open();
 				
-				IPackage[] packages = PackagesCore.getProjectPackages(project, monitor);
-				for (int i = 0; i < packages.length; i++)
-				{
-					PackagesCore.buildPackage(packages[i], monitor);
-				}
+				PackagesCore.buildProject(project, monitor);
 				
 				dialog.close();
 			}
