@@ -167,8 +167,10 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		}
 	}
 	
-	private IPackageFileSet findMatchingFileset (IFile file)
+	private IPackageFileSet[] findMatchingFilesets (IFile file)
 	{
+		ArrayList filesets = new ArrayList();
+		
 		for (Iterator iter = scannerCache.keySet().iterator(); iter.hasNext(); )
 		{
 			IPackage pkg = (IPackage) iter.next();
@@ -181,11 +183,12 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 				
 				if (fileset.matchesFile(scanner, file))
 				{
-					return fileset;
+					filesets.add(fileset);
 				}
 			}
 		}
-		return null;
+		
+		return (IPackageFileSet[]) filesets.toArray(new IPackageFileSet[filesets.size()]);
 	}
 	
 	private void buildFileset (IPackageFileSet fileset, boolean checkStamps)
@@ -200,7 +203,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			fireFinishedCollectingFileSet(fileset);
 			for (int i = 0; i < matchingFiles.length; i++)
 			{
-				updateFile(matchingFiles[i], fileset, checkStamps);
+				updateFile(matchingFiles[i], new IPackageFileSet[] { fileset }, checkStamps);
 			}
 		} else {
 			fireStartedCollectingFileSet(fileset);
@@ -374,17 +377,17 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		for (Iterator iter = filesToCopy.keySet().iterator(); iter.hasNext(); )	
 		{
 			IFile file = (IFile)iter.next();
-			IPackageFileSet fileset = (IPackageFileSet) filesToCopy.get(file);
+			IPackageFileSet[] filesets = (IPackageFileSet[]) filesToCopy.get(file);
 			
-			updateFile(file, fileset, false);
+			updateFile(file, filesets, false);
 		}
 		
 		for (Iterator iter = filesToRemove.keySet().iterator(); iter.hasNext(); )
 		{
 			IFile file = (IFile)iter.next();
-			IPackageFileSet fileset = (IPackageFileSet) filesToRemove.get(file);
+			IPackageFileSet[] filesets = (IPackageFileSet[]) filesToRemove.get(file);
 			
-			removeFile(file, fileset);
+			removeFile(file, filesets);
 		}
 		
 		for (Iterator iter = nodesToUpdate.iterator(); iter.hasNext(); )
@@ -418,7 +421,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	private void processFileDelta (IProject project, IResourceDelta delta, IProgressMonitor monitor)
 	{
 		IFile file = (IFile) delta.getResource();
-		IPackageFileSet fileset = findMatchingFileset(file);
+		IPackageFileSet[] filesets = findMatchingFilesets(file);
 		
 		IPackage pkg = getPackageFromFile(file);
 		if ((delta.getFlags() & IResourceDelta.REMOVED) > 0)
@@ -430,19 +433,19 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			}
 		}
 		
-		if (fileset != null)
+		if (filesets != null && filesets.length > 0)
 		{
 			if ((delta.getFlags() & IResourceDelta.ADDED) > 0)
 			{
-				filesToCopy.put(file, fileset);
+				filesToCopy.put(file, filesets);
 			}
 			else if ((delta.getFlags() & IResourceDelta.CONTENT) > 0 || (delta.getFlags() & IResourceDelta.CHANGED) > 0)
 			{
-				filesToCopy.put(file, fileset);
+				filesToCopy.put(file, filesets);
 			}
 			else if ((delta.getFlags() & IResourceDelta.REMOVED) > 0)
 			{
-				filesToRemove.put(file, fileset);
+				filesToRemove.put(file, filesets);
 			}
 		}
 	}
@@ -550,49 +553,52 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		return copyTo;
 	}
 	
-	private void updateFile(IFile file, IPackageFileSet fileset, boolean checkStamps)
+	private void updateFile(IFile file, IPackageFileSet[] filesets, boolean checkStamps)
 	{
-		IPath copyTo = getFileDestinationPath(file, fileset);
-		
-		if (checkStamps)
+		for (int i = 0; i < filesets.length; i++)
 		{
-			File packageFile = createFile(fileset, copyTo);
-			long stamp = file.getModificationStamp();
-			if (stamp != IResource.NULL_STAMP && packageFile.exists() && stamp >= packageFile.lastModified())
+			IPath copyTo = getFileDestinationPath(file, filesets[i]);
+			
+			if (checkStamps)
 			{
-				return;
-			}
-		}
-		
-		Trace.trace(getClass(), "copying " + file.getProjectRelativePath().toString() + " ...");
-		
-		InputStream in = null;
-		OutputStream out = null;
-		// I'm using the fully qualified package name here to avoid confusion with java.io
-		try {
-			try {
-				in = file.getContents();
-				out = createFileOutputStream(fileset, copyTo);
-				File.cp(in, out);
-			} catch (FileNotFoundException e) {
-				Trace.trace(getClass(), e);
-			} catch (IOException e) {
-				Trace.trace(getClass(), e);
-			} catch (CoreException e) {
-				Trace.trace(getClass(), e);
-			}
-		} finally {
-			try {
-				if (in != null) {
-					Trace.trace(getClass(), "closing file contents inputstream", Trace.DEBUG_OPTION_STREAM_CLOSE);
-					in.close();
+				File packageFile = createFile(filesets[i], copyTo);
+				long stamp = file.getModificationStamp();
+				if (stamp != IResource.NULL_STAMP && packageFile.exists() && stamp >= packageFile.lastModified())
+				{
+					return;
 				}
-				if (out != null) {
-					Trace.trace(getClass(), "closing package file outputstream", Trace.DEBUG_OPTION_STREAM_CLOSE);
-					out.close();
+			}
+			
+			Trace.trace(getClass(), "copying " + file.getProjectRelativePath().toString() + " ...");
+			
+			InputStream in = null;
+			OutputStream out = null;
+			// I'm using the fully qualified package name here to avoid confusion with java.io
+			try {
+				try {
+					in = file.getContents();
+					out = createFileOutputStream(filesets[i], copyTo);
+					File.cp(in, out);
+				} catch (FileNotFoundException e) {
+					Trace.trace(getClass(), e);
+				} catch (IOException e) {
+					Trace.trace(getClass(), e);
+				} catch (CoreException e) {
+					Trace.trace(getClass(), e);
 				}
-			} catch (IOException e) {
-				Trace.trace(getClass(), e);
+			} finally {
+				try {
+					if (in != null) {
+						Trace.trace(getClass(), "closing file contents inputstream", Trace.DEBUG_OPTION_STREAM_CLOSE);
+						in.close();
+					}
+					if (out != null) {
+						Trace.trace(getClass(), "closing package file outputstream", Trace.DEBUG_OPTION_STREAM_CLOSE);
+						out.close();
+					}
+				} catch (IOException e) {
+					Trace.trace(getClass(), e);
+				}
 			}
 		}
 	}
@@ -643,11 +649,14 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		}
 	}
 	
-	private void removeFile(IFile file, IPackageFileSet fileset)
+	private void removeFile(IFile file, IPackageFileSet[] filesets)
 	{
-		File packagedFile = new File(getFileDestinationPath(file, fileset).toFile());
-		
-		if (packagedFile.exists()) packagedFile.deleteAll();
+		for (int i = 0; i < filesets.length; i++)
+		{
+			File packagedFile = new File(getFileDestinationPath(file, filesets[i]).toFile());
+			
+			if (packagedFile.exists()) packagedFile.deleteAll();
+		}
 	}
 	
 	private void removePath(IPath path, IPackageFileSet fileset)
@@ -724,7 +733,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			fireFinishedCollectingFileSet(fileset);
 			for (int i = 0; i < matchingFiles.length; i++)
 			{
-				removeFile(matchingFiles[i], fileset);
+				removeFile(matchingFiles[i], new IPackageFileSet[] { fileset });
 			}
 		} else {
 			fireStartedCollectingFileSet(fileset);
