@@ -350,10 +350,15 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	}
 	
 	private Hashtable filesToCopy, filesToRemove;
+	/*
+	 * This method is responsible for throwing the proper events itself
+	 * as to which packages are going to be changed.
+	 */
 	private void incrementalBuild(Map args, final IProgressMonitor monitor)
 	{
 		filesToCopy = new Hashtable();
 		filesToRemove = new Hashtable();
+		final ArrayList packagesBeingChanged = new ArrayList();
 		for (Iterator iter = referencedProjects.iterator(); iter.hasNext(); )
 		{
 			final IProject project = (IProject) iter.next();
@@ -364,7 +369,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 					delta.accept(new IResourceDeltaVisitor () { 
 						public boolean visit(IResourceDelta delta) throws CoreException {
 							if (delta.getResource().getType() == IResource.FILE)
-								processFileDelta(project, delta, monitor);
+								processFileDelta(project, delta, packagesBeingChanged, monitor);
 							return true;
 						}
 					});
@@ -373,6 +378,13 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 				}
 			}
 		}
+		
+		// alert this package is being changed
+		for( int i = 0; i < packagesBeingChanged.size(); i++ ) {
+			IPackage p = (IPackage)packagesBeingChanged.get(i);
+			fireStartedBuildingPackage(p);
+		}
+		
 		
 		for (Iterator iter = filesToCopy.keySet().iterator(); iter.hasNext(); )	
 		{
@@ -404,6 +416,13 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 
 		filesToCopy.clear();
 		filesToRemove.clear();
+		
+		// alert this package is being changed
+		for( int i = 0; i < packagesBeingChanged.size(); i++ ) {
+			IPackage p = (IPackage)packagesBeingChanged.get(i);
+			fireFinishedBuildingPackage(p);
+		}
+
 	}
 	
 	private IPackage getPackageFromFile (IFile file)
@@ -418,11 +437,10 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		return null;
 	}
 	
-	private void processFileDelta (IProject project, IResourceDelta delta, IProgressMonitor monitor)
+	private void processFileDelta (IProject project, IResourceDelta delta, ArrayList packagesBeingChanged, IProgressMonitor monitor)
 	{
 		IFile file = (IFile) delta.getResource();
 		IPackageFileSet[] filesets = findMatchingFilesets(file);
-		
 		IPackage pkg = getPackageFromFile(file);
 		if ((delta.getFlags() & IResourceDelta.REMOVED) > 0)
 		{
@@ -435,6 +453,14 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		
 		if (filesets != null && filesets.length > 0)
 		{
+			// Is this right?? Is the parent guarenteed to be a package?
+			for( int i = 0; i < filesets.length; i++ ) {
+				IPackageNode n = filesets[i].getParent();
+				if( n instanceof IPackage ) 
+					packagesBeingChanged.add(n);
+			}
+			
+			
 			if ((delta.getFlags() & IResourceDelta.ADDED) > 0)
 			{
 				filesToCopy.put(file, filesets);
