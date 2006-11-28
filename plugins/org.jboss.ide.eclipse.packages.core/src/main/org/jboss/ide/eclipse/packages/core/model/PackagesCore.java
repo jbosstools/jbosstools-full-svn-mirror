@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
+import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageBuildDelegate;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
@@ -246,20 +247,30 @@ public class PackagesCore {
 	}
 	
 	/**
-	 * Builds all of a project's packages
+	 * Builds all of a project's packages  (performs a FULL_BUILD)
 	 * @param project The project to build
 	 * @param monitor A progress monitor
 	 */
 	public static void buildProject (IProject project, IProgressMonitor monitor)
 	{
+		buildProject(project, IncrementalProjectBuilder.FULL_BUILD, monitor);
+	}
+	
+	/**
+	 * Builds all of a project's packages
+	 * @param project The project to build
+	 * @param buildType FULL_BUILD, INCREMENTAL_BUILD, CLEAN_BUILD, etc
+	 * @param monitor A progress monitor
+	 */
+	public static void buildProject (IProject project, int buildType, IProgressMonitor monitor)
+	{
 		if (monitor == null) monitor = new NullProgressMonitor();
 		
 		PackageBuildDelegate delegate = new PackageBuildDelegate(project);
 		try {
-			delegate.build(IncrementalProjectBuilder.FULL_BUILD, null, monitor);
+			delegate.build(buildType, null, monitor);
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Trace.trace(PackagesCore.class, e);
 		}
 	}
 	
