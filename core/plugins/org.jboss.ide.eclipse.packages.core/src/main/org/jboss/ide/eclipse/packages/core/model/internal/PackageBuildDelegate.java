@@ -43,6 +43,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
@@ -562,12 +563,17 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	
 	private IPath getFileDestinationPath (IFile file, IPackageFileSet fileset)
 	{
-		IPath filePath = file.getProjectRelativePath();
-		IPath copyTo = filePath.removeFirstSegments(fileset.getSourceContainer().getProjectRelativePath().segmentCount()).removeLastSegments(1);
-		copyTo = copyTo.append(file.getName());
-		copyTo = copyTo.setDevice(null);
-		
-		return copyTo;
+		if (fileset.isSingleFile())
+		{
+			return new Path(file.getName());
+		} else {
+			IPath filePath = file.getProjectRelativePath();
+			IPath copyTo = filePath.removeFirstSegments(fileset.getSourceContainer().getProjectRelativePath().segmentCount()).removeLastSegments(1);
+			copyTo = copyTo.append(file.getName());
+			copyTo = copyTo.setDevice(null);
+			
+			return copyTo;
+		}
 	}
 	
 	private IPath getPathDestinationPath (IPath path, IPackageFileSet fileset)
@@ -604,6 +610,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 				try {
 					in = file.getContents();
 					out = createFileOutputStream(filesets[i], copyTo);
+					
 					File.cp(in, out);
 				} catch (FileNotFoundException e) {
 					Trace.trace(getClass(), e);
