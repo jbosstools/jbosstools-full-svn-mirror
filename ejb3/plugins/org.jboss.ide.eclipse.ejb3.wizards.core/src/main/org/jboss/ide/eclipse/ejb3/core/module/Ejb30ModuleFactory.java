@@ -153,24 +153,4 @@ public class Ejb30ModuleFactory extends ProjectModuleFactoryDelegate {
 	protected void clearCache() {
 		moduleDelegates = new HashMap(5);
 	}
-	
-	
-	
-	//  Stub
-	public class Ejb30ModuleDelegate extends ModuleDelegate {
-
-		public IModule[] getChildModules() {
-			return new IModule[0];
-		}
-
-		public IModuleResource[] members() throws CoreException {
-			return new IModuleResource[0];
-		}
-
-		public IStatus validate() {
-			return new Status(IStatus.OK, EJB3WizardsCorePlugin.PLUGIN_ID, 
-					0, "", null);
-		}
-	}
-	
 }
