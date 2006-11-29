@@ -75,10 +75,6 @@ public class PackageInfoWizardPage extends WizardPage {
 		
 		Object destination = wizard.getSelectedDestination();
 		destinationComposite = new PackageDestinationComposite(infoGroup, SWT.NONE, destination);
-		if (destination instanceof IPackageNode)
-		{
-			destinationComposite.setEditable(false);
-		}
 		
 		customManifestCheck = new Button(infoGroup , SWT.CHECK);
 		customManifestCheck.setText(PackagesUIMessages.PackageInfoWizardPage_customManifest_label);
