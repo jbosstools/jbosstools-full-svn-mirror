@@ -31,6 +31,8 @@ import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.jboss.ide.eclipse.core.test.util.JavaProjectHelper;
@@ -38,7 +40,6 @@ import org.jboss.ide.eclipse.core.test.util.TestFileUtil;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
-import org.jboss.ide.eclipse.packages.core.model.IPackageFolderWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.IPackageWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
@@ -48,6 +49,8 @@ import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFileSet;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFolder;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackages;
+import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
+import org.jboss.ide.eclipse.packages.core.model.types.JARPackageType;
 
 public class PackagesEARTest extends TestCase {
 
@@ -122,6 +125,7 @@ public class PackagesEARTest extends TestCase {
 		assertNull(ejbJar.getRef(), null);
 		assertNull(ejbJar.getToDir());
 		assertEquals(metaInfFiles.getFile(), "descriptors/application.xml");
+		assertTrue(metaInfFiles.isInWorkspace());
 		
 		assertEquals(ejbJar.getFileSets().size(), 1);
 		assertEquals(ejbJar.getFolders().size(), 1);
@@ -328,5 +332,60 @@ public class PackagesEARTest extends TestCase {
 		IFile packageFile = pkg.getPackageFile();
 		
 		assertTrue(packageFile.exists());
+		assertEquals(packageFile.getName(), "MyApp2.ear");
+		assertEquals(packageFile.getParent(), pkg.getDestinationContainer());
+		
+		de.schlichtherle.io.File packageZipFile = new de.schlichtherle.io.File(packageFile.getRawLocation().toString());
+		assertTrue(packageZipFile.exists());
+		
+		File[] children = packageZipFile.listFiles();
+		assertEquals(children.length, 2);
+		
+		File packagesFolder = children[0];
+		File metaInfFolder = children[1];
+		
+		assertEquals(metaInfFolder.getName(), "META-INF");
+		assertEquals(packagesFolder.getName(), "packages");
+		
+		children = metaInfFolder.listFiles();
+		assertEquals(children.length, 1);
+		
+		File applicationXml = children[0];
+		assertEquals(applicationXml.getName(), "application.xml");
+		
+		children = packagesFolder.listFiles();
+		assertEquals(children.length, 2);
+		
+	}
+	
+	public void testJARDefaultConfig ()
+	{
+		NullProgressMonitor nullMonitor = new NullProgressMonitor();
+		IPackageType jarPackageType = PackagesCore.getPackageType(JARPackageType.TYPE_ID);
+		
+		assertTrue(jarPackageType instanceof JARPackageType);
+		
+		IPackage jar = jarPackageType.createDefaultConfiguration(testPackagesProject.getProject(), nullMonitor);
+		
+		assertEquals(jar.getName(), "testPackagesProject.jar");
+		assertEquals(jar.getPackageType(), jarPackageType);
+		IPackageFileSet filesets[] = jar.getFileSets();
+		
+		assertEquals(filesets.length, 1);
+		IPackageFileSet classes = filesets[0];
+		
+		assertEquals(classes.getIncludesPattern(), "**/*");
+		
+//		try {
+//			testPackagesProject.getProject().build(IncrementalProjectBuilder.FULL_BUILD, nullMonitor);
+//		} catch (CoreException e) {
+//			fail(e.getMessage());
+//		}
+		
+		PackagesCore.buildPackage(jar, nullMonitor);
+		
+		IFile jarFile = jar.getPackageFile();
+		assertTrue(jarFile.exists());
+		
 	}
 }

@@ -10,15 +10,21 @@ import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.jboss.ide.eclipse.core.test.util.JavaProjectHelper;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
+import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
+import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackageBuildDelegate;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XMLBinding;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackages;
+import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
+import org.jboss.ide.eclipse.packages.core.model.types.JARPackageType;
 
 public class NewProjectTest extends TestCase {
 
@@ -93,4 +99,5 @@ public class NewProjectTest extends TestCase {
 		IPackage pkg = (IPackage) packages.get(0);
 		assertEquals(pkg.getName(), "test.jar");
 	}
+
 }
