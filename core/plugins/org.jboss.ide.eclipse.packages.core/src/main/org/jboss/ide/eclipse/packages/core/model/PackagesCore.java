@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.QualifiedName;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageBuildDelegate;
@@ -257,7 +258,8 @@ public class PackagesCore {
 	}
 	
 	/**
-	 * Builds all of a project's packages
+	 * Builds all of a project's packages. Note that this does not call any builders before or after the package builder (i.e. the JDT builder).
+	 * If you are looking to run all the builders on a project use project.build()
 	 * @param project The project to build
 	 * @param buildType FULL_BUILD, INCREMENTAL_BUILD, CLEAN_BUILD, etc
 	 * @param monitor A progress monitor
