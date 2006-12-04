@@ -13,10 +13,10 @@ public class AllTests {
 		suite.addTest(new PackagesEARTest("testSave"));
 		suite.addTest(new PackagesEARTest("testWorkingCopies"));
 		suite.addTest(new PackagesEARTest("testBuild"));
+		suite.addTest(new PackagesEARTest("testJARDefaultConfig"));
 		
 		suite.addTest(new NewProjectTest("testXbConsistency"));
 		suite.addTest(new NewProjectTest("testEclipseModelConsistency"));
-		
 		return suite;
 	}
 }
