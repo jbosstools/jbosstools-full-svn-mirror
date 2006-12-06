@@ -36,33 +36,84 @@ import org.eclipse.core.runtime.IPath;
  */
 public interface IPackageFileSet extends IPackageNode {
 
+	/**
+	 * @return Whether or not this fileset represents a single file
+	 */
 	public boolean isSingleFile();
 	
+	/**
+	 * @return Whether or not this fileset's basedir is inside the workspace
+	 */
 	public boolean isInWorkspace();
 	
+	/**
+	 * If this fileset represents a single file, and that file is in the workspace, this will return a reference to that file.
+	 * Otherwise this will return null.
+	 */
 	public IFile getFile();
 	
+	/**
+	 * If this fileset represents a single file, and that file is not in the workspace, this will return a filesystem path to that file.
+	 * Otherwise this will return null.
+	 */
 	public IPath getFilePath();
 	
+	/**
+	 * If this fileset represents a single file, this will return the destination filename of the file within this package
+	 */
 	public String getDestinationFilename();
 	
+	/**
+	 * This is a convenience method that will cast getSourceContainer() to an IProject if the source/basedir for this fileset represents a project
+	 */
 	public IProject getSourceProject();
 	
+	/**
+	 * If this fileset is based inside the workspace, this will return the workspace container at the root / base of this fileset.
+	 * @return The source container ("basedir" in ant terminology) for this fileset
+	 */
 	public IContainer getSourceContainer();
 	
+	/**
+	 * If this fileset is based in the external filesystem, this will return the absolute path of the root / base of this fileset.
+	 * @return The path to the source folder ("basedir" in ant terminology) for this fileset
+	 */
 	public IPath getSourceFolder();
 	
+	/**
+	 * @return The includes pattern for this fileset
+	 */
 	public String getIncludesPattern();
 	
+	/**
+	 * @return The excludes pattern for this fileset
+	 */
 	public String getExcludesPattern();
 	
+	/**
+	 * @return An array of matching IFile's in the workspace (for workspace-rooted filesets)
+	 */
 	public IFile[] findMatchingFiles();
 	
+	/**
+	 * @return An array of matching IPath's in the filesystem (for external filesystem filesets)
+	 */
 	public IPath[] findMatchingPaths();
 	
+	/**
+	 * @param file The file to check
+	 * @return Whether or not this fileset matches the passed-in file
+	 */
 	public boolean matchesFile(IFile file);
 	
+	/**
+	 * @param path The absolute path on the filesystem to check
+	 * @return Whether or not this fileset matches the passed-in path
+	 */
 	public boolean matchesPath(IPath path);
 	
+	/**
+	 * @return A working copy of this fileset
+	 */
 	public IPackageFileSetWorkingCopy createFileSetWorkingCopy();
 }

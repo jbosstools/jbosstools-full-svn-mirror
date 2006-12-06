@@ -35,6 +35,7 @@ import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
+import org.jboss.ide.eclipse.packages.core.model.IPackageNodeBase;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.IPackageWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
@@ -89,14 +90,14 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 	}
 
 	public IPackageFileSet[] getFileSets() {
-		IPackageNode nodes[] = getChildren(TYPE_PACKAGE_FILESET);
+		IPackageNodeBase nodes[] = getChildren(TYPE_PACKAGE_FILESET);
 		IPackageFileSet filesets[] = new IPackageFileSet[nodes.length];
 		System.arraycopy(nodes, 0, filesets, 0, nodes.length);
 		return filesets;
 	}
 
 	public IPackageFolder[] getFolders() {
-		IPackageNode nodes[] = getChildren(TYPE_PACKAGE_FOLDER);
+		IPackageNodeBase nodes[] = getChildren(TYPE_PACKAGE_FOLDER);
 		IPackageFolder folders[] = new IPackageFolder[nodes.length];
 		System.arraycopy(nodes, 0, folders, 0, nodes.length);
 		return folders;
@@ -107,7 +108,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 	}
 
 	public IPackage[] getPackages() {
-		IPackageNode nodes[] = getChildren(TYPE_PACKAGE);
+		IPackageNodeBase nodes[] = getChildren(TYPE_PACKAGE);
 		IPackage pkgs[] = new IPackage[nodes.length];
 		System.arraycopy(nodes, 0, pkgs, 0, nodes.length);
 		return pkgs;
@@ -239,7 +240,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 		
 		String path = new String(getName());
 		
-		IPackageNode parent = getParent(), save = null;
+		IPackageNodeBase parent = getParent(), save = null;
 		while (true) {
 			if (parent.getNodeType() == IPackageNode.TYPE_PACKAGE)
 				path = ((IPackage)parent).getName() + "/" + path;

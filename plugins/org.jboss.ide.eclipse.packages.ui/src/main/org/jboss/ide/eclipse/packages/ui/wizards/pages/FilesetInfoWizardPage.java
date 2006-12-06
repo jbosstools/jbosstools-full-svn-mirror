@@ -42,6 +42,7 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.PageBook;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
+import org.jboss.ide.eclipse.packages.core.model.IPackageNodeBase;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIMessages;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
@@ -50,7 +51,7 @@ import org.jboss.ide.eclipse.packages.ui.util.PackageNodeDestinationComposite;
 public class FilesetInfoWizardPage extends WizardPage {
 
 	private IPackageFileSet fileset;
-	private IPackageNode parentNode;
+	private IPackageNodeBase parentNode;
 	private Text includesText;
 	private Text excludesText;
 	private TableViewer previewTable;
@@ -77,7 +78,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 	private Composite singleFileComposite;
 	private Label singleFileProjectLabel;
 	
-	public FilesetInfoWizardPage (Shell parent, IPackageFileSet fileset, IPackageNode parentNode)
+	public FilesetInfoWizardPage (Shell parent, IPackageFileSet fileset, IPackageNodeBase parentNode)
 	{
 		super(PackagesUIMessages.FilesetInfoWizardPage_new_title, PackagesUIMessages.FilesetInfoWizardPage_new_title, null);
 		

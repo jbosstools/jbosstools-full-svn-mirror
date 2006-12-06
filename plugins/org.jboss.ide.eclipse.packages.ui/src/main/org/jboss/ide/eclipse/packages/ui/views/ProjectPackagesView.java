@@ -41,6 +41,7 @@ import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIMessages;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
+import org.jboss.ide.eclipse.packages.ui.actions.BuildPackagesAction;
 import org.jboss.ide.eclipse.packages.ui.actions.NewJARAction;
 import org.jboss.ide.eclipse.packages.ui.providers.PackagesContentProvider;
 import org.jboss.ide.eclipse.packages.ui.providers.PackagesLabelProvider;
@@ -57,13 +58,24 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	private Composite loadingPackagesComposite;
 	private TreeViewer packageTree;
 	private ProgressMonitorPart loadingProgress;
-	private Action newJARAction, editAction, deleteAction, newFolderAction, newFilesetAction;
+	private Action newJARAction, editAction, deleteAction, newFolderAction, newFilesetAction, buildAllAction, buildPackageAction;
 	private Action collapseAllAction;
 	private GroupMarker newPackageContributions;
 	private MenuManager newPackageManager;
 	private IProject currentProject;
 	private boolean loading;
 	private PackagesContentProvider contentProvider;
+	
+	private static ProjectPackagesView _instance;
+	public ProjectPackagesView ()
+	{
+		_instance = this;
+	}
+	
+	public static ProjectPackagesView instance()
+	{
+		return _instance;
+	}
 	
 	public void createPartControl(Composite parent) {
 		
@@ -160,12 +172,16 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 			}
 		};
 
+		buildAllAction = new BuildPackagesAction();
+		buildPackageAction = new BuildPackagesAction();
+		
 		newPackageContributions = new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS);
 	}
 	
 	private void createToolbar ()
 	{
 		IToolBarManager manager = getViewSite().getActionBars().getToolBarManager();
+		manager.add(buildAllAction);
 		manager.add(newJARAction);
 		manager.add(new Separator());
 		manager.add(collapseAllAction);
@@ -217,6 +233,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 						editAction.setText(PackagesUIMessages.ProjectPackagesView_editPackageAction_label); //$NON-NLS-1$
 						deleteAction.setText(PackagesUIMessages.ProjectPackagesView_deletePackageAction_label); //$NON-NLS-1$
 						editAction.setImageDescriptor(PackagesUIPlugin.getImageDescriptor(PackagesUIPlugin.IMG_PACKAGE_EDIT));
+						manager.add(buildPackageAction);
 					}
 					else if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FOLDER)
 					{
@@ -361,7 +378,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		IPackageNode node = getSelectedNode();
 		if (node != null)
 		{
-			IPackageNode parent = node.getParent();
+			IPackageNode parent = (IPackageNode) node.getParent();
 			if (parent != null)
 			{
 				parent.removeChild(node);
@@ -417,5 +434,10 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		if (!packageTree.getTree().isDisposed()) {
 			packageTree.remove(removed);
 		}
+	}
+	
+	public IProject getCurrentProject ()
+	{
+		return currentProject;
 	}
 }

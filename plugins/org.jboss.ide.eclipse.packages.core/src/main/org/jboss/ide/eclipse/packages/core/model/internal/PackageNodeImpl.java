@@ -29,6 +29,7 @@ import java.util.Properties;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Assert;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
+import org.jboss.ide.eclipse.packages.core.model.IPackageNodeBase;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeVisitor;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFileSet;
@@ -99,12 +100,12 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 		return children;
 	}
 	
-	public IPackageNode[] getAllChildren ()
+	public IPackageNodeBase[] getAllChildren ()
 	{
 		return nodesToChildren(nodeDelegate.getAllChildren());
 	}
 	
-	public IPackageNode[] getChildren(int type) {
+	public IPackageNodeBase[] getChildren(int type) {
 		return nodesToChildren(nodeDelegate.getChildren(intTypeToNodeType(type)));
 	}
 	
@@ -112,13 +113,13 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 		return nodeDelegate.hasChildren();
 	}
 	
-	public boolean hasChild (IPackageNode child)
+	public boolean hasChild (IPackageNodeBase child)
 	{
 		PackageNodeImpl childImpl = (PackageNodeImpl)child;
 		return nodeDelegate.getAllChildren().contains(childImpl.nodeDelegate);
 	}
 
-	public IPackageNode getParent() {
+	public IPackageNodeBase getParent() {
 		XbPackageNode parent = nodeDelegate.getParent();
 		if (parent != null)
 			return PackagesModel.instance().getPackageNodeImpl(parent);
@@ -147,7 +148,7 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 	}
 	
 	public boolean accept(IPackageNodeVisitor visitor, boolean depthFirst) {
-		IPackageNode children[] = getAllChildren();
+		IPackageNodeBase children[] = getAllChildren();
 		boolean keepGoing = true;
 		
 		if (!depthFirst)
