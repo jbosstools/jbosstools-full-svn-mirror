@@ -5,7 +5,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.wizard.Wizard;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSetWorkingCopy;
-import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
+import org.jboss.ide.eclipse.packages.core.model.IPackageNodeBase;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.ui.wizards.pages.FilesetInfoWizardPage;
 
@@ -13,9 +13,9 @@ public class FilesetWizard extends Wizard {
 
 	private FilesetInfoWizardPage page1;
 	private IPackageFileSet fileset;
-	private IPackageNode parentNode;
+	private IPackageNodeBase parentNode;
 	
-	public FilesetWizard(IPackageFileSet fileset, IPackageNode parentNode)
+	public FilesetWizard(IPackageFileSet fileset, IPackageNodeBase parentNode)
 	{
 		this.fileset = fileset;
 		this.parentNode = parentNode;

@@ -32,6 +32,7 @@ public class PackagesUIPlugin extends AbstractUIPlugin {
 	public static final String IMG_EJB_JAR = "icons/EJBJar.gif";
 	public static final String IMG_NEW_WAR_WIZARD="icons/new_war_wiz.png";
 	public static final String IMG_NEW_EAR_WIZARD="icons/ear-wiz-banner.gif";
+	public static final String IMG_BUILD_PACKAGES = "icons/build_packages.gif";
 	
 	// The shared instance
 	private static PackagesUIPlugin plugin;
@@ -76,7 +77,7 @@ public class PackagesUIPlugin extends AbstractUIPlugin {
 			IMG_NEW_PACKAGE, IMG_NEW_JAR_WIZARD, IMG_SINGLE_FILE,
 			IMG_MULTIPLE_FILES, IMG_COLLAPSE_ALL, IMG_PACKAGE_EDIT,
 			IMG_EAR, IMG_EJB_JAR, IMG_WAR, IMG_NEW_EAR_WIZARD,
-			IMG_NEW_WAR_WIZARD
+			IMG_NEW_WAR_WIZARD, IMG_BUILD_PACKAGES
 		});
 	}
 	

@@ -190,7 +190,7 @@ public class PackagesCore {
 	
 	public static IPackage getTopLevelPackage (IPackageNode node)
 	{
-		IPackageNode tmp = node.getParent(), top = tmp;
+		IPackageNodeBase tmp = node.getParent(), top = tmp;
 		while (tmp != null)
 		{
 			top = tmp;

@@ -21,9 +21,6 @@
  */
 package org.jboss.ide.eclipse.packages.core.model;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.IAdaptable;
-
 /**
  * The super type of all package nodes (IPackage, IPackageFileSet, IPackageFolder)
  * 
@@ -32,32 +29,18 @@ import org.eclipse.core.runtime.IAdaptable;
  * @author <a href="marshall@jboss.org">Marshall Culpepper</a>
  * @version $Revision$
  */
-public interface IPackageNode extends IAdaptable {
-
-	public static final int TYPE_PACKAGE = 0;
-	public static final int TYPE_PACKAGE_FILESET = 1;
-	public static final int TYPE_PACKAGE_FOLDER = 2;
+public interface IPackageNode extends IPackageNodeBase {
 	
-	public IPackageNode getParent();
-	public IPackageNode[] getChildren(int type);
-	public IPackageNode[] getAllChildren();
-	public boolean hasChildren();
-	public boolean hasChild(IPackageNode child);
-	
-	public int getNodeType();
-	
-	public String getProperty(String property);
-	
-	public IProject getProject();
-	
-	public boolean accept(IPackageNodeVisitor visitor);
-	public boolean accept(IPackageNodeVisitor visitor, boolean depthFirst);
-	
-	public IPackageNodeWorkingCopy createWorkingCopy();
-	
+	/**
+	 * Add a child node to this node
+	 * @param child The child to add
+	 */
 	public void addChild(IPackageNode child);
 	
+	/**
+	 * Remove a child node from this node
+	 * @param child The child to remove
+	 */
 	public void removeChild(IPackageNode child);
 	
-	public boolean hasWorkingCopy();
 }
