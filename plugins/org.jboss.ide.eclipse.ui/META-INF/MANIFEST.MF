@@ -9,7 +9,8 @@ Bundle-Vendor: %plugin.provider
 Bundle-Localization: plugin
 Export-Package: org.jboss.ide.eclipse.ui,
  org.jboss.ide.eclipse.ui.dialogs,
- org.jboss.ide.eclipse.ui.util
+ org.jboss.ide.eclipse.ui.util,
+ org.jboss.ide.eclipse.ui.wizards
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.ide,
  org.eclipse.ui.views,
