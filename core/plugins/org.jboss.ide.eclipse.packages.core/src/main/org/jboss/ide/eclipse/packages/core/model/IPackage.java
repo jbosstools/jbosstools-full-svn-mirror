@@ -128,6 +128,12 @@ public interface IPackage extends IPackageNode {
 	public IFile getPackageFile();
 
 	/**
+	 * Get the absolute path on the file system that corresponds with this package. Note that this method only works for external (filesystem) packages (null will be returned otherwise)
+	 * @return The absolute path to the package (note the file may not exist)
+	 */
+	public IPath getPackageFilePath();
+	
+	/**
 	 * If this package is not top-level, this will return a relative path to this package from within it's parent, i.e.
 	 * my.ear/web/my.war/WEB-INF/lib. Otherwise, this will return null
 	 * @return a relative IPath to this package's top level parent

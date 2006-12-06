@@ -124,6 +124,12 @@ public class PackageImpl extends PackageNodeImpl implements IPackage, IPackageWo
 		} else return null;
 	}
 
+	public IPath getPackageFilePath() {
+		if (!isDestinationInWorkspace()) {
+			return getDestinationFolder().append(new Path(getName()));
+		} else return null;
+	}
+	
 	public boolean isExploded() {
 		return packageDelegate.isExploded();
 	}
