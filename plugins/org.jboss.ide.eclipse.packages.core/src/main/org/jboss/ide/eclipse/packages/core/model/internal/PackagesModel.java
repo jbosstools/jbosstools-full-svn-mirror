@@ -156,7 +156,7 @@ public class PackagesModel {
 		}
 		
 		saveModel(pkg.getProject());
-		fireNodeRemoved(pkg);
+		fireNodeRemoved(pkg, true);
 	}
 	
 	public XbPackages getXbPackages(IProject project)
@@ -402,9 +402,8 @@ public class PackagesModel {
 		});
 	}
 	
-	protected void fireNodeRemoved (final IPackageNode removed)
-	{
-		fireEvent(removed, new Runnable() {
+	protected void fireNodeRemoved (final IPackageNode removed, boolean force) {
+		fireEvent(removed, force, new Runnable() {
 			public void run() {
 				for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
 				{
@@ -413,6 +412,9 @@ public class PackagesModel {
 				}
 			}
 		});
+	}
+	protected void fireNodeRemoved (final IPackageNode removed) {
+		fireNodeRemoved(removed, false);
 	}
 	
 	protected void fireNodeChanged (final IPackageNode changed)
@@ -428,9 +430,8 @@ public class PackagesModel {
 		});
 	}
 	
-	protected void fireEvent (IPackageNode source, Runnable runnable)
-	{
-		if (!modelBridge.containsKey(source)) //not registered in the model, no event should be broadcast
+	protected void fireEvent (IPackageNode source, boolean force, Runnable runnable) {
+		if (!force && !modelBridge.containsKey(source)) //not registered in the model, no event should be broadcast
 			return;
 		
 		PackageNodeImpl nodeImpl = (PackageNodeImpl) source;
@@ -438,6 +439,10 @@ public class PackagesModel {
 		{
 			runnable.run();
 		}
+	}
+	protected void fireEvent (IPackageNode source, Runnable runnable)
+	{
+		fireEvent(source, false, runnable);
 	}
 	
 	public boolean isPackageNodeRegistered (IPackageNode node)
