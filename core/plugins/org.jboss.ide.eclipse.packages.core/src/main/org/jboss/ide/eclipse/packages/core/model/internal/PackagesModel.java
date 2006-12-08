@@ -95,28 +95,31 @@ public class PackagesModel {
 	
 	public void registerProject(IProject project, IProgressMonitor monitor)
 	{
-		projectBeingRegistered = project;
-		monitor.beginTask("Loading configuration...", XMLBinding.NUM_UNMARSHAL_MONITOR_STEPS + 2);
-		
-		IFile packagesFile = project.getFile(PROJECT_PACKAGES_FILE);
-		if (packagesFile.exists())
+		if (projectBeingRegistered == null)
 		{
-			try {
-				if (!project.hasNature(PackagesNature.NATURE_ID)) {
-					ProjectUtil.addProjectNature(project, PackagesNature.NATURE_ID);
+			projectBeingRegistered = project;
+			monitor.beginTask("Loading configuration...", XMLBinding.NUM_UNMARSHAL_MONITOR_STEPS + 2);
+			
+			IFile packagesFile = project.getFile(PROJECT_PACKAGES_FILE);
+			if (packagesFile.exists())
+			{
+				try {
+					if (!project.hasNature(PackagesNature.NATURE_ID)) {
+						ProjectUtil.addProjectNature(project, PackagesNature.NATURE_ID);
+					}
+					
+					XbPackages packages = XMLBinding.unmarshal(packagesFile.getContents(), monitor);
+					monitor.worked(1);
+					
+					xbPackages.put(project, packages);
+					createPackageNodeImpl(project, packages);
+					monitor.worked(1);
+				} catch (CoreException e) {
+					Trace.trace(PackagesModel.class, e);
 				}
-				
-				XbPackages packages = XMLBinding.unmarshal(packagesFile.getContents(), monitor);
-				monitor.worked(1);
-				
-				xbPackages.put(project, packages);
-				createPackageNodeImpl(project, packages);
-				monitor.worked(1);
-			} catch (CoreException e) {
-				Trace.trace(PackagesModel.class, e);
 			}
+			projectBeingRegistered = null;
 		}
-		projectBeingRegistered = null;
 	}
 	
 	public IPackage createPackage(IProject project, boolean isTopLevel)
