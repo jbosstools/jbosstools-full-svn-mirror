@@ -70,7 +70,8 @@ public class PackagesModel {
 	private Hashtable xbPackages;
 	private ArrayList buildListeners;
 	private ArrayList modelListeners;
-	
+	private IProject projectBeingRegistered;
+	 
 	private PackagesModel ()
 	{
 		modelBridge = new Hashtable();
@@ -79,6 +80,7 @@ public class PackagesModel {
 		packageTypes = new Hashtable();
 		buildListeners = new ArrayList();
 		modelListeners = new ArrayList();
+		projectBeingRegistered = null;
 		
 		loadPackageTypes();
 	}
@@ -93,6 +95,7 @@ public class PackagesModel {
 	
 	public void registerProject(IProject project, IProgressMonitor monitor)
 	{
+		projectBeingRegistered = project;
 		monitor.beginTask("Loading configuration...", XMLBinding.NUM_UNMARSHAL_MONITOR_STEPS + 2);
 		
 		IFile packagesFile = project.getFile(PROJECT_PACKAGES_FILE);
@@ -113,6 +116,7 @@ public class PackagesModel {
 				Trace.trace(PackagesModel.class, e);
 			}
 		}
+		projectBeingRegistered = null;
 	}
 	
 	public IPackage createPackage(IProject project, boolean isTopLevel)
@@ -434,12 +438,16 @@ public class PackagesModel {
 		if (!force && !modelBridge.containsKey(source)) //not registered in the model, no event should be broadcast
 			return;
 		
+		if (projectBeingRegistered != null && source.getProject().equals(projectBeingRegistered))
+			return;
+		
 		PackageNodeImpl nodeImpl = (PackageNodeImpl) source;
 		if (!nodeImpl.isWorkingCopy())
 		{
 			runnable.run();
 		}
 	}
+	
 	protected void fireEvent (IPackageNode source, Runnable runnable)
 	{
 		fireEvent(source, false, runnable);
