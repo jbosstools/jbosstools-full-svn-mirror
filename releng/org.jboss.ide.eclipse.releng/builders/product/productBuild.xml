@@ -255,12 +255,12 @@
 		<property file="${build.root}/requirements/eclipse/build.properties"/>
 		<property name="product.plugin.dir" value="${product.build.root}/eclipse/plugins/org.jboss.ide.eclipse.product"/>
 		<!-- copy the necessary configuration product configuration files -->
-		<copy file="${product.plugin.dir}/.eclipseproduct" todir="${build.dest}/eclipse" overwrite="true">
+		<copy file="${product.plugin.dir}/.eclipseproduct" todir="${build.dest}/eclipse" overwrite="true" failonerror="false">
 			<filterchain>
 				<expandproperties/>
 			</filterchain>
 		</copy>
-		<copy file="${product.plugin.dir}/config.ini" todir="${build.dest}/eclipse/configuration" overwrite="true">
+		<copy file="${product.plugin.dir}/config.ini" todir="${build.dest}/eclipse/configuration" overwrite="true" failonerror="false">
 			<filterchain>
 				<expandproperties/>
 			</filterchain>
