@@ -1,22 +1,27 @@
 package org.jboss.ide.eclipse.packages.ui.wizards;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
+import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
-import org.jboss.ide.eclipse.packages.core.model.IPackageWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.ui.wizards.pages.PackageInfoWizardPage;
+import org.jboss.ide.eclipse.ui.wizards.WizardPageWithNotification;
+import org.jboss.ide.eclipse.ui.wizards.WizardWithNotification;
 
-public abstract class AbstractPackageWizard extends Wizard implements INewWizard
+public abstract class AbstractPackageWizard extends WizardWithNotification implements INewWizard
 {
 	private PackageInfoWizardPage firstPage;
 	private WizardPage pages[];
@@ -48,34 +53,34 @@ public abstract class AbstractPackageWizard extends Wizard implements INewWizard
 	}
 	
 	public boolean performFinish() {
-		Object destContainer = firstPage.getPackageDestination();
+		IWizardPage currentPage = getContainer().getCurrentPage();
 		
-		boolean isTopLevel = (destContainer == null || (!(destContainer instanceof IPackageNode)));
-		IPackage pkg = PackagesCore.createPackage(project, isTopLevel);
-		IPackageWorkingCopy packageWC = pkg.createPackageWorkingCopy();
-		
-		packageWC.setName(firstPage.getPackageName());
-		packageWC.setExploded(firstPage.isPackageExploded());
-		if (firstPage.isManifestEnabled())
+		if (currentPage instanceof WizardPageWithNotification)
 		{
-			packageWC.setManifest(firstPage.getManifestFile());
+			((WizardPageWithNotification)currentPage).pageExited(WizardWithNotification.FINISH);
 		}
 		
-		if (!destContainer.equals(project) && destContainer instanceof IContainer) {
-			packageWC.setDestinationContainer((IContainer)destContainer);
-		}
-		else if (destContainer instanceof IPath)
-		{
-			packageWC.setDestinationFolder((IPath) destContainer);
-		}
+		final IPackage pkg = firstPage.getPackage();
+		Object destination = firstPage.getPackageDestination();
 		
-		boolean performed = performFinish(packageWC);
+		boolean performed = performFinish(pkg);
 		
 		if (performed)
 		{
-			pkg = packageWC.savePackage();
-			if (destContainer instanceof IPackageNode) {
-				IPackageNode node = (IPackageNode) destContainer;
+			try {
+				getContainer().run(false, false, new IRunnableWithProgress () {
+					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+						PackagesCore.attach(pkg, monitor);	
+					}
+				});
+			} catch (InvocationTargetException e) {
+				Trace.trace(getClass(), e);
+			} catch (InterruptedException e) {
+				Trace.trace(getClass(), e);
+			}
+			
+			if (destination instanceof IPackageNode) {
+				IPackageNode node = (IPackageNode) destination;
 				node.addChild(pkg);
 			}
 		}
@@ -102,6 +107,8 @@ public abstract class AbstractPackageWizard extends Wizard implements INewWizard
 		else {
 			selectedDestination = project;
 		}
+		
+		setNeedsProgressMonitor(true);
 	}
 	
 	public Object getSelectedDestination ()
@@ -109,12 +116,22 @@ public abstract class AbstractPackageWizard extends Wizard implements INewWizard
 		return selectedDestination;
 	}
 	
-	public abstract boolean performFinish(IPackageWorkingCopy pkg);
+	public abstract boolean performFinish(IPackage pkg);
 	public abstract WizardPage[] createWizardPages();
 	public abstract ImageDescriptor getImageDescriptor();
 	public abstract String getPackageExtension();
 	
 	public IProject getProject() {
 		return project;
+	}
+	
+	/**
+	 * Returns the package created by this wizard.
+	 * Note: This should only be called after the first page has been completed
+	 * @return The package
+	 */
+	public IPackage getPackage ()
+	{
+		return firstPage.getPackage();
 	}
 }

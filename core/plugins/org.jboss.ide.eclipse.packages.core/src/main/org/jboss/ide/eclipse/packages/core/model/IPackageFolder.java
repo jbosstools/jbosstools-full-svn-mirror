@@ -34,15 +34,34 @@ import org.eclipse.core.runtime.IPath;
  */
 public interface IPackageFolder extends IPackageNode {
 
+	/**
+	 * @return The name of this folder
+	 */
 	public String getName();
 	
+	/**
+	 * Set the name of this folder
+	 * @param name The name of this folder
+	 */
+	public void setName(String name);
+	
+	/**
+	 * @return An array of sub-packages of this folder
+	 */
 	public IPackage[] getPackages();
 	
+	/**
+	 * @return An array of sub-folders of this folder
+	 */
 	public IPackageFolder[] getFolders();
 	
+	/**
+	 * @return An array of filesets whose destination is this folder
+	 */
 	public IPackageFileSet[] getFileSets();
 	
-	public IPackageFolderWorkingCopy createFolderWorkingCopy();
-	
+	/**
+	 * @return The path within the package to this folder
+	 */
 	public IPath getPackageRelativePath();
 }

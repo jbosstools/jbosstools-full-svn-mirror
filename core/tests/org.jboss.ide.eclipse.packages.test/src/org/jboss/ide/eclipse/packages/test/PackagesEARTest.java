@@ -31,8 +31,6 @@ import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IncrementalProjectBuilder;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.jboss.ide.eclipse.core.test.util.JavaProjectHelper;
@@ -41,7 +39,6 @@ import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
-import org.jboss.ide.eclipse.packages.core.model.IPackageWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XMLBinding;
@@ -223,7 +220,7 @@ public class PackagesEARTest extends TestCase {
 		}
 	}
 	
-	public void testModelBridge ()
+	public void testModel ()
 	{
 		PackagesModel.instance().registerProject(testPackagesProject.getProject(), new NullProgressMonitor());
 		List packages = PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
@@ -235,7 +232,7 @@ public class PackagesEARTest extends TestCase {
 		assertEquals(earPackage.getProject(), testPackagesProject.getProject());
 		assertEquals(earPackage.getName(), "MyApp.ear");
 		assertEquals(earPackage.getNodeType(), IPackageNode.TYPE_PACKAGE);
-		assertEquals(earPackage.getPackageType(), "j2ee.ear");
+//		assertEquals(earPackage.getPackageType(), "j2ee.ear");
 		
 		IPackageFolder earPackageFolders[] = earPackage.getFolders();
 		assertNotNull(earPackageFolders);
@@ -253,7 +250,7 @@ public class PackagesEARTest extends TestCase {
 		assertEquals(ejbJarPackage.getProject(), testPackagesProject.getProject());
 		assertEquals(ejbJarPackage.getName(), "MyEJBs.jar");
 		assertEquals(ejbJarPackage.getNodeType(), IPackageNode.TYPE_PACKAGE);
-		assertEquals(ejbJarPackage.getPackageType(), "j2ee.ejbjar");
+//		assertEquals(ejbJarPackage.getPackageType(), "j2ee.ejbjar");
 		
 		IPackageFileSet ejbJarFilesets[] = ejbJarPackage.getFileSets();
 		IPackageFolder ejbJarFolders[] = ejbJarPackage.getFolders();
@@ -275,7 +272,7 @@ public class PackagesEARTest extends TestCase {
 		assertEquals(warPackage.getProject(), testPackagesProject.getProject());
 		assertEquals(warPackage.getName(), "MyApp.war");
 		assertEquals(warPackage.getNodeType(), IPackageNode.TYPE_PACKAGE);
-		assertEquals(warPackage.getPackageType(), "j2ee.war");
+//		assertEquals(warPackage.getPackageType(), "j2ee.war");
 		
 		IPackageFolder[] warFolders = warPackage.getFolders();
 		assertNotNull(warFolders);
@@ -291,23 +288,6 @@ public class PackagesEARTest extends TestCase {
 		assertEquals(webInfFilesets.length, 1);
 		
 		assertFileset(webInfFilesets[0], "descriptors", new String[] { "descriptors/web.xml","descriptors/jboss-web.xml"}, "*web.xml", null);
-	}
-	
-	public void testWorkingCopies ()
-	{
-		List packages = PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
-		assertEquals(packages.size(), 1);
-		
-		IPackage pkg = (IPackage) packages.get(0);
-		assertNotNull(pkg);
-		
-		IPackageWorkingCopy wc = pkg.createPackageWorkingCopy();
-		
-		wc.setName("MyApp2.ear");	
-		assertEquals(pkg.getName(), "MyApp.ear");
-		wc.save();
-		assertEquals(pkg.getName(), "MyApp2.ear");
-		
 	}
 	
 	public void testSave()
@@ -332,7 +312,7 @@ public class PackagesEARTest extends TestCase {
 		IFile packageFile = pkg.getPackageFile();
 		
 		assertTrue(packageFile.exists());
-		assertEquals(packageFile.getName(), "MyApp2.ear");
+		assertEquals(packageFile.getName(), "MyApp.ear");
 		assertEquals(packageFile.getParent(), pkg.getDestinationContainer());
 		
 		de.schlichtherle.io.File packageZipFile = new de.schlichtherle.io.File(packageFile.getRawLocation().toString());
@@ -387,5 +367,23 @@ public class PackagesEARTest extends TestCase {
 		IFile jarFile = jar.getPackageFile();
 		assertTrue(jarFile.exists());
 		
+	}
+	
+	public void testDetachedNodes ()
+	{
+		NullProgressMonitor nullMonitor = new NullProgressMonitor();
+		
+		IPackage detachedPackage = PackagesCore.createDetachedPackage(testPackagesProject.getProject(), true);
+		
+		detachedPackage.setName("testPackagesProject.jar");
+		detachedPackage.setPackageType(PackagesCore.getPackageType(JARPackageType.TYPE_ID));
+		
+		IPackageFileSet detachedFileset = PackagesCore.createDetachedPackageFileSet(testPackagesProject.getProject());
+		detachedPackage.addChild(detachedFileset);
+		
+		IPackage[] packages = PackagesCore.getProjectPackages(testPackagesProject.getProject(), nullMonitor);
+		int index = Arrays.binarySearch(packages, detachedPackage);
+		
+		assertTrue(index >= 0);
 	}
 }

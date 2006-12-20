@@ -30,9 +30,6 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
-import org.jboss.ide.eclipse.packages.core.model.IPackageFileSetWorkingCopy;
-import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
-import org.jboss.ide.eclipse.packages.core.model.IPackageNodeWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFileSet;
 
@@ -43,10 +40,9 @@ import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFileSet;
  * @version $Revision$
  */
 public class PackageFileSetImpl extends PackageNodeImpl implements
-		IPackageFileSet, IPackageFileSetWorkingCopy {
+		IPackageFileSet {
 
 	private XbFileSet filesetDelegate;
-	private PackageFileSetImpl original;
 	
 	public PackageFileSetImpl (IProject project, XbFileSet delegate)
 	{
@@ -268,44 +264,7 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 		
 		filesetDelegate.setProject(project.getName());
 	}
-
-	public IPackageNodeWorkingCopy createWorkingCopy() {
-		return createFileSetWorkingCopy();
-	}
 	
-	public IPackageFileSetWorkingCopy createFileSetWorkingCopy() {
-		PackageFileSetImpl copy = new PackageFileSetImpl(project, new XbFileSet(filesetDelegate));
-		copy.original = this;
-		hasWorkingCopy = true;
-		return copy;
-	}
-	
-	public boolean hasWorkingCopy() {
-		return hasWorkingCopy;
-	}
-	
-	public IPackageNode save() {
-		return saveFileSet();
-	}
-	
-	public IPackageFileSet saveFileSet() {
-		PackageFileSetImpl originalImpl = (PackageFileSetImpl) original;
-		originalImpl.getFileSetDelegate().copyFrom(filesetDelegate);
-		
-		PackagesModel.instance().saveAndRegister(original);
-		PackagesModel.instance().fireNodeChanged(original);
-		original.hasWorkingCopy = false;
-		return original;
-	}
-	
-	public IPackageNode getOriginal() {
-		return getOriginalFileSet();
-	}
-	
-	public IPackageFileSet getOriginalFileSet() {
-		return original;
-	}
-
 	protected XbFileSet getFileSetDelegate () {
 		return filesetDelegate;
 	}

@@ -2,7 +2,8 @@ package org.jboss.ide.eclipse.packages.ui.wizards.pages;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -16,13 +17,17 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jboss.ide.eclipse.packages.core.Trace;
+import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
+import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIMessages;
 import org.jboss.ide.eclipse.packages.ui.util.PackageDestinationComposite;
-import org.jboss.ide.eclipse.packages.ui.util.PackageNodeDestinationComposite;
 import org.jboss.ide.eclipse.packages.ui.wizards.AbstractPackageWizard;
+import org.jboss.ide.eclipse.ui.wizards.WizardPageWithNotification;
+import org.jboss.ide.eclipse.ui.wizards.WizardWithNotification;
 
-public class PackageInfoWizardPage extends WizardPage {
+public class PackageInfoWizardPage extends WizardPageWithNotification {
 
 	private AbstractPackageWizard wizard;
 	private Text packageNameText;
@@ -36,7 +41,8 @@ public class PackageInfoWizardPage extends WizardPage {
 	private boolean manifestEnabled;
 	private IFile manifestFile;
 	private PackageDestinationComposite destinationComposite;
-
+	private IPackage pkg;
+	
 	public PackageInfoWizardPage (AbstractPackageWizard wizard)
 	{
 		super (PackagesUIMessages.PackageInfoWizardPage_title, PackagesUIMessages.PackageInfoWizardPage_title, wizard.getImageDescriptor());
@@ -156,6 +162,55 @@ public class PackageInfoWizardPage extends WizardPage {
 		return true;
 	}
 	
+	
+	public void pageExited(int button) {
+		Trace.trace(getClass(), "pageExited");
+		if (button == WizardWithNotification.NEXT || button == WizardWithNotification.FINISH)
+		{
+			createPackage();
+		}
+	}
+	
+	private void createPackage ()
+	{
+		Trace.trace(getClass(), "creating package");
+		
+		Object destContainer = getPackageDestination();
+		
+		boolean isTopLevel = (destContainer == null || (!(destContainer instanceof IPackageNode)));
+		
+		IProject project = null;
+		
+		if (destContainer instanceof IPackageNode)
+		{
+			project = ((IPackageNode)destContainer).getProject();
+		}
+		else if (destContainer instanceof IContainer)
+		{
+			project = ((IContainer)destContainer).getProject();
+		}
+		else {
+			project = wizard.getProject();
+		}
+		
+		pkg = PackagesCore.createDetachedPackage(project, isTopLevel);
+		
+		pkg.setName(getPackageName());
+		pkg.setExploded(isPackageExploded());
+		if (isManifestEnabled())
+		{
+			pkg.setManifest(getManifestFile());
+		}
+		
+		if (!destContainer.equals(wizard.getProject()) && destContainer instanceof IContainer) {
+			pkg.setDestinationContainer((IContainer)destContainer);
+		}
+		else if (destContainer instanceof IPath)
+		{
+			pkg.setDestinationFolder((IPath) destContainer);
+		}
+	}
+	
 	private void expand(Control control)
 	{
 		control.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -184,5 +239,10 @@ public class PackageInfoWizardPage extends WizardPage {
 	private void setWizard(AbstractPackageWizard wizard)
 	{
 		this.wizard = wizard;
+	}
+	
+	public IPackage getPackage ()
+	{
+		return pkg;
 	}
 }

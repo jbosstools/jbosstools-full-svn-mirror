@@ -27,10 +27,7 @@ import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
-import org.jboss.ide.eclipse.packages.core.model.IPackageFolderWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
-import org.jboss.ide.eclipse.packages.core.model.IPackageNodeBase;
-import org.jboss.ide.eclipse.packages.core.model.IPackageNodeWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFolder;
 
 /**
@@ -40,10 +37,9 @@ import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFolder;
  * @version $Revision$
  */
 public class PackageFolderImpl extends PackageNodeImpl implements
-		IPackageFolder, IPackageFolderWorkingCopy {
+		IPackageFolder {
 
 	private XbFolder folderDelegate;
-	private PackageFolderImpl original;
 	
 	public PackageFolderImpl(IProject project, XbFolder delegate)
 	{
@@ -57,20 +53,20 @@ public class PackageFolderImpl extends PackageNodeImpl implements
 	}
 
 	public IPackageFileSet[] getFileSets() {
-		IPackageNodeBase nodes[] = getChildren(TYPE_PACKAGE_FILESET);
+		IPackageNode nodes[] = getChildren(TYPE_PACKAGE_FILESET);
 		IPackageFileSet filesets[] = new IPackageFileSet[nodes.length];
 		System.arraycopy(nodes, 0, filesets, 0, nodes.length);
 		return filesets;
 	}
 
 	public IPackageFolder[] getFolders() {
-		IPackageNodeBase nodes[] = getChildren(TYPE_PACKAGE_FOLDER);
+		IPackageNode nodes[] = getChildren(TYPE_PACKAGE_FOLDER);
 		IPackageFolder folders[] = new IPackageFolder[nodes.length];
 		System.arraycopy(nodes, 0, folders, 0, nodes.length);
 		return folders;
 	}
 	public IPackage[] getPackages() {
-		IPackageNodeBase nodes[] = getChildren(TYPE_PACKAGE);
+		IPackageNode nodes[] = getChildren(TYPE_PACKAGE);
 		IPackage pkgs[] = new IPackage[nodes.length];
 		System.arraycopy(nodes, 0, pkgs, 0, nodes.length);
 		return pkgs;
@@ -95,49 +91,11 @@ public class PackageFolderImpl extends PackageNodeImpl implements
 	public void setName(String name) {
 		folderDelegate.setName(name);
 	}
-
-	public IPackageNodeWorkingCopy createWorkingCopy() {
-		return createFolderWorkingCopy();
-	}
-	
-	public IPackageFolderWorkingCopy createFolderWorkingCopy() {
-		PackageFolderImpl copy = new PackageFolderImpl(project, new XbFolder(folderDelegate));
-		copy.original = this;
-		hasWorkingCopy = true;
-		
-		return copy;
-	}
-	
-	public boolean hasWorkingCopy() {
-		return hasWorkingCopy;
-	}
-
-	public IPackageNode save() {
-		return saveFolder();
-	}
-	
-	public IPackageFolder saveFolder() {
-		PackageFolderImpl originalImpl = (PackageFolderImpl) original;
-		originalImpl.getFolderDelegate().copyFrom(folderDelegate);
-
-		PackagesModel.instance().saveAndRegister(original);		
-		PackagesModel.instance().fireNodeChanged(original);
-		original.hasWorkingCopy = false;
-		return original;
-	}
-
-	public IPackageNode getOriginal() {
-		return getOriginalFolder();
-	}
-	
-	public IPackageFolder getOriginalFolder() {
-		return original;
-	}
 	
 	public IPath getPackageRelativePath() {
 		String path = new String(getName());
 		
-		IPackageNodeBase parent = getParent(), save = null;
+		IPackageNode parent = getParent(), save = null;
 		while (true) {
 			if (parent.getNodeType() == IPackageNode.TYPE_PACKAGE)
 				path = ((IPackage)parent).getName() + "/" + path;

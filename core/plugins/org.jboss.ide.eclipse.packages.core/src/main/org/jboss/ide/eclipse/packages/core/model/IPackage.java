@@ -113,13 +113,6 @@ public interface IPackage extends IPackageNode {
 	 * @return A list of filesets contained in this package
 	 */
 	public IPackageFileSet[] getFileSets();
-	
-	/**
-	 * Create a working copy of this IPackage. This will allow you to work on a disconnected model object until
-	 * you are ready to make the changes live, at which point you can use workingCopy.save()
-	 * @return A working copy of this package
-	 */
-	public IPackageWorkingCopy createPackageWorkingCopy();
 
 	/**
 	 * Get the IFile that corresponds with this package. Note that this method only works for in-workspace packages (null will be returned otherwise)
@@ -139,4 +132,40 @@ public interface IPackage extends IPackageNode {
 	 * @return a relative IPath to this package's top level parent
 	 */
 	public IPath getPackageRelativePath();
+	
+	/**
+	 * Set the package type of this package
+	 * @param type The package type
+	 */
+	public void setPackageType(IPackageType type);
+
+	/**
+	 * Set the name of this package
+	 * @param name This package's name
+	 */
+	public void setName(String name);
+	
+	/**
+	 * Set whether or not this package is generated as a folder
+	 * @param exploded
+	 */
+	public void setExploded(boolean exploded);
+	
+	/**
+	 * Set a path to a custom manifest for this package. This is usefulf or runnable JARs etc.
+	 * @param manifestFile The manifest file in the workspace
+	 */
+	public void setManifest(IFile manifestFile);
+	
+	/**
+	 * Sets the destination folder in the filesystem for this package
+	 * @param path The absolute path where this package will be built
+	 */
+	public void setDestinationFolder (IPath path);
+	
+	/**
+	 * Sets the destination container in the workspace for this package
+	 * @param container The container where this package will be built
+	 */
+	public void setDestinationContainer(IContainer container);
 }
