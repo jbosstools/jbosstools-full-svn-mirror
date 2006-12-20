@@ -15,6 +15,21 @@ import org.jboss.ide.eclipse.packages.core.model.IPackage;
 public interface IPackageType {
 
 	/**
+	 * Represents full support for a project
+	 */
+	public static final int SUPPORT_FULL = 0;
+	
+	/**
+	 * Represents no support for a project
+	 */
+	public static final int SUPPORT_NONE = 1;
+	
+	/**
+	 * Represents conditional support for a project
+	 */
+	public static final int SUPPORT_CONDITIONAL = 2;
+	
+	/**
 	 * @return The ID for this PackageType, i.e. "jar", "war" etc
 	 */
 	public String getId();
@@ -34,4 +49,12 @@ public interface IPackageType {
 	 */
 	public IPackage createDefaultConfiguration(IProject project, IProgressMonitor monitor);
 	
+	/**
+	 * This will return the type of support this package type has for the passed in project.
+	 * The type of support can be FULL (should be no problems), NONE (this project is not supported),
+	 *  or CONDITIONAL (there might be some user input needed before the project supports this package type)
+	 * @param project The project to check
+	 * @return The support type this package type has for the project
+	 */
+	public int getSupportFor (IProject project);
 }
