@@ -36,6 +36,7 @@ import org.eclipse.jface.wizard.WizardDialog;
 public abstract class WizardWithNotification extends Wizard implements IPageChangedListener {
 	public static final int NEXT = 1;
 	public static final int PREVIOUS = 2;
+	public static final int FINISH = 3;
 	public static final int UNKNOWN = 4;
 	
 	
