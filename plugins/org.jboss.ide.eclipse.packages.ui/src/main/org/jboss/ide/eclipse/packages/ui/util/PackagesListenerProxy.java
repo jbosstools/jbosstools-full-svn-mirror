@@ -13,6 +13,8 @@ public class PackagesListenerProxy implements IPackagesModelListener
 		public static final int ADDED = 0;
 		public static final int REMOVED = 1;
 		public static final int CHANGED = 2;
+		public static final int ATTACHED = 3;
+		
 		public IPackageNode node;
 		public int event;
 		public void run ()
@@ -23,6 +25,7 @@ public class PackagesListenerProxy implements IPackagesModelListener
 				case ADDED: listener.packageNodeAdded(node); break;
 				case REMOVED: listener.packageNodeRemoved(node); break;
 				case CHANGED: listener.packageNodeChanged(node); break;
+				case ATTACHED: listener.packageNodeAttached(node); break;
 				}
 			}
 			
@@ -54,4 +57,9 @@ public class PackagesListenerProxy implements IPackagesModelListener
 		Display.getDefault().syncExec(internalListener);
 	}
 
+	public void packageNodeAttached(IPackageNode attached) {
+		internalListener.node = attached;
+		internalListener.event = Listener.ATTACHED;
+		Display.getDefault().syncExec(internalListener);
+	}
 }

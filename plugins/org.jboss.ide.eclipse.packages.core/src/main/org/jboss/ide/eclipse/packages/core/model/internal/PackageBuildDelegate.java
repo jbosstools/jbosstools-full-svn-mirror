@@ -50,7 +50,6 @@ import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
-import org.jboss.ide.eclipse.packages.core.model.IPackageNodeBase;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeVisitor;
 import org.jboss.ide.eclipse.packages.core.model.IPackagesBuildListener;
 import org.jboss.ide.eclipse.packages.core.model.IPackagesModelListener;
@@ -102,6 +101,11 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	
 	public void packageNodeRemoved(IPackageNode removed) {
 		nodesToRemove.add(removed);
+	}
+	
+	public void packageNodeAttached(IPackageNode attached) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	private void fireStartedBuild (IProject project)
@@ -457,7 +461,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		{
 			// Is this right?? Is the parent guarenteed to be a package?
 			for( int i = 0; i < filesets.length; i++ ) {
-				IPackageNodeBase n = filesets[i].getParent();
+				IPackageNode n = filesets[i].getParent();
 				if( n instanceof IPackage ) 
 					packagesBeingChanged.add(n);
 			}
@@ -482,7 +486,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	{
 		ArrayList parents = new ArrayList();
 		
-		IPackageNodeBase parent = fileset.getParent();
+		IPackageNode parent = fileset.getParent();
 		while (parent != null)
 		{
 			parents.add(0, parent);

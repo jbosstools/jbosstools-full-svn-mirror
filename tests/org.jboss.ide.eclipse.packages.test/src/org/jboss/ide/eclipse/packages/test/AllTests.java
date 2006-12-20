@@ -9,9 +9,8 @@ public class AllTests {
 	{
 		TestSuite suite = new TestSuite();
 		suite.addTest(new PackagesEARTest("testCorrectBinding"));
-		suite.addTest(new PackagesEARTest("testModelBridge"));
+		suite.addTest(new PackagesEARTest("testModel"));
 		suite.addTest(new PackagesEARTest("testSave"));
-		suite.addTest(new PackagesEARTest("testWorkingCopies"));
 		suite.addTest(new PackagesEARTest("testBuild"));
 		suite.addTest(new PackagesEARTest("testJARDefaultConfig"));
 		

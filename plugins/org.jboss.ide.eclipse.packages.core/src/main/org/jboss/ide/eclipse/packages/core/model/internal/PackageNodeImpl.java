@@ -29,21 +29,21 @@ import java.util.Properties;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Assert;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
-import org.jboss.ide.eclipse.packages.core.model.IPackageNodeBase;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeVisitor;
-import org.jboss.ide.eclipse.packages.core.model.IPackageNodeWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFileSet;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFolder;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackageNodeWithProperties;
+import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackages;
 
-public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorkingCopy {
+public abstract class PackageNodeImpl implements IPackageNode {
 
 	protected XbPackageNodeWithProperties nodeDelegate;
 	protected IProject project;
-	protected ArrayList childrenToRegister, childrenToUnregister;
-	protected boolean hasWorkingCopy;
+	protected IPackageNode parent;
+	protected ArrayList children;
+	protected boolean detached, hasWorkingCopy;
 	
 	protected static int nodeTypeToIntType (Class type)
 	{
@@ -70,9 +70,10 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 	{
 		nodeDelegate = delegate;
 		this.project = project;
-		childrenToRegister = new ArrayList();
-		childrenToUnregister = new ArrayList();
 		hasWorkingCopy = false;
+		detached = false;
+		
+		children = new ArrayList();
 	}
 	
 	public PackageNodeImpl ()
@@ -85,48 +86,53 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 		return nodeDelegate;
 	}
 	
-	private IPackageNode[] nodesToChildren (List nodes)
+	public IPackageNode[] getAllChildren ()
 	{
-		IPackageNode children[] = new IPackageNode[nodes.size()];
-		int i = 0;
-		
-		for (Iterator iter = nodes.iterator(); iter.hasNext();)
+		return (IPackageNode[]) children.toArray(new IPackageNode[children.size()]);
+	}
+	
+	public IPackageNode[] getChildren(int type) {
+		ArrayList typedChildren = new ArrayList();
+		for (Iterator iter = children.iterator(); iter.hasNext(); )
 		{
-			XbPackageNode node = (XbPackageNode) iter.next();
-			children[i] = PackagesModel.instance().getPackageNodeImpl(node);
-			i++;
+			IPackageNode child = (IPackageNode) iter.next();
+			if (child.getNodeType() == type)
+			{
+				typedChildren.add(child);
+			}
 		}
 		
-		return children;
-	}
-	
-	public IPackageNodeBase[] getAllChildren ()
-	{
-		return nodesToChildren(nodeDelegate.getAllChildren());
-	}
-	
-	public IPackageNodeBase[] getChildren(int type) {
-		return nodesToChildren(nodeDelegate.getChildren(intTypeToNodeType(type)));
+		return (IPackageNode[]) typedChildren.toArray(new IPackageNode[typedChildren.size()]);
 	}
 	
 	public boolean hasChildren () {
 		return nodeDelegate.hasChildren();
 	}
 	
-	public boolean hasChild (IPackageNodeBase child)
+	public boolean hasChild (IPackageNode child)
 	{
 		PackageNodeImpl childImpl = (PackageNodeImpl)child;
 		return nodeDelegate.getAllChildren().contains(childImpl.nodeDelegate);
 	}
 
-	public IPackageNodeBase getParent() {
-		XbPackageNode parent = nodeDelegate.getParent();
-		if (parent != null)
-			return PackagesModel.instance().getPackageNodeImpl(parent);
-		
-		return null;
+	public IPackageNode getParent() {
+		return parent;
 	}
 
+	public void setParent (IPackageNode parent)
+	{
+		if (parent != null)
+		{
+			this.parent = parent;
+			nodeDelegate.setParent(((PackageNodeImpl)parent).getNodeDelegate());
+		}
+		else if (getNodeType() == TYPE_PACKAGE) {
+			this.parent = null;
+			XbPackages packages = PackagesModel.instance().getXbPackages(getProject());
+			nodeDelegate.setParent(packages);
+		}
+	}
+	
 	public IProject getProject() {
 		return project;
 	}
@@ -148,7 +154,7 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 	}
 	
 	public boolean accept(IPackageNodeVisitor visitor, boolean depthFirst) {
-		IPackageNodeBase children[] = getAllChildren();
+		IPackageNode children[] = getAllChildren();
 		boolean keepGoing = true;
 		
 		if (!depthFirst)
@@ -177,8 +183,20 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 		
 		nodeDelegate.addChild(impl.nodeDelegate);
 		
-		PackagesModel.instance().saveModel(node.getProject());
-		PackagesModel.instance().fireNodeAdded(node);
+		addChildImpl(impl);
+		
+		if (!detached)
+		{
+			PackagesModel.instance().saveModel(node.getProject(), null);
+			PackagesModel.instance().fireNodeAdded(node);
+		}
+	}
+	
+	// convenience so we can skip adding in the delegate
+	protected void addChildImpl (PackageNodeImpl childImpl)
+	{
+		children.add(childImpl);
+		childImpl.setParent(this);
 	}
 	
 	public void removeChild(IPackageNode node) {
@@ -190,8 +208,14 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 			nodeDelegate.removeChild(impl.nodeDelegate);
 		}
 		
-		PackagesModel.instance().saveModel(node.getProject());
-		PackagesModel.instance().fireNodeRemoved(node);
+		if (children.contains(node))
+			children.remove(node);
+		
+		if (!detached)
+		{
+			PackagesModel.instance().saveModel(node.getProject(), null);
+			PackagesModel.instance().fireNodeRemoved(node);
+		}
 	}
 	
 	public Object getAdapter(Class adapter) {
@@ -202,12 +226,11 @@ public abstract class PackageNodeImpl implements IPackageNode, IPackageNodeWorki
 		else return null;
 	}
 	
-	public boolean isWorkingCopy ()
-	{
-		return getOriginal() != null;
+	public boolean isDetached() {
+		return detached;
 	}
-	
-	protected void finalize() throws Throwable {
-		if (getOriginal() != null) ((PackageNodeImpl)getOriginal()).hasWorkingCopy = false;
+
+	public void setDetached(boolean detached) {
+		this.detached = detached;
 	}
 }

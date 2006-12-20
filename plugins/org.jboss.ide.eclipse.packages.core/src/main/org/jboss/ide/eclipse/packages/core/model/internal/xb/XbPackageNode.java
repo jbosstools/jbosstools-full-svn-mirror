@@ -91,7 +91,7 @@ public abstract class XbPackageNode implements Cloneable {
 		return parent;
 	}
 	
-	protected void setParent (XbPackageNode parent)
+	public void setParent (XbPackageNode parent)
 	{
 		this.parent = parent;
 	}

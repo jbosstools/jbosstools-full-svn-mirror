@@ -64,7 +64,6 @@ public class PackagesModel {
 	
 	public static final String PROJECT_PACKAGES_FILE = ".packages";
 	
-	private Hashtable modelBridge;
 	private Hashtable projectPackages;
 	private Hashtable packageTypes;
 	private Hashtable xbPackages;
@@ -74,7 +73,6 @@ public class PackagesModel {
 	 
 	private PackagesModel ()
 	{
-		modelBridge = new Hashtable();
 		projectPackages = new Hashtable();
 		xbPackages = new Hashtable();
 		packageTypes = new Hashtable();
@@ -150,10 +148,6 @@ public class PackagesModel {
 			if (getProjectPackages(pkg.getProject()).contains(pkg))
 				getProjectPackages(pkg.getProject()).remove(pkg);
 		}
-		if (modelBridge.containsKey(pkg))
-		{
-			modelBridge.remove(pkg);
-		}
 		if (xbPackages.containsKey(pkg.getProject()))
 		{
 			PackageImpl packageImpl = (PackageImpl) pkg;
@@ -162,8 +156,8 @@ public class PackagesModel {
 			packages.removeChild(packageImpl.getNodeDelegate());
 		}
 		
-		saveModel(pkg.getProject());
-		fireNodeRemoved(pkg, true);
+		saveModel(pkg.getProject(), null);
+		fireNodeRemoved(pkg);
 	}
 	
 	public XbPackages getXbPackages(IProject project)
@@ -264,59 +258,33 @@ public class PackagesModel {
 		}
 	}
 	
-	protected void saveAndRegister (PackageNodeImpl node)
-	{
-		if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
-		{
-			PackageImpl pkg = (PackageImpl) node;
-			if (pkg.isTopLevel())
-			{
-				XbPackages packages = getXbPackages(node.getProject());
-				if (packages == null) {
-					packages = new XbPackages();
-					xbPackages.put(node.getProject(), packages);
-				}
-				
-				if (packages.getChildren(XbPackage.class) == null || !packages.getChildren(XbPackage.class).contains(node.getNodeDelegate()))
-				{	
-					packages.addChild(node.getNodeDelegate());
-				}
-			}
-		}
-		
-		if (!isPackageNodeRegistered(node)) {
-			registerPackageNode(node, node.getNodeDelegate());
-		}
-		
-		saveModel(node.getProject());
-	}
-	
 	protected void clearModel (IProject project)
 	{
 		List packages = getProjectPackages(project);
 		for (Iterator iter = packages.iterator(); iter.hasNext(); )
 		{
 			PackageImpl pkg = (PackageImpl) iter.next();
-			unregisterPackageNode(pkg, pkg.getNodeDelegate());
+			unregisterPackage(pkg);
 		}
 	}
 	
-	protected void saveModel (IProject project)
+	protected void saveModel (IProject project, IProgressMonitor monitor)
 	{
 		try {
-			IProgressMonitor nullMonitor = new NullProgressMonitor();
+			if (monitor == null)
+				monitor = new NullProgressMonitor();
 			
 			ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
 			OutputStreamWriter writer = new OutputStreamWriter(bytesOut);
-			XMLBinding.marshal(PackagesModel.instance().getXbPackages(project), writer, nullMonitor);
+			XMLBinding.marshal(PackagesModel.instance().getXbPackages(project), writer, monitor);
 			writer.close();
 			
 			ByteArrayInputStream bytesIn = new ByteArrayInputStream(bytesOut.toByteArray());
 			IFile packagesFile = project.getFile(PackagesModel.PROJECT_PACKAGES_FILE);
 			if (!packagesFile.exists())
-				packagesFile.create(bytesIn, true, nullMonitor);
+				packagesFile.create(bytesIn, true, monitor);
 			else
-				packagesFile.setContents(bytesIn, true, true, nullMonitor);
+				packagesFile.setContents(bytesIn, true, true, monitor);
 			
 			bytesIn.close();
 			bytesOut.close();
@@ -332,8 +300,6 @@ public class PackagesModel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
 	
 	protected PackageNodeImpl createPackageNodeImpl (IProject project, XbPackageNode node)
@@ -362,14 +328,17 @@ public class PackagesModel {
 		{
 			XbPackageNode child = (XbPackageNode) iter.next();
 			
-			// we don't need to do anything with child node impl's as they will 
-			// be retrieved via lookup from the node delegates
-			createPackageNodeImpl(project, child);
+			PackageNodeImpl childImpl = createPackageNodeImpl(project, child);
+			
+			if (nodeImpl != null)
+			{
+				nodeImpl.addChildImpl(childImpl);
+			}
 		}
 		
-		if (nodeImpl != null)
+		if (nodeImpl != null && nodeImpl.getNodeType() == IPackageNode.TYPE_PACKAGE)
 		{
-			registerPackageNode(nodeImpl, node);
+			registerPackage((PackageImpl)nodeImpl);
 		}
 		
 		return nodeImpl;
@@ -409,8 +378,8 @@ public class PackagesModel {
 		});
 	}
 	
-	protected void fireNodeRemoved (final IPackageNode removed, boolean force) {
-		fireEvent(removed, force, new Runnable() {
+	protected void fireNodeRemoved (final IPackageNode removed) {
+		fireEvent(removed, new Runnable() {
 			public void run() {
 				for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
 				{
@@ -419,9 +388,6 @@ public class PackagesModel {
 				}
 			}
 		});
-	}
-	protected void fireNodeRemoved (final IPackageNode removed) {
-		fireNodeRemoved(removed, false);
 	}
 	
 	protected void fireNodeChanged (final IPackageNode changed)
@@ -437,96 +403,113 @@ public class PackagesModel {
 		});
 	}
 	
-	protected void fireEvent (IPackageNode source, boolean force, Runnable runnable) {
-		if (!force && !modelBridge.containsKey(source)) //not registered in the model, no event should be broadcast
-			return;
-		
+	protected void fireNodeAttached (final IPackageNode attached)
+	{
+		fireEvent(attached, new Runnable() {
+			public void run ()
+			{
+				for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
+				{
+					IPackagesModelListener listener = (IPackagesModelListener) iter.next();
+					listener.packageNodeAttached(attached);
+				}
+			}
+		});
+	}
+	
+	protected void fireEvent (IPackageNode source, Runnable runnable) {
 		if (projectBeingRegistered != null && source.getProject().equals(projectBeingRegistered))
 			return;
+	
+		runnable.run();
+	}
+	
+	protected void registerPackage (PackageImpl pkg)
+	{
+		if (pkg.isTopLevel() && pkg.shouldParentBeNull()) {
+			if (!projectPackages.containsKey(pkg.getProject()))
+			{
+				projectPackages.put(pkg.getProject(), new ArrayList());
+			}
+			getProjectPackages(pkg.getProject()).add(pkg);
+		}
 		
-		PackageNodeImpl nodeImpl = (PackageNodeImpl) source;
-		if (!nodeImpl.isWorkingCopy())
+		if (pkg.isTopLevel())
 		{
-			runnable.run();
+			XbPackages packages = getXbPackages(pkg.getProject());
+			if (packages == null) {
+				packages = new XbPackages();
+				xbPackages.put(pkg.getProject(), packages);
+			}
+			
+			if (packages.getChildren(XbPackage.class) == null || !packages.getChildren(XbPackage.class).contains(pkg.getNodeDelegate()))
+			{	
+				packages.addChild(pkg.getNodeDelegate());
+			}
 		}
 	}
 	
-	protected void fireEvent (IPackageNode source, Runnable runnable)
+	protected void unregisterPackage (PackageImpl pkg)
 	{
-		fireEvent(source, false, runnable);
-	}
-	
-	public boolean isPackageNodeRegistered (IPackageNode node)
-	{
-		return modelBridge.containsKey(node);
-	}
-	
-	protected void registerPackageNode(PackageNodeImpl nodeImpl, XbPackageNode node)
-	{
-		if (!modelBridge.containsKey(nodeImpl))
-		{
-			modelBridge.put(nodeImpl, node);
-			
-			if (nodeImpl.getNodeType() == IPackageNode.TYPE_PACKAGE)
+		if (pkg.isTopLevel()) {
+			if (projectPackages.containsKey(pkg.getProject()))
 			{
-				PackageImpl pkg = (PackageImpl) nodeImpl;
-				if (pkg.isTopLevel() && pkg.shouldParentBeNull()) {
-					if (!projectPackages.containsKey(pkg.getProject()))
-					{
-						projectPackages.put(pkg.getProject(), new ArrayList());
-					}
-					getProjectPackages(pkg.getProject()).add(pkg);
+				List pkgs = getProjectPackages(pkg.getProject());
+				if (pkgs.contains(pkg))
+				{
+					pkgs.remove(pkg);
 				}
 			}
-			
-			fireNodeAdded(nodeImpl);
 		}
 	}
 	
-	protected void unregisterPackageNode(PackageNodeImpl nodeImpl, XbPackageNode node) {
-		if (modelBridge.containsKey(nodeImpl))
-		{
-			modelBridge.remove(nodeImpl);
-		
-			if (nodeImpl.getNodeType() == IPackageNode.TYPE_PACKAGE)
-			{
-				IPackage pkg = (IPackage) nodeImpl;
-				if (pkg.isTopLevel()) {
-					if (projectPackages.containsKey(pkg.getProject()))
-					{
-						List pkgs = getProjectPackages(pkg.getProject());
-						if (pkgs.contains(pkg))
-						{
-							pkgs.remove(pkg);
-						}
-					}
-				}
-			}
-			
-			fireNodeRemoved(nodeImpl);
-		}
-	}
-	
-	protected PackageNodeImpl getPackageNodeImpl(XbPackageNode node)
-	{
-		for (Iterator iter = modelBridge.keySet().iterator(); iter.hasNext(); )
-		{
-			PackageNodeImpl nodeImpl = (PackageNodeImpl)iter.next();
-			if (modelBridge.get(nodeImpl).equals(node))
-			{
-				return nodeImpl;
-			}
-		}
-		return null;
-	}
-	
-	protected XbPackageNode getPackageNode(PackageNodeImpl nodeImpl)
-	{
-		return (XbPackageNode) modelBridge.get(nodeImpl);
-	}
-
-	public IPackageType getPackageType(String packageType)
+	public IPackageType getPackageType (String packageType)
 	{
 		return (IPackageType) packageTypes.get(packageType);
+	}
+
+	public IPackage createDetachedPackage (IProject project, boolean isTopLevel)
+	{
+		IPackage pkg = createPackage(project, isTopLevel);
+		PackageImpl pkgImpl = (PackageImpl) pkg;
+		
+		pkgImpl.setDetached(true);
+		return pkgImpl;
+	}
+
+	public IPackageFolder createDetachedFolder (IProject project)
+	{
+		IPackageFolder folder = createPackageFolder(project);
+		PackageFolderImpl folderImpl = (PackageFolderImpl) folder;
+		
+		folderImpl.setDetached(true);
+		return folderImpl;
+	}
+
+	public IPackageFileSet createDetachedFileSet (IProject project)
+	{
+		IPackageFileSet fileset = createPackageFileSet(project);
+		PackageFileSetImpl filesetImpl = (PackageFileSetImpl) fileset;
+		
+		filesetImpl.setDetached(true);
+		return filesetImpl;
+	}
+
+	public void attach (IPackageNode nodeToAttach, IProgressMonitor monitor)
+	{
+		PackageNodeImpl node = (PackageNodeImpl) nodeToAttach;
+		
+		if (node.isDetached())
+		{
+			node.setDetached(false);
+			
+			fireNodeAttached(node);
+			if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
+			{
+				registerPackage((PackageImpl) node);
+			}
+			
+			saveModel(node.getProject(), monitor);
+		}
 	}
 }

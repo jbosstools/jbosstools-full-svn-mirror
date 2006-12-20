@@ -1,11 +1,15 @@
 package org.jboss.ide.eclipse.packages.ui.wizards;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
+import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
-import org.jboss.ide.eclipse.packages.core.model.IPackageFileSetWorkingCopy;
-import org.jboss.ide.eclipse.packages.core.model.IPackageNodeBase;
+import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.ui.wizards.pages.FilesetInfoWizardPage;
 
@@ -13,9 +17,9 @@ public class FilesetWizard extends Wizard {
 
 	private FilesetInfoWizardPage page1;
 	private IPackageFileSet fileset;
-	private IPackageNodeBase parentNode;
+	private IPackageNode parentNode;
 	
-	public FilesetWizard(IPackageFileSet fileset, IPackageNodeBase parentNode)
+	public FilesetWizard(IPackageFileSet fileset, IPackageNode parentNode)
 	{
 		this.fileset = fileset;
 		this.parentNode = parentNode;
@@ -25,21 +29,29 @@ public class FilesetWizard extends Wizard {
 		boolean createFileset = this.fileset == null;
 		
 		if (createFileset)
-			this.fileset = PackagesCore.createPackageFileSet(parentNode.getProject());
-		
-		IPackageFileSetWorkingCopy filesetWC = fileset.createFileSetWorkingCopy();
-		
-		fillFilesetFromPage(filesetWC);
+			this.fileset = PackagesCore.createDetachedPackageFileSet(parentNode.getProject());
+				
+		fillFilesetFromPage(fileset);
 
-		filesetWC.save();
-		
 		if (createFileset)
 			page1.getRootNode().addChild(this.fileset);
+		
+		try {
+			getContainer().run(false, false, new IRunnableWithProgress () {
+				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+					PackagesCore.attach(fileset, monitor);	
+				}
+			});
+		} catch (InvocationTargetException e) {
+			Trace.trace(getClass(), e);
+		} catch (InterruptedException e) {
+			Trace.trace(getClass(), e);
+		}
 		
 		return true;
 	}
 	
-	private void fillFilesetFromPage (IPackageFileSetWorkingCopy fileset)
+	private void fillFilesetFromPage (IPackageFileSet fileset)
 	{
 		if (page1.isSingleFile())
 		{

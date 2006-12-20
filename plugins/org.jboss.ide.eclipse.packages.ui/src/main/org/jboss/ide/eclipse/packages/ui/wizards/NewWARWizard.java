@@ -2,7 +2,7 @@ package org.jboss.ide.eclipse.packages.ui.wizards;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
-import org.jboss.ide.eclipse.packages.core.model.IPackageWorkingCopy;
+import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
 import org.jboss.ide.eclipse.packages.ui.wizards.pages.WARInfoWizardPage;
 
@@ -25,8 +25,8 @@ public class NewWARWizard extends AbstractPackageWizard {
 		return new WizardPage[] { warInfoPage };
 	}
 
-	public boolean performFinish(IPackageWorkingCopy pkg) {
-		pkg.setPackageType("war");
+	public boolean performFinish(IPackage pkg) {
+		//pkg.setPackageType("war");
 		return true;
 	}
 	

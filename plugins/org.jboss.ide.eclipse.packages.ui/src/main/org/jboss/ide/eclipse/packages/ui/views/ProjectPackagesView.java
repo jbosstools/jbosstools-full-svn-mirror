@@ -34,7 +34,6 @@ import org.eclipse.ui.part.ViewPart;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
-import org.jboss.ide.eclipse.packages.core.model.IPackageFolderWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.IPackagesModelListener;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
@@ -316,9 +315,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		{
 			IPackageNode selected = getSelectedNode();
 			IPackageFolder folder = PackagesCore.createPackageFolder(selected.getProject());
-			IPackageFolderWorkingCopy folderWC = folder.createFolderWorkingCopy();
-			folderWC.setName(dialog.getValue());
-			folder = folderWC.saveFolder();
+			folder.setName(dialog.getValue());
 			
 			selected.addChild(folder);
 		}
@@ -365,9 +362,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 				int response = dialog.open();
 				if (response == Dialog.OK)
 				{
-					IPackageFolderWorkingCopy wc = folder.createFolderWorkingCopy();
-					wc.setName(dialog.getValue());
-					wc.save();
+					folder.setName(dialog.getValue());
 				}
 			}
 		}
@@ -434,6 +429,10 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		if (!packageTree.getTree().isDisposed()) {
 			packageTree.remove(removed);
 		}
+	}
+	
+	public void packageNodeAttached(IPackageNode attached) {
+		packageNodeAdded(attached);
 	}
 	
 	public IProject getCurrentProject ()

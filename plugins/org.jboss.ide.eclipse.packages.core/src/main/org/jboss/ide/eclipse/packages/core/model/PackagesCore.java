@@ -34,7 +34,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.QualifiedName;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageBuildDelegate;
@@ -190,7 +189,7 @@ public class PackagesCore {
 	
 	public static IPackage getTopLevelPackage (IPackageNode node)
 	{
-		IPackageNodeBase tmp = node.getParent(), top = tmp;
+		IPackageNode tmp = node.getParent(), top = tmp;
 		while (tmp != null)
 		{
 			top = tmp;
@@ -294,14 +293,29 @@ public class PackagesCore {
 		return PackagesModel.instance().createPackage(project, isTopLevel);
 	}
 	
+	public static IPackage createDetachedPackage (IProject project, boolean isTopLevel)
+	{
+		return PackagesModel.instance().createDetachedPackage(project, isTopLevel);
+	}
+	
 	public static IPackageFolder createPackageFolder (IProject project)
 	{
 		return PackagesModel.instance().createPackageFolder(project);
 	}
 	
+	public static IPackageFolder createDetachedFolder (IProject project)
+	{
+		return PackagesModel.instance().createDetachedFolder(project);
+	}
+	
 	public static IPackageFileSet createPackageFileSet (IProject project)
 	{
 		return PackagesModel.instance().createPackageFileSet(project);
+	}
+	
+	public static IPackageFileSet createDetachedPackageFileSet (IProject project)
+	{
+		return PackagesModel.instance().createDetachedFileSet(project);
 	}
 	
 	public static void addPackagesModelListener (IPackagesModelListener listener)
@@ -324,4 +338,12 @@ public class PackagesCore {
 		PackagesModel.instance().removePackagesBuildListener(listener);
 	}
 	
+	/**
+	 * Attach a detached node to the model. This node will be saved and added to the next build.
+	 * @param nodeToAttach
+	 */
+	public static void attach (IPackageNode nodeToAttach, IProgressMonitor monitor)
+	{
+		PackagesModel.instance().attach(nodeToAttach, monitor);
+	}
 }
