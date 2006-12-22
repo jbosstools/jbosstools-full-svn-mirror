@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExecutableExtension;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
-import org.jboss.ide.eclipse.packages.core.model.types.AbstractPackageType;
 import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
 
 public class ExtensionManager {
@@ -34,21 +34,10 @@ public class ExtensionManager {
 			{
 				try {
 					Object executable = elements[j].createExecutableExtension("class");
-					if( !(executable instanceof AbstractPackageType)) 
-						throw new Exception("Provided class (" + elements[j].getAttribute("class")+ ") is not an IPackageType");
-					((AbstractPackageType)executable).setInitializationData(elements[j]);
 					packageTypes.add((IPackageType)executable);
 				} catch (InvalidRegistryObjectException e) {
 					Trace.trace(ExtensionManager.class, e);
-				} catch (ClassNotFoundException e) {
-					Trace.trace(ExtensionManager.class, e);
-				} catch (InstantiationException e) {
-					Trace.trace(ExtensionManager.class, e);
-				} catch (IllegalAccessException e) {
-					Trace.trace(ExtensionManager.class, e);
 				} catch( CoreException e ) {
-					Trace.trace(ExtensionManager.class, e);
-				} catch( Exception e ) {
 					Trace.trace(ExtensionManager.class, e);
 				}
 			}
