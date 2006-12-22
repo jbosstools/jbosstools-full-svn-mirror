@@ -64,7 +64,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="org.jboss.ide.eclipse.packages.core.model.types.AbstractPackageType"/>
+                  <meta.attribute kind="java" basedOn="org.jboss.ide.eclipse.packages.core.model.types.IPackageType"/>
                </appInfo>
             </annotation>
          </attribute>

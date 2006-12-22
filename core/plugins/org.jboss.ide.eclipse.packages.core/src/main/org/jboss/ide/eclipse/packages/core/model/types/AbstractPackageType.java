@@ -22,7 +22,9 @@
 package org.jboss.ide.eclipse.packages.core.model.types;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExecutableExtension;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 
@@ -30,18 +32,21 @@ import org.jboss.ide.eclipse.packages.core.model.IPackage;
  *
  * @author rob.stryker@jboss.com
  */
-public abstract class AbstractPackageType implements IPackageType {
-	private String id;
-	private String label;
-	
-	public void setInitializationData(IConfigurationElement el) {
-		id = el.getAttribute("id");
-		label = el.getAttribute("label");
+public abstract class AbstractPackageType implements IPackageType, IExecutableExtension {
+
+	private IConfigurationElement element;
+	public void setInitializationData(IConfigurationElement config, String propertyName, Object data) throws CoreException {
+		if( element == null ) element = config;
 	}
-	
-	public String getId() { return id; }
-	public String getLabel() { return label; }
-	
-	public abstract int getSupportFor (IProject project);
+	public String getId() {
+		return element.getAttribute("id");
+	}
+
+	public String getLabel() {
+		return element.getAttribute("label");
+	}
+
+	public abstract int getSupportFor(IProject project);
 	public abstract IPackage createDefaultConfiguration(IProject project, IProgressMonitor monitor);
+
 }
