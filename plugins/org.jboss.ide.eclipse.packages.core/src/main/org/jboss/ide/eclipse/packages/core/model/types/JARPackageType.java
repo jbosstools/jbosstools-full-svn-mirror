@@ -21,7 +21,7 @@ import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
  * The name of the resulting JAR will be the project's name followed by a ".jar" extension.
  * @author Marshall
  */
-public class JARPackageType implements IPackageType {
+public class JARPackageType extends AbstractPackageType {
 
 	public static final String TYPE_ID = "jar";
 	public IPackage createDefaultConfiguration(IProject project, IProgressMonitor monitor)
@@ -70,20 +70,12 @@ public class JARPackageType implements IPackageType {
 		try {
 			if (project.hasNature(JavaCore.NATURE_ID))
 			{
-				return SUPPORT_FULL;
+				return IPackageType.SUPPORT_FULL;
 			}
 		} catch (CoreException e) {
 			Trace.trace(getClass(), e);
 		}
 		
-		return SUPPORT_NONE;
-	}
-	
-	public String getId() {
-		return "jar";
-	}
-
-	public String getLabel() {
-		return "JAR";
+		return IPackageType.SUPPORT_NONE;
 	}
 }

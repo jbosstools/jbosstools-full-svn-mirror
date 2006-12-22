@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
+import org.jboss.ide.eclipse.packages.core.model.types.AbstractPackageType;
 import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
 
 public class ExtensionManager {
@@ -33,8 +34,9 @@ public class ExtensionManager {
 			{
 				try {
 					Object executable = elements[j].createExecutableExtension("class");
-					if( !(executable instanceof IPackageType)) 
-						throw new Exception("Provided class is not an IPackageType");
+					if( !(executable instanceof AbstractPackageType)) 
+						throw new Exception("Provided class (" + elements[j].getAttribute("class")+ ") is not an IPackageType");
+					((AbstractPackageType)executable).setInitializationData(elements[j]);
 					packageTypes.add((IPackageType)executable);
 				} catch (InvalidRegistryObjectException e) {
 					Trace.trace(ExtensionManager.class, e);
