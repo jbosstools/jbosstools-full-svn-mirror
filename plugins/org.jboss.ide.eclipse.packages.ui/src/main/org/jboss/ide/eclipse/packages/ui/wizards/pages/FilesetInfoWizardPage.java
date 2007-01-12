@@ -3,24 +3,18 @@ package org.jboss.ide.eclipse.packages.ui.wizards.pages;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -31,7 +25,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
@@ -45,6 +38,7 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIMessages;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
+import org.jboss.ide.eclipse.packages.ui.util.FilesetPreviewComposite;
 import org.jboss.ide.eclipse.packages.ui.util.PackageNodeDestinationComposite;
 
 public class FilesetInfoWizardPage extends WizardPage {
@@ -53,12 +47,12 @@ public class FilesetInfoWizardPage extends WizardPage {
 	private IPackageNode parentNode;
 	private Text includesText;
 	private Text excludesText;
-	private TableViewer previewTable;
 	private PackageNodeDestinationComposite destinationComposite;
-	
+
 	private String includes, excludes, rootDir, singleFile;
 	private boolean rootDirIsWorkspaceRelative, fileIsWorkspaceRelative, isSingleFile;
-	
+	private FilesetPreviewComposite previewComposite;
+
 	private IContainer rootContainer;
 	private IFile workspaceFile;
 	
@@ -217,20 +211,15 @@ public class FilesetInfoWizardPage extends WizardPage {
 		fileFilesystemBrowseButton.setText(PackagesUIMessages.FilesetInfoWizardPage_fileFilesystemBrowseButton_label);
 		
 		//Composite previewComposite = UIUtil.createExpandableComposite(mainComposite, "Preview", true);
-		Group previewComposite = new Group(mainComposite, SWT.NONE);
-		previewComposite.setLayout(new GridLayout(1, false));
-		
-		previewComposite.setText(PackagesUIMessages.FilesetInfoWizardPage_previewGroup_label);
-		
-		data = new GridData(GridData.FILL_BOTH);
-		data.horizontalSpan = 3;
-		previewComposite.setLayoutData(data);
-		
-		previewTable = new TableViewer(previewComposite, SWT.BORDER);
-		previewTable.getTable().setLayoutData(new GridData(GridData.FILL_BOTH));
-		previewTable.setContentProvider(new ArrayContentProvider());
-		previewTable.setLabelProvider(new ResourceLabelProvider());
-		
+		try {
+			Group previewGroup = new Group(mainComposite, SWT.NONE);
+			data = new GridData(GridData.FILL_BOTH);
+			data.horizontalSpan = 3;
+			previewGroup.setLayoutData(data);
+			previewGroup.setLayout(new GridLayout(1, false));
+			previewGroup.setText(PackagesUIMessages.FilesetInfoWizardPage_previewGroup_label);
+			previewComposite = new FilesetPreviewComposite(previewGroup, SWT.NONE);
+		} catch(Exception e) { e.printStackTrace(); }
 		addListeners();
 		fillDefaults();
 		changePreview();
@@ -403,12 +392,14 @@ public class FilesetInfoWizardPage extends WizardPage {
 	private void changePreview()
 	{
 		if (rootContainer != null)
-		{
+		{ 
 			IFile files[] = PackagesCore.findMatchingFiles(rootContainer, includesText.getText(), excludesText.getText());
-			previewTable.setInput(files);
+			previewComposite.setRootContainer(rootContainer);
+			previewComposite.setInput(files);
 		} else if (rootDir != null) {
+			previewComposite.setRootContainer(rootContainer);
 			IPath paths[] = PackagesCore.findMatchingPaths(new Path(rootDir), includesText.getText(), excludesText.getText());
-			previewTable.setInput(paths);
+			previewComposite.setInput(paths);
 		}
 	}
 	
@@ -422,9 +413,9 @@ public class FilesetInfoWizardPage extends WizardPage {
 			changePreview();
 		} else {
 			filesetModePageBook.showPage(singleFileComposite);
-			previewTable.getTable().clearAll();
+			previewComposite.clearAll();
 		}
-		previewTable.getTable().setEnabled(multipleFiles);
+		previewComposite.setEnabled(multipleFiles);
 	}
 	
 	private void browseWorkspaceForRootDir ()
@@ -546,69 +537,5 @@ public class FilesetInfoWizardPage extends WizardPage {
 		}
 	}
 	
-	private IPath getContainerRelativePath(IContainer container, IResource resource)
-	{
-		String path = "";
-		IContainer parent = resource.getParent();
-		while (parent != null)
-		{
-			if (parent.equals(container))
-			{
-				break;
-			}
-			path = parent.getName() + "/" + path;
-			parent = parent.getParent();
-		}
-		
-		path += (path.length() == 0 ? "" : "/") + resource.getName();
-		
-		return new Path(path);
-	}
 	
-	private class ResourceLabelProvider implements ILabelProvider
-	{
-
-		public Image getImage(Object element) {
-			if (element instanceof IResource)
-			{
-				IResource resource = (IResource) element;
-				if (resource.getType() == IResource.PROJECT)
-				{
-					return PlatformUI.getWorkbench().getSharedImages().getImage(IDE.SharedImages.IMG_OBJ_PROJECT);
-				}
-				else if (resource.getType() == IResource.FOLDER)
-				{
-					return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER);
-				}
-				else if (resource.getType() == IResource.FILE)
-				{
-					return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FILE);
-				}
-			} else if (element instanceof IPath) {
-				return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FILE);
-			}
-			return null;
-		}
-
-		public String getText(Object element) {
-			if (element instanceof IResource)
-			{
-				return getContainerRelativePath(rootContainer, (IResource)element).toString();
-			} else if (element instanceof IPath) {
-				return ((IPath)element).toString();
-			}
-			return "";
-		}
-
-		public void addListener(ILabelProviderListener listener) {}
-
-		public void dispose() {}
-
-		public boolean isLabelProperty(Object element, String property) {
-			return true;
-		}
-
-		public void removeListener(ILabelProviderListener listener) { }
-		
-	}
 }
