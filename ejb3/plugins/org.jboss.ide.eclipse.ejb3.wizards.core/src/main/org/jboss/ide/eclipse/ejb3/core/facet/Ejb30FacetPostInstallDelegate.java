@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -27,11 +29,12 @@ import org.eclipse.wst.common.componentcore.ComponentCore;
 import org.eclipse.wst.common.componentcore.datamodel.properties.IFacetProjectCreationDataModelProperties;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.IDelegate;
+import org.eclipse.wst.common.project.facet.core.IFacetedProject;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
+import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
 import org.eclipse.wst.common.project.facet.core.runtime.IRuntime;
 import org.jboss.ide.eclipse.ejb3.core.classpath.AopFromRuntimeClasspathContainer;
 import org.jboss.ide.eclipse.ejb3.core.classpath.EJB3ClasspathContainer;
-import org.jboss.ide.eclipse.jdt.aop.core.classpath.AopJdk15ClasspathContainer;
 
 public class Ejb30FacetPostInstallDelegate extends J2EEFacetInstallDelegate implements IDelegate {
 
@@ -40,7 +43,7 @@ public class Ejb30FacetPostInstallDelegate extends J2EEFacetInstallDelegate impl
 		if (monitor != null) {
 			monitor.beginTask("", 3); //$NON-NLS-1$
 		}
-
+		
 		wstEjbPostInstall(project, fv, config, monitor);
 		jbossPostInstall(project, fv, config, monitor);
 		
@@ -88,26 +91,45 @@ public class Ejb30FacetPostInstallDelegate extends J2EEFacetInstallDelegate impl
 	}
 	
 	public void addClasspathEntries(IProject project, IProjectFacetVersion fv, Object config, IProgressMonitor monitor) throws CoreException {
-	    ArrayList list = new ArrayList(); 
-	    String runtimeKey = IFacetProjectCreationDataModelProperties.FACET_RUNTIME;
-	    if( config instanceof IDataModel ) {
-	    	IDataModel model = (IDataModel)config;
-	    	Object runtime = model.getProperty(runtimeKey);
-	    	String runtimeName = null;
-	    	if( runtime instanceof IRuntime ) {
-	    		runtimeName = ((IRuntime)runtime).getName();
-	    	}
-			//list.add(JavaCore.newContainerEntry(new Path(AopJdk15ClasspathContainer.CONTAINER_ID)));
-		    list.add(JavaCore.newContainerEntry(new Path(EJB3ClasspathContainer.CONTAINER_ID).append(runtimeName)));
-		    list.add(JavaCore.newContainerEntry(new Path(AopFromRuntimeClasspathContainer.CONTAINER_ID).append(runtimeName)));
-
-			ClasspathHelper.addClasspathEntries(project, fv, list);
-	    }
+		try {
+			IFacetedProject facetedProj = ProjectFacetsManager.create(project);
+			IRuntime runtime = facetedProj.getPrimaryRuntime();
+			String runtimeName = runtime.getName();
+			
+		    ArrayList list = new ArrayList(); 
+		    String runtimeKey = IFacetProjectCreationDataModelProperties.FACET_RUNTIME;
+		    if( config instanceof IDataModel ) {
+		    	
+		    	if( runtime != null && runtime instanceof IRuntime ) {
+		    		runtimeName = ((IRuntime)runtime).getName();
+					//list.add(JavaCore.newContainerEntry(new Path(AopJdk15ClasspathContainer.CONTAINER_ID)));
+				    list.add(JavaCore.newContainerEntry(new Path(EJB3ClasspathContainer.CONTAINER_ID).append(runtimeName)));
+				    list.add(JavaCore.newContainerEntry(new Path(AopFromRuntimeClasspathContainer.CONTAINER_ID).append(runtimeName)));
+		
+					ClasspathHelper.addClasspathEntries(project, fv, list);
+		    	}
+		    }
+		} catch( Exception e ) {
+			e.printStackTrace();
+		}
 	    
 		if (monitor != null) {
 			monitor.worked(1);
 		}
 	}
+	
+	private void printModelProperties(IDataModel model) {
+		// diag
+		System.out.println("\n\n");
+		Collection c = model.getAllProperties();
+		Object o;
+		for( Iterator i = c.iterator(); i.hasNext();) {
+			o = i.next();
+			System.out.println(o + " - " + model.getProperty((String)o));
+		}
+
+	}
+	
 	public void addJNDIFile(IProject project) {
 		try {
 	        String sourcePath = findSourcePaths(project);
