@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.packages.ui.actions;
+package org.jboss.ide.eclipse.as.ui.mbeans.packages;
 
 import org.jboss.ide.eclipse.ui.util.ActionWithDelegate;
 

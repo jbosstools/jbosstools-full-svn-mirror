@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.packages.ui.actions;
+package org.jboss.ide.eclipse.as.ui.packages;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -7,7 +7,6 @@ import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
-import org.jboss.ide.eclipse.packages.ui.wizards.NewWARWizard;
 import org.jboss.ide.eclipse.ui.util.ActionWithDelegate;
 
 public class NewWARAction extends ActionWithDelegate implements IViewActionDelegate {

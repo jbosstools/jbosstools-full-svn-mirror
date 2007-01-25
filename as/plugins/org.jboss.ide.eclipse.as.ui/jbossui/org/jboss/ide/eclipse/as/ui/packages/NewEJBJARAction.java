@@ -1,10 +1,10 @@
-package org.jboss.ide.eclipse.packages.ui.actions;
+package org.jboss.ide.eclipse.as.ui.packages;
 
 import org.jboss.ide.eclipse.ui.util.ActionWithDelegate;
 
-public class NewEARAction extends ActionWithDelegate {
+public class NewEJBJARAction extends ActionWithDelegate {
 
-	public NewEARAction() {
+	public NewEJBJARAction() {
 		// TODO Auto-generated constructor stub
 	}
 

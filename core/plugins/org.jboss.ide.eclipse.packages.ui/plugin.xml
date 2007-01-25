@@ -22,41 +22,6 @@
             project="false"/>
    </extension>
    <extension
-         point="org.eclipse.ui.popupMenus">
-      <viewerContribution
-            id="org.jboss.ide.eclipse.packages.ui.jbossContribution"
-            targetID="org.jboss.ide.eclipse.packages.ui.newPackageMenu">
-         <action
-               class="org.jboss.ide.eclipse.packages.ui.actions.NewWARAction"
-               icon="icons/war.gif"
-               id="org.jboss.ide.eclipse.packages.ui.newWARAction"
-               label="WAR"
-               menubarPath="additions"
-               style="push"/>
-         <action
-               class="org.jboss.ide.eclipse.packages.ui.actions.NewEJBJARAction"
-               icon="icons/EJBJar.gif"
-               id="org.jboss.ide.eclipse.packages.ui.newEJBJARAction"
-               label="EJB JAR"
-               menubarPath="additions"
-               style="push"/>
-         <action
-               class="org.jboss.ide.eclipse.packages.ui.actions.NewEARAction"
-               icon="icons/ear.gif"
-               id="org.jboss.ide.eclipse.packages.ui.newEARAction"
-               label="EAR"
-               menubarPath="additions"
-               style="push"/>
-         <action
-               class="org.jboss.ide.eclipse.packages.ui.actions.NewSARAction"
-               icon="icons/sar.gif"
-               id="org.jboss.ide.eclipse.packages.ui.newSARAction"
-               label="SAR"
-               menubarPath="additions"
-               style="push"/>
-      </viewerContribution>
-   </extension>
-   <extension
          point="org.eclipse.ui.commands">
       <command
             categoryId="org.eclipse.ui.category.project"
