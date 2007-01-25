@@ -16,7 +16,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.part.ResourceTransfer;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
-import org.jboss.ide.eclipse.packages.core.model.IPackageNodeWorkingCopy;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageFileSetImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageNodeImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFileSet;
@@ -115,11 +114,11 @@ public class PackageDropTarget extends DropTargetAdapter {
 		{
 			IStructuredSelection selection = (IStructuredSelection) LocalSelectionTransfer.getTransfer().getSelection();
 			
-			for (Iterator iter = selection.iterator(); iter.hasNext(); )
-			{
-				IPackageNodeWorkingCopy node = (IPackageNodeWorkingCopy) iter.next();
-				target.addChild(node);
-			}
+//			for (Iterator iter = selection.iterator(); iter.hasNext(); )
+//			{
+//				IPackageNodeWorkingCopy node = (IPackageNodeWorkingCopy) iter.next();
+//				target.addChild(node);
+//			}
 		}
 	}
 }
