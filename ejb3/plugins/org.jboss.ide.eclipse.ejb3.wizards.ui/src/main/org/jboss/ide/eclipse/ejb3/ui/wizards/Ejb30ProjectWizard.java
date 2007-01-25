@@ -32,7 +32,7 @@ public class Ejb30ProjectWizard extends NewProjectDataModelFacetWizard
 	}
 
 	protected IFacetedProjectTemplate getTemplate() {
-		return ProjectFacetsManager.getTemplate("template.jboss.ejb30"); //$NON-NLS-1$
+		return ProjectFacetsManager.getTemplate("template.jbide.ejb30"); //$NON-NLS-1$
 	}
 
 	protected IWizardPage createFirstPage() {

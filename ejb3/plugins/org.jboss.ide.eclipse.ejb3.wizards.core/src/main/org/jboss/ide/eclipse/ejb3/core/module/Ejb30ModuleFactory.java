@@ -57,7 +57,7 @@ public class Ejb30ModuleFactory extends ProjectModuleFactoryDelegate {
 	protected Map moduleDelegates = new HashMap(5);
 	
 	public static final String ID = "org.eclipse.jst.j2ee.server"; //$NON-NLS-1$
-	public static final String EJB30_TYPE = "jboss.ejb30";
+	public static final String EJB30_TYPE = "jbide.ejb30";
 
 	protected IModule[] createModules(IProject project) {
 		try {

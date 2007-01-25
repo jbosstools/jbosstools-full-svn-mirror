@@ -27,7 +27,7 @@ import org.jboss.ide.eclipse.ejb3.core.classpath.EJB3ClasspathContainer;
 
 public class Ejb30FacetProjectCreationDataModelProvider extends J2EEFacetProjectCreationDataModelProvider {
 
-	public static final String EJB30_FACET_ID = "jboss.ejb30";
+	public static final String EJB30_FACET_ID = "jbide.ejb30";
 	public static final IProjectFacet EJB_30_FACET_OBJECT = ProjectFacetsManager.getProjectFacet(EJB30_FACET_ID);
 
 	public Ejb30FacetProjectCreationDataModelProvider() {

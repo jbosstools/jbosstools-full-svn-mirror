@@ -33,7 +33,7 @@ import org.eclipse.wst.web.internal.ResourceHandler;
 import org.eclipse.wst.web.ui.internal.wizards.DataModelFacetCreationWizardPage;
 
 public class Ejb30ProjectFirstPage extends J2EEComponentFacetCreationWizardPage {
-	public static final String EJB30_FACET_ID = "jboss.ejb30";
+	public static final String EJB30_FACET_ID = "jbide.ejb30";
 
 	protected String getModuleFacetID() {
 		return EJB30_FACET_ID;

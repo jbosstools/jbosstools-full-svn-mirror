@@ -14,7 +14,7 @@ import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
 public class Ejb30FacetInstallDataModelProvider extends J2EEModuleFacetInstallDataModelProvider 
 	implements IEjbFacetInstallDataModelProperties{
 
-	public static final String EJB30_FACET_ID = "jboss.ejb30";
+	public static final String EJB30_FACET_ID = "jbide.ejb30";
 	public static final IProjectFacetVersion EJB_30 = ProjectFacetsManager.getProjectFacet(EJB30_FACET_ID).getVersion("1.0"); //$NON-NLS-1$
 
 	public Set getPropertyNames() {
