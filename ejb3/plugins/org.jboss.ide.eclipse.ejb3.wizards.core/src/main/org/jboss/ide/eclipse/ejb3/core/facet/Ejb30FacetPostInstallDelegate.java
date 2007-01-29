@@ -6,7 +6,10 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -20,14 +23,26 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jem.util.logger.proxy.Logger;
 import org.eclipse.jst.common.project.facet.core.ClasspathHelper;
+import org.eclipse.jst.j2ee.application.Application;
+import org.eclipse.jst.j2ee.application.Module;
+import org.eclipse.jst.j2ee.application.internal.impl.EjbModuleImpl;
+import org.eclipse.jst.j2ee.application.internal.operations.AddComponentToEnterpriseApplicationDataModelProvider;
+import org.eclipse.jst.j2ee.application.internal.operations.AddComponentToEnterpriseApplicationOp;
+import org.eclipse.jst.j2ee.application.internal.operations.IAddComponentToEnterpriseApplicationDataModelProperties;
 import org.eclipse.jst.j2ee.internal.common.operations.JavaModelUtil;
+import org.eclipse.jst.j2ee.internal.project.J2EEProjectUtilities;
 import org.eclipse.jst.j2ee.project.facet.IJ2EEFacetInstallDataModelProperties;
 import org.eclipse.jst.j2ee.project.facet.IJ2EEModuleFacetInstallDataModelProperties;
 import org.eclipse.jst.j2ee.project.facet.J2EEFacetInstallDelegate;
 import org.eclipse.wst.common.componentcore.ComponentCore;
+import org.eclipse.wst.common.componentcore.datamodel.properties.ICreateReferenceComponentsDataModelProperties;
 import org.eclipse.wst.common.componentcore.datamodel.properties.IFacetProjectCreationDataModelProperties;
+import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
+import org.eclipse.wst.common.frameworks.datamodel.DataModelFactory;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
+import org.eclipse.wst.common.frameworks.datamodel.IDataModelOperation;
 import org.eclipse.wst.common.project.facet.core.IDelegate;
 import org.eclipse.wst.common.project.facet.core.IFacetedProject;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
@@ -85,6 +100,42 @@ public class Ejb30FacetPostInstallDelegate extends J2EEFacetInstallDelegate impl
 
 	}
 
+    protected void addToEar(IVirtualComponent earComp, IVirtualComponent j2eeComp, String moduleURI ){
+		final IDataModel dataModel = DataModelFactory.createDataModel(new AddEjb30ToEnterpriseApplicationDataModelProvider());
+		Map map = (Map)dataModel.getProperty(IAddComponentToEnterpriseApplicationDataModelProperties.TARGET_COMPONENTS_TO_URI_MAP);
+		map.put(j2eeComp, moduleURI);
+		
+		dataModel.setProperty(ICreateReferenceComponentsDataModelProperties.SOURCE_COMPONENT, earComp);
+			
+		List modList = (List) dataModel.getProperty(ICreateReferenceComponentsDataModelProperties.TARGET_COMPONENT_LIST);
+		modList.add(j2eeComp);
+		dataModel.setProperty(ICreateReferenceComponentsDataModelProperties.TARGET_COMPONENT_LIST, modList);
+		try {
+			dataModel.getDefaultOperation().execute(null, null);
+		} catch (ExecutionException e) {
+			Logger.getLogger().logError(e);
+		}
+    }
+	protected class AddEjb30ToEnterpriseApplicationDataModelProvider extends AddComponentToEnterpriseApplicationDataModelProvider {
+		public IDataModelOperation getDefaultOperation() {
+			return new AddEjb30ToEnterpriseApplicationOp(model);
+		}
+	}
+	
+	public class AddEjb30ToEnterpriseApplicationOp extends AddComponentToEnterpriseApplicationOp {
+		public AddEjb30ToEnterpriseApplicationOp(IDataModel model) {
+			super(model);
+		}
+		protected Module createNewModule(IVirtualComponent wc) {
+			IProject p = wc.getProject();
+			if( J2EEProjectUtilities.isProjectOfType(p, "jbide.ejb30"))
+				return new EjbModuleImpl();
+			return null;
+		}
+
+		
+	}
+	
 	public void jbossPostInstall(IProject project, IProjectFacetVersion fv, Object config, IProgressMonitor monitor) throws CoreException {
 		addClasspathEntries(project, fv, config, monitor);
 		addJNDIFile(project);
