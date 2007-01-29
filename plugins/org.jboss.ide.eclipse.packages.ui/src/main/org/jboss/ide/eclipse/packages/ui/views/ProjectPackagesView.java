@@ -3,6 +3,7 @@ package org.jboss.ide.eclipse.packages.ui.views;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -300,9 +301,26 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		newJARAction.setEnabled(true);
 	}
 
+	private MenuManager createLinkMenuManager;
+	private Menu createLinkMenu;
+	
 	private void createPackagePressed ()
 	{
-		newJARAction.run();
+//		newJARAction.run();
+		if (createLinkMenuManager == null)
+		{
+			createLinkMenuManager = new MenuManager();
+			
+			// Add the newPackageManager's contributions at the top level so we can avoid redundancy in the UI
+			IContributionItem items[] = newPackageManager.getItems();
+			for (int i = 0; i < items.length; i++)
+			{
+				createLinkMenuManager.add(items[i]);
+			}
+			createLinkMenu = createLinkMenuManager.createContextMenu(createPackageLink);
+		}
+		
+		createLinkMenu.setVisible(true);
 	}
 	
 	private void createFolder ()
