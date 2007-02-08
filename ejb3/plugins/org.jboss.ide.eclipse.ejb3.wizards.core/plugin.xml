@@ -112,6 +112,26 @@
             </moduleType>
       </moduleFactory>
    </extension>
+   <extension
+         point="org.eclipse.wst.server.core.moduleArtifactAdapters">
+      <moduleArtifactAdapter
+            class="org.jboss.ide.eclipse.ejb3.core.module.Ejb30ArtifactAdapter"
+            id="org.jboss.ide.eclipse.ejb3.wizards.core.moduleArtifactAdapter1">
+         <enablement>
+            <or>
+               <instanceof value="org.eclipse.core.resources.IProject"/>
+               <instanceof value="org.eclipse.jdt.core.IJavaProject"/>
+            </or>
+         </enablement>
+       </moduleArtifactAdapter>
+   </extension>
+   <extension
+         point="org.jboss.ide.eclipse.packages.core.packageTypes">
+      <packageType
+            class="org.jboss.ide.eclipse.ejb3.core.module.Ejb30PackageType"
+            id="org.jboss.ide.eclipse.ejb3.wizards.core.ejbPackageType"
+            label="EJB 3.0"/>
+   </extension>
 
 
 

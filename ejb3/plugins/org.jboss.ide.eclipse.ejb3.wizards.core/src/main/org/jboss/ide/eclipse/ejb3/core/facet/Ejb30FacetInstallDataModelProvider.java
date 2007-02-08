@@ -38,6 +38,7 @@ public class Ejb30FacetInstallDataModelProvider extends J2EEModuleFacetInstallDa
 
 	protected int convertFacetVersionToJ2EEVersion(IProjectFacetVersion version) {
 		// I've only got one facet version so far, so woohoo
+		// TODO: should eventually be 1.5? if constant exists
 		return J2EEVersionConstants.J2EE_1_4_ID;
 	}
 		

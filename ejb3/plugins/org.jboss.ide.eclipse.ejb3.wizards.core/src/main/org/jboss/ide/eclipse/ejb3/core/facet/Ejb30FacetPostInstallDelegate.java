@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -25,7 +26,6 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jem.util.logger.proxy.Logger;
 import org.eclipse.jst.common.project.facet.core.ClasspathHelper;
-import org.eclipse.jst.j2ee.application.Application;
 import org.eclipse.jst.j2ee.application.Module;
 import org.eclipse.jst.j2ee.application.internal.impl.EjbModuleImpl;
 import org.eclipse.jst.j2ee.application.internal.operations.AddComponentToEnterpriseApplicationDataModelProvider;
@@ -139,6 +139,7 @@ public class Ejb30FacetPostInstallDelegate extends J2EEFacetInstallDelegate impl
 	public void jbossPostInstall(IProject project, IProjectFacetVersion fv, Object config, IProgressMonitor monitor) throws CoreException {
 		addClasspathEntries(project, fv, config, monitor);
 		addJNDIFile(project);
+		addMetaInfFolder(project);
 	}
 	
 	public void addClasspathEntries(IProject project, IProjectFacetVersion fv, Object config, IProgressMonitor monitor) throws CoreException {
@@ -183,9 +184,26 @@ public class Ejb30FacetPostInstallDelegate extends J2EEFacetInstallDelegate impl
 	
 	public void addJNDIFile(IProject project) {
 		try {
-	        String sourcePath = findSourcePaths(project);
-	        createJndiProperties(new Path(sourcePath));
+	        Path sourcePath = new Path(findSourcePaths(project));
+	        IPath jndiPath = sourcePath.append("jndi.properties");
+	        IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(jndiPath);
+
+	        String jndiProps = "java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory\n"
+	              + "java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces\n"
+	              + "java.naming.provider.url=localhost:1099\n";
+
+	        file.create(new ByteArrayInputStream(jndiProps.getBytes()), true, new NullProgressMonitor());
 		} catch( CoreException ce ) {
+		}
+	}
+	
+	protected void addMetaInfFolder(IProject project) {
+		try {
+	        Path sourcePath = new Path(findSourcePaths(project));
+	        IPath metainfPath = sourcePath.append("META-INF");
+	        IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(metainfPath);
+	        folder.create(true, true, new NullProgressMonitor());
+		} catch( CoreException ce) {
 		}
 	}
 	
@@ -195,16 +213,6 @@ public class Ejb30FacetPostInstallDelegate extends J2EEFacetInstallDelegate impl
 	      }
    }
    
-   private void createJndiProperties(IPath srcPath) throws CoreException {
-      IPath jndiPath = srcPath.append("jndi.properties");
-      IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(jndiPath);
-
-      String jndiProps = "java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory\n"
-            + "java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces\n"
-            + "java.naming.provider.url=localhost:1099\n";
-
-      file.create(new ByteArrayInputStream(jndiProps.getBytes()), true, new NullProgressMonitor());
-   }
    private String findSourcePaths(IProject project) throws CoreException {
 	   IJavaElement elem = JavaCore.create(project);
 	   IPackageFragmentRoot initRoot= null;

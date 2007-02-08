@@ -2,9 +2,7 @@
 <?eclipse version="3.0"?>
 <plugin>
 
-     <extension
-         id="org.jboss.ide.eclipse.ejb3.wizards.ui.NewStatelessSessionBeanWizard"
-         point="org.eclipse.ui.newWizards">
+     <extension point="org.eclipse.ui.newWizards">
       <wizard
             icon="icons/full/ctool16/newclass_wiz.gif"
             class="org.jboss.ide.eclipse.ejb3.ui.wizards.NewSessionBeanWizard"
@@ -28,6 +26,13 @@
          id="org.jboss.ide.eclipse.ejb3.ui.wizards.NewEjb30Wizard"
          name="JBoss EJB 3.0 Project"
          project="true"/>
+</extension>
+<extension
+      point="org.eclipse.wst.server.ui.serverImages">
+   <image
+         icon="icons/EJBModule16.gif"
+         id="org.jboss.ide.eclipse.ejb3.ui.facet.image.ejb30"
+         typeIds="jbide.ejb30"/>
 </extension>
 
 
