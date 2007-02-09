@@ -21,8 +21,15 @@
  */
 package org.jboss.ide.eclipse.core.util;
 
+import java.io.InputStream;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 
 public class ResourceUtil
 {
@@ -47,5 +54,37 @@ public class ResourceUtil
       {
          e.printStackTrace();
       }
+   }
+   
+   /**
+    * This will create a file (using IFile.create()) and any parent directories that do not exist as well.
+    * @param file The file to create
+    * @param source The input stream that will be copied as the file's contents
+    * @param force Whether or not to force creation
+    */
+   public static void safeCreateFile (IFile file, InputStream source, boolean force, IProgressMonitor monitor)
+   	throws CoreException
+   {
+	   if (file.exists()) return;
+	   
+	   IProject project = file.getProject();
+	   
+	   if (project.isAccessible())
+	   {
+		 IPath relativePath = file.getProjectRelativePath();
+		 int folderCount = relativePath.segmentCount() - 1;
+		 
+		 for (int i = 0; i < folderCount; i++)
+		 {
+			 IFolder folder = project.getFolder(relativePath.removeLastSegments(folderCount - i));
+			 
+			 if (!folder.exists())
+			 {
+				folder.create(force, true, monitor);
+			 }
+		 }
+		 
+		 file.create(source, force, monitor);
+	   }
    }
 }
