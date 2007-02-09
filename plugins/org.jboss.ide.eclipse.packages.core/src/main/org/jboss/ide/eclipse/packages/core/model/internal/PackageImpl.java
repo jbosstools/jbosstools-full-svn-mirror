@@ -35,6 +35,7 @@ import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
+import org.jboss.ide.eclipse.packages.core.model.IPackageReference;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackages;
 import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
@@ -221,6 +222,18 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 		}
 		
 		return new Path(path);
+	}
+	
+	public IPackageReference createReference (boolean topLevel) {
+		PackageReferenceImpl ref = new PackageReferenceImpl(this, new XbPackage());
+		
+		if (topLevel)
+		{
+			XbPackages packages = PackagesModel.instance().getXbPackages(getProject());
+			packages.addChild(ref.xbPackage);
+		}
+		
+		return ref;
 	}
 	
 	protected XbPackage getPackageDelegate ()
