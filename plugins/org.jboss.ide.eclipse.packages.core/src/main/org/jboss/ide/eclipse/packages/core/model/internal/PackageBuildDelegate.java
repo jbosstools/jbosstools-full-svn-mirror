@@ -29,9 +29,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.tools.ant.DirectoryScanner;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -65,11 +67,11 @@ import de.schlichtherle.io.FileOutputStream;
 public class PackageBuildDelegate implements IPackagesModelListener {
 	private ArrayList referencedProjects;
 	private Hashtable scannerCache;
-	private IPackage packages[];
+	private List packages;
 	private ArrayList nodesToUpdate, nodesToRemove;
 	private IProject project;
 	private IResourceDelta delta;
-	
+	private static boolean building;
 	
 	public PackageBuildDelegate (PackagesBuilder builder)
 	{
@@ -88,6 +90,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		
 		nodesToUpdate = new ArrayList();
 		nodesToRemove = new ArrayList();
+		
 		PackagesModel.instance().addPackagesModelListener(this);
 	}
 	
@@ -153,9 +156,9 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	private void createScannerCache ()
 	{
 		scannerCache = new Hashtable();
-		for (int i = 0; i < packages.length; i++)
+		for (Iterator iter = packages.iterator(); iter.hasNext(); )
 		{
-			final IPackage pkg = packages[i];
+			final IPackage pkg = (IPackage) iter.next();
 			final Hashtable filesetCache = new Hashtable();
 			
 			scannerCache.put(pkg, filesetCache);
@@ -165,15 +168,54 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 					if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
 					{
 						PackageFileSetImpl fileset = (PackageFileSetImpl) node;
+						
+						Trace.trace(getClass(), "adding " + fileset + " @" + fileset.hashCode() + " to scanner cache.");
 						filesetCache.put(fileset, fileset.createDirectoryScanner(true));
 					}
 					return true;
 				}
 			});
 		}
+		
+		Trace.trace(getClass(), "scannerCache = " + scannerCache);
 	}
 	
-	private IPackageFileSet[] findMatchingFilesets (IFile file)
+	private IPackageFileSet[] findMatchingFilesetsForRemovedFile (IFile removedFile)
+	{
+		ArrayList filesets = new ArrayList();
+		
+		for (Iterator iter = scannerCache.keySet().iterator(); iter.hasNext(); )
+		{
+			IPackage pkg = (IPackage) iter.next();
+			Hashtable scanners = (Hashtable) scannerCache.get(pkg);
+			
+			for (Iterator filesetIter = scanners.keySet().iterator(); filesetIter.hasNext(); )
+			{
+				PackageFileSetImpl fileset = (PackageFileSetImpl) filesetIter.next();
+				
+				IContainer root = fileset.getSourceContainer();
+				IPath relativePath = removedFile.getFullPath();
+				IPath rootPath = root.getFullPath();
+				relativePath = relativePath.removeFirstSegments(rootPath.segmentCount());
+				
+				boolean matchesIncludes = DirectoryScanner.match(fileset.getIncludesPattern(), relativePath.toString());
+				boolean matchesExcludes = false;
+				if (fileset.getExcludesPattern() != null && fileset.getExcludesPattern().length() > 0)
+				{
+					matchesExcludes = DirectoryScanner.match(fileset.getExcludesPattern(), relativePath.toString());
+				}
+				
+				if (matchesIncludes && !matchesExcludes)
+				{
+					filesets.add(fileset);
+				}
+			}
+		}
+		
+		return (IPackageFileSet[]) filesets.toArray(new IPackageFileSet[filesets.size()]);
+	}
+	
+	private IPackageFileSet[] findMatchingFilesets (IFile file, boolean rescan)
 	{
 		ArrayList filesets = new ArrayList();
 		
@@ -186,6 +228,8 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			{
 				PackageFileSetImpl fileset = (PackageFileSetImpl) filesetIter.next();
 				DirectoryScanner scanner = (DirectoryScanner) scanners.get(fileset);
+				
+				if (rescan) scanner.scan();
 				
 				if (fileset.matchesFile(scanner, file))
 				{
@@ -266,24 +310,32 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			}
 		}
 		
+		try {
+			File.umount();
+		} catch (ArchiveException e) {
+			Trace.trace(getClass(), e);
+		}
+		
 		monitor.done();
 		fireFinishedBuildingPackage(pkg);
 	}
 	
 	private void fullBuild(Map args,  IProgressMonitor monitor)
 	{
-		for (int i = 0; i < packages.length; i++)
+		for (Iterator iter = packages.iterator(); iter.hasNext(); )
 		{
-			buildPackage(packages[i], monitor);
+			IPackage pkg = (IPackage) iter.next();
+			buildPackage(pkg, monitor);
 		}
 	}
 	
 	private void cleanBuild(Map args, IProgressMonitor monitor)
 	{
-		monitor.beginTask("Cleaning packages...", packages.length);
-		for (int i = 0; i < packages.length; i++)
+		monitor.beginTask("Cleaning packages...", packages.size());
+		for (Iterator iter = packages.iterator(); iter.hasNext(); )
 		{
-			IFile packageFile = packages[i].getPackageFile();
+			IPackage pkg = (IPackage) iter.next();
+			IFile packageFile = pkg.getPackageFile();
 			
 			if (packageFile.exists())
 			{
@@ -300,7 +352,9 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	
 	public void buildSinglePackage (IPackage pkg, IProgressMonitor monitor)
 	{
-		packages = new IPackage[] { pkg };
+		packages = new ArrayList();
+		packages.add(pkg);
+		
 		createScannerCache();
 		
 		buildPackage(pkg, monitor);
@@ -310,14 +364,18 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	
 	public IProject[] build(int kind, Map args, IProgressMonitor monitor)
 		throws CoreException {
-
+		
+		building = true;
 		referencedProjects = new ArrayList();
 		
-		packages = PackagesCore.getProjectPackages(project, monitor);
-		monitor.beginTask("Finding referenced projects...", packages.length);
-		for (int i = 0; i < packages.length; i++)
+		if (packages == null) return new IProject[0];
+		
+		packages = PackagesModel.instance().getProjectPackages(project);
+		monitor.beginTask("Finding referenced projects...", packages.size());
+		for (Iterator iter = packages.iterator(); iter.hasNext(); )
 		{
-			referencedProjects.addAll(PackagesExport.findReferencedProjects(project, packages[i]));
+			IPackage pkg = (IPackage) iter.next();
+			referencedProjects.addAll(PackagesExport.findReferencedProjects(project, pkg));
 			monitor.worked(1);
 		}
 		monitor.done();
@@ -352,7 +410,31 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		
 		nodesToUpdate.clear();
 		nodesToRemove.clear();
+		building = false;
+		
 		return (IProject[])referencedProjects.toArray(new IProject[referencedProjects.size()]);
+	}
+	
+	public static boolean isBuilding() {
+		return building;
+	}
+	
+	private void processDelta (final IProject project, final ArrayList packagesBeingChanged, final IProgressMonitor monitor)
+	{
+		if (delta != null)
+		{
+			try {
+				delta.accept(new IResourceDeltaVisitor () { 
+					public boolean visit(IResourceDelta delta) throws CoreException {
+						if (delta.getResource().getType() == IResource.FILE)
+							processFileDelta(project, delta, packagesBeingChanged, monitor);
+						return true;
+					}
+				});
+			} catch (CoreException e) {
+				Trace.trace(getClass(), e);
+			}
+		}
 	}
 	
 	private Hashtable filesToCopy, filesToRemove;
@@ -364,26 +446,14 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	{
 		filesToCopy = new Hashtable();
 		filesToRemove = new Hashtable();
-		final ArrayList packagesBeingChanged = new ArrayList();
+		ArrayList packagesBeingChanged = new ArrayList();
 		for (Iterator iter = referencedProjects.iterator(); iter.hasNext(); )
 		{
-			final IProject project = (IProject) iter.next();
-			
-			if (delta != null)
-			{
-				try {
-					delta.accept(new IResourceDeltaVisitor () { 
-						public boolean visit(IResourceDelta delta) throws CoreException {
-							if (delta.getResource().getType() == IResource.FILE)
-								processFileDelta(project, delta, packagesBeingChanged, monitor);
-							return true;
-						}
-					});
-				} catch (CoreException e) {
-					Trace.trace(getClass(), e);
-				}
-			}
+			IProject project = (IProject) iter.next();
+			processDelta(project, packagesBeingChanged, monitor);
 		}
+		
+		processDelta(this.project, packagesBeingChanged, monitor);
 		
 		// alert this package is being changed
 		for( int i = 0; i < packagesBeingChanged.size(); i++ ) {
@@ -431,24 +501,22 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 
 	}
 	
-	private IPackage getPackageFromFile (IFile file)
-	{
-		for (int i = 0; i < packages.length; i++)
-		{
-			if (packages[i].getName().equals(file.getName()) && packages[i].getDestinationContainer().equals(file.getParent()))
-			{
-				return packages[i];
-			}
-		}
-		return null;
-	}
-	
 	private void processFileDelta (IProject project, IResourceDelta delta, ArrayList packagesBeingChanged, IProgressMonitor monitor)
 	{
 		IFile file = (IFile) delta.getResource();
-		IPackageFileSet[] filesets = findMatchingFilesets(file);
-		IPackage pkg = getPackageFromFile(file);
-		if ((delta.getFlags() & IResourceDelta.REMOVED) > 0)
+		
+		Trace.trace(getClass(), "processing file delta for file \"" + file.getName() + "\"");
+		
+		IPackageFileSet[] filesets = new IPackageFileSet[0];
+		if ((delta.getKind() & IResourceDelta.REMOVED) > 0)
+		{
+			filesets = findMatchingFilesetsForRemovedFile(file); 
+		} else {
+			filesets = findMatchingFilesets(file,true);
+		}
+		
+		IPackage pkg = PackagesCore.getPackage(file);
+		if ((delta.getKind() & IResourceDelta.REMOVED) > 0)
 		{
 			if (pkg != null)
 			{
@@ -461,21 +529,20 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		{
 			// Is this right?? Is the parent guarenteed to be a package?
 			for( int i = 0; i < filesets.length; i++ ) {
-				IPackageNode n = filesets[i].getParent();
-				if( n instanceof IPackage ) 
-					packagesBeingChanged.add(n);
+				IPackage parentPackage = PackagesCore.getParentPackage(filesets[i]);
+				packagesBeingChanged.add(parentPackage);
 			}
 			
 			
-			if ((delta.getFlags() & IResourceDelta.ADDED) > 0)
+			if ((delta.getKind() & IResourceDelta.ADDED) > 0)
 			{
 				filesToCopy.put(file, filesets);
 			}
-			else if ((delta.getFlags() & IResourceDelta.CONTENT) > 0 || (delta.getFlags() & IResourceDelta.CHANGED) > 0)
+			else if ((delta.getKind() & IResourceDelta.CONTENT) > 0 || (delta.getKind() & IResourceDelta.CHANGED) > 0)
 			{
 				filesToCopy.put(file, filesets);
 			}
-			else if ((delta.getFlags() & IResourceDelta.REMOVED) > 0)
+			else if ((delta.getKind() & IResourceDelta.REMOVED) > 0)
 			{
 				filesToRemove.put(file, filesets);
 			}
@@ -691,7 +758,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	{
 		for (int i = 0; i < filesets.length; i++)
 		{
-			File packagedFile = new File(getFileDestinationPath(file, filesets[i]).toFile());
+			File packagedFile = createFile(filesets[i], getFileDestinationPath(file, filesets[i]));
 			
 			if (packagedFile.exists()) packagedFile.deleteAll();
 		}
@@ -792,4 +859,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 //		if (file.exists()) file.deleteAll();
 	}
 
+	public void setProject(IProject project) {
+		this.project = project;
+	}
 }
