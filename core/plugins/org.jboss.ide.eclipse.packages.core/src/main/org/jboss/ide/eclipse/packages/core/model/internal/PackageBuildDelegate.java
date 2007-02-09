@@ -368,9 +368,10 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		building = true;
 		referencedProjects = new ArrayList();
 		
+		packages = PackagesModel.instance().getProjectPackages(project);
+
 		if (packages == null) return new IProject[0];
 		
-		packages = PackagesModel.instance().getProjectPackages(project);
 		monitor.beginTask("Finding referenced projects...", packages.size());
 		for (Iterator iter = packages.iterator(); iter.hasNext(); )
 		{
