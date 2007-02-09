@@ -35,20 +35,25 @@ import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.packages.core.ExtensionManager;
+import org.jboss.ide.eclipse.packages.core.PackagesCorePlugin;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
+import org.jboss.ide.eclipse.packages.core.model.IPackageReference;
 import org.jboss.ide.eclipse.packages.core.model.IPackagesBuildListener;
 import org.jboss.ide.eclipse.packages.core.model.IPackagesModelListener;
+import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XMLBinding;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFileSet;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFolder;
@@ -79,6 +84,7 @@ public class PackagesModel {
 		buildListeners = new ArrayList();
 		modelListeners = new ArrayList();
 		projectBeingRegistered = null;
+		packageRefs = new Hashtable();
 		
 		loadPackageTypes();
 	}
@@ -98,23 +104,34 @@ public class PackagesModel {
 			projectBeingRegistered = project;
 			monitor.beginTask("Loading configuration...", XMLBinding.NUM_UNMARSHAL_MONITOR_STEPS + 2);
 			
+			try {
+				if (!project.hasNature(PackagesNature.NATURE_ID)) {
+					ProjectUtil.addProjectNature(project, PackagesNature.NATURE_ID);
+				}
+			} catch (CoreException e) {
+				Trace.trace(getClass(), e);
+			}
+			
 			IFile packagesFile = project.getFile(PROJECT_PACKAGES_FILE);
 			if (packagesFile.exists())
 			{
 				try {
-					if (!project.hasNature(PackagesNature.NATURE_ID)) {
-						ProjectUtil.addProjectNature(project, PackagesNature.NATURE_ID);
-					}
-					
 					XbPackages packages = XMLBinding.unmarshal(packagesFile.getContents(), monitor);
 					monitor.worked(1);
 					
 					xbPackages.put(project, packages);
-					createPackageNodeImpl(project, packages);
+					createPackageNodeImpl(project, packages, null);
+					linkPackageReferences(project);
+					
 					monitor.worked(1);
 				} catch (CoreException e) {
-					Trace.trace(PackagesModel.class, e);
+					Trace.trace(getClass(), e);
 				}
+			} else {
+				// This is the first time this project has been registered (probably before the model has even been saved)
+				
+				saveModel(project, monitor);
+				registerProject(project, monitor);
 			}
 			projectBeingRegistered = null;
 		}
@@ -197,6 +214,16 @@ public class PackagesModel {
 		return buildListeners;
 	}
 	
+	public static DirectoryScanner createDirectoryScanner (IFile file)
+	{
+		return createDirectoryScanner(file, true);
+	}
+	
+	public static DirectoryScanner createDirectoryScanner (IPath path)
+	{
+		return createDirectoryScanner(path, true);
+	}
+	
 	public static DirectoryScanner createDirectoryScanner (IPath filesystemFolder, String include, String excludes)
 	{
 		return createDirectoryScanner(filesystemFolder, include, excludes, true);
@@ -205,6 +232,34 @@ public class PackagesModel {
 	public static DirectoryScanner createDirectoryScanner (IContainer srcFolder, String include, String excludes)
 	{
 		return createDirectoryScanner(srcFolder, include, excludes, true);
+	}
+	
+	public static DirectoryScanner createDirectoryScanner (IFile file, boolean scan)
+	{
+		DirectoryScanner scanner = new DirectoryScanner();
+		scanner.setBasedir(ProjectUtil.getProjectLocation(file.getProject()).toFile());
+		scanner.setIncludes(new String[] { file.getProjectRelativePath().toString() });
+		
+		if (scan)
+			scanner.scan();
+		
+		return scanner;
+	}
+	
+	public static DirectoryScanner createDirectoryScanner (IPath path, boolean scan)
+	{
+		DirectoryScanner scanner = new DirectoryScanner();
+		
+		String filename = path.lastSegment();
+		IPath parentPath = path.removeLastSegments(1);
+		
+		scanner.setBasedir(parentPath.toFile());
+		scanner.setIncludes(new String[] { filename });
+		
+		if (scan)
+			scanner.scan();
+		
+		return scanner;
 	}
 	
 	public static DirectoryScanner createDirectoryScanner (IPath filesystemFolder, String includes, String excludes, boolean scan)
@@ -302,18 +357,27 @@ public class PackagesModel {
 		}
 	}
 	
-	protected PackageNodeImpl createPackageNodeImpl (IProject project, XbPackageNode node)
+	protected PackageNodeImpl createPackageNodeImpl (IProject project, XbPackageNode node, IPackageNode parent)
 	{
 		PackageNodeImpl nodeImpl = null;
 		
 		if (node instanceof XbPackage)
 		{
-			PackageImpl packageImpl = new PackageImpl(project, (XbPackage)node);
-			if (node.getParent() == null || node.getParent() instanceof XbPackages)
+			XbPackage xbPackage = (XbPackage)node;
+			
+			if (xbPackage.getRef() != null)
 			{
-				packageImpl.setParentShouldBeNull(true);
+				storePackageReference(xbPackage, parent);
 			}
-			nodeImpl = packageImpl;
+			else {
+				PackageImpl packageImpl = new PackageImpl(project, xbPackage);
+				if (node.getParent() == null || node.getParent() instanceof XbPackages)
+				{
+					packageImpl.setParentShouldBeNull(true);
+				}
+
+				nodeImpl = packageImpl;
+			}
 		}
 		else if (node instanceof XbFolder)
 		{
@@ -328,9 +392,9 @@ public class PackagesModel {
 		{
 			XbPackageNode child = (XbPackageNode) iter.next();
 			
-			PackageNodeImpl childImpl = createPackageNodeImpl(project, child);
+			PackageNodeImpl childImpl = createPackageNodeImpl(project, child, nodeImpl);
 			
-			if (nodeImpl != null)
+			if (nodeImpl != null && childImpl != null)
 			{
 				nodeImpl.addChildImpl(childImpl);
 			}
@@ -342,6 +406,70 @@ public class PackagesModel {
 		}
 		
 		return nodeImpl;
+	}
+
+	private Hashtable packageRefs;
+	
+	protected void storePackageReference (XbPackage xbPackage, IPackageNode parent)
+	{
+		ArrayList references = null;
+		if (packageRefs.containsKey(xbPackage))
+		{
+			references = (ArrayList) packageRefs.get(xbPackage);
+		}
+		else {
+			references = new ArrayList();
+			packageRefs.put(xbPackage, references);
+		}
+		
+		references.add(parent);
+	}
+	
+	protected void linkPackageReferences (IProject project)
+	{
+		for (Iterator iter = packageRefs.keySet().iterator(); iter.hasNext(); )
+		{
+			XbPackage xbPackage = (XbPackage) iter.next();
+			String ref = xbPackage.getRef();
+			PackageReferenceImpl.RefAttributes attrs = PackageReferenceImpl.getRefAttributes(ref);
+			
+			IPackageReference pkgRef = null;
+			if (attrs.locationType == PackageReferenceImpl.RefAttributes.WORKSPACE)
+			{
+				IFile packageFile = ResourcesPlugin.getWorkspace().getRoot().getFile(attrs.packagePath);
+				IPackage pkg = PackagesCore.getPackage(packageFile);
+				
+				if (pkg != null)
+				{
+					pkgRef = new PackageReferenceImpl(pkg, xbPackage);
+				}
+			}
+			else if (attrs.locationType == PackageReferenceImpl.RefAttributes.FILESYSTEM)
+			{
+				IPackage pkg = PackagesCore.getPackageFromFilesystem(project, attrs.packagePath);
+				
+				if (pkg != null)
+				{
+					pkgRef = new PackageReferenceImpl(pkg, xbPackage);
+				}
+			}
+			
+			ArrayList references = (ArrayList) packageRefs.get(xbPackage);
+			for (Iterator refIter = references.iterator(); refIter.hasNext(); )
+			{
+				PackageNodeImpl parent = (PackageNodeImpl) refIter.next();
+				if (pkgRef != null)
+				{
+					parent.addChild(pkgRef);
+					refIter.remove();
+				}
+			}
+			
+			if (references.isEmpty())
+			{
+				iter.remove();
+			}
+		}
 	}
 	
 	protected void fireNodeAdded (final IPackageNode added)
@@ -447,6 +575,8 @@ public class PackagesModel {
 				packages.addChild(pkg.getNodeDelegate());
 			}
 		}
+		
+		
 	}
 	
 	protected void unregisterPackage (PackageImpl pkg)
@@ -503,12 +633,12 @@ public class PackagesModel {
 		{
 			node.setDetached(false);
 			
-			fireNodeAttached(node);
 			if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
 			{
 				registerPackage((PackageImpl) node);
 			}
-			
+
+			fireNodeAttached(node);
 			saveModel(node.getProject(), monitor);
 		}
 	}
