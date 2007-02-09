@@ -31,7 +31,9 @@ import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
 import org.jboss.ide.eclipse.core.test.util.JavaProjectHelper;
 import org.jboss.ide.eclipse.core.test.util.TestFileUtil;
@@ -39,7 +41,9 @@ import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
+import org.jboss.ide.eclipse.packages.core.model.IPackageReference;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackageReferenceImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XMLBinding;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFileSet;
@@ -81,7 +85,7 @@ public class PackagesEARTest extends TestCase {
 		
 		List packages = packagesElement.getPackages();
 		assertNotNull(packages);
-		assertEquals(packages.size(), 1);
+		assertEquals(packages.size(), 3);
 		
 		Properties properties = packagesElement.getProperties().getProperties();
 		assertNotNull(properties);
@@ -226,7 +230,7 @@ public class PackagesEARTest extends TestCase {
 		List packages = PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
 		
 		assertNotNull(packages);
-		assertEquals(packages.size(), 1);
+		assertEquals(packages.size(), 3);
 		
 		IPackage earPackage = (IPackage) packages.get(0);
 		assertEquals(earPackage.getProject(), testPackagesProject.getProject());
@@ -385,5 +389,40 @@ public class PackagesEARTest extends TestCase {
 		int index = Arrays.binarySearch(packages, detachedPackage);
 		
 		assertTrue(index >= 0);
+	}
+	
+	public void testPathAppend ()
+	{
+		String sPath = "Project1/filesystem/C:/Users/Marshall/.vimrc";
+		PackageReferenceImpl.RefAttributes attrs = PackageReferenceImpl.getRefAttributes(sPath);
+		
+		assertEquals(attrs.projectName, "Project1");
+		assertEquals(attrs.locationType, PackageReferenceImpl.RefAttributes.FILESYSTEM);
+		assertEquals(attrs.packagePath, new Path("C:/Users/Marshall/.vimrc"));
+		System.out.println(attrs.packagePath);
+	}
+	
+	public void testPackageReference ()
+	{
+		List packages = PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
+		
+		assertNotNull(packages);
+		assertEquals(packages.size(), 3);
+		
+		IPackage testRef = (IPackage) packages.get(1);
+		IPackage testRef2 = (IPackage) packages.get(2);
+		IPackageNode refNodes[] = testRef2.getAllChildren();
+		
+		assertNotNull(refNodes);
+		assertEquals(refNodes.length, 1);
+		assertEquals(refNodes[0].getNodeType(), IPackageNode.TYPE_PACKAGE_REFERENCE);
+		
+		IPackageReference ref = (IPackageReference) refNodes[0];
+		assertEquals(ref.getPackage(), testRef);
+		assertEquals(ref.getParent(), testRef2);
+		
+		IPackageReference testRef3 = testRef.createReference(true);
+		PackageReferenceImpl refImpl = (PackageReferenceImpl) testRef3;
+		assertEquals(refImpl.getDelegate().getRef(), "testPackagesProject/workspace/testPackagesProject/testRef.jar");
 	}
 }
