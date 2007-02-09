@@ -23,13 +23,13 @@ package org.jboss.ide.eclipse.packages.core.model.internal;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Assert;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeVisitor;
+import org.jboss.ide.eclipse.packages.core.model.IPackageReference;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFileSet;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFolder;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
@@ -176,8 +176,15 @@ public abstract class PackageNodeImpl implements IPackageNode {
 		return keepGoing;
 	}
 	
+	
 	public void addChild(IPackageNode node) {
 		Assert.isNotNull(node);
+		
+		if (node.getNodeType() == TYPE_PACKAGE_REFERENCE)
+		{
+			addRef((IPackageReference)node);
+			return;
+		}
 		
 		PackageNodeImpl impl = (PackageNodeImpl) node;
 		
@@ -189,6 +196,19 @@ public abstract class PackageNodeImpl implements IPackageNode {
 		{
 			PackagesModel.instance().saveModel(node.getProject(), null);
 			PackagesModel.instance().fireNodeAdded(node);
+		}
+	}
+	
+	private void addRef (IPackageReference pkgRef)
+	{		
+		PackageReferenceImpl refImpl = (PackageReferenceImpl) pkgRef;
+		
+		children.add(refImpl);
+		refImpl.setParent(this);
+		
+		if (!detached)
+		{
+			PackagesModel.instance().saveModel(getProject(), null);
 		}
 	}
 	
