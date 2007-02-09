@@ -39,14 +39,19 @@ public interface IPackageNode {
 	public static final int TYPE_PACKAGE = 0;
 	
 	/**
+	 * The node type that represents an IPackageReference
+	 */
+	public static final int TYPE_PACKAGE_REFERENCE = 1;
+	
+	/**
 	 * The node type that represents an IPackageFileSet
 	 */
-	public static final int TYPE_PACKAGE_FILESET = 1;
+	public static final int TYPE_PACKAGE_FILESET = 2;
 	
 	/**
 	 * The node type that represents an IPackageFolder
 	 */
-	public static final int TYPE_PACKAGE_FOLDER = 2;
+	public static final int TYPE_PACKAGE_FOLDER = 3;
 	
 	/**
 	 * @return The parent of this package node, or null if this node is top level

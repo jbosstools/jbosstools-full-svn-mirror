@@ -168,4 +168,10 @@ public interface IPackage extends IPackageNode {
 	 * @param container The container where this package will be built
 	 */
 	public void setDestinationContainer(IContainer container);
+	
+	/**
+	 * Create a reference to this IPackage. Note: if this IPackage is already a reference, this will return that reference instead of creating a new one.
+	 * @return The IPackageReference
+	 */
+	public IPackageReference createReference (boolean topLevel);
 }
