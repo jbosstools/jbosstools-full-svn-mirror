@@ -2,7 +2,9 @@ package org.jboss.ide.eclipse.packages.ui.views;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.GroupMarker;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -256,8 +258,11 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 			}
 		});
 		
-		Menu contextMenu = manager.createContextMenu(packageTree.getTree());
-		packageTree.getTree().setMenu(contextMenu);
+		Menu treeContextMenu = manager.createContextMenu(packageTree.getTree());
+		packageTree.getTree().setMenu(treeContextMenu);
+		
+//		Menu emptyContextMenu = manager.createContextMenu(createPackageLink);
+//		createPackageLink.setMenu(emptyContextMenu);
 	}
 	
 	public void projectSelected(final IProject project)
@@ -300,27 +305,40 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		
 		newJARAction.setEnabled(true);
 	}
-
-	private MenuManager createLinkMenuManager;
-	private Menu createLinkMenu;
 	
 	private void createPackagePressed ()
 	{
-//		newJARAction.run();
-		if (createLinkMenuManager == null)
-		{
-			createLinkMenuManager = new MenuManager();
-			
-			// Add the newPackageManager's contributions at the top level so we can avoid redundancy in the UI
-			IContributionItem items[] = newPackageManager.getItems();
-			for (int i = 0; i < items.length; i++)
-			{
-				createLinkMenuManager.add(items[i]);
-			}
-			createLinkMenu = createLinkMenuManager.createContextMenu(createPackageLink);
-		}
-		
-		createLinkMenu.setVisible(true);
+		newJARAction.run();
+//		if (createLinkMenuManager == null)
+//		{
+//			createLinkMenuManager = new MenuManager();
+//			createLinkMenuManager.setRemoveAllWhenShown(true);
+//			
+//			createLinkMenuManager.addMenuListener(new IMenuListener () {
+//				public void menuAboutToShow(IMenuManager manager) {
+//					//	Add the newPackageManager's contributions at the top level so we can avoid redundancy in the UI
+//					createLinkMenuManager.add(newPackageContributions);
+//					
+//					IContributionItem items[] = newPackageManager.getItems();
+//					for (int i = 0; i < items.length; i++)
+//					{
+//						if (items[i] instanceof ActionContributionItem)
+//						{
+//							IAction action = ((ActionContributionItem)items[i]).getAction();
+//							createLinkMenuManager.add(action);
+//						}
+//						else if (items[i] instanceof Separator)
+//						{
+//							createLinkMenuManager.add(new Separator());
+//						}
+//					}
+//				}
+//			});
+//			
+//			createLinkMenu = createLinkMenuManager.createContextMenu(createPackageLink);
+//		}
+//		
+//		createLinkMenu.setVisible(true);
 	}
 	
 	private void createFolder ()
