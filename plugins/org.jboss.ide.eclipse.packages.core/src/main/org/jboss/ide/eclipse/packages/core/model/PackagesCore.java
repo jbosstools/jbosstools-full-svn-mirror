@@ -22,6 +22,7 @@
 package org.jboss.ide.eclipse.packages.core.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.tools.ant.DirectoryScanner;
@@ -37,7 +38,10 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageBuildDelegate;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackageImpl;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackageReferenceImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
+import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
 
 public class PackagesCore {
@@ -49,6 +53,11 @@ public class PackagesCore {
 	
 	public static IPackage[] getProjectPackages (IProject project, IProgressMonitor monitor)
 	{
+		return getProjectPackages(project, monitor, true);
+	}
+	
+	public static IPackage[] getProjectPackages (IProject project, IProgressMonitor monitor, boolean lazyInit)
+	{
 		if (monitor == null) monitor = new NullProgressMonitor();
 		
 		monitor.beginTask("Fetching packages for \"" + project.getName() + "\"...", 2);
@@ -56,9 +65,8 @@ public class PackagesCore {
 		monitor.worked(1);
 		
 		if (packages == null) {
-			if (project.getFile(PackagesModel.PROJECT_PACKAGES_FILE).exists())
+			if (lazyInit && projectHasPackages(project))
 			{
-				// lazy init
 				PackagesModel.instance().registerProject(project, monitor);
 				packages = PackagesModel.instance().getProjectPackages(project);
 			}
@@ -187,6 +195,18 @@ public class PackagesCore {
 		}
 	}
 	
+	public static IPackage getParentPackage (IPackageNode node)
+	{
+		if (node != null)
+		{
+			IPackageNode parent = null;
+			
+			for (parent = node.getParent(); parent != null && parent.getNodeType() != IPackageNode.TYPE_PACKAGE; parent = parent.getParent()) { }
+			return (IPackage) parent;
+		}
+		return null;
+	}
+	
 	public static IPackage getTopLevelPackage (IPackageNode node)
 	{
 		IPackageNode tmp = node.getParent(), top = tmp;
@@ -212,6 +232,27 @@ public class PackagesCore {
 	}
 	
 	/**
+	 * Returns the IPackage represented by the passed-in filesystem path.
+	 * This will return null if the passed-in path does not represent an IPath.
+	 * @param project The project the package exists in
+	 * @param systemPath The full system path to the package
+	 * @return an IPackage
+	 */
+	public static IPackage getPackageFromFilesystem (IProject project, IPath systemPath)
+	{
+		IPackage[] packages = getProjectPackages(project, null, false);
+		for (int i = 0; i < packages.length; i++)
+		{
+			if (packages[i].getPackageFilePath().equals(systemPath))
+			{
+				return packages[i];
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * @see getPackage(IFile);
 	 * 
 	 * @param project The project
@@ -234,12 +275,13 @@ public class PackagesCore {
 	 */
 	public static IPackage getPackage (IFile file)
 	{
-		IPackage[] packages = getProjectPackages(file.getProject(), null);
-		for (int i = 0; i < packages.length; i++)
+		List packages = PackagesModel.instance().getProjectPackages(file.getProject());
+		for (Iterator iter = packages.iterator(); iter.hasNext(); )
 		{
-			if (packages[i].getPackageFile().equals(file))
+			IPackage pkg = (IPackage) iter.next();
+			if (pkg.getPackageFile().equals(file))
 			{
-				return packages[i];
+				return pkg;
 			}
 		}
 		
@@ -291,6 +333,13 @@ public class PackagesCore {
 	public static IPackage createPackage (IProject project, boolean isTopLevel)
 	{
 		return PackagesModel.instance().createPackage(project, isTopLevel);
+	}
+
+	public IPackageReference createPackageReference (IPackage pkg) {
+		PackageImpl pkgImpl = (PackageImpl) pkg;
+		XbPackage xbPackage = new XbPackage((XbPackage)pkgImpl.getNodeDelegate());
+		
+		return new PackageReferenceImpl(pkg, xbPackage);
 	}
 	
 	public static IPackage createDetachedPackage (IProject project, boolean isTopLevel)
