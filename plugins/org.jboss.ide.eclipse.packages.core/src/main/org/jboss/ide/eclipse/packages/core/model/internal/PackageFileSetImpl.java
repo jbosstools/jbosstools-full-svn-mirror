@@ -186,13 +186,25 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 	}
 
 	public DirectoryScanner createDirectoryScanner(boolean scan) {
-		if (isInWorkspace())
+		if (isSingleFile())
 		{
-			return PackagesModel.createDirectoryScanner(
-					getSourceContainer(), getIncludesPattern(), getExcludesPattern(), scan);
-		} else {
-			return PackagesModel.createDirectoryScanner(
-					getSourceFolder(), getIncludesPattern(), getExcludesPattern(), scan);
+			if (isInWorkspace())
+			{
+				return PackagesModel.createDirectoryScanner(getFile(), scan);
+			}
+			else {
+				return PackagesModel.createDirectoryScanner(getFilePath(), scan);
+			}
+		}
+		else {
+			if (isInWorkspace())
+			{
+				return PackagesModel.createDirectoryScanner(
+						getSourceContainer(), getIncludesPattern(), getExcludesPattern(), scan);
+			} else {
+				return PackagesModel.createDirectoryScanner(
+						getSourceFolder(), getIncludesPattern(), getExcludesPattern(), scan);
+			}
 		}
 	}
 	
@@ -269,10 +281,10 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 		return filesetDelegate;
 	}
 	
-	public String toString() {
-		String includes = filesetDelegate.getIncludes();
-		if (includes == null) includes = "";
-		
-		return filesetDelegate.getDir() + " : " + includes;
-	}
+//	public String toString() {
+//		String includes = filesetDelegate.getIncludes();
+//		if (includes == null) includes = "";
+//		
+//		return filesetDelegate.getDir() + " : " + includes;
+//	}
 }
