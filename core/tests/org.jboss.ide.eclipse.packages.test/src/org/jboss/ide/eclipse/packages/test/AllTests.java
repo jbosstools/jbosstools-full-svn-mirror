@@ -13,9 +13,18 @@ public class AllTests {
 		suite.addTest(new PackagesEARTest("testSave"));
 		suite.addTest(new PackagesEARTest("testBuild"));
 		suite.addTest(new PackagesEARTest("testJARDefaultConfig"));
+		suite.addTest(new PackagesEARTest("testPathAppend"));
+		suite.addTest(new PackagesEARTest("testPackageReference"));
 		
 		suite.addTest(new NewProjectTest("testXbConsistency"));
 		suite.addTest(new NewProjectTest("testEclipseModelConsistency"));
+		
+		suite.addTest(new PackagesBuildTest("testSimpleJar_buildWithAPI"));
+		suite.addTest(new PackagesBuildTest("testSimpleJar_changeFile"));
+		suite.addTest(new PackagesBuildTest("testSimpleJar_addFile"));
+		suite.addTest(new PackagesBuildTest("testSimpleJar_removeFile"));
+		suite.addTest(new PackagesBuildTest("testSimpleJar_changeFilesetPattern"));
+		
 		return suite;
 	}
 }
