@@ -119,6 +119,14 @@ public class PackagesModel {
 					XbPackages packages = XMLBinding.unmarshal(packagesFile.getContents(), monitor);
 					monitor.worked(1);
 					
+					if (packages == null)
+					{
+						// Empty / non-working XML file loaded
+						Trace.trace(getClass(), "WARNING: .packages file for project " + project.getName() + " is empty or contains the wrong content");
+						projectBeingRegistered = null;
+						return;
+					}
+					
 					xbPackages.put(project, packages);
 					createPackageNodeImpl(project, packages, null);
 					linkPackageReferences(project);
@@ -625,11 +633,20 @@ public class PackagesModel {
 		return filesetImpl;
 	}
 
+	private boolean areAnyNodeParentsDetached (IPackageNode node)
+	{
+		for (IPackageNode parent = node.getParent(); parent != null; parent = parent.getParent() )
+		{
+			if (! ((PackageNodeImpl)parent).isDetached()) return false;
+		}
+		return true;
+	}
+	
 	public void attach (IPackageNode nodeToAttach, IProgressMonitor monitor)
 	{
 		PackageNodeImpl node = (PackageNodeImpl) nodeToAttach;
 		
-		if (node.isDetached())
+		if (node.isDetached() && areAnyNodeParentsDetached(node))
 		{
 			node.setDetached(false);
 			
