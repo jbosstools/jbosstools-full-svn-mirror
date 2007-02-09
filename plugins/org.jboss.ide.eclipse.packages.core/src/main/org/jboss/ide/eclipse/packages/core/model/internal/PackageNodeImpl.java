@@ -192,7 +192,7 @@ public abstract class PackageNodeImpl implements IPackageNode {
 		
 		addChildImpl(impl);
 		
-		if (!detached)
+		if (!detached && !areAnyParentsDetached())
 		{
 			PackagesModel.instance().saveModel(node.getProject(), null);
 			PackagesModel.instance().fireNodeAdded(node);
@@ -206,7 +206,7 @@ public abstract class PackageNodeImpl implements IPackageNode {
 		children.add(refImpl);
 		refImpl.setParent(this);
 		
-		if (!detached)
+		if (!detached && !areAnyParentsDetached())
 		{
 			PackagesModel.instance().saveModel(getProject(), null);
 		}
@@ -231,7 +231,7 @@ public abstract class PackageNodeImpl implements IPackageNode {
 		if (children.contains(node))
 			children.remove(node);
 		
-		if (!detached)
+		if (!detached && !areAnyParentsDetached())
 		{
 			PackagesModel.instance().saveModel(node.getProject(), null);
 			PackagesModel.instance().fireNodeRemoved(node);
@@ -248,6 +248,15 @@ public abstract class PackageNodeImpl implements IPackageNode {
 	
 	public boolean isDetached() {
 		return detached;
+	}
+	
+	public boolean areAnyParentsDetached ()
+	{
+		for (IPackageNode parent = getParent(); parent != null; parent = parent.getParent() )
+		{
+			if (! ((PackageNodeImpl)parent).isDetached()) return false;
+		}
+		return true;
 	}
 
 	public void setDetached(boolean detached) {
