@@ -633,20 +633,11 @@ public class PackagesModel {
 		return filesetImpl;
 	}
 
-	private boolean areAnyNodeParentsDetached (IPackageNode node)
-	{
-		for (IPackageNode parent = node.getParent(); parent != null; parent = parent.getParent() )
-		{
-			if (! ((PackageNodeImpl)parent).isDetached()) return false;
-		}
-		return true;
-	}
-	
 	public void attach (IPackageNode nodeToAttach, IProgressMonitor monitor)
 	{
 		PackageNodeImpl node = (PackageNodeImpl) nodeToAttach;
 		
-		if (node.isDetached() && areAnyNodeParentsDetached(node))
+		if (node.isDetached() && node.areAnyParentsDetached())
 		{
 			node.setDetached(false);
 			
