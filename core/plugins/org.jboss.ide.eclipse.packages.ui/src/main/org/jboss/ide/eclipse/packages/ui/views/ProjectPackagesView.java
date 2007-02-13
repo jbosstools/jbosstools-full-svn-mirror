@@ -60,7 +60,8 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	private Composite loadingPackagesComposite;
 	private TreeViewer packageTree;
 	private ProgressMonitorPart loadingProgress;
-	private Action newJARAction, editAction, deleteAction, newFolderAction, newFilesetAction, buildAllAction, buildPackageAction;
+	private Action newJARAction, editAction, deleteAction, newFolderAction, newFilesetAction;
+	private BuildPackagesAction buildAllAction, buildPackageAction;
 	private Action collapseAllAction;
 	private GroupMarker newPackageContributions;
 	private MenuManager newPackageManager;
@@ -175,7 +176,10 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		};
 
 		buildAllAction = new BuildPackagesAction();
+		buildAllAction.init(getViewSite().getWorkbenchWindow());
+		
 		buildPackageAction = new BuildPackagesAction();
+		buildPackageAction.init(getViewSite().getWorkbenchWindow());
 		
 		newPackageContributions = new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS);
 	}
