@@ -2,16 +2,14 @@ package org.jboss.ide.eclipse.packages.ui.views;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.GroupMarker;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -347,15 +345,43 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	
 	private void createFolder ()
 	{
+		IInputValidator validator = new IInputValidator () {
+			public String isValid(String newText) {
+				IPackageNode selected = getSelectedNode();
+				
+				boolean folderExists = false;
+				IPackageNode[] folders = selected.getChildren(IPackageNode.TYPE_PACKAGE_FOLDER);
+				for (int i = 0; i < folders.length; i++)
+				{
+					IPackageFolder folder = (IPackageFolder) folders[i];
+					if (folder.getName().equals(newText))
+					{
+						folderExists = true; break;
+					}
+				}
+				
+				if (folderExists)
+				{
+					return PackagesUIMessages.bind(
+						PackagesUIMessages.ProjectPackagesView_createFolderDialog_warnFolderExists, newText);
+					
+				}
+				return null;
+			}
+		};
+		
 		InputDialog dialog = new InputDialog(getSite().getShell(),
 			PackagesUIMessages.ProjectPackagesView_createFolderDialog_title,
-			PackagesUIMessages.ProjectPackagesView_createFolderDialog_message, "", null);
+			PackagesUIMessages.ProjectPackagesView_createFolderDialog_message, "", validator);
+		
 		int response = dialog.open();
 		if (response == Dialog.OK)
 		{
+			String folderName = dialog.getValue();
 			IPackageNode selected = getSelectedNode();
+
 			IPackageFolder folder = PackagesCore.createPackageFolder(selected.getProject());
-			folder.setName(dialog.getValue());
+			folder.setName(folderName);
 			
 			selected.addChild(folder);
 		}
