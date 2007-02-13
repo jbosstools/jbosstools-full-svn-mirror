@@ -80,13 +80,10 @@ public class PackagesModel {
 	{
 		projectPackages = new Hashtable();
 		xbPackages = new Hashtable();
-		packageTypes = new Hashtable();
 		buildListeners = new ArrayList();
 		modelListeners = new ArrayList();
 		projectBeingRegistered = null;
 		packageRefs = new Hashtable();
-		
-		loadPackageTypes();
 	}
 	
 	public static PackagesModel instance ()
@@ -311,15 +308,15 @@ public class PackagesModel {
 		return scanner;
 	}
 	
-	protected void loadPackageTypes ()
-	{
-		IPackageType[] packageTypes = ExtensionManager.findPackageTypes();
-		
-		for (int i = 0; i < packageTypes.length; i++)
-		{
-			this.packageTypes.put(packageTypes[i].getId(), packageTypes[i]);
-		}
-	}
+//	protected void loadPackageTypes ()
+//	{
+//		IPackageType[] packageTypes = ExtensionManager.findPackageTypes();
+//		
+//		for (int i = 0; i < packageTypes.length; i++)
+//		{
+//			this.packageTypes.put(packageTypes[i].getId(), packageTypes[i]);
+//		}
+//	}
 	
 	protected void clearModel (IProject project)
 	{
@@ -603,6 +600,16 @@ public class PackagesModel {
 	
 	public IPackageType getPackageType (String packageType)
 	{
+		if (packageTypes == null)
+		{
+			packageTypes = new Hashtable();
+			IPackageType[] registeredTypes = ExtensionManager.findPackageTypes();
+			for (int i = 0; i < registeredTypes.length; i++)	
+			{
+				packageTypes.put(registeredTypes[i].getId(), registeredTypes[i]);
+			}
+		}
+		
 		return (IPackageType) packageTypes.get(packageType);
 	}
 
