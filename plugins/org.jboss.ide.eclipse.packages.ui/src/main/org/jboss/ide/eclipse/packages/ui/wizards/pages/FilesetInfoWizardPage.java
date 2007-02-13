@@ -442,8 +442,11 @@ public class FilesetInfoWizardPage extends WizardPage {
 				rootProjectLabel.setText(project.getName());
 				
 				rootDir = relativePath.isEmpty() ? null : relativePath.toString();
-				if (!relativePath.isEmpty())
+				if (!relativePath.isEmpty()) {
 					rootDirText.setText(rootDir);
+				} else {
+					rootDirText.setText("");
+				}
 				
 				rootDirIsWorkspaceRelative = true;
 				
