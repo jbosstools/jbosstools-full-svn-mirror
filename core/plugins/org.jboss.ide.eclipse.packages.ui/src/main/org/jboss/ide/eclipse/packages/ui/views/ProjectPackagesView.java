@@ -62,7 +62,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	private BuildPackagesAction buildAllAction, buildPackageAction;
 	private Action collapseAllAction;
 	private GroupMarker newPackageContributions;
-	private MenuManager newPackageManager;
+	private MenuManager newPackageManager, contextMenuManager;
 	private IProject currentProject;
 	private boolean loading;
 	private PackagesContentProvider contentProvider;
@@ -204,15 +204,15 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	}
 	
 	public static final String NEW_PACKAGE_MENU_ID = "org.jboss.ide.eclipse.packages.ui.newPackageMenu";
+	public static final String NODE_CONTEXT_MENU_ID = "org.jboss.ide.eclipse.packages.ui.nodeContextMenu";
+		
 	private Link createPackageLink;
 	
 	private void createContextMenu ()
 	{
-		getViewSite().registerContextMenu(NEW_PACKAGE_MENU_ID, newPackageManager, packageTree);
-		
-		MenuManager manager = new MenuManager("#PopupMenu"); //$NON-NLS-1$
-		manager.setRemoveAllWhenShown(true);
-		manager.addMenuListener(new IMenuListener () {
+		contextMenuManager = new MenuManager(NODE_CONTEXT_MENU_ID); //$NON-NLS-1$
+		contextMenuManager.setRemoveAllWhenShown(true);
+		contextMenuManager.addMenuListener(new IMenuListener () {
 			public void menuAboutToShow(IMenuManager manager) {
 				IStructuredSelection selection = (IStructuredSelection) packageTree.getSelection();
 				if (selection != null && !selection.isEmpty())
@@ -257,11 +257,17 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 				else {
 					manager.add(newPackageManager);
 				}
+				
+				GroupMarker additions = new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS);
+				manager.add(additions);
 			}
 		});
 		
-		Menu treeContextMenu = manager.createContextMenu(packageTree.getTree());
+		Menu treeContextMenu = contextMenuManager.createContextMenu(packageTree.getTree());
 		packageTree.getTree().setMenu(treeContextMenu);
+		
+		getViewSite().registerContextMenu(NEW_PACKAGE_MENU_ID, newPackageManager, packageTree);
+		getViewSite().registerContextMenu(NODE_CONTEXT_MENU_ID, contextMenuManager, packageTree);
 		
 //		Menu emptyContextMenu = manager.createContextMenu(createPackageLink);
 //		createPackageLink.setMenu(emptyContextMenu);
