@@ -1,8 +1,12 @@
 package org.jboss.ide.eclipse.packages.ui;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -97,4 +101,40 @@ public class PackagesUIPlugin extends AbstractUIPlugin {
 	{
 		return getDefault().getImageRegistry().getDescriptor(id);
 	}
+	
+	   public static void alert(String string)
+	   {
+	      MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+	            "JBossIDE - Alert", Display.getDefault().getSystemImage(SWT.ICON_INFORMATION), string,
+	            MessageDialog.INFORMATION, new String[]
+	            {"OK",}, 0);
+
+	      dialog.setBlockOnOpen(true);
+
+	      dialog.open();
+	   }
+
+	   public static void error(String string)
+	   {
+	      MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+	            "JBossIDE - Error", Display.getDefault().getSystemImage(SWT.ICON_ERROR), string, MessageDialog.ERROR,
+	            new String[]
+	            {"OK",}, 0);
+
+	      dialog.setBlockOnOpen(true);
+
+	      dialog.open();
+	   }
+
+	   public static void warn(String string)
+	   {
+	      MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+	            "JBossIDE - Warning", Display.getDefault().getSystemImage(SWT.ICON_WARNING), string,
+	            MessageDialog.WARNING, new String[]
+	            {"OK",}, 0);
+
+	      dialog.setBlockOnOpen(true);
+
+	      dialog.open();
+	   }
 }
