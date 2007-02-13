@@ -254,9 +254,9 @@ public abstract class PackageNodeImpl implements IPackageNode {
 	{
 		for (IPackageNode parent = getParent(); parent != null; parent = parent.getParent() )
 		{
-			if (! ((PackageNodeImpl)parent).isDetached()) return false;
+			if (! ((PackageNodeImpl)parent).isDetached()) return true;
 		}
-		return true;
+		return false;
 	}
 
 	public void setDetached(boolean detached) {
