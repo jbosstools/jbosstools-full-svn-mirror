@@ -386,6 +386,10 @@ public class FilesetInfoWizardPage extends WizardPage {
 			}
 		} else {
 			multipleFilesButton.setEnabled(true);
+			
+			rootProjectLabel.setText(parentNode.getProject().getName());
+			singleFileProjectLabel.setText(parentNode.getProject().getName());
+			
 		}
 	}
 	
