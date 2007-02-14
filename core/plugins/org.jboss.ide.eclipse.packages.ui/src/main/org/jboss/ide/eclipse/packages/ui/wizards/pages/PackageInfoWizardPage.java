@@ -1,5 +1,8 @@
 package org.jboss.ide.eclipse.packages.ui.wizards.pages;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -21,7 +24,9 @@ import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIMessages;
+import org.jboss.ide.eclipse.packages.ui.util.DestinationChangeListener;
 import org.jboss.ide.eclipse.packages.ui.util.PackageDestinationComposite;
 import org.jboss.ide.eclipse.packages.ui.wizards.AbstractPackageWizard;
 import org.jboss.ide.eclipse.ui.wizards.WizardPageWithNotification;
@@ -81,6 +86,11 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 		
 		Object destination = wizard.getSelectedDestination();
 		destinationComposite = new PackageDestinationComposite(infoGroup, SWT.NONE, destination);
+		destinationComposite.addDestinationChangeListener(new DestinationChangeListener () {
+			public void destinationChanged(Object newDestination) {
+				validate();
+			}
+		});
 		
 		customManifestCheck = new Button(infoGroup , SWT.CHECK);
 		customManifestCheck.setText(PackagesUIMessages.PackageInfoWizardPage_customManifest_label);
@@ -131,6 +141,8 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 		});
 		explodedButton.setText(PackagesUIMessages.PackageInfoWizardPage_explodedButton_label);
 		setControl(main);
+		
+		validate();
 	}
 
 	private boolean validate ()
@@ -155,6 +167,42 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 			}
 			else {
 				setErrorMessage(null);
+			}
+		}
+		
+		Object destination = getPackageDestination();
+		if (destination instanceof IPackageNode)
+		{
+			IPackageNode parentNode = (IPackageNode) destination;
+			
+			IPackageNode subPackages[] = parentNode.getChildren(IPackageNode.TYPE_PACKAGE);
+			for (int i = 0; i < subPackages.length; i++)
+			{
+				IPackage subPackage = (IPackage) subPackages[i];
+				if (subPackage.getName().equals(packageNameText.getText()))
+				{
+					setErrorMessage(
+						PackagesUIMessages.bind(
+							PackagesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
+					setPageComplete(false);
+					return false;
+				}
+			}
+		} else if (destination instanceof IContainer) {
+			IContainer container = (IContainer) destination;
+			List packages = PackagesModel.instance().getProjectPackages(wizard.getProject());
+			for (Iterator iter = packages.iterator(); iter.hasNext(); )
+			{
+				IPackage pkg = (IPackage) iter.next();
+				if (pkg.getName().equals(packageNameText.getText())
+					&& (pkg.getDestinationContainer() != null && pkg.getDestinationContainer().equals(container)))
+				{
+					setErrorMessage(
+							PackagesUIMessages.bind(
+								PackagesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
+						setPageComplete(false);
+						return false;
+				}
 			}
 		}
 		
