@@ -85,11 +85,10 @@ public interface IPackage extends IPackageNode {
 	public boolean isDestinationInWorkspace();
 	
 	/**
-	 * If this package's destination is external (and not in the workspace), this will
-	 * return a file-system IPath to that destination. Otherwise this will return null
-	 * @return The absolute IPath in the file-system to this package's external destination
+	 * @return An IPath to this package's destination. Note that this destination can either be
+	 * filesystem-based or in the workspace. (Use isDestinationInWorkspace() to check)
 	 */
-	public IPath getDestinationFolder();
+	public IPath getDestinationPath();
 	
 	/**
 	 * If this package's destination is in the workspace (and not external), this will
@@ -121,8 +120,7 @@ public interface IPackage extends IPackageNode {
 	public IFile getPackageFile();
 
 	/**
-	 * Get the absolute path on the file system that corresponds with this package. Note that this method only works for external (filesystem) packages (null will be returned otherwise)
-	 * @return The absolute path to the package (note the file may not exist)
+	 * @return The path to this package's output file. This path can be filesyste-based or workspace-based.
 	 */
 	public IPath getPackageFilePath();
 	
@@ -158,13 +156,13 @@ public interface IPackage extends IPackageNode {
 	public void setManifest(IFile manifestFile);
 	
 	/**
-	 * Sets the destination folder in the filesystem for this package
+	 * Sets the destination path for this package.
 	 * @param path The absolute path where this package will be built
 	 */
-	public void setDestinationFolder (IPath path);
+	public void setDestinationPath (IPath path);
 	
 	/**
-	 * Sets the destination container in the workspace for this package
+	 * Convenience method. The same as <code>setDestinationPath(container.getLocation())</code>
 	 * @param container The container where this package will be built
 	 */
 	public void setDestinationContainer(IContainer container);

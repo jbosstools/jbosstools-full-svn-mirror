@@ -53,7 +53,7 @@ public interface IPackageFileSet extends IPackageNode {
 	public IFile getFile();
 	
 	/**
-	 * If this fileset represents a single file, and that file is not in the workspace, this will return a filesystem path to that file.
+	 * If this fileset represents a single file, this will return the path to that file.
 	 * Otherwise this will return null.
 	 */
 	public IPath getFilePath();
@@ -75,10 +75,10 @@ public interface IPackageFileSet extends IPackageNode {
 	public IContainer getSourceContainer();
 	
 	/**
-	 * If this fileset is based in the external filesystem, this will return the absolute path of the root / base of this fileset.
-	 * @return The path to the source folder ("basedir" in ant terminology) for this fileset
+	 * @return The path to the source folder ("basedir" in ant terminology) for this fileset. Note that this path can be
+	 * filesystem-based or workspace-based.
 	 */
-	public IPath getSourceFolder();
+	public IPath getSourcePath();
 	
 	/**
 	 * @return The includes pattern for this fileset
@@ -156,10 +156,10 @@ public interface IPackageFileSet extends IPackageNode {
 	public void setSourceContainer(IContainer container);
 	
 	/**
-	 * Sets the "root" or "source" of this fileset to be an absolute path on the filesystem
+	 * Sets the "root" or "source" of this fileset to be an absolute path.
 	 * @param path The absolute path that is the source of this fileset
 	 */
-	public void setSourceFolder(IPath path);
+	public void setSourcePath(IPath path);
 	
 	/**
 	 * Set the includes pattern for this fileset. This pattern uses the same syntax as Ant's include pattern.

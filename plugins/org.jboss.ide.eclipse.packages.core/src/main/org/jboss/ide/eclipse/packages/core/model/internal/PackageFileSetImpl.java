@@ -24,6 +24,7 @@ package org.jboss.ide.eclipse.packages.core.model.internal;
 import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
@@ -80,7 +81,7 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 		if (isSingleFile())
 			return new IPath[] { getFilePath() };
 		else
-			return PackagesCore.findMatchingPaths(scanner, getSourceFolder(), getIncludesPattern(), getExcludesPattern());
+			return PackagesCore.findMatchingPaths(scanner, getSourcePath(), getIncludesPattern(), getExcludesPattern());
 	}
 	
 	public String getDestinationFilename() {
@@ -121,10 +122,7 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 		return getSourceProject().getFolder(filesetDelegate.getDir());
 	}
 
-	public IPath getSourceFolder() {
-		if (isInWorkspace())
-			return null;
-		
+	public IPath getSourcePath() {
 		String path = filesetDelegate.getDir();
 		if (path == null) return null;
 		
@@ -167,7 +165,7 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 		
 		for (int i = 0; i < paths.length; i++)
 		{
-			if (getSourceFolder().append(paths[i]).equals(path))
+			if (getSourcePath().append(paths[i]).equals(path))
 			{
 				return true;
 			}
@@ -203,7 +201,7 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 						getSourceContainer(), getIncludesPattern(), getExcludesPattern(), scan);
 			} else {
 				return PackagesModel.createDirectoryScanner(
-						getSourceFolder(), getIncludesPattern(), getExcludesPattern(), scan);
+						getSourcePath(), getIncludesPattern(), getExcludesPattern(), scan);
 			}
 		}
 	}
@@ -264,11 +262,12 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 		filesetDelegate.setInWorkspace(true);
 	}
 	
-	public void setSourceFolder (IPath path) {
+	public void setSourcePath (IPath path) {
 		Assert.isNotNull(path);
+		IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(path);
 		
 		filesetDelegate.setDir(path.toString());
-		filesetDelegate.setInWorkspace(false);
+		filesetDelegate.setInWorkspace(folder != null);
 	}
 	
 	public void setSourceProject(IProject project) {

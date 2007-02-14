@@ -570,7 +570,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			IPath subPath = topLevelPackage.getDestinationContainer().getProjectRelativePath();
 			root = new File(projectPath.append(subPath).toFile());
 		} else {
-			root = new File(topLevelPackage.getDestinationFolder().toFile());
+			root = new File(topLevelPackage.getDestinationPath().toFile());
 		}
 		
 		for (Iterator iter = parents.iterator(); iter.hasNext(); )
@@ -651,7 +651,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	
 	private IPath getPathDestinationPath (IPath path, IPackageFileSet fileset)
 	{
-		IPath copyTo = path.removeFirstSegments(fileset.getSourceFolder().segmentCount()).removeLastSegments(1);
+		IPath copyTo = path.removeFirstSegments(fileset.getSourcePath().segmentCount()).removeLastSegments(1);
 		copyTo = copyTo.append(path.lastSegment());
 		copyTo = copyTo.setDevice(null);
 		

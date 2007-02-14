@@ -350,8 +350,8 @@ public class FilesetInfoWizardPage extends WizardPage {
 					rootContainer = fileset.getSourceContainer();
 					rootDirIsWorkspaceRelative = true;
 				}
-				else if (fileset.getSourceFolder() != null) {
-					rootDir = fileset.getSourceFolder().toString();
+				else if (fileset.getSourcePath() != null) {
+					rootDir = fileset.getSourcePath().toString();
 					rootDirText.setText(rootDir);
 					rootContainer = null;
 					rootDirIsWorkspaceRelative = false;
