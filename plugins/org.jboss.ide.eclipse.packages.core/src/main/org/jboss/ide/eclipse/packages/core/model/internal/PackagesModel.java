@@ -644,7 +644,7 @@ public class PackagesModel {
 	{
 		PackageNodeImpl node = (PackageNodeImpl) nodeToAttach;
 		
-		if (node.isDetached() && node.areAnyParentsDetached())
+		if (node.isDetached() && !node.areAnyParentsDetached())
 		{
 			node.setDetached(false);
 			
