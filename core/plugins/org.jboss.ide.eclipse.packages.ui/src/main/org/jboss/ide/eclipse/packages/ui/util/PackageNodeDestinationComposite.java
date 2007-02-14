@@ -1,5 +1,8 @@
 package org.jboss.ide.eclipse.packages.ui.util;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.dialogs.Dialog;
@@ -26,15 +29,17 @@ public class PackageNodeDestinationComposite extends Composite {
 	protected Label destinationImage;
 	protected Label destinationText;
 	protected Button destinationBrowseButton;
-	protected Object packageDestination;
+	protected Object nodeDestination;
 	protected boolean editable;
+	protected ArrayList listeners;
 	
 	public PackageNodeDestinationComposite(Composite parent, int style, Object destination)
 	{
 		super(parent, style);
 		this.parent = parent;
-		this.packageDestination = destination;
+		this.nodeDestination = destination;
 		this.editable = true;
+		this.listeners = new ArrayList();
 		createComposite();
 	}
 	
@@ -67,27 +72,28 @@ public class PackageNodeDestinationComposite extends Composite {
 	
 	protected void openDestinationDialog ()
 	{
-		PackageNodeDestinationDialog dialog = new PackageNodeDestinationDialog(getShell(), packageDestination, true, true);
-		if (packageDestination != null)
-			dialog.setInitialSelection(packageDestination);
+		PackageNodeDestinationDialog dialog = new PackageNodeDestinationDialog(getShell(), nodeDestination, true, true);
+		if (nodeDestination != null)
+			dialog.setInitialSelection(nodeDestination);
 		
 		int response = dialog.open();
 		if (response == Dialog.OK)
 		{
 			Object object = dialog.getResult()[0];
-			packageDestination = object;
+			nodeDestination = object;
 			
 			updateDestinationViewer();
+			fireDestinationChanged();
 		}
 	}
 	
 	protected void updateDestinationViewer ()
 	{
-		if (packageDestination == null) return;
+		if (nodeDestination == null) return;
 		
-		if (packageDestination instanceof IPackage)
+		if (nodeDestination instanceof IPackage)
 		{
-			IPackage pkg = (IPackage) packageDestination;
+			IPackage pkg = (IPackage) nodeDestination;
 			
 			if (pkg.isExploded()) {
 				destinationImage.setImage(PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_PACKAGE_EXPLODED));
@@ -96,21 +102,21 @@ public class PackageNodeDestinationComposite extends Composite {
 			}
 			destinationText.setText(pkg.getName());
 		}
-		else if (packageDestination instanceof IPackageFolder)
+		else if (nodeDestination instanceof IPackageFolder)
 		{
-			IPackageFolder folder = (IPackageFolder) packageDestination;
+			IPackageFolder folder = (IPackageFolder) nodeDestination;
 			destinationImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER));
 			destinationText.setText(folder.getPackageRelativePath().toString());
 		}
-		else if (packageDestination instanceof IProject)
+		else if (nodeDestination instanceof IProject)
 		{
-			IProject project = (IProject) packageDestination;
+			IProject project = (IProject) nodeDestination;
 			destinationImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(IDE.SharedImages.IMG_OBJ_PROJECT));
 			destinationText.setText(project.getName());
 		}
-		else if (packageDestination instanceof IFolder)
+		else if (nodeDestination instanceof IFolder)
 		{
-			IFolder folder = (IFolder) packageDestination;
+			IFolder folder = (IFolder) nodeDestination;
 			destinationImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER));
 			destinationText.setText(folder.getProjectRelativePath().toString());
 		}
@@ -118,7 +124,7 @@ public class PackageNodeDestinationComposite extends Composite {
 	
 	public Object getPackageNodeDestination ()
 	{
-		return packageDestination;
+		return nodeDestination;
 	}
 
 	public void setEditable(boolean editable) {
@@ -126,6 +132,25 @@ public class PackageNodeDestinationComposite extends Composite {
 		if (destinationBrowseButton != null)
 		{
 			destinationBrowseButton.setEnabled(editable);
+		}
+	}
+	
+	public void addDestinationChangeListener (DestinationChangeListener listener)
+	{
+		listeners.add(listener);
+	}
+	
+	public void removeDestinationChangeListener (DestinationChangeListener listener)
+	{
+		listeners.remove(listener);
+	}
+	
+	private void fireDestinationChanged ()
+	{
+		for (Iterator iter = listeners.iterator(); iter.hasNext(); )
+		{
+			DestinationChangeListener listener = (DestinationChangeListener) iter.next();
+			listener.destinationChanged(nodeDestination);
 		}
 	}
 }
