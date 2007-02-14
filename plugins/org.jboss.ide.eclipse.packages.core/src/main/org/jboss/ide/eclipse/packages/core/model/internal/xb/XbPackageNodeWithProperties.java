@@ -31,6 +31,8 @@ public abstract class XbPackageNodeWithProperties extends XbPackageNode {
 	public XbPackageNodeWithProperties ()
 	{
 		super();
+		
+		properties = new XbProperties();
 	}
 	
 	public XbPackageNodeWithProperties (XbPackageNodeWithProperties node)
