@@ -99,6 +99,7 @@ public abstract class AbstractPackageWizard extends WizardWithNotification imple
 			{
 				selectedDestination = selected;
 			}
+			project = node.getProject();
 		}
 		else if (selected instanceof IContainer)
 		{
