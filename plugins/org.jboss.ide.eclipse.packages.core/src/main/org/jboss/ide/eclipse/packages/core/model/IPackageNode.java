@@ -98,6 +98,13 @@ public interface IPackageNode {
 	public String getProperty(String property);
 	
 	/**
+	 * Set a property on this package node
+	 * @param property The name of the property to set
+	 * @param value The new value of the property
+	 */
+	public void setProperty(String property, String value);
+	
+	/**
 	 * @return The project that this node is defined in (not necessarily the project where this is based if this is a fileset)
 	 */
 	public IProject getProject();
