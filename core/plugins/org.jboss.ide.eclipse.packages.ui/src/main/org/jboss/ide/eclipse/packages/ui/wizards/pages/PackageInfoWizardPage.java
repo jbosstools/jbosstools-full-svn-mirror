@@ -160,7 +160,7 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 				{
 					destinationComposite.setPackageNodeDestination(pkg.getDestinationContainer());
 				} else {
-					destinationComposite.setPackageNodeDestination(pkg.getDestinationFolder());
+					destinationComposite.setPackageNodeDestination(pkg.getDestinationPath());
 				}
 			} else {
 				destinationComposite.setPackageNodeDestination(pkg.getParent());
@@ -255,7 +255,7 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 			{
 				IPackage pkg = (IPackage) iter.next();
 				if (pkg.getName().equals(packageNameText.getText())
-					&& (pkg.getDestinationFolder() != null && pkg.getDestinationFolder().equals(path))
+					&& (pkg.getDestinationPath() != null && pkg.getDestinationPath().equals(path))
 					&& (!pkg.equals(this.pkg)))
 				{
 					setErrorMessage(
@@ -318,7 +318,7 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 		}
 		else if (destContainer instanceof IPath)
 		{
-			pkg.setDestinationFolder((IPath) destContainer);
+			pkg.setDestinationPath((IPath) destContainer);
 		}
 	}
 	

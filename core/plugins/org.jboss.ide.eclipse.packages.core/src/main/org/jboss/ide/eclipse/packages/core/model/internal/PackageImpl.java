@@ -26,6 +26,7 @@ import java.util.jar.Manifest;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -77,9 +78,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 		return ResourcesPlugin.getWorkspace().getRoot().getContainerForLocation(new Path(packageDelegate.getToDir()));
 	}
 	
-	public IPath getDestinationFolder () {
-		if (isDestinationInWorkspace()) return null;
-		
+	public IPath getDestinationPath () {
 		String path = packageDelegate.getToDir();
 		if (path == null) return null;
 		
@@ -123,7 +122,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 
 	public IPath getPackageFilePath() {
 		if (!isDestinationInWorkspace()) {
-			return getDestinationFolder().append(new Path(getName()));
+			return getDestinationPath().append(new Path(getName()));
 		} else return null;
 	}
 	
@@ -178,8 +177,10 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 		addChild(pkg);
 	}
 
-	public void setDestinationFolder(IPath path) {
-		packageDelegate.setInWorkspace(false);
+	public void setDestinationPath(IPath path) {
+		IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(path);
+		
+		packageDelegate.setInWorkspace(folder != null);
 		packageDelegate.setToDir(path.toString());
 	}
 	

@@ -130,8 +130,8 @@ public class PackageReferenceImpl implements IPackageReference {
 		return pkg.getDestinationContainer();
 	}
 
-	public IPath getDestinationFolder() {
-		return pkg.getDestinationFolder();
+	public IPath getDestinationPath() {
+		return pkg.getDestinationPath();
 	}
 
 	public IPackageFileSet[] getFileSets() {
@@ -218,8 +218,8 @@ public class PackageReferenceImpl implements IPackageReference {
 		pkg.setDestinationContainer(container);
 	}
 
-	public void setDestinationFolder(IPath path) {
-		pkg.setDestinationFolder(path);
+	public void setDestinationPath(IPath path) {
+		pkg.setDestinationPath(path);
 	}
 
 	public void setExploded(boolean exploded) {

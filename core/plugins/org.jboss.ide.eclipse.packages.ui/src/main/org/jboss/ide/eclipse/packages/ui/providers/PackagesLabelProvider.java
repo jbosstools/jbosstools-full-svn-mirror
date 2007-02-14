@@ -132,7 +132,7 @@ public class PackagesLabelProvider implements ILabelProvider {
 					text += " : " + fileset.getIncludesPattern();
 				return text;
 			} else {
-				String text = fileset.getSourceFolder().lastSegment();
+				String text = fileset.getSourcePath().lastSegment();
 				if (fileset.getIncludesPattern() != null)
 					text += " : " + fileset.getIncludesPattern();
 				return text;
@@ -169,7 +169,7 @@ public class PackagesLabelProvider implements ILabelProvider {
 		}
 		else if (PackagesContentProvider.FILESET_PROP_DIR.equals(property.getName()))
 		{
-			return PackagesUIMessages.PackagesLabelProvider_filesetProperty_dir + property.getFileSet().getSourceFolder().toString();
+			return PackagesUIMessages.PackagesLabelProvider_filesetProperty_dir + property.getFileSet().getSourcePath().toString();
 		}
 		return "";
 	}

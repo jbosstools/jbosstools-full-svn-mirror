@@ -76,7 +76,7 @@ public class FilesetWizard extends Wizard {
 				
 				fileset.setSourceContainer(dir);
 			} else {
-				fileset.setSourceFolder(new Path(page1.getRootDir()));
+				fileset.setSourcePath(new Path(page1.getRootDir()));
 			}
 		}
 	}
