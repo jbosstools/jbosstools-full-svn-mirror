@@ -177,6 +177,10 @@ public class PackageReferenceImpl implements IPackageReference {
 	public String getProperty(String property) {
 		return pkg.getProperty(property);
 	}
+	
+	public void setProperty(String property, String value) {
+		pkg.setProperty(property, value);
+	}
 
 	public boolean hasChild(IPackageNode child) {
 		return pkg.hasChild(child);
