@@ -13,15 +13,23 @@ import org.jboss.ide.eclipse.packages.ui.wizards.pages.DefaultJARConfigWizardPag
 public class NewJARWizard extends AbstractPackageWizard
 {
 	public WizardPage[] createWizardPages() {
-		
-		return new WizardPage[] {
-				new DefaultJARConfigWizardPage(this)
-		};
+		if (existingPackage == null) {
+			return new WizardPage[] {
+					new DefaultJARConfigWizardPage(this)
+			};
+		} else return new WizardPage[0];
 	}
 
 	public NewJARWizard ()
 	{
 		setWindowTitle(PackagesUIMessages.NewJARWizard_windowTitle);
+	}
+	
+	public NewJARWizard (IPackage existingPackage)
+	{
+		super(existingPackage);
+		
+		setWindowTitle(PackagesUIMessages.NewJARWizard_windowTitle_editJAR);
 	}
 	
 	public boolean performFinish(IPackage pkg) {

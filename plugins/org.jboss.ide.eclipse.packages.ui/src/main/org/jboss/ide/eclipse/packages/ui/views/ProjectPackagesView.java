@@ -38,6 +38,7 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.IPackagesModelListener;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackageFolderImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIMessages;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
@@ -48,6 +49,7 @@ import org.jboss.ide.eclipse.packages.ui.providers.PackagesLabelProvider;
 import org.jboss.ide.eclipse.packages.ui.providers.PackagesContentProvider.FileSetProperty;
 import org.jboss.ide.eclipse.packages.ui.util.PackagesListenerProxy;
 import org.jboss.ide.eclipse.packages.ui.wizards.FilesetWizard;
+import org.jboss.ide.eclipse.packages.ui.wizards.NewJARWizard;
 import org.jboss.ide.eclipse.ui.IProjectSelectionListener;
 import org.jboss.ide.eclipse.ui.util.ProjectSelectionService;
 
@@ -435,7 +437,14 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 				if (response == Dialog.OK)
 				{
 					folder.setName(dialog.getValue());
+					((PackageFolderImpl)folder).flagAsChanged();
 				}
+			}
+			else if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
+			{
+				IPackage pkg = (IPackage) node;
+				WizardDialog dialog = new WizardDialog(getSite().getShell(), new NewJARWizard(pkg));
+				dialog.open();
 			}
 		}
 	}

@@ -24,6 +24,7 @@ import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackageImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIMessages;
 import org.jboss.ide.eclipse.packages.ui.util.DestinationChangeListener;
@@ -48,10 +49,11 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 	private PackageDestinationComposite destinationComposite;
 	private IPackage pkg;
 	
-	public PackageInfoWizardPage (AbstractPackageWizard wizard)
+	public PackageInfoWizardPage (AbstractPackageWizard wizard, IPackage existingPackage)
 	{
 		super (PackagesUIMessages.PackageInfoWizardPage_title, PackagesUIMessages.PackageInfoWizardPage_title, wizard.getImageDescriptor());
 		setWizard(wizard);
+		this.pkg = existingPackage;
 	}
 	
 	public void createControl(Composite parent) {
@@ -142,7 +144,47 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 		explodedButton.setText(PackagesUIMessages.PackageInfoWizardPage_explodedButton_label);
 		setControl(main);
 		
+		fillDefaults();
 		validate();
+	}
+	
+	private void fillDefaults ()
+	{
+		if (pkg != null)
+		{
+			packageNameText.setText(pkg.getName());
+			packageName = pkg.getName();
+			
+			if (pkg.isTopLevel()) {
+				if (pkg.isDestinationInWorkspace())
+				{
+					destinationComposite.setPackageNodeDestination(pkg.getDestinationContainer());
+				} else {
+					destinationComposite.setPackageNodeDestination(pkg.getDestinationFolder());
+				}
+			} else {
+				destinationComposite.setPackageNodeDestination(pkg.getParent());
+			}
+			
+			if (pkg.hasManifest())
+			{
+				PackageImpl pkgImpl = (PackageImpl) pkg;
+				
+				manifestEnabled = true;
+				manifestFile = pkgImpl.getManifestFile();
+				manifestText.setText(manifestFile.getLocation().toString());
+				manifestText.setEnabled(true);
+				manifestBrowseButton.setEnabled(true);
+				customManifestCheck.setSelection(true);
+			}
+			
+			if (pkg.isExploded())
+			{
+				explodedButton.setEnabled(true);
+			} else {
+				compressedButton.setEnabled(true);
+			}
+		}
 	}
 
 	private boolean validate ()
@@ -179,7 +221,8 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 			for (int i = 0; i < subPackages.length; i++)
 			{
 				IPackage subPackage = (IPackage) subPackages[i];
-				if (subPackage.getName().equals(packageNameText.getText()))
+				if (subPackage.getName().equals(packageNameText.getText())
+					&& (!pkg.equals(this.pkg)))
 				{
 					setErrorMessage(
 						PackagesUIMessages.bind(
@@ -195,7 +238,25 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 			{
 				IPackage pkg = (IPackage) iter.next();
 				if (pkg.getName().equals(packageNameText.getText())
-					&& (pkg.getDestinationContainer() != null && pkg.getDestinationContainer().equals(container)))
+					&& (pkg.getDestinationContainer() != null && pkg.getDestinationContainer().equals(container))
+					&& (!pkg.equals(this.pkg)))
+				{
+					setErrorMessage(
+							PackagesUIMessages.bind(
+								PackagesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
+						setPageComplete(false);
+						return false;
+				}
+			}
+		} else if (destination instanceof IPath) {
+			IPath path = (IPath) destination;
+			List packages = PackagesModel.instance().getProjectPackages(wizard.getProject());
+			for (Iterator iter = packages.iterator(); iter.hasNext(); )
+			{
+				IPackage pkg = (IPackage) iter.next();
+				if (pkg.getName().equals(packageNameText.getText())
+					&& (pkg.getDestinationFolder() != null && pkg.getDestinationFolder().equals(path))
+					&& (!pkg.equals(this.pkg)))
 				{
 					setErrorMessage(
 							PackagesUIMessages.bind(
@@ -241,7 +302,9 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 			project = wizard.getProject();
 		}
 		
-		pkg = PackagesCore.createDetachedPackage(project, isTopLevel);
+		if (pkg == null) {
+			pkg = PackagesCore.createDetachedPackage(project, isTopLevel);
+		}
 		
 		pkg.setName(getPackageName());
 		pkg.setExploded(isPackageExploded());
