@@ -56,7 +56,7 @@ public class PackageDestinationComposite extends PackageNodeDestinationComposite
 		String path = dialog.open();
 		if (path != null)
 		{
-			packageDestination = new Path(path);
+			nodeDestination = new Path(path);
 			updateDestinationViewer();
 		}	
 	}
@@ -65,14 +65,14 @@ public class PackageDestinationComposite extends PackageNodeDestinationComposite
 	{
 		super.updateDestinationViewer();
 
-		if (packageDestination instanceof IPath)
+		if (nodeDestination instanceof IPath)
 		{
 			inWorkspace = false;
-			IPath path = (IPath) packageDestination;
+			IPath path = (IPath) nodeDestination;
 			destinationImage.setImage(PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_EXTERNAL_FILE));
 			destinationText.setText(path.toString());
 		}
-		else if (packageDestination instanceof IContainer || packageDestination instanceof IPackageNode)
+		else if (nodeDestination instanceof IContainer || nodeDestination instanceof IPackageNode)
 		{
 			inWorkspace = true;
 		}
