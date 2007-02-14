@@ -17,6 +17,7 @@ import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackageImpl;
 import org.jboss.ide.eclipse.packages.ui.wizards.pages.PackageInfoWizardPage;
 import org.jboss.ide.eclipse.ui.wizards.WizardPageWithNotification;
 import org.jboss.ide.eclipse.ui.wizards.WizardWithNotification;
@@ -27,9 +28,18 @@ public abstract class AbstractPackageWizard extends WizardWithNotification imple
 	private WizardPage pages[];
 	protected IProject project;
 	protected Object selectedDestination;
+	protected IPackage existingPackage;
+	
+	public AbstractPackageWizard () {	}
+	
+	public AbstractPackageWizard (IPackage existingPackage)
+	{
+		this.existingPackage = existingPackage;
+		this.project = existingPackage.getProject();
+	}
 	
 	public void addPages() {
-		firstPage = new PackageInfoWizardPage(this);
+		firstPage = new PackageInfoWizardPage(this, existingPackage);
 		addPage(firstPage);
 		
 		pages = createWizardPages();
@@ -67,19 +77,33 @@ public abstract class AbstractPackageWizard extends WizardWithNotification imple
 		
 		if (performed)
 		{
-			try {
-				getContainer().run(false, false, new IRunnableWithProgress () {
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-						PackagesCore.attach(pkg, monitor);	
-					}
-				});
-			} catch (InvocationTargetException e) {
-				Trace.trace(getClass(), e);
-			} catch (InterruptedException e) {
-				Trace.trace(getClass(), e);
+			if (!pkg.equals(existingPackage))
+			{
+				try {
+					getContainer().run(false, false, new IRunnableWithProgress () {
+						public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+							PackagesCore.attach(pkg, monitor);	
+						}
+					});
+				} catch (InvocationTargetException e) {
+					Trace.trace(getClass(), e);
+				} catch (InterruptedException e) {
+					Trace.trace(getClass(), e);
+				}
+			}
+			else {
+				((PackageImpl)existingPackage).flagAsChanged();
 			}
 			
 			if (destination instanceof IPackageNode) {
+				if (pkg.equals(existingPackage) && !destination.equals(pkg.getParent()))
+				{
+					if (pkg.getParent() != null)
+					{
+						pkg.getParent().removeChild(pkg);
+					}
+				}
+				
 				IPackageNode node = (IPackageNode) destination;
 				node.addChild(pkg);
 			}

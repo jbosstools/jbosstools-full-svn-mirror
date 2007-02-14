@@ -262,4 +262,9 @@ public abstract class PackageNodeImpl implements IPackageNode {
 	public void setDetached(boolean detached) {
 		this.detached = detached;
 	}
+	
+	public void flagAsChanged ()
+	{
+		PackagesModel.instance().fireNodeChanged(this);
+	}
 }

@@ -11,6 +11,7 @@ import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackageFileSetImpl;
 import org.jboss.ide.eclipse.packages.ui.wizards.pages.FilesetInfoWizardPage;
 
 public class FilesetWizard extends Wizard {
@@ -47,6 +48,8 @@ public class FilesetWizard extends Wizard {
 		} catch (InterruptedException e) {
 			Trace.trace(getClass(), e);
 		}
+		
+		((PackageFileSetImpl)fileset).flagAsChanged();
 		
 		return true;
 	}

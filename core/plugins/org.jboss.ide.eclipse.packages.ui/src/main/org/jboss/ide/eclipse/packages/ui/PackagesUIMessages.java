@@ -6,7 +6,8 @@ public class PackagesUIMessages extends NLS {
 	public static final String BUNDLE_NAME = "org.jboss.ide.eclipse.packages.ui.PackagesUIMessages";
 
 	public static String NewJARWizard_windowTitle;
-
+	public static String NewJARWizard_windowTitle_editJAR;
+	
 	public static String PackageInfoWizardPage_compressedButton_label;
 	public static String PackageInfoWizardPage_customManifest_label;
 	public static String PackageInfoWizardPage_destination_label;

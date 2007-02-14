@@ -143,7 +143,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 	public Manifest getManifest() {
 		if (!hasManifest()) return null;
 		
-		IFile manifestFile = getProject().getFile(packageDelegate.getManifest());
+		IFile manifestFile = getManifestFile();
 		
 		try {
 			return new Manifest(manifestFile.getContents());
@@ -154,6 +154,12 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 		}
 		
 		return null;
+	}
+	
+	public IFile getManifestFile () {
+		if (!hasManifest()) return null;
+		
+		return getProject().getFile(packageDelegate.getManifest());
 	}
 	
 	public boolean hasManifest() {
@@ -242,7 +248,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 	}
 	
 	public String toString() {
-		return getName();
+		return "package[name: " +  getName() + " ,dest: " + packageDelegate.getToDir() + "]";
 	}
 
 	protected boolean shouldParentBeNull ()

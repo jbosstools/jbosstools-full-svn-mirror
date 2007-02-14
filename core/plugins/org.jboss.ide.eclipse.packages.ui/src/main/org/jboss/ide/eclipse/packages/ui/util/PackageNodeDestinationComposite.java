@@ -87,6 +87,12 @@ public class PackageNodeDestinationComposite extends Composite {
 		}
 	}
 	
+	public void setPackageNodeDestination (Object destination)
+	{
+		nodeDestination = destination;
+		updateDestinationViewer();
+	}
+	
 	protected void updateDestinationViewer ()
 	{
 		if (nodeDestination == null) return;
