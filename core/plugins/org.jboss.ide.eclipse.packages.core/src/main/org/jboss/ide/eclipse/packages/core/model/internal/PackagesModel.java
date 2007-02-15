@@ -41,10 +41,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.packages.core.ExtensionManager;
-import org.jboss.ide.eclipse.packages.core.PackagesCorePlugin;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
@@ -92,6 +90,88 @@ public class PackagesModel {
 			_instance = new PackagesModel();
 		
 		return _instance;
+	}
+	
+	protected Hashtable getTopLevelPackageAndPathway (IPackageNode node)
+	{
+		ArrayList parents = new ArrayList();
+		IPackageNode tmp = node.getParent(), top = tmp;
+		
+		while (tmp != null)
+		{
+			top = tmp;
+			parents.add(0, top);
+			
+			tmp = tmp.getParent();
+		}
+		
+		IPackage topLevelPackage = null;
+		
+		if (top instanceof IPackage)
+			topLevelPackage = (IPackage)top;
+		
+		Hashtable pkgAndPath = new Hashtable();
+		
+		if (topLevelPackage != null)
+			pkgAndPath.put(topLevelPackage, parents);
+		
+		return pkgAndPath;
+	}
+	
+	/**
+	 * This will return a hashtable of top-level packages and their corresponding
+	 * pathways from the passed-in node. This is used for determining all the pathway possibilities
+	 * for a single package node.
+	 *
+	 */
+	protected Hashtable getTopLevelPackagesAndPathways (IPackageNode node)
+	{
+		Hashtable pkgsAndPaths = new Hashtable();
+		
+		IPackage originalSource = PackagesCore.getTopLevelPackage(node);
+		ArrayList parents = new ArrayList();
+		
+		IPackageNode parent = node.getParent();
+		while (parent != null)
+		{
+			parents.add(0, parent);
+			
+			parent = parent.getParent();
+		}
+		pkgsAndPaths.put(originalSource, parents);
+		
+		parents = new ArrayList();
+		
+		IPackageNode tmp = node.getParent(), top = tmp;
+		while (tmp != null)
+		{
+			top = tmp;
+			if (top.getNodeType() == IPackageNode.TYPE_PACKAGE)
+			{
+				IPackage pkg = (IPackage) top;
+				IPackageReference refs[] = pkg.getReferences();
+				for (int i = 0; i < refs.length; i++)
+				{
+					Hashtable pkgAndPath = getTopLevelPackageAndPathway(refs[i]);
+					Iterator iter = pkgAndPath.keySet().iterator();
+					if (iter.hasNext())
+					{
+						IPackage topLevelPackage = (IPackage) iter.next();
+						ArrayList pathway = (ArrayList) pkgAndPath.get(topLevelPackage);
+						ArrayList fullPathway = new ArrayList(parents);
+						fullPathway.addAll(pathway);
+						fullPathway.add(refs[i]);
+						
+						pkgsAndPaths.put(topLevelPackage, fullPathway);
+					}
+				}
+			} else {
+				parents.add(0, top);
+			}
+			tmp = tmp.getParent();
+		}
+		
+		return pkgsAndPaths;
 	}
 	
 	public void registerProject(IProject project, IProgressMonitor monitor)
