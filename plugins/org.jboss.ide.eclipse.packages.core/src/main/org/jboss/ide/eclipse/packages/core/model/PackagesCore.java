@@ -207,6 +207,13 @@ public class PackagesCore {
 		return null;
 	}
 	
+	/**
+	 * Returns the top-level IPackage this node is under.
+	 * Note that if this node is under a package that is being referenced elsewhere, you will need to
+	 * use getTopLevelPackages() to retrieve all packages.
+	 * @param node The node who's top-level package to retrieve
+	 * @return
+	 */
 	public static IPackage getTopLevelPackage (IPackageNode node)
 	{
 		IPackageNode tmp = node.getParent(), top = tmp;
@@ -219,6 +226,35 @@ public class PackagesCore {
 		if (top instanceof IPackage)
 			return (IPackage)top;
 		else return null;
+	}
+	
+	/**
+	 * Returns all top-level IPackages that this node is under (either explicitly, or through package reference)
+	 * @param node
+	 * @return
+	 */
+	public static IPackage[] getTopLevelPackages (IPackageNode node)
+	{
+		ArrayList packages = new ArrayList();
+		packages.add(getTopLevelPackage(node));
+		
+		IPackageNode tmp = node.getParent(), top = tmp;
+		while (tmp != null)
+		{
+			top = tmp;
+			if (top.getNodeType() == IPackageNode.TYPE_PACKAGE)
+			{
+				IPackage pkg = (IPackage) top;
+				IPackageReference refs[] = pkg.getReferences();
+				for (int i = 0; i < refs.length; i++)
+				{
+					packages.add(getTopLevelPackage(refs[i]));
+				}
+			}
+			tmp = tmp.getParent();
+		}
+		
+		return (IPackage[]) packages.toArray(new IPackage[packages.size()]);
 	}
 	
 	/**
