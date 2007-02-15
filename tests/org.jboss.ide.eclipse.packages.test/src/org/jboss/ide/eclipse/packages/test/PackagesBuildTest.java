@@ -22,6 +22,7 @@ import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.packages.core.model.AbstractPackagesBuildListener;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
+import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageBuildDelegate;
@@ -39,9 +40,10 @@ public class PackagesBuildTest extends TestCase{
 	private PackageBuildDelegate buildDelegate;
 	private NullProgressMonitor nullMonitor = new NullProgressMonitor();
 	
-	private IPackage simpleJar;
+	private IPackage simpleJar, refJar;
 	private IFile testXmlFile;
 	private IPackageFileSet simpleJarFileset;
+	private IPackageFolder libFolder;
 	
 	private static boolean initialized = false;
 	
@@ -73,6 +75,20 @@ public class PackagesBuildTest extends TestCase{
 			simpleJar.addChild(simpleJarFileset);
 			
 			PackagesModel.instance().attach(simpleJar, nullMonitor);
+
+			refJar = PackagesCore.createDetachedPackage(project, true);
+			refJar.setName("ref.jar");
+			refJar.setPackageType(PackagesCore.getPackageType(JARPackageType.TYPE_ID));
+			refJar.setDestinationContainer(project);
+			
+			libFolder = PackagesCore.createDetachedFolder(project);
+			libFolder.setName("lib");
+			refJar.addChild(libFolder);
+			
+			libFolder.addChild(simpleJar.createReference(false));
+			
+			PackagesModel.instance().attach(refJar, nullMonitor);
+			
 			initialized = true;
 		} else{
 			
@@ -84,7 +100,10 @@ public class PackagesBuildTest extends TestCase{
 			
 			List packages = PackagesModel.instance().getProjectPackages(project);
 			simpleJar = (IPackage) packages.get(0);
-			simpleJarFileset = (IPackageFileSet) simpleJar.getChildren(IPackageNode.TYPE_PACKAGE_FILESET)[0];
+			simpleJarFileset = simpleJar.getFileSets()[0];
+			
+			refJar = (IPackage) packages.get(1);
+			libFolder = refJar.getFolders()[0];
 		}
 	}
 	
@@ -153,7 +172,7 @@ public class PackagesBuildTest extends TestCase{
 		return new de.schlichtherle.io.File(pkg.getPackageFile().getRawLocation().toFile());
 	}
 	
-	private File findFile (de.schlichtherle.io.File jarFile, String name)
+	private File findFile (File jarFile, String name)
 	{
 		File subFiles[] = jarFile.listFiles();
 		assertNotNull(subFiles);
@@ -215,16 +234,24 @@ public class PackagesBuildTest extends TestCase{
 	
 	private void waitForBuilder ()
 	{
+		long timeout = 1000 * 20;
+		long wait = 0;
+		
 		//	 wait for incremental builder to finish
 		try {
 			Thread.sleep(1000 * 3);
-			while (PackageBuildDelegate.isBuilding())
+			while (PackageBuildDelegate.isBuilding() && wait < timeout)
 			{
-				Thread.sleep(300);
+				Thread.sleep(100);
+				wait += 100;
+			}
+			if (wait > timeout) {
+				fail("Timed out ("+(timeout/1000)+"s) waiting for builder");
 			}
 		} catch (InterruptedException e) {
+			e.printStackTrace();
 			fail(e.getMessage());
-		}	
+		}
 	}
 	
 	public void testSimpleJar_changeFile ()
@@ -234,6 +261,20 @@ public class PackagesBuildTest extends TestCase{
 		waitForBuilder();
 		
 		assertTestXmlContents(testXml_newContents);
+		
+		assertTrue (refJar.getPackageFile().exists());
+		
+		de.schlichtherle.io.File refJarFile = getPackageFile(refJar);
+		File libFolderFile = findFile(refJarFile, "lib");
+		assertNotNull(libFolderFile);
+		
+		File nestedSimpleJarFile = findFile(libFolderFile, "simple.jar");
+		assertNotNull(nestedSimpleJarFile);
+		
+		File nestedTestXmlFile = findFile(nestedSimpleJarFile, "test.xml");
+		assertNotNull(nestedTestXmlFile);
+		
+		assertFileContents(nestedTestXmlFile, testXml_newContents);
 	}
 	
 	public void testSimpleJar_addFile ()
@@ -294,5 +335,4 @@ public class PackagesBuildTest extends TestCase{
 		
 		assertFileContents (nestedXMLFile2, nestedXml_contents);
 	}
-	
 }
