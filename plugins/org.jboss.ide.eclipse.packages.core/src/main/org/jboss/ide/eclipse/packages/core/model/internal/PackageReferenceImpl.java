@@ -60,6 +60,8 @@ public class PackageReferenceImpl implements IPackageReference {
 			}
 		}
 		xbPackage.setRef(refPath);
+		
+		((PackageImpl)this.pkg).addReference(this);
 	}
 	
 	public XbPackage getDelegate ()
@@ -206,6 +208,10 @@ public class PackageReferenceImpl implements IPackageReference {
 		return true;
 	}
 
+	public IPackageReference[] getReferences() {
+		return new IPackageReference[0];
+	}
+	
 	public boolean isTopLevel() {
 		return pkg.isTopLevel();
 	}
@@ -240,6 +246,10 @@ public class PackageReferenceImpl implements IPackageReference {
 	
 	public IPackageReference createReference (boolean topLevel) {
 		return this;
+	}
+	
+	public String toString() {
+		return pkg.toString() + "(ref)";
 	}
 	
 }
