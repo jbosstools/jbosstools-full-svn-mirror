@@ -27,10 +27,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.resources.IContainer;
@@ -65,7 +67,7 @@ import de.schlichtherle.io.File;
 import de.schlichtherle.io.FileOutputStream;
 
 public class PackageBuildDelegate implements IPackagesModelListener {
-	private ArrayList referencedProjects;
+	private TreeSet referencedProjects;
 	private Hashtable scannerCache;
 	private List packages;
 	private ArrayList nodesToUpdate, nodesToRemove;
@@ -366,7 +368,12 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		throws CoreException {
 		
 		building = true;
-		referencedProjects = new ArrayList();
+		referencedProjects = new TreeSet(new Comparator () {
+			public int compare(Object o1, Object o2) {
+				if (o1.equals(o2)) return 0;
+				else return -1;
+			}
+		});
 		
 		packages = PackagesModel.instance().getProjectPackages(project);
 
@@ -550,60 +557,73 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		}
 	}
 	
-	private File createFilesetRoot (IPackageFileSet fileset)
+	private File[] createFilesetRoots (IPackageFileSet fileset)
 	{
-		ArrayList parents = new ArrayList();
+		ArrayList roots = new ArrayList();
 		
-		IPackageNode parent = fileset.getParent();
-		while (parent != null)
+		Hashtable pkgsAndPaths = PackagesModel.instance().getTopLevelPackagesAndPathways(fileset);
+		for (Iterator iter = pkgsAndPaths.keySet().iterator(); iter.hasNext(); )
 		{
-			parents.add(0, parent);
+			IPackage topLevelPackage = (IPackage) iter.next();
+			ArrayList pathway = (ArrayList) pkgsAndPaths.get(topLevelPackage);
 			
-			parent = parent.getParent();
-		}
-		
-		IPackage topLevelPackage = PackagesCore.getTopLevelPackage(fileset);
-		File root = null;
-		if (topLevelPackage.isDestinationInWorkspace())
-		{
-			IPath projectPath = ProjectUtil.getProjectLocation(topLevelPackage.getProject());
-			IPath subPath = topLevelPackage.getDestinationContainer().getProjectRelativePath();
-			root = new File(projectPath.append(subPath).toFile());
-		} else {
-			root = new File(topLevelPackage.getDestinationPath().toFile());
-		}
-		
-		for (Iterator iter = parents.iterator(); iter.hasNext(); )
-		{
-			IPackageNode currentParent = (IPackageNode) iter.next();
-			
-			if (currentParent.getNodeType() == IPackageNode.TYPE_PACKAGE) {
-				IPackage pkg = (IPackage)currentParent;
-				root = new File(root, pkg.getName(), pkg.isExploded() ? ArchiveDetector.NULL : ArchiveDetector.DEFAULT);
-			} else if (currentParent.getNodeType() == IPackageNode.TYPE_PACKAGE_FOLDER) {
-				IPackageFolder folder = (IPackageFolder)currentParent;
-				root = new File(root, folder.getName(), ArchiveDetector.NULL);
+			File root = null;
+			if (topLevelPackage.isDestinationInWorkspace())
+			{
+				IPath projectPath = ProjectUtil.getProjectLocation(topLevelPackage.getProject());
+				IPath subPath = topLevelPackage.getDestinationContainer().getProjectRelativePath();
+				root = new File(projectPath.append(subPath).toFile());
+			} else {
+				root = new File(topLevelPackage.getDestinationPath().toFile());
 			}
+			
+			for (Iterator iter2 = pathway.iterator(); iter2.hasNext(); )
+			{
+				IPackageNode currentParent = (IPackageNode) iter2.next();
+				
+				if (currentParent.getNodeType() == IPackageNode.TYPE_PACKAGE
+					|| currentParent.getNodeType() == IPackageNode.TYPE_PACKAGE_REFERENCE) {
+					IPackage pkg = (IPackage)currentParent;
+					root = new File(root, pkg.getName(), pkg.isExploded() ? ArchiveDetector.NULL : ArchiveDetector.DEFAULT);
+				} else if (currentParent.getNodeType() == IPackageNode.TYPE_PACKAGE_FOLDER) {
+					IPackageFolder folder = (IPackageFolder)currentParent;
+					root = new File(root, folder.getName(), ArchiveDetector.NULL);
+				}
+			}
+			
+			roots.add(root);
 		}
 		
-		return root;
+		return (File[]) roots.toArray(new File[roots.size()]);
 	}
 	
-	private File createFile (IPackageFileSet fileset, IPath subPath)
+	private File[] createFiles (IPackageFileSet fileset, IPath subPath)
 	{
-		return new File(createFilesetRoot(fileset), subPath.toString(), ArchiveDetector.NULL);
-	}
-	
-	private OutputStream createFileOutputStream (IPackageFileSet fileset, IPath subPath)
-	{
-		File root = createFilesetRoot(fileset);
-		root = new File(root, subPath.toString(), ArchiveDetector.NULL);
-		try {
-			return new FileOutputStream(root);
-		} catch (FileNotFoundException e) {
-			Trace.trace(getClass(), e);
+		ArrayList files = new ArrayList();
+		File[] roots = createFilesetRoots(fileset);
+		for (int i = 0; i < roots.length; i++)
+		{
+			files.add(new File(roots[i], subPath.toString(), ArchiveDetector.NULL));
 		}
-		return null;
+		
+		return (File[]) files.toArray(new File[files.size()]); 
+	}
+	
+	private OutputStream[] createFileOutputStreams (IPackageFileSet fileset, IPath subPath)
+	{
+		ArrayList streams = new ArrayList();
+		File[] files = createFiles(fileset, subPath);
+		
+		for (int i = 0; i < files.length; i++)
+		{
+			try {
+				streams.add(new FileOutputStream(files[i]));
+			} catch (FileNotFoundException e) {
+				Trace.trace(getClass(), e);
+			}	
+		}
+		
+		return (OutputStream[]) streams.toArray(new OutputStream[streams.size()]);
 	}
 	
 //	private IPath getNode333ParentPath (IPackageNode node)
@@ -666,41 +686,50 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			
 			if (checkStamps)
 			{
-				File packageFile = createFile(filesets[i], copyTo);
-				long stamp = file.getModificationStamp();
-				if (stamp != IResource.NULL_STAMP && packageFile.exists() && stamp >= packageFile.lastModified())
+				File[] packageFiles = createFiles(filesets[i], copyTo);
+				for (int j = 0; j < packageFiles.length; j++)
 				{
-					return;
+					File packageFile = packageFiles[j];
+					long stamp = file.getModificationStamp();
+					if (stamp != IResource.NULL_STAMP && packageFile.exists() && stamp >= packageFile.lastModified())
+					{
+						return;
+					}
 				}
 			}
 			
 			Trace.trace(getClass(), "copying " + file.getProjectRelativePath().toString() + " ...");
 			
 			InputStream in = null;
-			OutputStream out = null;
+			OutputStream[] outStreams = null;
 			// I'm using the fully qualified package name here to avoid confusion with java.io
 			try {
-				try {
-					in = file.getContents();
-					out = createFileOutputStream(filesets[i], copyTo);
-					
-					File.cp(in, out);
-				} catch (FileNotFoundException e) {
-					Trace.trace(getClass(), e);
-				} catch (IOException e) {
-					Trace.trace(getClass(), e);
-				} catch (CoreException e) {
-					Trace.trace(getClass(), e);
-				}
-			} finally {
-				try {
-					if (in != null) {
+				outStreams = createFileOutputStreams(filesets[i], copyTo);
+				
+				for (int j = 0; j < outStreams.length; j++)
+				{
+					try {
+						in = file.getContents();
+						File.cp(in, outStreams[j]);
+						
 						Trace.trace(getClass(), "closing file contents inputstream", Trace.DEBUG_OPTION_STREAM_CLOSE);
 						in.close();
+					} catch (FileNotFoundException e) {
+						Trace.trace(getClass(), e);
+					} catch (IOException e) {
+						Trace.trace(getClass(), e);
 					}
-					if (out != null) {
-						Trace.trace(getClass(), "closing package file outputstream", Trace.DEBUG_OPTION_STREAM_CLOSE);
-						out.close();
+				}
+			} catch (CoreException e) { 
+				Trace.trace(getClass(), e);
+			} finally {
+				try {
+					if (outStreams != null) {
+						Trace.trace(getClass(), "closing package file outputstreams", Trace.DEBUG_OPTION_STREAM_CLOSE);
+						for (int j = 0; j < outStreams.length; j++)
+						{
+							outStreams[j].close();
+						}
 					}
 				} catch (IOException e) {
 					Trace.trace(getClass(), e);
@@ -715,39 +744,46 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		
 		if (checkStamps)
 		{
-			File packageFile = createFile(fileset, copyTo);
+			File[] packageFiles = createFiles(fileset, copyTo);
 			File externalFile = new File(path.toFile());
 			
-			long stamp = externalFile.lastModified();
-			if (packageFile.exists() && stamp >= packageFile.lastModified())
+			for (int i = 0; i < packageFiles.length; i++)
 			{
-				return;
+				File packageFile = packageFiles[i];
+				long stamp = externalFile.lastModified();
+				if (packageFile.exists() && stamp >= packageFile.lastModified())
+				{
+					return;
+				}
 			}
 		}
 		
 		Trace.trace(getClass(), "copying " + path.toString() + " ...");
 		
 		InputStream in = null;
-		OutputStream out = null;
+		OutputStream[] outStreams = null;
 		try {
-			try {
-				in = new FileInputStream(path.toFile());
-				out = createFileOutputStream(fileset, copyTo);
-				File.cp(in, out);
-			} catch (FileNotFoundException e) {
-				Trace.trace(getClass(), e);
-			} catch (IOException e) {
-				Trace.trace(getClass(), e);
+			outStreams = createFileOutputStreams(fileset, copyTo);
+			for (int i = 0; i < outStreams.length; i++)
+			{
+				try {
+					in = new FileInputStream(path.toFile());
+					File.cp(in, outStreams[i]);
+					
+					Trace.trace(getClass(), "closing file contents input stream", Trace.DEBUG_OPTION_STREAM_CLOSE);
+					in.close();
+				} catch (IOException e) {
+					Trace.trace(getClass(), e);
+				}
 			}
 		} finally {
 			try {
-				if (in != null) {
-					Trace.trace(getClass(), "closing file contents input stream", Trace.DEBUG_OPTION_STREAM_CLOSE);
-					in.close();
-				}
-				if (out != null) {
+				if (outStreams != null) {
 					Trace.trace(getClass(), "closing package file outputstream", Trace.DEBUG_OPTION_STREAM_CLOSE);
-					out.close();
+					for (int i = 0; i < outStreams.length; i++)
+					{
+						outStreams[i].close();
+					}
 				}
 			} catch (IOException e) {
 				Trace.trace(getClass(), e);
@@ -759,9 +795,13 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	{
 		for (int i = 0; i < filesets.length; i++)
 		{
-			File packagedFile = createFile(filesets[i], getFileDestinationPath(file, filesets[i]));
+			File[] packagedFiles = createFiles(filesets[i], getFileDestinationPath(file, filesets[i]));
 			
-			if (packagedFile.exists()) packagedFile.deleteAll();
+			for (int j = 0; j < packagedFiles.length; j++)
+			{
+				File packagedFile = packagedFiles[j];
+				if (packagedFile.exists()) packagedFile.deleteAll();
+			}
 		}
 	}
 	
