@@ -15,6 +15,7 @@ public class AllTests {
 		suite.addTest(new PackagesEARTest("testJARDefaultConfig"));
 		suite.addTest(new PackagesEARTest("testPathAppend"));
 		suite.addTest(new PackagesEARTest("testPackageReference"));
+		suite.addTest(new PackagesEARTest("testProperties"));
 		
 		suite.addTest(new NewProjectTest("testXbConsistency"));
 		suite.addTest(new NewProjectTest("testEclipseModelConsistency"));
