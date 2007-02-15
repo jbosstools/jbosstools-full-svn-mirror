@@ -226,7 +226,7 @@ public class PackagesEARTest extends TestCase {
 	
 	public void testModel ()
 	{
-		PackagesModel.instance().registerProject(testPackagesProject.getProject(), new NullProgressMonitor());
+//		PackagesModel.instance().registerProject(testPackagesProject.getProject(), new NullProgressMonitor());
 		List packages = PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
 		
 		assertNotNull(packages);
@@ -424,5 +424,14 @@ public class PackagesEARTest extends TestCase {
 		IPackageReference testRef3 = testRef.createReference(true);
 		PackageReferenceImpl refImpl = (PackageReferenceImpl) testRef3;
 		assertEquals(refImpl.getDelegate().getRef(), "testPackagesProject/workspace/testPackagesProject/testRef.jar");
+	}
+	
+	public void testProperties ()
+	{
+		List packages = PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
+		IPackage pkg1 = (IPackage) packages.get(0);
+		
+		String value = pkg1.getProperty("Yo");
+		assertNull(value);
 	}
 }
