@@ -55,6 +55,11 @@ public interface IPackage extends IPackageNode {
 	public boolean isReference();
 	
 	/**
+	 * @return An array of references to this package.
+	 */
+	public IPackageReference[] getReferences ();
+	
+	/**
 	 * @return Whether or not this package will be build exploded, or as a directory instead of a ZIP/JAR
 	 */
 	public boolean isExploded();

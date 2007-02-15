@@ -22,6 +22,7 @@
 package org.jboss.ide.eclipse.packages.core.model.internal;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.jar.Manifest;
 
 import org.eclipse.core.resources.IContainer;
@@ -51,6 +52,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 
 	private XbPackage packageDelegate;
 	private boolean parentShouldBeNull;
+	private ArrayList references;
 	
 	public PackageImpl(IProject project, XbPackage delegate)
 	{
@@ -59,6 +61,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 		this.packageDelegate = delegate;
 		this.hasWorkingCopy = false;
 		this.parentShouldBeNull = false;
+		this.references = new ArrayList();
 	}
 	
 	public int getNodeType() {
@@ -133,6 +136,14 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 	public boolean isReference() {
 		return (packageDelegate.getRef() != null
 			&& packageDelegate.getRef().length() > 0);
+	}
+	
+	public IPackageReference[] getReferences() {
+		return (IPackageReference[]) references.toArray(new IPackageReference[references.size()]);
+	}
+	
+	public void addReference(PackageReferenceImpl impl) {
+		references.add(impl);
 	}
 	
 	public boolean isTopLevel() {
@@ -239,7 +250,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 			XbPackages packages = PackagesModel.instance().getXbPackages(getProject());
 			packages.addChild(ref.xbPackage);
 		}
-		
+
 		return ref;
 	}
 	
@@ -249,7 +260,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 	}
 	
 	public String toString() {
-		return "package[name: " +  getName() + " ,dest: " + packageDelegate.getToDir() + "]";
+		return getName();
 	}
 
 	protected boolean shouldParentBeNull ()
