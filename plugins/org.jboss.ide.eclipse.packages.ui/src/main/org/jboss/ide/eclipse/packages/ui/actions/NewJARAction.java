@@ -1,7 +1,10 @@
 package org.jboss.ide.eclipse.packages.ui.actions;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
@@ -10,9 +13,19 @@ import org.jboss.ide.eclipse.ui.util.ActionWithDelegate;
 
 public class NewJARAction extends ActionWithDelegate
 {
+	private IProject project;
+	
 	public void run() {
 		NewJARWizard wizard = new NewJARWizard();
-		wizard.init(PlatformUI.getWorkbench(), getSelection());
+		
+		IStructuredSelection selection = getSelection();
+		if (selection.isEmpty())
+		{
+			wizard.init(PlatformUI.getWorkbench(), new StructuredSelection(project));
+		} else {
+			wizard.init(PlatformUI.getWorkbench(), getSelection());
+		}
+		
 		
 		WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wizard);
 		int response = dialog.open();
@@ -31,5 +44,10 @@ public class NewJARAction extends ActionWithDelegate
 	
 	public String getToolTipText() {
 		return "Create a new JAR package";
+	}
+	
+	public void setProject (IProject project)
+	{
+		this.project = project;
 	}
 }

@@ -281,6 +281,10 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 							return false;
 					}
 				}
+			} else if (destination == null) {
+				setErrorMessage(PackagesUIMessages.PackageInfoWizardPage_error_noDestination);
+				setPageComplete(false);
+				return false;
 			}
 		}
 		

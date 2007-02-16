@@ -14,6 +14,7 @@ public class PackagesUIMessages extends NLS {
 	public static String PackageInfoWizardPage_error_noManifest;
 	public static String PackageInfoWizardPage_error_noPackageName;
 	public static String PackageInfoWizardPage_error_packageAlreadyExists;
+	public static String PackageInfoWizardPage_error_noDestination;
 	public static String PackageInfoWizardPage_explodedButton_label;
 	public static String PackageInfoWizardPage_infoGroup_label;
 	public static String PackageInfoWizardPage_manifestBrowseButton_label;

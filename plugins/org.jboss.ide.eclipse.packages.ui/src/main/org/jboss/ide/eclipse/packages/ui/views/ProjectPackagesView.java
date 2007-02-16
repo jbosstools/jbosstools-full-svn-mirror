@@ -60,7 +60,8 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	private Composite loadingPackagesComposite;
 	private TreeViewer packageTree;
 	private ProgressMonitorPart loadingProgress;
-	private Action newJARAction, editAction, deleteAction, newFolderAction, newFilesetAction;
+	private Action editAction, deleteAction, newFolderAction, newFilesetAction;
+	private NewJARAction newJARAction;
 	private BuildPackagesAction buildAllAction, buildPackageAction;
 	private Action collapseAllAction;
 	private GroupMarker newPackageContributions;
@@ -314,6 +315,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		}
 		
 		newJARAction.setEnabled(true);
+		newJARAction.setProject(currentProject);
 	}
 	
 	private void createPackagePressed ()
