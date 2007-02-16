@@ -389,7 +389,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 			
 			rootProjectLabel.setText(parentNode.getProject().getName());
 			singleFileProjectLabel.setText(parentNode.getProject().getName());
-			
+			rootContainer = parentNode.getProject();
 		}
 	}
 	
