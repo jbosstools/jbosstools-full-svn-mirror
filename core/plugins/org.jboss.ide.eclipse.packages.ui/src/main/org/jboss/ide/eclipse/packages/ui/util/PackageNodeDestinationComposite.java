@@ -7,13 +7,19 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.GlyphMetrics;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
@@ -27,7 +33,7 @@ public class PackageNodeDestinationComposite extends Composite {
 
 	protected Composite parent;
 	protected Label destinationImage;
-	protected Label destinationText;
+	protected Text destinationText;
 	protected Button destinationBrowseButton;
 	protected Object nodeDestination;
 	protected boolean editable;
@@ -45,20 +51,43 @@ public class PackageNodeDestinationComposite extends Composite {
 	
 	protected void createComposite()
 	{
-		setLayout(new GridLayout(2, false));
-		setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		GridLayout layout = new GridLayout(2, false);
+		layout.marginHeight = 0;
+		layout.marginWidth = 0;
+		
+		setLayout(layout);
+		GridData data = new GridData(GridData.FILL_HORIZONTAL);
+		setLayoutData(data);
 		
 		destinationImage = new Label(this, SWT.NONE);
-		destinationText = new Label(this, SWT.NONE);
+		destinationText = new Text(this, SWT.BORDER);
+		destinationText.setEditable(false);
+		
 		updateDestinationViewer();
 		
 		destinationText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
-		createBrowseButton(parent);
+		new Label(parent, SWT.NONE);
+		new Label(parent, SWT.NONE);
+		
+		Composite buttons = new Composite(parent, SWT.NONE);
+		RowLayout buttonLayout = new RowLayout(SWT.HORIZONTAL);
+		buttonLayout.marginBottom = buttonLayout.marginLeft = 	buttonLayout.marginRight = buttonLayout.marginTop = 0;
+		buttonLayout.spacing = buttonLayout.marginHeight =  buttonLayout.marginWidth = 0;
+		
+		buttons.setLayout(buttonLayout);
+		GridData buttonData = new GridData(GridData.FILL_HORIZONTAL);
+		buttonData.horizontalSpan = 2;
+		buttonData.horizontalAlignment = GridData.END;
+		buttonData.verticalAlignment = GridData.BEGINNING;
+		buttons.setLayoutData(buttonData);
+		
+		createBrowseButton(buttons);
 	}
 	
 	protected void createBrowseButton (Composite parent)
 	{
+		
 		destinationBrowseButton = new Button(parent, SWT.PUSH); 
 		destinationBrowseButton.setText(PackagesUIMessages.PackageNodeDestinationComposite_destinationBrowseButton_label);
 		
@@ -93,38 +122,54 @@ public class PackageNodeDestinationComposite extends Composite {
 		updateDestinationViewer();
 	}
 	
+	protected void setDestinationImage (Image image)
+	{
+		destinationImage.setImage(image);
+	}
+	
+	protected void setDestinationText (String text)
+	{
+		destinationText.setText(text);
+	}
+	
 	protected void updateDestinationViewer ()
 	{
 		if (nodeDestination == null) return;
+		destinationText.setText("");
 		
 		if (nodeDestination instanceof IPackage)
 		{
 			IPackage pkg = (IPackage) nodeDestination;
 			
-			if (pkg.isExploded()) {
-				destinationImage.setImage(PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_PACKAGE_EXPLODED));
+			if (pkg.isTopLevel())
+			{
+				setDestinationText(pkg.getName());
 			} else {
-				destinationImage.setImage(PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_PACKAGE));
+				setDestinationText(pkg.getPackageRelativePath().toString());
 			}
-			destinationText.setText(pkg.getName());
+			if (pkg.isExploded()) {
+				setDestinationImage(PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_PACKAGE_EXPLODED));
+			} else {
+				setDestinationImage(PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_PACKAGE));
+			}
 		}
 		else if (nodeDestination instanceof IPackageFolder)
 		{
 			IPackageFolder folder = (IPackageFolder) nodeDestination;
-			destinationImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER));
-			destinationText.setText(folder.getPackageRelativePath().toString());
+			setDestinationText(folder.getPackageRelativePath().toString());
+			setDestinationImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER));
 		}
 		else if (nodeDestination instanceof IProject)
 		{
 			IProject project = (IProject) nodeDestination;
-			destinationImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(IDE.SharedImages.IMG_OBJ_PROJECT));
-			destinationText.setText(project.getName());
+			setDestinationText(project.getName());
+			setDestinationImage(PlatformUI.getWorkbench().getSharedImages().getImage(IDE.SharedImages.IMG_OBJ_PROJECT));
 		}
 		else if (nodeDestination instanceof IFolder)
 		{
 			IFolder folder = (IFolder) nodeDestination;
-			destinationImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER));
-			destinationText.setText(folder.getProjectRelativePath().toString());
+			setDestinationText("/" + folder.getProject().getName() + "/" + folder.getProjectRelativePath().toString());
+			setDestinationImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER));
 		}
 	}
 	

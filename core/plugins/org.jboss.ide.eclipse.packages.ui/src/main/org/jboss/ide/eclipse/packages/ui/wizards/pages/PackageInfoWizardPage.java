@@ -27,6 +27,7 @@ import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIMessages;
+import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
 import org.jboss.ide.eclipse.packages.ui.util.DestinationChangeListener;
 import org.jboss.ide.eclipse.packages.ui.util.PackageDestinationComposite;
 import org.jboss.ide.eclipse.packages.ui.wizards.AbstractPackageWizard;
@@ -68,10 +69,20 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 		expand(infoGroup);
 		
 		new Label(infoGroup, SWT.NONE).setText(PackagesUIMessages.PackageInfoWizardPage_packageName_label);
-		packageNameText = new Text(infoGroup, SWT.BORDER);
+		Composite pkgNameComposite = new Composite(infoGroup, SWT.NONE);
+		GridLayout pkgNameLayout = new GridLayout(2, false);
+		pkgNameLayout.marginHeight = 0;
+		pkgNameLayout.marginWidth = 0;
+		pkgNameComposite.setLayout(pkgNameLayout);
+		pkgNameComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		new Label(pkgNameComposite, SWT.NONE).setImage(PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_PACKAGE));
+		
+		packageNameText = new Text(pkgNameComposite, SWT.BORDER);
 		packageName = "Untitled." + wizard.getPackageExtension();
 		packageNameText.setText(packageName);
 		packageNameText.setSelection(0, "Untitled.".length()-1);
+		packageNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
 		expand(packageNameText);
 		packageNameText.addModifyListener(new ModifyListener() {

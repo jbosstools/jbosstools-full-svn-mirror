@@ -69,8 +69,8 @@ public class PackageDestinationComposite extends PackageNodeDestinationComposite
 		{
 			inWorkspace = false;
 			IPath path = (IPath) nodeDestination;
-			destinationImage.setImage(PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_EXTERNAL_FILE));
-			destinationText.setText(path.toString());
+			setDestinationText(path.toString());
+			setDestinationImage(PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_EXTERNAL_FILE));
 		}
 		else if (nodeDestination instanceof IContainer || nodeDestination instanceof IPackageNode)
 		{
