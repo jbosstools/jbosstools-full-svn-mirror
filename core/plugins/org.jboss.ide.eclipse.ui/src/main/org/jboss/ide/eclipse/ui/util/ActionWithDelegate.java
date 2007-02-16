@@ -38,7 +38,7 @@ public abstract class ActionWithDelegate extends Action implements IActionDelega
 		}
 	}
 	
-	private void setSelection(IStructuredSelection selection)
+	protected void setSelection(IStructuredSelection selection)
 	{
 		if (!selection.isEmpty())
 			this.selection = selection;
