@@ -42,14 +42,27 @@ import org.xml.sax.SAXException;
 
 public class XMLBinding {
 	
-	public static final int NUM_UNMARSHAL_MONITOR_STEPS = 4;
+	public static final int NUM_UNMARSHAL_MONITOR_STEPS = 3;
 	public static final int NUM_MARSHALL_MONITOR_STEPS = 2;
 	
 	private static URL schema = PackagesCorePlugin.getDefault().getBundle().getEntry("xml/packages.xsd");
 	private static URL log4jxml = PackagesCorePlugin.getDefault().getBundle().getEntry("log4j.xml");
+	private static SchemaBinding binding;
 	
 	static {
 		System.setProperty("log4j.configuration", log4jxml.toString());
+	}
+	
+	public static void init ()
+	{
+		try {
+			InputStream stream = schema.openStream();
+			binding = XsdBinder.bind(stream, "UTF-8", null);
+
+			stream.close();
+		} catch (IOException e) {
+			Trace.trace(XMLBinding.class, e);
+		}
 	}
 	
 	private static void binderSandbox (Runnable runnable)
@@ -70,10 +83,6 @@ public class XMLBinding {
 		binderSandbox(new Runnable() {
 			public void run ()  {
 				try {	
-					InputStream stream = schema.openStream();
-					monitor.worked(1);
-					
-					SchemaBinding binding = XsdBinder.bind(stream, "UTF-8", null);
 					Unmarshaller unmarshaller = UnmarshallerFactory.newInstance().newUnmarshaller();
 					monitor.worked(1);
 					
@@ -81,13 +90,8 @@ public class XMLBinding {
 					monitor.worked(1);
 					
 					element = (XbPackages) xmlObject;
-					
-					stream.close();
-					
 					monitor.worked(1);
 					
-				} catch (IOException e) {
-					Trace.trace(XMLBinding.class, e);
 				} catch (JBossXBException e) {
 					Trace.trace(XMLBinding.class, e);
 				}

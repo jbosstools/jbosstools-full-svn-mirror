@@ -22,6 +22,7 @@
 package org.jboss.ide.eclipse.packages.core;
 
 import org.eclipse.core.runtime.Plugin;
+import org.jboss.ide.eclipse.packages.core.model.internal.xb.XMLBinding;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -48,6 +49,9 @@ public class PackagesCorePlugin extends Plugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		
+		// force JBossXB initialization
+		XMLBinding.init();
 	}
 
 	/*
