@@ -245,35 +245,41 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 		} else if (destination instanceof IContainer) {
 			IContainer container = (IContainer) destination;
 			List packages = PackagesModel.instance().getProjectPackages(wizard.getProject());
-			for (Iterator iter = packages.iterator(); iter.hasNext(); )
+			if (packages != null)
 			{
-				IPackage pkg = (IPackage) iter.next();
-				if (pkg.getName().equals(packageNameText.getText())
-					&& (pkg.getDestinationContainer() != null && pkg.getDestinationContainer().equals(container))
-					&& (!pkg.equals(this.pkg)))
+				for (Iterator iter = packages.iterator(); iter.hasNext(); )
 				{
-					setErrorMessage(
-							PackagesUIMessages.bind(
-								PackagesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
-						setPageComplete(false);
-						return false;
+					IPackage pkg = (IPackage) iter.next();
+					if (pkg.getName().equals(packageNameText.getText())
+						&& (pkg.getDestinationContainer() != null && pkg.getDestinationContainer().equals(container))
+						&& (!pkg.equals(this.pkg)))
+					{
+						setErrorMessage(
+								PackagesUIMessages.bind(
+									PackagesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
+							setPageComplete(false);
+							return false;
+					}
 				}
 			}
 		} else if (destination instanceof IPath) {
 			IPath path = (IPath) destination;
 			List packages = PackagesModel.instance().getProjectPackages(wizard.getProject());
-			for (Iterator iter = packages.iterator(); iter.hasNext(); )
+			if (packages != null)
 			{
-				IPackage pkg = (IPackage) iter.next();
-				if (pkg.getName().equals(packageNameText.getText())
-					&& (pkg.getDestinationPath() != null && pkg.getDestinationPath().equals(path))
-					&& (!pkg.equals(this.pkg)))
+				for (Iterator iter = packages.iterator(); iter.hasNext(); )
 				{
-					setErrorMessage(
-							PackagesUIMessages.bind(
-								PackagesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
-						setPageComplete(false);
-						return false;
+					IPackage pkg = (IPackage) iter.next();
+					if (pkg.getName().equals(packageNameText.getText())
+						&& (pkg.getDestinationPath() != null && pkg.getDestinationPath().equals(path))
+						&& (!pkg.equals(this.pkg)))
+					{
+						setErrorMessage(
+								PackagesUIMessages.bind(
+									PackagesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
+							setPageComplete(false);
+							return false;
+					}
 				}
 			}
 		}
