@@ -21,6 +21,10 @@
  */
 package org.jboss.ide.eclipse.packages.core;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Plugin;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XMLBinding;
 import org.osgi.framework.BundleContext;
@@ -62,6 +66,43 @@ public class PackagesCorePlugin extends Plugin {
 		plugin = null;
 		super.stop(context);
 	}
+
+	public static boolean isFolderInWorkspace (IPath path)
+	{
+		boolean inWorkspace = false;
+		try {
+			IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(path);
+			
+			inWorkspace = (folder != null && folder.exists());
+		} catch (IllegalArgumentException e) {
+			// Swallow, we assume this isn't in the workspace if it's an invalid path
+		}
+		
+		return inWorkspace;
+	}
+
+	public static boolean isFileInWorkspace (IPath path)
+		{
+			boolean inWorkspace = false;
+			try {
+				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+				
+				inWorkspace = (file != null && file.exists());
+			} catch (IllegalArgumentException e) {
+				// Swallow, we assume this isn't in the workspace if it's an invalid path
+			}
+			
+			return inWorkspace;
+		}
+	//	protected void loadPackageTypes ()
+	//	{
+	//		IPackageType[] packageTypes = ExtensionManager.findPackageTypes();
+	//		
+	//		for (int i = 0; i < packageTypes.length; i++)
+	//		{
+	//			this.packageTypes.put(packageTypes[i].getId(), packageTypes[i]);
+	//		}
+	//	}
 
 	/**
 	 * Returns the shared instance

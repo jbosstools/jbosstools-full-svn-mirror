@@ -24,12 +24,12 @@ package org.jboss.ide.eclipse.packages.core.model.internal;
 import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.jboss.ide.eclipse.packages.core.PackagesCorePlugin;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFileSet;
@@ -232,14 +232,17 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 	public void setSingleFile(IPath path, String destinationFilename) {
 		Assert.isNotNull(path);
 		
-		filesetDelegate.setFile(path.toString());
-		filesetDelegate.setInWorkspace(false);
-		
-		if (destinationFilename != null)
+		if (PackagesCorePlugin.isFileInWorkspace(path))
 		{
+			setSingleFile(ResourcesPlugin.getWorkspace().getRoot().getFile(path), destinationFilename);
+		}
+		else {
+			filesetDelegate.setFile(path.toString());
+			filesetDelegate.setInWorkspace(false);
+			
 			if (destinationFilename != null) {
 				filesetDelegate.setToFile(destinationFilename);
-			}	
+			}
 		}
 	}
 	
@@ -264,10 +267,9 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 	
 	public void setSourcePath (IPath path) {
 		Assert.isNotNull(path);
-		IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(path);
 		
 		filesetDelegate.setDir(path.toString());
-		filesetDelegate.setInWorkspace(folder != null);
+		filesetDelegate.setInWorkspace(PackagesCorePlugin.isFolderInWorkspace(path));
 	}
 	
 	public void setSourceProject(IProject project) {

@@ -33,6 +33,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.jboss.ide.eclipse.packages.core.PackagesCorePlugin;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
@@ -189,9 +190,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 	}
 
 	public void setDestinationPath(IPath path) {
-		IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(path);
-		
-		packageDelegate.setInWorkspace(folder != null);
+		packageDelegate.setInWorkspace(PackagesCorePlugin.isFolderInWorkspace(path));
 		packageDelegate.setToDir(path.toString());
 	}
 	
