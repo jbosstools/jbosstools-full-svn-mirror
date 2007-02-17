@@ -8,14 +8,14 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.IViewActionDelegate;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
+import org.jboss.ide.eclipse.packages.ui.actions.INodeActionDelegate;
 import org.osgi.framework.Bundle;
 
 public class NodeContribution implements Comparable {
 	private String id, label;
-	private IViewActionDelegate actionDelegate;
+	private INodeActionDelegate actionDelegate;
 	private ImageDescriptor icon;
 	private int enablesForNodeType;
 	private int weight;
@@ -28,7 +28,7 @@ public class NodeContribution implements Comparable {
 		label = element.getAttribute("label");
 		
 		try {
-			actionDelegate = (IViewActionDelegate) element.createExecutableExtension("class");
+			actionDelegate = (INodeActionDelegate) element.createExecutableExtension("class");
 		} catch (CoreException e) {
 			Trace.trace(getClass(), e);
 		}
@@ -53,6 +53,8 @@ public class NodeContribution implements Comparable {
 		} else if ("fileset".equals(enablesFor)) {
 			enablesForNodeType = IPackageNode.TYPE_PACKAGE_FILESET;
 		}
+		
+		weight = Integer.parseInt(element.getAttribute("weight"));
 	}
 
 	public boolean isEnabledForNodeType (int nodeType)
@@ -79,7 +81,7 @@ public class NodeContribution implements Comparable {
 	}
 
 	
-	public IViewActionDelegate getActionDelegate() {
+	public INodeActionDelegate getActionDelegate() {
 		return actionDelegate;
 	}
 

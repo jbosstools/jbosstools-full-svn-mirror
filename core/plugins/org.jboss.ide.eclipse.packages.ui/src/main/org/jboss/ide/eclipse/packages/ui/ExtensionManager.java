@@ -26,7 +26,7 @@ public class ExtensionManager {
 		for (int i = 0; i < extensions.length; i++)
 		{
 			IConfigurationElement[] elements = extensions[i].getConfigurationElements();
-			for (int j = 0; j < extensions.length; j++)
+			for (int j = 0; j < elements.length; j++)
 			{
 				contributions.add(new NodeContribution(elements[j]));
 			}
