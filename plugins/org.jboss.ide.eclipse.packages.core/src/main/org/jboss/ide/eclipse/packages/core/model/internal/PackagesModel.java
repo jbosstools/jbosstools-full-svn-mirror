@@ -388,16 +388,6 @@ public class PackagesModel {
 		return scanner;
 	}
 	
-//	protected void loadPackageTypes ()
-//	{
-//		IPackageType[] packageTypes = ExtensionManager.findPackageTypes();
-//		
-//		for (int i = 0; i < packageTypes.length; i++)
-//		{
-//			this.packageTypes.put(packageTypes[i].getId(), packageTypes[i]);
-//		}
-//	}
-	
 	protected void clearModel (IProject project)
 	{
 		List packages = getProjectPackages(project);

@@ -129,16 +129,16 @@ public interface IPackageFileSet extends IPackageNode {
 	public void setSingleFile(IFile file, String destinationFilename);
 	
 	/**
-	 * Set this fileset to be a single file in the filesystem
+	 * Set this fileset to be a single file represented by the passed-in IPath.
 	 * Equivalent to:
 	 * <code>setSingleFile(path, null);</code>
-	 * @param path An absolute path to a file on the filesystem 
+	 * @param path Either an absolute path to a file on the filesystem, or a workspace-relative path. 
 	 */
 	public void setSingleFile(IPath path);
 	
 	/**
-	 * Set this fileset to be a single file in the filesystem, using the specified destination filename
-	 * @param path An absolute path to a file on the filesystem
+	 * Set this fileset to be a single file, using the specified destination filename
+	 * @param path Either an absolute path to a file on the filesystem, or a workspace-relative path.
 	 * @param destinationFilename The filename that the file will be called in the package
 	 */
 	public void setSingleFile(IPath path, String destinationFilename);

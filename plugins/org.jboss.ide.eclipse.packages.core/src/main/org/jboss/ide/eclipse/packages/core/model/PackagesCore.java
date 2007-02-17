@@ -315,9 +315,12 @@ public class PackagesCore {
 		for (Iterator iter = packages.iterator(); iter.hasNext(); )
 		{
 			IPackage pkg = (IPackage) iter.next();
-			if (pkg.getPackageFile().equals(file))
+			if (pkg.isDestinationInWorkspace())
 			{
-				return pkg;
+				if (pkg.getPackageFile().equals(file))
+				{
+					return pkg;
+				}
 			}
 		}
 		
