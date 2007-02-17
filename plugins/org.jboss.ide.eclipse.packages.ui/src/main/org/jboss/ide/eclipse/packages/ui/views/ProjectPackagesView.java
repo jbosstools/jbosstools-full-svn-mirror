@@ -1,5 +1,10 @@
 package org.jboss.ide.eclipse.packages.ui.views;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
@@ -40,6 +45,8 @@ import org.jboss.ide.eclipse.packages.core.model.IPackagesModelListener;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageFolderImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
+import org.jboss.ide.eclipse.packages.ui.ExtensionManager;
+import org.jboss.ide.eclipse.packages.ui.NodeContribution;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIMessages;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
 import org.jboss.ide.eclipse.packages.ui.actions.BuildPackagesAction;
@@ -69,11 +76,16 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	private IProject currentProject;
 	private boolean loading;
 	private PackagesContentProvider contentProvider;
+	private ArrayList nodePopupMenuContributions;
 	
 	private static ProjectPackagesView _instance;
 	public ProjectPackagesView ()
 	{
 		_instance = this;
+		
+		NodeContribution[] menus = ExtensionManager.findNodePopupMenuContributions();
+		nodePopupMenuContributions = new ArrayList(Arrays.asList(menus));
+		Collections.sort(nodePopupMenuContributions);
 	}
 	
 	public static ProjectPackagesView instance()
@@ -256,6 +268,8 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 					}
 					manager.add(editAction);
 					manager.add(deleteAction);
+					
+					addContextMenuContributions(node);
 				}
 				else {
 					manager.add(newPackageManager);
@@ -275,6 +289,44 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 //		Menu emptyContextMenu = manager.createContextMenu(createPackageLink);
 //		createPackageLink.setMenu(emptyContextMenu);
 	}
+	
+	private void addContextMenuContributions (IPackageNode context)
+	{
+		for (Iterator iter = nodePopupMenuContributions.iterator(); iter.hasNext(); )
+		{
+			NodeContribution contribution = (NodeContribution) iter.next();
+				
+			addContextMenuContribution(contribution, context);
+		}
+	}
+	
+	private void addContextMenuContribution(final NodeContribution contribution, IPackageNode context)
+	{
+		if (contribution.isEnabledForNodeType(context.getNodeType()))
+		{
+			Action action = new Action () {
+				public String getId() {
+					return contribution.getId();
+				}
+	
+				public ImageDescriptor getImageDescriptor() {
+					return contribution.getIcon();
+				}
+	
+				public String getText() {
+					return contribution.getLabel();
+				}
+	
+				public void run() {
+					contribution.getActionDelegate().init(ProjectPackagesView.this);
+					contribution.getActionDelegate().run(this);
+				}
+			};
+			
+			contextMenuManager.add(action);
+		}
+	}
+	
 	
 	public void projectSelected(final IProject project)
 	{
