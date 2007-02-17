@@ -292,6 +292,8 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	
 	private void addContextMenuContributions (IPackageNode context)
 	{
+		Collections.sort(nodePopupMenuContributions);
+		
 		for (Iterator iter = nodePopupMenuContributions.iterator(); iter.hasNext(); )
 		{
 			NodeContribution contribution = (NodeContribution) iter.next();
@@ -302,7 +304,8 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	
 	private void addContextMenuContribution(final NodeContribution contribution, IPackageNode context)
 	{
-		if (contribution.isEnabledForNodeType(context.getNodeType()))
+		if (contribution.isEnabledForNodeType(context.getNodeType())
+			&& contribution.getActionDelegate().isEnabledFor(context))
 		{
 			Action action = new Action () {
 				public String getId() {
