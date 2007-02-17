@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
+   <extension-point id="nodePopupMenus" name="Popup Menus for IPackageNodes" schema="schema/nodePopupMenus.exsd"/>
    <extension
          point="org.eclipse.ui.views">
       <view
@@ -59,6 +60,16 @@
             id="org.jboss.ide.eclipse.packages.ui.packagesPropertyPge"
             name="Packages"
             objectClass="org.eclipse.core.resources.IProject"/>
+   </extension>
+   <extension
+         point="org.jboss.ide.eclipse.packages.ui.nodePopupMenus">
+      <nodeContribution
+            class="org.jboss.ide.eclipse.packages.ui.actions.NodePropertiesAction"
+            enablesForNodeType="any"
+            icon="icons/prop_ps.gif"
+            id="org.jboss.ide.eclipse.packages.ui.propertyContribution"
+            label="Properties"
+            weight="99"/>
    </extension>
 
 </plugin>
