@@ -13,11 +13,12 @@ import org.jboss.ide.eclipse.packages.ui.wizards.pages.DefaultJARConfigWizardPag
 public class NewJARWizard extends AbstractPackageWizard
 {
 	public WizardPage[] createWizardPages() {
-		if (existingPackage == null) {
-			return new WizardPage[] {
-					new DefaultJARConfigWizardPage(this)
-			};
-		} else return new WizardPage[0];
+//		if (existingPackage == null) {
+//			return new WizardPage[] {
+//					new DefaultJARConfigWizardPage(this)
+//			};
+//		} else
+			return new WizardPage[0];
 	}
 
 	public NewJARWizard ()
