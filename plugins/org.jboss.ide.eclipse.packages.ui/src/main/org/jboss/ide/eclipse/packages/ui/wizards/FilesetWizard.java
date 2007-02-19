@@ -27,6 +27,7 @@ public class FilesetWizard extends Wizard {
 	}
 	
 	public boolean performFinish() {
+		try {
 		boolean createFileset = this.fileset == null;
 		
 		if (createFileset)
@@ -51,6 +52,7 @@ public class FilesetWizard extends Wizard {
 		
 		((PackageFileSetImpl)fileset).flagAsChanged();
 		
+		} catch(Exception e) {e.printStackTrace();}
 		return true;
 	}
 	
