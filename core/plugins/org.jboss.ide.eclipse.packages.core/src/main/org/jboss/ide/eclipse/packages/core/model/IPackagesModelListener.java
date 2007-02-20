@@ -1,5 +1,7 @@
 package org.jboss.ide.eclipse.packages.core.model;
 
+import org.eclipse.core.resources.IProject;
+
 /**
  * Implementations of this interface should register themselves to listen with:
  * <code>
@@ -10,6 +12,12 @@ package org.jboss.ide.eclipse.packages.core.model;
  */
 public interface IPackagesModelListener {
 
+	/**
+	 * A project was registered with the model
+	 * @param project The registered project
+	 */
+	public void projectRegistered (IProject project);
+	
 	/**
 	 * A node was added to the model
 	 * @param added The added node
