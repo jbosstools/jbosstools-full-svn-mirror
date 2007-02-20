@@ -96,6 +96,8 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		PackagesModel.instance().addPackagesModelListener(this);
 	}
 	
+	public void projectRegistered(IProject project) { }
+	
 	public void packageNodeAdded(IPackageNode added) {
 		nodesToUpdate.add(added);
 	}
@@ -109,8 +111,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	}
 	
 	public void packageNodeAttached(IPackageNode attached) {
-		// TODO Auto-generated method stub
-		
+		nodesToUpdate.add(attached);
 	}
 	
 	private void fireStartedBuild (IProject project)

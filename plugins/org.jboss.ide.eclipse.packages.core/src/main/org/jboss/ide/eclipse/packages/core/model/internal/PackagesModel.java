@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.resources.IContainer;
@@ -209,6 +210,7 @@ public class PackagesModel {
 					linkPackageReferences(project);
 					
 					monitor.worked(1);
+					fireProjectRegistered(project);
 				} catch (CoreException e) {
 					Trace.trace(getClass(), e);
 				}
@@ -265,6 +267,11 @@ public class PackagesModel {
 	public XbPackages getXbPackages(IProject project)
 	{
 		return (XbPackages) xbPackages.get(project);
+	}
+	
+	public Set getRegisteredProjects ()
+	{
+		return projectPackages.keySet();
 	}
 	
 	public List getProjectPackages (IProject project)
@@ -544,6 +551,15 @@ public class PackagesModel {
 			{
 				iter.remove();
 			}
+		}
+	}
+	
+	protected void fireProjectRegistered (final IProject project)
+	{
+		for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
+		{
+			IPackagesModelListener listener = (IPackagesModelListener) iter.next();
+			listener.projectRegistered(project);
 		}
 	}
 	

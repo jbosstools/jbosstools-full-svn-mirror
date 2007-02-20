@@ -17,6 +17,8 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.JFaceColors;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -24,9 +26,15 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.ProgressMonitorPart;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -35,6 +43,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
@@ -65,6 +74,8 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	private PageBook pageBook;
 	private Composite noProjectSelectedComposite;
 	private Composite loadingPackagesComposite;
+	private Composite mainPage;
+//	private Label projectLabel;
 	private TreeViewer packageTree;
 	private ProgressMonitorPart loadingProgress;
 	private Action editAction, deleteAction, newFolderAction, newFilesetAction;
@@ -118,7 +129,21 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		message += " " + PackagesUIMessages.ProjectPackagesView_createPackage_link;
 		createPackageLink.setText(message);
 		
-		packageTree = new TreeViewer(pageBook, SWT.NONE);
+		mainPage = new Composite(pageBook, SWT.NONE);
+		mainPage.setLayout(createGridLayoutWithNoMargins(1));
+		mainPage.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		
+//		final Composite labelComposite = new Composite(mainPage, SWT.NONE);
+//		labelComposite.setLayout(createGridLayoutWithNoMargins(2));
+//		labelComposite.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+//
+//		new Label(labelComposite, SWT.NONE).setImage(
+//			PlatformUI.getWorkbench().getSharedImages().getImage(IDE.SharedImages.IMG_OBJ_PROJECT));
+//		projectLabel = new Label(labelComposite, SWT.NONE);
+//		projectLabel.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
+		
+		packageTree = new TreeViewer(mainPage, SWT.NONE);
+		packageTree.getTree().setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 		contentProvider = new PackagesContentProvider();
 		packageTree.setContentProvider(contentProvider);
 		packageTree.setLabelProvider(new PackagesLabelProvider());
@@ -140,6 +165,25 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		PackagesCore.addPackagesModelListener(new PackagesListenerProxy(this));
 //		new PackageNodeDragSource(packageTree);
 //		new PackageDropTarget(packageTree);
+	}
+	
+	private GridLayout createGridLayoutWithNoMargins (int columns)
+	{
+		GridLayout layout = new GridLayout(columns, false);
+		layout.marginBottom = layout.marginHeight = layout.marginLeft = 0;
+		layout.marginRight = layout.marginTop = layout.marginWidth = 0;
+		
+		return layout;
+	}
+	
+	private void showCreatePackageLink ()
+	{
+		String message = 
+			PackagesUIMessages.bind(PackagesUIMessages.ProjectPackagesView_noPackagesDefinedMessage, currentProject.getName());
+		message += " " + PackagesUIMessages.ProjectPackagesView_createPackage_link;
+		
+		createPackageLink.setText(message);
+		pageBook.showPage(createPackageLink);
 	}
 	
 	private void packageNodeSelected (IPackageNode node)
@@ -333,9 +377,11 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	
 	public void projectSelected(final IProject project)
 	{
-		if (project != null && project.equals(currentProject)) return;
+		if (project == null) return;
+		if (project.equals(currentProject)) return;
 		
 		currentProject = project;
+//		projectLabel.setText(project.getName());
 		
 		if (PackagesCore.projectHasPackages(project))
 		{
@@ -348,11 +394,11 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 					IPackage packages[] = PackagesCore.getProjectPackages(project, loadingProgress);
 					
 					if (packages == null) {
-						pageBook.showPage(createPackageLink);
+						showCreatePackageLink();
 					}
 					
 					else {
-						pageBook.showPage(packageTree.getTree());
+						pageBook.showPage(mainPage);
 						if (packageTree.getInput() != packages)
 						{
 							packageTree.setInput(packages);
@@ -365,7 +411,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 			});
 		}
 		else {
-			pageBook.showPage(createPackageLink);
+			showCreatePackageLink();
 			collapseAllAction.setEnabled(false);
 		}
 		
@@ -530,6 +576,9 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 
 	}
 
+	public void projectRegistered(IProject project) {
+	}
+	
 	public void packageNodeAdded(IPackageNode added) {
 		if (!loading && !packageTree.getTree().isDisposed())
 		{
