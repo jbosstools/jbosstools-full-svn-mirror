@@ -21,7 +21,6 @@
  */
 package org.jboss.ide.eclipse.packages.test;
 
-import java.io.File;
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
@@ -30,11 +29,13 @@ import java.util.Properties;
 import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
 import org.jboss.ide.eclipse.core.test.util.JavaProjectHelper;
 import org.jboss.ide.eclipse.core.test.util.TestFileUtil;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
@@ -53,11 +54,14 @@ import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackages;
 import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
 import org.jboss.ide.eclipse.packages.core.model.types.JARPackageType;
 
+import de.schlichtherle.io.File;
+
 public class PackagesEARTest extends TestCase {
 
 	private IJavaProject testPackagesProject;
 	private XbPackages packagesElement;
 	private String testPackagesProjectRoot;
+	private static boolean initialized = false;
 	
 	public PackagesEARTest (String testName)
 	{
@@ -65,18 +69,25 @@ public class PackagesEARTest extends TestCase {
 	}
 	
 	protected void setUp() throws Exception {
-		testPackagesProject = JavaProjectHelper.createJavaProject(
-			"testPackagesProject", new String[] { "/src" }, "/bin");
-		
-		testPackagesProjectRoot = PackagesTestPlugin.getDefault().getBaseDir();
-		testPackagesProjectRoot += File.separator + "testPackagesProject";
-	      
-	   TestFileUtil.copyDirectory (new File(testPackagesProjectRoot), testPackagesProject.getProject().getLocation().toFile(), true);
-	   testPackagesProject.getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
-	   
+		if (!initialized)
+		{
+			testPackagesProject = JavaProjectHelper.createJavaProject(
+				"testPackagesProject", new String[] { "/src" }, "/bin");
+			
+			testPackagesProjectRoot = PackagesTestPlugin.getDefault().getBaseDir();
+			testPackagesProjectRoot += File.separator + "testPackagesProject";
+		      
+		   TestFileUtil.copyDirectory (new File(testPackagesProjectRoot), testPackagesProject.getProject().getLocation().toFile(), true);
+		   testPackagesProject.getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+		   
+		} else {
+			
+			IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject("testPackagesProject");
+			testPackagesProject = JavaCore.create(project);
+		}
+
 	   packagesElement = XMLBinding.unmarshal(
-				testPackagesProject.getProject().getFile(PackagesModel.PROJECT_PACKAGES_FILE).getContents(), new NullProgressMonitor());
-	   
+			testPackagesProject.getProject().getFile(PackagesModel.PROJECT_PACKAGES_FILE).getContents(), new NullProgressMonitor());
 	}
 	
 	public void testCorrectBinding ()
@@ -226,8 +237,11 @@ public class PackagesEARTest extends TestCase {
 	
 	public void testModel ()
 	{
-//		PackagesModel.instance().registerProject(testPackagesProject.getProject(), new NullProgressMonitor());
 		List packages = PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
+		if (packages == null) {
+			PackagesModel.instance().registerProject(testPackagesProject.getProject(), new NullProgressMonitor());
+			packages = PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
+		}
 		
 		assertNotNull(packages);
 		assertEquals(packages.size(), 3);
@@ -307,6 +321,7 @@ public class PackagesEARTest extends TestCase {
 	{
 		NullProgressMonitor nullMonitor = new NullProgressMonitor();
 		List packages = PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
+		assertNotNull(packages);
 		assertTrue(packages.size() > 0);
 		
 		IPackage pkg = (IPackage) packages.get(0);
@@ -319,25 +334,31 @@ public class PackagesEARTest extends TestCase {
 		assertEquals(packageFile.getName(), "MyApp.ear");
 		assertEquals(packageFile.getParent(), pkg.getDestinationContainer());
 		
-		de.schlichtherle.io.File packageZipFile = new de.schlichtherle.io.File(packageFile.getRawLocation().toString());
+		File packageZipFile = new File(packageFile.getRawLocation().toString());
 		assertTrue(packageZipFile.exists());
 		
-		File[] children = packageZipFile.listFiles();
+		File[] children = (File[]) packageZipFile.listFiles();
 		assertEquals(children.length, 2);
+		File metaInfFolder = null, packagesFolder = null;
 		
-		File packagesFolder = children[0];
-		File metaInfFolder = children[1];
+		for (int i = 0; i < 2; i++)
+		{
+			if (children[i].getName().equals("META-INF"))
+				metaInfFolder = children[i];
+			else if (children[i].getName().equals("packages"))
+				packagesFolder = children[i];
+		}
 		
-		assertEquals(metaInfFolder.getName(), "META-INF");
-		assertEquals(packagesFolder.getName(), "packages");
+		assertNotNull(metaInfFolder);
+		assertNotNull(packagesFolder);
 		
-		children = metaInfFolder.listFiles();
+		children = (File[]) metaInfFolder.listFiles();
 		assertEquals(children.length, 1);
 		
 		File applicationXml = children[0];
 		assertEquals(applicationXml.getName(), "application.xml");
 		
-		children = packagesFolder.listFiles();
+		children = (File []) packagesFolder.listFiles();
 		assertEquals(children.length, 2);
 		
 	}
@@ -366,6 +387,7 @@ public class PackagesEARTest extends TestCase {
 //			fail(e.getMessage());
 //		}
 		
+		PackagesCore.attach(jar, nullMonitor);
 		PackagesCore.buildPackage(jar, nullMonitor);
 		
 		IFile jarFile = jar.getPackageFile();
@@ -407,7 +429,7 @@ public class PackagesEARTest extends TestCase {
 		List packages = PackagesModel.instance().getProjectPackages(testPackagesProject.getProject());
 		
 		assertNotNull(packages);
-		assertEquals(packages.size(), 3);
+		assertEquals(packages.size(), 4);
 		
 		IPackage testRef = (IPackage) packages.get(1);
 		IPackage testRef2 = (IPackage) packages.get(2);
