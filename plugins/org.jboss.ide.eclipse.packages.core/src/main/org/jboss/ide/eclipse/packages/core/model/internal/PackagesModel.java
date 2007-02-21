@@ -281,13 +281,20 @@ public class PackagesModel {
 	
 	public void addPackagesModelListener (IPackagesModelListener listener)
 	{
-		modelListeners.add(listener);
+		synchronized (modelListeners)
+		{
+			if (!modelListeners.contains(listener))
+				modelListeners.add(listener);
+		}
 	}
 	
 	public void removePackagesModelListener (IPackagesModelListener listener)
 	{
-		if (modelListeners.contains(listener))
-			modelListeners.remove(listener);
+		synchronized (modelListeners)
+		{
+			if (modelListeners.contains(listener))
+				modelListeners.remove(listener);
+		}
 	}
 	
 	public void addPackagesBuildListener (IPackagesBuildListener listener)
@@ -556,84 +563,99 @@ public class PackagesModel {
 	
 	protected void fireProjectRegistered (final IProject project)
 	{
-		for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
+		synchronized (modelListeners)
 		{
-			IPackagesModelListener listener = (IPackagesModelListener) iter.next();
-			listener.projectRegistered(project);
+			for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
+			{
+				IPackagesModelListener listener = (IPackagesModelListener) iter.next();
+				listener.projectRegistered(project);
+			}
 		}
 	}
 	
 	protected void fireNodeAdded (final IPackageNode added)
 	{
-		// need to make sure if this is a package or folder node that we don't fire the "added" event prematurely
-		// basically we need to check if the node has been properly added to it's parent or not.
-		// since a package can be top level (i.e. no parent), i've added a special "shouldParentBeNull" flag (internal)
-		// to see if we can trigger the "added" event or not for packages. folders are only children of each other and packages
-		if (added.getNodeType() == IPackageNode.TYPE_PACKAGE)
+		synchronized (modelListeners)
 		{
-			PackageImpl pkg = (PackageImpl) added;
-			if (!pkg.shouldParentBeNull() && pkg.isTopLevel())
+			// need to make sure if this is a package or folder node that we don't fire the "added" event prematurely
+			// basically we need to check if the node has been properly added to it's parent or not.
+			// since a package can be top level (i.e. no parent), i've added a special "shouldParentBeNull" flag (internal)
+			// to see if we can trigger the "added" event or not for packages. folders are only children of each other and packages
+			if (added.getNodeType() == IPackageNode.TYPE_PACKAGE)
 			{
-				return;
-			}
-		}
-		else if (added.getNodeType() == IPackageNode.TYPE_PACKAGE_FOLDER)
-		{
-			PackageFolderImpl folder = (PackageFolderImpl) added;
-			if (folder.getParent() == null)
-			{
-				return;
-			}
-		}
-		
-		fireEvent(added, new Runnable() {
-			public void run() {
-				for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
+				PackageImpl pkg = (PackageImpl) added;
+				if (!pkg.shouldParentBeNull() && pkg.isTopLevel())
 				{
-					IPackagesModelListener listener = (IPackagesModelListener) iter.next();
-					listener.packageNodeAdded(added);
+					return;
 				}
 			}
-		});
+			else if (added.getNodeType() == IPackageNode.TYPE_PACKAGE_FOLDER)
+			{
+				PackageFolderImpl folder = (PackageFolderImpl) added;
+				if (folder.getParent() == null)
+				{
+					return;
+				}
+			}
+			
+			fireEvent(added, new Runnable() {
+				public void run() {
+					for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
+					{
+						IPackagesModelListener listener = (IPackagesModelListener) iter.next();
+						listener.packageNodeAdded(added);
+					}
+				}
+			});
+		}
 	}
 	
 	protected void fireNodeRemoved (final IPackageNode removed) {
-		fireEvent(removed, new Runnable() {
-			public void run() {
-				for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
-				{
-					IPackagesModelListener listener = (IPackagesModelListener) iter.next();
-					listener.packageNodeRemoved(removed);
+		synchronized (modelListeners)
+		{
+			fireEvent(removed, new Runnable() {
+				public void run() {
+					for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
+					{
+						IPackagesModelListener listener = (IPackagesModelListener) iter.next();
+						listener.packageNodeRemoved(removed);
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 	
 	protected void fireNodeChanged (final IPackageNode changed)
 	{
-		fireEvent(changed, new Runnable() {
-			public void run() {
-				for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
-				{
-					IPackagesModelListener listener = (IPackagesModelListener) iter.next();
-					listener.packageNodeChanged(changed);
+		synchronized (modelListeners)
+		{
+			fireEvent(changed, new Runnable() {
+				public void run() {
+					for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
+					{
+						IPackagesModelListener listener = (IPackagesModelListener) iter.next();
+						listener.packageNodeChanged(changed);
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 	
 	protected void fireNodeAttached (final IPackageNode attached)
 	{
-		fireEvent(attached, new Runnable() {
-			public void run ()
-			{
-				for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
+		synchronized (modelListeners)
+		{
+			fireEvent(attached, new Runnable() {
+				public void run ()
 				{
-					IPackagesModelListener listener = (IPackagesModelListener) iter.next();
-					listener.packageNodeAttached(attached);
+					for (Iterator iter = modelListeners.iterator(); iter.hasNext(); )
+					{
+						IPackagesModelListener listener = (IPackagesModelListener) iter.next();
+						listener.packageNodeAttached(attached);
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 	
 	protected void fireEvent (IPackageNode source, Runnable runnable) {
