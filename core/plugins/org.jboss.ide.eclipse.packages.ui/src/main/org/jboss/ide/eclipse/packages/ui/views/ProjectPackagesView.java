@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuListener;
@@ -540,6 +541,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 				if (response == Dialog.OK)
 				{
 					folder.setName(dialog.getValue());
+					PackagesModel.instance().saveModel(folder.getProject(), new NullProgressMonitor());
 					((PackageFolderImpl)folder).flagAsChanged();
 				}
 			}
