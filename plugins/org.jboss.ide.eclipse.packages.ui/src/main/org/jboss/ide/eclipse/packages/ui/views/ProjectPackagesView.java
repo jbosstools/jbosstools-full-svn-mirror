@@ -628,4 +628,8 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	{
 		return currentProject;
 	}
+	
+	public IStructuredSelection getSelection() {
+		return (IStructuredSelection)packageTree.getSelection();
+	}
 }

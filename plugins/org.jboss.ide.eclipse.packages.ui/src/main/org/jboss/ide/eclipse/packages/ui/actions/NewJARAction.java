@@ -8,6 +8,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
+import org.jboss.ide.eclipse.packages.ui.views.ProjectPackagesView;
 import org.jboss.ide.eclipse.packages.ui.wizards.NewJARWizard;
 import org.jboss.ide.eclipse.ui.util.ActionWithDelegate;
 
@@ -34,6 +35,9 @@ public class NewJARAction extends ActionWithDelegate
 		}
 	}
 	
+	public IStructuredSelection getSelection() {
+		return ProjectPackagesView.instance().getSelection();
+	}
 	public ImageDescriptor getImageDescriptor() {
 		return PackagesUIPlugin.getImageDescriptor(PackagesUIPlugin.IMG_NEW_PACKAGE);
 	}
