@@ -24,8 +24,8 @@ public class AllTests {
 		suite.addTest(new PackagesBuildTest("testSimpleJar_changeFile"));
 		suite.addTest(new PackagesBuildTest("testSimpleJar_addFile"));
 		suite.addTest(new PackagesBuildTest("testSimpleJar_removeFile"));
-		suite.addTest(new PackagesBuildTest("testSimpleJar_changeFilesetPattern"));
-		
+		suite.addTest(new PackagesBuildTest("testSimpleJar_changeFilesetPattern_addFile"));
+		suite.addTest(new PackagesBuildTest("testSimpleJar_changeFilesetPattern_removeFile"));
 		return suite;
 	}
 }
