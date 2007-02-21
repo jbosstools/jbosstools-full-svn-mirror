@@ -216,6 +216,11 @@ public class PackagesCore {
 	 */
 	public static IPackage getTopLevelPackage (IPackageNode node)
 	{
+		if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
+		{
+			if (((IPackage)node).isTopLevel()) return (IPackage) node;
+		}
+		
 		IPackageNode tmp = node.getParent(), top = tmp;
 		while (tmp != null)
 		{
@@ -348,7 +353,8 @@ public class PackagesCore {
 	{
 		if (monitor == null) monitor = new NullProgressMonitor();
 		
-		PackageBuildDelegate delegate = new PackageBuildDelegate(project);
+		PackageBuildDelegate delegate = PackageBuildDelegate.instance();
+		delegate.setProject(project);
 		try {
 			delegate.build(buildType, null, monitor);
 		} catch (CoreException e) {
@@ -364,7 +370,8 @@ public class PackagesCore {
 	{
 		if (monitor == null) monitor = new NullProgressMonitor();
 
-		PackageBuildDelegate delegate = new PackageBuildDelegate(pkg.getProject());
+		PackageBuildDelegate delegate = PackageBuildDelegate.instance();
+		delegate.setProject(pkg.getProject());
 		
 		delegate.buildSinglePackage(pkg, monitor);
 	}
