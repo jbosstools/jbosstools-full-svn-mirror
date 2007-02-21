@@ -412,7 +412,7 @@ public class PackagesModel {
 		}
 	}
 	
-	protected void saveModel (IProject project, IProgressMonitor monitor)
+	public void saveModel (IProject project, IProgressMonitor monitor)
 	{
 		try {
 			if (monitor == null)
@@ -675,7 +675,7 @@ public class PackagesModel {
 			getProjectPackages(pkg.getProject()).add(pkg);
 		}
 		
-		if (pkg.isTopLevel())
+		if (pkg.isTopLevel() && pkg.shouldParentBeNull())
 		{
 			XbPackages packages = getXbPackages(pkg.getProject());
 			if (packages == null) {
