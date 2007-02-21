@@ -140,7 +140,6 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 		packageExploded = false;
 		compressedButton = new Button(packageTypeGroup, SWT.RADIO);
 		compressedButton.setText(PackagesUIMessages.PackageInfoWizardPage_compressedButton_label);
-		compressedButton.setSelection(true);
 		compressedButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				packageExploded = false;
@@ -163,6 +162,8 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 	{
 		if (pkg != null)
 		{
+			compressedButton.setSelection(!pkg.isExploded());
+			explodedButton.setSelection(pkg.isExploded());
 			packageNameText.setText(pkg.getName());
 			packageName = pkg.getName();
 			
