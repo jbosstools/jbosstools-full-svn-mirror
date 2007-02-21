@@ -6,6 +6,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -21,6 +22,11 @@ public class PackageDestinationComposite extends PackageNodeDestinationComposite
 	
 	public PackageDestinationComposite (Composite parent, int style, Object destination) {
 		super(parent, style, destination);
+	}
+	
+	public PackageDestinationComposite (Composite parent, int style, GridData textLayoutData, GridData buttonLayoutData, Object destination)
+	{
+		super (parent, style, textLayoutData, buttonLayoutData, destination);
 	}
 	
 	protected void createBrowseButton(Composite parent) {
@@ -58,7 +64,7 @@ public class PackageDestinationComposite extends PackageNodeDestinationComposite
 		{
 			nodeDestination = new Path(path);
 			updateDestinationViewer();
-		}	
+		}
 	}
 	
 	protected void updateDestinationViewer()
