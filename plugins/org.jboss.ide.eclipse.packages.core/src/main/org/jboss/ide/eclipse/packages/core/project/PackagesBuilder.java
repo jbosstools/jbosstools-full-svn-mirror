@@ -39,7 +39,9 @@ public class PackagesBuilder extends IncrementalProjectBuilder {
 	public static final String BUILDER_ID = "org.jboss.ide.eclipse.packages.core.packagesBuilder";
 	
 	protected IProject[] build(int kind, Map args, IProgressMonitor monitor) throws CoreException {
-		PackageBuildDelegate delegate = new PackageBuildDelegate(this);
+		PackageBuildDelegate delegate = PackageBuildDelegate.instance();
+		delegate.setProject(getProject());
+		delegate.setDelta(getDelta(getProject()));
 		
 		return delegate.build(kind, args, monitor);
 	}
