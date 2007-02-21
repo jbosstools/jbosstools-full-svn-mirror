@@ -12,6 +12,7 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageFileSetImpl;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.ui.wizards.pages.FilesetInfoWizardPage;
 
 public class FilesetWizard extends Wizard {
@@ -28,20 +29,21 @@ public class FilesetWizard extends Wizard {
 	
 	public boolean performFinish() {
 		try {
-		boolean createFileset = this.fileset == null;
+		final boolean createFileset = this.fileset == null;
 		
 		if (createFileset)
 			this.fileset = PackagesCore.createDetachedPackageFileSet(parentNode.getProject());
 				
 		fillFilesetFromPage(fileset);
-
-		if (createFileset)
-			page1.getRootNode().addChild(this.fileset);
-		
 		try {
 			getContainer().run(false, false, new IRunnableWithProgress () {
 				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-					PackagesCore.attach(fileset, monitor);	
+					if (createFileset) {
+						page1.getRootNode().addChild(fileset);
+						PackagesCore.attach(fileset, monitor);	
+					} else {
+						PackagesModel.instance().saveModel(fileset.getProject(), monitor);
+					}
 				}
 			});
 		} catch (InvocationTargetException e) {
