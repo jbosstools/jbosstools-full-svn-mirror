@@ -1,7 +1,6 @@
 package org.jboss.ide.eclipse.packages.test;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -23,13 +22,14 @@ import org.jboss.ide.eclipse.packages.core.model.AbstractPackagesBuildListener;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
-import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageBuildDelegate;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackageNodeImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.core.model.types.JARPackageType;
 import org.jboss.ide.eclipse.packages.core.project.PackagesBuilder;
 
+import de.schlichtherle.io.File;
 import de.schlichtherle.io.FileInputStream;
 
 public class PackagesBuildTest extends TestCase{
@@ -58,7 +58,7 @@ public class PackagesBuildTest extends TestCase{
 			javaProject = JavaProjectHelper.createJavaProject("buildProject", new String[] { "src" }, "/bin");
 			project = javaProject.getProject();
 			
-			buildDelegate = new PackageBuildDelegate(project);
+			buildDelegate = PackageBuildDelegate.instance();
 			testXmlFile = project.getFile("test.xml");
 			
 			simpleJar = PackagesCore.createDetachedPackage(project, true);
@@ -95,7 +95,7 @@ public class PackagesBuildTest extends TestCase{
 			project = ResourcesPlugin.getWorkspace().getRoot().getProject("buildProject");
 			javaProject = JavaCore.create(project);
 			
-			buildDelegate = new PackageBuildDelegate(project);
+			buildDelegate = PackageBuildDelegate.instance();
 			testXmlFile = project.getFile("test.xml");
 			
 			List packages = PackagesModel.instance().getProjectPackages(project);
@@ -167,14 +167,14 @@ public class PackagesBuildTest extends TestCase{
 		assertFileContents(simpleJar, "test.xml", contents);
 	}
 	
-	private de.schlichtherle.io.File getPackageFile (IPackage pkg)
+	private File getPackageFile (IPackage pkg)
 	{
-		return new de.schlichtherle.io.File(pkg.getPackageFile().getRawLocation().toFile());
+		return new File(pkg.getPackageFile().getRawLocation().toFile());
 	}
 	
 	private File findFile (File jarFile, String name)
 	{
-		File subFiles[] = jarFile.listFiles();
+		File subFiles[] = (File [])  jarFile.listFiles();
 		assertNotNull(subFiles);
 		
 		File file = null;
@@ -210,7 +210,7 @@ public class PackagesBuildTest extends TestCase{
 	
 	private void assertFileContents (IPackage jar, String fileName, String contents)
 	{
-		de.schlichtherle.io.File jarFile = getPackageFile(jar);
+		File jarFile = getPackageFile(jar);
 		assertTrue(jarFile.exists());
 		assertTrue(jarFile.isArchive());
 
@@ -240,7 +240,7 @@ public class PackagesBuildTest extends TestCase{
 		//	 wait for incremental builder to finish
 		try {
 			Thread.sleep(1000 * 3);
-			while (PackageBuildDelegate.isBuilding() && wait < timeout)
+			while (PackageBuildDelegate.instance().isBuilding() && wait < timeout)
 			{
 				Thread.sleep(100);
 				wait += 100;
@@ -264,7 +264,7 @@ public class PackagesBuildTest extends TestCase{
 		
 		assertTrue (refJar.getPackageFile().exists());
 		
-		de.schlichtherle.io.File refJarFile = getPackageFile(refJar);
+		File refJarFile = getPackageFile(refJar);
 		File libFolderFile = findFile(refJarFile, "lib");
 		assertNotNull(libFolderFile);
 		
@@ -301,18 +301,18 @@ public class PackagesBuildTest extends TestCase{
 		
 		assertFalse(addedXML.exists());
 		
-		de.schlichtherle.io.File jarFile = getPackageFile(simpleJar);
+		File jarFile = getPackageFile(simpleJar);
 		File addedXMLFile = findFile(jarFile, "added.xml");
 		
 		assertNull(addedXMLFile);
 	}
 	
-	public void testSimpleJar_changeFilesetPattern ()
+	public void testSimpleJar_changeFilesetPattern_addFile ()
 	{
 		IFile nestedXMLFile = project.getFile(new Path("dir1/dir2/nested.xml"));
 		setContents(nestedXMLFile, nestedXml_contents);
 		
-		de.schlichtherle.io.File jarFile = getPackageFile(simpleJar);
+		File jarFile = getPackageFile(simpleJar);
 		File dir1 = findFile(jarFile, "dir1");
 		
 		assertNull(dir1);
@@ -325,14 +325,27 @@ public class PackagesBuildTest extends TestCase{
 		assertNotNull(dir1);
 		assertEquals(dir1.getName(), "dir1");
 		
-		File dir2 = dir1.listFiles()[0];
+		File dir2 = (File) dir1.listFiles()[0];
 		assertNotNull(dir2);
 		assertEquals(dir2.getName(), "dir2");
 		
-		File nestedXMLFile2 = dir2.listFiles()[0];
+		File nestedXMLFile2 = (File) dir2.listFiles()[0];
 		assertNotNull(nestedXMLFile2);
 		assertEquals(nestedXMLFile2.getName(), "nested.xml");
 		
 		assertFileContents (nestedXMLFile2, nestedXml_contents);
+	}
+	
+	public void testSimpleJar_changeFilesetPattern_removeFile ()
+	{
+		File jarFile = getPackageFile(simpleJar);
+		
+		simpleJarFileset.setIncludesPattern("*.xml");
+		((PackageNodeImpl)simpleJarFileset).flagAsChanged();
+		
+		waitForBuilder();
+		
+		File dir1 = findFile(jarFile, "dir1");
+		assertNull(dir1);
 	}
 }
