@@ -767,11 +767,9 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		return (File[]) files.toArray(new File[files.size()]); 
 	}
 	
-	private OutputStream[] createFileOutputStreams (IPackageFileSet fileset, IPath subPath)
+	private OutputStream[] createFileOutputStreams (File[] files)
 	{
-		ArrayList streams = new ArrayList();
-		File[] files = createFiles(fileset, subPath);
-		
+		ArrayList streams = new ArrayList();		
 		for (int i = 0; i < files.length; i++)
 		{
 			try {
@@ -780,7 +778,6 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 				Trace.trace(getClass(), e);
 			}	
 		}
-		
 		return (OutputStream[]) streams.toArray(new OutputStream[streams.size()]);
 	}
 	
@@ -843,10 +840,10 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			for (int i = 0; i < filesets.length; i++)
 			{
 				IPath copyTo = getFileDestinationPath(file, filesets[i]);
+				File[] packageFiles = createFiles(filesets[i], copyTo);
 				
 				if (checkStamps)
 				{
-					File[] packageFiles = createFiles(filesets[i], copyTo);
 					for (int j = 0; j < packageFiles.length; j++)
 					{
 						File packageFile = packageFiles[j];
@@ -864,7 +861,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 				OutputStream[] outStreams = null;
 				// I'm using the fully qualified package name here to avoid confusion with java.io
 				try {
-					outStreams = createFileOutputStreams(filesets[i], copyTo);
+					outStreams = createFileOutputStreams(packageFiles);
 					
 					for (int j = 0; j < outStreams.length; j++)
 					{
@@ -904,10 +901,10 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		synchronized (buildLock)
 		{
 			IPath copyTo = getPathDestinationPath(path, fileset);
+			File[] packageFiles = createFiles(fileset, copyTo);
 			
 			if (checkStamps)
 			{
-				File[] packageFiles = createFiles(fileset, copyTo);
 				File externalFile = new File(path.toFile());
 				
 				for (int i = 0; i < packageFiles.length; i++)
@@ -926,7 +923,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			InputStream in = null;
 			OutputStream[] outStreams = null;
 			try {
-				outStreams = createFileOutputStreams(fileset, copyTo);
+				outStreams = createFileOutputStreams(packageFiles);
 				for (int i = 0; i < outStreams.length; i++)
 				{
 					try {
