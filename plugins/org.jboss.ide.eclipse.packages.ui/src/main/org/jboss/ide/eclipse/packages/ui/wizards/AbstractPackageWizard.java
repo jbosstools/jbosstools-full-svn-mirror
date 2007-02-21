@@ -18,6 +18,7 @@ import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageImpl;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.ui.wizards.pages.PackageInfoWizardPage;
 import org.jboss.ide.eclipse.ui.wizards.WizardPageWithNotification;
 import org.jboss.ide.eclipse.ui.wizards.WizardWithNotification;
@@ -70,42 +71,39 @@ public abstract class AbstractPackageWizard extends WizardWithNotification imple
 			((WizardPageWithNotification)currentPage).pageExited(WizardWithNotification.FINISH);
 		}
 		
+		final boolean create = this.existingPackage == null;
 		final IPackage pkg = firstPage.getPackage();
-		Object destination = firstPage.getPackageDestination();
+		final Object destination = firstPage.getPackageDestination();
 		
 		boolean performed = performFinish(pkg);
 		
-		if (performed)
-		{
-			if (!pkg.equals(existingPackage))
-			{
-				try {
-					getContainer().run(false, false, new IRunnableWithProgress () {
-						public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-							PackagesCore.attach(pkg, monitor);	
+		if (performed) {
+			try {
+				getContainer().run(false, false, new IRunnableWithProgress () {
+					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+						if (destination instanceof IPackageNode) {
+							if (!create && !destination.equals(pkg.getParent())) {
+								if (pkg.getParent() != null) {
+									pkg.getParent().removeChild(pkg);
+								}
+							}
+							IPackageNode node = (IPackageNode) destination;
+							node.addChild(pkg);
 						}
-					});
-				} catch (InvocationTargetException e) {
-					Trace.trace(getClass(), e);
-				} catch (InterruptedException e) {
-					Trace.trace(getClass(), e);
-				}
-			}
-			else {
-				((PackageImpl)existingPackage).flagAsChanged();
-			}
-			
-			if (destination instanceof IPackageNode) {
-				if (pkg.equals(existingPackage) && !destination.equals(pkg.getParent()))
-				{
-					if (pkg.getParent() != null)
-					{
-						pkg.getParent().removeChild(pkg);
+						
+						if (create) {
+							PackagesCore.attach(pkg, monitor);	
+						} else {
+							((PackageImpl)existingPackage).flagAsChanged();
+							PackagesModel.instance().saveModel(pkg.getProject(), monitor);
+						}
+
 					}
-				}
-				
-				IPackageNode node = (IPackageNode) destination;
-				node.addChild(pkg);
+				});
+			} catch (InvocationTargetException e) {
+				Trace.trace(getClass(), e);
+			} catch (InterruptedException e) {
+				Trace.trace(getClass(), e);
 			}
 		}
 		return performed;
