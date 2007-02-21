@@ -82,9 +82,12 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 		packageName = "Untitled." + wizard.getPackageExtension();
 		packageNameText.setText(packageName);
 		packageNameText.setSelection(0, "Untitled.".length()-1);
-		packageNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		
 		expand(packageNameText);
+		
+		GridData pkgNameData = new GridData(GridData.FILL_HORIZONTAL);
+		pkgNameData.horizontalSpan = 2;
+		pkgNameComposite.setLayoutData(pkgNameData);
+		
 		packageNameText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				if (validate())
@@ -93,17 +96,24 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 				}
 			}
 		});
-		new Label(infoGroup, SWT.NONE);
 
 		new Label(infoGroup, SWT.NONE).setText(PackagesUIMessages.PackageInfoWizardPage_destination_label);
+
+		GridData destinationTextData = new GridData(GridData.FILL_BOTH);
+		destinationTextData.horizontalSpan = 2;
+		GridData buttonData = new GridData(GridData.FILL_HORIZONTAL);
+		buttonData.horizontalSpan = 3;
+		buttonData.horizontalAlignment = SWT.END;
 		
 		Object destination = wizard.getSelectedDestination();
-		destinationComposite = new PackageDestinationComposite(infoGroup, SWT.NONE, destination);
+		destinationComposite = new PackageDestinationComposite(
+			infoGroup, SWT.NONE, null, buttonData, destination);
 		destinationComposite.addDestinationChangeListener(new DestinationChangeListener () {
 			public void destinationChanged(Object newDestination) {
 				validate();
 			}
 		});
+		destinationComposite.setLayoutData(destinationTextData);
 		
 		customManifestCheck = new Button(infoGroup , SWT.CHECK);
 		customManifestCheck.setText(PackagesUIMessages.PackageInfoWizardPage_customManifest_label);

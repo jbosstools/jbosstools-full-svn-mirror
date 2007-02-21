@@ -7,12 +7,9 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.GlyphMetrics;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -38,14 +35,23 @@ public class PackageNodeDestinationComposite extends Composite {
 	protected Object nodeDestination;
 	protected boolean editable;
 	protected ArrayList listeners;
+	protected GridData textLayoutData, buttonLayoutData;
 	
 	public PackageNodeDestinationComposite(Composite parent, int style, Object destination)
+	{
+		this (parent, style, null, null, destination);
+	}
+	
+	public PackageNodeDestinationComposite(Composite parent, int style, GridData textLayoutData, GridData buttonLayoutData, Object destination)
 	{
 		super(parent, style);
 		this.parent = parent;
 		this.nodeDestination = destination;
 		this.editable = true;
 		this.listeners = new ArrayList();
+		this.textLayoutData = textLayoutData;
+		this.buttonLayoutData = buttonLayoutData; 
+		
 		createComposite();
 	}
 	
@@ -54,6 +60,7 @@ public class PackageNodeDestinationComposite extends Composite {
 		GridLayout layout = new GridLayout(2, false);
 		layout.marginHeight = 0;
 		layout.marginWidth = 0;
+		layout.marginBottom = layout.marginLeft = layout.marginRight = layout.marginTop = 0;
 		
 		setLayout(layout);
 		GridData data = new GridData(GridData.FILL_HORIZONTAL);
@@ -65,22 +72,26 @@ public class PackageNodeDestinationComposite extends Composite {
 		
 		updateDestinationViewer();
 		
-		destinationText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		
-		new Label(parent, SWT.NONE);
-		new Label(parent, SWT.NONE);
+		if (textLayoutData == null)
+		{
+			textLayoutData = new GridData(GridData.FILL_HORIZONTAL);
+		}
+		destinationText.setLayoutData(textLayoutData);
 		
 		Composite buttons = new Composite(parent, SWT.NONE);
-		RowLayout buttonLayout = new RowLayout(SWT.HORIZONTAL);
-		buttonLayout.marginBottom = buttonLayout.marginLeft = 	buttonLayout.marginRight = buttonLayout.marginTop = 0;
-		buttonLayout.spacing = buttonLayout.marginHeight =  buttonLayout.marginWidth = 0;
+		
+		GridLayout buttonLayout = new GridLayout(2, false);
+		//buttonLayout.marginBottom = buttonLayout.marginLeft = buttonLayout.marginRight = buttonLayout.marginTop = 0;
+		buttonLayout.marginHeight =  buttonLayout.marginWidth = 0;
 		
 		buttons.setLayout(buttonLayout);
-		GridData buttonData = new GridData(GridData.FILL_HORIZONTAL);
-		buttonData.horizontalSpan = 2;
-		buttonData.horizontalAlignment = GridData.END;
-		buttonData.verticalAlignment = GridData.BEGINNING;
-		buttons.setLayoutData(buttonData);
+		if (buttonLayoutData == null) {
+			buttonLayoutData = new GridData(GridData.FILL_HORIZONTAL);
+			buttonLayoutData.horizontalSpan = 2;
+			buttonLayoutData.horizontalAlignment = GridData.END;
+			buttonLayoutData.verticalAlignment = GridData.BEGINNING;
+		}
+		buttons.setLayoutData(buttonLayoutData);
 		
 		createBrowseButton(buttons);
 	}
