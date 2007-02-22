@@ -71,5 +71,17 @@
             label="Properties"
             weight="99"/>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.jboss.ide.eclipse.ui.MainPreferencePage"
+            class="org.jboss.ide.eclipse.packages.ui.properties.MainPreferencePage"
+            id="org.jboss.ide.eclipse.packages.ui.packagesPreferencePage"
+            name="Packages"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.jboss.ide.eclipse.packages.ui.PrefsInitializer"/>
+   </extension>
 
 </plugin>

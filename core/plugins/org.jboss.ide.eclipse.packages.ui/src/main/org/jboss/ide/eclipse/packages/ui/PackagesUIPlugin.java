@@ -1,6 +1,7 @@
 package org.jboss.ide.eclipse.packages.ui;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.SWT;
@@ -37,6 +38,10 @@ public class PackagesUIPlugin extends AbstractUIPlugin {
 	public static final String IMG_NEW_WAR_WIZARD="icons/new_war_wiz.png";
 	public static final String IMG_NEW_EAR_WIZARD="icons/ear-wiz-banner.gif";
 	public static final String IMG_BUILD_PACKAGES = "icons/build_packages.gif";
+	
+	// preference keys
+	public static final String PREF_SHOW_PACKAGE_OUTPUT_PATH = "showPackageOutputPath";
+	public static final String PREF_SHOW_FULL_FILESET_ROOT_DIR = "showFullFilesetRootDir";
 	
 	// The shared instance
 	private static PackagesUIPlugin plugin;
@@ -101,7 +106,6 @@ public class PackagesUIPlugin extends AbstractUIPlugin {
 	{
 		return getDefault().getImageRegistry().getDescriptor(id);
 	}
-	
 	   public static void alert(String string)
 	   {
 	      MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
