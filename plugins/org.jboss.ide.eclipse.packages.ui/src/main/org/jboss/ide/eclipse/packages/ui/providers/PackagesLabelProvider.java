@@ -109,7 +109,14 @@ public class PackagesLabelProvider implements ILabelProvider {
 	
 	private String getPackageText (IPackage pkg)
 	{
-		return pkg.getName();
+		String text = pkg.getName();
+		if (PackagesUIPlugin.getDefault().getPreferenceStore().getBoolean(
+			PackagesUIPlugin.PREF_SHOW_PACKAGE_OUTPUT_PATH))
+		{
+			text += " [" + pkg.getDestinationPath() + "]";
+			
+		}
+		return text;
 	}
 	
 	private String getPackageFolderText (IPackageFolder folder)
@@ -125,16 +132,35 @@ public class PackagesLabelProvider implements ILabelProvider {
 		}
 		else
 		{
+			boolean showFullPath = PackagesUIPlugin.getDefault().getPreferenceStore().getBoolean(
+				PackagesUIPlugin.PREF_SHOW_FULL_FILESET_ROOT_DIR);
+			
 			if (fileset.isInWorkspace())
 			{
-				String text = fileset.getSourceContainer().getName();
+				String text = "";
 				if (fileset.getIncludesPattern() != null)
-					text += " : " + fileset.getIncludesPattern();
+					text += fileset.getIncludesPattern() + ": ";
+				
+				if (showFullPath)
+				{
+					text += fileset.getSourceContainer().getFullPath().toString();
+				} else {
+					text += fileset.getSourceContainer().getName();
+				}
+				
 				return text;
 			} else {
-				String text = fileset.getSourcePath().lastSegment();
+				String text = "";
 				if (fileset.getIncludesPattern() != null)
-					text += " : " + fileset.getIncludesPattern();
+					text += fileset.getIncludesPattern() + ": ";
+				
+				if (showFullPath)
+				{
+					text += fileset.getSourcePath().toString();
+				} else {
+					text += fileset.getSourcePath().lastSegment();
+				}
+				
 				return text;
 			}
 		}

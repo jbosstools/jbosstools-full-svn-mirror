@@ -33,7 +33,7 @@ public class PackagesPropertyPage extends PropertyPage implements
 		IWorkbenchPropertyPage {
 
 	private Button autoBuild;
-
+	
 	protected Control createContents(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
