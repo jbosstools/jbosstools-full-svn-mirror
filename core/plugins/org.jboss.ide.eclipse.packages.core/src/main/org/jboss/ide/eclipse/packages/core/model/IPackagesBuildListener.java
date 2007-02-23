@@ -22,6 +22,7 @@
 package org.jboss.ide.eclipse.packages.core.model;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 
 /**
@@ -61,6 +62,22 @@ public interface IPackagesBuildListener {
 	 * @param fileset the fileset being collected
 	 */
 	public void finishedCollectingFileSet (IPackageFileSet fileset);
+	
+	/**
+	 * A file has been updated, with the given IPackage / IPackageFileSet context
+	 * @param topLevelPackage The top level package that was updated
+	 * @param fileset The fileset that matched the updated file
+	 * @param filePath The path to the file that was copied (filesystem/workspace path)
+	 */
+	public void fileUpdated (IPackage topLevelPackage, IPackageFileSet fileset, IPath filePath);
+	
+	/**
+	 * A file has been removed, with the given IPackage / IPackageFileSet context
+	 * @param topLevelPackage The top level package that was updated
+	 * @param fileset The fileset that matched the removed file
+	 * @param filePath The path to the file that was removed (filesystem/workspace path)
+	 */
+	public void fileRemoved (IPackage topLevelPackage, IPackageFileSet fileset, IPath filePath);
 	
 	/**
 	 * A project is finished being built by the packages builder

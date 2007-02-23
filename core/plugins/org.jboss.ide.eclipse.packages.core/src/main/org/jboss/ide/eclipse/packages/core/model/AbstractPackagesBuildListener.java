@@ -1,6 +1,7 @@
 package org.jboss.ide.eclipse.packages.core.model;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 
 public class AbstractPackagesBuildListener implements IPackagesBuildListener {
@@ -38,6 +39,16 @@ public class AbstractPackagesBuildListener implements IPackagesBuildListener {
 	public void startedCollectingFileSet(IPackageFileSet fileset) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public void fileRemoved(IPackage topLevelPackage, IPackageFileSet fileset, IPath filePath) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void fileUpdated(IPackage topLevelPackage, IPackageFileSet fileset, IPath filePath) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
