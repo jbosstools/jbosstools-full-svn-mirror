@@ -82,27 +82,18 @@ public class PackagesCorePlugin extends Plugin {
 	}
 
 	public static boolean isFileInWorkspace (IPath path)
-		{
-			boolean inWorkspace = false;
-			try {
-				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-				
-				inWorkspace = (file != null && file.exists());
-			} catch (IllegalArgumentException e) {
-				// Swallow, we assume this isn't in the workspace if it's an invalid path
-			}
+	{
+		boolean inWorkspace = false;
+		try {
+			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 			
-			return inWorkspace;
+			inWorkspace = (file != null && file.exists());
+		} catch (IllegalArgumentException e) {
+			// Swallow, we assume this isn't in the workspace if it's an invalid path
 		}
-	//	protected void loadPackageTypes ()
-	//	{
-	//		IPackageType[] packageTypes = ExtensionManager.findPackageTypes();
-	//		
-	//		for (int i = 0; i < packageTypes.length; i++)
-	//		{
-	//			this.packageTypes.put(packageTypes[i].getId(), packageTypes[i]);
-	//		}
-	//	}
+		
+		return inWorkspace;
+	}
 
 	/**
 	 * Returns the shared instance
