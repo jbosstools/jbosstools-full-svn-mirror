@@ -84,7 +84,11 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 	
 	public IPath getDestinationPath () {
 		String path = packageDelegate.getToDir();
-		if (path == null) return null;
+		if (path == null) {
+			if (project != null) {
+				return project.getFullPath();
+			} else return null;
+		}
 		
 		return new Path(path);
 	}
