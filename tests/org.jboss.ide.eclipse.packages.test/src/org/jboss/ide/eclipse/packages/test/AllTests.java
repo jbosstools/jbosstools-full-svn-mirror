@@ -8,24 +8,10 @@ public class AllTests {
 	public static Test suite()
 	{
 		TestSuite suite = new TestSuite();
-		suite.addTest(new PackagesEARTest("testCorrectBinding"));
-		suite.addTest(new PackagesEARTest("testModel"));
-		suite.addTest(new PackagesEARTest("testSave"));
-		suite.addTest(new PackagesEARTest("testBuild"));
-		suite.addTest(new PackagesEARTest("testJARDefaultConfig"));
-		suite.addTest(new PackagesEARTest("testPathAppend"));
-		suite.addTest(new PackagesEARTest("testPackageReference"));
-		suite.addTest(new PackagesEARTest("testProperties"));
+		suite.addTestSuite(PackagesEARTest.class);
+		suite.addTestSuite(NewProjectTest.class);
+		suite.addTestSuite(PackagesBuildTest.class);
 		
-		suite.addTest(new NewProjectTest("testXbConsistency"));
-		suite.addTest(new NewProjectTest("testEclipseModelConsistency"));
-		
-		suite.addTest(new PackagesBuildTest("testSimpleJar_buildWithAPI"));
-		suite.addTest(new PackagesBuildTest("testSimpleJar_changeFile"));
-		suite.addTest(new PackagesBuildTest("testSimpleJar_addFile"));
-		suite.addTest(new PackagesBuildTest("testSimpleJar_removeFile"));
-		suite.addTest(new PackagesBuildTest("testSimpleJar_changeFilesetPattern_addFile"));
-		suite.addTest(new PackagesBuildTest("testSimpleJar_changeFilesetPattern_removeFile"));
 		return suite;
 	}
 }
