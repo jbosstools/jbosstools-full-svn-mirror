@@ -29,6 +29,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.packages.core.PackagesCorePlugin;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
@@ -232,7 +233,7 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 	public void setSingleFile(IPath path, String destinationFilename) {
 		Assert.isNotNull(path);
 		
-		if (PackagesCorePlugin.isFileInWorkspace(path))
+		if (ResourceUtil.isResourceInWorkspace(path))
 		{
 			setSingleFile(ResourcesPlugin.getWorkspace().getRoot().getFile(path), destinationFilename);
 		}
@@ -269,7 +270,7 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 		Assert.isNotNull(path);
 		
 		filesetDelegate.setDir(path.toString());
-		filesetDelegate.setInWorkspace(PackagesCorePlugin.isFolderInWorkspace(path));
+		filesetDelegate.setInWorkspace(ResourceUtil.isResourceInWorkspace(path));
 	}
 	
 	public void setSourceProject(IProject project) {
