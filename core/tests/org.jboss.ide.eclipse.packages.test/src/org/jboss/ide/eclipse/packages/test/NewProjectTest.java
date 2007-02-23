@@ -104,5 +104,4 @@ public class NewProjectTest extends TestCase {
 		IPackage pkg = (IPackage) packages.get(0);
 		assertEquals(pkg.getName(), "test.jar");
 	}
-
 }

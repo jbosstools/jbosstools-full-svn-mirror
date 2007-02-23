@@ -13,6 +13,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
@@ -65,6 +66,7 @@ public class PackagesBuildTest extends TestCase{
 		suite.addTest(new PackagesBuildTest("testSimpleJar_changeFilesetPattern_removeFile"));
 		suite.addTest(new PackagesBuildTest("testExplodedJar"));
 		suite.addTest(new PackagesBuildTest("testSimpleJar_changeToExploded"));
+		suite.addTest(new PackagesBuildTest("testBaseFile"));
 		return suite;
 	}
 	
@@ -400,5 +402,25 @@ public class PackagesBuildTest extends TestCase{
 		
 		File simpleJarFile = getPackageFile(simpleJar);
 		assertTrue(simpleJarFile.getDelegate().isDirectory());
+	}
+	
+	public void testBaseFile ()
+	{
+		IPath projectPath = project.getFullPath();
+		IPath filePath = projectPath.append("simple.jar").append("test.xml");
+		
+		IPath basePath = PackagesCore.getBaseFile(filePath);
+		
+		assertEquals (basePath.segmentCount(), 2);
+		assertEquals (basePath.segment(0), project.getName());
+		assertEquals (basePath.segment(1), "simple.jar");
+		
+		filePath = projectPath.append("exploded.jar").append("test.xml");
+		basePath = PackagesCore.getBaseFile(filePath);
+		
+		assertEquals (basePath.segmentCount(), 3);
+		assertEquals (basePath.segment(0), project.getName());
+		assertEquals (basePath.segment(1), "exploded.jar");
+		assertEquals (basePath.segment(2), "test.xml");
 	}
 }
