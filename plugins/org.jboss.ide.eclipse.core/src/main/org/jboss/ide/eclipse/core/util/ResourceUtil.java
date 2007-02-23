@@ -21,12 +21,14 @@
  */
 package org.jboss.ide.eclipse.core.util;
 
+import java.io.File;
 import java.io.InputStream;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -86,5 +88,34 @@ public class ResourceUtil
 		 
 		 file.create(source, force, monitor);
 	   }
+   }
+   public static boolean isResourceInWorkspace (IPath path) 
+   { 
+        boolean inWorkspace = false; 
+        try { 
+             IResource file = ResourcesPlugin.getWorkspace().getRoot().findMember(path); 
+             inWorkspace = (file != null && file.exists()); 
+        } catch (IllegalArgumentException e) { 
+             // Swallow, we assume this isn't in the workspace if it's an invalid path 
+        } 
+         
+        return inWorkspace; 
+   }
+   
+   public static final boolean WORKSPACE_DEFAULT = true;
+   public static final boolean GLOBAL_DEFAULT = false;
+   
+   public static IPath makeAbsolute(IPath path, boolean assumption) {
+	   boolean inWorkspace = isResourceInWorkspace(path);
+	   boolean fileExists = new File(path.toOSString()).exists();
+	   if( inWorkspace && assumption == WORKSPACE_DEFAULT) {
+		   return ResourcesPlugin.getWorkspace().getRoot().getLocation().append(path);
+	   }
+	   if( fileExists && assumption == GLOBAL_DEFAULT) {
+		   return path;
+	   }
+	   
+	   // neither are true. return unchanged path;
+	   return path;
    }
 }
