@@ -26,7 +26,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import junit.framework.Test;
 import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -66,6 +68,20 @@ public class PackagesEARTest extends TestCase {
 	public PackagesEARTest (String testName)
 	{
 		super(testName);
+	}
+	
+	public static Test suite ()
+	{
+		TestSuite suite = new TestSuite();
+		suite.addTest(new PackagesEARTest("testCorrectBinding"));
+		suite.addTest(new PackagesEARTest("testModel"));
+		suite.addTest(new PackagesEARTest("testSave"));
+		suite.addTest(new PackagesEARTest("testBuild"));
+		suite.addTest(new PackagesEARTest("testJARDefaultConfig"));
+		suite.addTest(new PackagesEARTest("testPathAppend"));
+		suite.addTest(new PackagesEARTest("testPackageReference"));
+		suite.addTest(new PackagesEARTest("testProperties"));
+		return suite;
 	}
 	
 	protected void setUp() throws Exception {
@@ -393,24 +409,6 @@ public class PackagesEARTest extends TestCase {
 		IFile jarFile = jar.getPackageFile();
 		assertTrue(jarFile.exists());
 		
-	}
-	
-	public void testDetachedNodes ()
-	{
-		NullProgressMonitor nullMonitor = new NullProgressMonitor();
-		
-		IPackage detachedPackage = PackagesCore.createDetachedPackage(testPackagesProject.getProject(), true);
-		
-		detachedPackage.setName("testPackagesProject.jar");
-		detachedPackage.setPackageType(PackagesCore.getPackageType(JARPackageType.TYPE_ID));
-		
-		IPackageFileSet detachedFileset = PackagesCore.createDetachedPackageFileSet(testPackagesProject.getProject());
-		detachedPackage.addChild(detachedFileset);
-		
-		IPackage[] packages = PackagesCore.getProjectPackages(testPackagesProject.getProject(), nullMonitor);
-		int index = Arrays.binarySearch(packages, detachedPackage);
-		
-		assertTrue(index >= 0);
 	}
 	
 	public void testPathAppend ()

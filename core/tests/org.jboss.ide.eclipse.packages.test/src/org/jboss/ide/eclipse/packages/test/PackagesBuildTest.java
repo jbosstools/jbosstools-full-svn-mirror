@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+import junit.framework.Test;
 import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -40,9 +42,9 @@ public class PackagesBuildTest extends TestCase{
 	private PackageBuildDelegate buildDelegate;
 	private NullProgressMonitor nullMonitor = new NullProgressMonitor();
 	
-	private IPackage simpleJar, refJar;
+	private IPackage simpleJar, refJar, explodedJar;
 	private IFile testXmlFile;
-	private IPackageFileSet simpleJarFileset;
+	private IPackageFileSet simpleJarFileset, explodedJarFileset;
 	private IPackageFolder libFolder;
 	
 	private static boolean initialized = false;
@@ -50,6 +52,20 @@ public class PackagesBuildTest extends TestCase{
 	public PackagesBuildTest (String testName)
 	{
 		super(testName);
+	}
+	
+	public static Test suite ()
+	{
+		TestSuite suite = new TestSuite();
+		suite.addTest(new PackagesBuildTest("testSimpleJar_buildWithAPI"));
+		suite.addTest(new PackagesBuildTest("testSimpleJar_changeFile"));
+		suite.addTest(new PackagesBuildTest("testSimpleJar_addFile"));
+		suite.addTest(new PackagesBuildTest("testSimpleJar_removeFile"));
+		suite.addTest(new PackagesBuildTest("testSimpleJar_changeFilesetPattern_addFile"));
+		suite.addTest(new PackagesBuildTest("testSimpleJar_changeFilesetPattern_removeFile"));
+		suite.addTest(new PackagesBuildTest("testExplodedJar"));
+		suite.addTest(new PackagesBuildTest("testSimpleJar_changeToExploded"));
+		return suite;
 	}
 	
 	protected void setUp() throws Exception {
@@ -88,6 +104,20 @@ public class PackagesBuildTest extends TestCase{
 			libFolder.addChild(simpleJar.createReference(false));
 			
 			PackagesModel.instance().attach(refJar, nullMonitor);
+	
+			explodedJar = PackagesCore.createDetachedPackage(project, true);
+			explodedJar.setName("exploded.jar");
+			explodedJar.setExploded(true);
+			explodedJar.setPackageType(PackagesCore.getPackageType(JARPackageType.TYPE_ID));
+			explodedJar.setDestinationContainer(project);
+			
+			explodedJarFileset = PackagesCore.createDetachedPackageFileSet(project);
+			explodedJarFileset.setIncludesPattern("*.xml");
+			explodedJarFileset.setSourceProject(project);
+			
+			explodedJar.addChild(explodedJarFileset);
+			
+			PackagesModel.instance().attach(explodedJar, nullMonitor);
 			
 			initialized = true;
 		} else{
@@ -104,6 +134,9 @@ public class PackagesBuildTest extends TestCase{
 			
 			refJar = (IPackage) packages.get(1);
 			libFolder = refJar.getFolders()[0];
+			
+			explodedJar = (IPackage) packages.get(2);
+			explodedJarFileset = explodedJar.getFileSets()[0];
 		}
 	}
 	
@@ -347,5 +380,25 @@ public class PackagesBuildTest extends TestCase{
 		
 		File dir1 = findFile(jarFile, "dir1");
 		assertNull(dir1);
+	}
+	
+	public void testExplodedJar ()
+	{
+		PackageBuildDelegate.instance().buildSinglePackage(explodedJar, nullMonitor);
+		
+		File explodedJarFolder = getPackageFile(explodedJar);
+		
+		assertTrue(explodedJarFolder.exists());
+		assertTrue(explodedJarFolder.getDelegate().isDirectory());
+	}
+	
+	public void testSimpleJar_changeToExploded ()
+	{
+		simpleJar.setExploded(true);
+		((PackageNodeImpl)simpleJar).flagAsChanged();
+		waitForBuilder();
+		
+		File simpleJarFile = getPackageFile(simpleJar);
+		assertTrue(simpleJarFile.getDelegate().isDirectory());
 	}
 }
