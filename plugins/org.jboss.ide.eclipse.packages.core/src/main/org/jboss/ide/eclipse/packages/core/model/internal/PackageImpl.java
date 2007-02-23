@@ -128,9 +128,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 	}
 
 	public IPath getPackageFilePath() {
-		if (!isDestinationInWorkspace()) {
-			return getDestinationPath().append(new Path(getName()));
-		} else return null;
+		return getDestinationPath().append(new Path(getName()));
 	}
 	
 	public boolean isExploded() {
