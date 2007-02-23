@@ -27,13 +27,12 @@ import java.util.jar.Manifest;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.jboss.ide.eclipse.packages.core.PackagesCorePlugin;
+import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
@@ -194,7 +193,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 	}
 
 	public void setDestinationPath(IPath path) {
-		packageDelegate.setInWorkspace(PackagesCorePlugin.isFolderInWorkspace(path));
+		packageDelegate.setInWorkspace(ResourceUtil.isResourceInWorkspace(path));
 		packageDelegate.setToDir(path.toString());
 	}
 	
