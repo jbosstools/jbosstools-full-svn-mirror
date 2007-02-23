@@ -79,7 +79,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 		if (packageDelegate.getToDir() == null || packageDelegate.getToDir().equals("."))
 			return project;
 		
-		return ResourcesPlugin.getWorkspace().getRoot().getContainerForLocation(new Path(packageDelegate.getToDir()));
+		return ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(packageDelegate.getToDir()));
 	}
 	
 	public IPath getDestinationPath () {
