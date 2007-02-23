@@ -155,6 +155,7 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 				packageExploded = false;
 			}
 		});
+		compressedButton.setSelection(true);
 		explodedButton = new Button(packageTypeGroup, SWT.RADIO);
 		explodedButton.addSelectionListener(new SelectionAdapter () {
 			public void widgetSelected(SelectionEvent e) {
