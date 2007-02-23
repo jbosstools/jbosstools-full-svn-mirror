@@ -69,7 +69,6 @@ public class PackagesModel {
 	public static final String PROJECT_PACKAGES_FILE = ".packages";
 	
 	private Hashtable projectPackages;
-	private Hashtable packageTypes;
 	private Hashtable xbPackages;
 	private ArrayList buildListeners;
 	private ArrayList modelListeners;
@@ -618,21 +617,6 @@ public class PackagesModel {
 		}
 	}
 	
-	public IPackageType getPackageType (String packageType)
-	{
-		if (packageTypes == null)
-		{
-			packageTypes = new Hashtable();
-			IPackageType[] registeredTypes = ExtensionManager.findPackageTypes();
-			for (int i = 0; i < registeredTypes.length; i++)	
-			{
-				packageTypes.put(registeredTypes[i].getId(), registeredTypes[i]);
-			}
-		}
-		
-		return (IPackageType) packageTypes.get(packageType);
-	}
-
 	public IPackage createDetachedPackage (IProject project, boolean isTopLevel)
 	{
 		IPackage pkg = createPackage(project, isTopLevel);

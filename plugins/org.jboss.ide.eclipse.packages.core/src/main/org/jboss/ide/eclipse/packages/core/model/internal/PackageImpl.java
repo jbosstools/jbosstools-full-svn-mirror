@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.core.util.ResourceUtil;
+import org.jboss.ide.eclipse.packages.core.ExtensionManager;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
@@ -118,7 +119,7 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 	}
 
 	public IPackageType  getPackageType() {
-		return PackagesModel.instance().getPackageType(packageDelegate.getPackageType());
+		return ExtensionManager.getPackageType(packageDelegate.getPackageType());
 	}
 	
 	public IFile getPackageFile() {
