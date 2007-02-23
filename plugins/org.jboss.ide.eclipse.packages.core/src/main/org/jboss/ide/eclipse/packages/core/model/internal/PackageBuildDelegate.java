@@ -98,6 +98,11 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		PackagesModel.instance().addPackagesModelListener(this);
 	}
 	
+	private File getPackageFile (IPackage pkg)
+	{
+		return new File(pkg.getPackageFile().getRawLocation().toFile());
+	}
+	
 	public void projectRegistered(IProject project) {
 		List packages = PackagesModel.instance().getProjectPackages(project);
 		fillScannerCache(packages);
@@ -134,9 +139,31 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		if (changed.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
 		{
 			updateScannerCache((IPackageFileSet) changed);
+			
+			incrementalBuildUnderNode(changed, nullMonitor);
 		}
-		
-		incrementalBuildUnderNode(changed, nullMonitor);
+		else if (changed.getNodeType() == IPackageNode.TYPE_PACKAGE)
+		{
+			IPackage pkg = (IPackage) changed;
+			File packageFile = getPackageFile(pkg);
+			
+			if (! packageFile.getName().equals(pkg.getName()))
+			{
+				// File name was changed, rename
+				File newPackageFile = new File(packageFile.getParent(), pkg.getName());
+				packageFile.renameTo(newPackageFile, packageFile.getArchiveDetector());
+			}
+			else if (packageFile.getDelegate().isFile() && pkg.isExploded())
+			{
+				// Changed to exploded from compressed
+				packageFile.renameTo(packageFile, ArchiveDetector.DEFAULT);
+			}
+			else if (packageFile.getDelegate().isDirectory() && !pkg.isExploded())
+			{
+				//	Changed to compressed from exploded
+				packageFile.renameTo(packageFile, ArchiveDetector.NULL);
+			}
+		}
 	}
 	
 	public void packageNodeRemoved(IPackageNode removed) {
@@ -183,6 +210,18 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	{
 		for (Iterator iter = PackagesModel.instance().getBuildListeners().iterator(); iter.hasNext(); )
 			((IPackagesBuildListener)iter.next()).finishedCollectingFileSet(fileset);
+	}
+	
+	private void fireFileUpdated (IPackage topLevelPackage, IPackageFileSet fileset, IPath filePath)
+	{
+		for (Iterator iter = PackagesModel.instance().getBuildListeners().iterator(); iter.hasNext(); )
+			((IPackagesBuildListener)iter.next()).fileUpdated(topLevelPackage, fileset, filePath);
+	}
+	
+	private void fireFileRemoved (IPackage topLevelPackage, IPackageFileSet fileset, IPath filePath)
+	{
+		for (Iterator iter = PackagesModel.instance().getBuildListeners().iterator(); iter.hasNext(); )
+			((IPackagesBuildListener)iter.next()).fileRemoved(topLevelPackage, fileset, filePath);
 	}
 	
 	private void fireFinishedBuildingPackage (IPackage pkg)
@@ -390,6 +429,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			fireStartedCollectingFileSet(fileset);	
 			IFile matchingFiles[] = filesetImpl.findMatchingFiles(scanner);
 			fireFinishedCollectingFileSet(fileset);
+			
 			for (int i = 0; i < matchingFiles.length; i++)
 			{
 				updateFile(matchingFiles[i], new IPackageFileSet[] { fileset }, checkStamps);
@@ -398,6 +438,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			fireStartedCollectingFileSet(fileset);
 			IPath matchingPaths[] = filesetImpl.findMatchingPaths(scanner);
 			fireFinishedCollectingFileSet(fileset);
+			
 			for (int i = 0; i < matchingPaths.length; i++)
 			{
 				updatePath(matchingPaths[i], fileset, checkStamps);
@@ -716,10 +757,15 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 	}
 	
 	private File[] createFilesetRoots (IPackageFileSet fileset)
+	{	
+		Hashtable pkgsAndPaths = PackagesModel.instance().getTopLevelPackagesAndPathways(fileset);
+		return createFilesetRoots (fileset, pkgsAndPaths);	
+	}
+	
+	private File[] createFilesetRoots (IPackageFileSet fileset, Hashtable pkgsAndPaths)
 	{
 		ArrayList roots = new ArrayList();
 		
-		Hashtable pkgsAndPaths = PackagesModel.instance().getTopLevelPackagesAndPathways(fileset);
 		for (Iterator iter = pkgsAndPaths.keySet().iterator(); iter.hasNext(); )
 		{
 			IPackage topLevelPackage = (IPackage) iter.next();
@@ -749,16 +795,28 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 				}
 			}
 			
+			root.mkdirs();
 			roots.add(root);
 		}
 		
 		return (File[]) roots.toArray(new File[roots.size()]);
 	}
 	
+	private File[] createFiles (IPackageFileSet fileset, IPath subPath, Hashtable pkgsAndPaths)
+	{
+		File[] roots = createFilesetRoots(fileset, pkgsAndPaths);
+		return createFiles (roots, subPath);
+	}
+	
 	private File[] createFiles (IPackageFileSet fileset, IPath subPath)
 	{
-		ArrayList files = new ArrayList();
 		File[] roots = createFilesetRoots(fileset);
+		return createFiles (roots, subPath);
+	}
+	
+	private File[] createFiles (File[] roots, IPath subPath)
+	{
+		ArrayList files = new ArrayList();
 		for (int i = 0; i < roots.length; i++)
 		{
 			files.add(new File(roots[i], subPath.toString(), ArchiveDetector.NULL));
@@ -840,7 +898,11 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			for (int i = 0; i < filesets.length; i++)
 			{
 				IPath copyTo = getFileDestinationPath(file, filesets[i]);
-				File[] packageFiles = createFiles(filesets[i], copyTo);
+				Hashtable pkgsAndPaths = PackagesModel.instance().getTopLevelPackagesAndPathways(filesets[i]);
+				IPackage[] topLevelPackages = (IPackage [])
+					pkgsAndPaths.keySet().toArray(new IPackage[pkgsAndPaths.keySet().size()]);
+				
+				File[] packageFiles = createFiles (filesets[i], copyTo, pkgsAndPaths);
 				
 				if (checkStamps)
 				{
@@ -871,6 +933,8 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 							
 							Trace.trace(getClass(), "closing file contents inputstream", Trace.DEBUG_OPTION_STREAM_CLOSE);
 							in.close();
+							
+							fireFileUpdated(topLevelPackages[j], filesets[i], file.getFullPath());
 						} catch (FileNotFoundException e) {
 							Trace.trace(getClass(), e);
 						} catch (IOException e) {
@@ -901,7 +965,11 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		synchronized (buildLock)
 		{
 			IPath copyTo = getPathDestinationPath(path, fileset);
-			File[] packageFiles = createFiles(fileset, copyTo);
+			Hashtable pkgsAndPaths = PackagesModel.instance().getTopLevelPackagesAndPathways(fileset);
+			IPackage[] topLevelPackages = (IPackage [])
+				pkgsAndPaths.keySet().toArray(new IPackage[pkgsAndPaths.keySet().size()]);
+			
+			File[] packageFiles = createFiles (fileset, copyTo, pkgsAndPaths);
 			
 			if (checkStamps)
 			{
@@ -932,6 +1000,8 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 						
 						Trace.trace(getClass(), "closing file contents input stream", Trace.DEBUG_OPTION_STREAM_CLOSE);
 						in.close();
+						
+						fireFileUpdated(topLevelPackages[i], fileset, path);
 					} catch (IOException e) {
 						Trace.trace(getClass(), e);
 					}
@@ -974,13 +1044,21 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		{
 			for (int i = 0; i < filesets.length; i++)
 			{
-				File[] packagedFiles = createFiles(filesets[i], getFileDestinationPath(file, filesets[i]));
-				
+				Hashtable pkgsAndPathways = PackagesModel.instance().getTopLevelPackageAndPathway(filesets[i]);
+				File[] packagedFiles = createFiles(filesets[i], getFileDestinationPath(file, filesets[i]), pkgsAndPathways);
+				IPackage[] topLevelPackages = (IPackage[])
+					pkgsAndPathways.keySet().toArray(new IPackage[pkgsAndPathways.keySet().size()]);
+					
 				for (int j = 0; j < packagedFiles.length; j++)
 				{
 					File packagedFile = packagedFiles[j];
-					if (packagedFile.exists()) packagedFile.deleteAll();
-					deleteEmptyFolders(packagedFile);
+					if (packagedFile.exists())
+					{
+						packagedFile.deleteAll();
+						deleteEmptyFolders(packagedFile);
+						
+						fireFileRemoved(topLevelPackages[j], filesets[i], file.getFullPath());
+					}
 				}
 			}
 		}
@@ -991,8 +1069,13 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 		synchronized (buildLock)
 		{
 			File packagedFile = new File(getPathDestinationPath(path, fileset).toFile());
-			if (packagedFile.exists()) packagedFile.deleteAll();
-			deleteEmptyFolders(packagedFile);
+			if (packagedFile.exists()) 
+			{
+				packagedFile.deleteAll();
+				deleteEmptyFolders(packagedFile);
+				
+				fireFileRemoved(PackagesCore.getTopLevelPackage(fileset), fileset, path);
+			}
 		}
 	}
 	
@@ -1062,6 +1145,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			fireStartedCollectingFileSet(fileset);
 			IFile matchingFiles[] = ((PackageFileSetImpl)fileset).findMatchingFiles(scanner);
 			fireFinishedCollectingFileSet(fileset);
+			
 			for (int i = 0; i < matchingFiles.length; i++)
 			{
 				removeFile(matchingFiles[i], new IPackageFileSet[] { fileset });
@@ -1070,6 +1154,7 @@ public class PackageBuildDelegate implements IPackagesModelListener {
 			fireStartedCollectingFileSet(fileset);
 			IPath matchingPaths[] = ((PackageFileSetImpl)fileset).findMatchingPaths(scanner);
 			fireFinishedCollectingFileSet(fileset);
+			
 			for (int i = 0; i < matchingPaths.length; i++)
 			{
 				removePath(matchingPaths[i], fileset);
