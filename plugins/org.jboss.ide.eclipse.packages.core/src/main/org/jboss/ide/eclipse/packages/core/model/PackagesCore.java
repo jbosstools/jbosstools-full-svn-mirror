@@ -98,7 +98,7 @@ public class PackagesCore {
 	 */
 	public static IPath[] findMatchingPaths (IPath root, String includesPattern, String excludesPattern)
 	{
-		DirectoryScanner scanner = PackagesModel.createDirectoryScanner(
+		DirectoryScanner scanner = DirectoryScannerFactory.createDirectoryScanner(
 				root, includesPattern, excludesPattern);
 		
 		return findMatchingPaths(scanner, root, includesPattern, excludesPattern);
@@ -127,7 +127,7 @@ public class PackagesCore {
 	 */
 	public static IFile[] findMatchingFiles (IContainer root, String includesPattern, String excludesPattern)
 	{
-		DirectoryScanner scanner = PackagesModel.createDirectoryScanner(
+		DirectoryScanner scanner = DirectoryScannerFactory.createDirectoryScanner(
 				root, includesPattern, excludesPattern);
 		
 		return findMatchingFiles(scanner, root, includesPattern, excludesPattern);

@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.packages.core.PackagesCorePlugin;
+import org.jboss.ide.eclipse.packages.core.model.DirectoryScannerFactory;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFileSet;
@@ -187,19 +188,19 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 		{
 			if (isInWorkspace())
 			{
-				return PackagesModel.createDirectoryScanner(getFile(), scan);
+				return DirectoryScannerFactory.createDirectoryScanner(getFile(), scan);
 			}
 			else {
-				return PackagesModel.createDirectoryScanner(getFilePath(), scan);
+				return DirectoryScannerFactory.createDirectoryScanner(getFilePath(), scan);
 			}
 		}
 		else {
 			if (isInWorkspace())
 			{
-				return PackagesModel.createDirectoryScanner(
+				return DirectoryScannerFactory.createDirectoryScanner(
 						getSourceContainer(), getIncludesPattern(), getExcludesPattern(), scan);
 			} else {
-				return PackagesModel.createDirectoryScanner(
+				return DirectoryScannerFactory.createDirectoryScanner(
 						getSourcePath(), getIncludesPattern(), getExcludesPattern(), scan);
 			}
 		}
