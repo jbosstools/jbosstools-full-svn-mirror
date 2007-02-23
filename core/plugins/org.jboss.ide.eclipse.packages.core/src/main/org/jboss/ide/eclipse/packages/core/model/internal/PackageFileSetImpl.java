@@ -104,8 +104,6 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 	}
 
 	public IPath getFilePath() {
-		if (isInWorkspace()) return null;
-		
 		return new Path(filesetDelegate.getFile());
 	}
 	
