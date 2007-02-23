@@ -30,12 +30,14 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
+import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageBuildDelegate;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageImpl;
@@ -43,6 +45,8 @@ import org.jboss.ide.eclipse.packages.core.model.internal.PackageReferenceImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
+
+import de.schlichtherle.io.File;
 
 public class PackagesCore {
 
@@ -326,6 +330,64 @@ public class PackagesCore {
 				{
 					return pkg;
 				}
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns the base file in this IPath (can be workspace or filesystem based).
+	 * This is useful for finding the bottom-most literal "file" in the given path. Example:
+	 * <code>
+	 *   getBaseFile (new Path("/myproject/some.jar/META-INF/MANIFEST.MF"))
+	 * </code>
+	 * Would return "/myproject/some.jar" if some.jar is a compressed archive/package
+	 * or return "/myproject/some.jar/META-INF/MANIFEST.MF" if some.jar is exploded (a folder).
+	 * 
+	 * If the passed-in IPath does not represent a file that exists, this will return null.
+	 * If the passed-in IPath is filesystem based, the returned IPath will also be filesystem based.
+	 * @param filePath The path to find the base file in
+	 * @return The base file in this path
+	 */
+	public static IPath getBaseFile (IPath filePath)
+	{
+		String firstSegment = filePath.segment(0);
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(firstSegment);
+		File file = null;
+		IPath childSegments = null;
+		boolean workspacePath = true;
+		
+		if (project != null && project.isAccessible())
+		{
+			IPath location = ProjectUtil.getProjectLocation(project);
+			file = new File(location.toFile().getParent(), location.lastSegment());
+			childSegments = filePath.removeFirstSegments(1);
+		}
+		else {
+			file = new File(filePath.segment(0));
+			childSegments = filePath.removeFirstSegments(1);
+			workspacePath = false;
+		}
+		
+		if (file.exists())
+		{
+			while (file.getDelegate().isDirectory())
+			{
+				file = new File(file, childSegments.segment(0));
+				childSegments = childSegments.removeFirstSegments(1);
+			}
+			
+			if (workspacePath)
+			{
+				IPath location = ProjectUtil.getProjectLocation(project);
+				IPath fileLocation = new Path(file.getAbsolutePath());
+				
+				fileLocation = fileLocation.removeFirstSegments(location.segmentCount());
+				
+				return project.getFile(fileLocation).getFullPath();
+			} else {
+				return new Path(file.getAbsolutePath());
 			}
 		}
 		
