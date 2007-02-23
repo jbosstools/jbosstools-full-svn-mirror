@@ -38,6 +38,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
+import org.jboss.ide.eclipse.packages.core.ExtensionManager;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageBuildDelegate;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageImpl;
@@ -271,9 +272,8 @@ public class PackagesCore {
 	 * @param packageType The ID of the package type
 	 * @return A package type
 	 */
-	public static IPackageType getPackageType (String packageType)
-	{
-		return PackagesModel.instance().getPackageType(packageType);
+	public static IPackageType getPackageType (String packageType) {
+		return ExtensionManager.getPackageType(packageType);
 	}
 	
 	/**

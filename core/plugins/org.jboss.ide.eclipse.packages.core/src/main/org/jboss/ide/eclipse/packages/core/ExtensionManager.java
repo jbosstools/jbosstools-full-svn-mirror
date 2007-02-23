@@ -1,6 +1,7 @@
 package org.jboss.ide.eclipse.packages.core;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -45,4 +46,20 @@ public class ExtensionManager {
 		
 		return (IPackageType[]) packageTypes.toArray(new IPackageType[packageTypes.size()]);
 	}
+	
+	private static Hashtable packageTypes;
+	public static IPackageType getPackageType (String packageType) {
+		if (packageTypes == null)
+		{
+			packageTypes = new Hashtable();
+			IPackageType[] registeredTypes = ExtensionManager.findPackageTypes();
+			for (int i = 0; i < registeredTypes.length; i++)	
+			{
+				packageTypes.put(registeredTypes[i].getId(), registeredTypes[i]);
+			}
+		}
+		return (IPackageType) packageTypes.get(packageType);
+	}
+
+	
 }
