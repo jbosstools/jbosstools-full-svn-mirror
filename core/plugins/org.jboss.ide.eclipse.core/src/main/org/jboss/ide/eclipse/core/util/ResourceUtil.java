@@ -105,6 +105,16 @@ public class ResourceUtil
    public static final boolean WORKSPACE_DEFAULT = true;
    public static final boolean GLOBAL_DEFAULT = false;
    
+   
+   /**
+    * Makes a path absolute.
+    * If the path exists in workspace and assumption = workspace, append workspace root
+    * If the path exists in filesystem and assumption = global, return unchanged
+    * If both or neither, follow the assumption for behavior.
+    * @param path
+    * @param assumption
+    * @return
+    */
    public static IPath makeAbsolute(IPath path, boolean assumption) {
 	   boolean inWorkspace = isResourceInWorkspace(path);
 	   boolean fileExists = new File(path.toOSString()).exists();
@@ -115,7 +125,7 @@ public class ResourceUtil
 		   return path;
 	   }
 	   
-	   // neither are true. return unchanged path;
-	   return path;
+	   if( assumption == GLOBAL_DEFAULT ) return path;
+	   return ResourcesPlugin.getWorkspace().getRoot().getLocation().append(path);
    }
 }
