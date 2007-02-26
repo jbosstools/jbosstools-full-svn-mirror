@@ -31,7 +31,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.tools.ant.DirectoryScanner;
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -42,6 +41,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
@@ -51,9 +51,6 @@ import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageFileSetImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.core.util.PackagesExport;
-
-import de.schlichtherle.io.ArchiveException;
-import de.schlichtherle.io.File;
 
 public class PackageBuildDelegate {
 	private static PackageBuildDelegate _instance;
@@ -103,21 +100,29 @@ public class PackageBuildDelegate {
 						if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
 						{
 							IPackageFileSet fileset = (IPackageFileSet) node;
-							IContainer root = fileset.getSourceContainer();
-							IPath relativePath = removedFile.getFullPath();
-							IPath rootPath = root.getFullPath();
-							relativePath = relativePath.removeFirstSegments(rootPath.segmentCount());
 							
-							boolean matchesIncludes = DirectoryScanner.match(fileset.getIncludesPattern(), relativePath.toString());
-							boolean matchesExcludes = false;
-							if (fileset.getExcludesPattern() != null && fileset.getExcludesPattern().length() > 0)
+							if (fileset.isSingleFile())
 							{
-								matchesExcludes = DirectoryScanner.match(fileset.getExcludesPattern(), relativePath.toString());
-							}
-							
-							if (matchesIncludes && !matchesExcludes)
-							{
-								filesets.add(fileset);
+								if (fileset.getFilePath().equals(ResourceUtil.makeAbsolute(removedFile)))
+								{
+									filesets.add(fileset);
+								}
+							} else {
+								IPath root = fileset.getSourcePath();
+								IPath relativePath = ResourceUtil.makeAbsolute(removedFile);
+								relativePath = relativePath.removeFirstSegments(root.segmentCount());
+								
+								boolean matchesIncludes = DirectoryScanner.match(fileset.getIncludesPattern(), relativePath.toString());
+								boolean matchesExcludes = false;
+								if (fileset.getExcludesPattern() != null && fileset.getExcludesPattern().length() > 0)
+								{
+									matchesExcludes = DirectoryScanner.match(fileset.getExcludesPattern(), relativePath.toString());
+								}
+								
+								if (matchesIncludes && !matchesExcludes)
+								{
+									filesets.add(fileset);
+								}
 							}
 						}
 						return true;
