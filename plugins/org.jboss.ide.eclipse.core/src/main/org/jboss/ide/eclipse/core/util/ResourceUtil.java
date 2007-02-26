@@ -118,12 +118,17 @@ public class ResourceUtil
    public static IPath makeAbsolute(IPath path, boolean assumption) {
 	   boolean inWorkspace = isResourceInWorkspace(path);
 	   boolean fileExists = new File(path.toOSString()).exists();
+	   
+	   // if they follow the assumptions
 	   if( inWorkspace && assumption == WORKSPACE_DEFAULT) {
 		   return ResourcesPlugin.getWorkspace().getRoot().getLocation().append(path);
 	   }
 	   if( fileExists && assumption == GLOBAL_DEFAULT) {
 		   return path;
 	   }
+	   
+	   if( fileExists && !inWorkspace ) return path;
+	   if( !fileExists && inWorkspace ) return ResourcesPlugin.getWorkspace().getRoot().getLocation().append(path);
 	   
 	   if( assumption == GLOBAL_DEFAULT ) return path;
 	   return ResourcesPlugin.getWorkspace().getRoot().getLocation().append(path);
