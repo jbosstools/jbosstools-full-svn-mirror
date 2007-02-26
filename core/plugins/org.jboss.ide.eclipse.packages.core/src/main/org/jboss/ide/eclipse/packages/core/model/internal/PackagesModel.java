@@ -92,7 +92,7 @@ public class PackagesModel {
 		return _instance;
 	}
 	
-	protected Hashtable getTopLevelPackageAndPathway (IPackageNode node)
+	public Hashtable getTopLevelPackageAndPathway (IPackageNode node)
 	{
 		ArrayList parents = new ArrayList();
 		IPackageNode tmp = node.getParent(), top = tmp;
@@ -124,7 +124,7 @@ public class PackagesModel {
 	 * for a single package node.
 	 *
 	 */
-	protected Hashtable getTopLevelPackagesAndPathways (IPackageNode node)
+	public Hashtable getTopLevelPackagesAndPathways (IPackageNode node)
 	{
 		Hashtable pkgsAndPaths = new Hashtable();
 		
@@ -307,11 +307,10 @@ public class PackagesModel {
 			buildListeners.remove(listener);
 	}
 	
-	protected List getBuildListeners ()
+	public List getBuildListeners ()
 	{
 		return buildListeners;
 	}
-	
 	
 	protected void clearModel (IProject project)
 	{
