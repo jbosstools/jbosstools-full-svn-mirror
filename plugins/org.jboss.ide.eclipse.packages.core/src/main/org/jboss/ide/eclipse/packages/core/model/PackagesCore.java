@@ -40,12 +40,12 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.packages.core.ExtensionManager;
 import org.jboss.ide.eclipse.packages.core.Trace;
-import org.jboss.ide.eclipse.packages.core.model.internal.PackageBuildDelegate;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageReferenceImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
+import org.jboss.ide.eclipse.packages.core.project.build.PackageBuildDelegate;
 
 import de.schlichtherle.io.File;
 
