@@ -29,6 +29,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.packages.core.PackagesCorePlugin;
 import org.jboss.ide.eclipse.packages.core.model.DirectoryScannerFactory;
@@ -78,8 +79,6 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 
 	public IPath[] findMatchingPaths (DirectoryScanner scanner)
 	{
-		if (isInWorkspace()) return new IPath[0];
-		
 		if (isSingleFile())
 			return new IPath[] { getFilePath() };
 		else
@@ -87,7 +86,14 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 	}
 	
 	public String getDestinationFilename() {
-		return filesetDelegate.getToFile();
+		String destFilename =  filesetDelegate.getToFile();
+		
+		if (destFilename == null)
+		{
+			return getFilePath().lastSegment();
+		}
+		
+		return destFilename;
 	}
 
 	public String getExcludesPattern() {
@@ -124,7 +130,8 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 
 	public IPath getSourcePath() {
 		String path = filesetDelegate.getDir();
-		if (path == null) return null;
+		if (filesetDelegate.getDir() == null || filesetDelegate.getDir().equals(".") || filesetDelegate.getDir().equals(""))
+			return ProjectUtil.getProjectLocation(getSourceProject());
 		
 		return new Path(path);
 	}
