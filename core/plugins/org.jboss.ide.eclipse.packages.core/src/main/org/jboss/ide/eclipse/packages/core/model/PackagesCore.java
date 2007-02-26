@@ -365,7 +365,7 @@ public class PackagesCore {
 			childSegments = filePath.removeFirstSegments(1);
 		}
 		else {
-			file = new File(filePath.segment(0));
+			file = new File(filePath.removeLastSegments(filePath.segmentCount() - 1).toString());
 			childSegments = filePath.removeFirstSegments(1);
 			workspacePath = false;
 		}
