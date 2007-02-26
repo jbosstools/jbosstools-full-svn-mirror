@@ -27,7 +27,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.jboss.ide.eclipse.packages.core.model.internal.PackageBuildDelegate;
+import org.jboss.ide.eclipse.packages.core.project.build.PackageBuildDelegate;
 
 /**
  * The builder is responsible for building packages.
