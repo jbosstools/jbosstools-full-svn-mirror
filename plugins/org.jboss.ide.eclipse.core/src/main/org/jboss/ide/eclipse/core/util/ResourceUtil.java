@@ -128,4 +128,17 @@ public class ResourceUtil
 	   if( assumption == GLOBAL_DEFAULT ) return path;
 	   return ResourcesPlugin.getWorkspace().getRoot().getLocation().append(path);
    }
+   
+   /**
+    * Returns the absolute file-system based IPath for the passed in IResource
+    * @param resource The resource
+    * @return An absolute path
+    */
+   public static IPath makeAbsolute (IResource resource)
+   {
+	   IPath path = ProjectUtil.getProjectLocation(resource.getProject());
+	   path = path.append(resource.getProjectRelativePath());
+	   
+	   return path;
+   }
 }
