@@ -4,9 +4,12 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.packages.core.model.AbstractPackagesBuildListener;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
@@ -89,33 +92,11 @@ public class IncrementalBuilderTest extends BuildTest {
 		PackagesModel.instance().removePackagesBuildListener(listener);
 	}
 	
-	private void waitForBuilder ()
-	{
-		long timeout = 1000 * 20;
-		long wait = 0;
-		
-		//	 wait for incremental builder to finish
-		try {
-			Thread.sleep(1000 * 3);
-			while (PackageBuildDelegate.instance().isBuilding() && wait < timeout)
-			{
-				Thread.sleep(100);
-				wait += 100;
-			}
-			if (wait > timeout) {
-				fail("Timed out ("+(timeout/1000)+"s) waiting for builder");
-			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			fail(e.getMessage());
-		}
-	}
-	
 	public void testSimpleJar_changeFile ()
 	{	
 		setContents(testXmlFile, testXml_newContents);
 		
-		waitForBuilder();
+		waitForAutoBuild();
 		
 		assertTestXmlContents(testXml_newContents);
 		
@@ -139,7 +120,7 @@ public class IncrementalBuilderTest extends BuildTest {
 		IFile addedXMLFile = project.getFile("added.xml");
 		setContents(addedXMLFile, addedXml_contents);
 		
-		waitForBuilder();
+		waitForAutoBuild();
 	
 		assertFileContents (simpleJar, "added.xml", addedXml_contents);
 	}
@@ -154,7 +135,7 @@ public class IncrementalBuilderTest extends BuildTest {
 			fail(e.getMessage());
 		}
 		
-		waitForBuilder();
+		waitForAutoBuild();
 		
 		assertFalse(addedXML.exists());
 		
@@ -176,7 +157,7 @@ public class IncrementalBuilderTest extends BuildTest {
 		
 		simpleJarFileset.setIncludesPattern("**/*.xml");
 		
-		waitForBuilder();
+		waitForAutoBuild();
 		
 		dir1 = findFile(jarFile, "dir1");
 		assertNotNull(dir1);
@@ -200,7 +181,7 @@ public class IncrementalBuilderTest extends BuildTest {
 		simpleJarFileset.setIncludesPattern("*.xml");
 		((PackageNodeImpl)simpleJarFileset).flagAsChanged();
 		
-		waitForBuilder();
+		waitForAutoBuild();
 		
 		File dir1 = findFile(jarFile, "dir1");
 		assertNull(dir1);
@@ -220,7 +201,7 @@ public class IncrementalBuilderTest extends BuildTest {
 	{
 		simpleJar.setExploded(true);
 		((PackageNodeImpl)simpleJar).flagAsChanged();
-		waitForBuilder();
+		waitForAutoBuild();
 		
 		File simpleJarFile = getPackageFile(simpleJar);
 		assertTrue(simpleJarFile.getDelegate().isDirectory());
