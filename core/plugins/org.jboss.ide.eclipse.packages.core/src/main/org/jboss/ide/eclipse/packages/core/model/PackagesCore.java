@@ -29,6 +29,7 @@ import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -41,6 +42,7 @@ import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.packages.core.ExtensionManager;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageImpl;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackageNodeImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageReferenceImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
@@ -436,6 +438,21 @@ public class PackagesCore {
 		delegate.setProject(pkg.getProject());
 		
 		delegate.buildSinglePackage(pkg, monitor);
+	}
+	
+	/**
+	 * Run an IWorkspaceRunnable synchronously, afterwards broadcasting change events for the passed-in list of IPackageNodes
+	 * @param runnable
+	 */
+	public static void run (IWorkspaceRunnable runnable, IPackageNode[] nodesToChange, IProgressMonitor monitor)
+		throws CoreException
+	{
+		runnable.run(monitor);
+		
+		for (int i = 0; i < nodesToChange.length; i++)
+		{
+			((PackageNodeImpl)nodesToChange[i]).flagAsChanged();
+		}
 	}
 	
 	public static IPackage createPackage (IProject project, boolean isTopLevel)
