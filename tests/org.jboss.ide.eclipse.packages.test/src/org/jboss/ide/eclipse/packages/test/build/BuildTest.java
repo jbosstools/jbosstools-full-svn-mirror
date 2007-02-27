@@ -10,6 +10,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.jboss.ide.eclipse.core.test.util.JavaProjectHelper;
@@ -121,6 +123,23 @@ public class BuildTest extends TestCase {
 			explodedJar = (IPackage) packages.get(2);
 			explodedJarFileset = explodedJar.getFileSets()[0];
 		}
+	}
+	
+	/**
+	 * Wait for autobuild notification to occur
+	 */
+	public static void waitForAutoBuild() {
+		boolean wasInterrupted = false;
+		do {
+			try {
+				Platform.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD, null);
+				wasInterrupted = false;
+			} catch (OperationCanceledException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				wasInterrupted = true;
+			}
+		} while (wasInterrupted);
 	}
 	
 	protected void setContents(IFile file, String contents)
