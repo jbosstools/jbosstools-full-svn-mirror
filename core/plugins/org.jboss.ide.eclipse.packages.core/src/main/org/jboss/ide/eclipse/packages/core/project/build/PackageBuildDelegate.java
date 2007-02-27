@@ -55,7 +55,6 @@ import org.jboss.ide.eclipse.packages.core.util.PackagesExport;
 public class PackageBuildDelegate {
 	private static PackageBuildDelegate _instance;
 	
-	private Hashtable oldScanners;
 	private boolean building;
 	private NullProgressMonitor nullMonitor = new NullProgressMonitor();
 	// 
@@ -76,8 +75,6 @@ public class PackageBuildDelegate {
 	}
 	
 	public PackageBuildDelegate () {
-		oldScanners = new Hashtable();
-		
 		events = new BuildEvents(this);
 		fileOperations = new BuildFileOperations(this);
 	}
@@ -169,27 +166,8 @@ public class PackageBuildDelegate {
 	public void buildFileset (IPackageFileSet fileset, boolean checkStamps)
 	{
 		DirectoryScanner scanner = ((PackageFileSetImpl)fileset).createDirectoryScanner(true);
-		DirectoryScanner oldScanner = (DirectoryScanner) oldScanners.get(fileset);
 		PackageFileSetImpl filesetImpl = (PackageFileSetImpl) fileset;
 		IPackageFileSet filesets[] = new IPackageFileSet[] { fileset };
-		
-		if (oldScanner != null)
-		{
-			if (fileset.isInWorkspace())
-			{
-				IFile oldFiles[] = filesetImpl.findMatchingFiles(oldScanner);
-				for (int i = 0; i < oldFiles.length; i++)
-				{
-					fileOperations.removeFileFromFilesets(oldFiles[i], filesets);
-				}
-			} else {
-				IPath oldPaths[] = filesetImpl.findMatchingPaths(oldScanner);
-				for (int i = 0; i < oldPaths.length; i++)
-				{
-					fileOperations.removePathFromFilesets(oldPaths[i], filesets);
-				}
-			}
-		}
 		
 		if (fileset.isInWorkspace())
 		{
