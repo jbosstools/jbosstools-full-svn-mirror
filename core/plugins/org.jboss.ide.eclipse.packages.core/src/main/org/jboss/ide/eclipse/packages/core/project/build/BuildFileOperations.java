@@ -12,7 +12,6 @@ import java.util.Iterator;
 import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -23,7 +22,7 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeVisitor;
-import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
+import org.jboss.ide.eclipse.packages.core.model.IPackageReference;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageFileSetImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 
@@ -52,7 +51,7 @@ public class BuildFileOperations {
 		for (int i = 0; i < filesets.length; i++)
 		{
 			Hashtable pkgsAndPathways = PackagesModel.instance().getTopLevelPackagesAndPathways(filesets[i]);
-			File[] packagedFiles = TruezipUtil.createFiles(filesets[i], getFilesetRelativePath(path, filesets[i]), pkgsAndPathways);
+			File[] packagedFiles = TruezipUtil.createFiles(getFilesetRelativePath(path, filesets[i]), pkgsAndPathways);
 			IPackage[] topLevelPackages = (IPackage[])
 				pkgsAndPathways.keySet().toArray(new IPackage[pkgsAndPathways.keySet().size()]);
 				
@@ -85,7 +84,7 @@ public class BuildFileOperations {
 			IPackage[] topLevelPackages = (IPackage [])
 				pkgsAndPaths.keySet().toArray(new IPackage[pkgsAndPaths.keySet().size()]);
 			
-			File[] packageFiles = TruezipUtil.createFiles (filesets[i], copyTo, pkgsAndPaths);
+			File[] packageFiles = TruezipUtil.createFiles(copyTo, pkgsAndPaths);
 			
 			if (checkStamps)
 			{
@@ -178,39 +177,48 @@ public class BuildFileOperations {
 	}
 
 	public synchronized void removeFolder (IPackageFolder folder)
+	{
+		File folderInstances[] = TruezipUtil.createFiles(folder, new Path(folder.getName()));
+		
+		for (int i = 0; i < folderInstances.length; i++)
 		{
-	//		IPath parentPath = getNodeParentPath(folder);
-	//		File file = new File(parentPath.append(folder.getName()).toFile());
-	//		
-	//		if (file.exists()) file.deleteAll();
+			folderInstances[i].deleteAll();
 		}
+		TruezipUtil.umountAll();
+	}
 
-	public synchronized void removeInnerPackage (IPackage pkg)
+	public synchronized void removePackage (IPackage pkg)
+	{
+		File packageInstances[] = TruezipUtil.createFiles(pkg, pkg.isTopLevel() ? null : new Path(pkg.getName()));
+		
+		for (int i = 0; i < packageInstances.length; i++)
 		{
-	//		IPath parentPath = getNodeParentPath(pkg);
-	//		File file = new File(parentPath.toFile());wha
-	//		
-	//		if (file.exists()) file.deleteAll();
+			packageInstances[i].deleteAll();
 		}
+		TruezipUtil.umountAll();
+	}
+	
+	public synchronized void removePackageRef (IPackageReference ref)
+	{
+		File refInstances[] = TruezipUtil.createFiles (ref, new Path(ref.getName()));
+		
+		for (int i = 0; i < refInstances.length; i++)
+		{
+			refInstances[i].deleteAll(); 
+		}
+		TruezipUtil.umountAll();
+	}
 
 	public synchronized void removeNode (IPackageNode node)
 	{
 		NullProgressMonitor nullMonitor = new NullProgressMonitor();
 		if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
 		{
-			IPackage pkg = (IPackage) node;
-			if (pkg.isTopLevel())
-			{
-				IFile packageFile = pkg.getPackageFile();
-				try {
-					packageFile.delete(true, true, nullMonitor);
-				} catch (CoreException e) {
-					Trace.trace(getClass(), e);
-				}
-			}
-			else {
-				removeInnerPackage(pkg);
-			}
+			removePackage((IPackage)node);
+		}
+		else if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_REFERENCE)
+		{
+			removePackageRef((IPackageReference)node);
 		}
 		else if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
 		{
