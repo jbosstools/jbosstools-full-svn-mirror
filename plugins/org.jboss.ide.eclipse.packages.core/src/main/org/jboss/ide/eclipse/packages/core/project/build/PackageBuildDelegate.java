@@ -40,7 +40,6 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
@@ -56,7 +55,6 @@ public class PackageBuildDelegate {
 	private static PackageBuildDelegate _instance;
 	
 	private boolean building;
-	private NullProgressMonitor nullMonitor = new NullProgressMonitor();
 	// 
 	private TreeSet referencedProjects;
 	private List packages;
