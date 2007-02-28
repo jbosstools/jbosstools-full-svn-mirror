@@ -23,6 +23,7 @@ import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.core.model.types.JARPackageType;
 import org.jboss.ide.eclipse.packages.core.project.build.PackageBuildDelegate;
+import org.jboss.ide.eclipse.packages.core.project.build.TruezipUtil;
 
 import de.schlichtherle.io.File;
 import de.schlichtherle.io.FileInputStream;
@@ -40,6 +41,7 @@ public class BuildTest extends TestCase {
 	protected IFile testXmlFile;
 	protected IPackageFileSet simpleJarFileset, explodedJarFileset;
 	protected IPackageFolder libFolder;
+	protected File simpleJarFile, explodedJarFile, refJarFile;
 	
 	protected static boolean initialized = false;
 
@@ -123,6 +125,10 @@ public class BuildTest extends TestCase {
 			explodedJar = (IPackage) packages.get(2);
 			explodedJarFileset = explodedJar.getFileSets()[0];
 		}
+		
+		simpleJarFile = TruezipUtil.getPackageFile(simpleJar);
+		refJarFile = TruezipUtil.getPackageFile(refJar);
+		explodedJarFile = TruezipUtil.getPackageFile(explodedJar);
 	}
 	
 	/**
