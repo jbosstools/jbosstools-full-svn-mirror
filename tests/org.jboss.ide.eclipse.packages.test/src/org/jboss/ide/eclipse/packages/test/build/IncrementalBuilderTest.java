@@ -40,7 +40,9 @@ public class IncrementalBuilderTest extends BuildTest {
 		suite.addTest(new IncrementalBuilderTest("testSimpleJar_changeFilesetPattern_removeFile"));
 		suite.addTest(new IncrementalBuilderTest("testExplodedJar"));
 		suite.addTest(new IncrementalBuilderTest("testSimpleJar_changeToExploded"));
+		suite.addTest(new IncrementalBuilderTest("testSimpleJar_changeToCompressed"));
 		suite.addTest(new IncrementalBuilderTest("testBaseFile"));
+		suite.addTest(new IncrementalBuilderTest("testOverlappingFilesets"));
 		return suite;
 	}
 	
@@ -102,7 +104,6 @@ public class IncrementalBuilderTest extends BuildTest {
 		
 		assertTrue (refJar.getPackageFile().exists());
 		
-		File refJarFile = getPackageFile(refJar);
 		File libFolderFile = findFile(refJarFile, "lib");
 		assertNotNull(libFolderFile);
 		
@@ -139,8 +140,7 @@ public class IncrementalBuilderTest extends BuildTest {
 		
 		assertFalse(addedXML.exists());
 		
-		File jarFile = getPackageFile(simpleJar);
-		File addedXMLFile = findFile(jarFile, "added.xml");
+		File addedXMLFile = findFile(simpleJarFile, "added.xml");
 		
 		assertNull(addedXMLFile);
 	}
@@ -150,16 +150,15 @@ public class IncrementalBuilderTest extends BuildTest {
 		IFile nestedXMLFile = project.getFile(new Path("dir1/dir2/nested.xml"));
 		setContents(nestedXMLFile, nestedXml_contents);
 		
-		File jarFile = getPackageFile(simpleJar);
-		File dir1 = findFile(jarFile, "dir1");
+		File dir1 = findFile(simpleJarFile, "dir1");
 		
 		assertNull(dir1);
-		
-		simpleJarFileset.setIncludesPattern("**/*.xml");
-		
 		waitForAutoBuild();
 		
-		dir1 = findFile(jarFile, "dir1");
+		simpleJarFileset.setIncludesPattern("**/*.xml");
+		((PackageNodeImpl)simpleJarFileset).flagAsChanged();
+		
+		dir1 = findFile(simpleJarFile, "dir1");
 		assertNotNull(dir1);
 		assertEquals(dir1.getName(), "dir1");
 		
@@ -176,14 +175,12 @@ public class IncrementalBuilderTest extends BuildTest {
 	
 	public void testSimpleJar_changeFilesetPattern_removeFile ()
 	{
-		File jarFile = getPackageFile(simpleJar);
-		
 		simpleJarFileset.setIncludesPattern("*.xml");
 		((PackageNodeImpl)simpleJarFileset).flagAsChanged();
 		
 		waitForAutoBuild();
 		
-		File dir1 = findFile(jarFile, "dir1");
+		File dir1 = findFile(simpleJarFile, "dir1");
 		assertNull(dir1);
 	}
 	
@@ -191,32 +188,36 @@ public class IncrementalBuilderTest extends BuildTest {
 	{
 		PackageBuildDelegate.instance().buildSinglePackage(explodedJar, nullMonitor);
 		
-		File explodedJarFolder = getPackageFile(explodedJar);
-		
-		assertTrue(explodedJarFolder.exists());
-		assertTrue(explodedJarFolder.getDelegate().isDirectory());
+		assertTrue(explodedJarFile.exists());
+		assertTrue(explodedJarFile.getDelegate().isDirectory());
 	}
 	
 	public void testSimpleJar_changeToExploded ()
 	{
 		simpleJar.setExploded(true);
 		((PackageNodeImpl)simpleJar).flagAsChanged();
-		waitForAutoBuild();
 		
-		File simpleJarFile = getPackageFile(simpleJar);
 		assertTrue(simpleJarFile.getDelegate().isDirectory());
+	}
+	
+	public void testSimpleJar_changeToCompressed ()
+	{
+		simpleJar.setExploded(false);
+		((PackageNodeImpl)simpleJar).flagAsChanged();
+		
+		assertTrue(simpleJarFile.getDelegate().isFile());
 	}
 	
 	public void testBaseFile ()
 	{
 		IPath projectPath = project.getFullPath();
-		IPath filePath = projectPath.append("simple.jar").append("test.xml");
+		IPath filePath = projectPath.append("ref.jar").append("lib").append("simple.jar").append("test.xml");
 		
 		IPath basePath = PackagesCore.getBaseFile(filePath);
 		
 		assertEquals (basePath.segmentCount(), 2);
 		assertEquals (basePath.segment(0), project.getName());
-		assertEquals (basePath.segment(1), "simple.jar");
+		assertEquals (basePath.segment(1), "ref.jar");
 		
 		filePath = projectPath.append("exploded.jar").append("test.xml");
 		basePath = PackagesCore.getBaseFile(filePath);
@@ -225,5 +226,23 @@ public class IncrementalBuilderTest extends BuildTest {
 		assertEquals (basePath.segment(0), project.getName());
 		assertEquals (basePath.segment(1), "exploded.jar");
 		assertEquals (basePath.segment(2), "test.xml");
+	}
+	
+	public void testOverlappingFilesets ()
+	{
+		IPackageFileSet overlap = PackagesCore.createPackageFileSet(project);
+		overlap.setSourceContainer(project);
+		overlap.setIncludesPattern("test.xml");
+		simpleJar.addChild(overlap);
+		
+		simpleJarFileset.setIncludesPattern("**/nested.xml");
+		((PackageNodeImpl)simpleJarFileset).flagAsChanged();
+		
+		File testXML = findFile (simpleJarFile, "test.xml");
+		assertNotNull(testXML);
+		assertTrue(testXML.exists());
+		
+		simpleJar.removeChild(simpleJarFileset);
+		assertTrue(testXML.exists());
 	}
 }
