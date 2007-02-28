@@ -10,9 +10,9 @@ import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
-import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
+import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 
 import de.schlichtherle.io.ArchiveDetector;
@@ -24,15 +24,27 @@ public class TruezipUtil {
 
 	public static File getPackageFile (IPackage pkg)
 	{
-		return new File(pkg.getPackageFile().getRawLocation().toFile());
+		if (pkg.isTopLevel())
+		{
+			return new File(pkg.getPackageFilePath().toFile());
+		} else {
+			IPath relativePath = pkg.getPackageRelativePath();
+			IPackage topPackage = PackagesCore.getTopLevelPackage(pkg);
+			
+			return new File(topPackage.getPackageFilePath().append(relativePath).toFile());
+		}
 	}
 	
 	public static void umount (IPackage pkg)
 	{
 		File pkgFile = getPackageFile(pkg);
-		
+		umount (pkgFile);
+	}
+	
+	public static void umount (File file)
+	{
 		try {
-			File.umount(pkgFile);
+			File.umount(file);
 		} catch (ArchiveException e) {
 			Trace.trace(TruezipUtil.class, e);
 		}
@@ -66,31 +78,36 @@ public class TruezipUtil {
 		ArrayList files = new ArrayList();
 		for (int i = 0; i < roots.length; i++)
 		{
-			files.add(new File(roots[i], subPath.toString(), ArchiveDetector.NULL));
+			if (subPath == null)
+			{
+				files.add(new File(roots[i], ArchiveDetector.NULL));
+			} else {
+				files.add(new File(roots[i], subPath.toString(), ArchiveDetector.NULL));
+			}
 		}
 		
 		return (File[]) files.toArray(new File[files.size()]); 
 	}
 
-	public static File[] createFiles (IPackageFileSet fileset, IPath subPath)
+	public static File[] createFiles (IPackageNode node, IPath subPath)
 	{
-		File[] roots = createFilesetRoots(fileset);
+		File[] roots = createNodeRoots(node);
 		return createFiles (roots, subPath);
 	}
 
-	public static File[] createFiles (IPackageFileSet fileset, IPath subPath, Hashtable pkgsAndPaths)
+	public static File[] createFiles (IPath subPath, Hashtable pkgsAndPaths)
 	{
-		File[] roots = createFilesetRoots(fileset, pkgsAndPaths);
+		File[] roots = createFileRoots(pkgsAndPaths);
 		return createFiles (roots, subPath);
 	}
 
-	public static File[] createFilesetRoots (IPackageFileSet fileset)
+	public static File[] createNodeRoots (IPackageNode node)
 	{	
-		Hashtable pkgsAndPaths = PackagesModel.instance().getTopLevelPackagesAndPathways(fileset);
-		return createFilesetRoots (fileset, pkgsAndPaths);	
+		Hashtable pkgsAndPaths = PackagesModel.instance().getTopLevelPackagesAndPathways(node);
+		return createFileRoots (pkgsAndPaths);	
 	}
 
-	public static File[] createFilesetRoots (IPackageFileSet fileset, Hashtable pkgsAndPaths)
+	public static File[] createFileRoots (Hashtable pkgsAndPaths)
 	{
 		ArrayList roots = new ArrayList();
 		
