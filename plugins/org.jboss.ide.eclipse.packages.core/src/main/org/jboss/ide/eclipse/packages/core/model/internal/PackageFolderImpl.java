@@ -22,8 +22,6 @@
 package org.jboss.ide.eclipse.packages.core.model.internal;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
@@ -91,28 +89,7 @@ public class PackageFolderImpl extends PackageNodeImpl implements
 	public void setName(String name) {
 		folderDelegate.setName(name);
 	}
-	
-	public IPath getPackageRelativePath() {
-		String path = new String(getName());
-		
-		IPackageNode parent = getParent(), save = null;
-		while (true) {
-			if (parent.getNodeType() == IPackageNode.TYPE_PACKAGE)
-				path = ((IPackage)parent).getName() + "/" + path;
-			else
-				path = ((IPackageFolder)parent).getName() + "/" + path;
-			
-			save = parent;
-			parent = parent.getParent();
-			if (parent == null) { 
-				parent = save;
-				break;
-			}
-		}
-		
-		return new Path(path);
-	}
-	
+
 	protected XbFolder getFolderDelegate ()
 	{
 		return folderDelegate;

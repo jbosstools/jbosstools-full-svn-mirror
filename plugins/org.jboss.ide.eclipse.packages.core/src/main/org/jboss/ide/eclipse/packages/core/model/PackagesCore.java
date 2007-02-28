@@ -312,6 +312,46 @@ public class PackagesCore {
 	}
 	
 	/**
+	 * @param node An IPackageNode
+	 * @return The package-relative path of the passed-in node
+	 */
+	public static IPath getPackageRelativePath (IPackageNode node) {
+
+		String path = "";
+		if (node.getNodeType() == IPackageNode.TYPE_PACKAGE || node.getNodeType() == IPackageNode.TYPE_PACKAGE_REFERENCE)
+		{
+			if (node.getParent() == null) return null;
+			
+			path = ((IPackage)node).getName();
+		}
+		else if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FOLDER)
+		{
+			path = ((IPackageFolder)node).getName();
+		}
+		
+		IPackageNode parent = node.getParent(), save = null;
+		while (true) {
+			if (parent.getNodeType() == IPackageNode.TYPE_PACKAGE)
+				path = ((IPackage)parent).getName() + "/" + path;
+			else
+				path = ((IPackageFolder)parent).getName() + "/" + path;
+			
+			save = parent;
+			parent = parent.getParent();
+			if (parent == null) { 
+				parent = save;
+				break;
+			}
+		}
+		
+		if (path.charAt(path.length()-1) == '/')
+		{
+			path = path.substring(0, path.length() - 1);
+		}
+		return new Path(path);
+	}
+	
+	/**
 	 * Returns the IPackage represented by the passed-in file.
 	 * This will return null if the passed-in file does not represent an IPackage. Note that this will
 	 * return an IPackage that's destination matches, but it may not actually exist yet.

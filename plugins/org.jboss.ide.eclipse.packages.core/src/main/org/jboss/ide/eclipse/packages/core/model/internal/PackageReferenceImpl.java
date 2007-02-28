@@ -13,6 +13,7 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeVisitor;
 import org.jboss.ide.eclipse.packages.core.model.IPackageReference;
+import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
 
@@ -161,7 +162,7 @@ public class PackageReferenceImpl implements IPackageReference {
 	}
 
 	public IPath getPackageRelativePath() {
-		return pkg.getPackageRelativePath();
+		return PackagesCore.getPackageRelativePath(this);
 	}
 
 	public IPackage[] getPackages() {
