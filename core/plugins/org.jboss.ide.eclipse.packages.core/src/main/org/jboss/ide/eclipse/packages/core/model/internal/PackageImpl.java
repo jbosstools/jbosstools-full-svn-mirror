@@ -32,6 +32,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.packages.core.ExtensionManager;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
@@ -83,14 +84,10 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 	}
 	
 	public IPath getDestinationPath () {
-		String path = packageDelegate.getToDir();
-		if (path == null) {
-			if (project != null) {
-				return project.getFullPath();
-			} else return null;
-		}
+		if (packageDelegate.getToDir() == null || packageDelegate.getToDir().equals("."))
+			return ProjectUtil.getProjectLocation(project);
 		
-		return new Path(path);
+		else return new Path(packageDelegate.getToDir());
 	}
 
 	public IPackageFileSet[] getFileSets() {
@@ -218,29 +215,6 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 
 	public void setPackageType(IPackageType type) {
 		packageDelegate.setPackageType(type.getId());
-	}
-	
-	public IPath getPackageRelativePath() {
-		if (getParent() == null) return null;
-		
-		String path = new String(getName());
-		
-		IPackageNode parent = getParent(), save = null;
-		while (true) {
-			if (parent.getNodeType() == IPackageNode.TYPE_PACKAGE)
-				path = ((IPackage)parent).getName() + "/" + path;
-			else
-				path = ((IPackageFolder)parent).getName() + "/" + path;
-			
-			save = parent;
-			parent = parent.getParent();
-			if (parent == null) { 
-				parent = save;
-				break;
-			}
-		}
-		
-		return new Path(path);
 	}
 	
 	public IPackageReference createReference (boolean topLevel) {

@@ -27,9 +27,11 @@ import java.util.Properties;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeVisitor;
 import org.jboss.ide.eclipse.packages.core.model.IPackageReference;
+import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFileSet;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFolder;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
@@ -131,6 +133,10 @@ public abstract class PackageNodeImpl implements IPackageNode {
 			XbPackages packages = PackagesModel.instance().getXbPackages(getProject());
 			nodeDelegate.setParent(packages);
 		}
+	}
+
+	public IPath getPackageRelativePath() {
+		return PackagesCore.getPackageRelativePath(this);
 	}
 	
 	public IProject getProject() {
