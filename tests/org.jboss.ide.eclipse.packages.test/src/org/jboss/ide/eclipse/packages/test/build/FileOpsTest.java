@@ -7,7 +7,6 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.project.build.BuildFileOperations;
 import org.jboss.ide.eclipse.packages.core.project.build.TruezipUtil;
 
-import de.schlichtherle.io.ArchiveException;
 import de.schlichtherle.io.File;
 
 public class FileOpsTest extends BuildTest {
@@ -24,6 +23,8 @@ public class FileOpsTest extends BuildTest {
 		TestSuite suite = new TestSuite();
 		suite.addTest(new FileOpsTest("testRemoveFile"));
 		suite.addTest(new FileOpsTest("testUpdateFile_noStamps"));
+		suite.addTest(new FileOpsTest("testRemovePackageRef"));
+		suite.addTest(new FileOpsTest("testRemoveFolder"));
 		
 		return suite;
 	}
@@ -58,4 +59,19 @@ public class FileOpsTest extends BuildTest {
 		assertNotNull(findFile(simpleJarInRefJar, "test.xml"));
 	}
 
+	public void testRemovePackageRef ()
+	{
+		ops.removePackageRef(simpleJarRef);
+		File libFile = findFile(refJarFile, "lib");
+		File simpleJarInRefJar = findFile(libFile, "simple.jar");
+		
+		assertNull(simpleJarInRefJar);
+	}
+	
+	public void testRemoveFolder ()
+	{
+		ops.removeFolder(libFolder);
+		
+		assertNull(findFile(refJarFile, "lib"));
+	}
 }
