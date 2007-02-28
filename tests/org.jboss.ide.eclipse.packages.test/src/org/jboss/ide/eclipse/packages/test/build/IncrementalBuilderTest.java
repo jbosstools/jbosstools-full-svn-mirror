@@ -102,10 +102,10 @@ public class IncrementalBuilderTest extends BuildTest {
 		
 		assertTestXmlContents(testXml_newContents);
 		
-		assertTrue (refJar.getPackageFile().exists());
+		assertTrue (refJarFile.exists());
 		
 		File libFolderFile = findFile(refJarFile, "lib");
-		assertNotNull(libFolderFile);
+		assertNotNull (libFolderFile);
 		
 		File nestedSimpleJarFile = findFile(libFolderFile, "simple.jar");
 		assertNotNull(nestedSimpleJarFile);
