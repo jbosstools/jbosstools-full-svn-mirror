@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.resources.IFile;
@@ -21,19 +23,23 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeVisitor;
+import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageFileSetImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 
+import de.schlichtherle.io.ArchiveDetector;
 import de.schlichtherle.io.File;
 
 public class BuildFileOperations {
 
 	private PackageBuildDelegate builder;
+	private Hashtable scannerCache;
 	private NullProgressMonitor nullMonitor = new NullProgressMonitor();
 	
 	public BuildFileOperations (PackageBuildDelegate builder)
 	{
 		this.builder = builder;
+		this.scannerCache = new Hashtable();
 	}
 	
 	public void removeFileFromFilesets (IFile file, IPackageFileSet[] filesets)
@@ -45,7 +51,7 @@ public class BuildFileOperations {
 	{
 		for (int i = 0; i < filesets.length; i++)
 		{
-			Hashtable pkgsAndPathways = PackagesModel.instance().getTopLevelPackageAndPathway(filesets[i]);
+			Hashtable pkgsAndPathways = PackagesModel.instance().getTopLevelPackagesAndPathways(filesets[i]);
 			File[] packagedFiles = TruezipUtil.createFiles(filesets[i], getFilesetRelativePath(path, filesets[i]), pkgsAndPathways);
 			IPackage[] topLevelPackages = (IPackage[])
 				pkgsAndPathways.keySet().toArray(new IPackage[pkgsAndPathways.keySet().size()]);
@@ -153,7 +159,7 @@ public class BuildFileOperations {
 		}
 	}
 
-	public synchronized void removeFileset (final IPackageFileSet fileset)
+	public synchronized void removeFileset (IPackageFileSet fileset)
 	{
 		DirectoryScanner scanner = ((PackageFileSetImpl)fileset).createDirectoryScanner(true);
 		IPackageFileSet filesets[] = new IPackageFileSet[] { fileset };
@@ -164,7 +170,10 @@ public class BuildFileOperations {
 		
 		for (int i = 0; i < matchingPaths.length; i++)
 		{
-			removePathFromFilesets(matchingPaths[i], filesets);
+			if (!otherFilesetsMatch(matchingPaths[i], fileset))
+			{
+				removePathFromFilesets(matchingPaths[i], filesets);
+			}
 		}
 	}
 
@@ -249,5 +258,144 @@ public class BuildFileOperations {
 			
 			return copyTo;
 		}
+	}
+	
+	public IPath getTopLevelPackageRelativePath (IPath absolutePath, ArrayList pathway, IPackageFileSet fileset)
+	{
+		IPath filesetRelativePath = getFilesetRelativePath(absolutePath, fileset);
+		IPath topPath = new Path("");
+		for (Iterator iter = pathway.iterator(); iter.hasNext(); )
+		{
+			IPackageNode pathNode = (IPackageNode) iter.next();
+			switch (pathNode.getNodeType())
+			{
+				case IPackageNode.TYPE_PACKAGE:
+				case IPackageNode.TYPE_PACKAGE_REFERENCE:
+				{
+					topPath = topPath.append(((IPackage)pathNode).getName());
+				} break;
+				
+				case IPackageNode.TYPE_PACKAGE_FOLDER:
+				{
+					topPath = topPath.append(((IPackageFolder)pathNode).getName());
+				}
+			}
+		}
+
+		topPath = topPath.append(filesetRelativePath);
+		return topPath;
+	}
+	
+	public void updateScannerCache (IPackageFileSet fileset)
+	{
+		scannerCache.put(fileset, ((PackageFileSetImpl)fileset).createDirectoryScanner(true));
+	}
+	
+	public void updateScannerCache (IPackage pkg)
+	{
+		if (pkg.isTopLevel())
+		{
+			pkg.accept(new IPackageNodeVisitor () {
+				public boolean visit(IPackageNode node) {
+					if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
+					{
+						updateScannerCache((IPackageFileSet)node);
+					}
+					return true;
+				}
+			});
+		}
+	}
+	
+	private boolean otherMatches = false;
+	private boolean otherFilesetsMatch (final IPath absolutePath, final IPackageFileSet current)
+	{
+		otherMatches = false;
+		Hashtable pkgsAndPathways = PackagesModel.instance().getTopLevelPackagesAndPathways(current);
+		
+		for (Iterator pkgIter = pkgsAndPathways.keySet().iterator(); pkgIter.hasNext(); )
+		{
+			final IPackage topLevelPackage = (IPackage) pkgIter.next();
+			final ArrayList pathway = (ArrayList) pkgsAndPathways.get(topLevelPackage);
+			
+			final IPath destPath = getTopLevelPackageRelativePath(absolutePath, pathway, current);
+			
+			topLevelPackage.accept(new IPackageNodeVisitor () {
+				public boolean visit(IPackageNode node) {
+					if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
+					{
+						IPackageFileSet fileset = (IPackageFileSet) node;
+						if (fileset != current)
+						{
+							IPath currentDestPath = getTopLevelPackageRelativePath(absolutePath, pathway, fileset);
+							if (currentDestPath.equals(destPath))
+							{
+								otherMatches = true;
+								return false;
+							}
+						}
+					}
+					return true;
+				}
+			});
+		}
+		return otherMatches;
+	}
+	
+	public void changePackage (IPackage pkg)
+	{
+		File packageFile = TruezipUtil.getPackageFile(pkg);
+		
+		if (! packageFile.getName().equals(pkg.getName()))
+		{
+			// File name was changed, rename
+			File newPackageFile = new File(packageFile.getParent(), pkg.getName());
+			packageFile.renameTo(newPackageFile, packageFile.getArchiveDetector());
+		}
+		else if (packageFile.getDelegate().isFile() && pkg.isExploded())
+		{
+			// Changed to exploded from compressed
+			File tmpFile = new File(packageFile.getParent(), "_tmp_" + pkg.getName(), ArchiveDetector.NULL);
+			File newPackageFile = new File(packageFile.getParent(), pkg.getName(), ArchiveDetector.NULL);
+			
+			packageFile.renameTo(tmpFile, ArchiveDetector.NULL);
+			tmpFile.renameTo(newPackageFile, ArchiveDetector.NULL);
+		}
+		else if (packageFile.getDelegate().isDirectory() && !pkg.isExploded())
+		{
+			//	Changed to compressed from exploded
+			File tmpFile = new File(packageFile.getParent(), "_tmp_" + pkg.getName());
+			packageFile.renameTo(tmpFile, ArchiveDetector.DEFAULT);
+			tmpFile.renameTo(packageFile, ArchiveDetector.DEFAULT);
+		}
+	}
+	
+	public void changeFileset (IPackageFileSet fileset)
+	{
+		updateNode(fileset);
+		IPackageFileSet filesets[] = new IPackageFileSet[] { fileset };
+		PackageFileSetImpl filesetImpl = (PackageFileSetImpl) fileset;
+		
+		DirectoryScanner oldScanner = (DirectoryScanner) scannerCache.get(fileset);
+		
+		if (oldScanner != null)
+		{
+			IPath oldPaths[] = filesetImpl.findMatchingPaths(oldScanner);
+			for (int i = 0; i < oldPaths.length; i++)
+			{
+				if (!otherFilesetsMatch(oldPaths[i], fileset))
+				{
+					removePathFromFilesets(oldPaths[i], filesets);
+				}
+			}
+		}
+		
+		IPath newPaths[] = filesetImpl.findMatchingPaths();
+		for (int i = 0; i < newPaths.length; i++)
+		{
+			updatePathInFilesets(newPaths[i], filesets, false);
+		}
+		
+		updateScannerCache(fileset);
 	}
 }
