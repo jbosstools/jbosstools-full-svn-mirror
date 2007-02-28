@@ -5,6 +5,7 @@ import junit.framework.TestSuite;
 
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.project.build.BuildFileOperations;
+import org.jboss.ide.eclipse.packages.core.project.build.TruezipUtil;
 
 import de.schlichtherle.io.ArchiveException;
 import de.schlichtherle.io.File;
@@ -36,18 +37,12 @@ public class FileOpsTest extends BuildTest {
 	public void testRemoveFile ()
 	{
 		ops.removeFileFromFilesets(testXmlFile, new IPackageFileSet[] { simpleJarFileset });
-		File simpleJarFile = getPackageFile(simpleJar);
-		
-		try {
-			File.update(simpleJarFile);
-		} catch (ArchiveException e) {
-			fail(e.getMessage());
-		}
-		
-		File refJarFile = getPackageFile(refJar);
+		TruezipUtil.umount(simpleJar);
 		
 		assertNull(findFile(simpleJarFile, "test.xml"));
-		File simpleJarInRefJar = findFile(refJarFile, "simple.jar");
+		
+		File libFile = findFile(refJarFile, "lib");
+		File simpleJarInRefJar = findFile(libFile, "simple.jar");
 		
 		assertNull(findFile(simpleJarInRefJar, "test.xml"));
 	}
@@ -56,11 +51,9 @@ public class FileOpsTest extends BuildTest {
 	{
 		ops.updateFileInFilesets(testXmlFile, new IPackageFileSet[] { simpleJarFileset }, false);
 		
-		File simpleJarFile = getPackageFile(simpleJar);
-		File refJarFile = getPackageFile(refJar);
-		
 		assertNotNull(findFile(simpleJarFile, "test.xml"));
-		File simpleJarInRefJar = findFile(refJarFile, "simple.jar");
+		File libFile = findFile(refJarFile, "lib");
+		File simpleJarInRefJar = findFile(libFile, "simple.jar");
 		
 		assertNotNull(findFile(simpleJarInRefJar, "test.xml"));
 	}
