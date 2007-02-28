@@ -5,8 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -19,6 +22,7 @@ import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
+import org.jboss.ide.eclipse.packages.core.model.IPackageReference;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.core.model.types.JARPackageType;
@@ -27,8 +31,6 @@ import org.jboss.ide.eclipse.packages.core.project.build.TruezipUtil;
 
 import de.schlichtherle.io.File;
 import de.schlichtherle.io.FileInputStream;
-
-import junit.framework.TestCase;
 
 public class BuildTest extends TestCase {
 	protected IProject project;
@@ -41,6 +43,7 @@ public class BuildTest extends TestCase {
 	protected IFile testXmlFile;
 	protected IPackageFileSet simpleJarFileset, explodedJarFileset;
 	protected IPackageFolder libFolder;
+	protected IPackageReference simpleJarRef;
 	protected File simpleJarFile, explodedJarFile, refJarFile;
 	
 	protected static boolean initialized = false;
@@ -88,7 +91,8 @@ public class BuildTest extends TestCase {
 			libFolder.setName("lib");
 			refJar.addChild(libFolder);
 			
-			libFolder.addChild(simpleJar.createReference(false));
+			simpleJarRef = simpleJar.createReference(false);
+			libFolder.addChild(simpleJarRef);
 			
 			PackagesModel.instance().attach(refJar, nullMonitor);
 	
@@ -118,6 +122,7 @@ public class BuildTest extends TestCase {
 			List packages = PackagesModel.instance().getProjectPackages(project);
 			simpleJar = (IPackage) packages.get(0);
 			simpleJarFileset = simpleJar.getFileSets()[0];
+			simpleJarRef = simpleJar.getReferences()[0];
 			
 			refJar = (IPackage) packages.get(1);
 			libFolder = refJar.getFolders()[0];
@@ -134,7 +139,14 @@ public class BuildTest extends TestCase {
 	/**
 	 * Wait for autobuild notification to occur
 	 */
-	public static void waitForAutoBuild() {
+	public void waitForAutoBuild() {
+		
+		try {
+			project.refreshLocal(IResource.DEPTH_INFINITE, nullMonitor);
+		} catch (CoreException e1) {
+			fail(e1.getMessage());
+		}
+		
 		boolean wasInterrupted = false;
 		do {
 			try {
