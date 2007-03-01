@@ -19,6 +19,7 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
+import org.jboss.ide.eclipse.packages.ui.views.ProjectPackagesView;
 import org.jboss.ide.eclipse.packages.ui.wizards.pages.PackageInfoWizardPage;
 import org.jboss.ide.eclipse.ui.wizards.WizardPageWithNotification;
 import org.jboss.ide.eclipse.ui.wizards.WizardWithNotification;
@@ -111,9 +112,15 @@ public abstract class AbstractPackageWizard extends WizardWithNotification imple
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		if (selection == null) return;
+		project = ProjectPackagesView.instance().getCurrentProject();
+		Object selected;
 		
-		project = ProjectUtil.getProject(selection.getFirstElement());
-		Object selected = selection.getFirstElement();
+		if( selection.isEmpty() ) {
+			selected = project;
+		} else {
+			selected = selection.getFirstElement();
+		}
+
 		if (selected instanceof IPackageNode)
 		{
 			IPackageNode node = (IPackageNode) selected;
