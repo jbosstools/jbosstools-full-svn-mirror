@@ -101,8 +101,6 @@ public class BuildFileOperations {
 				}
 			}
 			
-			Trace.trace(getClass(), "copying " + path.toString() + " ...");
-			
 			InputStream in = null;
 			OutputStream[] outStreams = null;
 			// I'm using the fully qualified package name here to avoid confusion with java.io
@@ -111,6 +109,8 @@ public class BuildFileOperations {
 				
 				for (int j = 0; j < outStreams.length; j++)
 				{
+					Trace.trace(getClass(), "copying " + path.toString() + " to " + packageFiles[j].getAbsolutePath() + " ...");
+					
 					try {
 						in = new FileInputStream(path.toFile());
 						File.cp(in, outStreams[j]);

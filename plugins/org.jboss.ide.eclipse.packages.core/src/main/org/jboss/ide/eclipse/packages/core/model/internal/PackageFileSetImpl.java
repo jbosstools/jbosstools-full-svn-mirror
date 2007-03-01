@@ -31,7 +31,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.core.util.ResourceUtil;
-import org.jboss.ide.eclipse.packages.core.PackagesCorePlugin;
 import org.jboss.ide.eclipse.packages.core.model.DirectoryScannerFactory;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
@@ -130,10 +129,17 @@ public class PackageFileSetImpl extends PackageNodeImpl implements
 
 	public IPath getSourcePath() {
 		String path = filesetDelegate.getDir();
-		if (filesetDelegate.getDir() == null || filesetDelegate.getDir().equals(".") || filesetDelegate.getDir().equals(""))
+		if (path == null || path.equals(".") || path.equals(""))
 			return ProjectUtil.getProjectLocation(getSourceProject());
 		
-		return new Path(path);
+		else {
+			if (isInWorkspace())
+			{
+				return ResourceUtil.makeAbsolute(getSourceProject().getFolder(path));
+			} else {
+				return new Path(path);
+			}
+		}
 	}
 	
 	public IProject getSourceProject() {
