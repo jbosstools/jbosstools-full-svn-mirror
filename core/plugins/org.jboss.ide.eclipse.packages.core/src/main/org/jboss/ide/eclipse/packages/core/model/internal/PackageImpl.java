@@ -87,6 +87,10 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 		if (packageDelegate.getToDir() == null || packageDelegate.getToDir().equals("."))
 			return ProjectUtil.getProjectLocation(project);
 		
+		else if (isDestinationInWorkspace())
+		{	
+			return ResourceUtil.makeAbsolute(ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(packageDelegate.getToDir())));
+		}
 		else return new Path(packageDelegate.getToDir());
 	}
 
