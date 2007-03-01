@@ -417,7 +417,6 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		}
 		
 		newJARAction.setEnabled(true);
-		newJARAction.setProject(currentProject);
 	}
 	
 	private void createPackagePressed ()

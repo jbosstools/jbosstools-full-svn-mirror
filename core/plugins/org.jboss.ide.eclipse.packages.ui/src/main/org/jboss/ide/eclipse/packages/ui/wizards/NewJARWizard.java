@@ -1,7 +1,9 @@
 package org.jboss.ide.eclipse.packages.ui.wizards;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.ui.IWorkbench;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;

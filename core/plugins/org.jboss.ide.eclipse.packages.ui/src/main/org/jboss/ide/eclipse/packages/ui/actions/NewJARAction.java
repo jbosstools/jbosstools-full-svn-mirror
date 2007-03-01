@@ -12,21 +12,11 @@ import org.jboss.ide.eclipse.packages.ui.views.ProjectPackagesView;
 import org.jboss.ide.eclipse.packages.ui.wizards.NewJARWizard;
 import org.jboss.ide.eclipse.ui.util.ActionWithDelegate;
 
-public class NewJARAction extends ActionWithDelegate
-{
-	private IProject project;
-	
+public class NewJARAction extends ActionWithDelegate {
 	public void run() {
 		NewJARWizard wizard = new NewJARWizard();
 		
-		IStructuredSelection selection = getSelection();
-		if (selection.isEmpty())
-		{
-			wizard.init(PlatformUI.getWorkbench(), new StructuredSelection(project));
-		} else {
-			wizard.init(PlatformUI.getWorkbench(), getSelection());
-		}
-		
+		wizard.init(PlatformUI.getWorkbench(), getSelection());
 		
 		WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wizard);
 		int response = dialog.open();
@@ -48,10 +38,5 @@ public class NewJARAction extends ActionWithDelegate
 	
 	public String getToolTipText() {
 		return "Create a new JAR package";
-	}
-	
-	public void setProject (IProject project)
-	{
-		this.project = project;
 	}
 }
