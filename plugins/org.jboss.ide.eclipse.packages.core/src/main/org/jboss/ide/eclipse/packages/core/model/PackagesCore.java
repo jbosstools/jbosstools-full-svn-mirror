@@ -24,6 +24,7 @@ package org.jboss.ide.eclipse.packages.core.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.resources.IContainer;
@@ -57,6 +58,15 @@ public class PackagesCore {
 		new QualifiedName("org.jboss.ide.eclipse.packages.core", "antScriptPath");
 
 	public static final IPath DEFAULT_ANT_SCRIPT_PATH = new Path("buildPackages.xml");
+	
+	/**
+	 * @return An array of all the projects registered with a Packaging configuration
+	 */
+	public static IProject[] getPackageProjects ()
+	{
+		Set projects = PackagesModel.instance().getRegisteredProjects();
+		return (IProject[]) projects.toArray(new IProject[projects.size()]);
+	}
 	
 	public static IPackage[] getProjectPackages (IProject project, IProgressMonitor monitor)
 	{
