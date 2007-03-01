@@ -117,29 +117,27 @@ public class TruezipUtil {
 			
 			File root = new File(topLevelPackage.getDestinationPath().toFile());
 			
-//			if (topLevelPackage.isDestinationInWorkspace())
-//			{
-//				IPath projectPath = ProjectUtil.getProjectLocation(topLevelPackage.getProject());
-//				IPath subPath = topLevelPackage.getDestinationContainer().getProjectRelativePath();
-//				root = new File(projectPath.append(subPath).toFile());
-//			} else {
-//				root = new File(topLevelPackage.getDestinationPath().toFile());
-//			}
-			
-			for (Iterator iter2 = pathway.iterator(); iter2.hasNext(); )
+			if (pathway.isEmpty())
 			{
-				IPackageNode currentParent = (IPackageNode) iter2.next();
+				// Top level package, just append the package name
+				root = new File(root, topLevelPackage.getName(), topLevelPackage.isExploded() ? ArchiveDetector.NULL : ArchiveDetector.DEFAULT);
+			} else { 
+				root = new File(topLevelPackage.getDestinationPath().toFile());
 				
-				if (currentParent.getNodeType() == IPackageNode.TYPE_PACKAGE
-					|| currentParent.getNodeType() == IPackageNode.TYPE_PACKAGE_REFERENCE) {
-					IPackage pkg = (IPackage)currentParent;
-					root = new File(root, pkg.getName(), pkg.isExploded() ? ArchiveDetector.NULL : ArchiveDetector.DEFAULT);
-				} else if (currentParent.getNodeType() == IPackageNode.TYPE_PACKAGE_FOLDER) {
-					IPackageFolder folder = (IPackageFolder)currentParent;
-					root = new File(root, folder.getName(), ArchiveDetector.NULL);
+				for (Iterator iter2 = pathway.iterator(); iter2.hasNext(); )
+				{
+					IPackageNode currentParent = (IPackageNode) iter2.next();
+					
+					if (currentParent.getNodeType() == IPackageNode.TYPE_PACKAGE
+						|| currentParent.getNodeType() == IPackageNode.TYPE_PACKAGE_REFERENCE) {
+						IPackage pkg = (IPackage)currentParent;
+						root = new File(root, pkg.getName(), pkg.isExploded() ? ArchiveDetector.NULL : ArchiveDetector.DEFAULT);
+					} else if (currentParent.getNodeType() == IPackageNode.TYPE_PACKAGE_FOLDER) {
+						IPackageFolder folder = (IPackageFolder)currentParent;
+						root = new File(root, folder.getName(), ArchiveDetector.NULL);
+					}
 				}
 			}
-			
 			root.mkdirs();
 			roots.add(root);
 		}
