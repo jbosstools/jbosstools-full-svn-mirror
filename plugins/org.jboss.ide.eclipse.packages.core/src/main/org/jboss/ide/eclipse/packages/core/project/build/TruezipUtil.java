@@ -7,7 +7,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import org.eclipse.core.runtime.IPath;
-import org.jboss.ide.eclipse.core.util.ProjectUtil;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
@@ -97,17 +96,17 @@ public class TruezipUtil {
 
 	public static File[] createFiles (IPath subPath, Hashtable pkgsAndPaths)
 	{
-		File[] roots = createFileRoots(pkgsAndPaths);
+		File[] roots = createNodeRoots(pkgsAndPaths);
 		return createFiles (roots, subPath);
 	}
 
 	public static File[] createNodeRoots (IPackageNode node)
 	{	
 		Hashtable pkgsAndPaths = PackagesModel.instance().getTopLevelPackagesAndPathways(node);
-		return createFileRoots (pkgsAndPaths);	
+		return createNodeRoots (pkgsAndPaths);	
 	}
 
-	public static File[] createFileRoots (Hashtable pkgsAndPaths)
+	public static File[] createNodeRoots (Hashtable pkgsAndPaths)
 	{
 		ArrayList roots = new ArrayList();
 		
@@ -116,15 +115,16 @@ public class TruezipUtil {
 			IPackage topLevelPackage = (IPackage) iter.next();
 			ArrayList pathway = (ArrayList) pkgsAndPaths.get(topLevelPackage);
 			
-			File root = null;
-			if (topLevelPackage.isDestinationInWorkspace())
-			{
-				IPath projectPath = ProjectUtil.getProjectLocation(topLevelPackage.getProject());
-				IPath subPath = topLevelPackage.getDestinationContainer().getProjectRelativePath();
-				root = new File(projectPath.append(subPath).toFile());
-			} else {
-				root = new File(topLevelPackage.getDestinationPath().toFile());
-			}
+			File root = new File(topLevelPackage.getDestinationPath().toFile());
+			
+//			if (topLevelPackage.isDestinationInWorkspace())
+//			{
+//				IPath projectPath = ProjectUtil.getProjectLocation(topLevelPackage.getProject());
+//				IPath subPath = topLevelPackage.getDestinationContainer().getProjectRelativePath();
+//				root = new File(projectPath.append(subPath).toFile());
+//			} else {
+//				root = new File(topLevelPackage.getDestinationPath().toFile());
+//			}
 			
 			for (Iterator iter2 = pathway.iterator(); iter2.hasNext(); )
 			{
