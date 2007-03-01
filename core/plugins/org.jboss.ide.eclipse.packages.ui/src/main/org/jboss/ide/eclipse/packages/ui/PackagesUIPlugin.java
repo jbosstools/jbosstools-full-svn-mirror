@@ -1,7 +1,6 @@
 package org.jboss.ide.eclipse.packages.ui;
 
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.SWT;
@@ -42,6 +41,8 @@ public class PackagesUIPlugin extends AbstractUIPlugin {
 	// preference keys
 	public static final String PREF_SHOW_PACKAGE_OUTPUT_PATH = "showPackageOutputPath";
 	public static final String PREF_SHOW_FULL_FILESET_ROOT_DIR = "showFullFilesetRootDir";
+	public static final String PREF_SHOW_PROJECT_ROOT = "showProjectRoot";
+	public static final String PREF_SHOW_ALL_PROJECTS = "showAllProjects";
 	
 	// The shared instance
 	private static PackagesUIPlugin plugin;

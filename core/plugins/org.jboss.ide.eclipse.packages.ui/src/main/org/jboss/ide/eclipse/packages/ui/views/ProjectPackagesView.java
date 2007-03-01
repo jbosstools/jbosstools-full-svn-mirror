@@ -18,8 +18,6 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.JFaceColors;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -27,12 +25,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.ProgressMonitorPart;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -44,7 +38,6 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
@@ -386,30 +379,43 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		
 		if (PackagesCore.projectHasPackages(project))
 		{
-			pageBook.showPage(loadingPackagesComposite);
-			getSite().getShell().getDisplay().asyncExec(new Runnable () {
-				public void run ()
-				{
-					loading = true;
-					
-					IPackage packages[] = PackagesCore.getProjectPackages(project, loadingProgress);
-					
-					if (packages == null) {
-						showCreatePackageLink();
-					}
-					
-					else {
-						pageBook.showPage(mainPage);
-						if (packageTree.getInput() != packages)
-						{
-							packageTree.setInput(packages);
+			if (!showAllProjects())
+			{
+				pageBook.showPage(loadingPackagesComposite);
+				getSite().getShell().getDisplay().asyncExec(new Runnable () {
+					public void run ()
+					{
+						loading = true;
+						
+						IPackage packages[] = PackagesCore.getProjectPackages(project, loadingProgress);
+						
+						if (packages == null) {
+							showCreatePackageLink();
 						}
-						collapseAllAction.setEnabled(true);
+						
+						else {
+							pageBook.showPage(mainPage);
+							if (packageTree.getInput() != packages)
+							{
+								if (showProjectRoot())
+								{
+									packageTree.setInput(new IProject[] { project });
+									packageTree.expandToLevel(2);
+								} else {
+									packageTree.setInput(PackagesCore.getProjectPackages(project, null));
+								}
+							}
+							collapseAllAction.setEnabled(true);
+						}
+						
+						loading = false;
 					}
-					
-					loading = false;
-				}
-			});
+				});
+			} else {
+				pageBook.showPage(mainPage);
+				packageTree.setInput(PackagesCore.getPackageProjects());
+				packageTree.expandToLevel(currentProject, 1);
+			}
 		}
 		else {
 			showCreatePackageLink();
@@ -572,6 +578,16 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		}
 	}
 	
+	private boolean showProjectRoot ()
+	{
+		return PackagesUIPlugin.getDefault().getPluginPreferences().getBoolean(PackagesUIPlugin.PREF_SHOW_PROJECT_ROOT);
+	}
+	
+	private boolean showAllProjects ()
+	{
+		return PackagesUIPlugin.getDefault().getPluginPreferences().getBoolean(PackagesUIPlugin.PREF_SHOW_ALL_PROJECTS);
+	}
+	
 	public void setFocus() {
 		// TODO Auto-generated method stub
 
@@ -581,11 +597,20 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	}
 	
 	public void packageNodeAdded(IPackageNode added) {
-		if (!loading && !packageTree.getTree().isDisposed())
+		if (!loading && !packageTree.getTree().isDisposed() && added.getProject().equals(currentProject))
 		{
 			pageBook.showPage(packageTree.getTree());
 			if (added.getParent() == null) {
-				packageTree.setInput(PackagesCore.getProjectPackages(added.getProject(), null));
+				if (!showProjectRoot())
+				{
+					packageTree.setInput(PackagesCore.getProjectPackages(added.getProject(), null));
+				} else {
+					if (showAllProjects())
+					{
+						packageTree.setInput(PackagesCore.getPackageProjects());
+					}
+				}
+				
 				packageTree.refresh();
 			}
 			else {

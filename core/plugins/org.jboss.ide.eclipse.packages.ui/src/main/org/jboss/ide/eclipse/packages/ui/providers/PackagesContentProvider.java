@@ -13,6 +13,7 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeVisitor;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
+import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
 
 public class PackagesContentProvider implements ITreeContentProvider {
 	
@@ -21,6 +22,11 @@ public class PackagesContentProvider implements ITreeContentProvider {
 	public PackagesContentProvider ()
 	{
 		filesetProperties = new Hashtable();
+	}
+	
+	private boolean showProjectRoot ()
+	{
+		return PackagesUIPlugin.getDefault().getPluginPreferences().getBoolean(PackagesUIPlugin.PREF_SHOW_PROJECT_ROOT);
 	}
 	
 	public static class FileSetProperty {
@@ -78,7 +84,11 @@ public class PackagesContentProvider implements ITreeContentProvider {
 	}
 	
 	public Object[] getChildren(Object parentElement) {
-		if (parentElement instanceof IPackageFileSet)
+		if (parentElement instanceof IProject)
+		{
+			return PackagesCore.getProjectPackages((IProject)parentElement, null);
+		}
+		else if (parentElement instanceof IPackageFileSet)
 		{
 			IPackageFileSet fileset = (IPackageFileSet) parentElement;
 			ArrayList result = ((ArrayList)filesetProperties.get(fileset));
@@ -96,6 +106,12 @@ public class PackagesContentProvider implements ITreeContentProvider {
 		if (element instanceof IPackageNode)
 		{
 			IPackageNode node = (IPackageNode) element;
+			if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
+			{
+				if (((IPackage)node).isTopLevel() && showProjectRoot()) {
+					return node.getProject();
+				}
+			}
 			return node.getParent();
 		}
 		else if (element instanceof FileSetProperty)
@@ -106,6 +122,10 @@ public class PackagesContentProvider implements ITreeContentProvider {
 	}
 
 	public boolean hasChildren(Object element) {
+		if (element instanceof IProject)
+		{
+			return true;
+		}
 		if (element instanceof IPackageFileSet)
 		{
 			return true;
@@ -127,23 +147,34 @@ public class PackagesContentProvider implements ITreeContentProvider {
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		if (newInput == null) return;
 		
-		IPackage packages[] = (IPackage[]) newInput;
-		
-		if (oldInput != newInput && packages.length > 0)
+		IProject projects[] = new IProject[0];
+		if (newInput instanceof IPackage[])
 		{
-			final IProject project = (IProject) packages[0].getProject();
+			IPackage[] packages = (IPackage[]) newInput;
+			if (packages.length > 0)
+				projects = new IProject[] { packages[0].getProject() };
+		} else {
+			projects = (IProject[]) newInput;
+		}
+		
+		if (oldInput != newInput)
+		{
 			filesetProperties.clear();
-			
-			PackagesCore.visitProjectPackages(project, new IPackageNodeVisitor() {
-				public boolean visit(IPackageNode node) {
-					if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
-					{
-						IPackageFileSet fileset = (IPackageFileSet) node;
-						addFilesetProperties(project, fileset);
+			for (int i = 0; i < projects.length; i++)
+			{
+				final IProject currentProject = projects[i];
+				
+				PackagesCore.visitProjectPackages(currentProject, new IPackageNodeVisitor() {
+					public boolean visit(IPackageNode node) {
+						if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
+						{
+							IPackageFileSet fileset = (IPackageFileSet) node;
+							addFilesetProperties(currentProject, fileset);
+						}
+						return true;
 					}
-					return true;
-				}
-			});
+				});
+			}
 		}
 	}
 

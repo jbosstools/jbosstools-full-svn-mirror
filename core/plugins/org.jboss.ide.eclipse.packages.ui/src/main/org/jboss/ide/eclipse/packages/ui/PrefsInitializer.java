@@ -11,6 +11,8 @@ public class PrefsInitializer extends AbstractPreferenceInitializer {
 		
 		prefs.put(PackagesUIPlugin.PREF_SHOW_FULL_FILESET_ROOT_DIR, "true");
 		prefs.put(PackagesUIPlugin.PREF_SHOW_PACKAGE_OUTPUT_PATH, "true");
+		prefs.put(PackagesUIPlugin.PREF_SHOW_PROJECT_ROOT, "true");
+		prefs.put(PackagesUIPlugin.PREF_SHOW_ALL_PROJECTS, "false");
 	}
 
 }

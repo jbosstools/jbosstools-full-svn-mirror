@@ -3,6 +3,8 @@ package org.jboss.ide.eclipse.packages.ui.properties;
 import org.eclipse.core.runtime.Preferences;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -16,6 +18,7 @@ public class MainPreferencePage extends PreferencePage implements
 
 	private Button showPackageOutputPath;
 	private Button showFullFilesetRootDir;
+	private Button showProjectRoot, showAllProjects;
 	private IWorkbench workbench;
 	
 	public MainPreferencePage() {
@@ -38,6 +41,30 @@ public class MainPreferencePage extends PreferencePage implements
 		showFullFilesetRootDir.setSelection(
 			prefs.getBoolean(PackagesUIPlugin.PREF_SHOW_FULL_FILESET_ROOT_DIR));
 		
+		showProjectRoot = new Button(main, SWT.CHECK);
+		showProjectRoot.setText("Show project root");
+		showProjectRoot.setSelection(
+			prefs.getBoolean(PackagesUIPlugin.PREF_SHOW_PROJECT_ROOT));
+		
+		showProjectRoot.addSelectionListener(new SelectionListener () {
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);	
+			}
+			public void widgetSelected(SelectionEvent e) {
+				showAllProjects.setEnabled(showProjectRoot.getSelection());
+				
+				if (!showProjectRoot.getSelection())
+				{
+					showAllProjects.setSelection(false);
+				}
+			}
+		});
+		
+		showAllProjects = new Button(main, SWT.CHECK);
+		showAllProjects.setText("Show all projects");
+		showAllProjects.setSelection(
+			prefs.getBoolean(PackagesUIPlugin.PREF_SHOW_ALL_PROJECTS));
+		
 		return main;
 	}
 
@@ -50,6 +77,8 @@ public class MainPreferencePage extends PreferencePage implements
 		
 		prefs.setValue(PackagesUIPlugin.PREF_SHOW_PACKAGE_OUTPUT_PATH, showPackageOutputPath.getSelection());
 		prefs.setValue(PackagesUIPlugin.PREF_SHOW_FULL_FILESET_ROOT_DIR, showFullFilesetRootDir.getSelection());
+		prefs.setValue(PackagesUIPlugin.PREF_SHOW_PROJECT_ROOT, showProjectRoot.getSelection());
+		prefs.setValue(PackagesUIPlugin.PREF_SHOW_ALL_PROJECTS, showAllProjects.getSelection());
 		PackagesUIPlugin.getDefault().savePluginPreferences();
 		
 		return true;
