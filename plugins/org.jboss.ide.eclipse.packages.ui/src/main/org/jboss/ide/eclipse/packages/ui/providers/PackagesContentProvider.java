@@ -81,7 +81,8 @@ public class PackagesContentProvider implements ITreeContentProvider {
 		if (parentElement instanceof IPackageFileSet)
 		{
 			IPackageFileSet fileset = (IPackageFileSet) parentElement;
-			return ((ArrayList)filesetProperties.get(fileset)).toArray();
+			ArrayList result = ((ArrayList)filesetProperties.get(fileset));
+			return result == null ? new Object[]{} : result.toArray();
 		}
 		else if (parentElement instanceof IPackageNode)
 		{
