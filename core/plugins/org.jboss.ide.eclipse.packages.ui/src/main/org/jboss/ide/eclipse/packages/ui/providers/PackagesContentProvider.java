@@ -29,6 +29,17 @@ public class PackagesContentProvider implements ITreeContentProvider {
 		return PackagesUIPlugin.getDefault().getPluginPreferences().getBoolean(PackagesUIPlugin.PREF_SHOW_PROJECT_ROOT);
 	}
 	
+	public static class ProjectWrapper {
+		public IProject project;
+		public boolean equals(Object obj) {
+			if (obj instanceof IProject)
+			{
+				return project.equals(obj);
+			}
+			return this == obj;
+		}
+	}
+	
 	public static class FileSetProperty {
 		private IPackageFileSet fileset;
 		private String name;
@@ -84,9 +95,9 @@ public class PackagesContentProvider implements ITreeContentProvider {
 	}
 	
 	public Object[] getChildren(Object parentElement) {
-		if (parentElement instanceof IProject)
+		if (parentElement instanceof ProjectWrapper)
 		{
-			return PackagesCore.getProjectPackages((IProject)parentElement, null);
+			return PackagesCore.getProjectPackages(((ProjectWrapper)parentElement).project, null);
 		}
 		else if (parentElement instanceof IPackageFileSet)
 		{
@@ -122,7 +133,7 @@ public class PackagesContentProvider implements ITreeContentProvider {
 	}
 
 	public boolean hasChildren(Object element) {
-		if (element instanceof IProject)
+		if (element instanceof ProjectWrapper)
 		{
 			return true;
 		}
@@ -139,6 +150,19 @@ public class PackagesContentProvider implements ITreeContentProvider {
 	}
 
 	public Object[] getElements(Object inputElement) {
+		
+		if (inputElement instanceof IProject[])
+		{
+			IProject[] projects = (IProject[]) inputElement;
+			ProjectWrapper wrappers[] = new ProjectWrapper[projects.length];
+			for (int i = 0; i < projects.length; i++)
+			{
+				wrappers[i] = new ProjectWrapper();
+				wrappers[i].project = projects[i];
+			}
+			return wrappers;
+		}
+		
 		return (Object[]) inputElement;
 	}
 

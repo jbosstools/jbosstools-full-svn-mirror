@@ -232,7 +232,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		buildPackageAction = new BuildPackagesAction();
 		buildPackageAction.init(getViewSite().getWorkbenchWindow());
 		
-		newPackageContributions = new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS);
+		newPackageContributions = new GroupMarker(NEW_PACKAGE_ADDITIONS);
 	}
 	
 	private void createToolbar ()
@@ -251,14 +251,15 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		newPackageManager.add(new Separator());
 		newPackageManager.add(newPackageContributions);
 		
-		IMenuManager manager = getViewSite().getActionBars().getMenuManager();
-		
-		manager.add(newPackageManager);
+//		IMenuManager manager = getViewSite().getActionBars().getMenuManager();
+//		manager.add(newPackageContributions);
+//		
 	}
 	
 	public static final String NEW_PACKAGE_MENU_ID = "org.jboss.ide.eclipse.packages.ui.newPackageMenu";
 	public static final String NODE_CONTEXT_MENU_ID = "org.jboss.ide.eclipse.packages.ui.nodeContextMenu";
-		
+	public static final String NEW_PACKAGE_ADDITIONS = "newPackageAdditions";
+	
 	private Link createPackageLink;
 	
 	private void createContextMenu ()
@@ -270,60 +271,66 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 				IStructuredSelection selection = (IStructuredSelection) packageTree.getSelection();
 				if (selection != null && !selection.isEmpty())
 				{
-					if (!(selection.getFirstElement() instanceof IPackageNode)) return;
+					Object element = selection.getFirstElement();
 					
-					IPackageNode node = (IPackageNode) selection.getFirstElement();
+					if (!(element instanceof IPackageNode || element instanceof PackagesContentProvider.ProjectWrapper)) return;
 					
-					if (node.getNodeType() == IPackageNode.TYPE_PACKAGE
-							|| node.getNodeType() == IPackageNode.TYPE_PACKAGE_FOLDER)
-					{	
+					if (element instanceof PackagesContentProvider.ProjectWrapper)
+					{
 						newJARAction.setEnabled(true);
 						manager.add(newPackageManager);
+					}
+					else {
+						IPackageNode node = (IPackageNode) selection.getFirstElement();
 						
-						manager.add(newFolderAction);
-						manager.add(newFilesetAction);
-						manager.add(new Separator());
+						if (node.getNodeType() == IPackageNode.TYPE_PACKAGE
+								|| node.getNodeType() == IPackageNode.TYPE_PACKAGE_FOLDER)
+						{	
+							newJARAction.setEnabled(true);
+							manager.add(newPackageManager);
+							
+							manager.add(newFolderAction);
+							manager.add(newFilesetAction);
+							manager.add(new Separator());
+						}
+						
+						if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
+						{
+							editAction.setText(PackagesUIMessages.ProjectPackagesView_editPackageAction_label); //$NON-NLS-1$
+							deleteAction.setText(PackagesUIMessages.ProjectPackagesView_deletePackageAction_label); //$NON-NLS-1$
+							editAction.setImageDescriptor(PackagesUIPlugin.getImageDescriptor(PackagesUIPlugin.IMG_PACKAGE_EDIT));
+							manager.add(buildPackageAction);
+						}
+						else if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FOLDER)
+						{
+							editAction.setText(PackagesUIMessages.ProjectPackagesView_editFolderAction_label); //$NON-NLS-1$
+							deleteAction.setText(PackagesUIMessages.ProjectPackagesView_deleteFolderAction_label); //$NON-NLS-1$
+							editAction.setImageDescriptor(platformDescriptor(ISharedImages.IMG_OBJ_FOLDER));
+						}
+						else if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
+						{
+							editAction.setText(PackagesUIMessages.ProjectPackagesView_editFilesetAction_label); //$NON-NLS-1$
+							deleteAction.setText(PackagesUIMessages.ProjectPackagesView_deleteFilesetAction_label); //$NON-NLS-1$
+							editAction.setImageDescriptor(PackagesUIPlugin.getImageDescriptor(PackagesUIPlugin.IMG_MULTIPLE_FILES));
+						}
+						manager.add(editAction);
+						manager.add(deleteAction);
+						
+						addContextMenuContributions(node);
 					}
-					
-					if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
-					{
-						editAction.setText(PackagesUIMessages.ProjectPackagesView_editPackageAction_label); //$NON-NLS-1$
-						deleteAction.setText(PackagesUIMessages.ProjectPackagesView_deletePackageAction_label); //$NON-NLS-1$
-						editAction.setImageDescriptor(PackagesUIPlugin.getImageDescriptor(PackagesUIPlugin.IMG_PACKAGE_EDIT));
-						manager.add(buildPackageAction);
-					}
-					else if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FOLDER)
-					{
-						editAction.setText(PackagesUIMessages.ProjectPackagesView_editFolderAction_label); //$NON-NLS-1$
-						deleteAction.setText(PackagesUIMessages.ProjectPackagesView_deleteFolderAction_label); //$NON-NLS-1$
-						editAction.setImageDescriptor(platformDescriptor(ISharedImages.IMG_OBJ_FOLDER));
-					}
-					else if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
-					{
-						editAction.setText(PackagesUIMessages.ProjectPackagesView_editFilesetAction_label); //$NON-NLS-1$
-						deleteAction.setText(PackagesUIMessages.ProjectPackagesView_deleteFilesetAction_label); //$NON-NLS-1$
-						editAction.setImageDescriptor(PackagesUIPlugin.getImageDescriptor(PackagesUIPlugin.IMG_MULTIPLE_FILES));
-					}
-					manager.add(editAction);
-					manager.add(deleteAction);
-					
-					addContextMenuContributions(node);
-				}
-				else {
+				} else {
 					manager.add(newPackageManager);
 				}
-				
-				GroupMarker additions = new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS);
-				manager.add(additions);
+//				GroupMarker additions = new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS);
+//				manager.add(additions);
 			}
 		});
 		
 		Menu treeContextMenu = contextMenuManager.createContextMenu(packageTree.getTree());
 		packageTree.getTree().setMenu(treeContextMenu);
 		
+//		getViewSite().registerContextMenu(NODE_CONTEXT_MENU_ID, contextMenuManager, packageTree);
 		getViewSite().registerContextMenu(NEW_PACKAGE_MENU_ID, newPackageManager, packageTree);
-		getViewSite().registerContextMenu(NODE_CONTEXT_MENU_ID, contextMenuManager, packageTree);
-		
 //		Menu emptyContextMenu = manager.createContextMenu(createPackageLink);
 //		createPackageLink.setMenu(emptyContextMenu);
 	}
@@ -387,7 +394,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 					
 					IPackage packages[] = PackagesCore.getProjectPackages(project, loadingProgress);
 					
-					if (packages == null) {
+					if (packages == null || packages.length == 0) {
 						showCreatePackageLink();
 					}
 					
@@ -663,5 +670,9 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	
 	public IStructuredSelection getSelection() {
 		return (IStructuredSelection)packageTree.getSelection();
+	}
+	
+	public void dispose() {
+		ProjectSelectionService.instance().removeProjectSelectionListener(this);
 	}
 }
