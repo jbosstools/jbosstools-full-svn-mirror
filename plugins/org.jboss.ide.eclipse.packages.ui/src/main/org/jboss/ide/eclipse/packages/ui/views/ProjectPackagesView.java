@@ -379,43 +379,51 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		
 		if (PackagesCore.projectHasPackages(project))
 		{
-			if (!showAllProjects())
-			{
-				pageBook.showPage(loadingPackagesComposite);
-				getSite().getShell().getDisplay().asyncExec(new Runnable () {
-					public void run ()
-					{
-						loading = true;
-						
-						IPackage packages[] = PackagesCore.getProjectPackages(project, loadingProgress);
-						
-						if (packages == null) {
-							showCreatePackageLink();
-						}
-						
-						else {
-							pageBook.showPage(mainPage);
-							if (packageTree.getInput() != packages)
+			pageBook.showPage(loadingPackagesComposite);
+			getSite().getShell().getDisplay().asyncExec(new Runnable () {
+				public void run ()
+				{
+					loading = true;
+					
+					IPackage packages[] = PackagesCore.getProjectPackages(project, loadingProgress);
+					
+					if (packages == null) {
+						showCreatePackageLink();
+					}
+					
+					else {
+						pageBook.showPage(mainPage);
+						if (packageTree.getInput() != packages)
+						{
+							if (showProjectRoot())
 							{
-								if (showProjectRoot())
+
+								if (showAllProjects())
 								{
+									IProject[] projects = PackagesCore.getPackageProjects();
+									loadingProgress.beginTask("Loading...", projects.length);
+									for (int i = 0; i < projects.length; i++)
+									{
+										PackagesCore.getProjectPackages(projects[i], null);
+									}
+									
+									pageBook.showPage(mainPage);
+									packageTree.setInput(projects);
+									packageTree.expandToLevel(currentProject, 1);
+								} else {
 									packageTree.setInput(new IProject[] { project });
 									packageTree.expandToLevel(2);
-								} else {
-									packageTree.setInput(PackagesCore.getProjectPackages(project, null));
 								}
+							} else {
+								packageTree.setInput(PackagesCore.getProjectPackages(project, null));
 							}
-							collapseAllAction.setEnabled(true);
 						}
-						
-						loading = false;
+						collapseAllAction.setEnabled(true);
 					}
-				});
-			} else {
-				pageBook.showPage(mainPage);
-				packageTree.setInput(PackagesCore.getPackageProjects());
-				packageTree.expandToLevel(currentProject, 1);
-			}
+				
+					loading = false;
+				}
+			});
 		}
 		else {
 			showCreatePackageLink();

@@ -118,7 +118,7 @@ public class PackagesContentProvider implements ITreeContentProvider {
 		{
 			return ((FileSetProperty)element).getFileSet();
 		}
-		return new Object[0];
+		return null;
 	}
 
 	public boolean hasChildren(Object element) {
