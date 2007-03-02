@@ -5,6 +5,7 @@ import java.util.jar.Manifest;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
@@ -45,7 +46,7 @@ public class PackageReferenceImpl implements IPackageReference {
 		if (pkg.isDestinationInWorkspace())
 		{
 			refPath += "/workspace";
-			IFile pkgFile = pkg.getPackageFile();
+			IResource pkgFile = pkg.getPackageResource();
 			
 			refPath += pkgFile.getFullPath().toString();
 		}
@@ -153,8 +154,8 @@ public class PackageReferenceImpl implements IPackageReference {
 		return pkg.getName();
 	}
 
-	public IFile getPackageFile() {
-		return pkg.getPackageFile();
+	public IResource getPackageResource() {
+		return pkg.getPackageResource();
 	}
 
 	public IPath getPackageFilePath() {

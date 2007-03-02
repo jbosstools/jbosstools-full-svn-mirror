@@ -378,7 +378,7 @@ public class PackagesCore {
 			IPackage pkg = (IPackage) iter.next();
 			if (pkg.isDestinationInWorkspace())
 			{
-				if (pkg.getPackageFile().equals(file))
+				if (pkg.getPackageResource().equals(file))
 				{
 					return pkg;
 				}
