@@ -25,6 +25,7 @@ import java.util.jar.Manifest;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
 
@@ -119,10 +120,11 @@ public interface IPackage extends IPackageNode {
 	public IPackageFileSet[] getFileSets();
 
 	/**
-	 * Get the IFile that corresponds with this package. Note that this method only works for in-workspace packages (null will be returned otherwise)
-	 * @return The corresponding IFile in the workspace (note that this file may not exist)
+	 * Get the IResource that corresponds with this package. Note that this method only works for in-workspace packages (null will be returned otherwise).
+	 * If this is an exploded package, the resource will be a folder, otherwise it will be a file.
+	 * @return The corresponding IResource in the workspace (note that this resource may not exist)
 	 */
-	public IFile getPackageFile();
+	public IResource getPackageResource();
 
 	/**
 	 * @return The path to this package's output file. This path can be filesyste-based or workspace-based.

@@ -28,6 +28,7 @@ import java.util.jar.Manifest;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -123,9 +124,16 @@ public class PackageImpl extends PackageNodeImpl implements IPackage {
 		return ExtensionManager.getPackageType(packageDelegate.getPackageType());
 	}
 	
-	public IFile getPackageFile() {
+	public IResource getPackageResource() {
 		if (isDestinationInWorkspace()) {
-			return getDestinationContainer().getFile(new Path(getName()));
+			// use getFile/getFolder to for resource handles (never return null unless we're out of workspace)
+			if (isExploded())
+			{
+				return getDestinationContainer().getFolder(new Path(getName()));
+			} else {
+				return getDestinationContainer().getFile(new Path(getName()));
+			}
+//			return getDestinationContainer().findMember(getName());
 		} else return null;
 	}
 
