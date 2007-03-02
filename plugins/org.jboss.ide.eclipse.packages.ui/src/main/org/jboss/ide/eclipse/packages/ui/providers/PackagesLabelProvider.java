@@ -122,7 +122,11 @@ public class PackagesLabelProvider implements ILabelProvider {
 		if (PackagesUIPlugin.getDefault().getPreferenceStore().getBoolean(
 			PackagesUIPlugin.PREF_SHOW_PACKAGE_OUTPUT_PATH))
 		{
-			text += " [" + pkg.getDestinationPath() + "]";
+			if (pkg.isDestinationInWorkspace()) {
+				text += " [" + pkg.getDestinationContainer().getFullPath() + "]";
+			} else {
+				text += " [" + pkg.getDestinationPath() + "]";
+			}
 			
 		}
 		return text;
