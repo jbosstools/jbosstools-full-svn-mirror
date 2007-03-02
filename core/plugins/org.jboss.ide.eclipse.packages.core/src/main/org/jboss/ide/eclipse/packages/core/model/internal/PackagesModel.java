@@ -23,7 +23,6 @@ package org.jboss.ide.eclipse.packages.core.model.internal;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -32,18 +31,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.tools.ant.DirectoryScanner;
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.core.util.ProjectUtil;
-import org.jboss.ide.eclipse.packages.core.ExtensionManager;
 import org.jboss.ide.eclipse.packages.core.Trace;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
@@ -59,7 +54,6 @@ import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFolder;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackages;
-import org.jboss.ide.eclipse.packages.core.model.types.IPackageType;
 import org.jboss.ide.eclipse.packages.core.project.PackagesNature;
 
 public class PackagesModel {
@@ -245,7 +239,13 @@ public class PackagesModel {
 		return new PackageFileSetImpl(project, new XbFileSet());
 	}
 	
-	public void removePackage(IPackage pkg) {
+	public void removePackage(IPackage pkg)
+	{
+		removePackage(pkg, true);
+	}
+	
+	public void removePackage (IPackage pkg, boolean save)
+	{
 		if (projectPackages.containsKey(pkg.getProject()))
 		{
 			if (getProjectPackages(pkg.getProject()).contains(pkg))
@@ -259,7 +259,9 @@ public class PackagesModel {
 			packages.removeChild(packageImpl.getNodeDelegate());
 		}
 		
-		saveModel(pkg.getProject(), null);
+		if (save)
+			saveModel(pkg.getProject(), null);
+		
 		fireNodeRemoved(pkg);
 	}
 	
