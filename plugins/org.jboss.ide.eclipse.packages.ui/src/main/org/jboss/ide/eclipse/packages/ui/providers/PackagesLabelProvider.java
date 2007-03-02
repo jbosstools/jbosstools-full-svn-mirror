@@ -1,6 +1,5 @@
 package org.jboss.ide.eclipse.packages.ui.providers;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
@@ -39,7 +38,7 @@ public class PackagesLabelProvider implements ILabelProvider {
 	}
 	
 	private Image internalGetImage(Object element) {
-		if (element instanceof IProject)
+		if (element instanceof PackagesContentProvider.ProjectWrapper)
 		{
 			return PlatformUI.getWorkbench().getSharedImages().getImage(IDE.SharedImages.IMG_OBJ_PROJECT);
 		}
@@ -95,9 +94,9 @@ public class PackagesLabelProvider implements ILabelProvider {
 	}
 
 	private String internalGetText(Object element) {
-		if (element instanceof IProject)
+		if (element instanceof PackagesContentProvider.ProjectWrapper)
 		{
-			return ((IProject)element).getName();
+			return ((PackagesContentProvider.ProjectWrapper)element).project.getName();
 		}
 		else if (element instanceof IPackageNode)
 		{
