@@ -223,15 +223,7 @@ public class PackageBuildDelegate {
 			}
 		});
 		
-		IFile file = pkg.getPackageFile();
-		if (file != null)
-		{
-			try {
-				file.refreshLocal(IResource.DEPTH_ONE, monitor);
-			} catch (CoreException e) {
-				Trace.trace(getClass(), e);
-			}
-		}
+		BuildFileOperations.refreshPackage(pkg);
 		
 		monitor.done();
 		events.fireFinishedBuildingPackage(pkg);
@@ -252,7 +244,7 @@ public class PackageBuildDelegate {
 		for (Iterator iter = packages.iterator(); iter.hasNext(); )
 		{
 			IPackage pkg = (IPackage) iter.next();
-			IFile packageFile = pkg.getPackageFile();
+			IResource packageFile = pkg.getPackageResource();
 			
 			if (packageFile.exists())
 			{
@@ -343,8 +335,14 @@ public class PackageBuildDelegate {
 			try {
 				delta.accept(new IResourceDeltaVisitor () { 
 					public boolean visit(IResourceDelta delta) throws CoreException {
-						if (delta.getResource().getType() == IResource.FILE)
+						if (delta.getResource().getType() == IResource.FILE)  {
 							processFileDelta(project, delta, packagesBeingChanged, monitor);
+						} else if (delta.getResource().getType() == IResource.PROJECT) {
+							if ((delta.getKind() & IResourceDelta.REMOVED) > 0)
+							{
+								processProjectRemoved ((IProject) delta.getResource());
+							}
+						}
 						return true;
 					}
 				});
@@ -403,6 +401,11 @@ public class PackageBuildDelegate {
 			events.fireFinishedBuildingPackage(p);
 		}
 
+		for (Iterator iter = packagesBeingChanged.iterator(); iter.hasNext(); )
+		{
+			IPackage pkg = (IPackage) iter.next();
+			BuildFileOperations.refreshPackage(pkg);
+		}
 	}
 	
 	private void processFileDelta (IProject project, IResourceDelta delta, ArrayList packagesBeingChanged, IProgressMonitor monitor)
@@ -453,6 +456,18 @@ public class PackageBuildDelegate {
 			{
 				filesToRemove.put(file, filesets);
 			}
+		}
+	}
+	
+	private void processProjectRemoved (IProject project)
+	{
+		// For now removing model objects should be good enough, need to come back later and add support for removing any package references
+		
+		List packages = PackagesModel.instance().getProjectPackages(project);
+		for (Iterator iter = packages.iterator(); iter.hasNext(); )
+		{
+			IPackage pkg = (IPackage) iter.next();
+			PackagesModel.instance().removePackage(pkg, false);
 		}
 	}
 	
