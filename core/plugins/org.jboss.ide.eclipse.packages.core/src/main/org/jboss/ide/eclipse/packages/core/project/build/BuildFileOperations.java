@@ -12,6 +12,7 @@ import java.util.Iterator;
 import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -33,7 +34,7 @@ public class BuildFileOperations {
 
 	private PackageBuildDelegate builder;
 	private Hashtable scannerCache;
-	private NullProgressMonitor nullMonitor = new NullProgressMonitor();
+	private static NullProgressMonitor nullMonitor = new NullProgressMonitor();
 	
 	public BuildFileOperations (PackageBuildDelegate builder)
 	{
@@ -65,6 +66,8 @@ public class BuildFileOperations {
 					
 					IPath destPath = new Path(packagedFile.getAbsolutePath());
 					builder.getEvents().fireFileRemoved(topLevelPackages[j], filesets[i], destPath);
+					
+					BuildFileOperations.refreshPackage(topLevelPackages[j]);
 				}
 			}
 		}	
@@ -120,6 +123,8 @@ public class BuildFileOperations {
 						
 						IPath destPath = new Path(packageFiles[j].getAbsolutePath());
 						builder.getEvents().fireFileUpdated(topLevelPackages[j], filesets[i], destPath);
+						
+						BuildFileOperations.refreshPackage(topLevelPackages[j]);
 					} catch (FileNotFoundException e) {
 						Trace.trace(getClass(), e);
 					} catch (IOException e) {
@@ -359,6 +364,7 @@ public class BuildFileOperations {
 			// File name was changed, rename
 			File newPackageFile = new File(packageFile.getParent(), pkg.getName());
 			packageFile.renameTo(newPackageFile, packageFile.getArchiveDetector());
+			TruezipUtil.umount(newPackageFile);
 		}
 		else if (packageFile.getDelegate().isFile() && pkg.isExploded())
 		{
@@ -368,14 +374,21 @@ public class BuildFileOperations {
 			
 			packageFile.renameTo(tmpFile, ArchiveDetector.NULL);
 			tmpFile.renameTo(newPackageFile, ArchiveDetector.NULL);
+			
+			// can't umount a non-package file
 		}
 		else if (packageFile.getDelegate().isDirectory() && !pkg.isExploded())
 		{
 			//	Changed to compressed from exploded
 			File tmpFile = new File(packageFile.getParent(), "_tmp_" + pkg.getName());
-			packageFile.renameTo(tmpFile, ArchiveDetector.DEFAULT);
-			tmpFile.renameTo(packageFile, ArchiveDetector.DEFAULT);
+			File newPackageFile = new File(packageFile.getParent(), pkg.getName());
+			
+			packageFile.renameTo(tmpFile);
+			tmpFile.renameTo(newPackageFile, ArchiveDetector.DEFAULT);
+			TruezipUtil.umount(newPackageFile);
 		}
+		
+		refreshPackage(pkg);
 	}
 	
 	public void changeFileset (IPackageFileSet fileset)
@@ -405,5 +418,23 @@ public class BuildFileOperations {
 		}
 		
 		updateScannerCache(fileset);
+	}
+	
+	public static void refreshPackage (IPackage pkg)
+	{
+		if (pkg.isDestinationInWorkspace())
+		{
+			try {
+				if (pkg.getPackageResource() != null)
+				{
+					pkg.getPackageResource().clearHistory(nullMonitor);
+					pkg.getPackageResource().refreshLocal(IResource.DEPTH_INFINITE, nullMonitor);
+				}
+				pkg.getDestinationContainer().clearHistory(nullMonitor);
+				pkg.getDestinationContainer().refreshLocal(IResource.DEPTH_INFINITE, nullMonitor);
+			} catch (CoreException e) {
+				Trace.trace(BuildFileOperations.class, e);
+			}
+		}
 	}
 }
