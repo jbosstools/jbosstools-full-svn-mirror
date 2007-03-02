@@ -34,7 +34,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
@@ -345,7 +344,7 @@ public class PackagesEARTest extends TestCase {
 		assertNotNull(pkg);
 		
 		PackagesCore.buildPackage(pkg, nullMonitor);
-		IFile packageFile = pkg.getPackageFile();
+		IResource packageFile = pkg.getPackageResource();
 		
 		assertTrue(packageFile.exists());
 		assertEquals(packageFile.getName(), "MyApp.ear");
@@ -407,7 +406,7 @@ public class PackagesEARTest extends TestCase {
 		PackagesCore.attach(jar, nullMonitor);
 		PackagesCore.buildPackage(jar, nullMonitor);
 		
-		IFile jarFile = jar.getPackageFile();
+		IResource jarFile = jar.getPackageResource();
 		assertTrue(jarFile.exists());
 		
 	}

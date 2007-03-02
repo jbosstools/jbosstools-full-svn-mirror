@@ -72,7 +72,7 @@ public class IncrementalBuilderTest extends BuildTest {
 			assertTrue(startedCollecting);
 			assertTrue(finishedCollecting);
 			
-			assertTrue(simpleJar.getPackageFile().exists());
+			assertTrue(simpleJar.getPackageResource().exists());
 			assertTestXmlContents (testXml_originalContents);
 			
 			startedBuildingPackage = startedCollecting = finishedCollecting = false;
