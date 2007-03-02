@@ -187,7 +187,7 @@ public class BuildTest extends TestCase {
 	
 	protected File getPackageFile (IPackage pkg)
 	{
-		return new File(pkg.getPackageFile().getRawLocation().toFile());
+		return new File(pkg.getPackageResource().getRawLocation().toFile());
 	}
 	
 	protected File findFile (File jarFile, String name)
