@@ -2,6 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension-point id="nodePopupMenus" name="Popup Menus for IPackageNodes" schema="schema/nodePopupMenus.exsd"/>
+   <extension-point id="newPackageActions" name="Actions to create new Package types" schema="schema/newPackageActions.xsd"/>
    <extension
          point="org.eclipse.ui.views">
       <view
@@ -82,6 +83,14 @@
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer class="org.jboss.ide.eclipse.packages.ui.PrefsInitializer"/>
+   </extension>
+   <extension
+         point="org.jboss.ide.eclipse.packages.ui.newPackageActions">
+      <newPackageAction
+            class="org.jboss.ide.eclipse.packages.ui.actions.NewJARAction"
+            icon="icons/new_package.gif"
+            id="org.jboss.ide.eclipse.packages.ui.newJARAction"
+            label="JAR"/>
    </extension>
 
 </plugin>

@@ -8,7 +8,6 @@ import java.util.Iterator;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -25,8 +24,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.ProgressMonitorPart;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -53,6 +52,7 @@ import org.jboss.ide.eclipse.packages.ui.PackagesUIMessages;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
 import org.jboss.ide.eclipse.packages.ui.actions.BuildPackagesAction;
 import org.jboss.ide.eclipse.packages.ui.actions.NewJARAction;
+import org.jboss.ide.eclipse.packages.ui.actions.NewPackageAction;
 import org.jboss.ide.eclipse.packages.ui.properties.NodeWithProperties;
 import org.jboss.ide.eclipse.packages.ui.providers.PackagesContentProvider;
 import org.jboss.ide.eclipse.packages.ui.providers.PackagesLabelProvider;
@@ -69,6 +69,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	private Composite noProjectSelectedComposite;
 	private Composite loadingPackagesComposite;
 	private Composite mainPage;
+	private Composite createPackagesComposite;
 //	private Label projectLabel;
 	private TreeViewer packageTree;
 	private ProgressMonitorPart loadingProgress;
@@ -76,12 +77,11 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	private NewJARAction newJARAction;
 	private BuildPackagesAction buildAllAction, buildPackageAction;
 	private Action collapseAllAction;
-	private GroupMarker newPackageContributions;
 	private MenuManager newPackageManager, contextMenuManager;
 	private IProject currentProject;
 	private boolean loading;
 	private PackagesContentProvider contentProvider;
-	private ArrayList nodePopupMenuContributions;
+	private ArrayList nodePopupMenuContributions, newPackageActions;
 	
 	public static final String VIEW_ID = "org.jboss.ide.eclipse.packages.ui.ProjectPackagesView";
 	
@@ -93,6 +93,8 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		NodeContribution[] menus = ExtensionManager.findNodePopupMenuContributions();
 		nodePopupMenuContributions = new ArrayList(Arrays.asList(menus));
 		Collections.sort(nodePopupMenuContributions);
+		
+		newPackageActions = new ArrayList(Arrays.asList(ExtensionManager.findNewPackageActions()));
 	}
 	
 	public static ProjectPackagesView instance()
@@ -110,20 +112,15 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		noProjectSelectedComposite.setLayout(new FillLayout());
 		new Label(noProjectSelectedComposite, SWT.NONE).setText(PackagesUIMessages.ProjectPackagesView_noProjectSelectedMessage);
 		
-		createPackageLink = new Link(pageBook, SWT.NONE);
-		createPackageLink.addSelectionListener(new SelectionAdapter () {
-			public void widgetSelected(SelectionEvent e) {
-				createPackagePressed();
-			}
-		});
-				
+		createPackagesComposite = new Composite(pageBook, SWT.NONE);
+		createPackagesComposite.setLayout(new GridLayout(1, false));
+		new Label(createPackagesComposite, SWT.NONE).setText(PackagesUIMessages.ProjectPackagesView_noPackagesDefinedMessage);
+		new Label(createPackagesComposite, SWT.NONE).setText(PackagesUIMessages.ProjectPackagesView_createPackagesMessage);
+		addNewPackageActions(createPackagesComposite);
+		
 		loadingPackagesComposite = new Composite(pageBook, SWT.NONE);
 		loadingPackagesComposite.setLayout(new RowLayout(SWT.HORIZONTAL));
 		loadingProgress = new ProgressMonitorPart(loadingPackagesComposite, null);
-		
-		String message = PackagesUIMessages.ProjectPackagesView_noPackagesDefinedMessage;
-		message += " " + PackagesUIMessages.ProjectPackagesView_createPackage_link;
-		createPackageLink.setText(message);
 		
 		mainPage = new Composite(pageBook, SWT.NONE);
 		mainPage.setLayout(createGridLayoutWithNoMargins(1));
@@ -172,14 +169,13 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		return layout;
 	}
 	
-	private void showCreatePackageLink ()
+	private void showCreatePackages ()
 	{
-		String message = 
-			PackagesUIMessages.bind(PackagesUIMessages.ProjectPackagesView_noPackagesDefinedMessage, currentProject.getName());
-		message += " " + PackagesUIMessages.ProjectPackagesView_createPackage_link;
+//		String message = 
+//			PackagesUIMessages.bind(PackagesUIMessages.ProjectPackagesView_noPackagesDefinedMessage, currentProject.getName());
+//		message += " " + PackagesUIMessages.ProjectPackagesView_createPackage_link;
 		
-		createPackageLink.setText(message);
-		pageBook.showPage(createPackageLink);
+		pageBook.showPage(createPackagesComposite);
 	}
 	
 	private void packageNodeSelected (IPackageNode node)
@@ -233,8 +229,6 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		
 		buildPackageAction = new BuildPackagesAction();
 		buildPackageAction.init(getViewSite().getWorkbenchWindow());
-		
-		newPackageContributions = new GroupMarker(NEW_PACKAGE_ADDITIONS);
 	}
 	
 	private void createToolbar ()
@@ -249,11 +243,14 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	private void createMenu ()
 	{
 		newPackageManager = new MenuManager(PackagesUIMessages.ProjectPackagesView_newPackageMenu_label, NEW_PACKAGE_MENU_ID);
-		newPackageManager.add(newJARAction);
-		newPackageManager.add(new Separator());
-		newPackageManager.add(newPackageContributions);
+//		newPackageManager.add(newJARAction);
+//		newPackageManager.add(new Separator());
 		
-//		IMenuManager manager = getViewSite().getActionBars().getMenuManager();
+		addNewPackageActions(newPackageManager);
+		
+		IMenuManager manager = getViewSite().getActionBars().getMenuManager();
+		addNewPackageActions(manager);
+		
 //		manager.add(newPackageContributions);
 //		
 	}
@@ -261,8 +258,6 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	public static final String NEW_PACKAGE_MENU_ID = "org.jboss.ide.eclipse.packages.ui.newPackageMenu";
 	public static final String NODE_CONTEXT_MENU_ID = "org.jboss.ide.eclipse.packages.ui.nodeContextMenu";
 	public static final String NEW_PACKAGE_ADDITIONS = "newPackageAdditions";
-	
-	private Link createPackageLink;
 	
 	private void createContextMenu ()
 	{
@@ -377,6 +372,59 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		}
 	}
 	
+	private void addNewPackageActions (IMenuManager manager)
+	{
+		for (Iterator iter = newPackageActions.iterator(); iter.hasNext(); )
+		{
+			final NewPackageAction action = (NewPackageAction) iter.next();
+			
+			Action actionWrapper = new Action () {
+				public String getId() {
+					return action.getId();
+				}
+				
+				public ImageDescriptor getImageDescriptor() {
+					return action.getIconDescriptor();
+				}
+				
+				public String getText() {
+					return action.getLabel();
+				}
+				
+				public void run() {
+					action.getAction().run(this);
+				}
+			};
+			
+			manager.add(actionWrapper);
+		}
+	}
+	
+	private void addNewPackageActions (Composite composite)
+	{
+		for (Iterator iter = newPackageActions.iterator(); iter.hasNext();)
+		{
+			final NewPackageAction action = (NewPackageAction) iter.next();
+			
+			Composite linkComposite = new Composite(composite, SWT.NONE);
+			linkComposite.setLayout(new GridLayout(2, false));
+			linkComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+			
+			new Label(linkComposite, SWT.NONE).setImage(action.getIcon());
+			
+			Link actionLink = new Link(linkComposite, SWT.NONE);
+			actionLink.setText("<a href=\"create\">" + action.getLabel() + "</a>");
+			actionLink.addSelectionListener(new SelectionListener () {
+				public void widgetDefaultSelected(SelectionEvent e) {
+					widgetSelected(e);
+				}
+				
+				public void widgetSelected(SelectionEvent e) {
+					action.getAction().run(null);
+				}
+			});
+		}
+	}
 	
 	public void projectSelected(final IProject project)
 	{
@@ -397,7 +445,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 					IPackage packages[] = PackagesCore.getProjectPackages(project, loadingProgress);
 					
 					if (packages == null || packages.length == 0) {
-						showCreatePackageLink();
+						showCreatePackages();
 					}
 					
 					else {
@@ -435,7 +483,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 			});
 		}
 		else {
-			showCreatePackageLink();
+			showCreatePackages();
 			collapseAllAction.setEnabled(false);
 		}
 		
