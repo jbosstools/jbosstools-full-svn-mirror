@@ -28,6 +28,7 @@ import java.util.Properties;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeVisitor;
 import org.jboss.ide.eclipse.packages.core.model.IPackageReference;
@@ -149,6 +150,8 @@ public abstract class PackageNodeImpl implements IPackageNode {
 	
 	public void setProperty(String property, String value) {
 		getProperties().setProperty(property, value);
+		
+		PackagesModel.instance().saveModel(getProject(), new NullProgressMonitor());
 	}
 
 	public Properties getProperties() {
