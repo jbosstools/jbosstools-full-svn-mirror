@@ -12,6 +12,7 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIMessages;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
+import org.jboss.ide.eclipse.packages.ui.properties.NodeWithProperties;
 import org.jboss.ide.eclipse.packages.ui.providers.PackagesContentProvider.FileSetProperty;
 
 public class PackagesLabelProvider implements ILabelProvider {
@@ -42,9 +43,9 @@ public class PackagesLabelProvider implements ILabelProvider {
 		{
 			return PlatformUI.getWorkbench().getSharedImages().getImage(IDE.SharedImages.IMG_OBJ_PROJECT);
 		}
-		else if (element instanceof IPackageNode)
+		else if (element instanceof NodeWithProperties)
 		{
-			IPackageNode node = (IPackageNode) element;
+			IPackageNode node = ((NodeWithProperties) element).getNode();
 			switch (node.getNodeType())
 			{
 				case IPackageNode.TYPE_PACKAGE: {
@@ -98,14 +99,14 @@ public class PackagesLabelProvider implements ILabelProvider {
 		{
 			return ((PackagesContentProvider.ProjectWrapper)element).project.getName();
 		}
-		else if (element instanceof IPackageNode)
+		else if (element instanceof NodeWithProperties)
 		{
-			IPackageNode node = (IPackageNode) element;
+			IPackageNode node = ((NodeWithProperties) element).getNode();
 			switch (node.getNodeType())
 			{
-				case IPackageNode.TYPE_PACKAGE: return getPackageText((IPackage)element);
-				case IPackageNode.TYPE_PACKAGE_FOLDER: return getPackageFolderText((IPackageFolder)element);
-				case IPackageNode.TYPE_PACKAGE_FILESET: return getPackageFileSetText((IPackageFileSet)element);
+				case IPackageNode.TYPE_PACKAGE: return getPackageText((IPackage)node);
+				case IPackageNode.TYPE_PACKAGE_FOLDER: return getPackageFolderText((IPackageFolder)node);
+				case IPackageNode.TYPE_PACKAGE_FILESET: return getPackageFileSetText((IPackageFileSet)node);
 			}
 		}
 		else if (element instanceof FileSetProperty)
