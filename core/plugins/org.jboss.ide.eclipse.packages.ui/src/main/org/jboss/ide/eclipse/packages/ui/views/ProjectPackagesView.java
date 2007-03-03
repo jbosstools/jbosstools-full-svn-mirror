@@ -24,6 +24,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.ProgressMonitorPart;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
@@ -69,7 +70,8 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	private Composite noProjectSelectedComposite;
 	private Composite loadingPackagesComposite;
 	private Composite mainPage;
-	private Composite createPackagesComposite;
+	private ScrolledComposite createPackagesComposite;
+	private Label noPackagesLabel;
 //	private Label projectLabel;
 	private TreeViewer packageTree;
 	private ProgressMonitorPart loadingProgress;
@@ -112,11 +114,20 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		noProjectSelectedComposite.setLayout(new FillLayout());
 		new Label(noProjectSelectedComposite, SWT.NONE).setText(PackagesUIMessages.ProjectPackagesView_noProjectSelectedMessage);
 		
-		createPackagesComposite = new Composite(pageBook, SWT.NONE);
-		createPackagesComposite.setLayout(new GridLayout(1, false));
-		new Label(createPackagesComposite, SWT.NONE).setText(PackagesUIMessages.ProjectPackagesView_noPackagesDefinedMessage);
-		new Label(createPackagesComposite, SWT.NONE).setText(PackagesUIMessages.ProjectPackagesView_createPackagesMessage);
-		addNewPackageActions(createPackagesComposite);
+		createPackagesComposite = new ScrolledComposite(pageBook, SWT.H_SCROLL | SWT.V_SCROLL);
+		Composite subComposite = new Composite(createPackagesComposite, SWT.NONE);
+		subComposite.setLayout(new GridLayout(1, false));
+		createPackagesComposite.setContent(subComposite);
+		createPackagesComposite.setExpandHorizontal(true);
+		createPackagesComposite.setExpandVertical(true);
+		
+		noPackagesLabel = new Label(subComposite, SWT.WRAP);
+		noPackagesLabel.setText(PackagesUIMessages.ProjectPackagesView_noPackagesDefinedMessage);
+		
+		new Label(subComposite, SWT.NONE).setText(PackagesUIMessages.ProjectPackagesView_createPackagesMessage);
+		addNewPackageActions(subComposite);
+
+		createPackagesComposite.setMinSize(subComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
 		loadingPackagesComposite = new Composite(pageBook, SWT.NONE);
 		loadingPackagesComposite.setLayout(new RowLayout(SWT.HORIZONTAL));
@@ -171,9 +182,9 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	
 	private void showCreatePackages ()
 	{
-//		String message = 
-//			PackagesUIMessages.bind(PackagesUIMessages.ProjectPackagesView_noPackagesDefinedMessage, currentProject.getName());
-//		message += " " + PackagesUIMessages.ProjectPackagesView_createPackage_link;
+		String message = 
+			PackagesUIMessages.bind(PackagesUIMessages.ProjectPackagesView_noPackagesDefinedMessage, currentProject.getName());
+		noPackagesLabel.setText(message);
 		
 		pageBook.showPage(createPackagesComposite);
 	}
@@ -407,8 +418,8 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 			final NewPackageAction action = (NewPackageAction) iter.next();
 			
 			Composite linkComposite = new Composite(composite, SWT.NONE);
-			linkComposite.setLayout(new GridLayout(2, false));
-			linkComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+			linkComposite.setLayout(createGridLayoutWithNoMargins(2));
+			linkComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 			
 			new Label(linkComposite, SWT.NONE).setImage(action.getIcon());
 			
