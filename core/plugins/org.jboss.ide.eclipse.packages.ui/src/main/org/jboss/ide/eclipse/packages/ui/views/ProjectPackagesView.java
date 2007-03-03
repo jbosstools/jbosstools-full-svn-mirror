@@ -594,7 +594,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		if (selection != null && !selection.isEmpty())
 		{
 			Object selected = selection.getFirstElement();
-			if (selected instanceof IPackageNode) return (IPackageNode)selected;
+			if (selected instanceof NodeWithProperties) return ((NodeWithProperties)selected).getNode();
 			else if (selected instanceof FileSetProperty) return ((FileSetProperty)selected).getFileSet();
 		}
 		return null;
