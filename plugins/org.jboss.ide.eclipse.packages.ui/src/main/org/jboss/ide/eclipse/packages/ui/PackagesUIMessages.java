@@ -44,7 +44,7 @@ public class PackagesUIMessages extends NLS {
 
 	public static String ProjectPackagesView_noProjectSelectedMessage;
 	public static String ProjectPackagesView_noPackagesDefinedMessage;
-	public static String ProjectPackagesView_createPackage_link;
+	public static String ProjectPackagesView_createPackagesMessage;
 	public static String ProjectPackagesView_newFolderAction_label;
 	public static String ProjectPackagesView_newFilesetAction_label;
 	public static String ProjectPackagesView_collapseAllAction_label;
