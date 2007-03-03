@@ -13,7 +13,9 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeVisitor;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackageNodeImpl;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
+import org.jboss.ide.eclipse.packages.ui.properties.NodeWithProperties;
 
 public class PackagesContentProvider implements ITreeContentProvider {
 	
@@ -94,29 +96,42 @@ public class PackagesContentProvider implements ITreeContentProvider {
 		filesetProperties.put(fileset, props);
 	}
 	
+	private NodeWithProperties[] wrapNodes (IPackageNode[] nodes)
+	{
+		NodeWithProperties[] nodesWithProps = new NodeWithProperties[nodes.length];
+		for (int i = 0; i < nodes.length; i++)
+		{
+			nodesWithProps[i] = new NodeWithProperties((PackageNodeImpl)nodes[i]);
+		}
+		return nodesWithProps;
+	}
+	
 	public Object[] getChildren(Object parentElement) {
 		if (parentElement instanceof ProjectWrapper)
 		{
-			return PackagesCore.getProjectPackages(((ProjectWrapper)parentElement).project, null);
+			return wrapNodes(PackagesCore.getProjectPackages(((ProjectWrapper)parentElement).project, null));
 		}
-		else if (parentElement instanceof IPackageFileSet)
+		else if (parentElement instanceof NodeWithProperties)
 		{
-			IPackageFileSet fileset = (IPackageFileSet) parentElement;
-			ArrayList result = ((ArrayList)filesetProperties.get(fileset));
-			return result == null ? new Object[]{} : result.toArray();
-		}
-		else if (parentElement instanceof IPackageNode)
-		{
-			IPackageNode node = (IPackageNode)parentElement;
-			return node.getAllChildren();
+			IPackageNode node = ((NodeWithProperties)parentElement).getNode();
+			if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
+			{
+				IPackageFileSet fileset = (IPackageFileSet) node;
+				ArrayList result = ((ArrayList)filesetProperties.get(fileset));
+				return result == null ? new Object[]{} : result.toArray();
+			}
+			else
+			{
+				return wrapNodes(node.getAllChildren());
+			}
 		}
 		else return new Object[0];
 	}
 
 	public Object getParent(Object element) {
-		if (element instanceof IPackageNode)
+		if (element instanceof NodeWithProperties)
 		{
-			IPackageNode node = (IPackageNode) element;
+			IPackageNode node = ((NodeWithProperties) element).getNode();
 			if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
 			{
 				if (((IPackage)node).isTopLevel() && showProjectRoot()) {
@@ -137,14 +152,18 @@ public class PackagesContentProvider implements ITreeContentProvider {
 		{
 			return true;
 		}
-		if (element instanceof IPackageFileSet)
+		else if (element instanceof NodeWithProperties)
 		{
-			return true;
-		}
-		else if (element instanceof IPackageNode)
-		{
-			IPackageNode node = (IPackageNode) element;
-			return node.hasChildren();
+			NodeWithProperties node = (NodeWithProperties)element;
+			
+			if (node.getNode().getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
+			{
+				return true;
+			}
+			else
+			{
+				return node.getNode().hasChildren();
+			}
 		}
 		return false;
 	}
@@ -154,7 +173,7 @@ public class PackagesContentProvider implements ITreeContentProvider {
 		if (inputElement instanceof IProject[])
 		{
 			IProject[] projects = (IProject[]) inputElement;
-			ProjectWrapper wrappers[] = new ProjectWrapper[projects.length];
+			ProjectWrapper[] wrappers = new ProjectWrapper[projects.length];
 			for (int i = 0; i < projects.length; i++)
 			{
 				wrappers[i] = new ProjectWrapper();
@@ -162,7 +181,10 @@ public class PackagesContentProvider implements ITreeContentProvider {
 			}
 			return wrappers;
 		}
-		
+		else if (inputElement instanceof IPackageNode[])
+		{
+			return wrapNodes((IPackageNode[])inputElement);
+		}
 		return (Object[]) inputElement;
 	}
 

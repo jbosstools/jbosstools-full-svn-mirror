@@ -1,11 +1,16 @@
 package org.jboss.ide.eclipse.packages.ui.actions;
 
-import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.jboss.ide.eclipse.packages.core.Trace;
 
 public class NodePropertiesAction extends AbstractNodeActionDelegate {
 
 	public void run() {
-		PackagesUIPlugin.alert("Placeholder");
+		try {
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("org.eclipse.ui.views.PropertySheet");
+		} catch (PartInitException e) {
+			Trace.trace(getClass(), e);
+		}
 	}
-
 }

@@ -36,7 +36,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
@@ -54,6 +53,7 @@ import org.jboss.ide.eclipse.packages.ui.PackagesUIMessages;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
 import org.jboss.ide.eclipse.packages.ui.actions.BuildPackagesAction;
 import org.jboss.ide.eclipse.packages.ui.actions.NewJARAction;
+import org.jboss.ide.eclipse.packages.ui.properties.NodeWithProperties;
 import org.jboss.ide.eclipse.packages.ui.providers.PackagesContentProvider;
 import org.jboss.ide.eclipse.packages.ui.providers.PackagesLabelProvider;
 import org.jboss.ide.eclipse.packages.ui.providers.PackagesContentProvider.FileSetProperty;
@@ -82,6 +82,8 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	private boolean loading;
 	private PackagesContentProvider contentProvider;
 	private ArrayList nodePopupMenuContributions;
+	
+	public static final String VIEW_ID = "org.jboss.ide.eclipse.packages.ui.ProjectPackagesView";
 	
 	private static ProjectPackagesView _instance;
 	public ProjectPackagesView ()
@@ -273,7 +275,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 				{
 					Object element = selection.getFirstElement();
 					
-					if (!(element instanceof IPackageNode || element instanceof PackagesContentProvider.ProjectWrapper)) return;
+					if (!(element instanceof NodeWithProperties || element instanceof PackagesContentProvider.ProjectWrapper)) return;
 					
 					if (element instanceof PackagesContentProvider.ProjectWrapper)
 					{
@@ -281,7 +283,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 						manager.add(newPackageManager);
 					}
 					else {
-						IPackageNode node = (IPackageNode) selection.getFirstElement();
+						IPackageNode node = ((NodeWithProperties) selection.getFirstElement()).getNode();
 						
 						if (node.getNodeType() == IPackageNode.TYPE_PACKAGE
 								|| node.getNodeType() == IPackageNode.TYPE_PACKAGE_FOLDER)
@@ -661,6 +663,10 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	
 	public void packageNodeAttached(IPackageNode attached) {
 		packageNodeAdded(attached);
+	}
+	
+	public String getContributorId() {
+		return getSite().getId();
 	}
 	
 	public IProject getCurrentProject ()
