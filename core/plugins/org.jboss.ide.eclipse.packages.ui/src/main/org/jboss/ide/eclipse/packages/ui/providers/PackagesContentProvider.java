@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
@@ -20,10 +21,12 @@ import org.jboss.ide.eclipse.packages.ui.properties.NodeWithProperties;
 public class PackagesContentProvider implements ITreeContentProvider {
 	
 	private Hashtable filesetProperties;
+	protected boolean adaptNodeProperties;
 	
-	public PackagesContentProvider ()
+	public PackagesContentProvider (boolean adaptNodeProperties)
 	{
 		filesetProperties = new Hashtable();
+		this.adaptNodeProperties = adaptNodeProperties;
 	}
 	
 	private boolean showProjectRoot ()
@@ -96,14 +99,20 @@ public class PackagesContentProvider implements ITreeContentProvider {
 		filesetProperties.put(fileset, props);
 	}
 	
-	private NodeWithProperties[] wrapNodes (IPackageNode[] nodes)
+	private Object[] wrapNodes (IPackageNode[] nodes)
 	{
-		NodeWithProperties[] nodesWithProps = new NodeWithProperties[nodes.length];
-		for (int i = 0; i < nodes.length; i++)
+		if (adaptNodeProperties)
 		{
-			nodesWithProps[i] = new NodeWithProperties((PackageNodeImpl)nodes[i]);
+			NodeWithProperties[] nodesWithProps = new NodeWithProperties[nodes.length];
+			for (int i = 0; i < nodes.length; i++)
+			{
+				nodesWithProps[i] = new NodeWithProperties((PackageNodeImpl)nodes[i]);
+			}
+			return nodesWithProps;
 		}
-		return nodesWithProps;
+		else {
+			return nodes;
+		}
 	}
 	
 	public Object[] getChildren(Object parentElement) {
@@ -111,34 +120,40 @@ public class PackagesContentProvider implements ITreeContentProvider {
 		{
 			return wrapNodes(PackagesCore.getProjectPackages(((ProjectWrapper)parentElement).project, null));
 		}
-		else if (parentElement instanceof NodeWithProperties)
+		else if (parentElement instanceof IAdaptable)
 		{
-			IPackageNode node = ((NodeWithProperties)parentElement).getNode();
-			if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
+			IPackageNode node = (IPackageNode) ((IAdaptable)parentElement).getAdapter(IPackageNode.class);
+			if (node != null)
 			{
-				IPackageFileSet fileset = (IPackageFileSet) node;
-				ArrayList result = ((ArrayList)filesetProperties.get(fileset));
-				return result == null ? new Object[]{} : result.toArray();
-			}
-			else
-			{
-				return wrapNodes(node.getAllChildren());
+				if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
+				{
+					IPackageFileSet fileset = (IPackageFileSet) node;
+					ArrayList result = ((ArrayList)filesetProperties.get(fileset));
+					return result == null ? new Object[0] : result.toArray();
+				}
+				else
+				{
+					return wrapNodes(node.getAllChildren());
+				}
 			}
 		}
-		else return new Object[0];
+		return new Object[0];
 	}
 
 	public Object getParent(Object element) {
-		if (element instanceof NodeWithProperties)
+		if (element instanceof IAdaptable)
 		{
-			IPackageNode node = ((NodeWithProperties) element).getNode();
-			if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
+			IPackageNode node = (IPackageNode) ((IAdaptable)element).getAdapter(IPackageNode.class);
+			if (node != null)
 			{
-				if (((IPackage)node).isTopLevel() && showProjectRoot()) {
-					return node.getProject();
+				if (node.getNodeType() == IPackageNode.TYPE_PACKAGE)
+				{
+					if (((IPackage)node).isTopLevel() && showProjectRoot()) {
+						return node.getProject();
+					}
 				}
+				return node.getParent();
 			}
-			return node.getParent();
 		}
 		else if (element instanceof FileSetProperty)
 		{
@@ -152,17 +167,20 @@ public class PackagesContentProvider implements ITreeContentProvider {
 		{
 			return true;
 		}
-		else if (element instanceof NodeWithProperties)
+		else if (element instanceof IAdaptable)
 		{
-			NodeWithProperties node = (NodeWithProperties)element;
+			IPackageNode node = (IPackageNode) ((IAdaptable)element).getAdapter(IPackageNode.class);
 			
-			if (node.getNode().getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
+			if (node != null)
 			{
-				return true;
-			}
-			else
-			{
-				return node.getNode().hasChildren();
+				if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
+				{
+					return true;
+				}
+				else
+				{
+					return node.hasChildren();
+				}
 			}
 		}
 		return false;

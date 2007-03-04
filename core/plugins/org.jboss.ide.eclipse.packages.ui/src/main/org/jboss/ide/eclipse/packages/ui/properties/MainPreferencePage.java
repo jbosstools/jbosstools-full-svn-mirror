@@ -5,10 +5,12 @@ import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
@@ -31,18 +33,23 @@ public class MainPreferencePage extends PreferencePage implements
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
 		
-		showPackageOutputPath = new Button(main, SWT.CHECK);
-		showPackageOutputPath.setText("Show package output path in Project Packages view.");
+		Group viewPrefGroup = new Group(main, SWT.NONE);
+		viewPrefGroup.setText("Project Packages View");
+		viewPrefGroup.setLayout(new GridLayout(1, false));
+		viewPrefGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		showPackageOutputPath = new Button(viewPrefGroup, SWT.CHECK);
+		showPackageOutputPath.setText("Show full output path next to packages.");
 		showPackageOutputPath.setSelection(
 			prefs.getBoolean(PackagesUIPlugin.PREF_SHOW_PACKAGE_OUTPUT_PATH));
 		
-		showFullFilesetRootDir = new Button(main, SWT.CHECK);
-		showFullFilesetRootDir.setText("Show the full root directory of a fileset in the Project Packages view.");
+		showFullFilesetRootDir = new Button(viewPrefGroup, SWT.CHECK);
+		showFullFilesetRootDir.setText("Show the full root directory of filesets.");
 		showFullFilesetRootDir.setSelection(
 			prefs.getBoolean(PackagesUIPlugin.PREF_SHOW_FULL_FILESET_ROOT_DIR));
 		
-		showProjectRoot = new Button(main, SWT.CHECK);
-		showProjectRoot.setText("Show project root");
+		showProjectRoot = new Button(viewPrefGroup, SWT.CHECK);
+		showProjectRoot.setText("Show project at the root");
 		showProjectRoot.setSelection(
 			prefs.getBoolean(PackagesUIPlugin.PREF_SHOW_PROJECT_ROOT));
 		
@@ -60,8 +67,8 @@ public class MainPreferencePage extends PreferencePage implements
 			}
 		});
 		
-		showAllProjects = new Button(main, SWT.CHECK);
-		showAllProjects.setText("Show all projects");
+		showAllProjects = new Button(viewPrefGroup, SWT.CHECK);
+		showAllProjects.setText("Show all projects that contain packages");
 		showAllProjects.setSelection(
 			prefs.getBoolean(PackagesUIPlugin.PREF_SHOW_ALL_PROJECTS));
 		
