@@ -39,7 +39,7 @@ public class BuildEvents implements IPackagesModelListener {
 			IPackagesBuildListener listener = (IPackagesBuildListener) iter.next();
 			try {	
 					visitor.visitListener(listener);
-			} catch (RuntimeException e) {
+			} catch (Exception e) {
 				Trace.trace(getClass(), e);
 				// Handle exceptions here so we can still broadcast events to the rest of our listeners
 			}
