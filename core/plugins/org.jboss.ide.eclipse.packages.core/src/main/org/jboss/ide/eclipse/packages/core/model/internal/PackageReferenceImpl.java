@@ -254,4 +254,13 @@ public class PackageReferenceImpl implements IPackageReference {
 		return pkg.toString() + "(ref)";
 	}
 	
+	public Object getAdapter(Class adapter) {
+		if (adapter == IPackageNode.class)
+		{
+			return this;
+		} else if (adapter == IProject.class) {
+			return getProject();
+		}
+		return null;
+	}
 }

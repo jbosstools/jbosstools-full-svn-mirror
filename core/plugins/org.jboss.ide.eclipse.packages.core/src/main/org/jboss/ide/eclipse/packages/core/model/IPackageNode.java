@@ -22,6 +22,7 @@
 package org.jboss.ide.eclipse.packages.core.model;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IAdaptable;
 
 /**
  * The super type of all package nodes (IPackage, IPackageFileSet, IPackageFolder)
@@ -31,7 +32,7 @@ import org.eclipse.core.resources.IProject;
  * @author <a href="marshall@jboss.org">Marshall Culpepper</a>
  * @version $Revision$
  */
-public interface IPackageNode {
+public interface IPackageNode extends IAdaptable {
 	
 	/**
 	 * The node type that represents an IPackage
