@@ -46,6 +46,7 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.IPackagesModelListener;
 import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageFolderImpl;
+import org.jboss.ide.eclipse.packages.core.model.internal.PackageNodeImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 import org.jboss.ide.eclipse.packages.ui.ExtensionManager;
 import org.jboss.ide.eclipse.packages.ui.NodeContribution;
@@ -148,7 +149,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		
 		packageTree = new TreeViewer(mainPage, SWT.NONE);
 		packageTree.getTree().setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
-		contentProvider = new PackagesContentProvider();
+		contentProvider = new PackagesContentProvider(true);
 		packageTree.setContentProvider(contentProvider);
 		packageTree.setLabelProvider(new PackagesLabelProvider());
 		pageBook.showPage(noProjectSelectedComposite);
@@ -684,13 +685,15 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 					if (showAllProjects())
 					{
 						packageTree.setInput(PackagesCore.getPackageProjects());
+					} else {
+						packageTree.setInput(new IProject[] { added.getProject() });
 					}
 				}
 				
 				packageTree.refresh();
 			}
 			else {
-				packageTree.add(added.getParent(), added);
+				packageTree.add(added.getParent(), new NodeWithProperties((PackageNodeImpl)added));
 //				packageTree.refresh();
 				packageTree.expandToLevel(added.getParent(), 1);
 			}

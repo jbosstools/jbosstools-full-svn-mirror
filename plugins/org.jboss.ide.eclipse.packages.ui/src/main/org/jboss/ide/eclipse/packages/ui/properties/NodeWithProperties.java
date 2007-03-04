@@ -88,6 +88,8 @@ public class NodeWithProperties implements IAdaptable, IPropertySource {
 		if (adapter == IPropertySource.class)
 		{
 			return this;
+		} else if (adapter == IPackageNode.class) {
+			return node;
 		}
 		return null;
 	}

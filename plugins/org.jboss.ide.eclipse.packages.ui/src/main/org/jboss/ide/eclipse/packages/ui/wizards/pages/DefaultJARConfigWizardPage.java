@@ -35,7 +35,7 @@ public class DefaultJARConfigWizardPage extends WizardPageWithNotification {
 		new Label(main, SWT.NONE).setText("Preview");
 		
 		TreeViewer previewTree = new TreeViewer(main);
-		previewTree.setContentProvider(new PackagesContentProvider());
+		previewTree.setContentProvider(new PackagesContentProvider(false));
 		previewTree.setLabelProvider(new PackagesLabelProvider());
 		previewTree.setInput(wizard.getPackage());
 		

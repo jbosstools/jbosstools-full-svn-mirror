@@ -1,5 +1,6 @@
 package org.jboss.ide.eclipse.packages.ui.providers;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
@@ -12,11 +13,10 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIMessages;
 import org.jboss.ide.eclipse.packages.ui.PackagesUIPlugin;
-import org.jboss.ide.eclipse.packages.ui.properties.NodeWithProperties;
 import org.jboss.ide.eclipse.packages.ui.providers.PackagesContentProvider.FileSetProperty;
 
 public class PackagesLabelProvider implements ILabelProvider {
-
+	
 	public Image getImage(Object element) {
 		Image image = internalGetImage(element);
 		
@@ -43,25 +43,28 @@ public class PackagesLabelProvider implements ILabelProvider {
 		{
 			return PlatformUI.getWorkbench().getSharedImages().getImage(IDE.SharedImages.IMG_OBJ_PROJECT);
 		}
-		else if (element instanceof NodeWithProperties)
+		else if (element instanceof IAdaptable)
 		{
-			IPackageNode node = ((NodeWithProperties) element).getNode();
-			switch (node.getNodeType())
+			IPackageNode node = (IPackageNode) ((IAdaptable)element).getAdapter(IPackageNode.class);
+			if (node != null)
 			{
-				case IPackageNode.TYPE_PACKAGE: {
-					IPackage pkg = (IPackage) node;
-					if (!pkg.isExploded())
-						return PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_PACKAGE);
-					else
-						return PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_PACKAGE_EXPLODED);
-				}
-				case IPackageNode.TYPE_PACKAGE_FOLDER: return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER);
-				case IPackageNode.TYPE_PACKAGE_FILESET: {
-					IPackageFileSet fileset = (IPackageFileSet) node;
-					if (fileset.isSingleFile())
-						return PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_SINGLE_FILE);
-					else
-						return PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_MULTIPLE_FILES);
+				switch (node.getNodeType())
+				{
+					case IPackageNode.TYPE_PACKAGE: {
+						IPackage pkg = (IPackage) node;
+						if (!pkg.isExploded())
+							return PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_PACKAGE);
+						else
+							return PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_PACKAGE_EXPLODED);
+					}
+					case IPackageNode.TYPE_PACKAGE_FOLDER: return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER);
+					case IPackageNode.TYPE_PACKAGE_FILESET: {
+						IPackageFileSet fileset = (IPackageFileSet) node;
+						if (fileset.isSingleFile())
+							return PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_SINGLE_FILE);
+						else
+							return PackagesUIPlugin.getImage(PackagesUIPlugin.IMG_MULTIPLE_FILES);
+					}
 				}
 			}
 		}
@@ -99,14 +102,18 @@ public class PackagesLabelProvider implements ILabelProvider {
 		{
 			return ((PackagesContentProvider.ProjectWrapper)element).project.getName();
 		}
-		else if (element instanceof NodeWithProperties)
+		else if (element instanceof IAdaptable)
 		{
-			IPackageNode node = ((NodeWithProperties) element).getNode();
-			switch (node.getNodeType())
+			IPackageNode node = (IPackageNode) ((IAdaptable)element).getAdapter(IPackageNode.class);
+			
+			if (node != null)
 			{
-				case IPackageNode.TYPE_PACKAGE: return getPackageText((IPackage)node);
-				case IPackageNode.TYPE_PACKAGE_FOLDER: return getPackageFolderText((IPackageFolder)node);
-				case IPackageNode.TYPE_PACKAGE_FILESET: return getPackageFileSetText((IPackageFileSet)node);
+				switch (node.getNodeType())
+				{
+					case IPackageNode.TYPE_PACKAGE: return getPackageText((IPackage)node);
+					case IPackageNode.TYPE_PACKAGE_FOLDER: return getPackageFolderText((IPackageFolder)node);
+					case IPackageNode.TYPE_PACKAGE_FILESET: return getPackageFileSetText((IPackageFileSet)node);
+				}
 			}
 		}
 		else if (element instanceof FileSetProperty)
