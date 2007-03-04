@@ -251,6 +251,8 @@ public abstract class PackageNodeImpl implements IPackageNode {
 		if (adapter.equals(IProject.class))
 		{
 			return getProject();
+		} else if (adapter.equals(IPackageNode.class)) {
+			return this;
 		}
 		else return null;
 	}
