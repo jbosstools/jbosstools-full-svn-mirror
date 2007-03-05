@@ -149,6 +149,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		
 		packageTree = new TreeViewer(mainPage, SWT.NONE);
 		packageTree.getTree().setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+		
 		contentProvider = new PackagesContentProvider(true);
 		packageTree.setContentProvider(contentProvider);
 		packageTree.setLabelProvider(new PackagesLabelProvider());
@@ -676,11 +677,13 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 	public void packageNodeAdded(IPackageNode added) {
 		if (!loading && !packageTree.getTree().isDisposed() && added.getProject().equals(currentProject))
 		{
-			pageBook.showPage(packageTree.getTree());
+			pageBook.showPage(mainPage);
+			
 			if (added.getParent() == null) {
 				if (!showProjectRoot())
 				{
 					packageTree.setInput(PackagesCore.getProjectPackages(added.getProject(), null));
+					packageTree.refresh();
 				} else {
 					if (showAllProjects())
 					{
@@ -688,9 +691,9 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 					} else {
 						packageTree.setInput(new IProject[] { added.getProject() });
 					}
+					packageTree.refresh();
+					packageTree.expandToLevel(2);
 				}
-				
-				packageTree.refresh();
 			}
 			else {
 				packageTree.add(added.getParent(), new NodeWithProperties((PackageNodeImpl)added));
