@@ -357,7 +357,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 		}
 	}
 	
-	private void addContextMenuContribution(final NodeContribution contribution, IPackageNode context)
+	private void addContextMenuContribution(final NodeContribution contribution, final IPackageNode context)
 	{
 		if (contribution.isEnabledForNodeType(context.getNodeType())
 			&& contribution.getActionDelegate().isEnabledFor(context))
@@ -376,8 +376,7 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 				}
 	
 				public void run() {
-					contribution.getActionDelegate().init(ProjectPackagesView.this);
-					contribution.getActionDelegate().run(this);
+					contribution.getActionDelegate().run(context);
 				}
 			};
 			

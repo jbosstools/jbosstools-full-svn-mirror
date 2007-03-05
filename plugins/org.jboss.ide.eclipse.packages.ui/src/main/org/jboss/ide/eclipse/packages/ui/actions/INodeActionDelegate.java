@@ -1,6 +1,5 @@
 package org.jboss.ide.eclipse.packages.ui.actions;
 
-import org.eclipse.ui.IViewActionDelegate;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 
 /**
@@ -9,11 +8,17 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
  * @author Marshall
  *
  */
-public interface INodeActionDelegate extends IViewActionDelegate {
+public interface INodeActionDelegate {
 
 	/**
 	 * @param node
 	 * @return Whether or not this action delegate will be enabled (viewable) for a specific package node.
 	 */
 	public boolean isEnabledFor (IPackageNode node);
+	
+	/**
+	 * Run this action delegate on the passed-in node
+	 * @param node A package node
+	 */
+	public void run (IPackageNode node);
 }
