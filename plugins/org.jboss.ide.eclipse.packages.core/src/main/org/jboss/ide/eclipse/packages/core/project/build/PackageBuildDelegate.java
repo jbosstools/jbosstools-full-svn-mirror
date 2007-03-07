@@ -106,8 +106,13 @@ public class PackageBuildDelegate {
 								IPath root = fileset.getSourcePath();
 								IPath relativePath = ResourceUtil.makeAbsolute(removedFile);
 								relativePath = relativePath.removeFirstSegments(root.segmentCount());
+								relativePath = relativePath.setDevice(null);
 								
 								boolean matchesIncludes = DirectoryScanner.match(fileset.getIncludesPattern(), relativePath.toString());
+								// special hack -- DirectoryScanner text-based matching doesn't do intelligent path based globs when used as a utility 
+								if (!matchesIncludes && fileset.getIncludesPattern().equals("**/*"))
+									matchesIncludes = true;
+								
 								boolean matchesExcludes = false;
 								if (fileset.getExcludesPattern() != null && fileset.getExcludesPattern().length() > 0)
 								{
