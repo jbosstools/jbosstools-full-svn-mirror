@@ -31,6 +31,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.types.selectors.SelectorUtils;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -42,6 +43,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.jboss.ide.eclipse.core.util.ResourceUtil;
 import org.jboss.ide.eclipse.packages.core.Trace;
+import org.jboss.ide.eclipse.packages.core.model.DirectoryScannerFactory;
 import org.jboss.ide.eclipse.packages.core.model.IPackage;
 import org.jboss.ide.eclipse.packages.core.model.IPackageFileSet;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
@@ -108,15 +110,12 @@ public class PackageBuildDelegate {
 								relativePath = relativePath.removeFirstSegments(root.segmentCount());
 								relativePath = relativePath.setDevice(null);
 								
-								boolean matchesIncludes = DirectoryScanner.match(fileset.getIncludesPattern(), relativePath.toString());
-								// special hack -- DirectoryScanner text-based matching doesn't do intelligent path based globs when used as a utility 
-								if (!matchesIncludes && fileset.getIncludesPattern().equals("**/*"))
-									matchesIncludes = true;
+								boolean matchesIncludes = DirectoryScannerFactory.matchesPath(fileset.getIncludesPattern(), relativePath.toString());
 								
 								boolean matchesExcludes = false;
 								if (fileset.getExcludesPattern() != null && fileset.getExcludesPattern().length() > 0)
 								{
-									matchesExcludes = DirectoryScanner.match(fileset.getExcludesPattern(), relativePath.toString());
+									matchesExcludes = DirectoryScannerFactory.matchesPath(fileset.getExcludesPattern(), relativePath.toString());
 								}
 								
 								if (matchesIncludes && !matchesExcludes)

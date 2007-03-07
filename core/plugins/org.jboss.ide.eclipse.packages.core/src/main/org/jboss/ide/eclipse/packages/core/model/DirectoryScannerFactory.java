@@ -24,6 +24,7 @@ package org.jboss.ide.eclipse.packages.core.model;
 import java.io.File;
 
 import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.types.selectors.SelectorUtils;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
@@ -118,4 +119,15 @@ public class DirectoryScannerFactory {
 		return scanner;
 	}
 
+	// special hack -- DirectoryScanner path-based matching needs File.separatorChar, so we convert all slashes to it
+	public static boolean matchesPath (String pattern, String path)
+	{
+		pattern = pattern.replace('/', File.separatorChar);
+		pattern = pattern.replace('\\', File.separatorChar);
+		
+		path = path.replace('/', File.separatorChar);
+		path = path.replace('\\', File.separatorChar);
+		
+		return SelectorUtils.matchPath(pattern, path);
+	}
 }
