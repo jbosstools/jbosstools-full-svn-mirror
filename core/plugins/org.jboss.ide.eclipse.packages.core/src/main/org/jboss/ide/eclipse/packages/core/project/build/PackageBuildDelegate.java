@@ -223,9 +223,11 @@ public class PackageBuildDelegate {
 			}
 		});
 		
+		TruezipUtil.umountAll();
 		BuildFileOperations.refreshPackage(pkg);
 		
 		monitor.done();
+		
 		events.fireFinishedBuildingPackage(pkg);
 	}
 	
@@ -269,7 +271,6 @@ public class PackageBuildDelegate {
 		building = true;
 		
 		buildPackage(pkg, monitor);
-		TruezipUtil.umountAll();
 		
 		building = false;
 	}
@@ -298,12 +299,12 @@ public class PackageBuildDelegate {
 		}
 		monitor.done();
 		
+		ArrayList packagesBeingChanged = null;
 		try {
 			if (kind == IncrementalProjectBuilder.INCREMENTAL_BUILD || kind == IncrementalProjectBuilder.AUTO_BUILD)
 			{
 				events.fireStartedBuild(project);
-				incrementalBuild(args, monitor);
-				events.fireFinishedBuild(project);
+				packagesBeingChanged = incrementalBuild(args, monitor);
 			}
 			else if (kind == IncrementalProjectBuilder.CLEAN_BUILD)
 			{
@@ -313,12 +314,28 @@ public class PackageBuildDelegate {
 			{
 				events.fireStartedBuild(project);
 				fullBuild(args, monitor);
-				events.fireFinishedBuild(project);
 			}
 		} finally {
 			TruezipUtil.umountAll();
 		}
-
+		
+		if (packagesBeingChanged != null)
+		{
+			// alert this package is being changed
+			for( int i = 0; i < packagesBeingChanged.size(); i++ ) {
+				IPackage p = (IPackage)packagesBeingChanged.get(i);
+				events.fireFinishedBuildingPackage(p);
+			}
+	
+			for (Iterator iter = packagesBeingChanged.iterator(); iter.hasNext(); )
+			{
+				IPackage pkg = (IPackage) iter.next();
+				BuildFileOperations.refreshPackage(pkg);
+			}
+		}
+		
+		events.fireFinishedBuild(project);
+		
 		building = false;
 		delta = null;
 		return (IProject[])referencedProjects.toArray(new IProject[referencedProjects.size()]);
@@ -357,7 +374,7 @@ public class PackageBuildDelegate {
 	 * This method is responsible for throwing the proper events itself
 	 * as to which packages are going to be changed.
 	 */
-	private void incrementalBuild(Map args, final IProgressMonitor monitor)
+	private ArrayList incrementalBuild (Map args, final IProgressMonitor monitor)
 	{
 		filesToCopy = new Hashtable();
 		filesToRemove = new Hashtable();
@@ -395,17 +412,7 @@ public class PackageBuildDelegate {
 		filesToCopy.clear();
 		filesToRemove.clear();
 		
-		// alert this package is being changed
-		for( int i = 0; i < packagesBeingChanged.size(); i++ ) {
-			IPackage p = (IPackage)packagesBeingChanged.get(i);
-			events.fireFinishedBuildingPackage(p);
-		}
-
-		for (Iterator iter = packagesBeingChanged.iterator(); iter.hasNext(); )
-		{
-			IPackage pkg = (IPackage) iter.next();
-			BuildFileOperations.refreshPackage(pkg);
-		}
+		return packagesBeingChanged;
 	}
 	
 	private void processFileDelta (IProject project, IResourceDelta delta, ArrayList packagesBeingChanged, IProgressMonitor monitor)
