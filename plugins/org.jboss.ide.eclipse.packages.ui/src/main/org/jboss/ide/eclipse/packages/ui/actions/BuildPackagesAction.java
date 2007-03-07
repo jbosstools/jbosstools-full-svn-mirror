@@ -50,7 +50,8 @@ public class BuildPackagesAction extends ActionWithDelegate implements IWorkbenc
 		{
 			project = ProjectUtil.getProject(selection);
 		}
-		else {
+		if (project == null)
+		{
 			if (ProjectPackagesView.instance() != null)
 				project = ProjectPackagesView.instance().getCurrentProject();
 		}
