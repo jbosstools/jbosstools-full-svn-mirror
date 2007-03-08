@@ -80,6 +80,13 @@ public interface IPackagesBuildListener {
 	public void fileRemoved (IPackage topLevelPackage, IPackageFileSet fileset, IPath filePath);
 	
 	/**
+	 * A top level package has been changed to either exploded or compressed (see exploded parameter)
+	 * @param topLevelPackage The top level package that was changed
+	 * @param isExploded Whether or not this package is now exploded
+	 */
+	public void packageBuildTypeChanged (IPackage topLevelPackage, boolean isExploded);
+	
+	/**
 	 * A project is finished being built by the packages builder
 	 * @param project the project being built
 	 */

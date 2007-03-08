@@ -50,5 +50,10 @@ public class AbstractPackagesBuildListener implements IPackagesBuildListener {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void packageBuildTypeChanged(IPackage topLevelPackage, boolean exploded) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
