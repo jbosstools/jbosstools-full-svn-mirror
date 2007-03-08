@@ -282,10 +282,15 @@ public class PackagesModel {
 	
 	public void addPackagesModelListener (IPackagesModelListener listener)
 	{
+		addPackagesModelListener (listener, modelListeners.size());
+	}
+	
+	public void addPackagesModelListener (IPackagesModelListener listener, int index)
+	{
 		synchronized (modelListeners)
 		{
 			if (!modelListeners.contains(listener))
-				modelListeners.add(listener);
+				modelListeners.add(index, listener);
 		}
 	}
 	

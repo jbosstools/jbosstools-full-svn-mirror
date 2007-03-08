@@ -24,7 +24,7 @@ public class BuildEvents implements IPackagesModelListener {
 	{
 		this.builder = builder;
 		
-		PackagesModel.instance().addPackagesModelListener(this);
+		PackagesModel.instance().addPackagesModelListener(this, 0);
 	}
 	
 	private static interface ListenerVisitor
@@ -69,6 +69,15 @@ public class BuildEvents implements IPackagesModelListener {
 		fireEvent(new ListenerVisitor () {
 			public void visitListener(IPackagesBuildListener listener) {
 				listener.fileUpdated(topLevelPackage, fileset, filePath);
+			}
+		});
+	}
+	
+	public void firePackageBuildTypeChanged (final IPackage topLevelPackage, final boolean exploded)
+	{
+		fireEvent(new ListenerVisitor () {
+			public void visitListener(IPackagesBuildListener listener) {
+				listener.packageBuildTypeChanged(topLevelPackage, exploded);
 			}
 		});
 	}
@@ -128,15 +137,15 @@ public class BuildEvents implements IPackagesModelListener {
 	}
 
 	public void packageNodeAdded(IPackageNode added) {		
-		builder.getFileOperations().updateNode(added);
-		
-		if (added.getNodeType() == IPackageNode.TYPE_PACKAGE)
+		if (added.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
 		{
-			builder.getFileOperations().updateScannerCache ((IPackage) added);
-		}
-		else if (added.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
-		{
+			builder.getFileOperations().updateFileset((IPackageFileSet)added);
 			builder.getFileOperations().updateScannerCache ((IPackageFileSet)added);
+		}
+		else if (added.getNodeType() == IPackageNode.TYPE_PACKAGE)
+		{
+			builder.getFileOperations().updateNode(added, true);
+			builder.getFileOperations().updateScannerCache ((IPackage) added);
 		}
 	}
 	
