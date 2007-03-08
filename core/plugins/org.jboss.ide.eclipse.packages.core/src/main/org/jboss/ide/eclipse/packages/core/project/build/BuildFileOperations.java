@@ -24,6 +24,7 @@ import org.jboss.ide.eclipse.packages.core.model.IPackageFolder;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNode;
 import org.jboss.ide.eclipse.packages.core.model.IPackageNodeVisitor;
 import org.jboss.ide.eclipse.packages.core.model.IPackageReference;
+import org.jboss.ide.eclipse.packages.core.model.PackagesCore;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackageFileSetImpl;
 import org.jboss.ide.eclipse.packages.core.model.internal.PackagesModel;
 
@@ -106,7 +107,7 @@ public class BuildFileOperations {
 			
 			InputStream in = null;
 			OutputStream[] outStreams = null;
-			// I'm using the fully qualified package name here to avoid confusion with java.io
+			
 			try {
 				outStreams = TruezipUtil.createFileOutputStreams(packageFiles);
 				
@@ -235,23 +236,27 @@ public class BuildFileOperations {
 		}
 	}
 
-	public synchronized void updateNode (IPackageNode node)
+	public synchronized void updateFileset (IPackageFileSet fileset)
 	{
-		if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
-		{
-			builder.buildFileset((IPackageFileSet)node, true);
-		}
-		else {
-			node.accept(new IPackageNodeVisitor () {
-				public boolean visit(IPackageNode node) {
-					if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
-					{
-						builder.buildFileset((IPackageFileSet)node, true);
-					}
-					return true;
+		IPackage topLevelPackage = PackagesCore.getTopLevelPackage(fileset);
+		builder.getEvents().fireStartedBuildingPackage(topLevelPackage);
+		
+		builder.buildFileset(fileset, true);
+			
+		builder.getEvents().fireFinishedBuildingPackage(topLevelPackage);
+	}
+	
+	public synchronized void updateNode (IPackageNode node, boolean fireEvents)
+	{
+		node.accept(new IPackageNodeVisitor () {
+			public boolean visit(IPackageNode node) {
+				if (node.getNodeType() == IPackageNode.TYPE_PACKAGE_FILESET)
+				{
+					builder.buildFileset((IPackageFileSet)node, true);
 				}
-			});
-		}
+				return true;
+			}
+		});
 	}
 	
 	public IPath getFilesetRelativePath (IFile file, IPackageFileSet fileset)
@@ -265,7 +270,9 @@ public class BuildFileOperations {
 		{
 			return new Path(fileset.getDestinationFilename());
 		} else {
-			IPath copyTo = absolutePath.removeFirstSegments(fileset.getSourcePath().segmentCount()).removeLastSegments(1);
+			IPath sourcePath =fileset.getSourcePath();
+			
+			IPath copyTo = absolutePath.removeFirstSegments(sourcePath.segmentCount()).removeLastSegments(1);
 			copyTo = copyTo.append(absolutePath.lastSegment());
 			copyTo = copyTo.setDevice(null);
 			
@@ -374,7 +381,8 @@ public class BuildFileOperations {
 			
 			packageFile.renameTo(tmpFile, ArchiveDetector.NULL);
 			tmpFile.renameTo(newPackageFile, ArchiveDetector.NULL);
-			
+		
+			builder.getEvents().firePackageBuildTypeChanged(pkg, true);
 			// can't umount a non-package file
 		}
 		else if (packageFile.getDelegate().isDirectory() && !pkg.isExploded())
@@ -386,6 +394,8 @@ public class BuildFileOperations {
 			packageFile.renameTo(tmpFile);
 			tmpFile.renameTo(newPackageFile, ArchiveDetector.DEFAULT);
 			TruezipUtil.umount(newPackageFile);
+			
+			builder.getEvents().firePackageBuildTypeChanged(pkg, false);
 		}
 		
 		refreshPackage(pkg);
@@ -393,7 +403,10 @@ public class BuildFileOperations {
 	
 	public void changeFileset (IPackageFileSet fileset)
 	{
-		updateNode(fileset);
+		IPackage topLevelPackage = PackagesCore.getTopLevelPackage(fileset);
+		builder.getEvents().fireStartedBuildingPackage(topLevelPackage);
+		
+		builder.buildFileset(fileset, true);
 		IPackageFileSet filesets[] = new IPackageFileSet[] { fileset };
 		PackageFileSetImpl filesetImpl = (PackageFileSetImpl) fileset;
 		
@@ -418,6 +431,7 @@ public class BuildFileOperations {
 		}
 		
 		updateScannerCache(fileset);
+		builder.getEvents().fireFinishedBuildingPackage(topLevelPackage);
 	}
 	
 	public static void refreshPackage (IPackage pkg)
@@ -431,7 +445,7 @@ public class BuildFileOperations {
 					pkg.getPackageResource().refreshLocal(IResource.DEPTH_INFINITE, nullMonitor);
 				}
 				pkg.getDestinationContainer().clearHistory(nullMonitor);
-				pkg.getDestinationContainer().refreshLocal(IResource.DEPTH_INFINITE, nullMonitor);
+				pkg.getDestinationContainer().refreshLocal(IResource.DEPTH_ONE, nullMonitor);
 			} catch (CoreException e) {
 				Trace.trace(BuildFileOperations.class, e);
 			}
