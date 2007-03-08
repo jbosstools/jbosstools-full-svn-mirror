@@ -695,8 +695,8 @@ public class ProjectPackagesView extends ViewPart implements IProjectSelectionLi
 				}
 			}
 			else {
-				packageTree.add(added.getParent(), new NodeWithProperties((PackageNodeImpl)added));
-//				packageTree.refresh();
+//				packageTree.add(added.getParent(), new NodeWithProperties((PackageNodeImpl)added));
+				packageTree.refresh();
 				packageTree.expandToLevel(added.getParent(), 1);
 			}
 			
