@@ -404,7 +404,7 @@ public class PackageBuildDelegate {
 			
 			fileOperations.updateFileInFilesets(file, filesets, false);
 		}
-		
+		System.out.println("delegate filesToRemove: " + filesToRemove.size());
 		for (Iterator iter = filesToRemove.keySet().iterator(); iter.hasNext(); )
 		{
 			IFile file = (IFile)iter.next();
@@ -452,7 +452,8 @@ public class PackageBuildDelegate {
 			// Is this right?? Is the parent guarenteed to be a package?
 			for( int i = 0; i < filesets.length; i++ ) {
 				IPackage parentPackage = PackagesCore.getParentPackage(filesets[i]);
-				packagesBeingChanged.add(parentPackage);
+				if( !packagesBeingChanged.contains(parentPackage)) 
+					packagesBeingChanged.add(parentPackage);
 			}
 			
 			if ((delta.getKind() & IResourceDelta.ADDED) > 0)
