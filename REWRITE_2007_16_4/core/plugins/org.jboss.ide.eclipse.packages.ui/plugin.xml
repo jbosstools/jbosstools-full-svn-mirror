@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="nodePopupMenus" name="Popup Menus for IPackageNodes" schema="schema/nodePopupMenus.exsd"/>
+   <extension-point id="newPackageActions" name="Actions to create new Package types" schema="schema/newPackageActions.xsd"/>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.jboss.ide.eclipse.ui.views"
+            class="org.jboss.ide.eclipse.packages.ui.views.ProjectPackagesView"
+            icon="icons/jar_obj.gif"
+            id="org.jboss.ide.eclipse.packages.ui.ProjectPackagesView"
+            name="Project Packages"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <primaryWizard id="org.jboss.ide.eclipse.packages.ui.NewJARWizard"/>
+      <wizard
+            class="org.jboss.ide.eclipse.packages.ui.wizards.NewJARWizard"
+            hasPages="true"
+            icon="icons/new_package.gif"
+            id="org.jboss.ide.eclipse.packages.ui.NewJARWizard"
+            name="JAR"
+            project="false"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.eclipse.ui.category.project"
+            id="org.jboss.ide.eclipse.packages.ui.commands.buildPackagesCommand"
+            name="Build Packages"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.jboss.ide.eclipse.packages.ui.actions.Packages"
+            label="Packages"
+            visible="true">
+         <action
+               class="org.jboss.ide.eclipse.packages.ui.actions.BuildPackagesAction"
+               definitionId="org.jboss.ide.eclipse.packages.ui.actions.BuildPackagesAction"
+               icon="icons/build_packages.gif"
+               id="org.jboss.ide.eclipse.packages.ui.actions.BuildPackagesAction"
+               label="Build Packages"
+               menubarPath="project/additions"
+               style="push">
+            <enablement>
+               <and>
+               	<objectState
+                     name="projectNature"
+                     value="org.jboss.ide.eclipse.packages.core.packagesNature"/>
+               </and>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="org.jboss.ide.eclipse.packages.ui.properties.PackagesPropertyPage"
+            id="org.jboss.ide.eclipse.packages.ui.packagesPropertyPge"
+            name="Packages"
+            objectClass="org.eclipse.core.resources.IProject"/>
+   </extension>
+   <extension
+         point="org.jboss.ide.eclipse.packages.ui.nodePopupMenus">
+      <nodeContribution
+            class="org.jboss.ide.eclipse.packages.ui.actions.NodePropertiesAction"
+            enablesForNodeType="any"
+            icon="icons/prop_ps.gif"
+            id="org.jboss.ide.eclipse.packages.ui.propertyContribution"
+            label="Properties"
+            weight="99"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.jboss.ide.eclipse.ui.MainPreferencePage"
+            class="org.jboss.ide.eclipse.packages.ui.properties.MainPreferencePage"
+            id="org.jboss.ide.eclipse.packages.ui.packagesPreferencePage"
+            name="Packages"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.jboss.ide.eclipse.packages.ui.PrefsInitializer"/>
+   </extension>
+   <extension
+         point="org.jboss.ide.eclipse.packages.ui.newPackageActions">
+      <newPackageAction
+            class="org.jboss.ide.eclipse.packages.ui.actions.NewJARAction"
+            icon="icons/new_package.gif"
+            id="org.jboss.ide.eclipse.packages.ui.newJARAction"
+            label="JAR"/>
+   </extension>
+
+</plugin>
