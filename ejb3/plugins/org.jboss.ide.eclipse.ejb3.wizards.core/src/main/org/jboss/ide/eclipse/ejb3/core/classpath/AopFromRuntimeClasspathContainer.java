@@ -26,20 +26,21 @@ import java.util.ArrayList;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jdt.core.IClasspathContainer;
+import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.wst.server.core.IRuntime;
 import org.eclipse.wst.server.core.ServerCore;
 import org.jboss.ide.eclipse.as.core.runtime.server.AbstractJBossServerRuntime;
-import org.jboss.ide.eclipse.jdt.aop.core.classpath.AopJdk15ClasspathContainer;
 
 /**
  * @author Marshall
  */
-public class AopFromRuntimeClasspathContainer extends AopJdk15ClasspathContainer
+public class AopFromRuntimeClasspathContainer implements IClasspathContainer
 {
    public static final String CONTAINER_ID = "org.jboss.ide.eclipse.jdt.ejb3.wizards.core.classpath.AOP15_CONTAINER";
-
-   public static final String DESCRIPTION = AopJdk15ClasspathContainer.DESCRIPTION;
+   public static final String DESCRIPTION = "JBossAOP 1.3 Libraries (jdk 1.5)";
 
    private static IPath clientPath, libPath, aopDeployerPath;
    static {
@@ -62,10 +63,9 @@ public class AopFromRuntimeClasspathContainer extends AopJdk15ClasspathContainer
    
    protected IJavaProject javaProject;
    protected AbstractJBossServerRuntime jbsRuntime;
-   
+   protected IPath path;
    public AopFromRuntimeClasspathContainer(IPath path, IJavaProject project) {
-      super(path);
-
+	  this.path = path;
       this.javaProject = project;
       String runtimeName = path.segment(1);
       IRuntime runtime = ServerCore.findRuntime(runtimeName);
@@ -113,4 +113,27 @@ public class AopFromRuntimeClasspathContainer extends AopJdk15ClasspathContainer
    public String getDescription() {
       return DESCRIPTION + " [" + (jbsRuntime == null ? "error" : jbsRuntime.getRuntime().getName()) + "]";
    }
+
+   public IClasspathEntry[] getClasspathEntries() {
+      ArrayList entries = new ArrayList();
+      IPath jarPaths[] = getAopJarPaths();
+
+      for (int i = 0; i < jarPaths.length; i++) {
+         IPath jar = jarPaths[i];
+
+         // Later we can add the source jars here..
+         IClasspathEntry entry = JavaCore.newLibraryEntry(jar, null, null, false);
+         entries.add(entry);
+      }
+
+      return (IClasspathEntry[]) entries.toArray(new IClasspathEntry[entries.size()]);
+   }
+	
+	public int getKind() {
+		return K_APPLICATION;
+	}
+	
+	public IPath getPath() {
+		return path;
+	}
 }

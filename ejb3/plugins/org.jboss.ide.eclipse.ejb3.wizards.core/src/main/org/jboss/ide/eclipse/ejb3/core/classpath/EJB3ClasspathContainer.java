@@ -27,16 +27,18 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.jdt.core.IClasspathContainer;
+import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.wst.server.core.IRuntime;
 import org.eclipse.wst.server.core.ServerCore;
 import org.jboss.ide.eclipse.as.core.runtime.server.AbstractJBossServerRuntime;
-import org.jboss.ide.eclipse.jdt.aop.core.classpath.AopClasspathContainer;
 
 /**
  * @author Marshall
  */
-public class EJB3ClasspathContainer extends AopClasspathContainer
+public class EJB3ClasspathContainer implements IClasspathContainer
 {
    public static final String CONTAINER_ID = "org.jboss.ide.eclipse.jdt.ejb3.wizards.core.classpath.EJB3_CONTAINER";
 
@@ -69,10 +71,9 @@ public class EJB3ClasspathContainer extends AopClasspathContainer
    
    protected IJavaProject javaProject;
    protected AbstractJBossServerRuntime jbsRuntime;
-   
+   protected IPath path;
    public EJB3ClasspathContainer(IPath path, IJavaProject project) {
-      super(path);
-
+	  this.path = path;
       this.javaProject = project;
       String runtimeName = path.segment(1);
       IRuntime runtime = ServerCore.findRuntime(runtimeName);
@@ -120,4 +121,29 @@ public class EJB3ClasspathContainer extends AopClasspathContainer
    public String getDescription() {
       return DESCRIPTION + " [" + (jbsRuntime == null ? "error" : jbsRuntime.getRuntime().getName()) + "]";
    }
+
+   public IClasspathEntry[] getClasspathEntries()
+   {
+      ArrayList entries = new ArrayList();
+      IPath jarPaths[] = getAopJarPaths();
+
+      for (int i = 0; i < jarPaths.length; i++)
+      {
+         IPath jar = jarPaths[i];
+
+         // Later we can add the source jars here..
+         IClasspathEntry entry = JavaCore.newLibraryEntry(jar, null, null, false);
+         entries.add(entry);
+      }
+
+      return (IClasspathEntry[]) entries.toArray(new IClasspathEntry[entries.size()]);
+   }
+	
+	public int getKind() {
+		return K_APPLICATION;
+	}
+	
+	public IPath getPath() {
+		return path;
+	}
 }
