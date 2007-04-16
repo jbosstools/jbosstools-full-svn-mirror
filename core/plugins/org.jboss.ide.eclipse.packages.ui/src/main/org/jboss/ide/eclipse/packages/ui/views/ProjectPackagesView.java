@@ -74,7 +74,8 @@ public class ProjectPackagesView extends ViewPart implements IPackagesModelListe
 				if (element instanceof IAdaptable) {
 					IAdaptable adaptable = (IAdaptable)element;
 					IResource resource = (IResource) adaptable.getAdapter(IResource.class);
-					return resource.getProject();
+					if( resource != null )
+						return resource.getProject();
 				}
 				return null;
 			}
@@ -178,6 +179,11 @@ public class ProjectPackagesView extends ViewPart implements IPackagesModelListe
 	public void setFocus() {
 	}
 	public void viewSelectionChanged(IProject project) {
+		if( project == null ) {
+			this.project = null;
+			packageViewer.setInput(null);
+		}
+		
 		if( project.equals(packageViewer.getInput())) 
 			return;
 		
