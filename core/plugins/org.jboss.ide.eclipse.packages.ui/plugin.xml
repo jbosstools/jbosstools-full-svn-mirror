@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="nodePopupMenus" name="Popup Menus for IPackageNodes" schema="schema/nodePopupMenus.exsd"/>
+   <extension-point id="newPackageActions" name="Actions to create new Package types" schema="schema/newPackageActions.exsd"/>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.jboss.ide.eclipse.ui.views"
+            class="org.jboss.ide.eclipse.packages.ui.views.ProjectPackagesView"
+            icon="icons/jar_obj.gif"
+            id="org.jboss.ide.eclipse.packages.ui.ProjectPackagesView"
+            name="Project Packages"/>
+   </extension>
+
+   <extension
+         point="org.jboss.ide.eclipse.packages.ui.nodePopupMenus">
+      <nodeContribution
+            class="org.jboss.ide.eclipse.packages.ui.actions.NodePropertiesAction"
+            enablesForNodeType="any"
+            icon="icons/prop_ps.gif"
+            id="org.jboss.ide.eclipse.packages.ui.propertyContribution"
+            label="Properties"
+            weight="99"/>
+   </extension>
+
+   <extension
+         point="org.jboss.ide.eclipse.packages.ui.newPackageActions">
+      <newPackageAction
+            class="org.jboss.ide.eclipse.packages.ui.actions.NewJARAction"
+            icon="icons/new_package.gif"
+            id="org.jboss.ide.eclipse.packages.ui.newJARAction"
+            label="JAR"/>
+   </extension>
+</plugin>
