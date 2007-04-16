@@ -182,6 +182,7 @@ public class ProjectPackagesView extends ViewPart implements IPackagesModelListe
 		if( project == null ) {
 			this.project = null;
 			packageViewer.setInput(null);
+			return;
 		}
 		
 		if( project.equals(packageViewer.getInput())) 
