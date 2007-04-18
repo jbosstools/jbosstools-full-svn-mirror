@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JBossIDE Packages Core Plug-in
-Bundle-SymbolicName: org.jboss.ide.eclipse.packages.core;singleton:=true
+Bundle-SymbolicName: org.jboss.ide.eclipse.archives.core;singleton:=true
 Bundle-Version: 2.0.0
-Bundle-Activator: org.jboss.ide.eclipse.packages.core.PackagesCorePlugin
+Bundle-Activator: org.jboss.ide.eclipse.archives.core.ArchivesCorePlugin
 Bundle-Vendor: JBoss, a division of Red Hat
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
@@ -16,12 +16,12 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jdt.core
 Eclipse-LazyStart: true
 Export-Package: de.schlichtherle.io,
- org.jboss.ide.eclipse.packages.core,
- org.jboss.ide.eclipse.packages.core.model,
- org.jboss.ide.eclipse.packages.core.model.internal,
- org.jboss.ide.eclipse.packages.core.model.internal.xb,
- org.jboss.ide.eclipse.packages.core.model.types,
- org.jboss.ide.eclipse.packages.core.util
+ org.jboss.ide.eclipse.archives.core,
+ org.jboss.ide.eclipse.archives.core.model,
+ org.jboss.ide.eclipse.archives.core.model.internal,
+ org.jboss.ide.eclipse.archives.core.model.internal.xb,
+ org.jboss.ide.eclipse.archives.core.model.types,
+ org.jboss.ide.eclipse.archives.core.util
 Bundle-ClassPath: packagescore.jar,
  lib/concurrent.jar,
  lib/truezip-6.jar,

@@ -1,2 +1,2 @@
-org.jboss.ide.eclipse.packages.core/debug=true
-org.jboss.ide.eclipse.packages.core/debug/streamClose=false
+org.jboss.ide.eclipse.archives.core/debug=true
+org.jboss.ide.eclipse.archives.core/debug/streamClose=false
