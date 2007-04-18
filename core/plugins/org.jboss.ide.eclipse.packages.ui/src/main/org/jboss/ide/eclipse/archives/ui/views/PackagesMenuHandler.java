@@ -2,6 +2,7 @@ package org.jboss.ide.eclipse.archives.ui.views;
 
 import java.util.Arrays;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
@@ -16,13 +17,15 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IWorkbenchPartSite;
+import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.model.PackagesCore;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.ui.ExtensionManager;
 import org.jboss.ide.eclipse.archives.ui.NodeContribution;
@@ -53,7 +56,7 @@ public class PackagesMenuHandler {
 	
 	private Action editAction, deleteAction, newFolderAction, newFilesetAction;
 	private NewJARAction newJARAction;
-//	private BuildPackagesAction buildAllAction, buildPackageAction;
+	private Action buildAction;
 
 	public PackagesMenuHandler(TreeViewer viewer) {
 		this.packageTree = viewer;
@@ -67,8 +70,14 @@ public class PackagesMenuHandler {
 		createActions();
 		createMenu();
 		createContextMenu();
+		addToActionBars();
 	}
 
+	private void addToActionBars() {
+		IActionBars bars = getSite().getActionBars();
+		bars.getToolBarManager().add(buildAction);
+	}
+	
 	/**
 	 * Creates the primary menu as well as adds the package actions to it
 	 *
@@ -90,6 +99,8 @@ public class PackagesMenuHandler {
 					if (element instanceof WrappedProject) {
 						newJARAction.setEnabled(true);
 						manager.add(newPackageManager);
+						manager.add(buildAction);
+						buildAction.setText(PackagesUIMessages.ProjectPackagesView_buildProjectAction_label);
 					} else if( element instanceof IArchiveNode ){
 						IArchiveNode node = (IArchiveNode)element;
 						
@@ -108,7 +119,8 @@ public class PackagesMenuHandler {
 							editAction.setText(PackagesUIMessages.ProjectPackagesView_editPackageAction_label); //$NON-NLS-1$
 							deleteAction.setText(PackagesUIMessages.ProjectPackagesView_deletePackageAction_label); //$NON-NLS-1$
 							editAction.setImageDescriptor(PackagesSharedImages.getImageDescriptor(PackagesSharedImages.IMG_PACKAGE_EDIT));
-//							manager.add(buildPackageAction);
+							buildAction.setText(PackagesUIMessages.ProjectPackagesView_buildArchiveAction_label);
+							manager.add(buildAction);
 						} else if (node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FOLDER) {
 							editAction.setText(PackagesUIMessages.ProjectPackagesView_editFolderAction_label); //$NON-NLS-1$
 							deleteAction.setText(PackagesUIMessages.ProjectPackagesView_deleteFolderAction_label); //$NON-NLS-1$
@@ -161,12 +173,12 @@ public class PackagesMenuHandler {
 				editSelectedNode();
 			}
 		};
-
-//		buildAllAction = new BuildPackagesAction();
-//		buildAllAction.init(getViewSite().getWorkbenchWindow());
-//		
-//		buildPackageAction = new BuildPackagesAction();
-//		buildPackageAction.init(getViewSite().getWorkbenchWindow());
+		
+		buildAction = new Action("", PackagesSharedImages.getImageDescriptor(PackagesSharedImages.IMG_BUILD_PACKAGES)) {
+			public void run() {
+				buildSelectedNode();
+			}
+		};
 	}
 
 	private void addContextMenuContributions (final IArchiveNode context) {
@@ -319,6 +331,18 @@ public class PackagesMenuHandler {
 		}
 	}
 	
+	private void buildSelectedNode() {
+		Object selected = getSelectedObject();
+		if( selected == null ) return;
+		if (selected instanceof IArchiveNode && 
+				((IArchiveNode)selected).getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
+			PackagesCore.buildArchive((IArchive)selected, null);
+		} else if( selected != null && selected instanceof IProject ){
+			PackagesCore.buildProject((IProject)selected, null);
+		}
+		
+	}
+	
 	private void deleteSelectedNode () {
 		IArchiveNode node = getSelectedNode();
 		if (node != null) {
@@ -336,16 +360,20 @@ public class PackagesMenuHandler {
 	 * Utility methods below
 	 */
 
-	private IWorkbenchPartSite getSite() {
-		return ProjectArchivesView.getInstance().getSite();
+	private IViewSite getSite() {
+		return (IViewSite) ProjectArchivesView.getInstance().getSite();
 	}
 
 	private IArchiveNode getSelectedNode () {
+		Object selected = getSelectedObject();
+		if( selected instanceof IArchiveNode ) 
+			return ((IArchiveNode)selected);
+		return null;
+	}
+	private Object getSelectedObject() {
 		IStructuredSelection selection = (IStructuredSelection) ProjectArchivesView.getInstance().getSelection();
-		if (selection != null && !selection.isEmpty()) {
-			Object selected = selection.getFirstElement();
-			if( selected instanceof IArchiveNode ) return ((IArchiveNode)selected);
-		}
+		if (selection != null && !selection.isEmpty())
+			return selection.getFirstElement();
 		return null;
 	}
 	

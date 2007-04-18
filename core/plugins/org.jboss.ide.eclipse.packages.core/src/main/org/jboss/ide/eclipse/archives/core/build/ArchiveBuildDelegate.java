@@ -21,7 +21,6 @@ public class ArchiveBuildDelegate {
 		
 	}
 	
-	
 	// full build
 	public void fullProjectBuild(IProject project) {
 		ArchiveModelNode root = ArchivesModel.instance().getRoot(project);

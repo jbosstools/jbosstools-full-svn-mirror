@@ -12,6 +12,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ExtensionManager;
+import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
 import org.jboss.ide.eclipse.archives.core.build.ModelChangeListener;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.types.IArchiveType;
@@ -58,18 +59,6 @@ public class PackagesCore {
 	
 	
 	
-	
-	
-	
-	/**
-	 * Builds all of a project's packages  (performs a FULL_BUILD)
-	 * @param project The project to build
-	 * @param monitor A progress monitor
-	 */
-	public static void buildProject (IProject project, IProgressMonitor monitor) {
-		buildProject(project, IncrementalProjectBuilder.FULL_BUILD, monitor);
-	}
-	
 	/**
 	 * Builds all of a project's packages. Note that this does not call any builders before or after the package builder (i.e. the JDT builder).
 	 * If you are looking to run all the builders on a project use project.build()
@@ -77,29 +66,18 @@ public class PackagesCore {
 	 * @param buildType FULL_BUILD, INCREMENTAL_BUILD, CLEAN_BUILD, etc
 	 * @param monitor A progress monitor
 	 */
-	public static void buildProject (IProject project, int buildType, IProgressMonitor monitor) {
+	public static void buildProject (IProject project, IProgressMonitor monitor) {
 		if (monitor == null) monitor = new NullProgressMonitor();
-		
-//		PackageBuildDelegate delegate = PackageBuildDelegate.instance();
-//		delegate.setProject(project);
-//		try {
-//			delegate.build(buildType, null, monitor);
-//		} catch (CoreException e) {
-//			Trace.trace(PackagesCore.class, e);
-//		}
+		new ArchiveBuildDelegate().fullProjectBuild(project);
 	}
 	
 	/**
 	 * Build the passed-in package.
 	 * @param pkg The package to build
 	 */
-	public static void buildPackage (IArchive pkg, IProgressMonitor monitor) {
-//		if (monitor == null) monitor = new NullProgressMonitor();
-//
-//		PackageBuildDelegate delegate = PackageBuildDelegate.instance();
-//		delegate.setProject(pkg.getProject());
-//		
-//		delegate.buildSinglePackage(pkg, monitor);
+	public static void buildArchive (IArchive pkg, IProgressMonitor monitor) {
+		if (monitor == null) monitor = new NullProgressMonitor();
+		new ArchiveBuildDelegate().fullArchiveBuild(pkg);
 	}
 
 	public static IArchive[] getAllProjectPackages(IProgressMonitor monitor) {
@@ -148,7 +126,7 @@ public class PackagesCore {
 	 * @param project The project whose packages to visit
 	 * @param visitor The visitor
 	 */
-	public static void visitProjectPackages (IProject project, IArchiveNodeVisitor visitor) {
+	public static void visitProjectArchives (IProject project, IArchiveNodeVisitor visitor) {
 		if (packageFileExists(project)) {
 			IArchive packages[] = getProjectPackages(project, null, false);
 			if( packages == null ) return;
