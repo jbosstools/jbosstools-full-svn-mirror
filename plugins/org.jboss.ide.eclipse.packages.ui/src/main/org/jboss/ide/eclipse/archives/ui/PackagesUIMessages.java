@@ -55,6 +55,9 @@ public class PackagesUIMessages extends NLS {
 	public static String ProjectPackagesView_deleteFolderAction_label;
 	public static String ProjectPackagesView_editFilesetAction_label;
 	public static String ProjectPackagesView_deleteFilesetAction_label;
+	public static String ProjectPackagesView_buildArchiveAction_label;
+	public static String ProjectPackagesView_buildProjectAction_label;
+
 	public static String ProjectPackagesView_createFolderDialog_title;
 	public static String ProjectPackagesView_createFolderDialog_message;
 	public static String ProjectPackagesView_createFolderDialog_warnFolderExists;
