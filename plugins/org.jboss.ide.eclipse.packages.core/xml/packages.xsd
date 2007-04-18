@@ -27,7 +27,7 @@
     <xsd:complexType name="packages-type">
         <xsd:annotation>
             <xsd:appinfo>
-                <jbxb:class impl="org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackages"/>
+                <jbxb:class impl="org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages"/>
             </xsd:appinfo>    
         </xsd:annotation>
         
@@ -41,7 +41,7 @@
     	<xsd:annotation>
     		<xsd:appinfo>
     			<jbxb:class
-    				impl="org.jboss.ide.eclipse.packages.core.model.internal.xb.XbPackage" />
+    				impl="org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage" />
     			<jbxb:addMethod name="addChild" />
     		</xsd:appinfo>
     	</xsd:annotation>
@@ -80,7 +80,7 @@
     <xsd:complexType name="properties-type">
         <xsd:annotation>
             <xsd:appinfo>
-                <jbxb:class impl="org.jboss.ide.eclipse.packages.core.model.internal.xb.XbProperties"/>
+                <jbxb:class impl="org.jboss.ide.eclipse.archives.core.model.internal.xb.XbProperties"/>
                 <jbxb:addMethod name="setProperties"/>
             </xsd:appinfo>    
         </xsd:annotation>
@@ -93,7 +93,7 @@
     <xsd:complexType name="property-type">
         <xsd:annotation>
             <xsd:appinfo>
-                <jbxb:class impl="org.jboss.ide.eclipse.packages.core.model.internal.xb.XbProperty"/>
+                <jbxb:class impl="org.jboss.ide.eclipse.archives.core.model.internal.xb.XbProperty"/>
                 <jbxb:addMethod name="addProperty"/>
             </xsd:appinfo>    
         </xsd:annotation>
@@ -105,7 +105,7 @@
     <xsd:complexType name="folder-type">
         <xsd:annotation>
             <xsd:appinfo>
-                <jbxb:class impl="org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFolder"/>
+                <jbxb:class impl="org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFolder"/>
                 <jbxb:addMethod name="addChild"/>
             </xsd:appinfo>    
         </xsd:annotation>
@@ -123,7 +123,7 @@
     <xsd:complexType name="fileset-type">
         <xsd:annotation>
             <xsd:appinfo>
-                <jbxb:class impl="org.jboss.ide.eclipse.packages.core.model.internal.xb.XbFileSet"/>
+                <jbxb:class impl="org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFileSet"/>
                 <jbxb:addMethod name="addChild"/>
             </xsd:appinfo>    
         </xsd:annotation>

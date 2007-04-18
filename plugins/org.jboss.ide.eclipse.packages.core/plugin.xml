@@ -3,28 +3,28 @@
 <plugin>
    <extension-point id="packageTypes" name="JBossIDE Package Type" schema="schema/packageTypes.exsd"/>
    <extension
-         id="packagesNature"
+         id="archivesNature"
          name="JBossIDE Packages Nature"
          point="org.eclipse.core.resources.natures">
       <runtime>
-         <run class="org.jboss.ide.eclipse.packages.core.build.PackagesNature"/>
+         <run class="org.jboss.ide.eclipse.archives.core.build.ArchivesNature"/>
       </runtime>
-      <builder id="org.jboss.ide.eclipse.packages.core.packagesBuilder"/>
+      <builder id="org.jboss.ide.eclipse.archives.core.archivesBuilder"/>
    </extension>
    <extension
-         id="packagesBuilder"
+         id="archivesBuilder"
          name="JBossIDE Packages Builder"
          point="org.eclipse.core.resources.builders">
       <builder
             hasNature="true"
             >
-         <run class="org.jboss.ide.eclipse.packages.core.build.PackagesBuilder"/>
+         <run class="org.jboss.ide.eclipse.archives.core.build.ArchivesBuilder"/>
       </builder>
    </extension>
    <extension
-         point="org.jboss.ide.eclipse.packages.core.packageTypes">
+         point="org.jboss.ide.eclipse.archives.core.packageTypes">
       <packageType
-            class="org.jboss.ide.eclipse.packages.core.model.types.JARPackageType"
+            class="org.jboss.ide.eclipse.archives.core.model.types.JARPackageType"
             id="jar"
             label="JAR"/>
    </extension>

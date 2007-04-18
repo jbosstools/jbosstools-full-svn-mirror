@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.jboss.ide.eclipse.packages.core">
+<schema targetNamespace="org.jboss.ide.eclipse.archives.core">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.jboss.ide.eclipse.packages.core" id="packageTypes" name="JBossIDE Package Type"/>
+         <meta.schema plugin="org.jboss.ide.eclipse.archives.core" id="packageTypes" name="JBossIDE Package Type"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -64,7 +64,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="org.jboss.ide.eclipse.packages.core.model.types.IPackageType"/>
+                  <meta.attribute kind="java" basedOn="org.jboss.ide.eclipse.archives.core.model.types.IPackageType"/>
                </appInfo>
             </annotation>
          </attribute>
