@@ -32,6 +32,7 @@ public class ArchiveBuildDelegate {
 	
 	public void fullArchiveBuild(IArchive pkg) {
 		ModelTruezipBridge.deleteArchive(pkg);
+		ModelTruezipBridge.createContainer(pkg);
 		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(pkg);
 		for( int i = 0; i < filesets.length; i++ ) {
 			fullFilesetBuild(filesets[i]);
@@ -49,11 +50,11 @@ public class ArchiveBuildDelegate {
 	
 	/**
 	 * Incremental Build!! 
+	 * Parameters are instances of changed IResource objects
 	 * @param addedChanged  Set of changed / added resources
 	 * @param setRemoved	Set of removed resources
 	 */
 	public void projectIncrementalBuild(Set addedChanged, Set removed) {
-		
 		
 		// find any and all filesets that match each file
 		Iterator i = addedChanged.iterator();

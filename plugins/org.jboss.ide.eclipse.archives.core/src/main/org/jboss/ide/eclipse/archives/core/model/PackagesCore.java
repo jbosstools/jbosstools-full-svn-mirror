@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
