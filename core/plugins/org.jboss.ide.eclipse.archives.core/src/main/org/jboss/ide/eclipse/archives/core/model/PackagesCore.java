@@ -32,16 +32,16 @@ public class PackagesCore {
 		addModelListener(new ModelChangeListener());
 	}
 	
-	public void addBuildListener(IPackagesBuildListener listener) {
+	public void addBuildListener(IArchiveBuildListener listener) {
 		if( !buildListeners.contains(listener)) 
 			buildListeners.add(listener);
 	}
-	public void removeBuildListener(IPackagesBuildListener listener) {
+	public void removeBuildListener(IArchiveBuildListener listener) {
 		if( buildListeners.contains(listener)) 
 			buildListeners.remove(listener);
 	}
-	public IPackagesBuildListener[] getBuildListeners() {
-		return (IPackagesBuildListener[]) buildListeners.toArray(new IPackagesBuildListener[buildListeners.size()]);
+	public IArchiveBuildListener[] getBuildListeners() {
+		return (IArchiveBuildListener[]) buildListeners.toArray(new IArchiveBuildListener[buildListeners.size()]);
 	}
 	
 	public void addModelListener(IArchiveModelListener listener) {

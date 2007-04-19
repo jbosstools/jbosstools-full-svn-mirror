@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.model.events.EventManager;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.util.ModelTruezipBridge;
@@ -24,26 +25,40 @@ public class ArchiveBuildDelegate {
 	
 	// full build
 	public void fullProjectBuild(IProject project) {
+		EventManager.startedBuild(project);
+
 		ArchiveModelNode root = ArchivesModel.instance().getRoot(project);
 		IArchiveNode[] nodes = root.getChildren(IArchiveNode.TYPE_ARCHIVE);
 		for( int i = 0; i < nodes.length; i++ ) {
 			fullArchiveBuild(((IArchive)nodes[i]));
 		}
+
+		EventManager.finishedBuild(project);
 	}
 	
 	public void fullArchiveBuild(IArchive pkg) {
+		EventManager.startedBuildingArchive(pkg);
+		
 		ModelTruezipBridge.deleteArchive(pkg);
 		ModelTruezipBridge.createFile(pkg);
 		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(pkg);
 		for( int i = 0; i < filesets.length; i++ ) {
-			fullFilesetBuild(filesets[i]);
+			fullFilesetBuild(filesets[i], pkg);
 		}
+		
+		EventManager.finishedBuildingArchive(pkg);
 	}
 	
-	public void fullFilesetBuild(IArchiveFileSet fileset) {
+	public void fullFilesetBuild(IArchiveFileSet fileset, IArchive topLevel) {
+		EventManager.startedCollectingFileSet(fileset);
+		
+		// reset the scanner. It *is* a full build afterall
 		fileset.resetScanner();
 		IPath[] paths = fileset.findMatchingPaths();
-		ModelTruezipBridge.copyFiles(fileset, paths);
+		ModelTruezipBridge.fullFilesetBuild(fileset);
+
+		EventManager.filesUpdated(topLevel, fileset, paths);
+		EventManager.finishedCollectingFileSet(fileset);
 	}
 
 	
@@ -65,6 +80,7 @@ public class ArchiveBuildDelegate {
 			path = ((IResource)i.next()).getLocation();
 			matchingFilesets = ModelUtil.getMatchingFilesets(path);
 			ModelTruezipBridge.copyFiles(matchingFilesets, new IPath[] { path }, false);
+			EventManager.fileUpdated(path, matchingFilesets);
 		}
 		
 		i = removed.iterator();
@@ -72,6 +88,7 @@ public class ArchiveBuildDelegate {
 			path = ((IResource)i.next()).getLocation();
 			matchingFilesets = ModelUtil.getMatchingFilesets(path);
 			ModelTruezipBridge.deleteFiles(matchingFilesets, new IPath[] { path }, false);
+			EventManager.fileRemoved(path, matchingFilesets);
 		}
 		TrueZipUtil.sync();
 	}

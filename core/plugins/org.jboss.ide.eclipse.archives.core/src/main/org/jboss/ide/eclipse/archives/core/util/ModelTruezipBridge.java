@@ -1,5 +1,8 @@
 package org.jboss.ide.eclipse.archives.core.util;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
@@ -30,16 +33,11 @@ public class ModelTruezipBridge {
 		TrueZipUtil.sync();
 	}
 		
-	public static void deleteFolder(IArchiveFolder folder) {
-		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(folder);
-		deleteFolder(folder,filesets);
+	public static void cleanFolder(IArchiveFolder folder) {
+		cleanFolder(folder, true);
 	}
 	
-	public static void deleteFolder(IArchiveFolder folder, IArchiveFileSet[] filesets) {
-		deleteFolder(folder, filesets, true);
-	}
-	public static void deleteFolder(final IArchiveFolder folder, final IArchiveFileSet[] filesets, boolean sync) {
-		fullFilesetsRemove(filesets, false);
+	public static void cleanFolder(IArchiveFolder folder, boolean sync) {
 		final File file = getFile(folder);
 		TrueZipUtil.deleteEmptyFolders(file);
 		if( sync )
@@ -57,9 +55,6 @@ public class ModelTruezipBridge {
 			TrueZipUtil.sync();
 	}
 		
-	public static void fullFilesetsRemove(IArchiveFileSet[] filesets) {
-		fullFilesetsRemove(filesets, true);
-	}
 	public static void fullFilesetsRemove(IArchiveFileSet[] filesets, boolean sync) {
 		for( int i = 0; i < filesets.length; i++ )
 			fullFilesetRemove(filesets[i], false);
@@ -67,20 +62,24 @@ public class ModelTruezipBridge {
 			TrueZipUtil.sync();
 	}
 	
-	public static void fullFilesetRemove(IArchiveFileSet fileset) {
-		fullFilesetRemove(fileset, true);
-	}
-	public static void fullFilesetRemove(final IArchiveFileSet fileset, boolean sync) {
+	
+	// Let them know which files were removed, for events
+	public static IPath[] fullFilesetRemove(final IArchiveFileSet fileset, boolean sync) {
 		IPath[] paths = fileset.findMatchingPaths();
+		List list = Arrays.asList(paths);
 		for( int i = 0; i < paths.length; i++ ) {
 			if( !ModelUtil.otherFilesetMatchesPath(fileset, paths[i])) {
 				// remove
 				deleteFiles(fileset, new IPath[] {paths[i]}, false);
+			} else {
+				list.remove(paths[i]);
 			}
 		}
 
 		if( sync ) 
 			TrueZipUtil.sync();
+		
+		return (IPath[]) list.toArray(new IPath[list.size()]);
 	}
 
 	
