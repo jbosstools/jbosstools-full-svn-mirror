@@ -4,6 +4,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
@@ -11,6 +12,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
+import org.jboss.ide.eclipse.archives.core.model.events.EventManager;
 import org.jboss.ide.eclipse.archives.core.util.ModelTruezipBridge;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 
@@ -112,7 +114,10 @@ public class ModelChangeListener implements IArchiveModelListener {
 		}
 		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(added);
 		for( int i = 0; i < filesets.length; i++ ) {
+			filesets[i].resetScanner();
+			IPath[] paths = filesets[i].findMatchingPaths();
 			ModelTruezipBridge.fullFilesetBuild(filesets[i]);
+			EventManager.filesUpdated(filesets[i].getRootArchive(), filesets[i], paths);
 		}
 		refreshLocal(added);
 	}
@@ -121,19 +126,30 @@ public class ModelChangeListener implements IArchiveModelListener {
 	private void nodeRemoved(IArchiveNode removed) {
 		if( removed.getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
 			ModelTruezipBridge.deleteArchive((IArchive)removed);
+			
+			// no event needed? we'll see
 			refreshLocal(removed);
 			return;
 		} else if( removed.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FOLDER ){
-			ModelTruezipBridge.deleteFolder((IArchiveFolder)removed);
+			IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(((IArchiveFolder)removed));
+			for( int i = 0; i < filesets.length; i++ ) {
+				IPath[] removedPaths = ModelTruezipBridge.fullFilesetRemove(((IArchiveFileSet)removed), false);
+				EventManager.filesRemoved(removedPaths, ((IArchiveFileSet)removed));
+			}
 			refreshLocal(removed);
 			return;
 		}
 
 		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(removed);
-		ModelTruezipBridge.fullFilesetsRemove(filesets);
+		for( int i = 0; i < filesets.length; i++ ) {
+			IPath[] removedPaths = ModelTruezipBridge.fullFilesetRemove(((IArchiveFileSet)removed), false);
+			EventManager.filesRemoved(removedPaths, ((IArchiveFileSet)removed));
+		}
 		refreshLocal(removed);
 	}
 	
+	
+	// refresh the file tree structure
 	private void refreshLocal(IArchiveNode node) {
 		IArchive pack = node.getRootArchive();
 		if( pack != null && pack.isDestinationInWorkspace() ) {

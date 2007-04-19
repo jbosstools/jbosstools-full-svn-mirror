@@ -54,7 +54,6 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 	public static final String BUILDER_ID = "org.jboss.ide.eclipse.archives.core.archivesBuilder";
 	
 	protected IProject[] build(int kind, Map args, IProgressMonitor monitor) throws CoreException {
-		EventManager.fireBuildStarted();
 		IProject[] interestingProjects = getInterestingProjectsInternal();
 
 		final TreeSet addedChanged = createDefaultTreeSet();
@@ -71,8 +70,6 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 			delegate.fullProjectBuild(p);
 		}
 		
-		
-		EventManager.fireBuildEnded();
 		return interestingProjects;
 	}
 	
