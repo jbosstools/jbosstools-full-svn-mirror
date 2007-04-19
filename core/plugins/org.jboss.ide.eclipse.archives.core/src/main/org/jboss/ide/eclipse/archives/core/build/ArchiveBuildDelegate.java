@@ -13,6 +13,7 @@ import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.util.ModelTruezipBridge;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
+import org.jboss.ide.eclipse.archives.core.util.TrueZipUtil;
 
 public class ArchiveBuildDelegate {
 	
@@ -32,7 +33,7 @@ public class ArchiveBuildDelegate {
 	
 	public void fullArchiveBuild(IArchive pkg) {
 		ModelTruezipBridge.deleteArchive(pkg);
-		ModelTruezipBridge.createContainer(pkg);
+		ModelTruezipBridge.createFile(pkg);
 		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(pkg);
 		for( int i = 0; i < filesets.length; i++ ) {
 			fullFilesetBuild(filesets[i]);
@@ -63,14 +64,15 @@ public class ArchiveBuildDelegate {
 		while(i.hasNext()) {
 			path = ((IResource)i.next()).getLocation();
 			matchingFilesets = ModelUtil.getMatchingFilesets(path);
-			ModelTruezipBridge.copyFiles(matchingFilesets, new IPath[] { path });
+			ModelTruezipBridge.copyFiles(matchingFilesets, new IPath[] { path }, false);
 		}
 		
 		i = removed.iterator();
 		while(i.hasNext()) {
 			path = ((IResource)i.next()).getLocation();
 			matchingFilesets = ModelUtil.getMatchingFilesets(path);
-			ModelTruezipBridge.deleteFiles(matchingFilesets, new IPath[] { path });
+			ModelTruezipBridge.deleteFiles(matchingFilesets, new IPath[] { path }, false);
 		}
+		TrueZipUtil.sync();
 	}
 }

@@ -105,10 +105,10 @@ public class ModelChangeListener implements IArchiveModelListener {
 	private void nodeAdded(IArchiveNode added) {
 		if( added.getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
 			// create the package
-			ModelTruezipBridge.createContainer(added);
+			ModelTruezipBridge.createFile(added);
 		} else if( added.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FOLDER ) {
 			// create hte folder
-			ModelTruezipBridge.createContainer(added);
+			ModelTruezipBridge.createFile(added);
 		}
 		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(added);
 		for( int i = 0; i < filesets.length; i++ ) {
@@ -130,9 +130,7 @@ public class ModelChangeListener implements IArchiveModelListener {
 		}
 
 		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(removed);
-		for( int i = 0; i < filesets.length; i++ ) {
-			ModelTruezipBridge.fullFilesetRemove(filesets[i]);
-		}
+		ModelTruezipBridge.fullFilesetsRemove(filesets);
 		refreshLocal(removed);
 	}
 	
