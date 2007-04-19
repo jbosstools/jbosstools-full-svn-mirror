@@ -26,85 +26,136 @@ import de.schlichtherle.io.File;
 public class ModelTruezipBridge {
 	public static void deleteArchive(IArchive archive) {
 		final File file = getFile(archive);
-		TrueZipUtil.syncExec(new Runnable() {
-			public void run() {
-				file.deleteAll();
-			}
-		});
+		file.deleteAll();
+		TrueZipUtil.sync();
 	}
-	
-	public static void createContainer(IArchiveNode node) {
-		File f = getFile(node);
-		f.mkdirs();
-	}
-	
+		
 	public static void deleteFolder(IArchiveFolder folder) {
 		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(folder);
 		deleteFolder(folder,filesets);
 	}
 	
 	public static void deleteFolder(IArchiveFolder folder, IArchiveFileSet[] filesets) {
-		// remove all files from filesets
-		for( int i = 0; i < filesets.length; i++ )
-			fullFilesetRemove(filesets[i]);
-		
+		deleteFolder(folder, filesets, true);
+	}
+	public static void deleteFolder(final IArchiveFolder folder, final IArchiveFileSet[] filesets, boolean sync) {
+		fullFilesetsRemove(filesets, false);
 		final File file = getFile(folder);
-		TrueZipUtil.syncExec(new Runnable() {
-			public void run() {
-				TrueZipUtil.deleteEmptyFolders(file);
-			}
-		});
+		TrueZipUtil.deleteEmptyFolders(file);
+		if( sync )
+			TrueZipUtil.sync();
 	}
 	
 	public static void fullFilesetBuild(IArchiveFileSet fileset) {
+		fullFilesetBuild(fileset, true);
+	}
+	public static void fullFilesetBuild(final IArchiveFileSet fileset, boolean sync) {
 		fileset.resetScanner();
 		IPath[] paths = fileset.findMatchingPaths();
-		ModelTruezipBridge.copyFiles(fileset, paths);
+		copyFiles(fileset, paths, false);
+		if( sync )
+			TrueZipUtil.sync();
 	}
 		
+	public static void fullFilesetsRemove(IArchiveFileSet[] filesets) {
+		fullFilesetsRemove(filesets, true);
+	}
+	public static void fullFilesetsRemove(IArchiveFileSet[] filesets, boolean sync) {
+		for( int i = 0; i < filesets.length; i++ )
+			fullFilesetRemove(filesets[i], false);
+		if( sync )
+			TrueZipUtil.sync();
+	}
+	
 	public static void fullFilesetRemove(IArchiveFileSet fileset) {
+		fullFilesetRemove(fileset, true);
+	}
+	public static void fullFilesetRemove(final IArchiveFileSet fileset, boolean sync) {
 		IPath[] paths = fileset.findMatchingPaths();
 		for( int i = 0; i < paths.length; i++ ) {
 			if( !ModelUtil.otherFilesetMatchesPath(fileset, paths[i])) {
 				// remove
-				ModelTruezipBridge.deleteFiles(fileset, new IPath[] {paths[i]});
+				deleteFiles(fileset, new IPath[] {paths[i]}, false);
 			}
 		}
+
+		if( sync ) 
+			TrueZipUtil.sync();
 	}
 
 	
 	public static void copyFiles(IArchiveFileSet[] filesets, IPath[] paths) {
+		copyFiles(filesets, paths, true);
+	}
+	
+	public static void copyFiles(final IArchiveFileSet[] filesets, final IPath[] paths, boolean sync) {
 		for( int i = 0; i < filesets.length; i++ ) {
-			copyFiles(filesets[i], paths);
+			copyFiles(filesets[i], paths, false);
 		}
+		if( sync ) 
+			TrueZipUtil.sync();
+		
 	}
 	
 	public static void copyFiles(IArchiveFileSet fileset, final IPath[] paths) {
+		copyFiles(fileset, paths, true);
+	}
+	public static void copyFiles(IArchiveFileSet fileset, final IPath[] paths, boolean sync) {
 		final File[] destFiles = getFiles(paths, fileset);
-		TrueZipUtil.syncExec(new Runnable() {
-			public void run() {
-				for( int i = 0; i < paths.length; i++ ) {
-					TrueZipUtil.copyFile(paths[i].toOSString(), destFiles[i]);
-				}
-			}
-		});
+		for( int i = 0; i < paths.length; i++ ) {
+			TrueZipUtil.copyFile(paths[i].toOSString(), destFiles[i]);
+		}
+		if( sync ) 
+			TrueZipUtil.sync();
 	}
 	
+	
+	/*
+	 * Deleting files
+	 */
 	public static void deleteFiles(IArchiveFileSet[] filesets, IPath[] paths ) {
+		deleteFiles(filesets, paths, true);
+	}
+	public static void deleteFiles(final IArchiveFileSet[] filesets, final IPath[] paths, boolean sync ) {
 		for( int i = 0; i < filesets.length; i++ ) {
-			deleteFiles(filesets[i], paths);
+			deleteFiles(filesets[i], paths, false);
 		}
+		if( sync ) 
+			TrueZipUtil.sync();
 	}
+	
 	public static void deleteFiles(IArchiveFileSet fileset, final IPath[] paths ) {
-		final File[] destFiles = getFiles(paths, fileset);
-		TrueZipUtil.syncExec(new Runnable() {
-			public void run() {
-				for( int i = 0; i < paths.length; i++ ) {
-					TrueZipUtil.deleteAll(destFiles[i]);
-				}
-			}
-		});
+		deleteFiles(fileset, paths, true);
 	}
+	public static void deleteFiles(IArchiveFileSet fileset, final IPath[] paths, boolean sync ) {
+		final File[] destFiles = getFiles(paths, fileset);
+		for( int i = 0; i < paths.length; i++ ) {
+			TrueZipUtil.deleteAll(destFiles[i]);
+		}
+		
+		if( sync ) 	
+			TrueZipUtil.sync();
+	}
+	
+	
+	/**
+	 * Creates the file, folder, or archive represented by the node.
+	 * Does nothing for filesets
+	 * @param node
+	 */
+	public static void createFile(final IArchiveNode node) {
+		createFile(node, true);
+	}
+	public static void createFile(final IArchiveNode node, boolean sync) {
+		File f = getFile(node);
+		if( f != null ) {
+			f.mkdirs();
+		}
+		if( sync ) 
+			TrueZipUtil.sync();
+	}
+	
+
 	
 	/**
 	 * Gets all properly-created de.sch files for a fileset
@@ -156,23 +207,6 @@ public class ModelTruezipBridge {
 			return new File(parentFile, ((IArchiveFolder)node).getName(), ArchiveDetector.NULL);
 		}
 		return null;
-	}
-	
-	
-	/**
-	 * Creates the file, folder, or archive represented by the node.
-	 * Does nothing for filesets
-	 * @param node
-	 */
-	public static void createFile(final IArchiveNode node) {
-		TrueZipUtil.syncExec(new Runnable() {
-			public void run() {
-				File f = getFile(node);
-				if( f != null ) {
-					f.mkdirs();
-				}
-			}
-		});
 	}
 	
 }

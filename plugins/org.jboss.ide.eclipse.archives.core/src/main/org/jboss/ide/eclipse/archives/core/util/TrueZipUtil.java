@@ -116,14 +116,19 @@ public class TrueZipUtil {
 	}
 	
 	/**
-	 * Sync's with file system after executing
-	 * @param run
+	 * Sync's with file system after executing a runnable
+	 * @param run Runnable or null
 	 */
 	public static void syncExec(Runnable run) {
 		try {
-			run.run();
+			if( run != null )
+				run.run();
 		} catch (Exception e ) {}
 		umount();
+	}
+	
+	public static void sync() {
+		syncExec(null);
 	}
 	
 	public static void updateParentTimestamps(IPath path) {
