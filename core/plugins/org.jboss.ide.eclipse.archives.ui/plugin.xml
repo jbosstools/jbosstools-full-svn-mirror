@@ -33,4 +33,30 @@
             id="org.jboss.ide.eclipse.archives.ui.newJARAction"
             label="JAR"/>
    </extension>
+   
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.jboss.ide.eclipse.archives.ui.actions.Archives"
+            label="Archives"
+            visible="true">
+         <action
+               class="org.jboss.ide.eclipse.archives.ui.actions.BuildProjectAction"
+               definitionId="org.jboss.ide.eclipse.packages.ui.actions.BuildArchivesAction"
+               icon="icons/build_packages.gif"
+               id="org.jboss.ide.eclipse.archives.ui.actions.BuildArchivesAction"
+               label="Build Packages"
+               menubarPath="project/additions"
+               style="push">
+            <enablement>
+               <and>
+               	<objectState
+                     name="projectNature"
+                     value="org.jboss.ide.eclipse.archives.core.archivesNature"/>
+               </and>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   
 </plugin>

@@ -32,6 +32,7 @@ import org.jboss.ide.eclipse.archives.ui.NodeContribution;
 import org.jboss.ide.eclipse.archives.ui.PackageNodeFactory;
 import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PackagesUIMessages;
+import org.jboss.ide.eclipse.archives.ui.actions.ActionWithDelegate;
 import org.jboss.ide.eclipse.archives.ui.actions.NewJARAction;
 import org.jboss.ide.eclipse.archives.ui.actions.NewPackageAction;
 import org.jboss.ide.eclipse.archives.ui.providers.PackagesContentProvider.WrappedProject;
@@ -174,9 +175,13 @@ public class PackagesMenuHandler {
 			}
 		};
 		
-		buildAction = new Action("", PackagesSharedImages.getImageDescriptor(PackagesSharedImages.IMG_BUILD_PACKAGES)) {
+		buildAction = new ActionWithDelegate("", PackagesSharedImages.getImageDescriptor(PackagesSharedImages.IMG_BUILD_PACKAGES)) {
 			public void run() {
 				buildSelectedNode();
+			}
+
+			public IStructuredSelection getSelection() {
+				return ProjectArchivesView.getInstance().getSelection();
 			}
 		};
 	}
