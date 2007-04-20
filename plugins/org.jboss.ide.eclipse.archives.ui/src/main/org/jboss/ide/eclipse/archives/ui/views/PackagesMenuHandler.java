@@ -25,17 +25,17 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.core.model.PackagesCore;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.ui.ExtensionManager;
 import org.jboss.ide.eclipse.archives.ui.NodeContribution;
-import org.jboss.ide.eclipse.archives.ui.PackageNodeFactory;
 import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PackagesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.actions.ActionWithDelegate;
 import org.jboss.ide.eclipse.archives.ui.actions.NewJARAction;
 import org.jboss.ide.eclipse.archives.ui.actions.NewPackageAction;
-import org.jboss.ide.eclipse.archives.ui.providers.PackagesContentProvider.WrappedProject;
+import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProvider.WrappedProject;
+import org.jboss.ide.eclipse.archives.ui.util.PackageNodeFactory;
 import org.jboss.ide.eclipse.archives.ui.wizards.FilesetWizard;
 import org.jboss.ide.eclipse.archives.ui.wizards.NewJARWizard;
 
@@ -341,9 +341,9 @@ public class PackagesMenuHandler {
 		if( selected == null ) return;
 		if (selected instanceof IArchiveNode && 
 				((IArchiveNode)selected).getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
-			PackagesCore.buildArchive((IArchive)selected, null);
+			ArchivesCore.buildArchive((IArchive)selected, null);
 		} else if( selected != null && selected instanceof IProject ){
-			PackagesCore.buildProject((IProject)selected, null);
+			ArchivesCore.buildProject((IProject)selected, null);
 		}
 		
 	}

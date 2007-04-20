@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.archives.ui.util;
+package org.jboss.ide.eclipse.archives.ui.util.composites;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.runtime.IPath;

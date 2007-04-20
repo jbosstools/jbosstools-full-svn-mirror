@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.archives.ui;
+package org.jboss.ide.eclipse.archives.ui.util;
 
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;

@@ -25,9 +25,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.ide.IDE;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.core.model.PackagesCore;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
 import org.jboss.ide.eclipse.archives.ui.PackagesUIMessages;
-import org.jboss.ide.eclipse.archives.ui.providers.PackagesLabelProvider;
+import org.jboss.ide.eclipse.archives.ui.providers.ArchivesLabelProvider;
 
 public class PackageNodeDestinationDialog extends ElementTreeSelectionDialog {
 
@@ -58,7 +58,7 @@ public class PackageNodeDestinationDialog extends ElementTreeSelectionDialog {
 			 IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 			 for( int i = 0; i < projects.length; i++ ) {
 				 if( projects[i].isAccessible()) {
-					 destinations.addAll(Arrays.asList(PackagesCore.getProjectPackages(projects[i], monitor, true)));
+					 destinations.addAll(Arrays.asList(ArchivesCore.getProjectPackages(projects[i], monitor, true)));
 				 }
 			 }
 		 }
@@ -123,10 +123,10 @@ public class PackageNodeDestinationDialog extends ElementTreeSelectionDialog {
 	 }
 	 
 	 private static class DestinationLabelProvider implements ILabelProvider {
-		private PackagesLabelProvider delegate;
+		private ArchivesLabelProvider delegate;
 		 
 		public DestinationLabelProvider  ()  {
-			delegate = new PackagesLabelProvider();
+			delegate = new ArchivesLabelProvider();
 		}
 		
 		public Image getImage(Object element) {

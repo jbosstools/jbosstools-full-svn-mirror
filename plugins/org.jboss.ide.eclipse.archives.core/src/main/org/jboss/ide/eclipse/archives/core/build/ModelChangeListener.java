@@ -6,6 +6,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.jboss.ide.eclipse.archives.core.CorePreferenceManager;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
@@ -23,6 +24,10 @@ public class ModelChangeListener implements IArchiveModelListener {
 	 * It immediately passes the delta to be handled.
 	 */
 	public void modelChanged(IArchiveNodeDelta delta) {
+		// if we're not building, get out
+		if( !CorePreferenceManager.isBuilderEnabled(delta.getPostNode().getProject())) 
+			return;
+
 		handle(delta);
 	}
 

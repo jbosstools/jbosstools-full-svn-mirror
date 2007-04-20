@@ -4,7 +4,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
 import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
-import org.jboss.ide.eclipse.archives.core.model.PackagesCore;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.types.JARPackageType;
 import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PackagesUIMessages;
@@ -28,7 +28,7 @@ public class NewJARWizard extends AbstractPackageWizard
 	public boolean performFinish(IArchive pkg) {
 		Trace.trace(getClass(), "performing finish");
 		
-		pkg.setArchiveType(PackagesCore.getPackageType(JARPackageType.TYPE_ID));
+		pkg.setArchiveType(ArchivesCore.getPackageType(JARPackageType.TYPE_ID));
 		return true;
 	}
 	

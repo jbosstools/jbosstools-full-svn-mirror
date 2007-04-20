@@ -10,7 +10,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.core.model.PackagesCore;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
 import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
 
 //public class BuildProjectAction extends ActionWithDelegate  {
@@ -39,7 +39,7 @@ public class BuildProjectAction implements IWorkbenchWindowActionDelegate {
 
 	public void run(IAction action) {
 		if( selectedProject != null ) 
-			PackagesCore.buildProject(selectedProject, null);
+			ArchivesCore.buildProject(selectedProject, null);
 	}
 
 	public void selectionChanged(IAction action, ISelection selection) {
