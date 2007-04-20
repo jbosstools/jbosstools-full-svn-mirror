@@ -12,7 +12,7 @@ import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
-import org.jboss.ide.eclipse.archives.ui.PackageNodeFactory;
+import org.jboss.ide.eclipse.archives.ui.util.PackageNodeFactory;
 import org.jboss.ide.eclipse.archives.ui.wizards.pages.FilesetInfoWizardPage;
 
 public class FilesetWizard extends Wizard {

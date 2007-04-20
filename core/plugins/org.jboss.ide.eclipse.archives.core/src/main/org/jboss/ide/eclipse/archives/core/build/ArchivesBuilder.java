@@ -35,11 +35,11 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.jboss.ide.eclipse.archives.core.CorePreferenceManager;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
-import org.jboss.ide.eclipse.archives.core.model.events.EventManager;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.util.TrueZipUtil;
@@ -54,6 +54,11 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 	public static final String BUILDER_ID = "org.jboss.ide.eclipse.archives.core.archivesBuilder";
 	
 	protected IProject[] build(int kind, Map args, IProgressMonitor monitor) throws CoreException {
+		
+		// if we're not to build, get out of here
+		if( !CorePreferenceManager.isBuilderEnabled(getProject())) 
+			return new IProject[]{};
+		
 		IProject[] interestingProjects = getInterestingProjectsInternal();
 
 		final TreeSet addedChanged = createDefaultTreeSet();

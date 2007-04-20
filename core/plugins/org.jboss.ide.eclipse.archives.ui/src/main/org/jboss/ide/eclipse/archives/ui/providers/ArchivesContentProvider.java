@@ -1,17 +1,20 @@
 package org.jboss.ide.eclipse.archives.ui.providers;
 
+import java.util.ArrayList;
+
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
-import org.jboss.ide.eclipse.archives.ui.PackagesUIPlugin;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
 
-public class PackagesContentProvider implements ITreeContentProvider {
+public class ArchivesContentProvider implements ITreeContentProvider {
 	
-	public PackagesContentProvider () {
+	public ArchivesContentProvider () {
 	}
 	
 	public static class WrappedProject  {
@@ -21,7 +24,7 @@ public class PackagesContentProvider implements ITreeContentProvider {
 	}
 
 	private boolean showProjectRoot () {
-		return PackagesUIPlugin.getDefault().getPluginPreferences().getBoolean(PrefsInitializer.PREF_SHOW_PROJECT_ROOT);
+		return PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_PROJECT_ROOT);
 	}
 		
 	private Object[] wrapProjects(IProject[] project) {
@@ -31,8 +34,22 @@ public class PackagesContentProvider implements ITreeContentProvider {
 		return ret;
 	}
 	public Object[] getChildren(Object parentElement) {
-		if( parentElement instanceof ArchiveModelNode && showProjectRoot()) 
-			return wrapProjects(new IProject[] { ((ArchiveModelNode)parentElement).getProject()});
+		if( parentElement instanceof ArchiveModelNode && showProjectRoot())  {
+			IProject[] projects;
+			if( PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS)) {
+				IProject[] projects2 = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+				ArrayList list = new ArrayList();
+				for( int i = 0; i < projects2.length; i++ ) {
+					if( ArchivesCore.packageFileExists(projects2[i])) {
+						list.add(projects2[i]);
+					}
+				}
+				projects = (IProject[]) list.toArray(new IProject[list.size()]);
+			} else {
+				projects = new IProject[] { ((ArchiveModelNode)parentElement).getProject()};
+			}
+			return wrapProjects(projects);
+		}
 		
 		if( parentElement instanceof ArchiveModelNode)
 			return ((ArchiveModelNode)parentElement).getAllChildren();

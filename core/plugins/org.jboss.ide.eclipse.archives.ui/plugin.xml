@@ -59,4 +59,28 @@
       </actionSet>
    </extension>
    
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.jboss.ide.eclipse.ui.MainPreferencePage"
+            class="org.jboss.ide.eclipse.archives.ui.preferences.MainPreferencePage"
+            id="org.jboss.ide.eclipse.archives.ui.archivesPreferencePage"
+            name="Packaging Archives"/>
+   </extension>
+   
+   
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="org.jboss.ide.eclipse.archives.ui.preferences.MainPreferencePage"
+            id="org.jboss.ide.eclipse.archives.ui.projectProperties"
+            name="Packaging Archives"
+            objectClass="org.eclipse.core.resources.IProject"/>
+      <page
+            class="org.jboss.ide.eclipse.archives.ui.preferences.MainPreferencePage"
+            id="org.jboss.ide.eclipse.archives.ui.projectProperties2"
+            name="Packaging Archives"
+            objectClass="org.eclipse.jdt.core.IJavaProject"/>
+   </extension>
+   
 </plugin>

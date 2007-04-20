@@ -16,17 +16,17 @@ import org.jboss.ide.eclipse.archives.core.build.ModelChangeListener;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.types.IArchiveType;
 
-public class PackagesCore {
-	private static PackagesCore instance;
-	public static PackagesCore getInstance() {
+public class ArchivesCore {
+	private static ArchivesCore instance;
+	public static ArchivesCore getInstance() {
 		if( instance == null ) 
-			instance = new PackagesCore();
+			instance = new ArchivesCore();
 		return instance;
 	}
 	
 	private ArrayList buildListeners;
 	private ArrayList modelListeners;
-	public PackagesCore() {
+	public ArchivesCore() {
 		buildListeners = new ArrayList();
 		modelListeners = new ArrayList();
 		addModelListener(new ModelChangeListener());

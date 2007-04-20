@@ -32,12 +32,12 @@ import org.eclipse.ui.part.ViewPart;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
-import org.jboss.ide.eclipse.archives.core.model.PackagesCore;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.ui.ExtensionManager;
 import org.jboss.ide.eclipse.archives.ui.actions.NewPackageAction;
-import org.jboss.ide.eclipse.archives.ui.providers.PackagesContentProvider;
-import org.jboss.ide.eclipse.archives.ui.providers.PackagesLabelProvider;
+import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProvider;
+import org.jboss.ide.eclipse.archives.ui.providers.ArchivesLabelProvider;
 
 public class ProjectArchivesView extends ViewPart implements IArchiveModelListener {
 	
@@ -52,7 +52,7 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 		instance = this;
 		selectionListener = createSelectionListener();
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService().addSelectionListener(selectionListener);
-		PackagesCore.getInstance().addModelListener(this);
+		ArchivesCore.getInstance().addModelListener(this);
 	}
 	
 	
@@ -87,8 +87,8 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 	// parts
 	private PageBook book;
 	private IProject project;
-	private PackagesContentProvider contentProvider = new PackagesContentProvider();
-	private PackagesLabelProvider labelProvider = new PackagesLabelProvider();
+	private ArchivesContentProvider contentProvider = new ArchivesContentProvider();
+	private ArchivesLabelProvider labelProvider = new ArchivesLabelProvider();
 	private Composite emptyComposite, viewerComposite, loadingPackagesComposite;
 	private IProgressMonitor loadingProgress;
 	private TreeViewer packageViewer;
@@ -188,8 +188,8 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 		if( project.equals(packageViewer.getInput())) 
 			return;
 		
-		if( PackagesCore.packageFileExists(project) ) { 
-			if( PackagesCore.projectRegistered(project))
+		if( ArchivesCore.packageFileExists(project) ) { 
+			if( ArchivesCore.projectRegistered(project))
 				book.showPage(viewerComposite);
 			else {
 				this.project = project;
@@ -254,5 +254,16 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 				list.add(children[i].getPostNode());
 		}
 		return (IArchiveNode[]) list.toArray(new IArchiveNode[list.size()]);
+	}
+	
+	public void refreshViewer(final Object node) {
+		getSite().getShell().getDisplay().asyncExec(new Runnable () {
+			public void run () {
+				if( node == null )
+					packageViewer.refresh();
+				else
+					packageViewer.refresh(node);
+			}
+		});
 	}
 }

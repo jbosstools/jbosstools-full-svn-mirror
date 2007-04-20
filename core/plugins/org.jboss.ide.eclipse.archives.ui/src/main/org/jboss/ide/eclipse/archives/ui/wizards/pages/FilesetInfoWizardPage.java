@@ -29,11 +29,11 @@ import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 import org.eclipse.ui.ide.IDE;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.core.model.PackagesCore;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
 import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PackagesUIMessages;
-import org.jboss.ide.eclipse.archives.ui.util.FilesetPreviewComposite;
-import org.jboss.ide.eclipse.archives.ui.util.PackageNodeDestinationComposite;
+import org.jboss.ide.eclipse.archives.ui.util.composites.FilesetPreviewComposite;
+import org.jboss.ide.eclipse.archives.ui.util.composites.PackageNodeDestinationComposite;
 
 public class FilesetInfoWizardPage extends WizardPage {
 
@@ -299,7 +299,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 	
 	private void changePreview() {
 		IPath root = isRootDirWorkspaceRelative() ? ResourcesPlugin.getWorkspace().getRoot().getLocation().append(rootDir) : rootDir;
-		IPath paths[] = PackagesCore.findMatchingPaths(root, includesText.getText(), excludesText.getText());
+		IPath paths[] = ArchivesCore.findMatchingPaths(root, includesText.getText(), excludesText.getText());
 		previewComposite.setInput(paths);
 	}
 	

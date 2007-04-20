@@ -14,7 +14,7 @@ import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PackagesUIPlugin;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
 
-public class PackagesLabelProvider implements ILabelProvider {
+public class ArchivesLabelProvider implements ILabelProvider {
 	
 	
 	/*
@@ -89,15 +89,14 @@ public class PackagesLabelProvider implements ILabelProvider {
 	}
 	private String getPackageText (IArchive pkg) {
 		String text = pkg.getName();
-		if (PackagesUIPlugin.getDefault().getPreferenceStore().getBoolean(
-			PrefsInitializer.PREF_SHOW_PACKAGE_OUTPUT_PATH)) {
+		if (PrefsInitializer.getBoolean( PrefsInitializer.PREF_SHOW_PACKAGE_OUTPUT_PATH)) {
 			text += " [" + pkg.getDestinationPath() + "]";
 		}
 		return text;
 	}
 
 	private String getPackageFileSetText (IArchiveFileSet fileset) {
-		boolean showFullPath = PackagesUIPlugin.getDefault().getPreferenceStore().getBoolean(
+		boolean showFullPath = PrefsInitializer.getBoolean(
 				PrefsInitializer.PREF_SHOW_FULL_FILESET_ROOT_DIR);
 		String text = "";
 		if (fileset.getIncludesPattern() != null)

@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.archives.ui.util;
+package org.jboss.ide.eclipse.archives.ui.util.composites;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,6 +27,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PackagesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.dialogs.PackageNodeDestinationDialog;
+import org.jboss.ide.eclipse.archives.ui.util.DestinationChangeListener;
 
 public class PackageNodeDestinationComposite extends Composite {
 
