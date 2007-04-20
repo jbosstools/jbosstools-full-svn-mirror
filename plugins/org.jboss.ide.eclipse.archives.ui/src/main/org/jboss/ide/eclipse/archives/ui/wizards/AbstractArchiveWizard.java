@@ -19,18 +19,18 @@ import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesView;
 import org.jboss.ide.eclipse.archives.ui.wizards.pages.ArchiveInfoWizardPage;
 
-public abstract class ArchivePackageWizard extends WizardWithNotification implements INewWizard {
+public abstract class AbstractArchiveWizard extends WizardWithNotification implements INewWizard {
 	private ArchiveInfoWizardPage firstPage;
 	private WizardPage pages[];
 	protected IProject project;
 	protected Object selectedDestination;
 	protected IArchive existingPackage;
 	
-	public ArchivePackageWizard () {	
+	public AbstractArchiveWizard () {	
 		this.project = ProjectArchivesView.getInstance().getCurrentProject();
 	}
 	
-	public ArchivePackageWizard (IArchive existingPackage) {
+	public AbstractArchiveWizard (IArchive existingPackage) {
 		this.existingPackage = existingPackage;
 		this.project = existingPackage.getProject();
 	}
@@ -64,7 +64,7 @@ public abstract class ArchivePackageWizard extends WizardWithNotification implem
 		}
 		
 		final boolean create = this.existingPackage == null;
-		final IArchive pkg = firstPage.getPackage();
+		final IArchive pkg = firstPage.getArchive();
 		final Object destination = firstPage.getPackageDestination();
 		
 		boolean performed = performFinish(pkg);
@@ -141,7 +141,7 @@ public abstract class ArchivePackageWizard extends WizardWithNotification implem
 	public abstract boolean performFinish(IArchive pkg);
 	public abstract WizardPage[] createWizardPages();
 	public abstract ImageDescriptor getImageDescriptor();
-	public abstract String getPackageExtension();
+	public abstract String getArchiveExtension();
 	
 	public IProject getProject() {
 		return project;
@@ -152,7 +152,7 @@ public abstract class ArchivePackageWizard extends WizardWithNotification implem
 	 * Note: This should only be called after the first page has been completed
 	 * @return The package
 	 */
-	public IArchive getPackage () {
-		return firstPage.getPackage();
+	public IArchive getArchive () {
+		return firstPage.getArchive();
 	}
 }

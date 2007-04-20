@@ -9,14 +9,14 @@ import org.eclipse.swt.widgets.Label;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProvider;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesLabelProvider;
-import org.jboss.ide.eclipse.archives.ui.wizards.ArchivePackageWizard;
+import org.jboss.ide.eclipse.archives.ui.wizards.AbstractArchiveWizard;
 import org.jboss.ide.eclipse.archives.ui.wizards.WizardPageWithNotification;
 
 public class DefaultJARConfigWizardPage extends WizardPageWithNotification {
 
-	private ArchivePackageWizard wizard;
+	private AbstractArchiveWizard wizard;
 	
-	public DefaultJARConfigWizardPage (ArchivePackageWizard wizard) {
+	public DefaultJARConfigWizardPage (AbstractArchiveWizard wizard) {
 		super ("Default JAR Configuration", "Default JAR Configuration",
 				ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_NEW_JAR_WIZARD));
 		
@@ -36,7 +36,7 @@ public class DefaultJARConfigWizardPage extends WizardPageWithNotification {
 		TreeViewer previewTree = new TreeViewer(main);
 		previewTree.setContentProvider(new ArchivesContentProvider());
 		previewTree.setLabelProvider(new ArchivesLabelProvider());
-		previewTree.setInput(wizard.getPackage());
+		previewTree.setInput(wizard.getArchive());
 		
 		setControl(main);
 	}

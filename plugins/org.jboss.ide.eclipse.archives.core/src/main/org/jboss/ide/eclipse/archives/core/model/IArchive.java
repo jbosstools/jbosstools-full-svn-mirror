@@ -79,9 +79,8 @@ public interface IArchive extends IArchiveNode {
 	public boolean isTopLevel();
 		
 	/**
-	 * If this package is top-level, there are two types of destinations it can have. "Inside" the workspace, and "outside" the workspace.
-	 * If the destination is inside the workspace, you will need to call getDestinationContainer()
-	 * Otherwise you will need to call getDestinationFolder()
+	 * If this package is top-level, there are two types of destinations it can have. 
+	 * "Inside" the workspace, and "outside" the workspace. 
 	 * @return Wheter or not the destination of this package is in the workspace
 	 * @see IPackage.getDestinationFolder()
 	 * @see IPackage.getDestinationContainer()
@@ -148,7 +147,9 @@ public interface IArchive extends IArchiveNode {
 		
 	/**
 	 * Sets the destination path for this package.
-	 * @param path The absolute path where this package will be built
+	 * In workspace paths are relative to workspace root.
+	 * Out of workspace paths are file-system absolute
+	 * @param path The path where this archive will be built. 
 	 */
 	public void setDestinationPath (IPath path, boolean inWorkspace);
 		

@@ -20,30 +20,30 @@ import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
+import org.jboss.ide.eclipse.archives.core.util.ArchiveNodeFactory;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.util.DestinationChangeListener;
-import org.jboss.ide.eclipse.archives.ui.util.ArchiveNodeFactory;
 import org.jboss.ide.eclipse.archives.ui.util.composites.ArchiveDestinationComposite;
-import org.jboss.ide.eclipse.archives.ui.wizards.ArchivePackageWizard;
+import org.jboss.ide.eclipse.archives.ui.wizards.AbstractArchiveWizard;
 import org.jboss.ide.eclipse.archives.ui.wizards.WizardPageWithNotification;
 import org.jboss.ide.eclipse.archives.ui.wizards.WizardWithNotification;
 
 public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 
-	private ArchivePackageWizard wizard;
+	private AbstractArchiveWizard wizard;
 	private Text packageNameText;
 	private Button compressedButton;
 	private Button explodedButton;
 	private String packageName;
 	private boolean packageExploded;
 	private ArchiveDestinationComposite destinationComposite;
-	private IArchive pkg;
+	private IArchive archive;
 	
-	public ArchiveInfoWizardPage (ArchivePackageWizard wizard, IArchive existingPackage) {
+	public ArchiveInfoWizardPage (AbstractArchiveWizard wizard, IArchive existingPackage) {
 		super (ArchivesUIMessages.PackageInfoWizardPage_title, ArchivesUIMessages.PackageInfoWizardPage_title, wizard.getImageDescriptor());
 		setWizard(wizard);
-		this.pkg = existingPackage;
+		this.archive = existingPackage;
 	}
 	
 	public void createControl(Composite parent) {
@@ -70,7 +70,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 		packageNameText = new Text(pkgNameComposite, SWT.BORDER);
 		System.out.println(wizard.getProject());
 		packageName = wizard.getProject().getName();
-		packageName += "." + wizard.getPackageExtension();
+		packageName += "." + wizard.getArchiveExtension();
 		packageNameText.setText(packageName);
 		packageNameText.setSelection(0, wizard.getProject().getName().length());
 		expand(packageNameText);
@@ -135,22 +135,22 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 	
 	private void fillDefaults ()
 	{
-		if (pkg != null)
+		if (archive != null)
 		{
-			compressedButton.setSelection(!pkg.isExploded());
-			explodedButton.setSelection(pkg.isExploded());
-			packageNameText.setText(pkg.getName());
-			packageName = pkg.getName();
+			compressedButton.setSelection(!archive.isExploded());
+			explodedButton.setSelection(archive.isExploded());
+			packageNameText.setText(archive.getName());
+			packageName = archive.getName();
 			
-			if (pkg.isTopLevel()) {
+			if (archive.isTopLevel()) {
 				
 				// TODO:  FIX THIS
-				destinationComposite.setPackageNodeDestination(pkg.getDestinationPath());
+				destinationComposite.setPackageNodeDestination(archive.getDestinationPath());
 			} else {
-				destinationComposite.setPackageNodeDestination(pkg.getParent());
+				destinationComposite.setPackageNodeDestination(archive.getParent());
 			}
 			
-			if (pkg.isExploded())
+			if (archive.isExploded())
 			{
 				explodedButton.setEnabled(true);
 			} else {
@@ -182,7 +182,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 			{
 				IArchive subPackage = (IArchive) subPackages[i];
 				if (subPackage.getName().equals(packageNameText.getText())
-					&& (!pkg.equals(this.pkg)))
+					&& (!archive.equals(this.archive)))
 				{
 					setErrorMessage(
 						ArchivesUIMessages.bind(
@@ -199,7 +199,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 					IArchive pkg = (IArchive) packages[i];
 					if (pkg.getName().equals(packageNameText.getText())
 						&& (pkg.getDestinationPath() != null && pkg.getDestinationPath().equals(container.getFullPath()))
-						&& (!pkg.equals(this.pkg)))
+						&& (!pkg.equals(this.archive)))
 					{
 						setErrorMessage(
 								ArchivesUIMessages.bind(
@@ -217,7 +217,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 					IArchive pkg = (IArchive) packages[i];
 					if (pkg.getName().equals(packageNameText.getText())
 						&& (pkg.getDestinationPath() != null && pkg.getDestinationPath().equals(path))
-						&& (!pkg.equals(this.pkg)))
+						&& (!pkg.equals(this.archive)))
 					{
 						setErrorMessage(
 								ArchivesUIMessages.bind(
@@ -259,17 +259,17 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 			project = wizard.getProject();
 		}
 		
-		if (pkg == null) {
-			pkg = ArchiveNodeFactory.createPackage();
+		if (archive == null) {
+			archive = ArchiveNodeFactory.createArchive();
 		}
 		
-		pkg.setName(getPackageName());
-		pkg.setExploded(isPackageExploded());
+		archive.setName(getPackageName());
+		archive.setExploded(isPackageExploded());
 		
 		if (destContainer instanceof IContainer) {
-			pkg.setDestinationPath(((IContainer)destContainer).getFullPath() , true);
+			archive.setDestinationPath(((IContainer)destContainer).getFullPath() , true);
 		} else if (destContainer instanceof IPath) {
-			pkg.setDestinationPath((IPath) destContainer, false);
+			archive.setDestinationPath((IPath) destContainer, false);
 		}
 	}
 	
@@ -290,13 +290,13 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 		return destinationComposite.getPackageNodeDestination();
 	}
 	
-	private void setWizard(ArchivePackageWizard wizard)
+	private void setWizard(AbstractArchiveWizard wizard)
 	{
 		this.wizard = wizard;
 	}
 	
-	public IArchive getPackage ()
+	public IArchive getArchive ()
 	{
-		return pkg;
+		return archive;
 	}
 }

@@ -2,8 +2,6 @@ package org.jboss.ide.eclipse.archives.ui.wizards;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -12,7 +10,7 @@ import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
-import org.jboss.ide.eclipse.archives.ui.util.ArchiveNodeFactory;
+import org.jboss.ide.eclipse.archives.core.util.ArchiveNodeFactory;
 import org.jboss.ide.eclipse.archives.ui.wizards.pages.FilesetInfoWizardPage;
 
 public class FilesetWizard extends Wizard {

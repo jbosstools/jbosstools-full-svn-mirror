@@ -20,7 +20,7 @@ import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
  * The name of the resulting JAR will be the project's name followed by a ".jar" extension.
  * @author Marshall
  */
-public class JARPackageType extends AbstractArchiveType {
+public class JARArchiveType extends AbstractArchiveType {
 
 	public static final String TYPE_ID = "jar";
 	public IArchive createDefaultConfiguration(IProject project, IProgressMonitor monitor) {
@@ -38,7 +38,7 @@ public class JARPackageType extends AbstractArchiveType {
 		try {
 			outputPath = javaProject.getOutputLocation();
 		} catch (JavaModelException e) {
-			Trace.trace(JARPackageType.class, e);
+			Trace.trace(JARArchiveType.class, e);
 			return null;
 		}
 		

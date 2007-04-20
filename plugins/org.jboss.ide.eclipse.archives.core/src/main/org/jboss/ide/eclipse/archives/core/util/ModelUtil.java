@@ -12,6 +12,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
+import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 
 public class ModelUtil {
@@ -78,4 +79,40 @@ public class ModelUtil {
 		}
 		return null;
 	}
+	
+	public static IPath getBaseFile(IArchiveNode node) {
+		return getBaseFile(node, null);
+	}
+	public static IPath getBaseFile(IArchiveNode node, IPath absolutePath) {
+		ArrayList list = new ArrayList();
+		while( node != null && !(node instanceof ArchiveModelNode)) {
+			list.add(node);
+			node = node.getParent();
+		}
+		IArchiveNode[] nodes = (IArchiveNode[]) list.toArray(new IArchiveNode[list.size()]);
+		
+		IPath lastConcrete = null;
+		for( int i = 0; i < nodes.length; i++ ) {
+			if( nodes[i] instanceof IArchive) {
+				if( lastConcrete == null ) 
+					lastConcrete = ((IArchive)nodes[i]).getArchiveFilePath();
+				else
+					lastConcrete = lastConcrete.append(((IArchive)nodes[i]).getName());
+				
+				if( !((IArchive)nodes[i]).isExploded())
+					return lastConcrete;
+			}  else if( nodes[i] instanceof IArchiveFolder ) {
+				lastConcrete = lastConcrete.append(((IArchiveFolder)nodes[i]).getName());
+			}
+		}
+		
+		if( absolutePath != null && node.getNodeType() ==  IArchiveNode.TYPE_ARCHIVE_FILESET ) {
+			 IArchiveFileSet fs = ((IArchiveFileSet)node);
+			 if( fs.getSourcePath().isPrefixOf(absolutePath)) {
+				 lastConcrete.append(absolutePath.removeFirstSegments(fs.getSourcePath().segmentCount()));
+			 }
+		} 
+		return lastConcrete; 
+	}
+	
 }
