@@ -5,11 +5,11 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
-import org.jboss.ide.eclipse.archives.core.model.types.JARPackageType;
+import org.jboss.ide.eclipse.archives.core.model.types.JARArchiveType;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 
-public class NewJARWizard extends ArchivePackageWizard
+public class NewJARWizard extends AbstractArchiveWizard
 {
 	public WizardPage[] createWizardPages() {
 		return new WizardPage[0];
@@ -28,7 +28,7 @@ public class NewJARWizard extends ArchivePackageWizard
 	public boolean performFinish(IArchive pkg) {
 		Trace.trace(getClass(), "performing finish");
 		
-		pkg.setArchiveType(ArchivesCore.getPackageType(JARPackageType.TYPE_ID));
+		pkg.setArchiveType(ArchivesCore.getArchiveType(JARArchiveType.TYPE_ID));
 		return true;
 	}
 	
@@ -36,7 +36,7 @@ public class NewJARWizard extends ArchivePackageWizard
 		return ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_NEW_JAR_WIZARD);
 	}
 	
-	public String getPackageExtension() {
+	public String getArchiveExtension() {
 		return "jar";
 	}
 }

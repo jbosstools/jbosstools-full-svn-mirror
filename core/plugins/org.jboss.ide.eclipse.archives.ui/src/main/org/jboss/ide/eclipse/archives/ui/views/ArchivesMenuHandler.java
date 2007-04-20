@@ -27,6 +27,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
+import org.jboss.ide.eclipse.archives.core.util.ArchiveNodeFactory;
 import org.jboss.ide.eclipse.archives.ui.ExtensionManager;
 import org.jboss.ide.eclipse.archives.ui.NodeContribution;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
@@ -35,7 +36,6 @@ import org.jboss.ide.eclipse.archives.ui.actions.ActionWithDelegate;
 import org.jboss.ide.eclipse.archives.ui.actions.NewJARAction;
 import org.jboss.ide.eclipse.archives.ui.actions.NewArchiveAction;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProvider.WrappedProject;
-import org.jboss.ide.eclipse.archives.ui.util.ArchiveNodeFactory;
 import org.jboss.ide.eclipse.archives.ui.wizards.FilesetWizard;
 import org.jboss.ide.eclipse.archives.ui.wizards.NewJARWizard;
 

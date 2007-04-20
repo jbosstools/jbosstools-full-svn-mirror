@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.archives.ui.util;
+package org.jboss.ide.eclipse.archives.core.util;
 
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
@@ -8,7 +8,7 @@ import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFolderImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
 
 public class ArchiveNodeFactory {
-	public static IArchive createPackage() {
+	public static IArchive createArchive() {
 		return new ArchiveImpl();
 	}
 	

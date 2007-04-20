@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-   <extension-point id="packageTypes" name="JBossIDE Package Type" schema="schema/packageTypes.exsd"/>
+   <extension-point id="archiveTypes" name="JBossIDE Package Type" schema="schema/archiveTypes.exsd"/>
    <extension
          id="archivesNature"
          name="JBossIDE Packages Nature"
@@ -22,9 +22,9 @@
       </builder>
    </extension>
    <extension
-         point="org.jboss.ide.eclipse.archives.core.packageTypes">
+         point="org.jboss.ide.eclipse.archives.core.archiveTypes">
       <packageType
-            class="org.jboss.ide.eclipse.archives.core.model.types.JARPackageType"
+            class="org.jboss.ide.eclipse.archives.core.model.types.JARArchiveType"
             id="jar"
             label="JAR"/>
    </extension>

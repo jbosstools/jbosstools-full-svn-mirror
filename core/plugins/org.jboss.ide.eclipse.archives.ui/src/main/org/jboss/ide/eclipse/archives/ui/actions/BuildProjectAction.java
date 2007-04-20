@@ -8,26 +8,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
-import org.jboss.ide.eclipse.archives.core.model.IArchive;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
-import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
-
-//public class BuildProjectAction extends ActionWithDelegate  {
-//
-//
-//	public IStructuredSelection getSelection() {
-//		return ProjectArchivesView.getInstance().getSelection();
-//	}
-//	
-//	public Object getSelectedObject() {
-//		IStructuredSelection sel = getSelection();
-//		if( sel != null && !sel.isEmpty() ) {
-//			return sel.getFirstElement();
-//		}
-//		return null;
-//	}
-//}
 
 public class BuildProjectAction implements IWorkbenchWindowActionDelegate {
 	private IProject selectedProject;

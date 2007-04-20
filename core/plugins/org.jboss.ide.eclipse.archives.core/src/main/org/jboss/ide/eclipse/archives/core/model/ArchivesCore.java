@@ -137,7 +137,7 @@ public class ArchivesCore {
 	}
 
 	
-	public static IArchiveType getPackageType (String packageType) {
+	public static IArchiveType getArchiveType (String packageType) {
 		return ExtensionManager.getArchiveType(packageType);
 	}
 
@@ -151,4 +151,5 @@ public class ArchivesCore {
 		}
 		return paths;
 	}
+	
 }
