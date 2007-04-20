@@ -26,17 +26,17 @@ import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.ide.IDE;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
-import org.jboss.ide.eclipse.archives.ui.PackagesUIMessages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesLabelProvider;
 
-public class PackageNodeDestinationDialog extends ElementTreeSelectionDialog {
+public class ArchiveNodeDestinationDialog extends ElementTreeSelectionDialog {
 
 	private boolean showWorkspace, showNodes;
 	
-	 public PackageNodeDestinationDialog(Shell parent, Object destination, boolean showWorkspace, boolean showNodes) {
+	 public ArchiveNodeDestinationDialog(Shell parent, Object destination, boolean showWorkspace, boolean showNodes) {
 		 super(parent, new DestinationLabelProvider(), new DestinationContentProvider());
 		 setAllowMultiple(false);
-		 setTitle(PackagesUIMessages.PackageNodeDestinationDialog_title);
+		 setTitle(ArchivesUIMessages.PackageNodeDestinationDialog_title);
 		 
 		 this.showWorkspace = showWorkspace;
 		 this.showNodes = showNodes;

@@ -13,7 +13,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.jboss.ide.eclipse.archives.core.CorePreferenceManager;
-import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
 import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesView;
 
@@ -29,7 +29,7 @@ public class MainPreferencePage extends PropertyPage implements
 	public MainPreferencePage() {
 		super();
 		setTitle("Packaging Archives");
-		setImageDescriptor(PackagesSharedImages.getImageDescriptor(PackagesSharedImages.IMG_PACKAGE));
+		setImageDescriptor(ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_PACKAGE));
 	}
 
 	protected Control createContents(Composite parent) {

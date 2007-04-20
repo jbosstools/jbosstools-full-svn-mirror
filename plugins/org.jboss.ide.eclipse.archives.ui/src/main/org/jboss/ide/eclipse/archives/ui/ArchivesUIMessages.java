@@ -2,7 +2,7 @@ package org.jboss.ide.eclipse.archives.ui;
 
 import org.eclipse.osgi.util.NLS;
 
-public class PackagesUIMessages extends NLS {
+public class ArchivesUIMessages extends NLS {
 	public static final String BUNDLE_NAME = "org.jboss.ide.eclipse.archives.ui.PackagesUIMessages";
 
 	public static String NewJARWizard_windowTitle;
@@ -87,6 +87,6 @@ public class PackagesUIMessages extends NLS {
 	public static String FilesetInfoWizardPage_fileWorkspaceBrowser_message;
 	
 	static {
-		NLS.initializeMessages(BUNDLE_NAME, PackagesUIMessages.class);
+		NLS.initializeMessages(BUNDLE_NAME, ArchivesUIMessages.class);
 	}
 }

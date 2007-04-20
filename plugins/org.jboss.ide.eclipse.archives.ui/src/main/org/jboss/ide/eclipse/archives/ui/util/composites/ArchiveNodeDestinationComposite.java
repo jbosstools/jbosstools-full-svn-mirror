@@ -24,12 +24,12 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
-import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
-import org.jboss.ide.eclipse.archives.ui.PackagesUIMessages;
-import org.jboss.ide.eclipse.archives.ui.dialogs.PackageNodeDestinationDialog;
+import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
+import org.jboss.ide.eclipse.archives.ui.dialogs.ArchiveNodeDestinationDialog;
 import org.jboss.ide.eclipse.archives.ui.util.DestinationChangeListener;
 
-public class PackageNodeDestinationComposite extends Composite {
+public class ArchiveNodeDestinationComposite extends Composite {
 
 	protected Composite parent;
 	protected Label destinationImage;
@@ -39,7 +39,7 @@ public class PackageNodeDestinationComposite extends Composite {
 	protected boolean editable;
 	protected ArrayList listeners;
 	
-	public PackageNodeDestinationComposite(Composite parent, int style, Object destination) {
+	public ArchiveNodeDestinationComposite(Composite parent, int style, Object destination) {
 		super(parent, style);
 		this.parent = parent;
 		this.nodeDestination = destination;
@@ -75,7 +75,7 @@ public class PackageNodeDestinationComposite extends Composite {
 	
 	protected void fillBrowseComposite(Composite browseComposite) {
 		destinationBrowseButton = new Button(browseComposite, SWT.PUSH); 
-		destinationBrowseButton.setText(PackagesUIMessages.PackageNodeDestinationComposite_destinationBrowseButton_label);
+		destinationBrowseButton.setText(ArchivesUIMessages.PackageNodeDestinationComposite_destinationBrowseButton_label);
 		destinationBrowseButton.addSelectionListener(new SelectionAdapter () {
 			public void widgetSelected(SelectionEvent e) {
 				openDestinationDialog();
@@ -113,7 +113,7 @@ public class PackageNodeDestinationComposite extends Composite {
 	
 	protected void openDestinationDialog ()
 	{
-		PackageNodeDestinationDialog dialog = new PackageNodeDestinationDialog(getShell(), nodeDestination, true, true);
+		ArchiveNodeDestinationDialog dialog = new ArchiveNodeDestinationDialog(getShell(), nodeDestination, true, true);
 		if (nodeDestination != null)
 			dialog.setInitialSelection(nodeDestination);
 		
@@ -160,9 +160,9 @@ public class PackageNodeDestinationComposite extends Composite {
 				setDestinationText(pkg.getRootArchiveRelativePath().toOSString());
 			}
 			if (pkg.isExploded()) {
-				setDestinationImage(PackagesSharedImages.getImage(PackagesSharedImages.IMG_PACKAGE_EXPLODED));
+				setDestinationImage(ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_PACKAGE_EXPLODED));
 			} else {
-				setDestinationImage(PackagesSharedImages.getImage(PackagesSharedImages.IMG_PACKAGE));
+				setDestinationImage(ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_PACKAGE));
 			}
 		}
 		else if (nodeDestination instanceof IArchiveFolder)

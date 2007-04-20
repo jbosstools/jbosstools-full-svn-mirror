@@ -11,15 +11,15 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
-import org.jboss.ide.eclipse.archives.ui.PackagesUIMessages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 
-public class PackageDestinationComposite extends PackageNodeDestinationComposite {
+public class ArchiveDestinationComposite extends ArchiveNodeDestinationComposite {
 
 	protected boolean inWorkspace;
 	protected Button filesystemBrowseButton, workspaceBrowseButton;
 	
-	public PackageDestinationComposite (Composite parent, int style, Object destination) {
+	public ArchiveDestinationComposite (Composite parent, int style, Object destination) {
 		super(parent, style, destination);
 	}
 	
@@ -33,7 +33,7 @@ public class PackageDestinationComposite extends PackageNodeDestinationComposite
 		browseComposite.setLayout(new GridLayout(2, false));
 		
 		workspaceBrowseButton = new Button(browseComposite, SWT.PUSH);
-		workspaceBrowseButton.setText(PackagesUIMessages.PackageDestinationComposite_workspaceBrowseButton_label);
+		workspaceBrowseButton.setText(ArchivesUIMessages.PackageDestinationComposite_workspaceBrowseButton_label);
 		workspaceBrowseButton.addSelectionListener(new SelectionAdapter () {
 			public void widgetSelected(SelectionEvent e) {
 				openDestinationDialog();
@@ -41,7 +41,7 @@ public class PackageDestinationComposite extends PackageNodeDestinationComposite
 		});
 		
 		filesystemBrowseButton = new Button(browseComposite, SWT.PUSH);
-		filesystemBrowseButton.setText(PackagesUIMessages.PackageDestinationComposite_filesystemBrowseButton_label);
+		filesystemBrowseButton.setText(ArchivesUIMessages.PackageDestinationComposite_filesystemBrowseButton_label);
 		filesystemBrowseButton.addSelectionListener(new SelectionAdapter () {
 			public void widgetSelected(SelectionEvent e) {
 				browseFilesystem();
@@ -75,7 +75,7 @@ public class PackageDestinationComposite extends PackageNodeDestinationComposite
 			inWorkspace = false;
 			IPath path = (IPath) nodeDestination;
 			setDestinationText(path.toString());
-			setDestinationImage(PackagesSharedImages.getImage(PackagesSharedImages.IMG_EXTERNAL_FILE));
+			setDestinationImage(ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_EXTERNAL_FILE));
 		}
 		else if (nodeDestination instanceof IContainer || nodeDestination instanceof IArchiveNode)
 		{

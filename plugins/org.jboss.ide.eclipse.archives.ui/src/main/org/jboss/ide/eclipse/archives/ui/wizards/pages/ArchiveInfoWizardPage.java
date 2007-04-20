@@ -20,44 +20,44 @@ import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
-import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
-import org.jboss.ide.eclipse.archives.ui.PackagesUIMessages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.util.DestinationChangeListener;
-import org.jboss.ide.eclipse.archives.ui.util.PackageNodeFactory;
-import org.jboss.ide.eclipse.archives.ui.util.composites.PackageDestinationComposite;
-import org.jboss.ide.eclipse.archives.ui.wizards.AbstractPackageWizard;
+import org.jboss.ide.eclipse.archives.ui.util.ArchiveNodeFactory;
+import org.jboss.ide.eclipse.archives.ui.util.composites.ArchiveDestinationComposite;
+import org.jboss.ide.eclipse.archives.ui.wizards.ArchivePackageWizard;
 import org.jboss.ide.eclipse.archives.ui.wizards.WizardPageWithNotification;
 import org.jboss.ide.eclipse.archives.ui.wizards.WizardWithNotification;
 
-public class PackageInfoWizardPage extends WizardPageWithNotification {
+public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 
-	private AbstractPackageWizard wizard;
+	private ArchivePackageWizard wizard;
 	private Text packageNameText;
 	private Button compressedButton;
 	private Button explodedButton;
 	private String packageName;
 	private boolean packageExploded;
-	private PackageDestinationComposite destinationComposite;
+	private ArchiveDestinationComposite destinationComposite;
 	private IArchive pkg;
 	
-	public PackageInfoWizardPage (AbstractPackageWizard wizard, IArchive existingPackage) {
-		super (PackagesUIMessages.PackageInfoWizardPage_title, PackagesUIMessages.PackageInfoWizardPage_title, wizard.getImageDescriptor());
+	public ArchiveInfoWizardPage (ArchivePackageWizard wizard, IArchive existingPackage) {
+		super (ArchivesUIMessages.PackageInfoWizardPage_title, ArchivesUIMessages.PackageInfoWizardPage_title, wizard.getImageDescriptor());
 		setWizard(wizard);
 		this.pkg = existingPackage;
 	}
 	
 	public void createControl(Composite parent) {
-		setMessage(PackagesUIMessages.PackageInfoWizardPage_message);		
+		setMessage(ArchivesUIMessages.PackageInfoWizardPage_message);		
 		
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
 		
 		Group infoGroup = new Group(main, SWT.NONE);
 		infoGroup.setLayout(new GridLayout(3, false));
-		infoGroup.setText(PackagesUIMessages.PackageInfoWizardPage_infoGroup_label);
+		infoGroup.setText(ArchivesUIMessages.PackageInfoWizardPage_infoGroup_label);
 		expand(infoGroup);
 		
-		new Label(infoGroup, SWT.NONE).setText(PackagesUIMessages.PackageInfoWizardPage_packageName_label);
+		new Label(infoGroup, SWT.NONE).setText(ArchivesUIMessages.PackageInfoWizardPage_packageName_label);
 		Composite pkgNameComposite = new Composite(infoGroup, SWT.NONE);
 		GridLayout pkgNameLayout = new GridLayout(2, false);
 		pkgNameLayout.marginHeight = 0;
@@ -65,7 +65,7 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 		pkgNameComposite.setLayout(pkgNameLayout);
 		pkgNameComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
-		new Label(pkgNameComposite, SWT.NONE).setImage(PackagesSharedImages.getImage(PackagesSharedImages.IMG_PACKAGE));
+		new Label(pkgNameComposite, SWT.NONE).setImage(ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_PACKAGE));
 		
 		packageNameText = new Text(pkgNameComposite, SWT.BORDER);
 		System.out.println(wizard.getProject());
@@ -88,7 +88,7 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 			}
 		});
 
-		new Label(infoGroup, SWT.NONE).setText(PackagesUIMessages.PackageInfoWizardPage_destination_label);
+		new Label(infoGroup, SWT.NONE).setText(ArchivesUIMessages.PackageInfoWizardPage_destination_label);
 
 		GridData destinationTextData = new GridData(GridData.FILL_BOTH);
 		destinationTextData.horizontalSpan = 2;
@@ -97,7 +97,7 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 		buttonData.horizontalAlignment = SWT.END;
 		
 		Object destination = wizard.getSelectedDestination();
-		destinationComposite = new PackageDestinationComposite(
+		destinationComposite = new ArchiveDestinationComposite(
 			infoGroup, SWT.NONE, destination);
 		destinationComposite.addDestinationChangeListener(new DestinationChangeListener () {
 			public void destinationChanged(Object newDestination) {
@@ -108,12 +108,12 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 		
 		Group packageTypeGroup = new Group(main, SWT.NONE);
 		packageTypeGroup.setLayout(new GridLayout(1, false));
-		packageTypeGroup.setText(PackagesUIMessages.PackageInfoWizardPage_packageTypeGroup_label);
+		packageTypeGroup.setText(ArchivesUIMessages.PackageInfoWizardPage_packageTypeGroup_label);
 		expand(packageTypeGroup);
 		
 		packageExploded = false;
 		compressedButton = new Button(packageTypeGroup, SWT.RADIO);
-		compressedButton.setText(PackagesUIMessages.PackageInfoWizardPage_compressedButton_label);
+		compressedButton.setText(ArchivesUIMessages.PackageInfoWizardPage_compressedButton_label);
 		compressedButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				packageExploded = false;
@@ -126,7 +126,7 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 				packageExploded = true;
 			}
 		});
-		explodedButton.setText(PackagesUIMessages.PackageInfoWizardPage_explodedButton_label);
+		explodedButton.setText(ArchivesUIMessages.PackageInfoWizardPage_explodedButton_label);
 		setControl(main);
 		
 		fillDefaults();
@@ -163,7 +163,7 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 	{
 		if (packageNameText.getText() == null || packageNameText.getText().length() == 0)
 		{
-			setErrorMessage(PackagesUIMessages.PackageInfoWizardPage_error_noPackageName);
+			setErrorMessage(ArchivesUIMessages.PackageInfoWizardPage_error_noPackageName);
 			setPageComplete(false);
 			return false;
 		}
@@ -185,8 +185,8 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 					&& (!pkg.equals(this.pkg)))
 				{
 					setErrorMessage(
-						PackagesUIMessages.bind(
-							PackagesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
+						ArchivesUIMessages.bind(
+							ArchivesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
 					setPageComplete(false);
 					return false;
 				}
@@ -202,8 +202,8 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 						&& (!pkg.equals(this.pkg)))
 					{
 						setErrorMessage(
-								PackagesUIMessages.bind(
-									PackagesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
+								ArchivesUIMessages.bind(
+									ArchivesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
 							setPageComplete(false);
 							return false;
 					}
@@ -220,14 +220,14 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 						&& (!pkg.equals(this.pkg)))
 					{
 						setErrorMessage(
-								PackagesUIMessages.bind(
-									PackagesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
+								ArchivesUIMessages.bind(
+									ArchivesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
 							setPageComplete(false);
 							return false;
 					}
 				}
 			} else if (destination == null) {
-				setErrorMessage(PackagesUIMessages.PackageInfoWizardPage_error_noDestination);
+				setErrorMessage(ArchivesUIMessages.PackageInfoWizardPage_error_noDestination);
 				setPageComplete(false);
 				return false;
 			}
@@ -260,7 +260,7 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 		}
 		
 		if (pkg == null) {
-			pkg = PackageNodeFactory.createPackage();
+			pkg = ArchiveNodeFactory.createPackage();
 		}
 		
 		pkg.setName(getPackageName());
@@ -290,7 +290,7 @@ public class PackageInfoWizardPage extends WizardPageWithNotification {
 		return destinationComposite.getPackageNodeDestination();
 	}
 	
-	private void setWizard(AbstractPackageWizard wizard)
+	private void setWizard(ArchivePackageWizard wizard)
 	{
 		this.wizard = wizard;
 	}

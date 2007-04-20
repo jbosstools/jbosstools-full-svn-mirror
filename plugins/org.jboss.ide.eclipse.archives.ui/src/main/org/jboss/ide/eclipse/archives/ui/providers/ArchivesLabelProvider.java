@@ -10,7 +10,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PackagesUIPlugin;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
 
@@ -53,13 +53,13 @@ public class ArchivesLabelProvider implements ILabelProvider {
 					case IArchiveNode.TYPE_ARCHIVE: {
 						IArchive pkg = (IArchive) node;
 						if (!pkg.isExploded())
-							return PackagesSharedImages.getImage(PackagesSharedImages.IMG_PACKAGE);
+							return ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_PACKAGE);
 						else
-							return PackagesSharedImages.getImage(PackagesSharedImages.IMG_PACKAGE_EXPLODED);
+							return ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_PACKAGE_EXPLODED);
 					}
 					case IArchiveNode.TYPE_ARCHIVE_FOLDER: return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER);
 					case IArchiveNode.TYPE_ARCHIVE_FILESET: {
-						return PackagesSharedImages.getImage(PackagesSharedImages.IMG_MULTIPLE_FILES);
+						return ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_MULTIPLE_FILES);
 					}
 				}
 			}

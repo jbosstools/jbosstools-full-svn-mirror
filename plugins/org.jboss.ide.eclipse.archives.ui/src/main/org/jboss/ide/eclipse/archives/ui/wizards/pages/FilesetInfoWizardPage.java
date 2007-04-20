@@ -30,10 +30,10 @@ import org.eclipse.ui.ide.IDE;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
-import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
-import org.jboss.ide.eclipse.archives.ui.PackagesUIMessages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.util.composites.FilesetPreviewComposite;
-import org.jboss.ide.eclipse.archives.ui.util.composites.PackageNodeDestinationComposite;
+import org.jboss.ide.eclipse.archives.ui.util.composites.ArchiveNodeDestinationComposite;
 
 public class FilesetInfoWizardPage extends WizardPage {
 
@@ -41,7 +41,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 	private IArchiveNode parentNode;
 	private Text includesText;
 	private Text excludesText;
-	private PackageNodeDestinationComposite destinationComposite;
+	private ArchiveNodeDestinationComposite destinationComposite;
 
 	private String includes, excludes;
 	private IPath rootDir;
@@ -55,14 +55,14 @@ public class FilesetInfoWizardPage extends WizardPage {
 	private Button rootDirFilesystemBrowseButton;
 
 	public FilesetInfoWizardPage (Shell parent, IArchiveFileSet fileset, IArchiveNode parentNode) {
-		super(PackagesUIMessages.FilesetInfoWizardPage_new_title, PackagesUIMessages.FilesetInfoWizardPage_new_title, null);
+		super(ArchivesUIMessages.FilesetInfoWizardPage_new_title, ArchivesUIMessages.FilesetInfoWizardPage_new_title, null);
 		
 		if (fileset == null) {
-			setTitle(PackagesUIMessages.FilesetInfoWizardPage_new_title);
-			setMessage(PackagesUIMessages.FilesetInfoWizardPage_new_message);
+			setTitle(ArchivesUIMessages.FilesetInfoWizardPage_new_title);
+			setMessage(ArchivesUIMessages.FilesetInfoWizardPage_new_message);
 		} else {
-			setTitle(PackagesUIMessages.FilesetInfoWizardPage_edit_title);
-			setMessage(PackagesUIMessages.FilesetInfoWizardPage_edit_message);
+			setTitle(ArchivesUIMessages.FilesetInfoWizardPage_edit_title);
+			setMessage(ArchivesUIMessages.FilesetInfoWizardPage_edit_message);
 		}
 		
 		this.fileset = fileset;
@@ -120,12 +120,12 @@ public class FilesetInfoWizardPage extends WizardPage {
 		previewGroup.setLayout(new FormLayout());
 		previewComposite = new FilesetPreviewComposite(previewGroup, SWT.NONE);
 		previewComposite.setLayoutData(createFormData(0,0,100,0,0,0,100,0));
-		previewGroup.setText(PackagesUIMessages.FilesetInfoWizardPage_previewGroup_label);
+		previewGroup.setText(ArchivesUIMessages.FilesetInfoWizardPage_previewGroup_label);
 		return previewGroup;
 	}
 	private Group createInfoGroup(Composite mainComposite) {
 		Group infoGroup = new Group(mainComposite, SWT.NONE);
-		infoGroup.setText(PackagesUIMessages.FilesetInfoWizardPage_infoGroup_title);
+		infoGroup.setText(ArchivesUIMessages.FilesetInfoWizardPage_infoGroup_title);
 
 		// positioning in parent
 		infoGroup.setLayoutData(createFormData(0,5,null,0,0,5,100,-5));
@@ -138,7 +138,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 
 		// destination row
 		Label destinationKey = new Label(infoGroup, SWT.NONE);
-		destinationComposite = new PackageNodeDestinationComposite(infoGroup, SWT.NONE, parentNode);
+		destinationComposite = new ArchiveNodeDestinationComposite(infoGroup, SWT.NONE, parentNode);
 
 		destinationKey.setLayoutData(createFormData(0,10,null,0,null,5, 0, max));
 		destinationComposite.setLayoutData(createFormData(0,5,null,0,destinationKey,5, 100, -5));
@@ -205,17 +205,17 @@ public class FilesetInfoWizardPage extends WizardPage {
 		
 		
 		// customize widgets
-		destinationKey.setText(PackagesUIMessages.FilesetInfoWizardPage_destination_label);
-		rootProjectKey.setText(PackagesUIMessages.FilesetInfoWizardPage_rootProject_label);
+		destinationKey.setText(ArchivesUIMessages.FilesetInfoWizardPage_destination_label);
+		rootProjectKey.setText(ArchivesUIMessages.FilesetInfoWizardPage_rootProject_label);
 		projectImageLabel.setImage(
 				PlatformUI.getWorkbench().getSharedImages().getImage(IDE.SharedImages.IMG_OBJ_PROJECT));
-		rootDirectoryLabel.setText(PackagesUIMessages.FilesetInfoWizardPage_rootDirectory_label);
-		rootDirWorkspaceBrowseButton.setText(PackagesUIMessages.FilesetInfoWizardPage_rootDirWorkspaceBrowseButton_label);
-		rootDirFilesystemBrowseButton.setText(PackagesUIMessages.FilesetInfoWizardPage_rootDirFilesystemBrowseButton_label);
-		includesImage.setImage(PackagesSharedImages.getImage(PackagesSharedImages.IMG_INCLUDES));
-		includesTextLabel.setText(PackagesUIMessages.FilesetInfoWizardPage_includes_label);
-		excludesImage.setImage(PackagesSharedImages.getImage(PackagesSharedImages.IMG_EXCLUDES));
-		excludesTextLabel.setText(PackagesUIMessages.FilesetInfoWizardPage_excludes_label);
+		rootDirectoryLabel.setText(ArchivesUIMessages.FilesetInfoWizardPage_rootDirectory_label);
+		rootDirWorkspaceBrowseButton.setText(ArchivesUIMessages.FilesetInfoWizardPage_rootDirWorkspaceBrowseButton_label);
+		rootDirFilesystemBrowseButton.setText(ArchivesUIMessages.FilesetInfoWizardPage_rootDirFilesystemBrowseButton_label);
+		includesImage.setImage(ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_INCLUDES));
+		includesTextLabel.setText(ArchivesUIMessages.FilesetInfoWizardPage_includes_label);
+		excludesImage.setImage(ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_EXCLUDES));
+		excludesTextLabel.setText(ArchivesUIMessages.FilesetInfoWizardPage_excludes_label);
 		rootDirText.setEnabled(false);
 
 		return infoGroup;
@@ -307,7 +307,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 	private void browseWorkspaceForRootDir () {
 		IContainer workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 		ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), workspaceRoot, true,
-			PackagesUIMessages.FilesetInfoWizardPage_rootDirWorkspaceBrowser_message);
+			ArchivesUIMessages.FilesetInfoWizardPage_rootDirWorkspaceBrowser_message);
 		
 		int response = dialog.open();
 		if (response == Dialog.OK) {
@@ -344,7 +344,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 			rootDirText.setText(path);
 			rootDir = new Path(path);
 			rootDirIsWorkspaceRelative = false;
-			rootProjectLabel.setText(PackagesUIMessages.FilesetInfoWizardPage_noProjectMessage);
+			rootProjectLabel.setText(ArchivesUIMessages.FilesetInfoWizardPage_noProjectMessage);
 			changePreview();
 		}
 	}

@@ -7,15 +7,15 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
-import org.jboss.ide.eclipse.archives.ui.actions.NewPackageAction;
+import org.jboss.ide.eclipse.archives.ui.actions.NewArchiveAction;
 
 public class ExtensionManager {
 	public static final String NODE_POPUP_MENUS_EXTENSION_ID = "org.jboss.ide.eclipse.archives.ui.nodePopupMenus";
 	public static final String NEW_PACKAGE_ACTIONS_EXTENSION_ID = "org.jboss.ide.eclipse.archives.ui.newArchiveActions";
 	
-	private NewPackageAction[] newArchiveActions;
+	private NewArchiveAction[] newArchiveActions;
 	private NodeContribution[] nodeContributions;
-	public NewPackageAction[] getNewArchiveActions() {
+	public NewArchiveAction[] getNewArchiveActions() {
 		if( newArchiveActions == null )
 			newArchiveActions = findNewArchiveActions();
 		return newArchiveActions;
@@ -46,7 +46,7 @@ public class ExtensionManager {
 		return (NodeContribution[]) contributions.toArray(new NodeContribution[contributions.size()]);
 	}
 	
-	public static NewPackageAction[] findNewArchiveActions () {
+	public static NewArchiveAction[] findNewArchiveActions () {
 		ArrayList contributions = new ArrayList();
 		IExtension[] extensions = findExtension(NEW_PACKAGE_ACTIONS_EXTENSION_ID);
 		
@@ -55,10 +55,10 @@ public class ExtensionManager {
 			IConfigurationElement[] elements = extensions[i].getConfigurationElements();
 			for (int j = 0; j < elements.length; j++)
 			{
-				contributions.add(new NewPackageAction(elements[j]));
+				contributions.add(new NewArchiveAction(elements[j]));
 			}
 		}
 		
-		return (NewPackageAction[]) contributions.toArray(new NewPackageAction[contributions.size()]);
+		return (NewArchiveAction[]) contributions.toArray(new NewArchiveAction[contributions.size()]);
 	}
 }

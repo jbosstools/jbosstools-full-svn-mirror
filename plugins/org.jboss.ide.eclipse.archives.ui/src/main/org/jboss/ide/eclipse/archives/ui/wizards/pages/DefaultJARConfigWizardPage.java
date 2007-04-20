@@ -6,19 +6,19 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProvider;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesLabelProvider;
-import org.jboss.ide.eclipse.archives.ui.wizards.AbstractPackageWizard;
+import org.jboss.ide.eclipse.archives.ui.wizards.ArchivePackageWizard;
 import org.jboss.ide.eclipse.archives.ui.wizards.WizardPageWithNotification;
 
 public class DefaultJARConfigWizardPage extends WizardPageWithNotification {
 
-	private AbstractPackageWizard wizard;
+	private ArchivePackageWizard wizard;
 	
-	public DefaultJARConfigWizardPage (AbstractPackageWizard wizard) {
+	public DefaultJARConfigWizardPage (ArchivePackageWizard wizard) {
 		super ("Default JAR Configuration", "Default JAR Configuration",
-				PackagesSharedImages.getImageDescriptor(PackagesSharedImages.IMG_NEW_JAR_WIZARD));
+				ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_NEW_JAR_WIZARD));
 		
 		this.wizard = wizard;
 	}

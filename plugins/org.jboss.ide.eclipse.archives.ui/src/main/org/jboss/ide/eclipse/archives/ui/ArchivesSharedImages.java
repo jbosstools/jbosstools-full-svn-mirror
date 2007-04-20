@@ -5,7 +5,7 @@ import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-public class PackagesSharedImages {
+public class ArchivesSharedImages {
 	// image ids
 	public static final String IMG_PACKAGE = "icons/jar_obj.gif";
 	public static final String IMG_PACKAGE_EXPLODED = "icons/jar_exploded_obj.gif";
