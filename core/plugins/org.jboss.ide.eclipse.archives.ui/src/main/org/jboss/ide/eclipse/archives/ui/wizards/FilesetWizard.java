@@ -12,7 +12,7 @@ import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
-import org.jboss.ide.eclipse.archives.ui.util.PackageNodeFactory;
+import org.jboss.ide.eclipse.archives.ui.util.ArchiveNodeFactory;
 import org.jboss.ide.eclipse.archives.ui.wizards.pages.FilesetInfoWizardPage;
 
 public class FilesetWizard extends Wizard {
@@ -32,7 +32,7 @@ public class FilesetWizard extends Wizard {
 		final boolean createFileset = this.fileset == null;
 		
 		if (createFileset)
-			this.fileset = PackageNodeFactory.createFileset();
+			this.fileset = ArchiveNodeFactory.createFileset();
 				
 		fillFilesetFromPage(fileset);
 		try {

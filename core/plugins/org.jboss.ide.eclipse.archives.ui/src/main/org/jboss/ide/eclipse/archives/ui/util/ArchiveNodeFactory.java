@@ -7,7 +7,7 @@ import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFileSetImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFolderImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
 
-public class PackageNodeFactory {
+public class ArchiveNodeFactory {
 	public static IArchive createPackage() {
 		return new ArchiveImpl();
 	}

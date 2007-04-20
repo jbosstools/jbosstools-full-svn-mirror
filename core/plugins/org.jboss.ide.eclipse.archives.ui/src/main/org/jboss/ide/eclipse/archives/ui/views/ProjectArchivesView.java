@@ -35,7 +35,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.ui.ExtensionManager;
-import org.jboss.ide.eclipse.archives.ui.actions.NewPackageAction;
+import org.jboss.ide.eclipse.archives.ui.actions.NewArchiveAction;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProvider;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesLabelProvider;
 
@@ -92,13 +92,13 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 	private Composite emptyComposite, viewerComposite, loadingPackagesComposite;
 	private IProgressMonitor loadingProgress;
 	private TreeViewer packageViewer;
-	private PackagesMenuHandler menuHandler;
+	private ArchivesMenuHandler menuHandler;
 	public void createPartControl(Composite parent) {
 		book = new PageBook(parent, SWT.NONE);
 		addEmptyComposite(book);
 		addLoadingComposite(book);
 		addViewerComposite(book);
-		menuHandler = new PackagesMenuHandler(packageViewer);
+		menuHandler = new ArchivesMenuHandler(packageViewer);
 	}
 	
 	protected void addEmptyComposite(PageBook book) {
@@ -129,9 +129,9 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 		
 	
 	private void addNewPackageActions (Composite composite) {
-		NewPackageAction[] actions = ExtensionManager.findNewArchiveActions();
+		NewArchiveAction[] actions = ExtensionManager.findNewArchiveActions();
 		for (int i = 0; i < actions.length; i++) {
-			final NewPackageAction action = actions[i];
+			final NewArchiveAction action = actions[i];
 			
 			Composite linkComposite = new Composite(composite, SWT.NONE);
 			linkComposite.setLayout(createGridLayoutWithNoMargins(2));

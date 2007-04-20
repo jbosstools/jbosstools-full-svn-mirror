@@ -16,14 +16,14 @@ import org.osgi.framework.Bundle;
 /**
  * This is an action wrapper. It wraps the extension point
  */
-public class NewPackageAction {
+public class NewArchiveAction {
 
 	private String id, label;
 	private ImageDescriptor icon;
 	private Image iconImage;
 	private IActionDelegate action;
 	
-	public NewPackageAction(IConfigurationElement element) {
+	public NewArchiveAction(IConfigurationElement element) {
 		id = element.getAttribute("id");
 		label = element.getAttribute("label");
 		

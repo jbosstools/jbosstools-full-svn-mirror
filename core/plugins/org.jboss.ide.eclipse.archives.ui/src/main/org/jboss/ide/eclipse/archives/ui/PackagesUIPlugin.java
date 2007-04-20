@@ -53,6 +53,6 @@ public class PackagesUIPlugin extends AbstractUIPlugin {
 	
 	
 	protected void initializeImageRegistry(ImageRegistry registry) {
-		PackagesSharedImages.register(registry);
+		ArchivesSharedImages.register(registry);
 	}
 }

@@ -17,26 +17,26 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesView;
-import org.jboss.ide.eclipse.archives.ui.wizards.pages.PackageInfoWizardPage;
+import org.jboss.ide.eclipse.archives.ui.wizards.pages.ArchiveInfoWizardPage;
 
-public abstract class AbstractPackageWizard extends WizardWithNotification implements INewWizard {
-	private PackageInfoWizardPage firstPage;
+public abstract class ArchivePackageWizard extends WizardWithNotification implements INewWizard {
+	private ArchiveInfoWizardPage firstPage;
 	private WizardPage pages[];
 	protected IProject project;
 	protected Object selectedDestination;
 	protected IArchive existingPackage;
 	
-	public AbstractPackageWizard () {	
+	public ArchivePackageWizard () {	
 		this.project = ProjectArchivesView.getInstance().getCurrentProject();
 	}
 	
-	public AbstractPackageWizard (IArchive existingPackage) {
+	public ArchivePackageWizard (IArchive existingPackage) {
 		this.existingPackage = existingPackage;
 		this.project = existingPackage.getProject();
 	}
 	
 	public void addPages() {
-		firstPage = new PackageInfoWizardPage(this, existingPackage);
+		firstPage = new ArchiveInfoWizardPage(this, existingPackage);
 		addPage(firstPage);
 		
 		pages = createWizardPages();

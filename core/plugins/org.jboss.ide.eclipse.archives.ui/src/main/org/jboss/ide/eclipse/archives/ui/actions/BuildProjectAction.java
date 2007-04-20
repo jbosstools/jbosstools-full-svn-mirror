@@ -11,7 +11,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
-import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 
 //public class BuildProjectAction extends ActionWithDelegate  {
 //

@@ -6,23 +6,23 @@ import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.types.JARPackageType;
-import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
-import org.jboss.ide.eclipse.archives.ui.PackagesUIMessages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 
-public class NewJARWizard extends AbstractPackageWizard
+public class NewJARWizard extends ArchivePackageWizard
 {
 	public WizardPage[] createWizardPages() {
 		return new WizardPage[0];
 	}
 
 	public NewJARWizard () {
-		setWindowTitle(PackagesUIMessages.NewJARWizard_windowTitle);
+		setWindowTitle(ArchivesUIMessages.NewJARWizard_windowTitle);
 	}
 	
 	public NewJARWizard (IArchive existingPackage) {
 		super(existingPackage);
 		
-		setWindowTitle(PackagesUIMessages.NewJARWizard_windowTitle_editJAR);
+		setWindowTitle(ArchivesUIMessages.NewJARWizard_windowTitle_editJAR);
 	}
 	
 	public boolean performFinish(IArchive pkg) {
@@ -33,7 +33,7 @@ public class NewJARWizard extends AbstractPackageWizard
 	}
 	
 	public ImageDescriptor getImageDescriptor() {
-		return PackagesSharedImages.getImageDescriptor(PackagesSharedImages.IMG_NEW_JAR_WIZARD);
+		return ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_NEW_JAR_WIZARD);
 	}
 	
 	public String getPackageExtension() {

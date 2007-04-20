@@ -5,7 +5,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.PlatformUI;
-import org.jboss.ide.eclipse.archives.ui.PackagesSharedImages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesView;
 import org.jboss.ide.eclipse.archives.ui.wizards.NewJARWizard;
 
@@ -29,7 +29,7 @@ public class NewJARAction extends ActionWithDelegate {
 		return ProjectArchivesView.getInstance().getSelection();
 	}
 	public ImageDescriptor getImageDescriptor() {
-		return PackagesSharedImages.getImageDescriptor(PackagesSharedImages.IMG_NEW_PACKAGE);
+		return ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_NEW_PACKAGE);
 	}
 	
 	public String getText() {
