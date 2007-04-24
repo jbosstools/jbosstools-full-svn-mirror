@@ -28,20 +28,17 @@ public abstract class XbPackageNodeWithProperties extends XbPackageNode {
 
 	protected XbProperties properties;
 	
-	public XbPackageNodeWithProperties ()
-	{
+	public XbPackageNodeWithProperties () {
 		super();
-		
 		properties = new XbProperties();
 	}
 	
-	public XbPackageNodeWithProperties (XbPackageNodeWithProperties node)
-	{
+	public XbPackageNodeWithProperties (XbPackageNodeWithProperties node) {
 		super(node);
+		properties = new XbProperties();
 	}
 	
-	public void copyFrom (XbPackageNodeWithProperties node)
-	{
+	public void copyFrom (XbPackageNodeWithProperties node) {
 		properties.getProperties().clear();
 		
 		Properties props = node.getProperties().getProperties();
@@ -53,18 +50,15 @@ public abstract class XbPackageNodeWithProperties extends XbPackageNode {
 		}
 	}
 	
-	public XbProperties getProperties ()
-	{
+	public XbProperties getProperties () {
 		return properties;
 	}
 	
-	public void setProperties (Object object)
-	{
+	public void setProperties (Object object) {
 		setProperties((XbProperties)object);
 	}
 	
-	protected void setProperties (XbProperties properties)
-	{
+	protected void setProperties (XbProperties properties) {
 		this.properties = properties;
 	}
 

@@ -119,9 +119,8 @@ public class ModelChangeListener implements IArchiveModelListener {
 		}
 		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(added);
 		for( int i = 0; i < filesets.length; i++ ) {
-			filesets[i].resetScanner();
-			IPath[] paths = filesets[i].findMatchingPaths();
 			ModelTruezipBridge.fullFilesetBuild(filesets[i]);
+			IPath[] paths = filesets[i].findMatchingPaths();
 			EventManager.filesUpdated(filesets[i].getRootArchive(), filesets[i], paths);
 		}
 		refreshLocal(added);
