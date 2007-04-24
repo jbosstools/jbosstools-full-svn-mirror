@@ -1,5 +1,6 @@
 package org.jboss.ide.eclipse.archives.core.build;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -78,9 +79,11 @@ public class ArchiveBuildDelegate {
 		Iterator i = addedChanged.iterator();
 		IPath path;
 		IArchiveFileSet[] matchingFilesets;
+		ArrayList topPackagesChanged = new ArrayList();
 		while(i.hasNext()) {
 			path = ((IResource)i.next()).getLocation();
 			matchingFilesets = ModelUtil.getMatchingFilesets(path);
+			localFireAffectedTopLevelPackages(topPackagesChanged, matchingFilesets);
 			ModelTruezipBridge.copyFiles(matchingFilesets, new IPath[] { path }, false);
 			EventManager.fileUpdated(path, matchingFilesets);
 		}
@@ -89,9 +92,25 @@ public class ArchiveBuildDelegate {
 		while(i.hasNext()) {
 			path = ((IResource)i.next()).getLocation();
 			matchingFilesets = ModelUtil.getMatchingFilesets(path);
+			localFireAffectedTopLevelPackages(topPackagesChanged, matchingFilesets);
 			ModelTruezipBridge.deleteFiles(matchingFilesets, new IPath[] { path }, false);
 			EventManager.fileRemoved(path, matchingFilesets);
 		}
+		
 		TrueZipUtil.sync();
+
+		i = topPackagesChanged.iterator();
+		while(i.hasNext()) {
+			EventManager.finishedBuildingArchive((IArchive)i.next());
+		}
+	}
+	
+	private void localFireAffectedTopLevelPackages(ArrayList affected, IArchiveFileSet[] filesets) {
+		for( int i = 0; i < filesets.length; i++ ) {
+			if( !affected.contains(filesets[i].getRootArchive())) {
+				affected.add(filesets[i].getRootArchive());
+				EventManager.startedBuildingArchive(filesets[i].getRootArchive());
+			}
+		}
 	}
 }
