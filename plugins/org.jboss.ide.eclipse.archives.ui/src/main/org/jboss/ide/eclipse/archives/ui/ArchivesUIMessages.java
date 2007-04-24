@@ -3,7 +3,7 @@ package org.jboss.ide.eclipse.archives.ui;
 import org.eclipse.osgi.util.NLS;
 
 public class ArchivesUIMessages extends NLS {
-	public static final String BUNDLE_NAME = "org.jboss.ide.eclipse.archives.ui.PackagesUIMessages";
+	public static final String BUNDLE_NAME = "org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages";
 
 	public static String NewJARWizard_windowTitle;
 	public static String NewJARWizard_windowTitle_editJAR;
