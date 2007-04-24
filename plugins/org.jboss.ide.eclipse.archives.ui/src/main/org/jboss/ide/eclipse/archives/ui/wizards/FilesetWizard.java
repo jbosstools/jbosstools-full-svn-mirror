@@ -56,8 +56,7 @@ public class FilesetWizard extends Wizard {
 	private void fillFilesetFromPage (IArchiveFileSet fileset) {
 		fileset.setExcludesPattern(page1.getExcludes());
 		fileset.setIncludesPattern(page1.getIncludes());
-		fileset.setInWorkspace(page1.isRootDirWorkspaceRelative());
-		fileset.setSourcePath(new Path(page1.getRootDir()));
+		fileset.setSourcePath(new Path(page1.getRootDir()), page1.isRootDirWorkspaceRelative());
 	}
 
 	public void addPages() {
