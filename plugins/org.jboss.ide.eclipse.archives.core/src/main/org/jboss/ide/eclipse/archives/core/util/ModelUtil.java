@@ -2,6 +2,7 @@ package org.jboss.ide.eclipse.archives.core.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -89,6 +90,7 @@ public class ModelUtil {
 			list.add(node);
 			node = node.getParent();
 		}
+		Collections.reverse(list);
 		IArchiveNode[] nodes = (IArchiveNode[]) list.toArray(new IArchiveNode[list.size()]);
 		
 		IPath lastConcrete = null;

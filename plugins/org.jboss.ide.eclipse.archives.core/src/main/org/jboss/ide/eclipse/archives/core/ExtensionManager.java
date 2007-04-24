@@ -13,7 +13,7 @@ import org.eclipse.core.runtime.Platform;
 import org.jboss.ide.eclipse.archives.core.model.types.IArchiveType;
 
 public class ExtensionManager {
-	public static final String ARCHIVE_TYPES_EXTENSION_ID = "org.jboss.ide.eclipse.archives.core.packageTypes";
+	public static final String ARCHIVE_TYPES_EXTENSION_ID = "org.jboss.ide.eclipse.archives.core.archiveTypes";
 	
 	public static IExtension[] findExtension (String extensionId)
 	{
@@ -50,12 +50,14 @@ public class ExtensionManager {
 	public static IArchiveType getArchiveType (String packageType) {
 		if (archiveTypes == null)
 		{
+			try {
 			archiveTypes = new Hashtable();
 			IArchiveType[] registeredTypes = ExtensionManager.findPackageTypes();
 			for (int i = 0; i < registeredTypes.length; i++)	
 			{
 				archiveTypes.put(registeredTypes[i].getId(), registeredTypes[i]);
 			}
+			} catch( Exception e ) { e.printStackTrace(); }
 		}
 		return (IArchiveType) archiveTypes.get(packageType);
 	}
