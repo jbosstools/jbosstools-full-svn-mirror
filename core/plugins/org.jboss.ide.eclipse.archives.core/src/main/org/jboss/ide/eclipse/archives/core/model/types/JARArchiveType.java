@@ -54,7 +54,7 @@ public class JARArchiveType extends AbstractArchiveType {
 		
 		IArchiveFileSet classes = new ArchiveFileSetImpl();
 		classes.setIncludesPattern("**/*");
-		classes.setSourcePath(outputContainer.getLocation());
+		classes.setSourcePath(outputContainer.getFullPath(), true);
 		
 		jar.addChild(classes);
 		

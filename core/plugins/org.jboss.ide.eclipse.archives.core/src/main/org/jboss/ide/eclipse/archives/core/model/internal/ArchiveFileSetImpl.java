@@ -141,7 +141,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		filesetDelegate.setInWorkspace(isInWorkspace);
 	}
 	
-	public void setSourcePath (IPath path) {
+	public void setSourcePath (IPath path, boolean inWorkspace) {
 		Assert.isNotNull(path);
 		IPath src = getGlobalSourcePath();
 		attributeChanged(SOURCE_PATH_ATTRIBUTE, src == null ? null : src.toString(), path == null ? null : path.toString());

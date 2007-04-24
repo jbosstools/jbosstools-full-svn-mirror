@@ -13,52 +13,68 @@ import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
 public class EventManager {
 	
 	public static void cleanProjectBuild(IProject project) {
-		IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
-		for( int i = 0; i < listeners.length; i++ ) 
-			listeners[i].cleanProject(project);
+		try { 
+			IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
+			for( int i = 0; i < listeners.length; i++ ) 
+				listeners[i].cleanProject(project);
+		} catch(Exception e ) {}
 	}
 	
 	public static void cleanArchiveBuild(IArchive archive) {
-		IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
-		for( int i = 0; i < listeners.length; i++ ) 
-			listeners[i].cleanArchive(archive);
+		try {
+			IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
+			for( int i = 0; i < listeners.length; i++ ) 
+				listeners[i].cleanArchive(archive);
+		} catch(Exception e ) {}
 	}
 	
 	public static void startedBuild(IProject project) {
-		IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
-		for( int i = 0; i < listeners.length; i++ ) 
-			listeners[i].startedBuild(project);
+		try {
+			IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
+			for( int i = 0; i < listeners.length; i++ ) 
+				listeners[i].startedBuild(project);
+		} catch(Exception e ) {}
 	}
 
 	public static void finishedBuild(IProject project) {
-		IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
-		for( int i = 0; i < listeners.length; i++ ) 
-			listeners[i].finishedBuild(project);
+		try {
+			IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
+			for( int i = 0; i < listeners.length; i++ ) 
+				listeners[i].finishedBuild(project);
+		} catch(Exception e ) {}
 	}
 
 	public static void startedBuildingArchive(IArchive archive) {
-		IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
-		for( int i = 0; i < listeners.length; i++ ) 
-			listeners[i].startedBuildingArchive(archive);
+		try {
+			IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
+			for( int i = 0; i < listeners.length; i++ ) 
+				listeners[i].startedBuildingArchive(archive);
+		} catch(Exception e ) {}
 	}
 
 	public static void finishedBuildingArchive(IArchive archive) {
-		IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
-		for( int i = 0; i < listeners.length; i++ ) 
-			listeners[i].finishedBuildingArchive(archive);
+		try {
+			IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
+			for( int i = 0; i < listeners.length; i++ ) 
+				listeners[i].finishedBuildingArchive(archive);
+		} catch(Exception e ) {}
 	}
 
 	
 	
 	public static void startedCollectingFileSet(IArchiveFileSet fileset) {
-		IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
-		for( int i = 0; i < listeners.length; i++ ) 
-			listeners[i].startedCollectingFileSet(fileset);
+		try {
+			IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
+			for( int i = 0; i < listeners.length; i++ ) 
+				listeners[i].startedCollectingFileSet(fileset);
+		} catch(Exception e ) {}
 	}
 	public static void finishedCollectingFileSet(IArchiveFileSet fileset) {
-		IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
-		for( int i = 0; i < listeners.length; i++ ) 
-			listeners[i].finishedCollectingFileSet(fileset);
+		try {
+			IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
+			for( int i = 0; i < listeners.length; i++ ) 
+				listeners[i].finishedCollectingFileSet(fileset);
+		} catch(Exception e ) {}
 	}
 
 	// Bulk events
@@ -76,15 +92,19 @@ public class EventManager {
 	}
 	
 	public static void fileUpdated(IArchive topLevelArchive, IArchiveFileSet fileset, IPath filePath) {
-		IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
-		for( int i = 0; i < listeners.length; i++ ) 
-			listeners[i].fileUpdated(topLevelArchive, fileset, filePath);
+		try {
+			IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
+			for( int i = 0; i < listeners.length; i++ ) 
+				listeners[i].fileUpdated(topLevelArchive, fileset, filePath);
+		} catch(Exception e ) {}
 	}
 
 	public static void fileRemoved(IArchive topLevelArchive, IArchiveFileSet fileset, IPath filePath) {
-		IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
-		for( int i = 0; i < listeners.length; i++ ) 
-			listeners[i].fileRemoved(topLevelArchive, fileset, filePath);
+		try {
+			IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
+			for( int i = 0; i < listeners.length; i++ ) 
+				listeners[i].fileRemoved(topLevelArchive, fileset, filePath);
+		} catch(Exception e ) {}
 	}
 
 	// one file removed matching multiple filesets
@@ -109,9 +129,11 @@ public class EventManager {
 	 */
 	
 	public static void fireDelta(IArchiveNodeDelta delta) {
-		IArchiveModelListener[] listeners = ArchivesCore.getInstance().getModelListeners();
-		for( int i = 0; i < listeners.length; i++ ) 
-			listeners[i].modelChanged(delta);
+		try {
+			IArchiveModelListener[] listeners = ArchivesCore.getInstance().getModelListeners();
+			for( int i = 0; i < listeners.length; i++ ) 
+				listeners[i].modelChanged(delta);
+		} catch(Exception e ) {}
 	}
 
 

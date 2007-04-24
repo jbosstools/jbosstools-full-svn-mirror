@@ -48,6 +48,8 @@ public class ExtensionManager {
 	
 	private static Hashtable archiveTypes;
 	public static IArchiveType getArchiveType (String packageType) {
+		Hashtable t = archiveTypes;
+		int x;
 		if (archiveTypes == null)
 		{
 			try {
