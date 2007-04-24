@@ -32,9 +32,9 @@ import org.eclipse.core.runtime.IStatus;
  */
 public interface IArchiveBuildListener {
 
+	
 	/**
 	 * A project has started being built by the Archives builder
-	 * This is *only* used during  a FULL BUILD
 	 * @param project the project being built
 	 */
 	public void startedBuild (IProject project);
@@ -45,6 +45,9 @@ public interface IArchiveBuildListener {
 	 */
 	public void finishedBuild (IProject project);
 
+	
+	public void cleanProject(IProject project);
+	
 	/**
 	 * A Archive has started being built by the Archives builder
 	 * This is *only* used during  a FULL BUILD or after a MODEL CHANGE
@@ -55,13 +58,15 @@ public interface IArchiveBuildListener {
 	 */
 	public void startedBuildingArchive (IArchive pkg);
 	
-	
 	/**
 	 * A Archive is finished being built by the Archives builder
 	 * @param pkg the Archive being built
 	 */
 	public void finishedBuildingArchive (IArchive pkg);
 
+	public void cleanArchive(IArchive pkg);
+
+	
 	/**
 	 * A fileset has started being collected for copying into a Archive
 	 * This is *only* used during  a FULL BUILD or after a MODEL CHANGE

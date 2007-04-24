@@ -11,6 +11,19 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
 
 public class EventManager {
+	
+	public static void cleanProjectBuild(IProject project) {
+		IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
+		for( int i = 0; i < listeners.length; i++ ) 
+			listeners[i].cleanProject(project);
+	}
+	
+	public static void cleanArchiveBuild(IArchive archive) {
+		IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
+		for( int i = 0; i < listeners.length; i++ ) 
+			listeners[i].cleanArchive(archive);
+	}
+	
 	public static void startedBuild(IProject project) {
 		IArchiveBuildListener[] listeners = ArchivesCore.getInstance().getBuildListeners();
 		for( int i = 0; i < listeners.length; i++ ) 
@@ -87,19 +100,9 @@ public class EventManager {
 		}
 	}
 
-
-	public static void ArchiveBuildTypeChanged(IArchive topLevelArchive, boolean isExploded) {
-	}
-
 	public static void buildFailed(IArchive pkg, IStatus status) {
 	}
 
-
-
-
-
-
-	
 	/**
 	 * Model changes
 	 * @param delta

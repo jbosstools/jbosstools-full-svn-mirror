@@ -25,6 +25,7 @@ public class ArchiveBuildDelegate {
 	
 	// full build
 	public void fullProjectBuild(IProject project) {
+		EventManager.cleanProjectBuild(project);
 		EventManager.startedBuild(project);
 
 		ArchiveModelNode root = ArchivesModel.instance().getRoot(project);
@@ -37,6 +38,7 @@ public class ArchiveBuildDelegate {
 	}
 	
 	public void fullArchiveBuild(IArchive pkg) {
+		EventManager.cleanArchiveBuild(pkg);
 		EventManager.startedBuildingArchive(pkg);
 		
 		ModelTruezipBridge.deleteArchive(pkg);
