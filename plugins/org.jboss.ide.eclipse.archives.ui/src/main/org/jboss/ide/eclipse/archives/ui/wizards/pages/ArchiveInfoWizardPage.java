@@ -17,10 +17,10 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.ide.eclipse.archives.core.Trace;
+import org.jboss.ide.eclipse.archives.core.model.ArchiveNodeFactory;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
-import org.jboss.ide.eclipse.archives.core.util.ArchiveNodeFactory;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.util.DestinationChangeListener;
@@ -267,9 +267,11 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 		archive.setExploded(isPackageExploded());
 		
 		if (destContainer instanceof IContainer) {
-			archive.setDestinationPath(((IContainer)destContainer).getFullPath() , true);
+			archive.setDestinationPath(((IContainer)destContainer).getFullPath());
+			archive.setInWorkspace(true);
 		} else if (destContainer instanceof IPath) {
-			archive.setDestinationPath((IPath) destContainer, false);
+			archive.setDestinationPath((IPath) destContainer);
+			archive.setInWorkspace(false);
 		}
 	}
 	

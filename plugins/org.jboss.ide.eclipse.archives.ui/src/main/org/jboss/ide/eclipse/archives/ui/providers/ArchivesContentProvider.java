@@ -7,9 +7,9 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
-import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
 
 public class ArchivesContentProvider implements ITreeContentProvider {
@@ -34,7 +34,7 @@ public class ArchivesContentProvider implements ITreeContentProvider {
 		return ret;
 	}
 	public Object[] getChildren(Object parentElement) {
-		if( parentElement instanceof ArchiveModelNode && showProjectRoot())  {
+		if( parentElement instanceof IArchiveModelNode && showProjectRoot())  {
 			IProject[] projects;
 			if( PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS)) {
 				IProject[] projects2 = ResourcesPlugin.getWorkspace().getRoot().getProjects();
@@ -46,13 +46,13 @@ public class ArchivesContentProvider implements ITreeContentProvider {
 				}
 				projects = (IProject[]) list.toArray(new IProject[list.size()]);
 			} else {
-				projects = new IProject[] { ((ArchiveModelNode)parentElement).getProject()};
+				projects = new IProject[] { ((IArchiveModelNode)parentElement).getProject()};
 			}
 			return wrapProjects(projects);
 		}
 		
-		if( parentElement instanceof ArchiveModelNode)
-			return ((ArchiveModelNode)parentElement).getAllChildren();
+		if( parentElement instanceof IArchiveModelNode)
+			return ((IArchiveModelNode)parentElement).getAllChildren();
 		
 		if( parentElement instanceof ArchivesModel ) {
 			// return all that's there
