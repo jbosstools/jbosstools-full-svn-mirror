@@ -58,18 +58,27 @@ public class ModelUtil {
 	}
 
 	public static IArchiveFileSet[] findAllDescendentFilesets(IArchiveNode node) {
-		if( node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FILESET ) 
-			return new IArchiveFileSet[] {(IArchiveFileSet)node};
+		ArrayList matches = findAllDescendents(node, IArchiveNode.TYPE_ARCHIVE_FILESET);
+		return (IArchiveFileSet[]) matches.toArray(new IArchiveFileSet[matches.size()]);
+	}
+	public static IArchiveFolder[] findAllDescendentFolders(IArchiveNode node) {
+		ArrayList matches = findAllDescendents(node, IArchiveNode.TYPE_ARCHIVE_FOLDER);
+		return (IArchiveFolder[]) matches.toArray(new IArchiveFolder[matches.size()]);
+	}
+	
+	public static ArrayList findAllDescendents(IArchiveNode node, final int type) {
+		final ArrayList matches = new ArrayList();
+		if( node.getNodeType() == type ) 
+			matches.add(node);
 		
-		final ArrayList filesets = new ArrayList();
 		node.accept(new IArchiveNodeVisitor() {
 			public boolean visit(IArchiveNode node) {
-				if( node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FILESET)
-					filesets.add(node);
+				if( node.getNodeType() == type)
+					matches.add(node);
 				return true;
 			} 
 		});
-		return (IArchiveFileSet[]) filesets.toArray(new IArchiveFileSet[filesets.size()]);
+		return matches;
 	}
 
 
