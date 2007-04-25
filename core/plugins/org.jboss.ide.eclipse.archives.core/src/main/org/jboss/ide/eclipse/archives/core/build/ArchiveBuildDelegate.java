@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.events.EventManager;
@@ -80,6 +81,14 @@ public class ArchiveBuildDelegate {
 		
 		ModelTruezipBridge.deleteArchive(pkg);
 		ModelTruezipBridge.createFile(pkg);
+		
+		// force create all folders
+		IArchiveFolder[] folders = ModelUtil.findAllDescendentFolders(pkg);
+		for( int i = 0; i < folders.length; i++ ) {
+			ModelTruezipBridge.createFile(folders[i]);
+		}
+		
+		// build the filesets
 		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(pkg);
 		for( int i = 0; i < filesets.length; i++ ) {
 			fullFilesetBuild(filesets[i], pkg);
