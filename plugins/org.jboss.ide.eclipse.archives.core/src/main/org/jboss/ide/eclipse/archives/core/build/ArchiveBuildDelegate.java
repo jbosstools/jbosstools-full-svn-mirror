@@ -28,12 +28,12 @@ import java.util.Set;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.events.EventManager;
-import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
-import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.util.ModelTruezipBridge;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 import org.jboss.ide.eclipse.archives.core.util.TrueZipUtil;
@@ -61,7 +61,7 @@ public class ArchiveBuildDelegate {
 		EventManager.cleanProjectBuild(project);
 		EventManager.startedBuild(project);
 
-		ArchiveModelNode root = ArchivesModel.instance().getRoot(project);
+		IArchiveModelNode root = ArchivesModel.instance().getRoot(project);
 		IArchiveNode[] nodes = root.getChildren(IArchiveNode.TYPE_ARCHIVE);
 		for( int i = 0; i < nodes.length; i++ ) {
 			fullArchiveBuild(((IArchive)nodes[i]));

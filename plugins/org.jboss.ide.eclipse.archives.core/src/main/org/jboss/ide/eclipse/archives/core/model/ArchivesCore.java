@@ -34,7 +34,6 @@ import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ExtensionManager;
 import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
 import org.jboss.ide.eclipse.archives.core.build.ModelChangeListener;
-import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.types.IArchiveType;
 
 /**

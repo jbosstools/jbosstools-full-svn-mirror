@@ -134,6 +134,10 @@ public interface IArchive extends IArchiveNode {
 	 * Out of workspace paths are file-system absolute
 	 * @param path The path where this archive will be built. 
 	 */
-	public void setDestinationPath (IPath path, boolean inWorkspace);
-		
+	public void setDestinationPath (IPath path);
+	
+	/**
+	 * Set's whether the destination is workspace relative or not
+	 */
+	public void setInWorkspace(boolean inWorkspace);	
 }

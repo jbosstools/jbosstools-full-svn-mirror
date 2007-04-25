@@ -30,11 +30,14 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFileSet;
 
 /**
- * A PackageFileSetImpl.
+ * An implementation for filesets
+ * @author <a href="rob.stryker@redhat.com">Rob Stryker</a>
+ *
  */
 public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		IArchiveFileSet {
@@ -52,6 +55,9 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		this.filesetDelegate = delegate;
 	}
 	
+	/*
+	 * @see IArchiveFileSet#findMatchingPaths()
+	 */
 	public IPath[] findMatchingPaths () {
 		DirectoryScannerExtension scanner = getScanner();
 		ArrayList paths = new ArrayList();
@@ -65,19 +71,30 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		return (IPath[])paths.toArray(new IPath[paths.size()]);
 	}
 	
+	/*
+	 * @see IArchiveFileSet#getExcludesPattern()
+	 */
 	public String getExcludesPattern() {
 		return filesetDelegate.getExcludes();
 	}
 	
+	/*
+	 * @see IArchiveFileSet#isInWorkspace()
+	 */
 	public boolean isInWorkspace() {
 		return filesetDelegate.isInWorkspace();
 	}
 	
+	/*
+	 * @see IArchiveFileSet#getIncludesPattern()
+	 */
 	public String getIncludesPattern() {
 		return filesetDelegate.getIncludes();
 	}
 
-	// returns a file-system relative path
+	/*
+	 * @see IArchiveFileSet#getGlobalSourcePath()
+	 */
 	public IPath getGlobalSourcePath() {
 		String path = filesetDelegate.getDir();
 		if (path == null || path.equals(".") || path.equals("")) {
@@ -89,23 +106,32 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		}
 	}
 	
+	/*
+	 * @see IArchiveFileSet#getSourcePath()
+	 */
 	public IPath getSourcePath() {
 		return new Path(filesetDelegate.getDir());
 	}
 	
+	/*
+	 * @see IArchiveFileSet#matchesFile(IFile)
+	 */
 	public boolean matchesFile(IFile file) {
 		return matchesFile(getScanner(), file);
 	}
 
-	public boolean matchesFile(DirectoryScannerExtension scanner, IFile file) {
+	private boolean matchesFile(DirectoryScannerExtension scanner, IFile file) {
 		return matchesPath(file.getLocation());
 	}
 	
+	/*
+	 * @see IArchiveFileSet#matchesPath(IPath)
+	 */
 	public boolean matchesPath(IPath path) {
 		return matchesPath(getScanner(), path);
 	}
 
-	public boolean matchesPath(DirectoryScannerExtension scanner, IPath path) {
+	private boolean matchesPath(DirectoryScannerExtension scanner, IPath path) {
 		if( getGlobalSourcePath().isPrefixOf(path)) {
 			String s = path.toOSString().substring(getGlobalSourcePath().toOSString().length()+1);
 			return scanner.isIncluded(s);
@@ -113,6 +139,10 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		return false;
 	}
 	
+	/*
+	 * Will re-scan if required, or use cached scanner
+	 * @return
+	 */
 	private synchronized DirectoryScannerExtension getScanner() {
 		if( scanner == null || rescanRequired) {
 			rescanRequired = false;
@@ -122,26 +152,41 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		return scanner;
 	}
 		
+	/*
+	 * @see IArchiveNode#getNodeType()
+	 */
 	public int getNodeType() {
 		return TYPE_ARCHIVE_FILESET;
 	}
 	
+	/*
+	 * @see IArchiveFileSet#setExcludesPattern(String)
+	 */
 	public void setExcludesPattern(String excludes) {
 		attributeChanged(EXCLUDES_ATTRIBUTE, getExcludesPattern(), excludes);
 		filesetDelegate.setExcludes(excludes);
 	}
 
+	/*
+	 * @see IArchiveFileSet#setIncludesPattern(String)
+	 */
 	public void setIncludesPattern(String includes) {
 		attributeChanged(INCLUDES_ATTRIBUTE, getIncludesPattern(), includes);
 		filesetDelegate.setIncludes(includes);
 	}
 
+	/*
+	 * @see IArchiveFileSet#setInWorkspace(boolean)
+	 */
 	public void setInWorkspace(boolean isInWorkspace) {
 		attributeChanged(IN_WORKSPACE_ATTRIBUTE, new Boolean(isInWorkspace()), new Boolean(isInWorkspace));
 		filesetDelegate.setInWorkspace(isInWorkspace);
 	}
 	
-	public void setSourcePath (IPath path, boolean inWorkspace) {
+	/*
+	 * @see IArchiveFileSet#setSourcePath(IPath, boolean)
+	 */
+	public void setSourcePath (IPath path) {
 		Assert.isNotNull(path);
 		IPath src = getGlobalSourcePath();
 		attributeChanged(SOURCE_PATH_ATTRIBUTE, src == null ? null : src.toString(), path == null ? null : path.toString());
@@ -152,13 +197,19 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		return filesetDelegate;
 	}
 
-	// filesets have no path of their own
-	// and should not be the parents of any other node
-	// so the parent is their base location
+	/*
+	 * filesets have no path of their own
+	 * and should not be the parents of any other node
+	 * so the parent is their base location
+	 * @see IArchiveNode#getRootArchiveRelativePath()
+	 */
 	public IPath getRootArchiveRelativePath() {
 		return getParent().getRootArchiveRelativePath(); 
 	}
 	
+	/*
+	 * @see IArchiveFileSet#getRootArchiveRelativePath(IPath)
+	 */
 	public IPath getRootArchiveRelativePath(IPath inputFile) {
 		if( matchesPath(inputFile)) {
 			String s = inputFile.toOSString().substring(getGlobalSourcePath().toOSString().length()+1);
@@ -167,6 +218,9 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		return null;
 	}
 
+	/*
+	 * @see IArchiveFileSet#resetScanner()
+	 */
 	public void resetScanner() {
 		rescanRequired = true;
 	}

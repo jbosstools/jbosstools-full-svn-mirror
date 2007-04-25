@@ -23,6 +23,7 @@ import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
 public class JARArchiveType extends AbstractArchiveType {
 
 	public static final String TYPE_ID = "jar";
+	
 	public IArchive createDefaultConfiguration(IProject project, IProgressMonitor monitor) {
 		//IPackageType t = this;
 		Assert.isNotNull(project);
@@ -47,14 +48,16 @@ public class JARArchiveType extends AbstractArchiveType {
 		
 		IArchive jar = new ArchiveImpl(); 
 		
-		jar.setDestinationPath(project.getLocation(), true);
+		jar.setDestinationPath(project.getLocation());
+		jar.setInWorkspace(true);
 		jar.setExploded(false);
 		jar.setName(project.getName() + ".jar");
-		//jar.setPackageType(this);
+		jar.setArchiveType(this);
 		
 		IArchiveFileSet classes = new ArchiveFileSetImpl();
 		classes.setIncludesPattern("**/*");
-		classes.setSourcePath(outputContainer.getFullPath(), true);
+		classes.setSourcePath(outputContainer.getFullPath());
+		classes.setInWorkspace(true);
 		
 		jar.addChild(classes);
 		

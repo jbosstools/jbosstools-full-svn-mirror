@@ -34,7 +34,7 @@ import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 import org.jboss.ide.eclipse.archives.core.model.types.IArchiveType;
 
 /**
- * A Package.
+ * An archive
  * 
  * @author Rob stryker
  */
@@ -50,14 +50,23 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 		this.packageDelegate = delegate;
 	}
 	
+	/*
+	 * @see IArchiveNode#getNodeType()
+	 */
 	public int getNodeType() {
 		return TYPE_ARCHIVE;
 	}
 
+	/*
+	 * @see IArchive#isDestinationInWorkspace()
+	 */
 	public boolean isDestinationInWorkspace() {
 		return packageDelegate.isInWorkspace();
 	}
 	
+	/*
+	 * @see IArchive#getDestinationPath()
+	 */
 	public IPath getDestinationPath () {
 		if (packageDelegate.getToDir() == null || packageDelegate.getToDir().equals("."))
 			return getProject() == null ? null : getProject().getLocation();
@@ -68,10 +77,16 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 			return new Path(packageDelegate.getToDir());
 	}
 
+	/*
+	 * @see IArchive#getArchiveFilePath()
+	 */
 	public IPath getArchiveFilePath() {
 		return getDestinationPath().append(getName());
 	}
 	
+	/*
+	 * @see IArchive#getFileSets()
+	 */
 	public IArchiveFileSet[] getFileSets() {
 		IArchiveNode nodes[] = getChildren(TYPE_ARCHIVE_FILESET);
 		IArchiveFileSet filesets[] = new IArchiveFileSet[nodes.length];
@@ -79,6 +94,9 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 		return filesets;
 	}
 
+	/*
+	 * @see IArchive#getFolders()
+	 */
 	public IArchiveFolder[] getFolders() {
 		IArchiveNode nodes[] = getChildren(TYPE_ARCHIVE_FOLDER);
 		IArchiveFolder folders[] = new IArchiveFolder[nodes.length];
@@ -86,6 +104,9 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 		return folders;
 	}
 
+	/*
+	 * @see IArchive#getArchives()
+	 */
 	public IArchive[] getArchives() {
 		IArchiveNode nodes[] = getChildren(TYPE_ARCHIVE);
 		IArchive pkgs[] = new IArchive[nodes.length];
@@ -93,52 +114,70 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 		return pkgs;
 	}
 
+	/*
+	 * @see IArchive#getName()
+	 */
 	public String getName() {
 		return packageDelegate.getName();
 	}
 
+	/*
+	 * @see IArchive#getArchiveType()
+	 */
 	public IArchiveType  getArchiveType() {
 		return ExtensionManager.getArchiveType(packageDelegate.getPackageType());
 	}
 		
+	/*
+	 * @see IArchive#isExploded()
+	 */
 	public boolean isExploded() {
 		return packageDelegate.isExploded();
 	}
 	
+	/*
+	 * @see IArchive#isTopLevel()
+	 */
 	public boolean isTopLevel() {
 		return (packageDelegate.getParent() instanceof XbPackages);
 	}
 	
-	public void addFileSet(IArchiveFileSet fileset) {
-		addChild(fileset);
-	}
-
-	public void addFolder(IArchiveFolder folder) {
-		addChild(folder);
-	}
-
-	public void addPackage(IArchive pkg) {
-		addChild(pkg);
-	}
-
-	public void setDestinationPath(IPath path, boolean inWorkspace) {
+	/*
+	 * @see IArchive#setDestinationPath(IPath, boolean)
+	 */
+	public void setDestinationPath(IPath path) {
 		IPath destPath = getDestinationPath();
-		attributeChanged(IN_WORKSPACE_ATTRIBUTE, new Boolean(isDestinationInWorkspace()), new Boolean(inWorkspace));
 		attributeChanged(DESTINATION_ATTRIBUTE, destPath == null ? null : destPath.toString(), path == null ? null : path.toString());
-		packageDelegate.setInWorkspace(inWorkspace);
 		packageDelegate.setToDir(path.toString());
 	}
 
+	/*
+	 * @see IArchive#setInWorkspace(boolean)
+	 */
+	public void setInWorkspace(boolean inWorkspace) {
+		attributeChanged(IN_WORKSPACE_ATTRIBUTE, new Boolean(isDestinationInWorkspace()), new Boolean(inWorkspace));
+		packageDelegate.setInWorkspace(inWorkspace);
+	}
+	
+	/*
+	 * @see IArchive#setExploded(boolean)
+	 */
 	public void setExploded(boolean exploded) {
 		attributeChanged(EXPLODED_ATTRIBUTE, new Boolean(isExploded()), new Boolean(exploded));
 		packageDelegate.setExploded(exploded);
 	}
 
+	/*
+	 * @see IArchive#setName(String)
+	 */
 	public void setName(String name) {
 		attributeChanged(NAME_ATTRIBUTE, getName(), name);
 		packageDelegate.setName(name);
 	}
 
+	/*
+	 * @see IArchive#setArchiveType(IArchiveType)
+	 */
 	public void setArchiveType(IArchiveType type) {
 		attributeChanged(PACKAGE_TYPE_ATTRIBUTE, getArchiveTypeId(), type == null ? null : type.getId());
 		packageDelegate.setPackageType(type.getId());
@@ -148,6 +187,9 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 		return packageDelegate;
 	}
 
+	/*
+	 * @see IArchive#setArchiveType(String)
+	 */
 	public void setArchiveType(String type) {
 		attributeChanged(PACKAGE_TYPE_ATTRIBUTE, getArchiveTypeId(), type);
 		packageDelegate.setPackageType(type);
@@ -156,9 +198,17 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 	public String toString() {
 		return getName();
 	}
+	
+	/*
+	 * @see IArchive#getArchiveTypeId()
+	 */
 	public String getArchiveTypeId() {
 		return packageDelegate.getPackageType();
 	}
+	
+	/* 
+	 * @see IArchiveNode#getRootArchiveRelativePath()
+	 */
 	public IPath getRootArchiveRelativePath() {
 		if( getParent() == null || getParent().getRootArchiveRelativePath() == null )
 			return new Path(getName());

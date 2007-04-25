@@ -32,6 +32,7 @@ import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFolder;
  * A PackageFolderImpl.
  * 
  * @author <a href="marshall@jboss.org">Marshall Culpepper</a>
+ * @author <a href="rob.stryker@redhat.com">Rob Stryker</a>
  * @version $Revision$
  */
 public class ArchiveFolderImpl extends ArchiveNodeImpl implements
@@ -47,10 +48,16 @@ public class ArchiveFolderImpl extends ArchiveNodeImpl implements
 		this.folderDelegate = delegate;
 	}
 
+	/*
+	 * @see IArchiveFolder#getName()
+	 */
 	public String getName() {
 		return folderDelegate.getName();
 	}
 
+	/*
+	 * @see IArchiveFolder#getFileSets()
+	 */
 	public IArchiveFileSet[] getFileSets() {
 		IArchiveNode nodes[] = getChildren(TYPE_ARCHIVE_FILESET);
 		IArchiveFileSet filesets[] = new IArchiveFileSet[nodes.length];
@@ -58,12 +65,19 @@ public class ArchiveFolderImpl extends ArchiveNodeImpl implements
 		return filesets;
 	}
 
+	/*
+	 * @see IArchiveFolder#getFolders()
+	 */
 	public IArchiveFolder[] getFolders() {
 		IArchiveNode nodes[] = getChildren(TYPE_ARCHIVE_FOLDER);
 		IArchiveFolder folders[] = new IArchiveFolder[nodes.length];
 		System.arraycopy(nodes, 0, folders, 0, nodes.length);
 		return folders;
 	}
+
+	/*
+	 * @see IArchiveFolder#getArchives()
+	 */
 	public IArchive[] getArchives() {
 		IArchiveNode nodes[] = getChildren(TYPE_ARCHIVE);
 		IArchive pkgs[] = new IArchive[nodes.length];
@@ -71,35 +85,32 @@ public class ArchiveFolderImpl extends ArchiveNodeImpl implements
 		return pkgs;
 	}
 
+	/*
+	 * @see IArchiveNode#getNodeType()
+	 */
 	public int getNodeType() {
 		return TYPE_ARCHIVE_FOLDER;
 	}
 
-	public void addFileSet(IArchiveFileSet fileset) {
-		addChild(fileset);
-	}
-
-	public void addFolder(IArchiveFolder folder) {
-		addChild(folder);
-	}
-
-	public void addPackage(IArchive pkg) {
-		addChild(pkg);
-	}
-
+	/*
+	 * @see IArchiveFolder#setName(String)
+	 */
 	public void setName(String name) {
 		attributeChanged(NAME_ATTRIBUTE, getName(), name);
 		folderDelegate.setName(name);
 	}
 
-	protected XbFolder getFolderDelegate ()
-	{
+	protected XbFolder getFolderDelegate () {
 		return folderDelegate;
 	}
 	
 	public String toString() {
 		return "folder[" + getName() + "]";
 	}
+	
+	/*
+	 * @see IArchiveNode#getRootArchiveRelativePath()
+	 */
 	public IPath getRootArchiveRelativePath() {
 		return getParent().getRootArchiveRelativePath().append(getName());
 	}

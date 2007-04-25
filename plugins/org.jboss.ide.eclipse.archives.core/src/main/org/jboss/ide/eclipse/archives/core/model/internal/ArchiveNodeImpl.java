@@ -28,6 +28,7 @@ import java.util.Properties;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Assert;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
@@ -63,10 +64,18 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		return nodeDelegate;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getRoot()
+	 */
 	public IArchiveNode getRoot() {
 		return parent == null ? this : parent.getRoot();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getRootArchive()
+	 */
 	public IArchive getRootArchive() {
 		IArchiveNode parent = this.parent;
 		IArchive topArchives = null;
@@ -80,11 +89,18 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		return topArchives;
 	}
 
-	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getAllChildren()
+	 */
 	public IArchiveNode[] getAllChildren () {
 		return (IArchiveNode[]) children.toArray(new IArchiveNode[children.size()]);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getChildren(int)
+	 */
 	public IArchiveNode[] getChildren(int type) {
 		ArrayList typedChildren = new ArrayList();
 		for (Iterator iter = children.iterator(); iter.hasNext(); ) {
@@ -97,19 +113,35 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		return (IArchiveNode[]) typedChildren.toArray(new IArchiveNode[typedChildren.size()]);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#hasChildren()
+	 */
 	public boolean hasChildren () {
 		return nodeDelegate.hasChildren();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#hasChild(org.jboss.ide.eclipse.archives.core.model.IArchiveNode)
+	 */
 	public boolean hasChild (IArchiveNode child) {
 		ArchiveNodeImpl childImpl = (ArchiveNodeImpl)child;
 		return nodeDelegate.getAllChildren().contains(childImpl.nodeDelegate);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getParent()
+	 */
 	public IArchiveNode getParent() {
 		return parent;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#setParent(org.jboss.ide.eclipse.archives.core.model.IArchiveNode)
+	 */
 	public void setParent (IArchiveNode parent) {
 		if( getParent() != null && parent != getParent()) {
 			getParent().removeChild(this);
@@ -125,6 +157,10 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		}
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getProject()
+	 */
 	public IProject getProject() {
 		IArchiveNode root = getRoot();
 		if( root.getNodeType() != IArchiveNode.TYPE_MODEL)
@@ -132,10 +168,18 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		return root.getProject();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getProperty(java.lang.String)
+	 */
 	public String getProperty(String property) {
 		return getProperties().getProperty(property);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#setProperty(java.lang.String, java.lang.String)
+	 */
 	public void setProperty(String property, String value) {
 		if( property == null ) return;
 		propertyChanged(property, getProperty(property), value);
@@ -146,14 +190,25 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		}
 	}
 
-	public Properties getProperties() {
+	/**
+	 * @return Get the properties for this object
+	 */
+	protected Properties getProperties() {
 		return nodeDelegate.getProperties().getProperties();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#accept(org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor)
+	 */
 	public boolean accept(IArchiveNodeVisitor visitor) {
 		return accept(visitor, false);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#accept(org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor, boolean)
+	 */
 	public boolean accept(IArchiveNodeVisitor visitor, boolean depthFirst) {
 		IArchiveNode children[] = getAllChildren();
 		boolean keepGoing = true;
@@ -175,10 +230,19 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		return keepGoing;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#addChild(org.jboss.ide.eclipse.archives.core.model.IArchiveNode)
+	 */
 	public void addChild(IArchiveNode node) {
 		addChild(node, true);
 	}
 
+	/**
+	 * Add a child with the option to skip adding in the delegate
+	 * @param child
+	 * @param addInDelegate
+	 */
 	public void addChild(IArchiveNode child, boolean addInDelegate) {
 		Assert.isNotNull(child);
 		ArchiveNodeImpl childImpl = (ArchiveNodeImpl) child;
@@ -189,6 +253,10 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		childChanges(child, IArchiveNodeDelta.CHILD_ADDED);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#removeChild(org.jboss.ide.eclipse.archives.core.model.IArchiveNode)
+	 */
 	public void removeChild(IArchiveNode node) {
 		Assert.isNotNull(node);
 		ArchiveNodeImpl impl = (ArchiveNodeImpl) node;
@@ -206,6 +274,10 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 			childChanges(node, IArchiveNodeDelta.CHILD_REMOVED);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
+	 */
 	public Object getAdapter(Class adapter) {
 		if (adapter.equals(IProject.class)) {
 			return getProject();
@@ -216,15 +288,18 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	}
 	
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#connectedToModel()
+	 */
 	public boolean connectedToModel() {
 		IArchiveNode root = getRoot();
 		return root instanceof ArchiveModelNode && ArchivesModel.instance().containsRoot((ArchiveModelNode)root);
 	}
 	
 	
-	/*
-	 * The following are for deltas. It keeps track of recent changes
-	 * and makes sure all changes are accoutned for properly between saves
+	/**
+	 * An attribute has changed. Save the change so it can be represented in a delta
 	 */
 	protected void attributeChanged(String key, Object beforeValue, Object afterValue) {
 		int kind = IArchiveNodeDelta.ATTRIBUTE_CHANGED;
@@ -252,6 +327,9 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		}
 	}
 	
+	/**
+	 * A property has changed. Save the change so it can be represented in a delta
+	 */
 	protected void propertyChanged(String key, Object beforeValue, Object afterValue) {
 		HashMap changeMap = propertyChanges;
 		// short circuit if no change has REALLY occurred
@@ -284,8 +362,11 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		}
 	}
 	
-	// children are either added or removed here.  
-	// changed children are discovered through the delta
+	/**
+	 * A child has changed. Save the change
+	 * @param node
+	 * @param changeType
+	 */
 	protected void childChanges(IArchiveNode node, int changeType) {
 		if( childChanges.containsKey(node)) {
 			int lastChange = ((Integer)childChanges.get(node)).intValue();
@@ -299,12 +380,19 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		}
 	}	
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getDelta()
+	 */
 	public IArchiveNodeDelta getDelta() {
 		return new ArchiveNodeDeltaImpl(null, this, (HashMap)attributeChanges.clone(), 
 				(HashMap)propertyChanges.clone(), (HashMap)childChanges.clone());
 	}
 	
-	protected void clearDeltas() {
+	/**
+	 *  Forget all past state
+	 */
+	public void clearDeltas() {
 		attributeChanges.clear();
 		propertyChanges.clear();
 		childChanges.clear();
