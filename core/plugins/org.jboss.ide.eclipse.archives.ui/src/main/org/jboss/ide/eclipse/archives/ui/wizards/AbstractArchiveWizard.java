@@ -13,9 +13,9 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.ide.eclipse.archives.core.Trace;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesView;
 import org.jboss.ide.eclipse.archives.ui.wizards.pages.ArchiveInfoWizardPage;
 
