@@ -15,10 +15,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.commands,
  org.eclipse.jdt.core
 Eclipse-LazyStart: true
-Export-Package: de.schlichtherle.io;x-internal:=true,
- org.jboss.ide.eclipse.archives.core,
+Export-Package: org.jboss.ide.eclipse.archives.core,
  org.jboss.ide.eclipse.archives.core.model,
- org.jboss.ide.eclipse.archives.core.model.types
+ org.jboss.ide.eclipse.archives.core.model.types;x-friends:="org.jboss.ide.eclipse.archives.ui",
+ org.jboss.ide.eclipse.archives.core.util
 Bundle-ClassPath: packagescore.jar,
  lib/concurrent.jar,
  lib/truezip-6.jar,

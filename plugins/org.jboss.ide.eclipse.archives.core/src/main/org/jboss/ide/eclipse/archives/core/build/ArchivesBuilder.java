@@ -42,7 +42,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
-import org.jboss.ide.eclipse.archives.core.util.TrueZipUtil;
+import org.jboss.ide.eclipse.archives.core.util.internal.TrueZipUtil;
 
 /**
  * This builder is responsible for building the archives
