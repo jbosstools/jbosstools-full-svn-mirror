@@ -35,8 +35,8 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.events.EventManager;
-import org.jboss.ide.eclipse.archives.core.util.ModelTruezipBridge;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
+import org.jboss.ide.eclipse.archives.core.util.internal.ModelTruezipBridge;
 
 /**
  * This class responds to model change events. 

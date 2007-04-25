@@ -34,9 +34,9 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.events.EventManager;
-import org.jboss.ide.eclipse.archives.core.util.ModelTruezipBridge;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
-import org.jboss.ide.eclipse.archives.core.util.TrueZipUtil;
+import org.jboss.ide.eclipse.archives.core.util.internal.ModelTruezipBridge;
+import org.jboss.ide.eclipse.archives.core.util.internal.TrueZipUtil;
 
 /**
  * This delegate will either build from the model completely 

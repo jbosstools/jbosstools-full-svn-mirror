@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.ide.eclipse.archives.core.util;
+package org.jboss.ide.eclipse.archives.core.util.internal;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +29,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 
 import de.schlichtherle.io.ArchiveDetector;
 import de.schlichtherle.io.File;
