@@ -91,10 +91,10 @@ public interface IArchiveFileSet extends IArchiveNode {
 	public boolean matchesPath(IPath path);
 	
 	/**
-	 * Sets the "root" or "source" of this fileset to be an absolute path.
+	 * Sets the "root" or "source" of this fileset (file-system or workspace relative)
 	 * @param path The absolute path that is the source of this fileset
 	 */
-	public void setSourcePath(IPath path, boolean inWorkspace);
+	public void setSourcePath(IPath path);
 	
 	/**
 	 * Set the includes pattern for this fileset. This pattern uses the same syntax as Ant's include pattern.

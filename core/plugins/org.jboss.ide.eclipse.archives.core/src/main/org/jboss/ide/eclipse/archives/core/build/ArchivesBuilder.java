@@ -36,12 +36,12 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.CorePreferenceManager;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
-import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
-import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.util.TrueZipUtil;
 
 /**
@@ -90,7 +90,7 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 	 */
 	protected void clean(IProgressMonitor monitor) throws CoreException {
 		IProject p = getProject();
-		ArchiveModelNode root = ArchivesModel.instance().getRoot(p);
+		IArchiveModelNode root = ArchivesModel.instance().getRoot(p);
 		IArchiveNode[] nodes = root.getChildren(IArchiveNode.TYPE_ARCHIVE);
 		for( int i = 0; i < nodes.length; i++ ) {
 			IPath path = ((IArchive)nodes[i]).getDestinationPath();

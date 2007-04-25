@@ -1,4 +1,25 @@
-package org.jboss.ide.eclipse.archives.core.model.internal;
+/*
+ * JBoss, a division of Red Hat
+ * Copyright 2006, Red Hat Middleware, LLC, and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+package org.jboss.ide.eclipse.archives.core.model;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -17,11 +38,12 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.build.ArchivesNature;
-import org.jboss.ide.eclipse.archives.core.model.IArchive;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
 import org.jboss.ide.eclipse.archives.core.model.events.EventManager;
+import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFileSetImpl;
+import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFolderImpl;
+import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
+import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
+import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFileSet;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFolder;
@@ -29,8 +51,17 @@ import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackageNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 
+/**
+ * The root model which keeps track of registered projects
+ * and what archives / model nodes they contain.
+ * 
+ * @author <a href="rob.stryker@redhat.com">Rob Stryker</a>
+ */
 public class ArchivesModel {
 	
+	/**
+	 * The packages file name
+	 */
 	public static final String PROJECT_PACKAGES_FILE = ".packages";
 	
 	/**
@@ -66,6 +97,9 @@ public class ArchivesModel {
 		return (XbPackages)(xbPackages.get(project));
 	}
 	
+	/**
+	 * Accept a visitor
+	 */
 	public boolean accept(IArchiveNodeVisitor visitor) {
 		IArchiveNode children[] = getAllArchives();
 		boolean keepGoing = true;
@@ -82,7 +116,7 @@ public class ArchivesModel {
 	}	
 	
 	/**
-	 * Gets every single registered model
+	 * Gets every single *registered* model
 	 * @return
 	 */
 	protected ArchiveModelNode[] getAllArchives() {
@@ -95,19 +129,24 @@ public class ArchivesModel {
 		return ret;
 	}
 	
-	public ArchiveModelNode getRoot(IProject project) {
+	/**
+	 * Get the root node for this object
+	 * @param project
+	 * @return
+	 */
+	public IArchiveModelNode getRoot(IProject project) {
 		return getRoot(project, false, new NullProgressMonitor());
 	}
 	
-	public ArchiveModelNode getRoot(IProject project, boolean force, IProgressMonitor monitor) {
+	public IArchiveModelNode getRoot(IProject project, boolean force, IProgressMonitor monitor) {
 		if( archivesRoot.get(project) == null && force ) {
 			registerProject(project, monitor);
 		}
-		return (ArchiveModelNode)(archivesRoot.get(project));
+		return (IArchiveModelNode)(archivesRoot.get(project));
 	}
 	
 	public IArchive[] getProjectArchives(IProject project) {
-		ArchiveModelNode root = getRoot(project);
+		IArchiveModelNode root = getRoot(project);
 		if( root != null ) {
 			List list = Arrays.asList( getRoot(project).getAllChildren());
 			return (IArchive[]) list.toArray(new IArchive[list.size()]);
@@ -167,7 +206,7 @@ public class ArchivesModel {
 	protected ArchiveNodeImpl createPackageNodeImpl (IProject project, XbPackageNode node, IArchiveNode parent) {
 		
 		if( node instanceof XbPackages ) {
-			ArchiveModelNode impl = getRoot(project);
+			ArchiveModelNode impl = (ArchiveModelNode)getRoot(project);
 			for (Iterator iter = node.getAllChildren().iterator(); iter.hasNext(); ) {
 				XbPackageNode child = (XbPackageNode) iter.next();
 				ArchiveNodeImpl childImpl = createPackageNodeImpl(project, child, impl);
@@ -251,7 +290,7 @@ public class ArchivesModel {
 			
 			// get deltas
 			try {
-				ArchiveModelNode root = getRoot(project);
+				ArchiveModelNode root = (ArchiveModelNode)getRoot(project);
 				IArchiveNodeDelta delta = root.getDelta();
 				
 				// clear deltas

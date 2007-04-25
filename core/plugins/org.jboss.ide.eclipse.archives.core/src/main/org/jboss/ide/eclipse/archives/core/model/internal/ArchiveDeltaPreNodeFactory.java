@@ -1,3 +1,24 @@
+/*
+ * JBoss, a division of Red Hat
+ * Copyright 2006, Red Hat Middleware, LLC, and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
 package org.jboss.ide.eclipse.archives.core.model.internal;
 
 import java.util.HashMap;
@@ -17,9 +38,11 @@ import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackageNodeWithPr
 
 /**
  * This class generates a replica of what an archive 
- * node looked like before the changes that inspired
+ * node looked like before the changes that instigated
  * the delta.
  * 
+ * Because these replica nodes will not be connected ot the model, 
+ * they need to know their project and their parent properly
  * @author rstryker
  *
  */
@@ -123,7 +146,9 @@ public class ArchiveDeltaPreNodeFactory {
 	 * Therefore the project must be kept handy. 
 	 */
 	
-	
+	/**
+	 * Extending class representing a delta fileset
+	 */
 	public static class DeltaFileset extends ArchiveFileSetImpl {
 		// everything goes through the delegate or the parent. Simple
 		private ArchiveNodeDeltaImpl parentDelta; 
@@ -141,6 +166,9 @@ public class ArchiveDeltaPreNodeFactory {
 		}
 	}
 	
+	/**
+	 * Extending class representing a delta folder
+	 */
 	public static class DeltaFolder extends ArchiveFolderImpl {
 		private ArchiveNodeDeltaImpl parentDelta; 
 		private IProject project;
@@ -157,6 +185,9 @@ public class ArchiveDeltaPreNodeFactory {
 		}
 	}
 	
+	/**
+	 * Extending class representing a delta archive
+	 */
 	public static class DeltaArchive extends ArchiveImpl {
 		private ArchiveNodeDeltaImpl parentDelta; 
 		private IProject project;

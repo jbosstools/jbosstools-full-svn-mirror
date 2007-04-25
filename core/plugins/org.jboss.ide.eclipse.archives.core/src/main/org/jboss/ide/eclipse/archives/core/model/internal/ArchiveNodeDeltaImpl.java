@@ -1,3 +1,24 @@
+/*
+ * JBoss, a division of Red Hat
+ * Copyright 2006, Red Hat Middleware, LLC, and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
 package org.jboss.ide.eclipse.archives.core.model.internal;
 
 import java.util.ArrayList;
@@ -8,6 +29,11 @@ import java.util.Iterator;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 
+/**
+ * This class represents changed nodes in the model
+ * @author <a href="rob.stryker@redhat.com">Rob Stryker</a>
+ *
+ */
 public class ArchiveNodeDeltaImpl implements IArchiveNodeDelta {
 	
 	private ArchiveNodeDeltaImpl parentDelta;
@@ -60,10 +86,6 @@ public class ArchiveNodeDeltaImpl implements IArchiveNodeDelta {
 		kind = kind | forcedKind; // pre-gaming 
 	}
 	
-	/** 
-	 * Get the parent delta
-	 * @return
-	 */
 	protected ArchiveNodeDeltaImpl getParentDelta() {
 		return parentDelta;
 	}
@@ -151,12 +173,7 @@ public class ArchiveNodeDeltaImpl implements IArchiveNodeDelta {
 		return childrenDeltas;
 	}
 
-	/*
-	 * Because a node can be ADDED with respect to one node, and
-	 * REMOVED with respect to another, that portion of the delta 
-	 * kind must be set here, from the parent, rather than in the 
-	 * child. 
-	 */
+
 	private IArchiveNodeDelta getDelta(IArchiveNode child) {
 		if( child instanceof ArchiveNodeImpl ) {
 			int addedOrRemoved = 0;
@@ -177,39 +194,76 @@ public class ArchiveNodeDeltaImpl implements IArchiveNodeDelta {
 		return child.getDelta();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta#getKind()
+	 */
 	public int getKind() {
 		return kind;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta#getPostNode()
+	 */
 	public IArchiveNode getPostNode() {
 		return postNode;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta#getPreNode()
+	 */
 	public IArchiveNode getPreNode() {
 		return preNode;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta#getAttributesWithDeltas()
+	 */
 	public String[] getAttributesWithDeltas() {
 		Collection atts = attributes.keySet();
 		return (String[]) atts.toArray(new String[atts.size()]);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta#getAttributeDelta(java.lang.String)
+	 */
 	public INodeDelta getAttributeDelta(String key) {
 		return (INodeDelta)attributes.get(key);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta#getPropertiesWithDeltas()
+	 */
 	public String[] getPropertiesWithDeltas() {
 		Collection atts = properties.keySet();
 		return (String[]) atts.toArray(new String[atts.size()]);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta#getPropertyDelta(java.lang.String)
+	 */
 	public INodeDelta getPropertyDelta(String key) {
 		return (INodeDelta)properties.get(key);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta#getAddedChildrenDeltas()
+	 */
 	public IArchiveNodeDelta[] getAddedChildrenDeltas() {
 		return getChangedChildren(IArchiveNodeDelta.ADDED);
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta#getRemovedChildrenDeltas()
+	 */
 	public IArchiveNodeDelta[] getRemovedChildrenDeltas() {
 		return getChangedChildren(IArchiveNodeDelta.REMOVED);
 	}
