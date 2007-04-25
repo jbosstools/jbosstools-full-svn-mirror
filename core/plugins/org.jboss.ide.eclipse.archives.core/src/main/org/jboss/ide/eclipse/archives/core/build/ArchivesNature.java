@@ -30,6 +30,13 @@ import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
+/**
+ * The nature associated with archives, specifically
+ * the builder is added or removed based on this nature.
+ * 
+ * @author Rob Stryker (rob.stryker@redhat.com)
+ *
+ */
 public class ArchivesNature implements IProjectNature {
 
 	public static final String NATURE_ID = "org.jboss.ide.eclipse.archives.core.archivesNature";

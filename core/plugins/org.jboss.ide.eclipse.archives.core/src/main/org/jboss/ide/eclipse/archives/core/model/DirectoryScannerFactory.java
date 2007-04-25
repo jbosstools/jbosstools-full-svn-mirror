@@ -27,7 +27,7 @@ import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.runtime.IPath;
 
 /**
- *
+ * Utility methods to create scanners for matching
  * @author rob.stryker@jboss.com
  */
 public class DirectoryScannerFactory {
@@ -49,7 +49,11 @@ public class DirectoryScannerFactory {
 		
 		return scanner;
 	}
-	
+
+	/**
+	 * Exposes the isIncluded method so that entire scans do not need to occur
+	 * to find matches. 
+	 */
 	public static class DirectoryScannerExtension extends DirectoryScanner {
 	    public boolean isIncluded(String name) {
 	    	return super.isIncluded(name);

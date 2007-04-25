@@ -27,8 +27,9 @@ import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
- */
-public class ArchivesCorePlugin extends Plugin {
+ * @author rstryker
+ *
+ */public class ArchivesCorePlugin extends Plugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.jboss.ide.eclipse.archives.core";

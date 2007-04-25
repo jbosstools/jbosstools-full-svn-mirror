@@ -21,6 +21,10 @@
  */
 package org.jboss.ide.eclipse.archives.core.model;
 
+/**
+ * The interface for visiting through nodes
+ * @author <a href="rob.stryker@redhat.com">Rob Stryker</a>
+ */
 public interface IArchiveNodeVisitor {
 
 	public boolean visit (IArchiveNode node);
