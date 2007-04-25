@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.IPath;
  * Each node in a package may have arbitrary properties that can be reflected upon by other plug-ins
  * 
  * @author <a href="marshall@jboss.org">Marshall Culpepper</a>
+ * @author <a href="rob.stryker@redhat.com">Rob Stryker</a>
  * @version $Revision$
  */
 public interface IArchiveNode extends IAdaptable {
@@ -166,7 +167,7 @@ public interface IArchiveNode extends IAdaptable {
 	 */
 	public IArchive getRootArchive();
 	/**
-	 * Get the delta
+	 * Get the current delta
 	 * @return
 	 */
 	public IArchiveNodeDelta getDelta();

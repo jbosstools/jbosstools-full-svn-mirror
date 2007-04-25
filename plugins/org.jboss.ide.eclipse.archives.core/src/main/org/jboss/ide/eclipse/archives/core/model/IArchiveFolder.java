@@ -29,6 +29,7 @@ package org.jboss.ide.eclipse.archives.core.model;
  * </p>
  * 
  * @author <a href="marshall@jboss.org">Marshall Culpepper</a>
+ * @author <a href="rob.stryker@redhat.com">Rob Stryker</a>
  * @version $Revision$
  */
 public interface IArchiveFolder extends IArchiveNode {

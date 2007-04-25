@@ -26,11 +26,12 @@ import org.jboss.ide.eclipse.archives.core.model.types.IArchiveType;
 
 /** 
  * <p>
- * This interface represents a package definition.
- * A package definition consists of a list of folders, filesets, and sub-packages
+ * This interface represents an archive definition.
+ * An archive definition consists of a list of folders, filesets, and sub-packages
  * </p>
  * 
  * @author <a href="marshall@jboss.org">Marshall Culpepper</a>
+ * @author <a href="rob.stryker@redhat.com">Rob Stryker</a>
  * @version $Revision$
  */
 public interface IArchive extends IArchiveNode {
@@ -58,16 +59,6 @@ public interface IArchive extends IArchiveNode {
 	 */
 	public String getName();
 	
-//	/**
-//	 * @return Whether or not this package is a reference to another package.
-//	 */
-//	public boolean isReference();
-	
-//	/**
-//	 * @return An array of references to this package.
-//	 */
-//	public IPackageReference[] getReferences ();
-	
 	/**
 	 * @return Whether or not this package will be build exploded, or as a directory instead of a ZIP/JAR
 	 */
@@ -81,17 +72,9 @@ public interface IArchive extends IArchiveNode {
 	/**
 	 * If this package is top-level, there are two types of destinations it can have. 
 	 * "Inside" the workspace, and "outside" the workspace. 
-	 * @return Wheter or not the destination of this package is in the workspace
-	 * @see IPackage.getDestinationFolder()
-	 * @see IPackage.getDestinationContainer()
+	 * @return Whether or not the destination of this package is in the workspace
 	 */
 	public boolean isDestinationInWorkspace();
-	
-	/**
-	 * @return An IPath to this package's destination. 
-	 * Destination will always be file-system based
-	 */
-	public IPath getDestinationPath();
 	
 	/**
 	 * @return A list of sub-archives contained in this package
@@ -116,12 +99,12 @@ public interface IArchive extends IArchiveNode {
 	public IPath getArchiveFilePath();
 	
 	/**
-	 * If this package is not top-level, this will return a relative path to this package from within it's parent, i.e.
-	 * my.ear/web/my.war/WEB-INF/lib. Otherwise, this will return null
-	 * @return a relative IPath to this package's top level parent
+	 * The absolute raw file system path to the 
+	 * destination (containing folder) of this archive
+	 * @return An IPath to this package's destination folder
 	 */
-	//public IPath getPackageRelativePath();
-	
+	public IPath getDestinationPath();
+
 	/**
 	 * Set the package type of this package
 	 * @param type The package type

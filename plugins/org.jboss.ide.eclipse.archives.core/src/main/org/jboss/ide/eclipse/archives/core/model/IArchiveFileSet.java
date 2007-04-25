@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.IPath;
  * </p>
  * 
  * @author <a href="marshall@jboss.org">Marshall Culpepper</a>
+ * @author <a href="rob.stryker@redhat.com">Rob Stryker</a>
  * @version $Revision$
  */
 public interface IArchiveFileSet extends IArchiveNode {
@@ -47,14 +48,13 @@ public interface IArchiveFileSet extends IArchiveNode {
 	public boolean isInWorkspace();
 	
 	/**
+	 * Returns the absolute file-system relative source path
 	 * @return The path to the source folder ("basedir" in ant terminology) for this fileset. 
-	 * Note that this path can be filesystem-based or workspace-based.
 	 */
 	public IPath getGlobalSourcePath();
 	
 	/**
-	 * Same as above but file-system relative
-	 * @return
+	 * @return the source path from the delegate (file-system or workspace-relative)
 	 */
 	public IPath getSourcePath();
 	
@@ -115,5 +115,10 @@ public interface IArchiveFileSet extends IArchiveNode {
 	 */
 	public void setInWorkspace(boolean isInWorkspace);
 	
+	/**
+	 * Get the relative path of the input file to the root archive
+	 * @param inputFile
+	 * @return
+	 */
 	public IPath getRootArchiveRelativePath(IPath inputFile);
 }

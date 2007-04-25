@@ -45,14 +45,20 @@ import org.jboss.ide.eclipse.archives.core.model.internal.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.util.TrueZipUtil;
 
 /**
- * The builder is responsible for building packages.
- * 
- * @author Stryker
+ * This builder is responsible for building the archives
+ * It delegates to a delegate. 
+ * @author Rob Stryker (rob.stryker@redhat.com)
+ *
  */
 public class ArchivesBuilder extends IncrementalProjectBuilder {
 
 	public static final String BUILDER_ID = "org.jboss.ide.eclipse.archives.core.archivesBuilder";
 	
+	/**
+	 * Build. 
+	 * @see IncrementalProjectBuilder#build(int, Map, IProgressMonitor)
+	 * @see IProject#build(int, String, Map, IProgressMonitor) 
+	 */
 	protected IProject[] build(int kind, Map args, IProgressMonitor monitor) throws CoreException {
 		
 		// if we're not to build, get out of here
@@ -78,6 +84,10 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 		return interestingProjects;
 	}
 	
+	/**
+	 * Delete all archives that were created or represented by this
+	 * project's archive model. 
+	 */
 	protected void clean(IProgressMonitor monitor) throws CoreException {
 		IProject p = getProject();
 		ArchiveModelNode root = ArchivesModel.instance().getRoot(p);
@@ -88,6 +98,13 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 		}
 	}
 
+	/**
+	 * Browse through the deltas and fill the treesets with
+	 * affected resources. 
+	 * @param projects The interesting projects
+	 * @param addedChanged A collection of resources that have been added or changed
+	 * @param removed A collection of resources that have been removed.
+	 */
 	protected void fillDeltas(IProject[] projects, final TreeSet addedChanged, final TreeSet removed) {
 		for( int i = 0; i < projects.length; i++ ) {
 			final IProject proj = projects[i];
@@ -115,6 +132,13 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 			}
 		}
 	}
+	
+	/**
+	 * Get any projects that the current project may depend on 
+	 * (regarding it's archive model, if any filesets match files in 
+	 * another project).
+	 * @return The list of projects that matter
+	 */
 	protected IProject[] getInterestingProjectsInternal() {
 		final TreeSet set = createDefaultTreeSet();
 		set.add(getProject());
@@ -138,6 +162,10 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 		return (IProject[]) set.toArray(new IProject[set.size()]);
 	}
 	
+	/** 
+	 * Default treeset with default comparator
+	 * @return
+	 */
 	protected TreeSet createDefaultTreeSet() {
 		return new TreeSet(new Comparator () {
 			public int compare(Object o1, Object o2) {

@@ -26,7 +26,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 
 /**
- * This interface is inteded to be implemented by classes who are interested in receiving callbacks for various IArchive build events
+ * This interface is inteded to be implemented by classes who are 
+ * interested in receiving callbacks for various IArchive build events
  * 
  * @author Marshall
  */
@@ -45,25 +46,34 @@ public interface IArchiveBuildListener {
 	 */
 	public void finishedBuild (IProject project);
 
-	
+	/**
+	 * The project is going to be rebuilt from scratch and all state should be discarded
+	 * @param project
+	 */
 	public void cleanProject(IProject project);
 	
 	/**
-	 * A Archive has started being built by the Archives builder
-	 * This is *only* used during  a FULL BUILD or after a MODEL CHANGE
-	 * The appropriate action after receiving this event is to clear 
-	 * any cached state you have for that archive. 
+	 * An Archive has started being built by the Archives builder
+	 * This can be called from a full build, or from the incremental build
+	 * if and only if one of the affected files matches a fileset in this archive. 
 	 * 
 	 * @param pkg the Archive being built
 	 */
 	public void startedBuildingArchive (IArchive pkg);
 	
 	/**
-	 * A Archive is finished being built by the Archives builder
+	 * An Archive is finished being built by the Archives builder
+	 * This can be called from a full build, or from the incremental build
+	 * if and only if one of the affected files matches a fileset in this archive. 
+	 * 
 	 * @param pkg the Archive being built
 	 */
 	public void finishedBuildingArchive (IArchive pkg);
 
+	/**
+	 * The archive is going to be rebuilt from scratch and all state should be discarded
+	 * @param pkg
+	 */
 	public void cleanArchive(IArchive pkg);
 
 	
