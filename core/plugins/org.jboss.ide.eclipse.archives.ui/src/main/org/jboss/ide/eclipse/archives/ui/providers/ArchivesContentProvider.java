@@ -34,6 +34,10 @@ public class ArchivesContentProvider implements ITreeContentProvider {
 		return ret;
 	}
 	public Object[] getChildren(Object parentElement) {
+		
+		if( parentElement instanceof Object[] ) return (Object[])parentElement;
+		
+		
 		if( parentElement instanceof IArchiveModelNode && showProjectRoot())  {
 			IProject[] projects;
 			if( PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS)) {
