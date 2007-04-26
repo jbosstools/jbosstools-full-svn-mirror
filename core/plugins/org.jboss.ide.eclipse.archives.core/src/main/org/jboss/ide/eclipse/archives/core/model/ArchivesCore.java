@@ -36,7 +36,7 @@ import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
 import org.jboss.ide.eclipse.archives.core.build.ModelChangeListener;
 
 /**
- * The 
+ * The main model entry point
  * @author Rob Stryker (rob.stryker@redhat.com)
  *
  */
