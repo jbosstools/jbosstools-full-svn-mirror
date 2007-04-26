@@ -19,11 +19,10 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.ide.eclipse.archives.core.model.types;
+package org.jboss.ide.eclipse.archives.core.model;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.jboss.ide.eclipse.archives.core.model.IArchive;
 
 /**
  * This interface represents a package type (i.e. JAR,WAR,SAR etc).

@@ -29,9 +29,9 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
-import org.jboss.ide.eclipse.archives.core.model.types.IArchiveType;
 
 /**
  * An archive

@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
 
 /**
  *
