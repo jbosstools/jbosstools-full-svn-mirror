@@ -34,6 +34,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
+import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.ExtensionManager;
 import org.jboss.ide.eclipse.archives.ui.actions.NewArchiveAction;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProvider;
@@ -64,7 +65,8 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 				
 				Object element = ((IStructuredSelection)selection).getFirstElement();
 				IProject project = getProject(element);
-				viewSelectionChanged(project);
+				if( project != null ) 
+					viewSelectionChanged(project);
 			}
 			
 			public IProject getProject (Object element) {
@@ -89,7 +91,7 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 	private IProject project;
 	private ArchivesContentProvider contentProvider = new ArchivesContentProvider();
 	private ArchivesLabelProvider labelProvider = new ArchivesLabelProvider();
-	private Composite emptyComposite, viewerComposite, loadingPackagesComposite;
+	private Composite emptyComposite, viewerComposite, loadingPackagesComposite, noSelectionComposite;
 	private IProgressMonitor loadingProgress;
 	private TreeViewer packageViewer;
 	private ArchivesMenuHandler menuHandler;
@@ -98,9 +100,17 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 		addEmptyComposite(book);
 		addLoadingComposite(book);
 		addViewerComposite(book);
+		addNoSelectionComposite(book);
+		book.showPage(noSelectionComposite);
 		menuHandler = new ArchivesMenuHandler(packageViewer);
 	}
 	
+	protected void addNoSelectionComposite(PageBook book) {
+		noSelectionComposite = new Composite(book, SWT.NONE);
+		noSelectionComposite.setLayout(new FillLayout());
+		Label label = new Label(noSelectionComposite, SWT.NONE);
+		label.setText(ArchivesUIMessages.ProjectPackagesView_noProjectSelectedMessage);
+	}
 	protected void addEmptyComposite(PageBook book) {
 		emptyComposite = new Composite(book, SWT.NONE);
 		emptyComposite.setLayout(new FormLayout());
