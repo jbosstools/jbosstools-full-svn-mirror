@@ -36,6 +36,7 @@ public class MainPreferencePage extends PropertyPage implements
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
 		
+		createOverridePrefs(main);
 		createCorePrefs(main);
 		createViewPrefs(main);
 		fillValues();
@@ -52,7 +53,17 @@ public class MainPreferencePage extends PropertyPage implements
 				PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_FULL_FILESET_ROOT_DIR, getElement()));
 		showProjectRoot.setSelection(
 				PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_PROJECT_ROOT, getElement()));
-		
+
+		showAllProjects.setEnabled(showProjectRoot.getSelection());
+		if (!showProjectRoot.getSelection()) 
+			showAllProjects.setSelection(false);
+	}
+	
+	protected void createOverridePrefs(Composite main) {
+		System.out.println(getElement());
+		if( getElement() != null ) {
+			
+		}
 	}
 	
 	protected void createCorePrefs(Composite main) {
@@ -113,6 +124,25 @@ public class MainPreferencePage extends PropertyPage implements
 		PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_PROJECT_ROOT, showProjectRoot.getSelection(), getElement());
 		PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS, showAllProjects.getSelection(), getElement());
 		ProjectArchivesView.getInstance().refreshViewer(null);
+		
+		/*
+		 * 
+		 * 
+		IProject[] projects;
+		if( getElement() == null )
+			projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+		else
+			projects = new IProject[]{ (IProject)getElement().getAdapter(IProject.class)};
+
+		for( int i = 0; i < projects.length; i++ ) {
+			CorePreferenceManager.setBuilderEnabled(getElement(), automaticBuilder.getSelection());
+			PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_PACKAGE_OUTPUT_PATH, showPackageOutputPath.getSelection(), getElement());
+			PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_FULL_FILESET_ROOT_DIR, showFullFilesetRootDir.getSelection(), getElement());
+			PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_PROJECT_ROOT, showProjectRoot.getSelection(), getElement());
+			PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS, showAllProjects.getSelection(), getElement());
+		}
+
+		 */
 		return true;
 	}
 }

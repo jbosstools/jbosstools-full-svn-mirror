@@ -82,5 +82,9 @@
             name="Packaging Archives"
             objectClass="org.eclipse.jdt.core.IJavaProject"/>
    </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.jboss.ide.eclipse.archives.ui.PrefsInitializer"/>
+   </extension>
    
 </plugin>

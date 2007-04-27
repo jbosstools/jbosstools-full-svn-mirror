@@ -11,8 +11,8 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
-import org.jboss.ide.eclipse.archives.ui.PackagesUIPlugin;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
+import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProvider.WrappedProject;
 
 public class ArchivesLabelProvider implements ILabelProvider {
 	
@@ -44,7 +44,7 @@ public class ArchivesLabelProvider implements ILabelProvider {
 	
 	private Image internalGetImage(Object element) {
 		element = unwrapElement(element);
-		if( element instanceof IProject ) 
+		if( element instanceof WrappedProject ) 
 			return PlatformUI.getWorkbench().getSharedImages().getImage(org.eclipse.ui.ide.IDE.SharedImages.IMG_OBJ_PROJECT);
 		if( element instanceof IArchiveNode ) {
 			IArchiveNode node = (IArchiveNode) element;
@@ -70,8 +70,8 @@ public class ArchivesLabelProvider implements ILabelProvider {
 
 	private String internalGetText(Object element) {
 		element = unwrapElement(element);
-		if( element instanceof IProject) 
-			return ((IProject)element).getName();
+		if( element instanceof WrappedProject) 
+			return ((WrappedProject)element).getProject().getName();
 		if( element instanceof IArchiveNode ) {
 			switch (((IArchiveNode)element).getNodeType()) {
 				case IArchiveNode.TYPE_ARCHIVE: return getPackageText((IArchive)element);

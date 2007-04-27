@@ -115,7 +115,7 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 		emptyComposite = new Composite(book, SWT.NONE);
 		emptyComposite.setLayout(new FormLayout());
 		Label l = new Label(emptyComposite, SWT.NONE);
-		l.setText("Project has no packages. Create an Archive");
+		l.setText(ArchivesUIMessages.ProjectPackagesView_createPackagesMessage);
 		
 		Composite actionsComposite = new Composite(emptyComposite, SWT.NONE);
 		
@@ -269,10 +269,13 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 	public void refreshViewer(final Object node) {
 		getSite().getShell().getDisplay().asyncExec(new Runnable () {
 			public void run () {
-				if( node == null )
+				if( node == null ) {
+					Object[] els = packageViewer.getExpandedElements();
 					packageViewer.refresh();
-				else
+					packageViewer.setExpandedElements(els);
+				} else {
 					packageViewer.refresh(node);
+				}
 			}
 		});
 	}
