@@ -7,6 +7,7 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 
 public class PrefsInitializer extends AbstractPreferenceInitializer {
 
@@ -19,11 +20,15 @@ public class PrefsInitializer extends AbstractPreferenceInitializer {
 	
 	public void initializeDefaultPreferences() {
 		IEclipsePreferences prefs = new DefaultScope().getNode(PackagesUIPlugin.PLUGIN_ID);
-		
 		prefs.putBoolean(PREF_SHOW_FULL_FILESET_ROOT_DIR, true);
 		prefs.putBoolean(PREF_SHOW_PACKAGE_OUTPUT_PATH, true);
 		prefs.putBoolean(PREF_SHOW_PROJECT_ROOT, true);
 		prefs.putBoolean(PREF_SHOW_ALL_PROJECTS, false);
+		try {
+			prefs.flush();
+		} catch (org.osgi.service.prefs.BackingStoreException e) { 
+			e.printStackTrace();
+		} // swallow
 	}
 
 	public static void setBoolean(String key, boolean val) {
@@ -41,7 +46,12 @@ public class PrefsInitializer extends AbstractPreferenceInitializer {
 				}
 			} catch(CoreException ce) {}
 		}
-		new DefaultScope().getNode(PackagesUIPlugin.PLUGIN_ID).putBoolean(key, val);
+		IEclipsePreferences prefs = new InstanceScope().getNode(PackagesUIPlugin.PLUGIN_ID);
+		prefs.putBoolean(key, val);
+		try {
+			prefs.flush();
+		} catch (org.osgi.service.prefs.BackingStoreException e) { } // swallow
+
 	}
 	
 	public static boolean getBoolean(String key) {
@@ -57,6 +67,6 @@ public class PrefsInitializer extends AbstractPreferenceInitializer {
 				}
 			} catch(CoreException ce) {}
 		}
-		return new DefaultScope().getNode(PackagesUIPlugin.PLUGIN_ID).getBoolean(key, false);
+		return new InstanceScope().getNode(PackagesUIPlugin.PLUGIN_ID).getBoolean(key, false);
 	}
 }

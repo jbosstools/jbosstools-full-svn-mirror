@@ -61,8 +61,8 @@ public class ArchivesContentProvider implements ITreeContentProvider {
 		if( parentElement instanceof ArchivesModel ) {
 			// return all that's there
 		}
-		if( parentElement instanceof IProject ) {
-			return ArchivesModel.instance().getProjectArchives((IProject)parentElement);
+		if( parentElement instanceof WrappedProject ) {
+			return ArchivesModel.instance().getProjectArchives(((WrappedProject)parentElement).getProject());
 		}
 		if( parentElement instanceof IArchiveNode ) {
 			return ((IArchiveNode)parentElement).getAllChildren();
@@ -71,6 +71,10 @@ public class ArchivesContentProvider implements ITreeContentProvider {
 	}
 
 	public Object getParent(Object element) {
+		if( element instanceof IArchiveNode ) 
+			return ((IArchiveNode)element).getParent();
+		if( element instanceof WrappedProject ) 
+			return ArchivesModel.instance().getRoot(((WrappedProject)element).getProject());
 		return null;
 	}
 
