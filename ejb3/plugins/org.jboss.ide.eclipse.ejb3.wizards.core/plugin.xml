@@ -126,7 +126,7 @@
        </moduleArtifactAdapter>
    </extension>
    <extension
-         point="org.jboss.ide.eclipse.packages.core.packageTypes">
+         point="org.jboss.ide.eclipse.archives.core.archiveTypes">
       <packageType
             class="org.jboss.ide.eclipse.ejb3.core.module.Ejb30PackageType"
             id="org.jboss.ide.eclipse.ejb3.wizards.core.ejbPackageType"

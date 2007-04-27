@@ -43,5 +43,5 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.wst.common.emfworkbench.integration,
  org.eclipse.jem,
  org.eclipse.jem.workbench,
- org.jboss.ide.eclipse.packages.core
+ org.jboss.ide.eclipse.archives.core
 Eclipse-AutoStart: true
