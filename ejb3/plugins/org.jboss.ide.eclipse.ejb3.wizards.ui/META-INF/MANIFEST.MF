@@ -36,13 +36,12 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.core,
  org.eclipse.jem.util,
  org.eclipse.wst.server.core,
- org.jboss.ide.eclipse.as.core,
  org.eclipse.wst.server.ui,
  org.eclipse.jst.server.core,
  org.eclipse.jdt.ui,
  org.eclipse.jface.text,
- org.jboss.ide.eclipse.ejb3.wizards.core,
  org.eclipse.jdt.launching,
  org.eclipse.ui.ide,
- org.eclipse.jface.databinding
+ org.eclipse.jface.databinding,
+ org.jboss.ide.eclipse.ejb3.wizards.core
 Eclipse-LazyStart: true
