@@ -8,7 +8,8 @@ Bundle-Activator: org.jboss.ide.eclipse.ejb3.core.EJB3WizardsCorePlugin
 Bundle-Vendor: JBoss, a division of Red Hat
 Bundle-Localization: plugin
 Export-Package: org.jboss.ide.eclipse.ejb3.core,
- org.jboss.ide.eclipse.ejb3.core.facet
+ org.jboss.ide.eclipse.ejb3.core.facet,
+ org.jboss.ide.eclipse.ejb3.core.module
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources,
  org.eclipse.core.runtime,
