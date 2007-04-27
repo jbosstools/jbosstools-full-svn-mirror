@@ -87,17 +87,6 @@
    </extension>
 -->
 
-
-   <extension
-         point="org.eclipse.jdt.core.classpathContainerInitializer">
-      <classpathContainerInitializer
-            class="org.jboss.ide.eclipse.ejb3.core.classpath.EJB3ClasspathContainerInitializer"
-            id="org.jboss.ide.eclipse.jdt.ejb3.wizards.core.classpath.EJB3_CONTAINER"/>
-      <classpathContainerInitializer
-            class="org.jboss.ide.eclipse.ejb3.core.classpath.EJB3ClasspathContainerInitializer"
-            id="org.jboss.ide.eclipse.jdt.ejb3.wizards.core.classpath.AOP15_CONTAINER"/>
-   </extension>
-
    <extension
          point="org.eclipse.wst.server.core.moduleFactories">
          
@@ -125,14 +114,5 @@
          </enablement>
        </moduleArtifactAdapter>
    </extension>
-   <extension
-         point="org.jboss.ide.eclipse.archives.core.archiveTypes">
-      <packageType
-            class="org.jboss.ide.eclipse.ejb3.core.module.Ejb30PackageType"
-            id="org.jboss.ide.eclipse.ejb3.wizards.core.ejbPackageType"
-            label="EJB 3.0"/>
-   </extension>
-
-
 
 </plugin>

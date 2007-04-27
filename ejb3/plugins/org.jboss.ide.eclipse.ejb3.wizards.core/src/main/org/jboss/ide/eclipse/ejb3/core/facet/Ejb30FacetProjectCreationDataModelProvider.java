@@ -2,11 +2,7 @@ package org.jboss.ide.eclipse.ejb3.core.facet;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jst.common.project.facet.IJavaFacetInstallDataModelProperties;
 import org.eclipse.jst.common.project.facet.JavaFacetInstallDataModelProvider;
 import org.eclipse.jst.j2ee.internal.project.J2EEProjectUtilities;
@@ -20,10 +16,6 @@ import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModelListener;
 import org.eclipse.wst.common.project.facet.core.IProjectFacet;
 import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
-import org.eclipse.wst.common.project.facet.core.runtime.IRuntime;
-import org.eclipse.wst.server.core.ServerCore;
-import org.jboss.ide.eclipse.as.core.runtime.server.AbstractJBossServerRuntime;
-import org.jboss.ide.eclipse.ejb3.core.classpath.EJB3ClasspathContainer;
 
 public class Ejb30FacetProjectCreationDataModelProvider extends J2EEFacetProjectCreationDataModelProvider {
 
@@ -68,41 +60,41 @@ public class Ejb30FacetProjectCreationDataModelProvider extends J2EEFacetProject
 	}	
 	
 	public DataModelPropertyDescriptor[] getValidPropertyDescriptors(String propertyName) {
-		if (FACET_RUNTIME.equals(propertyName)) {
-			DataModelPropertyDescriptor[] descriptors = super.getValidPropertyDescriptors(propertyName);
-			List list = new ArrayList();
-			for (int i = 0; i < descriptors.length; i++) {
-				IRuntime rt = (IRuntime) descriptors[i].getPropertyValue();
-				if( rt == null ) continue;
-				Map properties = rt.getProperties();
-				String id = (String)properties.get("id");
-				org.eclipse.wst.server.core.IRuntime wstRuntime = ServerCore.findRuntime(id);
-				try {
-					AbstractJBossServerRuntime jbrt = (AbstractJBossServerRuntime) wstRuntime.getAdapter(AbstractJBossServerRuntime.class);
-					if( hasEJB3(jbrt)) {
-						list.add(descriptors[i]);
-					}
-				} catch( Exception e ) {
-					e.printStackTrace();
-				}
-			}
-			descriptors = new DataModelPropertyDescriptor[list.size()];
-			for (int i = 0; i < descriptors.length; i++) {
-				descriptors[i] = (DataModelPropertyDescriptor) list.get(i);
-			}
-			return descriptors;
-		}
+//		if (FACET_RUNTIME.equals(propertyName)) {
+//			DataModelPropertyDescriptor[] descriptors = super.getValidPropertyDescriptors(propertyName);
+//			List list = new ArrayList();
+//			for (int i = 0; i < descriptors.length; i++) {
+//				IRuntime rt = (IRuntime) descriptors[i].getPropertyValue();
+//				if( rt == null ) continue;
+//				Map properties = rt.getProperties();
+//				String id = (String)properties.get("id");
+//				org.eclipse.wst.server.core.IRuntime wstRuntime = ServerCore.findRuntime(id);
+//				try {
+//					AbstractJBossServerRuntime jbrt = (AbstractJBossServerRuntime) wstRuntime.getAdapter(AbstractJBossServerRuntime.class);
+//					if( hasEJB3(jbrt)) {
+//						list.add(descriptors[i]);
+//					}
+//				} catch( Exception e ) {
+//					e.printStackTrace();
+//				}
+//			}
+//			descriptors = new DataModelPropertyDescriptor[list.size()];
+//			for (int i = 0; i < descriptors.length; i++) {
+//				descriptors[i] = (DataModelPropertyDescriptor) list.get(i);
+//			}
+//			return descriptors;
+//		}
 		return super.getValidPropertyDescriptors(propertyName);
 	}
 	
-	protected boolean hasEJB3(AbstractJBossServerRuntime jbrt) {
-	      IPath jarToCheck = EJB3ClasspathContainer.jbossConfigRelativeJarPaths[0];
-
-	      String jbossBaseDir = jbrt.getRuntime().getLocation().toOSString();
-	      String jbossConfigDir = jbrt.getJBossConfiguration();
-	      IPath absoluteJarPath = new Path(jbossBaseDir).append("server").append(jbossConfigDir).append(jarToCheck);
-	      return absoluteJarPath.toFile().exists();
-	}
+//	protected boolean hasEJB3(AbstractJBossServerRuntime jbrt) {
+//	      IPath jarToCheck = EJB3ClasspathContainer.jbossConfigRelativeJarPaths[0];
+//
+//	      String jbossBaseDir = jbrt.getRuntime().getLocation().toOSString();
+//	      String jbossConfigDir = jbrt.getJBossConfiguration();
+//	      IPath absoluteJarPath = new Path(jbossBaseDir).append("server").append(jbossConfigDir).append(jarToCheck);
+//	      return absoluteJarPath.toFile().exists();
+//	}
 
 }
 

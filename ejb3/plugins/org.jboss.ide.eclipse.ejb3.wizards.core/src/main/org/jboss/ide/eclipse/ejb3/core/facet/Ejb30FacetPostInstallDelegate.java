@@ -3,7 +3,6 @@ package org.jboss.ide.eclipse.ejb3.core.facet;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileFilter;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -25,7 +24,6 @@ import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jem.util.logger.proxy.Logger;
-import org.eclipse.jst.common.project.facet.core.ClasspathHelper;
 import org.eclipse.jst.j2ee.application.Module;
 import org.eclipse.jst.j2ee.application.internal.impl.EjbModuleImpl;
 import org.eclipse.jst.j2ee.application.internal.operations.AddComponentToEnterpriseApplicationDataModelProvider;
@@ -38,18 +36,13 @@ import org.eclipse.jst.j2ee.project.facet.IJ2EEModuleFacetInstallDataModelProper
 import org.eclipse.jst.j2ee.project.facet.J2EEFacetInstallDelegate;
 import org.eclipse.wst.common.componentcore.ComponentCore;
 import org.eclipse.wst.common.componentcore.datamodel.properties.ICreateReferenceComponentsDataModelProperties;
-import org.eclipse.wst.common.componentcore.datamodel.properties.IFacetProjectCreationDataModelProperties;
 import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 import org.eclipse.wst.common.frameworks.datamodel.DataModelFactory;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModelOperation;
 import org.eclipse.wst.common.project.facet.core.IDelegate;
-import org.eclipse.wst.common.project.facet.core.IFacetedProject;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
-import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
 import org.eclipse.wst.common.project.facet.core.runtime.IRuntime;
-import org.jboss.ide.eclipse.ejb3.core.classpath.AopFromRuntimeClasspathContainer;
-import org.jboss.ide.eclipse.ejb3.core.classpath.EJB3ClasspathContainer;
 
 public class Ejb30FacetPostInstallDelegate extends J2EEFacetInstallDelegate implements IDelegate {
 
@@ -143,31 +136,31 @@ public class Ejb30FacetPostInstallDelegate extends J2EEFacetInstallDelegate impl
 	}
 	
 	public void addClasspathEntries(IProject project, IProjectFacetVersion fv, Object config, IProgressMonitor monitor) throws CoreException {
-		try {
-			IFacetedProject facetedProj = ProjectFacetsManager.create(project);
-			IRuntime runtime = facetedProj.getPrimaryRuntime();
-			String runtimeName = runtime.getName();
-			
-		    ArrayList list = new ArrayList(); 
-		    String runtimeKey = IFacetProjectCreationDataModelProperties.FACET_RUNTIME;
-		    if( config instanceof IDataModel ) {
-		    	
-		    	if( runtime != null && runtime instanceof IRuntime ) {
-		    		runtimeName = ((IRuntime)runtime).getName();
-					//list.add(JavaCore.newContainerEntry(new Path(AopJdk15ClasspathContainer.CONTAINER_ID)));
-				    list.add(JavaCore.newContainerEntry(new Path(EJB3ClasspathContainer.CONTAINER_ID).append(runtimeName)));
-				    list.add(JavaCore.newContainerEntry(new Path(AopFromRuntimeClasspathContainer.CONTAINER_ID).append(runtimeName)));
-		
-					ClasspathHelper.addClasspathEntries(project, fv, list);
-		    	}
-		    }
-		} catch( Exception e ) {
-			e.printStackTrace();
-		}
-	    
-		if (monitor != null) {
-			monitor.worked(1);
-		}
+//		try {
+//			IFacetedProject facetedProj = ProjectFacetsManager.create(project);
+//			IRuntime runtime = facetedProj.getPrimaryRuntime();
+//			String runtimeName = runtime.getName();
+//			
+//		    ArrayList list = new ArrayList(); 
+//		    String runtimeKey = IFacetProjectCreationDataModelProperties.FACET_RUNTIME;
+//		    if( config instanceof IDataModel ) {
+//		    	
+//		    	if( runtime != null && runtime instanceof IRuntime ) {
+//		    		runtimeName = ((IRuntime)runtime).getName();
+//					//list.add(JavaCore.newContainerEntry(new Path(AopJdk15ClasspathContainer.CONTAINER_ID)));
+//				    list.add(JavaCore.newContainerEntry(new Path(EJB3ClasspathContainer.CONTAINER_ID).append(runtimeName)));
+//				    list.add(JavaCore.newContainerEntry(new Path(AopFromRuntimeClasspathContainer.CONTAINER_ID).append(runtimeName)));
+//		
+//					ClasspathHelper.addClasspathEntries(project, fv, list);
+//		    	}
+//		    }
+//		} catch( Exception e ) {
+//			e.printStackTrace();
+//		}
+//	    
+//		if (monitor != null) {
+//			monitor.worked(1);
+//		}
 	}
 	
 	private void printModelProperties(IDataModel model) {

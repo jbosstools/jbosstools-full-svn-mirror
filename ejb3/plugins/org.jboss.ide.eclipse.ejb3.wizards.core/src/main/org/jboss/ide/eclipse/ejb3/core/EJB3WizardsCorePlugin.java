@@ -28,7 +28,6 @@ import java.util.ResourceBundle;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
-import org.jboss.ide.eclipse.as.core.server.JBossServer;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -42,9 +41,6 @@ public class EJB3WizardsCorePlugin extends Plugin
 
    //Resource bundle.
    private ResourceBundle resourceBundle;
-
-   private JBossServer selectedServer;
-
    /**
     * The constructor.
     */
@@ -130,15 +126,5 @@ public class EJB3WizardsCorePlugin extends Plugin
          ioe.printStackTrace();
       }
       return null;
-   }
-
-   public JBossServer getSelectedServer()
-   {
-      return selectedServer;
-   }
-
-   public void setSelectedServer(JBossServer selectedServer)
-   {
-      this.selectedServer = selectedServer;
    }
 }
