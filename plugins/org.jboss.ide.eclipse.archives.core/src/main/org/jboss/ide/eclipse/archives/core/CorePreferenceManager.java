@@ -27,6 +27,9 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.osgi.service.prefs.BackingStoreException;
 
 
 /**
@@ -51,7 +54,7 @@ public class CorePreferenceManager extends AbstractPreferenceInitializer {
 				}
 			} catch( CoreException ce ) {}
 		}
-		return new DefaultScope().getNode(ArchivesCorePlugin.PLUGIN_ID).getBoolean(AUTOMATIC_BUILDER_ENABLED, true);
+		return new InstanceScope().getNode(ArchivesCorePlugin.PLUGIN_ID).getBoolean(AUTOMATIC_BUILDER_ENABLED, true);
 	}
 	
 	public static void setBuilderEnabled(IAdaptable adaptable, boolean value) {
@@ -67,10 +70,18 @@ public class CorePreferenceManager extends AbstractPreferenceInitializer {
 				}
 			} catch( CoreException ce ) {}
 		}
-		new DefaultScope().getNode(ArchivesCorePlugin.PLUGIN_ID).putBoolean(AUTOMATIC_BUILDER_ENABLED, value);
+		IEclipsePreferences prefs = new InstanceScope().getNode(ArchivesCorePlugin.PLUGIN_ID);
+		prefs.putBoolean(AUTOMATIC_BUILDER_ENABLED, value);
+		try {
+			prefs.flush();
+		} catch (BackingStoreException e) {		}
 	}
 	
 	public void initializeDefaultPreferences() {
-		new DefaultScope().getNode(ArchivesCorePlugin.PLUGIN_ID).putBoolean(AUTOMATIC_BUILDER_ENABLED, true);
+		IEclipsePreferences prefs = new DefaultScope().getNode(ArchivesCorePlugin.PLUGIN_ID);
+		prefs.putBoolean(AUTOMATIC_BUILDER_ENABLED, true);
+		try {
+			prefs.flush();
+		} catch (BackingStoreException e) { }
 	}
 }
