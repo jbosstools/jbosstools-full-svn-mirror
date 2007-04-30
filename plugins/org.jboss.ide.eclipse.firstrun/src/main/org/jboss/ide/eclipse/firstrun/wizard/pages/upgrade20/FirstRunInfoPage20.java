@@ -23,7 +23,8 @@ package org.jboss.ide.eclipse.firstrun.wizard.pages.upgrade20;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jboss.ide.eclipse.firstrun.FirstRunMessages;
@@ -36,7 +37,7 @@ public class FirstRunInfoPage20 extends AbstractFirstRunPage {
    public FirstRunInfoPage20()
    {
       super(FirstRunMessages.getString("InfoPage20.title"), FirstRunMessages.getString("FirstRunWizard.title"),
-            FirstRunPlugin.getImageDescriptor(FirstRunPlugin.ICON_JBOSSIDE_LOGO));
+            FirstRunPlugin.getImageDescriptor(FirstRunPlugin.ICON_RHDS_LOGO));
    }
 
    public void createControl(Composite parent)
@@ -44,15 +45,16 @@ public class FirstRunInfoPage20 extends AbstractFirstRunPage {
       setTitle(FirstRunMessages.getString("InfoPage20.title"));
 
       Composite main = new Composite(parent, SWT.NONE);
-      main.setLayout(new FillLayout());
+      main.setLayout(new GridLayout(1, false));
 
       Label label = new Label(main, SWT.WRAP);
-
+      label.setLayoutData(new GridData(GridData.FILL_BOTH));
+      
       if( ((FirstRunWizard)getWizard()).getNumPagesWithChanges() != 0 )
     	  label.setText(FirstRunMessages.getString("InfoPage20.info"));
       else 
     	  label.setText(FirstRunMessages.getString("InfoPage20.welcomeOnly"));
-    	  
+      
       setControl(main);
    }
 

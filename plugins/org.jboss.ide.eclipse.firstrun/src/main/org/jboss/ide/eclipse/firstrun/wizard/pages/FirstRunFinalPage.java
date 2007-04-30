@@ -33,7 +33,7 @@ public class FirstRunFinalPage extends AbstractFirstRunPage {
 
    public FirstRunFinalPage() {
       super(FirstRunMessages.getString("FinalPage.title"), FirstRunMessages.getString("FirstRunWizard.title"),
-            FirstRunPlugin.getImageDescriptor(FirstRunPlugin.ICON_JBOSSIDE_LOGO));
+            FirstRunPlugin.getImageDescriptor(FirstRunPlugin.ICON_RHDS_LOGO));
    }
 
    public void createControl(Composite parent) {

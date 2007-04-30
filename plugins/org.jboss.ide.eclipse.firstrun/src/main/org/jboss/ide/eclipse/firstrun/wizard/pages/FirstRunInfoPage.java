@@ -34,7 +34,7 @@ public class FirstRunInfoPage extends AbstractFirstRunPage {
    public FirstRunInfoPage()
    {
       super(FirstRunMessages.getString("InfoPage.title"), FirstRunMessages.getString("FirstRunWizard.title"),
-            FirstRunPlugin.getImageDescriptor(FirstRunPlugin.ICON_JBOSSIDE_LOGO));
+            FirstRunPlugin.getImageDescriptor(FirstRunPlugin.ICON_RHDS_LOGO));
    }
 
    public void createControl(Composite parent)

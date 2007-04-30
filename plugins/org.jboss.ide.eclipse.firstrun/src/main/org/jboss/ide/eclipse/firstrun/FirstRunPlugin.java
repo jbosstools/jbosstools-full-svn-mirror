@@ -49,7 +49,7 @@ public class FirstRunPlugin extends AbstractUIPlugin
 	   "org.jboss.ide.eclipse.firstrun.version";
    
 
-   public static final String ICON_JBOSSIDE_LOGO = "icons/jbosside-logo.png";
+   public static final String ICON_RHDS_LOGO = "icons/rhds_wiz.png";
 
    /**
     * The constructor.
