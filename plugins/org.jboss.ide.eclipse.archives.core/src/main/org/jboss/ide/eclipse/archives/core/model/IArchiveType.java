@@ -54,4 +54,9 @@ public interface IArchiveType {
 	 */
 	public IArchive createDefaultConfiguration(IProject project, IProgressMonitor monitor);
 	
+	/**
+	 * Fill an archive type with some filesets and folders that are required
+	 */ 
+	public IArchive fillDefaultConfiguration(IProject project, IArchive topLevel, IProgressMonitor monitor);
+	
 }
