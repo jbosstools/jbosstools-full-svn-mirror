@@ -31,6 +31,7 @@ import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
@@ -235,6 +236,17 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 
 
 	public void modelChanged(IArchiveNodeDelta delta) {
+		boolean update = true;
+		try {
+			if( project == null ) return;
+			if( delta.getPostNode() == null && delta.getPreNode() == null ) return;
+			if( delta.getPreNode() == null ) update = delta.getPostNode().getProject().equals(project);
+			else if( delta.getPostNode() == null ) update = delta.getPreNode().getProject().equals(project);
+			else update = delta.getPreNode().getProject().equals(project) || delta.getPostNode().getProject().equals(project);
+		} catch( Exception e ) {}
+
+		if( !update ) return;
+			
 		final IArchiveNode[] topChanges;
 		if( delta.getKind() == IArchiveNodeDelta.DESCENDENT_CHANGED) 
 			topChanges = getChanges(delta);
@@ -247,7 +259,11 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 		getSite().getShell().getDisplay().asyncExec(new Runnable () {
 			public void run () {
 				for( int i = 0; i < topChanges.length; i++ ) {
-					packageViewer.refresh(topChanges[i]);
+					if( topChanges.length == 1 && topChanges[0] instanceof IArchiveModelNode) {
+						packageViewer.setInput(ArchivesModel.instance().getRoot(project));
+						book.showPage(viewerComposite);
+					} else 
+						packageViewer.refresh(topChanges[i]);
 				}
 			}
 		});
