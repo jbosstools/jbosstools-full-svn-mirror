@@ -2,6 +2,8 @@ package org.jboss.ide.eclipse.ejb3.core.facet;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jst.common.project.facet.IJavaFacetInstallDataModelProperties;
 import org.eclipse.jst.common.project.facet.JavaFacetInstallDataModelProvider;
@@ -16,6 +18,8 @@ import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModelListener;
 import org.eclipse.wst.common.project.facet.core.IProjectFacet;
 import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
+import org.eclipse.wst.common.project.facet.core.runtime.IRuntime;
+import org.eclipse.wst.server.core.ServerCore;
 
 public class Ejb30FacetProjectCreationDataModelProvider extends J2EEFacetProjectCreationDataModelProvider {
 
@@ -60,42 +64,34 @@ public class Ejb30FacetProjectCreationDataModelProvider extends J2EEFacetProject
 	}	
 	
 	public DataModelPropertyDescriptor[] getValidPropertyDescriptors(String propertyName) {
-//		if (FACET_RUNTIME.equals(propertyName)) {
-//			DataModelPropertyDescriptor[] descriptors = super.getValidPropertyDescriptors(propertyName);
-//			List list = new ArrayList();
-//			for (int i = 0; i < descriptors.length; i++) {
-//				IRuntime rt = (IRuntime) descriptors[i].getPropertyValue();
-//				if( rt == null ) continue;
-//				Map properties = rt.getProperties();
-//				String id = (String)properties.get("id");
-//				org.eclipse.wst.server.core.IRuntime wstRuntime = ServerCore.findRuntime(id);
-//				try {
+		if (FACET_RUNTIME.equals(propertyName)) {
+			DataModelPropertyDescriptor[] descriptors = super.getValidPropertyDescriptors(propertyName);
+			List list = new ArrayList();
+			for (int i = 0; i < descriptors.length; i++) {
+				IRuntime rt = (IRuntime) descriptors[i].getPropertyValue();
+				if( rt == null ) continue;
+				Map properties = rt.getProperties();
+				String id = (String)properties.get("id");
+				org.eclipse.wst.server.core.IRuntime wstRuntime = ServerCore.findRuntime(id);
+				if( wstRuntime != null ) {
 //					AbstractJBossServerRuntime jbrt = (AbstractJBossServerRuntime) wstRuntime.getAdapter(AbstractJBossServerRuntime.class);
-//					if( hasEJB3(jbrt)) {
+//					if( jbrt != null ) {
 //						list.add(descriptors[i]);
+//					} else { // it's not a jboss runtime and it claims to support jbide.ejb30
+//					list.add(descriptors[i]);
 //					}
-//				} catch( Exception e ) {
-//					e.printStackTrace();
-//				}
-//			}
-//			descriptors = new DataModelPropertyDescriptor[list.size()];
-//			for (int i = 0; i < descriptors.length; i++) {
-//				descriptors[i] = (DataModelPropertyDescriptor) list.get(i);
-//			}
-//			return descriptors;
-//		}
+					list.add(descriptors[i]);
+				}
+			}
+			descriptors = new DataModelPropertyDescriptor[list.size()];
+			for (int i = 0; i < descriptors.length; i++) {
+				descriptors[i] = (DataModelPropertyDescriptor) list.get(i);
+			}
+			return descriptors;
+		}
 		return super.getValidPropertyDescriptors(propertyName);
 	}
 	
-//	protected boolean hasEJB3(AbstractJBossServerRuntime jbrt) {
-//	      IPath jarToCheck = EJB3ClasspathContainer.jbossConfigRelativeJarPaths[0];
-//
-//	      String jbossBaseDir = jbrt.getRuntime().getLocation().toOSString();
-//	      String jbossConfigDir = jbrt.getJBossConfiguration();
-//	      IPath absoluteJarPath = new Path(jbossBaseDir).append("server").append(jbossConfigDir).append(jarToCheck);
-//	      return absoluteJarPath.toFile().exists();
-//	}
-
 }
 
 
