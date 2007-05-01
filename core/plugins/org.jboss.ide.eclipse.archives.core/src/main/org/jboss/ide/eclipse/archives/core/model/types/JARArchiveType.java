@@ -66,4 +66,9 @@ public class JARArchiveType extends AbstractArchiveType {
 		
 		return jar;
 	}
+
+	// do nothing
+	public IArchive fillDefaultConfiguration(IProject project, IArchive topLevel, IProgressMonitor monitor) {
+		return null;
+	}
 }
