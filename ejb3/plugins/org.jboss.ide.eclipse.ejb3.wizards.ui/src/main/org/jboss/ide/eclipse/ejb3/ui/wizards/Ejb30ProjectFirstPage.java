@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jst.j2ee.internal.wizard.J2EEComponentFacetCreationWizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -19,22 +19,20 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wst.common.componentcore.datamodel.properties.IFacetProjectCreationDataModelProperties;
 import org.eclipse.wst.common.frameworks.datamodel.DataModelPropertyDescriptor;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
-import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
-import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
 import org.eclipse.wst.common.project.facet.core.runtime.IRuntime;
-import org.eclipse.wst.common.project.facet.core.runtime.internal.RuntimeComponent;
-import org.eclipse.wst.common.project.facet.core.runtime.internal.RuntimeManagerImpl;
 import org.eclipse.wst.project.facet.ProductManager;
+import org.eclipse.wst.server.core.ServerCore;
 import org.eclipse.wst.web.internal.ResourceHandler;
-import org.eclipse.wst.web.ui.internal.wizards.DataModelFacetCreationWizardPage;
+import org.jboss.ide.eclipse.as.core.runtime.server.AbstractJBossServerRuntime;
+import org.jboss.ide.eclipse.as.core.util.EJB30SupportVerifier;
 
 public class Ejb30ProjectFirstPage extends J2EEComponentFacetCreationWizardPage {
 	public static final String EJB30_FACET_ID = "jbide.ejb30";
-
+	private Label warningLabel;
+	
 	protected String getModuleFacetID() {
 		return EJB30_FACET_ID;
 	}
@@ -116,13 +114,33 @@ public class Ejb30ProjectFirstPage extends J2EEComponentFacetCreationWizardPage 
 			}
 		});
 		
-		Label label = new Label(group, SWT.NONE);
-		label.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
-		label.setText("Warning: Make sure you're creating a runtime that supports ejb3.0.");
+		warningLabel = new Label(group, SWT.NONE);
+		warningLabel.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+		warningLabel.setText("Warning: The selected runtime is missing one or more required libraries");
+		warningLabel.setVisible(false);
+		
+		serverTargetCombo.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+
+			public void widgetSelected(SelectionEvent e) {
+				hideOrShowWarning();
+			} 
+		} );
 		
 		Control[] deps = new Control[]{newServerTargetButton};
 		synchHelper.synchCombo(serverTargetCombo, FACET_RUNTIME, deps);
 		if (serverTargetCombo.getSelectionIndex() == -1 && serverTargetCombo.getVisibleItemCount() != 0)
 			serverTargetCombo.select(0);
+		
+		hideOrShowWarning();
+	}
+	
+	protected void hideOrShowWarning() {
+		int index = serverTargetCombo.getSelectionIndex();
+		String runtimeName = serverTargetCombo.getItem(index);
+		org.eclipse.wst.server.core.IRuntime rt = ServerCore.findRuntime(runtimeName);
+		warningLabel.setVisible(!EJB30SupportVerifier.verify(rt));
 	}
 }

@@ -43,5 +43,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.launching,
  org.eclipse.ui.ide,
  org.eclipse.jface.databinding,
- org.jboss.ide.eclipse.ejb3.wizards.core
+ org.jboss.ide.eclipse.ejb3.wizards.core,
+ org.jboss.ide.eclipse.as.core
 Eclipse-LazyStart: true
