@@ -8,6 +8,7 @@ import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.jboss.ide.eclipse.archives.core.CorePreferenceManager;
 
 public class PrefsInitializer extends AbstractPreferenceInitializer {
 
@@ -54,12 +55,39 @@ public class PrefsInitializer extends AbstractPreferenceInitializer {
 
 	}
 	
+	/**
+	 * Get the global pref value for this key
+	 * @param key
+	 * @return
+	 */
 	public static boolean getBoolean(String key) {
-		return getBoolean(key, null);
+		return getBoolean(key, null, true);
 	}
-	public static boolean getBoolean(String key, IAdaptable adaptable) {
+	
+	/**
+	 * Get the *effective* value of this preference upon this adaptable / resource
+	 * Effective values are the stored value if project-specific prefs are turned on.
+	 * Effective values are the global value if project-specific prefs are *NOT* turned on.
+	 * 
+	 * @param key
+	 * @param adaptable
+	 * @return
+	 */
+//	public static boolean getBoolean(String key, IAdaptable adaptable) {
+//		return getBoolean(key, adaptable, true);
+//	}
+	
+	/**
+	 * 
+	 * @param key  the preference to be gotten
+	 * @param adaptable  the project / resource where the pref might be stored
+	 * @param effective  whether or not to get the raw pref value or the effective value 
+	 * 					(based on whether project specific prefs are turned on) 
+	 * @return
+	 */
+	public static boolean getBoolean(String key, IAdaptable adaptable, boolean effective) {
 		QualifiedName name = new QualifiedName(PackagesUIPlugin.PLUGIN_ID, key);
-		if( adaptable != null ) {
+		if( adaptable != null && CorePreferenceManager.areProjectSpecificPrefsEnabled(adaptable)) {
 			IResource project = (IResource)adaptable.getAdapter(IResource.class);
 			try {
 				if( project != null && project.getPersistentProperty(name) != null) {

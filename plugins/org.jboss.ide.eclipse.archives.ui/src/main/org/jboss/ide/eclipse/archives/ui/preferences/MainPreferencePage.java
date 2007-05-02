@@ -3,6 +3,7 @@ package org.jboss.ide.eclipse.archives.ui.preferences;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -22,8 +23,9 @@ public class MainPreferencePage extends PropertyPage implements
 
 	private Button showPackageOutputPath, showFullFilesetRootDir;
 	private Button showProjectRoot, showAllProjects;
-	private Button automaticBuilder;
+	private Button automaticBuilder, overrideButton;
 	private Group corePrefGroup, viewPrefGroup;
+	private Composite overrideComp;
 	
 	
 	public MainPreferencePage() {
@@ -44,26 +46,52 @@ public class MainPreferencePage extends PropertyPage implements
 	}
 	
 	protected void fillValues() {
+		if( getElement() != null ) 
+			overrideButton.setSelection(CorePreferenceManager.areProjectSpecificPrefsEnabled(getElement()));
 		automaticBuilder.setSelection(CorePreferenceManager.isBuilderEnabled(getElement()));
 		showAllProjects.setSelection(
-				PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS, getElement()));
+				PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS, getElement(), false));
 		showPackageOutputPath.setSelection(
-				PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_PACKAGE_OUTPUT_PATH, getElement()));
+				PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_PACKAGE_OUTPUT_PATH, getElement(), false));
 		showFullFilesetRootDir.setSelection(
-				PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_FULL_FILESET_ROOT_DIR, getElement()));
+				PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_FULL_FILESET_ROOT_DIR, getElement(), false));
 		showProjectRoot.setSelection(
-				PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_PROJECT_ROOT, getElement()));
+				PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_PROJECT_ROOT, getElement(), false));
 
 		showAllProjects.setEnabled(showProjectRoot.getSelection());
 		if (!showProjectRoot.getSelection()) 
 			showAllProjects.setSelection(false);
+		
+		if( getElement() != null ) {
+			setWidgetsEnabled(overrideButton.getSelection());
+		}
 	}
 	
 	protected void createOverridePrefs(Composite main) {
-		System.out.println(getElement());
 		if( getElement() != null ) {
+			overrideComp = new Composite(main, SWT.NONE);
+			overrideComp.setLayout(new FillLayout());
+			overrideButton = new Button(overrideComp, SWT.CHECK);
+			overrideButton.setText("Enable Project Specific Settings");
 			
+			overrideButton.addSelectionListener(new SelectionListener(){
+				public void widgetDefaultSelected(SelectionEvent e) {
+					widgetSelected(e);
+				}
+				public void widgetSelected(SelectionEvent e) {
+					setWidgetsEnabled(overrideButton.getSelection());
+				}
+			});
 		}
+	}
+	
+	protected void setWidgetsEnabled(boolean val) {
+		showPackageOutputPath.setEnabled(val);
+		showProjectRoot.setEnabled(val);
+		showFullFilesetRootDir.setEnabled(val);
+		if( showProjectRoot.getSelection())
+			showAllProjects.setEnabled(val);
+		automaticBuilder.setEnabled(val);
 	}
 	
 	protected void createCorePrefs(Composite main) {
@@ -118,6 +146,9 @@ public class MainPreferencePage extends PropertyPage implements
 	}
 
 	public boolean performOk() {
+		if( getElement() != null ) {
+			CorePreferenceManager.setProjectSpecificPrefs(getElement(), overrideButton.getSelection());
+		}
 		CorePreferenceManager.setBuilderEnabled(getElement(), automaticBuilder.getSelection());
 		PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_PACKAGE_OUTPUT_PATH, showPackageOutputPath.getSelection(), getElement());
 		PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_FULL_FILESET_ROOT_DIR, showFullFilesetRootDir.getSelection(), getElement());
@@ -125,24 +156,6 @@ public class MainPreferencePage extends PropertyPage implements
 		PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS, showAllProjects.getSelection(), getElement());
 		ProjectArchivesView.getInstance().refreshViewer(null);
 		
-		/*
-		 * 
-		 * 
-		IProject[] projects;
-		if( getElement() == null )
-			projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-		else
-			projects = new IProject[]{ (IProject)getElement().getAdapter(IProject.class)};
-
-		for( int i = 0; i < projects.length; i++ ) {
-			CorePreferenceManager.setBuilderEnabled(getElement(), automaticBuilder.getSelection());
-			PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_PACKAGE_OUTPUT_PATH, showPackageOutputPath.getSelection(), getElement());
-			PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_FULL_FILESET_ROOT_DIR, showFullFilesetRootDir.getSelection(), getElement());
-			PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_PROJECT_ROOT, showProjectRoot.getSelection(), getElement());
-			PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS, showAllProjects.getSelection(), getElement());
-		}
-
-		 */
 		return true;
 	}
 }
