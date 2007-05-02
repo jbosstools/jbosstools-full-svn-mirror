@@ -1,16 +1,13 @@
 package org.jboss.ide.eclipse.archives.ui.providers;
 
-import java.util.ArrayList;
-
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
+import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesView;
 
 public class ArchivesContentProvider implements ITreeContentProvider {
 	
@@ -41,14 +38,7 @@ public class ArchivesContentProvider implements ITreeContentProvider {
 		if( parentElement instanceof IArchiveModelNode && showProjectRoot())  {
 			IProject[] projects;
 			if( PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS)) {
-				IProject[] projects2 = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-				ArrayList list = new ArrayList();
-				for( int i = 0; i < projects2.length; i++ ) {
-					if( ArchivesCore.packageFileExists(projects2[i])) {
-						list.add(projects2[i]);
-					}
-				}
-				projects = (IProject[]) list.toArray(new IProject[list.size()]);
+				projects = ProjectArchivesView.getInstance().getAllProjectsWithPackages();
 			} else {
 				projects = new IProject[] { ((IArchiveModelNode)parentElement).getProject()};
 			}
@@ -79,6 +69,9 @@ public class ArchivesContentProvider implements ITreeContentProvider {
 	}
 
 	public boolean hasChildren(Object element) {
+		if( element == null || getChildren(element) == null ) {
+			System.out.println("pause");
+		}
 		return getChildren(element).length > 0;
 	}
 

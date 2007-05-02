@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.ISelection;
@@ -37,6 +38,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesCore;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.ExtensionManager;
+import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
 import org.jboss.ide.eclipse.archives.ui.actions.NewArchiveAction;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProvider;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesLabelProvider;
@@ -205,7 +207,11 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 			else {
 				this.project = project;
 				book.showPage(loadingPackagesComposite);
-				registerProject(project);
+				if( PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS, project, true)) {
+					registerProjects(getAllProjectsWithPackages(), this.project);
+				} else {
+					registerProjects(new IProject[] {this.project}, this.project);
+				}
 				return;
 			}
 		} else { 
@@ -220,16 +226,33 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 		return project;
 	}
 	
-	protected void registerProject(final IProject project) {
+	/**
+	 * Registers the projects if and only if a file exists already
+	 * @param projects
+	 * @param projectToShow
+	 */
+	protected void registerProjects(final IProject[] projects, final IProject projectToShow) {
 		getSite().getShell().getDisplay().asyncExec(new Runnable () {
 			public void run () {
-				ArchivesModel.instance().registerProject(project, loadingProgress);
+				for( int i = 0; i < projects.length; i++ ) {
+					ArchivesModel.instance().registerProject(projects[i], loadingProgress);
+				}
 				book.showPage(viewerComposite);
-				packageViewer.setInput(ArchivesModel.instance().getRoot(project));
+				packageViewer.setInput(ArchivesModel.instance().getRoot(projectToShow));
 			}
 		});
 	}
 	
+	public IProject[] getAllProjectsWithPackages() {
+		IProject[] projects2 = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+		ArrayList list = new ArrayList();
+		for( int i = 0; i < projects2.length; i++ ) {
+			if( ArchivesCore.packageFileExists(projects2[i])) {
+				list.add(projects2[i]);
+			}
+		}
+		return (IProject[]) list.toArray(new IProject[list.size()]);
+	}
 	public IStructuredSelection getSelection() {
 		return (IStructuredSelection)packageViewer.getSelection();
 	}
