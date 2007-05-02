@@ -41,10 +41,12 @@ import org.osgi.service.prefs.BackingStoreException;
  */
 public class CorePreferenceManager extends AbstractPreferenceInitializer {
 	public static final String AUTOMATIC_BUILDER_ENABLED = "org.jboss.ide.eclipse.archives.core.automaticBuilderEnabled";
+	public static final String PROJECT_SPECIFIC_PREFS = "org.jboss.ide.eclipse.archives.core.projectSpecificPreferencesEnabled";
+	
 	
 	public static boolean isBuilderEnabled(IAdaptable adaptable) {
 		QualifiedName name = new QualifiedName(ArchivesCorePlugin.PLUGIN_ID, AUTOMATIC_BUILDER_ENABLED);
-		if( adaptable != null ) {
+		if( adaptable != null && areProjectSpecificPrefsEnabled(adaptable)) {
 			IResource resource = (IResource)adaptable.getAdapter(IResource.class);
 			
 			// if the resource is null or the resource has no preference val, use global val
@@ -84,4 +86,36 @@ public class CorePreferenceManager extends AbstractPreferenceInitializer {
 			prefs.flush();
 		} catch (BackingStoreException e) { }
 	}
+	
+	public static boolean areProjectSpecificPrefsEnabled(IAdaptable adaptable) {
+		QualifiedName name = new QualifiedName(ArchivesCorePlugin.PLUGIN_ID, PROJECT_SPECIFIC_PREFS);
+		if( adaptable != null ) {
+			IResource resource = (IResource)adaptable.getAdapter(IResource.class);
+			
+			// if the resource is null or the resource has no preference val, use global val
+			try {
+				if( resource != null && resource.getPersistentProperty(name) != null) {
+					return Boolean.parseBoolean(resource.getPersistentProperty(name));
+				}
+			} catch( CoreException ce ) {}
+		}
+		return false;
+	}
+	
+	public static void setProjectSpecificPrefs(IAdaptable adaptable, boolean value) {
+		QualifiedName name = new QualifiedName(ArchivesCorePlugin.PLUGIN_ID, PROJECT_SPECIFIC_PREFS);
+		if( adaptable != null ) {
+			IResource resource = (IResource)adaptable.getAdapter(IResource.class);
+			
+			// if the resource is null or the resource has no preference val, use global val
+			try {
+				if( resource != null) {
+					resource.setPersistentProperty(name, new Boolean(value).toString());
+					return;
+				}
+			} catch( CoreException ce ) {}
+		}
+	}
+
+
 }
