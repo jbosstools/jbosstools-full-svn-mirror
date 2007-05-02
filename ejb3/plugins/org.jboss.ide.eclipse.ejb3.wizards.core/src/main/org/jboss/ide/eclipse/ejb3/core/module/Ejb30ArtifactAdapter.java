@@ -21,7 +21,9 @@
  */
 package org.jboss.ide.eclipse.ejb3.core.module;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.IModuleArtifact;
 import org.eclipse.wst.server.core.internal.ModuleFactory;
@@ -47,8 +49,14 @@ public class Ejb30ArtifactAdapter extends ModuleArtifactAdapterDelegate {
 	}
 	
 	public IModuleArtifact getModuleArtifact(Object obj) {
+		IJavaProject jp = null;
 		if( obj instanceof IJavaProject ) {
-			IJavaProject jp = (IJavaProject)obj;
+			jp = (IJavaProject)obj;
+		} else if( obj instanceof IProject ) {
+			jp = JavaCore.create((IProject)obj);
+		}
+		
+		if( jp != null ) {
 			ModuleFactory mf = getModuleFactory();
 			IModule mod = mf.getModule(jp.getElementName());
 			if( mod != null ) {
