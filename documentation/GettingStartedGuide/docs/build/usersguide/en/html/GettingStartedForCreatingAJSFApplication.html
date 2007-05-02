@@ -1,0 +1,90 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;2.&nbsp;Getting Started Guide for
+Creating a JSF Application</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.65.1"><meta name="keywords" content="Red Hat Developer Studio, JSF application, Java"><link rel="home" href="index.html" title="Getting Started with Red Hat Developer Studio"><link rel="up" href="index.html" title="Getting Started with Red Hat Developer Studio"><link rel="previous" href="GettingStartedWithRHDS.html" title="Chapter&nbsp;1.&nbsp;Getting Started with Red Hat Developer Studio"><link rel="next" href="GettingStartedGuideforCreatingaStrutsApplication.html" title="Chapter&nbsp;3.&nbsp;Getting Started Guide for Creating a Struts Application"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&nbsp;2.&nbsp;Getting Started Guide for
+Creating a JSF Application</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="GettingStartedWithRHDS.html">Prev</a>&nbsp;</td><th width="60%" align="center">&nbsp;</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="GettingStartedGuideforCreatingaStrutsApplication.html">Next</a></td></tr></table><hr></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="GettingStartedForCreatingAJSFApplication"></a>Chapter&nbsp;2.&nbsp;Getting Started Guide for
+Creating a JSF Application</h2></div></div><div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="CreatingAJSFApplication"></a>2.1.&nbsp;Creating a Simple JSF Application</h2></div></div><div></div></div><p>We are going to show you how to create a simple JSF application using the Red Hat Developer Studio
+ plug-in for Eclipse. The completed application will ask a user to enter a name and click
+a button. The resulting new page will display the familiar message, "Hello &lt;name&gt;!"
+This document will show you how to create such an application from the beginning, along
+the way demonstrating some of the powerful features of Red Hat Developer Studio. You will design the
+JSF application and then run the application from inside Red Hat Developer Studio.
+We'll assume that you have already launched Eclipse with Red Hat Developer Studio installed and
+also that the Red Hat Developer Studio perspective is the current perspective. (If not, make it active by
+selecting Window/Open Perspective/Red Hat Developer Studio from the menu bar or by selecting Window/
+Open Perspective/Other... from the menu bar and then selecting Red Hat Developer Studio from
+the Select Perspective dialog box.)</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="SettingUpTheProject"></a>2.2.&nbsp;Setting Up the Project</h2></div></div><div></div></div><p>We are first going to create a new project for the application.</p><div class="orderedlist"><ol type="1"><li><p>Go to the menu bar and select File/New/Project... .</p></li><li><p>Select Red Hat Developer Studio/JSF Project in the New Project dialog box.</p></li><li><p>Click Next</p></li><li><p>Enter jsfHello as the project name.</p></li><li><p>Leave everything else as is, and click Finish.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="TheJSFApplicationConfigurationFile"></a>2.3.&nbsp;The JSF Application Configuration File</h2></div></div><div></div></div><p>A jsfHello node should appear in the upper-left Package Explorer view.</p><div class="orderedlist"><div class="figure"><a name="d0e296"></a><div class="mediaobject"><img src="img/"></div><p class="title"><b>Figure&nbsp;2.1.&nbsp;</b></p></div><ol start="6" type="1"><li><p>Click the plus sign next to jsfHello to reveal the child nodes.</p></li><li><p>Click the plus sign next to WebContent under jsfHello.</p></li><li><p>Click the plus sign next to WEB-INF under WebContent.</p></li><li><p>Then double-click on the faces-config.xml node to display the JSF application configuration file editor.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="AddingNavigationToTheApplication"></a>2.4.&nbsp;Adding Navigation to the Application</h2></div></div><div></div></div><p>In our simple application, the flow is defined as a single navigation rule connecting two
+views (presentation files). At this point, we will create the placeholders for the two JSP presentation
+files and then the navigation rule to connect them as views. Later, we will complete
+the coding for the JSP presentation files. With Red Hat Developer Studio, we can do all of this in the
+Diagram mode of the configuration file editor.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="AddingTwoViews(JSPPages)"></a>2.4.1.&nbsp;Adding Two Views (JSP Pages)</h3></div></div><div></div></div><div class="orderedlist"><ol start="10" type="1"><li><p>Right-click anywhere on the diagram and select New View... from the pop-up
+menu</p></li><li><p>In the dialog box, type pages/inputname as the value for From-view-id</p></li><li><p>Leave everything else as is</p></li><li><p>Click Finish.</p><p>If you look in the Package Explorer view you should see a pages folder under WebContent. Opening it 
+will reveal the JSP file you just created</p></li><li><p>Back on the diagram, right-click anywhere and select New View... from the popup
+menu</p></li><li><p>In the dialog box, type pages/greeting as the value for From-view-id</p></li><li><p>Leave everything else as is</p></li><li><p>Click Finish</p></li></ol></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="CreatingTheTransition(NavigationRule)"></a>2.4.1.1.&nbsp;Creating the Transition (Navigation Rule)</h4></div></div><div></div></div><div class="orderedlist"><ol start="18" type="1"><li><p>In the diagram, select the connection icon third from the top along the upper left
+side of the diagram</p></li></ol></div><div class="figure"><a name="d0e346"></a><div class="mediaobject"><img src="img/"></div><p class="title"><b>Figure&nbsp;2.2.&nbsp;</b></p></div><p>to get an arrow cursor with a two-pronged plug at the arrow's bottom.</p><div class="orderedlist"><ol start="19" type="1"><li><p>Click on the pages/inputname page icon and then click on the pages/greeting page icon</p></li></ol></div><p>A transition should appear between the two icons.</p><div class="figure"><a name="d0e359"></a><div class="mediaobject"><img src="img/"></div><p class="title"><b>Figure&nbsp;2.3.&nbsp;</b></p></div><div class="orderedlist"><ol start="20" type="1"><li><p>Select File/Save from the menu bar.</p></li></ol></div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="AddingAManagedBeanToTheApplication"></a>2.5.&nbsp;Adding a Managed Bean to the Application</h2></div></div><div></div></div><p>To store data in the application, we will use a managed bean.</p><div class="orderedlist"><ol start="21" type="1"><li><p>Click on the Tree tab at the bottom of the editing window</p></li><li><p>Select the Managed Beans node and then click the Add... button displayed along
+the right side of the editor window</p></li><li><p>Type in jsfHello.PersonBean for Class and personBean for Name. Leave
+Scope as is and Generate Source Code as is (checked)</p></li><li><p>Click Finish</p></li><li><p>personBean will now be selected and three sections of information, Managed
+Bean, Properties, and Advanced, will be displayed about it. Under the Properties
+section, click the Add... button</p></li><li><p>For Property-Name type in name. Leave everything else as is. (When Property-
+Class is not filled in, String is the assumed type.)</p></li><li><p>Click Finish</p></li><li><p>Select the personBean node in the tree</p></li></ol></div><p>You should see this now:</p><div class="figure"><a name="d0e401"></a><div class="mediaobject"><img src="img/"></div><p class="title"><b>Figure&nbsp;2.4.&nbsp;</b></p></div><div class="orderedlist"><ol start="29" type="1"><li><p>Select File/Save from the menu bar.</p></li></ol></div><p>You have now registered the managed bean and created a stub-coded class file for it.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="EditingTheJSPViewFiles"></a>2.6.&nbsp;Editing the JSP View Files</h2></div></div><div></div></div><p>Now we will finish editing the JSP files for our two "views" using Exadel's JSP Visual Page</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="Inputname.jsp"></a>2.6.1.&nbsp;inputname.jsp</h3></div></div><div></div></div><div class="orderedlist"><ol start="30" type="1"><li><p>Click on the Diagram tab for the configuration file editor</p></li><li><p>Open the editor for this first JSP file by double-clicking on the /pages/inputname.
+jsp icon</p></li></ol></div><p>The Visual Page Editor will open in a screen split between source code along the top and 
+a WYSIWIG view along the bottom:</p><div class="figure"><a name="d0e430"></a><div class="mediaobject"><img src="img/"></div><p class="title"><b>Figure&nbsp;2.5.&nbsp;</b></p></div><p>Some JSF code will already be in the file because we selected a template when creating the page.</p><div class="orderedlist"><ol start="32" type="1"><li><p>Select the Visual tab, so we can work with the editor completely in its WYSIWYG
+mode</p></li><li><p>To the right of the editor, in the Exadel Palette, expand the JSF HTML palette folder
+by selecting it</p></li></ol></div><div class="figure"><a name="d0e444"></a><div class="mediaobject"><img src="img/"></div><p class="title"><b>Figure&nbsp;2.6.&nbsp;</b></p></div><div class="orderedlist"><ol start="34" type="1"><li><p>34. Click on form within this folder, drag the cursor over to the editor, 
+and drop it inside the red box in the editor</p></li><li><p>Another red box will appear inside the first red box.</p></li><li><p>Right-click on the innermost box and select &lt;h:form&gt; Attributes from the menu</p></li><li><p>In the value field next to id, type greeting and click on the Close button</p></li><li><p>Type Please enter name: inside the boxes</p></li><li><p>Select inputText within the JSF HTML palette folder and drag it into the innermost
+box in the editor after "Please enter name:"</p></li><li><p>In the attributes dialog, click in the value field next to the value attribute and click
+on the ... button</p></li><li><p>Then, select the Managed Beans/personBean/name node and click on the Ok
+button</p></li><li><p>Back in the attributes dialog, select the Advanced tab, type in name as the value
+for the id attribute, and then click on the Finish button</p></li><li><p>Select commandButton within the JSF HTML palette folder and drag it into the
+innermost box in the editor after the input box</p></li><li><p>In the attributes dialog, click in the value field next to the action attribute and click
+on the ... button</p></li><li><p>Then, select the View Actions/greeting node and click on the Ok button</p></li><li><p>Back in the attributes dialog box, type in Say Hello as the value for the value
+attribute ("Say Hello") and then click on the Finish button</p></li></ol></div><p>The source coding should be something like this now:</p><pre class="programlisting">&lt;%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %&gt;
+&lt;%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;f:view&gt;
+&lt;h:form id="greeting"&gt;
+&lt;para&gt;Please enter a name:&lt;/para&gt;
+&lt;h:inputText id="name" value="#{personBean.name}"/&gt;
+&lt;h:commandButton value=" Say Hello " action="greeting"/&gt;
+&lt;/h:form&gt;
+&lt;/f:view&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><p>The editor should look like this:</p><div class="figure"><a name="d0e496"></a><div class="mediaobject"><img src="img/"></div><p class="title"><b>Figure&nbsp;2.7.&nbsp;</b></p></div><div class="orderedlist"><ol start="47" type="1"><li><p>Save the file by selecting File/Save from the menu bar.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="Greeting.jsp"></a>2.6.2.&nbsp;greeting.jsp</h3></div></div><div></div></div><div class="orderedlist"><ol start="48" type="1"><li><p>Click on the faces-config.xml tab to bring the diagram back</p></li><li><p>Open the editor for the second file by double-clicking on the /pages/greeting.jsp
+icon</p></li><li><p>Select the Visual tab, so we can work with the editor completely in its WYSIWYG
+mode</p></li><li><p>Type Hello (note space after hello) into the box</p></li><li><p>Select outputText within the JSF HTML palette folder and drag it into the innermost
+box in the editor after "Hello"</p></li><li><p>In the attributes dialog, click in value field next to the value attribute and click on
+the ... button</p></li><li><p>Then, select the Managed Beans/personBean/name node, click on the Ok button,
+and then click on the Finish button</p></li><li><p>Right after the output field, type an exclamation point (!)</p></li></ol></div><p>The source coding should be something like this now:</p><pre class="programlisting">&lt;%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %&gt;
+&lt;%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;f:view&gt;
+Hello &lt;h:outputText value="#{personBean.name}"/&gt;!
+&lt;/f:view&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><div class="orderedlist"><ol start="56" type="1"><li><p>Save the file.</p></li></ol></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="CreatingTheStartPage"></a>2.7.&nbsp;Creating the Start Page</h2></div></div><div></div></div><p>You also need to create a start page as an entry point into the application.</p><div class="orderedlist"><ol start="57" type="1"><li><p>In the Package Explorer view to the left, right-click jsfHello/WebContent and select
+New/JSP File</p></li><li><p>For Name type in index, for Template select JSPRedirect and click Finish.</p></li></ol></div><p>A JSP editor will open up on the newly created file.</p><div class="orderedlist"><ol start="59" type="1"><li><p>In the Source part of the split screen, type /pages/inputname.jsf in between
+the quotes for the page attribute</p></li></ol></div><p>The source coding should look like this now:</p><pre class="programlisting">&lt;!doctype html public "-//w3c//dtd html 4.0 transitional//en"&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;jsp:forward page="/pages/inputname.jsf" /&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><p>Note the .jsf extension for the file name. This is a mapping defined in the web.xml file 
+for the project for invoking JavaServer Faces when you run the application.</p><div class="orderedlist"><ol start="60" type="1"><li><p>Select File/Save from the menu bar.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="RunningTheApplicationJSF"></a>2.8.&nbsp;Running the Application</h2></div></div><div></div></div><p>Everything is now ready for running our application without having to leave Red Hat Developer Studio 
+by using the Tomcat engine that comes with the Red Hat Developer Studio plug-in. For controlling
+Tomcat within Red Hat Developer Studio, the toolbar contains a special panel</p><div class="figure"><a name="d0e576"></a><div class="mediaobject"><img src="img/"></div><p class="title"><b>Figure&nbsp;2.8.&nbsp;</b></p></div><div class="orderedlist"><ol start="61" type="1"><li><p>Start up Tomcat by clicking on the first icon from left. (If Tomcat is already running,
+stop it by clicking on the third icon from the left and then start it again. Remember,
+the JSF run-time requires restarting the servlet engine when any changes have been
+made.) After the messages in the Console tabbed view stop scrolling, Tomcat is available.</p></li><li><p>Click on the Red Hat run icon in the toolbar:</p></li></ol></div><div class="figure"><a name="d0e588"></a><div class="mediaobject"><img src="img/"></div><p class="title"><b>Figure&nbsp;2.9.&nbsp;</b></p></div><p>This is the equivalent of launching the browser and typing http://localhost:8080/jsfHello into your
+ browser. Our JSF application should now appear.</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="GettingStartedWithRHDS.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="index.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="GettingStartedGuideforCreatingaStrutsApplication.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;1.&nbsp;Getting Started with Red Hat Developer Studio&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;3.&nbsp;Getting Started Guide for Creating a Struts Application</td></tr></table></div></body></html>
