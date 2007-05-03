@@ -25,8 +25,11 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
+import org.eclipse.ui.INullSelectionListener;
 import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
@@ -55,14 +58,25 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 	public ProjectArchivesView() {
 		instance = this;
 		selectionListener = createSelectionListener();
-		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService().addSelectionListener(selectionListener);
+	}
+	
+	public void init(IViewSite site) throws PartInitException {
+		super.init(site);
+		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService().addPostSelectionListener(selectionListener);
 		ArchivesCore.getInstance().addModelListener(this);
 	}
 	
+    public void dispose() {
+    	super.dispose();
+    	PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService().removePostSelectionListener(selectionListener);
+    	ArchivesCore.getInstance().removeModelListener(this);
+    }
+
 	
 	protected ISelectionListener createSelectionListener() {
-		return new ISelectionListener() {
+		return new INullSelectionListener() {
 			public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+				System.out.println("selection changed: " + selection);
 				if (!(selection instanceof IStructuredSelection))
 					return;
 				

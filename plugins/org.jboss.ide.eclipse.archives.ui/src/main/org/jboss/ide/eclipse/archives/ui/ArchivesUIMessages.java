@@ -9,9 +9,7 @@ public class ArchivesUIMessages extends NLS {
 	public static String NewJARWizard_windowTitle_editJAR;
 	
 	public static String PackageInfoWizardPage_compressedButton_label;
-	public static String PackageInfoWizardPage_customManifest_label;
 	public static String PackageInfoWizardPage_destination_label;
-	public static String PackageInfoWizardPage_error_noManifest;
 	public static String PackageInfoWizardPage_error_noPackageName;
 	public static String PackageInfoWizardPage_error_packageAlreadyExists;
 	public static String PackageInfoWizardPage_error_noDestination;
