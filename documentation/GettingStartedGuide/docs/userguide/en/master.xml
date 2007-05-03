@@ -3,13 +3,11 @@
 "../../../../resources/support/docbook-dtd/docbookx.dtd"
 
 [<!ENTITY GettingStartedWithRHDS SYSTEM "modules/GettingStartedWithRHDS.xml">
+<!ENTITY GettingStartedGuideforJSFwithHibernate  SYSTEM "modules/GettingStartedGuideforJSFwithHibernate.xml">
+<!ENTITY GettingStartedGuideforJavaServerFaces SYSTEM "modules/GettingStartedGuideforJavaServerFaces.xml">
 <!ENTITY GettingStartedForCreatingaJSFApplication SYSTEM "modules/GettingStartedForCreatingAJSFApplication.xml">
 <!ENTITY GettingStartedGuideforCreatingaStrutsApplication  SYSTEM "modules/GettingStartedGuideforCreatingaStrutsApplication.xml">
 <!ENTITY GettingStartedStrutsValidationExamples  SYSTEM "modules/GettingStartedStrutsValidationExamples.xml">
-<!ENTITY GettingStartedGuideforJSFwithHibernate  SYSTEM "modules/GettingStartedGuideforJSFwithHibernate.xml">
-<!ENTITY GettingStartedGuideforJavaServerFaces SYSTEM "modules/GettingStartedGuideforJavaServerFaces.xml">
-
-
 ]>
 
 <book>
@@ -29,10 +27,10 @@
     
 
 &GettingStartedWithRHDS;
+&GettingStartedGuideforJSFwithHibernate;
 &GettingStartedForCreatingaJSFApplication;
 &GettingStartedGuideforCreatingaStrutsApplication;
 &GettingStartedStrutsValidationExamples;
-&GettingStartedGuideforJSFwithHibernate;
     <!--
         &GettingStartedGuideforJavaServerFaces;
     -->
