@@ -1,0 +1,240 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<chapter id="GettingStartedStrutsValidationExamples" xreflabel="GettingStartedStrutsValidationExamples">
+  <?dbhtml filename="GettingStartedStrutsValidationExamples.html"?>
+  <chapterinfo>
+        <keywordset>
+            <keyword>Red Hat Developer Studio</keyword>
+            <keyword>Struts</keyword>
+            <keyword>Struts Validation</keyword>
+            </keywordset>
+    </chapterinfo>
+<title>Getting Started Struts Validation Examples</title>
+
+<para>Validation of input is an important part of any Web application. All Apache Jakarta frameworks, 
+including Struts, can use a common Jakarta Validation Framework for streamlining this aspect of Web 
+application development. The Validation Framework allows the developer to define validation rules and then
+ apply these rules on the client-side or the server-side.</para>
+
+<para>Red Hat Developer Studio makes using the Validation Framework in Struts even easier through a specialized editor
+ for the XML files that control validation in a project. In this document, we&apos;ll show you how this all
+  works by creating some simple client-side validation and server-side validation examples.</para>
+
+<section id="StartingPoint">
+<?dbhtml filename="StartingPoint.html"?>
+<title>Starting Point</title>
+<para>The example assumes that you have already created our sample StrutsHello application from the 
+Getting Started Guide for Creating a Struts Application. You should have the Red Hat Developer Studio perspective
+ open on this StrutsHello project.</para>
+</section>
+
+<section id="DefiningTheValidationRule">
+<?dbhtml filename="DefiningTheValidationRule.html"?>
+<title>Defining the Validation Rule</title>
+<para>In these steps you will set up the validation that can be used for either client-side or 
+serverside validation. You need to enable validation as part of the project, define an error message, 
+and tie it into the appropriate part of the application.</para>
+
+<orderedlist>
+<listitem><para>Right-click the plug-ins node under the StrutsHello/Configuration/default/
+struts-config.xml node in the Web Projects view and select Create Special Plugin/Validators from the context
+ menu.</para></listitem>
+<listitem><para>Further down in the Web Projects view, right-click on the 
+StrutsHello/ResourceBundles node and select New/Properties File... from the context menu.</para></listitem>
+<listitem><para>In the dialog box, click on the Browse... button next to the Folder field, expand the
+JavaSource folder in this next dialog box, select the sample subfolder, and click on the OK button.</para></listitem>
+<listitem><para>Back in the first dialog box, type in applResources for the Name field and 
+click on the Finish button.</para></listitem>
+<listitem><para>Right-click the newly created file and select Add/Default Error Messages
+ from the context menu.</para></listitem>
+
+<listitem><para>Drag up the sample.applResources icon until you can drop it on the resources folder under struts-config.xml.</para></listitem>
+<listitem><para>Select File/Save All from the menu bar.</para></listitem>
+<listitem><para>Select validation.xml under the StrutsHello/Validation node and double-click it to open it with the Exadel Studio Validation Editor.</para></listitem>
+<listitem><para>Expand the form-beans node under the StrutsHello/Configuration/default/ struts-config.xml node. Then, drag the form bean GetNameForm and drop it onto formset (default) in the Validation Editor.</para></listitem>
+<listitem><para>In the Validation Editor, expand the formset node, right-click GetNameForm, and select Add Field... from the context menu.</para></listitem>
+<listitem><para>Enter name for Property in the dialog box.</para></listitem>
+<listitem><para>In the properties for the name field to the right of the &quot;tree&quot; for the validation.xml file, click on the Change... button next to the Depends entry field.</para></listitem>
+<listitem><para>In the displayed double list, select required from the left list and then click Add->.</para></listitem>
+<listitem><para>Click Ok.</para></listitem>
+<listitem><para>Right-click name and select Add Arg... from the context menu.</para></listitem>
+<listitem><para>In the Add Arg dialog box, click on the Change... button next to the Key field.</para></listitem>
+<listitem><para>In the Key dialog box that appears now, click on the Add button.</para></listitem>
+<listitem><para>Enter name.required in the Name field, and enter A person&apos;s name in the Value field.</para></listitem>
+<listitem><para>Click Finish, then Ok, and then Ok again.</para></listitem>
+<listitem><para>Select File/Save All from the menu bar.</para></listitem>
+</orderedlist>
+</section>
+
+<section id="Client-SideValidation">
+<?dbhtml filename="Client-SideValidation.html"?>
+<title>Client-Side Validation</title>
+<para>Client-side validation uses a scripting language (like JavaScript) running in the client browser</para>
+<para>to actually do the validation. In a Struts application using the Validation Framework, however,</para>
+<para>you don&apos;t actually have to do any of the script coding. The Validation Framework handles this.</para>
+<para>To see how this works in our application, you&apos;ll just need to make a couple of modifications to one of the JSP files.</para>
+<orderedlist continuation="continues">
+<listitem><para>Double-click inputname.jsp under StrutsHello/WEB-ROOT (WebContent)/ pages to open it for editing.</para></listitem>
+<listitem><para>Find the  tag near the top and hit Return to make a new line under it.</para></listitem>
+<listitem><para>In the Red Hat Palette view to the right, open the HTML folder and click on the javascript tag.</para></listitem>
+
+<listitem><para>Back in the editor, just in front of the closing slash for this inserted tag, hit Ctrlspace and select formName from the prompting menu.</para></listitem>
+<listitem><para>Over in the Web Projects view, select GetNameForm under the StrutsHello/Configuration/ default/struts-config.xml/form-beans node, drag it, and drop it between the quotes in the editor.</para></listitem>
+<listitem><para>Modify the &gt;html:form&lt; tag by inserting this attribute:</para></listitem>
+</orderedlist>
+<para>onsubmit=&quot;return validateGetNameForm(this)&quot;</para>
+<para>The file should now look like this:</para>
+<programlisting role="HTML"><![CDATA[
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:html>
+<head>
+<title>Input name</title>
+<html:javascript formName="GetNameForm"/>
+</head>
+<body>
+<html:form action="/greeting.do" onsubmit="return
+<para>validateGetNameForm(this)"></para>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td><b>Input name:</b></td>
+</tr>
+<tr>
+<td>
+<html:text property="name" />
+<html:submit value=" Say Hello! " />
+</td>
+</tr>
+</table>
+</html:form>
+</body>
+</html:html>
+]]></programlisting>
+<orderedlist continuation="continues">
+<listitem><para>Select File/Save from the menu bar.</para></listitem>
+<listitem><para>28. Start Tomcat by clicking on its icon (a right-pointing arrow) in the toolbar.</para></listitem>
+<listitem><para>29. Click on the Run icon in the toolbar.</para></listitem>
+</orderedlist>
+<figure>
+<title></title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="img/"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<itemizedlist><listitem><para>30. In the browser window, click on the Say Hello! button without having entered any name in the form.</para></listitem></itemizedlist>
+<para>A JavaScript error message should be displayed in an alert box.</para>
+</section>
+<section id="Server-SideValidation">
+<?dbhtml filename="Server-SideValidation.html"?>
+<title>Server-Side Validation</title>
+<para>Server-side validation does the validation inside the application on the server. In a Struts 
+application using the Validation Framework, you still don&apos;t have to do any of the actual validation 
+coding. The Validation Framework handles this. You will, though, have to make a few changes to the JSP 
+file you modified for client-side validation along with a change to an action and a few changes to the
+ form bean class.</para>
+</section>
+
+<section id="EditingTheJSPFile">
+<?dbhtml filename="EditingTheJSPFile.html"?>
+<title>Editing the JSP File</title>
+<orderedlist continuation="continues">
+<listitem><para>Reopen inputname.jsp for editing.</para></listitem>
+<listitem><para>Delete the onsubmit attribute in the &gt;html:form&lt; element that you put in for client-side validation.</para></listitem>
+
+<listitem><para>Add an &gt;html:errors/&gt; tag after the &gt;/html:form&gt; tag.</para></listitem>
+</orderedlist>
+<para>The JSP file should now look like this:</para>
+
+<programlisting role="HTML"><![CDATA[
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<html:html>
+<head>
+<title>Input name</title>
+<html:javascript formName="GetNameForm"/>
+</head>
+<body>
+<html:form action="/greeting.do">
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td><b>Input name:</b></td>
+</tr>
+<tr>
+<td>
+<html:text property="name" />
+<html:submit value=" Say Hello! " />
+</td>
+</tr>
+</table>
+</html:form>
+<html:errors />
+</body>
+</html:html>
+]]></programlisting>
+
+</section>
+
+<section id="EditingTheAction">
+<?dbhtml filename="EditingTheAction.html"?>
+<title>Editing the Action</title>
+<orderedlist continuation="continues">
+<listitem><para>In the Web Projects view, expand the node under the StrutsHello/Configuration/ default/struts-config.xml/action-mappings node, right-click the /greeting action, and then select Properties... from the context menu.</para></listitem>
+
+<listitem><para>In the Edit Properties window, insert the cursor into the value column for the input property and click on the ... button.</para></listitem>
+
+<listitem><para>In the dialog box, make sure the Pages tab is selected, select StrutsHello/WEBROOT( WebContent)/pages/ inputname.jsp, click the Ok button, and then click on the Close button.</para></listitem>
+</orderedlist>
+</section>
+<section id="EditingTheFormBean">
+<?dbhtml filename="EditingTheFormBean.html"?>
+
+<title>Editing the Form Bean</title>
+<orderedlist continuation="continues">
+<listitem><para>Right-click the /greeting action again and select Open Form-bean Source to open the GetNameForm.java file for editing.</para></listitem>
+<listitem><para>Change the class that it extends to from: org.apache.struts.action.ActionForm to: org.apache.struts.validator.ValidatorForm</para></listitem>
+<listitem><para>Comment out out the validate method.</para></listitem>
+</orderedlist>
+<para>The file should now look like this:</para>
+<programlisting role="JAVA"><![CDATA[
+package sample;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionMapping;
+public class GetNameForm extends
+org.apache.struts.validator.ValidatorForm {
+private String name = "";
+/**
+* @return Returns the name.
+*/
+public String getName() {
+return name;
+}
+/**
+* @param name The name to set.
+*/
+public void setName(String name) {
+this.name = name;
+}
+public GetNameForm () {
+}
+public void reset(ActionMapping actionMapping, HttpServletRequest
+request) {
+this.name = "";
+}
+// public ActionErrors validate(ActionMapping actionMapping,
+HttpServletRequest request) {
+// ActionErrors errors = new ActionErrors();
+// return errors;
+// }
+}
+]]></programlisting>
+
+
+<para>Select File/Save All from the menu bar.</para>
+<orderedlist continuation="continues">
+<listitem><para>Reload the application into Tomcat by clicking on the Change Time Stamp icon (a finger pointing with a little star) in the toolbar.</para></listitem>
+<listitem><para>Run the application.</para></listitem>
+<listitem><para>In the browser window, click on the Say Hello! button without having entered any name in the form.</para></listitem>
+</orderedlist>
+<para>The error message should appear in a refreshed version of the form.</para>
+</section>
+</chapter>
