@@ -311,7 +311,6 @@ public class NewSessionBeanWizardPage extends NewTypeWizardPage
       beanAstUnit.recordModifications();
 
       ImportDeclaration importDecl = ast.newImportDeclaration();
-      System.out.println("javax.ejb." + beanType);
       importDecl.setName(ast.newName(new String[]
       {"javax", "ejb", beanType}));
       importDecl.setOnDemand(false);
@@ -357,9 +356,6 @@ public class NewSessionBeanWizardPage extends NewTypeWizardPage
       String source = "package " + remoteInterfacePackage + ";\n" + "\n" + "import javax.ejb.Remote;\n" + "\n"
             + "@Remote\n" + "public interface " + remoteInterfaceName + " {\n" + "\n" + "}\n";
 
-      //System.out.println(remoteInterfaceName + " = " + source);
-
-      System.out.println("remoteInterfacePackageFragment exists?" + remoteInterfacePackageFragment.exists());
 
       return remoteInterfacePackageFragment.createCompilationUnit(remoteInterfaceName + ".java", source, true, monitor);
       //			AST ast = new AST();
