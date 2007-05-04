@@ -80,5 +80,7 @@
         table before
         procedure before
     </xsl:param>    
+    <xsl:template match="section[@role = 'NotInToc']//*"  mode="toc" />
+    <xsl:template match="chapter[@role = 'NotInToc']//section//*"  mode="toc" />
     
 </xsl:stylesheet>
