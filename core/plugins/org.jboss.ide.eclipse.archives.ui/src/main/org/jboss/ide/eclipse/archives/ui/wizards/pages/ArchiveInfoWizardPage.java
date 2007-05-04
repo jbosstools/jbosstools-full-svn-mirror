@@ -68,7 +68,6 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 		new Label(pkgNameComposite, SWT.NONE).setImage(ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_PACKAGE));
 		
 		packageNameText = new Text(pkgNameComposite, SWT.BORDER);
-		System.out.println(wizard.getProject());
 		packageName = wizard.getProject().getName();
 		packageName += "." + wizard.getArchiveExtension();
 		packageNameText.setText(packageName);

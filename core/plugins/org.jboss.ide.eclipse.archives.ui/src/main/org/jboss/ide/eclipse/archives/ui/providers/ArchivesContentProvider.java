@@ -69,9 +69,6 @@ public class ArchivesContentProvider implements ITreeContentProvider {
 	}
 
 	public boolean hasChildren(Object element) {
-		if( element == null || getChildren(element) == null ) {
-			System.out.println("pause");
-		}
 		return getChildren(element).length > 0;
 	}
 

@@ -44,6 +44,10 @@ public class FilesetInfoWizardPage extends WizardPage {
 	private ArchiveNodeDestinationComposite destinationComposite;
 
 	private String includes, excludes;
+	
+	/**
+	 * This variable must at all times be global. ALWAYS
+	 */
 	private IPath rootDir;
 	private boolean rootDirIsWorkspaceRelative, fileIsWorkspaceRelative;
 	private FilesetPreviewComposite previewComposite;
@@ -293,12 +297,12 @@ public class FilesetInfoWizardPage extends WizardPage {
 			rootProjectLabel.setText(parentNode.getProject().getName());
 			fileIsWorkspaceRelative = true;
 			rootDirIsWorkspaceRelative = true;
-			rootDir = ResourcesPlugin.getWorkspace().getRoot().getProject(parentNode.getProject().getName()).getFullPath();
+			rootDir = ResourcesPlugin.getWorkspace().getRoot().getProject(parentNode.getProject().getName()).getLocation();
 		}
 	}
 	
 	private void changePreview() {
-		IPath root = isRootDirWorkspaceRelative() ? ResourcesPlugin.getWorkspace().getRoot().getLocation().append(rootDir) : rootDir;
+		IPath root = rootDir; //isRootDirWorkspaceRelative() ? ResourcesPlugin.getWorkspace().getRoot().getLocation().append(rootDir) : rootDir;
 		IPath paths[] = ArchivesCore.findMatchingPaths(root, includesText.getText(), excludesText.getText());
 		previewComposite.setInput(paths);
 	}
@@ -320,7 +324,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 				IPath relativePath = path.removeFirstSegments(1);
 				rootProjectLabel.setText(project.getName());
 				
-				rootDir = path;
+				rootDir = ResourcesPlugin.getWorkspace().getRoot().getLocation().append(path);
 				if (!relativePath.isEmpty()) {
 					rootDirText.setText(relativePath.toString());
 				} else {

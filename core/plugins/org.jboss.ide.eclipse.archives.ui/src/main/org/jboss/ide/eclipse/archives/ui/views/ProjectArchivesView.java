@@ -76,7 +76,6 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 	protected ISelectionListener createSelectionListener() {
 		return new INullSelectionListener() {
 			public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-				System.out.println("selection changed: " + selection);
 				if (!(selection instanceof IStructuredSelection))
 					return;
 				
