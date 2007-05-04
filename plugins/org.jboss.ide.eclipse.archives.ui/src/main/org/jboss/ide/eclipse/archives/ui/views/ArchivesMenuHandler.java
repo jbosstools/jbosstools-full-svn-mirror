@@ -212,7 +212,7 @@ public class ArchivesMenuHandler {
 					};
 					contextMenuManager.add(action);
 				}
-			} catch( Exception e) { e.getMessage(); }
+			} catch( Exception e) { System.out.println(e.getMessage()); }
 		}
 
 	}

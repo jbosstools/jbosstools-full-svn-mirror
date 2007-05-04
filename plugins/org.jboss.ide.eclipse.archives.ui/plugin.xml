@@ -15,17 +15,6 @@
    </extension>
 
    <extension
-         point="org.jboss.ide.eclipse.archives.ui.nodePopupMenus">
-      <nodeContribution
-            class="org.jboss.ide.eclipse.archives.ui.actions.NodePropertiesAction"
-            enablesForNodeType="any"
-            icon="icons/prop_ps.gif"
-            id="org.jboss.ide.eclipse.archives.ui.propertyContribution"
-            label="Properties"
-            weight="99"/>
-   </extension>
-
-   <extension
          point="org.jboss.ide.eclipse.archives.ui.newArchiveActions">
       <newPackageAction
             class="org.jboss.ide.eclipse.archives.ui.actions.NewJARAction"
