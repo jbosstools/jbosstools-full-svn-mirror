@@ -165,6 +165,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	public void setExcludesPattern(String excludes) {
 		attributeChanged(EXCLUDES_ATTRIBUTE, getExcludesPattern(), excludes);
 		filesetDelegate.setExcludes(excludes);
+		rescanRequired = true;
 	}
 
 	/*
@@ -173,6 +174,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	public void setIncludesPattern(String includes) {
 		attributeChanged(INCLUDES_ATTRIBUTE, getIncludesPattern(), includes);
 		filesetDelegate.setIncludes(includes);
+		rescanRequired = true;
 	}
 
 	/*
@@ -181,6 +183,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	public void setInWorkspace(boolean isInWorkspace) {
 		attributeChanged(IN_WORKSPACE_ATTRIBUTE, new Boolean(isInWorkspace()), new Boolean(isInWorkspace));
 		filesetDelegate.setInWorkspace(isInWorkspace);
+		rescanRequired = true;
 	}
 	
 	/*
@@ -191,6 +194,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		IPath src = getGlobalSourcePath();
 		attributeChanged(SOURCE_PATH_ATTRIBUTE, src == null ? null : src.toString(), path == null ? null : path.toString());
 		filesetDelegate.setDir(path.toString());
+		rescanRequired = true;
 	}
 	
 	protected XbFileSet getFileSetDelegate () {
