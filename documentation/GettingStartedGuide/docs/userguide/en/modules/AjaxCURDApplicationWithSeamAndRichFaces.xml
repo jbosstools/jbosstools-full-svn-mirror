@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="AjaxCURDApplicationWithSeamAndRichFaces" xreflabel="AjaxCURDApplicationWithSeamAndRichFaces">
+    <?dbhtml filename="AjaxCURDApplicationWithSeamAndRichFaces.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>Red Hat Developer Studio</keyword>
+            <keyword>Seam</keyword>
+            <keyword>JBoss</keyword>
+            <keyword>CURD-application</keyword>
+            </keywordset>
+    </chapterinfo>
+    
+    <title>Ajax CURD-application with Seam and Rich Faces</title>
+<para>In this chapter we will see how easy it is to build Seam applications and integrate
+them with Ajax4jsf and Rich Faces. We will bootstrap the application using Seam Gen which is
+ a  CRUD application generator. Seam Gen can be used from either the command line or via an
+  Eclipse Plugin. Unlike most application generators, Seam Gen can also be used to
+   incrementally add more functionality to an existing Seam application.</para>
+   <para>Seam is an incredibly flexible development framework that can be completely
+    integrated with a Java EE server or in a simple POJO environment like Tomcat. Seam is 
+    also extremely portable, and has been tested on several popular containers like JBoss, 
+    Tomcat, Weblogic, WebSphere. Seam uses JSF as its view layer and can use either JSP or 
+    Faceless as the presentation layer.</para>
+    <para>Seam Gen generates all the required layers of an application. It uses JPA as the 
+    persistence layer, POJO&apos;s (Plain Old Java Objects) as the business logic layer and 
+    Facelets as the presentation layer.</para>
+    <para>We will perform the following steps in this chapter of the tutorial:</para>
+    <itemizedlist>
+    <listitem>Creating a Seam Project using Seam Gen</listitem>
+    <listitem>Generating a Seam application using Seam Gen</listitem>
+    <listitem>Running the Seam application</listitem>
+    <listitem>Customizing the generated Seam application</listitem>
+    <listitem>Adding AJAX features to automatically generated JSF Seam UI components</listitem>
+    <listitem>Replacing standard JSF UI components with AJAX enabled rich UI components 
+    provided by the Red Hat Developer Studio</listitem>
+    <listitem>Using AJAX components to do live validation on web pages</listitem>
+    <listitem>Adding Rich Faces components to a Seam application</listitem>
+    </itemizedlist>
+<section id="CreatingASeamProjectUsingSeamGen">
+<?dbhtml filename="CreatingASeamProjectUsingSeamGen.html"?>
+<title>Creating a Seam Project using Seam Gen</title>
+<orderedlist>
+<listitem>Stop your JBoss AS Server by clicking on the stop button as shown below. We are
+ doing this so that the generated application can be deployed properly when the server 
+ starts.</listitem>
+ </orderedlist>
+ <figure>
+<title>Stopping JBoss AS Server</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/StoppingServer.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem>To create a Seam project, select Seam Gen -> Setup/Configuration -> Setup to 
+launch the Seam Gen setup window as shown below. Note: </listitem>
+</orderedlist>
+<note>
+    <title>Note:</title>
+    <para>If this is the first time you run 
+Seam Gen a file dialog will be shown. In this you need to select &lt;seam&gt;/seam-gen/build.xml
+ so the plugin knows which seam-gen to use.</para>
+   </note>
+
+ 
+ <figure>
+<title>Seam Gen Setup Window</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/SeamGenSetup.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<para>Fill the items in the dialog as shown below and select the OK button.</para>
+<table>
+         <title>Filling Project Items</title>
+         <tgroup cols="2">
+            <thead>
+               <row>
+                  <entry>Field Name</entry>
+                  <entry>Field Value</entry>
+               </row>
+            </thead>
+            <tbody>
+               <row>
+                  <entry>Project</entry>
+                  <entry>EclipseCon</entry>
+               </row>
+               <row>
+               <entry>Seam project workspace</entry>
+               <entry>&lt;your project directory&gt;</entry>
+               </row>
+               <row>
+               <entry>JBoss AS Home directory</entry>
+               <entry>&lt;JBoss AS Home Dir&gt;</entry>
+               </row>
+               <row>
+               <entry>Driver Location</entry>
+               <entry>&lt;seam>/&lt;seam-gen&gt;/lib/hsqldb.jar</entry>
+               </row>
+            </tbody>
+         </tgroup>
+      </table>
+      <para>The plug-in will initialize the Seam Gen ant tasks that simplify all key Seam 
+      operations. We will invoke several of these ant tasks via the Seam Eclipse Plugin 
+      throughout this tutorial.</para>
+      <para>The plug-in will also prompt you to create a project. Select &quot;Yes&quot; to create a
+       Project.  This step will create not only an Eclipse project but also all the required
+        artifacts to get you started.</para>
+        <para>The plug-in will also prompt you create a database connection. Select
+         &quot;Yes&quot; to create a WTP Database connection that connects to the default HSQL DB
+          instance that we have set up. If you are using any other database then set up the
+           appropriate database settings in the Seam Gen setup window.</para>
+           <para>At the end of this step you will see an Eclipse project called &quot;EclipseCon&quot;
+             as shown below. This project has all the necessary elements required to deploy
+              a Seam application.</para>
+              <figure>
+<title>EclipseCon Project Structure</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/EclipseConProjectStructure.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem>Start the application server. Open your favorite browser and point to the 
+following URL http://localhost:8080/EclipseCon. You should see the following page:</listitem>
+</orderedlist>  
+<figure>
+<title>Created Project</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/CreatedProject.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<para>Congratulations! You have written your first Seam application.</para> 
+<orderedlist continuation="continues">
+<listitem>Let us take a look at the database connection that was created by the Eclipse
+ Plugin and browse the database provided.  The database connection view should now have a
+  connection to our sample database as shown below.</listitem> 
+  </orderedlist>
+  <figure>
+<title>Connections View</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/ConnectionsView.png"/>
+        </imageobject>
+</mediaobject>
+</figure>   
+<para>Right click on the connection -> Reconnect. Just specify &quot;sa&quot; as the user id. The password
+ field should be blank.</para>
+ <para>You should now be able to browse the database and  see the meta-data and query data using SQL. 
+ Your meta-data should look like the following:</para>
+ <figure>
+<title>Meta-data View</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/Metadata.png"/>
+        </imageobject>
+</mediaobject>
+</figure> 
+</section>
+<section id="GeneratingACRUDApplicationUsingSeamGen">
+<?dbhtml filename="GeneratingACRUDApplicationUsingSeamGen.html"?>
+<title>Generating a CRUD application using Seam Gen</title>
+<orderedlist>
+<listitem>The next step in our exercise is to generate a full blown application using Seam Gen. 
+This application will generate CRUD pages and Search pages for all the entities in the database. 
+Click on Seam Gen -> Generate Entities.  Seam Gen will connect to the database we defined in the
+ setup part of the application and generate all the required components.</listitem>
+ <listitem>Since Seam Gen is generating files on the file system that Eclipse does not know 
+ about, right click on the project name on your project and choose the Refresh item. This will let
+  Eclipse know that there are new files and get them updated in the Eclipse project and deployed 
+  in the JBoss instance.</listitem>
+  <listitem>Restart you application server, just in case those files have not been properly
+   synchronized with the application server.</listitem>
+   <listitem>Point your favorite browser to the following URL http://localhost:8080/EclipseCon.
+    You will see the following page:</listitem>
+    </orderedlist>
+    <figure>
+<title>EclipseCon Project</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/CreatedProject.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem>Let us now look at one of the entities and see what has been generated. Click on the
+ &quot;Offices List&quot; to see a search page that allows you to filter the list and the list of all the 
+ offices in the database.</listitem>
+ <listitem>Type in USA in the country field and click on Search to get a list of offices in the
+  USA as shown below.</listitem>
+  </orderedlist>
+  <figure>
+<title>Search Panel</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/SearchPanel.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+<orderedlist continuation="continues">
+<listitem>Let us now check out the editing capability of the generated Seam application. Select
+ the first office code and click on the Edit button. You will be prompted for a userID and 
+ password. Use &quot;seamuser&quot; for both user and password. You should at this point see the edit page
+  as shown below. Notice that the NOT NULL columns in the database table are automatically marked 
+  with the red * to indicate that they are required.</listitem>
+  </orderedlist>
+  <figure>
+<title>Generated Edit Page</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/GeneratedEditPage.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem>Change a few things and save changes. This should update the record in the database.
+ There you have it. A simple and easy way to bootstrap your applications.</listitem>
+ <listitem>Let us look at how validations are done in Seam. Go back to and edit another office
+  record and this time leave the city blank and click on the Save button. You will see the default
+   Seam validations get triggered. In this case the &quot;value required&quot; validation is fired as shown 
+   below.</listitem>
+   </orderedlist>
+<figure>
+<title>Error Reporting</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/ValidationInEditPage.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+</section>
+<section id="CustomizingTheGeneratedApplication">
+<?dbhtml filename="CustomizingTheGeneratedApplication.html"?>
+<title>Customizing the generated application</title>
+<orderedlist>
+<listitem>Let us look at a couple of simple things we can change in the generated application
+ to show you that the generated application can be customized. Let us start by changing the edit 
+ page that we just saw. We will clean up the labels using the Facelet designer as shown below. 
+ Open the view directory in your project and double click on the OfficeEdit.xhtml file.</listitem>
+</orderedlist>
+<figure>
+<title>Facelet Designer</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/FaceletDesigner.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<para>Unlike other WYSIWYG editors which developers tend to hate, the  visual designers in Red Hat
+ Developer Studio are designed  for developers to rapidly find their way in a source file, while
+  still allowing them to visually look at a document.</para>
+  
+<orderedlist continuation="continues">
+<listitem>To change a label text, click on a label in the designer. This will position the
+ cursor at the correct location in the source view. Type the new label there. The designer does 
+ not force the developer to use the WYSIWIG environment. Change all the labels for the edit page.</listitem>
+ </orderedlist>
+ <para>Once you save the page, the IDE automatically rebuilds the application and re-deploys it.
+  So, just reload your browser and you should see an updated web page like the following. If for
+   some reason the re-deployment did not work, stop and restart the server normally resolves the issue.</para>
+    <figure>
+<title>Edit Page</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/EditPage.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+</section>
+<section id="UsingHibernateToolsToInteractWithTheJPAEntities">
+<?dbhtml filename="UsingHibernateToolsToInteractWithTheJPAEntities.html"?>
+<title>Using Hibernate tools to interact with the JPA Entities</title>
+<para>As part of generating the application, Seam Gen also generates JPA entities that are used
+ to interact with the database. Let us quickly take a look at Hibernate tools and see how we can 
+ interact with the database using HQL and the Hibernate Criteria API.</para>
+ <orderedlist>
+ <listitem>Open the Hibernate Configurations View. You should be able to open the console like
+  the other views we have seen so far in the tutorial. Your view should resemble the following:</listitem>
+ </orderedlist>
+ <figure>
+<title>Hibernate Configurations View</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/HibernateConfigurationsView.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem>Before we run the HQL,  let us open up the &quot;Hibernate Query Result&quot; and the &quot;Hibernate
+ Dynamic SQL Preview&quot; views. You should be able to do that in a manner similar to  other views we
+  have opened in this tutorial. Alternatively you can open the Hibernate Console Perspective where
+   these views are opened up by default.</listitem>
+   <listitem>Click on the &quot;HQL&quot; icon in the &quot;Hibernate Configurations&quot; view. This will open up 
+   the HQL Designer view as shown below. Also, select &quot;EclipseCon&quot; from the drop down menu next to
+    the green &quot;run&quot; button.</listitem>
+    </orderedlist>
+    <figure>
+<title>HQL Designer View</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/HQLDesignerView.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem>Type in a simple query as shown above &quot;from Offices o&quot; and click on the green &quot;run&quot;
+ button. You should see the result of the HQL query in the &quot;Hibernate Query Result&quot; window as 
+ shown below.</listitem>
+    </orderedlist>
+    <figure>
+<title>Hibernate Query Result Window</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/HibernateQueryResultWindow.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem>Click on any of the objects in the result and you should be able see the contents of
+ the objects in the Property view as shown below.  If you don&apos;t have the view open in your 
+ perspective, you can open this view like all other views in this tutorial.</listitem>
+    </orderedlist>
+    <figure>
+<title>Property View</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/PropertyView.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<para>Select the &quot;Hibernate Dynamic SQL Preview&quot; view to the generated SQL. This is a great tool 
+to see the SQL being generated by Hibernate for your HQL. Not only is this a great debugging tool,
+ it is also a great way to optimize your HQL queries.</para>
+ <figure>
+<title>Hibernate Dynamic SQL Preview</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/HibernateDynamicSQLPreview.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem>Let us try a slightly more complex query. Type in the following query in the query 
+window and see how the query result changes and the SQL Preview changes.</listitem>
+    </orderedlist>
+    <programlisting role="JAVA"><![CDATA[select city, state, postalcode 
+		          from Offices o
+			   where country = 'USA'
+]]></programlisting>
+<orderedlist continuation="continues">
+<listitem>Let us try the Hibernate criteria APIs next. To use Hibernate Criteria APIs click on 
+the &quot;CRI&quot; button in the Hibernate Configurations View. This will open the Criteria API designer 
+view. Type in this simple criteria query as shown below and click on the green run button to see
+ the results. Also, select &quot;EclipseCon&quot; from the drop down menu next to the green &quot;run&quot; button.</listitem>
+    </orderedlist>
+    <programlisting role="JAVA"><![CDATA[session.createCriteria(Offices.class)
+]]></programlisting>
+<para>The results will be very similar to the HQL query except that the criteria query does not 
+generate the SQL in the &quot;Hibernate Dynamic SQL Preview&quot; view.</para>
+<orderedlist continuation="continues">
+<listitem>Let us try something a little more complex. Let us filter all offices in the USA as 
+shown below. The results of this query should be very similar to the results of the HQL.</listitem>
+    </orderedlist>
+    <programlisting role="JAVA"><![CDATA[session.createCriteria(Offices.class)
+                    .add(Restrictions.eq("country", "USA")) ;
+]]></programlisting>
+<orderedlist continuation="continues">
+<listitem>Finally let us visually see the entity model of the generated JPA objects. Before we
+ do that, open the &quot;Hibernate Entity Model&quot; view and select the &quot;Configurations&quot; option in the 
+ &quot;Hibernate Configurations&quot; view. The plug-in will show all the entities in a visual format. 
+ You can either manually align your objects or click on the &quot;Layout&quot; button on the right of the 
+ &quot;Hibernate Entity Model&quot; view to generate a default layout.</listitem>
+    </orderedlist>
+    <figure>
+<title>Hibernate Entities</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/HibernateEntities.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+</section>
+<section id="AddingAJAXAndRichUIFeaturesToASeamApplication">
+<?dbhtml filename="AddingAJAXAndRichUIFeaturesToASeamApplication.html"?>
+<title>Adding AJAX and rich UI features to a Seam application</title>
+<para>A key feature of JBoss Seam and the Red Hat Developer Studio is that they make AJAX and rich
+ UI web applications a breeze to develop. In this section of the tutorial, we will show you how 
+ to:</para>
+ <itemizedlistlist>
+ <listitem>Add AJAX features to automatically generated JSF Seam UI components</listitem>
+ <listitem>Replace standard JSF UI components with AJAX enabled rich UI components provided by the
+  Red Hat Developer Studio</listitem>
+  <listitem>Use AJAX components to do live validation on web pages</listitem>
+ </itemizedlist>
+ <section id="AddingAJAXFeaturesToGeneratedUIComponents">
+<?dbhtml filename="AddingAJAXFeaturesToGeneratedUIComponents.html"?>
+<title>Adding AJAX features to generated UI components</title>
+<para>Let us now try to add some AJAX features to the generated Seam application. Click on the
+ Payments List link on the top of the page. You will see a search page as shown below.</para>
+ <figure>
+<title>Search Page</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/SearchPage.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<para>You can search for any &quot;checknumber&quot; by typing in the number or by paging through the list
+ of payments. But what if you only knew a few of the digits/alphabets in the &quot;checknumber&quot;? It 
+ would be very useful to filter the list based on that.  AJAX provides very useful techniques to
+  build these types of applications and Ajax4Jsf provides the building blocks to simplify these 
+  techniques.</para>
+  <para>Double Click on the  PaymentsList.xhtml to open the visual facelet designer. You will 
+  notice that in the beginning of the source, Seam Gen has already add the tag library references
+   to Ajax4Jsf and RichFaces as shown below.</para>
+   <programlisting role="JAVA"><![CDATA[<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+                xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+                template="layout/template.xhtml">
+]]></programlisting>
+<para>Next, locate the check number input field. We need to add AJAX to this field. Basically, 
+as we type we want to update the table. Adding AJAX functionality usually requires two things:</para>
+<itemizedlist>
+<listitem>Letting the framework know on which event to send an AJAX request to the server.</listitem>
+<listitem>Specifying what component(s) to update with the output from the server.</listitem>
+</itemizedlist>
+<para>Ajax4Jsf provides a simple JSF component <emphasis role="bold"><property>&lt;aj4:support&gt;</property></emphasis> that simplifies this process. Let us 
+take our example and add AJAX to it.</para>
+<orderedlist>
+<listitem>Click on the checknumber field in the visual designer, it will position you at the 
+correct location in the source. You will notice that the inputText tag does not have a closing 
+tag. Let us add a closing tag to the input text field as shown below.</listitem>
+</orderedlist>
+<programlisting role="JSP"><![CDATA[<h:inputText id="checknumber" 
+                          value="#{paymentsList.payments.checknumber}">
+                       <a4j:support event="onkeyup" reRender="paymentsList"/>
+                </h:inputText>
+]]></programlisting>
+<orderedlist continuation="continues">
+<listitem>Now let us add the AJAX support tag to let Ajax4Jsf know that when the user presses a
+ key we want to go to the server to get a list of payments that match the characters entered in
+  the checknumber text box. Add the tag that is highlighted below to the inputText tag.</listitem>
+</orderedlist>
+<programlisting role="JSP"><![CDATA[<h:inputText id="checknumber" 
+                          value="#{paymentsList.payments.checknumber}">
+                       <a4j:support event="onkeyup" reRender="paymentsList"/>
+                </h:inputText>
+]]></programlisting>
+<para>This tag is pretty self explanatory, it posts the server when a key is pressed and then
+ takes the response from the server and re-renders the section of the page that has an id of 
+ &quot;paymentList&quot;.</para>
+ <orderedlist continuation="continues">
+<listitem>If you follow along in the page, you will see that the section that displays the 
+results is in a div tag that has an id of &quot;paymentsList&quot;</listitem>
+</orderedlist>
+<programlisting role="JSP"><![CDATA[<div class="results" id="paymentsList">
+		    <h3>search results</h3>
+		    <h:outputText value="No payments exists" 
+            	   rendered="#{empty paymentsList.resultList}"/>
+            	   ...
+            	   </div>
+]]></programlisting>
+<orderedlist continuation="continues">
+<listitem>Save the changes and refresh your browser. You will see that as you  type characters 
+in the checknumber field, all payments that begin with those characters will be displayed in the 
+table automatically.</listitem>
+</orderedlist>
+<figure>
+<title>Data Fields</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/DataFields.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<para>But there is still one more problem in this page, you will see that the &quot;Next&quot; and
+ &quot;Previous&quot; buttons will be displayed even for search results that are small as shown above.</para>
+ <orderedlist continuation="continues">
+<listitem>The tag that we added in the previous step only updates the table. Let us add an AJAX 
+region around the page buttons at the bottom of the table. This will allow Ajax4Jsf to update 
+those buttons independently.</listitem>
+</orderedlist>
+<programlisting role="JSP"><![CDATA[<a4j:outputPanel ajaxRendered="true">
+		          <div class="tableControl">
+      		           ...
+    			    </div>
+    			</a4j:outputPanel>
+]]></programlisting>
+<para>Add an <emphasis role="bold"><property>&lt;a4j:outputPanel&gt;</property></emphasis> tag around the page buttons as shown above and run the page again.
+ If  the result list is small, you will see that the page buttons are no longer visible as shown
+  below.</para>
+  <figure>
+<title>Datatable With No Page Buttons</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/NoButtons.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem>Let add one more thing to complete this part of the sample. When we type a character in
+ the &quot;checknumber&quot; field, there is no visual feedback to the user that there is a request being
+  made to the server.</listitem>
+  </orderedlist>
+  <para>Ajax4Jsf has a pre-built tag <emphasis role="bold"><property>&lt;a4j:status&gt;</property></emphasis> that allows you to either render a text or an 
+  image in response to an AJAX event. Add the following code, right after the end of the 
+  <emphasis role="bold"><property>&lt;h:inputText&gt;</property></emphasis> tag.</para>
+  <programlisting role="JSP"><![CDATA[<a4j:status>
+        <f:facet name="start">
+          <h:graphicImage value="/img/ajax-loader.gif" style="border: 1px solid #E0E0E0"/>
+        </f:facet>
+       </a4j:status>
+]]></programlisting>
+<para>Save changes to the page and refresh the browser. You will see the image when the AJAX 
+request is active. The image will disappear as soon as the response is received.</para>
+<orderedlist continuation="continues">
+<listitem>Finally, let us place the image beside the &quot;checknumber&quot; text box. Place a 
+<emphasis role="bold"><property>&lt;h:panelGroup&gt;</property></emphasis> around the <emphasis role="bold"><property>&lt;h:inputText&gt;</property></emphasis> and <emphasis role="bold"><property>&lt;a4j:status&gt;</property></emphasis> tags as shown below. 
+Save changes and refresh the browser. You should see the image right next to the text box.</listitem>
+  </orderedlist>
+  <programlisting role="JSP"><![CDATA[<h:panelGroup>
+	    <h:inputText id="checknumber" 
+	                 value="#{paymentsList.payments.checknumber}">
+	        <a4j:support event="onkeyup" 
+                           reRender="paymentsList"/>                                        
+	    </h:inputText>
+	    <a4j:status>
+	        <f:facet name="start">
+	            <h:graphicImage value="/img/ajax-loader.gif" 
+                                   style="border: 1px solid #E0E0E0"/>
+	        </f:facet>
+	    </a4j:status>  
+     </h:panelGroup>
+]]></programlisting>
+<para>Although  this example was a bit long, it shows how easy it is to add AJAX capabilities to 
+an existing Seam application.</para>
+</section>
+<section id="AddingRichfacesComponentsToaSeamApplication">
+<?dbhtml filename="AddingRichfacesComponentsToaSeamApplication.html"?>
+<title>Adding RichFaces components to a Seam application</title>
+<para>Now that we have seen how AJAX can bring interactivity to an application, let us add rich 
+controls that will improve the user experience. RichFaces provides numerous rich controls that 
+can be added to an application. In this section we will add spinner and slider controls that 
+allow users to change numerical values without using the keyboard.</para>
+<para>Double Click on the  OrderdetailsEdit.xhtml to open the visual facelet designer. You will
+ notice that in the beginning of the source, Seam Gen has already included the tag library 
+ references to Ajax4Jsf and RichFaces as shown below.</para>
+ <programlisting role="JSP"><![CDATA[<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+                xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+                template="layout/template.xhtml">
+]]></programlisting>
+<para>In this page, we are going to replace the &quot;quantityordered&quot; text box with the spinner
+ control.</para>
+ <orderedlist>
+ <listitem>In the visual view of the page, click on the &quot;quantityordered&quot; text box, this will 
+ select the appropriate markup in the source view. Delete the selected markup.</listitem>
+ </orderedlist>
+ <figure>
+<title>Deleting Selected Markup</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/DeletingSelectedMarkup.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<para>We will replace the <emphasis role="bold"><property>&lt;h:inputText&gt;</property></emphasis> tag with a pre-built <emphasis role="bold"><property>&lt;rich:inputNumberSpinner&gt;</property></emphasis> tag.
+ The spinner control tag is very simple to use and  like all other JSF controls, it has a value
+  attribute that can be bound to any JSF Managed Bean or Seam component.  The designer allows you
+   to visually find all the beans available as shown below. Right
+    click on the <emphasis role="bold"><property>&lt;rich:inputNumberSpinner&gt;</property></emphasis> input field and select &quot;<emphasis role="bold"><property>&lt;rich:inputNumberSpinner&gt;</property></emphasis> Attributes&quot;.</para>
+    <figure>
+<title>Replacing Tags</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/ReplacingTags.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<para>The minValue and maxValue are self explanatory, they represent the minimum and maximum
+ values for the spinner. Place the following tag in your page.</para>
+ <programlisting role="JSP"><![CDATA[<rich:inputNumberSpinner 
+          value="#{orderdetailsHome.definedInstance.quantityordered}" 
+          inputStyle="width:30px; height:20px" 
+          minValue="0" 
+          maxValue="100" 
+          required="true"/>
+]]></programlisting>
+
+<orderedlist continuation="continues">
+<listitem>Save changes and refresh the browser page. Your output page should look like this:</listitem>
+</orderedlist>
+<figure>
+<title>Output Page</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/OutputPage.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem>Although this is not the best situation to use a slider, let us take a quick look at 
+another RichFaces control <emphasis role="bold"><property>&lt;rich:inputNumberSlider&gt;</property></emphasis>.  The slider control is similar to the the 
+spinner control; it is bound to the same object.  Replace the spinner with the following markup. 
+Save the page and refresh your browser window.</listitem>
+</orderedlist>
+<programlisting role="JSP"><![CDATA[<rich:inputNumberSlider 
+            value="#{orderdetailsHome.definedInstance.quantityordered}"              
+            styleClass="slider" 
+            width="200"/>
+]]></programlisting>
+<figure>
+<title>InputNumberSlider Settings</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/InputNumberSliderSettings.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem>Seam Gen also generates a date picker control for all date fields in an edit page.
+ Click on &quot;Order List&quot; and edit one of the orders to see an example of the date picker control
+  that is bundled with Seam.</listitem>
+</orderedlist>
+
+<figure>
+<title>Order List</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/OrderedList.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+</section>
+<section id="ValidatingTheAJAXWay(LiveValidations)">
+<?dbhtml filename="ValidatingTheAJAXWay(LiveValidations).html"?>
+<title>Validating the AJAX way (Live Validations)</title>
+<para>Seam Gen also generates field validation code that leverages AJAX techniques, by providing
+ immediate feedback to users who use these applications. To see an example of this, go back to
+  the Office Edit page and leave the city blank and tab out of the field. Seam will immediately
+   validate the field and tell you that the value is required.</para>
+   <figure>
+<title>Office Edit Page</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/OfficeEditPage.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<para>To provide this functionality for every required field in the page Seam generates the
+ following markup:</para>
+<programlisting role="JSP"><![CDATA[<s:decorate id="cityDecoration">	
+<h:inputText id="city" 
+                   required="true"
+                   size="50"
+                   maxlength="50"
+                   value="#{officesHome.instance.city}">
+          <a:support event="onblur" reRender="cityDecoration"/>
+      </h:inputText>
+    </s:decorate>
+]]></programlisting>
+<para>Seam uses Ajax4Jsf to make a server side call to validate the field.</para>
+</section>
+</section>
+</chapter>
