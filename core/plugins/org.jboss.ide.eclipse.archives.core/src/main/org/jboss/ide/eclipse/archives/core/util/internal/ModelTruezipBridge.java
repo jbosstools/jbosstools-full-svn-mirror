@@ -21,8 +21,8 @@
  */
 package org.jboss.ide.eclipse.archives.core.util.internal;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
@@ -88,7 +88,8 @@ public class ModelTruezipBridge {
 	// Let them know which files were removed, for events
 	public static IPath[] fullFilesetRemove(final IArchiveFileSet fileset, boolean sync) {
 		IPath[] paths = fileset.findMatchingPaths();
-		List list = Arrays.asList(paths);
+		ArrayList list = new ArrayList();
+		list.addAll(Arrays.asList(paths));
 		for( int i = 0; i < paths.length; i++ ) {
 			if( !ModelUtil.otherFilesetMatchesPath(fileset, paths[i])) {
 				// remove
