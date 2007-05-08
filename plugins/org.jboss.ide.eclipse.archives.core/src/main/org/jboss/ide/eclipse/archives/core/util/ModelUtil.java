@@ -68,12 +68,12 @@ public class ModelUtil {
 	
 	public static ArrayList findAllDescendents(IArchiveNode node, final int type) {
 		final ArrayList matches = new ArrayList();
-		if( node.getNodeType() == type ) 
+		if( node.getNodeType() == type && !matches.contains(node) ) 
 			matches.add(node);
 		
 		node.accept(new IArchiveNodeVisitor() {
 			public boolean visit(IArchiveNode node) {
-				if( node.getNodeType() == type)
+				if( node.getNodeType() == type && !matches.contains(node))
 					matches.add(node);
 				return true;
 			} 

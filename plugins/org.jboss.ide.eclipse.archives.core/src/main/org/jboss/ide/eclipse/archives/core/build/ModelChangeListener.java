@@ -61,7 +61,11 @@ public class ModelChangeListener implements IArchiveModelListener {
 		if( !CorePreferenceManager.isBuilderEnabled(delta.getPostNode().getProject())) 
 			return;
 
+		try {
 		handle(delta);
+		} catch( Exception e ) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
