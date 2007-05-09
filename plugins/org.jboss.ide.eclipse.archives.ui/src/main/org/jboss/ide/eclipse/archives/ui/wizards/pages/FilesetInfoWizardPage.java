@@ -49,7 +49,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 	 * This variable must at all times be global. ALWAYS
 	 */
 	private IPath rootDir;
-	private boolean rootDirIsWorkspaceRelative, fileIsWorkspaceRelative;
+	private boolean rootDirIsWorkspaceRelative;
 	private FilesetPreviewComposite previewComposite;
 
 	private Composite mainComposite;
@@ -277,10 +277,6 @@ public class FilesetInfoWizardPage extends WizardPage {
 		return rootDirIsWorkspaceRelative;
 	}
 	
-	public boolean isFileWorkspaceRelative () {
-		return fileIsWorkspaceRelative;
-	}
-		
 	private void fillDefaults () {
 		if (fileset != null) {
 				if (fileset.getIncludesPattern() != null)
@@ -295,7 +291,6 @@ public class FilesetInfoWizardPage extends WizardPage {
 				}
 		} else {
 			rootProjectLabel.setText(parentNode.getProject().getName());
-			fileIsWorkspaceRelative = true;
 			rootDirIsWorkspaceRelative = true;
 			rootDir = ResourcesPlugin.getWorkspace().getRoot().getProject(parentNode.getProject().getName()).getLocation();
 		}

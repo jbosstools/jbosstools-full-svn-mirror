@@ -113,7 +113,7 @@ public class ArchiveNodeDestinationComposite extends Composite {
 	
 	protected void openDestinationDialog ()
 	{
-		ArchiveNodeDestinationDialog dialog = new ArchiveNodeDestinationDialog(getShell(), nodeDestination, true, true);
+		ArchiveNodeDestinationDialog dialog = new ArchiveNodeDestinationDialog(getShell(), nodeDestination, false, true);
 		if (nodeDestination != null)
 			dialog.setInitialSelection(nodeDestination);
 		
