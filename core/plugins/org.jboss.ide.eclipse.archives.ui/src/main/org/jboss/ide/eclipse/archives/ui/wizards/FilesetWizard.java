@@ -2,6 +2,7 @@ package org.jboss.ide.eclipse.archives.ui.wizards;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -56,8 +57,13 @@ public class FilesetWizard extends Wizard {
 	private void fillFilesetFromPage (IArchiveFileSet fileset) {
 		fileset.setExcludesPattern(page1.getExcludes());
 		fileset.setIncludesPattern(page1.getIncludes());
-		fileset.setSourcePath(new Path(page1.getRootDir()));
-		fileset.setInWorkspace(page1.isRootDirWorkspaceRelative());
+		if( page1.isRootDirWorkspaceRelative()) {
+			int workspaceLength = ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString().length();
+			fileset.setSourcePath(new Path(page1.getRootDir().substring(workspaceLength)));
+		} else {
+			fileset.setSourcePath(new Path(page1.getRootDir()));
+			fileset.setInWorkspace(false);
+		}
 	}
 
 	public void addPages() {
