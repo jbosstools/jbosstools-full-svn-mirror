@@ -22,7 +22,7 @@ the way demonstrating some of the powerful features of Red Hat Developer Studio.
 JSF application and then run the application from inside Red Hat Developer Studio.
 We&apos;ll assume that you have already launched Eclipse with Red Hat Developer Studio installed and
 also that the Red Hat Developer Studio perspective is the current perspective. (If not, make it active by
-selecting Window/Open Perspective/Red Hat Developer Studio from the menu bar or by selecting Window/
+selecting Window > Open Perspective > Red Hat Developer Studio from the menu bar or by selecting Window/
 Open Perspective/Other... from the menu bar and then selecting Red Hat Developer Studio from
 the Select Perspective dialog box.)</para>
 </section>    
@@ -31,8 +31,8 @@ the Select Perspective dialog box.)</para>
 <title>Setting Up the Project</title>
 <para>We are first going to create a new project for the application.</para>
 <orderedlist>
-<listitem><para>Go to the menu bar and select File/New/Project... .</para></listitem>
-<listitem><para>Select Red Hat Developer Studio/JSF Project in the New Project dialog box.</para></listitem>
+<listitem><para>Go to the menu bar and select File > New > Project... .</para></listitem>
+<listitem><para>Select Red Hat Developer Studio > JSF > JSF Project in the New Project dialog box.</para></listitem>
 <listitem><para>Click Next</para></listitem>
 <listitem><para>Enter jsfHello as the project name.</para></listitem>
 <listitem><para>Leave everything else as is, and click Finish.</para></listitem>
@@ -43,21 +43,30 @@ the Select Perspective dialog box.)</para>
 <?dbhtml filename="TheJSFApplicationConfigurationFile.html"?>
 <title>The JSF Application Configuration File</title>
 <para>A jsfHello node should appear in the upper-left Package Explorer view.</para>
+    <figure>
+        <title>Package Explorer View</title>
+        <mediaobject> 
+            <imageobject>
+                <imagedata fileref="images/pev.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
 <orderedlist continuation="continues">
 <listitem><para>Click the plus sign next to jsfHello to reveal the child nodes.</para></listitem>
 <listitem><para>Click the plus sign next to WebContent under jsfHello.</para></listitem>
 <listitem><para>Click the plus sign next to WEB-INF under WebContent.</para></listitem>
 
 <listitem><para>Then double-click on the faces-config.xml node to display the JSF application configuration file editor.</para></listitem>
+</orderedlist>
 <figure>
 <title></title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="img/"/>
+            <imagedata fileref="images/ConfigEditor.png"/>
         </imageobject>
 </mediaobject>
 </figure>
-</orderedlist>
+
 </section>
 <section id="AddingNavigationToTheApplication">
 <?dbhtml filename="AddingNavigationToTheApplication.html"?>
@@ -93,14 +102,13 @@ menu</para></listitem>
 side of the diagram</para></listitem>
 </orderedlist>
 <figure>
-<title></title>
+    <title>Connection icon</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="img/"/>
+            <imagedata fileref="images/arrow.png"/>
         </imageobject>
 </mediaobject>
 </figure>
-
 <para>to get an arrow cursor with a two-pronged plug at the arrow&apos;s bottom.</para>
 <orderedlist continuation="continues">
 <listitem><para>Click on the pages/inputname page icon and then click on the pages/greeting page icon</para></listitem>
@@ -108,10 +116,10 @@ side of the diagram</para></listitem>
 </orderedlist>
 <para>A transition should appear between the two icons.</para>
 <figure>
-<title></title>
+<title>Transition between two icons</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="img/"/>
+            <imagedata fileref="images/connection.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -142,10 +150,10 @@ Class is not filled in, String is the assumed type.)</para></listitem>
 </orderedlist>
 <para>You should see this now:</para>
 <figure>
-<title></title>
+<title>Tree view in Config Editor</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="img/"/>
+            <imagedata fileref="images/ConfigEditor2.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -173,7 +181,7 @@ a WYSIWIG view along the bottom:</para>
 <title></title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="img/"/>
+            <imagedata fileref="images/"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -181,19 +189,19 @@ a WYSIWIG view along the bottom:</para>
 <orderedlist continuation="continues">
 <listitem><para>Select the Visual tab, so we can work with the editor completely in its WYSIWYG
 mode</para></listitem>
-<listitem><para>To the right of the editor, in the Exadel Palette, expand the JSF HTML palette folder
+<listitem><para>To the right of the editor, in the Red Hat Palette, expand the JSF HTML palette folder
 by selecting it</para></listitem>
 </orderedlist>
 <figure>
 <title></title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="img/"/>
+            <imagedata fileref="images/RHDSpalette.png"/>
         </imageobject>
 </mediaobject>
 </figure>
 <orderedlist continuation="continues">
-<listitem><para>34. Click on form within this folder, drag the cursor over to the editor, 
+<listitem><para>Click on form within this folder, drag the cursor over to the editor, 
 and drop it inside the red box in the editor</para></listitem>
 
 <listitem><para>Another red box will appear inside the first red box.</para></listitem>
