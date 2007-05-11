@@ -181,7 +181,7 @@ a WYSIWIG view along the bottom:</para>
 <title></title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/"/>
+            <imagedata fileref="images/visual.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -248,7 +248,7 @@ attribute (&quot;Say Hello&quot;) and then click on the Finish button</para></li
 <title></title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="img/"/>
+            <imagedata fileref="images/visual2.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -326,13 +326,13 @@ for the project for invoking JavaServer Faces when you run the application.</par
 <?dbhtml filename="RunningTheApplicationJSF.html"?>
 <title>Running the Application</title>
 <para>Everything is now ready for running our application without having to leave Red Hat Developer Studio 
-by using the Tomcat engine that comes with the Red Hat Developer Studio plug-in. For controlling
-Tomcat within Red Hat Developer Studio, the toolbar contains a special panel</para>
+by using the JBoss engine that comes with the Red Hat Developer Studio plug-in. For controlling
+JBoss server within Red Hat Developer Studio, the toolbar contains a special panel</para>
 <figure>
 <title></title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="img/"/>
+            <imagedata fileref="images/running.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -348,7 +348,7 @@ made.) After the messages in the Console tabbed view stop scrolling, Tomcat is a
 <title></title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="img/"/>
+            <imagedata fileref="images/run.png"/>
         </imageobject>
 </mediaobject>
 </figure>
