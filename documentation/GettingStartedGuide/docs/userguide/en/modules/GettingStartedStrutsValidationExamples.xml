@@ -49,7 +49,7 @@ click on the Finish button.</para></listitem>
 
 <listitem><para>Drag up the sample.applResources icon until you can drop it on the resources folder under struts-config.xml.</para></listitem>
 <listitem><para>Select File/Save All from the menu bar.</para></listitem>
-<listitem><para>Select validation.xml under the StrutsHello/Validation node and double-click it to open it with the Exadel Studio Validation Editor.</para></listitem>
+<listitem><para>Select validation.xml under the StrutsHello/Validation node and double-click it to open it with the Red Hat Studio Validation Editor.</para></listitem>
 <listitem><para>Expand the form-beans node under the StrutsHello/Configuration/default/ struts-config.xml node. Then, drag the form bean GetNameForm and drop it onto formset (default) in the Validation Editor.</para></listitem>
 <listitem><para>In the Validation Editor, expand the formset node, right-click GetNameForm, and select Add Field... from the context menu.</para></listitem>
 <listitem><para>Enter name for Property in the dialog box.</para></listitem>
@@ -110,14 +110,14 @@ click on the Finish button.</para></listitem>
 ]]></programlisting>
 <orderedlist continuation="continues">
 <listitem><para>Select File/Save from the menu bar.</para></listitem>
-<listitem><para>28. Start Tomcat by clicking on its icon (a right-pointing arrow) in the toolbar.</para></listitem>
-<listitem><para>29. Click on the Run icon in the toolbar.</para></listitem>
+<listitem><para>Start Tomcat by clicking on its icon (a right-pointing arrow) in the toolbar.</para></listitem>
+<listitem><para>Click on the Run icon in the toolbar.</para></listitem>
 </orderedlist>
 <figure>
 <title></title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="img/"/>
+            <imagedata fileref="images/run.png"/>
         </imageobject>
 </mediaobject>
 </figure>

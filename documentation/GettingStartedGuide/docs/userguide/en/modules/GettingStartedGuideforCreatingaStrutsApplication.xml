@@ -41,7 +41,7 @@ make it active by selecting Window/Open Perspective/Other/Red Hat Developer Stud
 first. (We dont have to complete all of the details inside the components until afterwards.)</para>
         <section id="CreatingJSPPagePlaceholders">
          <title>Creating JSP Page Placeholders</title>
-<para>Next, lets create and place two JSP pages. We will not write any code for the files, but only
+            <para>Next, let&apos;s create and place two JSP pages. We will not write any code for the files, but only
 create them as placeholders so that we can create links to them in the diagram. We will write
 the code a little bit later.</para>
             <section id="CreatingthePagePlaceholders">
@@ -81,10 +81,11 @@ and drop it to the right of the /pages/inputname.jsp icon with some extra space.
         </orderedlist>
         <table>
              <tgroup cols="2">
+                 <tbody>
                  <row>
-					  <entry>path</entry>
-					  <entry>/greeting</entry>
-				 </row>
+                       <entry>path</entry>
+                       <entry>/greeting</entry>
+	 </row>
                  <row>
                      <entry>name</entry>
                      <entry>GetNameForm</entry>
@@ -101,6 +102,7 @@ and drop it to the right of the /pages/inputname.jsp icon with some extra space.
                      <entry>validate</entry>
                      <entry>&lt;leave blank&gt;</entry>
                  </row>
+                     </tbody>
                  </tgroup>
         </table>
 <para>(GetNameForm is the name for a form bean that we will create later.)</para>
@@ -113,9 +115,19 @@ asterisk to the right of the name, struts-config.xml, in the Outline view showin
     </section>
         <section id="CreatingaLink">
          <title>Creating a Link</title>
-<para>Lets now create a link from the inputname.jsp page to the action.</para>
+<para>Let&apos;s now create a link from the inputname.jsp page to the action.</para>
          <orderedlist continuation="continues">
 <listitem><para>On the left-hand side of the diagram in the column of icons, click on this icon:</para></listitem>
+         </orderedlist>
+            <figure>
+                <title>Create New Connection Icon</title>
+                <mediaobject> 
+                    <imageobject>
+                        <imagedata fileref="images/arrow.png"/>
+                    </imageobject>
+                </mediaobject>
+                </figure>
+            <orderedlist continuation="continues">
              <listitem><para>In the connect-the-components mode you are in now, click on the /pages/inputname.jsp icon in the diagram and then click on the /greeting action.</para></listitem>
          </orderedlist>
 <para>A link will be created from the page to the action.</para>
@@ -125,6 +137,16 @@ asterisk to the right of the name, struts-config.xml, in the Outline view showin
 <para>Next, we are going to create a forward for the action.</para>
          <orderedlist continuation="continues">        
 <listitem><para>On the left-hand side of the diagram in the column of icons, click on this icon, again:</para></listitem>
+         </orderedlist>
+            <figure>
+                <title>Create New Connection Icon</title>
+                <mediaobject> 
+                    <imageobject>
+                        <imagedata fileref="images/arrow.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <orderedlist continuation="continues">>
 <listitem><para>Click on the /greeting action icon in the diagram and then click on the /pages/greeting.jsp icon.</para></listitem>
              
 <listitem><para>Thats it. A link will be drawn from the actions new greeting forward to the greeting.jsp JSP page. Note that the forwards name will be set based on the name of the target JSP file
@@ -151,7 +173,15 @@ name. If you dont like it, you can easily change it.</para></listitem>
 <para>A forward object now appears on the diagram and also in the global-forwards folder in the Outline view.</para>
          <orderedlist continuation="continues">
              <listitem><para>Tidy up the diagram, by clicking and dragging around each icon, so that the diagram looks something like this:</para></listitem>
-             </orderedlist>
+         </orderedlist>
+            <figure>
+                <title>Diagram View</title>
+                <mediaobject> 
+                    <imageobject>
+                        <imagedata fileref="images/Diagram.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
      </section>
         <section id="CreatingaFormBean">
          <title>Creating a Form Bean</title>
@@ -334,12 +364,30 @@ public class GreetingAction extends org.apache.struts.action.Action {
 
 <listitem><para>Select the Visual pane of the editor.</para></listitem>
 <listitem><para>Then, in the Red Hat Palette, expand the Struts Form library, select text, and drag it onto the box.</para></listitem>
-<listitem><para>In the Insert Tag dialog box, type in name for property and select Finish.</para></listitem>
+ </orderedlist>
+                <figure>
+                    <title>Red Hat Palette</title>
+                    <mediaobject> 
+                        <imageobject>
+                            <imagedata fileref="images/RH_Palette.png"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+ <orderedlist continuation="continues">
+ <listitem><para>In the Insert Tag dialog box, type in name for property and select Finish.</para></listitem>
 <listitem><para>In the Struts Form library in the Red Hat Palette, select submit, and drag it to right after the the text box in the Visual pane of the editor.</para></listitem>
 <listitem><para>Right-click the submit button and select &lt;html:submit&gt; Attributes from the context menu.</para></listitem>
 <listitem><para>In the Attributes dialog box, select the value field and type in Say Hello! for its value.</para></listitem>
  </orderedlist>
 <para>After tidying the page source, the Editor window for the file should look something like this:</para>
+                <figure>
+                    <title>Editor window</title>
+                    <mediaobject> 
+                        <imageobject>
+                            <imagedata fileref="images/strinputname.png"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
  </section>
             <section id="greeting.jsp">
              <title>greeting.jsp</title>
@@ -376,6 +424,14 @@ public class GreetingAction extends org.apache.struts.action.Action {
 <listitem><para>Type in GetNameForm for the name attribute and add a property attribute with greetName as its value.</para></listitem>
     </orderedlist>
 <para>The editor should should now look like this:</para>
+                <figure>
+                    <title>Editor window</title>
+                    <mediaobject> 
+                        <imageobject>
+                            <imagedata fileref="images/strgreeting.png"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
  </section>
             <section id="index.jsp">
              <title>index.jsp</title>
@@ -415,6 +471,14 @@ public class GreetingAction extends org.apache.struts.action.Action {
  <para>Everything is now ready for running our applicationwithout having to leave Red Hat Developer Studio
      by using the JBoss Application Server engine that comes with the Red Hat Developer Studio plug-in. For controlling
      JBoss AS within Red Hat Developer Studio, the toolbar contains a panel.</para>
+        <figure>
+            <title>JBoss Server Panel</title>
+            <mediaobject> 
+                <imageobject>
+                    <imagedata fileref="images/running.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
         <orderedlist continuation="continues">
 <listitem>Start up JBoss AS by clicking on the first icon from left in this panel. (If JBoss AS is
     already running, stop it by clicking on the third icon from the left and then start it
