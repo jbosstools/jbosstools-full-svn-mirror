@@ -21,12 +21,9 @@
  */
 package org.jboss.ide.eclipse.archives.core.model.types;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
 
 /**
@@ -46,7 +43,4 @@ public abstract class AbstractArchiveType implements IArchiveType, IExecutableEx
 	public String getLabel() {
 		return element.getAttribute("label");
 	}
-
-	public abstract IArchive createDefaultConfiguration(IProject project, IProgressMonitor monitor);
-
 }
