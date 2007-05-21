@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="src/main"/>
 	<classpathentry exported="true" kind="lib" path="lib/jboss-common-4.0.4.jar" sourcepath="C:/Users/Marshall/Downloads/jbossxb-1.0.1.TEST-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jbossxb-1.0.1.TEST.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xercesImpl.jar"/>
