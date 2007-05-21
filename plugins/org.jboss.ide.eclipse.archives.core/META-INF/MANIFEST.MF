@@ -13,12 +13,13 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.eclipse.jdt.core
 Eclipse-LazyStart: true
-Bundle-ClassPath: packagescore.jar,
- lib/concurrent.jar,
+Bundle-ClassPath: lib/concurrent.jar,
  lib/truezip-6.jar,
  lib/xercesImpl.jar,
  lib/jboss-common-4.0.4.jar,
- lib/jbossxb-1.0.1.TEST.jar
+ lib/jbossxb-1.0.1.TEST.jar,
+ archivescore.jar,
+ archivescore-eclipse.jar
 Export-Package: org.jboss.ide.eclipse.archives.core,
  org.jboss.ide.eclipse.archives.core.build,
  org.jboss.ide.eclipse.archives.core.model,

@@ -24,7 +24,7 @@
    <extension
          point="org.jboss.ide.eclipse.archives.core.archiveTypes">
       <packageType
-            class="org.jboss.ide.eclipse.archives.core.model.types.JARArchiveType"
+            class="org.jboss.ide.eclipse.archives.core.model.types.WorkspaceJARArchiveType"
             id="jar"
             label="JAR"/>
    </extension>
