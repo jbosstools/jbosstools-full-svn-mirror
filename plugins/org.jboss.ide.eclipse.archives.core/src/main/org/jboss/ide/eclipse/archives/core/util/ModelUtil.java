@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import org.eclipse.core.runtime.IPath;
+import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
@@ -190,4 +191,12 @@ public class ModelUtil {
 		return lastConcrete; 
 	}
 	
+	
+	public static IPath workspacePathToAbsolutePath (IPath workspacePath)
+	{
+		String projectName = workspacePath.segment(0);
+		IPath projectPath = ArchivesCore.getInstance().getVariables().getProjectPath(projectName);
+		
+		return projectPath.append(workspacePath.removeFirstSegments(1));
+	}
 }
