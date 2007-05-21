@@ -31,6 +31,7 @@ import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFileSet;
+import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 
 /**
  * An implementation for filesets
@@ -98,7 +99,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		if (path == null || path.equals(".") || path.equals("")) {
 			return getProjectPath() == null ? null : getProjectPath();
 		} else if( isInWorkspace()){
-			return ArchivesCore.getInstance().getVariables().getWorkspacePath().append(path); 
+			return ModelUtil.workspacePathToAbsolutePath(new Path(path)); 
 		} else {
 			return new Path(path);
 		}
