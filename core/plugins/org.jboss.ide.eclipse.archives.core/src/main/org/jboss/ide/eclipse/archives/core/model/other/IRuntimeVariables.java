@@ -12,7 +12,9 @@ public interface IRuntimeVariables {
 	 * @return
 	 */
 	public boolean isDebugging(String option);
-	public IPath getWorkspacePath();
+	public IPath getProjectPath(String projectName);
+	
+//	public IPath getWorkspacePath();
 	public URL getBindingSchema();
 	public URL getBindingLog4j();
 }
