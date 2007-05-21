@@ -3,20 +3,14 @@ package org.jboss.ide.eclipse.archives.core;
 import org.jboss.ide.eclipse.archives.core.model.other.IExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.other.IPreferenceManager;
 import org.jboss.ide.eclipse.archives.core.model.other.IRuntimeVariables;
-import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspaceExtensionManager;
-import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspacePreferenceManager;
-import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspaceVariables;
 
-public class ArchivesCore {
+public abstract class ArchivesCore {
 
 	private static ArchivesCore instance;
+	// Due to classloader restrictions we won't be able to lazy load, but that should be ok as long
+	// as we keep the construction of ArchivesCore subclasses to a minimum
 	public static ArchivesCore getInstance() {
-		if( instance == null )
-			instance = new ArchivesCore(WORKSPACE);
 		return instance;
-	}
-	public static void create(int type) {
-		instance = new ArchivesCore(type);
 	}
 	
 	public static final int STANDALONE = 0;
@@ -29,14 +23,16 @@ public class ArchivesCore {
 	
 	public ArchivesCore(int runType) {
 		this.runType = runType;
-		if( this.runType == STANDALONE) {
-			//variables = new StandaloneVariables();
-		} else {
-			variables = new WorkspaceVariables();
-			extensionManager = new WorkspaceExtensionManager();
-			preferenceManager = new WorkspacePreferenceManager();
-		}
+		variables = createVariables();
+		extensionManager = createExtensionManager();
+		preferenceManager = createPreferenceManager();
+		
+		instance = this;
 	}
+	
+	protected abstract IRuntimeVariables createVariables();
+	protected abstract IExtensionManager createExtensionManager();
+	protected abstract IPreferenceManager createPreferenceManager();
 	
 	public boolean isWorkspaceRuntype() {
 		return runType == WORKSPACE;
