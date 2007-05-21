@@ -21,7 +21,7 @@
  */
 package org.jboss.ide.eclipse.archives.core.model;
 
-import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
@@ -49,14 +49,14 @@ public interface IArchiveType {
 	 * 
 	 * If the passed-in project does not support this package type, a null IPackage should be returned.
 	 * 
-	 * @param project The project to create the packages configuration for
+	 * @param projectName The project to create the packages configuration for
 	 * @return The top level package that was created
 	 */
-	public IArchive createDefaultConfiguration(IProject project, IProgressMonitor monitor);
+	public IArchive createDefaultConfiguration(String projectName, IProgressMonitor monitor);
 	
 	/**
 	 * Fill an archive type with some filesets and folders that are required
 	 */ 
-	public IArchive fillDefaultConfiguration(IProject project, IArchive topLevel, IProgressMonitor monitor);
+	public IArchive fillDefaultConfiguration(String projectName, IArchive topLevel, IProgressMonitor monitor);
 	
 }
