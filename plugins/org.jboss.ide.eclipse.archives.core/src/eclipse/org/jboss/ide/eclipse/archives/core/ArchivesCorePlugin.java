@@ -54,9 +54,6 @@ import org.osgi.framework.BundleContext;
 		
 		// Load the workspace version of ArchivesCore
 		ArchivesCore core = new WorkspaceArchivesCore();
-		
-		// force JBossXB initialization
-		XMLBinding.init();
 	}
 
 	/*

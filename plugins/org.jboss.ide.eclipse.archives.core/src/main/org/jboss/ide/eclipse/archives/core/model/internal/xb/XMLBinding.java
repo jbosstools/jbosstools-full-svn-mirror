@@ -49,6 +49,8 @@ public class XMLBinding {
 	private static URL log4jxml = ArchivesCore.getInstance().getVariables().getBindingLog4j();
 	private static SchemaBinding binding;
 	
+	private static boolean initialized = false;
+	
 	static {
 		System.setProperty("log4j.configuration", log4jxml.toString());
 	}
@@ -60,6 +62,7 @@ public class XMLBinding {
 			binding = XsdBinder.bind(stream, "UTF-8", null);
 
 			stream.close();
+			initialized = true;
 		} catch (IOException e) {
 			Trace.trace(XMLBinding.class, e);
 		}
@@ -78,6 +81,7 @@ public class XMLBinding {
 	
 	public static XbPackages unmarshal (final InputStream in, final IProgressMonitor monitor)
 	{
+		if( !initialized) init();
 		element = null;
 		
 		binderSandbox(new Runnable() {
@@ -103,6 +107,7 @@ public class XMLBinding {
 	
 	public static void marshal (final XbPackages element, final Writer writer, final IProgressMonitor monitor)
 	{
+		if( !initialized) init();
 		binderSandbox(new Runnable() {
 			public void run ()  {
 				try {
