@@ -15,7 +15,6 @@ public class GenerateArchivesTask extends Task {
 
 	private String projectPath;
 	
-	@Override
 	public void init() throws BuildException {
 //		 Force standalone mode
 		ArchivesCore standalone = new StandaloneArchivesCore();
@@ -27,5 +26,13 @@ public class GenerateArchivesTask extends Task {
 		
 		ArchivesModel.instance().registerProject(projectPath, monitor);
 		ArchivesModelCore.buildProject(projectPath, monitor);
+	}
+
+	public String getProjectPath() {
+		return projectPath;
+	}
+
+	public void setProjectPath(String projectPath) {
+		this.projectPath = projectPath;
 	}
 }
