@@ -1,12 +1,7 @@
 package org.jboss.ide.eclipse.archives.core.build;
 
 
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
@@ -140,14 +135,14 @@ public class ModelChangeListener implements IArchiveModelListener {
 			IPath[] paths = filesets[i].findMatchingPaths();
 			EventManager.filesUpdated(filesets[i].getRootArchive(), filesets[i], paths);
 		}
-		refreshLocal(added);
+		postChange(added);
 	}
 	
 	
 	private void nodeRemoved(IArchiveNode removed) {
 		if( removed.getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
 			ModelTruezipBridge.deleteArchive((IArchive)removed);
-			refreshLocal(removed);
+			postChange(removed);
 			return;
 		} else if( removed.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FOLDER ){
 			IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(((IArchiveFolder)removed));
@@ -155,7 +150,7 @@ public class ModelChangeListener implements IArchiveModelListener {
 				IPath[] removedPaths = ModelTruezipBridge.fullFilesetRemove(((IArchiveFileSet)removed), false);
 				EventManager.filesRemoved(removedPaths, ((IArchiveFileSet)removed));
 			}
-			refreshLocal(removed);
+			postChange(removed);
 			return;
 		}
 
@@ -164,24 +159,22 @@ public class ModelChangeListener implements IArchiveModelListener {
 			IPath[] removedPaths = ModelTruezipBridge.fullFilesetRemove(((IArchiveFileSet)removed), false);
 			EventManager.filesRemoved(removedPaths, ((IArchiveFileSet)removed));
 		}
-		refreshLocal(removed);
+		postChange(removed);
 	}
 	
 	
-	// refresh the file tree structure
-	private void refreshLocal(IArchiveNode node) {
-		IArchive pack = node.getRootArchive();
-		if( pack != null && pack.isDestinationInWorkspace() ) {
-			// refresh the root package node
-			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-			IResource res = root.getContainerForLocation(pack.getDestinationPath());
-			if( res != null ) {
-				try {
-					res.getParent().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
-				} catch( CoreException ce ) {
-				}
-			}
-		}
-
+	protected void postChange(IArchiveNode node) {
+//		IArchive pack = node.getRootArchive();
+//		if( pack != null && pack.isDestinationInWorkspace() ) {
+//			// refresh the root package node
+//			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+//			IResource res = root.getContainerForLocation(pack.getDestinationPath());
+//			if( res != null ) {
+//				try {
+//					res.getParent().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+//				} catch( CoreException ce ) {
+//				}
+//			}
+//		}
 	}
 }

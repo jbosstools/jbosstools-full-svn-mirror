@@ -4,6 +4,8 @@ package org.jboss.ide.eclipse.archives.core;
 
 import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
+import org.jboss.ide.eclipse.archives.core.build.ModelChangeListenerWithRefresh;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.other.IExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.other.IPreferenceManager;
 import org.jboss.ide.eclipse.archives.core.model.other.IRuntimeVariables;
@@ -17,6 +19,7 @@ public class WorkspaceArchivesCore extends ArchivesCore {
 	public WorkspaceArchivesCore ()
 	{
 		super(WORKSPACE);
+		ArchivesModel.instance().addModelListener(new ModelChangeListenerWithRefresh());
 	}
 	
 	protected IExtensionManager createExtensionManager() {
