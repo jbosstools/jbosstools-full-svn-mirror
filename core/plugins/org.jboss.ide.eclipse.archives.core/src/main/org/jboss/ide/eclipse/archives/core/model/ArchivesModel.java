@@ -55,7 +55,6 @@ import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackageNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 import org.jboss.ide.eclipse.archives.core.model.other.IArchiveBuildListener;
 import org.jboss.ide.eclipse.archives.core.model.other.IArchiveModelListener;
-import org.jboss.ide.eclipse.archives.core.project.ProjectUtils;
 
 /**
  * The root model which keeps track of registered projects
@@ -209,19 +208,11 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		return archivesRoot.containsValue(node);
 	}
 	
-	private void addNature(IPath project) {
-		try {
-			ProjectUtils.addProjectNature(project);
-		} catch(Exception e) {
-		}
-	}
 	public void registerProject(IPath project, IProgressMonitor monitor) {
 		// if the file exists, read it in
 		monitor.beginTask("Loading configuration...", XMLBinding.NUM_UNMARSHAL_MONITOR_STEPS + 2);
-				
-		if( ArchivesCore.getInstance().isWorkspaceRuntype()) {
-			addNature(project);
-		}
+		
+		ArchivesCore.getInstance().preRegister(project);
 		
 		ArchiveModelNode root;
 		IPath packagesFile = project.append(PROJECT_PACKAGES_FILE);
