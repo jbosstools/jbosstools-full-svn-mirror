@@ -1,5 +1,6 @@
 package org.jboss.ide.eclipse.archives.core;
 
+import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.model.other.IExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.other.IPreferenceManager;
 import org.jboss.ide.eclipse.archives.core.model.other.IRuntimeVariables;
@@ -47,4 +48,6 @@ public abstract class ArchivesCore {
 	public IPreferenceManager getPreferenceManager() {
 		return preferenceManager;
 	}
+	
+	public abstract void preRegister(IPath project);
 }

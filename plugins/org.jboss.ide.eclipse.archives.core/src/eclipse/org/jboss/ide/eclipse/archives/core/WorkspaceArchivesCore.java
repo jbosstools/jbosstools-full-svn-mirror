@@ -2,6 +2,7 @@ package org.jboss.ide.eclipse.archives.core;
 
 
 
+import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.other.IExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.other.IPreferenceManager;
@@ -9,6 +10,7 @@ import org.jboss.ide.eclipse.archives.core.model.other.IRuntimeVariables;
 import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspaceExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspacePreferenceManager;
 import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspaceVariables;
+import org.jboss.ide.eclipse.archives.core.project.ProjectUtils;
 
 public class WorkspaceArchivesCore extends ArchivesCore {
 
@@ -28,4 +30,9 @@ public class WorkspaceArchivesCore extends ArchivesCore {
 	protected IRuntimeVariables createVariables() {
 		return new WorkspaceVariables();
 	}
+
+	public void preRegister(IPath project) {
+		ProjectUtils.addProjectNature(project);
+	}
+	
 }

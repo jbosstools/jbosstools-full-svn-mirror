@@ -1,5 +1,6 @@
 package org.jboss.ide.eclipse.archives.core;
 
+import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.model.other.IExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.other.IPreferenceManager;
 import org.jboss.ide.eclipse.archives.core.model.other.IRuntimeVariables;
@@ -26,4 +27,7 @@ public class StandaloneArchivesCore extends ArchivesCore {
 		return new StandaloneVariables();
 	}
 
+	public void preRegister(IPath project) {
+		
+	}
 }
