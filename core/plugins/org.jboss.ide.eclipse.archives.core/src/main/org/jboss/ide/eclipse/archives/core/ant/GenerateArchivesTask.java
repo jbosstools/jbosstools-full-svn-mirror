@@ -15,10 +15,13 @@ public class GenerateArchivesTask extends Task {
 
 	private String projectPath;
 	
-	public void execute() throws BuildException {
-		// Force standalone mode
+	@Override
+	public void init() throws BuildException {
+//		 Force standalone mode
 		ArchivesCore standalone = new StandaloneArchivesCore();
-		
+	}
+	
+	public void execute() throws BuildException {
 		IPath projectPath = new Path(this.projectPath);
 		IProgressMonitor monitor = new NullProgressMonitor();
 		
