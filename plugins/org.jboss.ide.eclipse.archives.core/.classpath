@@ -4,9 +4,9 @@
 	<classpathentry kind="src" path="src/xml"/>
 	<classpathentry kind="src" path="src/eclipse"/>
 	<classpathentry exported="true" kind="lib" path="lib/concurrent.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/truezip-6.jar" sourcepath="C:/code/truezip/truezip-6/src"/>
+	<classpathentry exported="true" kind="lib" path="lib/truezip-6.jar" />
 	<classpathentry exported="true" kind="lib" path="lib/xercesImpl.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jboss-common-4.0.4.jar" sourcepath="C:/Users/Marshall/Downloads/jbossxb-1.0.1.TEST-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jboss-common-4.0.4.jar" />
 	<classpathentry exported="true" kind="lib" path="lib/jbossxb-1.0.1.TEST.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
