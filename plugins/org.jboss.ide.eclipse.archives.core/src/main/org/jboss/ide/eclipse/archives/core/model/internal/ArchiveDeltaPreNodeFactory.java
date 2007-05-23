@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeDeltaImpl.NodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFileSet;
@@ -55,13 +56,13 @@ public class ArchiveDeltaPreNodeFactory {
 		switch(postChange.getNodeType()) {
 		case IArchiveNode.TYPE_ARCHIVE_FILESET:
 			XbFileSet fs = createFileset((ArchiveFileSetImpl)postChange, attributeChanges, propertyChanges); 
-			return new DeltaFileset(fs, parentDelta, postChange.getProjectPath());
+			return new DeltaFileset(fs, parentDelta, postChange);
 		case IArchiveNode.TYPE_ARCHIVE_FOLDER:
 			XbFolder folder = createFolder((ArchiveFolderImpl)postChange, attributeChanges, propertyChanges);
-			return new DeltaFolder(folder, parentDelta, postChange.getProjectPath());
+			return new DeltaFolder(folder, parentDelta, postChange);
 		case IArchiveNode.TYPE_ARCHIVE:
 			XbPackage pack = createPackage((ArchiveImpl)postChange, attributeChanges, propertyChanges);
-			return new DeltaArchive(pack, parentDelta, postChange.getProjectPath());
+			return new DeltaArchive(pack, parentDelta, postChange);
 		}
 		
 		return null;
@@ -152,17 +153,20 @@ public class ArchiveDeltaPreNodeFactory {
 	public static class DeltaFileset extends ArchiveFileSetImpl {
 		// everything goes through the delegate or the parent. Simple
 		private ArchiveNodeDeltaImpl parentDelta; 
-		private IPath project;
-		public DeltaFileset(XbFileSet fileset, ArchiveNodeDeltaImpl parentDelta, IPath project){
+		private ArchiveNodeImpl impl;
+		public DeltaFileset(XbFileSet fileset, ArchiveNodeDeltaImpl parentDelta, ArchiveNodeImpl impl){
 			super(fileset);
 			this.parentDelta = parentDelta;
-			this.project = project;
+			this.impl = impl;
 		}
 		public IArchiveNode getParent() {
 			return parentDelta == null ? null : parentDelta.getPreNode();
 		}
 		public IPath getProjectPath() {
-			return project;
+			return impl.getProjectPath();
+		}
+		public IArchiveModelNode getModel() {
+			return impl.getModel();
 		}
 	}
 	
@@ -171,17 +175,20 @@ public class ArchiveDeltaPreNodeFactory {
 	 */
 	public static class DeltaFolder extends ArchiveFolderImpl {
 		private ArchiveNodeDeltaImpl parentDelta; 
-		private IPath project;
-		public DeltaFolder(XbFolder folder, ArchiveNodeDeltaImpl parentDelta, IPath project){
+		private ArchiveNodeImpl impl;
+		public DeltaFolder(XbFolder folder, ArchiveNodeDeltaImpl parentDelta, ArchiveNodeImpl impl){
 			super(folder);
 			this.parentDelta = parentDelta;
-			this.project = project;
+			this.impl = impl;
 		}
 		public IArchiveNode getParent() {
 			return parentDelta == null ? null : parentDelta.getPreNode();
 		}
 		public IPath getProjectPath() {
-			return project;
+			return impl.getProjectPath();
+		}
+		public IArchiveModelNode getModel() {
+			return impl.getModel();
 		}
 	}
 	
@@ -190,17 +197,20 @@ public class ArchiveDeltaPreNodeFactory {
 	 */
 	public static class DeltaArchive extends ArchiveImpl {
 		private ArchiveNodeDeltaImpl parentDelta; 
-		private IPath project;
-		public DeltaArchive(XbPackage pack, ArchiveNodeDeltaImpl parentDelta, IPath project){
+		private ArchiveNodeImpl impl;
+		public DeltaArchive(XbPackage pack, ArchiveNodeDeltaImpl parentDelta, ArchiveNodeImpl impl){
 			super(pack);
 			this.parentDelta = parentDelta;
-			this.project = project;
+			this.impl = impl;
 		}
 		public IArchiveNode getParent() {
 			return parentDelta == null ? null : parentDelta.getPreNode();
 		}
 		public IPath getProjectPath() {
-			return project;
+			return impl.getProjectPath();
+		}
+		public IArchiveModelNode getModel() {
+			return impl.getModel();
 		}
 	}
 }
