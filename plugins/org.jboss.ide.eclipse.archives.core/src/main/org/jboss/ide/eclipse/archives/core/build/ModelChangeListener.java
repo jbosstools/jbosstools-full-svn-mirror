@@ -164,17 +164,5 @@ public class ModelChangeListener implements IArchiveModelListener {
 	
 	
 	protected void postChange(IArchiveNode node) {
-//		IArchive pack = node.getRootArchive();
-//		if( pack != null && pack.isDestinationInWorkspace() ) {
-//			// refresh the root package node
-//			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-//			IResource res = root.getContainerForLocation(pack.getDestinationPath());
-//			if( res != null ) {
-//				try {
-//					res.getParent().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
-//				} catch( CoreException ce ) {
-//				}
-//			}
-//		}
 	}
 }
