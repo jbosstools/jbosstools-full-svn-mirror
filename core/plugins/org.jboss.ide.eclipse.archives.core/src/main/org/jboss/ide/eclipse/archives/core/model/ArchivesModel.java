@@ -190,13 +190,13 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		return getProjectArchives(project, false, new NullProgressMonitor());
 	}
 	public IArchive[] getProjectArchives(IPath project, boolean register, IProgressMonitor monitor) {
-		IArchiveModelNode root = getRoot(project);
+		IArchiveModelNode root = getRoot(project, register, monitor);
 		if( root != null ) {
-			List list = Arrays.asList( getRoot(project).getAllChildren());
+			List list = Arrays.asList( getRoot(project, register, monitor).getAllChildren());
 			return (IArchive[]) list.toArray(new IArchive[list.size()]);
 		} else {
 			registerProject(project, monitor);
-			List list = Arrays.asList( getRoot(project).getAllChildren());
+			List list = Arrays.asList( getRoot(project, register, monitor).getAllChildren());
 			return (IArchive[]) list.toArray(new IArchive[list.size()]);
 		}
 	}
@@ -208,6 +208,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 	
 	public void registerProject(IPath project, IProgressMonitor monitor) {
 		// if the file exists, read it in
+		if( monitor == null ) monitor = new NullProgressMonitor();
 		monitor.beginTask("Loading configuration...", XMLBinding.NUM_UNMARSHAL_MONITOR_STEPS + 2);
 		
 		ArchivesCore.getInstance().preRegister(project);

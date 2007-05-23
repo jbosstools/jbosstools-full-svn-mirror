@@ -58,24 +58,7 @@ public class ArchivesModelCore {
 	}
 	
 	public static IArchive[] getProjectPackages (IPath project, IProgressMonitor monitor, boolean forceInit) {
-		if (monitor == null) monitor = new NullProgressMonitor();
-		
-		monitor.beginTask("Fetching packages for \"" + project.lastSegment() + "\"...", 2);
-		IArchive[] packages = ArchivesModel.instance().getProjectArchives(project);
-		monitor.worked(1);
-		
-		if (packages == null) {
-			if (forceInit && packageFileExists(project)) {
-				ArchivesModel.instance().registerProject(project, monitor);
-				packages = ArchivesModel.instance().getProjectArchives(project);
-			}
-			
-			if (packages == null) return new IArchive[0];
-		}
-
-		monitor.worked(1);
-		monitor.done();
-		return packages;
+		return ArchivesModel.instance().getProjectArchives(project, forceInit, monitor);
 	}
 
 	public static boolean packageFileExists (IPath project) {
