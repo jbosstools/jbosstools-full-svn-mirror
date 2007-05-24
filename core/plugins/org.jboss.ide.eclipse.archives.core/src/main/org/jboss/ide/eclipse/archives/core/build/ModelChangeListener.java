@@ -56,12 +56,14 @@ public class ModelChangeListener implements IArchiveModelListener {
 	 * @param delta
 	 */
 	private void handle(IArchiveNodeDelta delta) {
+		if( isTopLevelArchive(delta.getPostNode())) 
+			EventManager.startedBuildingArchive((IArchive)delta.getPostNode());
+
+		
 		if( (delta.getKind() & IArchiveNodeDelta.REMOVED) != 0 ) {
 			nodeRemoved(delta.getPreNode());
-			return;
 		} else if( (delta.getKind() & IArchiveNodeDelta.ADDED) != 0 ) {
 			nodeAdded(delta.getPostNode());
-			return;
 		} else  if( (delta.getKind() & IArchiveNodeDelta.ATTRIBUTE_CHANGED) != 0) {
 			boolean shouldHandleChildren = handleAttributeChange(delta);
 			if( shouldHandleChildren ) {
@@ -76,13 +78,21 @@ public class ModelChangeListener implements IArchiveModelListener {
 				handle(children[i]);
 			}
 		}
+		
+		if( isTopLevelArchive(delta.getPostNode())) 
+			EventManager.finishedBuildingArchive((IArchive)delta.getPostNode());
+
 	}
 	protected boolean descendentChanged(int kind) {
 		 return (kind & IArchiveNodeDelta.DESCENDENT_CHANGED) != 0 || 
 		 		(kind & IArchiveNodeDelta.CHILD_ADDED) != 0 ||
 		 		(kind & IArchiveNodeDelta.CHILD_REMOVED) != 0;
 	}
-
+	protected boolean isTopLevelArchive(IArchiveNode node) {
+		if( node != null && node instanceof IArchive && ((IArchive)node).isTopLevel())
+			return true;
+		return false;
+	}
 	/**
 	 * Handle changes in this node
 	 * @param delta
@@ -100,6 +110,10 @@ public class ModelChangeListener implements IArchiveModelListener {
 		return false;
 	}
 
+	
+	/*
+	 * These three methods will need to be optimized eventually. Because right now they suck
+	 */
 	private boolean handleFolderAttributeChanged(IArchiveNodeDelta delta) {
 		nodeRemoved(delta.getPreNode());
 		nodeAdded(delta.getPostNode());
