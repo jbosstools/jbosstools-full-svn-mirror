@@ -66,9 +66,9 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 		new Label(pkgNameComposite, SWT.NONE).setImage(ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_PACKAGE));
 		
 		packageNameText = new Text(pkgNameComposite, SWT.BORDER);
-		packageName = wizard.getProject().lastSegment() + "." + wizard.getArchiveExtension();
+		packageName = wizard.getProject().getName() + "." + wizard.getArchiveExtension();
 		packageNameText.setText(packageName);
-		packageNameText.setSelection(0, wizard.getProject().lastSegment().length());
+		packageNameText.setSelection(0, wizard.getProject().getName().length());
 		expand(packageNameText);
 		
 		GridData pkgNameData = new GridData(GridData.FILL_HORIZONTAL);
@@ -189,7 +189,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 			}
 		} else if (destination instanceof IContainer) {
 			IContainer container = (IContainer) destination;
-			IArchive[] packages = ArchivesModel.instance().getProjectArchives(wizard.getProject());
+			IArchive[] packages = ArchivesModel.instance().getProjectArchives(wizard.getProject().getLocation());
 			if (packages != null) {
 				for( int i = 0; i < packages.length; i++ ) {
 					IArchive pkg = (IArchive) packages[i];
@@ -207,7 +207,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 			}
 		} else if (destination instanceof IPath) {
 			IPath path = (IPath) destination;
-			IArchive[] packages = ArchivesModel.instance().getProjectArchives(wizard.getProject());
+			IArchive[] packages = ArchivesModel.instance().getProjectArchives(wizard.getProject().getLocation());
 			if (packages != null) {
 				for( int i = 0; i < packages.length; i++ ) {
 					IArchive pkg = (IArchive) packages[i];
