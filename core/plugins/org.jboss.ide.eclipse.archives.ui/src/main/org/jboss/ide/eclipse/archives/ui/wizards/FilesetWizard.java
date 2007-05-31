@@ -60,6 +60,7 @@ public class FilesetWizard extends Wizard {
 		if( page1.isRootDirWorkspaceRelative()) {
 			int workspaceLength = ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString().length();
 			fileset.setSourcePath(new Path(page1.getRootDir().substring(workspaceLength)));
+			fileset.setInWorkspace(true);
 		} else {
 			fileset.setSourcePath(new Path(page1.getRootDir()));
 			fileset.setInWorkspace(false);
