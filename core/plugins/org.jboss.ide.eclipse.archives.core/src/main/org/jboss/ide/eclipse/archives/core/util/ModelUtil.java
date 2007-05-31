@@ -159,6 +159,7 @@ public class ModelUtil {
 	 * @return
 	 */
 	public static IPath getBaseFile(IArchiveNode node, IPath absolutePath) {
+		IArchiveNode parameterNode = node;
 		ArrayList list = new ArrayList();
 		while( node != null && !(node instanceof ArchiveModelNode)) {
 			list.add(node);
@@ -182,10 +183,11 @@ public class ModelUtil {
 			}
 		}
 		
-		if( absolutePath != null && node.getNodeType() ==  IArchiveNode.TYPE_ARCHIVE_FILESET ) {
-			 IArchiveFileSet fs = ((IArchiveFileSet)node);
-			 if( fs.getSourcePath().isPrefixOf(absolutePath)) {
-				 lastConcrete.append(absolutePath.removeFirstSegments(fs.getSourcePath().segmentCount()));
+		if( absolutePath != null && parameterNode.getNodeType() ==  IArchiveNode.TYPE_ARCHIVE_FILESET ) {
+			 IArchiveFileSet fs = ((IArchiveFileSet)parameterNode);
+			 IPath sourcePath = fs.isInWorkspace() ? workspacePathToAbsolutePath(fs.getSourcePath()) : fs.getSourcePath();
+			 if( sourcePath.isPrefixOf(absolutePath)) {
+				 lastConcrete = lastConcrete.append(absolutePath.removeFirstSegments(sourcePath.segmentCount()));
 			 }
 		} 
 		return lastConcrete; 
