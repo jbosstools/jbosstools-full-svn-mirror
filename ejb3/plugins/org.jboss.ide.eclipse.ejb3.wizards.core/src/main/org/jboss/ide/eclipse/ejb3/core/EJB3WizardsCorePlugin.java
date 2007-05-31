@@ -38,7 +38,7 @@ public class EJB3WizardsCorePlugin extends Plugin
    //The shared instance.
    private static EJB3WizardsCorePlugin plugin;
    public static final String PLUGIN_ID = "org.jboss.ide.eclipse.ejb3.core";
-asdfasdf
+
    //Resource bundle.
    private ResourceBundle resourceBundle;
    /**
