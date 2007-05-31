@@ -29,6 +29,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 
 import de.schlichtherle.io.ArchiveDetector;
@@ -56,12 +57,11 @@ public class ModelTruezipBridge {
 	}
 		
 	public static void cleanFolder(IArchiveFolder folder) {
-		cleanFolder(folder, true);
+		cleanFolder(getFile(folder), true);
 	}
 	
-	public static void cleanFolder(IArchiveFolder folder, boolean sync) {
-		final File file = getFile(folder);
-		TrueZipUtil.deleteEmptyFolders(file);
+	public static void cleanFolder(java.io.File folder, boolean sync) {
+		TrueZipUtil.deleteEmptyChildren(folder);
 		if( sync )
 			TrueZipUtil.sync();
 	}
@@ -87,7 +87,7 @@ public class ModelTruezipBridge {
 	// Let them know which files were removed, for events
 	public static IPath[] fullFilesetRemove(final IArchiveFileSet fileset, boolean sync) {
 		IPath[] paths = fileset.findMatchingPaths();
-		ArrayList list = new ArrayList();
+		final ArrayList list = new ArrayList();
 		list.addAll(Arrays.asList(paths));
 		for( int i = 0; i < paths.length; i++ ) {
 			if( !ModelUtil.otherFilesetMatchesPath(fileset, paths[i])) {
@@ -97,7 +97,22 @@ public class ModelTruezipBridge {
 				list.remove(paths[i]);
 			}
 		}
-
+		
+		// kinda ugly here.   delete all empty folders beneath
+		cleanFolder(getFile(fileset), false);
+		
+		// now ensure all mandatory child folders are still there
+		fileset.getParent().accept(new IArchiveNodeVisitor() {
+			public boolean visit(IArchiveNode node) {
+				if( node.getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
+					createFile(node);
+				} else if( node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FOLDER) {
+						createFile(node);
+				}
+				return true;
+			} 
+		} );
+				
 		if( sync ) 
 			TrueZipUtil.sync();
 		

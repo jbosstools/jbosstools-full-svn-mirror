@@ -109,6 +109,13 @@ public class TrueZipUtil {
 		file.deleteAll();
 	}
 	
+	public static void deleteEmptyChildren(java.io.File file) {
+		if( file.isDirectory() ) {
+			java.io.File[] children = file.listFiles();
+			for( int i = 0; i < children.length; i++ )
+				deleteEmptyFolders(children[i]);
+		}
+	}
 	public static void deleteEmptyFolders(java.io.File file ) {
 		if( file.isDirectory() ) {
 			java.io.File[] children = file.listFiles();

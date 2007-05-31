@@ -130,8 +130,8 @@ public class ArchiveBuildDelegate {
 	/**
 	 * Incremental build.
 	 * Parameters are instance sof changed IPath objects
-	 * Will search only the given node for descendent filesets
-	 * @param archive   An archive to limit the scope to, or null if the entire model
+	 * Will search only the given node for matching descendent filesets
+	 * @param archive   An archive to limit the scope to, or null if the entire default model 
 	 * @param addedChanged  A list of added or changed resource paths
 	 * @param removed       A list of removed resource paths
 	 */

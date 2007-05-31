@@ -109,7 +109,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	 * @see IArchiveFileSet#getSourcePath()
 	 */
 	public IPath getSourcePath() {
-		return new Path(filesetDelegate.getDir());
+		return filesetDelegate.getDir() == null ? null : new Path(filesetDelegate.getDir());
 	}
 	
 	/*
@@ -179,7 +179,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	 */
 	public void setSourcePath (IPath path) {
 		Assert.isNotNull(path);
-		IPath src = getGlobalSourcePath();
+		IPath src = getSourcePath();
 		attributeChanged(SOURCE_PATH_ATTRIBUTE, src == null ? null : src.toString(), path == null ? null : path.toString());
 		filesetDelegate.setDir(path.toString());
 		rescanRequired = true;
