@@ -281,44 +281,25 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 	public void saveModel (IPath project, IProgressMonitor monitor) {
 		// get a list of dirty nodes
 		
-		try {
-			if (monitor == null)
-				monitor = new NullProgressMonitor();
-			
-			ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-			OutputStreamWriter writer = new OutputStreamWriter(bytesOut);
-			XbPackages packs = getXbPackages(project);
-			XMLBinding.marshal(packs, writer, monitor);
-			writer.close();
-			
-			ByteArrayInputStream bytesIn = new ByteArrayInputStream(bytesOut.toByteArray());
-			IPath packagesFile = project.append(ArchivesModel.PROJECT_PACKAGES_FILE);
-			OutputStream out = new FileOutputStream(packagesFile.toFile());
+		if (monitor == null)
+			monitor = new NullProgressMonitor();
+		
+		IPath packagesFile = project.append(ArchivesModel.PROJECT_PACKAGES_FILE);
+		XbPackages packs = getXbPackages(project);
 
-			// Transfer bytes from in to out
-	        byte[] buf = new byte[1024];
-	        int len;
-	        while ((len = bytesIn.read(buf)) > 0) {
-	            out.write(buf, 0, len);
-	        }
-			out.close();
-			bytesIn.close();
-			bytesOut.close();
+		XMLBinding.savePackagesToFile(packs, packagesFile, monitor);
+		
+		// get deltas
+		try {
+			ArchiveModelNode root = (ArchiveModelNode)getRoot(project);
+			IArchiveNodeDelta delta = root.getDelta();
 			
-			// get deltas
-			try {
-				ArchiveModelNode root = (ArchiveModelNode)getRoot(project);
-				IArchiveNodeDelta delta = root.getDelta();
-				
-				// clear deltas
-				root.clearDeltas();
-				
-				// fire delta events
-				EventManager.fireDelta(delta);
-			} catch( Exception e ) {
-				e.printStackTrace();
-			}
-		} catch (IOException e) {
+			// clear deltas
+			root.clearDeltas();
+			
+			// fire delta events
+			EventManager.fireDelta(delta);
+		} catch( Exception e ) {
 			e.printStackTrace();
 		}
 	}
