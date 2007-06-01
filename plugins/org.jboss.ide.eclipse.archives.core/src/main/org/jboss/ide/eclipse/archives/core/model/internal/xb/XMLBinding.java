@@ -21,14 +21,20 @@
  */
 package org.jboss.ide.eclipse.archives.core.model.internal.xb;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URL;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.Trace;
@@ -78,6 +84,10 @@ public class XMLBinding {
 	}
 	
 	private static XbPackages element = null;
+	
+	public static XbPackages unmarshal( String input, IProgressMonitor monitor ) {
+		return unmarshal(new ByteArrayInputStream(input.getBytes()), monitor);
+	}
 	
 	public static XbPackages unmarshal (final InputStream in, final IProgressMonitor monitor)
 	{
@@ -133,5 +143,41 @@ public class XMLBinding {
 				}
 			}
 		});
+	}
+	
+	
+	public static void savePackagesToFile(XbPackages packages, IPath outputFile, IProgressMonitor monitor) {
+		try {
+			ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+			OutputStreamWriter writer = new OutputStreamWriter(bytesOut);
+			XMLBinding.marshal(packages, writer, monitor);
+			writer.close();
+			
+			ByteArrayInputStream bytesIn = new ByteArrayInputStream(bytesOut.toByteArray());
+			OutputStream out = new FileOutputStream(outputFile.toFile());
+	
+			// Transfer bytes from in to out
+	        byte[] buf = new byte[1024];
+	        int len;
+	        while ((len = bytesIn.read(buf)) > 0) {
+	            out.write(buf, 0, len);
+	        }
+			out.close();
+			bytesIn.close();
+			bytesOut.close();
+		} catch( IOException ioe ) {
+		}
+	}
+	
+	public static String serializePackages(XbPackages packages, IProgressMonitor monitor) {
+		try {
+			ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+			OutputStreamWriter writer = new OutputStreamWriter(bytesOut);
+			XMLBinding.marshal(packages, writer, monitor);
+			writer.close();
+			return new String(bytesOut.toByteArray());
+		} catch( Exception e ) {
+		}
+		return null;
 	}
 }
