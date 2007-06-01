@@ -148,8 +148,8 @@ public class ModelUtil {
 	 * @param node
 	 * @return
 	 */
-	public static IPath getBaseFile(IArchiveNode node) {
-		return getBaseFile(node, null);
+	public static IPath getBaseDestinationFile(IArchiveNode node) {
+		return getBaseDestinationFile(node, null);
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class ModelUtil {
 	 * @param node
 	 * @return
 	 */
-	public static IPath getBaseFile(IArchiveNode node, IPath absolutePath) {
+	public static IPath getBaseDestinationFile(IArchiveNode node, IPath absolutePath) {
 		IArchiveNode parameterNode = node;
 		ArrayList list = new ArrayList();
 		while( node != null && !(node instanceof ArchiveModelNode)) {
