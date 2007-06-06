@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
-"../../../../jbosstools/trunk/documentation/resources/support/docbook-dtd/docbookx.dtd"
+"../../../../resources/support/docbook-dtd/docbookx.dtd"
 
 [<!ENTITY GettingStartedWithRHDS SYSTEM "modules/GettingStartedWithRHDS.xml">
-<!ENTITY GettingStartedGuideforJSFwithHibernate  SYSTEM "modules/GettingStartedGuideforJSFwithHibernate.xml">
-<!ENTITY AjaxCURDApplicationWithSeamAndRichFaces  SYSTEM "modules/AjaxCURDApplicationWithSeamAndRichFaces.xml">
-<!ENTITY BusinessProcessAndRulesApplication  SYSTEM "modules/BusinessProcessAndRulesApplication.xml">
-<!ENTITY GettingStartedGuideforJavaServerFaces SYSTEM "modules/GettingStartedGuideforJavaServerFaces.xml">
 <!ENTITY GettingStartedForCreatingaJSFApplication SYSTEM "modules/GettingStartedForCreatingAJSFApplication.xml">
 <!ENTITY GettingStartedGuideforCreatingaStrutsApplication  SYSTEM "modules/GettingStartedGuideforCreatingaStrutsApplication.xml">
 <!ENTITY GettingStartedStrutsValidationExamples  SYSTEM "modules/GettingStartedStrutsValidationExamples.xml">
+<!ENTITY GettingStartedGuideforJSFwithHibernate  SYSTEM "modules/GettingStartedGuideforJSFwithHibernate.xml">
+<!ENTITY GettingStartedGuideforJavaServerFaces SYSTEM "modules/GettingStartedGuideforJavaServerFaces.xml">
+
+
 ]>
 
 <book>
@@ -29,12 +29,10 @@
     
 
 &GettingStartedWithRHDS;
-&GettingStartedGuideforJSFwithHibernate;
-&AjaxCURDApplicationWithSeamAndRichFaces;
-&BusinessProcessAndRulesApplication;
 &GettingStartedForCreatingaJSFApplication;
 &GettingStartedGuideforCreatingaStrutsApplication;
 &GettingStartedStrutsValidationExamples;
+&GettingStartedGuideforJSFwithHibernate;
     <!--
         &GettingStartedGuideforJavaServerFaces;
     -->
