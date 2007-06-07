@@ -18,7 +18,7 @@
    <para>Before installing Red Hat Developer Studio, make sure you have one of the following versions of Java 
     installed:</para>
    <itemizedlist>
-    <listitem><para>JDK 1.4.2 or higher</para></listitem>
+    <listitem><para>JDK 1.5 or higher</para></listitem>
    </itemizedlist>
    <para>It must be the full JDK, not just the JRE (Java Runtime Environment). For more information about 
     target operating environments and compatible Java versions, refer to the JBoss web site. Please note
@@ -170,6 +170,58 @@
     <listitem><para>Exact steps you took to get the error</para></listitem>
    </itemizedlist>
   </section>
-
+<section id="FAQ">
+ <?dbhtml filename="FAQ.html"?>
+ <title>FAQ</title>
+ <para>For easy reference to Red Hat Developer Studio related questions, our FAQ provides answers to our most &quot;popular&quot; questions.
+  The sections of questions are organized by type. For further support, please contact support@exadel.com.</para>
+ <section>
+  <title>Top Questions</title>
+  <para><emphasis role="bold">Is it possible to increase the performance of Eclipse after installing your product? My Eclipse now crawls.</emphasis></para>
+  <para>By default, Eclipse allocates only 128 Mb of memory whatever physical memory you actually have installed. You can significantly increase performance
+  if you allocate more memory. For example:</para>
+  <para>eclipse.exe -vmargs -Xmx512M</para>
+  <para><emphasis role="bold">How can I add my own tag library to the Exadel Palette?</emphasis></para>
+  <para>See Adding Tag Libraries in JBossJSFTools Guide</para>
+ </section>
+ <section>
+  <title>Before Installing, Tutorials, Examples, Readme Files</title>
+  <para><emphasis role="bold">I'm looking for examples, do you have any?</emphasis></para>
+  <para>Yes, simply go to our tutorials page</para>
+  <para><emphasis role="bold">Where can I find the Red Hat Developer Studio readme file?</emphasis></para>
+  <para>It's at http://www.exadel.com/web/portal/products/ReleaseNotes</para>
+  <para><emphasis role="bold">Where can I find some documentation for Red Hat Developer Studio?</emphasis></para>
+  <para>Try these resources:</para>
+  <para>TBD</para>
+  <para><emphasis role="bold">What version of Eclipse does Red Hat Developer Studio support?</emphasis></para>
+  <para>Red Hat Developer Studio works with Eclipse 3.2.2 </para>
+ <section>
+  <title>Downloading</title>
+  <para><emphasis role="bold">Where can I download a copy of Red Hat Developer Studio?</emphasis></para>
+  <para>Simply go TBD. </para>
+ </section>
+ <section>
+  <title>Installation Issues</title>
+  <para><emphasis role="bold">Do I need to have JBoss server installed to run Red Hat Developer Studio?</emphasis></para>
+  <para>No. Red Hat Developer Studio already comes bundled with JBoss server. We bundle it together so that you don't need to download any 
+  additional software and can test your application in a Web browser right away.</para>
+  <para>If you want to use a different JBoss server installation, after installing, simply go to preferences and change the settings to point to another 
+  Jboss server installation.</para>
+  <para>Red Hat Developer Stuiod works with any serlvet container, not just JBoss. For more information on deployment, please see the Deploying Your Application section.</para>
+  <para><emphasis role="bold"> What third-party plug-ins are installed with Exadel Studio?</emphasis></para>
+  <para>Read the <link  linkend="Installing">Installing</link> section.</para> 
+ </section>
+ <section>
+  <title>Importing Projects</title>
+  <para><emphasis role="bold">I have an existing Struts or JSF project. Can I open the project in Exadel Studio?</emphasis></para>
+  <para>Yes. Read the TBD</para>
+  <para><emphasis role="bold">Can I import a .war file?</emphasis></para>
+  <para>Yes. Read the TBD</para>
+ </section>
+ <section>
+  <title>Troubleshooting, Problems, Configuration, Error Messages</title>
+ </section>
+</section>
+</section>
 </chapter>
 
