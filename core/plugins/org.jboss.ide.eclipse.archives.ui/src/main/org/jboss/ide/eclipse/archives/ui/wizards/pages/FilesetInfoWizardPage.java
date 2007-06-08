@@ -279,10 +279,14 @@ public class FilesetInfoWizardPage extends WizardPage {
 	
 	private void fillDefaults () {
 		if (fileset != null) {
-				if (fileset.getIncludesPattern() != null)
-					includesText.setText(fileset.getIncludesPattern());
-				if (fileset.getExcludesPattern() != null)
-					excludesText.setText(fileset.getExcludesPattern());
+				if (fileset.getIncludesPattern() != null) {
+					includes = fileset.getIncludesPattern();
+					includesText.setText(includes);
+				}
+				if (fileset.getExcludesPattern() != null) {
+					excludes = fileset.getExcludesPattern();
+					excludesText.setText(excludes);
+				}
 				
 				if (fileset.getGlobalSourcePath() != null) {
 					rootDir = fileset.getGlobalSourcePath();
