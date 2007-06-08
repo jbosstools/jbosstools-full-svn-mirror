@@ -195,6 +195,7 @@
   <para>TBD</para>
   <para><emphasis role="bold">What version of Eclipse does Red Hat Developer Studio support?</emphasis></para>
   <para>Red Hat Developer Studio works with Eclipse 3.2.2 </para>
+  </section>
  <section>
   <title>Downloading</title>
   <para><emphasis role="bold">Where can I download a copy of Red Hat Developer Studio?</emphasis></para>
@@ -220,8 +221,17 @@
  </section>
  <section>
   <title>Troubleshooting, Problems, Configuration, Error Messages</title>
+  <para><emphasis role="bold">Is it possible to increase the performance of Eclipse after installing your product? My Eclipse now crawls.</emphasis></para>
+  <para>By default, Eclipse allocates only 128 Mb of memory whatever physical memory you actually have installed. You can significantly increase performance
+   if you allocate more memory. For example:</para>
+  <para>eclipse.exe -vmargs -Xmx512M</para>
+  <para><emphasis role="bold">How can I add my own tag library to the Exadel Palette?</emphasis></para>
+  <para>See Adding Tag Libraries in JBossJSFTools Guide</para>
+  <para><emphasis role="bold">I see the Oracle ADF Faces component library tags in the Exadel Palette, but I can't seem to find the libraries for ADF.
+  How do I use this component library with Exadel Studio?</emphasis></para>
+  <para>See Adding Support for the Oracle ADF Components Library in the Exadel Studio User Guide.</para>
+
  </section>
-</section>
 </section>
 </chapter>
 
