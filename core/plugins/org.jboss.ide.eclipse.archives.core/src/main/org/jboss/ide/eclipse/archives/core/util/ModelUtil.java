@@ -185,7 +185,7 @@ public class ModelUtil {
 		
 		if( absolutePath != null && parameterNode.getNodeType() ==  IArchiveNode.TYPE_ARCHIVE_FILESET ) {
 			 IArchiveFileSet fs = ((IArchiveFileSet)parameterNode);
-			 IPath sourcePath = fs.isInWorkspace() ? workspacePathToAbsolutePath(fs.getSourcePath()) : fs.getSourcePath();
+			 IPath sourcePath = fs.getGlobalSourcePath();
 			 if( sourcePath.isPrefixOf(absolutePath)) {
 				 lastConcrete = lastConcrete.append(absolutePath.removeFirstSegments(sourcePath.segmentCount()));
 			 }
@@ -194,8 +194,7 @@ public class ModelUtil {
 	}
 	
 	
-	public static IPath workspacePathToAbsolutePath (IPath workspacePath)
-	{
+	public static IPath workspacePathToAbsolutePath (IPath workspacePath) {
 		String projectName = workspacePath.segment(0);
 		IPath projectPath = ArchivesCore.getInstance().getVariables().getProjectPath(projectName);
 		

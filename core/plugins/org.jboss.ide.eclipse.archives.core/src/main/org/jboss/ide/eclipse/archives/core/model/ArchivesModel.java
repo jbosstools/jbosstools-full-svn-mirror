@@ -21,14 +21,8 @@
  */
 package org.jboss.ide.eclipse.archives.core.model;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -89,6 +83,8 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 	}
 	
 	
+	public static final int LIST_FRONT = 0;
+	public static final int LIST_BACK = -1;
 	
 	/*
 	 * Listeners
@@ -97,9 +93,17 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		if( !buildListeners.contains(listener)) 
 			buildListeners.add(listener);
 	}
+	public void addBuildListener(IArchiveBuildListener listener, int loc) {
+		if( !buildListeners.contains(listener)) {
+			if( loc == LIST_FRONT )
+				buildListeners.add(0, listener);
+			else
+				buildListeners.add(listener);				
+		}
+	}
+	
 	public void removeBuildListener(IArchiveBuildListener listener) {
-		if( buildListeners.contains(listener)) 
-			buildListeners.remove(listener);
+		buildListeners.remove(listener);
 	}
 	public IArchiveBuildListener[] getBuildListeners() {
 		return (IArchiveBuildListener[]) buildListeners.toArray(new IArchiveBuildListener[buildListeners.size()]);
@@ -109,6 +113,15 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		if( !modelListeners.contains(listener)) 
 			modelListeners.add(listener);
 	}
+	public void addModelListener(IArchiveModelListener listener, int loc) {
+		if( !modelListeners.contains(listener)) {
+			if( loc == LIST_FRONT )
+				modelListeners.add(0, listener);
+			else
+				modelListeners.add(listener);				
+		}
+	}
+	
 	public void removeModelListener(IArchiveModelListener listener) {
 		if( modelListeners.contains(listener)) 
 			modelListeners.remove(listener);
