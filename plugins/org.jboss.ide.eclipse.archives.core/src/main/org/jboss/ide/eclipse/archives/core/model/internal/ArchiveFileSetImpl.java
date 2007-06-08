@@ -97,7 +97,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	public IPath getGlobalSourcePath() {
 		String path = filesetDelegate.getDir();
 		if (path == null || path.equals(".") || path.equals("")) {
-			return getProjectPath() == null ? null : getProjectPath();
+			return getProjectPath();
 		} else if( isInWorkspace()){
 			return ModelUtil.workspacePathToAbsolutePath(new Path(path)); 
 		} else {

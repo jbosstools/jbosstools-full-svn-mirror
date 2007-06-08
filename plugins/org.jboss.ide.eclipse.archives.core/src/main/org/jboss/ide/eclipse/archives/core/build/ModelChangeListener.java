@@ -33,6 +33,7 @@ public class ModelChangeListener implements IArchiveModelListener {
 	 */
 	public void modelChanged(IArchiveNodeDelta delta) {
 		// if we're not building, get out
+		System.out.println("**  model changed");
 		if( !ArchivesCore.getInstance().getPreferenceManager().isBuilderEnabled(delta.getPostNode().getProjectPath())) 
 			return;
 
