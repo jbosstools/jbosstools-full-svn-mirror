@@ -120,7 +120,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 	
 	private Group createPreviewGroup(Composite mainComposite, Group info) {
 		Group previewGroup = new Group(mainComposite, SWT.NONE);
-		previewGroup.setLayoutData(createFormData(info,5,100,-5,0,5,100,-5));
+		previewGroup.setLayoutData(createFormData(info,5,info,300,0,5,100,-5));
 		previewGroup.setLayout(new FormLayout());
 		previewComposite = new FilesetPreviewComposite(previewGroup, SWT.NONE);
 		previewComposite.setLayoutData(createFormData(0,0,100,0,0,0,100,0));
