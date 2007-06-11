@@ -15,7 +15,7 @@ make it active by selecting Window/Open Perspective/Other/Red Hat Developer Stud
     <section id="StartingUp">
     <title>Starting Up</title>   
 <para>We are first going to create a new project for the application.</para>
- <orderedlist>
+ <itemizedlist>
 <listitem><para>Go to the menu bar and select File/New/Project... .</para></listitem>
 <listitem><para>Select Red Hat Developer Studio/Struts/Struts Project in the New Project dialog box.</para></listitem>
 <listitem><para>Click Next >.</para></listitem>
@@ -23,14 +23,14 @@ make it active by selecting Window/Open Perspective/Other/Red Hat Developer Stud
 <listitem><para>Leave everything else as is, and click Next >.</para></listitem>
 <listitem><para>Click Next> again.</para></listitem>
      <listitem><para>7. Make sure that struts-bean.tld, struts-html.tld, and struts-logic.tld are checked in the list of included tag libraries and then click Finish.</para></listitem>
-</orderedlist>   
+</itemizedlist>   
 <para>A StrutsHello node should appear in the upper-left Package Explorer view.</para>
-  <orderedlist continuation="continues">
+  <itemizedlist continuation="continues">
 <listitem><para>Click the plus sign next to StrutsHello to reveal the child nodes.</para></listitem>
 <listitem><para>Click the plus sign next to WebContent under StrutsHello.</para></listitem>
 <listitem><para>Click the plus sign next to WEB-INF under WebContent.</para></listitem>
       <listitem><para>Then, double-click on the struts-config.xml node to display a diagram of the Struts application configuration file in the editing area.</para></listitem>
- </orderedlist> 
+ </itemizedlist> 
 <para>At this point, its empty except for the background grid lines.</para>
     </section>
 
@@ -46,7 +46,7 @@ create them as placeholders so that we can create links to them in the diagram. 
 the code a little bit later.</para>
             <section id="CreatingthePagePlaceholders">
            <title>Creating the Page Placeholders</title>
- <orderedlist continuation="continues">
+ <itemizedlist continuation="continues">
 <listitem><para>Bring the Web Projects view to the front of the Package Explorer view by selecting the Web Projects tab next to that tab.</para></listitem>
 <listitem><para>Right-click the StrutsHello/WEB-ROOT (WebContent) folder in the Web Projects view and select New/Folder... .</para></listitem>
 <listitem><para>Enter pages for a folder name and click Finish.</para></listitem>
@@ -57,28 +57,28 @@ the code a little bit later.</para>
                <listitem><para>For Name type in inputname (the JSP extension will be automatically added to the file), for Template select StrutsForm, and then click on the Finish button.</para></listitem>
 <listitem><para>Right-click the pages folder again and select New/File/JSP... .</para></listitem>
 <listitem><para>For Name type in greeting , for Template leave as Blank, and then click on the Finish button.</para></listitem>
- </orderedlist>
+ </itemizedlist>
 <para>Just leave these files as is for now.</para>
         </section>
             <section id="PlacingthePagePlaceholders">
      <title>Placing the Page Placeholders</title>
 <para>Lets now place the two pages just created on the diagram.</para>
-     <orderedlist continuation="continues">
+     <itemizedlist continuation="continues">
 <listitem><para>Click on the struts-config.xml tab in the Editing area to bring the diagram to the front.</para></listitem>
 <listitem><para>Click on the inputname.jsp page in the Web Projects view, drag it onto the diagram, and drop it.</para></listitem>
 <listitem>Click on the greeting.jsp page in the Web Projects view, drag it onto the diagram,
 and drop it to the right of the /pages/inputname.jsp icon with some extra space.</listitem>
-</orderedlist>
+</itemizedlist>
 <para>You should now have two JSP pages in the diagram.</para>
  </section>
  </section>    
         <section id="CreatinganActionMappings">
         <title>Creating an Action Mappings</title>
 <para>Using a context menu on the diagram, we are next going to create an Action mapping.</para>
-        <orderedlist continuation="continues">
+        <itemizedlist continuation="continues">
 <listitem><para>Right-click between the two icons and select Add/Action</para></listitem>
 <listitem><para>Enter the following values:</para></listitem>
-        </orderedlist>
+        </itemizedlist>
         <table>
              <tgroup cols="2">
                  <tbody>
@@ -106,9 +106,9 @@ and drop it to the right of the /pages/inputname.jsp icon with some extra space.
                  </tgroup>
         </table>
 <para>(GetNameForm is the name for a form bean that we will create later.)</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
         <listitem><para>Click Finish.</para></listitem>
-</orderedlist>
+</itemizedlist>
             
 <para>The /greeting action should appear in two places, in the diagram and also under the action-mappings node under the struts-config.xml node in the Outline view. Also, note the
 asterisk to the right of the name, struts-config.xml, in the Outline view showing that the file has been changed, but not saved to disk.</para>
@@ -116,9 +116,9 @@ asterisk to the right of the name, struts-config.xml, in the Outline view showin
         <section id="CreatingaLink">
          <title>Creating a Link</title>
 <para>Let&apos;s now create a link from the inputname.jsp page to the action.</para>
-         <orderedlist continuation="continues">
+         <itemizedlist continuation="continues">
 <listitem><para>On the left-hand side of the diagram in the column of icons, click on this icon:</para></listitem>
-         </orderedlist>
+         </itemizedlist>
             <figure>
                 <title>Create New Connection Icon</title>
                 <mediaobject> 
@@ -127,17 +127,17 @@ asterisk to the right of the name, struts-config.xml, in the Outline view showin
                     </imageobject>
                 </mediaobject>
                 </figure>
-            <orderedlist continuation="continues">
+            <itemizedlist continuation="continues">
              <listitem><para>In the connect-the-components mode you are in now, click on the /pages/inputname.jsp icon in the diagram and then click on the /greeting action.</para></listitem>
-         </orderedlist>
+         </itemizedlist>
 <para>A link will be created from the page to the action.</para>
      </section>
         <section id="CreatingaForward">
          <title>Creating a Forward</title>
 <para>Next, we are going to create a forward for the action.</para>
-         <orderedlist continuation="continues">        
+         <itemizedlist continuation="continues">        
 <listitem><para>On the left-hand side of the diagram in the column of icons, click on this icon, again:</para></listitem>
-         </orderedlist>
+         </itemizedlist>
             <figure>
                 <title>Create New Connection Icon</title>
                 <mediaobject> 
@@ -146,7 +146,7 @@ asterisk to the right of the name, struts-config.xml, in the Outline view showin
                     </imageobject>
                 </mediaobject>
             </figure>
-            <orderedlist continuation="continues">>
+            <itemizedlist continuation="continues">>
 <listitem><para>Click on the /greeting action icon in the diagram and then click on the /pages/greeting.jsp icon.</para></listitem>
              
 <listitem><para>Thats it. A link will be drawn from the actions new greeting forward to the greeting.jsp JSP page. Note that the forwards name will be set based on the name of the target JSP file
@@ -156,12 +156,12 @@ name. If you dont like it, you can easily change it.</para></listitem>
 <listitem><para>Expand the struts-config.xml/action-mappings//greeting node and then select the greeting forward.</para></listitem>
 <listitem><para>In the Properties Editor to the right, change the text to sayHello in the Name field.</para></listitem>
 <listitem><para>Select the Diagram tab at the bottom of the editor window and see how the diagram is also updated to reflect the change.</para></listitem>
-             </orderedlist>
+             </itemizedlist>
      </section>
         <section id="CreatingaGlobalForward">
          <title>Creating a Global Forward</title>
 <para>One last component that we need to create in the diagram is a global forward.</para>
- <orderedlist continuation="continues">
+ <itemizedlist continuation="continues">
 <listitem><para>Somewhere in the top-left corner of diagram, right-click and select Add/Global Forward....</para></listitem>
 <listitem><para>Enter getName in the Name field.</para></listitem>
 <listitem><para>Select the Change... button for Path.</para></listitem>
@@ -169,11 +169,11 @@ name. If you dont like it, you can easily change it.</para></listitem>
 <listitem><para>Expand the StrutsHello/WEB-ROOT (WebContent)/pages node and then select the inputname.jsp page.</para></listitem>
 <listitem><para>Click Ok.</para></listitem>
 <listitem><para>Leave the rest of the fields blank and click Ok.</para></listitem>
- </orderedlist>    
+ </itemizedlist>    
 <para>A forward object now appears on the diagram and also in the global-forwards folder in the Outline view.</para>
-         <orderedlist continuation="continues">
+         <itemizedlist continuation="continues">
              <listitem><para>Tidy up the diagram, by clicking and dragging around each icon, so that the diagram looks something like this:</para></listitem>
-         </orderedlist>
+         </itemizedlist>
             <figure>
                 <title>Diagram View</title>
                 <mediaobject> 
@@ -186,13 +186,13 @@ name. If you dont like it, you can easily change it.</para></listitem>
         <section id="CreatingaFormBean">
          <title>Creating a Form Bean</title>
 <para>One last thing that we need to do is to create a form bean.</para>
- <orderedlist continuation="continues">
+ <itemizedlist continuation="continues">
 <listitem><para>Switch to the Tree viewer in the editor for the struts-config.xml file, by selecting the Tree tab at the bottom of the editor window.</para></listitem>
 <listitem><para>Right-click struts-config.xml/form-beans and select Create Form Bean.</para></listitem>
 <listitem><para>Enter GetNameForm in the name field and sample.GetNameForm for type.</para></listitem>
 <listitem><para>Click Finish.</para></listitem>
 <listitem><para>To save your changes to struts-config.xml, select File/Save from the menu bar.</para></listitem>
- </orderedlist>
+ </itemizedlist>
 <para>Note the disappearance of the asterisk next to the name, struts-config.xml.</para>
 </section>
 </section>
@@ -204,18 +204,18 @@ name. If you dont like it, you can easily change it.</para></listitem>
       code for the action component. We also need to write an action class for the /greeting mapping
       along with a FormBean. To aid in the coding phase, Red Hat Developer Studio can generate Java class
       stubs for all of the components shown in the diagram.</para>
- <orderedlist continuation="continues">
+ <itemizedlist continuation="continues">
 <listitem><para>Switch back to the diagram, by selecting the Diagram tab at the bottom of the editor window.</para></listitem>
 <listitem><para>Right-click a blank space in the diagram and select Generate Java Code.</para></listitem>
 <listitem><para>Leave everything as is in the dialog box and click Generate .</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>You should see a screen that says:</para>
 <para>Generated classes: 2</para>
 <para>Actions: 1</para>
 <para>Form beans: 1</para>
-     <orderedlist continuation="continues">
+     <itemizedlist continuation="continues">
 <listitem><para>Click Finish.</para></listitem>
-     </orderedlist>
+     </itemizedlist>
 <para>The Java files will be generated in a JavaSource/sample folder that you can see in the Package
     Explorer view under the StrutsHello node. One Action stub and one FormBean stub will have been generated.</para>
  </section>
@@ -226,34 +226,34 @@ name. If you dont like it, you can easily change it.</para></listitem>
     from previous steps, and a new start JSP page we will have to create.</para>
         <section id="JavaStubClasses">
          <title>Java Stub Classes</title>
-  <orderedlist continuation="continues">
+  <itemizedlist continuation="continues">
       <listitem><para>To finish the two Java classes, switch to the Package Explorer view and expand the JavaSource/sample folder.</para></listitem>
- </orderedlist>
+ </itemizedlist>
             <section id="GetNameForm.java">
     <title>GetNameForm.java</title>
-    <orderedlist continuation="continues">
+    <itemizedlist continuation="continues">
 <listitem><para>Double-click GetNameForm.java for editing.</para></listitem>
  
 <listitem><para>You are looking at a Java stub class that was generated by Red Hat Developer Studio. Now we are going to edit the file.</para></listitem>
 
 <listitem><para>Add the following attributes at the beginning of the class:</para></listitem>
-     </orderedlist>
+     </itemizedlist>
 <para>private String name = "";</para>
 <para>private String greetName = "";</para>
-    <orderedlist continuation="continues">
+    <itemizedlist continuation="continues">
 <listitem><para>Inside the reset method, delete the TO DO and throw lines and add:</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>this.name = "";</para>
 <para>this.greetName = "";</para>
-    <orderedlist continuation="continues">
+    <itemizedlist continuation="continues">
 <listitem><para>Inside the validate method, delete the TO DO and throw lines and add:</para></listitem>
-     </orderedlist>
+     </itemizedlist>
 <para>ActionErrors errors = new ActionErrors();</para>
 <para>return errors;</para>
-    <orderedlist continuation="continues">
+    <itemizedlist continuation="continues">
 <listitem><para>Right-click and select Source/Generate Getters and Setters... from the context menu.</para></listitem>
 <listitem><para>In the dialog box, check the check boxes for name and greetName, select First method for Insertion point, and click on the OK button.</para></listitem>
-        </orderedlist>
+        </itemizedlist>
 <para>The final GetNameForm.java file should look like this:</para>
 <programlisting role="JAVA"><![CDATA[
 package sample;
@@ -297,16 +297,16 @@ public class GetNameForm extends org.apache.struts.action.ActionForm {
 }
 ]]></programlisting>
     
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Save the file.</para></listitem>
-</orderedlist>
+</itemizedlist>
 </section>
             <section id="GreetingAction.java">
              <title>GreetingAction.java</title>
- <orderedlist continuation="continues">
+ <itemizedlist continuation="continues">
 <listitem><para>Open GreetingAction.java for editing.</para></listitem>
 <listitem><para>Inside the execute method, delete the TO DO and throw lines and add the following:</para></listitem>
- </orderedlist>
+ </itemizedlist>
      
      <programlisting role="JAVA"><![CDATA[
 String name = ((GetNameForm)form).getName();
@@ -342,10 +342,10 @@ public class GreetingAction extends org.apache.struts.action.Action {
 	}
 }
 ]]></programlisting>
-     <orderedlist continuation="continues">
+     <itemizedlist continuation="continues">
 <listitem><para>Save the file.</para></listitem>
 <listitem><para>Close the editors for the two Java files.</para></listitem>
- </orderedlist>
+ </itemizedlist>
 <para>The last thing left to do is to code the JSP files whose editors should still be open from having been created as placeholders.</para>
    </section>
  </section>
@@ -354,7 +354,7 @@ public class GreetingAction extends org.apache.struts.action.Action {
             <section id="inputname.jsp">
              <title>inputname.jsp</title>
 <para>In this page, the user will enter any name and click the submit button. Then, the greeting action will be called through the form.</para>
- <orderedlist continuation="continues">
+ <itemizedlist continuation="continues">
 <listitem><para>Click on the inputname.jsp tab in the Editing area to bring its editor forward.</para></listitem>
 <listitem><para>In the Web Projects view, expand StrutsHello/Configuration/default/strutsconfig.xml/action-mappings and select /greeting.</para></listitem>
 <listitem><para>Drag it and drop it between the quotes for the action attribute to the html:form element in the Source pane of the editor.</para></listitem>
@@ -364,7 +364,7 @@ public class GreetingAction extends org.apache.struts.action.Action {
 
 <listitem><para>Select the Visual pane of the editor.</para></listitem>
 <listitem><para>Then, in the Red Hat Palette, expand the Struts Form library, select text, and drag it onto the box.</para></listitem>
- </orderedlist>
+ </itemizedlist>
                 <figure>
                     <title>Red Hat Palette</title>
                     <mediaobject> 
@@ -373,12 +373,12 @@ public class GreetingAction extends org.apache.struts.action.Action {
                         </imageobject>
                     </mediaobject>
                 </figure>
- <orderedlist continuation="continues">
+ <itemizedlist continuation="continues">
  <listitem><para>In the Insert Tag dialog box, type in name for property and select Finish.</para></listitem>
 <listitem><para>In the Struts Form library in the Red Hat Palette, select submit, and drag it to right after the the text box in the Visual pane of the editor.</para></listitem>
 <listitem><para>Right-click the submit button and select &lt;html:submit&gt; Attributes from the context menu.</para></listitem>
 <listitem><para>In the Attributes dialog box, select the value field and type in Say Hello! for its value.</para></listitem>
- </orderedlist>
+ </itemizedlist>
 <para>After tidying the page source, the Editor window for the file should look something like this:</para>
                 <figure>
                     <title>Editor window</title>
@@ -392,10 +392,10 @@ public class GreetingAction extends org.apache.struts.action.Action {
             <section id="greeting.jsp">
              <title>greeting.jsp</title>
 <para>Next, we will fill in the result page.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Click on the greeting.jsp tab in the Editing area to bring its editor forward.</para></listitem>
 <listitem><para>Type in the following code:</para></listitem>
-    </orderedlist>
+    </itemizedlist>
 <programlisting role="XML"><![CDATA[
 <html>
 <head>
@@ -409,20 +409,20 @@ public class GreetingAction extends org.apache.struts.action.Action {
 ]]></programlisting>
 
 <para>To complete editing of this file, we will use macros from the Red Hat Palette. This palette is a view that should be available to the right of the editing area.</para>
-     <orderedlist continuation="continues">
+     <itemizedlist continuation="continues">
 <listitem><para>Click on the Struts Common folder in the Red Hat Palette to open it.</para></listitem>
 <listitem><para>Position the cursor at the beginning of the greeting.jsp file in the Source pane and then click on bean taglib in the Red Hat Palette.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>This will insert the following line at the top of the file:</para>
 <programlisting role="JAVA"><![CDATA[
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 ]]></programlisting>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Click on the Struts Bean folder in the Red Hat Palette to open it.</para></listitem>
 <listitem><para>Position the cursor inside the p element.</para></listitem>
 <listitem><para>Click on write in the Red Hat Palette.</para></listitem>
 <listitem><para>Type in GetNameForm for the name attribute and add a property attribute with greetName as its value.</para></listitem>
-    </orderedlist>
+    </itemizedlist>
 <para>The editor should should now look like this:</para>
                 <figure>
                     <title>Editor window</title>
@@ -436,7 +436,7 @@ public class GreetingAction extends org.apache.struts.action.Action {
             <section id="index.jsp">
              <title>index.jsp</title>
 <para>Finally, we will need to create and edit an index.jsp page. This page will use a Struts forward to simply redirect us to the getName global forward.</para>
- <orderedlist continuation="continues">
+ <itemizedlist continuation="continues">
 <listitem><para>In the Web Projects view, right-click on StrutsHello/WEB-ROOT(WebContent)</para>
 <para>node and select New/File/JSP... .</para>
 </listitem>
@@ -447,15 +447,15 @@ public class GreetingAction extends org.apache.struts.action.Action {
 <listitem><para>Back on the palette, select the Struts Logic folder of macros.</para></listitem>
 <listitem><para>Click on redirect.</para></listitem>
 <listitem><para>Delete the ending tag, put a forward slash in front of the closing angle bracket, and type forward=getName in front of the slash.</para></listitem>
- </orderedlist>
+ </itemizedlist>
 <para>The finished code for the page is shown below:</para>
 <programlisting role="JAVA"><![CDATA[
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <logic:redirect forward="getName"/>
 ]]></programlisting>
-       <orderedlist continuation="continues">      
+       <itemizedlist continuation="continues">      
 <listitem><para>To save all the edits to files, select File/Save All from the menu bar.</para></listitem>
-         </orderedlist>
+         </itemizedlist>
      </section>
    </section>
  </section>
@@ -479,7 +479,7 @@ public class GreetingAction extends org.apache.struts.action.Action {
                 </imageobject>
             </mediaobject>
         </figure>
-        <orderedlist continuation="continues">
+        <itemizedlist continuation="continues">
 <listitem>Start up JBoss AS by clicking on the first icon from left in this panel. (If JBoss AS is
     already running, stop it by clicking on the third icon from the left and then start it
     again. Remember, the Struts run-time requires restarting the servlet engine when
@@ -487,7 +487,7 @@ public class GreetingAction extends org.apache.struts.action.Action {
 <listitem>After the messages in the Console tabbed view stop scrolling, JBoss AS is available.
     At this point, right-click on the getName global forward in the struts-config.xml
     diagram view and select Run on Server.</listitem>
- </orderedlist>
+ </itemizedlist>
 <para>The browser should appear with the application started.</para>
     </section>
 </chapter>

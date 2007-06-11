@@ -30,14 +30,14 @@ the Select Perspective dialog box.)</para>
 <?dbhtml filename="SettingUpTheProject.html"?>
 <title>Setting Up the Project</title>
 <para>We are first going to create a new project for the application.</para>
-<orderedlist>
+<itemizedlist>
 <listitem><para>Go to the menu bar and select File > New > Project... .</para></listitem>
 <listitem><para>Select Red Hat Developer Studio > JSF > JSF Project in the New Project dialog box.</para></listitem>
 <listitem><para>Click Next</para></listitem>
 <listitem><para>Enter jsfHello as the project name.</para></listitem>
 <listitem><para>Leave everything else as is, and click Finish.</para></listitem>
 
-</orderedlist>
+</itemizedlist>
 </section>
 <section id="TheJSFApplicationConfigurationFile">
 <?dbhtml filename="TheJSFApplicationConfigurationFile.html"?>
@@ -51,13 +51,13 @@ the Select Perspective dialog box.)</para>
             </imageobject>
         </mediaobject>
     </figure>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Click the plus sign next to jsfHello to reveal the child nodes.</para></listitem>
 <listitem><para>Click the plus sign next to WebContent under jsfHello.</para></listitem>
 <listitem><para>Click the plus sign next to WEB-INF under WebContent.</para></listitem>
 
 <listitem><para>Then double-click on the faces-config.xml node to display the JSF application configuration file editor.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <figure>
 <title></title>
 <mediaobject> 
@@ -79,7 +79,7 @@ Diagram mode of the configuration file editor.</para>
 <section id="AddingTwoViews(JSPPages)">
 <?dbhtml filename="AddingTwoViews(JSPPages).html"?>
 <title>Adding Two Views (JSP Pages)</title>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Right-click anywhere on the diagram and select New View... from the pop-up
 menu</para></listitem>
 <listitem><para>In the dialog box, type pages/inputname as the value for From-view-id</para></listitem>
@@ -93,14 +93,14 @@ menu</para></listitem>
 <listitem><para>In the dialog box, type pages/greeting as the value for From-view-id</para></listitem>
 <listitem><para>Leave everything else as is</para></listitem>
 <listitem><para>Click Finish</para></listitem>
-</orderedlist>
+</itemizedlist>
 <section id="CreatingTheTransition(NavigationRule)">
 <?dbhtml filename="CreatingTheTransition(NavigationRule).html"?>
 <title>Creating the Transition (Navigation Rule)</title>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>In the diagram, select the connection icon third from the top along the upper left
 side of the diagram</para></listitem>
-</orderedlist>
+</itemizedlist>
 <figure>
     <title>Connection icon</title>
 <mediaobject> 
@@ -110,10 +110,10 @@ side of the diagram</para></listitem>
 </mediaobject>
 </figure>
 <para>to get an arrow cursor with a two-pronged plug at the arrow&apos;s bottom.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Click on the pages/inputname page icon and then click on the pages/greeting page icon</para></listitem>
 
-</orderedlist>
+</itemizedlist>
 <para>A transition should appear between the two icons.</para>
 <figure>
 <title>Transition between two icons</title>
@@ -123,9 +123,9 @@ side of the diagram</para></listitem>
         </imageobject>
 </mediaobject>
 </figure>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Select File/Save from the menu bar.</para></listitem>
-</orderedlist>
+</itemizedlist>
 </section>
 </section>
 </section>    
@@ -133,7 +133,7 @@ side of the diagram</para></listitem>
 <?dbhtml filename="AddingAManagedBeanToTheApplication.html"?>
 <title>Adding a Managed Bean to the Application</title>
 <para>To store data in the application, we will use a managed bean.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Click on the Tree tab at the bottom of the editing window</para></listitem>
 <listitem><para>Select the Managed Beans node and then click the Add... button displayed along
 the right side of the editor window</para></listitem>
@@ -147,7 +147,7 @@ section, click the Add... button</para></listitem>
 Class is not filled in, String is the assumed type.)</para></listitem>
 <listitem><para>Click Finish</para></listitem>
 <listitem><para>Select the personBean node in the tree</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>You should see this now:</para>
 <figure>
 <title>Tree view in Config Editor</title>
@@ -157,9 +157,9 @@ Class is not filled in, String is the assumed type.)</para></listitem>
         </imageobject>
 </mediaobject>
 </figure>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Select File/Save from the menu bar.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>You have now registered the managed bean and created a stub-coded class file for it.</para>
 </section>
 <section id="EditingTheJSPViewFiles">
@@ -169,11 +169,11 @@ Class is not filled in, String is the assumed type.)</para></listitem>
 <para>Now we will finish editing the JSP files for our two &quot;views&quot; using Exadel&apos;s JSP Visual Page</para>
 <section id="Inputname.jsp">
 <title>inputname.jsp</title>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Click on the Diagram tab for the configuration file editor</para></listitem>
 <listitem><para>Open the editor for this first JSP file by double-clicking on the /pages/inputname.
 jsp icon</para></listitem>
-</orderedlist>
+</itemizedlist>
 
 <para>The Visual Page Editor will open in a screen split between source code along the top and 
 a WYSIWIG view along the bottom:</para>
@@ -186,12 +186,12 @@ a WYSIWIG view along the bottom:</para>
 </mediaobject>
 </figure>
 <para>Some JSF code will already be in the file because we selected a template when creating the page.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Select the Visual tab, so we can work with the editor completely in its WYSIWYG
 mode</para></listitem>
 <listitem><para>To the right of the editor, in the Red Hat Palette, expand the JSF HTML palette folder
 by selecting it</para></listitem>
-</orderedlist>
+</itemizedlist>
 <figure>
 <title></title>
 <mediaobject> 
@@ -200,7 +200,7 @@ by selecting it</para></listitem>
         </imageobject>
 </mediaobject>
 </figure>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Click on form within this folder, drag the cursor over to the editor, 
 and drop it inside the red box in the editor</para></listitem>
 
@@ -224,7 +224,7 @@ on the ... button</para></listitem>
 <listitem><para>Then, select the View Actions/greeting node and click on the Ok button</para></listitem>
 <listitem><para>Back in the attributes dialog box, type in Say Hello as the value for the value
 attribute (&quot;Say Hello&quot;) and then click on the Finish button</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>The source coding should be something like this now:</para>
 <programlisting role="XML"><![CDATA[<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
@@ -252,13 +252,13 @@ attribute (&quot;Say Hello&quot;) and then click on the Finish button</para></li
         </imageobject>
 </mediaobject>
 </figure>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Save the file by selecting File/Save from the menu bar.</para></listitem>
-</orderedlist>
+</itemizedlist>
 </section>
 <section id="Greeting.jsp">
 <title>greeting.jsp</title>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Click on the faces-config.xml tab to bring the diagram back</para></listitem>
 <listitem><para>Open the editor for the second file by double-clicking on the /pages/greeting.jsp
 icon</para></listitem>
@@ -272,7 +272,7 @@ the ... button</para></listitem>
 <listitem><para>Then, select the Managed Beans/personBean/name node, click on the Ok button,
 and then click on the Finish button</para></listitem>
 <listitem><para>Right after the output field, type an exclamation point (!)</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>The source coding should be something like this now:</para>
 <programlisting role="XML"><![CDATA[<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
@@ -287,25 +287,25 @@ Hello <h:outputText value="#{personBean.name}"/>!
 </body>
 </html>
 ]]></programlisting>
-<orderedlist continuation="continues">
-<listitem><para>Save the file.</para></listitem></orderedlist>
+<itemizedlist continuation="continues">
+<listitem><para>Save the file.</para></listitem></itemizedlist>
 </section>
 </section>
 <section id="CreatingTheStartPage">
 <?dbhtml filename="CreatingTheStartPage.html"?>
 <title>Creating the Start Page</title>
 <para>You also need to create a start page as an entry point into the application.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>In the Package Explorer view to the left, right-click jsfHello/WebContent and select
 New/JSP File</para></listitem>
 <listitem><para>For Name type in index, for Template select JSPRedirect and click Finish.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>A JSP editor will open up on the newly created file.</para>
 
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>In the Source part of the split screen, type /pages/inputname.jsf in between
 the quotes for the page attribute</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>The source coding should look like this now:</para>
 <programlisting role="JSP"><![CDATA[<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
@@ -318,9 +318,9 @@ the quotes for the page attribute</para></listitem>
 
 <para>Note the .jsf extension for the file name. This is a mapping defined in the web.xml file 
 for the project for invoking JavaServer Faces when you run the application.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Select File/Save from the menu bar.</para></listitem>
-</orderedlist>
+</itemizedlist>
 </section>
 <section id="RunningTheApplicationJSF">
 <?dbhtml filename="RunningTheApplicationJSF.html"?>
@@ -336,14 +336,14 @@ JBoss server within Red Hat Developer Studio, the toolbar contains a special pan
         </imageobject>
 </mediaobject>
 </figure>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Start up Tomcat by clicking on the first icon from left. (If Tomcat is already running,
 stop it by clicking on the third icon from the left and then start it again. Remember,
 the JSF run-time requires restarting the servlet engine when any changes have been
 made.) After the messages in the Console tabbed view stop scrolling, Tomcat is available.</para></listitem>
 
 <listitem><para>Click on the Red Hat run icon in the toolbar:</para></listitem>
-</orderedlist>
+</itemizedlist>
 <figure>
 <title></title>
 <mediaobject> 

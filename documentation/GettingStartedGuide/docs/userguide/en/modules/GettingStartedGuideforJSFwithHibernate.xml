@@ -14,7 +14,7 @@
 <title>Installing the Project</title>
 <para>We are first going to download and import this project (ormHibernate3-jsf) into Eclipse.</para>
 
-<orderedlist>
+<itemizedlist>
 <listitem><para>Download: http://webdownload.exadel.com/dirdownloads/ormhib/examples/ormHibernate3-jsf.zip</para></listitem>
 <listitem><para>Unzip this file into your Eclipse workspace folder.</para></listitem>
 <listitem><para>Launch Eclipse.</para></listitem>
@@ -22,7 +22,7 @@
 <listitem><para>Click Next.</para></listitem>
 <listitem><para>Browse to where the project was unzipped.</para></listitem>
 <listitem><para>Find the web.xml file inside the WebContent folder in the WEB-INF folder, select it, and Click Finish.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>The ormHibernate3-jsf project should appear in the Package Explorer with a standard Web application 
 structure. As we mentioned before, this is a JSF application. To see the JSF configuration file, browse to
  WebContent/WEB-INF/faces-config.xml.</para>
@@ -70,11 +70,11 @@ structure. As we mentioned before, this is a JSF application. To see the JSF con
 <para>We are ready to run this project in a Web browser and see how it looks. We don&apos;t need to
  compile these classes, because Eclipse did it for us when we imported the project.</para>
 
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Start Tomcat.</para></listitem>
 <listitem><para>Click on the running-man-and-blue-butterfly icon from the toolbar.</para></listitem>
 <listitem><para>Go ahead and play with the application.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>Initially users don&apos;t exist, so entering any ID will prompt you to enter user details. Once you have saved a user, you can go back to the main page by clicking on the Back to Login Page link. If you then enter that user&apos;s id again, the application will locate and display the user&apos;s details.</para>
 
 </section>
@@ -97,19 +97,19 @@ structure. As we mentioned before, this is a JSF application. To see the JSF con
 <para>Let&apos;s start by using Red Hat Developer Studio with the application project. First, we create 
 the object/relational mapping from our simple object model to a database schema after adding Hibernate 
 capabilities to our project.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Right-click on ormHibernate3-jsf in the Package Explorer view and select Exadel</para></listitem>
 <listitem><para>Studio/Add Hibernate Capability... from the context menu.</para></listitem>
 <listitem><para>Click on Yes in the the dialog box with Add Hibernate Jars selected.</para></listitem>
 <listitem><para>In the Configuration Wizard, click twice in the Value field for dialect and select org.hibernate.dialect.HSQLDialect from the pop-up menu.</para></listitem>
 <listitem><para>Click Finish</para></listitem>
 <listitem><para>Select Object to Schema for the Mapping Approach.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>We are only interested in saving the User class in a database, so we are going to create a mapping for the User class to a database table.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>In the Persistent Classes Wizard dialog that appears next, click on the SelectClasses.</para></listitem>
 <listitem><para>Leave all other values as they are in the next dialog box and click Finish.</para></listitem>
-</orderedlist>
+</itemizedlist>
 </section>
 
 <section id="EditTheHibernateConfiguration">
@@ -118,9 +118,9 @@ capabilities to our project.</para>
 <para>Afterwards, the Hibernate configuration file, hibernate.cfg.xml, will appear in an editor window. 
 So, let&apos;s adjust this file first.</para>
 
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Replace these two lines:</para></listitem>
-</orderedlist>
+</itemizedlist>
 
 
 <programlisting role="XML"><![CDATA[<property
@@ -148,17 +148,15 @@ DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <session-factory>
 <property name="hibernate.connection.datasource">java:comp/env/jdbc/
 kickstart</property>
-Exadel Studio 3.0
-page 4 of 10
-<property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</
+<property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect/>
 property>
 <mapping resource="demo/User.hbm.xml"/>
 </session-factory>
 </hibernate-configuration>
 ]]></programlisting>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Save the file.</para></listitem>
-</orderedlist>
+</itemizedlist>
 </section>
 
 <section id="EdittheMappingFile">
@@ -166,13 +164,13 @@ property>
 <title>Edit the Mapping File</title>
 <para>Next, we need to make on slight change to the mapping file, User.hbm.xml.</para>
 
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>In the ORM Explorer view, reveal the 
 ormHibernate3-jsf/JavaSource/hibernate.cfg.xml/demo/User -> user node, right-click it, and select 
 Open Mapping from the context menu.</para></listitem>
 <listitem><para>In the editor that opens up for the mapping file, just change the class 
 attribute for generator to a value of assigned and you&apos;re done with this file.</para></listitem>
-</orderedlist>
+</itemizedlist>
 
 
 <para>Here is what the edited User.hbm.xml file should now look like:</para>
@@ -200,19 +198,19 @@ attribute for generator to a value of assigned and you&apos;re done with this fi
 ]]></programlisting>
 
 
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Save the file.</para></listitem>
-</orderedlist>
+</itemizedlist>
 </section>
 <section id="AddAGeneralClassForIncorporatingHibernate">
 <?dbhtml filename="AddAGeneralClassForIncorporatingHibernate.html"?>
 <title>Add a General Class for Incorporating Hibernate</title>
 <para>Next, we will need to create a special Java class for incorprating Hibernate into our application.</para>
 
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Switch to the Package Explorer view and create the class,
 HibernateHelper.java, in JavaSource/demo with this content and save it.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <programlisting role="JAVA"><![CDATA[
 package demo;
 import org.hibernate.HibernateException;
@@ -296,18 +294,18 @@ return (s);
 
 <para>We also need to modify the two bean classes in our application to &quot;Hibernate-ize&quot; them.</para>
 
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Modify the GetUserIdBean.java class in JavaSource/demo by adding these imports:
 
 </para></listitem>
-</orderedlist>
+</itemizedlist>
 <programlisting role="JAVA"><![CDATA[import org.hibernate.Session;
 import javax.faces.application.FacesMessage;
 ]]></programlisting>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Then, replace the action() method with this code and save.</para></listitem>
 
-</orderedlist>
+</itemizedlist>
 <programlisting role="JAVA"><![CDATA[{
 public String action()
 throws Exception
@@ -354,16 +352,16 @@ userForm.setZip(user.getAddress().getZip());
 }
 ]]></programlisting>
 
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Modify the UserFormBean.java class in JavaSource/demo by adding these
  imports:</para></listitem>
-</orderedlist>
+</itemizedlist>
 <programlisting role="JAVA"><![CDATA[import org.hibernate.Session;
 import org.hibernate.Transaction;
 ]]></programlisting>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Then, replace the save() method with this code and save the class.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <programlisting role="JAVA"><![CDATA[public String save() throws Exception {
 Map sessionMap =
 FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -402,12 +400,12 @@ database table corresponding to the class we are trying to persist and make the 
 <?dbhtml filename="CreatingtheDatabaseTable.html"?>
 <title>Creating the Database Table</title>
 <para>Let&apos;s first create the script for our database table in Red Hat Developer Studio.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>In the ORM Explorer view, right-click on JavaSource/hibernate.cfg.xml and select "Generate DDL Wizard".</para></listitem>
 
 <listitem><para>Select HSQL as the Dialect and leave Location as is.</para></listitem>
 <listitem><para>Click Finish.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>A DDL file called schema.sql will be created in the root of the project and will be opened in an
  editor window.</para>
  </section>
@@ -415,24 +413,24 @@ database table corresponding to the class we are trying to persist and make the 
  <?dbhtml filename="MakingTheDatabaseAvailableForTheApplication.html"?>
 <title>Making the Database Available for the Application</title>
 <para>The databse server, HSQLDB, is provided with the project. It&apos;s located in the ormHibernate3-jsf/hsqldb folder.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Start the database server: .../ormHibernate3-jsf/hsqldb/bin/server.bat</para></listitem>
 <listitem><para>In a separate window, start the admin tool: .../ormHibernate3-jsf/hsqldb/bin/dbadmin.bat</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>This will launch a small GUI application, HSQL Database Manager.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Leave all values as they are, only change URL: to the following: jdbc:hsqldb:hsql://localhost</para></listitem>
 <listitem><para>Click OK.</para></listitem>
 <listitem><para>Select File/Open Script... from the menu bar of HSQL Database Manager.</para></listitem>
 <listitem><para>Find and open the the DDL file we just created.</para></listitem>
 <listitem><para>Click Execute back in the main screen of the Database Manager.</para></listitem>
 <listitem><para>38. Select View/Refresh Tree from the menu bar.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>The User database should now appear in the expand/collapse tree to the left.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Select File/Exit from the menu bar.</para></listitem>
 <listitem><para>Stop the database server: .../ormHibernate3-jsf/hsqldb/bin/shutdown.bat</para></listitem>
-</orderedlist>
+</itemizedlist>
 </section>
 
 <section id="SettinguptheApplicationServer">
@@ -442,26 +440,26 @@ database table corresponding to the class we are trying to persist and make the 
 <para>Finally, we need to set up the application server before we can run the database-enabled
 application in a Web browser. To do this, we&apos;ll need to modify the application context in the-
 Tomcat server.xml file.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Stop the Tomcat server, if it&apos;s running.</para></listitem>
 <listitem><para>Locate the server.xml file in the Package Explorer view under the Tomcat Server
 node under Servers.</para></listitem>
 <listitem><para>Double-click the file to open an editor on it.</para></listitem>
 <listitem><para>Find the Context tag for your application in the file. It will have a path attribute
 with a value of /ormHibernate3-jsf.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>You&apos;ll need to convert this &quot;empty&quot; XML element into one with beginning and ending tags,
 so we can insert the special resource tags for Tomcat to run this application with a database.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Delete the closing slash at the end of the Context tag.</para></listitem>
 <listitem><para>Insert a blank line after the tag and then start another line.</para></listitem>
 <listitem><para>On this line, insert a closing tag:</para></listitem>
-</orderedlist>
+</itemizedlist>
 <programlisting role="JAVA"><![CDATA[</Context>
 ]]></programlisting>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>On the blank line between the starting and ending tags, add the following resource definition coding.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <programlisting role="XML"><![CDATA[<Resource name="jdbc/kickstart" scope="Shareable"
 type="javax.sql.DataSource"/>
 <ResourceParams name="jdbc/kickstart">
@@ -500,20 +498,20 @@ value>
 </parameter>
 </ResourceParams>
 ]]></programlisting>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Finally, copy .../ormHibernate3-jsf/hsqldb/lib/hsqldb.jar to your
 Tomcat .../common/lib folder.</para></listitem>
-</orderedlist>
+</itemizedlist>
 </section>
 
 <section id="RunningOurNewApplication">
 <?dbhtml filename="RunningOurNewApplication.html"?>
 <title>Running Our New Application</title>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>Start the database server: .../ormHibernate3-jsf/hsqldb/bin/server.bat</para></listitem>
 <listitem><para>Start the Tomcat server.</para></listitem>
 <listitem><para>Run the application.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>Play with the application. Restart Tomcat and the database server. If you run the application
 again and enter a user that you already saved, the application should retrieve it from the database
 and display its details.</para>
