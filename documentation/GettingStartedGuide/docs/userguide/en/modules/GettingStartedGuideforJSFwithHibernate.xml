@@ -7,7 +7,7 @@
 <para>The application itself is a simple JSF-based application that asks the user to enter a UserID. It tries to locate a record for the entered User ID (entered during the application session).</para>
 <para>If the record is found, details are displayed. If the record is not found, you are asked to create this record. This application, of course, only runs as long as the Tomcat server is running. Once we stop the server all of the data is lost as all information is saved only in the application session context.</para>
 <para>With the help of Exadel Studio, we will convert this application to use the lightweight hsqldb database (included with the downloaded project). We will use Exadel Studio special features for object-relational mapping for this conversion After the conversion, even if we restart the server, the data we entered will have been saved in a database and thus available to the application.</para>
-<para>Before we start, we assume that you have Eclipse, and have installed Exadel Studio Pro with Tomcat server.</para>
+<para>Before we start, we assume that you have Eclipse, and have installed RHDS with Tomcat server.</para>
 
 <section id="InstallingTheProject">
 <?dbhtml filename="InstallingTheProject.html"?>
@@ -266,8 +266,6 @@ Session s = (Session)session.get();
 session.set(null);
 if (s != null) {
 s.close();
-Exadel Studio Pro
-page 6 of 9
 }
 }
 /**
