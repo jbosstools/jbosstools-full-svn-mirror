@@ -109,11 +109,11 @@
    
    <itemizedlist>
     <listitem><para> Make sure Eclipse is not running.</para>
-<para>Uninstall your current version of Exadel Studio. You can do one of the following:</para>
+<para>Uninstall your current version of RHDS. You can do one of the following:</para>
 </listitem>
 <listitem><para>Run the Red Hat Developer Studio uninstaller</para></listitem>
     <listitem><para>Delete the file {EclipseHome}/links/com.exadel.studio.link</para>
-<para>Either method will uninstall Exadel Studio.</para>
+<para>Either method will uninstall RHDS.</para>
 </listitem>
 <listitem>Start Eclipse:
      <para>eclipse -clean</para></listitem>

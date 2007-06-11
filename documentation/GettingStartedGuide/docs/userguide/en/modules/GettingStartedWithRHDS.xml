@@ -108,11 +108,11 @@
    
    <itemizedlist>
     <listitem><para> Make sure Eclipse is not running.</para>
-<para>Uninstall your current version of Exadel Studio. You can do one of the following:</para>
+<para>Uninstall your current version of RHDS. You can do one of the following:</para>
 </listitem>
 <listitem><para>Run the Red Hat Developer Studio uninstaller</para></listitem>
     <listitem><para>Delete the file {EclipseHome}/links/com.exadel.studio.link</para>
-<para>Either method will uninstall Exadel Studio.</para>
+<para>Either method will uninstall RHDS.</para>
 </listitem>
 <listitem>Start Eclipse:
      <para>eclipse -clean</para></listitem>
@@ -209,12 +209,12 @@
   <para>If you want to use a different JBoss server installation, after installing, simply go to preferences and change the settings to point to another 
   Jboss server installation.</para>
   <para>Red Hat Developer Stuiod works with any serlvet container, not just JBoss. For more information on deployment, please see the Deploying Your Application section.</para>
-  <para><emphasis role="bold"> What third-party plug-ins are installed with Exadel Studio?</emphasis></para>
+  <para><emphasis role="bold"> What third-party plug-ins are installed with RHDS?</emphasis></para>
   <para>Read the <link  linkend="Installing">Installing</link> section.</para> 
  </section>
  <section>
   <title>Importing Projects</title>
-  <para><emphasis role="bold">I have an existing Struts or JSF project. Can I open the project in Exadel Studio?</emphasis></para>
+  <para><emphasis role="bold">I have an existing Struts or JSF project. Can I open the project in RHDS?</emphasis></para>
   <para>Yes. Read the TBD</para>
   <para><emphasis role="bold">Can I import a .war file?</emphasis></para>
   <para>Yes. Read the TBD</para>
@@ -228,8 +228,8 @@
   <para><emphasis role="bold">How can I add my own tag library to the Exadel Palette?</emphasis></para>
   <para>See Adding Tag Libraries in JBossJSFTools Guide</para>
   <para><emphasis role="bold">I see the Oracle ADF Faces component library tags in the Exadel Palette, but I can't seem to find the libraries for ADF.
-  How do I use this component library with Exadel Studio?</emphasis></para>
-  <para>See Adding Support for the Oracle ADF Components Library in the Exadel Studio User Guide.</para>
+  How do I use this component library with RHDS?</emphasis></para>
+  <para>See Adding Support for the Oracle ADF Components Library in the RHDS User Guide.</para>
 
  </section>
 </section>

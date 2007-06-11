@@ -2,11 +2,11 @@
 <chapter id="GettingStartedGuideforJSFwithHibernate" xreflabel="GettingStartedGuideforJSFwithHibernate">
     <?dbhtml filename="GettingStartedGuideforJSFwithHibernate.html"?>
 	<title>Getting Started Guide for JSF with Hibernate</title>
-<para>In this guide, we will show you how to take a very simple ready-made JSF application and convert it to use a database with the help of Exadel Studio. After downloading, we will first</para>
+<para>In this guide, we will show you how to take a very simple ready-made JSF application and convert it to use a database with the help of RHDS. After downloading, we will first</para>
 <para>set up and run the application without persistence, and then with persistence.</para>
 <para>The application itself is a simple JSF-based application that asks the user to enter a UserID. It tries to locate a record for the entered User ID (entered during the application session).</para>
 <para>If the record is found, details are displayed. If the record is not found, you are asked to create this record. This application, of course, only runs as long as the Tomcat server is running. Once we stop the server all of the data is lost as all information is saved only in the application session context.</para>
-<para>With the help of Exadel Studio, we will convert this application to use the lightweight hsqldb database (included with the downloaded project). We will use Exadel Studio special features for object-relational mapping for this conversion After the conversion, even if we restart the server, the data we entered will have been saved in a database and thus available to the application.</para>
+<para>With the help of RHDS, we will convert this application to use the lightweight hsqldb database (included with the downloaded project). We will use RHDS special features for object-relational mapping for this conversion After the conversion, even if we restart the server, the data we entered will have been saved in a database and thus available to the application.</para>
 <para>Before we start, we assume that you have Eclipse, and have installed RHDS with Tomcat server.</para>
 
 <section id="InstallingTheProject">
