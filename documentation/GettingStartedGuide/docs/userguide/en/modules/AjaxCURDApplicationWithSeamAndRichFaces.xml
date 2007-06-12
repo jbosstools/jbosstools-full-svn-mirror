@@ -393,7 +393,7 @@ shown below. The results of this query should be very similar to the results of 
 <para>A key feature of JBoss Seam and the Red Hat Developer Studio is that they make AJAX and rich
  UI web applications a breeze to develop. In this section of the tutorial, we will show you how 
  to:</para>
- <itemizedlistlist>
+ <itemizedlist>
  <listitem>Add AJAX features to automatically generated JSF Seam UI components</listitem>
  <listitem>Replace standard JSF UI components with AJAX enabled rich UI components provided by the
   Red Hat Developer Studio</listitem>
@@ -616,7 +616,7 @@ allow users to change numerical values without using the keyboard.</para>
 <itemizedlist continuation="continues">
 <listitem>Although this is not the best situation to use a slider, let us take a quick look at 
 another RichFaces control <emphasis role="bold"><property>&lt;rich:inputNumberSlider&gt;</property></emphasis>.  The slider control is similar to the the 
-spinner control; it is bound to the same object.  Replace the spinner with the following markup. 
+spinner control; it is bound to the same object. Replace the spinner with the following markup. 
 Save the page and refresh your browser window.</listitem>
 </itemizedlist>
 <programlisting role="JSP"><![CDATA[<rich:inputNumberSlider 
@@ -642,7 +642,7 @@ Save the page and refresh your browser window.</listitem>
 <title>Order List</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/itemizedlist.png"/>
+            <imagedata fileref="images/OrderedList.png"/>
         </imageobject>
 </mediaobject>
 </figure>
