@@ -10,29 +10,6 @@
     </keywordset>
   </chapterinfo>
  <title>Getting Started with Red Hat Developer Studio</title>
- <section id="TechnicalRequirements">
- <?dbhtml filename="TechnicalRequirements.html"?>
-<title>Technical Requirements</title>
-    <section id="Java">
-    <title>Java</title>
-   <para>Before installing Red Hat Developer Studio, make sure you have one of the following versions of Java 
-    installed:</para>
-   <itemizedlist>
-    <listitem><para>JDK 1.5 or higher</para></listitem>
-   </itemizedlist>
-   <para>It must be the full JDK, not just the JRE (Java Runtime Environment). For more information about 
-    target operating environments and compatible Java versions, refer to the JBoss web site. Please note
-    that the Eclipse documentation states that you only need a Java Runtime Environment for Eclipse, but usage of Red Hat Developer Studio requires a full JDK in order to compile Java classes and JSP pages.</para>
-  </section>
-  <section id="OperatingSystems">
-  <?dbhtml filename="OperatingSystems.html"?>
-    <title>Operating Systems</title>
-   <itemizedlist>
-    <listitem><para>Windows</para></listitem>
-    <listitem><para>Linux</para></listitem>
-   </itemizedlist>
-  </section>  
-  </section>
   <section id="Installing">
   <?dbhtml filename="Installing.html"?>
 <title>Installing</title>
@@ -56,30 +33,25 @@
     </mediaobject>
    </figure>
    
-   <para>After installation process you will have all required platforms to run Red Hat Developer Studio:</para>
+   <para>Installation process includes all required platforms to run Red Hat Developer Studio:</para>
    <itemizedlist>
     <listitem>
      <para>Eclipse 3.2.2</para>
     </listitem>
     <listitem>
-     <para>JBoss Application Server</para>
+     <para>JBoss J2EE Application Server</para>
+     <figure>
+      <title>JBoss J2EE Application Server installing</title>
+      <mediaobject> 
+       <imageobject>
+        <imagedata fileref="images/install2.png"/>
+       </imageobject>
+      </mediaobject>
+     </figure>
+     <note>The installer will install JBoss J2EE Application Server for running your applications if you select this option during the installation process. 
+      If you want to use a different server than ours, you can change the setting in Red Hat Developer Studio.</note>
     </listitem>
    </itemizedlist>
-   
-   <para>Red Hat Developer Studio comes with the following plug-ins:</para> 
-   <itemizedlist>
-    <listitem><para>WTP runtime 1.5</para></listitem>
-    <listitem><para>GEF runtime 3.2</para></listitem>
-    <listitem><para>JEM runtime 1.2</para></listitem>
-    <listitem><para>EMF and SDO runtime 2.2</para></listitem>
-    <listitem><para>XSD runtime 2.2</para></listitem>
-    <listitem>Hibernate-tools-3.1.0 beta5 (without WTP, EMF, GEF, and other non-Hibernate plug-ins from 
-     Hibernate-tools-3.1.0 beta5)</listitem>
-    <listitem><para>QuickImage 0.2.0</para></listitem>
-    <listitem><para>Spring IDE 1.3.2</para></listitem>
-    <listitem><para>Sun Glassfish 0.3</para></listitem>
-   </itemizedlist>
-   
   </section>  
   <section id="InstallingthroughTheUpdateSite">
   <?dbhtml filename="InstallingthroughTheUpdateSite.html"?>
@@ -181,7 +153,7 @@
   <para>By default, Eclipse allocates only 128 Mb of memory whatever physical memory you actually have installed. You can significantly increase performance
   if you allocate more memory. For example:</para>
   <para>eclipse.exe -vmargs -Xmx512M</para>
-  <para><emphasis role="bold">How can I add my own tag library to the Exadel Palette?</emphasis></para>
+  <para><emphasis role="bold">How can I add my own tag library to the Red Hat Palette?</emphasis></para>
   <para>See Adding Tag Libraries in JBossJSFTools Guide</para>
  </section>
  <section>
@@ -225,7 +197,7 @@
   <para>By default, Eclipse allocates only 128 Mb of memory whatever physical memory you actually have installed. You can significantly increase performance
    if you allocate more memory. For example:</para>
   <para>eclipse.exe -vmargs -Xmx512M</para>
-  <para><emphasis role="bold">How can I add my own tag library to the Exadel Palette?</emphasis></para>
+  <para><emphasis role="bold">How can I add my own tag library to the Red Hat Palette?</emphasis></para>
   <para>See Adding Tag Libraries in JBossJSFTools Guide</para>
   <para><emphasis role="bold">I see the Oracle ADF Faces component library tags in the Exadel Palette, but I can't seem to find the libraries for ADF.
   How do I use this component library with RHDS?</emphasis></para>
