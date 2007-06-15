@@ -89,7 +89,7 @@ public class ArchivesLabelProvider implements ILabelProvider {
 	private String getPackageText (IArchive pkg) {
 		String text = pkg.getName();
 		if (PrefsInitializer.getBoolean( PrefsInitializer.PREF_SHOW_PACKAGE_OUTPUT_PATH)) {
-			text += " [" + pkg.getDestinationPath() + "]";
+			text += " [" + pkg.getGlobalDestinationPath() + "]";
 		}
 		return text;
 	}
