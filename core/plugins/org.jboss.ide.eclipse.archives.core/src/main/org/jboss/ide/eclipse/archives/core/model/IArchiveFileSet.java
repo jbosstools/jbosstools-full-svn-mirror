@@ -114,4 +114,15 @@ public interface IArchiveFileSet extends IArchiveNode {
 	 * @return
 	 */
 	public IPath getRootArchiveRelativePath(IPath inputFile);
+	
+	/**
+	 * Get a path relative only to the folder or archive that is the direct parent of the fileset
+	 * @param inputFile
+	 * @return
+	 */
+	public IPath getPathRelativeToParent(IPath inputFile);
+	
+	public void addMatchingFile(IPath file);
+	public void removeMatchingFile(IPath file);
+	
 }

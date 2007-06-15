@@ -102,6 +102,13 @@ public interface IArchive extends IArchiveNode {
 	 * destination (containing folder) of this archive
 	 * @return An IPath to this package's destination folder
 	 */
+	public IPath getGlobalDestinationPath();
+
+	/**
+	 * A path representing the string from the delegate
+	 * May be work-space relative or global
+	 * @return
+	 */
 	public IPath getDestinationPath();
 
 	/**
