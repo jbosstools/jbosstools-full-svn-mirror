@@ -236,7 +236,7 @@ public class ModelTruezipBridge {
 			boolean exploded = ((IArchive)node).isExploded();
 			ArchiveDetector detector = exploded ? ArchiveDetector.NULL : ArchiveDetector.DEFAULT;
 			if( parentFile == null ) 
-				return new File(node2.getDestinationPath().append(node2.getName()).toOSString(), detector);
+				return new File(node2.getGlobalDestinationPath().append(node2.getName()).toOSString(), detector);
 			return new File(parentFile, node2.getName(), detector);
 		}
 		if( node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FOLDER ) {
