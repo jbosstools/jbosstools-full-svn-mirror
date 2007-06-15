@@ -94,7 +94,7 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 		IArchiveModelNode root = ArchivesModel.instance().getRoot(p);
 		IArchiveNode[] nodes = root.getChildren(IArchiveNode.TYPE_ARCHIVE);
 		for( int i = 0; i < nodes.length; i++ ) {
-			IPath path = ((IArchive)nodes[i]).getDestinationPath();
+			IPath path = ((IArchive)nodes[i]).getGlobalDestinationPath();
 			TrueZipUtil.deleteAll(path);
 		}
 	}
