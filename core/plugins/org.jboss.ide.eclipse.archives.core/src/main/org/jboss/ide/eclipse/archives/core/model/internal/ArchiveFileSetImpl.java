@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension;
@@ -43,6 +42,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 
 	private XbFileSet filesetDelegate;
 	private DirectoryScannerExtension scanner;
+	private ArrayList matchingPaths;
 	private boolean rescanRequired = true;
 	
 	public ArchiveFileSetImpl() {
@@ -54,20 +54,24 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		this.filesetDelegate = delegate;
 	}
 	
+	
+	public void addMatchingFile(IPath file) {
+		if( !matchingPaths.contains(file) && matchesPath(file)) 
+			matchingPaths.add(file);
+	}
+
+	public void removeMatchingFile(IPath file ) {
+		if( matchingPaths.contains(file) && matchesPath(file))
+			matchingPaths.remove(file);
+	}
+
+	
 	/*
 	 * @see IArchiveFileSet#findMatchingPaths()
 	 */
-	public IPath[] findMatchingPaths () {
-		DirectoryScannerExtension scanner = getScanner();
-		ArrayList paths = new ArrayList();
-		IPath sp = getGlobalSourcePath();
-		String matched[] = scanner.getIncludedFiles();
-		for (int i = 0; i < matched.length; i++) {
-			IPath path = sp.append(new Path(matched[i]));
-			paths.add(path);
-		}
-		
-		return (IPath[])paths.toArray(new IPath[paths.size()]);
+	public synchronized IPath[] findMatchingPaths () {
+		getScanner();  // ensure up to date
+		return (IPath[]) matchingPaths.toArray(new IPath[matchingPaths.size()]);
 	}
 	
 	/*
@@ -134,8 +138,21 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	private synchronized DirectoryScannerExtension getScanner() {
 		if( scanner == null || rescanRequired) {
 			rescanRequired = false;
+
+			// new scanner
 			scanner = DirectoryScannerFactory.createDirectoryScanner(
 					getGlobalSourcePath(), getIncludesPattern(), getExcludesPattern(), true);
+			
+			// cache the paths
+			ArrayList paths = new ArrayList();
+			IPath sp = getGlobalSourcePath();
+			String matched[] = scanner.getIncludedFiles();
+			for (int i = 0; i < matched.length; i++) {
+				IPath path = sp.append(new Path(matched[i]));
+				paths.add(path);
+			}
+
+			matchingPaths = paths;
 		}
 		return scanner;
 	}
@@ -204,11 +221,18 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	 */
 	public IPath getRootArchiveRelativePath(IPath inputFile) {
 		if( matchesPath(inputFile)) {
-			String s = inputFile.toOSString().substring(getGlobalSourcePath().toOSString().length()+1);
-			return getParent().getRootArchiveRelativePath().append(s);
+			return getParent().getRootArchiveRelativePath().append(getPathRelativeToParent(inputFile));
 		}
 		return null;
 	}
+	/*
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet#getPathRelativeToParent(org.eclipse.core.runtime.IPath)
+	 */
+	public IPath getPathRelativeToParent(IPath inputFile) {
+		String s = inputFile.toOSString().substring(getGlobalSourcePath().toOSString().length()+1);
+		return new Path(s);
+}
+
 
 	/*
 	 * @see IArchiveFileSet#resetScanner()
