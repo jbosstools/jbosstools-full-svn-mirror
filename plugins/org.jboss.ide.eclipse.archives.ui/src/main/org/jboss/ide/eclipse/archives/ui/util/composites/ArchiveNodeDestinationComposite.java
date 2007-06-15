@@ -58,15 +58,15 @@ public class ArchiveNodeDestinationComposite extends Composite {
 		Composite browseComposite = new Composite(this, SWT.NONE);
 		
 		// set up their layout positioning
-		destinationImage.setLayoutData(createFormData(0,5,null, 0, 0, 5, null, 0));
-		destinationText.setLayoutData(createFormData(0, 5, null, 0, destinationImage, 5, browseComposite, -5));
+		destinationImage.setLayoutData(createFormData(0,5,null, 0, 0, 0, null, 0));
+		destinationText.setLayoutData(createFormData(0, 5, null, 0, destinationImage, 5, destinationImage, 205));
 	
 		
 		// set text, add listeners, etc
 		destinationText.setEditable(false);
 
 		browseComposite.setLayout(new FillLayout());
-		browseComposite.setLayoutData(createFormData(0,0,null,0,null,0,100,-5));
+		browseComposite.setLayoutData(createFormData(0,0,null,0,destinationText,5,100,-5)); 
 		fillBrowseComposite(browseComposite);
 		
 		// call other functions required for startup
@@ -113,7 +113,7 @@ public class ArchiveNodeDestinationComposite extends Composite {
 	
 	protected void openDestinationDialog ()
 	{
-		ArchiveNodeDestinationDialog dialog = new ArchiveNodeDestinationDialog(getShell(), nodeDestination, false, true);
+		ArchiveNodeDestinationDialog dialog = new ArchiveNodeDestinationDialog(getShell(), nodeDestination, true, true);
 		if (nodeDestination != null)
 			dialog.setInitialSelection(nodeDestination);
 		
