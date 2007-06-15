@@ -67,7 +67,7 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 	/*
 	 * @see IArchive#getDestinationPath()
 	 */
-	public IPath getDestinationPath () {
+	public IPath getGlobalDestinationPath () {
 		if (packageDelegate.getToDir() == null || packageDelegate.getToDir().equals("."))
 			return getProjectPath() == null ? null : getProjectPath();
 		
@@ -77,11 +77,15 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 			return new Path(packageDelegate.getToDir());
 	}
 
+	public IPath getDestinationPath() {
+		return packageDelegate.getToDir() == null ? null : new Path(packageDelegate.getToDir());
+	}
+	
 	/*
 	 * @see IArchive#getArchiveFilePath()
 	 */
 	public IPath getArchiveFilePath() {
-		return getDestinationPath().append(getName());
+		return getGlobalDestinationPath().append(getName());
 	}
 	
 	/*
