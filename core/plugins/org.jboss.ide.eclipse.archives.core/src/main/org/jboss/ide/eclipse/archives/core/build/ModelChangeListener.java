@@ -33,7 +33,6 @@ public class ModelChangeListener implements IArchiveModelListener {
 	 */
 	public void modelChanged(IArchiveNodeDelta delta) {
 		// if we're not building, get out
-		System.out.println("**  model changed");
 		if( !ArchivesCore.getInstance().getPreferenceManager().isBuilderEnabled(delta.getPostNode().getProjectPath())) 
 			return;
 
@@ -162,8 +161,8 @@ public class ModelChangeListener implements IArchiveModelListener {
 		} else if( removed.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FOLDER ){
 			IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(((IArchiveFolder)removed));
 			for( int i = 0; i < filesets.length; i++ ) {
-				IPath[] removedPaths = ModelTruezipBridge.fullFilesetRemove(((IArchiveFileSet)removed), false);
-				EventManager.filesRemoved(removedPaths, ((IArchiveFileSet)removed));
+				IPath[] removedPaths = ModelTruezipBridge.fullFilesetRemove(filesets[i], false);
+				EventManager.filesRemoved(removedPaths, ((IArchiveFileSet)filesets[i]));
 			}
 			postChange(removed);
 			return;
