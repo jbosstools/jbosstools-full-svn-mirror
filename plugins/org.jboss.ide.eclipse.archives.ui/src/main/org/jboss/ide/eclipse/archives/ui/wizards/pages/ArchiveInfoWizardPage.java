@@ -1,6 +1,7 @@
 package org.jboss.ide.eclipse.archives.ui.wizards.pages;
 
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -141,13 +142,16 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 			if (archive.isTopLevel()) {
 				
 				// TODO:  FIX THIS
-				destinationComposite.setPackageNodeDestination(archive.getDestinationPath());
+				IContainer container = ResourcesPlugin.getWorkspace().getRoot().getContainerForLocation(archive.getGlobalDestinationPath());
+				if( container != null )
+					destinationComposite.setPackageNodeDestination(container);
+				else 
+					destinationComposite.setPackageNodeDestination(archive.getGlobalDestinationPath());
 			} else {
 				destinationComposite.setPackageNodeDestination(archive.getParent());
 			}
 			
-			if (archive.isExploded())
-			{
+			if (archive.isExploded()) {
 				explodedButton.setEnabled(true);
 			} else {
 				compressedButton.setEnabled(true);
@@ -194,7 +198,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 				for( int i = 0; i < packages.length; i++ ) {
 					IArchive pkg = (IArchive) packages[i];
 					if (pkg.getName().equals(packageNameText.getText())
-						&& (pkg.getDestinationPath() != null && pkg.getDestinationPath().equals(container.getFullPath()))
+						&& (pkg.getGlobalDestinationPath() != null && pkg.getGlobalDestinationPath().equals(container.getFullPath()))
 						&& (!pkg.equals(this.archive)))
 					{
 						setErrorMessage(
@@ -212,7 +216,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 				for( int i = 0; i < packages.length; i++ ) {
 					IArchive pkg = (IArchive) packages[i];
 					if (pkg.getName().equals(packageNameText.getText())
-						&& (pkg.getDestinationPath() != null && pkg.getDestinationPath().equals(path))
+						&& (pkg.getGlobalDestinationPath() != null && pkg.getGlobalDestinationPath().equals(path))
 						&& (!pkg.equals(this.archive)))
 					{
 						setErrorMessage(

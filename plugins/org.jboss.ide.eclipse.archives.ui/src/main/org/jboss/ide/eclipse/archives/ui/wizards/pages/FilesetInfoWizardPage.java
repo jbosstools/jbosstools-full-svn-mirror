@@ -155,8 +155,8 @@ public class FilesetInfoWizardPage extends WizardPage {
 		Label projectImageLabel = new Label(rootProjectVal, SWT.NONE);
 		rootProjectLabel = new Label(rootProjectVal, SWT.NONE);
 		
-		projectImageLabel.setLayoutData(createFormData(0,0,null,0,0,5, null,0));
-		rootProjectLabel.setLayoutData(createFormData(0,0,null,0,projectImageLabel, 5, 100,-5));
+		projectImageLabel.setLayoutData(createFormData(0,0,null,0,0,0, null,0));
+		rootProjectLabel.setLayoutData(createFormData(0,0,null,0,projectImageLabel, 10, 100,-5));
 		rootProjectKey.setLayoutData(createFormData(destinationComposite,5,null,0,null,5,0,max));
 		rootProjectVal.setLayoutData(createFormData(destinationComposite,5, null, 0, destinationKey, 5, 100, -5));
 		
