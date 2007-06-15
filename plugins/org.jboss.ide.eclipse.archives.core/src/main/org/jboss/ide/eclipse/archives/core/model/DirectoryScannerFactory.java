@@ -22,6 +22,8 @@
 package org.jboss.ide.eclipse.archives.core.model;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.runtime.IPath;
