@@ -32,7 +32,7 @@ public class ModelChangeListenerWithRefresh extends ModelChangeListener {
 			if( pack.isDestinationInWorkspace() ) {
 				// refresh the root package node
 				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-				IResource res = root.getContainerForLocation(pack.getDestinationPath());
+				IResource res = root.getContainerForLocation(pack.getGlobalDestinationPath());
 				if( res != null ) {
 					try {
 						res.getParent().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
