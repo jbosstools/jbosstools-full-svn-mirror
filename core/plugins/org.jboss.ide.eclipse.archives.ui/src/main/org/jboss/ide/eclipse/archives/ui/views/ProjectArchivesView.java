@@ -7,6 +7,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -211,7 +212,10 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 			return;
 		}
 		
-		if( project.equals(packageViewer.getInput())) 
+		IArchiveModelNode node = (IArchiveModelNode) packageViewer.getInput();
+		IPath projectPath = node.getProjectPath();
+		
+		if( project.getLocation().equals(projectPath)) 
 			return;
 		
 		if( ArchivesModelCore.packageFileExists(project.getLocation()) ) { 
