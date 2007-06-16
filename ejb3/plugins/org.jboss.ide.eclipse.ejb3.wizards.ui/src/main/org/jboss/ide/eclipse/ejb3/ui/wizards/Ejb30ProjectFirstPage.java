@@ -139,8 +139,11 @@ public class Ejb30ProjectFirstPage extends J2EEComponentFacetCreationWizardPage 
 	
 	protected void hideOrShowWarning() {
 		int index = serverTargetCombo.getSelectionIndex();
-		String runtimeName = serverTargetCombo.getItem(index);
-		org.eclipse.wst.server.core.IRuntime rt = ServerCore.findRuntime(runtimeName);
-		warningLabel.setVisible(!EJB30SupportVerifier.verify(rt));
+		if (index > 0)
+		{
+			String runtimeName = serverTargetCombo.getItem(index);
+			org.eclipse.wst.server.core.IRuntime rt = ServerCore.findRuntime(runtimeName);
+			warningLabel.setVisible(!EJB30SupportVerifier.verify(rt));
+		}
 	}
 }
