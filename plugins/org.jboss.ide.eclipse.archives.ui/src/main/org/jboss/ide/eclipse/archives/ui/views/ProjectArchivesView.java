@@ -213,10 +213,13 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 		}
 		
 		IArchiveModelNode node = (IArchiveModelNode) packageViewer.getInput();
-		IPath projectPath = node.getProjectPath();
-		
-		if( project.getLocation().equals(projectPath)) 
-			return;
+		if (node != null)
+		{
+			IPath projectPath = node.getProjectPath();
+			
+			if( project.getLocation().equals(projectPath)) 
+				return;
+		}
 		
 		if( ArchivesModelCore.packageFileExists(project.getLocation()) ) { 
 			if( ArchivesModelCore.projectRegistered(project.getLocation()))
