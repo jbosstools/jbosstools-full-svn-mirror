@@ -22,6 +22,7 @@
 package org.jboss.ide.eclipse.ejb3.core.module;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.wst.server.core.IModule;
@@ -58,7 +59,7 @@ public class Ejb30ArtifactAdapter extends ModuleArtifactAdapterDelegate {
 		
 		if( jp != null ) {
 			ModuleFactory mf = getModuleFactory();
-			IModule mod = mf.getModule(jp.getElementName());
+			IModule mod = mf.findModule(jp.getElementName(), new NullProgressMonitor());
 			if( mod != null ) {
 				return wrap(mod);
 			}
