@@ -27,10 +27,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -86,7 +85,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.wst.server.core.IServer;
 import org.jboss.ide.eclipse.as.core.model.DescriptorModel.ServerDescriptorModel.XPathTreeItem;
@@ -326,15 +325,12 @@ public class DescriptorXPathViewProvider extends JBossServerViewExtension {
 				try {
 					Object o = getPropertySelection();
 					File file = ((XPathTreeItem)o).getFile();
-					IFile eclipseFile = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(new Path(file.getAbsolutePath()));
-					
 					IWorkbench wb = PlatformUI.getWorkbench();
 					IWorkbenchWindow win = wb.getActiveWorkbenchWindow();
 					IWorkbenchPage page = win.getActivePage();
-//					IFileStore fileStore= EFS.getLocalFileSystem().fromLocalFile(file);
-					
-					if( eclipseFile != null ) {
-						IEditorInput input = new FileEditorInput(eclipseFile);
+					IFileStore fileStore= EFS.getLocalFileSystem().fromLocalFile(file);
+					if( fileStore != null ) {
+						IEditorInput input = new JavaFileEditorInput(fileStore);
 						IEditorDescriptor desc = PlatformUI.getWorkbench().
 							getEditorRegistry().getDefaultEditor(file.getName());
 					   page.openEditor(input, desc.getId());

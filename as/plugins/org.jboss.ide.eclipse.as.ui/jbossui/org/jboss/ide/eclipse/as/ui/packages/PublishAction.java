@@ -41,10 +41,12 @@ public class PublishAction implements INodeActionDelegate {
 		{
 			IArchive pkg = (IArchive)node;
 			String servers = node.getProperty(ArchivesBuildListener.DEPLOY_SERVERS);
-			if( !new Boolean(pkg.getProperty(ArchivesBuildListener.DEPLOY_AFTER_BUILD)).booleanValue()  ||
-					servers == null || "".equals(servers) || anyServerDoesntExist(servers)){
+			
+			if (servers == null || "".equals(servers) || anyServerDoesntExist(servers))
+			{
 				servers = showSelectServersDialog(pkg);
 			}
+			
 			ArchivesBuildListener.publish(pkg, servers, IServer.PUBLISH_FULL);
 		}
 	}
