@@ -1,0 +1,19 @@
+# component versions 
+core=2.0.0.Alpha
+aop=1.2.0.Alpha
+as=1.0.0.Alpha
+ejb3=1.1.0.Alpha
+freemarker=1.0.0.Alpha
+jbpm=3.0.10
+hibernate-tools=beta6
+tests=2.0.0.Alpha
+
+# cvs tags 
+core.cvs=IDE_CORE_2_0_0_ALPHA 
+aop.cvs=IDE_AOP_DEVELOPER_1_2_ALPHA
+as.cvs=IDE_ASBRIDGE_1_0_ALPHA
+ejb3.cvs=IDE_EJB3_TOOLS_1_1_ALPHA
+freemarker.cvs=IDE_FREEMARKER_1_0_PREVIEW
+jbpm.cvs=jbpm_gpd_3_0_10
+hibernate-tools.cvs=TOOLS_3_2_0_beta6
+tests.cvs=HEAD
