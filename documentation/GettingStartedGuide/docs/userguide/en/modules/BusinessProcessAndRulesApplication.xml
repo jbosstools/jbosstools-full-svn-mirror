@@ -49,7 +49,7 @@
 Those files are very simple and we will review them as we go along with the tutorial. We import 
 them here to reduce potential typos and other errors in the tutorial.</para>
 <orderedlist>
-<listitem>1.Choose the File -> Import ... menu and then select General -> Existing project into workspace and 
+<listitem>Choose the File -> Import ... menu and then select General -> Existing project into workspace and 
 click on the Next button.</listitem>
 </orderedlist>
 <figure>
@@ -62,7 +62,7 @@ click on the Next button.</listitem>
 </figure>
 <orderedlist continuation="continues">
 <listitem>To make this demo a little more manageable we have already created some demo code 
-that is available in the the rules-bpm directory of your tutorial distribution code. It is
+that is available in the rules-bpm directory of your tutorial distribution code. It is
  located in the root directory of the distribution.  Select the rules-bpm directory and check 
  the &quot;Copy projects into the workspace&quot; directory check box.</listitem>
 </orderedlist>

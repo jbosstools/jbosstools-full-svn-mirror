@@ -62,7 +62,7 @@ launch the Seam Gen setup window as shown below. Note: </listitem>
 Seam Gen a file dialog will be shown. In this you need to select &lt;seam&gt;/seam-gen/build.xml
  so the plugin knows which seam-gen to use.</para>
    </note>
-
+<para></para>
  
  <figure>
 <title>Seam Gen Setup Window</title>
