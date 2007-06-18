@@ -170,12 +170,12 @@ public class ViewPreferencePage extends PreferencePage implements
 	}
 
 	protected void addEnablementComposite(Composite parent) {
-		mainDescriptionLabel = new Label(parent, SWT.WRAP);
-        FormData labelData = new FormData();
-        labelData.left = new FormAttachment(0,5);
-        labelData.right = new FormAttachment(100, -5);
-        labelData.top = new FormAttachment(0,5);
-		mainDescriptionLabel.setLayoutData(labelData);
+//		mainDescriptionLabel = new Label(parent, SWT.WRAP);
+//        FormData labelData = new FormData();
+//        labelData.left = new FormAttachment(0,5);
+//        labelData.right = new FormAttachment(100, -5);
+//        labelData.top = new FormAttachment(0,5);
+//		mainDescriptionLabel.setLayoutData(labelData);
 
 	//	mainDescriptionLabel.setText(Messages.ViewExtensionEnablementDescription);
 		
@@ -190,23 +190,17 @@ public class ViewPreferencePage extends PreferencePage implements
 		
         table = new Table(c, SWT.BORDER);
         
-        FormData tableData = new FormData();
-        tableData.left = new FormAttachment(10,5);
-        tableData.right = new FormAttachment(100, -5);
-        tableData.top = new FormAttachment(0,5);
-        tableData.bottom = new FormAttachment(100,0);
-        table.setLayoutData(tableData);
-        
         table.setHeaderVisible(true);
         table.setLinesVisible(false);
+
         TableColumn column0 = new TableColumn(table, SWT.NONE);
-        column0.setText(Messages.ViewPreferencePageName);
+        column0.setText(Messages.ViewPreferencePageEnabled);
         TableColumn column1 = new TableColumn(table, SWT.NONE);
-        column1.setText(Messages.ViewPreferencePageEnabled);
+        column1.setText(Messages.ViewPreferencePageName);
 //        TableColumn column2 = new TableColumn(table, SWT.NONE);
 //        column2.setText(Messages.ViewPreferencePageWeight);
-        TableColumn column3 = new TableColumn(table, SWT.NONE);
-        column3.setText(Messages.ViewPreferencePageDescription);
+//        TableColumn column3 = new TableColumn(table, SWT.NONE);
+//        column3.setText(Messages.ViewPreferencePageDescription);
         
         providers = JBossServerUIPlugin.getDefault().getAllServerViewProviders();
         int minWidth = 0;
@@ -219,8 +213,8 @@ public class ViewPreferencePage extends PreferencePage implements
                 item.setData(providers[i]);
                 
                 
-                item.setText(new String[] {providers[i].getName(), "", providers[i].getDescription()});
-                item.setImage(providers[i].getImage());
+                item.setText(new String[] {"", providers[i].getName()});
+                item.setImage(1, providers[i].getImage());
 
                 final Button b = new Button(table, SWT.CHECK);
                 enabledButtons.add(b);
@@ -233,7 +227,7 @@ public class ViewPreferencePage extends PreferencePage implements
                 editor.minimumHeight = size.y;
                 editor.horizontalAlignment = SWT.CENTER;
                 editor.verticalAlignment = SWT.CENTER;
-                editor.setEditor(b, item , 1);
+                editor.setEditor(b, item , 0);
                 b.addSelectionListener(new SelectionListener() {
 					public void widgetDefaultSelected(SelectionEvent e) {
 					}
@@ -271,26 +265,31 @@ public class ViewPreferencePage extends PreferencePage implements
         column1.setWidth(column1.getWidth() + minWidth);
 //        column2.pack();
 //        column2.setWidth(column2.getWidth() + minWidth);
-        column3.pack();
-        column3.setWidth(column3.getWidth() + minWidth);
-        
-        
-        
+//        column3.pack();
+//        column3.setWidth(column3.getWidth() + minWidth);
+       
         moveUp = new Button(c, SWT.PUSH);
         moveDown = new Button(c, SWT.PUSH);
 
         moveUp.setText("Move Up");
         moveDown.setText("Move Down");
         
+        FormData tableData = new FormData();
+        tableData.left = new FormAttachment(0,5);
+        tableData.right = new FormAttachment(moveDown, -5);
+        tableData.top = new FormAttachment(0,5);
+        tableData.bottom = new FormAttachment(100,0);
+        table.setLayoutData(tableData);
+        
         FormData moveUpData = new FormData();
-        moveUpData.left = new FormAttachment(0,0);
-        moveUpData.right = new FormAttachment(table, -5);
-        moveUpData.top = new FormAttachment(30,0);
+        moveUpData.left = new FormAttachment(table, 5);
+        moveUpData.right = new FormAttachment(100, -5);
+        moveUpData.top = new FormAttachment(0,5);
+        
         moveUp.setLayoutData(moveUpData);
 
         FormData moveDownData = new FormData();
-        moveDownData.left = new FormAttachment(0,0);
-        moveDownData.right = new FormAttachment(table, -5);
+        moveDownData.right = new FormAttachment(100, -5);
         moveDownData.top = new FormAttachment(moveUp, 5);
         moveDown.setLayoutData(moveDownData);
 
@@ -327,6 +326,7 @@ public class ViewPreferencePage extends PreferencePage implements
 			} 
         });
 	}
+	
 	protected void enableMoveButtons() {
 		int index = table.getSelectionIndex();
 		int length = table.getItemCount();
@@ -341,6 +341,7 @@ public class ViewPreferencePage extends PreferencePage implements
 			moveDown.setEnabled(true);
 		}
 	}
+	
 	protected void move(int selectedIndex, int swapIndex) {
 		TableItem selected = table.getItem(selectedIndex);
 		TableItem above = table.getItem(swapIndex);
@@ -371,6 +372,7 @@ public class ViewPreferencePage extends PreferencePage implements
 		
 		table.setSelection(swapIndex);
 	}
+	
 	protected void addExtensionPreferencePages(Composite parent) {
 		
 		preferenceCompositeDescriptionLabel = new Label(parent, SWT.WRAP);
@@ -390,16 +392,13 @@ public class ViewPreferencePage extends PreferencePage implements
 		scData.bottom = new FormAttachment(100, -5);
 		sc.setLayoutData(scData);
 		
-		
 		Composite sub = new Composite(sc, SWT.NONE);
 	    sc.setContent(sub);
 		sub.setLayout(new FillLayout());
 		
 		book = new PageBook(sub, SWT.NONE);
 		
-	    
-	    
-		ServerViewProvider[] providers = JBossServerUIPlugin.getDefault().getAllServerViewProviders();
+	    ServerViewProvider[] providers = JBossServerUIPlugin.getDefault().getAllServerViewProviders();
 		
 		for( int i = 0; i < providers.length; i++ ) {
 			Group g = new Group(book, SWT.NONE);
@@ -411,8 +410,6 @@ public class ViewPreferencePage extends PreferencePage implements
 			providerToGroup.put(providers[i], g);
 		}
 		
-		
-		
 		// force a layout
 		sub.pack();
 		//sub.layout();
@@ -422,8 +419,7 @@ public class ViewPreferencePage extends PreferencePage implements
         int sY = sub.getSize().y;
         int sX = sub.getSize().x;
 
-		
-	    sc.setExpandHorizontal(true);
+		sc.setExpandHorizontal(true);
 	    sc.setExpandVertical(true);
 	    sc.setMinHeight(locY + sY);
 	    sc.setMinWidth(locX + sX);
@@ -439,14 +435,8 @@ public class ViewPreferencePage extends PreferencePage implements
 			Button enabled = new Button(this, SWT.CHECK);
 			enabled.setText(Messages.ViewPreferencePageEnabled);
 			enabled.setSelection(provider.isEnabled());
-			
-			
-			
 		}
-		
 	}
 	
-	public void init(IWorkbench workbench) {
-	}
-
+	public void init(IWorkbench workbench) {}
 }
