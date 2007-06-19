@@ -166,7 +166,7 @@ Class is not filled in, String is the assumed type.)</para></listitem>
 <?dbhtml filename="EditingTheJSPViewFiles.html"?>
 <title>Editing the JSP View Files</title>
 
-<para>Now we will finish editing the JSP files for our two &quot;views&quot; using Exadel&apos;s JSP Visual Page</para>
+<para>Now we will finish editing the JSP files for our two &quot;views&quot; using Red Hat JSP Visual Page</para>
 <section id="Inputname.jsp">
 <title>inputname.jsp</title>
 <itemizedlist continuation="continues">

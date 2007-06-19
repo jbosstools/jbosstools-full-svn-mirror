@@ -81,7 +81,7 @@ structure. As we mentioned before, this is a JSF application. To see the JSF con
 
 <section id="ConvertingforUseWithaDatabase">
 <?dbhtml filename="ConvertingforUseWithaDatabase.html"?><title>Converting for Use With a Database</title>
-<para>Now we are ready to convert this application to use with a database with the help of ExadelStudio. To convert the application for use with a database, we need to set things up in three different places:</para>
+<para>Now we are ready to convert this application to use with a database with the help of Red Hat Developer Studio. To convert the application for use with a database, we need to set things up in three different places:</para>
 
 
 <itemizedlist><listitem><para>The Application</para></listitem></itemizedlist>
@@ -98,7 +98,7 @@ structure. As we mentioned before, this is a JSF application. To see the JSF con
 the object/relational mapping from our simple object model to a database schema after adding Hibernate 
 capabilities to our project.</para>
 <itemizedlist continuation="continues">
-<listitem><para>Right-click on ormHibernate3-jsf in the Package Explorer view and select Exadel</para></listitem>
+<listitem><para>Right-click on ormHibernate3-jsf in the Package Explorer view and select Red Hat</para></listitem>
 <listitem><para>Studio/Add Hibernate Capability... from the context menu.</para></listitem>
 <listitem><para>Click on Yes in the the dialog box with Add Hibernate Jars selected.</para></listitem>
 <listitem><para>In the Configuration Wizard, click twice in the Value field for dialect and select org.hibernate.dialect.HSQLDialect from the pop-up menu.</para></listitem>
@@ -124,11 +124,8 @@ So, let&apos;s adjust this file first.</para>
 
 
 <programlisting role="XML"><![CDATA[<property
-name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</
-property>
-<property
-name="hibernate.connection.url">jdbc:hsqldb:hsql:[hostname]</
-property>
+name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
+<property name="hibernate.connection.url">jdbc:hsqldb:hsql:[hostname]</property>
 ]]></programlisting>
 
 <para>With this single line:</para>
