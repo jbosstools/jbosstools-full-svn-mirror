@@ -4,7 +4,7 @@
 
 [<!ENTITY GettingStartedWithRHDS SYSTEM "modules/GettingStartedWithRHDS.xml">
 <!ENTITY GettingStartedGuideforJSFwithHibernate  SYSTEM "modules/GettingStartedGuideforJSFwithHibernate.xml">
-<!ENTITY AjaxCURDApplicationWithSeamAndRichFaces  SYSTEM "modules/AjaxCURDApplicationWithSeamAndRichFaces.xml">
+<!ENTITY AjaxCRUDApplicationWithSeamAndRichFaces  SYSTEM "modules/AjaxCRUDApplicationWithSeamAndRichFaces.xml">
 <!ENTITY BusinessProcessAndRulesApplication  SYSTEM "modules/BusinessProcessAndRulesApplication.xml">
 <!ENTITY GettingStartedGuideforJavaServerFaces SYSTEM "modules/GettingStartedGuideforJavaServerFaces.xml">
 <!ENTITY GettingStartedForCreatingaJSFApplication SYSTEM "modules/GettingStartedForCreatingAJSFApplication.xml">
@@ -30,7 +30,7 @@
 
 &GettingStartedWithRHDS;
 &GettingStartedGuideforJSFwithHibernate;
-&AjaxCURDApplicationWithSeamAndRichFaces;
+&AjaxCRUDApplicationWithSeamAndRichFaces;
 &BusinessProcessAndRulesApplication;
 &GettingStartedForCreatingaJSFApplication;
 &GettingStartedGuideforCreatingaStrutsApplication;

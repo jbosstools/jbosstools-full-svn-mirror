@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="AjaxCURDApplicationWithSeamAndRichFaces" xreflabel="AjaxCURDApplicationWithSeamAndRichFaces">
-    <?dbhtml filename="AjaxCURDApplicationWithSeamAndRichFaces.html"?>
+<chapter id="AjaxCRUDApplicationWithSeamAndRichFaces" xreflabel="AjaxCRUDApplicationWithSeamAndRichFaces">
+    <?dbhtml filename="AjaxCRUDApplicationWithSeamAndRichFaces.html"?>
     <chapterinfo>
         <keywordset>
             <keyword>Red Hat Developer Studio</keyword>
             <keyword>Seam</keyword>
             <keyword>JBoss</keyword>
-            <keyword>CURD-application</keyword>
+            <keyword>CRUD-application</keyword>
             </keywordset>
     </chapterinfo>
     
-    <title>Ajax CURD-application with Seam and Rich Faces</title>
+    <title>Ajax CRUD-application with Seam and Rich Faces</title>
 <para>In this chapter we will see how easy it is to build Seam applications and integrate
 them with Ajax4jsf and Rich Faces. We will bootstrap the application using Seam Gen which is
  a  CRUD application generator. Seam Gen can be used from either the command line or via an
