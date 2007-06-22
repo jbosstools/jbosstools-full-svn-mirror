@@ -147,7 +147,7 @@
  <title>FAQ</title>
  <para>For easy reference to Red Hat Developer Studio related questions, our FAQ provides answers to our most &quot;popular&quot; questions.
   The sections of questions are organized by type. For further support, please contact support@exadel.com.</para>
-  <section>
+ <section id="Before_Installing">
   <title>Before Installing, Tutorials, Examples, Readme Files</title>
   <para><emphasis role="bold">I'm looking for examples, do you have any?</emphasis></para>
   <para>Yes, simply go to our tutorials page</para>
@@ -159,12 +159,12 @@
   <para><emphasis role="bold">What version of Eclipse does Red Hat Developer Studio support?</emphasis></para>
   <para>Red Hat Developer Studio works with Eclipse 3.2.2 </para>
   </section>
- <section>
+ <section id="Downloading">
   <title>Downloading</title>
   <para><emphasis role="bold">Where can I download a copy of Red Hat Developer Studio?</emphasis></para>
   <para>Simply go TBD. </para>
  </section>
- <section>
+ <section id="Installation_Issues">
   <title>Installation Issues</title>
   <para><emphasis role="bold">Do I need to have JBoss server installed to run Red Hat Developer Studio?</emphasis></para>
   <para>No. Red Hat Developer Studio already comes bundled with JBoss server. We bundle it together so that you don't need to download any 
@@ -175,20 +175,20 @@
   <para><emphasis role="bold"> What third-party plug-ins are installed with RHDS?</emphasis></para>
   <para>Read the <link  linkend="Installing">Installing</link> section.</para> 
  </section>
- <section>
+ <section id="Importing_Projects">
   <title>Importing Projects</title>
   <para><emphasis role="bold">I have an existing Struts or JSF project. Can I open the project in RHDS?</emphasis></para>
   <para>Yes. Read the TBD</para>
   <para><emphasis role="bold">Can I import a .war file?</emphasis></para>
   <para>Yes. Read the TBD</para>
  </section>
- <section>
+ <section id="Troubleshooting">
   <title>Troubleshooting, Problems, Configuration, Error Messages</title>
   <para><emphasis role="bold">Is it possible to increase the performance of Eclipse after installing your product? My Eclipse now crawls.</emphasis></para>
   <para>By default, Eclipse allocates only 128 Mb of memory whatever physical memory you actually have installed. You can significantly increase performance
    if you allocate more memory. For example:</para>
   <para>eclipse.exe -vmargs -Xmx512M</para>
-  <para><emphasis role="bold">How can I add my own tag library to the Red Hat Palette?</emphasis></para>
+    <para><emphasis role="bold">How can I add my own tag library to the Red Hat Palette?</emphasis></para>
   <para>See Adding Tag Libraries in JBossJSFTools Guide</para>
   <para><emphasis role="bold">I see the Oracle ADF Faces component library tags in the Red Hat Palette, but I can't seem to find the libraries for ADF.
   How do I use this component library with RHDS?</emphasis></para>
