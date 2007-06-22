@@ -257,7 +257,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		}
 	}
 	
-	protected ArchiveNodeImpl createPackageNodeImpl (IPath project, XbPackageNode node, IArchiveNode parent) {
+	public ArchiveNodeImpl createPackageNodeImpl (IPath project, XbPackageNode node, IArchiveNode parent) {
 		
 		if( node instanceof XbPackages ) {
 			ArchiveModelNode impl = (ArchiveModelNode)getRoot(project);

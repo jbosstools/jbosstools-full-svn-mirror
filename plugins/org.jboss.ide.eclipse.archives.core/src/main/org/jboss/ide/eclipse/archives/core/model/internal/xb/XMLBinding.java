@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URL;
 
@@ -38,6 +39,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.Trace;
+import org.jboss.ide.eclipse.archives.core.model.IArchive;
+import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
 import org.jboss.xb.binding.JBossXBException;
 import org.jboss.xb.binding.Unmarshaller;
 import org.jboss.xb.binding.UnmarshallerFactory;
@@ -115,7 +118,16 @@ public class XMLBinding {
 		return element;
 	}
 	
-	public static void marshal (final XbPackages element, final Writer writer, final IProgressMonitor monitor)
+	public static String marshall(IArchive topLevelArchive, IProgressMonitor monitor ) {
+		if( topLevelArchive.isTopLevel() && topLevelArchive instanceof ArchiveImpl ) {
+			XbPackages packs = (XbPackages)((ArchiveImpl)topLevelArchive).getNodeDelegate().getParent();
+			StringWriter sw = new StringWriter();
+			marshall(packs, sw, monitor);
+			return sw.toString();
+		}
+		return null;
+	}
+	public static void marshall (final XbPackages element, final Writer writer, final IProgressMonitor monitor)
 	{
 		if( !initialized) init();
 		binderSandbox(new Runnable() {
@@ -150,7 +162,7 @@ public class XMLBinding {
 		try {
 			ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
 			OutputStreamWriter writer = new OutputStreamWriter(bytesOut);
-			XMLBinding.marshal(packages, writer, monitor);
+			XMLBinding.marshall(packages, writer, monitor);
 			writer.close();
 			
 			ByteArrayInputStream bytesIn = new ByteArrayInputStream(bytesOut.toByteArray());
@@ -173,7 +185,7 @@ public class XMLBinding {
 		try {
 			ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
 			OutputStreamWriter writer = new OutputStreamWriter(bytesOut);
-			XMLBinding.marshal(packages, writer, monitor);
+			XMLBinding.marshall(packages, writer, monitor);
 			writer.close();
 			return new String(bytesOut.toByteArray());
 		} catch( Exception e ) {
