@@ -61,19 +61,7 @@
 
 
  </section>
- <section id="RunningForTheFirstTime">
-  <?dbhtml filename="RunningForTheFirstTime.html"?>
-  <title>Running for the First Time</title>
-  <itemizedlist>
-   <listitem><para> Launch Eclipse</para></listitem>
-   <listitem><para> Select Window/Open Perspective.../Other...</para></listitem>
-   <listitem><para> Select Red Hat Developer Studio from the perspective list</para></listitem>
-  </itemizedlist>
-  <para>We recommend starting Eclipse with VM arguments to make more memory (heap) available for large-scale projects. Open the file &lt;eclipse&gt;\eclipse.ini and set the following:</para>
-  <para>eclipse -clean -vmargs -Xms512m -Xmx512m -XX:MaxPermSize=128m</para>
-  <para>This setting will allow the Java heap to grow to 512MB.</para>
- </section>
-  <section id="Upgrading">
+   <section id="Upgrading">
    <?dbhtml filename="Upgrading.html"?>
    <title>Upgrading</title>
    <para>To upgrade, just uninstall your current version and install the new version.</para>
