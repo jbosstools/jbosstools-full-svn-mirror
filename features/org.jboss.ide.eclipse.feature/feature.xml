@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.jboss.ide.eclipse.feature"
-      label="JBossIDE for Eclipse"
-      version="0.0.0"
+      label="JBossTools"
+      version="2.0.0"
       provider-name="JBoss, a division of Red Hat"
       image="splash.jpg">
 
