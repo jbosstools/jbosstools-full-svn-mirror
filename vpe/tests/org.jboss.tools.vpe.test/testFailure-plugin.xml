@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<!-- This plugin contains test templates for which test must failed -->
+<plugin>
+   <extension id="org.jboss.tools.vpe.tests.failureExtensions"
+         point="org.jboss.tools.vpe.templates">
+      <templates
+            name="Test1"
+            path="templates/test2.xml"/>
+      <templates
+            name="Test2"
+            path="templates/test1.xml"/>
+   </extension>
+</plugin>
