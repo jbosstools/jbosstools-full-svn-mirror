@@ -65,51 +65,14 @@
    <?dbhtml filename="Upgrading.html"?>
    <title>Upgrading</title>
    <para>To upgrade, just uninstall your current version and install the new version.</para>
-   
-   <itemizedlist>
-    <listitem><para> Make sure Eclipse is not running.</para>
-<para>Uninstall your current version of RHDS. You can do one of the following:</para>
-</listitem>
-<listitem><para>Run the Red Hat Developer Studio uninstaller</para></listitem>
-    <listitem><para>Delete the file {EclipseHome}/links/com.exadel.studio.link</para>
-<para>Either method will uninstall RHDS.</para>
-</listitem>
-<listitem>Start Eclipse:
-     <para>eclipse -clean</para></listitem>
-   </itemizedlist>
-   
-   <itemizedlist>
-    <listitem><para>Close Eclipse</para></listitem>
-    <listitem><para>Install the new version of Red Hat Developer Studio.</para></listitem>
-    <listitem>After installation, start Eclipse with the -clean option:
-     <para>eclipse -clean</para></listitem>
-   </itemizedlist>
-   
-   <para>This step is very important as it will clear the Eclipse cache of the old uninstalled plug-in.</para>
-   <note>
-    <title>Note:</title>
-    <para>It is recommended to uninstall Red Hat Developer along with Eclipse and install Red Hat Developer 
-     Studio into a new clean Eclipse</para>
-   </note>
-   </section>
+  </section>
  <section id="Uninstalling">
   <?dbhtml filename="Uninstalling.html"?>
    <title>Uninstalling</title>
   
-  <para> Make sure Eclipse is not running.</para>
-  <para> Uninstall your current version of Red Hat Developer Studio. You can do one of the following:</para>
-  <itemizedlist>
-   <listitem><para>Run the Red Hat Developer Studio uninstaller</para></listitem>
-   <listitem><para>Delete the file {EclipseHome}/links/com.exadel.studio.link</para>
-<para>Either method will uninstall Red Hat Developer Studio.</para>
-</listitem>
-</itemizedlist>
-  <itemizedlist>
-   <listitem><para>Start Eclipse with the -clean option:</para>
-<para>eclipse -clean</para>
-</listitem>
-</itemizedlist>
-  <para>This step is very important as it will clear the Eclipse cache of the uninstalled plug-in.</para>
+  <para>Make sure Red Hat Developer Studio is not running.</para>
+  <para>Uninstall your current version of Red Hat Developer Studio by running uninstaller.</para>
+
  </section>
   <section id="Subscription">
    <?dbhtml filename="Subscription.html"?>
@@ -124,7 +87,6 @@
     <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">Red Hat Developer Studio Forum</ulink>.</para>
    <para>When writing to support, please include the following information:</para>
    <itemizedlist>
-    <listitem><para>Eclipse version</para></listitem>
     <listitem><para> Red Hat Developer Studio version</para></listitem>
     <listitem><para>Exact error message</para></listitem>
     <listitem><para>Exact steps you took to get the error</para></listitem>
