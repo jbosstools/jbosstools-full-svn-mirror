@@ -22,7 +22,7 @@ public class ShaleClayEntityRecognizer implements ShaleClayConstants, EntityReco
             Class c = ShaleClayEntityRecognizer.class;
             XMLEntityResolver.registerPublicEntity(DOC_PUBLICID, FileLocator.resolve(c.getResource("/meta/shale-clay-config_1_0.dtd")).toString());
         } catch (Exception e) {
-        	ShaleModelPlugin.log(e);
+        	ShaleModelPlugin.getPluginLog().logError(e);
         }
     }
 

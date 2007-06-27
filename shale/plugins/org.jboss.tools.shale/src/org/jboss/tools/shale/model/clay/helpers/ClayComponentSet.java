@@ -15,6 +15,7 @@ import org.jboss.tools.common.model.*;
 import org.jboss.tools.common.model.event.*;
 import org.jboss.tools.common.model.plugin.ModelPlugin;
 import org.jboss.tools.jsf.web.JSFWebHelper;
+import org.jboss.tools.shale.ShaleModelPlugin;
 import org.jboss.tools.shale.model.clay.ShaleClayConstants;
 import org.jboss.tools.shale.model.dialog.ShaleDialogConstants;
 
@@ -128,7 +129,7 @@ public class ClayComponentSet implements XModelTreeListener{
 				try {
 					ls[i].componentsChanged(removed, added);
 				} catch (Exception e) {
-					ModelPlugin.log(e);
+					ShaleModelPlugin.getPluginLog().logError(e);
 				}
 			}
 		}

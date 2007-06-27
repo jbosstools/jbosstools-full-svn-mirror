@@ -10,32 +10,15 @@
  ******************************************************************************/ 
 package org.jboss.tools.shale;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.jboss.tools.common.log.BaseUIPlugin;
+import org.jboss.tools.common.log.IPluginLog;
 
-public class ShaleModelPlugin extends AbstractUIPlugin {
+public class ShaleModelPlugin extends BaseUIPlugin {
 	public static final String PLUGIN_ID = "org.jboss.tools.shale";
 
 	public ShaleModelPlugin() {
 		super();
 		INSTANCE = this;
-	}
-	
-	public static void log(String msg) {
-		if(isDebugEnabled()) INSTANCE.getLog().log(new Status(Status.INFO, PLUGIN_ID, Status.OK, msg, null));		
-	}
-	
-	public static void log(IStatus status) {
-		if(isDebugEnabled() || !status.isOK()) INSTANCE.getLog().log(status);
-	}
-	
-	public static void log(String message, Throwable exception) {
-		INSTANCE.getLog().log(new Status(Status.ERROR, PLUGIN_ID, Status.OK, message, exception));		
-	}
-	
-	public static void log(Exception ex) {
-		INSTANCE.getLog().log(new Status(Status.ERROR, PLUGIN_ID, Status.OK, "No message", ex));
 	}
 
 	public static boolean isDebugEnabled() {
@@ -47,5 +30,12 @@ public class ShaleModelPlugin extends AbstractUIPlugin {
 	}
 	
 	static ShaleModelPlugin INSTANCE = null; 
+
+	/**
+	 * @return IPluginLog object
+	 */
+	public static IPluginLog getPluginLog() {
+		return getDefault();
+	}
 
 }

@@ -22,7 +22,7 @@ public class ShaleDialogEntityRecognizer implements ShaleDialogConstants, Entity
             Class c = ShaleDialogEntityRecognizer.class;
             XMLEntityResolver.registerPublicEntity(DOC_PUBLICID, FileLocator.resolve(c.getResource("/meta/shale-dialog-config_1_0.dtd")).toString());
         } catch (Exception e) {
-        	ShaleModelPlugin.log(e);
+        	ShaleModelPlugin.getPluginLog().logError(e);
         }
     }
 

@@ -22,7 +22,7 @@ public class SpringBeansEntityRecognizer implements SpringBeansConstants, Entity
             Class c = SpringBeansEntityRecognizer.class;
             XMLEntityResolver.registerPublicEntity(DOC_PUBLICID, FileLocator.resolve(c.getResource("/meta/spring-beans.dtd")).toString());
         } catch (Exception e) {
-        	ShaleModelPlugin.log(e);
+        	ShaleModelPlugin.getPluginLog().logError(e);
         }
     }
 
