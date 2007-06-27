@@ -66,8 +66,26 @@
 <!--
 	netscape.security.PrivilegeManager.enablePrivilege('UniversalXPConnect');
 	var prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch(null);
-	if(!prefs.getBoolPref('accessibility.browsewithcaret'))
-		prefs.setBoolPref('accessibility.browsewithcaret', true);
+	if(!prefs.getBoolPref('accessibility.browsewithcaret'))		prefs.setBoolPref('accessibility.browsewithcaret', true);
+	if(prefs.getBoolPref('browser.cache.enable'))
+		prefs.setBoolPref('browser.cache.enable', false);
+		
+	if(prefs.getBoolPref('browser.cache.disk.enable'))
+		prefs.setBoolPref('browser.cache.disk.enable', false);
+
+	prefs.setIntPref('browser.cache.disk.capacity', 0);
+
+	if(prefs.getBoolPref('browser.cache.memory.enable'))
+		prefs.setBoolPref('browser.cache.memory.enable', false);
+
+	// -1 = determine dynamically, 0 = none, n = memory capacity in kilobytes
+	prefs.setIntPref('browser.cache.memory.capacity', 0);
+	
+	// 0 = once-per-session, 1 = each-time, 2 = never, 3 = when-appropriate/automatically		
+	prefs.setIntPref('browser.cache.check_doc_frequency', 2);
+	
+	if(prefs.getBoolPref('network.http.use-cache'))
+		prefs.setBoolPref('network.http.use-cache', false);
 //-->
 </script>
 
