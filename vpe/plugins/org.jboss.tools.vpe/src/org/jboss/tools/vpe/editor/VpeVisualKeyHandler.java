@@ -51,6 +51,11 @@ import org.w3c.dom.Comment;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
+/**
+ * Class created for process key events in VPE editor
+ * @author Max Areshkau
+ *
+ */
 public class VpeVisualKeyHandler {
     
 	public static final int VK_ENTER			= 0x0D;
@@ -249,7 +254,7 @@ public class VpeVisualKeyHandler {
 			}
 			if (focusNode != null) {
 				if (focusNode.getNodeType() == Node.TEXT_NODE && 
-						selection.getFocusOffset() < ((IndexedRegion)focusNode).getLength()) {
+						selection.getFocusOffset() < (((TextImpl)selection.getFocusNode()).getValueSource().length())) {
 					deleteRightChar(sourceSelectionBuilder, selection);
 					return true;
 				} else if ((focusNode.getNodeType() == Node.ELEMENT_NODE && selection.getFocusOffset() != 2)) {
@@ -350,8 +355,9 @@ public class VpeVisualKeyHandler {
 				}
 			}
 			
-			int offset = (focusNode == selection.getFocusNode() ? selection.getFocusOffset() : 0);
-			int length = ((IndexedRegion)focusNode).getLength();
+			int offset = (focusNode == selection.getFocusNode() ? selection.getFocusOffset() : (((TextImpl)focusNode).getValueSource().length()));
+
+			int length = (((TextImpl)selection.getFocusNode()).getValueSource()).length();
 			if (length <= offset) {
 					break;
 			}
@@ -495,7 +501,7 @@ public class VpeVisualKeyHandler {
 				System.out.println(">>>   1. VpeVisualKeyHandler.deleteLeft(): focusNode = " + focusNode + "   |   focusOffset = " + selection.getFocusOffset());
 			}
 			if (focusNode != null) {
-				if (focusNode.getNodeType() == Node.TEXT_NODE && selection.getFocusOffset() > 0) {
+				if (focusNode.getNodeType() == Node.TEXT_NODE && selection.getFocusOffset() >= 0) {
 					deleteLeftChar(sourceSelectionBuilder, selection);
 					return true;
 				} else if (focusNode.getNodeType() == Node.TEXT_NODE && selection.getFocusOffset() == 0) {
@@ -677,8 +683,9 @@ public class VpeVisualKeyHandler {
 				}
 			}
 
-			int offset = (focusNode == selection.getFocusNode() ? selection.getFocusOffset() : ((IndexedRegion)focusNode).getLength());
-
+			int offset = (focusNode == selection.getFocusNode() ? selection.getFocusOffset() : (((TextImpl)focusNode).getValueSource().length()));
+							
+			
 			if (offset == 0) { 
 				break;
 			}
@@ -689,11 +696,13 @@ public class VpeVisualKeyHandler {
 					try {
 						String sourceText = sourceEditor.getTextViewer().getDocument().get(region.getStartOffset(), region.getEndOffset()-region.getStartOffset());
 						String escString = TextUtil.isEcsToLeft(sourceText,offset);
+
 						if(escString != null){
 							Point range = sourceEditor.getTextViewer().getSelectedRange();
 							sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x-escString.length(), escString.length(), "");
+
 							atLeastOneCharIsDeleted = true;
-							continue;
+							return selection;
 						}
 					} catch(Exception ex) {
 						VpePlugin.getPluginLog().logError(ex);
@@ -1320,17 +1329,23 @@ public class VpeVisualKeyHandler {
 					selection.getFocusNode().getNodeType() == Node.COMMENT_NODE) {
 				int so = ((IndexedRegion)selection.getFocusNode()).getStartOffset();
 				int eo = ((IndexedRegion)selection.getFocusNode()).getEndOffset();
-				if (selection.getFocusOffset() >= ((IndexedRegion)selection.getFocusNode()).getLength()) {
+				if (selection.getFocusOffset() >= eo-so) {
 					return moveCursorToNextVisualNode(selection.getFocusNode());
 				}
 				int fo = selection.getFocusOffset();
-				int diff = 0;
 				char[] chars = ((TextImpl)selection.getFocusNode()).getValueSource().toCharArray();
+				
+				String sourceValue=((TextImpl)selection.getFocusNode()).getValueSource();
+				String nodeValue=selection.getFocusNode().getNodeValue();				
+				
+				int visualOffser=TextUtil.visualPosition(sourceValue, fo);
+				int sourseOffset=TextUtil.sourcePosition(sourceValue, nodeValue, visualOffser+1);
+				int diff = sourseOffset-fo;
+				
 				while ((fo + diff < chars.length) && isTextToSkip(chars, fo + diff)) {
 					diff++;
 				}
-				diff++;
-				if (fo + diff > chars.length) {
+				if (fo + diff > chars.length||diff==0) {
 					return moveCursorToNextVisualNode(selection.getFocusNode());
 				}
 				setSourceFocus(so + fo + diff);
@@ -1346,12 +1361,15 @@ public class VpeVisualKeyHandler {
 		return false;
 	}
 
+	//moves selection to left
 	private boolean moveLeft() {
+		
 		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(sourceEditor);
 		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
-		if (selection == null || selection.getFocusNode() == null) 
+		if (selection == null || selection.getFocusNode() == null) {
+	
 			return false; 
-
+		}
 		// We're in the visible attribute
 		if (selection.getFocusAttribute() != null) {
 			if (isVisualEditableForNode(selection.getFocusNode())) {
@@ -1377,28 +1395,42 @@ public class VpeVisualKeyHandler {
 					selection.getFocusNode().getNodeType() == Node.COMMENT_NODE) {
 				int so = ((IndexedRegion)selection.getFocusNode()).getStartOffset();
 				int eo = ((IndexedRegion)selection.getFocusNode()).getEndOffset();
+				
 				if (selection.getFocusOffset() <= 0) {
+
 					return moveCursorToPrevVisualNode(selection.getFocusNode());
 				}
 				int fo = selection.getFocusOffset();
-				int diff = -1;
+
+
+				
 				char[] chars = ((TextImpl)selection.getFocusNode()).getValueSource().toCharArray();
-				while ((fo + diff >= 0) && isTextToSkip(chars, fo + diff)) {
+				String sourceValue=((TextImpl)selection.getFocusNode()).getValueSource();
+				String nodeValue=selection.getFocusNode().getNodeValue();
+				
+				int visualOffser=TextUtil.visualPosition(sourceValue, fo);
+				int sourseOffset=TextUtil.sourcePosition(sourceValue, nodeValue, visualOffser-1);
+				int diff = sourseOffset-fo;
+				
+				while ((fo + diff > 0) && isTextToSkip(chars, fo + diff)) {
 					diff--;
 				}
-				if (fo + diff < 0) {
+				if (fo + diff < 0||diff==0) {
+
 					return moveCursorToPrevVisualNode(selection.getFocusNode());
 				}
+
 				setSourceFocus(so + fo + diff);
 				return true;
 			} else if (selection.getFocusNode().getNodeType() == Node.ELEMENT_NODE) {
 				// Move to second position of the visual attribute (because we're placed 
 				//   either before first char of visual attribute or not in visual attribute 
 				//   but still in the beginning of the element
+
 				return moveCursorToPrevVisualNode(selection.getFocusNode());
 			}
 		}
-
+		
 		return false;
 	}
 	
