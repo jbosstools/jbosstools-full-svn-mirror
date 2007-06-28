@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.w3c.dom.Node;
 
+import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelectionBuilder;
@@ -163,7 +164,7 @@ public class SelectionBar extends Layout implements SelectionListener {
 		try {
 			rect = composite.getBounds();
 		} catch (Exception e) {
-			e.printStackTrace();
+			VpePlugin.getPluginLog().logError(e);
 		}
 
 		int allItems = selBar.getItems().length;
