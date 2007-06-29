@@ -20,7 +20,7 @@ them with Ajax4jsf and Rich Faces. We will bootstrap the application using Seam 
     integrated with a Java EE server or in a simple POJO environment like Tomcat. Seam is 
     also extremely portable, and has been tested on several popular containers like JBoss, 
     Tomcat, Weblogic, WebSphere. Seam uses JSF as its view layer and can use either JSP or 
-    Faceless as the presentation layer.</para>
+    Facelets as the presentation layer.</para>
     <para>Seam Gen generates all the required layers of an application. It uses JPA as the 
     persistence layer, POJO&apos;s (Plain Old Java Objects) as the business logic layer and 
     Facelets as the presentation layer.</para>
@@ -677,5 +677,19 @@ Save the page and refresh your browser window.</listitem>
 ]]></programlisting>
 <para>Seam uses Ajax4Jsf to make a server side call to validate the field.</para>
 </section>
+</section>
+
+<section id="OtherRelevantResourcesOnTheTopic2">
+<?dbhtml filename="OtherRelevantResourcesOnTheTopic2.html"?>
+<title>Other relevant resources on the topic</title>
+<para>Seam on JBoss: <ulink url="http://www.jboss.com/products/seam">Seam Framework</ulink></para>
+
+<para>Ten Good Reasons to use Seam: <ulink url="http://www.jboss.com/products/seam/whyseam">Why Seam</ulink></para>
+<para>Getting Started: <ulink url="http://labs.jboss.com/jbossseam/gettingstarted">Getting Started with JBoss Seam</ulink></para>
+<para>Wiki: <ulink url="http://www.jboss.com/wiki/Wiki.jsp?page=JBossSeam">JBoss Wiki</ulink></para>
+<para>FAQ: <ulink url="http://labs.jboss.com/jbossseam/faq/index.html">JBoss Seam FAQ</ulink></para>
+<para>Downloads: <ulink url="http://labs.jboss.com/jbossseam/download">JBoss Seam Downloads</ulink></para>
+<para>Jira: <ulink url="http://jira.jboss.org/jira/browse/JBSEAM">Jira issue tracker</ulink></para>
+<para>Rules Framework: <ulink url="http://www.jboss.com/products/rules">JBoss Rules</ulink></para>
 </section>
 </chapter>

@@ -511,4 +511,16 @@ Tomcat .../common/lib folder.</para></listitem>
 again and enter a user that you already saved, the application should retrieve it from the database
 and display its details.</para>
 </section>
+
+<section id="OtherRelevantResourcesOnTheTopic">
+<?dbhtml filename="OtherRelevantResourcesOnTheTopic.html"?>
+<title>Other relevant resources on the topic</title>
+<para>Hibernate on JBoss: <ulink url="http://www.jboss.org/products/hibernate">Hibernate Framework</ulink></para>
+
+<para>Hibernate Annotations: <ulink url="http://docs.jboss.org/ejb3/app-server/HibernateAnnotations/reference/en/html_single/index.html">Hibernate Annotations</ulink></para>
+<para>Downloads: <ulink url="http://www.hibernate.org/6.html">Hibernate Download</ulink></para>
+<para>Wiki: <ulink url="http://www.jboss.org/wiki/Wiki.jsp?page=JBossHibernate">Hibernate Wiki</ulink></para>
+
+</section>
+
 </chapter>
