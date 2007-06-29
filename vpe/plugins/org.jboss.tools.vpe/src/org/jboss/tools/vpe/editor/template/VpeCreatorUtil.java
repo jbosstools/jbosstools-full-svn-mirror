@@ -139,8 +139,6 @@ public class VpeCreatorUtil {
 			if (wtpModel != null) return wtpModel.getDocument();
 		} catch(Exception e) {
 			VpePlugin.getPluginLog().logError(e);
-		} finally {
-			if (wtpModel != null) wtpModel.releaseFromRead();
 		}
 		return null;
 	}
