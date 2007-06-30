@@ -146,5 +146,13 @@
 
  </section>
 </section>
+
+<section id="OtherRelevantResourcesOnTheTopic33">
+<?dbhtml filename="OtherRelevantResourcesOnTheTopic33.html"?>
+<title>Other relevant resources on the topic</title>
+<para>RHDS on JBoss: <ulink url="http://www.jboss.org/projects/rhdevstudio">Red Hat Developer Studio</ulink></para>
+<para>Forum: <ulink url="http://www.jboss.org/projects/rhdevstudio">JBoss Forum</ulink></para>
+<para>Download: <ulink url="www.exadel.com/web/portal/download">RHDS Download</ulink></para>
+</section>
 </chapter>
 
