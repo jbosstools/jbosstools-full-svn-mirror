@@ -21,7 +21,7 @@ This document will show you how to create such an application from the beginning
 the way demonstrating some of the powerful features of Red Hat Developer Studio. You will design the
 JSF application and then run the application from inside Red Hat Developer Studio.
 We&apos;ll assume that you have already launched Eclipse with Red Hat Developer Studio installed and
-also that the Red Hat Developer Studio perspective is the current perspective. (If not, make it active by
+also that the Red Hat Developer Studio perspective is the current one. (If not, make it active by
 selecting Window > Open Perspective > Red Hat Developer Studio from the menu bar or by selecting Window/
 Open Perspective/Other... from the menu bar and then selecting Red Hat Developer Studio from
 the Select Perspective dialog box.)</para>
@@ -355,4 +355,17 @@ made.) After the messages in the Console tabbed view stop scrolling, Tomcat is a
 <para>This is the equivalent of launching the browser and typing http://localhost:8080/jsfHello into your
  browser. Our JSF application should now appear.</para>
  </section>
+ 
+ <section id="OtherRelevantResourcesOnTheTopic3">
+<?dbhtml filename="OtherRelevantResourcesOnTheTopic3.html"?>
+<title>Other relevant resources on the topic</title>
+<para>JSF on Sun: <ulink url="http://java.sun.com/javaee/javaserverfaces/">JavaServer Faces Technology</ulink></para>
+<para>Core JSF: <ulink url="http://www.horstmann.com/corejsf/">Core JavaServer Faces</ulink></para>
+<para>API: <ulink url="http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/index.html">JSF API</ulink></para>
+<para>JSF Tags: <ulink url="http://www.horstmann.com/corejsf/jsf-tags.html">JSF Core Tags</ulink></para>
+<para>HTML Tags Reference: <ulink url="http://www.exadel.com/tutorial/jsf/jsftags-guide.html">JSF HTML Tags Reference</ulink></para>
+<para>JSF Central: <ulink url="http://www.jsfcentral.com/">JSF Central - Your JavaServer Faces Community</ulink></para>
+<para>FAQ: <ulink url="http://wiki.java.net/bin/view/Projects/JavaServerFacesSpecFaq">JSF FAQ</ulink></para>
+<para>Download: <ulink url="http://java.sun.com/javaee/javaserverfaces/download.html">JavaServer Faces Technology - Download</ulink></para>
+</section>
  </chapter>
