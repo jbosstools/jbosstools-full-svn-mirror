@@ -4,7 +4,6 @@ Bundle-Name: Mozilla Tests Plug-in
 Bundle-SymbolicName: org.jboss.tools.vpe.mozilla.test;singleton:=true
 Bundle-Version: 2.0.0
 Bundle-Vendor: Red Hat, Inc.
-Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.junit,

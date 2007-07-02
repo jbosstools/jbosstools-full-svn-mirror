@@ -12,7 +12,7 @@ package org.jboss.tools.vpe.mozilla.tests;
 
 import junit.framework.TestCase;
 
-import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -55,7 +55,7 @@ public class MozillaBrowserTest extends TestCase {
 	* Wait until all background tasks are complete.
 	*/
 	public void waitForJobs() {
-	   while (Platform.getJobManager().currentJob() != null)
+	   while (Job.getJobManager().currentJob() != null)
 	      delay(1000);
 	}
     
