@@ -150,9 +150,9 @@
 <section id="OtherRelevantResourcesOnTheTopic33">
 <?dbhtml filename="OtherRelevantResourcesOnTheTopic33.html"?>
 <title>Other relevant resources on the topic</title>
-<para>RHDS on JBoss: <ulink url="http://www.jboss.org/projects/rhdevstudio">Red Hat Developer Studio</ulink></para>
-<para>Forum: <ulink url="http://www.jboss.org/projects/rhdevstudio">JBoss Forum</ulink></para>
-<para>Download: <ulink url="www.exadel.com/web/portal/download">RHDS Download</ulink></para>
+<para>RHDS on JBoss: <ulink url="http://labs.jboss.com/rhdevstudio/">Red Hat Developer Studio</ulink></para>
+<para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Forum</ulink></para>
+<para>Download: <ulink url="http://www.exadel.com/web/portal/download/esp35">RHDS Download</ulink></para>
 </section>
 </chapter>
 
