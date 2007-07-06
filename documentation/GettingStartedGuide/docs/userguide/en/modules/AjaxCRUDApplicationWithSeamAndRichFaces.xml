@@ -53,7 +53,7 @@ them with Ajax4jsf and Rich Faces. We will bootstrap the application using Seam 
 </mediaobject>
 </figure>
 <itemizedlist continuation="continues">
-<listitem>To create a Seam project, select Seam Gen -> Setup/Configuration -> Setup to 
+<listitem>To create a Seam project, select <emphasis>Seam Gen -> Setup/Configuration -> Setup </emphasis>to 
 launch the Seam Gen setup window as shown below. Note: </listitem>
 </itemizedlist>
 <note>

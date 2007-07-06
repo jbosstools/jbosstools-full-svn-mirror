@@ -59,7 +59,7 @@ recommend you to use Red Hat Developer Studio. Developer Studio allows the runni
 without redeployment. This is extremely important when you play with the code by adding new
 features to test how they work. At the same time, Developer Studio allows you to have full control over
 the source code. We even recommend turning on the &quot;Use Source Tab as a default for multi-tab
-editors&quot; option in the Preferences Editor (Red Hat->Editors section). You can always use the GUI
+editors&quot; option in the Preferences Editor (<emphasis>Red Hat->Editors</emphasis> section). You can always use the GUI
 feature of Developer Studio later to slash the development time when you start to understand enough
 how things works on the source code level. The provided example is fully adapted to work with
 Red Hat Developer Studio.</para>
@@ -68,7 +68,7 @@ debug a regular Java application within the Eclipse environment. This is an extr
 feature for learning.</para>
 <para>To start working with the tutorial example, copy the &quot;ticker&quot; folder to a new place on the
 disk. If you use Red Hat Developer Studio, copy this folder to the Eclipse workspace folder (or wherever you
-usually keep projects) and then import this project using the Eclipse File->Import menu. Leave
+usually keep projects) and then import this project using the <emphasis>Eclipse File->Import</emphasis> menu. Leave
 the server.xml registration option checked on the second screen of wizard. This allows you to
 change and then run an application without any special redeployment.</para>
 <para>Each ticker folder contains four subfolders:</para>
@@ -581,7 +581,7 @@ the <emphasis role="bold"><property>&lt;d:ticker&gt;</property></emphasis> is a 
 around it, you can the that the same prefix is added to the value you assigned for id.</para>
 <para>We are done with <emphasis role="italic"><property>&quot;id&quot;</property></emphasis> attribute. Now, let&apos;s use the <emphasis role="italic"><property>&quot;rendered&quot;</property></emphasis> attribute. This attribute can
 be used with any JSF Component, because it is inherited from the UIComponent class, the top
-level of the JSF Component hierarchy. The <emphasis role="italic"><property>&quot;rendered&quot;</property></emphasis> attribute itself is not passed through to the HTML code as a tag attribute, but, if it has been set to “false,” the tag with all of its children will
+level of the JSF Component hierarchy. The <emphasis role="italic"><property>&quot;rendered&quot;</property></emphasis> attribute itself is not passed through to the HTML code as a tag attribute, but, if it has been set to &quot;false&quot;, the tag with all of its children will
 not be rendered at all.</para>
 <para>It is pretty easy to add a <emphasis role="italic"><property>&quot;rendered&quot;</property></emphasis> attribute. Just add it into the ticker.tld and all is set.</para>
 <programlisting role="XML"><![CDATA[<attribute>

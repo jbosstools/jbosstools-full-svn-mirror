@@ -18,7 +18,7 @@
 <listitem><para>Download: http://webdownload.exadel.com/dirdownloads/ormhib/examples/ormHibernate3-jsf.zip</para></listitem>
 <listitem><para>Unzip this file into your Eclipse workspace folder.</para></listitem>
 <listitem><para>Launch Eclipse.</para></listitem>
-<listitem><para>In Eclipse, select File/Import/JSF Project.</para></listitem>
+<listitem><para>In Eclipse, select <emphasis>File/Import/JSF Project</emphasis>.</para></listitem>
 <listitem><para>Click Next.</para></listitem>
 <listitem><para>Browse to where the project was unzipped.</para></listitem>
 <listitem><para>Find the web.xml file inside the WebContent folder in the WEB-INF folder, select it, and Click Finish.</para></listitem>
@@ -99,7 +99,7 @@ the object/relational mapping from our simple object model to a database schema 
 capabilities to our project.</para>
 <itemizedlist continuation="continues">
 <listitem><para>Right-click on ormHibernate3-jsf in the Package Explorer view and select Red Hat</para></listitem>
-<listitem><para>Studio/Add Hibernate Capability... from the context menu.</para></listitem>
+<listitem><para><emphasis> <emphasis>Studio/Add Hibernate Capability...</emphasis></emphasis> from the context menu.</para></listitem>
 <listitem><para>Click on Yes in the the dialog box with Add Hibernate Jars selected.</para></listitem>
 <listitem><para>In the Configuration Wizard, click twice in the Value field for dialect and select org.hibernate.dialect.HSQLDialect from the pop-up menu.</para></listitem>
 <listitem><para>Click Finish</para></listitem>
@@ -416,14 +416,14 @@ database table corresponding to the class we are trying to persist and make the 
 <itemizedlist continuation="continues">
 <listitem><para>Leave all values as they are, only change URL: to the following: jdbc:hsqldb:hsql://localhost</para></listitem>
 <listitem><para>Click OK.</para></listitem>
-<listitem><para>Select File/Open Script... from the menu bar of HSQL Database Manager.</para></listitem>
+<listitem><para>Select <emphasis> File/Open Script...</emphasis>from the menu bar of HSQL Database Manager.</para></listitem>
 <listitem><para>Find and open the the DDL file we just created.</para></listitem>
 <listitem><para>Click Execute back in the main screen of the Database Manager.</para></listitem>
-<listitem><para>38. Select View/Refresh Tree from the menu bar.</para></listitem>
+<listitem><para>38. Select <emphasis>View/Refresh Tree</emphasis> from the menu bar.</para></listitem>
 </itemizedlist>
 <para>The User database should now appear in the expand/collapse tree to the left.</para>
 <itemizedlist continuation="continues">
-<listitem><para>Select File/Exit from the menu bar.</para></listitem>
+<listitem><para>Select<emphasis> File/Exit </emphasis>from the menu bar.</para></listitem>
 <listitem><para>Stop the database server: .../ormHibernate3-jsf/hsqldb/bin/shutdown.bat</para></listitem>
 </itemizedlist>
 </section>

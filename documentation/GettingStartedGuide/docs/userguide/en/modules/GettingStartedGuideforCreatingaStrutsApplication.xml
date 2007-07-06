@@ -16,8 +16,8 @@ make it active by selecting Window/Open Perspective/Other/Red Hat Developer Stud
     <title>Starting Up</title>   
 <para>We are first going to create a new project for the application.</para>
  <itemizedlist>
-<listitem><para>Go to the menu bar and select File/New/Project... .</para></listitem>
-<listitem><para>Select Red Hat Developer Studio/Struts/Struts Project in the New Project dialog box.</para></listitem>
+<listitem><para>Go to the menu bar and select File/New/<emphasis>Project...</emphasis>.</para></listitem>
+<listitem><para><emphasis>Select Red Hat Developer Studio/Struts/Struts Project</emphasis> in the New Project dialog box.</para></listitem>
 <listitem><para>Click Next >.</para></listitem>
 <listitem><para>Enter StrutsHello as the project name.</para></listitem>
 <listitem><para>Leave everything else as is, and click Next >.</para></listitem>
@@ -48,7 +48,7 @@ the code a little bit later.</para>
            <title>Creating the Page Placeholders</title>
  <itemizedlist continuation="continues">
 <listitem><para>Bring the Web Projects view to the front of the Package Explorer view by selecting the Web Projects tab next to that tab.</para></listitem>
-<listitem><para>Right-click the StrutsHello/WEB-ROOT (WebContent) folder in the Web Projects view and select New/Folder... .</para></listitem>
+<listitem><para>Right-click the StrutsHello/WEB-ROOT (WebContent) folder in the Web Projects view and select New/<emphasis>Folder...</emphasis>.</para></listitem>
 <listitem><para>Enter pages for a folder name and click Finish.</para></listitem>
      
 <listitem><para>We will keep our presentation files in this folder.</para></listitem>
@@ -162,13 +162,13 @@ name. If you dont like it, you can easily change it.</para></listitem>
          <title>Creating a Global Forward</title>
 <para>One last component that we need to create in the diagram is a global forward.</para>
  <itemizedlist continuation="continues">
-<listitem><para>Somewhere in the top-left corner of diagram, right-click and select Add/Global Forward....</para></listitem>
+<listitem><para>Somewhere in the top-left corner of diagram, right-click and select <emphasis> Add/Global Forward...</emphasis></para></listitem>
 <listitem><para>Enter getName in the Name field.</para></listitem>
-<listitem><para>Select the Change... button for Path.</para></listitem>
+<listitem><para>Select the <emphasis>Change...</emphasis>button for Path.</para></listitem>
 <listitem><para>In the Edit Path window, switch to the Pages tab.</para></listitem>
-<listitem><para>Expand the StrutsHello/WEB-ROOT (WebContent)/pages node and then select the inputname.jsp page.</para></listitem>
-<listitem><para>Click Ok.</para></listitem>
-<listitem><para>Leave the rest of the fields blank and click Ok.</para></listitem>
+<listitem><para>Expand the <emphasis>StrutsHello/WEB-ROOT (WebContent)/pages</emphasis> node and then select the inputname.jsp page.</para></listitem>
+<listitem><para>Click <emphasis>Ok</emphasis>.</para></listitem>
+<listitem><para>Leave the rest of the fields blank and click <emphasis>Ok</emphasis>.</para></listitem>
  </itemizedlist>    
 <para>A forward object now appears on the diagram and also in the global-forwards folder in the Outline view.</para>
          <itemizedlist continuation="continues">
@@ -191,7 +191,7 @@ name. If you dont like it, you can easily change it.</para></listitem>
 <listitem><para>Right-click struts-config.xml/form-beans and select Create Form Bean.</para></listitem>
 <listitem><para>Enter GetNameForm in the name field and sample.GetNameForm for type.</para></listitem>
 <listitem><para>Click Finish.</para></listitem>
-<listitem><para>To save your changes to struts-config.xml, select File/Save from the menu bar.</para></listitem>
+<listitem><para>To save your changes to struts-config.xml, select <emphasis>File/Save</emphasis> from the menu bar.</para></listitem>
  </itemizedlist>
 <para>Note the disappearance of the asterisk next to the name, struts-config.xml.</para>
 </section>
@@ -216,7 +216,7 @@ name. If you dont like it, you can easily change it.</para></listitem>
      <itemizedlist continuation="continues">
 <listitem><para>Click Finish.</para></listitem>
      </itemizedlist>
-<para>The Java files will be generated in a JavaSource/sample folder that you can see in the Package
+<para>The Java files will be generated in a <emphasis>JavaSource/sample</emphasis> folder that you can see in the Package
     Explorer view under the StrutsHello node. One Action stub and one FormBean stub will have been generated.</para>
  </section>
     <section id="CodingtheVariousFiles">
@@ -227,7 +227,7 @@ name. If you dont like it, you can easily change it.</para></listitem>
         <section id="JavaStubClasses">
          <title>Java Stub Classes</title>
   <itemizedlist continuation="continues">
-      <listitem><para>To finish the two Java classes, switch to the Package Explorer view and expand the JavaSource/sample folder.</para></listitem>
+      <listitem><para>To finish the two Java classes, switch to the Package Explorer view and expand the <emphasis>JavaSource/sample</emphasis> folder.</para></listitem>
  </itemizedlist>
             <section id="GetNameForm.java">
     <title>GetNameForm.java</title>
@@ -251,7 +251,7 @@ name. If you dont like it, you can easily change it.</para></listitem>
 <para>ActionErrors errors = new ActionErrors();</para>
 <para>return errors;</para>
     <itemizedlist continuation="continues">
-<listitem><para>Right-click and select Source/Generate Getters and Setters... from the context menu.</para></listitem>
+<listitem><para>Right-click and select Source/Generate Getters and <emphasis>Setters...</emphasis>from the context menu.</para></listitem>
 <listitem><para>In the dialog box, check the check boxes for name and greetName, select First method for Insertion point, and click on the OK button.</para></listitem>
         </itemizedlist>
 <para>The final GetNameForm.java file should look like this:</para>
@@ -356,7 +356,7 @@ public class GreetingAction extends org.apache.struts.action.Action {
 <para>In this page, the user will enter any name and click the submit button. Then, the greeting action will be called through the form.</para>
  <itemizedlist continuation="continues">
 <listitem><para>Click on the inputname.jsp tab in the Editing area to bring its editor forward.</para></listitem>
-<listitem><para>In the Web Projects view, expand StrutsHello/Configuration/default/strutsconfig.xml/action-mappings and select /greeting.</para></listitem>
+<listitem><para>In the Web Projects view, expand <emphasis>StrutsHello/Configuration/default/strutsconfig.xml/action-mappings</emphasis> and select <emphasis>/greeting</emphasis>.</para></listitem>
 <listitem><para>Drag it and drop it between the quotes for the action attribute to the html:form element in the Source pane of the editor.</para></listitem>
 <listitem><para>Then type this text on a new line just below this line:</para></listitem>
  
@@ -410,7 +410,7 @@ public class GreetingAction extends org.apache.struts.action.Action {
 
 <para>To complete editing of this file, we will use macros from the Red Hat Palette. This palette is a view that should be available to the right of the editing area.</para>
      <itemizedlist continuation="continues">
-<listitem><para>Click on the Struts Common folder in the Red Hat Palette to open it.</para></listitem>
+<listitem><para>Click on the <emphasis>Struts Common</emphasis> folder in the Red Hat Palette to open it.</para></listitem>
 <listitem><para>Position the cursor at the beginning of the greeting.jsp file in the Source pane and then click on bean taglib in the Red Hat Palette.</para></listitem>
 </itemizedlist>
 <para>This will insert the following line at the top of the file:</para>
@@ -437,8 +437,8 @@ public class GreetingAction extends org.apache.struts.action.Action {
              <title>index.jsp</title>
 <para>Finally, we will need to create and edit an index.jsp page. This page will use a Struts forward to simply redirect us to the getName global forward.</para>
  <itemizedlist continuation="continues">
-<listitem><para>In the Web Projects view, right-click on StrutsHello/WEB-ROOT(WebContent)</para>
-<para>node and select New/File/JSP... .</para>
+<listitem><para>In the Web Projects view, right-click on <emphasis>StrutsHello/WEB-ROOT(WebContent)</emphasis></para>
+<para>node and select <emphasis>New/File/JSP...</emphasis> .</para>
 </listitem>
 <listitem><para>Type index for Name and click on the Finish button.</para></listitem>
 <listitem><para>On the Red Hat Palette, select the Struts Common folder of macros by clicking on it in the palette.</para></listitem>

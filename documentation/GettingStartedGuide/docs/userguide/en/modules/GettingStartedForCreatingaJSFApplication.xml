@@ -22,8 +22,8 @@ the way demonstrating some of the powerful features of Red Hat Developer Studio.
 JSF application and then run the application from inside Red Hat Developer Studio.
 We&apos;ll assume that you have already launched Eclipse with Red Hat Developer Studio installed and
 also that the Red Hat Developer Studio perspective is the current one. (If not, make it active by
-selecting Window > Open Perspective > Red Hat Developer Studio from the menu bar or by selecting Window/
-Open Perspective/Other... from the menu bar and then selecting Red Hat Developer Studio from
+selecting <emphasis>Window > Open Perspective > Red Hat Developer Studio</emphasis> from the menu bar or by selecting <emphasis>Window/
+Open Perspective/Other...</emphasis> from the menu bar and then selecting Red Hat Developer Studio from
 the Select Perspective dialog box.)</para>
 </section>    
 <section id="SettingUpTheProject">
@@ -31,8 +31,8 @@ the Select Perspective dialog box.)</para>
 <title>Setting Up the Project</title>
 <para>We are first going to create a new project for the application.</para>
 <itemizedlist>
-<listitem><para>Go to the menu bar and select File > New > Project... .</para></listitem>
-<listitem><para>Select Red Hat Developer Studio > JSF > JSF Project in the New Project dialog box.</para></listitem>
+<listitem><para>Go to the menu bar and select <emphasis>File > New > Project...</emphasis> .</para></listitem>
+<listitem><para>Select <emphasis>Red Hat Developer Studio > JSF > JSF Project</emphasis> in the New Project dialog box.</para></listitem>
 <listitem><para>Click Next</para></listitem>
 <listitem><para>Enter jsfHello as the project name.</para></listitem>
 <listitem><para>Leave everything else as is, and click Finish.</para></listitem>
@@ -80,7 +80,7 @@ Diagram mode of the configuration file editor.</para>
 <?dbhtml filename="AddingTwoViews(JSPPages).html"?>
 <title>Adding Two Views (JSP Pages)</title>
 <itemizedlist continuation="continues">
-<listitem><para>Right-click anywhere on the diagram and select New View... from the pop-up
+<listitem><para>Right-click anywhere on the diagram and select<emphasis>New View...</emphasis> from the pop-up
 menu</para></listitem>
 <listitem><para>In the dialog box, type pages/inputname as the value for From-view-id</para></listitem>
 <listitem><para>Leave everything else as is</para></listitem>
@@ -88,7 +88,7 @@ menu</para></listitem>
 <para>If you look in the Package Explorer view you should see a pages folder under WebContent. Opening it 
 will reveal the JSP file you just created</para>
 </listitem>
-<listitem><para>Back on the diagram, right-click anywhere and select New View... from the popup
+<listitem><para>Back on the diagram, right-click anywhere and select<emphasis>New View...</emphasis> from the popup
 menu</para></listitem>
 <listitem><para>In the dialog box, type pages/greeting as the value for From-view-id</para></listitem>
 <listitem><para>Leave everything else as is</para></listitem>
@@ -135,14 +135,14 @@ side of the diagram</para></listitem>
 <para>To store data in the application, we will use a managed bean.</para>
 <itemizedlist continuation="continues">
 <listitem><para>Click on the Tree tab at the bottom of the editing window</para></listitem>
-<listitem><para>Select the Managed Beans node and then click the Add... button displayed along
+<listitem><para>Select the Managed Beans node and then click the <emphasis>Add...</emphasis> button displayed along
 the right side of the editor window</para></listitem>
 <listitem><para>Type in jsfHello.PersonBean for Class and personBean for Name. Leave
 Scope as is and Generate Source Code as is (checked)</para></listitem>
 <listitem><para>Click Finish</para></listitem>
 <listitem><para>personBean will now be selected and three sections of information, Managed
 Bean, Properties, and Advanced, will be displayed about it. Under the Properties
-section, click the Add... button</para></listitem>
+section, click the <emphasis>Add...</emphasis> button</para></listitem>
 <listitem><para>For Property-Name type in name. Leave everything else as is. (When Property-
 Class is not filled in, String is the assumed type.)</para></listitem>
 <listitem><para>Click Finish</para></listitem>
@@ -212,7 +212,7 @@ and drop it inside the red box in the editor</para></listitem>
 <listitem><para>Select inputText within the JSF HTML palette folder and drag it into the innermost
 box in the editor after &quot;Please enter name:&quot;</para></listitem>
 <listitem><para>In the attributes dialog, click in the value field next to the value attribute and click
-on the ... button</para></listitem>
+on the <emphasis>... </emphasis>button</para></listitem>
 <listitem><para>Then, select the Managed Beans/personBean/name node and click on the Ok
 button</para></listitem>
 <listitem><para>Back in the attributes dialog, select the Advanced tab, type in name as the value
@@ -220,7 +220,7 @@ for the id attribute, and then click on the Finish button</para></listitem>'
 <listitem><para>Select commandButton within the JSF HTML palette folder and drag it into the
 innermost box in the editor after the input box</para></listitem>
 <listitem><para>In the attributes dialog, click in the value field next to the action attribute and click
-on the ... button</para></listitem>
+on the <emphasis>... </emphasis>button</para></listitem>
 <listitem><para>Then, select the View Actions/greeting node and click on the Ok button</para></listitem>
 <listitem><para>Back in the attributes dialog box, type in Say Hello as the value for the value
 attribute (&quot;Say Hello&quot;) and then click on the Finish button</para></listitem>
@@ -296,14 +296,14 @@ Hello <h:outputText value="#{personBean.name}"/>!
 <title>Creating the Start Page</title>
 <para>You also need to create a start page as an entry point into the application.</para>
 <itemizedlist continuation="continues">
-<listitem><para>In the Package Explorer view to the left, right-click jsfHello/WebContent and select
+<listitem><para>In the Package Explorer view to the left, right-click <emphasis>jsfHello/WebContent</emphasis> and select
 New/JSP File</para></listitem>
 <listitem><para>For Name type in index, for Template select JSPRedirect and click Finish.</para></listitem>
 </itemizedlist>
 <para>A JSP editor will open up on the newly created file.</para>
 
 <itemizedlist continuation="continues">
-<listitem><para>In the Source part of the split screen, type /pages/inputname.jsf in between
+<listitem><para>In the Source part of the split screen, type <emphasis>/pages/inputname.jsf</emphasis> in between
 the quotes for the page attribute</para></listitem>
 </itemizedlist>
 <para>The source coding should look like this now:</para>
