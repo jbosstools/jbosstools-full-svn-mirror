@@ -25,7 +25,7 @@
 </itemizedlist>
 <para>The ormHibernate3-jsf project should appear in the Package Explorer with a standard Web application 
 structure. As we mentioned before, this is a JSF application. To see the JSF configuration file, browse to
- WebContent/WEB-INF/faces-config.xml.</para>
+ <emphasis>WebContent/WEB-INF/faces-config.xml</emphasis>.</para>
 <para>In the JavaSource folder, you will find the following Java source files. We will briefly explain these
  files and then run the application.</para>
  <table>
@@ -163,7 +163,7 @@ property>
 
 <itemizedlist continuation="continues">
 <listitem><para>In the ORM Explorer view, reveal the 
-ormHibernate3-jsf/JavaSource/hibernate.cfg.xml/demo/User -> user node, right-click it, and select 
+<emphasis>ormHibernate3-jsf/JavaSource/hibernate.cfg.xml/demo/User -> user node</emphasis>, right-click it, and select 
 Open Mapping from the context menu.</para></listitem>
 <listitem><para>In the editor that opens up for the mapping file, just change the class 
 attribute for generator to a value of assigned and you&apos;re done with this file.</para></listitem>
@@ -396,7 +396,7 @@ database table corresponding to the class we are trying to persist and make the 
 <title>Creating the Database Table</title>
 <para>Let&apos;s first create the script for our database table in Red Hat Developer Studio.</para>
 <itemizedlist continuation="continues">
-<listitem><para>In the ORM Explorer view, right-click on JavaSource/hibernate.cfg.xml and select "Generate DDL Wizard".</para></listitem>
+<listitem><para>In the ORM Explorer view, right-click on <emphasis>JavaSource/hibernate.cfg.xml</emphasis> and select "Generate DDL Wizard".</para></listitem>
 
 <listitem><para>Select HSQL as the Dialect and leave Location as is.</para></listitem>
 <listitem><para>Click Finish.</para></listitem>
@@ -409,12 +409,12 @@ database table corresponding to the class we are trying to persist and make the 
 <title>Making the Database Available for the Application</title>
 <para>The databse server, HSQLDB, is provided with the project. It&apos;s located in the ormHibernate3-jsf/hsqldb folder.</para>
 <itemizedlist continuation="continues">
-<listitem><para>Start the database server: .../ormHibernate3-jsf/hsqldb/bin/server.bat</para></listitem>
-<listitem><para>In a separate window, start the admin tool: .../ormHibernate3-jsf/hsqldb/bin/dbadmin.bat</para></listitem>
+<listitem><para>Start the database server: <emphasis>.../ormHibernate3-jsf/hsqldb/bin/server.bat</emphasis></para></listitem>
+<listitem><para>In a separate window, start the admin tool: <emphasis>.../ormHibernate3-jsf/hsqldb/bin/dbadmin.bat</emphasis></para></listitem>
 </itemizedlist>
 <para>This will launch a small GUI application, HSQL Database Manager.</para>
 <itemizedlist continuation="continues">
-<listitem><para>Leave all values as they are, only change URL: to the following: jdbc:hsqldb:hsql://localhost</para></listitem>
+<listitem><para>Leave all values as they are, only change URL: to the following: <emphasis>jdbc:hsqldb:hsql://localhost</emphasis></para></listitem>
 <listitem><para>Click OK.</para></listitem>
 <listitem><para>Select <emphasis> File/Open Script...</emphasis>from the menu bar of HSQL Database Manager.</para></listitem>
 <listitem><para>Find and open the the DDL file we just created.</para></listitem>
@@ -424,7 +424,7 @@ database table corresponding to the class we are trying to persist and make the 
 <para>The User database should now appear in the expand/collapse tree to the left.</para>
 <itemizedlist continuation="continues">
 <listitem><para>Select<emphasis> File/Exit </emphasis>from the menu bar.</para></listitem>
-<listitem><para>Stop the database server: .../ormHibernate3-jsf/hsqldb/bin/shutdown.bat</para></listitem>
+<listitem><para>Stop the database server: <emphasis>.../ormHibernate3-jsf/hsqldb/bin/shutdown.bat</emphasis></para></listitem>
 </itemizedlist>
 </section>
 

@@ -183,7 +183,7 @@ file you modified for client-side validation along with a change to an action an
 
 <listitem><para>In the Edit Properties window, insert the cursor into the value column for the input property and click on the <emphasis>...</emphasis> button.</para></listitem>
 
-<listitem><para>In the dialog box, make sure the Pages tab is selected, select StrutsHello/WEB-ROOT(WebContent)/pages/inputname.jsp, click the Ok button, and then click on the Close button.</para></listitem>
+<listitem><para>In the dialog box, make sure the Pages tab is selected, select <emphasis>StrutsHello/WEB-ROOT(WebContent)/pages/inputname.jsp</emphasis>, click the Ok button, and then click on the Close button.</para></listitem>
 </itemizedlist>
 </section>
 <section id="EditingTheFormBean">

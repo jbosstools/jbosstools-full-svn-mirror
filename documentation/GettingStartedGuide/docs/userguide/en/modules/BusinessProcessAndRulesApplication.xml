@@ -49,7 +49,7 @@
 Those files are very simple and we will review them as we go along with the tutorial. We import 
 them here to reduce potential typos and other errors in the tutorial.</para>
 <orderedlist>
-<listitem>Choose the File -> Import ... menu and then select General -> Existing project into workspace and 
+<listitem>Choose the <emphasis>File -> Import ...</emphasis> menu and then select <emphasis>General -> Existing</emphasis> project into workspace and 
 click on the Next button.</listitem>
 </orderedlist>
 <figure>
@@ -90,7 +90,7 @@ directory, you will see numerous files as shown below. We will look at these fil
 </mediaobject>
 </figure>
 <orderedlist continuation="continues">
-<listitem>Right click on the rules-bpm/build.xml file, and select Run AS ... -> Ant Build.</listitem>
+<listitem>Right click on the rules-bpm/build.xml file, and select <emphasis>Run AS ... -> Ant</emphasis> Build.</listitem>
 </orderedlist>
 
 <figure>
@@ -120,8 +120,8 @@ directory, you will see numerous files as shown below. We will look at these fil
     <orderedlist>
     <listitem>Select the<emphasis> EclipseCon/resources </emphasis>directory. That is where we are going to put the
      rules definition file.</listitem>
-     <listitem>Select the following menu actions: File -> New -> Other ... -> JBoss Rules -> New
-      Rules Resource to bring up the JBoss Rules wizard.</listitem>
+     <listitem>Select the following menu actions: F<emphasis>ile -> New -> Other ... -> JBoss Rules -> New
+      Rules Resource</emphasis> to bring up the JBoss Rules wizard.</listitem>
     </orderedlist>
     <figure>
 <title>New Rules File</title>
@@ -181,7 +181,7 @@ end
 ]]></programlisting>
 <para>Notice that the IDE automatically highlights the syntax and provides auto-completion help.
  You may wonder how Seam knows to load the process-order.drl file for the application.</para>
- <para>If you look in the resources/WEB-INF/components.xml file we copied from the imported 
+ <para>If you look in the <emphasis>resources/WEB-INF/components.xml</emphasis> file we copied from the imported 
  rules-bpm project. It has an element pointing to the process-order.drl file.</para>
  <programlisting role="XML"><![CDATA[<drools:rule-base name="securityRules">
        <drools:rule-files>
@@ -198,7 +198,7 @@ end
  refunded. Since the business analyst typically designs this process, it is very high level and 
  can be drawn up in a GUI designer.</para>
  <orderedlist>
- <listitem>Select the<emphasis> EclipseCon/resources </emphasis>folder and select menu actions File -> New -> File.
+ <listitem>Select the<emphasis> EclipseCon/resources </emphasis>folder and select menu actions <emphasis>File -> New -> File</emphasis>.
   Add a new file called process-order.jpdl.xml as shown below:</listitem>
  </orderedlist>
  <figure>
@@ -220,8 +220,8 @@ process definition, and allows us to use the jBPM visual designer to further edi
 </process-definition>
 ]]></programlisting>
 <orderedlist continuation="continues">
-<listitem>Right click on the process-order.jpdl.xml file and select Open with ... -> jBPM 
-Graphical Process Designer.</listitem>
+<listitem>Right click on the process-order.jpdl.xml file and select <emphasis>Open with ... -> jBPM 
+Graphical Process Designer</emphasis>.</listitem>
 </orderedlist>
 <figure>
 <title>Opening Graphical Process Designer</title>
@@ -264,8 +264,8 @@ that based on the icon on the node as shown below. Draw a rectangle on the canva
   the outcome of each node – hence the next node in the process.</para>
    <para>Let&apos;s go through the exercise for the &quot;Check Inventory&quot; node first.</para>
    <orderedlist>
-   <listitem>Right click on the &quot;Check Inventory&quot; node in the designer and select Add 
-   Actions -> Node Enter from the menu as shown below.</listitem>
+   <listitem>Right click on the &quot;Check Inventory&quot; node in the designer and select <emphasis>Add 
+   Actions -> Node Enter </emphasis>from the menu as shown below.</listitem>
    </orderedlist>
    <figure>
 <title>Node Entering</title>
@@ -291,7 +291,7 @@ node enter, and you will see action1. The Outline view may be hidden or on the l
 <orderedlist continuation="continues">
 <listitem>Double click on action1 to bring up the wizard. Select Handler on the left and enter
  com.mydomain.EclipseCon.process. CheckInventoryAction as the class and bean as the type as shown
-  below. You can can also search for the class by clicking on the Browse.. button.</listitem>
+  below. You can can also search for the class by clicking on the <emphasis>Browse...</emphasis> button.</listitem>
 </orderedlist>
 <figure>
 <title>Action Handler</title>

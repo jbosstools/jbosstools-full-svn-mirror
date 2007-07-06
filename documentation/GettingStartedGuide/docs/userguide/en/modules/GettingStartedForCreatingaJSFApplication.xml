@@ -213,7 +213,7 @@ and drop it inside the red box in the editor</para></listitem>
 box in the editor after &quot;Please enter name:&quot;</para></listitem>
 <listitem><para>In the attributes dialog, click in the value field next to the value attribute and click
 on the <emphasis>... </emphasis>button</para></listitem>
-<listitem><para>Then, select the Managed Beans/personBean/name node and click on the Ok
+<listitem><para>Then, select the <emphasis>Managed Beans/personBean/name</emphasis> node and click on the Ok
 button</para></listitem>
 <listitem><para>Back in the attributes dialog, select the Advanced tab, type in name as the value
 for the id attribute, and then click on the Finish button</para></listitem>'
@@ -221,7 +221,7 @@ for the id attribute, and then click on the Finish button</para></listitem>'
 innermost box in the editor after the input box</para></listitem>
 <listitem><para>In the attributes dialog, click in the value field next to the action attribute and click
 on the <emphasis>... </emphasis>button</para></listitem>
-<listitem><para>Then, select the View Actions/greeting node and click on the Ok button</para></listitem>
+<listitem><para>Then, select the <emphasis>View Actions/greetin</emphasis>g node and click on the Ok button</para></listitem>
 <listitem><para>Back in the attributes dialog box, type in Say Hello as the value for the value
 attribute (&quot;Say Hello&quot;) and then click on the Finish button</para></listitem>
 </itemizedlist>
@@ -269,7 +269,7 @@ mode</para></listitem>
 box in the editor after &quot;Hello&quot;</para></listitem>
 <listitem><para>In the attributes dialog, click in value field next to the value attribute and click on
 the ... button</para></listitem>
-<listitem><para>Then, select the Managed Beans/personBean/name node, click on the Ok button,
+<listitem><para>Then, select the <emphasis>Managed Beans/personBean/name</emphasis> node, click on the Ok button,
 and then click on the Finish button</para></listitem>
 <listitem><para>Right after the output field, type an exclamation point (!)</para></listitem>
 </itemizedlist>
@@ -319,7 +319,7 @@ the quotes for the page attribute</para></listitem>
 <para>Note the .jsf extension for the file name. This is a mapping defined in the web.xml file 
 for the project for invoking JavaServer Faces when you run the application.</para>
 <itemizedlist continuation="continues">
-<listitem><para>Select File/Save from the menu bar.</para></listitem>
+<listitem><para>Select<emphasis> File/Save</emphasis> from the menu bar.</para></listitem>
 </itemizedlist>
 </section>
 <section id="RunningTheApplicationJSF">

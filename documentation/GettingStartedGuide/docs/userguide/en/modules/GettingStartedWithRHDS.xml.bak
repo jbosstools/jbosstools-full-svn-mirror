@@ -10,30 +10,6 @@
     </keywordset>
   </chapterinfo>
  <title>Getting Started with Red Hat Developer Studio</title>
- <section id="TechnicalRequirements">
- <?dbhtml filename="TechnicalRequirements.html"?>
-<title>Technical Requirements</title>
-    <section id="Java">
-    <title>Java</title>
-   <para>Before installing Red Hat Developer Studio, make sure you have one of the following versions of Java 
-    installed:</para>
-   <itemizedlist>
-    <listitem><para>JDK 1.4.2 or higher</para></listitem>
-   </itemizedlist>
-   <para>It must be the full JDK, not just the JRE (Java Runtime Environment). For more information about 
-    target operating environments and compatible Java versions please refer to the JBoss web site. Please note
-    that the Eclipse documentation states that you only need a Java Runtime Environment for Eclipse, but to 
-    use Red Hat Developer Studio requires a full JDK in order to compile Java classes and JSP pages.</para>
-  </section>
-  <section id="OperatingSystems">
-  <?dbhtml filename="OperatingSystems.html"?>
-    <title>Operating Systems</title>
-   <itemizedlist>
-    <listitem><para>Windows</para></listitem>
-    <listitem><para>Linux</para></listitem>
-   </itemizedlist>
-  </section>  
-  </section>
   <section id="Installing">
   <?dbhtml filename="Installing.html"?>
 <title>Installing</title>
@@ -57,100 +33,46 @@
     </mediaobject>
    </figure>
    
-   <para>After installation process you will have all required platforms to run Red Hat Developer Studio:</para>
+   <para>Installation process includes all required platforms to run Red Hat Developer Studio:</para>
    <itemizedlist>
     <listitem>
      <para>Eclipse 3.2.2</para>
     </listitem>
     <listitem>
-     <para>JBoss Application Server</para>
+     <para>JBoss J2EE Application Server</para>
+     <figure>
+      <title>JBoss J2EE Application Server installing</title>
+      <mediaobject> 
+       <imageobject>
+        <imagedata fileref="images/install2.png"/>
+       </imageobject>
+      </mediaobject>
+     </figure>
+     <note>The installer will install JBoss J2EE Application Server for running your applications if you select this option during the installation process. 
+      If you want to use a different server than ours, you can change the setting in Red Hat Developer Studio.</note>
     </listitem>
    </itemizedlist>
-   
-   <para>Red Hat Developer Studio comes with the following plug-ins:</para> 
-   <itemizedlist>
-    <listitem><para>WTP runtime 1.5</para></listitem>
-    <listitem><para>GEF runtime 3.2</para></listitem>
-    <listitem><para>JEM runtime 1.2</para></listitem>
-    <listitem><para>EMF and SDO runtime 2.2</para></listitem>
-    <listitem><para>XSD runtime 2.2</para></listitem>
-    <listitem>Hibernate-tools-3.1.0 beta5 (without WTP, EMF, GEF, and other non-Hibernate plug-ins from 
-     Hibernate-tools-3.1.0 beta5)</listitem>
-    <listitem><para>QuickImage 0.2.0</para></listitem>
-    <listitem><para>Spring IDE 1.3.2</para></listitem>
-    <listitem><para>Sun Glassfish 0.3</para></listitem>
-   </itemizedlist>
-   
   </section>  
   <section id="InstallingthroughTheUpdateSite">
   <?dbhtml filename="InstallingthroughTheUpdateSite.html"?>
-   <title>Installing through the update Site</title>
+   <title>Installing via update Site</title>
    TBD
   </section>
 
 
  </section>
- <section id="RunningForTheFirstTime">
-  <?dbhtml filename="RunningForTheFirstTime.html"?>
-  <title>Running for the First Time</title>
-  <itemizedlist>
-   <listitem><para> Launch Eclipse</para></listitem>
-   <listitem><para> Select Window/Open Perspective.../Other...</para></listitem>
-   <listitem><para> Select Red Hat Developer Studio from the perspective list</para></listitem>
-  </itemizedlist>
-  <para>We recommend starting Eclipse with VM arguments to make more memory (heap) available for large-scale projects. Open the file &lt;eclipse&gt;\eclipse.ini and set the following:</para>
-  <para>eclipse -clean -vmargs -Xms512m -Xmx512m -XX:MaxPermSize=128m</para>
-  <para>This setting will allow the Java heap to grow to 512MB.</para>
- </section>
-  <section id="Upgrading">
+   <section id="Upgrading">
    <?dbhtml filename="Upgrading.html"?>
    <title>Upgrading</title>
    <para>To upgrade, just uninstall your current version and install the new version.</para>
-   
-   <itemizedlist>
-    <listitem><para> Make sure Eclipse is not running.</para>
-<para>Uninstall your current version of RHDS. You can do one of the following:</para>
-</listitem>
-<listitem><para>Run the Red Hat Developer Studio uninstaller</para></listitem>
-    <listitem><para>Delete the file {EclipseHome}/links/com.exadel.studio.link</para>
-<para>Either method will uninstall RHDS.</para>
-</listitem>
-<listitem>Start Eclipse:
-     <para>eclipse -clean</para></listitem>
-   </itemizedlist>
-   
-   <itemizedlist>
-    <listitem><para>Close Eclipse</para></listitem>
-    <listitem><para>Install the new version of Red Hat Developer Studio.</para></listitem>
-    <listitem>After installation, start Eclipse with the -clean option:
-     <para>eclipse -clean</para></listitem>
-   </itemizedlist>
-   
-   <para>This step is very important as it will clear the Eclipse cache of the old uninstalled plug-in.</para>
-   <note>
-    <title>Note:</title>
-    <para>It is recommended to uninstall Red Hat Developer along with Eclipse and install Red Hat Developer 
-     Studio into a new clean Eclipse</para>
-   </note>
-   </section>
+  </section>
  <section id="Uninstalling">
   <?dbhtml filename="Uninstalling.html"?>
    <title>Uninstalling</title>
   
-  <para> Make sure Eclipse is not running.</para>
-  <para> Uninstall your current version of Red Hat Developer Studio. You can do one of the following:</para>
-  <itemizedlist>
-   <listitem><para>Run the Red Hat Developer Studio uninstaller</para></listitem>
-   <listitem><para>Delete the file {EclipseHome}/links/com.exadel.studio.link</para>
-<para>Either method will uninstall Red Hat Developer Studio.</para>
-</listitem>
-</itemizedlist>
-  <itemizedlist>
-   <listitem><para>Start Eclipse with the -clean option:</para>
-<para>eclipse -clean</para>
-</listitem>
-</itemizedlist>
-  <para>This step is very important as it will clear the Eclipse cache of the uninstalled plug-in.</para>
+  <para>Make sure Red Hat Developer Studio is not running.</para>
+  <para>Uninstall your current version of Red Hat Developer Studio by running uninstaller.</para>
+
  </section>
   <section id="Subscription">
    <?dbhtml filename="Subscription.html"?>
@@ -162,15 +84,75 @@
    <title>Support</title>
     <para>If you have comments or questions, you can send them to 
     <ulink url="mailto:support@exadel.com">support@exadel.com</ulink> or 
-    <ulink url="">Red Hat Developer Studio Forum</ulink>.</para>
+    <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">Red Hat Developer Studio Forum</ulink>.</para>
    <para>When writing to support, please include the following information:</para>
    <itemizedlist>
-    <listitem><para>Eclipse version</para></listitem>
     <listitem><para> Red Hat Developer Studio version</para></listitem>
     <listitem><para>Exact error message</para></listitem>
     <listitem><para>Exact steps you took to get the error</para></listitem>
    </itemizedlist>
   </section>
+<section id="FAQ">
+ <?dbhtml filename="FAQ.html"?>
+ <title>FAQ</title>
+ <para>For easy reference to Red Hat Developer Studio related questions, our FAQ provides answers to our most &quot;popular&quot; questions.
+  The sections of questions are organized by type. For further support, please contact support@exadel.com.</para>
+ <section id="Before_Installing">
+  <title>Before Installing, Tutorials, Examples, Readme Files</title>
+  <para><emphasis role="bold">I'm looking for examples, do you have any?</emphasis></para>
+  <para>Yes, simply go to our tutorials page</para>
+  <para><emphasis role="bold">Where can I find the Red Hat Developer Studio readme file?</emphasis></para>
+  <para>It's at http://www.exadel.com/web/portal/products/ReleaseNotes</para>
+  <para><emphasis role="bold">Where can I find some documentation for Red Hat Developer Studio?</emphasis></para>
+  <para>Try these resources:</para>
+  <para>TBD</para>
+  <para><emphasis role="bold">What version of Eclipse does Red Hat Developer Studio support?</emphasis></para>
+  <para>Red Hat Developer Studio works with Eclipse 3.2.2 </para>
+  </section>
+ <section id="Downloading">
+  <title>Downloading</title>
+  <para><emphasis role="bold">Where can I download a copy of Red Hat Developer Studio?</emphasis></para>
+  <para>Simply go TBD. </para>
+ </section>
+ <section id="Installation_Issues">
+  <title>Installation Issues</title>
+  <para><emphasis role="bold">Do I need to have JBoss server installed to run Red Hat Developer Studio?</emphasis></para>
+  <para>No. Red Hat Developer Studio already comes bundled with JBoss server. We bundle it together so that you don't need to download any 
+  additional software and can test your application in a Web browser right away.</para>
+  <para>If you want to use a different JBoss server installation, after installing, simply go to preferences and change the settings to point to another 
+  Jboss server installation.</para>
+  <para>Red Hat Developer Stuiod works with any serlvet container, not just JBoss. For more information on deployment, please see the Deploying Your Application section.</para>
+  <para><emphasis role="bold"> What third-party plug-ins are installed with RHDS?</emphasis></para>
+  <para>Read the <link  linkend="Installing">Installing</link> section.</para> 
+ </section>
+ <section id="Importing_Projects">
+  <title>Importing Projects</title>
+  <para><emphasis role="bold">I have an existing Struts or JSF project. Can I open the project in RHDS?</emphasis></para>
+  <para>Yes. Read the TBD</para>
+  <para><emphasis role="bold">Can I import a .war file?</emphasis></para>
+  <para>Yes. Read the TBD</para>
+ </section>
+ <section id="Troubleshooting">
+  <title>Troubleshooting, Problems, Configuration, Error Messages</title>
+  <para><emphasis role="bold">Is it possible to increase the performance of Eclipse after installing your product? My Eclipse now crawls.</emphasis></para>
+  <para>By default, Eclipse allocates only 128 Mb of memory whatever physical memory you actually have installed. You can significantly increase performance
+   if you allocate more memory. For example:</para>
+  <para>eclipse.exe -vmargs -Xmx512M</para>
+    <para><emphasis role="bold">How can I add my own tag library to the Red Hat Palette?</emphasis></para>
+  <para>See Adding Tag Libraries in JBossJSFTools Guide</para>
+  <para><emphasis role="bold">I see the Oracle ADF Faces component library tags in the Red Hat Palette, but I can't seem to find the libraries for ADF.
+  How do I use this component library with RHDS?</emphasis></para>
+  <para>See Adding Support for the Oracle ADF Components Library in the RHDS User Guide.</para>
 
+ </section>
+</section>
+
+<section id="OtherRelevantResourcesOnTheTopic33">
+<?dbhtml filename="OtherRelevantResourcesOnTheTopic33.html"?>
+<title>Other relevant resources on the topic</title>
+<para>RHDS on JBoss: <ulink url="http://labs.jboss.com/rhdevstudio/">Red Hat Developer Studio</ulink></para>
+<para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Forum</ulink></para>
+<para>Download: <ulink url="http://www.exadel.com/web/portal/download/esp35">RHDS Download</ulink></para>
+</section>
 </chapter>
 
