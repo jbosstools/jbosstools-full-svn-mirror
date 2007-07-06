@@ -51,7 +51,7 @@ click on the Finish button.</para></listitem>
 <listitem><para>Select<emphasis> File/Save </emphasis>All from the menu bar.</para></listitem>
 <listitem><para>Select validation.xml under the <emphasis>StrutsHello/Validation</emphasis> node and double-click it to open it with the Red Hat Developer Studio Validation Editor.</para></listitem>
 <listitem><para>Select validation.xml under the<emphasis> StrutsHello/Validation</emphasis> node and double-click it to open it with the Red Hat Studio Validation Editor.</para></listitem>
-<listitem><para>Expand the form-beans node under the <emphasis>StrutsHello/Configuration/default/ struts-config.xml node.</emphasis> Then, drag the form bean GetNameForm and drop it onto formset (default) in the Validation Editor.</para></listitem>
+<listitem><para>Expand the form-beans node under the <emphasis>StrutsHello/Configuration/default/struts-config.xml node.</emphasis> Then, drag the form bean GetNameForm and drop it onto formset (default) in the Validation Editor.</para></listitem>
 <listitem><para>In the Validation Editor, expand the formset node, right-click GetNameForm, and select<emphasis>Add Field...</emphasis> from the context menu.</para></listitem>
 <listitem><para>Enter name for Property in the dialog box.</para></listitem>
 <listitem><para>In the properties for the name field to the right of the &quot;tree&quot; for the validation.xml file, click on the <emphasis>Change...</emphasis>button next to the Depends entry field.</para></listitem>
@@ -74,7 +74,7 @@ click on the Finish button.</para></listitem>
 <para>you don&apos;t actually have to do any of the script coding. The Validation Framework handles this.</para>
 <para>To see how this works in our application, you&apos;ll just need to make a couple of modifications to one of the JSP files.</para>
 <itemizedlist continuation="continues">
-<listitem><para>Double-click inputname.jsp under <emphasis>StrutsHello/WEB-ROOT</emphasis> (WebContent)/ pages to open it for editing.</para></listitem>
+<listitem><para>Double-click inputname.jsp under <emphasis>StrutsHello/WEB-ROOT(WebContent)/pages to open it for editing.</para></listitem>
 <listitem><para>Find the  tag near the top and hit Return to make a new line under it.</para></listitem>
 <listitem><para>In the Red Hat Palette view to the right, open the HTML folder and click on the javascript tag.</para></listitem>
 <listitem><para>Back in the editor, just in front of the closing slash for this inserted tag, hit Ctrl+Space and select formName from the prompting menu.</para></listitem>
