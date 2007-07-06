@@ -17,8 +17,8 @@ import org.w3c.dom.Node;
 
 public class VpeCreationData {
 	private Node node;
-	private List childrenInfoList;
-	private List illegalChildren;
+	private List<VpeChildrenInfo> childrenInfoList;
+	private List<Node> illegalChildren;
 	private Object data;
 
 	public VpeCreationData(Node node) {
@@ -31,23 +31,23 @@ public class VpeCreationData {
 	
 	public void addChildrenInfo(VpeChildrenInfo info) {
 		if (childrenInfoList == null) {
-			childrenInfoList = new ArrayList();
+			childrenInfoList = new ArrayList<VpeChildrenInfo>();
 		}
 		childrenInfoList.add(info);
 	}
 	
-	public List getChildrenInfoList() {
+	public List<VpeChildrenInfo> getChildrenInfoList() {
 		return childrenInfoList;
 	}
 	
 	public void addIllegalChild(Node child) {
 		if (illegalChildren == null) {
-			illegalChildren = new ArrayList();
+			illegalChildren = new ArrayList<Node>();
 		}
 		illegalChildren.add(child);
 	}
 	
-	public List getIllegalChildren() {
+	public List<Node> getIllegalChildren() {
 		return illegalChildren;
 	}
 	

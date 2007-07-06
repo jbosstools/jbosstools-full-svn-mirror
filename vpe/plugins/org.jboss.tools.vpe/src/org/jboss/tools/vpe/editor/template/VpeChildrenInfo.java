@@ -22,7 +22,7 @@ import org.w3c.dom.Node;
 
 public class VpeChildrenInfo {
 	private Element visualParent;
-	private List sourceChildren;
+	private List<Node> sourceChildren;
 
 	public VpeChildrenInfo(Element visualParent) {
 		this.visualParent = visualParent;
@@ -40,7 +40,7 @@ public class VpeChildrenInfo {
 	 * Returs <code>List</code> of nodes of the source tree for creating new visual nodes.
 	 * @return <code>List</code> of nodes of the source tree for creating new visual nodes.
 	 */
-	public List getSourceChildren() {
+	public List<Node> getSourceChildren() {
 		return sourceChildren;
 	}
 	
@@ -49,13 +49,13 @@ public class VpeChildrenInfo {
 	 * @param child The node of the source tree.
 	 */
 	public void addSourceChild(Node child) {
-		List children = getChildren();
+		List<Node> children = getChildren();
 		children.add(child);
 	}
 	
-	private List getChildren() {
+	private List<Node> getChildren() {
 		if (sourceChildren == null) {
-			sourceChildren = new ArrayList();
+			sourceChildren = new ArrayList<Node> ();
 		}
 		return sourceChildren;
 	}

@@ -623,26 +623,37 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 //	==========================================================
 	
 	public void updateNode(Node sourceNode) {
-		if (sourceNode != null) {
-		    if (sourceNode.getNodeType() == Node.DOCUMENT_NODE) {
-				rebuildDom((Document)sourceNode);
-			} else if (sourceNode.getNodeType() == Node.COMMENT_NODE) {
-				updateComment(sourceNode);
-			} else {
-				Node sourceTable = getParentTable(sourceNode, 2);
-				if (sourceTable != null) {
-					updateElement(sourceTable);
-					return;
-				} else {
-					Node sourceSelect = getParentSelect(sourceNode);
-					if (sourceSelect != null) {
-						updateElement(sourceSelect);
-						return;
-					}
-				}
-				updateElement(sourceNode);
-			}
+		if (sourceNode == null)
+			return;
+		
+		switch (sourceNode.getNodeType()) {
+		case Node.DOCUMENT_NODE :
+			rebuildDom((Document)sourceNode);
+			break;
+		case Node.COMMENT_NODE :
+			updateComment(sourceNode);
+			break;
+		default :
+			updateElement(getNodeForUpdate(sourceNode));
 		}
+	}
+	
+	// TODO S.Vasilyev make a common code for figuring out
+	// if it is need to update parent node or not  
+	private Node getNodeForUpdate(Node sourceNode) {
+		/* Changing of <tr> or <td> tags can affect whole the table */
+		Node sourceTable = getParentTable(sourceNode, 2);
+		if (sourceTable != null) {
+			return sourceTable;
+		}
+		
+		/* Changing of an <option> tag can affect the parent select */
+		Node sourceSelect = getParentSelect(sourceNode);
+		if (sourceSelect != null) {
+			return sourceSelect;
+		}
+
+		return sourceNode;
 	}
 	
 	private void updateComment(Node sourceNode) {
@@ -726,7 +737,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	public void setText(Node sourceText) {
 		Node sourceParent = sourceText.getParentNode();
 		if (sourceParent != null && sourceParent.getLocalName() != null) {
-			String sourceParentName = sourceParent.getLocalName().toLowerCase();
+			String sourceParentName = sourceParent.getLocalName();
 			if ("textarea".equalsIgnoreCase(sourceParentName) || "option".equalsIgnoreCase(sourceParentName)) {
 				updateNode(sourceText.getParentNode());
 				return;
@@ -918,7 +929,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	
 	private Element createLinkNode(String href_val, String rel_val, String ext_val) {
 		Element linkNode = null;
-		if ((ATTR_REL_STYLESHEET_VALUE.compareToIgnoreCase(rel_val) == 0)
+		if ((ATTR_REL_STYLESHEET_VALUE.equalsIgnoreCase(rel_val))
 				&& href_val.startsWith("file:")) {
 			/* Because of the Mozilla caches the linked css files we replace
 			 * tag <link rel="styleseet" href="file://..."> with tag
