@@ -59,7 +59,7 @@ recommend you to use Red Hat Developer Studio. Developer Studio allows the runni
 without redeployment. This is extremely important when you play with the code by adding new
 features to test how they work. At the same time, Developer Studio allows you to have full control over
 the source code. We even recommend turning on the &quot;Use Source Tab as a default for multi-tab
-editors&quot; option in the Preferences Editor (<emphasis>Red Hat->Editors</emphasis> section). You can always use the GUI
+editors&quot; option in the Preferences Editor (<emphasis>Red Hat>Editors</emphasis> section). You can always use the GUI
 feature of Developer Studio later to slash the development time when you start to understand enough
 how things works on the source code level. The provided example is fully adapted to work with
 Red Hat Developer Studio.</para>
@@ -68,7 +68,7 @@ debug a regular Java application within the Eclipse environment. This is an extr
 feature for learning.</para>
 <para>To start working with the tutorial example, copy the &quot;ticker&quot; folder to a new place on the
 disk. If you use Red Hat Developer Studio, copy this folder to the Eclipse workspace folder (or wherever you
-usually keep projects) and then import this project using the <emphasis>Eclipse File->Import</emphasis> menu. Leave
+usually keep projects) and then import this project using the <emphasis>Eclipse File>Import</emphasis> menu. Leave
 the server.xml registration option checked on the second screen of wizard. This allows you to
 change and then run an application without any special redeployment.</para>
 <para>Each ticker folder contains four subfolders:</para>

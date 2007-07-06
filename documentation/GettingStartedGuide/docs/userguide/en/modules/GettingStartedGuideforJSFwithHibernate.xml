@@ -163,7 +163,7 @@ property>
 
 <itemizedlist continuation="continues">
 <listitem><para>In the ORM Explorer view, reveal the 
-<emphasis>ormHibernate3-jsf/JavaSource/hibernate.cfg.xml/demo/User -> user node</emphasis>, right-click it, and select 
+<emphasis>ormHibernate3-jsf/JavaSource/hibernate.cfg.xml/demo/User > user node</emphasis>, right-click it, and select 
 Open Mapping from the context menu.</para></listitem>
 <listitem><para>In the editor that opens up for the mapping file, just change the class 
 attribute for generator to a value of assigned and you&apos;re done with this file.</para></listitem>

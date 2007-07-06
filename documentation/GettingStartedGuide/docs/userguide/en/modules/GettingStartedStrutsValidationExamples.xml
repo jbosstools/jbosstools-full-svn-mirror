@@ -55,7 +55,7 @@ click on the Finish button.</para></listitem>
 <listitem><para>In the Validation Editor, expand the formset node, right-click GetNameForm, and select<emphasis>Add Field...</emphasis> from the context menu.</para></listitem>
 <listitem><para>Enter name for Property in the dialog box.</para></listitem>
 <listitem><para>In the properties for the name field to the right of the &quot;tree&quot; for the validation.xml file, click on the <emphasis>Change...</emphasis>button next to the Depends entry field.</para></listitem>
-<listitem><para>In the displayed double list, select required from the left list and then click <emphasis>Add-></emphasis>.</para></listitem>
+<listitem><para>In the displayed double list, select required from the left list and then click <emphasis>Add></emphasis>.</para></listitem>
 <listitem><para>Click Ok.</para></listitem>
 <listitem><para>Right-click name and select<emphasis>Add Arg...</emphasis> from the context menu.</para></listitem>
 <listitem><para>In the Add Arg dialog box, click on the <emphasis>Change...</emphasis>button next to the <emphasis>Key</emphasis> field.</para></listitem>

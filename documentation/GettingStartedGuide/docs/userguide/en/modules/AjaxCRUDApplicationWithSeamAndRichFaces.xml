@@ -53,7 +53,7 @@ them with Ajax4jsf and Rich Faces. We will bootstrap the application using Seam 
 </mediaobject>
 </figure>
 <itemizedlist continuation="continues">
-<listitem>To create a Seam project, select <emphasis>Seam Gen -> Setup/Configuration -> Setup </emphasis>to 
+<listitem>To create a Seam project, select <emphasis>Seam Gen > Setup/Configuration > Setup </emphasis>to 
 launch the Seam Gen setup window as shown below. Note: </listitem>
 </itemizedlist>
 <note>
@@ -72,7 +72,7 @@ Seam Gen a file dialog will be shown. In this you need to select &lt;seam&gt;/se
         </imageobject>
 </mediaobject>
 </figure>
-<para>Fill the items in the dialog as shown below and select the OK button.</para>
+<para>Fill the items in the dialog as shown below and select the <emphasis>OK</emphasis> button.</para>
 <table>
          <title>Filling Project Items</title>
          <tgroup cols="2">
@@ -149,7 +149,7 @@ following URL http://localhost:8080/EclipseCon. You should see the following pag
         </imageobject>
 </mediaobject>
 </figure>   
-<para>Right click on the connection -> Reconnect. Just specify &quot;sa&quot; as the user id. The password
+<para>Right click on the connection > Reconnect. Just specify &quot;sa&quot; as the user id. The password
  field should be blank.</para>
  <para>You should now be able to browse the database and  see the meta-data and query data using SQL. 
  Your meta-data should look like the following:</para>
@@ -168,7 +168,7 @@ following URL http://localhost:8080/EclipseCon. You should see the following pag
 <itemizedlist>
 <listitem>The next step in our exercise is to generate a full blown application using Seam Gen. 
 This application will generate CRUD pages and Search pages for all the entities in the database. 
-Click on Seam Gen -> Generate Entities.  Seam Gen will connect to the database we defined in the
+Click on Seam Gen > Generate Entities.  Seam Gen will connect to the database we defined in the
  setup part of the application and generate all the required components.</listitem>
  <listitem>Since Seam Gen is generating files on the file system that Eclipse does not know 
  about, right click on the project name on your project and choose the Refresh item. This will let

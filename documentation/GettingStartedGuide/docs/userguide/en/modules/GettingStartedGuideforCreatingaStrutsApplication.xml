@@ -454,7 +454,7 @@ public class GreetingAction extends org.apache.struts.action.Action {
 <logic:redirect forward="getName"/>
 ]]></programlisting>
        <itemizedlist continuation="continues">      
-<listitem><para>To save all the edits to files, select File/Save All from the menu bar.</para></listitem>
+<listitem><para>To save all the edits to files, select <emphasis>File/Save All</emphasis> from the menu bar.</para></listitem>
          </itemizedlist>
      </section>
    </section>
