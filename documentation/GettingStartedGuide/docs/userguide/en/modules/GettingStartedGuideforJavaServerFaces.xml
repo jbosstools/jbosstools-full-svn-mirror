@@ -1214,7 +1214,7 @@ the folder where the archive will be placed. To use the new Ant target coding we
 Ant folder and run the script by typing from the command line:</para>
 <programlisting role="XML"><![CDATA[ant createtaglib
 ]]></programlisting>
-<para>To see how this works now, copy the mylib.jar file to the WEB-INF/lib folder of any JSF
+<para>To see how this works now, copy the mylib.jar file to the <emphasis>WEB-INF/lib</emphasis> folder of any JSF
 project. Then insert your new custom tag on one of the JSP pages. Don&apos;t forget to insert at the
 top of the page the definition:</para>
 <programlisting role="XML"><![CDATA[<%@ taglib uri="http://jsftutorials.com/" prefix="d" %>
