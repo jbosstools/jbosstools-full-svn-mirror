@@ -74,7 +74,7 @@ click on the Finish button.</para></listitem>
 <para>you don&apos;t actually have to do any of the script coding. The Validation Framework handles this.</para>
 <para>To see how this works in our application, you&apos;ll just need to make a couple of modifications to one of the JSP files.</para>
 <itemizedlist continuation="continues">
-<listitem><para>Double-click inputname.jsp under <emphasis>StrutsHello/WEB-ROOT(WebContent)/pages to open it for editing.</para></listitem>
+<listitem><para>Double-click inputname.jsp under <emphasis>StrutsHello/WEB-ROOT(WebContent)/pages</emphasis> to open it for editing.</para></listitem>
 <listitem><para>Find the  tag near the top and hit Return to make a new line under it.</para></listitem>
 <listitem><para>In the Red Hat Palette view to the right, open the HTML folder and click on the javascript tag.</para></listitem>
 <listitem><para>Back in the editor, just in front of the closing slash for this inserted tag, hit Ctrl+Space and select formName from the prompting menu.</para></listitem>
