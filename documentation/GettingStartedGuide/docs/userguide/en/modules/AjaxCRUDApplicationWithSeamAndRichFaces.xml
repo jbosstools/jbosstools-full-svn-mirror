@@ -415,11 +415,11 @@ shown below. The results of this query should be very similar to the results of 
 <para>You can search for any &quot;checknumber&quot; by typing in the number or by paging through the list
  of payments. But what if you only knew a few of the digits/alphabets in the &quot;checknumber&quot;? It 
  would be very useful to filter the list based on that.  AJAX provides very useful techniques to
-  build these types of applications and Ajax4Jsf provides the building blocks to simplify these 
+  build these types of applications and Ajax4jsf provides the building blocks to simplify these 
   techniques.</para>
   <para>Double Click on the  PaymentsList.xhtml to open the visual facelet designer. You will 
   notice that in the beginning of the source, Seam Gen has already add the tag library references
-   to Ajax4Jsf and RichFaces as shown below.</para>
+   to Ajax4jsf and RichFaces as shown below.</para>
    <programlisting role="JAVA"><![CDATA[<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:s="http://jboss.com/products/seam/taglib"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -435,7 +435,7 @@ as we type we want to update the table. Adding AJAX functionality usually requir
 <listitem>Letting the framework know on which event to send an AJAX request to the server.</listitem>
 <listitem>Specifying what component(s) to update with the output from the server.</listitem>
 </itemizedlist>
-<para>Ajax4Jsf provides a simple JSF component <emphasis role="bold"><property>&lt;aj4:support&gt;</property></emphasis> that simplifies this process. Let us 
+<para>Ajax4jsf provides a simple JSF component <emphasis role="bold"><property>&lt;aj4:support&gt;</property></emphasis> that simplifies this process. Let us 
 take our example and add AJAX to it.</para>
 <itemizedlist>
 <listitem>Click on the checknumber field in the visual designer, it will position you at the 
@@ -448,7 +448,7 @@ tag. Let us add a closing tag to the input text field as shown below.</listitem>
                 </h:inputText>
 ]]></programlisting>
 <itemizedlist continuation="continues">
-<listitem>Now let us add the AJAX support tag to let Ajax4Jsf know that when the user presses a
+<listitem>Now let us add the AJAX support tag to let Ajax4jsf know that when the user presses a
  key we want to go to the server to get a list of payments that match the characters entered in
   the checknumber text box. Add the tag that is highlighted below to the inputText tag.</listitem>
 </itemizedlist>
@@ -459,7 +459,7 @@ tag. Let us add a closing tag to the input text field as shown below.</listitem>
 ]]></programlisting>
 <para>This tag is pretty self explanatory, it posts the server when a key is pressed and then
  takes the response from the server and re-renders the section of the page that has an id of 
- &quot;paymentList&quot;.</para>
+ &quot;paymentsList&quot;.</para>
  <itemizedlist continuation="continues">
 <listitem>If you follow along in the page, you will see that the section that displays the 
 results is in a div tag that has an id of &quot;paymentsList&quot;</listitem>
@@ -483,12 +483,17 @@ table automatically.</listitem>
             <imagedata fileref="images/DataFields.png"/>
         </imageobject>
 </mediaobject>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/Buttons.png"/>
+        </imageobject>
+</mediaobject>
 </figure>
 <para>But there is still one more problem in this page, you will see that the &quot;Next&quot; and
  &quot;Previous&quot; buttons will be displayed even for search results that are small as shown above.</para>
  <itemizedlist continuation="continues">
 <listitem>The tag that we added in the previous step only updates the table. Let us add an AJAX 
-region around the page buttons at the bottom of the table. This will allow Ajax4Jsf to update 
+region around the page buttons at the bottom of the table. This will allow Ajax4jsf to update 
 those buttons independently.</listitem>
 </itemizedlist>
 <programlisting role="JSP"><![CDATA[<a4j:outputPanel ajaxRendered="true">
@@ -513,7 +518,7 @@ those buttons independently.</listitem>
  the &quot;checknumber&quot; field, there is no visual feedback to the user that there is a request being
   made to the server.</listitem>
   </itemizedlist>
-  <para>Ajax4Jsf has a pre-built tag <emphasis role="bold"><property>&lt;a4j:status&gt;</property></emphasis> that allows you to either render a text or an 
+  <para>Ajax4jsf has a pre-built tag <emphasis role="bold"><property>&lt;a4j:status&gt;</property></emphasis> that allows you to either render a text or an 
   image in response to an AJAX event. Add the following code, right after the end of the 
   <emphasis role="bold"><property>&lt;h:inputText&gt;</property></emphasis> tag.</para>
   <programlisting role="JSP"><![CDATA[<a4j:status>
@@ -555,7 +560,7 @@ can be added to an application. In this section we will add spinner and slider c
 allow users to change numerical values without using the keyboard.</para>
 <para>Double Click on the  OrderdetailsEdit.xhtml to open the visual facelet designer. You will
  notice that in the beginning of the source, Seam Gen has already included the tag library 
- references to Ajax4Jsf and RichFaces as shown below.</para>
+ references to Ajax4jsf and RichFaces as shown below.</para>
  <programlisting role="JSP"><![CDATA[<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:s="http://jboss.com/products/seam/taglib"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -675,7 +680,7 @@ Save the page and refresh your browser window.</listitem>
       </h:inputText>
     </s:decorate>
 ]]></programlisting>
-<para>Seam uses Ajax4Jsf to make a server side call to validate the field.</para>
+<para>Seam uses Ajax4jsf to make a server side call to validate the field.</para>
 </section>
 </section>
 
