@@ -6,21 +6,21 @@
       <keyword>Red Hat Developer Studio</keyword>
       <keyword>Eclipse</keyword>
       <keyword>Java</keyword>
-      <keyword>Tomcat</keyword>
+      <keyword>JBoss</keyword>
     </keywordset>
   </chapterinfo>
  <title>Getting Started with Red Hat Developer Studio</title>
   <section id="Installing">
   <?dbhtml filename="Installing.html"?>
-<title>Installing</title>
+<title>Installation</title>
   <section id="Inst from down ver">
    <title>Installing from the downloaded version</title>
    <itemizedlist>
    <listitem>
-   <para>Download the appropriate installation file for your platform from www.exadel.com/web/portal/download.</para>
+   <para>Download the appropriate installation file for your platform from www.exadel.com/web/portal/download</para>
    </listitem>
     <listitem>
-     <para>Run install.jar and follow the instructions presented by the installation wizard.</para>
+     <para>Run install.jar and follow the instructions presented by the installation wizard</para>
     </listitem>
    </itemizedlist>
    
@@ -36,48 +36,56 @@
    <para>Installation process includes all required platforms to run Red Hat Developer Studio:</para>
    <itemizedlist>
     <listitem>
-     <para>Eclipse 3.2.2</para>
+     <para>Eclipse 3.3</para>
     </listitem>
     <listitem>
      <para>JBoss J2EE Application Server</para>
+     </listitem>
+     </itemizedlist>
      <figure>
       <title>JBoss J2EE Application Server installing</title>
-      <mediaobject> 
-       <imageobject>
+      <imageobject>
         <imagedata fileref="images/install2.png"/>
        </imageobject>
-      </mediaobject>
      </figure>
      <note>The installer will install JBoss J2EE Application Server for running your applications if you select this option during the installation process. 
       If you want to use a different server than ours, you can change the setting in Red Hat Developer Studio.</note>
-    </listitem>
-   </itemizedlist>
+    
   </section>  
   <section id="InstallingthroughTheUpdateSite">
   <?dbhtml filename="InstallingthroughTheUpdateSite.html"?>
    <title>Installing via update Site</title>
    TBD
   </section>
-
-
+  
  </section>
    <section id="Upgrading">
    <?dbhtml filename="Upgrading.html"?>
    <title>Upgrading</title>
-   <para>To upgrade, just uninstall your current version and install the new version.</para>
+   <para>To upgrade, just uninstall your current version and install the new one.</para>
   </section>
  <section id="Uninstalling">
   <?dbhtml filename="Uninstalling.html"?>
    <title>Uninstalling</title>
-  
-  <para>Make sure Red Hat Developer Studio is not running.</para>
-  <para>Uninstall your current version of Red Hat Developer Studio by running uninstaller.</para>
-
+  <itemizedlist>
+  <listitem>Make sure Red Hat Developer Studio is not running</listitem>
+  <listitem>Uninstall your current version of Red Hat Developer Studio by running uninstaller</listitem>
+</itemizedlist>
  </section>
   <section id="Subscription">
    <?dbhtml filename="Subscription.html"?>
    <title>Subscription</title>
-   TBD
+   <para>Enjoy the peace of mind that comes with knowing that you are just an email away from having the advice of our  development team at your fingertips to solve the problems that crop up during application development. Get the advice you need to ensure the success of your projects on time and on budget. Whether you are using JSF, RichFaces,  Ajax4jsf, Hibernate or Seam, the JBoss team is always available to help. Just subcribe to our subcription program:</para>
+   <para>What You Get:</para>
+   <itemizedlist>
+   <listitem>Email access to the JBoss customer support team (responses within 48 hours)</listitem>
+   <listitem>Application development consultation</listitem>
+   <listitem>Sample code</listitem>
+   <listitem>Code review</listitem>
+   <listitem>General architectural review</listitem>
+   <listitem>User interface design tips</listitem>
+   <listitem>Overviews of JSF or AJAX technologies</listitem>
+   </itemizedlist>
   </section>
   <section id="Support">
    <?dbhtml filename="Support.html"?>
@@ -86,64 +94,59 @@
     <ulink url="mailto:support@exadel.com">support@exadel.com</ulink> or 
     <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">Red Hat Developer Studio Forum</ulink>.</para>
    <para>When writing to support, please include the following information:</para>
-   <itemizedlist>
-    <listitem><para> Red Hat Developer Studio version</para></listitem>
+   <orderedlist>
+    <listitem><para>Red Hat Developer Studio version</para></listitem>
     <listitem><para>Exact error message</para></listitem>
-    <listitem><para>Exact steps you took to get the error</para></listitem>
-   </itemizedlist>
+    <listitem><para>Exact steps you take to get the error</para></listitem>
+   </orderedlist>
   </section>
 <section id="FAQ">
  <?dbhtml filename="FAQ.html"?>
  <title>FAQ</title>
  <para>For easy reference to Red Hat Developer Studio related questions, our FAQ provides answers to our most &quot;popular&quot; questions.
-  The sections of questions are organized by type. For further support, please contact support@exadel.com.</para>
+  The sections of questions are organized by type. For further support, please contact <ulink url="mailto:support@exadel.com">support@exadel.com</ulink>.</para>
  <section id="Before_Installing">
   <title>Before Installing, Tutorials, Examples, Readme Files</title>
   <para><emphasis role="bold">I'm looking for examples, do you have any?</emphasis></para>
-  <para>Yes, simply go to our tutorials page</para>
+  <para>Yes, simply go to our <ulink url="http://exadel.com/web/portal/products/Tutorials">tutorials page</ulink></para>
   <para><emphasis role="bold">Where can I find the Red Hat Developer Studio readme file?</emphasis></para>
-  <para>It's at http://www.exadel.com/web/portal/products/ReleaseNotes</para>
+  <para>It's located at this page: <ulink url="http://www.exadel.com/web/portal/products/ReleaseNotes">Release Notes</ulink></para>
   <para><emphasis role="bold">Where can I find some documentation for Red Hat Developer Studio?</emphasis></para>
-  <para>Try these resources:</para>
-  <para>TBD</para>
+  <para>Try these resources: <ulink url="http://www.exadel.com/exadelstudio/help/">User Guide</ulink></para>
   <para><emphasis role="bold">What version of Eclipse does Red Hat Developer Studio support?</emphasis></para>
-  <para>Red Hat Developer Studio works with Eclipse 3.2.2 </para>
+  <para>Red Hat Developer Studio works with Eclipse 3.3</para>
   </section>
  <section id="Downloading">
   <title>Downloading</title>
   <para><emphasis role="bold">Where can I download a copy of Red Hat Developer Studio?</emphasis></para>
-  <para>Simply go TBD. </para>
+  <para>Go to <ulink url="http://www.exadel.com/web/portal/download/esp35">Download Page</ulink></para>
  </section>
  <section id="Installation_Issues">
   <title>Installation Issues</title>
   <para><emphasis role="bold">Do I need to have JBoss server installed to run Red Hat Developer Studio?</emphasis></para>
   <para>No. Red Hat Developer Studio already comes bundled with JBoss server. We bundle it together so that you don't need to download any 
   additional software and can test your application in a Web browser right away.</para>
-  <para>If you want to use a different JBoss server installation, after installing, simply go to preferences and change the settings to point to another 
-  Jboss server installation.</para>
-  <para>Red Hat Developer Stuiod works with any serlvet container, not just JBoss. For more information on deployment, please see the Deploying Your Application section.</para>
+  <para>If you want to use a different JBoss server installation, after Red Hat Developer Studio is installed open Servers View (select Window &gt; Show View &gt; Others &gt; Server &gt; Servers), then right click on this view &gt; New &gt; Server and follow the wizards steps to point to another Jboss server installation.</para>
+  <para>Red Hat Developer Studio works with any servlet container, not just JBoss. For more information on deployment, please see the Deploying Your Application section.</para>
   <para><emphasis role="bold"> What third-party plug-ins are installed with RHDS?</emphasis></para>
-  <para>Read the <link  linkend="Installing">Installing</link> section.</para> 
+  <para>Read the <link  linkend="Installing">Installation</link> section.</para> 
  </section>
  <section id="Importing_Projects">
   <title>Importing Projects</title>
   <para><emphasis role="bold">I have an existing Struts or JSF project. Can I open the project in RHDS?</emphasis></para>
-  <para>Yes. Read the TBD</para>
+  <para>Yes. From main menu select File &gt; Import &gt; Other &gt; JSF Project (or Struts Project) and follow wizards steps.</para>
   <para><emphasis role="bold">Can I import a .war file?</emphasis></para>
-  <para>Yes. Read the TBD</para>
+  <para>Yes. Select File &gt; Import &gt; Web &gt; WAR file. Then follow importing steps.</para>
  </section>
  <section id="Troubleshooting">
   <title>Troubleshooting, Problems, Configuration, Error Messages</title>
   <para><emphasis role="bold">Is it possible to increase the performance of Eclipse after installing your product? My Eclipse now crawls.</emphasis></para>
-  <para>By default, Eclipse allocates only 128 Mb of memory whatever physical memory you actually have installed. You can significantly increase performance
-   if you allocate more memory. For example:</para>
-  <para>eclipse.exe -vmargs -Xmx512M</para>
+  <para>By default, Eclipse allocates only 128 Mb of memory whatever physical memory you actually have installed. You can significantly increase performance if you allocate more memory. For example:</para>
+  <para>-vmargs -Xms128m -Xmx512m -XX:MaxPermSize=128m</para>
     <para><emphasis role="bold">How can I add my own tag library to the Red Hat Palette?</emphasis></para>
-  <para>See Adding Tag Libraries in JBossJSFTools Guide</para>
-  <para><emphasis role="bold">I see the Oracle ADF Faces component library tags in the Red Hat Palette, but I can't seem to find the libraries for ADF.
-  How do I use this component library with RHDS?</emphasis></para>
-  <para>See Adding Support for the Oracle ADF Components Library in the RHDS User Guide.</para>
-
+  <para>See <ulink url="http://labs.jboss.com/jbossjsftools/docs">Adding Tag Libraries</ulink> in JBossJSFTools Guide.</para>
+  <para><emphasis role="bold">I see the Oracle ADF Faces component library tags in the Red Hat Palette, but I can&apos;t seem to find the libraries for ADF. How do I use this component library with RHDS?</emphasis></para>
+  <para>See <ulink url="http://labs.jboss.com/jbossrhdsuserguide/docs">Adding Support for the Oracle ADF Components Library</ulink> in the RHDS User Guide.</para>
  </section>
 </section>
 
