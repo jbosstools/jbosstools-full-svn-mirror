@@ -334,10 +334,17 @@ public class VpeVisualKeyHandler {
 			return true;
 		}
 	}
-
+	/**
+	 * Deletes right char
+	 * @param sourceSelectionBuilder
+	 * 
+	 * @param selection -contains information about current selection
+	 * 
+	 * @return
+	 */
 
 	private VpeSourceSelection deleteRightChar(VpeSourceSelectionBuilder sourceSelectionBuilder, VpeSourceSelection selection) {
-		boolean atLeastOneCharIsDeleted = false;
+		boolean atLeastOneCharIsDeleted  = false;
 		Node focusNode = null;
 		while (selection != null && (focusNode = selection.getFocusNode()) != null) {
 
@@ -389,9 +396,23 @@ public class VpeVisualKeyHandler {
 			if (!TextUtil.isWhitespace(((TextImpl)focusNode).getValueSource().toCharArray()[offset])
 						) {
 				break;
+			}else if(!atLeastOneCharIsDeleted) {
+				
+				//delete whitespaces 
+				int endPos = 0;
+				while(TextUtil.isWhitespace(((TextImpl)focusNode).getValueSource().toCharArray()[offset+endPos])){
+					endPos++;
+				}
+				Point range = sourceEditor.getTextViewer().getSelectedRange();
+				sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x, endPos, "");
+				selection = sourceSelectionBuilder.getSelection();
+				atLeastOneCharIsDeleted = true;
+				break;
+			} else {
+				break;
 			}
-			sourceEditor.getAction(ITextEditorActionDefinitionIds.DELETE_NEXT).run();
-			selection = sourceSelectionBuilder.getSelection();
+//			sourceEditor.getAction(ITextEditorActionDefinitionIds.DELETE_NEXT).run();
+//			selection = sourceSelectionBuilder.getSelection();
 		}
 		
 		return selection;
@@ -709,10 +730,25 @@ public class VpeVisualKeyHandler {
 					}
 				}
 
+				if(!atLeastOneCharIsDeleted) {
+					
+					int endPos = 1;
+					while(TextUtil.isWhitespace(((TextImpl)focusNode).getValueSource().toCharArray()[offset-endPos])){
+						endPos++;
+					}
+					endPos--;
+					if(endPos!=0){
+					Point range = sourceEditor.getTextViewer().getSelectedRange();
+					sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x-endPos, endPos, "");
+					selection = sourceSelectionBuilder.getSelection();
+					atLeastOneCharIsDeleted = true;
+					}
+				}
+				if(!atLeastOneCharIsDeleted){
 				sourceEditor.getAction(ITextEditorActionDefinitionIds.DELETE_PREVIOUS).run();
 				selection = sourceSelectionBuilder.getSelection();
 				atLeastOneCharIsDeleted = true;
-				continue;
+				continue;}
 			}
 			String valueSource = ((TextImpl)focusNode).getValueSource();
 			if (valueSource==null) {
@@ -722,8 +758,12 @@ public class VpeVisualKeyHandler {
 				if(offset>charArray.length || !TextUtil.isWhitespace(valueSource.toCharArray()[offset - 1])) {
 					break;
 				}
+			} 
+			if(!atLeastOneCharIsDeleted) {			
+				sourceEditor.getAction(ITextEditorActionDefinitionIds.DELETE_PREVIOUS).run();
+			}else {
+				break;
 			}
-			sourceEditor.getAction(ITextEditorActionDefinitionIds.DELETE_PREVIOUS).run();
 			selection = sourceSelectionBuilder.getSelection();
 		}
 
@@ -1004,7 +1044,7 @@ public class VpeVisualKeyHandler {
 			char[] s = new char[1];
 			s[0] = (char) charCode;
 			String str = new String(s);
-			if(TextUtil.containsKey(s[0]) && s[0] != ' '){
+			if(TextUtil.containsKey(s[0])){
 				str = TextUtil.getValue(s[0]);
 			}
 			sourceEditor.getTextViewer().getTextWidget().replaceTextRange(start, 0, str);
@@ -1339,16 +1379,19 @@ public class VpeVisualKeyHandler {
 				String nodeValue=selection.getFocusNode().getNodeValue();				
 				
 				int visualOffser=TextUtil.visualPosition(sourceValue, fo);
+
 				int sourseOffset=TextUtil.sourcePosition(sourceValue, nodeValue, visualOffser+1);
 				int diff = sourseOffset-fo;
-				
+				if(isTextToSkip(chars, fo + diff-1)){
 				while ((fo + diff < chars.length) && isTextToSkip(chars, fo + diff)) {
 					diff++;
+				}
 				}
 				if (fo + diff > chars.length||diff==0) {
 					return moveCursorToNextVisualNode(selection.getFocusNode());
 				}
 				setSourceFocus(so + fo + diff);
+				
 				return true;
 			} else if (selection.getFocusNode().getNodeType() == Node.ELEMENT_NODE) {
 				// Move to second position of the visual attribute (because we're placed 
@@ -1411,10 +1454,17 @@ public class VpeVisualKeyHandler {
 				int visualOffser=TextUtil.visualPosition(sourceValue, fo);
 				int sourseOffset=TextUtil.sourcePosition(sourceValue, nodeValue, visualOffser-1);
 				int diff = sourseOffset-fo;
+				boolean cicle=false;
 				
-				while ((fo + diff > 0) && isTextToSkip(chars, fo + diff)) {
+				while ((fo + diff >= 0)&&(fo+diff<chars.length) && isTextToSkip(chars, fo + diff)) {
 					diff--;
+					cicle=true;
 				}
+				
+				if(cicle==true){
+					diff++;
+				}
+
 				if (fo + diff < 0||diff==0) {
 
 					return moveCursorToPrevVisualNode(selection.getFocusNode());
@@ -1436,7 +1486,7 @@ public class VpeVisualKeyHandler {
 	
 	private boolean isTextToSkip(char[] chars, int position) {
 		try {
-			if (chars[position] < ' ')
+			if (chars[position] == ' ')
 				return true;
 			
 			if (TextUtil.isWhitespaceText(new String(chars, 0, position + 1)) ||

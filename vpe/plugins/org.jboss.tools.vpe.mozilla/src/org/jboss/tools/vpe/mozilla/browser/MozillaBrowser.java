@@ -3161,11 +3161,11 @@ private Point getAdjustTwipsCoords(nsIDOMElement element, int x, int y) {
 	}
 	
 	/**
-	 * Finds visible nearest visble node for hidden node
+	 * Finds visible nearest visible node for hidden node
 	 * 
 	 * @param element
 	 * 
-	 * @return nearest visble node or null if can't find
+	 * @return nearest visible node or null if can't find
 	 */
 	private nsIDOMElement  findVisbleParentElement(nsIDOMElement element) {
 		
