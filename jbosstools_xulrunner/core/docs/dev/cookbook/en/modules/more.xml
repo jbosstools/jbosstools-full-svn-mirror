@@ -1,0 +1,58 @@
+
+Lazy Initialization:
+   Eclipse has a large passion for what is called Lazy Initialization. A plug-in is 
+
+officially loaded, and its OSGi bundle put into memory, whenever any class from the 
+
+plug-in is requested. Often times it is not necessary to initialize the entire plug-in 
+
+at this point. If your plug-in needs to load a large model to be FULLY functional, for 
+
+example, and another plugin wishes to use only one of your classes, you don't want 
+
+your entire plugin and model to be initialized unnecessarily.
+   Another example of eclipse's lazy initialization is more evident through it's 
+
+plugin.xml file and manifest.mf file. As we'll see later on, these files list 
+
+information about your plugin to keep as much information available without loading 
+
+the implementations until completely necessary. A great example of this is having your 
+
+plugin add actions to a context menu when right-clicking on a method or field, all 
+
+through the .xml file. Rather than load your plugin, or even the action, the 
+
+plugin.xml file simply lists what classes will be used when the action is invoked. 
+
+This way, your actions are added to the menu without your plugin being loaded until 
+
+the action is called. 
+   Because of this structure, a lot of key information will be in your plugin.xml 
+
+file, which can be edited manually or through a graphical editor.
+
+
+
+
+Resources:
+Eclipse Workbench User Guide: 
+
+http://www.eclipse.org/documentation/pdf/org.eclipse.platform.doc.user_3.0.1.pdf
+Eclipse Java Development User Guide: 
+
+http://www.eclipse.org/documentation/pdf/org.eclipse.jdt.doc.user_3.0.1.pdf
+Eclipse Plugin Development Environment Guide: 
+
+http://www.eclipse.org/documentation/pdf/org.eclipse.pde.doc.user_3.0.1.pdf
+Eclipse Platform Plugin-Developer Guide: 
+
+http://www.eclipse.org/documentation/pdf/org.eclipse.platform.doc.isv_3.0.1.pdf
+Eclipse JDT Plug-in Developer Guide: 
+
+http://www.eclipse.org/documentation/pdf/org.eclipse.jdt.doc.isv_3.0.1.pdf
+
+
+Gef: http://www.eclipse.org/gef/
+EMF: http://www.eclipse.org/emf/
+Webtools: http://www.eclipse.org/webtools/

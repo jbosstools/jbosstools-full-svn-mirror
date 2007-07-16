@@ -1,0 +1,283 @@
+<?xml version='1.0' encoding="UTF-8"?>
+
+
+<!--
+
+ Copyright 2004-2005 The Apache Software Foundation.
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+ $Id: shale-clay-config_1_0.dtd,v 1.1 2005/12/23 14:01:34 glory Exp $
+
+-->
+
+<!--
+
+    DTD for view definitions used by the "org.apache.shale.clay" package.
+    To support validation of your configuration file, include the following
+    DOCTYPE element at the beginning (after the "xml" declaration):
+
+    <!DOCTYPE view PUBLIC
+      "-//Apache Software Foundation//DTD Shale Clay View Configuration 1.0//EN"
+      "http://struts.apache.org/dtds/shale-clay-config_1_0.dtd">
+
+-->
+
+<!--
+   The BindingType enumeration defines how Expression Language (EL) binding is 
+   handled.
+   VB - Use Value Binding
+   MB - Use Method Binding
+   None - No use of EL.  The value passes through
+   Early - EL evaluated before setting the component property/attribute.  
+-->
+<!ENTITY % BindingType "(VB|MB|None|Early)">
+
+
+<!--Boolean enumeration as two values that correspond to a boolean primitive data type-->
+<!ENTITY % Boolean "(true|false)">
+
+<!--
+  The "attributes" node contains all of the attributes that will be applied to the
+  the target "component" or "element".  Individual attributes are specified using the
+  "set" node, a child element.  
+  
+  When using JSF/JSP tags to define composition, the attributes are specified in the body
+  of the begining JSP tag.  In clay, all components are represented generically by a top-level
+  "component" or nested "element" node.  The attributes are declared using the 
+  "attributes" node verses a unique tag for each specific type of component.
+-->
+<!ELEMENT attributes (set+)>
+
+<!--
+The "symbols" node contains tokens that are replaced within meta-data attribute values.  
+The symbol token identifier is the at, '@', character.  The scope of the symbols is the 
+"component" or "element" they are applied to.  This includes all aggregated definitions.  
+This means that symbols can also inherited from an outer scope.  The bindingType
+attribute in the "set" node is ignored for the symbols collection.
+-->
+
+<!ELEMENT symbols (set+)>
+
+<!--
+  The "set" node represents an individual meta attribute that should be applied to the "component" 
+  or "element" nodes. 
+  
+  name - The attribute name that corresponds to a component property.  The parent "attributes" node
+         container can be inherited.  The "name" attribute acts as the "method signature" when 
+         resolving inheritance.
+  
+  bindingType - This attribute is of BindingType.  It indicates the contract that a component 
+         property/attribute has with the proper use of EL.  This attribute is only valid within 
+         the attributes collection.
+                  
+  value - This attribute holds the value of the named attribute. A literal string value or a dynamic bound 
+         expression.  
+-->
+<!ELEMENT set EMPTY>
+<!ATTLIST set
+	name CDATA #REQUIRED
+	bindingType %BindingType; #IMPLIED
+    value CDATA #IMPLIED
+>
+
+<!--
+  A "component" represents a single top-level simple component or a subtree of components.
+  
+  attributes - A container to hold attributes that will be applied to the target component.
+  
+  symbols - A container to hold tokens that are replaced within attribute values.  
+  
+  converter - A component can have a single converter which is the same relationship that 
+      a JSF component would have to a Converter.  JSF has a assumed rule that only components 
+      implementing the ValueHolder interfaces can be assigned converters.  This rule is enforced 
+      at runtime and not through this document type definition.
+         
+  validator - A component can have zero or many associated validators.  Only components that 
+      implement the EditableValueHolder interfaces can be assigned validators.  This rule 
+      is enforced at runtime and not through this document type definition. 
+  
+  actionListener - A component can have zero or many assigned actionListeners.  Action listeners
+      can only be assigned to components implementing the ActionSource interfaces.  This rule is
+      enforced at runtime.
+
+  valueChangeListener - A component can have zero or many assigned valueChangeListeners.  Change listeners
+      can only be assigned to components implementing the EditableValueHolder interfaces.  This rule is
+      enforced at runtime.
+
+      
+   element - A top-level "component" can contain any number of sub "elements".  Elements define 
+      composition for a complex component.  The element is the glue that pulls in a "top-level" 
+      component.  The element is kind of like an inner class in that it can extend the attributes 
+      of the "top-level" component that it's aggregating.
+      
+      
+   jsfid - A unique identifier defining the component instances as it relates to the 
+      componentType.  This is a required attribute.
+   
+   extends - A jsfid that this component will inherit characteristics from. A jsfid that this 
+      component will inherit characteristics from. By  characteristics we mean parent "elements" 
+      and "attributes".  This is an optional attribute.
+      
+   componentType - The component type will be the JSF registered logical name for Components,
+      Validators and Converters in the faces-config.xml file.  For ActionListeners and 
+      ValueChangeListeners, the component type will be the fully qualified class name.  The
+      componentType will be required when the extends attribute is not specified.  If the 
+      extends attribute is specified it will inherit the attribute value from the parent
+      component.  It can also override a extended component's type morphing it into
+      another type of component. 
+      
+   allowBody - This attribute only applies when using the Clay template features and it 
+      is optional.  A "true" value is returned if the HTML child nodes under the node that 
+      this meta component is bound to should be rendered; otherwise, a "false" value is 
+      returned indicating the child nodes should be ignored.  This feature allows you to 
+      override design-time mockup HTML at runtime. 
+      
+   facetName - Use this attribute to register the component in the facets collection rather 
+      than the children collection.  
+   
+-->
+<!ELEMENT component  (attributes?, symbols?, converter?, validator*, actionListener*, valueChangeListener*, element*)>
+<!ATTLIST component jsfid CDATA #REQUIRED
+	extends CDATA #IMPLIED
+	componentType CDATA #IMPLIED
+	id CDATA #IMPLIED	
+	allowBody %Boolean; #IMPLIED
+	facetName CDATA #IMPLIED
+>
+
+<!--
+   The element nodes are the composition glue.  The jsfid represents the top-level component that 
+   the nested component will extend.  The jsfid is used in the element like the componentType is 
+   to the "component".  The renderId is the unique namespace within the owning "component" or "element".
+   The key difference between an element and component is that a component can be reused within
+   any number of compositions where an element is the structure for defining the composition.
+   
+  attributes - A container to hold attributes that will be applied to the target component.  These
+       attributes will override and extend attributes in the top-level component which is specified
+       by the "jsfid" attribute.
+
+  symbols - A container to hold tokens that are replaced within attribute values.  
+
+  converter - A component can have a single converter which is the same relationship that 
+      a JSF component would have to a Converter.  JSF has a assumed rule that only components 
+      implementing the ValueHolder interfaces can be assigned converters.  This rule is enforced 
+      at runtime and not through this document type definition.
+         
+  validator - A component can have zero or many associated validators.  Only components that 
+      implement the EditableValueHolder interfaces can be assigned validators.  This rule 
+      is enforced at runtime and not through this document type definition. 
+  
+  actionListener - A component can have zero or many assigned actionListeners.  Action listeners
+      can only be assigned to components implementing the ActionSource interfaces.  This rule is
+      enforced at runtime.
+
+  valueChangeListener - A component can have zero or many assigned valueChangeListeners.  Change listeners
+      can only be assigned to components implementing the EditableValueHolder interfaces.  This rule is
+      enforced at runtime.
+      
+  element - A "element" can contain any number of sub-elements.  Elements define 
+      composition for a complex component.  The element is the glue that pulls in a "top-level" 
+      component.  The element is kind of like an inner class in that it can extend the attributes 
+      of the "top-level" component that it's aggregating.  
+      
+  renderId - A numeric integer value that uniquely defines the element within a owning "component"
+      or "element".  It's the "method signature" used to resolve inheritances and also ordering 
+      within the parent.  A component that extends another can override or add nested "element"s 
+      by renderId.     
+      
+   id - This attribute corresponds to a JSF component's id attribute that will be used to derive
+      the client id value within the HTML id attribute.
+      
+   facetName - Use this attribute to register the component in the facets collection rather 
+      than the children collection. 
+     
+   componentType - The component type will be the JSF registered logical name for Components,
+      Validators and Converters in the faces-config.xml file.  For ActionListeners and 
+      ValueChangeListeners, the component type will be the fully qualified class name.  The
+      componentType will be required when the extends attribute is not specified.  If the 
+      extends attribute is specified it will inherit the attribute value from the parent
+      component.  It can also override a extended component's type morphing it into
+      another type of component. 
+      
+-->
+<!ELEMENT element  (attributes?, symbols?, converter?, validator*, actionListener*, valueChangeListener*, element*)>
+<!ATTLIST element
+	renderId CDATA #REQUIRED
+	jsfid CDATA #REQUIRED
+	id CDATA #IMPLIED
+	facetName CDATA #IMPLIED
+	componentType CDATA #IMPLIED
+>
+
+<!--
+  A "converter" node is the meta component definition for a JSF converter.  This 
+  node can exist under a "component" or "element" node.  A converter can only be
+  assigned to a JSF component implementing the ValueHolder interfaces.
+  
+  jsfid - The top-level component that defines a converter. The componentType
+     attribute of this component will should be a converter-id registered in
+     the faces-config.xml file.
+-->
+<!ELEMENT converter (attributes?)>
+<!ATTLIST converter jsfid CDATA #REQUIRED>
+
+<!--
+  A "actionListener" node is the meta component definition for a JSF action listener.  This 
+  node can exist under a "component" or "element" node.  A action listener can only be
+  assigned to a JSF component implementing the ActionSource interfaces.
+  
+  jsfid - The top-level component that defines a converter. The componentType
+     attribute of this component will should be a fully qualified class name
+     of the java class implementing the ActionListener interfaces.
+-->
+<!ELEMENT actionListener (attributes?)>
+<!ATTLIST actionListener jsfid CDATA #REQUIRED>
+
+<!--
+  A "validator" node is the meta component definition for a JSF validator.  This 
+  node can exist under a "component" or "element" node.  A converter can only be
+  assigned to a JSF component implementing the EditableValueHolder interfaces.
+  
+  jsfid - The top-level component that defines a validator. The componentType
+     attribute of this component will should be a validator-id registered in
+     the faces-config.xml file.
+-->
+<!ELEMENT validator (attributes?)>
+<!ATTLIST validator jsfid CDATA #REQUIRED>
+
+<!--
+  A "valueChangeListener" node is the meta component definition for a JSF value change listener. 
+  This node can exist under a "component" or "element" node.  A value change listener can only be
+  assigned to a JSF component implementing the EditableValueHolder interfaces.
+  
+  jsfid - The top-level component that defines a value change listener. The componentType
+     attribute of this component will should be a fully qualified class name
+     of the java class implementing the ValueChangeListener interfaces.
+-->
+<!ELEMENT valueChangeListener (attributes?)>
+<!ATTLIST valueChangeListener jsfid CDATA #REQUIRED>
+
+<!-- 
+  The "view" node is the root of the document.  This document holds meta data used to 
+  construct a sub component tree.  It's a stand-in for the JSF JSP tags meaning that
+  the same information can be represented here using a very generic structure.
+  
+  component - A top-level meta component definition that can be reused across pages 
+  and subtree compositions. 
+  
+  A component can be directly included from within a clay component by it's unique 
+  jsfid or tied to the view composition indirectly by a HTML template where the HTML 
+  element has a binding jsfid attribute.
+-->
+<!ELEMENT view (component*)>

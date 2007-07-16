@@ -1,0 +1,134 @@
+#!/bin/sh
+
+prefix=/usr/local
+exec_prefix=/usr/local
+exec_prefix_set=no
+
+usage()
+{
+	cat <<EOF
+Usage: mozilla-config [OPTIONS] [LIBRARIES]
+Options:
+	[--prefix[=DIR]]
+	[--exec-prefix[=DIR]]
+	[--version]
+	[--defines]
+	[--libs] [libraries]
+	[--cflags] [components]
+Components:
+    *
+Libraries:
+    xpcom
+    nspr
+    js
+    jsj
+    gfx
+EOF
+	exit $1
+}
+
+if test $# -eq 0; then
+	usage 1 1>&2
+fi
+
+while test $# -gt 0; do
+  case "$1" in
+  -*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+  *) optarg= ;;
+  esac
+
+  case $1 in
+    --prefix=*)
+      prefix=$optarg
+      if test $exec_prefix_set = no ; then
+        exec_prefix=$optarg
+      fi
+      ;;
+    --prefix)
+      echo_prefix=yes
+      ;;
+    --exec-prefix=*)
+      exec_prefix=$optarg
+      exec_prefix_set=yes
+      ;;
+    --exec-prefix)
+      echo_exec_prefix=yes
+      ;;
+    --version)
+      echo 1.6
+      exit 0
+      ;;
+    --cflags)
+      if test "/usr/local/include/mozilla-1.6" != /usr/include ; then
+        includes="-I/usr/local/include/mozilla-1.6"
+      fi
+      echo_cflags=yes
+      ;;
+    --defines)
+      echo_defines=yes
+      ;;
+    --libs)
+      echo_libs=yes
+      ;;
+    xpcom|js|nspr|gfx|jsj)
+      echo_components="$echo_components $1"
+      echo_libraries="$echo_libraries $1"
+      ;;
+    xpconnect)
+      echo_components="$echo_components $1"
+      ;;
+    "")
+      usage 1 1>&2
+      ;;
+    *)
+      echo_components="$echo_components $1"
+      ;;
+  esac
+  shift
+done
+
+if test "$echo_prefix" = "yes"; then
+	echo $prefix
+fi
+if test "$echo_exec_prefix" = "yes"; then
+	echo $exec_prefix
+fi
+
+if test "$echo_defines" = "yes"; then
+    echo -DD_INO=d_ino -DSTDC_HEADERS=1 -DHAVE_ST_BLKSIZE=1 -DHAVE_SIGINFO_T=1 -DHAVE_INT16_T=1 -DHAVE_INT32_T=1 -DHAVE_INT64_T=1 -DHAVE_UINT=1 -DHAVE_UNAME_DOMAINNAME_FIELD=1 -DHAVE_DIRENT_H=1 -DHAVE_GETOPT_H=1 -DHAVE_SYS_BITYPES_H=1 -DHAVE_MEMORY_H=1 -DHAVE_UNISTD_H=1 -DHAVE_GNU_LIBC_VERSION_H=1 -DHAVE_NL_TYPES_H=1 -DHAVE_MALLOC_H=1 -DHAVE_X11_XKBLIB_H=1 -DHAVE_SYS_STATVFS_H=1 -DHAVE_SYS_STATFS_H=1 -DHAVE_MMINTRIN_H=1 -DHAVE_SYS_CDEFS_H=1 -DHAVE_LIBM=1 -DHAVE_LIBDL=1 -DFUNCPROTO=15 -DHAVE_XSHM=1 -D_REENTRANT=1 -DHAVE_RANDOM=1 -DHAVE_STRERROR=1 -DHAVE_LCHOWN=1 -DHAVE_FCHMOD=1 -DHAVE_SNPRINTF=1 -DHAVE_MEMMOVE=1 -DHAVE_RINT=1 -DHAVE_NL_LANGINFO=1 -DHAVE_FLOCKFILE=1 -DHAVE_LOCALTIME_R=1 -DHAVE_STRTOK_R=1 -DHAVE_RES_NINIT=1 -DHAVE_GNU_GET_LIBC_VERSION=1 -DVA_COPY=va_copy -DHAVE_VA_COPY=1 -DHAVE_I18N_LC_MESSAGES=1 -DMOZ_DEFAULT_TOOLKIT=\"gtk2\" -DMOZ_WIDGET_GTK2=1 -DMOZ_ENABLE_XREMOTE=1 -DMOZ_X11=1 -DMOZ_ENABLE_XFT=1 -DMOZ_ENABLE_COREXFONTS=1 -DMOZ_EXTRA_X11CONVERTERS=1 -DOJI=1 -DIBMBIDI=1 -DMOZ_VIEW_SOURCE=1 -DACCESSIBILITY=1 -DMOZ_XPINSTALL=1 -DMOZ_JSLOADER=1 -DMOZ_MATHML=1 -DMOZ_LOGGING=1 -DMOZ_ENABLE_OLD_ABI_COMPAT_WRAPPERS=1 -DMOZ_USER_DIR=\".mozilla\" -DMOZ_XUL=1 -DMOZ_PROFILESHARING=1 -DMOZ_PROFILELOCKING=1 -DMOZ_DLL_SUFFIX=\".so\" -DXP_UNIX=1 -DUNIX_ASYNC_DNS=1 -DJS_THREADSAFE=1 -DNS_PRINT_PREVIEW=1 -DNS_PRINTING=1 -DMOZ_ACCESSIBILITY_ATK=1 -DMOZILLA_VERSION=\"1.6\" 
+fi
+
+if test "$echo_cflags" = "yes"; then
+    nspr_cflags="-I/usr/local/include/mozilla-1.6/nspr"
+    for n in $echo_components; do
+	component_includes="$component_includes -I/usr/local/include/mozilla-1.6/$n"
+    done
+    echo $component_includes $includes $nspr_cflags
+fi
+
+_nspr_libs="-L/usr/local/lib/mozilla-1.6 -lplds4 -lplc4 -lnspr4 -lpthread -ldl"
+_xpcom_libs="-lxpcom $_nspr_libs"
+_js_libs="-ljs"
+
+if test "$echo_libs" = "yes"; then
+    for l in $echo_libraries; do
+	case "$l" in
+	gfx) 
+	    libs="$libs -lgkgfx $_xpcom_libs"
+	    ;;
+	xpcom)
+	    libs="$libs $_xpcom_libs"
+	    ;;
+	nspr)
+	    libs="$libs $_nspr_libs"
+	    ;;
+	js)
+	    libs="$libs $_js_libs"
+	    ;;
+	jsj)
+	    libs="$libs -ljsj $_js_libs $_xpcom_libs"
+	    ;;
+        esac
+    done
+    echo -L/usr/local/lib/mozilla-1.6 $libs
+fi

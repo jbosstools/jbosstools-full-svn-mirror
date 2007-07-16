@@ -1,0 +1,1361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE XModelEntityGroup PUBLIC "-//Red Hat, Inc.//DTD Meta 1.0//EN"
+                                   "meta.dtd">
+<XModelEntityGroup>
+ <VERSION DEPENDS="Model:1.0" MODULE="Struts Editor" VERSION="1.0"/>
+ <MAPPINGS>
+  <MAPPING name="FilteredTreeConstraints">
+   <PAIR name="FileSystems$144" value="org.jboss.tools.shale.model.clay.ClayConfigFilteredTreeConstraint"/>
+  </MAPPING>
+  <MAPPING name="FilteredTrees"/>
+  <MAPPING name="Recognizers">
+   <PAIR name="xml$36" value="org.jboss.tools.shale.model.clay.ShaleClayEntityRecognizer"/>
+  </MAPPING>
+ </MAPPINGS>
+ <ICONS>
+  <GROUP name="action">
+   <GROUP name="new"/>
+  </GROUP>
+  <GROUP name="main">
+   <GROUP name="shale">
+    <ICON name="clay-config" path="images/file/clay-config.gif"/>
+   </GROUP>
+  </GROUP>
+ </ICONS>
+ <GlobalActions kind="list"/>
+ <XModelEntity name="AddShaleClaySetWizard">
+  <XChildrenEntities/>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.jsf.attribute" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="set" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true;save=always;category=general"
+    name="name" xmlname="name">
+    <Constraint loader="ListString"/>
+    <Editor name="ListString"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="category=general" name="binding type" xmlname="bindingType">
+    <Constraint loader="List">
+     <value/>
+     <value name="VB"/>
+     <value name="MB"/>
+     <value name="None"/>
+     <value name="Early"/>
+    </Constraint>
+    <Editor name="List"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="category=general" name="value" xmlname="value">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
+    <Constraint/>
+    <Editor name="Note"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list"/>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity
+  ImplementationLoadingClass="org.jboss.tools.shale.model.clay.ClayConfigLoader"
+  ImplementingClass="org.jboss.tools.shale.model.clay.FileClayImpl"
+  ObjectEditorClass="%XML%"
+  PROPERTIES="formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  XMLSUBPATH="view" name="FileShaleClay">
+  <XChildrenEntities>
+   <XChildEntity name="ShaleClayComponent"/>
+   <XChildEntity maxCount="1" name="ShaleClayProcess" required="yes"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.shale.clay-config" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="view" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="category=general" default="faces-config"
+    name="name" xmlname="NAME">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute default="xml" name="extension" xmlname="EXTENSION">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="id" xmlname="id">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute TRIM="no" name="comment" xmlname="#comment">
+    <Constraint/>
+    <Editor name="Note"/>
+   </XModelAttribute>
+   <XModelAttribute loader="ElementType" name="_lateload" visibility="false">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute
+    default="-//Apache Software Foundation//DTD Shale Clay View Configuration 1.0//EN"
+    name="publicId" visibility="false">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute
+    default="http://struts.apache.org/dtds/shale-clay-config_1_0.dtd"
+    name="systemId" visibility="false">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute default="no" name="isIncorrect" visibility="false">
+    <Constraint loader="List">
+     <value name="yes"/>
+     <value name="no"/>
+    </Constraint>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="incorrectBody" visibility="false">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute name="encoding">
+    <Constraint loader="ListString">
+     <value name="ISO-8859-1"/>
+     <value name="UTF-8"/>
+    </Constraint>
+    <Editor name="ListString"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem HandlerClassName="%Open%" ICON="action.empty"
+    displayName="Open" kind="action" name="Open"/>
+   <XActionItem displayName="Open With" group="1" kind="list" name="OpenWith">
+    <XActionItem HIDE="always"
+     HandlerClassName="org.jboss.tools.common.meta.action.impl.handlers.OpenWithExternalHandler"
+     ICON="action.empty" PROPERTIES="extension=struts-config"
+     displayName="Open with External Program" kind="action" name="OpenWithSelected"/>
+    <XActionItem HIDE="always"
+     HandlerClassName="org.jboss.tools.common.meta.action.impl.handlers.OpenWithChoiceHandler"
+     ICON="action.empty" PROPERTIES="extension=struts-config"
+     displayName="Choose Program..." kind="action" name="OpenWithChoice">
+     <EntityData EntityName="OpenWithHelper">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="default"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem kind="list" name="EditActions">
+    <XActionItem
+     HandlerClassName="org.jboss.tools.shale.model.clay.handlers.RenameClayConfigFileHandler"
+     ICON="action.empty" PROPERTIES="validator.edit=true"
+     WizardClassName="%Default%" displayName="Rename..." kind="action" name="Rename">
+     <EntityData EntityName="FacesConfig">
+      <AttributeData AttributeName="name"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem kind="list" name="SaveActions">
+    <XActionItem HIDE="always" HandlerClassName="%SaveFile%"
+     ICON="action.save" displayName="Save" kind="action" name="Save"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" displayName="New" group="1"
+    kind="list" name="CreateActions">
+    <XActionItem HandlerClassName="%Create%" ICON="action.empty"
+     PROPERTIES="validator.add=true" WizardClassName="%Default%"
+     displayName="Component..." kind="action" name="AddComponent">
+     <EntityData EntityName="ShaleClayComponent">
+      <AttributeData AttributeName="jsf id"/>
+      <AttributeData AttributeName="extends" Mandatory="no"/>
+      <AttributeData AttributeName="component type" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Copy" HandlerClassName="%Copy%"
+     ICON="action.copy" displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Cut" HandlerClassName="%Cut%"
+     ICON="action.cut" displayName="Cut" kind="action" name="Cut"/>
+    <XActionItem BaseActionName="Paste" HandlerClassName="%Paste%"
+     ICON="action.paste" displayName="Paste" kind="action" name="Paste"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete"
+     HandlerClassName="org.jboss.tools.shale.model.clay.handlers.DeleteClayConfigFileHandler"
+     ICON="action.delete" displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+   <XActionItem kind="list" name="DiscardActions">
+    <XActionItem HIDE="always"
+     HandlerClassName="org.jboss.tools.jsf.model.handlers.DiscardConfigHandler"
+     ICON="action.delete"
+     PROPERTIES="significanceMessageClass=org.jboss.tools.common.model.filesystems.impl.DiscardFileSignificanceMessage"
+     displayName="Discard Changes" kind="action" name="Discard"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity name="FileShaleClay_EditorActionList">
+  <XChildrenEntities/>
+  <XEntityRenderer/>
+  <XModelAttributes/>
+  <XActionItem kind="list">
+   <XActionItem displayName="New" group="1" kind="list" name="CreateActions">
+    <XActionItem HandlerClassName="%Create%" ICON="action.empty"
+     PROPERTIES="validator.add=true" WizardClassName="%Default%"
+     displayName="Component..." kind="action" name="AddComponent">
+     <EntityData EntityName="ShaleClayComponent">
+      <AttributeData AttributeName="jsf id"/>
+      <AttributeData AttributeName="extends" Mandatory="no"/>
+      <AttributeData AttributeName="component type" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+   <XActionItem kind="list" name="VerifyActions">
+    <XActionItem kind="list" name="StaticActions"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity ImplementingClass="%Custom%"
+  PROPERTIES="formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  XMLSUBPATH="actionListener" name="ShaleClayActionListener">
+  <XChildrenEntities>
+   <XChildEntity maxCount="1" name="ShaleClayAttributes" required="yes"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.jsf.listener" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="action listener" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true;save=always;category=general"
+    name="jsf id" xmlname="jsfid">
+    <Constraint loader="ListString"/>
+    <Editor name="ClayComponentList"/>
+   </XModelAttribute>
+   <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
+    <Constraint/>
+    <Editor name="Note"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Copy" HandlerClassName="%Copy%"
+     ICON="action.copy" displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Cut" HandlerClassName="%Cut%"
+     ICON="action.copy" displayName="Cut" kind="action" name="Cut"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete" HandlerClassName="%Delete%"
+     ICON="action.delete" displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity ImplementingClass="%Custom%"
+  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData" name="ShaleClayActionListenerFolder">
+  <XChildrenEntities>
+   <XChildEntity name="ShaleClayActionListener"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.file.folder" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="folder" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true" default="Action Listeners"
+    name="name" visibility="false">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.empty" displayName="New" group="1"
+    kind="list" name="CreateActions">
+    <XActionItem HandlerClassName="%Create%" ICON="action.empty"
+     PROPERTIES="validator.add=true" WizardClassName="%Default%"
+     displayName="Action Listener..." kind="action" name="AddActionListener">
+     <EntityData EntityName="ShaleClayActionListener">
+      <AttributeData AttributeName="jsf id"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Copy" HandlerClassName="%Copy%"
+     ICON="action.copy" displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Cut" HandlerClassName="%Cut%"
+     ICON="action.copy" displayName="Cut" kind="action" name="Cut"/>
+    <XActionItem BaseActionName="Paste" HandlerClassName="%Paste%"
+     ICON="action.paste" displayName="Paste" kind="action" name="Paste"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete" HandlerClassName="%Delete%"
+     ICON="action.delete" displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity ImplementingClass="%Custom%"
+  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  XMLSUBPATH="attributes" name="ShaleClayAttributes">
+  <XChildrenEntities>
+   <XChildEntity name="ShaleClaySet"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.file.folder" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="attributes" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true" default="Attributes"
+    name="name" visibility="false">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
+    <Constraint/>
+    <Editor name="Note"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.empty" displayName="New" group="1"
+    kind="list" name="CreateActions">
+    <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
+     PROPERTIES="validator.add=true;support=org.jboss.tools.shale.model.clay.handlers.CreateAttributeSupport;entity=ShaleClaySet"
+     displayName="Set..." kind="action" name="AddSet">
+     <EntityData EntityName="AddShaleClaySetWizard">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="binding type" Mandatory="no"/>
+      <AttributeData AttributeName="value" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Copy" HandlerClassName="%Copy%"
+     ICON="action.copy" displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Cut" HandlerClassName="%Cut%"
+     ICON="action.copy" displayName="Cut" kind="action" name="Cut"/>
+    <XActionItem BaseActionName="Paste" HandlerClassName="%Paste%"
+     ICON="action.paste" displayName="Paste" kind="action" name="Paste"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete" HandlerClassName="%Delete%"
+     ICON="action.delete" displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity ImplementingClass="%Custom%"
+  PROPERTIES="children=%EntityOrdered%;loaderKind=component;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  XMLSUBPATH="component" name="ShaleClayComponent">
+  <XChildrenEntities>
+   <XChildEntity maxCount="1" name="ShaleClayAttributes" required="yes"/>
+   <XChildEntity maxCount="1" name="ShaleClaySymbols" required="yes"/>
+   <XChildEntity maxCount="1" name="ShaleClayConverter" required="yes"/>
+   <XChildEntity maxCount="1" name="ShaleClayValidatorFolder" required="yes"/>
+   <XChildEntity maxCount="1" name="ShaleClayActionListenerFolder" required="yes"/>
+   <XChildEntity maxCount="1" name="ShaleClayValueListenerFolder" required="yes"/>
+   <XChildEntity maxCount="1" name="ShaleClayElementFolder" required="yes"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.jsf.component" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="component" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true;save=always;category=general"
+    name="jsf id" xmlname="jsfid">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="save=always;category=general"
+    name="extends" xmlname="extends">
+    <Constraint loader="ListString"/>
+    <Editor name="ClayComponentList"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="category=advanced" name="component type" xmlname="componentType">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="category=advanced" name="facet name" xmlname="facetName">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="category=advanced" name="allow body" xmlname="allowBody">
+    <Constraint loader="List">
+     <value/>
+     <value name="true"/>
+     <value name="false"/>
+    </Constraint>
+    <Editor name="List"/>
+   </XModelAttribute>
+   <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
+    <Constraint/>
+    <Editor name="Note"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.empty" displayName="New" group="1"
+    kind="list" name="CreateActions">
+    <XActionItem HandlerClassName="%Redirect%" ICON="action.empty"
+     PROPERTIES="validator.add=true;sourcepath=Attributes;actionpath=CreateActions/AddSet"
+     WizardClassName="%Default%" displayName="Attribute..."
+     kind="action" name="AddAttribute">
+     <EntityData EntityName="ShaleAction">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="method"/>
+      <AttributeData AttributeName="class name" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+    <XActionItem HandlerClassName="%Redirect%" ICON="action.empty"
+     PROPERTIES="validator.add=true;sourcepath=Symbols;actionpath=CreateActions/AddSet"
+     WizardClassName="%Default%" displayName="Symbol..." kind="action" name="AddSymbol">
+     <EntityData EntityName="ShaleAction">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="method"/>
+      <AttributeData AttributeName="class name" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+    <XActionItem HandlerClassName="%Redirect%" ICON="action.empty"
+     PROPERTIES="validator.add=true;sourcepath=Validators;actionpath=CreateActions/AddValidator"
+     WizardClassName="%Default%" displayName="Validator..."
+     kind="action" name="AddValidator">
+     <EntityData EntityName="ShaleAction">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="method"/>
+      <AttributeData AttributeName="class name" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+    <XActionItem HandlerClassName="%Redirect%" ICON="action.empty"
+     PROPERTIES="validator.add=true;sourcepath=Action Listeners;actionpath=CreateActions/AddActionListener"
+     WizardClassName="%Default%" displayName="Action Listener..."
+     kind="action" name="AddActionListener">
+     <EntityData EntityName="ShaleAction">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="method"/>
+      <AttributeData AttributeName="class name" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+    <XActionItem HandlerClassName="%Redirect%" ICON="action.empty"
+     PROPERTIES="validator.add=true;sourcepath=Value Change Listeners;actionpath=CreateActions/AddValueListener"
+     WizardClassName="%Default%" displayName="Value Change Listener..."
+     kind="action" name="AddValueListener">
+     <EntityData EntityName="ShaleAction">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="method"/>
+      <AttributeData AttributeName="class name" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+    <XActionItem HandlerClassName="%Redirect%" ICON="action.empty"
+     PROPERTIES="validator.add=true;sourcepath=Elements;actionpath=CreateActions/AddElement"
+     WizardClassName="%Default%" displayName="Element..." kind="action" name="AddElement">
+     <EntityData EntityName="ShaleAction">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="method"/>
+      <AttributeData AttributeName="class name" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Copy" HandlerClassName="%Copy%"
+     ICON="action.copy" displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Cut" HandlerClassName="%Cut%"
+     ICON="action.copy" displayName="Cut" kind="action" name="Cut"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete" HandlerClassName="%Delete%"
+     ICON="action.delete" displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+   <XActionItem displayName="move" kind="list" name="MoveActions">
+    <XActionItem HIDE="always" HandlerClassName="%Move%"
+     ICON="action.move" displayName="Move" kind="action" name="Move"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity ImplementingClass="%Custom%"
+  PROPERTIES="formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  XMLSUBPATH="converter" name="ShaleClayConverter">
+  <XChildrenEntities>
+   <XChildEntity maxCount="1" name="ShaleClayAttributes" required="yes"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.jsf.converter" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="converter" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true" default="Converter" name="name" visibility="false">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="save=always;category=general"
+    name="jsf id" xmlname="jsfid">
+    <Constraint loader="ListString"/>
+    <Editor name="ClayComponentList"/>
+   </XModelAttribute>
+   <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
+    <Constraint/>
+    <Editor name="Note"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Copy" HandlerClassName="%Copy%"
+     ICON="action.copy" displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Cut" HandlerClassName="%Cut%"
+     ICON="action.copy" displayName="Cut" kind="action" name="Cut"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete" HandlerClassName="%Delete%"
+     ICON="action.delete" displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity ImplementingClass="%Custom%"
+  PROPERTIES="children=%EntityOrdered%;loaderKind=component;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  XMLSUBPATH="element" name="ShaleClayElement">
+  <XChildrenEntities>
+   <XChildEntity maxCount="1" name="ShaleClayAttributes" required="yes"/>
+   <XChildEntity maxCount="1" name="ShaleClaySymbols" required="yes"/>
+   <XChildEntity maxCount="1" name="ShaleClayConverter" required="yes"/>
+   <XChildEntity maxCount="1" name="ShaleClayValidatorFolder" required="yes"/>
+   <XChildEntity maxCount="1" name="ShaleClayActionListenerFolder" required="yes"/>
+   <XChildEntity maxCount="1" name="ShaleClayValueListenerFolder" required="yes"/>
+   <XChildEntity maxCount="1" name="ShaleClayElementFolder" required="yes"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.jsf.component" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="element" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="save=always;category=general"
+    name="jsf id" xmlname="jsfid">
+    <Constraint loader="ListString"/>
+    <Editor name="ClayComponentList"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true;save=always;category=general"
+    name="render id" xmlname="renderId">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="category=advanced" name="facet name" xmlname="facetName">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="category=advanced" name="component type" xmlname="componentType">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="category=advanced" name="id" xmlname="id">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
+    <Constraint/>
+    <Editor name="Note"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.empty" displayName="New" group="1"
+    kind="list" name="CreateActions">
+    <XActionItem HandlerClassName="%Redirect%" ICON="action.empty"
+     PROPERTIES="validator.add=true;sourcepath=Attributes;actionpath=CreateActions/AddSet"
+     WizardClassName="%Default%" displayName="Attribute..."
+     kind="action" name="AddAttribute">
+     <EntityData EntityName="ShaleAction">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="method"/>
+      <AttributeData AttributeName="class name" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+    <XActionItem HandlerClassName="%Redirect%" ICON="action.empty"
+     PROPERTIES="validator.add=true;sourcepath=Symbols;actionpath=CreateActions/AddSet"
+     WizardClassName="%Default%" displayName="Symbol..." kind="action" name="AddSymbol">
+     <EntityData EntityName="ShaleAction">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="method"/>
+      <AttributeData AttributeName="class name" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+    <XActionItem HandlerClassName="%Redirect%" ICON="action.empty"
+     PROPERTIES="validator.add=true;sourcepath=Validators;actionpath=CreateActions/AddValidator"
+     WizardClassName="%Default%" displayName="Validator..."
+     kind="action" name="AddValidator">
+     <EntityData EntityName="ShaleAction">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="method"/>
+      <AttributeData AttributeName="class name" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+    <XActionItem HandlerClassName="%Redirect%" ICON="action.empty"
+     PROPERTIES="validator.add=true;sourcepath=Action Listeners;actionpath=CreateActions/AddActionListener"
+     WizardClassName="%Default%" displayName="Action Listener..."
+     kind="action" name="AddActionListener">
+     <EntityData EntityName="ShaleAction">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="method"/>
+      <AttributeData AttributeName="class name" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+    <XActionItem HandlerClassName="%Redirect%" ICON="action.empty"
+     PROPERTIES="validator.add=true;sourcepath=Value Change Listeners;actionpath=CreateActions/AddValueListener"
+     WizardClassName="%Default%" displayName="Value Change Listener..."
+     kind="action" name="AddValueListener">
+     <EntityData EntityName="ShaleAction">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="method"/>
+      <AttributeData AttributeName="class name" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+    <XActionItem HandlerClassName="%Redirect%" ICON="action.empty"
+     PROPERTIES="validator.add=true;sourcepath=Elements;actionpath=CreateActions/AddElement"
+     WizardClassName="%Default%" displayName="Element..." kind="action" name="AddElement">
+     <EntityData EntityName="ShaleAction">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="method"/>
+      <AttributeData AttributeName="class name" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Copy" HandlerClassName="%Copy%"
+     ICON="action.copy" displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Cut" HandlerClassName="%Cut%"
+     ICON="action.copy" displayName="Cut" kind="action" name="Cut"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete" HandlerClassName="%Delete%"
+     ICON="action.delete" displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+   <XActionItem displayName="move" kind="list" name="MoveActions">
+    <XActionItem HIDE="always" HandlerClassName="%Move%"
+     ICON="action.move" displayName="Move" kind="action" name="Move"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity ImplementingClass="%Custom%"
+  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData" name="ShaleClayElementFolder">
+  <XChildrenEntities>
+   <XChildEntity name="ShaleClayElement"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.jsf.components" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="folder" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true" default="Elements" name="name" visibility="false">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.empty" displayName="New" group="1"
+    kind="list" name="CreateActions">
+    <XActionItem HandlerClassName="%Create%" ICON="action.empty"
+     PROPERTIES="validator.add=true" WizardClassName="%Default%"
+     displayName="Element..." kind="action" name="AddElement">
+     <EntityData EntityName="ShaleClayElement">
+      <AttributeData AttributeName="jsf id"/>
+      <AttributeData AttributeName="render id"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Copy" HandlerClassName="%Copy%"
+     ICON="action.copy" displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Cut" HandlerClassName="%Cut%"
+     ICON="action.copy" displayName="Cut" kind="action" name="Cut"/>
+    <XActionItem BaseActionName="Paste" HandlerClassName="%Paste%"
+     ICON="action.paste" displayName="Paste" kind="action" name="Paste"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete" HandlerClassName="%Delete%"
+     ICON="action.delete" displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity
+  ImplementingClass="org.jboss.tools.shale.model.clay.ClayProcessImpl" name="ShaleClayProcess">
+  <XChildrenEntities>
+   <XChildEntity name="ShaleClayProcessItem"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.jsf.process" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="folder" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute default="process" name="name" visibility="false" xmlname="NAME">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="module" visibility="false" xmlname="MODULE">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute default="no" name="hide comments" visibility="false" xmlname="HIDE_COMMENTS">
+    <Constraint loader="List">
+     <value name="no"/>
+     <value name="yes"/>
+    </Constraint>
+    <Editor name="List"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.empty" displayName="New" kind="list" name="CreateActions">
+    <XActionItem
+     HandlerClassName="org.jboss.tools.jst.web.tiles.model.handlers.TilesProcessRegirectHandler"
+     ICON="action.empty"
+     PROPERTIES="actionpath=CreateActions/AddComponent"
+     WizardClassName="%Default%" displayName="Add Component..."
+     kind="action" name="AddComponent">
+     <EntityData EntityName="ShaleClayComponent">
+      <AttributeData AttributeName="jsf id"/>
+      <AttributeData AttributeName="extends" Mandatory="no"/>
+      <AttributeData AttributeName="component type" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Cut" ICON="action.cut"
+     displayName="Cut" kind="action" name="Cut"/>
+    <XActionItem BaseActionName="Copy" ICON="action.copy"
+     displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Paste"
+     HandlerClassName="org.jboss.tools.jst.web.tiles.model.handlers.TilesProcessRegirectHandler"
+     ICON="action.paste" PROPERTIES="actionpath=CopyActions/Paste"
+     displayName="Paste" kind="action" name="Paste"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete" ICON="action.delete"
+     displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HIDE="always"
+     HandlerClassName="org.jboss.tools.jst.web.tiles.model.handlers.TilesProcessRegirectHandler"
+     ICON="action.empty" PROPERTIES="actionpath=Properties/Properties"
+     displayName="Properties..." kind="action" name="Properties"/>
+    <XActionItem
+     HandlerClassName="org.jboss.tools.jst.web.tiles.model.handlers.ShowPreferenceHandler"
+     ICON="action.empty" displayName="Preferences..." kind="action" name="Preferences"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity
+  ImplementingClass="org.jboss.tools.shale.model.clay.ClayProcessItemImpl"
+  XMLSUBPATH="PROCESS-ITEM" name="ShaleClayProcessItem">
+  <XChildrenEntities>
+   <XChildEntity name="ShaleClayProcessItemOutput"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.jsf.component" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="definition" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="name" xmlname="NAME">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="title" xmlname="TITLE">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="id" xmlname="ID">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="type" xmlname="TYPE">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="subtype" xmlname="SUBTYPE">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="path" xmlname="PATH">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="shape" xmlname="SHAPE">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute COPYABLE="no" default="false" name="confirmed" visibility="false">
+    <Constraint loader="List">
+     <value name="true"/>
+     <value name="false"/>
+    </Constraint>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem HIDE="disabled"
+    HandlerClassName="org.jboss.tools.jst.web.tiles.model.handlers.JumpToItemFromOtherFile"
+    ICON="main.web.tiles.definition" PROPERTIES="actionpath=Open"
+    displayName="Open" kind="action" name="Open"/>
+   <XActionItem kind="list" name="EditActions">
+    <XActionItem
+     HandlerClassName="org.jboss.tools.jst.web.tiles.model.handlers.TilesProcessRegirectHandler"
+     ICON="action.empty" PROPERTIES="actionpath=EditActions/Rename"
+     displayName="Rename..." kind="action" name="Rename"/>
+   </XActionItem>
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Cut"
+     HandlerClassName="org.jboss.tools.jst.web.tiles.model.handlers.TilesProcessRegirectHandler"
+     ICON="action.cut" PROPERTIES="actionpath=CopyActions/Cut"
+     displayName="Cut" kind="action" name="Cut"/>
+    <XActionItem BaseActionName="Copy"
+     HandlerClassName="org.jboss.tools.jst.web.tiles.model.handlers.TilesProcessRegirectHandler"
+     ICON="action.copy" PROPERTIES="actionpath=CopyActions/Copy"
+     displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Paste"
+     HandlerClassName="org.jboss.tools.jst.web.tiles.model.handlers.TilesProcessRegirectHandler"
+     ICON="action.paste" PROPERTIES="actionpath=CopyActions/Paste"
+     displayName="Paste" kind="action" name="Paste"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete"
+     HandlerClassName="org.jboss.tools.jst.web.tiles.model.handlers.TilesProcessRegirectHandler"
+     ICON="action.delete" PROPERTIES="actionpath=DeleteActions/Delete"
+     displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem
+     HandlerClassName="org.jboss.tools.jst.web.tiles.model.handlers.TilesProcessRegirectHandler"
+     ICON="action.empty" PROPERTIES="actionpath=Properties/Properties"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity
+  ImplementingClass="org.jboss.tools.shale.model.clay.ClayProcessItemOutputImpl"
+  XMLSUBPATH="PROCESS-ITEM-OUTPUT" name="ShaleClayProcessItemOutput">
+  <XChildrenEntities/>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.jsf.process-item-output" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="extends" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="name" xmlname="NAME">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="title" xmlname="TITLE">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="id" xmlname="ID">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="type" xmlname="TYPE">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="subtype" xmlname="SUBTYPE">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="path" xmlname="PATH">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="shape" xmlname="SHAPE">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute name="target" xmlname="TARGET">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute default="no" name="hidden" xmlname="HIDDEN">
+    <Constraint loader="List">
+     <value name="yes"/>
+     <value name="no"/>
+    </Constraint>
+    <Editor name="List"/>
+   </XModelAttribute>
+   <XModelAttribute default="no" name="shortcut" xmlname="SHORTCUT">
+    <Constraint loader="List">
+     <value name="yes"/>
+     <value name="no"/>
+    </Constraint>
+    <Editor name="List"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem
+     HandlerClassName="org.jboss.tools.jst.web.tiles.model.handlers.TilesProcessRegirectHandler"
+     ICON="action.delete"
+     PROPERTIES="actionpath=DeleteActions/DeleteLink"
+     displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity ImplementingClass="%Custom%"
+  PROPERTIES="formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  XMLSUBPATH="set" name="ShaleClaySet">
+  <XChildrenEntities/>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.jsf.attribute" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="set" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true;save=always;category=general"
+    name="name" xmlname="name">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="category=general" name="binding type" xmlname="bindingType">
+    <Constraint loader="List">
+     <value/>
+     <value name="VB"/>
+     <value name="MB"/>
+     <value name="None"/>
+     <value name="Early"/>
+    </Constraint>
+    <Editor name="List"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="category=general" name="value" xmlname="value">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
+    <Constraint/>
+    <Editor name="Note"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Copy" HandlerClassName="%Copy%"
+     ICON="action.copy" displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Cut" HandlerClassName="%Cut%"
+     ICON="action.copy" displayName="Cut" kind="action" name="Cut"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete" HandlerClassName="%Delete%"
+     ICON="action.delete" displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity ImplementingClass="%Custom%"
+  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  XMLSUBPATH="symbols" name="ShaleClaySymbols">
+  <XChildrenEntities>
+   <XChildEntity name="ShaleClaySet"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.file.folder" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="symbols" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true" default="Symbols" name="name" visibility="false">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
+    <Constraint/>
+    <Editor name="Note"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.empty" displayName="New" group="1"
+    kind="list" name="CreateActions">
+    <XActionItem HandlerClassName="%Create%" ICON="action.empty"
+     PROPERTIES="validator.add=true" WizardClassName="%Default%"
+     displayName="Set..." kind="action" name="AddSet">
+     <EntityData EntityName="ShaleClaySet">
+      <AttributeData AttributeName="name"/>
+      <AttributeData AttributeName="binding type" Mandatory="no"/>
+      <AttributeData AttributeName="value" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Copy" HandlerClassName="%Copy%"
+     ICON="action.copy" displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Cut" HandlerClassName="%Cut%"
+     ICON="action.copy" displayName="Cut" kind="action" name="Cut"/>
+    <XActionItem BaseActionName="Paste" HandlerClassName="%Paste%"
+     ICON="action.paste" displayName="Paste" kind="action" name="Paste"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete" HandlerClassName="%Delete%"
+     ICON="action.delete" displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity ImplementingClass="%Custom%"
+  PROPERTIES="formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  XMLSUBPATH="validator" name="ShaleClayValidator">
+  <XChildrenEntities>
+   <XChildEntity maxCount="1" name="ShaleClayAttributes" required="yes"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.jsf.validator" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="validator" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true;save=always;category=general"
+    name="jsf id" xmlname="jsfid">
+    <Constraint loader="ListString"/>
+    <Editor name="ClayComponentList"/>
+   </XModelAttribute>
+   <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
+    <Constraint/>
+    <Editor name="Note"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Copy" HandlerClassName="%Copy%"
+     ICON="action.copy" displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Cut" HandlerClassName="%Cut%"
+     ICON="action.copy" displayName="Cut" kind="action" name="Cut"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete" HandlerClassName="%Delete%"
+     ICON="action.delete" displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity ImplementingClass="%Custom%"
+  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData" name="ShaleClayValidatorFolder">
+  <XChildrenEntities>
+   <XChildEntity name="ShaleClayValidator"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.jsf.validators" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="folder" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true" default="Validators"
+    name="name" visibility="false">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.empty" displayName="New" group="1"
+    kind="list" name="CreateActions">
+    <XActionItem HandlerClassName="%Create%" ICON="action.empty"
+     PROPERTIES="validator.add=true" WizardClassName="%Default%"
+     displayName="Validator..." kind="action" name="AddValidator">
+     <EntityData EntityName="ShaleClayValidator">
+      <AttributeData AttributeName="jsf id"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Copy" HandlerClassName="%Copy%"
+     ICON="action.copy" displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Cut" HandlerClassName="%Cut%"
+     ICON="action.copy" displayName="Cut" kind="action" name="Cut"/>
+    <XActionItem BaseActionName="Paste" HandlerClassName="%Paste%"
+     ICON="action.paste" displayName="Paste" kind="action" name="Paste"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete" HandlerClassName="%Delete%"
+     ICON="action.delete" displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity ImplementingClass="%Custom%"
+  PROPERTIES="formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  XMLSUBPATH="valueChangeListener" name="ShaleClayValueListener">
+  <XChildrenEntities>
+   <XChildEntity maxCount="1" name="ShaleClayAttributes" required="yes"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.jsf.listener" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="value change listener" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true;save=always;category=general"
+    name="jsf id" xmlname="jsfid">
+    <Constraint loader="ListString"/>
+    <Editor name="ClayComponentList"/>
+   </XModelAttribute>
+   <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
+    <Constraint/>
+    <Editor name="Note"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Copy" HandlerClassName="%Copy%"
+     ICON="action.copy" displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Cut" HandlerClassName="%Cut%"
+     ICON="action.copy" displayName="Cut" kind="action" name="Cut"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete" HandlerClassName="%Delete%"
+     ICON="action.delete" displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity ImplementingClass="%Custom%"
+  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData" name="ShaleClayValueListenerFolder">
+  <XChildrenEntities>
+   <XChildEntity name="ShaleClayValueListener"/>
+  </XChildrenEntities>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.file.folder" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="folder" loader="ElementType" name="element type">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true"
+    default="Value Change Listeners" name="name" visibility="false">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.empty" displayName="New" group="1"
+    kind="list" name="CreateActions">
+    <XActionItem HandlerClassName="%Create%" ICON="action.empty"
+     PROPERTIES="validator.add=true" WizardClassName="%Default%"
+     displayName="Value Change Listener..." kind="action" name="AddValueListener">
+     <EntityData EntityName="ShaleClayValueListener">
+      <AttributeData AttributeName="jsf id"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
+    <XActionItem BaseActionName="Copy" HandlerClassName="%Copy%"
+     ICON="action.copy" displayName="Copy" kind="action" name="Copy"/>
+    <XActionItem BaseActionName="Cut" HandlerClassName="%Cut%"
+     ICON="action.copy" displayName="Cut" kind="action" name="Cut"/>
+    <XActionItem BaseActionName="Paste" HandlerClassName="%Paste%"
+     ICON="action.paste" displayName="Paste" kind="action" name="Paste"/>
+   </XActionItem>
+   <XActionItem ICON="action.delete" displayName="Delete" kind="list" name="DeleteActions">
+    <XActionItem BaseActionName="Delete" HandlerClassName="%Delete%"
+     ICON="action.delete" displayName="Delete" kind="action" name="Delete"/>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HandlerClassName="%Properties%" ICON="action.empty"
+     displayName="Properties..." kind="action" name="Properties"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XEntityExtension name="FileFolder">
+  <XChildrenEntities>
+   <XChildEntity name="FileShaleClay"/>
+  </XChildrenEntities>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.empty" displayName="New" group="1"
+    kind="list" name="CreateActions">
+    <XActionItem ICON="action.newattribute" displayName="File" group="1"
+     kind="list" name="CreateFiles">
+     <XActionItem displayName="JSF" kind="list" name="JSF">
+      <XActionItem displayName="Shale" group="1" kind="list" name="Shale">
+       <XActionItem HandlerClassName="%SpecialWizard%"
+        ICON="main.shale.clay-config"
+        PROPERTIES="entity=FileShaleClay;extensions=.xml.;validator.addfile=true;support=org.jboss.tools.shale.model.clay.handlers.CreateClayConfigFileSupport;extension=xml"
+        displayName="Shale Clay Descriptor" kind="action" name="CreateShaleClay">
+        <EntityData EntityName="CreateFacesConfigHelper">
+         <AttributeData AttributeName="folder"/>
+         <AttributeData AttributeName="separator" Mandatory="no"/>
+         <AttributeData AttributeName="name"/>
+         <AttributeData AttributeName="register in web.xml" Mandatory="no"/>
+        </EntityData>
+       </XActionItem>
+      </XActionItem>
+     </XActionItem>
+    </XActionItem>
+   </XActionItem>
+  </XActionItem>
+ </XEntityExtension>
+ <XEntityExtension name="FileSystemFolder">
+  <XChildrenEntities>
+   <XChildEntity name="FileShaleClay"/>
+  </XChildrenEntities>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.empty" displayName="New" group="1"
+    kind="list" name="CreateActions">
+    <XActionItem ICON="action.newattribute" displayName="File" group="1"
+     kind="list" name="CreateFiles">
+     <XActionItem displayName="JSF" kind="list" name="JSF">
+      <XActionItem displayName="Shale" group="1" kind="list" name="Shale">
+       <XActionItem HandlerClassName="%SpecialWizard%"
+        ICON="main.shale.clay-config"
+        PROPERTIES="entity=FileShaleClay;extensions=.xml.;validator.addfile=true;support=org.jboss.tools.shale.model.clay.handlers.CreateClayConfigFileSupport;extension=xml"
+        displayName="Shale Clay Descriptor" kind="action" name="CreateShaleClay">
+        <EntityData EntityName="CreateFacesConfigHelper">
+         <AttributeData AttributeName="folder"/>
+         <AttributeData AttributeName="separator" Mandatory="no"/>
+         <AttributeData AttributeName="name"/>
+         <AttributeData AttributeName="register in web.xml" Mandatory="no"/>
+        </EntityData>
+       </XActionItem>
+      </XActionItem>
+     </XActionItem>
+    </XActionItem>
+   </XActionItem>
+  </XActionItem>
+ </XEntityExtension>
+ <XEntityExtension name="FileSystemJar">
+  <XChildrenEntities>
+   <XChildEntity name="FileShaleClay"/>
+  </XChildrenEntities>
+  <XActionItem kind="list"/>
+ </XEntityExtension>
+ <XEntityExtension name="JarFolder">
+  <XChildrenEntities>
+   <XChildEntity name="FileShaleClay"/>
+  </XChildrenEntities>
+  <XActionItem kind="list"/>
+ </XEntityExtension>
+</XModelEntityGroup>

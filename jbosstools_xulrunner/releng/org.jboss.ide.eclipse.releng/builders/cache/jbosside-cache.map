@@ -1,0 +1,2 @@
+feature@org.jboss.ide.eclipse.jbosscache.feature=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/cache/features/org.jboss.ide.eclipse.jbosscache.feature
+plugin@org.jboss.ide.eclipse.jbosscache=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/cache/plugins/org.jboss.ide.eclipse.jbosscache

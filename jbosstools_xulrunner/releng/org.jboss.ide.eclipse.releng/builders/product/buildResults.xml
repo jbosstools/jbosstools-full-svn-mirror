@@ -1,0 +1,327 @@
+<project default="build.results">
+	<import file="../common/scp.xml"/>
+	<import file="../common/common.xml"/>
+
+	<property name="jbosside.download.root" value="${jbosside.download.url}/builds/${product.buildDesc}/${product.versionTag}"/>
+
+	<macrodef name="get.status">
+		<attribute name="file"/>
+		<attribute name="property"/>
+		<sequential>
+			<if>
+				<available file="@{file}"/>
+				<then><property name="@{property}" value="OK"/></then>
+				<else><property name="@{property}" value="FAIL"/></else>
+			</if>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="get.size">
+		<attribute name="file"/>
+		<attribute name="property"/>
+		<sequential>
+			<var name="size" unset="true"/>
+			<var name="size-in-mb" unset="true"/>
+			<length file="@{file}" property="size"/>
+			
+			<math result="size-in-mb">
+				<op op="/">
+					<op op="floor">
+						<op op="*">
+							<op op="/">
+								<num value="${size}"/>
+								<num value="1048576"/>
+							</op>
+							<num value="100"/>
+						</op>
+					</op>
+					<num value="100"/>
+				</op>
+			</math>
+			
+			<property name="@{property}" value="${size-in-mb}"/>
+		</sequential>
+	</macrodef>
+	
+	<target name="get.build.properties">
+		<load.property file="../../requirements/eclipse/build.properties" property="eclipseBuildID"/>
+		<load.property file="../../requirements/eclipse/build.properties" property="eclipseURL"/>
+		<property name="eclipse.download.url" value="${eclipseURL}/eclipse-SDK-${eclipseBuildID}-win32.zip"/>
+		
+		<load.property file="../../requirements/emf-sdo-xsd/build.properties" property="build.uri" dest="emf.sdo.xsd.build.uri"/>
+		<load.property file="../../requirements/emf-sdo-xsd/build.properties" property="build.archive" dest="emf.sdo.xsd.build.archive"/>
+		<load.property file="../../requirements/gef/build.properties" property="build.uri" dest="gef.build.uri"/>
+		<load.property file="../../requirements/gef/build.properties" property="build.archive" dest="gef.build.archive"/>
+		<load.property file="../../requirements/jem/build.properties" property="build.uri" dest="jem.build.uri"/>
+		<load.property file="../../requirements/jem/build.properties" property="build.archive" dest="jem.build.archive"/>
+		<load.property file="../../requirements/webtools/build.properties" property="build.uri" dest="webtools.build.uri"/>
+		<load.property file="../../requirements/webtools/build.properties" property="build.archive" dest="webtools.build.archive"/>
+
+		
+		<propertyregex property="webtoolsBuildID"
+			input="${webtools.build.archive}"
+			regexp="wtp-(.+).zip"
+			select="\1"
+			casesensitive="false" />
+		
+		<get.version.tag builder="aop" property="aop.versionTag"/>
+		<get.version.tag builder="ejb3" property="ejb3.versionTag"/>
+		<get.version.tag builder="core" property="core.versionTag"/>
+		<load.property file="../hibernate-tools/build.properties" property="hibernate.tools.release"/>
+		<get.version.tag builder="hibernate-tools" property="hibernate-tools.versionTag"/>
+		<get.version.tag builder="jbpm" property="jbpm.versionTag"/>
+		<get.version.tag builder="as" property="as.versionTag"/>
+		<get.version.tag builder="freemarker" property="freemarker.versionTag"/>
+		<get.version.tag builder="cache" property="cache.versionTag"/>
+		<get.version.tag builder="drools-ide" property="drools-ide.versionTag"/>
+		<get.version.tag builder="jbossws" property="jbossws.versionTag"/>
+	
+		<loadfile property="build.information" srcfile="buildInfo/${product.buildDesc}.html"/>
+		
+		<load.property file="build.properties" property="${product.buildDesc}.build.steps"/>
+		<propertycopy name="build.steps" from="${product.buildDesc}.build.steps"/>
+		
+		<property name="jbosside-download-root" value="${jbosside.download.root}"/>
+		<property name="jbosside-all-filename" value="${product.name}-${product.versionTag}-ALL.zip"/>
+		<property name="jbosside-win32-bundle-filename" value="${product.name}-${product.versionTag}-Bundle-win32.zip"/>
+		<property name="jbosside-linux-gtk2-bundle-filename" value="${product.name}-${product.versionTag}-Bundle-linux-gtk.tar.gz"/>
+		<property name="jbosside-core-filename" value="JBossIDE-Core-${core.versionTag}.zip"/>
+		<property name="jbosside-core-nodeps-filename" value="JBossIDE-Core-nodeps-${core.versionTag}.zip"/>
+		<property name="jbosside-aop-filename" value="JBossIDE-AOP-Developer-${aop.versionTag}.zip"/>
+		<property name="jbosside-aop-nodeps-filename" value="JBossIDE-AOP-Developer-nodeps-${aop.versionTag}.zip"/>
+		<property name="jbosside-hibernate-tools-filename" value="HibernateTools-${hibernate.tools.release}.${hibernate-tools.versionTag}.zip"/>
+		<property name="jbosside-hibernate-tools-nodeps-filename" value="HibernateTools-nodeps-${hibernate.tools.release}.${hibernate-tools.versionTag}.zip"/>
+		<property name="jbosside-jbpm-filename" value="jBPM-Designer-${jbpm.versionTag}.zip"/>
+		<property name="jbosside-jbpm-nodeps-filename" value="jBPM-Designer-nodeps-${jbpm.versionTag}.zip"/>
+		<property name="jbosside-ejb3-filename" value="JBossIDE-EJB3-Tools-${ejb3.versionTag}.zip"/>
+		<property name="jbosside-ejb3-nodeps-filename" value="JBossIDE-EJB3-Tools-nodeps-${ejb3.versionTag}.zip"/>
+		<property name="jbosside-as-filename" value="JBossIDE-JBossAS-Tools-${as.versionTag}.zip"/>
+		<property name="jbosside-as-nodeps-filename" value="JBossIDE-JBossAS-Tools-nodeps-${as.versionTag}.zip"/>
+		<property name="jbosside-freemarker-filename" value="JBossIDE-FreeMarker-${freemarker.versionTag}.zip"/>
+		<property name="jbosside-freemarker-nodeps-filename" value="JBossIDE-FreeMarker-nodeps-${freemarker.versionTag}.zip"/>
+		<property name="jbosside-cache-filename" value="JBossIDE-JBossCacheIDE-${cache.versionTag}.zip"/>
+		<property name="jbosside-cache-nodeps-filename" value="JBossIDE-JBossCacheIDE-nodeps-${cache.versionTag}.zip"/>
+		<property name="jbosside-drools-ide-filename" value="JBossIDE-Drools-${drools-ide.versionTag}.zip"/>
+		<property name="jbosside-drools-ide-nodeps-filename" value="JBossIDE-Drools-nodeps-${drools-ide.versionTag}.zip"/>
+		<property name="jbosside-jbossws-filename" value="JBossIDE-JBossWS-${jbossws.versionTag}.zip"/>
+		<property name="jbosside-jbossws-nodeps-filename" value="JBossIDE-JBossWS-nodeps-${jbossws.versionTag}.zip"/>
+		
+		<property name="all-file" value="${product.build.directory}/all/${jbosside-all-filename}" />
+		<property name="win32-bundle-file" value="${product.build.directory}/bundle/${jbosside-win32-bundle-filename}" />
+		<property name="linux-gtk2-bundle-file" value="${product.build.directory}/bundle/${jbosside-linux-gtk2-bundle-filename}" />
+		<property name="core-file" value="${product.build.directory}/core/${jbosside-core-filename}" />
+		<property name="core-nodeps-file" value="${product.build.directory}/core/${jbosside-core-nodeps-filename}" />
+		<property name="aop-file" value="${product.build.directory}/aop/${jbosside-aop-filename}" />
+		<property name="aop-nodeps-file" value="${product.build.directory}/aop/${jbosside-aop-nodeps-filename}" />
+		<property name="hibernate-tools-file" value="${product.build.directory}/hibernate-tools/${jbosside-hibernate-tools-filename}" />
+		<property name="hibernate-tools-nodeps-file" value="${product.build.directory}/hibernate-tools/${jbosside-hibernate-tools-nodeps-filename}" />
+		<property name="jbpm-file" value="${product.build.directory}/jbpm/${jbosside-jbpm-filename}" />
+		<property name="jbpm-nodeps-file" value="${product.build.directory}/jbpm/${jbosside-jbpm-nodeps-filename}" />
+		<property name="ejb3-file" value="${product.build.directory}/ejb3/${jbosside-ejb3-filename}" />
+		<property name="ejb3-nodeps-file" value="${product.build.directory}/ejb3/${jbosside-ejb3-nodeps-filename}" />
+		<property name="as-file" value="${product.build.directory}/as/${jbosside-as-filename}"/>
+		<property name="as-nodeps-file" value="${product.build.directory}/as/${jbosside-as-nodeps-filename}"/>
+		<property name="freemarker-file" value="${product.build.directory}/freemarker/${jbosside-freemarker-filename}"/>
+		<property name="freemarker-nodeps-file" value="${product.build.directory}/freemarker/${jbosside-freemarker-nodeps-filename}"/>
+		<property name="cache-file" value="${product.build.directory}/cache/${jbosside-cache-filename}"/>
+		<property name="cache-nodeps-file" value="${product.build.directory}/cache/${jbosside-cache-nodeps-filename}"/>
+		<property name="drools-ide-file" value="${product.build.directory}/drools-ide/${jbosside-drools-ide-filename}"/>
+		<property name="drools-ide-nodeps-file" value="${product.build.directory}/drools-ide/${jbosside-drools-ide-nodeps-filename}"/>
+		<property name="jbossws-file" value="${product.build.directory}/jbossws/${jbosside-jbossws-filename}"/>
+		<property name="jbossws-nodeps-file" value="${product.build.directory}/jbossws/${jbosside-jbossws-nodeps-filename}"/>
+		
+		<get.status file="${all-file}" property="jbosside-all-status"/>
+		<get.status file="${win32-bundle-file}" property="jbosside-win32-bundle-status"/>
+		<get.status file="${linux-gtk2-bundle-file}" property="jbosside-linux-gtk2-bundle-status"/>
+		<get.status file="${core-file}" property="jbosside-core-status"/>
+		<get.status file="${core-nodeps-file}" property="jbosside-core-nodeps-status"/>
+		<get.status file="${aop-file}" property="jbosside-aop-status"/>
+		<get.status file="${aop-nodeps-file}" property="jbosside-aop-nodeps-status"/>
+		<get.status file="${hibernate-tools-file}" property="jbosside-hibernate-tools-status"/>
+		<get.status file="${hibernate-tools-nodeps-file}" property="jbosside-hibernate-tools-nodeps-status"/>
+		<get.status file="${jbpm-file}" property="jbosside-jbpm-status"/>
+		<get.status file="${jbpm-nodeps-file}" property="jbosside-jbpm-nodeps-status"/>
+		<get.status file="${ejb3-file}" property="jbosside-ejb3-status"/>
+		<get.status file="${ejb3-nodeps-file}" property="jbosside-ejb3-nodeps-status"/>
+		<get.status file="${as-file}" property="jbosside-as-status"/>
+		<get.status file="${as-nodeps-file}" property="jbosside-as-nodeps-status"/>
+		<get.status file="${freemarker-file}" property="jbosside-freemarker-status"/>
+		<get.status file="${freemarker-nodeps-file}" property="jbosside-freemarker-nodeps-status"/>
+		<get.status file="${cache-file}" property="jbosside-cache-status"/>
+		<get.status file="${cache-nodeps-file}" property="jbosside-cache-nodeps-status"/>
+		<get.status file="${drools-ide-file}" property="jbosside-drools-ide-status"/>
+		<get.status file="${drools-ide-nodeps-file}" property="jbosside-drools-ide-nodeps-status"/>
+		<get.status file="${jbossws-file}" property="jbosside-jbossws-status"/>
+		<get.status file="${jbossws-nodeps-file}" property="jbosside-jbossws-nodeps-status"/>
+		
+		<get.size file="${all-file}" property="all-file-size"  />
+		<if>
+			<contains string="${build.steps}" substring="bundle.eclipse"/>
+			<then>
+				<get.size file="${win32-bundle-file}" property="win32-bundle-file-size"  />
+				<get.size file="${linux-gtk2-bundle-file}" property="linux-gtk2-bundle-file-size"  />
+			</then>
+		</if>
+		<get.size file="${core-file}" property="core-file-size"  />
+		<get.size file="${core-nodeps-file}" property="core-nodeps-file-size"  />
+		<get.size file="${aop-file}" property="aop-file-size"  />
+		<get.size file="${aop-nodeps-file}" property="aop-nodeps-file-size"  />
+		<get.size file="${hibernate-tools-file}" property="hibernate-tools-file-size"  />
+		<get.size file="${hibernate-tools-nodeps-file}" property="hibernate-tools-nodeps-file-size"  />
+		<get.size file="${jbpm-file}" property="jbpm-file-size"  />
+		<get.size file="${jbpm-nodeps-file}" property="jbpm-nodeps-file-size"  />
+		<get.size file="${ejb3-file}" property="ejb3-file-size"  />
+		<get.size file="${ejb3-nodeps-file}" property="ejb3-nodeps-file-size"  />
+		<get.size file="${as-file}" property="as-file-size" />
+		<get.size file="${as-nodeps-file}" property="as-nodeps-file-size" />
+		<get.size file="${freemarker-file}" property="freemarker-file-size"/>
+		<get.size file="${freemarker-nodeps-file}" property="freemarker-nodeps-file-size"/>
+		<get.size file="${cache-file}" property="cache-file-size"/>
+		<get.size file="${cache-nodeps-file}" property="cache-nodeps-file-size"/>
+		<get.size file="${drools-ide-file}" property="drools-ide-file-size"/>
+		<get.size file="${drools-ide-nodeps-file}" property="drools-ide-nodeps-file-size"/>
+		<get.size file="${jbossws-file}" property="jbossws-file-size"/>
+		<get.size file="${jbossws-nodeps-file}" property="jbossws-nodeps-file-size"/>
+
+		<loadfile srcfile="${all-file}.MD5" property="all-file-md5" failonerror="false" />
+		<loadfile srcfile="${win32-bundle-file}.MD5" property="win32-bundle-file-md5" failonerror="false" />
+		<loadfile srcfile="${linux-gtk2-bundle-file}.MD5" property="linux-gtk2-bundle-file-md5" failonerror="false" />
+		<loadfile srcfile="${core-file}.MD5" property="core-file-md5" failonerror="false" />
+		<loadfile srcfile="${aop-file}.MD5" property="aop-file-md5" failonerror="false" />
+		<loadfile srcfile="${hibernate-tools-file}.MD5" property="hibernate-tools-file-md5" failonerror="false" />
+		<loadfile srcfile="${jbpm-file}.MD5" property="jbpm-file-md5" failonerror="false" />
+		<loadfile srcfile="${ejb3-file}.MD5" property="ejb3-file-md5" failonerror="false" />
+		<loadfile srcfile="${as-file}.MD5" property="as-file-md5" failonerror="false"/>
+		<loadfile srcfile="${freemarker-file}.MD5" property="freemarker-file-md5" failonerror="false"/>
+		<loadfile srcfile="${cache-file}.MD5" property="cache-file-md5" failonerror="false"/>
+		<loadfile srcfile="${drools-ide-file}.MD5" property="drools-ide-file-md5" failonerror="false"/>
+		<loadfile srcfile="${jbossws-file}.MD5" property="jbossws-file-md5" failonerror="false"/>
+		
+		<!-- load bundle html (if necessary) -->
+		<if>
+			<contains string="${build.steps}" substring="bundle.eclipse"/>
+			<then>
+				<loadfile property="bundle.information" srcfile="buildInfo/bundles.html">
+					<filterchain><expandproperties/></filterchain>
+				</loadfile>
+			</then>
+			<else>
+				<property name="bundle.information" value=""/>
+			</else>
+		</if>
+		
+		<tstamp>
+			<format pattern="MM/dd/yyyy HH:mm" property="build-date"/>
+		</tstamp>
+		
+		<stopwatch name="buildTimer" action="total"/>
+		
+		<!-- load test results -->
+		<property file="${product.build.directory}/tests/test-results/org.jboss.ide.eclipse.tests.properties"/>
+		
+	</target>
+	
+	<target name="update.builds.xml" depends="get.build.properties" if="enable.publishing">
+		<get src="${jbosside.download.url}/builds/builds.xml" dest="builds.xml"/>
+		
+		<loadfile property="builds-xml" srcfile="builds.xml" >
+			<filterchain><expandproperties/></filterchain>
+		</loadfile>
+		<loadfile property="token" srcfile="labs.jboss.com/builds-token.xml">
+			<filterchain><expandproperties/></filterchain>
+		</loadfile>
+		<loadfile property="build-xml" srcfile="labs.jboss.com/builds-build.xml">
+			<filterchain><expandproperties/></filterchain>
+		</loadfile>
+		
+		<propertyregex property="new-builds-xml"
+			input="${builds-xml}"
+			regexp="(${token})"
+			replace="${build-xml}"
+			casesensitive="false" />
+		
+		<echo file="builds.xml" message="${new-builds-xml}"/>
+		
+		<scp.fileset.trusted>
+			<fileset file="builds.xml"/>
+		</scp.fileset.trusted>
+		
+		<delete file="builds.xml"/>
+	</target>
+			
+	<target name="build.results" depends="get.build.properties,update.builds.xml">
+		<tstamp>
+			<format property="date" pattern="MMMM d yyyy"/>
+		</tstamp>
+		
+		<property name="build-type" value="${product.buildDesc}"/>
+		<property name="jbosside-build-name" value="${product.versionTag}"/>
+		<property name="jbosside-download-root" value="${jbosside.download.root}"/>
+		<property name="eclipse-download-url" value="${eclipse.download.url}"/>
+		<property name="eclipse-target" value="eclipse-SDK-${eclipseBuildID}-win32.zip"/>
+		<property name="webtools-download-url" value="${webtools.build.uri}/${webtools.build.archive}"/>
+		<property name="webtools-target" value="${webtools.build.archive}"/>
+		<property name="gef-download-url" value="${gef.build.uri}/${gef.build.archive}"/>
+		<property name="gef-target" value="${gef.build.archive}"/>
+		<property name="emf-sdo-xsd-download-url" value="${emf.sdo.xsd.build.uri}/${emf.sdo.xsd.build.archive}"/>
+		<property name="emf-sdo-xsd-target" value="${emf.sdo.xsd.build.archive}"/>
+		<property name="jem-download-url" value="${jem.build.uri}/${jem.build.archive}"/>
+		<property name="jem-target" value="${jem.build.archive}"/>
+		<property name="build-time" value="${buildTimer}"/>
+		<property name="build-information" value="${build.information}"/>
+		<property name="bundle-information" value="${bundle.information}"/>
+		<property name="junit-error-count" value="${junit.errorCount}"/>
+		<property name="junit-failure-count" value="${junit.failureCount}"/>
+		<property name="junit-test-count" value="${junit.testCount}"/>
+			
+		<copy todir="${product.build.directory}" overwrite="true">
+			<fileset file="buildResults.html.template"/>
+			<mapper type="glob" from="*.html.template" to="*.html"/>
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</copy>
+
+		<copy todir="." overwrite="true">
+			<fileset file="emailBody.html.template"/>
+			<mapper type="glob" from="*.html.template" to="*.html"/>
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</copy>
+		
+		<copy todir="${product.build.directory}" overwrite="true">
+			<fileset file="buildResults.css"/>	
+		</copy>
+		
+		<copy todir="${product.build.directory}/images">
+			<fileset dir="images">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<property file="../global.properties"/>
+	<property file="build.properties"/>
+	
+	<target name="publish.log" if="enable.publishing">
+
+		<property file="${product.build.root}/buildData.properties"/>
+			
+		<zip destfile="${product.build.directory}/build.log.zip">
+			<fileset file="${build.root}/builders/build.log"/>
+		</zip>
+		<delete>
+			<fileset file="${build.root}/builders/build.log"/>
+		</delete>
+		
+		<scp.fileset.trusted todir="${upload.to}">
+			<fileset file="${product.build.directory}/build.log.zip"/>
+			<fileset file="${product.build.directory}/buildResults.html"/>
+		</scp.fileset.trusted>
+			
+		<!--scp trust="true" todir="${ssh.username}@${ssh.host}:${scp.basedir}/${upload.to}" keyfile="${ssh.key}" passphrase="${ssh.passphrase}">
+			<fileset file="${build.dir}/build.log.zip"/>
+		</scp-->
+	</target>
+</project>

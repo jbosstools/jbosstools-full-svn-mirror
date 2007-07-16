@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+  Copyright 2004-2005 The Apache Software Foundation.
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  $Id: shale-dialog-config_1_0.dtd,v 1.1 2005/12/23 14:01:34 glory Exp $
+
+-->
+
+<!--
+
+    DTD for dialog definitions used by the "org.apache.shale.dialog" package.
+    To support validation of your configuration file, include the following
+    DOCTYPE element at the beginning (after the "xml" declaration):
+    
+    <!DOCTYPE dialogs PUBLIC
+      "-//Apache Software Foundation//DTD Shale Dialog Configuration 1.0//EN"
+      "http://struts.apache.org/dtds/shale-dialog-config_1_0.dtd">
+
+-->
+
+
+<!-- ====================== Top Level Elements ============================= -->
+
+
+<!-- The "dialogs" element is the root of a single configuration file, and
+     contains zero or more "dialog" elements defining the states and transitions
+     for a particular dialog.
+-->
+<!ELEMENT dialogs (dialog*)>
+
+
+<!-- The "dialog" element defines the states for a particular reusable dialog,
+     which itself consists of zero or more states (of particular types).  The
+     following attributes are defined:
+
+     className                  Fully qualified class name of the configuration
+                                object for this element.
+                                [org.apache.shale.dialog.impl.DialogImpl]
+
+     name                       Name of this dialog (must be unique among
+                                all defined dialogs).
+
+     start                      Name of the starting state for this dialog.
+-->
+<!ELEMENT dialog ((transition|action|end|subdialog|view)*)>
+<!ATTLIST dialog                className       CDATA          #IMPLIED>
+<!ATTLIST dialog                name            CDATA          #REQUIRED>
+<!ATTLIST dialog                start           CDATA          #REQUIRED>
+
+
+<!-- The "action" element represents an action state, which causes the
+     invocation of a public method that takes no arguments, and returns
+     the logical outcome as a String.  The following attributes are defined:
+
+     className                  Fully qualified class name of the configuration
+                                object for this element.
+                                [org.apache.shale.dialog.impl.ActionStateImpl]
+
+     name                       Name of this state (must be unique among
+                                all states defined for this dialog).
+
+     method                     Method binding expression ("#{...}") that
+                                identifies a public method that takes no
+                                arguments, and returns a String that represents
+                                the logical outcome of this state.
+-->
+<!ELEMENT action (transition*)>
+<!ATTLIST action                className       CDATA          #IMPLIED>
+<!ATTLIST action                name            CDATA          #REQUIRED>
+<!ATTLIST action                method          CDATA          #REQUIRED>
+
+
+<!-- The "subdialog" element represents a transition to a subordinate
+     dialog, saving the current state in the currently executing dialog
+     on a stack.  When the subordinate dialog completes, the outcome it
+     returns will be used to trigger a transition in this dialog.
+     The following attributes are defined:
+
+     className                  Fully qualified class name of the configuration
+                                object for this element.
+                                [org.apache.shale.dialog.impl.SubdialogStateImpl]
+
+     name                       Name of this state (must be unique among
+                                all states defined for this dialog).
+
+     dialogName                 Name of the subordinate dialog to be
+                                executed.
+
+-->
+<!ELEMENT subdialog (transition*)>
+<!ATTLIST subdialog             className       CDATA          #IMPLIED>
+<!ATTLIST subdialog             name            CDATA          #REQUIRED>
+<!ATTLIST subdialog             dialogName      CDATA          #REQUIRED>
+
+
+<!-- The "view" element represents a view state, which causes the rendering
+     of the specified JavaServer Faces view.  When the subsequent submit from
+     this view is returned, the outcome returned by whatever action method was
+     invoked is returned in order to determine the next transition.  The
+     following attributes are defined:
+
+     className                  Fully qualified class name of the configuration
+                                object for this element.
+                                [org.apache.shale.dialog.impl.ViewStateImpl]
+
+     name                       Name of this state (must be unique among
+                                all states defined for this dialog).
+
+     viewId                     View identifier of the JavaServer Faces view
+                                that should be rendered.  The logical outcome
+                                returned by whatever action handles the
+                                subsequent submit from this view will be used
+                                to determine the next state transition.
+
+-->
+<!ELEMENT view (transition*)>
+<!ATTLIST view                  className       CDATA          #IMPLIED>
+<!ATTLIST view                  name            CDATA          #REQUIRED>
+<!ATTLIST view                  viewId          CDATA          #REQUIRED>
+
+
+<!-- The "end" element represents a state that terminates a dialog.  If
+     a view identifier is specified, it is rendered; otherwise, it is assumed
+     that a parent dialog which invoked the current dialog will be responsible
+     for producing the view for the current response.
+
+     className                  Fully qualified class name of the configuration
+                                object for this element.
+                                [org.apache.shale.dialog.impl.EndStateImpl]
+
+     name                       Name of this state (must be unique among
+                                all states defined for this dialog).
+
+     viewId                     View identifier of the JavaServer Faces view
+                                that should be rendered (if any).  The logical
+                                outcome returned by whatever action handles the
+                                subsequent submit from this view will be
+                                returned to the parent dialog to drive its
+                                own state transition.
+-->
+<!ELEMENT end (transition*)>
+<!ATTLIST end                   className       CDATA          #IMPLIED>
+<!ATTLIST end                   name            CDATA          #REQUIRED>
+<!ATTLIST end                   viewId          CDATA          #IMPLIED>
+
+
+<!-- The "transition" element represents a state transition from the current
+     state (in which this "transition" element is nested) to a subsequent
+     state.  The following attributes are defined:
+
+     className                  Fully qualified class name of the configuration
+                                object for this element.
+                                [org.apache.shale.dialog.impl.TransitionImpl]
+
+     outcome                    Logical outcome String returned by the invoked
+                                method (for an "action" element), or by the
+                                invoked action's action method (for a "view"
+                                element).
+
+     target                     State name of the state to which control should
+                                be transitioned.  Must match the "name"
+                                attribute of a state defined in this dialog.
+-->
+
+<!ELEMENT transition EMPTY>
+<!ATTLIST transition            className       CDATA          #IMPLIED>
+<!ATTLIST transition            outcome         CDATA          #REQUIRED>
+<!ATTLIST transition            target          CDATA          #REQUIRED>
+
