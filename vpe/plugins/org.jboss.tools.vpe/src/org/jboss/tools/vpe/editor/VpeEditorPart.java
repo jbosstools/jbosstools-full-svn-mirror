@@ -65,6 +65,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 	private EditorPart multiPageEditor;
 	private static final QualifiedName SPLITTER_POSITION_KEY1 = new QualifiedName("", "splitter_position1");
 	private static final QualifiedName SPLITTER_POSITION_KEY2 = new QualifiedName("", "splitter_position2");
+	private static final QualifiedName SPLITTER_POSITION_KEY3 = new QualifiedName("", "splitter_position3");
 	private int controlCount = 0;
 	
 	/** default web-browser */
@@ -220,7 +221,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 	}
 	
 	protected int[] loadSplitterPosition() {
-		int[] sizes = new int[2];
+		int[] sizes = new int[3];
 		try { 
 			IEditorInput input = getEditorInput();
 			if(!(input instanceof IFileEditorInput)) return null;
@@ -232,6 +233,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 			s = file.getPersistentProperty(SPLITTER_POSITION_KEY2);
 			if (s != null) {
 				sizes[1] = Integer.parseInt(s);
+			}else return null;
+			s = file.getPersistentProperty(SPLITTER_POSITION_KEY3);
+			if (s != null) {
+				sizes[2] = Integer.parseInt(s);
 			}else return null;
 		} catch (Exception e) {
 			VpePlugin.getPluginLog().logError(e);
@@ -249,6 +254,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 			file.setPersistentProperty(SPLITTER_POSITION_KEY1, s);
 			s = String.valueOf(weights[1]);
 			file.setPersistentProperty(SPLITTER_POSITION_KEY2, s);
+			s = String.valueOf(weights[2]);
+			file.setPersistentProperty(SPLITTER_POSITION_KEY3, s);
 		} catch (Exception e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
