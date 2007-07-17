@@ -194,6 +194,12 @@ public interface VpeTemplate {
 	 */
 	boolean isCaseSensitive();
 	
+	
+	/**
+	 * @return <code>true</code> if the element is have visual preview
+	 */
+	boolean isHaveVisualPreview(); 
+	
 	/**
 	 * Returns the data for formatting an element of source tree
 	 * @return <code>TextFormatingData</code>

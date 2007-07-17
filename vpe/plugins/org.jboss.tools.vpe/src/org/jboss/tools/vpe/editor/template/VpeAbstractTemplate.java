@@ -39,6 +39,9 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	protected boolean caseSensitive;
 	protected boolean children;
 	protected boolean modify; 
+	
+	protected boolean haveVisualPreview;
+	
 	private VpeResizer resizer;
 	private VpeDnd dragger;
 	private TextFormatingData textFormatingData;
@@ -145,6 +148,16 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		this.caseSensitive = caseSensitive;
 		children = "yes".equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_CHILDREN));
 		modify = "yes".equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_MODIFY));
+		
+		String strHaveVisualPreview = templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_HAVE_VISUAL_PREVIEW);
+		
+		if (strHaveVisualPreview != null && strHaveVisualPreview.length() != 0 ) {
+			haveVisualPreview = "yes".equals(strHaveVisualPreview);			
+		} else {
+			haveVisualPreview = true;
+		}
+		
+		
 		init(templateElement);
 	}
 	
@@ -891,5 +904,9 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 
 	public boolean containsText() {
 		return true;
+	}
+	
+	public boolean isHaveVisualPreview() {
+		return haveVisualPreview;
 	}
 }
