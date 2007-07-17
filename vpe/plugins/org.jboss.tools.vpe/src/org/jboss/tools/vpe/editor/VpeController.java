@@ -45,6 +45,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -74,7 +75,6 @@ import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
 import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
-import org.jboss.tools.common.model.util.ModelFeatureFactory;
 import org.jboss.tools.common.model.ui.editor.IModelObjectEditorInput;
 import org.jboss.tools.common.model.ui.editors.dnd.DropCommandFactory;
 import org.jboss.tools.common.model.ui.editors.dnd.DropData;
@@ -125,6 +125,7 @@ import org.jboss.tools.vpe.editor.util.VpeDndUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.mozilla.browser.MozillaBrowser;
 import org.jboss.tools.vpe.mozilla.browser.util.DOMTreeDumper;
+import org.jboss.tools.vpe.mozilla.internal.swt.xpl.XPCOM;
 import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMEvent;
 import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMKeyEvent;
 import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMMouseEvent;
@@ -858,6 +859,39 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				sourceSelectionChanged(true);
 				visualSelectionController.setCaretEnabled(true);
 				switcher.stopActiveEditor();
+			} else {
+				//adding calls of core event handlers, for example 'CTR+H' or 'CTRL+M' event handler dialog
+				Event keyboardEvent = new Event ();
+				//widget where event occur
+				keyboardEvent.widget=browser;
+				int rc=0;
+				boolean[] aAltKey = new boolean[1];
+				boolean[] aCtrlKey = new boolean[1];
+				boolean[] aShiftKey = new boolean[1];
+				boolean[] aMetaKey = new boolean[1]; 
+				
+				rc = keyEvent.GetAltKey (aAltKey);
+				if (rc != XPCOM.NS_OK) MozillaBrowser.error (rc);
+				rc = keyEvent.GetCtrlKey (aCtrlKey);
+				if (rc != XPCOM.NS_OK) MozillaBrowser.error (rc);
+				rc = keyEvent.GetShiftKey (aShiftKey);
+				if (rc != XPCOM.NS_OK) MozillaBrowser.error (rc);
+				rc = keyEvent.GetMetaKey (aMetaKey);
+				if (rc != XPCOM.NS_OK) MozillaBrowser.error (rc);
+							
+				keyboardEvent.stateMask = (aAltKey[0] ? SWT.ALT : 0) | (aCtrlKey[0] ? SWT.CTRL : 0) | (aShiftKey[0] ? SWT.SHIFT : 0) | (aMetaKey[0] ? SWT.MOD1 : 0);
+				keyboardEvent.x=0;
+				keyboardEvent.y=0;
+				keyboardEvent.type=1;
+				
+				if(keyEvent.getKeyCode()==0) {
+					
+				keyboardEvent.keyCode=keyEvent.getCharCode();
+				} else{
+					
+				keyboardEvent.keyCode=keyEvent.getKeyCode();			
+				}
+				browser.notifyListeners(keyboardEvent.type, keyboardEvent);
 			}
 		} catch (Exception e) {
 			VpePlugin.getPluginLog().logError(e);
