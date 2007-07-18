@@ -2,7 +2,7 @@
 
 	<dirname property="support.startdir" file="${ant.file.DocSupport}"/>
 
-    <property name="support.basedir" value="${support.startdir}/../../../resources"/>
+    <property name="support.basedir" value="${support.startdir}"/>
 	
 	<property file="${support.basedir}/support.properties" />
 
