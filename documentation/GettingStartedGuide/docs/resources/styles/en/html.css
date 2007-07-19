@@ -1,122 +1,390 @@
- * {
-     font-family: "Verdana", "Arial", "Helvetica";
-     font-size: 14px;
- }
+* {
+font-family:verdana, helvetica, sans-serif;
+line-height:20px;
+}
 
- A {
-     color: #0000CC;
- }
+div.navheader table {
+margin:0px;
+border:0px;
+}
 
- A:active {
-     color: #0000CC;
- }
-
- A:visited {
-     color: #0000CC;
- }
-
- P, OL, UL, LI, DL, DT, DD, BLOCKQUOTE {
-     color: #000000;
- }
-
- TD, TH, SPAN {
-     color: #000000;
- }
-
- BLOCKQUOTE {
-     margin-right: 0px;
- }
+div.navfooter table {
+margin:0px;
+border:0px;
+}
 
 
- H1, H2, H3, H4, H5, H6    {
-     color:       #003399;
-     font-weight: 500;
-     margin-top:  10px;
-     padding-top: 5px;
- }
+A {
+	FONT-SIZE: 12px;
+	COLOR: #2A7BD4;
+	FONT-FAMILY: verdana, helvetica, sans-serif;
+}
 
- H1 { font-size: 150%; }
- H2 { font-size: 140%; }
- H3 { font-size: 110%; font-weight: bold; }
- H4 { font-size: 110%; font-weight: bold;}
- H5 { font-size: 100%; font-style: italic; }
- H6 { font-size: 100%; font-style: italic; }
+A:hover {
+	FONT-SIZE: 12px;
+	COLOR: #003399;
+	FONT-FAMILY: verdana, helvetica, sans-serif
+}
 
- TABLE  {
-     border-collapse: collapse;
-     border-spacing:  0;
-     border:          1px dashed #CCCCCC;
-     empty-cells:     hide;
-     width: 100%
- }
+A:visited {
+    font-family:verdana, helvetica, sans-serif;
+	color: #888888;
+	font-size:12px;
+}
 
- TD  {
-     padding: 4pt;
- }
+P, OL, UL, LI, DL, DT, DD, BLOCKQUOTE {
+    color: #000000;
+	font-size:12px;
+}
+
+TD, TH, SPAN {
+    color: #000000;
+}
+
+SPAN.property {
+    font-family: Verdana, Helvetica, sans-serif;
+	color: #008CCA;
+}
+
+SPAN.italic {
+    font-family: Verdana, Helvetica, sans-serif;
+	font-style:italic;
+	
+}
+
+SPAN.bold {
+    font-family: Verdana, Helvetica, sans-serif;
+	font-style:bold;
+}	
+	
+BLOCKQUOTE {
+    margin-right: 0px;
+}
+
+div.titlepage div.mediaobject{
+text-align:center;
+}
+
+div.mediaobject, div.mediaobject img{
+text-align:left;
+
+}
+
+H1 {
+    color: #FF6600;
+    padding-top:30px;
+	MARGIN-TOP: 0px;
+	FONT-SIZE: 22px;
+	PADDING-TOP: 15px;
+}
+
+H2 {
+	MARGIN-TOP: 10px;
+	FONT-SIZE: 18px;
+	COLOR: #2A7BD4;
+	PADDING-TOP: 20px
+}
+
+H3 {
+	MARGIN-TOP: 15px;
+	FONT-SIZE: 16px;
+	COLOR: #000000;
+	PADDING-TOP: 5px
+}
+
+H4 {
+	MARGIN-TOP: 10px;
+	FONT-SIZE: 12px;
+	COLOR: #000000;
+	PADDING-TOP: 15px
+}
+H5 {
+	MARGIN-TOP: 10px;
+	FONT-SIZE: 12px;
+	COLOR: #000000;
+	PADDING-TOP: 15px
+}
+
+H6 {
+	MARGIN-TOP: 10px;
+	FONT-SIZE: 12px;
+	COLOR: #000000;
+	PADDING-TOP:15px;
+}
+
+div.note {
+	FONT-SIZE: 12px;
+	Color:#000000;
+	width:500px;
+	text-align:justify;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+    border-style:solid;
+    border-width:1px;
+	border-left-color:#CCCCCC;
+	border-top-color:#CCCCCC;
+    border-right-color: #CCCCCC;
+    border-bottom-color: #CCCCCC;
+    background-color: #F4F4F4;
+	PADDING-LEFT:1em;
+	PADDING-RIGHT:1em;
+	PADDING-TOP:0px;
+	PADDING-BOTTOM:0px;
+	MARGIN-BOTTOM:0px;
+    MARGIN-TOP:0px;
+}
+
+.note .title, .important .title {
+MARGIN-BOTTOM:0px;
+MARGIN-TOP:0px;
+MARGIN-BOTTOM:0px;
+MARGIN-TOP:0px;
+PADDING-LEFT:0px;
+PADDING-RIGHT:0px;
+PADDING-TOP:1em;
+PADDING-BOTTOM:5px;
+}
+
+.note p, .important p {
+	PADDING-TOP:0px;
+	PADDING-BOTTOM:0px;
+	MARGIN-BOTTOM:1em;
+	MARGIN-TOP:0px;
+}
+
+div.important {
+	FONT-SIZE: 12px;
+	Color:#000000;
+	width:500px;
+	text-align:justify;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+    border-style:solid;
+    border-width:1px;
+	border-left-color:#2A7BD4;
+	border-top-color:#2A7BD4;
+    border-right-color:#2A7BD4;
+    border-bottom-color:#2A7BD4;
+	PADDING-LEFT:1em;
+	PADDING-RIGHT:1em;
+	PADDING-TOP:0px;
+	PADDING-BOTTOM:0px;
+	MARGIN-BOTTOM:0px;
+    MARGIN-TOP:0px;
+}
 
 
- TT {
-     font-size:  90%;
-     font-style: monospace;
-     color:      #111111;
- }
+TABLE  {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	text-align:justify;
+    border-collapse: collapse;
+    border-spacing:0;
+    border-bottom-width:1px;
+	border-top-width:1px;
+	border-left-width:1px;
+	border-right-width:1px;
+	border-left-color:#d8e7f8;
+	border-right-color:#d8e7f8;
+	border-top-color:#CCCCCC;
+	border-bottom-color:#CCCCCC;
+    empty-cells: hide;
+    border-style: solid;
+}
 
- PRE {
-     font-size:        100%;
-     padding:          5px;
-     border-style:     solid;
-     border-width:     1px;
-     border-color:     #CCCCCC;
-     background-color: #F4F4F4;
- }
+.table TH	{
+	background-color:#d8e7f8;
+	text-align:center;
+	white-space:nowrap;
+}
 
- HR  {
-     width:            100%;
-     height:           1px;
-     background-color: #CCCCCC;
-     border-width:     0px;
-     padding:          0px;
-     color:            #CCCCCC;
- }
+ul, li {
+list-style-type: disc;
 
- .variablelist {
-     padding-top:    10;
-     padding-bottom: 10;
-     margin:         0;
- }
+list-style-position:inside;
+}
 
- .itemizedlist {
-     padding-top:    0;
-     padding-bottom: 0;
-     margin:         0;
- list-style-type: disc;
-
- }
-
- .orderedlist{
-     padding-top:    0;
-     padding-bottom: 0;
-     margin:         0;
- }
-
- .term {
-     font-weight: bold;
- }
-
- .note
- {
-    padding-bottom: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-    background-color: #FFFFCC;
- }
-
- .warning
- {
-    padding-bottom: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-    background-color: #FBDADA;
- }
+div.table {
+	width:800px;
+}
 
 
+TD  {
+    padding: 4pt;
+}
+
+
+H1 { font-size: 140%; }
+H2 { font-size: 120%; }
+H3 { font-size: 100%; }
+H4 { font-size: 100%; }
+H5 { font-size: 100%; }
+H6 { font-size: 100%; }
+
+p.copyright	{
+	text-align:center
+}
+
+
+TT {
+font-size: 90%;
+    font-family: "Courier New", Courier, monospace;
+    color: #000000;
+}
+
+dl, dt, dd{margin-left : 8; margin-bottom : 6;}
+
+PRE {
+	
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    padding: 5px;
+    border-style: solid;
+    border-width: 1px;
+	border-left-color:#2A7BD4;
+	border-top-color:#2A7BD4;
+    border-right-color: #CCCCCC;
+    border-bottom-color: #CCCCCC;
+    background-color: #F4F4F4;
+	width:800px;
+}
+
+UL LI {
+	PADDING-LEFT: 20px; LIST-STYLE-TYPE: disc
+}
+
+OL LI {
+	PADDING-LEFT: 20px; LIST-STYLE-TYPE: decimal
+}
+
+HR  {
+   BORDER-TOP-WIDTH: 0px;
+    PADDING-RIGHT: 0px; 
+	PADDING-LEFT: 0px; 
+	BORDER-LEFT-WIDTH: 0px; 
+	BORDER-BOTTOM-WIDTH: 0px;
+	PADDING-BOTTOM: 0px;
+	WIDTH: 100%; 
+	COLOR: #cccccc; 
+	PADDING-TOP: 0px; 
+	HEIGHT: 1px; 
+	BACKGROUND-COLOR: #cccccc; 
+	BORDER-RIGHT-WIDTH: 0px
+}
+
+.variablelist { 
+    padding-top: 10px; 
+    padding-bottom:10px; 
+    margin:0;
+}
+
+.itemizedlist, UL { 
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+    padding-top: 0; 
+    padding-bottom:0; 
+    margin:0;
+	text-align:justify;
+}
+
+.itemizedlist, li {
+list-style-position:outside;
+}
+
+.term { 
+    font-weight:bold;
+}
+
+pre.JAVA, pre.XML, pre.JSP, pre.XHTML {
+	line-height:0px;
+}
+
+.java_type {
+color:#008CCA;
+}
+.java_keyword {
+color: rgb(0,0,0); font-weight: bold;
+}
+.java_javadoc_comment {
+color: rgb(147,147,147); background-color: rgb(247,247,247); font-style: italic;
+}
+.java_comment {
+color: rgb(147,147,147); background-color: rgb(247,247,247);
+}
+.java_operator {
+color: #003399;
+}
+.java_plain {
+color: rgb(0,0,0);
+}
+.java_literal {
+color:#FF6600;
+}
+pre code {
+	color: rgb(0,0,0); font-family: monospace; font-size: 12px; white-space: nowrap;
+}
+.java_javadoc_tag {
+color: rgb(147,147,147); background-color: rgb(247,247,247); font-style: italic; font-weight: bold;
+}
+.java_separator {
+color:#008CCA;
+}
+.xml_plain {
+color: rgb(0,0,0);
+}
+.xml_tag_name {
+color: #008CCA;
+}
+.xml_comment {
+color: rgb(147,147,147); background-color: rgb(247,247,247);
+}
+.xml_tag_symbols {
+color:#008CCA;
+}
+.xml_rife_tag {
+color: rgb(0,0,0); background-color: rgb(228,230,160);
+}
+.xml_attribute_value {
+color:#FF6600
+}
+
+.xml_attribute_name {
+color: rgb(0,0,0); font-weight: bold;
+}
+.xml_char_data {
+color: rgb(0,0,0);
+}
+.xml_rife_name {
+color:#008CCA; background-color: rgb(228,230,160);
+}
+.xml_processing_instruction {
+color: rgb(0,0,0); font-weight: bold; font-style: italic;
+}
+
+.book .titlepage .title {
+	text-align:center;
+}
+
+.book .chapter .title {
+	text-align:left;
+}
+
+td.java, td.java-ln {vertical-align:top; line-height:10px;}
+tt.java, tt.java-ln, pre.java, pre.java-ln {line-height:1em; margin-bottom:0em;line-height:10px;}
+td.java-ln { text-align:right; line-height:10px;}
+tt.java-ln, pre.java-ln { color:#888888; line-height:10px;}
+/* Background       */ span.java0  { font-size: 8pt; color:#ffffff; line-height:10px;}
+/* Line numbers       */ span.java1  { font-size: 8pt; color:#808080; }
+/* Multi-line comments       */ span.java2  { font-size: 8pt; color:#3f7f5f; line-height:10px;}
+/* Single-line comments       */ span.java3  { font-size: 8pt; color:#3f7f5f; line-height:10px;}
+/* Keywords       */ span.java4  { font-size: 8pt; color:#FF6600; font-weight:bold; line-height:10px;}
+/* Strings       */ span.java5  { font-size:8pt; color:#2a00ff; line-height:10px;}
+/* Character constants       */ span.java6  { font-size: 8pt; color:#990000; line-height:10px;}
+/* Numeric constants       */ span.java7  { font-size: 8pt; color:#990000; line-height:10px;}
+/* Parenthesis       */ span.java8  { font-size: 8pt; color:#000000; line-height:10px;}
+/* Primitive Types       */ span.java9  { font-size: 8pt; color:#FF6600; font-weight:bold; line-height:10px;}
+/* Others       */ span.java10  { font-size: 8pt; color:#000000; line-height:10px;}
+/* Javadoc keywords       */ span.java11  { font-size: 8pt; color:#7f9fbf; line-height:10px;}
+/* Javadoc HTML tags       */ span.java12  { font-size: 8pt; color:#7f7f9f; line-height:10px;}
+/* Javadoc links       */ span.java13  { font-size: 8pt; color:#3f3fbf; line-height:10px;}
+/* Javadoc others       */ span.java14  { font-size: 8pt; color:#3f5fbf; line-height:10px;}
+/* Undefined       */ span.java15  { font-size: 8pt; color:#ff6100; line-height:10px;}
+/* Annotation       */ span.java16  { font-size: 8pt; color:#646464; line-height:10px;} 
