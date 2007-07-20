@@ -10,9 +10,100 @@
     </keywordset>
   </chapterinfo>
  <title>Getting Started with Red Hat Developer Studio</title>
-  <section id="Installing">
+   <section id="Installing">
   <?dbhtml filename="Installing.html"?>
-<title>Installation</title>
+  <title>Installation</title>
+    <section id="HowToInstallJDK">
+     <title>How to setup and install a proper JDK on RHEL</title>
+      <section id="RHEL_JDK_support"><title>What Java Development Kits (JDKs) are provided with Red Hat Enterprise Linux and what support does Red Hat offer for them?</title>
+      <para>To make it as easy as possible for customers to install and run Java applications on Red Hat Enterprise Linux, third-party Java Development Kits
+       (JDKs) from IBM and BEA are provided through the Red Hat Enterprise Linux Extras channel on Red Hat Network (RHN) and on the Red Hat Enterprise
+       Linux Extras CD. Red Hat's current and planned availability of the IBM JDK is as follows:</para>
+      
+      <itemizedlist>
+       <listitem><para>IBM JDK 1.4.2.3. (currently shipped with Red Hat Enterprise Linux 3 Update 8 and Red Hat Enterprise Linux 4 Update 4)</para></listitem>
+       <listitem><para>IBM JDK 1.5.0 (currently shipped with Red Hat Enterprise Linux 4 Update 4)</para></listitem>
+       <listitem><para>IBM JDK 1.4.2.6 (planned for Red Hat Enterprise Linux 4 Update 5 and Red Hat Enterprise Linux 5)</para></listitem>
+       <listitem><para>IBM JDK 1.5.3 (planned for Red Hat Enterprise Linux 4 Update 5 and Red Hat Enterprise Linux 5)</para></listitem>
+      </itemizedlist>
+      
+      <para>Red Hat does not provide the special version "IBM JDK 1.4.2 for SAP"; this software is available directly from IBM.</para>
+      <para>The IBM and BEA JDKs, along with the other packages on the Extras CD, are licensed separately (see http://www.redhat.com/licenses/thirdparty/eula.html) 
+       and are not included under the Red Hat Enterprise Linux production-level Service Level Agreement (SLA).</para>
+      <para>Customers who require enterprise-level support for either JDK package must purchase it directly from the Java vendor. Red Hat's support of the
+      IBM and BEA JDKs included on the Red Hat Enteprise Linux Extra CD/RHN channel is limited to:</para>
+      <itemizedlist>
+       <listitem><para>Assistance with installation and configuration of the Red Hat provided Java Runtime environment.</para></listitem>
+       <listitem><para>Verification of proper operation through the use of a Red Hat provided test program written in Java.</para></listitem>
+      </itemizedlist>
+            <para>Note that this support does not include assistance with the development of Java applications, which is available with Red Hat's Development 
+             Support Services. In addition, the JDKs are not eligible for a "hotfix" through the Red Hat Hotfix process.</para>
+            <para>If the customer problem lies in the Red Hat Enterprise Linux operating system, Red Hat provides full production-level support for problem resolution.
+             If the problem lies in the JDK, Red Hat will escalate the problem to the appropriate Java vendor via bugzilla, but cannot guarantee response or problem 
+             resolution by that vendor.</para>
+     </section>
+
+     <section id="Java-1.5.0-sun packages"><title>Java-1.5.0-sun packages</title>
+  
+  <para><emphasis role="bold">Details:</emphasis></para>
+  <para>The following packages comprise Sun's 1.5.0 Java release: </para>
+  <para>java-1.5.0-sun</para>
+  <para>java-1.5.0-sun-demo</para>
+  <para>java-1.5.0-sun-devel</para>
+  <para>java-1.5.0-sun-jdbc</para>
+  <para>java-1.5.0-sun-plugin</para>
+  <para>java-1.5.0-sun-src </para>
+  
+  <para>These packages include the Sun Java 5 Runtime Environment, Sun Java
+  5 Software Development Kit, and Sun's 1.5.0_11-b03 SDK release.</para>
+    <para>The Java 5 Runtime Environment (JRE) consists of the Java virtual machine,
+   the Java platform core classes and supporting files, and includes a Web
+   browser plug-in for running Java applets. It is the runtime section of the
+   Java 5 SDK, but without the development tools such as compilers and debuggers.</para>
+  <para>The Java 5 Software Development Kit (SDK) is a development environment for
+   building applications, applets, and components that can be deployed on the
+   Java platform. The Java 5 SDK software includes tools useful for
+   developing and testing programs written in the Java programming language.
+   The Java 5 SDK software also includes a JDBC/ODBC bridge for Java
+   applications that need to communicate with a database. </para>
+  <para>Java users are advised to install these packages.</para>
+  
+  <para><emphasis role="bold">Solution:</emphasis></para>
+  <para>Before applying this update, make sure all previously released errata
+  relevant to your system have been applied.</para>
+  <para>To update all RPMs for your particular architecture, run: </para>
+  <programlisting><![CDATA[rpm -Fvh [filenames]]]></programlisting>
+  <para>where [filenames] is a list of the RPMs you wish to upgrade. Only those
+   RPMs which are currently installed will be updated. Those RPMs which are
+   not installed but included in the list will not be updated. Note that you
+   can also use wildcards (*.rpm) if your current directory *only* contains the
+   desired RPMs.
+  </para>
+  <para>
+   Please note that this update is also available via Red Hat Network. Many
+   people find this an easier way to apply updates. To use Red Hat Network,
+   launch the Red Hat Update Agent with the following command: </para>
+  <programlisting><![CDATA[up2date]]></programlisting>
+  <para>This will start an interactive process that will result in the appropriate
+   RPMs being upgraded on your system.</para></section>
+ 
+     <section id="RHEL 5"><title>RHEL 5</title>
+      <para>The instructions for RHEL 5 are similar to RHEL 4, except that RHEL 5 uses &quot;yum&quot; instead of &quot;up2date&quot;, 
+      and they are in the supplementary channel rather than the extras channel.</para>
+      
+      <para>Install the 32-bit Java plugin as shown below:</para>
+      
+      <programlisting><![CDATA[$ yum install java-1.4.2-ibm-plugin java-1.4.2-ibm.i386 libXp.i386 gtk+.i386]]></programlisting>
+<para>or</para>
+      <programlisting><![CDATA[$ yum install java-1.5.0-ibm-plugin java-1.5.0-ibm.i386 libXp.i386 gtk +.i386]]></programlisting>
+
+      <para>Alternatively, download Java6 ( jdk-6u1-linux-i586-rpm.bin ) from http://java.sun.com, and install it. Once done, install the Java plugin as shown:</para>
+      
+      <programlisting><![CDATA[$ ln -s /usr/java/latest/jre/plugin/i386/ns7/libjavaplugin_oji.so /usr/lib/mozilla/plugins/]]></programlisting>
+     
+     </section>
+     
+    </section>
   <section id="Inst from down ver">
    <title>Installing from the downloaded version</title>
    <itemizedlist>
