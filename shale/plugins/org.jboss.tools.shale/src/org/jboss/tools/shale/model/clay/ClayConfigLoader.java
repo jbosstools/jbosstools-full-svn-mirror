@@ -26,8 +26,9 @@ public class ClayConfigLoader extends SimpleWebFileLoader implements WebProcessL
 
 	public void load(XModelObject object) {
 		String body = XModelObjectLoaderUtil.getTempBody(object);
-		String[] errors = XMLUtil.getXMLErrors(new StringReader(body));
-		if(errors != null && errors.length > 0) {
+		String[] errors = XMLUtil.getXMLErrors(new StringReader(body), false);
+		boolean hasErrors = (errors != null && errors.length > 0);
+		if(hasErrors) {
 			object.setAttributeValue("isIncorrect", "yes");
 			object.setAttributeValue("incorrectBody", body);
 			object.set("actualBodyTimeStamp", "-1");
@@ -46,6 +47,8 @@ public class ClayConfigLoader extends SimpleWebFileLoader implements WebProcessL
 		}
 		Element element = doc.getDocumentElement();
 		util.load(element, object);
+		String loadingError = util.getError();
+		
 
 		setEncoding(object, body);
 		NodeList nl = doc.getChildNodes();
@@ -58,6 +61,13 @@ public class ClayConfigLoader extends SimpleWebFileLoader implements WebProcessL
 		}
 		reloadProcess(object);
 		object.set("actualBodyTimeStamp", "" + object.getTimeStamp());
+		
+		((AbstractXMLFileImpl)object).setLoaderError(loadingError);
+		if(!hasErrors && loadingError != null) {
+			object.setAttributeValue("isIncorrect", "yes");
+			object.setAttributeValue("incorrectBody", body);
+			object.set("actualBodyTimeStamp", "" + object.getTimeStamp());
+		}
 	}
 	
 	public void reloadProcess(XModelObject object) {
