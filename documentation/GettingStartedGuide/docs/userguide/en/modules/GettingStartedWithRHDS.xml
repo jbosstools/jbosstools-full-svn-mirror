@@ -10,15 +10,25 @@
     </keywordset>
   </chapterinfo>
  <title>Getting Started with Red Hat Developer Studio</title>
-   <section id="Installing">
-  <?dbhtml filename="Installing.html"?>
-  <title>Installation</title>
+ <section id="Prerequisites">
+  <?dbhtml filename="Prerequisites.html"?>
+  <title>Prerequisites</title>
+  <para>Before installation Red Hat Developer Studio make sure you have an appropriate JDK version installed on your Linux system.  Studio will properly work with the next JDK's:</para>
+  <itemizedlist>
+  <listitem>JDK 1.5</listitem>
+  <listitem>JDK 1.6</listitem>
+  </itemizedlist>
+  <para>If your Linux comes with no proper JDK you should install it.</para>
+  <para>For proper installation the java from Sun there is need to install the java from .rpm file or after installing it from .bin it is need to tune the java with command "alternative".</para>
+     <para>Red Hat Enterprise Linux includes several JDK&apos;s from Sun, IBM, and BEA. For RHEL 4, they are in the &quot;Extras&quot; RHN Channel. For RHEL 5, they are in the &quot;Supplementary&quot; RHN channel.
+</para>
     <section id="HowToInstallJDK">
      <title>How to setup and install a proper JDK on RHEL</title>
-      <section id="RHEL_JDK_support"><title>What Java Development Kits (JDKs) are provided with Red Hat Enterprise Linux and what support does Red Hat offer for them?</title>
+      <section id="RHEL_JDK_support">
+      <title>What Java Development Kits (JDKs) are provided with Red Hat Enterprise Linux and what support does Red Hat offer for them?</title>
       <para>To make it as easy as possible for customers to install and run Java applications on Red Hat Enterprise Linux, third-party Java Development Kits
        (JDKs) from IBM and BEA are provided through the Red Hat Enterprise Linux Extras channel on Red Hat Network (RHN) and on the Red Hat Enterprise
-       Linux Extras CD. Red Hat's current and planned availability of the IBM JDK is as follows:</para>
+       Linux Extras CD. Red Hat&apos;s current and planned availability of the IBM JDK is as follows:</para>
       
       <itemizedlist>
        <listitem><para>IBM JDK 1.4.2.3. (currently shipped with Red Hat Enterprise Linux 3 Update 8 and Red Hat Enterprise Linux 4 Update 4)</para></listitem>
@@ -102,8 +112,11 @@
       <programlisting><![CDATA[$ ln -s /usr/java/latest/jre/plugin/i386/ns7/libjavaplugin_oji.so /usr/lib/mozilla/plugins/]]></programlisting>
      
      </section>
-     
+     </section>
     </section>
+    <section id="Installing">
+  <?dbhtml filename="Installing.html"?>
+  <title>Installation</title>
   <section id="Inst from down ver">
    <title>Installing from the downloaded version</title>
    <itemizedlist>
@@ -148,8 +161,8 @@
    <title>Installing via update Site</title>
    TBD
   </section>
-  
- </section>
+  </section>
+ 
    <section id="Upgrading">
    <?dbhtml filename="Upgrading.html"?>
    <title>Upgrading</title>
