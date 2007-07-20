@@ -10,7 +10,6 @@
  ******************************************************************************/ 
 package org.jboss.tools.shale.model.spring;
 
-import org.eclipse.core.runtime.FileLocator;
 import org.jboss.tools.common.model.loaders.EntityRecognizer;
 import org.jboss.tools.common.xml.XMLEntityResolver;
 import org.jboss.tools.shale.ShaleModelPlugin;
@@ -20,7 +19,7 @@ public class SpringBeansEntityRecognizer implements SpringBeansConstants, Entity
     static {
         try {
             Class<?> c = SpringBeansEntityRecognizer.class;
-            XMLEntityResolver.registerPublicEntity(DOC_PUBLICID, FileLocator.resolve(c.getResource("/meta/spring-beans.dtd")).toString());
+            XMLEntityResolver.registerPublicEntity(DOC_PUBLICID, c, "/meta/spring-beans.dtd");
         } catch (Exception e) {
         	ShaleModelPlugin.getPluginLog().logError(e);
         }
