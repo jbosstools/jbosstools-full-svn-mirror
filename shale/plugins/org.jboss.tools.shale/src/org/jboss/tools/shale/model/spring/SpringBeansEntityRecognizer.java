@@ -12,14 +12,14 @@ package org.jboss.tools.shale.model.spring;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.jboss.tools.common.model.loaders.EntityRecognizer;
-import org.jboss.tools.common.model.util.XMLEntityResolver;
+import org.jboss.tools.common.xml.XMLEntityResolver;
 import org.jboss.tools.shale.ShaleModelPlugin;
 
 public class SpringBeansEntityRecognizer implements SpringBeansConstants, EntityRecognizer {
 
     static {
         try {
-            Class c = SpringBeansEntityRecognizer.class;
+            Class<?> c = SpringBeansEntityRecognizer.class;
             XMLEntityResolver.registerPublicEntity(DOC_PUBLICID, FileLocator.resolve(c.getResource("/meta/spring-beans.dtd")).toString());
         } catch (Exception e) {
         	ShaleModelPlugin.getPluginLog().logError(e);

@@ -12,14 +12,14 @@ package org.jboss.tools.shale.model.dialog;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.jboss.tools.common.model.loaders.EntityRecognizer;
-import org.jboss.tools.common.model.util.XMLEntityResolver;
+import org.jboss.tools.common.xml.XMLEntityResolver;
 import org.jboss.tools.shale.ShaleModelPlugin;
 
 public class ShaleDialogEntityRecognizer implements ShaleDialogConstants, EntityRecognizer {
 
     static {
         try {
-            Class c = ShaleDialogEntityRecognizer.class;
+            Class<?> c = ShaleDialogEntityRecognizer.class;
             XMLEntityResolver.registerPublicEntity(DOC_PUBLICID, FileLocator.resolve(c.getResource("/meta/shale-dialog-config_1_0.dtd")).toString());
         } catch (Exception e) {
         	ShaleModelPlugin.getPluginLog().logError(e);
