@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="BusinessProcessAndRulesApplication" xreflabel="BusinessProcessAndRulesApplication">
-    <?dbhtml filename="BusinessProcessAndRulesApplication.html"?>
-    <chapterinfo>
+<chapter id="AddBusinessProcess" xreflabel="AddBusinessProcess">
+ <?dbhtml filename="AddBusinessProcess.html"?>
+  <chapterinfo>
         <keywordset>
             <keyword>Business process</keyword>
             <keyword>Seam</keyword>

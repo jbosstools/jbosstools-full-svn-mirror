@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="ManageJBossAS" xreflabel="ManageJBossAS">
+ <?dbhtml filename="ManageJBossAS.html"?>
+  <chapterinfo>
+    <keywordset>
+      <keyword>Red Hat Developer Studio</keyword>
+      <keyword>Eclipse</keyword>
+      <keyword>Java</keyword>
+      <keyword>JBoss</keyword>
+     <keyword>JBoss AS</keyword>
+    </keywordset>
+  </chapterinfo>
+ <title>Manage JBoss AS from Red Hat Developer Studio</title>
+
+</chapter>
+

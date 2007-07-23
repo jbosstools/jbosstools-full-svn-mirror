@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="AjaxCRUDApplicationWithSeamAndRichFaces" xreflabel="AjaxCRUDApplicationWithSeamAndRichFaces">
-    <?dbhtml filename="AjaxCRUDApplicationWithSeamAndRichFaces.html"?>
+<chapter id="GetStartSeamGen" xreflabel="GetStartSeamGen">
+ <?dbhtml filename="GetStartSeamGen.html"?>
     <chapterinfo>
         <keywordset>
             <keyword>Red Hat Developer Studio</keyword>
