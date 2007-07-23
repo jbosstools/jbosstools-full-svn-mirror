@@ -13,7 +13,7 @@
  <section id="JDKInstalling">
   <?dbhtml filename="JDKInstalling.html"?>
   <title>JDK Installation</title>
-  <para>Before installing Red Hat Developer Studio make sure you have an appropriate JDK version installed on your Linux system.  Studio will properly work with the next JDK&apos;s:</para>
+  <para>Before installing Red Hat Developer Studio make sure you have an appropriate JDK version installed on your computer. Studio will properly work with the next JDK&apos;s:</para>
   <itemizedlist>
   <listitem>JDK 1.5</listitem>
   <listitem>JDK 1.6</listitem>
