@@ -2213,6 +2213,9 @@ int SetFocus() {
 	if (rc != XPCOM.NS_OK) error(rc);
 	baseWindow.Release();
 
+	//set focus current widget
+	super.setFocus();
+	
 	return XPCOM.NS_OK;     	
 }	
 
