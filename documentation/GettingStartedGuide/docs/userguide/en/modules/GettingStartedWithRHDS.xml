@@ -18,21 +18,12 @@
   <listitem>JDK 1.5</listitem>
   <listitem>JDK 1.6</listitem>
   </itemizedlist>
-  <section id="JDKInstallingOnWindows">
-  <?dbhtml filename="JDKInstallingOnWindows.html"?>
-  <title>JDK Installation on Windows</title>
-    <para>To install JDK on Windows you should download an appropriate JDK package from Sun site. After launching an executable file of this JDK you will see the first window of wizard:</para>
-<figure>
-<title>First Wizard Dialog</title>
-<mediaobject> 
-        <imageobject>
-            <imagedata fileref="images/installjdkwindows1.png"/>
-        </imageobject>
-</mediaobject>
-</figure>
-    <para>After accepting the license agreement just follow the intuitive installation wizard&apos;s steps.</para>
-  </section>
-  <section id="HowToInstallJDKOnLinux">
+   <note>
+    <title>Note:</title>
+    <para>Eclipse can use JDK 6 but the JBoss AS it manages needs to start under JDK 5 (i.e., select a JDK 5 JRE from the Server Runtime wizard).</para>
+   </note>
+ 
+    <section id="HowToInstallJDKOnLinux">
       <?dbhtml filename="JDKInstalling.html"?>
      <title>How to setup and install JDK on RHEL</title>
     <para>For proper installation the java from Sun there is need to install the java from .rpm file or after installing it from .bin it is necessary to tune the java with command "alternative".</para> 
@@ -52,10 +43,23 @@
        <listitem><para>Install the rpm file by executing 'rpm -i filename.rpm', where filename is the name of your .rpm file. (Such as jdk-6-linux-i586.rpm).</para></listitem>
        <listitem><para>Now, if you want to be able to execute this version of Java interpretor or compiler from any directory on your Linux system you will have to create a few symbolic links:</para></listitem></orderedlist>
 <programlisting role="JAVA"><![CDATA[ln -s /usr/java/jdk1.6.0/bin/java /usr/bin/java]]></programlisting>
-       
-    <programlisting role="JAVA"><![CDATA[ln -s /usr/java/jdk1.6.0/bin/javac /usr/bin/javac]]></programlisting>
+<programlisting role="JAVA"><![CDATA[ln -s /usr/java/jdk1.6.0/bin/javac /usr/bin/javac]]></programlisting>
              
-      </section>
+    </section>
+  <section id="JDKInstallingOnWindows">
+   <?dbhtml filename="JDKInstallingOnWindows.html"?>
+   <title>JDK Installation on Windows</title>
+   <para>To install JDK on Windows you should download an appropriate JDK package from Sun site. After launching an executable file of this JDK you will see the first window of wizard:</para>
+   <figure>
+    <title>First JDK Wizard Dialog</title>
+    <mediaobject> 
+     <imageobject>
+      <imagedata fileref="images/installjdkwindows1.png"/>
+     </imageobject>
+    </mediaobject>
+   </figure>
+   <para>After accepting the license agreement just follow the intuitive installation wizard&apos;s steps.</para>
+  </section>
     </section>
     <section id="InstallingRHDS">
   <?dbhtml filename="InstallingRHDS.html"?>
@@ -95,8 +99,11 @@
         <imagedata fileref="images/install2.png"/>
        </imageobject>
      </figure>
-     <note>The installer will install JBoss J2EE Application Server for running your applications if you select this option during the installation process. 
-      If you want to use a different server than ours, you can change the setting in Red Hat Developer Studio.</note>
+     <note>
+      <title>Note:</title>
+      <para>The installer will install JBoss J2EE Application Server for running your applications if you select this option during the installation process. 
+      If you want to use a different server than ours, you can change the setting in Red Hat Developer Studio.</para>
+     </note>
     
   </section>  
   <section id="InstallingthroughTheUpdateSite">
