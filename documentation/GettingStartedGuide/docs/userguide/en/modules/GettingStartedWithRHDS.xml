@@ -59,6 +59,16 @@
     </mediaobject>
    </figure>
    <para>After accepting the license agreement just follow the intuitive installation wizard&apos;s steps.</para>
+   <para>Finally, you need to make sure that Eclipse is set to the correct Java compliance. On the Eclipse menu bar, go to Window > Preferences > expand Java > Compiler and make sure that the &quot;Compiler 
+   compliance level&quot; is set to 5.0 (or 6.0 for JDK 1.6.). See image:</para>
+   <figure>
+    <title>JDK Compliance</title>
+    <mediaobject> 
+     <imageobject>
+      <imagedata fileref="images/JDK_compliance.png"/>
+     </imageobject>
+    </mediaobject>
+   </figure>
   </section>
     </section>
     <section id="InstallingRHDS">
