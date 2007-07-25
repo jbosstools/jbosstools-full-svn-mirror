@@ -1,16 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="ManageJBossAS" xreflabel="ManageJBossAS">
- <?dbhtml filename="ManageJBossAS.html"?>
+<chapter id="ManageJBossASFromRedHatDeveloperStudio" xreflabel="ManageJBossASFromRedHatDeveloperStudio">
+  <?dbhtml filename="ManageJBossASFromRedHatDeveloperStudio.html"?>
   <chapterinfo>
     <keywordset>
       <keyword>Red Hat Developer Studio</keyword>
       <keyword>Eclipse</keyword>
-      <keyword>Java</keyword>
+      <keyword>Deploy</keyword>
+      <keyword>Deployment</keyword>
       <keyword>JBoss</keyword>
-     <keyword>JBoss AS</keyword>
     </keywordset>
   </chapterinfo>
  <title>Manage JBoss AS from Red Hat Developer Studio</title>
+ <section id="JBossInstalling">
+  <?dbhtml filename="JBossInstalling.html"?>
+  <title>JBoss AS Installation</title>
+  <para>If you followed the default installation of Red Hat Developer Studio, you will already have a JBoss 4.2 server installed and defined. You  have to do nothing to deploy your project. Just start JBoss server using a JBoss icon from command panel and launch your application. Registration to default JBoss AS is being done when you are creating an appication, in the second screen of wizard called &quot;Web&quot; (&quot;Target Server&quot; section). Simply do not uncheck the control in this section.</para>
+<para>Besides that you can deploy your application to some servers that Red Hat Developer Studio supports directly (through the bundled Eclipse WTP plug-ins). Say you want to deploy the application to JBoss 4.0.5 server. First of all you need to install it.</para>
+<orderedlist>
+<listitem><para>Download the installation pack of JBoss 4.0.5 and save it on your computer: <ulink url="http://labs.jboss.com/jbossas/downloads">http://labs.jboss.com/jbossas/downloads</ulink></para></listitem>
+<listitem><para>Double-click this file or launch the installation from terminal like this:</para></listitem>
+</orderedlist>
+<programlisting role="JAVA"><![CDATA[java -jar jems.installer-1.2.0.GA.jar
+]]></programlisting>
+<para>This will start the installation wizard and in the first window you will be proposed to choose the language for installing instructions:</para>
+<figure>
+<title>Choose your language</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/chooselanguage.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
 
-</chapter>
+<orderedlist continuation="continues">
+<listitem><para>Choose preferred language and click OK. In the next two dialogs click the Next button.</para></listitem>
+<listitem><para>In the following window accept the license agreement and press the Next button.</para></listitem>
+</orderedlist>
+<figure>
+<title>Accept the license</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/licenseagreement.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
 
+<orderedlist continuation="continues">
+<listitem><para>Choose the place where JBoss server will be installed and click Next.</para></listitem>
+</orderedlist>
+
+<figure>
+<title>Choosing installation path</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/choosinglocation.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem><para>On the next step select EJB profile.</para></listitem>
+</orderedlist>
+
+<figure>
+<title>Selecting EJB profile</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/ejbprofile.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+<orderedlist continuation="continues">
+<listitem><para>In the following window choose packs you want to be installed and click Next.</para></listitem>
+</orderedlist>
+
+<figure>
+<title>Selecting installing packs</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/selectingpacks.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem><para>Then select installation type (advanced or standard):</para></listitem>
+</orderedlist>
+
+<figure>
+<title>Selecting installation type</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/installationtype.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem><para>When all this is done you will see the information dialog with installation settings. Click the Next button to start installation.</para></listitem>
+</orderedlist>
+<orderedlist continuation="continues">
+<listitem><para>After installation process is complete click the button Next &gt; Done.</para></listitem>
+</orderedlist>
+<para>That&apos;s it. JBoss server is installed. Now you should add it to server manager in Red Hat Developer Studio.</para>
+</section>
+ 
+ <section id="AddingJBossServer">
+  <?dbhtml filename="AddingJBossServer.html"?>
+  <title>Adding and configuring JBoss server</title>
+  <para>Now we should add just installed server into server manager in Red Hat Developer Studio.</para>
+  <orderedlist>
+  <listitem><para>In the main menu select Window &gt; Preferences &gt; Server &gt; Installed Runtimes.</para></listitem>
+  <listitem><para>Click the Add button to add a new server.</para></listitem>
+  </orderedlist>
+  <figure>
+<title>Selecting server type</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/servertype.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+  <orderedlist continuation="continues">
+<listitem><para>In the dialog that appeared choose JBoss &gt; JBoss v4.0 and click Next.</para></listitem>
+</orderedlist>
+<figure>
+<title>Defining JBoss Runtime</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/jbossruntime.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+<orderedlist continuation="continues">
+<listitem><para>In the next step locate the place where you have installed the server and click the Finish button.</para></listitem>
+</orderedlist>
+<para>After that JBoss server should appear in &quot;Installed server runtimes&quot; section.</para>
+<orderedlist continuation="continues">
+<listitem><para>Close this window by clicking OK.</para></listitem>
+<listitem><para>Open the Servers View by selecting Window &gt; Show View &gt; Other &gt; Server &gt; Servers. You will see Servers view.</para></listitem>
+<listitem><para>Right click anywhere in this view and select New &gt; Server.</para></listitem>
+<listitem><para>Select JBoss, a division of Red Hat &gt; JBoss AS 4.0 and press Next.</para></listitem>
+</orderedlist>
+
+<figure>
+<title>Defining new JBoss server</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/definingnewjbossserver.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem><para>Give a name to the server, locate its home directory and define JRE.
+<note>
+    <title>Note:</title>
+    <para>When adding a new server you will need to specify what JRE to use. It is important to set this value to a full JDK, not JRE. Again, you need a full JDK to run Web applications, JRE will not be enough.</para>
+   </note>
+</para></listitem>
+</orderedlist>
+  </section>
+ </chapter>
