@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor.bundle;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -32,17 +33,16 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
-import org.jboss.tools.jst.jsp.preferences.VpePreference;
-
 import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
 import org.jboss.tools.common.model.util.ELParser;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
-import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.jst.web.project.list.WebPromptingProvider;
+import org.jboss.tools.vpe.VpePlugin;
 
 public class BundleMap {
 //	private static final String BEGIN_BUNDLE = "#{";
@@ -202,8 +202,8 @@ public class BundleMap {
 					try {
 						file = new File(javaSources[i]).getCanonicalFile();
 						urls[i] = file.toURL();
-					} catch (Exception e) {
-						VpePlugin.reportProblem(e);
+					} catch (IOException ioe) {
+						VpePlugin.reportProblem(ioe);
 						return null;
 					}
 				}
@@ -214,10 +214,8 @@ public class BundleMap {
 			}
 		} catch (MissingResourceException ex) {
 		    // Ignore this exception
-		} 
-		catch(Exception e) {
-			VpePlugin.getPluginLog().logError(e);
 		}
+	
 		return null;
 	}
 	
