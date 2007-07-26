@@ -37,6 +37,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
@@ -127,6 +128,21 @@ public class XMLBinding {
 		}
 		return null;
 	}
+	
+	public static void marshallToFile(XbPackages element, IPath filePath, IProgressMonitor monitor) {
+		OutputStreamWriter writer = null;
+		try {
+			writer = new OutputStreamWriter(new FileOutputStream(filePath.toFile()));
+			XMLBinding.marshall(element, writer, new NullProgressMonitor());
+		} catch( Exception e ) {
+		}
+		finally {
+			try {
+			if( writer != null ) writer.close();
+			} catch( IOException ioe) {}
+		}
+	}
+	
 	public static void marshall (final XbPackages element, final Writer writer, final IProgressMonitor monitor)
 	{
 		if( !initialized) init();
@@ -155,30 +171,6 @@ public class XMLBinding {
 				}
 			}
 		});
-	}
-	
-	
-	public static void savePackagesToFile(XbPackages packages, IPath outputFile, IProgressMonitor monitor) {
-		try {
-			ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-			OutputStreamWriter writer = new OutputStreamWriter(bytesOut);
-			XMLBinding.marshall(packages, writer, monitor);
-			writer.close();
-			
-			ByteArrayInputStream bytesIn = new ByteArrayInputStream(bytesOut.toByteArray());
-			OutputStream out = new FileOutputStream(outputFile.toFile());
-	
-			// Transfer bytes from in to out
-	        byte[] buf = new byte[1024];
-	        int len;
-	        while ((len = bytesIn.read(buf)) > 0) {
-	            out.write(buf, 0, len);
-	        }
-			out.close();
-			bytesIn.close();
-			bytesOut.close();
-		} catch( IOException ioe ) {
-		}
 	}
 	
 	public static String serializePackages(XbPackages packages, IProgressMonitor monitor) {
