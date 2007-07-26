@@ -10,67 +10,101 @@
     </keywordset>
   </chapterinfo>
  <title>Getting Started with Red Hat Developer Studio</title>
- <section id="JDKInstalling">
-  <?dbhtml filename="JDKInstalling.html"?>
-  <title>JDK Installation</title>
-  <para>Before installing Red Hat Developer Studio make sure you have an appropriate JDK version installed on your computer. Studio will properly work with the next JDK&apos;s:</para>
+ <section id="ConfigJavaEnvironment">
+  <?dbhtml filename="ConfigJavaEnvironment.html"?>
+  <title>Configuring Your Java Environment</title> 
+  <para>You must have a working installation of JDK 1.5 before you install JBoss Enterprise Application Platform. You can install the 32-bit or 64-bit JVM as per your 
+   requirements. In this guide we will show you how to install a 32-bit Sun JDK 5.0 on a Linux Platform and Microsoft Windows Platform. But before we do that let's take 
+   a look at some of the benefits of using a 64-bit JVM.</para>
+  <emphasis role="bold">Benefits of 64-bit JVM on 64-bit OS and Hardware:</emphasis>
   <itemizedlist>
-  <listitem>JDK 1.5</listitem>
-  <listitem>JDK 1.6</listitem>
+   <listitem><para>Wider datapath: The pipe between RAM and CPU is doubled, which improves the performance of memory-bound applications.</para></listitem>
+   <listitem><para>64-bit memory addressing gives virtually unlimited (1 exabyte) heap allocation. However large heaps affect garbage collection.</para></listitem>
+   <listitem><para>Applications that run with more than 1.5GB of RAM (including free space for garbage collection optimization) should utilize the 64-bit JVM.</para></listitem>
+   <listitem><para>Applications that run on 32-bit JVM and do not require more than minimal heap sizes will gain nothing from a 64-bit JVM. Barring memory issues, 64-bit hardware with the same relative clock speed and architecture is not likely to run Java applications faster than their 32-bit cousin.</para></listitem>
   </itemizedlist>
-   <note>
-    <title>Note:</title>
-    <para>Eclipse can use JDK 6 but the JBoss AS it manages needs to start under JDK 5 (i.e., select a JDK 5 JRE from the Server Runtime wizard).</para>
-   </note>
+  <section id="InstallJDK50onLinux">
+   <title>Installing and Configuring 32-bit Sun JDK 5.0 on Linux</title>
+   <itemizedlist>
+    <listitem><para>Download the <ulink  url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0 (Java 2 Development Kit)</ulink> from Sun's website. 
+     Choose &quot;JDK 5.0 Update &lt;x&gt;&quot; (where x is the latest update number) for download and then select &quot;RPM in self-extracting&quot; file for Linux. Read the instructions on Sun's website for installing the JDK.</para></listitem>
+    <listitem><para>If you don't want to use SysV service scripts you can install the &quot;self-extracting file&quot; for Linux instead of choosing the &quot;RPM in self-extracting&quot; file. 
+    In that case you can skip the next step mentioned here. But it is recommended to use the SysV service scripts for production servers.</para></listitem>
+    <listitem><para>Download and install the appropriate -compat RPM from JPackage <ulink  url="ftp://jpackage.hmdc.harvard.edu/JPackage/1.7/generic/RPMS.non-free/">here</ulink>. 
+    Please ensure you choose a matching version of the -compat package to the JDK you installed.</para></listitem>
+    <listitem><para>Create an environment variable that points to the JDK installation directory and call it JAVA_HOME. Add $JAVA_HOME/bin to the system path to be able to run java from the 
+    command line. You can do this by adding the following lines to the .bashrc file in your home directory.</para></listitem>
+   </itemizedlist>
+   <programlisting><![CDATA[#In this example /usr/java/jdk1.5.0_11 is the JDK installation directory.
+export JAVA_HOME=/usr/java/jdk1.5.0_11
+export PATH=$PATH:$JAVA_HOME/bin]]></programlisting>
+   <para>Set this variable for the user account doing the installation and also for the user account that will run the server.</para>
+   <itemizedlist>
+    <listitem><para>If you have more than one version of JVM installed in your machine, make sure you are using the JDK1.5 installation as the default java and javac. 
+     You can do this using the alternatives system. The alternatives system allows different versions of Java, from different sources to co-exist on your system.</para></listitem>
+   </itemizedlist>
+   <section id="SelectAlternativesforJava">
+    <title>Select alternatives for java, javac and java_sdk_1.5.0</title>
+    <itemizedlist>
+     <listitem><para>As root, type the following command at the shell prompt and you should see something like this:</para></listitem>
+    </itemizedlist>
+    <programlisting><![CDATA[[root@vsr ~]$ /usr/sbin/alternatives --config java
+There are 2 programs which provide 'java'.
+Selection    Command
+-----------------------------------------------
+   1           /usr/lib/jvm/jre-1.4.2-gcj/bin/java
+*+ 2           /usr/lib/jvm/jre-1.5.0-sun/bin/java
+Enter to keep the current selection[+], or type selection number:]]></programlisting>
+    <para>Make sure the Sun version [jre-1.5.0-sun in this case] is selected (marked with a '+' in the output), or select it by entering its number as prompted.</para>
+    <itemizedlist>
+     <listitem><para>Repeat the same for javac and java_sdk_1.5.0.</para></listitem>
+    </itemizedlist>
+    <programlisting><![CDATA[[root@vsr ~]$ /usr/sbin/alternatives --config javac
+There are 1 programs which provide 'javac'.
+	Selection   Command
+-----------------------------------------------
+*+ 1           /usr/lib/jvm/java-1.5.0-sun/bin/javac
+Enter to keep the current selection[+], or type selection number:
+
+[root@vsr ~]$ /usr/sbin/alternatives --config java_sdk_1.5.0
+There are 1 programs which provide 'java_sdk_1.5.0'.
+	Selection   Command
+-----------------------------------------------
+*+ 1           /usr/lib/jvm/java-1.5.0-sun
+Enter to keep the current selection[+], or type selection number:]]></programlisting>
+    <para>You should verify that java, javac and java_sdk_1.5.0 all point to the same manufacturer and version.</para>
+    <note>
+     <title>Note:</title>
+     <para>You can always override this step by setting the JAVA_HOME environment variable as explained in the previous step.</para>
+    </note>
+    <itemizedlist>
+     <listitem><para>Make sure that the java executable is in your path and that you are using an appropriate version. To verify your Java environment, type java -version
+      at the shell prompt and you should see something like this:</para></listitem>
+    </itemizedlist>
+    <programlisting><![CDATA[[root@vsr ~]$ java -version
+java version "1.5.0_11"
+Java(TM) 2 Runtime Environment, Standard Edition (build 1.5.0_11-b03)
+Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></programlisting>
+</section>
  
-    <section id="HowToInstallJDKOnLinux">
-      <?dbhtml filename="JDKInstalling.html"?>
-     <title>How to setup and install JDK on RHEL</title>
-    <para>For proper installation the java from Sun there is need to install the java from .rpm file or after installing it from .bin it is necessary to tune the java with command "alternative".</para> 
-       <para>If your Linux distribution comes with no Java you should install it. The installation Java on Linux is pretty straightforward.</para>  
-       <orderedlist>
-       <listitem>
-    <para>Download the JDK from Sun, to start go here: <ulink url="http://developers.sun.com/downloads/">Download JDK</ulink></para></listitem>
-    <listitem><para>Choose JDK 1.5 or JDK 1.6.</para></listitem>
-    <listitem><para>Click on &quot;Donwload&quot; button right to the appropriate section.</para></listitem>
-    <listitem><para>Accept the license and continue.</para></listitem>
-       <listitem><para>Under the &quot;Linux Platform&quot;, select &quot;RPM in self-extracting file&quot;.</para></listitem>
-       <listitem><para>Download this .bin file and save it to your Linux machine.</para></listitem>
-       <listitem><para>Once it has been downloaded, login as root and switch to the directory where you saved the file.</para></listitem>
-       <listitem><para>Execute &apos;./filename&apos;, where filename is the name of the file that you downloaded. The filename might be very similar to jdk-6-linux-i586-rpm.bin depending on what the latest version is. You may have to make the file executable by executing the &apos;chmod +x filename.bin&apos; command.</para></listitem>
-       <listitem><para>You will get a license, press space bar a bunch of times until you are prompted to enter yes or no. Type in yes and hit enter.</para></listitem>
-       <listitem><para>This will place an .rpm file in the same directory as your .bin file with the same name (minus the .bin part).</para></listitem>
-       <listitem><para>Install the rpm file by executing 'rpm -i filename.rpm', where filename is the name of your .rpm file. (Such as jdk-6-linux-i586.rpm).</para></listitem>
-       <listitem><para>Now, if you want to be able to execute this version of Java interpretor or compiler from any directory on your Linux system you will have to create a few symbolic links:</para></listitem></orderedlist>
-<programlisting role="JAVA"><![CDATA[ln -s /usr/java/jdk1.6.0/bin/java /usr/bin/java]]></programlisting>
-<programlisting role="JAVA"><![CDATA[ln -s /usr/java/jdk1.6.0/bin/javac /usr/bin/javac]]></programlisting>
-             
-    </section>
-  <section id="JDKInstallingOnWindows">
-   <?dbhtml filename="JDKInstallingOnWindows.html"?>
-   <title>JDK Installation on Windows</title>
-   <para>To install JDK on Windows you should download an appropriate JDK package from Sun site. After launching an executable file of this JDK you will see the first window of wizard:</para>
-   <figure>
-    <title>First JDK Wizard Dialog</title>
-    <mediaobject> 
-     <imageobject>
-      <imagedata fileref="images/installjdkwindows1.png"/>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <para>After accepting the license agreement just follow the intuitive installation wizard&apos;s steps.</para>
-   <para>Finally, you need to make sure that Eclipse is set to the correct Java compliance. On the Eclipse menu bar, go to Window > Preferences > expand Java > Compiler and make sure that the &quot;Compiler 
-   compliance level&quot; is set to 5.0 (or 6.0 for JDK 1.6.). See image:</para>
-   <figure>
-    <title>JDK Compliance</title>
-    <mediaobject> 
-     <imageobject>
-      <imagedata fileref="images/JDK_compliance.png"/>
-     </imageobject>
-    </mediaobject>
-   </figure>
+   
   </section>
-    </section>
+  
+  <section id="InstallJDK50onWindows">
+   <title>Installing and Configuring 32-bit Sun JDK 5.0 on Microsoft Windows</title>
+   <itemizedlist>
+    <listitem><para>Download the <ulink  url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0 (Java 2 Development Kit)</ulink> from Sun's website. 
+    Choose &quot;JDK 5.0 Update &lt;x&gt;&quot; (where x is the latest update number) for download and then select your Windows Platform options to perform the installation.</para></listitem>
+    <listitem><para>Create an environment variable called JAVA_HOME that points to the JDK installation directory, for example:</para></listitem>
+   </itemizedlist>
+   <programlisting><![CDATA[C:\Program Files\Java\jdk1.5.0_11\]]></programlisting>
+     <para>In order to run java from the command line add the jre\bin directory to your path, for example:</para>
+   <programlisting><![CDATA[C:\Program Files\Java\jdk1.5.0_11\jre\bin]]></programlisting>
+      <para>To do this, open the Control Panel from the Start Menu, switch to Classic View if necessary, open the System Control Panel applet, select the Advanced Tab, 
+     and click on the Environment Variables button.</para>
+     
+  </section>
+ </section>
     <section id="InstallingRHDS">
   <?dbhtml filename="InstallingRHDS.html"?>
   <title>Red Hat Developer Studio Installation</title>
