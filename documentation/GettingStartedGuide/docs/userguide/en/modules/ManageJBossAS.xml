@@ -58,11 +58,11 @@
 </mediaobject>
 </figure>
 <orderedlist continuation="continues">
-<listitem><para>On the next step select EJB profile.</para></listitem>
+<listitem><para>On the next step select server profile.</para></listitem>
 </orderedlist>
 
 <figure>
-<title>Selecting EJB profile</title>
+<title>Selecting server profile</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/ejbprofile.png"/>
