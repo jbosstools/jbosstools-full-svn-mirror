@@ -21,13 +21,15 @@
  */
 package org.jboss.ide.eclipse.archives.core.util.internal;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.eclipse.core.runtime.IPath;
 
+import de.schlichtherle.io.AbstractArchiveDetector;
 import de.schlichtherle.io.ArchiveDetector;
 import de.schlichtherle.io.ArchiveException;
+import de.schlichtherle.io.archive.spi.ArchiveDriver;
+import de.schlichtherle.io.archive.zip.Zip32Driver;
 
 /**
  * Accesses raw files with the truezip filesystem
@@ -65,29 +67,7 @@ public class TrueZipUtil {
 	}
 	
 	public static void copyFile(String source, de.schlichtherle.io.File file) {
-		try {
-			// make parent folders
-			if( !file.getParentFile().exists() )
-				file.getParentFile().mkdirs();
-			
-			de.schlichtherle.io.FileOutputStream fos = new de.schlichtherle.io.FileOutputStream(file);
-			java.io.FileInputStream fis = new java.io.FileInputStream(source);
-			
-			byte[] buf = new byte[1024];
-			int i = 0;
-			while((i=fis.read(buf))!=-1) {
-			  fos.write(buf, 0, i);
-			  }
-			fis.close();
-			fos.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    
+		new de.schlichtherle.io.File(source).copyAllTo(file);
 	    updateParentTimestamps(file);
 	}
 	
@@ -128,18 +108,18 @@ public class TrueZipUtil {
 	
 	
 	public static void createFolder(IPath parent, String folderName) {
-		createFolder(parent.append(folderName));
+		new de.schlichtherle.io.File(getFile(parent, ArchiveDetector.DEFAULT), folderName, ArchiveDetector.NULL).mkdirs();
+		updateParentTimestamps(parent.append(folderName));
 	}
 	public static void createFolder(IPath path) {
-		getFile(path, ArchiveDetector.NULL).mkdirs();
-	    updateParentTimestamps(path);
+		createFolder(path.removeLastSegments(1), path.lastSegment());
 	}
 	public static void createArchive(IPath parent, String folderName) {
-		createArchive(parent.append(folderName));
+		new de.schlichtherle.io.File(getFile(parent, ArchiveDetector.DEFAULT), folderName, getJarArchiveDetector()).mkdirs();
+	    updateParentTimestamps(parent.append(folderName));
 	}
 	public static void createArchive(IPath path) {
-		getFile(path).mkdirs();
-	    updateParentTimestamps(path);
+		createArchive(path.removeLastSegments(1), path.lastSegment());
 	}
 	public static void umount() {
 		try {
@@ -174,6 +154,21 @@ public class TrueZipUtil {
 			parent.setLastModified(time);
 			parent = parent.getEnclArchive();
 		}
-
+	}
+	
+	
+	private static ArchiveDetector JAR_ARCHIVE_DETECTOR;
+	public static ArchiveDetector getJarArchiveDetector() {
+		if( JAR_ARCHIVE_DETECTOR == null ) {
+			JAR_ARCHIVE_DETECTOR = new JarArchiveDetector();
+		}
+		return JAR_ARCHIVE_DETECTOR;
+	}
+	
+	public static class JarArchiveDetector extends AbstractArchiveDetector {
+		public ArchiveDriver getArchiveDriver(String arg0) {
+			return new Zip32Driver();
+		}
+		
 	}
 }
