@@ -15,7 +15,7 @@
   <?dbhtml filename="JBossInstalling.html"?>
   <title>JBoss AS Installation</title>
   <para>If you followed the default installation of Red Hat Developer Studio, you will already have a JBoss 4.2 server installed and defined. You  have to do nothing to deploy your project. Just start JBoss server using a JBoss icon from command panel and launch your application. Registration to default JBoss AS is being done when you are creating an appication, in the second screen of wizard called &quot;Web&quot; (&quot;Target Server&quot; section). Simply do not uncheck the control in this section.</para>
-<para>Besides that you can deploy your application to some servers that Red Hat Developer Studio supports directly (through the bundled Eclipse WTP plug-ins). Say you want to deploy the application to JBoss 4.0.5 server. First of all you need to install it.</para>
+<para>Besides that you can deploy your application to some servers that Red Hat Developer Studio supports directly (through the bundled Eclipse WTP plug-ins). Suppose you want to deploy the application to JBoss 4.0.5 server. First of all you need to install it.</para>
 <orderedlist>
 <listitem><para>Download the installation pack of JBoss 4.0.5 and save it on your computer: <ulink url="http://labs.jboss.com/jbossas/downloads">http://labs.jboss.com/jbossas/downloads</ulink></para></listitem>
 <listitem><para>Double-click this file or launch the installation from terminal like this:</para></listitem>
@@ -158,5 +158,43 @@
    </note>
 </para></listitem>
 </orderedlist>
+  </section>
+
+ <section id="StartingServer">
+  <?dbhtml filename="StartingServer.html"?>
+  <title>Starting and stopping JBoss server</title>
+  <para>Starting JBoss server is quite simple. Red Hat Developer Studio allows you control its behaviour through a special toolbar: start it in regular or debug mode, stop it, or restart it.</para>
+  <orderedlist>
+  <listitem><para>To launch the server click the green colored icon on the panel or right click server name in Servers view and select &quot;Start&quot;:</para></listitem>
+  </orderedlist>
+  <figure>
+<title>Starting from icon</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/startingfromicon.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+<figure>
+<title>Starting from Servers view</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/startingfromserversview.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<orderedlist continuation="continues">
+<listitem><para>To stop the server click the button &quot;Stop&quot;.</para></listitem>
+</orderedlist>
+<para>While launching Server output will be written to the Console view:</para>
+<figure>
+<title>Console output</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/consoleoutput.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
   </section>
  </chapter>
