@@ -300,7 +300,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		IPath packagesFile = project.append(ArchivesModel.PROJECT_PACKAGES_FILE);
 		XbPackages packs = getXbPackages(project);
 
-		XMLBinding.savePackagesToFile(packs, packagesFile, monitor);
+		XMLBinding.marshallToFile(packs, packagesFile, monitor);
 		
 		// get deltas
 		try {
