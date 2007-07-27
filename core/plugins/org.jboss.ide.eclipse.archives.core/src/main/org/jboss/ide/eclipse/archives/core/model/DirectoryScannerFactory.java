@@ -55,10 +55,12 @@ public class DirectoryScannerFactory {
 	/**
 	 * Exposes the isIncluded method so that entire scans do not need to occur
 	 * to find matches. 
+	 * 
+	 * Overwrites 
 	 */
 	public static class DirectoryScannerExtension extends DirectoryScanner {
-	    public boolean isIncluded(String name) {
-	    	return super.isIncluded(name);
+	    public boolean isUltimatelyIncluded(String name) {
+	    	return super.isIncluded(name) && !super.isExcluded(name);
 	    }
 	}
 }

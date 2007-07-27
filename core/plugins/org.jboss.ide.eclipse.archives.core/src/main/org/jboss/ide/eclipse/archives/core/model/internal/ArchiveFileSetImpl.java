@@ -126,7 +126,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	private boolean matchesPath(DirectoryScannerExtension scanner, IPath path) {
 		if( getGlobalSourcePath().isPrefixOf(path)) {
 			String s = path.toOSString().substring(getGlobalSourcePath().toOSString().length()+1);
-			return scanner.isIncluded(s);
+			return scanner.isUltimatelyIncluded(s);
 		}
 		return false;
 	}
