@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.selbar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.compare.Splitter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -163,7 +164,7 @@ public class SelectionBar extends Layout implements SelectionListener {
 		Rectangle rect = null;
 		try {
 			rect = composite.getBounds();
-		} catch (Exception e) {
+		} catch (SWTException e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
 
