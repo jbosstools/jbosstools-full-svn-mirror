@@ -90,7 +90,7 @@ public class ModelTruezipBridge {
 		final ArrayList list = new ArrayList();
 		list.addAll(Arrays.asList(paths));
 		for( int i = 0; i < paths.length; i++ ) {
-			if( !ModelUtil.otherFilesetMatchesPath(fileset, paths[i])) {
+			if( !ModelUtil.otherFilesetMatchesPathAndOutputLocation(fileset, paths[i])) {
 				// remove
 				deleteFiles(fileset, new IPath[] {paths[i]}, false);
 			} else {
