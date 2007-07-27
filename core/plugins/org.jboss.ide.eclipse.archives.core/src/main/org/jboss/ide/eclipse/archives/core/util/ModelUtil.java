@@ -84,7 +84,7 @@ public class ModelUtil {
 	 * @return
 	 */
 	public static IArchiveFileSet[] findAllDescendentFilesets(IArchiveNode node) {
-		ArrayList matches = findAllDescendents(node, IArchiveNode.TYPE_ARCHIVE_FILESET);
+		ArrayList matches = findAllDescendents(node, IArchiveNode.TYPE_ARCHIVE_FILESET, true);
 		return (IArchiveFileSet[]) matches.toArray(new IArchiveFileSet[matches.size()]);
 	}
 
@@ -94,7 +94,7 @@ public class ModelUtil {
 	 * @return
 	 */
 	public static IArchiveFolder[] findAllDescendentFolders(IArchiveNode node) {
-		ArrayList matches = findAllDescendents(node, IArchiveNode.TYPE_ARCHIVE_FOLDER);
+		ArrayList matches = findAllDescendents(node, IArchiveNode.TYPE_ARCHIVE_FOLDER, false);
 		return (IArchiveFolder[]) matches.toArray(new IArchiveFolder[matches.size()]);
 	}
 	
@@ -103,14 +103,12 @@ public class ModelUtil {
 	 * @param node
 	 * @return
 	 */
-	public static ArrayList findAllDescendents(IArchiveNode node, final int type) {
+	public static ArrayList findAllDescendents(IArchiveNode node, final int type, final boolean includeSelf) {
 		final ArrayList matches = new ArrayList();
-		if( node.getNodeType() == type && !matches.contains(node) ) 
-			matches.add(node);
-		
+		final IArchiveNode original = node;
 		node.accept(new IArchiveNodeVisitor() {
 			public boolean visit(IArchiveNode node) {
-				if( node.getNodeType() == type && !matches.contains(node))
+				if( ((node.getNodeType() == type) && !matches.contains(node)) && (includeSelf || node != original))
 					matches.add(node);
 				return true;
 			} 
