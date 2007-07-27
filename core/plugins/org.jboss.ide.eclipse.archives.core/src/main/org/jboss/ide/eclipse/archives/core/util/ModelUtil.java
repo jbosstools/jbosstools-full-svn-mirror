@@ -116,23 +116,33 @@ public class ModelUtil {
 		return matches;
 	}
 
+	
+	public static boolean otherFilesetMatchesPathAndOutputLocation(IArchiveFileSet fileset, IPath path) {
+		return otherFilesetMatchesPathAndOutputLocation(fileset, path, null);
+	}
+
 
 	/**
 	 * Do any filesets other than the parameter match this path?
 	 * @param fileset
 	 * @param path
+	 * @param root a node to start with, or null if the entire model
 	 * @return
 	 */
-	public static boolean otherFilesetMatchesPath(IArchiveFileSet fileset, IPath path) {
-		IArchiveFileSet[] filesets = ModelUtil.getMatchingFilesets(path);
+	public static boolean otherFilesetMatchesPathAndOutputLocation(IArchiveFileSet fileset, IPath path, IArchiveNode root) {
+		IArchiveFileSet[] filesets = ModelUtil.getMatchingFilesets(root, path);
 		if( filesets.length == 0 || (filesets.length == 1 && Arrays.asList(filesets).contains(fileset))) {
 			return false;
 		} else {
 			// other filesets DO match... but are they at the same location in the archive?
+			boolean relativePathsMatch;
+			boolean destinationsMatch;
 			for( int i = 0; i < filesets.length; i++ ) {
 				if( fileset.equals(filesets[i])) continue;
-				if( fileset.getRootArchiveRelativePath(path).equals(filesets[i].getRootArchiveRelativePath(path))) {
-					// the two put the file in the same spot! It's a match!
+				relativePathsMatch = fileset.getRootArchiveRelativePath(path).equals(filesets[i].getRootArchiveRelativePath(path));
+				destinationsMatch = fileset.getRootArchive().getArchiveFilePath().equals(filesets[i].getRootArchive().getArchiveFilePath());
+				if( relativePathsMatch && destinationsMatch ) {
+					// the two put the file in the same spot, within the same archive! It's a match!
 					return true;
 				}
 			}
