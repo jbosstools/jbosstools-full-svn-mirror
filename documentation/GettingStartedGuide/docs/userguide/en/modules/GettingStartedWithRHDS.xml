@@ -38,6 +38,12 @@
    <programlisting><![CDATA[#In this example /usr/java/jdk1.5.0_11 is the JDK installation directory.
 export JAVA_HOME=/usr/java/jdk1.5.0_11
 export PATH=$PATH:$JAVA_HOME/bin]]></programlisting>
+   <note>
+    <title>Note:</title>
+    <para>When you add $JAVA_HOME/bin to $PATH, you should add it <emphasis role="bold">before</emphasis> the old $PATH not after it. This way, the machine will pick up the new JVM first. 
+     You only need to run &quot;alternative&quot; as a safe guard for the right JVM.</para>
+   </note>
+   
    <para>Set this variable for the user account doing the installation and also for the user account that will run the server.</para>
    <itemizedlist>
     <listitem><para>If you have more than one version of JVM installed in your machine, make sure you are using the JDK1.5 installation as the default java and javac. 
