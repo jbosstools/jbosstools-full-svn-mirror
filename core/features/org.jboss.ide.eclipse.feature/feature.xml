@@ -6,12 +6,12 @@
       provider-name="JBoss, a division of Red Hat"
       image="splash.jpg">
 
-   <description url="http://www.jboss.com/products/jbosside">
+   <description url="http://www.jboss.org/tools">
       Select &apos;More Info&apos;
    </description>
 
    <license url="http://osdn.dl.sourceforge.net/sourceforge/jboss/LGPL.html">
-      JBossIDE for Eclipse is under the LGPL Licence
+      JBossTools Core is under the LGPL Licence
 GNU LESSER GENERAL PUBLIC LICENSE
 Version 2.1, February 1999 
 Copyright (C) 1991, 1999 Free Software Foundation, Inc.
