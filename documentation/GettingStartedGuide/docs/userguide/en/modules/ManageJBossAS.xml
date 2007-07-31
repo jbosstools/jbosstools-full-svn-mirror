@@ -234,6 +234,7 @@
 <note>
     <title>Note:</title>
     <para>When adding a new server you will need to specify what JRE to use. It is important to set this value to a full JDK, not JRE. Again, you need a full JDK to run Web applications, JRE will not be enough.</para>
+</note>
 <orderedlist continuation="continues">
   <listitem><para>In the following window give a name to a new server. After that press Next.</para></listitem>
   </orderedlist>
@@ -246,7 +247,7 @@
 </mediaobject>
 </figure>
 
-   </note>
+   
 <orderedlist continuation="continues">
   <listitem><para>In the last wizard&apos;s dialog modify the projects that are configured on the server and click Finish.</para></listitem>
   </orderedlist>
