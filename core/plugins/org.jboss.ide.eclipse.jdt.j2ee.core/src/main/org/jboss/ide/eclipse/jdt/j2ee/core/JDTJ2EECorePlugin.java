@@ -25,8 +25,6 @@ import org.jboss.ide.eclipse.core.AbstractPlugin;
 import org.jboss.ide.eclipse.jdt.core.classpath.ClassPathContainerRepository;
 import org.jboss.ide.eclipse.jdt.j2ee.core.classpath.J2EE13ClasspathContainer;
 import org.jboss.ide.eclipse.jdt.j2ee.core.classpath.J2EE14ClasspathContainer;
-import org.jboss.ide.eclipse.jdt.test.core.JDTTestCorePlugin;
-import org.jboss.ide.eclipse.jdt.ws.core.JDTWSCorePlugin;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -63,9 +61,6 @@ public class JDTJ2EECorePlugin extends AbstractPlugin
       ClassPathContainerRepository.getInstance().addClassPathEntry(J2EE13ClasspathContainer.CLASSPATH_CONTAINER);
       ClassPathContainerRepository.getInstance().addClassPathEntry(J2EE14ClasspathContainer.CLASSPATH_CONTAINER);
 
-      // Force the plugin load
-      JDTTestCorePlugin.getDefault().getBaseDir();
-      JDTWSCorePlugin.getDefault().getBaseDir();
    }
 
    /**
