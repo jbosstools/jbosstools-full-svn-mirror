@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="XULRunner"
+            id="org.jboss.tools.vpe.xulrunner">
+      </category>
+      <view
+            name="XULRunner Browser"
+            icon="icons/sample.gif"
+            category="org.jboss.tools.vpe.xulrunner"
+            class="org.jboss.tools.vpe.xulrunner.browser.view.views.XulRunnerBrowserView"
+            id="org.jboss.tools.vpe.xulrunner.browser.view.views.XulRunnerBrowserView">
+      </view>
+   </extension>
+</plugin>
