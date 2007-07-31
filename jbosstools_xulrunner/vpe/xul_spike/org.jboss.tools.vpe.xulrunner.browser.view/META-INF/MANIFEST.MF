@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: View Plug-in
+Bundle-SymbolicName: org.jboss.tools.vpe.xulrunner.browser.view; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Vendor: Red Hat, Inc.
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.jboss.tools.vpe.xulrunner.browser
