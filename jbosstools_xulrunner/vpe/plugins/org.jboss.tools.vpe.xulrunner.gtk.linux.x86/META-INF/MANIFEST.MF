@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: XULRunner Linux (gtk,x86) Plug-in
+Bundle-SymbolicName: org.jboss.tools.vpe.xulrunner
+Bundle-Version: 1.8.1.3
+Bundle-Vendor: Red Hat, Inc.
+Eclipse-PlatformFilter: (& (osgi.ws=gtk) (osgi.os=linux) (osgi.arch=x86))
+Bundle-ClassPath: xulrunner/
