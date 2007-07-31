@@ -474,61 +474,13 @@ END OF TERMS AND CONDITIONS
          version="0.0.0"/>
 
    <plugin
-         id="org.jboss.ide.eclipse.jdt.test.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.jboss.ide.eclipse.jdt.test.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="org.jboss.ide.eclipse.jdt.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
-         id="org.jboss.ide.eclipse.jdt.ws.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.jboss.ide.eclipse.jdt.ws.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="org.jboss.ide.eclipse.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.jboss.ide.eclipse.xdoclet.assist"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.jboss.ide.eclipse.xdoclet.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.jboss.ide.eclipse.xdoclet.run"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.jboss.ide.eclipse.xdoclet.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
