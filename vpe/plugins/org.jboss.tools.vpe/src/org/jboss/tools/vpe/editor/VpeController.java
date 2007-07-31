@@ -10,9 +10,9 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -22,6 +22,9 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.bindings.Binding;
+import org.eclipse.jface.bindings.keys.KeySequence;
+import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -45,12 +48,16 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.internal.keys.WorkbenchKeyboard;
+import org.eclipse.ui.keys.IBindingService;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.eclipse.wst.sse.core.internal.model.ModelLifecycleEvent;
 import org.eclipse.wst.sse.core.internal.provisional.IModelLifecycleListener;
@@ -74,7 +81,6 @@ import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
 import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
-import org.jboss.tools.common.model.util.ModelFeatureFactory;
 import org.jboss.tools.common.model.ui.editor.IModelObjectEditorInput;
 import org.jboss.tools.common.model.ui.editors.dnd.DropCommandFactory;
 import org.jboss.tools.common.model.ui.editors.dnd.DropData;
@@ -125,6 +131,7 @@ import org.jboss.tools.vpe.editor.util.VpeDndUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.mozilla.browser.MozillaBrowser;
 import org.jboss.tools.vpe.mozilla.browser.util.DOMTreeDumper;
+import org.jboss.tools.vpe.mozilla.internal.swt.xpl.XPCOM;
 import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMEvent;
 import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMKeyEvent;
 import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMMouseEvent;
@@ -146,6 +153,9 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 public class VpeController implements INodeAdapter, IModelLifecycleListener, INodeSelectionListener, ITextSelectionListener, SelectionListener, EditorDomEventListener, VpeTemplateListener, XModelTreeListener, ResourceReferenceListListener, ISelectionChangedListener, IVisualController {
+	//id of command which is maximazed/minimazed editor
+	private static final String MAXIMAZE_PART_ID="org.eclipse.ui.window.maximizePart";
+	
 	StructuredTextEditor sourceEditor;
 	private MozillaEditor visualEditor;
 	MozillaBrowser browser;
@@ -785,7 +795,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				selectionBuilder.setClickContentAreaSelection();
 			}
 		}
-		switcher.stopActiveEditor();
+		switcher.stopActiveEditor(); 
 	}
 
 	public void mouseDblClick(nsIDOMMouseEvent mouseEvent) {
@@ -845,12 +855,17 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (VpeDebug.printVisualKeyEvent) {
 			System.out.println("<<< keyPress  type: " + keyEvent.getType() + "  Ctrl: " + keyEvent.isCtrlKey() + "  Shift: " + keyEvent.isShiftKey() + "  CharCode: " + keyEvent.getCharCode() + "  KeyCode: " + keyEvent.getKeyCode()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		}
+
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+		switcher.stopActiveEditor();
 			return;
 		}
+		
 		visualEditor.hideResizer();
+		//TODO with this behaviour isn't works 'CTRL+M' 
 		switcher.stopActiveEditor();
 
+		
 		try {
 			if (visualKeyHandler.keyPressHandler(keyEvent)) {
 				switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
@@ -858,11 +873,70 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				sourceSelectionChanged(true);
 				visualSelectionController.setCaretEnabled(true);
 				switcher.stopActiveEditor();
+			} else {
+				//adding calls of core event handlers, for example 'CTR+H' or 'CTRL+M' event handler dialog
+				Event keyboardEvent = new Event ();
+				//widget where event occur
+				keyboardEvent.widget=browser;
+				int rc=0;
+				boolean[] aAltKey = new boolean[1];
+				boolean[] aCtrlKey = new boolean[1];
+				boolean[] aShiftKey = new boolean[1];
+				boolean[] aMetaKey = new boolean[1]; 
+				
+				rc = keyEvent.GetAltKey (aAltKey);
+				if (rc != XPCOM.NS_OK) MozillaBrowser.error (rc);
+				rc = keyEvent.GetCtrlKey (aCtrlKey);
+				if (rc != XPCOM.NS_OK) MozillaBrowser.error (rc);
+				rc = keyEvent.GetShiftKey (aShiftKey);
+				if (rc != XPCOM.NS_OK) MozillaBrowser.error (rc);
+				rc = keyEvent.GetMetaKey (aMetaKey);
+				if (rc != XPCOM.NS_OK) MozillaBrowser.error (rc);
+							
+				keyboardEvent.stateMask = (aAltKey[0] ? SWT.ALT : 0) | (aCtrlKey[0] ? SWT.CTRL : 0) | (aShiftKey[0] ? SWT.SHIFT : 0) | (aMetaKey[0] ? SWT.MOD1 : 0);
+				keyboardEvent.x=0;
+				keyboardEvent.y=0;
+				keyboardEvent.type=SWT.KeyDown;
+				
+				if(keyEvent.getKeyCode()==0) {
+					
+					keyboardEvent.keyCode=keyEvent.getCharCode();
+				} else{
+					
+					keyboardEvent.keyCode=keyEvent.getKeyCode();			
+				}
+				//for maximaze/minimaze command(CTRL+M), we shouldn't call event listeners 
+				List possibleKeyStrokes = WorkbenchKeyboard.generatePossibleKeyStrokes(keyboardEvent);
+				IWorkbench iWorkbench = VpePlugin.getDefault().getWorkbench();
+				if(iWorkbench.hasService(IBindingService.class)){
+				IBindingService iBindingService = (IBindingService) iWorkbench.getService(IBindingService.class);
+
+				KeySequence sequenceBeforeKeyStroke = KeySequence.getInstance();
+					for (Iterator iterator = possibleKeyStrokes.iterator(); iterator
+					.hasNext();){
+						KeySequence sequenceAfterKeyStroke = KeySequence.getInstance(
+								sequenceBeforeKeyStroke, (KeyStroke) iterator.next());
+						if(iBindingService.isPerfectMatch(sequenceAfterKeyStroke)){
+							final Binding binding = iBindingService.getPerfectMatch(sequenceAfterKeyStroke);
+							
+							if((binding!=null)
+								&& (binding.getParameterizedCommand()!=null)
+								&& (binding.getParameterizedCommand().getCommand()!=null)
+								&& (binding.getParameterizedCommand().getCommand().getId()!=null)
+								&&binding.getParameterizedCommand().getCommand().getId().equals(VpeController.MAXIMAZE_PART_ID)){
+								keyboardEvent.type = SWT.NONE;
+							}
+						}
+					}
+				}
+				browser.notifyListeners(keyboardEvent.type, keyboardEvent);
+				
 			}
 		} catch (Exception e) {
 			VpePlugin.getPluginLog().logError(e);
 			visualRefresh();
 		}
+
 	}
 
 	public void elementResized(Element element, int resizerConstrains, int top, int left, int width, int height) {

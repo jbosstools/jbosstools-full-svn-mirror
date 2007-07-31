@@ -1060,7 +1060,7 @@
     </vpe:tag>
 
     <vpe:tag name="f:view" case-sensitive="yes">
-	    <vpe:template children="yes" modify="yes">
+	    <vpe:template children="yes" modify="yes" haveVisualPreview="no">
 			<div style="border:1px dotted #FF6600;padding: 5px;" title="{tagstring()}"/>
 			<vpe:dnd>
 				<vpe:drag start-enable="yes"/>
@@ -1078,7 +1078,7 @@
     </vpe:tag>
 
     <vpe:tag name="f:subview" case-sensitive="yes">
-	    <vpe:template children="yes" modify="yes">
+    	<vpe:template children="yes" modify="yes" haveVisualPreview="no">
 			<div style="border:1px dotted #FF6600;padding: 5px;" title="{tagstring()}"/>
 			<vpe:dnd>
 				<vpe:drag start-enable="yes"/>
@@ -1096,7 +1096,7 @@
     </vpe:tag>
 
     <vpe:tag name="h:form" case-sensitive="yes">
-	    <vpe:template children="yes" modify="yes">
+    	<vpe:template children="yes" modify="yes" haveVisualPreview="no">
 			<div style="border:1px dotted #FF6600;padding: 5px;" title="{tagstring()}"/>
 			<vpe:dnd>
 				<vpe:drag start-enable="yes"/>
