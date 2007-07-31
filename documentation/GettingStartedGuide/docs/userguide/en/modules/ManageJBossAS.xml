@@ -19,9 +19,9 @@
   <section id="StartingServer">
   <?dbhtml filename="StartingServer.html"?>
   <title>Starting JBoss server</title>
-  <para>Starting JBoss server is quite simple. Red Hat Developer Studio allows you control its behaviour through a special toolbar: start it in regular or debug mode, stop it, or restart it.</para>
+  <para>Starting JBoss server is quite simple. Red Hat Developer Studio allows you control its behaviour through a special toolbar: start it in a regular or debug mode, stop it, or restart it.</para>
   <orderedlist>
-  <listitem><para>To launch the server click the green colored icon on the panel or right click server name in JBoss Server view and select &quot;Start&quot;. If this view is not open select Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View:</para></listitem>
+  <listitem><para>To launch the server click the green-with-white-arrow icon on the JBoss Server View or right click server name in this view and select &quot;Start&quot;. If this view is not open select Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View:</para></listitem>
   </orderedlist>
   <figure>
 <title>Starting from icon</title>
@@ -72,7 +72,7 @@
   <section id="StoppingJBoss">
   <?dbhtml filename="StoppingJBoss.html"?>
   <title>Stopping JBoss server</title>
-  <para>To stop the server select the Stop sign in command panel or right click the server name and press Stop.</para>
+  <para>To stop the server select the Stop sign in JBoss Server View or right click the server name and press Stop.</para>
   <figure>
 <title>Stopping server</title>
 <mediaobject> 
@@ -119,9 +119,9 @@
 <listitem><para>Download the installation pack of JBoss 4.0.5 and save it on your computer: <ulink url="http://labs.jboss.com/jbossas/downloads">http://labs.jboss.com/jbossas/downloads</ulink></para></listitem>
 <listitem><para>Double-click this file or launch the installation from terminal like this:</para></listitem>
 </orderedlist>
-<programlisting role="JAVA"><![CDATA[java -jar jems.installer-1.2.0.GA.jar
+<programlisting role="JAVA"><![CDATA[java -jar jems-installer-1.2.0.GA.jar
 ]]></programlisting>
-<para>This will start the installation wizard and in the first window you will be proposed to choose the language for installing instructions:</para>
+<para>This will start the installation wizard and in the first window you will be proposed to choose a language for install instructions:</para>
 <figure>
 <title>Choose your language</title>
 <mediaobject> 
@@ -207,10 +207,11 @@
   <title>Adding and configuring JBoss server</title>
   <para>Now we should add just installed server into server manager in Red Hat Developer Studio.</para>
   <orderedlist>
-  <listitem><para>In the main menu select Window &gt; Preferences &gt; Server &gt; Installed Runtimes.</para></listitem>
-  <listitem><para>Click the Add button to add a new server.</para></listitem>
-  </orderedlist>
-  <figure>
+  <listitem><para>Open the JBoss Server View by selecting Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View. You will see JBoss Server view.</para></listitem>
+  <listitem><para>Right click anywhere in this view and select New Server.</para></listitem>
+<listitem><para>Select JBoss, a division of Red Hat &gt; JBoss AS 4.0 and press Next.</para></listitem>
+</orderedlist>
+<figure>
 <title>Selecting server type</title>
 <mediaobject> 
         <imageobject>
@@ -218,8 +219,9 @@
         </imageobject>
 </mediaobject>
 </figure>
-  <orderedlist continuation="continues">
-<listitem><para>In the dialog that appeared choose JBoss &gt; JBoss v4.0 and click Next.</para></listitem>
+
+<orderedlist continuation="continues">
+<listitem><para>In the next step locate the place where you have installed the server, locate its home directory and define JRE.</para></listitem>
 </orderedlist>
 <figure>
 <title>Defining JBoss Runtime</title>
@@ -229,34 +231,43 @@
         </imageobject>
 </mediaobject>
 </figure>
-
-<orderedlist continuation="continues">
-<listitem><para>In the next step locate the place where you have installed the server and click the Finish button.</para></listitem>
-</orderedlist>
-<para>After that JBoss server should appear in &quot;Installed server runtimes&quot; section.</para>
-<orderedlist continuation="continues">
-<listitem><para>Close this window by clicking OK.</para></listitem>
-<listitem><para>Open the Servers View by selecting Window &gt; Show View &gt; Other &gt; Server &gt; Servers. You will see Servers view.</para></listitem>
-<listitem><para>Right click anywhere in this view and select New &gt; Server.</para></listitem>
-<listitem><para>Select JBoss, a division of Red Hat &gt; JBoss AS 4.0 and press Next.</para></listitem>
-</orderedlist>
-
-<figure>
-<title>Defining new JBoss server</title>
-<mediaobject> 
-        <imageobject>
-            <imagedata fileref="images/definingnewjbossserver.png"/>
-        </imageobject>
-</mediaobject>
-</figure>
-<orderedlist continuation="continues">
-<listitem><para>Give a name to the server, locate its home directory and define JRE.
 <note>
     <title>Note:</title>
     <para>When adding a new server you will need to specify what JRE to use. It is important to set this value to a full JDK, not JRE. Again, you need a full JDK to run Web applications, JRE will not be enough.</para>
+<orderedlist continuation="continues">
+  <listitem><para>In the following window give a name to a new server. After that press Next.</para></listitem>
+  </orderedlist>
+  <figure>
+<title>Defining JBoss Server Name</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/jbossname.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
    </note>
-</para></listitem>
-</orderedlist>
+<orderedlist continuation="continues">
+  <listitem><para>In the last wizard&apos;s dialog modify the projects that are configured on the server and click Finish.</para></listitem>
+  </orderedlist>
+  <figure>
+<title>Configuring Projects</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/configuringprojects.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<para>A new JBoss server should now appear in JBoss Server View.</para>  
+<figure>
+<title>New JBoss Server</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newjbossserver.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
   </section>
 
  
