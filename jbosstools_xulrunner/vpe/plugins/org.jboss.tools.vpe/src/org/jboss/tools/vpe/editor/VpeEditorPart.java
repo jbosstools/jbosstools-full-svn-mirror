@@ -28,7 +28,6 @@ import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
@@ -49,10 +48,10 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorExtension;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.jst.jsp.editor.IVisualEditor;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.mozilla.EditorLoadWindowListener;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
+import org.jboss.tools.vpe.editor.mozilla.MozillaPreview;
 import org.jboss.tools.vpe.editor.xpl.SashForm;
 
 public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEditorExtension, IReusableEditor, IVisualEditor {
@@ -66,8 +65,15 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 	private EditorPart multiPageEditor;
 	private static final QualifiedName SPLITTER_POSITION_KEY1 = new QualifiedName("", "splitter_position1");
 	private static final QualifiedName SPLITTER_POSITION_KEY2 = new QualifiedName("", "splitter_position2");
+	private static final QualifiedName SPLITTER_POSITION_KEY3 = new QualifiedName("", "splitter_position3");
 	private int controlCount = 0;
 	
+	/** default web-browser */
+	private MozillaPreview previewWebBrowser  = null;
+		
+	/** preview content */
+	private  Composite previewContent = null;
+
 	public StructuredTextEditor getSourceEditor(){
 		return sourceEditor;
 	}
@@ -150,10 +156,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 		if(sourceEditor!=null)sourceEditor.removeRulerContextMenuListener(listener);
 	}
 	public void setStatusField(IStatusField field, String category) {
-		if(visualMode == VISUAL_MODE){
-			if(field != null){
-			field.setImage(null);
-			field.setText(null);
+		if(visualMode == VISUAL_MODE) {
+			if(field != null) {
+				field.setImage(null);
+				field.setText(null);
 			}
 		}else 
 			if(sourceEditor!=null)sourceEditor.setStatusField(field, category);
@@ -215,7 +221,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 	}
 	
 	protected int[] loadSplitterPosition() {
-		int[] sizes = new int[2];
+		int[] sizes = new int[3];
 		try { 
 			IEditorInput input = getEditorInput();
 			if(!(input instanceof IFileEditorInput)) return null;
@@ -227,6 +233,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 			s = file.getPersistentProperty(SPLITTER_POSITION_KEY2);
 			if (s != null) {
 				sizes[1] = Integer.parseInt(s);
+			}else return null;
+			s = file.getPersistentProperty(SPLITTER_POSITION_KEY3);
+			if (s != null) {
+				sizes[2] = Integer.parseInt(s);
 			}else return null;
 		} catch (Exception e) {
 			VpePlugin.getPluginLog().logError(e);
@@ -244,6 +254,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 			file.setPersistentProperty(SPLITTER_POSITION_KEY1, s);
 			s = String.valueOf(weights[1]);
 			file.setPersistentProperty(SPLITTER_POSITION_KEY2, s);
+			s = String.valueOf(weights[2]);
+			file.setPersistentProperty(SPLITTER_POSITION_KEY3, s);
 		} catch (Exception e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
@@ -256,14 +268,40 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 			case VISUALSOURCE_MODE:
 				if(sourceContent!= null)sourceContent.setVisible(true);
 				if(visualContent!= null)visualContent.setVisible(true);
+				if(previewContent != null) {
+					previewContent.setVisible(false);
+				}
 				break;
+				
 			case VISUAL_MODE:
 				if(sourceContent!= null)sourceContent.setVisible(false);
 				if(visualContent!= null)visualContent.setVisible(true);
+				if(previewContent != null) {
+					previewContent.setVisible(false);
+				}
 				break;
+				
 			case SOURCE_MODE:
 				if(sourceContent!= null)sourceContent.setVisible(true);
 				if(visualContent!= null)visualContent.setVisible(false);
+				if(previewContent != null) {
+					previewContent.setVisible(false);
+				}
+				break;
+				
+			case PREVIEW_MODE:
+				if(sourceContent!= null) {
+					sourceContent.setVisible(false);
+				}
+				
+				if(visualContent!= null) {
+					visualContent.setVisible(false);
+				}
+				
+				if(previewContent != null) {
+					previewWebBrowser.rebuildDom();
+					previewContent.setVisible(true);
+				}					
 				break;
 		}
 		container.layout();
@@ -290,6 +328,12 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 			sourceContent.setLayout(new FillLayout());
 			visualContent = new Composite(container, SWT.NONE);
 			visualContent.setLayout(new FillLayout());
+			
+			
+			// Create a preview content
+			previewContent = new Composite(container, SWT.NONE);
+			previewContent.setLayout(new FillLayout());
+			
 			if(sourceEditor == null)sourceEditor = new StructuredTextEditor() {
 				public void safelySanityCheckState(IEditorInput input) {
 					super.safelySanityCheckState(input);
@@ -314,6 +358,13 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 			visualEditor = new MozillaEditor();
 			try {
 				visualEditor.init(getEditorSite(), getEditorInput());
+			} catch (Exception e) {
+				VpePlugin.reportProblem(e);
+			}
+
+			previewWebBrowser = new MozillaPreview(this, sourceEditor);
+			try {
+				previewWebBrowser.init(getEditorSite(), getEditorInput());
 			} catch (Exception e) {
 				VpePlugin.reportProblem(e);
 			}
@@ -347,6 +398,18 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 				});
 				visualEditor.createPartControl(visualContent);
 			}
+			
+			
+			if(previewWebBrowser!=null) {
+				previewWebBrowser.setEditorLoadWindowListener(new EditorLoadWindowListener() {
+					public void load() {
+						previewWebBrowser.setEditorLoadWindowListener(null);
+						previewWebBrowser.buildDom();
+					}
+				});
+				previewWebBrowser.createPartControl(previewContent);
+			}
+			
 			activeEditor = sourceEditor;
 
 			sourceContent.addListener(SWT.Activate, new Listener() {
@@ -370,6 +433,19 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 					}
 				}
 			});
+
+			
+			previewContent.addListener(SWT.Activate, new Listener() {
+				public void handleEvent(Event event) {
+					if (event.type == SWT.Activate) {
+						if (previewWebBrowser!=null && activeEditor != previewWebBrowser) {
+							activeEditor = previewWebBrowser;
+							setFocus();
+						}
+					}
+				}
+			});
+			
 
 			IWorkbenchWindow window = getSite().getWorkbenchWindow();
 			window.getPartService().addPartListener(activationListener);
@@ -413,6 +489,11 @@ public class VpeEditorPart extends EditorPart implements ITextEditor, ITextEdito
 		if (visualEditor != null) {
 			visualEditor.dispose();
 			visualEditor = null;
+		}
+		
+		if (previewContent != null) {
+			previewContent.dispose();
+			previewContent = null;
 		}
 	}
 

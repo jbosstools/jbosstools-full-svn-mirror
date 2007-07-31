@@ -38,7 +38,11 @@ public class VpeDomBuilder {
 		return templateManager;
 	}
 
-	public void registerNodes(VpeNodeMapping nodeMapping) {
+	public void registerNodes(VpeNodeMapping nodeMapping) {		
+		if (sorceAdapter == null) {
+			return;
+		}
+		
 		domMapping.mapNodes(nodeMapping);
 		Node sourceNode = nodeMapping.getSourceNode();
 		if (((INodeNotifier) sourceNode).getExistingAdapter(sorceAdapter) == null) {

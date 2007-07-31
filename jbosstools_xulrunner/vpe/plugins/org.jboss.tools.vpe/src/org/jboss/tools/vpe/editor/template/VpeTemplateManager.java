@@ -112,6 +112,9 @@ public class VpeTemplateManager {
 	static final String ATTR_TEMPLATE_CLASS = "class";
 	static final String ATTR_TEMPLATE_CHILDREN = "children";
 	static final String ATTR_TEMPLATE_MODIFY = "modify";
+	
+	/** ATTR_TEMPLATE_HAVE_VISUAL_PREVIEW */
+	static final String ATTR_TEMPLATE_HAVE_VISUAL_PREVIEW = "haveVisualPreview";
 
 	static final String ATTR_COPY_ATTRS = "attrs";
 
