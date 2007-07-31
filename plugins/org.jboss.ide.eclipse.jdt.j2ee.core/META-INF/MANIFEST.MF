@@ -22,7 +22,5 @@ Require-Bundle: org.eclipse.ui.ide,
  org.eclipse.jdt.core,
  org.eclipse.jdt.ui,
  org.jboss.ide.eclipse.jdt.core,
- org.jboss.ide.eclipse.jdt.test.core,
- org.jboss.ide.eclipse.jdt.ws.core,
  org.eclipse.core.runtime
 Eclipse-AutoStart: true
