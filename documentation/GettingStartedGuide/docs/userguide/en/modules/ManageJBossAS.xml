@@ -121,9 +121,11 @@
 </orderedlist>
 <programlisting role="JAVA"><![CDATA[java -jar jems-installer-1.2.0.GA.jar
 ]]></programlisting>
-<para>This will start the installation wizard and in the first window you will be proposed to choose a language for install instructions:</para>
+<para>This will start the installation wizard and in the first screen you will be proposed to choose a language for install
+ instructions. This screen only selects the language that the installer will display choices in and has no effect on the 
+language used by JBoss or the applications deployed in JBoss.</para>
 <figure>
-<title>Choose your language</title>
+<title>The installer language selection screen</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/chooselanguage.png"/>
@@ -136,20 +138,20 @@
 <listitem><para>In the following window accept the license agreement and press the Next button.</para></listitem>
 </orderedlist>
 <figure>
-<title>Accept the license</title>
+<title>Accepting the license</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/licenseagreement.png"/>
         </imageobject>
 </mediaobject>
 </figure>
-
+<para>The installer will ask for the directory to use for the installation. The installer does not write the installation directory into any of the scripts or into any form of registry, so you will be free to move or rename the JBoss installation directory after installation. On Linux platform installation directories that contains spaces can cause problems, so we recommend sticking to simple directory names.</para>
 <orderedlist continuation="continues">
 <listitem><para>Choose the place where JBoss server will be installed and click Next.</para></listitem>
 </orderedlist>
 
 <figure>
-<title>Choosing installation path</title>
+<title>Selecting the installation directory</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/choosinglocation.png"/>
@@ -157,24 +159,31 @@
 </mediaobject>
 </figure>
 <orderedlist continuation="continues">
-<listitem><para>On the next step select server profile.</para></listitem>
+<listitem><para>On the next step you are able to select the starting server configuration set.</para></listitem>
 </orderedlist>
 
 <figure>
-<title>Selecting server profile</title>
+<title>Selecting the installation group</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/ejbprofile.png"/>
         </imageobject>
 </mediaobject>
 </figure>
-
+<para>The starting configuration determines which sets of packages are available for installation. After selecting the configuration set, you have the option to further customize the installation, customizing the set of services installed. 
+The next screen shows the package selection screen. The installer knows the dependencies between services and will not allow
+ you to configure services in an incompatible way. This is much safer than the trial and error approach of configuring 
+services by hand from a raw ZIP install. When choosing configuration sets, be aware that you can not add packages that are 
+not a part of the selected configuration set. If you wanted a simple web container (the tomcat configuration) that also had 
+JMS support (the jms configuration), it would be necessary to go to a larger configuration, such as the default configuration,
+ and remove the unwanted packages. There are some combinations of JEMS components that are not supported directly through the
+ installer.</para>
 <orderedlist continuation="continues">
-<listitem><para>In the following window choose packs you want to be installed and click Next.</para></listitem>
+<listitem><para>Choose packs you want to be installed and click Next.</para></listitem>
 </orderedlist>
 
 <figure>
-<title>Selecting installing packs</title>
+<title>Selecting the packages to install</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/selectingpacks.png"/>
@@ -193,13 +202,17 @@
         </imageobject>
 </mediaobject>
 </figure>
+<para>When all this is done you will be asked to confirm your installation.</para>
 <orderedlist continuation="continues">
-<listitem><para>When all this is done you will see the information dialog with installation settings. Click the Next button to start installation.</para></listitem>
+<listitem><para>Click the Next button to start installation.</para></listitem>
 </orderedlist>
 <orderedlist continuation="continues">
 <listitem><para>After installation process is complete click the button Next &gt; Done.</para></listitem>
 </orderedlist>
-<para>That&apos;s it. JBoss server is installed. Now you should add it to server manager in Red Hat Developer Studio.</para>
+<para>That&apos;s it. JBoss server is installed. Your JBoss installation can be found in the directory that you specified at 
+the beginning of the install. The installer image may contain different services than the archive distribution, depending on
+ the type of installation performed. However, the basic structure and layout of all JBoss instances are the same.</para>
+<para>Now you should add JBoss AS to server manager in Red Hat Developer Studio.</para>
 </section>
  
  <section id="AddingJBossServer">
