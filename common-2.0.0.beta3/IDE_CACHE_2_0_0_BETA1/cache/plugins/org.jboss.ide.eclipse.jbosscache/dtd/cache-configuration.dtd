@@ -1,0 +1,50 @@
+<!-- JBoss Cache file-based configuration document.
+
+<!DOCTYPE mbean PUBLIC
+	"-//Cache/Cache Configuration DTD 1.0//EN"
+	"http://localhost/cache-configuration-1.0.dtd">
+
+-->
+
+<!ELEMENT server (classpath,mbean*)>
+
+<!ELEMENT classpath EMPTY>
+<!ATTLIST classpath codebase CDATA #REQUIRED>
+<!ATTLIST classpath archives CDATA #REQUIRED>
+
+<!ELEMENT mbean (depends,attribute*)>
+
+<!ELEMENT depends (#PCDATA)>
+
+<!ELEMENT attribute (#PCDATA|config)*>
+<!ATTLIST attribute name CDATA #REQUIRED>
+
+<!ELEMENT config (attribute?,buddyReplicationEnabled?,buddyLocatorClass?,buddyLocatorProperties?,buddyPoolName?,buddyCommunicationTimeout?,autoDataGravitation?,dataGravitationRemoveOnFind?,dataGravitationSearchBackupTrees?,passivation?,preload?,shared?,cacheloader*,region*)>
+
+
+<!ELEMENT buddyReplicationEnabled (#PCDATA)>
+<!ELEMENT buddyLocatorClass (#PCDATA)>
+<!ELEMENT buddyLocatorProperties (#PCDATA)>
+<!ELEMENT buddyPoolName (#PCDATA)>
+<!ELEMENT buddyCommunicationTimeout (#PCDATA)>
+<!ELEMENT autoDataGravitation (#PCDATA)>
+<!ELEMENT dataGravitationRemoveOnFind (#PCDATA)>
+<!ELEMENT dataGravitationSearchBackupTrees (#PCDATA)>
+<!ELEMENT passivation (#PCDATA)>
+<!ELEMENT preload (#PCDATA)>
+<!ELEMENT shared (#PCDATA)>
+
+<!ELEMENT cacheloader (class,properties,async,fetchPersistentState,ignoreModifications,purgeOnStartup)>
+
+<!ELEMENT class (#PCDATA)>
+<!ELEMENT properties (#PCDATA)>
+<!ELEMENT async (#PCDATA)>
+<!ELEMENT fetchPersistentState (#PCDATA)>
+<!ELEMENT ignoreModifications (#PCDATA)>
+<!ELEMENT purgeOnStartup (#PCDATA)>
+
+<!ELEMENT region (attribute*)>
+<!ATTLIST region name CDATA #REQUIRED>
+<!ATTLIST region policyClass CDATA #REQUIRED>
+
+<!ELEMENT class (#PCDATA)>

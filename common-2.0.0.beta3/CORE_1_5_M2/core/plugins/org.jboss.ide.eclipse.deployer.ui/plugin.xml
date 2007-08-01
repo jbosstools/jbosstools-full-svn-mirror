@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin
+   id="org.jboss.ide.eclipse.deployer.ui"
+   name="%plugin.name"
+   version="1.5.0"
+   provider-name="%plugin.provider"
+   class="org.jboss.ide.eclipse.deployer.ui.DeployerUIPlugin">
+
+   <runtime>
+      <library name="org-jboss-ide-eclipse-deployer-ui.jar">
+         <export name="*"/>
+      </library>
+   </runtime>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.debug.core"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.eclipse.jdt"/>
+      <import plugin="org.eclipse.jdt.ui"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.jboss.ide.eclipse.core"/>
+      <import plugin="org.jboss.ide.eclipse.deployer.core"/>
+      <import plugin="org.jboss.ide.eclipse.ui"/>
+   </requires>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            name="%org.jboss.ide.eclipse.deployer.ui.commands.RedeployAction"
+            categoryId="org.eclipse.ui.category.project"
+            id="org.jboss.ide.eclipse.deployer.ui.commands.RedeployAction">
+      </command>
+      <keyBinding
+            commandId="org.jboss.ide.eclipse.deployer.ui.commands.RedeployAction"
+            keySequence="Ctrl+Alt+F8"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="%org.jboss.ide.eclipse.deployer.ui.actions.Deployment"
+            visible="true"
+            id="org.jboss.ide.eclipse.deployer.ui.actions.Deployment">
+         <action
+               definitionId="org.jboss.ide.eclipse.deployer.ui.commands.RedeployAction"
+               label="%org.jboss.ide.eclipse.deployer.ui.actions.RedeployAction"
+               icon="icons/full/obj16/deployement.gif"
+               tooltip="Redeploy current resource"
+               class="org.jboss.ide.eclipse.deployer.ui.actions.RedeployAction"
+               menubarPath="project/additions"
+               id="org.jboss.ide.eclipse.deployer.ui.actions.RedeployAction">
+            <enablement>
+               <objectClass
+                     name="org.eclipse.core.resources.IResource">
+               </objectClass>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.core.resources.IResource"
+            id="org.jboss.ide.eclipse.deployer.ui.popupMenus.iResourceContributions">
+         <menu
+               label="%org.jboss.ide.eclipse.deployer.ui.popupMenus"
+               id="org.jboss.ide.eclipse.deployer.ui.popupMenus">
+            <separator
+                  name="group">
+            </separator>
+         </menu>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.core.resources.IResource"
+            id="org.jboss.ide.eclipse.deployer.ui.popupMenus.iResourceContributions">
+         <action
+               label="%org.jboss.ide.eclipse.deployer.ui.popup.DeployAction"
+               class="org.jboss.ide.eclipse.deployer.ui.actions.DeployAction"
+               menubarPath="org.jboss.ide.eclipse.deployer.ui.popupMenus/group"
+               enablesFor="+"
+               id="org.jboss.ide.eclipse.deployer.ui.popup.DeployAction">
+            <selection
+                  class="org.eclipse.core.resources.IFile">
+            </selection>
+            <selection
+                  class="org.eclipse.core.resources.IFolder">
+            </selection>
+         </action>
+         <action
+               definitionId="org.jboss.ide.eclipse.deployer.ui.commands.RedeployAction"
+               label="%org.jboss.ide.eclipse.deployer.ui.popup.RedeployAction"
+               class="org.jboss.ide.eclipse.deployer.ui.actions.RedeployAction"
+               menubarPath="org.jboss.ide.eclipse.deployer.ui.popupMenus/group"
+               enablesFor="+"
+               id="org.jboss.ide.eclipse.deployer.ui.popup.RedeployAction">
+            <selection
+                  class="org.eclipse.core.resources.IFile">
+            </selection>
+            <selection
+                  class="org.eclipse.core.resources.IFolder">
+            </selection>
+            <enablement>
+               <objectState
+                     name="sessionProperty"
+                     value="org.jboss.ide.eclipse.deployer.ui.deployed=true">
+               </objectState>
+            </enablement>
+         </action>
+         <action
+               label="%org.jboss.ide.eclipse.deployer.ui.popup.UndeployAction"
+               class="org.jboss.ide.eclipse.deployer.ui.actions.UndeployAction"
+               menubarPath="org.jboss.ide.eclipse.deployer.ui.popupMenus/group"
+               enablesFor="+"
+               id="org.jboss.ide.eclipse.deployer.ui.popup.UndeployAction">
+            <selection
+                  class="org.eclipse.core.resources.IFile">
+            </selection>
+            <selection
+                  class="org.eclipse.core.resources.IFolder">
+            </selection>
+            <enablement>
+               <objectState
+                     name="sessionProperty"
+                     value="org.jboss.ide.eclipse.deployer.ui.deployed=true">
+               </objectState>
+            </enablement>
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="%org.jboss.ide.eclipse.deployer.ui.preferences.MainPreferencePage"
+            category="org.jboss.ide.eclipse.ui.MainPreferencePage"
+            class="org.jboss.ide.eclipse.deployer.ui.preferences.MainPreferencePage"
+            id="org.jboss.ide.eclipse.deployer.ui.preferences.MainPreferencePage">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            lightweight="true"
+            adaptable="true"
+            location="TOP_LEFT"
+            label="%org.jboss.ide.eclipse.deployer.ui.decorators.DeployedDecorator"
+            class="org.jboss.ide.eclipse.deployer.ui.decorators.DeployedDecorator"
+            state="true"
+            id="org.jboss.ide.eclipse.deployer.ui.decorators.DeployedDecorator">
+         <description>
+            Indicates that the resource is deployed
+         </description>
+         <enablement>
+            <objectClass
+                  name="org.eclipse.core.resources.IResource">
+            </objectClass>
+         </enablement>
+      </decorator>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            adaptable="true"
+            objectClass="org.eclipse.core.resources.IResource"
+            name="%org.jboss.ide.eclipse.deployer.ui.properties.DeployedResourcePropertyPage"
+            class="org.jboss.ide.eclipse.deployer.ui.properties.DeployedResourcePropertyPage"
+            id="org.jboss.ide.eclipse.deployer.ui.properties.DeployedResourcePropertyPage">
+      </page>
+   </extension>
+
+</plugin>

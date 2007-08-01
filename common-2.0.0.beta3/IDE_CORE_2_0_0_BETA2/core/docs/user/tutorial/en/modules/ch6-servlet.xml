@@ -1,0 +1,274 @@
+<chapter id="servlet">
+	<title>The Servlet and the Web-App</title>
+	<para>Having an EJB is not enough. We will write a servlet that access this EJB to perform the actual computation of the Fibonacci suite.</para>
+
+	<informaltable frame="none">
+	<tgroup cols="2" align="left" colsep="1" rowsep="1">
+		<tbody>
+			<row>
+				<entry>
+				<para>
+					Create a new HTTP Servlet. Select <literal>File</literal> &gt; <literal>New</literal> &gt; Other... 
+					and choose <literal>JBoss-IDE</literal> &gt; <literal>Web Components</literal> &gt; <literal>HTTP Servlet</literal>.
+				</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/new-servlet-wizard.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<procedure>
+						<title>HTTP Servlet Configuration</title>
+						<step>Set the <literal>Package</literal> to <literal>tutorial.web</literal>.</step>
+						<step>Set the Class <literal>Name</literal> to <literal>ComputeServlet</literal>.</step>
+						<step>Under <literal>Which method stubs would you like to create?</literal>, check the <literal>init() method</literal>.</step>
+						<step>Under <literal>Which service method stubs would like to create?</literal>, check the <literal>doPost() method</literal>.</step>
+					</procedure>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/servlet-wizard.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+		</tbody>
+	</tgroup>
+	</informaltable>
+	<para>
+		Our servlet needs some initialization and processing code. Add the following private member.
+	</para>
+	<programlisting>
+		private FiboHome home;
+	</programlisting>
+	<para>
+		Complete the <literal>init</literal> method as shown. This code is responsible for the initialization of the EJB Home interface and grabbing the local environment entry.
+	</para>
+	<programlisting>
+public void init(ServletConfig config) throws ServletException {
+	try {
+		Context context = new InitialContext();
+		Object ref = context.lookup("java:/comp/env/ejb/Fibo");
+		home = (FiboHome) PortableRemoteObject.narrow(ref, FiboHome.class);
+	} catch (Exception e) {
+		throw new ServletException("Lookup of java:/comp/env/ failed");
+	}
+}
+	</programlisting>
+	<para>
+		Complete the <literal>doPost</literal> method as shown. The code will parse the request to get the limit parameter, create an instance of the EJB, perform computation, release the instance and output the result as HTML.
+	</para>
+	<programlisting>
+protected void doPost(HttpServletRequest request,
+	HttpServletResponse response) throws ServletException, IOException {
+
+	response.setContentType("text/html");
+	PrintWriter out = response.getWriter();
+
+	out.println("&lt;html&gt;&lt;head&gt;&lt;title&gt;");
+	out.println("Fibonaci Computation");
+	out.println("&lt;/title&gt;&lt;/head&gt;");
+	out.println("&lt;body&gt;");
+
+	out.println("&lt;h1&gt;");
+	out.println("Fibonaci Computation");
+	out.println("&lt;/h1&gt;");
+
+	try {
+		Fibo bean = home.create();
+		int limit = 0;
+		String value = request.getParameter("limit");
+		if (value != null) {
+			try {
+				limit = Integer.parseInt(value);
+			} catch (Exception e) {
+			}
+		}
+		double[] result = bean.compute(limit);
+		bean.remove();
+
+		out.println("&lt;p&gt;");
+		out.print("The ");
+		out.print(limit);
+		out.print(" first Fibonacci numbers ");
+
+		for (int i = 0; i &lt; result.length; i++) {
+			out.println("&lt;br&gt;");
+			out.println(i);
+			out.println(" : ");
+			out.println(result[i]);
+		}
+
+		out.println("&lt;/p&gt;");
+	} catch (Exception e) {
+		out.println(e.getMessage());
+		e.printStackTrace(out);
+	} finally {
+		out.println("&lt;/body&gt;&lt;/html&gt;");
+		out.close();
+	}
+}
+	</programlisting>
+	<informaltable frame="none">
+	<tgroup cols="2" align="left" colsep="1" rowsep="1">
+		<tbody>
+			<row>
+				<entry>
+				<para>
+					Next, we will insert the missing XDoclet tags for the Servlet. In the Java editor go in the Javadoc class paragraph. Type “@web.” And press CTRL+Space. You should see JBoss Eclipse IDE's auto-completion in action.
+				</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/xdoclet-autocomplete.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+		</tbody>
+	</tgroup>
+	</informaltable>
+	
+	<para>
+		Correct and complete the attributes of the tag with the following values (press CTRL+Space for each attribute if you want the completion) :
+	</para>
+	
+	<programlisting>
+/**
+ * @web.servlet
+ *		name="Compute"
+ *		display-name="Computation Servlet"
+ *		description="Servlet that compute Fibonacci suite"
+ * 
+ * @web.servlet-mapping
+ * 		url-pattern="/Compute"
+ * 
+ * @web.ejb-ref
+ *		name="ejb/Fibo"
+ *		type="Session"
+ *		home="tutorial.interfaces.FiboHome"
+ *		remote="tutorial.interfaces.Fibo"
+ *		description="Reference to the Fibo EJB"
+ * 
+ * @jboss.ejb-ref-jndi
+ *		ref-name="ejb/Fibo"
+ *		jndi-name="ejb/Fibo"
+ */
+public class ComputeServlet extends HttpServlet {
+	</programlisting>
+	<para>
+		After that, the file should look like this. Now we are ready to run XDoclet on the file, which will generate the Web descriptors.
+	</para>
+	<programlisting>
+package tutorial.web;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.rmi.PortableRemoteObject;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import tutorial.interfaces.Fibo;
+import tutorial.interfaces.FiboHome;
+
+/**
+ * @web.servlet
+ *		name="Compute"
+ *		display-name="Computation Servlet"
+ *		description="Servlet that compute Fibonacci suite"
+ * 
+ * @web.servlet-mapping
+ * 		url-pattern="/Compute"
+ * 
+ * @web.ejb-ref
+ *		name="ejb/Fibo"
+ *		type="Session"
+ *		home="tutorial.interfaces.FiboHome"
+ *		remote="tutorial.interfaces.Fibo"
+ *		description="Reference to the Fibo EJB"
+ * 
+ * @jboss.ejb-ref-jndi
+ *		ref-name="ejb/Fibo"
+ *		jndi-name="ejb/Fibo"
+ */
+public class ComputeServlet extends HttpServlet {
+	private FiboHome home;
+
+	public ComputeServlet() {
+		super();
+	}
+
+      public void init(ServletConfig config) throws ServletException {
+		try {
+			Context context = new InitialContext();
+			Object ref = context.lookup("java:/comp/env/ejb/Fibo");
+			home = (FiboHome) PortableRemoteObject.narrow(ref, FiboHome.class);
+		} catch (Exception e) {
+			throw new ServletException("Lookup of java:/comp/env/ failed");
+		}
+	}
+
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+
+		out.println("&lt;html&gt;&lt;head&gt;&lt;title&gt;");
+		out.println("Fibonaci Computation");
+		out.println("&lt;/title&gt;&lt;/head&gt;");
+		out.println("&lt;body&gt;");
+
+		out.println("&lt;h1&gt;");
+		out.println("Fibonaci Computation");
+		out.println("&lt;/h1&gt;");
+
+		try {
+			Fibo bean = home.create();
+			int limit = 0;
+			String value = request.getParameter("limit");
+			if (value != null) {
+				try {
+					limit = Integer.parseInt(value);
+				} catch (Exception e) {
+				}
+			}
+			double[] result = bean.compute(limit);
+			bean.remove();
+
+			out.println("&lt;p&gt;");
+			out.print("The ");
+			out.print(limit);
+			out.print(" first Fibonacci numbers ");
+
+			for (int i = 0; i &lt; result.length; i++) {
+				out.println("&lt;br&gt;");
+				out.println(i);
+				out.println(" : ");
+				out.println(result[i]);
+			}
+
+			out.println("&lt;/p&gt;");
+		} catch (Exception e) {
+			out.println(e.getMessage());
+			e.printStackTrace(out);
+		} finally {
+			out.println("&lt;/body&gt;&lt;/html&gt;");
+			out.close();
+		}
+	}
+}
+	</programlisting>
+</chapter>

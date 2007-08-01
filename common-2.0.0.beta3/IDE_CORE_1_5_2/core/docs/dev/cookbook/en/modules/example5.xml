@@ -1,0 +1,214 @@
+<chapter id="Example5">
+  <title>Editors</title>
+  <section>
+  	<title>Introduction</title>
+  	<para>
+  		Making your own editor involves extending current editor classes that
+  		are available to you, like <literal>TextEditor</literal>. The 
+  		project named <literal>Example5aCustomEditor</literal>
+  		is the eclipse template generated for you, with absolutely no 
+  		modifications at all by me to mark up or elaborate on the topic.
+  		It primarily parses and then colors xml documents.</para>
+  		
+  		<para>
+	  		<literal>Example5bMultiPageEditor</literal> is a two-page editor
+	  		that has a text-style editor on one page, and a view on the other
+	  		to represent that data graphically. While crude in its implementation,
+	  		it serves pretty well to demonstrate what goes into making a multi-page
+	  		editor.</para>
+  </section>
+  
+  <section>
+  	<title>Custom Editor</title>
+  	<para>
+  		The basic TextEditor is a large text field centered inside
+  		your workbench, and provides columns for line numbers and markers on the sides.
+  		Because of this, most editors you produce should probably inherit
+  		from TextEditor. The steps to creating your editor 
+  		are: declaring your dependencies, declaring your extension, and
+  		finally, making the editor.</para>
+  		
+  	<para>
+  		In order to provide a custom editor, you will need to depend on 
+  		<literal>org.eclipse.jface.text</literal>, 
+  		<literal>org.eclipse.ui.editors</literal>, and 
+  		<literal>org.eclipse.ui.workbench.texteditor</literal>. Once you have 
+  		these dependencies, we're ready to declare our extension point.</para>
+  		
+  	<para>
+  		To create our extension, we add <literal>org.eclipse.ui.editors</literal>
+  		as an extension point, right-click on it once added and select
+  		<literal>new-&gt;editor</literal>. Our new editor needs 
+  		an id, a name, preferably some extension denoting what types of 
+  		files we can be used to edit, a class for the editor, and a contributor
+  		class, which manages the context menus for editors. (You are, of course,
+  		welcome to create your own contributer after studying some of the generalized
+  		ones, but that is an exercise left up to the reader, should they care to do so.
+  		My example has used a common contributor class.)</para>
+  		
+  	<para>
+  		The astute reader who is actively browsing the project code now 
+  		will notice that the actual editor class itself is rather tiny.
+  		For those who aren't reading along, the editor class looks as follows:
+  	</para>
+  	
+  	<programlisting>public class XMLEditor extends TextEditor {
+
+	private ColorManager colorManager;
+
+	public XMLEditor() {
+		super();
+		colorManager = new ColorManager();
+		setSourceViewerConfiguration(new XMLConfiguration(colorManager));
+		setDocumentProvider(new XMLDocumentProvider());
+	}
+	public void dispose() {
+		colorManager.dispose();
+		super.dispose();
+	}
+
+}</programlisting>
+
+	<para>
+		So apparently all this editor does is change our source view 
+		configuration and our document provider. Unfortunately, I don't
+		know much about either of these classes, so our only clues as to 
+		what they do are in the javadocs for their respective classes. </para>
+	<para>
+		By pressing <literal>ctrl</literal> and mousing over these classes, then
+		clicking, we can browse to them and read their javadocs or explore their
+		code. For Document Providers, we find is that:
+	</para>
+	<para><programlisting>/**
+ * A document provider maps between domain elements and documents. A document provider has the
+ * following responsibilities:
+ * &lt;ul&gt;
+ * &lt;li&gt;create an annotation model of a domain model element
+ * &lt;li&gt;create and manage a textual representation, i.e., a document, of a domain model element
+ * &lt;li&gt;create and save the content of domain model elements based on given documents
+ * &lt;li&gt;update the documents this document provider manages for domain model elements to changes
+ * directly applied to those domain model elements
+ * &lt;li&gt;notify all element state listeners about changes directly applied to domain model 
+ * elements this document provider manages a document for, i.e. the document provider must 
+ * know which changes of a domain model element are to be interpreted as element moves, deletes, etc.
+ * &lt;/ul&gt;
+ * Text editors use document providers to bridge the gap between their input elements and the
+ * documents they work on. A single document provider may be shared between multiple editors; 
+ * the methods take the editors' input elements as a parameter.
+ * &lt;p&gt;
+ * This interface may be implemented by clients; or subclass the standard abstract base class
+ * &lt;code&gt;AbstractDocumentProvider&lt;/code&gt;.</programlisting></para>
+  		<para>For Source Viewer Configurations, we find:</para>
+  		<para><programlisting>/**
+ * This class bundles the configuration space of a source viewer. Instances of
+ * this class are passed to the <code>configure</code> method of
+ * &lt;code&gt;ISourceViewer&lt;/code&gt;.
+ * Each method in this class get as argument the source viewer for which it
+ * should provide a particular configuration setting such as a presentation
+ * reconciler. Based on its specific knowledge about the returned object, the
+ * configuration might share such objects or compute them according to some
+ * rules.  		
+  		</programlisting></para>
+  		<para></para>
+  		<para>To test how this editor looks, run the plug-in,
+  		and in the runtime workspace, create a new file 
+  		(<literal>file-&gt;new-&gt;file</literal>) with a 
+  		<literal>.xml</literal> extension and open it. It should
+  		open by default into an editor of our example type, and 
+  		as you type in some xml, it should color it appropriately.</para>
+  		
+  		<para>Unfortunately, that's all the information I can really
+  		provide on overriding a simple editor. As we just saw, 
+  		it mostly consists of declaring your dependencies, declaring
+  		your extension, and following through by creating an editor
+  		that overrides some default functionality. The rest really involves
+  		using the classes provided as basepoints from which to branch
+  		off and do your own thing as necessary.</para>
+  </section>
+  
+  
+  <section>
+  	<title>Multi-Page Editor</title>
+  	<para>Multi-page editors are most often represented as some group of models
+  	that represent or display data from a raw or source text file. In this example,
+  	I've simply used our simple editor from the last example as a base, and 
+  	added a second page that displays all top level elements under the &lt;xml&gt; tag.</para>
+  	
+  	<para>Editors follow the open, save, close methodology, so any changes you make
+  	to some editor data via its gui interface 
+  	should change it's associated text editor immediately, but should
+  	NOT save the changes to the underlying resource until the user requests it to do so.</para>
+  	
+  	<para>A multi-page editor should extend the <literal>MultiPageEditorPart</literal>
+  	superclass. Our example will have two pages, one with our xml editor, the other 
+  	with a viewer. I've declared two private members for these elements.</para>
+  	
+  	<para>The only method we MUST implement from the abstract superclass is the
+  	<literal>createPages</literal> method. Everything else is done for us, though
+  	we're always welcome to override what we need to. In this example, we don't
+  	override much at all. </para>
+  	
+  	<para>We begin by creating each of our two pages, and then changing the title 
+  	for the editor, which is simply a cosmetic change. Because our editor page
+  	is the simplest to look at, I'll use it to demonstrate how to create a new page.</para>
+  	
+  	<programlisting>
+		editor = new XMLEditor();
+		int index = addPage(editor, getEditorInput());
+		setPageText(index, "Source");		
+  	</programlisting>
+  	
+  	<para>That's about all that's involved. If your editor is going to use a simple
+  	regular text editor, you can set editor to a new <literal>TextEditor</literal>
+  	object instead. The next step is to then create our other page, 
+  	the viewer page. The code for our viewer page could actually be just
+  	as short:</para>
+
+  	<programlisting>
+		viewer = new TableViewer(getContainer(), SWT.NONE);
+		int index = addPage(viewer.getControl());
+		setPageText(index, "Viewer");
+  	</programlisting>
+  	
+  	<para>The next thing we need to do here is set up the data model for the viewer.
+  	Remember, we want the viewer to match the text document at every conceivable point, 
+  	and since users can only look at one page in an editor at a time, a good time
+  	to update the viewer is when the user switches tabs. </para>
+  	
+  	<programlisting>
+		protected void pageChange(int newPage) {
+			if( newPage == 0 ) {
+				// make it refresh this
+				viewer.setInput(editor);
+			}
+		}  	
+  	</programlisting>
+  	
+  	<para>Next, our viewer needs a content provider and a label provider. How
+  	do we want our view to display the xml data at hand? In this example, I just
+  	made it display the top level elements. The only really interesting
+  	code here that you haven't seen is how to get the text from your editor.</para>
+  	
+  	<programlisting>
+		String editorText = editor.getDocumentProvider().
+		getDocument(editor.getEditorInput()).get();
+  	</programlisting>
+  	
+  	<para>Now this should work well to display the editor's data
+  	to the user, but there's very little point to having a multi-paged
+  	editor with a gui interface unless you're going to provide actions
+  	for the user to make it easier to modify the file. Because of this we've 
+  	added our menu managers and a context menu with a <literal>REMOVE</literal>
+  	action. And, of course, we need to change the text in the editor 
+  	when we switch back to it.</para>
+  	
+  	<programlisting>
+		editor.getDocumentProvider().getDocument(editor.getEditorInput()).set(newXML);
+		viewer.refresh();
+	</programlisting>
+	
+	<para>Good luck making your tabbed text-editor</para>
+
+  	
+  </section>
+</chapter>

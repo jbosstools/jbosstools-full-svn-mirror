@@ -1,0 +1,104 @@
+<!--
+
+  HibernateTools ANT build script.
+-->
+
+<project name="org.hibernate.eclipse" default="dist" basedir=".">
+
+	<!-- Name of project and version, used to create filenames -->
+    <property name="Name" value="org.hibernate.eclipse"/>
+    <property name="name" value="org.hibernate.eclipse"/>
+    <property name="version" value="3.1"/>
+	<property name="javadoc.packagenames" value="org.hibernate.eclipse.*"/>
+
+	<property name="src.dir" location="src"/>
+	
+	<import file="../common/common-build.xml"/> 
+
+	<target name="javadoc"/>
+	
+	<target name="update" depends="init">
+         
+        <delete failonerror="no">
+	     <fileset dir="lib">
+               <exclude name="bsh-core-2.0b4.jar"/>     
+               <exclude name="annotations/*"/>
+               <exclude name="CVS"/>
+            <include name="**/*"/>
+    	 </fileset>
+        </delete>
+        
+        <mkdir dir="lib/hibernate"/>      
+        <mkdir dir="lib/tools"/>            
+        
+        <property name="lib.hibernate" location="lib/hibernate"/>
+        <property name="lib.tools" location="lib/tools"/>      
+        
+		<!-- DONT BUILD H3 unless you have to use new features from the core. use the released binary if you can! -->
+		 <ant antfile="${hibernate-core.home}\..\hibernate3\build.xml" inheritall="false" inheritrefs="false" target="jar"/> 
+		<ant antfile="${hibernate-core.home}\..\hibernate3\build.xml" inheritall="false" inheritrefs="false" target="copylib"/>  
+    
+        <!-- we need to have the hibernateconsole stuff together with the core to fake DriverManager into allow loading drivers -->
+		<!-- <ant antfile="..\console\build.xml" inheritall="false" inheritrefs="false" target="jar"/>
+		<copy file="..\console\target\hibernateconsole\hibernateconsole.jar" todir="${lib.tools}"/> -->
+		<!--
+		 I guess we also need l2fprod for Property / HibernateProperty
+		-->
+		<!--<copy file="..\console\lib\l2fprod-common.jar" todir="${lib.tools}"/> -->
+
+		<ant antfile="..\tools\build.xml" inheritall="false" inheritrefs="false" target="jar"/>
+        <ant antfile="..\tools\build.xml" inheritall="false" inheritrefs="false" target="copylib"/>        
+		<copy file="..\tools\target\hibernate-tools\hibernate-tools.jar" todir="${lib.tools}"/>
+		<copy file="..\tools\target\hibernate-tools\lib\velocity-1.4.jar" todir="${lib.tools}"/>
+		<copy file="..\tools\target\hibernate-tools\lib\velocity-tools-generic-1.1.jar" todir="${lib.tools}"/>		
+		<copy file="..\tools\target\hibernate-tools\lib\jtidy-r8-21122004.jar" todir="${lib.tools}"/>		
+		
+		<property file="${hibernate-core.lib.dir}/version.properties" prefix="h3"/>
+		
+        <copy todir="${lib.hibernate}" >
+			<fileset dir="${hibernate-core.home}">
+				<include name="hibernate3.jar"/>	
+        	</fileset>
+        	    	
+            <fileset dir="${hibernate-core.lib.dir}">
+            	<include name="${h3.antlr.lib}"/>
+            	<include name="${h3.c3p0.lib}"/>
+		    	<include name="${h3.cglib.lib}"/>
+		    	<include name="${h3.asm.lib}"/>
+                <include name="${h3.asm-attrs.lib}"/>		    	
+		    	<include name="${h3.commons-collections.lib}"/>
+				<include name="${h3.commons-logging.lib}"/>
+				<include name="${h3.dom4j.lib}"/>
+            	
+            	<!-- ehcache, required if no other cache provider is set -->
+            	<include name="${h3.ehcache.lib}"/>
+            	
+            	<!-- optionals (required when outside app container)-->
+            	<include name="${h3.connector.lib}"/>
+            	<include name="${h3.jdbc-stdext.lib}"/>
+            	<include name="${h3.jta.lib}"/>
+
+            	<!-- replicated caches -->
+            	<include name="${h3.jgroups.lib}"/>
+            	
+            	<!-- Treecache deps -->
+				<include name="${h3.concurrent.lib}"/>            	
+            	<include name="${h3.jboss-cache.lib}"/>            	
+            	<include name="${h3.jboss-common.lib}"/>            	
+            	<include name="${h3.jboss-jmx.lib}"/>            	
+            	<include name="${h3.jboss-system.lib}"/>            	
+				<!-- Treecache deps end -->
+            	
+            	<!-- unclassified -->
+            	<include name="${h3.commons-collections.lib}"/>
+            	<include name="${h3.jaas.lib}"/>
+            	<include name="${h3.log4j.lib}"/>
+               	<include name="${h3.oscache.lib}"/>
+            	<include name="${h3.proxool.lib}"/>
+            	<include name="${h3.swarmcache.lib}"/>
+            </fileset>
+        </copy>
+  
+	</target>
+
+</project>

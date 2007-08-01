@@ -1,0 +1,23 @@
+<project default="build.driver">
+	<loadproperties srcFile="${driver.properties}"/>
+
+	<target name="build.driver" depends="download.archive">
+		<property name="unzip.dest" value="${eclipseInstallDir}"/>
+
+		<unzip src="${build.archive}" dest="${unzip.dest}"/>
+
+		<tstamp/>
+
+		<echo file="${requirement.root}/${requirement}/return.properties">
+			# Generated on ${DSTAMP} ${TSTAMP}
+		</echo>
+	</target>
+
+	<target name="check.archive">
+		<available file="${build.archive}" property="archive.exists"/>
+	</target>
+
+	<target name="download.archive" depends="check.archive" unless="archive.exists">
+		<get src="${build.uri}/${build.archive}" dest="${build.archive}"/>
+	</target>
+</project>

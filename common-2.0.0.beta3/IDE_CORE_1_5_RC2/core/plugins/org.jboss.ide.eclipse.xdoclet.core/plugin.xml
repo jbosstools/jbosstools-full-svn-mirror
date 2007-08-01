@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="%org.jboss.ide.eclipse.xdoclet.core.ui.MainPreferencePage"
+            category="org.jboss.ide.eclipse.ui.MainPreferencePage"
+            class="org.jboss.ide.eclipse.xdoclet.core.ui.MainPreferencePage"
+            id="org.jboss.ide.eclipse.xdoclet.core.ui.MainPreferencePage">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.contentTypes">
+      <file-association
+            file-names="xdoclet-build.xml"
+            content-type="antBuildFile">
+      </file-association>
+   </extension>
+
+</plugin>

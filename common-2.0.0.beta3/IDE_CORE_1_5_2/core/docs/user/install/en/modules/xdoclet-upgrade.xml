@@ -1,0 +1,27 @@
+<chapter id="xdoclet.upgrade">
+    <title>XDoclet Upgrade</title>
+	<para>
+		JBoss-IDE looks for the XDoclet modules in the following directory :
+		<literal>$ECLIPSE_HOME/plugins/org.jboss.ide.eclipse.xdoclet.core_x.y.z/</literal>
+		where x.y.z is the release of JBoss-IDE.
+	</para>
+	<para>You can add or remove modules from this directory as you like. After such a change you have to refresh the XDoclet module list and data.</para>
+	<para>
+		When the XDoclet code assist is used the first time after Eclipse has been restarted it looks for the cache and if the
+		cache is there it just takes a couple of seconds to load the data.
+		Go to <literal>Window</literal> &gt; <literal>Preferences</literal> &gt; <literal>JBoss-IDE</literal> &gt; <literal>XDoclet</literal>
+		for refreshing module list and to <literal>Window</literal> &gt; <literal>Preferences</literal> &gt; <literal>JBoss-IDE</literal> &gt; <literal>XDoclet</literal> &gt; <literal>Assist</literal>
+		to force the data cache to be regenerated.
+	</para>
+	<para>
+		Note that it is necessary to refresh both the module list and to flush the cache, otherwise new modules will not be correctly taken into account.
+		<figure id="xdoclet.modules">
+	        <title>Preferences window for XDoclet modules list.</title>
+	        <mediaobject>
+	            <imageobject>
+	                <imagedata align="center" fileref="images/xdoclet-modules.jpg"/>
+	            </imageobject>
+	        </mediaobject>
+	    </figure>
+	</para>
+</chapter>
