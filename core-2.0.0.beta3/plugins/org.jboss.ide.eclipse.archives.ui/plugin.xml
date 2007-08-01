@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="nodePopupMenus" name="Popup Menus for IPackageNodes" schema="schema/nodePopupMenus.exsd"/>
+   <extension-point id="newArchiveActions" name="Actions to create new Package types" schema="schema/newArchiveActions.exsd"/>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.jboss.ide.eclipse.ui.views"
+            class="org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesView"
+            icon="icons/jar_obj.gif"
+            id="org.jboss.ide.eclipse.archives.ui.ProjectArchivesView"
+            name="Project archives"/>
+   </extension>
+
+   <extension
+         point="org.jboss.ide.eclipse.archives.ui.newArchiveActions">
+      <newPackageAction
+            class="org.jboss.ide.eclipse.archives.ui.actions.NewJARAction"
+            icon="icons/new_package.gif"
+            id="org.jboss.ide.eclipse.archives.ui.newJARAction"
+            label="JAR"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.jboss.ide.eclipse.archives.ui.actions.Archives"
+            label="Archives"
+            visible="true">
+         <action
+               class="org.jboss.ide.eclipse.archives.ui.actions.BuildProjectAction"
+               definitionId="org.jboss.ide.eclipse.packages.ui.actions.BuildArchivesAction"
+               icon="icons/build_packages.gif"
+               id="org.jboss.ide.eclipse.archives.ui.actions.BuildArchivesAction"
+               label="Build Packages"
+               menubarPath="project/additions"
+               style="push">
+            <enablement>
+               <and>
+               	<objectState
+                     name="projectNature"
+                     value="org.jboss.ide.eclipse.archives.core.archivesNature"/>
+               </and>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.jboss.ide.eclipse.ui.MainPreferencePage"
+            class="org.jboss.ide.eclipse.archives.ui.preferences.MainPreferencePage"
+            id="org.jboss.ide.eclipse.archives.ui.archivesPreferencePage"
+            name="Packaging Archives"/>
+   </extension>
+   
+   
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="org.jboss.ide.eclipse.archives.ui.preferences.MainPreferencePage"
+            id="org.jboss.ide.eclipse.archives.ui.projectProperties"
+            name="Packaging Archives"
+            objectClass="org.eclipse.core.resources.IProject"/>
+      <page
+            class="org.jboss.ide.eclipse.archives.ui.preferences.MainPreferencePage"
+            id="org.jboss.ide.eclipse.archives.ui.projectProperties2"
+            name="Packaging Archives"
+            objectClass="org.eclipse.jdt.core.IJavaProject"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.jboss.ide.eclipse.archives.ui.PrefsInitializer"/>
+   </extension>
+   
+</plugin>
