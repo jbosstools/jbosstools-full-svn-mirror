@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jst.jsp.core.internal.contentmodel.TaglibController;
 import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TLDCMDocumentManager;
@@ -28,19 +29,21 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
-import org.jboss.tools.jst.jsp.editor.IVisualContext;
-import org.jboss.tools.jst.jsp.editor.TLDRegisterHelper;
-import org.jboss.tools.jst.jsp.preferences.VpePreference;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 import org.jboss.tools.common.kb.KbConnectorFactory;
 import org.jboss.tools.common.kb.KbConnectorType;
 import org.jboss.tools.common.kb.KbTldResource;
 import org.jboss.tools.common.kb.wtp.JspWtpKbConnector;
 import org.jboss.tools.common.kb.wtp.TLDVersionHelper;
 import org.jboss.tools.common.kb.wtp.WtpKbConnector;
-import org.jboss.tools.common.model.ui.editors.dnd.DropUtils;
+import org.jboss.tools.common.model.XModel;
+import org.jboss.tools.common.model.project.IModelNature;
+import org.jboss.tools.common.model.util.EclipseResourceUtil;
+import org.jboss.tools.jst.jsp.editor.IVisualContext;
+import org.jboss.tools.jst.jsp.editor.TLDRegisterHelper;
+import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.jst.web.tld.TaglibData;
+import org.jboss.tools.jst.web.tld.VpeTaglibListener;
+import org.jboss.tools.jst.web.tld.VpeTaglibManager;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
@@ -55,9 +58,8 @@ import org.jboss.tools.vpe.editor.css.TaglibReferenceList;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.FileUtil;
-import org.jboss.tools.jst.web.tld.TaglibData;
-import org.jboss.tools.jst.web.tld.VpeTaglibListener;
-import org.jboss.tools.jst.web.tld.VpeTaglibManager;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * Contains the information on edited page.
@@ -409,7 +411,8 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 				Iterator it = list.iterator();
 				while(it.hasNext()) {
 					TaglibData data = (TaglibData)it.next();
-					TLDRegisterHelper.registerTld(data, (JspWtpKbConnector)wtpKbConnector, document);
+					IEditorInput ei = editPart.getEditorInput();
+					TLDRegisterHelper.registerTld(data, (JspWtpKbConnector)wtpKbConnector, document, ei);
 				}
 				return true;
 			}
