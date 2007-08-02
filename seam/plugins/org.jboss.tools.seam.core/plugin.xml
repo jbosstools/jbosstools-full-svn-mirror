@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         id="seambuilder"
+         name="Seam Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="false">
+         <run
+               class="org.jboss.tools.seam.core.SeamCoreBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="seamnature"
+         name="Seam Project Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.jboss.tools.seam.internal.core.SeamProject">
+         </run>
+      </runtime>
+      <builder
+            id="org.jboss.tools.seam.core.seambuilder">
+      </builder>
+   </extension>
+
+   <extension point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.jboss.tools.seam.internal.core.SeamPreferenceInitializer"/>
+      <initializer
+            class="org.jboss.tools.seam.internal.core.project.facet.SeamFacetPreferenceInitializer">
+      </initializer>
+   </extension>
+
+   <extension
+         point="org.eclipse.wst.common.project.facet.core.facets">
+      <project-facet
+            id="jst.seam">
+         <label>
+            Seam Facet
+         </label>
+         <description>
+            Seam facet description
+         </description>
+      </project-facet>
+      <project-facet-version
+            facet="jst.seam"
+            version="1.2">
+         <constraint>
+            <and>
+               <requires
+                     facet="jst.web"
+                     version="[2.4">
+               </requires>
+               <requires
+                     facet="jst.jsf"
+                     version="[1.1">
+               </requires>
+               <requires
+                     facet="jst.java"
+                     version="[5.0">
+               </requires>
+            </and>
+         </constraint>
+      </project-facet-version>
+      <action
+            facet="jst.seam"
+            id="jst.seam.1.2.install"
+            type="install"
+            version="1.2">
+         <delegate
+               class="org.jboss.tools.seam.internal.core.project.facet.SeamFacetInstallDelegete">
+         </delegate>
+         <config-factory
+               class="org.jboss.tools.seam.internal.core.project.facet.SeamFacetInstallDataModelProvider">
+         </config-factory>
+      </action>
+      <action
+            facet="jst.seam"
+            id="jst.seam.1.2.uninstall"
+            type="uninstall"
+            version="1.2">
+         <delegate
+               class="org.jboss.tools.seam.internal.core.project.facet.SeamFacetUninstallDelegate">
+         </delegate>
+      </action>
+      <event-handler
+            facet="jst.seam"
+            type="POST_INSTALL"
+            version="[1.2">
+         <delegate
+               class="org.jboss.tools.seam.internal.core.project.facet.SeamFacetPostInstallDelegate">
+         </delegate>
+      </event-handler>
+      <event-handler
+            facet="jst.seam"
+            type="PRE_INSTALL"
+            version="[1.2">
+         <delegate
+               class="org.jboss.tools.seam.internal.core.project.facet.SeamFacetPreInstallDelegate">
+         </delegate>
+      </event-handler>
+   </extension>
+   <extension
+         point="org.eclipse.wst.common.project.facet.core.runtimes">
+      <supported>
+         <runtime-component
+               id="org.eclipse.jst.server.generic.runtime.jboss"
+               version="4.2">
+         </runtime-component>
+         <runtime-component
+               id="org.jboss.ide.eclipse.as.runtime.component.40"
+               version="4.0">
+         </runtime-component>
+         <runtime-component
+               id="org.jboss.ide.eclipse.as.runtime.component.42"
+               version="4.2">
+         </runtime-component>
+         <facet
+               id="jst.seam"
+               version="1.2">
+         </facet>
+      </supported>
+   </extension>
+ <extension
+       point="org.eclipse.wst.common.project.facet.core.presets">
+       <static-preset
+           id="preset.jst.seam.v1_2">
+	    <label>Seam 1.2 project</label>
+	    <facet id="jst.java" version="5.0" />
+	    <facet id="jst.web" version="2.5"/>
+	    <facet id="jst.jsf" version="1.2" />
+	    <facet id="jst.seam" version="1.2"/>
+     <description>
+        Seam 1.2 project
+     </description>
+     </static-preset>
+ </extension>
+
+   <extension
+        point="org.eclipse.wst.validation.validator"
+		id="SeamValidator"
+		name="Seam Validator">
+		<validator>
+			<projectNature id="org.jboss.tools.seam.core.seamnature" />
+			<filter
+				objectClass="org.eclipse.core.resources.IFile"
+				nameFilter="*.java"/>
+			<filter
+				objectClass="org.eclipse.core.resources.IFile"
+				nameFilter="*.xml"/>
+			<filter
+				objectClass="org.eclipse.core.resources.IFile"
+				nameFilter="*.xhtml"/>
+			<filter
+				objectClass="org.eclipse.core.resources.IFile"
+				nameFilter="*.jsp">
+			</filter>
+			<filter
+				objectClass="org.eclipse.core.resources.IFile"
+				nameFilter="*.jspf">
+			</filter>
+			<filter
+				objectClass="org.eclipse.core.resources.IFile"
+				nameFilter="*.jsf">
+			</filter>
+			<filter
+				objectClass="org.eclipse.core.resources.IFile"
+				nameFilter="*.jsv">
+			</filter>
+			<filter
+				objectClass="org.eclipse.core.resources.IFile"
+				nameFilter="*.jtpl">
+			</filter>
+         	<contentTypeBinding contentTypeId="org.eclipse.jst.jsp.core.jspsource"/>
+         	<contentTypeBinding contentTypeId="org.eclipse.jst.jsp.core.jspfragmentsource"/>
+         	<contentTypeBinding contentTypeId="org.eclipse.jst.jsp.core.tagsource"/>
+			<markerId
+               markerIdValue="seamProblem">
+         	</markerId>
+			<helper 
+				class="org.jboss.tools.seam.internal.core.validation.SeamValidationHelper">
+			</helper>
+			<run
+         		class="org.jboss.tools.seam.internal.core.validation.SeamValidatorManager"
+         		incremental="true"
+         		fullBuild="true"
+         	/>
+		</validator>
+	</extension>
+
+   <extension
+         id="seamProblem"
+         name="Seam Problem"
+         point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.wst.validation.problemmarker"/>
+      	<persistent
+            value="true">
+      	</persistent>
+   </extension>
+
+</plugin>
