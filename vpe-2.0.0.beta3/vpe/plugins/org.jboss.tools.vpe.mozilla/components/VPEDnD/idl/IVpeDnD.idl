@@ -1,0 +1,29 @@
+#include "nsISupports.idl"
+
+%{C++
+#include "nsAString.h"
+%}
+
+interface nsIDOMDocument;
+interface nsIPresShell;
+interface nsIDOMNode;
+interface nsIDOMElement;
+interface IVpeDragDropListener;
+
+[scriptable,uuid(A5EA4500-600F-4716-A17D-827EEF6BD126)]
+
+interface IVpeDnD : nsISupports
+{
+	void Init(in nsIDOMDocument aDOMDocument,
+		in nsIPresShell aPresShell,
+		in IVpeDragDropListener aListener,
+		in AString pathSeparator);
+	
+	void GetBounds(in nsIDOMNode aNode,
+		out PRInt32 aX,
+		out PRInt32 aY,
+		out PRInt32 aWidth,
+		out PRInt32 aHeight) ;
+	
+	void SetCursor(in AString aCursorName, in PRInt32 aLock);
+};

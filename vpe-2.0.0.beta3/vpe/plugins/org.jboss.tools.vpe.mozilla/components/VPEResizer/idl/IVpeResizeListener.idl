@@ -1,0 +1,10 @@
+#include "nsISupports.idl"
+
+interface nsIDOMElement;
+
+[scriptable,uuid(29C1345E-90A1-4dd0-B525-7F27F259D9A8)]
+
+interface IVpeResizeListener : nsISupports
+{
+  void OnEndResizing(in PRInt32 aUsedHandle, in PRInt32 aTop, in PRInt32 aLeft, in PRInt32 aX, in PRInt32 aY, in nsIDOMElement resizedObject);
+};
