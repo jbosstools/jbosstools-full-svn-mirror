@@ -10,7 +10,7 @@
             </keywordset>
     </chapterinfo>
     
-    <title>Ajax CRUD-application with Seam and Rich Faces</title>
+    <title>Getting Started with Seam Gen</title>
 <para>In this chapter we will see how easy it is to build Seam applications and integrate
 them with Ajax4jsf and Rich Faces. We will bootstrap the application using Seam Gen which is
  a  CRUD application generator. Seam Gen can be used from either the command line or via an
@@ -59,7 +59,7 @@ launch the Seam Gen setup window as shown below. Note: </listitem>
 <note>
     <title>Note:</title>
     <para>If this is the first time you run 
-Seam Gen a file dialog will be shown. In this you need to select &lt;seam&gt;/seam-gen/build.xml
+Seam Gen a file dialog will be shown. In this diallog you need to select &lt;seam&gt;/seam-gen/build.xml
  so the plugin knows which seam-gen to use.</para>
    </note>
 <para></para>
@@ -85,7 +85,7 @@ Seam Gen a file dialog will be shown. In this you need to select &lt;seam&gt;/se
             <tbody>
                <row>
                   <entry>Project</entry>
-                  <entry>EclipseCon</entry>
+                  <entry>SeamSample</entry>
                </row>
                <row>
                <entry>Seam project workspace</entry>
@@ -112,11 +112,11 @@ Seam Gen a file dialog will be shown. In this you need to select &lt;seam&gt;/se
          &quot;Yes&quot; to create a WTP Database connection that connects to the default HSQL DB
           instance that we have set up. If you are using any other database then set up the
            appropriate database settings in the Seam Gen setup window.</para>
-           <para>At the end of this step you will see an Eclipse project called &quot;EclipseCon&quot;
+           <para>At the end of this step you will see an Eclipse project called &quot;SeamSample&quot;
              as shown below. This project has all the necessary elements required to deploy
               a Seam application.</para>
               <figure>
-<title>EclipseCon Project Structure</title>
+<title>SeamSample Project Structure</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/EclipseConProjectStructure.png"/>
@@ -125,7 +125,7 @@ Seam Gen a file dialog will be shown. In this you need to select &lt;seam&gt;/se
 </figure>
 <itemizedlist continuation="continues">
 <listitem>Start the application server. Open your favorite browser and point to the 
-following URL http://localhost:8080/EclipseCon. You should see the following page:</listitem>
+following URL http://localhost:8080/SeamSample. You should see the following page:</listitem>
 </itemizedlist>  
 <figure>
 <title>Created Project</title>
