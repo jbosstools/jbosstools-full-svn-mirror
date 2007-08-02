@@ -171,6 +171,13 @@
             </fileset>
         </copy>
 
+	<copy todir="${build.dir}/${lang}/html/css/images">
+            <fileset dir="${styles.dir}/${lang}/Images">
+                <include name="**/*.gif"/>
+            </fileset>
+        </copy>
+
+
         <java classname="com.icl.saxon.StyleSheet"
               fork="true" dir="${build.dir}/${lang}/html">
             <classpath refid="lib.classpath"/>
@@ -193,6 +200,13 @@
         <copy todir="${build.dir}/${lang}/html_single/css">
             <fileset dir="${styles.dir}/${lang}">
                 <include name="**/*.css"/>
+            </fileset>
+        </copy>
+
+
+	<copy todir="${build.dir}/${lang}/html_single/css/images">
+            <fileset dir="${styles.dir}/${lang}/Images">
+                <include name="**/*.gif"/>
             </fileset>
         </copy>
 

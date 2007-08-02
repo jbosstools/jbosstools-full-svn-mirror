@@ -1,390 +1,335 @@
 * {
-font-family:verdana, helvetica, sans-serif;
-line-height:20px;
+	LINE-HEIGHT: 20px; FONT-FAMILY: verdana, helvetica, sans-serif
 }
-
-div.navheader table {
-margin:0px;
-border:0px;
+DIV.navheader TABLE, DIV.navheader TABLE td, DIV.navfooter TABLE, DIV.navfooter TABLE td{
+	BORDER-RIGHT: 0px; BORDER-TOP: 0px; MARGIN: 0px; BORDER-LEFT: 0px; BORDER-BOTTOM: 0px; FONT-SIZE: 11px; padding : 0px;
 }
-
-div.navfooter table {
-margin:0px;
-border:0px;
-}
-
-
 A {
-	FONT-SIZE: 12px;
-	COLOR: #2A7BD4;
-	FONT-FAMILY: verdana, helvetica, sans-serif;
+	COLOR: #2a7bd4; FONT-FAMILY: verdana, helvetica, sans-serif
 }
-
 A:hover {
-	FONT-SIZE: 12px;
-	COLOR: #003399;
-	FONT-FAMILY: verdana, helvetica, sans-serif
+	COLOR: #003399; FONT-FAMILY: verdana, helvetica, sans-serif
 }
-
 A:visited {
-    font-family:verdana, helvetica, sans-serif;
-	color: #888888;
-	font-size:12px;
+	COLOR: #888888; FONT-FAMILY: verdana, helvetica, sans-serif
 }
-
-P, OL, UL, LI, DL, DT, DD, BLOCKQUOTE {
-    color: #000000;
-	font-size:12px;
+P {
+	FONT-SIZE: 12px; COLOR: #000000; margin : 5px 0px 5px 0px;
 }
-
-TD, TH, SPAN {
-    color: #000000;
+OL {
+	FONT-SIZE: 12px; COLOR: #000000; margin-top : 5px; margin-bottom : 5px;
 }
-
-SPAN.property {
-    font-family: Verdana, Helvetica, sans-serif;
-	color: #008CCA;
+UL {
+	FONT-SIZE: 12px; COLOR: #000000; margin-top : 5px; margin-bottom : 5px;
 }
-
-SPAN.italic {
-    font-family: Verdana, Helvetica, sans-serif;
-	font-style:italic;
-	
+LI {
+	FONT-SIZE: 12px; COLOR: #000000; margin-top : 5px; margin-bottom : 5px;
 }
-
-SPAN.bold {
-    font-family: Verdana, Helvetica, sans-serif;
-	font-style:bold;
-}	
-	
+DL {
+	FONT-SIZE: 12px; COLOR: #000000; margin-top : 5px; margin-bottom : 5px;
+}
+DT {
+	FONT-SIZE: 12px; COLOR: #000000; margin-top : 5px; margin-bottom : 5px;
+}
+DD {
+	FONT-SIZE: 12px; COLOR: #000000; margin-top : 5px; margin-bottom : 5px;
+}
 BLOCKQUOTE {
-    margin-right: 0px;
+	FONT-SIZE: 12px; COLOR: #000000
+}
+TD {
+	COLOR: #000000
+}
+TH {
+	COLOR: #000000
+}
+SPAN {
+	COLOR: #000000
+}
+SPAN.property {
+	COLOR: #008cca;
+}
+SPAN.italic {
+	FONT-STYLE: italic;
 }
 
-div.titlepage div.mediaobject{
+BLOCKQUOTE {
+	MARGIN-RIGHT: 0px
+}
+
+P.title {
+	MARGIN-BOTTOM: 5px;
+	MARGIN-top: 20px;
+}
+
+div.book div.chapter .title {
+	text-align: left;
+}
+
+
+div.book .title {
+	text-align: center;
+}
+
+.mediaobject{
+	padding : 5px 10px 5px 35px;
+}
+H1 {
+	MARGIN: 0px; FONT-SIZE: 22px; COLOR: #ff6600; PADDING: 45px 0px 10px 0px;
+}
+H2 {
+	MARGIN: 0px; FONT-SIZE: 18px; COLOR: #2a7bd4; PADDING: 25px 0px 10px 0px;
+}
+H3 {
+	MARGIN: 0px; FONT-SIZE: 15px; COLOR: #000000; PADDING: 20px 0px 10px 0px;
+}
+H4 {
+	MARGIN: 0px; FONT-SIZE: 12px; COLOR: #000000; PADDING: 15px 0px 10px 0px;
+}
+H5 {
+	MARGIN: 0px; FONT-SIZE: 12px; COLOR: #000000; PADDING: 15px 0px 10px 0px;
+}
+H6 {
+	MARGIN: 0px; FONT-SIZE: 11px; COLOR: #000000; PADDING: 5px 0px 0px 0px;
+}
+
+div.book div.section div.mediaobject{
+text-align:left;
+}
+
+
+div.book div.mediaobject{
 text-align:center;
 }
 
-div.mediaobject, div.mediaobject img{
+div.mediaobject, div.mediaobject img *{
 text-align:left;
 
 }
 
-H1 {
-    color: #FF6600;
-    padding-top:30px;
-	MARGIN-TOP: 0px;
-	FONT-SIZE: 22px;
-	PADDING-TOP: 15px;
+DIV.note{
+	BORDER: #CECECE 1px solid; PADDING: 3px 10px 10px 50px; line-height : 14px;   MARGIN: 10px 0px 10px 0px; FONT-SIZE: 11px; WIDTH: 500px; BACKGROUND-COLOR: #FFFDD3;
+	background-image : url('Images/ico_note.gif'); background-repeat : no-repeat; background-position :top left;
 }
 
-H2 {
-	MARGIN-TOP: 10px;
-	FONT-SIZE: 18px;
-	COLOR: #2A7BD4;
-	PADDING-TOP: 20px
+DIV.note *{
+	line-height : 14px;
 }
 
-H3 {
-	MARGIN-TOP: 15px;
-	FONT-SIZE: 16px;
-	COLOR: #000000;
-	PADDING-TOP: 5px
+.note P {
+	MARGIN-TOP: 0px; MARGIN-BOTTOM: 1em; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+.important P {
+	MARGIN-TOP: 0px; MARGIN-BOTTOM: 1em; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+DIV.important {
+	BORDER: #CECECE  1px solid; PADDING: 3px 10px 10px 50px; line-height : 14px;   MARGIN: 10px 0px 10px 0px; FONT-SIZE: 11px; WIDTH: 500px; BACKGROUND-COLOR: #CFE3FF;
+	background-image : url('Images/ico_important.gif'); background-repeat : no-repeat; background-position :top left; 
 }
 
-H4 {
-	MARGIN-TOP: 10px;
-	FONT-SIZE: 12px;
-	COLOR: #000000;
-	PADDING-TOP: 15px
-}
-H5 {
-	MARGIN-TOP: 10px;
-	FONT-SIZE: 12px;
-	COLOR: #000000;
-	PADDING-TOP: 15px
+DIV.important *{
+	line-height : 14px;
 }
 
-H6 {
-	MARGIN-TOP: 10px;
-	FONT-SIZE: 12px;
-	COLOR: #000000;
-	PADDING-TOP:15px;
-}
+.important pre.XML {
+PADDING: 1px 1px 1px 10px;
 
-div.note {
-	FONT-SIZE: 12px;
-	Color:#000000;
-	width:500px;
-	text-align:justify;
-	font-family:Verdana, Arial, Helvetica, sans-serif;
-    border-style:solid;
-    border-width:1px;
-	border-left-color:#CCCCCC;
-	border-top-color:#CCCCCC;
-    border-right-color: #CCCCCC;
-    border-bottom-color: #CCCCCC;
-    background-color: #F4F4F4;
-	PADDING-LEFT:1em;
-	PADDING-RIGHT:1em;
-	PADDING-TOP:0px;
-	PADDING-BOTTOM:0px;
-	MARGIN-BOTTOM:0px;
-    MARGIN-TOP:0px;
-}
-
-.note .title, .important .title {
-MARGIN-BOTTOM:0px;
-MARGIN-TOP:0px;
-MARGIN-BOTTOM:0px;
-MARGIN-TOP:0px;
-PADDING-LEFT:0px;
-PADDING-RIGHT:0px;
-PADDING-TOP:1em;
-PADDING-BOTTOM:5px;
-}
-
-.note p, .important p {
-	PADDING-TOP:0px;
-	PADDING-BOTTOM:0px;
-	MARGIN-BOTTOM:1em;
-	MARGIN-TOP:0px;
-}
-
-div.important {
-	FONT-SIZE: 12px;
-	Color:#000000;
-	width:500px;
-	text-align:justify;
-	font-family:Verdana, Arial, Helvetica, sans-serif;
-    border-style:solid;
-    border-width:1px;
-	border-left-color:#2A7BD4;
-	border-top-color:#2A7BD4;
-    border-right-color:#2A7BD4;
-    border-bottom-color:#2A7BD4;
-	PADDING-LEFT:1em;
-	PADDING-RIGHT:1em;
-	PADDING-TOP:0px;
-	PADDING-BOTTOM:0px;
-	MARGIN-BOTTOM:0px;
-    MARGIN-TOP:0px;
 }
 
 
-TABLE  {
-	font-family:Verdana, Arial, Helvetica, sans-serif;
-	font-size:12px;
-	text-align:justify;
-    border-collapse: collapse;
-    border-spacing:0;
-    border-bottom-width:1px;
-	border-top-width:1px;
-	border-left-width:1px;
-	border-right-width:1px;
-	border-left-color:#d8e7f8;
-	border-right-color:#d8e7f8;
-	border-top-color:#CCCCCC;
-	border-bottom-color:#CCCCCC;
-    empty-cells: hide;
-    border-style: solid;
+TABLE {
+	BORDER: #cccccc 1px solid; FONT-SIZE: 11px; BORDER-COLLAPSE: collapse;  border-spacing: 0; empty-cells: hide; margin-bottom : 10px;
 }
 
-.table TH	{
-	background-color:#d8e7f8;
-	text-align:center;
-	white-space:nowrap;
-}
-
-ul, li {
-list-style-type: disc;
-
-list-style-position:inside;
-}
-
-div.table {
-	width:800px;
+table *{
+	line-height : 14px;
 }
 
 
-TD  {
-    padding: 4pt;
+.table TH {
+	WHITE-SPACE: nowrap; BACKGROUND-COLOR: #EEF5FF; TEXT-ALIGN: center;   BORDER-BOTTOM: #CAE1FF 2px solid; PADDING: 2px 8px 2px 8px;
+	background-image : url('Images/bg_table.gif'); background-repeat : repeat-x; background-position :top left;
 }
-
-
-H1 { font-size: 140%; }
-H2 { font-size: 120%; }
-H3 { font-size: 100%; }
-H4 { font-size: 100%; }
-H5 { font-size: 100%; }
-H6 { font-size: 100%; }
-
-p.copyright	{
-	text-align:center
+TD {
+	PADDING: 4px 8px 4px 8px; BORDER-BOTTOM: #cccccc 1px dotted;  BORDER-right: #cccccc 1px dotted;
 }
-
-
+P.copyright {
+	TEXT-ALIGN: center
+}
 TT {
-font-size: 90%;
-    font-family: "Courier New", Courier, monospace;
-    color: #000000;
+	FONT-SIZE: 90%; COLOR: #000000; FONT-FAMILY: "Courier New", Courier, monospace
 }
-
-dl, dt, dd{margin-left : 8; margin-bottom : 6;}
-
+DL {
+	MARGIN-BOTTOM: 6px; MARGIN-LEFT: 8px
+}
+DT {
+	MARGIN-BOTTOM: 6px; MARGIN-LEFT: 8px
+}
+DD {
+	MARGIN-BOTTOM: 6px; MARGIN-LEFT: 8px
+}
 PRE {
-	
-	font-family:Verdana, Arial, Helvetica, sans-serif;
-    font-size: 11px;
-    padding: 5px;
-    border-style: solid;
-    border-width: 1px;
-	border-left-color:#2A7BD4;
-	border-top-color:#2A7BD4;
-    border-right-color: #CCCCCC;
-    border-bottom-color: #CCCCCC;
-    background-color: #F4F4F4;
-	width:800px;
+	BORDER: #cccccc 1px solid; PADDING: 5px 15px 5px 25px; FONT-SIZE: 11px;  BACKGROUND-COLOR: #f5f5f5;
 }
-
-UL LI {
-	PADDING-LEFT: 20px; LIST-STYLE-TYPE: disc
+HR {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; WIDTH: 100%; COLOR: #cccccc; PADDING-TOP: 0px; HEIGHT: 1px; BACKGROUND-COLOR: #cccccc; BORDER-RIGHT-WIDTH: 0px
 }
-
-OL LI {
-	PADDING-LEFT: 20px; LIST-STYLE-TYPE: decimal
+.variablelist {
+	PADDING-BOTTOM: 10px; MARGIN: 0px; PADDING-TOP: 10px
 }
-
-HR  {
-   BORDER-TOP-WIDTH: 0px;
-    PADDING-RIGHT: 0px; 
-	PADDING-LEFT: 0px; 
-	BORDER-LEFT-WIDTH: 0px; 
-	BORDER-BOTTOM-WIDTH: 0px;
-	PADDING-BOTTOM: 0px;
-	WIDTH: 100%; 
-	COLOR: #cccccc; 
-	PADDING-TOP: 0px; 
-	HEIGHT: 1px; 
-	BACKGROUND-COLOR: #cccccc; 
-	BORDER-RIGHT-WIDTH: 0px
+.itemizedlist {
+	FONT-SIZE: 12px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px;TEXT-ALIGN: justify
 }
-
-.variablelist { 
-    padding-top: 10px; 
-    padding-bottom:10px; 
-    margin:0;
+.term {
+	FONT-WEIGHT: bold
 }
-
-.itemizedlist, UL { 
-    font-family:Verdana, Arial, Helvetica, sans-serif;
-	font-size:12px;
-    padding-top: 0; 
-    padding-bottom:0; 
-    margin:0;
-	text-align:justify;
+PRE.JAVA {
+	LINE-HEIGHT: 0px
 }
-
-.itemizedlist, li {
-list-style-position:outside;
+PRE.XML {
+	LINE-HEIGHT: 0px
 }
-
-.term { 
-    font-weight:bold;
+PRE.JSP {
+	LINE-HEIGHT: 0px
 }
-
-pre.JAVA, pre.XML, pre.JSP, pre.XHTML {
-	line-height:0px;
+PRE.XHTML {
+	LINE-HEIGHT: 0px
 }
-
 .java_type {
-color:#008CCA;
+	COLOR: #008cca
 }
 .java_keyword {
-color: rgb(0,0,0); font-weight: bold;
+	FONT-WEIGHT: bold; COLOR: rgb(0,0,0)
 }
 .java_javadoc_comment {
-color: rgb(147,147,147); background-color: rgb(247,247,247); font-style: italic;
+	COLOR: rgb(147,147,147); FONT-STYLE: italic; BACKGROUND-COLOR: rgb(247,247,247)
 }
 .java_comment {
-color: rgb(147,147,147); background-color: rgb(247,247,247);
+	COLOR: rgb(147,147,147); BACKGROUND-COLOR: rgb(247,247,247)
 }
 .java_operator {
-color: #003399;
+	COLOR: #003399
 }
 .java_plain {
-color: rgb(0,0,0);
+	COLOR: rgb(0,0,0)
 }
 .java_literal {
-color:#FF6600;
+	COLOR: #ff6600
 }
-pre code {
-	color: rgb(0,0,0); font-family: monospace; font-size: 12px; white-space: nowrap;
+PRE CODE {
+	FONT-SIZE: 12px; COLOR: rgb(0,0,0); FONT-FAMILY: monospace; WHITE-SPACE: nowrap
 }
 .java_javadoc_tag {
-color: rgb(147,147,147); background-color: rgb(247,247,247); font-style: italic; font-weight: bold;
+	FONT-WEIGHT: bold; COLOR: rgb(147,147,147); FONT-STYLE: italic; BACKGROUND-COLOR: rgb(247,247,247)
 }
 .java_separator {
-color:#008CCA;
+	COLOR: #008cca
 }
 .xml_plain {
-color: rgb(0,0,0);
+	COLOR: rgb(0,0,0)
 }
 .xml_tag_name {
-color: #008CCA;
+	COLOR: #008cca
 }
 .xml_comment {
-color: rgb(147,147,147); background-color: rgb(247,247,247);
+	COLOR: rgb(147,147,147); BACKGROUND-COLOR: rgb(247,247,247)
 }
 .xml_tag_symbols {
-color:#008CCA;
+	COLOR: #008cca
 }
 .xml_rife_tag {
-color: rgb(0,0,0); background-color: rgb(228,230,160);
+	COLOR: rgb(0,0,0); BACKGROUND-COLOR: rgb(228,230,160)
 }
 .xml_attribute_value {
-color:#FF6600
+	COLOR: #ff6600
 }
-
 .xml_attribute_name {
-color: rgb(0,0,0); font-weight: bold;
+	FONT-WEIGHT: bold; COLOR: rgb(0,0,0)
 }
 .xml_char_data {
-color: rgb(0,0,0);
+	COLOR: rgb(0,0,0)
 }
 .xml_rife_name {
-color:#008CCA; background-color: rgb(228,230,160);
+	COLOR: #008cca; BACKGROUND-COLOR: rgb(228,230,160)
 }
 .xml_processing_instruction {
-color: rgb(0,0,0); font-weight: bold; font-style: italic;
+	FONT-WEIGHT: bold; COLOR: rgb(0,0,0); FONT-STYLE: italic
 }
-
-.book .titlepage .title {
-	text-align:center;
+TD.java {
+	VERTICAL-ALIGN: top; LINE-HEIGHT: 10px
 }
-
-.book .chapter .title {
-	text-align:left;
+TD.java-ln {
+	VERTICAL-ALIGN: top; LINE-HEIGHT: 10px
 }
-
-td.java, td.java-ln {vertical-align:top; line-height:10px;}
-tt.java, tt.java-ln, pre.java, pre.java-ln {line-height:1em; margin-bottom:0em;line-height:10px;}
-td.java-ln { text-align:right; line-height:10px;}
-tt.java-ln, pre.java-ln { color:#888888; line-height:10px;}
-/* Background       */ span.java0  { font-size: 8pt; color:#ffffff; line-height:10px;}
-/* Line numbers       */ span.java1  { font-size: 8pt; color:#808080; }
-/* Multi-line comments       */ span.java2  { font-size: 8pt; color:#3f7f5f; line-height:10px;}
-/* Single-line comments       */ span.java3  { font-size: 8pt; color:#3f7f5f; line-height:10px;}
-/* Keywords       */ span.java4  { font-size: 8pt; color:#FF6600; font-weight:bold; line-height:10px;}
-/* Strings       */ span.java5  { font-size:8pt; color:#2a00ff; line-height:10px;}
-/* Character constants       */ span.java6  { font-size: 8pt; color:#990000; line-height:10px;}
-/* Numeric constants       */ span.java7  { font-size: 8pt; color:#990000; line-height:10px;}
-/* Parenthesis       */ span.java8  { font-size: 8pt; color:#000000; line-height:10px;}
-/* Primitive Types       */ span.java9  { font-size: 8pt; color:#FF6600; font-weight:bold; line-height:10px;}
-/* Others       */ span.java10  { font-size: 8pt; color:#000000; line-height:10px;}
-/* Javadoc keywords       */ span.java11  { font-size: 8pt; color:#7f9fbf; line-height:10px;}
-/* Javadoc HTML tags       */ span.java12  { font-size: 8pt; color:#7f7f9f; line-height:10px;}
-/* Javadoc links       */ span.java13  { font-size: 8pt; color:#3f3fbf; line-height:10px;}
-/* Javadoc others       */ span.java14  { font-size: 8pt; color:#3f5fbf; line-height:10px;}
-/* Undefined       */ span.java15  { font-size: 8pt; color:#ff6100; line-height:10px;}
-/* Annotation       */ span.java16  { font-size: 8pt; color:#646464; line-height:10px;} 
+TT.java {
+	MARGIN-BOTTOM: 0em; LINE-HEIGHT: 10px
+}
+TT.java-ln {
+	MARGIN-BOTTOM: 0em; LINE-HEIGHT: 10px
+}
+PRE.java {
+	MARGIN-BOTTOM: 0em; LINE-HEIGHT: 10px
+}
+PRE.java-ln {
+	MARGIN-BOTTOM: 0em; LINE-HEIGHT: 10px
+}
+TD.java-ln {
+	LINE-HEIGHT: 10px; TEXT-ALIGN: right
+}
+TT.java-ln {
+	COLOR: #888888; LINE-HEIGHT: 10px
+}
+PRE.java-ln {
+	COLOR: #888888; LINE-HEIGHT: 10px
+}
+SPAN.java0 {
+	FONT-SIZE: 8pt; COLOR: #ffffff; LINE-HEIGHT: 10px
+}
+SPAN.java1 {
+	FONT-SIZE: 8pt; COLOR: #808080
+}
+SPAN.java2 {
+	FONT-SIZE: 8pt; COLOR: #3f7f5f; LINE-HEIGHT: 10px
+}
+SPAN.java3 {
+	FONT-SIZE: 8pt; COLOR: #3f7f5f; LINE-HEIGHT: 10px
+}
+SPAN.java4 {
+	FONT-WEIGHT: bold; FONT-SIZE: 8pt; COLOR: #ff6600; LINE-HEIGHT: 10px
+}
+SPAN.java5 {
+	FONT-SIZE: 8pt; COLOR: #2a00ff; LINE-HEIGHT: 10px
+}
+SPAN.java6 {
+	FONT-SIZE: 8pt; COLOR: #990000; LINE-HEIGHT: 10px
+}
+SPAN.java7 {
+	FONT-SIZE: 8pt; COLOR: #990000; LINE-HEIGHT: 10px
+}
+SPAN.java8 {
+	FONT-SIZE: 8pt; COLOR: #000000; LINE-HEIGHT: 10px
+}
+SPAN.java9 {
+	FONT-WEIGHT: bold; FONT-SIZE: 8pt; COLOR: #ff6600; LINE-HEIGHT: 10px
+}
+SPAN.java10 {
+	FONT-SIZE: 8pt; COLOR: #000000; LINE-HEIGHT: 10px
+}
+SPAN.java11 {
+	FONT-SIZE: 8pt; COLOR: #7f9fbf; LINE-HEIGHT: 10px
+}
+SPAN.java12 {
+	FONT-SIZE: 8pt; COLOR: #7f7f9f; LINE-HEIGHT: 10px
+}
+SPAN.java13 {
+	FONT-SIZE: 8pt; COLOR: #3f3fbf; LINE-HEIGHT: 10px
+}
+SPAN.java14 {
+	FONT-SIZE: 8pt; COLOR: #3f5fbf; LINE-HEIGHT: 10px
+}
+SPAN.java15 {
+	FONT-SIZE: 8pt; COLOR: #ff6100; LINE-HEIGHT: 10px
+}
+SPAN.java16 {
+	FONT-SIZE: 8pt; COLOR: #646464; LINE-HEIGHT: 10px
+}
