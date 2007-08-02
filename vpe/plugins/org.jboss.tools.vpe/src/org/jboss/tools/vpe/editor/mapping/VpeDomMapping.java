@@ -1,0 +1,327 @@
+/*******************************************************************************
+ * Copyright (c) 2007 Exadel, Inc. and Red Hat, Inc.
+ * Distributed under license by Red Hat, Inc. All rights reserved.
+ * This program is made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
+ ******************************************************************************/ 
+package org.jboss.tools.vpe.editor.mapping;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.jboss.tools.vpe.mozilla.browser.MozillaBrowser;
+import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMElement;
+import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMNode;
+
+public class VpeDomMapping {
+	private Map sourceMap = new HashMap();
+	private Map visualMap = new HashMap();
+	private VpePageContext pageContext;
+	
+	public VpeDomMapping(VpePageContext pageContext) {
+		this.pageContext = pageContext;
+	}
+
+	public void mapNodes(VpeNodeMapping nodeMapping) {
+		sourceMap.put(nodeMapping.getSourceNode(), nodeMapping);
+		if (nodeMapping.getVisualNode() != null) {
+			visualMap.put(nodeMapping.getVisualNode(), nodeMapping);
+			if (nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+				if (((VpeElementMapping)nodeMapping).getBorder() != null) {
+					visualMap.put(((VpeElementMapping)nodeMapping).getBorder(), nodeMapping);
+				}
+			}
+		}
+	}
+	
+	public void clear(Node except) {
+		Set entrySet = visualMap.entrySet();
+		Iterator iter = entrySet.iterator();
+		while (iter.hasNext()) {
+			Map.Entry entry = (Map.Entry)iter.next();
+			Object key = entry.getKey();
+			if (key instanceof Node) {
+				Node visualNode = (Node) entry.getKey();
+				if (!visualNode.equals(except)) {
+					MozillaSupports.release(visualNode);
+				}
+			}
+		}
+		sourceMap.clear();
+		visualMap.clear();
+	}
+	
+	public VpeNodeMapping getNodeMapping(Node node) {
+		if (node instanceof nsIDOMNode) {
+			return getNodeMappingAtVisualNode(node);
+		} else {
+			return getNodeMappingAtSourceNode(node);
+		}
+	}
+	
+	public VpeNodeMapping getNodeMappingAtSourceNode(Node sourceNode) {
+		if (sourceNode != null) {
+			return (VpeNodeMapping) sourceMap.get(sourceNode);
+		}
+		return null;
+	}
+	
+	public VpeNodeMapping getNodeMappingAtVisualNode(Node visualNode) {
+		if (visualNode != null) {
+			return (VpeNodeMapping) visualMap.get(visualNode);
+		}
+		return null;
+	}
+	
+	public Node getVisualNode(Node sourceNode) {
+		VpeNodeMapping nodeMapping = getNodeMapping(sourceNode);
+		if (nodeMapping != null) {
+			return nodeMapping.getVisualNode();
+		}
+		return null;
+	}
+	
+	public Node getSourceNode(Node visualNode) {
+		VpeNodeMapping nodeMapping = getNodeMapping(visualNode);
+		if (nodeMapping != null) {
+			return nodeMapping.getSourceNode();
+		}
+		return null;
+	}
+	
+	public VpeNodeMapping getNearNodeMapping(Node node) {
+		if (node instanceof nsIDOMNode) {
+			return getNearNodeMappingAtVisualNode(node);
+		} else {
+			return getNearNodeMappingAtSourceNode(node);
+		}
+	}
+	
+	public VpeNodeMapping getNearNodeMappingAtSourceNode(Node sourceNode) {
+		VpeNodeMapping nodeMapping = getNodeMappingAtSourceNode(sourceNode);
+		
+		if(nodeMapping!=null){
+			
+			if(sourceNode!=null && nodeMapping != null) {			
+				
+				Node nearVisualNode = nodeMapping.getVisualNode();
+				if(nearVisualNode instanceof Element){	
+					
+					Element visualElement = (Element) nearVisualNode;
+					visualElement.removeAttribute(MozillaBrowser.VPEFLASHERCOLORATTRIBUTE);
+				}
+			}
+		}
+		while (sourceNode != null && nodeMapping == null) {
+			sourceNode = sourceNode.getParentNode();
+			nodeMapping = getNodeMappingAtSourceNode(sourceNode);
+			
+			if(sourceNode!=null && nodeMapping != null) {			
+				Node nearVisualNode = nodeMapping.getVisualNode();
+				if(nearVisualNode instanceof Element){	
+					Element visualElement = (Element) nearVisualNode;
+					visualElement.setAttribute(MozillaBrowser.VPEFLASHERCOLORATTRIBUTE, 
+							MozillaBrowser.flasherHiddentElementColor);
+				}
+			} 
+		}
+		return nodeMapping;
+	}
+
+	public VpeNodeMapping getNearNodeMappingAtVisualNode(Node visualNode) {
+		VpeNodeMapping nodeMapping = getNodeMappingAtVisualNode(visualNode);
+		while (visualNode != null && nodeMapping == null) {
+			visualNode = visualNode.getParentNode();
+			nodeMapping = getNodeMappingAtVisualNode(visualNode);
+		}
+		return nodeMapping;
+	}
+	
+	public VpeNodeMapping getNearParentMapping(Node sourceNode) {
+		VpeNodeMapping nodeMapping = null;
+		if (sourceNode.getNodeType() == Node.ELEMENT_NODE) {
+			nodeMapping = getNearNodeMapping(sourceNode);
+		} else if (sourceNode.getNodeType() == Node.TEXT_NODE) {
+			sourceNode = sourceNode.getParentNode();
+			nodeMapping = getNodeMapping(sourceNode);
+			while (sourceNode != null && sourceNode.getNodeType() != Node.DOCUMENT_NODE && nodeMapping == null) {
+				sourceNode = sourceNode.getParentNode();
+				nodeMapping = getNodeMapping(sourceNode);
+			}
+		}
+		return nodeMapping;
+	}
+
+	public VpeNodeMapping getParentMapping(Node sourceNode) {
+		VpeNodeMapping nodeMapping = null;
+		sourceNode = sourceNode.getParentNode();
+		nodeMapping = getNodeMapping(sourceNode);
+		while (sourceNode != null && sourceNode.getNodeType() != Node.DOCUMENT_NODE && nodeMapping == null) {
+			sourceNode = sourceNode.getParentNode();
+			nodeMapping = getNodeMapping(sourceNode);
+		}
+		return nodeMapping;
+	}
+
+	public VpeElementMapping getNearElementMapping(Node node) {
+		if (node instanceof nsIDOMNode) {
+			return getNearElementMappingAtVisualNode(node);
+		} else {
+			return getNearElementMappingAtSourceNode(node);
+		}
+	}
+
+	public VpeElementMapping getNearElementMappingAtSourceNode(Node sourceNode) {
+		VpeNodeMapping nodeMapping = getNearNodeMappingAtSourceNode(sourceNode);
+		if (nodeMapping != null) {
+			switch (nodeMapping.getType()) {
+			case VpeNodeMapping.TEXT_MAPPING:
+				return getNearElementMappingAtSourceNode(nodeMapping.getSourceNode().getParentNode());
+			case VpeNodeMapping.ELEMENT_MAPPING:
+				return (VpeElementMapping)nodeMapping;
+			}
+		}
+		return null;
+	}
+
+	public VpeElementMapping getNearElementMappingAtVisualNode(Node visualNode) {
+		VpeNodeMapping nodeMapping = getNearNodeMappingAtVisualNode(visualNode);
+		if (nodeMapping != null) {
+			switch (nodeMapping.getType()) {
+			case VpeNodeMapping.TEXT_MAPPING:
+				return getNearElementMappingAtSourceNode(nodeMapping.getSourceNode().getParentNode());
+			case VpeNodeMapping.ELEMENT_MAPPING:
+				return (VpeElementMapping)nodeMapping;
+			}
+		}
+		return null;
+	}
+	
+	public Node getNearVisualNode_(Node sourceNode) {
+		VpeNodeMapping nodeMapping = getNearNodeMapping(sourceNode);
+		if (nodeMapping != null) {
+			return nodeMapping.getVisualNode();
+		}
+		return null;
+	}
+	
+	public Node getNearVisualNode(Node sourceNode) {
+		if (sourceNode == null) return null;
+		VpeNodeMapping nodeMapping = getNearNodeMappingAtSourceNode(sourceNode);
+		if (nodeMapping != null) {
+			if (nodeMapping.getVisualNode() == null) {
+	
+				return getNearVisualNode(sourceNode.getParentNode());
+			} else {
+				
+				return nodeMapping.getVisualNode();
+			}
+		}
+		return null;
+	}
+	
+	public Node getNearSourceNode(Node visualNode) {
+		VpeNodeMapping nodeMapping = getNearNodeMapping(visualNode);
+		if (nodeMapping != null) {
+			return nodeMapping.getSourceNode();
+		}
+		return null;
+	}
+	
+	public Node remove(Node sourceNode) {
+		Node visualNode = getVisualNode(sourceNode);
+//		if (visualNode != null) {
+			removeImpl(sourceNode);
+//		}
+		return visualNode;
+	}
+	
+	public void removeChildren(Node sourceNode) {
+		NodeList sourceChildren = sourceNode.getChildNodes();
+		if (sourceChildren != null) {
+			int len = sourceChildren.getLength();
+			for (int i = 0; i < len; i++) {
+				Node sourceChild = sourceChildren.item(i);
+				VpeNodeMapping nodeMapping = removeImpl(sourceChild);
+				if (nodeMapping != null) {
+					if (nodeMapping.getVisualNode() != null) {
+						MozillaSupports.release(nodeMapping.getVisualNode());
+					}
+					if (nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+						VpeElementMapping elementMapping = (VpeElementMapping)nodeMapping;
+						if (elementMapping.getBorder() != null) {
+							MozillaSupports.release(elementMapping.getBorder());
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private VpeNodeMapping removeImpl(Node sourceNode) {
+		Node visualNode = null;
+		VpeNodeMapping nodeMapping = (VpeNodeMapping)sourceMap.remove(sourceNode);
+		if (nodeMapping != null) {
+			visualNode = nodeMapping.getVisualNode();
+			if (visualNode != null) {
+				visualMap.remove(visualNode);
+			}
+			if (nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+				VpeElementMapping elementMapping = (VpeElementMapping)nodeMapping;
+				Map xmlnsMap = elementMapping.getXmlnsMap();
+				if (xmlnsMap != null) {
+					for (Iterator iter = xmlnsMap.values().iterator(); iter.hasNext();) {
+						pageContext.setTaglib(((Integer)iter.next()).intValue(), null, null, true);
+					}
+					elementMapping.setXmlnsMap(null);
+				}
+				if (elementMapping.getBorder() != null) {
+					visualMap.remove(elementMapping.getBorder());
+				}
+				elementMapping.getTemplate().beforeRemove(pageContext, (Element)elementMapping.getSourceNode(), (nsIDOMElement)elementMapping.getVisualNode(), elementMapping.getData());
+			}
+		}
+		removeChildren(sourceNode);
+		return nodeMapping;
+	}
+	
+	//for debug
+	public void printMapping() {
+		System.out.println("Source DOM Mapping ------------------------------------");
+		Set entrySet = sourceMap.entrySet();
+		Iterator iter = entrySet.iterator();
+		while (iter.hasNext()) {
+			Map.Entry entry = (Map.Entry)iter.next();
+			VpeNodeMapping nodeMapping = (VpeNodeMapping)entry.getValue(); 
+			Node sourceNode = nodeMapping.getSourceNode();
+			Node visualNode = nodeMapping.getVisualNode(); 
+			System.out.println("sourceNode: " + sourceNode.getNodeName() + " (" + sourceNode.hashCode() + ")    visualNode: " + (visualNode != null ? visualNode.getNodeName() + " (" + visualNode.hashCode() + ")  refCount: " + MozillaSupports.getRefCount(visualNode) : null));
+		}
+		System.out.println("Visual DOM Mapping ------------------------------------");
+		entrySet = visualMap.entrySet();
+		iter = entrySet.iterator();
+		while (iter.hasNext()) {
+			Map.Entry entry = (Map.Entry)iter.next();
+			VpeNodeMapping nodeMapping = (VpeNodeMapping)entry.getValue(); 
+			Node sourceNode = nodeMapping.getSourceNode();
+			Node visualNode = nodeMapping.getVisualNode(); 
+			System.out.println("sourceNode: " + (sourceNode != null ? sourceNode.getNodeName() + " (" + sourceNode.hashCode() + ")" : null) + "    visualNode: " + visualNode.getNodeName() + " (" + visualNode.hashCode() + ")  refCount: " + MozillaSupports.getRefCount(visualNode));
+		}
+	}
+
+	public Map getVisualMap() {
+		return visualMap;
+	}
+}
