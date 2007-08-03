@@ -14,7 +14,7 @@
 <para>In this chapter we will see how easy it is to build Seam applications and integrate
 them with Ajax4jsf and Rich Faces. We will bootstrap the application using Seam Gen which is
  a  CRUD application generator. Seam Gen can be used from either the command line or via an
-  Eclipse Plugin. Unlike most application generators, Seam Gen can also be used to
+  Red Hat Developer Studio. Unlike most application generators, Seam Gen can also be used to
    incrementally add more functionality to an existing Seam application.</para>
    <para>Seam is an incredibly flexible development framework that can be completely
     integrated with a Java EE server or in a simple POJO environment like Tomcat. Seam is 
@@ -103,7 +103,7 @@ Seam Gen a file dialog will be shown. In this diallog you need to select &lt;sea
          </tgroup>
       </table>
       <para>The plug-in will initialize the Seam Gen ant tasks that simplify all key Seam 
-      operations. We will invoke several of these ant tasks via the Seam Eclipse Plugin 
+      operations. We will invoke several of these ant tasks via the Seam Red Hat Developer Studio Plugin 
       throughout this tutorial.</para>
       <para>The plug-in will also prompt you to create a project. Select &quot;Yes&quot; to create a
        Project.  This step will create not only an Eclipse project but also all the required
@@ -137,8 +137,7 @@ following URL http://localhost:8080/SeamSample. You should see the following pag
 </figure>
 <para>Congratulations! You have written your first Seam application.</para> 
 <itemizedlist continuation="continues">
-<listitem>Let us take a look at the database connection that was created by the Eclipse
- Plugin and browse the database provided.  The database connection view should now have a
+<listitem>Let us take a look at the database connection that was created by Red Hat Developer Studio and browse the database provided.  The database connection view should now have a
   connection to our sample database as shown below.</listitem> 
   </itemizedlist>
   <figure>
@@ -149,7 +148,7 @@ following URL http://localhost:8080/SeamSample. You should see the following pag
         </imageobject>
 </mediaobject>
 </figure>   
-<para>Right click on the connection > Reconnect. Just specify &quot;sa&quot; as the user id. The password
+<para>Right click on the connection > Connect. Just specify &quot;sa&quot; as the user id. The password
  field should be blank.</para>
  <para>You should now be able to browse the database and  see the meta-data and query data using SQL. 
  Your meta-data should look like the following:</para>
@@ -176,11 +175,11 @@ Click on Seam Gen > Generate Entities.  Seam Gen will connect to the database we
   in the JBoss instance.</listitem>
   <listitem>Restart you application server, just in case those files have not been properly
    synchronized with the application server.</listitem>
-   <listitem>Point your favorite browser to the following URL http://localhost:8080/EclipseCon.
+   <listitem>Point your favorite browser to the following URL http://localhost:8080/SeamSample.
     You will see the following page:</listitem>
     </itemizedlist>
     <figure>
-<title>EclipseCon Project</title>
+<title>SeamSample Project</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/CreatedProject12.png"/>
@@ -297,7 +296,7 @@ Click on Seam Gen > Generate Entities.  Seam Gen will connect to the database we
   have opened in this tutorial. Alternatively you can open the Hibernate Console Perspective where
    these views are opened up by default.</listitem>
    <listitem>Click on the &quot;HQL&quot; icon in the &quot;Hibernate Configurations&quot; view. This will open up 
-   the HQL Designer view as shown below. Also, select &quot;EclipseCon&quot; from the drop down menu next to
+   the HQL Designer view as shown below. Also, select &quot;SeamSample&quot; from the drop down menu next to
     the green &quot;run&quot; button.</listitem>
     </itemizedlist>
     <figure>
@@ -357,7 +356,7 @@ window and see how the query result changes and the SQL Preview changes.</listit
 <listitem>Let us try the Hibernate criteria APIs next. To use Hibernate Criteria APIs click on 
 the &quot;CRI&quot; button in the Hibernate Configurations View. This will open the Criteria API designer 
 view. Type in this simple criteria query as shown below and click on the green run button to see
- the results. Also, select &quot;EclipseCon&quot; from the drop down menu next to the green &quot;run&quot; button.</listitem>
+ the results. Also, select &quot;SeamSample&quot; from the drop down menu next to the green &quot;run&quot; button.</listitem>
     </itemizedlist>
     <programlisting role="JAVA"><![CDATA[session.createCriteria(Offices.class)
 ]]></programlisting>
