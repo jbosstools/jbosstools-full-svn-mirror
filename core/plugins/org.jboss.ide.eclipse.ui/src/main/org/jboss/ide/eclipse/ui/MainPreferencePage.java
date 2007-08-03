@@ -80,34 +80,34 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
     */
    protected Control createContents(Composite parent)
    {
-      GridData layoutData;
+//      GridData layoutData;
       Composite composite = new Composite(parent, SWT.NONE);
-      composite.setLayout(new GridLayout(1, false));
-      layoutData = new GridData(GridData.FILL_BOTH);
-      composite.setLayoutData(layoutData);
-
-      try
-      {
-         URL url = new URL(UIPlugin.getDefault().getBundle().getEntry("/"), "resources/jbosside-logo.png");//$NON-NLS-1$ //$NON-NLS-2$
-         ImageDescriptor descriptor = ImageDescriptor.createFromURL(url);
-         this.image = descriptor.createImage();
-
-         if (this.image != null)
-         {
-            Label lbl = new Label(composite, SWT.NONE);
-            lbl.setImage(this.image);
-            layoutData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
-            lbl.setLayoutData(layoutData);
-
-            lbl = new Label(composite, SWT.NONE);
-            layoutData = new GridData(GridData.FILL_BOTH);
-            lbl.setLayoutData(layoutData);
-         }
-      }
-      catch (MalformedURLException mfue)
-      {
-         // Do nothing
-      }
+//      composite.setLayout(new GridLayout(1, false));
+//      layoutData = new GridData(GridData.FILL_BOTH);
+//      composite.setLayoutData(layoutData);
+//
+//      try
+//      {
+//         URL url = new URL(UIPlugin.getDefault().getBundle().getEntry("/"), "resources/jbosside-logo.png");//$NON-NLS-1$ //$NON-NLS-2$
+//         ImageDescriptor descriptor = ImageDescriptor.createFromURL(url);
+//         this.image = descriptor.createImage();
+//
+//         if (this.image != null)
+//         {
+//            Label lbl = new Label(composite, SWT.NONE);
+//            lbl.setImage(this.image);
+//            layoutData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
+//            lbl.setLayoutData(layoutData);
+//
+//            lbl = new Label(composite, SWT.NONE);
+//            layoutData = new GridData(GridData.FILL_BOTH);
+//            lbl.setLayoutData(layoutData);
+//         }
+//      }
+//      catch (MalformedURLException mfue)
+//      {
+//         // Do nothing
+//      }
 
       return composite;
    }
