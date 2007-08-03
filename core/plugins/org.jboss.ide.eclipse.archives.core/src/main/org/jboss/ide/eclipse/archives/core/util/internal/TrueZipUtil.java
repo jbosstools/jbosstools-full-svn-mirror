@@ -67,6 +67,7 @@ public class TrueZipUtil {
 	}
 	
 	public static void copyFile(String source, de.schlichtherle.io.File file) {
+		file.getParentFile().mkdirs();
 		new de.schlichtherle.io.File(source).copyAllTo(file);
 	    updateParentTimestamps(file);
 	}
