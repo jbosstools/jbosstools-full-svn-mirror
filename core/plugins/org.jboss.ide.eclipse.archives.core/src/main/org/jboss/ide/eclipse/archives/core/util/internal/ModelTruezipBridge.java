@@ -206,7 +206,7 @@ public class ModelTruezipBridge {
 		int fsLength = fs.getGlobalSourcePath().toOSString().length()+1;
 		for( int i = 0; i < inputFiles.length; i++ ) {
 			filesetRelative = inputFiles[i].toOSString().substring(fsLength);
-			returnFiles[i] = new File(fsFile, filesetRelative, ArchiveDetector.NULL);
+			returnFiles[i] = new File(fsFile, filesetRelative, ArchiveDetector.DEFAULT);
 		}
 		return returnFiles;
 	}
