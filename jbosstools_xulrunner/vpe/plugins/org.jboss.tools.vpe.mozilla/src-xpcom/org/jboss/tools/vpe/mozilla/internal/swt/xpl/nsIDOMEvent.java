@@ -29,7 +29,6 @@ package org.jboss.tools.vpe.mozilla.internal.swt.xpl;
 
 import org.w3c.dom.Node;
 
-import org.jboss.tools.vpe.mozilla.browser.MozillaBrowser;
 
 public class nsIDOMEvent extends nsISupports {
 
@@ -116,17 +115,8 @@ public class nsIDOMEvent extends nsISupports {
 		int[] result = new int[] {0};
 		int rc = GetTarget(result);
 		if (rc != XPCOM.NS_OK) error(rc);
-		if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_ERROR_NO_INTERFACE);
+//		if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_ERROR_NO_INTERFACE);
 		return new nsIDOMEventTarget(result[0]);
-	}
-
-	public Node getTargetNode() {
-		int[] result = new int[] {0};
-		int rc = GetTarget(result);
-		if (rc != XPCOM.NS_OK) error(rc);
-		if (result[0] == 0) return null;
-		int nodeAddress = nsISupports.queryInterface(result[0], nsIDOMNode.NS_IDOMNODE_IID);
-		return nsIDOMNode.getNodeAtAddress(nodeAddress);
 	}
 
 	public Node getCurrentTargetNode() {

@@ -10,10 +10,27 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.mozilla;
 
+import org.jboss.tools.common.log.BaseUIPlugin;
+import org.jboss.tools.common.log.IPluginLog;
+
 /**
  * 
  * @author eskimo(dgolovin@exadel.com)
  */
-public class MozillaJavaXpComPlugin {
-	public static final String ID = "org.jboss.tools.vpe.mozilla"; 
+public class MozillaJavaXpComPlugin extends BaseUIPlugin {
+	public static final String PLUGIN_ID = "org.jboss.tools.vpe.mozilla";
+	
+	private static MozillaJavaXpComPlugin instance;
+	
+	public MozillaJavaXpComPlugin() {
+		instance = this;
+	}
+	
+	public static MozillaJavaXpComPlugin getDefault() {
+		return instance;
+	}
+	
+	public static IPluginLog getPluginLog() {
+		return getDefault();
+	}
 }

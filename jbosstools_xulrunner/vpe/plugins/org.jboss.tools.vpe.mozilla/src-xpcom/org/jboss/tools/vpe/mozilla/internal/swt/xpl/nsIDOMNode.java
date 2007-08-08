@@ -384,15 +384,15 @@ public class nsIDOMNode extends nsISupports implements Node {
 		return getNodeAtAddress(result[0]);
 	}
 	
-	public int getOffset() {
-		int offset = 0;
-		int address = getAddress();
-		while ((address = getPreviousSiblingAddress(address)) != 0) {
-			release(address);
-			offset++;
-		}
-		return offset;
-	}
+//	public int getOffset() {
+//		int offset = 0;
+//		int address = getAddress();
+//		while ((address = getPreviousSiblingAddress(address)) != 0) {
+//			release(address);
+//			offset++;
+//		}
+//		return offset;
+//	}
 
     /**
      * The namespace prefix of this node, or <code>null</code> if it is unspecified.

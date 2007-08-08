@@ -12,7 +12,6 @@ package org.jboss.tools.vpe.mozilla.browser;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
-import org.jboss.tools.common.log.LogHelper;
 import org.jboss.tools.vpe.mozilla.MozillaJavaXpComPlugin;
 
 /**
@@ -39,7 +38,7 @@ public class GRE {
 		try {
 			return getBasePath().toOSString();
 		} catch (UnsupportedWindowsSystemException e) {
-			LogHelper.logError(MozillaJavaXpComPlugin.ID, e);
+			MozillaJavaXpComPlugin.getPluginLog().logError(e);
 			return null;
 		}
 	} // getGREPath()

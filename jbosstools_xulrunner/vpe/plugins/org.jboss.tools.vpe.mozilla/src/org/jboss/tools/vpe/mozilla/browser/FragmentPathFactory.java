@@ -12,8 +12,8 @@ package org.jboss.tools.vpe.mozilla.browser;
 
 import java.lang.reflect.Constructor;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.jboss.tools.vpe.mozilla.MozillaJavaXpComPlugin;
 
 /**
  * @author Sergey Vasilyev
@@ -23,14 +23,12 @@ public class FragmentPathFactory {
 	private String pluginId; 
 	public static final String WS_WIN32 = "win32";
 	public static final String WS_GTK = "gtk";
-	private Loger loger;
 	
 	public FragmentPathFactory(String pluginId, String ws)
 	throws
 		UnsupportedWindowsSystemException,
 		RuntimeException {
 		this.pluginId = pluginId;
-		loger = new Loger(pluginId);
 		
 		Class[] params = { String.class };
 		Class factoryClass;
@@ -42,14 +40,14 @@ public class FragmentPathFactory {
 		} else {
 			UnsupportedWindowsSystemException e =
 				new UnsupportedWindowsSystemException(Platform.getWS());
-			loger.log(IStatus.ERROR,e.getMessage(),e);
+			MozillaJavaXpComPlugin.getPluginLog().logError(e);
 			throw e;
 		} 
 		
 		try {
 			factoryConstructor = factoryClass.getConstructor(params);
 		} catch (Exception e) {
-			loger.log(IStatus.ERROR,"Error getting constructor for factory class WS="+ws,e);
+			MozillaJavaXpComPlugin.getPluginLog().logError("Error getting constructor for factory class WS="+ws,e);
 			throw new RuntimeException(e);
 		}
 	} // FragmentPathFactory(String)
@@ -62,7 +60,7 @@ public class FragmentPathFactory {
 		try {
 			factory = factoryConstructor.newInstance(args);
 		} catch (Exception e) {
-			loger.log(IStatus.ERROR,"Error creating factory instance",e);
+			MozillaJavaXpComPlugin.getPluginLog().logError("Error creating factory instance",e);
 			throw new RuntimeException(e);
 		} // try
 		return (IFragmentPath)factory;
