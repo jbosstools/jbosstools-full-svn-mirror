@@ -15,14 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
@@ -30,7 +22,16 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMText;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author Nick Belaevski
@@ -77,7 +78,7 @@ public class VpeLabeledFormCreator extends VpeAbstractCreator {
 		}
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		String labelAttrName = VpeTemplateManager.ATTR_LABELED_FORM_DEFAULT_LABEL;
 		if (labelNameExpr != null) {
 			VpeValue vpeValue = labelNameExpr.exec(pageContext, sourceNode);
@@ -86,7 +87,7 @@ public class VpeLabeledFormCreator extends VpeAbstractCreator {
 			}
 		}
 		
-		Element visualTable = visualDocument.createElement("table");
+		nsIDOMElement visualTable = visualDocument.createElement(HTML.TAG_TABLE);
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(visualTable);
 
 		// transfer attributes to resulting visual node 
@@ -96,9 +97,8 @@ public class VpeLabeledFormCreator extends VpeAbstractCreator {
 				if (creator != null) {
 					VpeCreatorInfo info = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
 					if (info != null && info.getVisualNode() != null) {
-						Attr attr = (Attr)info.getVisualNode();
+						nsIDOMAttr attr = (nsIDOMAttr)info.getVisualNode();
 						visualTable.setAttributeNode(attr);
-						MozillaSupports.release(attr);
 					}
 				}
 			}
@@ -127,19 +127,19 @@ public class VpeLabeledFormCreator extends VpeAbstractCreator {
 				if (attrMap != null)
 					attrNode = attrMap.getNamedItem(labelAttrName);
 
-				Element row = visualDocument.createElement("tr");
+				nsIDOMElement row = visualDocument.createElement(HTML.TAG_TR);
 				
-				Element labelCell = visualDocument.createElement("td");
+				nsIDOMElement labelCell = visualDocument.createElement(HTML.TAG_TD);
 				if (attrNode != null)
 				{
 					String labelValue = attrNode.getNodeValue();
-					Text text = visualDocument.createTextNode(labelValue);
+					nsIDOMText text = visualDocument.createTextNode(labelValue);
 					labelCell.appendChild(text);
 				}
 				row.appendChild(labelCell);
 
 					
-				Element valueCell = visualDocument.createElement("td");
+				nsIDOMElement valueCell = visualDocument.createElement(HTML.TAG_TD);
 
 				row.appendChild(valueCell);
 				visualTable.appendChild(row);

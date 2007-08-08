@@ -11,15 +11,18 @@
 package org.jboss.tools.vpe.editor.template;
 
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDropInfo;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMText;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 public interface VpeTemplate {
 
@@ -48,7 +51,7 @@ public interface VpeTemplate {
 	 * @return The information on the created node of the visual tree.
 	 */
 	VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			Document visualDocument);
+			nsIDOMDocument visualDocument);
 
 	/**
 	 * Is invoked after construction of all child nodes of the current visual
@@ -65,7 +68,7 @@ public interface VpeTemplate {
 	 *            <code>create</code>
 	 */
 	void validate(VpePageContext pageContext, Node sourceNode,
-			Document visualDocument, VpeCreationData data);
+			nsIDOMDocument visualDocument, VpeCreationData data);
 
 	/**
 	 * Processes keyboard input (without the pressed key Ctrl)
@@ -89,8 +92,8 @@ public interface VpeTemplate {
 	 * @return <code>true</code> if the key is processed
 	 */
 	boolean nonctrlKeyPressHandler(VpePageContext pageContext,
-			Document sourceDocument, Node sourceNode, Node visualNode,
-			Object data, int charCode, VpeSourceSelection selection,
+			Document sourceDocument, Node sourceNode, nsIDOMNode visualNode,
+			Object data, long charCode, VpeSourceSelection selection,
 			ITextFormatter formatter);
 
 	/**
@@ -113,7 +116,7 @@ public interface VpeTemplate {
 	 *            Attribute value.
 	 */
 	void setAttribute(VpePageContext pageContext, Element sourceElement,
-			Document visualDocument, Node visualNode, Object data, String name,
+			nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name,
 			String value);
 
 	/**
@@ -133,7 +136,7 @@ public interface VpeTemplate {
 	 *            Attribute name.
 	 */
 	void removeAttribute(VpePageContext pageContext, Element sourceElement,
-			Document visualDocument, Node visualNode, Object data, String name);
+			nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name);
 
 	/**
 	 * Is invoked before removal of the visiblis node from the tree
@@ -148,7 +151,7 @@ public interface VpeTemplate {
 	 *            The arbitrary data, built by a method <code>create</code>
 	 */
 	void beforeRemove(VpePageContext pageContext, Node sourceNode,
-			Node visualNode, Object data);
+			nsIDOMNode visualNode, Object data);
 
 	/**
 	 * At a modification of the node of an source tree, the method update for
@@ -166,7 +169,7 @@ public interface VpeTemplate {
 	 *         null, that is invoked update for current source node
 	 */
 	Node getNodeForUptate(VpePageContext pageContext, Node sourceNode,
-			Node visualNode, Object data);
+			nsIDOMNode visualNode, Object data);
 
 	/**
 	 * Is invoked at resize of an element visual tree
@@ -201,7 +204,7 @@ public interface VpeTemplate {
 	 *            Element height
 	 */
 	void resize(VpePageContext pageContext, Element sourceElement,
-			Document visualDocument, Element visualElement, Object data,
+			nsIDOMDocument visualDocument, nsIDOMElement visualElement, Object data,
 			int resizerConstrains, int top, int left, int width, int height);
 
 	/**
@@ -220,7 +223,7 @@ public interface VpeTemplate {
 	 * @return <code>true</code> The element can be dragged
 	 */
 	boolean canInnerDrag(VpePageContext pageContext, Element sourceElement,
-			Document visualDocument, Element visualElement, Object data);
+			nsIDOMDocument visualDocument, nsIDOMElement visualElement, Object data);
 
 	/**
 	 * Checks a capability to drop an element in the container
@@ -265,8 +268,8 @@ public interface VpeTemplate {
 	 * @return <code>VpeTagDescription</code>
 	 */
 	VpeTagDescription getTagDescription(VpePageContext pageContext,
-			Element sourceElement, Document visualDocument,
-			Element visualElement, Object data);
+			Element sourceElement, nsIDOMDocument visualDocument,
+			nsIDOMElement visualElement, Object data);
 
 	/**
 	 * Checks, whether it is necessary to re-create an element at change of
@@ -290,7 +293,7 @@ public interface VpeTemplate {
 	 *         a modification of attribute, <code>false</code> otherwise.
 	 */
 	boolean isRecreateAtAttrChange(VpePageContext pageContext,
-			Element sourceElement, Document visualDocument, Node visualNde,
+			Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualNde,
 			Object data, String name, String value);
 
 	/**
@@ -400,7 +403,7 @@ public interface VpeTemplate {
 
 	/**
 	 * If the value of attribute of an element of an source tree is mapped by
-	 * the way of text node of a visual treer, this method returns the text
+	 * the way of text node of a visual tree, this method returns the text
 	 * node, otherwise - null
 	 * 
 	 * @param pageContext
@@ -411,7 +414,7 @@ public interface VpeTemplate {
 	 *            The arbitrary data, built by a method <code>create</code>
 	 * @return Text node or null
 	 */
-	Node getOutputTextNode(VpePageContext pageContext, Element sourceElement,
+	nsIDOMText getOutputTextNode(VpePageContext pageContext, Element sourceElement,
 			Object data);
 
 	/**
@@ -458,7 +461,7 @@ public interface VpeTemplate {
 	 *            The document of the visual tree.
 	 */
 	void setPseudoContent(VpePageContext pageContext, Node sourceContainer,
-			Node visualContainer, Document visualDocument);
+			nsIDOMNode visualContainer, nsIDOMDocument visualDocument);
 
 	boolean containsText();
 }

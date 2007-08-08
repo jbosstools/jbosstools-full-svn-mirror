@@ -12,14 +12,17 @@ package org.jboss.tools.vpe.editor.template;
 
 import java.util.Map;
 
+import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMNodeList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
 
 public class VpeFacetCreator extends VpeAbstractCreator {
 	private boolean caseSensitive;
@@ -28,7 +31,7 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		this.caseSensitive = caseSensitive;
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		VpeCreatorInfo creatorInfo = null;
 
 		boolean isHeader = false, isFooter = false;
@@ -42,43 +45,39 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		if (isHeader || isFooter) {
 			Node sourceParent = sourceNode.getParentNode();
 			if (sourceParent != null) {
-				Node visualParent = null;
+				nsIDOMNode visualParent = null;
 				VpeDomMapping domMapping = pageContext.getDomMapping();
 				if (sourceParent != null && domMapping != null) {
 					visualParent = pageContext.getDomMapping().getVisualNode(sourceParent);
 				}
 
-				Node header = null, footer = null;
+				nsIDOMNode header = null, footer = null;
 				if (visualParent != null && visualParent.getNodeName().equalsIgnoreCase("table")) {
 
-					NodeList children = visualParent.getChildNodes();
-					int count = children != null ? children.getLength() : 0;
+					nsIDOMNodeList children = visualParent.getChildNodes();
+					long count = children != null ? children.getLength() : 0;
 					if (count > 0) {
-						for (int i = 0; i < count; i++) {
-							Node node = children.item(i);
-							if (node.getNodeType() == Node.ELEMENT_NODE) {
-								if (isHeader && "THEAD".equalsIgnoreCase(node.getNodeName())) {
+						for (long i = 0; i < count; i++) {
+							nsIDOMNode node = children.item(i);
+							if (node.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+								if (isHeader && HTML.TAG_THEAD.equalsIgnoreCase(node.getNodeName())) {
 									header = node;
-									MozillaSupports.release(node);
 									break;
-								} else if (isFooter && "TFOOT".equalsIgnoreCase(node.getNodeName())) {
+								} else if (isFooter && HTML.TAG_TFOOT.equalsIgnoreCase(node.getNodeName())) {
 									footer = node;
-									MozillaSupports.release(node);
 									break;
 								}
 							}
-							MozillaSupports.release(node);
 						}
-						MozillaSupports.release(children);
 					}
 				}
 
-				Node cell = null;
+				nsIDOMNode cell = null;
 				int columnsCount = getColumnsCount(sourceParent); 
 				if (isHeader) {
-					cell = makeCell(header, columnsCount, "TH", visualDocument, 0);
+					cell = makeCell(columnsCount, HTML.TAG_TH, visualDocument);
 				} else if (isFooter) {
-					cell = makeCell(footer, columnsCount, "TD", visualDocument, 1);
+					cell = makeCell(columnsCount, HTML.TAG_TD, visualDocument);
 				}
 				if (cell != null) {
 					if (isHeader) {
@@ -101,10 +100,10 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		return sourceNode.getParentNode();
 	}
 
-	private void setCellClass(Node cell, String className) {
+	private void setCellClass(nsIDOMNode cell, String className) {
 		if (cell != null) {
 			if (className != null && className.trim().length() > 0) {
-				((Element)cell).setAttribute("class", className);
+				((nsIDOMElement)cell).setAttribute("class", className);
 			}
 		}
 	}
@@ -132,8 +131,8 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		return count;
 	}
 
-	private Node makeCell(Node section, int columnCount, String cellTag, Document visualDocument, int index) {
-		Element visualCell = visualDocument.createElement(cellTag);
+	private nsIDOMNode makeCell(int columnCount, String cellTag, nsIDOMDocument visualDocument) {
+		nsIDOMElement visualCell = visualDocument.createElement(cellTag);
 		if (columnCount > 1) {
 			visualCell.setAttribute("colspan", "" + columnCount);
 		}

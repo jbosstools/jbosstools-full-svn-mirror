@@ -24,6 +24,10 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMText;
 
 public class VpeValueCreator extends VpeAbstractCreator implements VpeOutputAttributes {
 	public static final String SIGNATURE_VPE_VALUE = ":vpe:value";
@@ -49,14 +53,14 @@ public class VpeValueCreator extends VpeAbstractCreator implements VpeOutputAttr
 		}
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		String value;
 		if (expression != null) {
 			value = expression.exec(pageContext, sourceNode).stringValue();
 		} else {
 			value = "";
 		}
-		Node valueNode = visualDocument.createTextNode(value);
+		nsIDOMText valueNode = visualDocument.createTextNode(value);
 		visualNodeMap.put(this, valueNode);
 		return new VpeCreatorInfo(valueNode);
 	}
@@ -98,9 +102,9 @@ public class VpeValueCreator extends VpeAbstractCreator implements VpeOutputAttr
 		}
 	}
 
-	public Node getOutputTextNode(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
+	public nsIDOMText getOutputTextNode(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
 		if (outputAttrName != null) {
-			return (Node) visualNodeMap.get(this);
+			return (nsIDOMText) visualNodeMap.get(this);
 		}
 		return null;
 	}

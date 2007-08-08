@@ -10,9 +10,15 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe;
 
+import java.io.IOException;
+import java.net.URL;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Platform;
 import org.jboss.tools.common.log.BaseUIPlugin;
 import org.jboss.tools.common.log.IPluginLog;
 import org.jboss.tools.common.reporting.ProblemReportingHelper;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -94,6 +100,24 @@ public class VpePlugin extends BaseUIPlugin {
 		} else {
 			ProblemReportingHelper.reportProblem(PLUGIN_ID, throwable);
 		}
+	}
+	
+	public String getResourcePath(String resourceName) {
+		Bundle bundle = Platform.getBundle(PLUGIN_ID);
+		
+		if (bundle != null) {
+			URL url = bundle.getEntry(resourceName);
+			
+			if (url != null) {
+				try {
+					return FileLocator.resolve(url).getPath();
+				} catch (IOException ioe) {
+					logError(ioe);
+				}
+			}
+		}
+		
+		return null;
 	}
 	
 	public static IPluginLog getPluginLog() {

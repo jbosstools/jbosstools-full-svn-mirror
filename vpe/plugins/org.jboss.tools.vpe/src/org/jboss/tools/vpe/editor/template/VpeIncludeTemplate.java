@@ -11,12 +11,6 @@
 package org.jboss.tools.vpe.editor.template;
 
 import org.eclipse.core.resources.IFile;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeIncludeInfo;
 import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
@@ -26,6 +20,15 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
 import org.jboss.tools.vpe.editor.util.FileUtil;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class VpeIncludeTemplate extends VpeAbstractTemplate {
 	private static final String ATTR_FILE = "file";
@@ -44,7 +47,7 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 		initTemplateSections(templateElement, false, true, false, false, false);
 	}
 
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 		String fileName = null;
 		if (fileNameExpression != null) {
 			VpeValue vpeValue = fileNameExpression.exec(pageContext, sourceNode);
@@ -75,7 +78,7 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 		return creationData;
 	}
 
-	public void validate(VpePageContext pageContext, Node sourceNode, Document visualDocument, VpeCreationData data) {
+	public void validate(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, VpeCreationData data) {
 		if (data.getData() != null) {
 			VpeIncludeInfo includeInfo = pageContext.getVisualBuilder().popIncludeStack();
 			if (includeInfo != null) {
@@ -84,19 +87,19 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 		}
 	}
 
-	public void beforeRemove(VpePageContext pageContext, Node sourceNode, Node visualNode, Object data) {
+	public void beforeRemove(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
 		IFile file = (IFile)data;
 		if (file != null) {
 			pageContext.getEditPart().getController().getIncludeList().removeIncludeModel(file);
 		}
 	}
 
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
+	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualNode, Object data, String name, String value) {
 		return true;
 	}
 	
-	private VpeCreationData createInclude(Document sourceDocument, Document visualDocument) {
-		Element visualNewElement = visualDocument.createElement("div");
+	private VpeCreationData createInclude(Document sourceDocument, nsIDOMDocument visualDocument) {
+		nsIDOMElement visualNewElement = visualDocument.createElement(HTML.TAG_DIV);
 		VpeVisualDomBuilder.markIncludeElement(visualNewElement);
 		VpeCreationData creationData = new VpeCreationData(visualNewElement);
 		if (children) {
@@ -111,8 +114,8 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 		return creationData;
 	}
 	
-	private VpeCreationData createStub(String fileName, Document visualDocument) {
-		Element visualNewElement = visualDocument.createElement("div");
+	private VpeCreationData createStub(String fileName, nsIDOMDocument visualDocument) {
+		nsIDOMElement visualNewElement = visualDocument.createElement(HTML.TAG_DIV);
 		visualNewElement.setAttribute("style", "background-color:#ECF3FF;cursor:pointer;padding:0 5px;margin:3px 0;font-style:italic;color:#0051DD;");
 		VpeVisualDomBuilder.markIncludeElement(visualNewElement);
 		if (fileName != null) {

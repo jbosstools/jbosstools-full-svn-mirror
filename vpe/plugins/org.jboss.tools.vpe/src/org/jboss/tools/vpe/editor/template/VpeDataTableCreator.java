@@ -14,12 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeDataTableElements.SourceColumnElements;
@@ -29,7 +23,16 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMNodeList;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 public class VpeDataTableCreator extends VpeAbstractCreator {
 	private boolean caseSensitive;
@@ -103,19 +106,19 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		}
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 
 		SourceDataTableElements sourceElements = new SourceDataTableElements(sourceNode);
 		VisualDataTableElements visualElements = new VisualDataTableElements();
 
-		Element visualTable = visualDocument.createElement("table");
+		nsIDOMElement visualTable = visualDocument.createElement(HTML.TAG_TABLE);
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(visualTable);
 
-		Element section = null, row = null, cell = null;
+		nsIDOMElement section = null, row = null, cell = null;
 		if (true || sourceElements.hasHeaderSection()) {
-			section = visualDocument.createElement("thead");
+			section = visualDocument.createElement(HTML.TAG_THEAD);
 			if (true || sourceElements.hasTableHeader()) {
-				row = visualDocument.createElement("tr");
+				row = visualDocument.createElement(HTML.TAG_TR);
 				section.appendChild(row);
 				visualElements.setTableHeaderRow(row);
 				if (sourceElements.getTableHeader() != null) {
@@ -155,8 +158,8 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		}
 
 		if (true || sourceElements.hasBodySection()) {
-			section = visualDocument.createElement("tbody");
-			row = visualDocument.createElement("tr");
+			section = visualDocument.createElement(HTML.TAG_TBODY);
+			row = visualDocument.createElement(HTML.TAG_TR);
 			section.appendChild(row);
 			visualTable.appendChild(section);
 			visualElements.setBodyRow(row);
@@ -165,7 +168,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 
 		VpeChildrenInfo info = null;
 		if (sourceElements.getColumnCount() > 0) {
-			Element group = visualDocument.createElement("colgroup");
+			nsIDOMElement group = visualDocument.createElement(HTML.TAG_COLGROUP);
 			visualTable.appendChild(group);
 			info = new VpeChildrenInfo(group);
 			creatorInfo.addChildrenInfo(info);
@@ -186,9 +189,8 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			if (creator != null) {
 				VpeCreatorInfo info1 = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
 				if (info1 != null && info1.getVisualNode() != null) {
-					Attr attr = (Attr)info1.getVisualNode();
+					nsIDOMAttr attr = (nsIDOMAttr) info1.getVisualNode();
 					visualTable.setAttributeNode(attr);
-					MozillaSupports.release(attr);
 				}
 			}
 		}
@@ -220,7 +222,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			sourceElements = getSourceDataTableElements(visualNodeMap);
 		} else if (sourceElement != null) {
 			sourceElements = new SourceDataTableElements(sourceElement);
-			Node visualNode = pageContext.getCurrentVisualNode();
+			nsIDOMNode visualNode = pageContext.getCurrentVisualNode();
 			if (visualNode != null) {
 				visualElements = VpeDataTableElements.getVisualDataTableElements(visualNode);
 			}
@@ -267,41 +269,37 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		return null;
 	}
 
-	private void setCellsClass(Element row, String value) {
+	private void setCellsClass(nsIDOMElement row, String value) {
 		if (row != null && value != null) {
 			String[] classes = getClasses(value);
 			int ind = 0;
 
-			NodeList children = row.getChildNodes();
-			int count = children != null ? children.getLength() : 0;
-			for (int i = 0; i < count; i++) {
-				Node child = children.item(i);
-				if (child != null && child.getNodeType() == Node.ELEMENT_NODE) {
+			nsIDOMNodeList children = row.getChildNodes();
+			long count = children != null ? children.getLength() : 0;
+			for (long i = 0; i < count; i++) {
+				nsIDOMNode child = children.item(i);
+				if (child != null && child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 					((Element)child).setAttribute("class", classes[ind]);
 					ind = ind < (classes.length - 1) ? ind + 1 : 0;
 				}
-				MozillaSupports.release(child);
 			}
-			MozillaSupports.release(children);
 		}
 	}
 
-	private void removeCellsClass(Element row) {
+	private void removeCellsClass(nsIDOMElement row) {
 		if (row != null) {
-			NodeList children = row.getChildNodes();
-			int count = children != null ? children.getLength() : 0;
-			for (int i = 0; i < count; i++) {
-				Node child = children.item(i);
-				if (child != null && child.getNodeType() == Node.ELEMENT_NODE) {
-					((Element)child).removeAttribute("class");
+			nsIDOMNodeList children = row.getChildNodes();
+			long count = children != null ? children.getLength() : 0;
+			for (long i = 0; i < count; i++) {
+				nsIDOMNode child = children.item(i);
+				if (child != null && child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+					((nsIDOMElement)child).removeAttribute("class");
 				}
-				MozillaSupports.release(child);
 			}
-			MozillaSupports.release(children);
 		}
 	}
 
-	private void setRowClass(Element row, String value) {
+	private void setRowClass(nsIDOMElement row, String value) {
 		if (row != null && value != null) {
 			String[] rowClasses = getClasses(value);
 			String rowClass = (rowClasses != null && rowClasses.length > 0) ? rowClasses[0] : null;
@@ -313,13 +311,13 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		}
 	}
 
-	private void setRowDisplayStyle(Element row, boolean visible) {
+	private void setRowDisplayStyle(nsIDOMElement row, boolean visible) {
 		if (row != null) {
 			row.setAttribute("style", "display:" + (visible ? "" : "none"));
 		}
 	}
 
-	private void removeRowClass(Element row) {
+	private void removeRowClass(nsIDOMElement row) {
 		if (row != null) {
 			row.removeAttribute("class");
 		}

@@ -17,6 +17,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
 
 public class VpeTextCreator extends VpeAbstractCreator {
 	private String text;
@@ -29,7 +31,7 @@ public class VpeTextCreator extends VpeAbstractCreator {
 		text = textNode.getNodeValue();
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		return new VpeCreatorInfo(visualDocument.createTextNode(text));
 	}
 }

@@ -18,10 +18,12 @@ import org.w3c.dom.Node;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMNode;
 
 public class VpeBreackerHelper {
 
-	public static boolean selectItem(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, Node visualNode, Object data, int charCode, VpeSourceSelection selection) {
+	public static boolean selectItem(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, nsIDOMNode visualNode, Object data, long charCode, VpeSourceSelection selection) {
 		Attr attr = selection.getFocusAttribute();
 		if (attr != null) {
 			Point range = selection.getFocusAttributeRange();
@@ -74,8 +76,8 @@ public class VpeBreackerHelper {
 				}
 				Node parent = selectItemNode.getParentNode();
 				if (parent != null) {
-					Node p1 = parent.getOwnerDocument().createElement("p");
-					Node p2 = parent.getOwnerDocument().createElement("p");
+					Node p1 = parent.getOwnerDocument().createElement(HTML.TAG_P);
+					Node p2 = parent.getOwnerDocument().createElement(HTML.TAG_P);
 					p1 = parent.insertBefore(p1, selectItemNode);
 					selectItemNode = parent.removeChild(selectItemNode);
 					p1.appendChild(selectItemNode);

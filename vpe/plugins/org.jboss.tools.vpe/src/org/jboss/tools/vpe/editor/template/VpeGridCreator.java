@@ -15,12 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
@@ -28,7 +22,14 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class VpeGridCreator extends VpeAbstractCreator {
 	static final String VAL_PAGE_DIRECTION = "pageDirection";
@@ -82,7 +83,7 @@ public class VpeGridCreator extends VpeAbstractCreator {
 		}
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		boolean layoutHorizontal = true;
 		if (layoutExpr != null) {
 			VpeValue vpeValue = layoutExpr.exec(pageContext, sourceNode);
@@ -111,7 +112,7 @@ public class VpeGridCreator extends VpeAbstractCreator {
 			}
 		}
 		
-		Element visualTable = visualDocument.createElement("table");
+		nsIDOMElement visualTable = visualDocument.createElement(HTML.TAG_TABLE);
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(visualTable);
 
 		if (propertyCreators != null) {
@@ -120,9 +121,8 @@ public class VpeGridCreator extends VpeAbstractCreator {
 				if (creator != null) {
 					VpeCreatorInfo info = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
 					if (info != null && info.getVisualNode() != null) {
-						Attr attr = (Attr)info.getVisualNode();
+						nsIDOMAttr attr = (nsIDOMAttr)info.getVisualNode();
 						visualTable.setAttributeNode(attr);
-						MozillaSupports.release(attr);
 					}
 				}
 			}
@@ -155,9 +155,9 @@ public class VpeGridCreator extends VpeAbstractCreator {
 					rowLength = (childrenCount + tableSize - 1) / tableSize;
 				}
 				for (int i = 0; i < rowCount; i++) {
-					Element visualRow = visualDocument.createElement("tr");
+					nsIDOMElement visualRow = visualDocument.createElement(HTML.TAG_TR);
 					for (int j = 0; j < rowLength; j++) {
-						Element visualCell = visualDocument.createElement("td");
+						nsIDOMElement visualCell = visualDocument.createElement(HTML.TAG_TD);
 						visualRow.appendChild(visualCell);
 						int sourceIndex = layoutHorizontal ? rowLength * i + j : rowCount * j + i;
 						if (sourceIndex < childrenCount) {

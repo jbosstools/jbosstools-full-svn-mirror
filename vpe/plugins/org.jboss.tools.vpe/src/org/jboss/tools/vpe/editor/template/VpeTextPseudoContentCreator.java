@@ -15,6 +15,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMText;
 
 public class VpeTextPseudoContentCreator extends VpePseudoContentCreator {
 	private String text;
@@ -30,8 +35,8 @@ public class VpeTextPseudoContentCreator extends VpePseudoContentCreator {
 		}
 	}
 
-	public void setPseudoContent(VpePageContext pageContext, Node sourceContainer, Node visualContainer, Document visualDocument) {
-		Element visualNewElement = visualDocument.createElement("span");
+	public void setPseudoContent(VpePageContext pageContext, Node sourceContainer, nsIDOMNode visualContainer, nsIDOMDocument visualDocument) {
+		nsIDOMElement visualNewElement = visualDocument.createElement(HTML.TAG_SPAN);
 		setPseudoAttribute(visualNewElement);
 		String text = this.text;
 		if (text == null) {
@@ -51,7 +56,7 @@ public class VpeTextPseudoContentCreator extends VpePseudoContentCreator {
 				text = "Insert Content";
 			}
 		}
-		Node newTextNode = visualDocument.createTextNode(text);
+		nsIDOMText newTextNode = visualDocument.createTextNode(text);
 		visualNewElement.appendChild(newTextNode);
 		visualContainer.appendChild(visualNewElement);
 	}

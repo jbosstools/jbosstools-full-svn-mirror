@@ -16,11 +16,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.mozilla.interfaces.nsIDOMText;
 
 public interface VpeOutputAttributes {
 	void setOutputAttributeValue(VpePageContext pageContext, Element sourceElement, Map visualNodeMap);
 	String[] getOutputAttributes();
 	boolean isEditabledAtribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap);
 	void setOutputAttributeSelection(VpePageContext pageContext, Element sourceElement, int offset, int length, Map visualNodeMap);
-	Node getOutputTextNode(VpePageContext pageContext, Element sourceElement, Map visualNodeMap);
+	nsIDOMText getOutputTextNode(VpePageContext pageContext, Element sourceElement, Map visualNodeMap);
 }

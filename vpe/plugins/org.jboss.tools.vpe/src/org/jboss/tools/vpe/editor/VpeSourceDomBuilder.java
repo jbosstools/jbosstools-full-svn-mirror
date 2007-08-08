@@ -24,17 +24,10 @@ import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
-//import org.eclipse.wst.sse.ui.internal.ViewerSelectionManager;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
@@ -42,8 +35,15 @@ import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
 import org.jboss.tools.vpe.editor.util.TextUtil;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMNodeList;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class VpeSourceDomBuilder extends VpeDomBuilder {
 	private StructuredTextViewer structuredTextViewer;
@@ -68,18 +68,18 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		this.pageContext = pageContext;
 	}
 
-	public void addNode(Node visualNode) {
-		Node visualContainer = visualNode.getParentNode();
+	public void addNode(nsIDOMNode visualNode) {
+		nsIDOMNode visualContainer = visualNode.getParentNode();
 		Node sourceContainer = domMapping.getSourceNode(visualContainer);
 
 		if (sourceContainer != null && (sourceContainer.getNodeType() == Node.ELEMENT_NODE || sourceContainer.getNodeType() == Node.DOCUMENT_NODE)) {
-			Node visualNextNode = visualNode.getNextSibling();
+			nsIDOMNode visualNextNode = visualNode.getNextSibling();
 			Node sourceNextNode = domMapping.getSourceNode(visualNextNode);
 			addNode(visualNode, sourceNextNode, sourceContainer);
 		}
 	}
 
-	public void removeNode(Node visualNode) {
+	public void removeNode(nsIDOMNode visualNode) {
 		Node sourceNode = domMapping.getSourceNode(visualNode);
 		if (sourceNode != null) {
 			Node sourceContainer = sourceNode.getParentNode();
@@ -94,15 +94,14 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 				}
 			}
 		}
-		MozillaSupports.release(visualNode);
 	}
 	
-	public void setText(Node visualText) {
+	public void setText(nsIDOMNode visualText) {
 		Node sourceText = domMapping.getSourceNode(visualText);
 		if (sourceText != null) {
 			sourceText.setNodeValue(TextUtil.sourceText(visualText.getNodeValue()));
 		} else {
-			Node visualParent = visualText.getParentNode();
+			nsIDOMNode visualParent = visualText.getParentNode();
 			if (visualParent != null) {
 				Node sourceParent = domMapping.getNearSourceNode(visualText);
 				if (sourceParent != null) {
@@ -121,7 +120,6 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 //						}
 					}
 				}
-				MozillaSupports.release(visualParent);
 			}
 		}
 	}
@@ -202,7 +200,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		return (t == null) ? 0 : t.getCaretOffset();
 	}
 	
-	private void addNode(Node visualNewNode, Node sourceNextNode, Node sourceContainer) {
+	private void addNode(nsIDOMNode visualNewNode, Node sourceNextNode, Node sourceContainer) {
 		Node sourceNewNode = createNode(visualNewNode);
 		if (sourceNewNode != null) {
 			if (sourceNextNode == null) {
@@ -213,7 +211,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		}
 	}
 	
-	private Node createNode(Node visualNewNode) {
+	private Node createNode(nsIDOMNode visualNewNode) {
 		if (sourceDocument != null) {
 			switch (visualNewNode.getNodeType()) {
 			case Node.ELEMENT_NODE:
@@ -222,7 +220,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 				//VpeVisualDomBuilder visualBuildet = 
 					pageContext.getVisualBuilder();
 				VpeTemplate template = templateManager.getTemplate(pageContext, sourceNewElement, ifDependencySet);
-				registerNodes(new VpeElementMapping(sourceNewElement, (Element)visualNewNode, null, template, ifDependencySet, null));
+				registerNodes(new VpeElementMapping(sourceNewElement, (nsIDOMElement)visualNewNode, null, template, ifDependencySet, null));
 				addChildren(visualNewNode, sourceNewElement);
 				return sourceNewElement;
 			case Node.TEXT_NODE:
@@ -234,17 +232,17 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		return null;
 	}
 
-	private void addChildren(Node visualContainer, Element sourceContainer) {
-		NodeList visualNodes = visualContainer.getChildNodes();
-		int len = visualNodes.getLength();
+	private void addChildren(nsIDOMNode visualContainer, Element sourceContainer) {
+		nsIDOMNodeList visualNodes = visualContainer.getChildNodes();
+		long len = visualNodes.getLength();
 
-		for (int i = 0; i < len; i++) {
-			Node visualNode = visualNodes.item(i);
+		for (long i = 0; i < len; i++) {
+			nsIDOMNode visualNode = visualNodes.item(i);
 			addNode(visualNode, null, sourceContainer);
 		}
 	}
 	
-	boolean openBundleEditors(Node visualNode) {
+	boolean openBundleEditors(nsIDOMNode visualNode) {
 		Node sourceNode = domMapping.getNearSourceNode(visualNode);
 		if (sourceNode != null && sourceNode.getNodeType() == Node.ELEMENT_NODE) {
 			VpeElementMapping elementMapping = (VpeElementMapping)domMapping.getNodeMapping(sourceNode);
@@ -256,7 +254,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		return false;
 	}
 	
-	boolean openIncludeEditor(Node visualNode) {
+	boolean openIncludeEditor(nsIDOMNode visualNode) {
 		Node sourceNode = domMapping.getNearSourceNode(visualNode);
 		if (sourceNode != null && sourceNode.getNodeType() == Node.ELEMENT_NODE) {
 			VpeElementMapping elementMapping = (VpeElementMapping)domMapping.getNodeMapping(sourceNode);
@@ -298,8 +296,8 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		return start;
 	}
 	
-	void setAttributeSelection(Node visualText, int offset, int length) {
-		Node visualParent = visualText.getParentNode();
+	void setAttributeSelection(nsIDOMNode visualText, int offset, int length) {
+		nsIDOMNode visualParent = visualText.getParentNode();
 		if (visualParent != null) {
 			Node sourceParent = domMapping.getNearSourceNode(visualText);
 			if (sourceParent != null) {
@@ -316,7 +314,6 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 //					}
 				}
 			}
-			MozillaSupports.release(visualParent);
 		}
 	}
 	
@@ -364,16 +361,14 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		return sourceEditor.getTextViewer().getSelectedRange();
 	}
 	
-	public void setComment(Node sourceComment, Node visualElement) {
-		NodeList visualNodes = visualElement.getChildNodes();
-		int len = visualNodes.getLength();
+	public void setComment(Node sourceComment, nsIDOMNode visualElement) {
+		nsIDOMNodeList visualNodes = visualElement.getChildNodes();
+		long len = visualNodes.getLength();
 		
 		if (len > 0) {
-			Node visualText = visualNodes.item(0); 
+			nsIDOMNode visualText = visualNodes.item(0); 
 			sourceComment.setNodeValue(visualText.getNodeValue());
-			MozillaSupports.release(visualText);
 		}
-		MozillaSupports.release(visualNodes);
 	}
 
 	public StructuredTextViewer getStructuredTextViewer() {

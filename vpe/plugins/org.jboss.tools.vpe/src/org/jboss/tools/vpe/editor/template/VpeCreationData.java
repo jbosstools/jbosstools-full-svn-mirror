@@ -13,19 +13,20 @@ package org.jboss.tools.vpe.editor.template;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Node;
 
 public class VpeCreationData {
-	private Node node;
+	private nsIDOMNode node;
 	private List<VpeChildrenInfo> childrenInfoList;
 	private List<Node> illegalChildren;
 	private Object data;
 
-	public VpeCreationData(Node node) {
+	public VpeCreationData(nsIDOMNode node) {
 		this.node = node;
 	}
 
-	public Node getNode() {
+	public nsIDOMNode getNode() {
 		return node;
 	}
 	

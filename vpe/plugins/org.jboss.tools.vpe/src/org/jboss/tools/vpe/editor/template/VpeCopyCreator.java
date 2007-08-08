@@ -15,16 +15,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
+import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
 
 public class VpeCopyCreator extends VpeAbstractCreator {
 	private boolean caseSensitive;
@@ -73,18 +73,17 @@ public class VpeCopyCreator extends VpeAbstractCreator {
 		}
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
-		Element visualNewElement = visualDocument.createElement(sourceNode.getNodeName());
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
+		nsIDOMElement visualNewElement = visualDocument.createElement(sourceNode.getNodeName());
 		visualNodeMap.put(this, visualNewElement);
 		addAttributes((Element)sourceNode, visualNewElement);
 		if (attrs != null) {
 			for (int i = 0; i < attrs.length; i++) {
 				VpeCreatorInfo attributeInfo = attrs[i].create(pageContext, (Element) sourceNode, visualDocument, visualNewElement, visualNodeMap);
 				if (attributeInfo != null) {
-					Attr newVisualAttribute = (Attr)attributeInfo.getVisualNode();
+					nsIDOMAttr newVisualAttribute = (nsIDOMAttr)attributeInfo.getVisualNode();
 					if (newVisualAttribute != null) {
 						visualNewElement.setAttributeNode(newVisualAttribute);
-						MozillaSupports.release(newVisualAttribute);
 					}
 				}
 			}
@@ -110,7 +109,7 @@ public class VpeCopyCreator extends VpeAbstractCreator {
 		visualNodeMap.put(this, visualNode);
 	}
 
-	private void addAttributes(Element sourceElement, Element visualElement) {
+	private void addAttributes(Element sourceElement, nsIDOMElement visualElement) {
 		NamedNodeMap sourceAttributes = sourceElement.getAttributes();
 		if (sourceAttributes == null) {
 			return;

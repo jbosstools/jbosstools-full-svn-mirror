@@ -11,15 +11,14 @@
 package org.jboss.tools.vpe.editor.mozilla;
 
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import org.jboss.tools.vpe.mozilla.browser.ContextMenuListener;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMEvent;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMKeyEvent;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMMouseEvent;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMMutationEvent;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsISelection;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMEvent;
+import org.mozilla.interfaces.nsIDOMKeyEvent;
+import org.mozilla.interfaces.nsIDOMMouseEvent;
+import org.mozilla.interfaces.nsIDOMMutationEvent;
+import org.mozilla.interfaces.nsISelection;
 
 public interface EditorDomEventListener extends ContextMenuListener {
 
@@ -31,7 +30,7 @@ public interface EditorDomEventListener extends ContextMenuListener {
 	void nodeInsertedIntoDocument(nsIDOMMutationEvent mutationEvent);
 	void attrModified(nsIDOMMutationEvent mutationEvent);
 	void characterDataModified(nsIDOMMutationEvent mutationEvent);
-	void notifySelectionChanged(Document doc, nsISelection sel, int reason);
+	void notifySelectionChanged(nsIDOMDocument domDocument, nsISelection selection, short reason);
 	void mouseDown(nsIDOMMouseEvent mouseEvent);
 	void mouseUp(nsIDOMMouseEvent mouseEvent);
 	void mouseClick(nsIDOMMouseEvent mouseEvent);
@@ -42,7 +41,7 @@ public interface EditorDomEventListener extends ContextMenuListener {
 //	void keyUp(nsIDOMKeyEvent keyEvent);
 	void mouseMove(nsIDOMMouseEvent mouseEvent);
 	void keyPress(nsIDOMKeyEvent keyEvent);
-	void elementResized(Element element, int resizerConstrains, int top, int left, int width, int height);
+	void elementResized(nsIDOMElement element, int resizerConstrains, int top, int left, int width, int height);
 	
 	void dragEnter(nsIDOMEvent event);
 	void dragExit(nsIDOMEvent event);

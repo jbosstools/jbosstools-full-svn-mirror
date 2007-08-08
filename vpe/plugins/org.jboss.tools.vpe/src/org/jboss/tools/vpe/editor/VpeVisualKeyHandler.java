@@ -43,9 +43,11 @@ import org.jboss.tools.vpe.editor.selection.VpeSourceSelectionBuilder;
 import org.jboss.tools.vpe.editor.template.VpeHtmlTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.util.FlatIterator;
+import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMKeyEvent;
 import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIFrameSelection;
+import org.mozilla.interfaces.nsIDOMKeyEvent;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Node;
@@ -74,18 +76,16 @@ public class VpeVisualKeyHandler {
     StructuredTextEditor sourceEditor;
 	VpeDomMapping domMapping;
 	VpePageContext pageContext;
-	nsIFrameSelection frameSelection;
 	
-	VpeVisualKeyHandler(StructuredTextEditor sourceEditor, VpeDomMapping domMapping, VpePageContext pageContext, nsIFrameSelection frameSelection) {
+	VpeVisualKeyHandler(StructuredTextEditor sourceEditor, VpeDomMapping domMapping, VpePageContext pageContext) {
 		this.sourceEditor = sourceEditor;
 		this.domMapping = domMapping;
 		this.pageContext = pageContext;
-		this.frameSelection = frameSelection;
 	}
 	
 	boolean keyPressHandler(nsIDOMKeyEvent keyEvent) {
 		boolean handled = false;
-		if (keyEvent.isCtrlKey() || keyEvent.isMetaKey()) {
+		if (keyEvent.getCtrlKey() || keyEvent.getMetaKey()) {
 			handled = ctrlKeyPressHandler(keyEvent);
 		} else {
 			handled = nonctrlKeyPressHandler(keyEvent);
@@ -101,22 +101,22 @@ public class VpeVisualKeyHandler {
 	}
 
 	private boolean ctrlKeyPressHandler(nsIDOMKeyEvent keyEvent) {
-		switch (keyEvent.getCharCode()) {
+		switch ((int)keyEvent.getCharCode()) {
 		case 0:
-			switch (keyEvent.getKeyCode()) {
+			switch ((int)keyEvent.getKeyCode()) {
 			case VK_F4:
 				IWorkbenchPage workbenchPage = VpePlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage();
-				if(keyEvent.isShiftKey()) workbenchPage.closeAllEditors(true);
+				if(keyEvent.getShiftKey()) workbenchPage.closeAllEditors(true);
 				else workbenchPage.closeEditor(pageContext.getEditPart().getParentEditor(),true);
 				break;
 			case VK_HOME:
-				if (keyEvent.isShiftKey()) {
+				if (keyEvent.getShiftKey()) {
 					
 					return selectToBegin();
 				}
 				break;
 			case VK_END:
-				if (keyEvent.isShiftKey()) {
+				if (keyEvent.getShiftKey()) {
 					
 					return selectToEnd();
 				}
@@ -159,8 +159,8 @@ public class VpeVisualKeyHandler {
 	}
 
 	private boolean nonctrlKeyPressHandler(nsIDOMKeyEvent keyEvent) {
-		int keyCode = keyEvent.getKeyCode();
-		boolean shiftKey = keyEvent.isShiftKey();
+		long keyCode = keyEvent.getKeyCode();
+		boolean shiftKey = keyEvent.getShiftKey();
 		
 		if (keyCode == VK_ENTER) {
 			return split();
@@ -418,7 +418,7 @@ public class VpeVisualKeyHandler {
 		return selection;
 	}
 
-	private boolean processNonCollapsedSelection(VpeSourceSelectionBuilder sourceSelectionBuilder, int keyCode) {
+	private boolean processNonCollapsedSelection(VpeSourceSelectionBuilder sourceSelectionBuilder, long keyCode) {
 		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection != null) {
 			List selectedNodes = selection.getSelectedNodes();
@@ -440,7 +440,7 @@ public class VpeVisualKeyHandler {
 		return false;
 	}
 
-	private boolean processAttributeSelection(VpeSourceSelectionBuilder sourceSelectionBuilder, int keyCode) {
+	private boolean processAttributeSelection(VpeSourceSelectionBuilder sourceSelectionBuilder, long keyCode) {
 		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection != null) {
 			if (selection.getFocusAttribute() != null) {
@@ -458,7 +458,7 @@ public class VpeVisualKeyHandler {
 					return true;
 				} else {
 					int attrSelStart = ((ElementImpl)attr.getOwnerElement()).getStartOffset() + ((AttrImpl)attr).getValueRegion().getStart() + 1 + range.x;
-					switch (keyCode) {
+					switch ((int)keyCode) {
 					case VK_DELETE: {
 						String value = attr.getValue();
 						int so = range.x;
@@ -878,9 +878,9 @@ public class VpeVisualKeyHandler {
 
 	private boolean isVisualEditableForNode(Node node) {
 		try {
-			Node visualNode = domMapping.getVisualNode(node);
+			nsIDOMNode visualNode = domMapping.getVisualNode(node);
 			if (visualNode.getNodeType() == Node.ELEMENT_NODE) {
-				Node styleAttr = visualNode.getAttributes().getNamedItem("style");
+				nsIDOMNode styleAttr = visualNode.getAttributes().getNamedItem("style");
 				if (styleAttr != null) {
 					String style = styleAttr.getNodeValue();
 					if (style != null) {
@@ -900,7 +900,7 @@ public class VpeVisualKeyHandler {
 	
 	private boolean isVisualNodeSourceAttribute(Node node) {
 		try {
-			Node visualNode = domMapping.getVisualNode(node);
+			nsIDOMNode visualNode = domMapping.getVisualNode(node);
 			VpeNodeMapping nm = domMapping.getNodeMapping(visualNode);
 			if (nm.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
 				VpeElementMapping em = (VpeElementMapping)nm;
@@ -914,7 +914,7 @@ public class VpeVisualKeyHandler {
 
 	private boolean isVisualNodeEmpty(Node node) {
 		try {
-			Node visualNode = domMapping.getVisualNode(node);
+			nsIDOMNode visualNode = domMapping.getVisualNode(node);
 			return pageContext.getVisualBuilder().isEmptyElement(visualNode);
 		} catch (Exception e) {
 			VpePlugin.getPluginLog().logError(e);
@@ -924,7 +924,7 @@ public class VpeVisualKeyHandler {
 
 	private Attr getVisualNodeSourceAttribute(Node node) {
 		try {
-			Node visualNode = domMapping.getVisualNode(node);
+			nsIDOMNode visualNode = domMapping.getVisualNode(node);
 			if(visualNode==null) {
 				return null;
 			}
@@ -943,9 +943,9 @@ public class VpeVisualKeyHandler {
 		return null;
 	}
 
-	private Node getVisualNode(Node node) {
+	private nsIDOMNode getVisualNode(Node node) {
 		if (domMapping != null) {
-			Node visualNode = domMapping.getVisualNode(node);
+			nsIDOMNode visualNode = domMapping.getVisualNode(node);
 			boolean isEditable = false;
 			if (visualNode != null) {
 				if (visualNode.getNodeType() == Node.ELEMENT_NODE || 
@@ -1012,10 +1012,10 @@ public class VpeVisualKeyHandler {
 			if (sourceNode != null) {
 				VpeDomMapping mapping = pageContext.getDomMapping();
 				if (mapping != null) {
-					Node visualNode = mapping.getVisualNode(sourceNode);
+					nsIDOMNode visualNode = mapping.getVisualNode(sourceNode);
 					if (visualNode != null) {
 						if (visualNode.getNodeType() == Node.ELEMENT_NODE) {
-							Node styleAttr = visualNode.getAttributes().getNamedItem("style");
+							nsIDOMNode styleAttr = visualNode.getAttributes().getNamedItem("style");
 							if (styleAttr != null) {
 								String style = styleAttr.getNodeValue();
 								if (style != null) {
@@ -1040,7 +1040,7 @@ public class VpeVisualKeyHandler {
 			start = 0;
 		}
 		if (isEditable) {
-			int charCode = keyEvent.getCharCode();
+			long charCode = keyEvent.getCharCode();
 			char[] s = new char[1];
 			s[0] = (char) charCode;
 			String str = new String(s);
@@ -1060,9 +1060,9 @@ public class VpeVisualKeyHandler {
 		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(sourceEditor);
 		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection != null) {
-			int keyCode = keyEvent.getKeyCode();
+			long keyCode = keyEvent.getKeyCode();
 			List selectedNodes = selection.getSelectedNodes();
-			switch (keyCode) {
+			switch ((int)keyCode) {
 				case VK_ENTER:
 					if (!selection.isCollapsed()) {
 						for (int i = 0; i < selectedNodes.size(); i++) {
@@ -1082,15 +1082,15 @@ public class VpeVisualKeyHandler {
 						while (!handled && parentMapping != null && parentMapping instanceof VpeElementMapping) {
 							VpeTemplate template = ((VpeElementMapping)parentMapping).getTemplate();
 							Node srcNode = parentMapping.getSourceNode();
-							Node visualNode = parentMapping.getVisualNode();
+							nsIDOMNode visualNode = parentMapping.getVisualNode();
 							handled = template.nonctrlKeyPressHandler(pageContext, srcNode.getOwnerDocument(), srcNode, visualNode, null, keyCode, selection, formatter);
 							parentMapping = domMapping.getParentMapping(srcNode);
 						}
 						if (!handled && focusNode.getParentNode().getNodeType() == Node.DOCUMENT_NODE) {
 							if (focusNode.getNodeType() == Node.TEXT_NODE) {
 								Point range = sourceEditor.getTextViewer().getSelectedRange();
-								Node p1 = focusNode.getOwnerDocument().createElement("p");
-								Node p2 = focusNode.getOwnerDocument().createElement("p");
+								Node p1 = focusNode.getOwnerDocument().createElement(HTML.TAG_P);
+								Node p2 = focusNode.getOwnerDocument().createElement(HTML.TAG_P);
 								Text newNode = ((Text)focusNode).splitText(getSourceNodeOffset(focusNode, range.x));
 								focusNode.getParentNode().insertBefore(p1, focusNode);
 								focusNode.getParentNode().insertBefore(p2, newNode);
@@ -1152,7 +1152,7 @@ public class VpeVisualKeyHandler {
 				while (!handled && parentMapping != null && parentMapping instanceof VpeElementMapping) {
 					VpeTemplate template = ((VpeElementMapping)parentMapping).getTemplate();
 					Node srcNode = parentMapping.getSourceNode();
-					Node visualNode = parentMapping.getVisualNode();
+					nsIDOMNode visualNode = parentMapping.getVisualNode();
 					handled = template.nonctrlKeyPressHandler(pageContext, srcNode.getOwnerDocument(), srcNode, visualNode, null, VK_ENTER, selection, formatter);
 					parentMapping = domMapping.getParentMapping(srcNode);
 				}
@@ -1240,7 +1240,7 @@ public class VpeVisualKeyHandler {
 		}
 	}
 	
-	private int processNode(VpeSelectedNodeInfo nodeInfo, int keyCode, VpeSourceSelection selection) {
+	private int processNode(VpeSelectedNodeInfo nodeInfo, long keyCode, VpeSourceSelection selection) {
 		Node node = nodeInfo.getNode();
 		if (domMapping.getNodeMapping(node) != null) {
 			int type = node.getNodeType();
@@ -1285,14 +1285,14 @@ public class VpeVisualKeyHandler {
 		return null;
 	}
 	
-	private void goToParentTemplate(Node node, VpeSourceSelection selection, int keyCode) {
+	private void goToParentTemplate(Node node, VpeSourceSelection selection, long keyCode) {
 		ITextFormatter formatter = null;
 		VpeNodeMapping nearNodeMapping = domMapping.getNearParentMapping(node);
 		if (nearNodeMapping != null && nearNodeMapping instanceof VpeElementMapping) {
 			VpeTemplate template = ((VpeElementMapping)nearNodeMapping).getTemplate();
 			if (template != null) {
 				Node sourceNode = nearNodeMapping.getSourceNode();
-				Node visualNode = nearNodeMapping.getVisualNode();
+				nsIDOMNode visualNode = nearNodeMapping.getVisualNode();
 				template.nonctrlKeyPressHandler(null, sourceNode.getOwnerDocument(), sourceNode, visualNode, null, keyCode, selection, formatter);
 			}
 		}
@@ -1530,8 +1530,8 @@ public class VpeVisualKeyHandler {
 					setSourceFocus(attrSelStart);
 					return true;
 				}
-				Node visualNode = domMapping.getVisualNode(next);
-				if (visualNode != null && "input".equalsIgnoreCase(visualNode.getNodeName())) {
+				nsIDOMNode visualNode = domMapping.getVisualNode(next);
+				if (visualNode != null && HTML.TAG_INPUT.equalsIgnoreCase(visualNode.getNodeName())) {
 					setSourceFocus(((IndexedRegion)next).getStartOffset());
 					return true;
 				}
@@ -1569,7 +1569,7 @@ public class VpeVisualKeyHandler {
 					setSourceFocus(attrSelStart + attrSelLength - 1);
 					return true;
 				}
-				Node visualNode = domMapping.getVisualNode(prev);
+				nsIDOMNode visualNode = domMapping.getVisualNode(prev);
 				if (visualNode != null && "input".equalsIgnoreCase(visualNode.getNodeName())) {
 					setSourceFocus(((IndexedRegion)prev).getStartOffset());
 					return true;
@@ -1674,32 +1674,38 @@ public class VpeVisualKeyHandler {
 	}
 
 	private boolean moveUp(boolean extend) {
-		frameSelection.lineMove(false, extend);
+		// TODO Max Areshkau figure out
+//		frameSelection.lineMove(false, extend);
 		return true;
 	}
 
 	private boolean moveDown(boolean extend) {
-		frameSelection.lineMove(true, extend);
+		// TODO Max Areshkau figure out
+//		frameSelection.lineMove(true, extend);
 		return true;
 	}
 
 	private boolean moveHome(boolean extend) {
-		frameSelection.intraLineMove(false, extend);
+		// TODO Max Areshkau figure out
+//		frameSelection.intraLineMove(false, extend);
 		return true;
 	}
 
 	private boolean moveEnd(boolean extend) {
-		frameSelection.intraLineMove(true, extend);
+		// TODO Max Areshkau figure out
+//		frameSelection.intraLineMove(true, extend);
 		return true;
 	}
 
 	private boolean moveLeft(boolean extend) {
-		frameSelection.characterMove(false, extend);
+		// TODO Max Areshkau figure out
+//		frameSelection.characterMove(false, extend);
 		return true;
 	}
 
 	private boolean moveRight(boolean extend) {
-		frameSelection.characterMove(true, extend);
+		// TODO Max Areshkau figure out
+//		frameSelection.characterMove(true, extend);
 		return true;
 	}
 }

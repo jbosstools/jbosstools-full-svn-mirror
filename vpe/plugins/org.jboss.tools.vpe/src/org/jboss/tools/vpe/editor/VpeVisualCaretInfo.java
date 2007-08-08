@@ -13,14 +13,14 @@ package org.jboss.tools.vpe.editor;
 import org.eclipse.swt.graphics.Point;
 import org.w3c.dom.Node;
 
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.mozilla.interfaces.nsIDOMNode;
 
 public class VpeVisualCaretInfo {
 	private VpeSelectionBuilder selectionBuilder;
-	private Node rangeParent;
+	private nsIDOMNode rangeParent;
 	private int rangeOffset;
 
-	public VpeVisualCaretInfo(VpeSelectionBuilder selectionBuilder, Node rangeParent, int rangeOffset) {
+	public VpeVisualCaretInfo(VpeSelectionBuilder selectionBuilder, nsIDOMNode rangeParent, int rangeOffset) {
 		this.selectionBuilder = selectionBuilder;
 		this.rangeParent = rangeParent;
 		this.rangeOffset = rangeOffset;
@@ -45,11 +45,5 @@ public class VpeVisualCaretInfo {
 
 	Point getSourceSelectionRange() {
 		return selectionBuilder.getSourceSelectionRangeAtVisualNode(rangeParent, rangeOffset);
-	}
-	
-	public void Release() {
-		if (rangeParent != null) {
-			MozillaSupports.release(rangeParent);
-		}
 	}
 }

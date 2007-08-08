@@ -10,16 +10,14 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.mozilla;
 
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMNode;
-import org.w3c.dom.Node;
-
+import org.mozilla.interfaces.nsIDOMNode;
 
 public class MozillaDropInfo {
 	private boolean canDrop;
-	private Node caretParent;
-	private int caretOffset;
+	private nsIDOMNode caretParent;
+	private long caretOffset;
 	
-	public MozillaDropInfo(boolean canDrop, Node caretParent, int caretOffset) {
+	public MozillaDropInfo(boolean canDrop, nsIDOMNode caretParent, long caretOffset) {
 		this.canDrop = canDrop;
 		this.caretParent = caretParent;
 		this.caretOffset = caretOffset;
@@ -29,11 +27,11 @@ public class MozillaDropInfo {
 		return canDrop;
 	}
 
-	public Node getCaretParent() {
+	public nsIDOMNode getCaretParent() {
 		return caretParent;
 	}
 
-	public int getCaretOffset() {
+	public long getCaretOffset() {
 		return caretOffset;
 	}
 }
