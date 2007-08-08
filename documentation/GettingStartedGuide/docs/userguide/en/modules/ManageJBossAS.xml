@@ -132,7 +132,7 @@
   <orderedlist>
   <listitem><para>Open the JBoss Server View by selecting Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View. You will see JBoss Server view.</para></listitem>
   <listitem><para>Right click anywhere in this view and select New Server.</para></listitem>
-<listitem><para>Select JBoss &gt; JBoss v4.2 and press Next.</para></listitem>
+<listitem><para>Select JBoss, a division of Red Hat &gt; JBoss v4.2, click the &quot;Installed Runtimes&quot; button to select a new installed runtime and press Next.</para></listitem>
 </orderedlist>
 <figure>
 <title>Selecting server type</title>
@@ -142,6 +142,19 @@
         </imageobject>
 </mediaobject>
 </figure>
+<figure>
+<title>Selecting JBoss Runtime</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/jbossruntime2.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+<orderedlist continuation="continues">
+<listitem><para>Click &quot;Add&quot; button to add a new jboss runtime.</para></listitem>
+<listitem><para>Select JBoss, a division of Red Hat &gt; JBoss v4.2 and press Next.</para></listitem>
+</orderedlist>
 
 <orderedlist continuation="continues">
 <listitem><para>In the next step make Red Hat Developer Studio to know where you have installed the server and define JRE.</para></listitem>
@@ -159,8 +172,38 @@
     <para>When adding a new server you will need to specify what JRE to use. It is important to set this value to a full JDK, not JRE. Again, you need a full JDK to run Web applications, JRE will not be enough.</para>
 </note>
 <orderedlist continuation="continues">
-  <listitem><para>In the following window leave all settings default and press Next button.</para></listitem>
-  
+  <listitem><para>In the following window leave all settings default or give your name to a new jboss server and press Finish.</para></listitem>
+</orderedlist>
+<figure>
+<title>Adding new runtime</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/addingjbossserver.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+  <para>A new runtime will now appear in the Preferences &gt; Server &gt; Installed Runtimes dialog.</para>
+<figure>
+<title>Runtime is added</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/addedruntime.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+<orderedlist continuation="continues">
+  <listitem><para>Click OK. Then select a new added runtime in Server runtime drop down list and click Next button twice.</para></listitem>
+</orderedlist>
+<figure>
+<title>Choosing runtime</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/choosingruntime.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+  <orderedlist continuation="continues">
   <listitem><para>In the last wizard&apos;s dialog modify the projects that are configured on the server and click Finish.</para></listitem>
   </orderedlist>
   <figure>
