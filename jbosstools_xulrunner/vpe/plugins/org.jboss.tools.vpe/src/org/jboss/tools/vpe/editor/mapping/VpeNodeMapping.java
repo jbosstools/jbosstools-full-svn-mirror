@@ -10,9 +10,8 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.mapping;
 
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Node;
-
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
 
 public class VpeNodeMapping {
 	public static final int EMPTY_MAPPING = 0;
@@ -22,9 +21,9 @@ public class VpeNodeMapping {
 	public static final int DOCUMENT_MAPPING = 4;
 	
 	private Node sourceNode;
-	private Node visualNode;
+	private nsIDOMNode visualNode;
 	
-	public VpeNodeMapping(Node sourceNode, Node visualNode) {
+	public VpeNodeMapping(Node sourceNode, nsIDOMNode visualNode) {
 		this.sourceNode = sourceNode;
 		this.visualNode = visualNode;
 	}
@@ -50,11 +49,7 @@ public class VpeNodeMapping {
 		return sourceNode;
 	}
 	
-	public Node getVisualNode() {
+	public nsIDOMNode getVisualNode() {
 		return visualNode;
-	}
-	
-	public void release() {
-		MozillaSupports.release(visualNode);
 	}
 }

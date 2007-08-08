@@ -18,8 +18,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
-
 public class MozillaDomBuilder {
 	private Document targetDocument;
 	private Element targetContentArea;
@@ -63,13 +61,11 @@ public class MozillaDomBuilder {
 				buildAttributes((Element)sourceNode, newTargetElement);
 				build((Element)sourceNode, newTargetElement);
 				Node appendedTargetNode = targetContainer.appendChild(newTargetElement);
-				MozillaSupports.release(appendedTargetNode, newTargetElement);
 				break;
 
 			case Node.TEXT_NODE:
 				Text newTargetText = targetDocument.createTextNode(sourceNode.getNodeValue());
 				Node appendedTargetText = targetContainer.appendChild(newTargetText);
-				MozillaSupports.release(appendedTargetText, newTargetText);
 				break;
 			}
 		}

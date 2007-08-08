@@ -13,12 +13,14 @@ package org.jboss.tools.vpe.editor.template;
 import java.util.Map;
 
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
+import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-
-import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 
 public abstract class VpeAbstractCreator implements VpeCreator {
 
@@ -33,7 +35,7 @@ public abstract class VpeAbstractCreator implements VpeCreator {
 	 * @param visualNodeMap Is used for a storage padding information.
 	 * @return The information on the created node of the visual tree. 
 	 */
-	public abstract VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap);
+	public abstract VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap);
 
 	/**
 	 * Is invoked after construction of all child nodes of the current visual node.
@@ -44,7 +46,7 @@ public abstract class VpeAbstractCreator implements VpeCreator {
 	 * @param visualElement The current element of the visual tree.
 	 * @param visualNodeMap Is used for a storage padding information.
 	 */
-	public void validate(VpePageContext pageContext, Element sourceElement, Document visualDocument, Element visualParent, Element visualElement, Map visualNodeMap) {
+	public void validate(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualParent, nsIDOMElement visualElement, Map visualNodeMap) {
 	}
 
 	/**
@@ -98,7 +100,7 @@ public abstract class VpeAbstractCreator implements VpeCreator {
 	 * @param value Attribute value.
 	 * @return <code>true</code> if it is required to re-create an element at a modification of attribute, <code>false</code> otherwise.
 	 */
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNde, Object data, String name, String value) {
+	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name, String value) {
 		return false;
 	}
 
@@ -113,11 +115,11 @@ public abstract class VpeAbstractCreator implements VpeCreator {
 	 * @param formatter Formatter of text.
 	 * @return <code>true</code> if the key is treated, <code>false</code> otherwise.
 	 */
-	public boolean nonctrlKeyPressHandler(VpePageContext pageContext, Document sourceDocument, Node sourceNode, Object data, int charCode, VpeSourceSelection selection, ITextFormatter formatter) {
+	public boolean nonctrlKeyPressHandler(VpePageContext pageContext, Document sourceDocument, Node sourceNode, Object data, long charCode, VpeSourceSelection selection, ITextFormatter formatter) {
 		return false;
 	}
 
-	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode, Node visualNode, Map visualNodeMap) {
+	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Map visualNodeMap) {
 		return null;
 	}
 }

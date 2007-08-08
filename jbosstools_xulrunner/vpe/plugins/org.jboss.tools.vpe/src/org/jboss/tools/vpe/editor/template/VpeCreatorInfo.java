@@ -15,16 +15,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.resources.IFile;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
+import org.mozilla.interfaces.nsIDOMNode;
 
 public class VpeCreatorInfo {
-	private Node visualNode;
-	private List childrenInfoList;
+	private nsIDOMNode visualNode;
+	private List<VpeChildrenInfo> childrenInfoList;
 	private Set dependencySet;
 
-	VpeCreatorInfo(Node visualNode) {
+	VpeCreatorInfo(nsIDOMNode visualNode) {
 		this.visualNode = visualNode;
 	}
 	
@@ -32,7 +30,7 @@ public class VpeCreatorInfo {
 	 * Returns the built element of the visual tree.
 	 * @return The built element of the visual tree.
 	 */
-	Node getVisualNode() {
+	nsIDOMNode getVisualNode() {
 		return visualNode;
 	}
 	
@@ -41,7 +39,7 @@ public class VpeCreatorInfo {
 	 * @param info The information on links between visual container and source nodes. 
 	 */
 	void addChildrenInfo(VpeChildrenInfo info) {
-		List infoList = getInfoList();
+		List<VpeChildrenInfo> infoList = getInfoList();
 		infoList.add(info);
 	}
 
@@ -49,7 +47,7 @@ public class VpeCreatorInfo {
 	 * Returns list information� on links between visual container and source nodes.
 	 * @return List information� on links between visual container and source nodes.
 	 */
-	List getChildrenInfoList() {
+	List<VpeChildrenInfo> getChildrenInfoList() {
 		return childrenInfoList;
 	}
 
@@ -66,9 +64,9 @@ public class VpeCreatorInfo {
 		}
 	}
 	
-	private List getInfoList() {
+	private List<VpeChildrenInfo> getInfoList() {
 		if (childrenInfoList == null) {
-			childrenInfoList = new ArrayList();
+			childrenInfoList = new ArrayList<VpeChildrenInfo>();
 		}
 		return childrenInfoList;
 	}

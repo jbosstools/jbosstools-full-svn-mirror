@@ -21,10 +21,8 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IEditorInput;
@@ -45,34 +43,24 @@ import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
-import org.jboss.tools.vpe.mozilla.browser.MozillaBrowser;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.VpeDnD;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMElement;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMEventTarget;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsISelectionController;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsISupports;
-import org.w3c.dom.Document;
+import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMEventTarget;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * a class implementation of mozilla previre 
  * @author A. Yukhovich
  */
 public class MozillaPreview extends MozillaEditor {
-	private static final String INIT_URL = "chrome://vpe/content/init.html"; //$NON-NLS-1$
-	private static final String CONTENT_AREA_ID = "__content__area__"; //$NON-NLS-1$
-
-	static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
-	private MozillaBrowser editor;
-	private Document domDocument;
+	private XulRunnerEditor editor;
+	private nsIDOMDocument domDocument;
 	private nsIDOMEventTarget documentEventTarget;
-	private Element contentArea;
-	private Node headNode;
+	private nsIDOMElement contentArea;
+	private nsIDOMNode headNode;
 	private nsIDOMEventTarget contentAreaEventTarget;
 	private MozillaDomEventListener contentAreaEventListener;
 	private MozillaBaseEventListener baseEventListener;
@@ -126,13 +114,10 @@ public class MozillaPreview extends MozillaEditor {
 	 */
 	public void createPartControl(final Composite parent) {
 		try {
-			editor = new MozillaBrowser(parent, SWT.NONE) {
+			editor = new XulRunnerEditor(parent) {
 				public void onLoadWindow() {
 					super.onLoadWindow();
 					MozillaPreview.this.onLoadWindow();
-				}
-				
-				public void onElementResize(nsIDOMElement element, int resizerConstrains, int top, int left, int width, int height) {
 				}
 				
 				public void onShowTooltip(int x, int y, String text) {
@@ -146,7 +131,7 @@ public class MozillaPreview extends MozillaEditor {
 					}
 				}
 			};
-			editor.setUrl(INIT_URL);
+			editor.setURL(INIT_URL);
 			editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		} catch (Exception e) {
 	        Label title = new Label(parent, SWT.WRAP);
@@ -210,11 +195,9 @@ public class MozillaPreview extends MozillaEditor {
 		super.dispose();
 
 		if (contentArea != null) {
-			MozillaSupports.release(contentArea);
 			contentArea = null;
 		}
 		if (domDocument != null) {
-			MozillaSupports.release(domDocument);
 			domDocument = null;
 		}
 		if (editor != null) {
@@ -232,118 +215,10 @@ public class MozillaPreview extends MozillaEditor {
 		if (contentAreaEventListener != null) {
 			contentAreaEventListener.setEditorDomEventListener(listener);
 		}
-		if (editor != null) {
-			editor.setContextMenuListener(listener);
-		}
-	}
-
-	public Document getDomDocument() {
-		if (domDocument == null) {
-			domDocument = editor.getDOMDocument();
-		}
-		return domDocument;
-	}
-
-	public Element getContentArea() {
-		return contentArea;
-	}
-
-	public Node getHeadNode() {
-		return headNode;
-	}
-
-	public Menu getMenu() {
-		return editor.getMenu();
-	}
-
-	public Control getControl() {
-		return editor;
-	}
-
-	public VpeDnD getLocalDnD() {
-		if (contentAreaEventListener != null) {
-			return contentAreaEventListener.getLocalDnD();
-		}
-		return null;
-	}
-
-	private Element findContentArea() {
-		Node root = editor.getDOMDocumentElement();
-		Node area = findContentArea(root);
-		if (area == null) {
-			return null;
-		}
-		headNode = findHeadNode(root);
-		MozillaSupports.release(root);
-		return (Element)area;
-	}
-
-	private Node findHeadNode(Node root){
-		Node headNode = findChildNode(root, "HEAD"); //$NON-NLS-1$
-		return headNode;
-	}
-
-	private Node findChildNode(Node parent, String name) {
-		NodeList list = parent.getChildNodes();
-		Node node;
-		for (int i=0;i<list.getLength();i++) {
-			node = list.item(i);
-			if (node.getNodeName().equalsIgnoreCase(name)) {
-				MozillaSupports.release(list);
-				return node;
-			}
-			else {
-				MozillaSupports.release(node);
-			}
-		}
-		MozillaSupports.release(list);
-		return null;
-	}
-
-	private Node findContentArea(Node node) {
-		Node area = null;
-		if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
-        	NodeList children = node.getChildNodes();
-        	if (children != null) {
-	        	int length = children.getLength();
-	        	for (int i = 0; i < length; i++) {
-	        		Node child = children.item(i);
-	        		if (isContentArea(child)) {
-	        			area = child;
-	        			break;
-	        		}
-	        		area = findContentArea(child);
-	        		MozillaSupports.release(child);
-	        		if (area != null) {
-	        			break;
-	        		}
-	        	}
-	        	MozillaSupports.release(children);
-        	}
-    	}
-    	return area;
-	}
-
-	private boolean isContentArea(Node node) {
-		boolean ret = false;
-    	if ("BODY".equalsIgnoreCase(node.getNodeName())) { //$NON-NLS-1$
-   	    	NamedNodeMap map = node.getAttributes();
-			if (map != null) {
-				int length = map.getLength();
-    			for (int i = 0; i < length; i++) {
-    				Node attr = map.item(i);
-    				ret = attr.getNodeType() == Node.ATTRIBUTE_NODE &&
-							"ID".equalsIgnoreCase(attr.getNodeName()) && //$NON-NLS-1$
-							CONTENT_AREA_ID.equalsIgnoreCase(attr.getNodeValue());
-    				MozillaSupports.release(attr);
-    				if (ret) {
-    	    			break;
-    				}
-    			}
-    			MozillaSupports.release(map);
-			}
-    	}
-    	return ret;
+		// TODO Max Areshkau add Context Menu Listener
+//		if (editor != null) {
+//			editor.setContextMenuListener(listener);
+//		}
 	}
 
 	/**
@@ -361,80 +236,63 @@ public class MozillaPreview extends MozillaEditor {
 	private void addDomEventListeners() {
 		if (contentArea != null) {
 			try {
-				contentAreaEventListener = (MozillaDomEventListener)Class.forName("org.jboss.tools.vpe.editor.mozilla.MozillaDomEventListener").newInstance(); //$NON-NLS-1$
+				contentAreaEventListener = new MozillaDomEventListener();
 			} catch (Exception e) {
 			}
 
 			if (contentAreaEventListener != null) {
-				contentAreaEventListener.setMozillaBrowser(editor);
-				int aEventTarget = nsISupports.queryInterface(MozillaSupports.getAddress(contentArea), nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
-				contentAreaEventTarget = new nsIDOMEventTarget(aEventTarget);
-				contentAreaEventListener.getLocalDnD().Init(editor.getDOMDocument(),editor.getPresShell(), contentAreaEventListener.getDropListener());
-				//contentAreaEventTarget.addEventListener("DOMSubtreeModified", contentAreaEventListener.getDomEventListener());
-				//contentAreaEventTarget.addEventListener("DOMNodeInserted", contentAreaEventListener.getDomEventListener());
-				//contentAreaEventTarget.addEventListener("DOMNodeRemoved", contentAreaEventListener.getDomEventListener());
-				//contentAreaEventTarget.addEventListener("DOMNodeRemovedFromDocument", contentAreaEventListener.getDomEventListener());
-				//contentAreaEventTarget.addEventListener("DOMNodeInsertedIntoDocument", contentAreaEventListener.getDomEventListener());
-				//contentAreaEventTarget.addEventListener("DOMAttrModified", contentAreaEventListener.getDomEventListener());
-				//contentAreaEventTarget.addEventListener("DOMCharacterDataModified", contentAreaEventListener.getDomEventListener());
-				contentAreaEventTarget.addEventListener("click", contentAreaEventListener.getDomEventListener()); //$NON-NLS-1$
-				contentAreaEventTarget.addEventListener("mousedown", contentAreaEventListener.getDomEventListener()); //$NON-NLS-1$
-				contentAreaEventTarget.addEventListener("mouseup", contentAreaEventListener.getDomEventListener()); //$NON-NLS-1$
-				contentAreaEventTarget.addEventListener("mousemove", contentAreaEventListener.getDomEventListener()); //$NON-NLS-1$
+				contentAreaEventListener.setVisualEditor(editor);
+				contentAreaEventTarget = (nsIDOMEventTarget) contentArea.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
+				contentAreaEventTarget.addEventListener("click", contentAreaEventListener, false); //$NON-NLS-1$
+				contentAreaEventTarget.addEventListener("mousedown", contentAreaEventListener, false); //$NON-NLS-1$
+				contentAreaEventTarget.addEventListener("mouseup", contentAreaEventListener, false); //$NON-NLS-1$
+				contentAreaEventTarget.addEventListener("mousemove", contentAreaEventListener, false); //$NON-NLS-1$
 	
-				Document document = getDomDocument();
-				aEventTarget = nsISupports.queryInterface(MozillaSupports.getAddress(document), nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
-				documentEventTarget = new nsIDOMEventTarget(aEventTarget);
-				documentEventTarget.addEventListener("keypress", contentAreaEventListener.getDomEventListener()); //$NON-NLS-1$
+				documentEventTarget = (nsIDOMEventTarget) getDomDocument().queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
+				documentEventTarget.addEventListener("keypress", contentAreaEventListener, false); //$NON-NLS-1$
 			} else {
 				baseEventListener = new MozillaBaseEventListener();
-				baseEventListener.getLocalDnD().Init(editor.getDOMDocument(),editor.getPresShell(), baseEventListener.getDropListener());
 			}
 		}
 	}
 
 	private void removeDomEventListeners() {
 		if (contentAreaEventTarget != null && contentAreaEventListener != null) {
-			contentAreaEventTarget.removeEventListener("click", contentAreaEventListener.getDomEventListener()); //$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener("mousedown", contentAreaEventListener.getDomEventListener()); //$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener("mouseup", contentAreaEventListener.getDomEventListener()); //$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener("mousemove", contentAreaEventListener.getDomEventListener()); //$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener("click", contentAreaEventListener, false); //$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener("mousedown", contentAreaEventListener, false); //$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener("mouseup", contentAreaEventListener, false); //$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener("mousemove", contentAreaEventListener, false); //$NON-NLS-1$
 		}
 		if (domDocument != null && documentEventTarget != null) {
-			documentEventTarget.removeEventListener("keypress", contentAreaEventListener.getDomEventListener()); //$NON-NLS-1$
+			documentEventTarget.removeEventListener("keypress", contentAreaEventListener, false); //$NON-NLS-1$
 		}
 	}
 
 	private void addSelectionListener() {
-		if (contentAreaEventListener != null) {
-			nsISelectionController selectionController = editor.getSelectionController();
-			selectionController.addSelectionListener(contentAreaEventListener.getSelectionListener());
-			selectionController.Release();
-		}
+		// TODO Max Areshkau add Selection Controller
+//		if (contentAreaEventListener != null) {
+//			nsISelectionController selectionController = editor.getSelectionController();
+//			selectionController.addSelectionListener(contentAreaEventListener);
+//		}
 	}
 
 	private void removeSelectionListener() {
-		nsISelectionController selectionController = editor.getSelectionController();
-		selectionController.removeSelectionListener(contentAreaEventListener.getSelectionListener());
-		selectionController.Release();
+		// TODO Max Areshkau add Selection Controller
+//		nsISelectionController selectionController = editor.getSelectionController();
+//		selectionController.removeSelectionListener(contentAreaEventListener.getSelectionListener());
 	}
 
 	public void setSelectionRectangle(Element element, int resizerConstrains, boolean scroll) {
-		if (contentAreaEventListener != null) {
-			editor.setSelectionRectangle((nsIDOMElement)element, resizerConstrains, scroll);
-		}
+		// TODO Sergey Vasilyev figure out with selection in preview
+//		if (contentAreaEventListener != null) {
+//			editor.setSelectionRectangle((nsIDOMElement)element, resizerConstrains, scroll);
+//		}
 	}
 
 	public void showResizer() {
-		if (contentAreaEventListener != null) {
-			editor.showResizer();
-		}
 	}
 
 	public void hideResizer() {
-		if (contentAreaEventListener != null) {
-			editor.hideResizer();
-		}
 	}
 
 	/**

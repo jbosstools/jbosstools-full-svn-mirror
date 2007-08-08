@@ -23,6 +23,11 @@ import org.jboss.tools.vpe.editor.VpeSourceDomBuilder;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMText;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -133,12 +138,12 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		}
 	}
 	
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 		Map visualNodeMap = new HashMap();
 		VpeCreatorInfo creatorInfo = createVisualElement(pageContext, (Element)sourceNode, visualDocument, null, visualNodeMap);
-		Element newVisualElement = null;
+		nsIDOMElement newVisualElement = null;
 		if (creatorInfo != null) {
-			newVisualElement = (Element)creatorInfo.getVisualNode();
+			newVisualElement = (nsIDOMElement)creatorInfo.getVisualNode();
 		}
 		VpeCreationData creationData = new VpeCreationData(newVisualElement);
 		if (creatorInfo != null) {
@@ -153,19 +158,19 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		return creationData;
 	}
 
-	public void validate(VpePageContext pageContext, Node sourceNode, Document visualDocument, VpeCreationData creationdata) {
-		validateVisualElement(pageContext, (Element)sourceNode, visualDocument, null, (Element)creationdata.getNode(), (Map)creationdata.getData());
+	public void validate(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, VpeCreationData creationdata) {
+		validateVisualElement(pageContext, (Element)sourceNode, visualDocument, null, (nsIDOMElement)creationdata.getNode(), (Map)creationdata.getData());
 	}
 
 	public void setAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		setAttribute(pageContext, sourceElement, (Map)data, name, value);
 	}
 
-	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name) {
+	public void removeAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name) {
 		removeAttribute(pageContext, sourceElement, (Map)data, name);
 	}
 
-	public void beforeRemove(VpePageContext pageContext, Node sourceNode, Node visualNode, Object data) {
+	public void beforeRemove(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
 		removeElement(pageContext, (Element)sourceNode, (Map) data);
 	}
 	
@@ -173,18 +178,18 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		return creator == null ? false : children;
 	}
 	
-	private VpeCreatorInfo createVisualElement(VpePageContext pageContext, Element sourceElement, Document visualDocument, Element visualParent, Map visualNodeMap) {
+	private VpeCreatorInfo createVisualElement(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualParent, Map visualNodeMap) {
 		if (creator == null) {
 			return null;
 		}
 		
 		VpeCreatorInfo elementInfo = creator.create(pageContext, sourceElement, visualDocument, visualParent, visualNodeMap);
 		if (elementInfo != null) {
-			Element visualElement = (Element)elementInfo.getVisualNode();
+			nsIDOMElement visualElement = (nsIDOMElement)elementInfo.getVisualNode();
 			if (visualElement != null) {
 				boolean curModify = getCurrentModify(pageContext, sourceElement, visualNodeMap);
 				makeModify(visualElement, curModify);
-				if (!"INPUT".equalsIgnoreCase(visualElement.getNodeName()) && dependencyFromBundle && !curModify) {
+				if (!HTML.TAG_INPUT.equalsIgnoreCase(visualElement.getNodeName()) && dependencyFromBundle && !curModify) {
 					String style = visualElement.getAttribute(ATTR_STYLE);
 					visualElement.setAttribute(ATTR_STYLE, style + ATTR_CURSOR_POINTER);
 				}
@@ -197,13 +202,13 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		return elementInfo;
 	}
 
-	private void validateVisualElement(VpePageContext pageContext, Element sourceElement, Document visualDocument, Element visualParent, Element visualElement, Map visualNodeMap) {
+	private void validateVisualElement(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualParent, nsIDOMElement visualElement, Map visualNodeMap) {
 		if (creator != null) {
 			creator.validate(pageContext, sourceElement, visualDocument, visualParent, visualElement, visualNodeMap);
 		}
 	}
 
-	public boolean nonctrlKeyPressHandler(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, Node visualNode, Object data, int charCode, VpeSourceSelection selection, ITextFormatter formatter) {
+	public boolean nonctrlKeyPressHandler(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, nsIDOMNode visualNode, Object data, long charCode, VpeSourceSelection selection, ITextFormatter formatter) {
 		if (creator != null) {
 			boolean done = creator.nonctrlKeyPressHandler(pageContext, sourceDocument,  sourceNode, data, charCode, selection, formatter);
 			if (done) {
@@ -393,11 +398,11 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		return null;
 	}
 
-	public Node getOutputTextNode(VpePageContext pageContext, Element sourceElement, Object data) {
+	public nsIDOMText getOutputTextNode(VpePageContext pageContext, Element sourceElement, Object data) {
 		VpeCreator[] creators = dependencyMap.getCreators(VpeValueCreator.SIGNATURE_VPE_VALUE);
 		for (int i = 0; i < creators.length; i++) {
 			if (creators[i] instanceof VpeOutputAttributes) {
-				return (Node)((VpeOutputAttributes)creators[i]).getOutputTextNode(pageContext, sourceElement, (Map)data);
+				return ((VpeOutputAttributes)creators[i]).getOutputTextNode(pageContext, sourceElement, (Map)data);
 			}
 		}
 		return null;
@@ -427,11 +432,11 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		changeModify(pageContext, sourceElement, visualNodeMap);
 	}
 	
-	static void makeModify(Element visualElement, boolean modify) {
+	static void makeModify(nsIDOMElement visualElement, boolean modify) {
 		String s = ATTR_STYLE_MODIFY_NAME + ":" + 
 				(modify ? ATTR_STYLE_MODIFY_READ_WRITE_VALUE : ATTR_STYLE_MODIFY_READ_ONLY_VALUE);
 		String style = visualElement.getAttribute(ATTR_STYLE);
-		if (style.length() > 0) {
+		if (style != null && style.length() > 0) {
 			if (style.indexOf(ATTR_STYLE_MODIFY_NAME) >= 0) {
 				String[] items =  style.split(";");
 				style = "";
@@ -492,10 +497,10 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	}
 	
 	private static class ModifyInfo {
-		private Element visualElement;
+		private nsIDOMElement visualElement;
 		private boolean modify;
 		
-		private ModifyInfo(Element visualElement, boolean modify) {
+		private ModifyInfo(nsIDOMElement visualElement, boolean modify) {
 			this.visualElement = visualElement;
 			this.modify = modify;
 		}
@@ -554,14 +559,14 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		}
 	}
 
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
+	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualNode, Object data, String name, String value) {
 		if (creator != null) {
 			return creator.isRecreateAtAttrChange(pageContext, sourceElement, visualDocument, visualNode, data, name, value);
 		}
 		return false;
 	}
 
-	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode, Node visualNode, Object data) {
+	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
 		if (creator != null) {
 			return creator.getNodeForUptate(pageContext, sourceNode, visualNode, (Map)data);
 		}

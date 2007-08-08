@@ -10,25 +10,25 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 
 public class VpeVisualInnerDragInfo {
-	private Node node;
+	private nsIDOMNode node;
 	private int offset;
 	private int length;
 	
-	public VpeVisualInnerDragInfo(Element node) {
+	public VpeVisualInnerDragInfo(nsIDOMElement node) {
 		this.node = node;
 	}
 	
-	public VpeVisualInnerDragInfo(Node node, int offset, int length) {
+	public VpeVisualInnerDragInfo(nsIDOMNode node, int offset, int length) {
 		this.node = node;
 		this.offset = offset;
 		this.length = length;
 	}
 	
-	public Node getNode() {
+	public nsIDOMNode getNode() {
 		return node;
 	}
 	

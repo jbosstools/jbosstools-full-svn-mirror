@@ -196,7 +196,7 @@ public class SelectionBar extends Layout implements SelectionListener {
 	}
 
 	public void dispose() {
-		if (!selBar.isDisposed()) {
+		if (selBar != null && (!selBar.isDisposed())) {
 			for (int i =0; i < selBar.getItemCount(); i++) {
 				if (!selBar.getItem(i).isDisposed()) {
 					selBar.getItem(i).removeSelectionListener(this);

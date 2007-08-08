@@ -11,7 +11,6 @@
 package org.jboss.tools.vpe.editor;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -23,7 +22,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -51,21 +49,25 @@ import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
+import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
-import org.jboss.tools.vpe.mozilla.browser.MozillaBrowser;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.VpeDnD;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMMouseEvent;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMNode;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMRange;
+import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
+import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMMouseEvent;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMNodeList;
+import org.mozilla.interfaces.nsIDOMRange;
+import org.mozilla.interfaces.nsIDOMText;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 
 public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private static final String PSEUDO_ELEMENT = "br";
@@ -81,36 +83,15 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private static final String ATTR_XMLNS = "xmlns";
 	
 	private MozillaEditor visualEditor;
-	private MozillaBrowser browser; 
-	private Document visualDocument;
-	private Element visualContentArea;
+	private XulRunnerEditor xulRunnerEditor;
+	private nsIDOMDocument visualDocument;
+	private nsIDOMElement visualContentArea;
 	private VpePageContext pageContext;
-	private VpeDnD dnd;
-	private Node headNode;
+	// TODO Max Areshkau figure out with DnD
+//	private VpeDnD dnd;
+	private nsIDOMNode headNode;
 	private List includeStack;
 	boolean rebuildFlag = false;
-	
-	private static final String EMPTY_STRING = ""; 
-	
-	private static final String TAG_BODY     = "body";
-	private static final String TAG_HEAD     = "head";
-	private static final String TAG_HTML     = "html";
-	private static final String TAG_LINK     = "link";
-	private static final String TAG_STYLE    = "style";
-	private static final String TAG_TABLE    = "table";
-	private static final String TAG_TBODY    = "tbody";
-	private static final String TAG_THEAD    = "thead";
-	private static final String TAG_TR       = "tr";
-	private static final String TAG_TD       = "td";
-	private static final String TAG_COL      = "col";
-	private static final String TAG_COLS     = "cols";
-	private static final String TAG_COLGROUP = "colgroup";
-	private static final String TAG_BR       = "br";
-	private static final String TAG_LI       = "li";
-	private static final String TAG_IMG      = "img";
-	private static final String TAG_DIV      = "div";
-	private static final String TAG_SPAN     = "span";
-	private static final String TAG_P        = "p";
 	
 	private static final String ATTR_VPE     = "vpe";
 	private static final String ATTR_VPE_INLINE_LINK_VALUE = "inlinelink";
@@ -120,6 +101,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private static final String YES_STRING   = "yes";
 	private static final String NO_STRING    = "no";
 	private static final String ZERO_STRING  = "0";
+	private static final String EMPTY_STRING = ""; 
 	
 	private static final String ATRIBUTE_BORDER       = "border"; 
 	private static final String ATRIBUTE_CELLSPACING  = "cellspacing";
@@ -131,24 +113,24 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private static final String DOTTED_BORDER_STYLE_FOR_SPAN = "border : 1px solid #0051DD; color:#0051DD; background-color:#ECF3FF; padding-left: 3px;  padding-right: 3px;  line-height : 10px; font-family : arial; font-size : 10px; text-align:top; margin : 1px; -moz-user-modify : read-only";
 	
 	
-	static private HashSet unborderedSourceNodes = new HashSet();
+	static private HashSet<String> unborderedSourceNodes = new HashSet<String>();
 	static{
-		unborderedSourceNodes.add(TAG_HTML);
-		unborderedSourceNodes.add(TAG_HEAD);
-		unborderedSourceNodes.add(TAG_BODY);
+		unborderedSourceNodes.add(HTML.TAG_HTML);
+		unborderedSourceNodes.add(HTML.TAG_HEAD);
+		unborderedSourceNodes.add(HTML.TAG_BODY);
 	}
 	
-	static private HashSet unborderedVisualNodes = new HashSet();
+	static private HashSet<String> unborderedVisualNodes = new HashSet<String>();
 	static{
-		unborderedVisualNodes.add(TAG_TBODY);
-		unborderedVisualNodes.add(TAG_THEAD);
-		unborderedVisualNodes.add(TAG_TR);
-		unborderedVisualNodes.add(TAG_TD);
-		unborderedVisualNodes.add(TAG_COL);
-		unborderedVisualNodes.add(TAG_COLS);
-		unborderedVisualNodes.add(TAG_COLGROUP);
-		unborderedVisualNodes.add(TAG_LI);
-		unborderedVisualNodes.add(TAG_BR);
+		unborderedVisualNodes.add(HTML.TAG_TBODY);
+		unborderedVisualNodes.add(HTML.TAG_THEAD);
+		unborderedVisualNodes.add(HTML.TAG_TR);
+		unborderedVisualNodes.add(HTML.TAG_TD);
+		unborderedVisualNodes.add(HTML.TAG_COL);
+		unborderedVisualNodes.add(HTML.TAG_COLS);
+		unborderedVisualNodes.add(HTML.TAG_COLGROUP);
+		unborderedVisualNodes.add(HTML.TAG_LI);
+		unborderedVisualNodes.add(HTML.TAG_BR);
 	}
 	private VpeDnd dropper;
 	
@@ -156,14 +138,16 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	public VpeVisualDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, VpeTemplateManager templateManager, MozillaEditor visualEditor, VpePageContext pageContext) {
 		super(domMapping, sorceAdapter, templateManager);
 		this.visualEditor = visualEditor;
-		browser = (MozillaBrowser)visualEditor.getControl();
+		xulRunnerEditor = (XulRunnerEditor)visualEditor.getControl();
 		this.visualDocument = visualEditor.getDomDocument();
 		this.visualContentArea = visualEditor.getContentArea();
-		this.dnd = visualEditor.getLocalDnD();
+		// TODO Max Areshkau figure out 
+//		this.dnd = visualEditor.getLocalDnD();
 		this.pageContext = pageContext;
 		this.headNode = visualEditor.getHeadNode();
-		dropper = new VpeDnd();
-		dropper.setDndData(false, true);
+		// TODO Max Areshkau figure out
+//		dropper = new VpeDnd();
+//		dropper.setDndData(false, true);
 	}
 	
 	public void buildDom(Document sourceDocument) {
@@ -188,14 +172,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		refreshExternalLinks();
 		pageContext.getBundle().refreshRegisteredBundles();
 
-		NodeList children = visualContentArea.getChildNodes();
-		int len = children.getLength();
-		for (int i = len - 1; i >= 0; i--) {
-			Node child = children.item(i);
-			Node visualRemovedNode = visualContentArea.removeChild(child);
-			MozillaSupports.release(child, visualRemovedNode);
+		nsIDOMNodeList children = visualContentArea.getChildNodes();
+		long len = children.getLength();
+		for (long i = len - 1; i >= 0; i--) {
+			visualContentArea.removeChild(children.item(i));
 		}
-		MozillaSupports.release(children);
 
 		if (sourceDocument != null) {
 			buildDom(sourceDocument);
@@ -207,28 +188,29 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	// temporary, will be change to prefference's variable
 	//private boolean borderVisible = true;
 	
-	private boolean addNode(Node sourceNode, Node visualNextNode, Node visualContainer) {
-		Node visualNewNode = createNode(sourceNode, visualContainer);
+	private boolean addNode(Node sourceNode, nsIDOMNode visualNextNode, nsIDOMNode visualContainer) {
+		nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer);
 		if (visualNewNode != null) {
-			Node visualAddedNode = visualNextNode == null ? 
-						visualContainer.appendChild(visualNewNode) : 
-						visualContainer.insertBefore(visualNewNode, visualNextNode);
-			MozillaSupports.release(visualAddedNode);
+			if (visualNextNode == null) { 
+				visualContainer.appendChild(visualNewNode);
+			} else { 
+				visualContainer.insertBefore(visualNewNode, visualNextNode);
+			}
 			return true;
-		} else {
-			return false;
 		}
+		
+		return false;
 	}
 	
 
-	private Element createBorder(Node sourceNode, Element visualNode, boolean block){
-		Element border = null;
+	private nsIDOMElement createBorder(Node sourceNode, nsIDOMElement visualNode, boolean block){
+		nsIDOMElement border = null;
 		if (visualNode == null) return null;
 		if(unborderedSourceNodes.contains(sourceNode.getNodeName().toLowerCase())) return null;
 		if(unborderedVisualNodes.contains(visualNode.getNodeName().toLowerCase())) return null;
-		if(TAG_IMG.equalsIgnoreCase(visualNode.getNodeName())){
+		if(HTML.TAG_IMG.equalsIgnoreCase(visualNode.getNodeName())){
 			String width = visualNode.getAttribute(ATRIBUTE_BORDER);
-			if(width == null || ZERO_STRING.equalsIgnoreCase(width) || "".equalsIgnoreCase(width)){
+			if(width == null || ZERO_STRING.equalsIgnoreCase(width) || EMPTY_STRING.equalsIgnoreCase(width)){
 				String style = visualNode.getAttribute(VpeStyleUtil.ATTRIBUTE_STYLE);
 				style = VpeStyleUtil.setParameterInStyle(style, ATRIBUTE_BORDER, DOTTED_BORDER_STYLE_FOR_IMG);
 				visualNode.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
@@ -237,53 +219,51 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 		if( block){
 			if (YES_STRING.equals(VpePreference.USE_DETAIL_BORDER.getValue())){
-				border = visualDocument.createElement(TAG_TABLE);
+				border = visualDocument.createElement(HTML.TAG_TABLE);
 				border.setAttribute(ATRIBUTE_CELLSPACING, ZERO_STRING);
 				border.setAttribute(ATRIBUTE_CELLPADDING, ZERO_STRING);
 
-				Element tr1 = visualDocument.createElement(TAG_TR);
+				nsIDOMElement tr1 = visualDocument.createElement(HTML.TAG_TR);
 				border.appendChild(tr1);
-				Element td1 = visualDocument.createElement(TAG_TD);
+				nsIDOMElement td1 = visualDocument.createElement(HTML.TAG_TD);
 				td1.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, DOTTED_BORDER_STYLE_FOR_TD);
-				Text text = visualDocument.createTextNode(sourceNode.getNodeName());
+				nsIDOMText text = visualDocument.createTextNode(sourceNode.getNodeName());
 				td1.appendChild(text);
-				MozillaSupports.release(text);
 				tr1.appendChild(td1);
-				Element tr2 = visualDocument.createElement(TAG_TR);
+				nsIDOMElement tr2 = visualDocument.createElement(HTML.TAG_TR);
 				border.appendChild(tr2);
-				Element td2 = visualDocument.createElement(TAG_TD);
+				nsIDOMElement td2 = visualDocument.createElement(HTML.TAG_TD);
 				tr2.appendChild(td2);
-				Element p = visualDocument.createElement(TAG_P);
+				nsIDOMElement p = visualDocument.createElement(HTML.TAG_P);
 				p.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, DOTTED_BORDER_STYLE);
 				td2.appendChild(p);
 
 				p.appendChild(visualNode);
 				
 			}else{
-				border = visualDocument.createElement(TAG_TABLE);
+				border = visualDocument.createElement(HTML.TAG_TABLE);
 				border.setAttribute(ATRIBUTE_CELLSPACING, ZERO_STRING);
 				border.setAttribute(ATRIBUTE_CELLPADDING, ZERO_STRING);
 				
-				Element tr2 = visualDocument.createElement(TAG_TR);
+				nsIDOMElement tr2 = visualDocument.createElement(HTML.TAG_TR);
 				border.appendChild(tr2);
-				Element td2 = visualDocument.createElement(TAG_TD);
+				nsIDOMElement td2 = visualDocument.createElement(HTML.TAG_TD);
 				tr2.appendChild(td2);
-				Element p = visualDocument.createElement(TAG_P);
+				nsIDOMElement p = visualDocument.createElement(HTML.TAG_P);
 				p.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, DOTTED_BORDER_STYLE);
 				td2.appendChild(p);
 
 				p.appendChild(visualNode);
 			}
 		}else{
-			border = visualDocument.createElement(TAG_SPAN);
+			border = visualDocument.createElement(HTML.TAG_SPAN);
 			border.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, DOTTED_BORDER_STYLE);
 			if(YES_STRING.equals(VpePreference.USE_DETAIL_BORDER.getValue())){
-				Element name = visualDocument.createElement(TAG_SPAN);
+				nsIDOMElement name = visualDocument.createElement(HTML.TAG_SPAN);
 				name.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, DOTTED_BORDER_STYLE_FOR_SPAN);
-				Text text = visualDocument.createTextNode(sourceNode.getNodeName());
+				nsIDOMText text = visualDocument.createTextNode(sourceNode.getNodeName());
 				name.appendChild(text);
 				border.appendChild(name);
-				MozillaSupports.release(text, name);
 			}
 			border.appendChild(visualNode);
 		}
@@ -306,7 +286,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return border;
 	}
 		
-	private Node createNode(Node sourceNode, Node visualOldContainer) {
+	private nsIDOMNode createNode(Node sourceNode, nsIDOMNode visualOldContainer) {
 		boolean registerFlag = isCurrentMainDocument();
 		switch (sourceNode.getNodeType()) {
 		case Node.ELEMENT_NODE:
@@ -316,9 +296,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			VpeTemplate template = templateManager.getTemplate(pageContext, (Element)sourceNode, ifDependencySet);
 			VpeCreationData creationData = template.create(pageContext, sourceNode, visualDocument);
 			pageContext.setCurrentVisualNode(null);
-			Element visualNewElement;
-			visualNewElement = (Element)creationData.getNode();
-			Element border = null;
+			nsIDOMElement visualNewElement = (nsIDOMElement) creationData.getNode();
+			nsIDOMElement border = null;
 			setTooltip((Element)sourceNode, visualNewElement);
 			if (YES_STRING.equals(VpePreference.SHOW_BORDER_FOR_ALL_TAGS.getValue()) && visualNewElement != null) {
 				boolean block = true;
@@ -355,7 +334,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				return null;
 			}
 			String visualText = TextUtil.visualText(sourceText);
-			Node visualNewTextNode = visualDocument.createTextNode(visualText);
+			nsIDOMText visualNewTextNode = visualDocument.createTextNode(visualText);
 			if (registerFlag) {
 				registerNodes(new VpeNodeMapping(sourceNode, visualNewTextNode));
 			}
@@ -364,7 +343,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			if(!YES_STRING.equals(VpePreference.SHOW_COMMENTS.getValue())) {
 				return null;
 			}
-			Element visualNewComment = createComment(sourceNode);
+			nsIDOMElement visualNewComment = createComment(sourceNode);
 			if (registerFlag) {
 				registerNodes(new VpeNodeMapping(sourceNode, visualNewComment));
 			}
@@ -373,16 +352,16 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return null;
 	}
 	
-	private Element createComment(Node sourceNode) {
-		Element div = visualDocument.createElement(TAG_DIV);
+	protected nsIDOMElement createComment(Node sourceNode) {
+		nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
 		div.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, COMMENT_STYLE);
 		String value = COMMENT_PREFIX + sourceNode.getNodeValue() + COMMENT_SUFFIX;
-		Node text = visualDocument.createTextNode(value);
+		nsIDOMText text = visualDocument.createTextNode(value);
 		div.appendChild(text);
 		return div;
 	}
 
-	private void addChildren(VpeTemplate containerTemplate, Node sourceContainer, Node visualContainer) {
+	protected void addChildren(VpeTemplate containerTemplate, Node sourceContainer, nsIDOMNode visualContainer) {
 		NodeList sourceNodes = sourceContainer.getChildNodes();
 		int len = sourceNodes.getLength();
 		int childrenCount = 0;
@@ -397,10 +376,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 
-	private void addChildren(VpeTemplate containerTemplate, Node sourceContainer, Node visualOldContainer, List childrenInfoList) {
+	protected void addChildren(VpeTemplate containerTemplate, Node sourceContainer, nsIDOMNode visualOldContainer, List childrenInfoList) {
 		for (int i = 0; i < childrenInfoList.size(); i++) {
 			VpeChildrenInfo info = (VpeChildrenInfo)childrenInfoList.get(i);
-			Node visualParent = info.getVisualParent();
+			nsIDOMNode visualParent = info.getVisualParent();
 			if (visualParent == null) visualParent = visualOldContainer;
 			List sourceChildren = info.getSourceChildren();
 			int childrenCount = 0;
@@ -422,35 +401,31 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	
 
 ///////////////////////////////////////////////////////////////////////////	
-	public Node addStyleNodeToHead(String styleText){
-		Node newStyle = visualDocument.createElement(VpeStyleUtil.ATTRIBUTE_STYLE);
+	public nsIDOMNode addStyleNodeToHead(String styleText){
+		nsIDOMNode newStyle = visualDocument.createElement(VpeStyleUtil.ATTRIBUTE_STYLE);
 		
 		if(styleText != null){
-			Node newText = visualDocument.createTextNode(styleText);
+			nsIDOMText newText = visualDocument.createTextNode(styleText);
 			newStyle.appendChild(newText);
-			MozillaSupports.release(newText);
 		}
 		headNode.appendChild(newStyle);
 		return newStyle;
 	}
 
-	public Node replaceStyleNodeToHead(Node oldStyleNode, String styleText){
-		Node newStyle = visualDocument.createElement(VpeStyleUtil.ATTRIBUTE_STYLE);
+	public nsIDOMNode replaceStyleNodeToHead(nsIDOMNode oldStyleNode, String styleText){
+		nsIDOMElement newStyle = visualDocument.createElement(VpeStyleUtil.ATTRIBUTE_STYLE);
 		
 		if(styleText != null){
-			Node newText = visualDocument.createTextNode(styleText);
+			nsIDOMNode newText = visualDocument.createTextNode(styleText);
 			newStyle.appendChild(newText);
-			MozillaSupports.release(newText);
 		}
 		
 		headNode.replaceChild(newStyle, oldStyleNode);
-		MozillaSupports.release(oldStyleNode);
 		return newStyle;
 	}
 	
-	public void removeStyleNodeFromHead(Node oldStyleNode){
+	public void removeStyleNodeFromHead(nsIDOMNode oldStyleNode){
 		headNode.removeChild(oldStyleNode);
-		MozillaSupports.release(oldStyleNode);
 	}
 	
 	void addExternalLinks() {
@@ -472,25 +447,23 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 
 	void removeExternalLinks() {
-	    NodeList childs = headNode.getChildNodes();
-	    int length = childs.getLength();
-	    for (int i = length - 1; i >= 0; i--) {
-	        Node node = childs.item(i);
-	        if (node.getNodeType() == Node.ELEMENT_NODE) {
+	    nsIDOMNodeList childs = headNode.getChildNodes();
+	    long length = childs.getLength();
+	    for (long i = length - 1; i >= 0; i--) {
+	        nsIDOMNode node = childs.item(i);
+	        if (node.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 	        	boolean isLink = false;
 	        	boolean isStyle = false;
-	        	if((isLink = TAG_LINK.equalsIgnoreCase(node.getNodeName()))
-	        			|| (isStyle = TAG_STYLE.equalsIgnoreCase(node.getNodeName()))) {
-	        		Element element = (Element)node;
+	        	if((isLink = HTML.TAG_LINK.equalsIgnoreCase(node.getNodeName()))
+	        			|| (isStyle = HTML.TAG_STYLE.equalsIgnoreCase(node.getNodeName()))) {
+	        		nsIDOMElement element = (nsIDOMElement)node.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 		            if ((isLink || (isStyle && ATTR_VPE_INLINE_LINK_VALUE.equalsIgnoreCase(element.getAttribute(ATTR_VPE))))
 		            		&& YES_STRING.equalsIgnoreCase(element.getAttribute("ext"))) {
 		                headNode.removeChild(node);
 		            }
 	        	}
 	        }
-	        MozillaSupports.release(node);
 	    }
-        MozillaSupports.release(childs);
 	}
 
 	void refreshExternalLinks() {
@@ -499,64 +472,76 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	
 //	==========================================================
-	void resetPseudoElement(Node visualNode) {
+	void resetPseudoElement(nsIDOMNode visualNode) {
 		if (visualNode != null) {
-			Node visualParent = visualNode.getParentNode();
+			nsIDOMNode visualParent = visualNode.getParentNode();
 			if (visualParent != null) {
 				PseudoInfo info = getPseudoInfo(visualParent);
 				if (info.pseudoNode == null && !info.isElements) {
 					addPseudoElementImpl(visualParent);
 				} else  if (info.pseudoNode != null && info.isElements) {
 					visualParent.removeChild(info.pseudoNode);
-					MozillaSupports.release(info.pseudoNode);
 				}
-				MozillaSupports.release(visualParent);
 			}
 		}
 	}
 	
-	private PseudoInfo getPseudoInfo(Node visualParent) {
-		Node pseudoNode = null;
+	private PseudoInfo getPseudoInfo(nsIDOMNode visualParent) {
+		nsIDOMNode pseudoNode = null;
 		boolean isElements = false;
 
 		if (visualParent == null) return new PseudoInfo();
-	    NodeList visualNodes = visualParent.getChildNodes();
+	    nsIDOMNodeList visualNodes = visualParent.getChildNodes();
 	    if (visualNodes == null) return new PseudoInfo();
 
-	    int length = visualNodes.getLength();
-	    for (int i = 0; i < length; i++) {
-	        Node visualNode = visualNodes.item(i);
+	    long length = visualNodes.getLength();
+	    for (long i = 0; i < length; i++) {
+	        nsIDOMNode visualNode = visualNodes.item(i);
 	        if (pseudoNode == null && isPseudoElement(visualNode)) {
 	        	pseudoNode = visualNode;
 	        } else if (!isEmptyText(visualNode)) {
 	        	isElements = true;
 	        }
-	        if (visualNode != pseudoNode) {
-	        	MozillaSupports.release(visualNode);
-	        }
 	        if (pseudoNode != null && isElements) {
 	        	break;
 	        }
 	    }
-	    MozillaSupports.release(visualNodes);
 		return new PseudoInfo(pseudoNode, isElements);
 	}
 	
-	static boolean isInitElement(Node visualNode) {
-		if (visualNode == null) return false;
-		if (visualNode.getNodeType() != Node.ELEMENT_NODE) return false;
-        if (YES_STRING.equalsIgnoreCase(((Element)visualNode).getAttribute(INIT_ELEMENT_ATTR))) return true;
+	static boolean isInitElement(nsIDOMNode visualNode) {
+		if (visualNode == null) {
+			return false;
+		}
+		
+		if (visualNode.getNodeType() != Node.ELEMENT_NODE) {
+			return false;
+		}
+		
+        if (YES_STRING.equalsIgnoreCase(((nsIDOMElement)visualNode).getAttribute(INIT_ELEMENT_ATTR))) {
+        	return true;
+        }
+        
 		return false;
 	}
 	
-	static boolean isPseudoElement(Node visualNode) {
-		if (visualNode == null) return false;
-		if (visualNode.getNodeType() != Node.ELEMENT_NODE) return false;
-        if (YES_STRING.equalsIgnoreCase(((Element)visualNode).getAttribute(PSEUDO_ELEMENT_ATTR))) return true;
-		return false;
+	static boolean isPseudoElement(nsIDOMNode visualNode) {
+		if (visualNode == null) {
+			return false;
+		}
+		
+		if (visualNode.getNodeType() != Node.ELEMENT_NODE) {
+			return false;
+		}
+		
+        if (YES_STRING.equalsIgnoreCase(((nsIDOMElement)visualNode).getAttribute(PSEUDO_ELEMENT_ATTR))) {
+        	return true;
+        }
+
+        return false;
 	}
 	
-	private void setPseudoContent(VpeTemplate containerTemplate, Node sourceContainer, Node visualContainer) {
+	private void setPseudoContent(VpeTemplate containerTemplate, Node sourceContainer, nsIDOMNode visualContainer) {
 		if (containerTemplate != null) {
 			containerTemplate.setPseudoContent(pageContext, sourceContainer, visualContainer, visualDocument);
 		} else {
@@ -568,56 +553,52 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 //		}
 	}
 	
-	private void addPseudoElementImpl(Node visualParent) {
+	private void addPseudoElementImpl(nsIDOMNode visualParent) {
 		if (!templateManager.isWithoutPseudoElementContainer(visualParent.getNodeName())) {
 			if (VpeDebug.visualAddPseudoElement) {
 				System.out.println("-------------------- addPseudoElement: " + visualParent.getNodeName());
 			}
-			Element visualPseudoElement = visualDocument.createElement(PSEUDO_ELEMENT);
+			nsIDOMElement visualPseudoElement = visualDocument.createElement(PSEUDO_ELEMENT);
 			visualPseudoElement.setAttribute(PSEUDO_ELEMENT_ATTR, "yes");
 			visualParent.appendChild(visualPseudoElement);
-			MozillaSupports.release(visualPseudoElement);
 		}
 	}
 	
-	public boolean isEmptyElement(Node visualParent) {
-		boolean empty = false;
-		NodeList visualNodes = visualParent.getChildNodes();
-		int len = visualNodes.getLength();
-		if (len == 0) {
-			empty = true;
-		} else if (len == 1) {
-			Node visualNode = visualNodes.item(0);
-			if (isEmptyText(visualNode)) {
-				empty = true;
-			}
-			MozillaSupports.release(visualNode);
+	public boolean isEmptyElement(nsIDOMNode visualParent) {
+		nsIDOMNodeList visualNodes = visualParent.getChildNodes();
+		long len = visualNodes.getLength();
+		
+		if ((len == 0)
+				|| (len == 1 && isEmptyText(visualNodes.item(0)))) {
+			return true;
 		}
-		MozillaSupports.release(visualNodes);
-		return empty;
+
+		return false;
 	}
 	
 	public boolean isEmptyDocument() {
-		boolean empty = false;
-		NodeList visualNodes = visualContentArea.getChildNodes();
-		int len = visualNodes.getLength();
-		if (len == 0) {
-			empty = true;
-		} else if (len == 1) {
-			Node visualNode = visualNodes.item(0);
-			if (isEmptyText(visualNode) || isPseudoElement(visualNode)) {
-				empty = true;
-			}
-			MozillaSupports.release(visualNode);
+		nsIDOMNodeList visualNodes = visualContentArea.getChildNodes();
+		long len = visualNodes.getLength();
+		if ((len == 0)
+				|| (len == 1 
+						&& (isEmptyText(visualNodes.item(0))
+								|| isPseudoElement(visualNodes.item(0)))) ) {
+			return true;
 		}
-		MozillaSupports.release(visualNodes);
-		return empty;
+		
+		return false;
 	}
 	
-	private boolean isEmptyText(Node visualNode) {
-		if (visualNode == null) return false;
-		if (visualNode.getNodeType() != Node.TEXT_NODE) return false;
-		if (visualNode.getNodeValue().trim().length() == 0) return true;
+	private boolean isEmptyText(nsIDOMNode visualNode) {
+		if (visualNode == null
+				|| (visualNode.getNodeType() != nsIDOMNode.TEXT_NODE) ) {
+			return false;
+		}
+		
+		if (visualNode.getNodeValue().trim().length() == 0) {
+			return true;
+		}
+		
 		return false;
 	}
 //	==========================================================
@@ -638,7 +619,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 	
-	// TODO S.Vasilyev make a common code for figuring out
+	// TODO Ssergey Vasilyev make a common code for figuring out
 	// if it is need to update parent node or not  
 	private Node getNodeForUpdate(Node sourceNode) {
 		/* Changing of <tr> or <td> tags can affect whole the table */
@@ -659,15 +640,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private void updateComment(Node sourceNode) {
 		VpeNodeMapping mapping = domMapping.getNodeMapping(sourceNode);
 		if (mapping != null && mapping.getType() == VpeNodeMapping.COMMENT_MAPPING) {
-			Node visualCommentFrame = mapping.getVisualNode(); 
-			NodeList visualNodes = visualCommentFrame.getChildNodes();
-			int len = visualNodes.getLength();
-			if (len > 0) {
-				Node visualText = visualNodes.item(0);
-				visualText.setNodeValue(sourceNode.getNodeValue());
-				MozillaSupports.release(visualText);
+			nsIDOMNodeList visualNodes = mapping.getVisualNode().getChildNodes();
+			
+			if (visualNodes.getLength() > 0) {
+				visualNodes.item(0).setNodeValue(sourceNode.getNodeValue());
 			}
-			MozillaSupports.release(visualNodes);
 		}
 	}
 	
@@ -684,22 +661,20 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				}
 			}
 		}
-		Node visualOldNode = domMapping.remove(sourceNode);
+		nsIDOMNode visualOldNode = domMapping.remove(sourceNode);
 		if (visualOldNode != null) {
 			if(elementMapping != null){
-				Element border = elementMapping.getBorder();
+				nsIDOMElement border = elementMapping.getBorder();
 				if(border != null){
-					MozillaSupports.release(visualOldNode);
 					visualOldNode = border;
 				}
 			}
-			Node visualContainer = visualOldNode.getParentNode();
-			Node visualNextNode = visualOldNode.getNextSibling();
+			nsIDOMNode visualContainer = visualOldNode.getParentNode();
+			nsIDOMNode visualNextNode = visualOldNode.getNextSibling();
 			if (visualContainer != null) {
 				visualContainer.removeChild(visualOldNode);
 				addNode(sourceNode, visualNextNode, visualContainer);
 			}
-			MozillaSupports.release(visualOldNode, visualNextNode, visualContainer);
 		} else {
 			if (sourceNode.getNodeType() == Node.TEXT_NODE) {
 				updateNode(sourceNode.getParentNode());
@@ -708,16 +683,13 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	
 	public void removeNode(Node sourceNode) {
-		Node visualNode = domMapping.remove(sourceNode);
-		if (visualNode != null) {
-			MozillaSupports.release(visualNode);
-		}
+		domMapping.remove(sourceNode);
 	}
 	
 	private Node getParentTable(Node sourceNode, int depth) {
 		Node parentNode = sourceNode.getParentNode();
 		for (int i = 0; parentNode != null && i < depth; parentNode = parentNode.getParentNode(), i++) {
-			if (TAG_TABLE.equalsIgnoreCase(parentNode.getNodeName())) {
+			if (HTML.TAG_TABLE.equalsIgnoreCase(parentNode.getNodeName())) {
 				return parentNode;
 			}
 		}
@@ -725,9 +697,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	
 	private Node getParentSelect(Node sourceNode) {
-		if ("OPTION".equalsIgnoreCase(sourceNode.getNodeName())) {
+		if (HTML.TAG_OPTION.equalsIgnoreCase(sourceNode.getNodeName())) {
 			Node parentNode = sourceNode.getParentNode();
-			if ("SELECT".equalsIgnoreCase(parentNode.getNodeName())) {
+			if (HTML.TAG_SELECT.equalsIgnoreCase(parentNode.getNodeName())) {
 				return parentNode;
 			}
 		}
@@ -738,12 +710,13 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		Node sourceParent = sourceText.getParentNode();
 		if (sourceParent != null && sourceParent.getLocalName() != null) {
 			String sourceParentName = sourceParent.getLocalName();
-			if ("textarea".equalsIgnoreCase(sourceParentName) || "option".equalsIgnoreCase(sourceParentName)) {
+			if (HTML.TAG_TEXTAREA.equalsIgnoreCase(sourceParentName)
+					|| HTML.TAG_OPTION.equalsIgnoreCase(sourceParentName)) {
 				updateNode(sourceText.getParentNode());
 				return;
 			}
 		}
-		Node visualText = domMapping.getVisualNode(sourceText);
+		nsIDOMNode visualText = domMapping.getVisualNode(sourceText);
 		if (visualText != null) {
 			String visualValue = TextUtil.visualText(sourceText.getNodeValue());
 			visualText.setNodeValue(visualValue);
@@ -770,16 +743,16 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				VpeTemplate template = elementMapping.getTemplate();
 				if (elementMapping.getBorder() != null) {
 					updateElement(sourceElement);
-				} else if (template.isRecreateAtAttrChange(pageContext, sourceElement, visualDocument, (Element)elementMapping.getVisualNode(), elementMapping.getData(), name, value)) {
+				} else if (template.isRecreateAtAttrChange(pageContext, sourceElement, visualDocument, (nsIDOMElement)elementMapping.getVisualNode(), elementMapping.getData(), name, value)) {
 					updateElement(sourceElement);
 				} else {
-					Element visualElement = (Element)elementMapping.getVisualNode();
+					nsIDOMElement visualElement = (nsIDOMElement)elementMapping.getVisualNode();
 					if (visualElement != null) {
-						String visualElementName = visualElement.getNodeName().toLowerCase();
-						if ("select".equals(visualElementName)) {
+						String visualElementName = visualElement.getNodeName();
+						if (HTML.TAG_SELECT.equalsIgnoreCase(visualElementName)) {
 							updateElement(sourceElement);
 							return;
-						} else if ("option".equals(visualElementName)) {
+						} else if (HTML.TAG_OPTION.equalsIgnoreCase(visualElementName)) {
 							updateElement(sourceElement.getParentNode());
 							return;
 						}
@@ -807,26 +780,24 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			}
 		}
 	}
-	public boolean doToggle(Node visualNode) {
+	public boolean doToggle(nsIDOMNode visualNode) {
 		if (visualNode == null) return false;
 		
-		Element visualElement = (Element) (visualNode instanceof Element ? 
+		nsIDOMElement visualElement = (nsIDOMElement) (visualNode instanceof nsIDOMElement ? 
 				visualNode : visualNode.getParentNode());
 		
 		if (visualElement == null) return false;
 
-		Attr toggleIdAttr = visualElement.getAttributeNode("vpe-user-toggle-id");
+		nsIDOMAttr toggleIdAttr = visualElement.getAttributeNode("vpe-user-toggle-id");
 		if (toggleIdAttr == null) return false;
 		String toggleId = toggleIdAttr.getNodeValue();
-		MozillaSupports.release(toggleIdAttr);
 
 		if (toggleId == null) return false;
 
 		boolean toggleLookup = false;
-		Attr toggleLookupAttr = visualElement.getAttributeNode("vpe-user-toggle-lookup-parent");
+		nsIDOMAttr toggleLookupAttr = visualElement.getAttributeNode("vpe-user-toggle-lookup-parent");
 		if (toggleLookupAttr != null) {
 			toggleLookup = "true".equals(toggleLookupAttr.getNodeValue());
-			MozillaSupports.release(toggleIdAttr);
 		}
 		
 		
@@ -864,12 +835,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				updateElement(sourceElement);
 			} else {
 				VpeTemplate template = elementMapping.getTemplate();
-				if (template.isRecreateAtAttrChange(pageContext, sourceElement, visualDocument, (Element)elementMapping.getVisualNode(), elementMapping.getData(), name, null)) {
+				if (template.isRecreateAtAttrChange(pageContext, sourceElement, visualDocument, (nsIDOMElement)elementMapping.getVisualNode(), elementMapping.getData(), name, null)) {
 					updateElement(sourceElement);
 				} else {
 					removeXmlnsAttribute(elementMapping, name);
-					template.removeAttribute(pageContext, sourceElement, visualDocument, (Element)elementMapping.getVisualNode(), elementMapping.getData(), name);
-					resetTooltip(sourceElement, (Element)elementMapping.getVisualNode());
+					template.removeAttribute(pageContext, sourceElement, visualDocument, (nsIDOMElement)elementMapping.getVisualNode(), elementMapping.getData(), name);
+					resetTooltip(sourceElement, (nsIDOMElement)elementMapping.getVisualNode());
 				}
 			}
 		}
@@ -883,52 +854,50 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 	
-	boolean isContentArea(Node visualNode) {
+	boolean isContentArea(nsIDOMNode visualNode) {
 		return visualContentArea.equals(visualNode);
 	}
 	
-	Element getContentArea() {
+	nsIDOMElement getContentArea() {
 		return visualContentArea;
 	}
 
-	void setSelectionRectangle(Element visualElement) {
+	void setSelectionRectangle(nsIDOMElement visualElement) {
 		setSelectionRectangle(visualElement, true);
 	}
 
-	void setSelectionRectangle(Element visualElement, boolean scroll) {
+	void setSelectionRectangle(nsIDOMElement visualElement, boolean scroll) {
 		int resizerConstrains = getResizerConstrains(visualElement);
 		visualEditor.setSelectionRectangle(visualElement, resizerConstrains, scroll);
 	}
 
-	public Node addLinkNodeToHead(String href_val, String ext_val) {
-	    Element newNode = createLinkNode(href_val, ATTR_REL_STYLESHEET_VALUE, ext_val);
+	public nsIDOMNode addLinkNodeToHead(String href_val, String ext_val) {
+	    nsIDOMElement newNode = createLinkNode(href_val, ATTR_REL_STYLESHEET_VALUE, ext_val);
 		headNode.appendChild(newNode);
 		return newNode;
 	}
 
-	public Node replaceLinkNodeToHead(Node oldNode, String href_val, String ext_val) {
-	    Node newNode = createLinkNode(href_val, ATTR_REL_STYLESHEET_VALUE, ext_val);
+	public nsIDOMNode replaceLinkNodeToHead(nsIDOMNode oldNode, String href_val, String ext_val) {
+	    nsIDOMNode newNode = createLinkNode(href_val, ATTR_REL_STYLESHEET_VALUE, ext_val);
 		headNode.replaceChild(newNode, oldNode);
-		MozillaSupports.release(oldNode);
 		return newNode;
 	}
 	
-	public Node replaceLinkNodeToHead(String href_val, String ext_val) {
-		Node newNode = null;
-		Node oldNode = getLinkNode(href_val, ext_val);
+	public nsIDOMNode replaceLinkNodeToHead(String href_val, String ext_val) {
+		nsIDOMNode newNode = null;
+		nsIDOMNode oldNode = getLinkNode(href_val, ext_val);
 	    if (oldNode == null) {
 	    	newNode = addLinkNodeToHead(href_val, ext_val);
 	    }
 		return newNode;
 	}
 	
-	public void removeLinkNodeFromHead(Node node){
+	public void removeLinkNodeFromHead(nsIDOMNode node){
 		headNode.removeChild(node);
-		MozillaSupports.release(node);
 	}
 	
-	private Element createLinkNode(String href_val, String rel_val, String ext_val) {
-		Element linkNode = null;
+	private nsIDOMElement createLinkNode(String href_val, String rel_val, String ext_val) {
+		nsIDOMElement linkNode = null;
 		if ((ATTR_REL_STYLESHEET_VALUE.equalsIgnoreCase(rel_val))
 				&& href_val.startsWith("file:")) {
 			/* Because of the Mozilla caches the linked css files we replace
@@ -936,7 +905,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			 * <style vpe="ATTR_VPE_INLINE_LINK_VALUE">file content</style>
 			 * It is LinkReplacer
 			 */
-			linkNode = visualDocument.createElement(TAG_STYLE);
+			linkNode = visualDocument.createElement(HTML.TAG_STYLE);
 			linkNode.setAttribute(ATTR_VPE, ATTR_VPE_INLINE_LINK_VALUE);
 			
 			/* Copy links attributes into our <style> */
@@ -950,19 +919,17 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					styleText.append(str);
 				}
 				in.close();
-				Node textNode = visualDocument.createTextNode(styleText.toString());
+				nsIDOMText textNode = visualDocument.createTextNode(styleText.toString());
 				linkNode.appendChild(textNode);
 				return linkNode;
 			} catch (FileNotFoundException fnfe) {
-				MozillaSupports.release(linkNode);
 				/* File which was pointed by user is not exists. Do nothing. */
 			} catch (IOException ioe) {
-				MozillaSupports.release(linkNode);
 				VpePlugin.getPluginLog().logError(ioe.getMessage(), ioe);
 			}
 		}
 		
-		linkNode = visualDocument.createElement(TAG_LINK);
+		linkNode = visualDocument.createElement(HTML.TAG_LINK);
 	    linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_REL, rel_val);
 	    linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_HREF, href_val);
 	    linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_EXT, ext_val);
@@ -970,104 +937,102 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    return linkNode;
 	}
 
-	private boolean isLinkReplacer(Node node) {
-		return TAG_STYLE.equalsIgnoreCase(node.getNodeName())
-				&& ATTR_VPE_INLINE_LINK_VALUE.equalsIgnoreCase(((Element)node).getAttribute(ATTR_VPE));
+	private boolean isLinkReplacer(nsIDOMNode node) {
+		return HTML.TAG_STYLE.equalsIgnoreCase(node.getNodeName())
+				&& ATTR_VPE_INLINE_LINK_VALUE.equalsIgnoreCase(((nsIDOMElement)node.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)).getAttribute(ATTR_VPE));
 	}
 
-	private Node getLinkNode(String href_val, String ext_val) {
-		NodeList children = headNode.getChildNodes();
-		int len = children.getLength();
-		for (int i = len - 1; i >= 0; i--) {
-			Node node = children.item(i);
+	private nsIDOMNode getLinkNode(String href_val, String ext_val) {
+		nsIDOMNodeList children = headNode.getChildNodes();
+		long len = children.getLength();
+		for (long i = len - 1; i >= 0; i--) {
+			nsIDOMNode node = children.item(i);
 	        if (node.getNodeType() == Node.ELEMENT_NODE) {
-	            if (TAG_LINK.equalsIgnoreCase(node.getNodeName())
+	            if (HTML.TAG_LINK.equalsIgnoreCase(node.getNodeName())
 	            		|| isLinkReplacer(node) ) {
-		            Element element = (Element)node;
+		            nsIDOMElement element = (nsIDOMElement)node;
 		            if (ext_val.equalsIgnoreCase(element.getAttribute(VpeTemplateManager.ATTR_LINK_EXT))
 		            		&& href_val.equalsIgnoreCase(element.getAttribute(VpeTemplateManager.ATTR_LINK_HREF))) {
-		        		MozillaSupports.release(children);
 		                return node;
 		            }
 	            }
 	        }
-	        MozillaSupports.release(node);
 		}
-		MozillaSupports.release(children);
 		return null;
 	}
 	
 	private void cleanHead() {
-		NodeList children = headNode.getChildNodes();
-		int len = children.getLength();
-		for (int i = len - 1; i >= 0; i--) {
-			Node node = children.item(i);
+		nsIDOMNodeList children = headNode.getChildNodes();
+		long len = children.getLength();
+		for (long i = len - 1; i >= 0; i--) {
+			nsIDOMNode node = children.item(i);
 	        if (node.getNodeType() == Node.ELEMENT_NODE) {
 	        	String name = node.getNodeName();
-	        	if (TAG_LINK.equalsIgnoreCase(name) || isLinkReplacer(node) ) {
-	        		if (NO_STRING.equalsIgnoreCase(((Element)node).getAttribute("ext"))) {
+	        	if (HTML.TAG_LINK.equalsIgnoreCase(name) || isLinkReplacer(node) ) {
+	        		if (NO_STRING.equalsIgnoreCase(((nsIDOMElement)node.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)).getAttribute("ext"))) {
 //		                int linkAddress = MozillaSupports.queryInterface(node, nsIStyleSheetLinkingElement.NS_ISTYLESHEETLINKINGELEMENT_IID);
 //	                	nsIStyleSheetLinkingElement linkingElement = new nsIStyleSheetLinkingElement(linkAddress);
 //	                	linkingElement.removeStyleSheet();
 		                node = headNode.removeChild(node);
 	        		}
-	        	} else if (TAG_STYLE.equalsIgnoreCase(node.getNodeName())
-	        			&& (!YES_STRING.equalsIgnoreCase(((Element)node).getAttribute(ATTR_VPE)))) {
+	        	} else if (HTML.TAG_STYLE.equalsIgnoreCase(node.getNodeName())
+	        			&& (!YES_STRING.equalsIgnoreCase(((nsIDOMElement)node.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)).getAttribute(ATTR_VPE)))) {
 	                node = headNode.removeChild(node);
 	        	} 
 	        }
-	        MozillaSupports.release(node);
 		}
-		MozillaSupports.release(children);
 	}
 	
 	private class PseudoInfo {
-		private Node pseudoNode;
+		private nsIDOMNode pseudoNode;
 		private boolean isElements;
 		
 		private PseudoInfo() {
 			this(null, false);
 		}
 		
-		private PseudoInfo(Node pseudoNode, boolean isElements) {
+		private PseudoInfo(nsIDOMNode pseudoNode, boolean isElements) {
 			this.pseudoNode = pseudoNode;
 			this.isElements = isElements;
 		}
 	}
 
 	
-	void showDragCaret(Node node, int offset) {
-		browser.showDragCaret((nsIDOMNode)node, offset);
+	void showDragCaret(nsIDOMNode node, int offset) {
+		xulRunnerEditor.showDragCaret(node, offset);
 	}
 	
 	void hideDragCaret() {
-		browser.hideDragCaret();
+		
+		xulRunnerEditor.hideDragCaret();
 	}
 	
-	private int getResizerConstrains(Node visualNode) {
+	private int getResizerConstrains(nsIDOMNode visualNode) {
 		VpeNodeMapping nodeMapping = domMapping.getNodeMapping(visualNode);
 		if (nodeMapping != null && nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
-			return ((VpeElementMapping)nodeMapping).getTemplate().getTagDescription(pageContext, (Element)nodeMapping.getSourceNode(), visualDocument, (Element)nodeMapping.getVisualNode(), ((VpeElementMapping)nodeMapping).getData()).getResizeConstrains();
+			return ((VpeElementMapping)nodeMapping).getTemplate().getTagDescription(pageContext, (Element)nodeMapping.getSourceNode(), visualDocument, (nsIDOMElement)nodeMapping.getVisualNode(), ((VpeElementMapping)nodeMapping).getData()).getResizeConstrains();
 		}
 		return VpeTagDescription.RESIZE_CONSTRAINS_NONE;
 	}
 
-	public void resize(Element element, int resizerConstrains, int top, int left, int width, int height) {
+	public void resize(nsIDOMElement element, int resizerConstrains, int top, int left, int width, int height) {
 		VpeElementMapping elementMapping = (VpeElementMapping)domMapping.getNodeMapping(element);
 		if (elementMapping != null) {
 			elementMapping.getTemplate().resize(pageContext, (Element)elementMapping.getSourceNode(), visualDocument, element, elementMapping.getData(), resizerConstrains, top, left, width, height);
 		}
 	}
 	
-	static boolean isAnonElement(Node visualNode) {
-		if (visualNode != null && visualNode.getNodeType() == Node.ELEMENT_NODE) {
-			String attrValue = ((Element)visualNode).getAttribute(MOZ_ANONCLASS_ATTR);
+	static boolean isAnonElement(nsIDOMNode visualNode) {
+		if (visualNode != null && visualNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+			String attrValue = ((nsIDOMElement)visualNode).getAttribute(MOZ_ANONCLASS_ATTR);
+			
 			return attrValue != null && attrValue.length() > 0;
 		}
+		
 		return false;
 	}
 
-	boolean canInnerDrag(Element visualDragElement) {
+	boolean canInnerDrag(nsIDOMElement visualDragElement) {
 		VpeNodeMapping node = domMapping.getNodeMapping(visualDragElement);
 		if(node instanceof VpeElementMapping) {
 			VpeElementMapping elementMapping = (VpeElementMapping)node;
@@ -1079,18 +1044,18 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 
 	VpeSourceInnerDropInfo getSourceInnerDropInfo(Node sourceDragNode, VpeVisualInnerDropInfo visualDropInfo, boolean checkParentTemplates) {
-		Node visualDropContainer = visualDropInfo.getDropContainer();
-		int visualDropOffset = visualDropInfo.getDropOffset();
+		nsIDOMNode visualDropContainer = visualDropInfo.getDropContainer();
+		long visualDropOffset = visualDropInfo.getDropOffset();
 		Node sourceDropContainer = null;
 		int sourceDropOffset = 0;
 		
 		switch (visualDropContainer.getNodeType()) {
-		case Node.ELEMENT_NODE:
-			Node visualOffsetNode = null;
+		case nsIDOMNode.ELEMENT_NODE:
+			nsIDOMNode visualOffsetNode = null;
 			boolean afterFlag = false;
-			int visualChildCount = MozillaSupports.getChildCount(visualDropContainer);
+			long visualChildCount = VisualDomUtil.getChildCount(visualDropContainer);
 			if (visualDropOffset < visualChildCount) {
-				visualOffsetNode = MozillaSupports.getChildNode(visualDropContainer, visualDropOffset);
+				visualOffsetNode = VisualDomUtil.getChildNode(visualDropContainer, visualDropOffset);
 				if (isPseudoElement(visualOffsetNode) || isAnonElement(visualOffsetNode)) {
 					visualOffsetNode = getLastAppreciableVisualChild(visualDropContainer);
 					afterFlag = true;
@@ -1120,7 +1085,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				sourceDropOffset = sourceDropContainer.getChildNodes().getLength();
 			}
 			break;
-		case Node.TEXT_NODE:
+		case nsIDOMNode.TEXT_NODE:
 			VpeNodeMapping nodeMapping = domMapping.getNearNodeMapping(visualDropContainer);
 			switch (nodeMapping.getType()) {
 			case VpeNodeMapping.TEXT_MAPPING:
@@ -1182,15 +1147,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	public void innerDrop(Node dragNode, Node container, int offset) {
 		VpeNodeMapping mapping = domMapping.getNearNodeMapping(container);
 		if (mapping != null) {
-			Node visualDropContainer = mapping.getVisualNode();
+			nsIDOMNode visualDropContainer = mapping.getVisualNode();
 			switch (mapping.getType()) {
 			case VpeNodeMapping.TEXT_MAPPING:
 				break;
 			case VpeNodeMapping.ELEMENT_MAPPING:
-				Node visualParent = visualDropContainer.getParentNode();
+				nsIDOMNode visualParent = visualDropContainer.getParentNode();
 				VpeNodeMapping oldMapping = mapping;
 				mapping = domMapping.getNearNodeMapping(visualParent);
-				MozillaSupports.release(visualParent);
 				if (mapping != null && mapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
 					((VpeElementMapping)mapping).getTemplate().innerDrop(pageContext,
 							new VpeSourceInnerDragInfo(dragNode, 0, 0),
@@ -1209,61 +1173,56 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		dropper.drop(pageContext, dragInfo, dropInfo);
 	}
 	
-	Element getNearDragElement(Element visualElement) {
+	nsIDOMElement getNearDragElement(Element visualElement) {
 		VpeElementMapping elementMapping = domMapping.getNearElementMapping(visualElement);
 		while (elementMapping != null) {
-			if (canInnerDrag((Element)elementMapping.getVisualNode())) {
-				return (Element)elementMapping.getVisualNode();
+			if (canInnerDrag(elementMapping.getVisualElement())) {
+				return elementMapping.getVisualElement();
 			}
 			elementMapping = domMapping.getNearElementMapping(elementMapping.getVisualNode().getParentNode());
 		}
 		return null;
 	}
 	
-	Element getDragElement(Element visualElement) {
+	nsIDOMElement getDragElement(nsIDOMElement visualElement) {
 		VpeElementMapping elementMapping = domMapping.getNearElementMapping(visualElement);
-		if (elementMapping != null && canInnerDrag((Element)elementMapping.getVisualNode())) {
-			return (Element)elementMapping.getVisualNode();
+		if (elementMapping != null && canInnerDrag(elementMapping.getVisualElement())) {
+			return elementMapping.getVisualElement();
 		}
 		return null;
 	}
 
-	public boolean isTextEditable(Node visualNode) {
+	public boolean isTextEditable(nsIDOMNode visualNode) {
 		if (visualNode != null) {
-			Node parent = visualNode.getParentNode();
-			if (parent != null && parent.getNodeType() == Node.ELEMENT_NODE) {
-				Element element = (Element)parent;
-				Attr style = element.getAttributeNode("style");
+			nsIDOMNode parent = visualNode.getParentNode();
+			if (parent != null && parent.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+				nsIDOMElement element = (nsIDOMElement)parent;
+				nsIDOMAttr style = element.getAttributeNode("style");
 				if (style != null) {
 					String styleValue = style.getNodeValue();
-					MozillaSupports.release(style);
 					String [] items = styleValue.split(";");
 					for (int i = 0; i < items.length; i++) {
 						String[] item = items[i].split(":");
 						if ("-moz-user-modify".equals(item[0].trim()) && "read-only".equals(item[1].trim())) {
-							MozillaSupports.release(parent);
 							return false;
 						}
 					}
 				}
-				Attr classAttr = element.getAttributeNode("class");
+				nsIDOMAttr classAttr = element.getAttributeNode("class");
 				if (classAttr != null) {
 					String classValue = classAttr.getNodeValue().trim();
-					MozillaSupports.release(classAttr);
 					if ("__any__tag__caption".equals(classValue)) {
-						MozillaSupports.release(parent);
 						return false;
 					}
 				}
 			}
-			MozillaSupports.release(parent);
 		}
 		return true;
 	}
 	
 	VpeVisualInnerDropInfo getInnerDropInfo(Node sourceDropContainer, int sourceDropOffset) {
-		Node visualDropContainer = null;
-		int visualDropOffset = 0;
+		nsIDOMNode visualDropContainer = null;
+		long visualDropOffset = 0;
 
 		switch (sourceDropContainer.getNodeType()) {
 		case Node.TEXT_NODE:
@@ -1275,17 +1234,18 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			NodeList sourceChildren = sourceDropContainer.getChildNodes();
 			if (sourceDropOffset < sourceChildren.getLength()) {
 				Node sourceChild = sourceChildren.item(sourceDropOffset);
-				Node visualChild = domMapping.getVisualNode(sourceChild);
+				nsIDOMNode visualChild = domMapping.getVisualNode(sourceChild);
 				if (visualChild != null) {
 					visualDropContainer = visualChild.getParentNode();
-					visualDropOffset = MozillaSupports.getOffset(visualChild);
+					
+					visualDropOffset = VisualDomUtil.getOffset(visualChild);
 				}
 			}
 			if (visualDropContainer == null) {
 				visualDropContainer = domMapping.getNearVisualNode(sourceDropContainer);
-				Node visualChild = getLastAppreciableVisualChild(visualDropContainer);
+				nsIDOMNode visualChild = getLastAppreciableVisualChild(visualDropContainer);
 				if (visualChild != null) {
-					visualDropOffset = MozillaSupports.getOffset(visualChild) + 1;
+					visualDropOffset = VisualDomUtil.getOffset(visualChild) + 1;
 				} else {
 					visualDropOffset = 0;
 				}
@@ -1294,7 +1254,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		case Node.ATTRIBUTE_NODE:
 			Element sourceElement = ((Attr)sourceDropContainer).getOwnerElement();
 			VpeElementMapping elementMapping = domMapping.getNearElementMapping(sourceElement);
-			Node textNode = elementMapping.getTemplate().getOutputTextNode(pageContext, sourceElement, elementMapping.getData());
+			nsIDOMNode textNode = elementMapping.getTemplate().getOutputTextNode(pageContext, sourceElement, elementMapping.getData());
 			if (textNode != null) {
 				visualDropContainer = textNode;
 				visualDropOffset = TextUtil.visualInnerPosition(sourceDropContainer.getNodeValue(), sourceDropOffset);
@@ -1307,9 +1267,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return new VpeVisualInnerDropInfo(visualDropContainer, visualDropOffset, 0, 0); 
 	}
 	
-	private void setTooltip(Element sourceElement, Element visualElement) {
+	protected void setTooltip(Element sourceElement, nsIDOMElement visualElement) {
 		if (visualElement != null && sourceElement != null && !((ElementImpl)sourceElement).isJSPTag()) {
-			if ("HTML".equalsIgnoreCase(sourceElement.getNodeName())) return;
+			if (HTML.TAG_HTML.equalsIgnoreCase(sourceElement.getNodeName())) return;
 			String titleValue = getTooltip(sourceElement);
 			
 			if (titleValue != null) {
@@ -1325,23 +1285,21 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 	
-	private void setTooltip(Element visualElement, String titleValue) {
+	protected void setTooltip(nsIDOMElement visualElement, String titleValue) {
 		visualElement.setAttribute("title", titleValue);
-		NodeList children = visualElement.getChildNodes();
-		int len = children.getLength();
-		for (int i = 0; i < len; i++) {
-			Node child = children.item(i);
-			if (child.getNodeType() == Node.ELEMENT_NODE) {
-				setTooltip((Element)child, titleValue);
+		nsIDOMNodeList children = visualElement.getChildNodes();
+		long len = children.getLength();
+		for (long i = 0; i < len; i++) {
+			nsIDOMNode child = children.item(i);
+			if (child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+				setTooltip(((nsIDOMElement)child.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)), titleValue);
 			}
-			MozillaSupports.release(child);
 		}
-		MozillaSupports.release(children);
 	}
 	
-	private void resetTooltip(Element sourceElement, Element visualElement) {
+	private void resetTooltip(Element sourceElement, nsIDOMElement visualElement) {
 		if (visualElement != null && sourceElement != null && !((ElementImpl)sourceElement).isJSPTag()) {
-			if ("HTML".equalsIgnoreCase(sourceElement.getNodeName())) return;
+			if (HTML.TAG_HTML.equalsIgnoreCase(sourceElement.getNodeName())) return;
 			String titleValue = getTooltip(sourceElement);
 			
 			if (titleValue != null) {
@@ -1356,20 +1314,18 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 	
-	private void resetTooltip(Element visualElement, String titleValue) {
+	private void resetTooltip(nsIDOMElement visualElement, String titleValue) {
 		visualElement.setAttribute("title", titleValue);
-		NodeList children = visualElement.getChildNodes();
-		int len = children.getLength();
-		for (int i = 0; i < len; i++) {
-			Node child = children.item(i);
-			if (child.getNodeType() == Node.ELEMENT_NODE) {
+		nsIDOMNodeList children = visualElement.getChildNodes();
+		long len = children.getLength();
+		for (long i = 0; i < len; i++) {
+			nsIDOMNode child = children.item(i);
+			if (child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 				if (domMapping.getNodeMapping(child) == null) {
-					resetTooltip((Element)child, titleValue);
+					resetTooltip((nsIDOMElement)child, titleValue);
 				}
 			}
-			MozillaSupports.release(child);
 		}
-		MozillaSupports.release(children);
 	}
 	
 	private String getTooltip(Element sourceElement) {
@@ -1397,8 +1353,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return buffer.toString();
 	}
 	
-	Rectangle getNodeBounds(Node visualNode) {
-		return dnd.getBounds((nsIDOMNode)visualNode);
+	Rectangle getNodeBounds(nsIDOMNode visualNode) {
+		// TODO Max Areshkau add DnD support
+//		return dnd.getBounds(visualNode);
+		return null;
 	}
 	
 	static boolean canInsertAfter(int x, int y, Rectangle rect) {
@@ -1408,36 +1366,34 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return y >= rect.x && x > (rect.x + rect.width / 2);
 	}
 	
-	static Node getLastAppreciableVisualChild(Node visualParent) {
-		Node visualLastChild = null;
-		NodeList visualChildren = visualParent.getChildNodes();
-		int len = visualChildren.getLength();
-		for (int i = len - 1; i >= 0; i--) {
-			Node visualChild = visualChildren.item(i);
+	static nsIDOMNode getLastAppreciableVisualChild(nsIDOMNode visualParent) {
+		nsIDOMNode visualLastChild = null;
+		nsIDOMNodeList visualChildren = visualParent.getChildNodes();
+		long len = visualChildren.getLength();
+		for (long i = len - 1; i >= 0; i--) {
+			nsIDOMNode visualChild = visualChildren.item(i);
 			if (!isPseudoElement(visualChild) && !isAnonElement(visualChild)) {
 				visualLastChild = visualChild;
 				break;
 			}
-			MozillaSupports.release(visualChild);
 		}
-		MozillaSupports.release(visualChildren);
 		return visualLastChild;
 	}
 	
 	void correctVisualDropPosition(VpeVisualInnerDropInfo newVisualDropInfo, VpeVisualInnerDropInfo oldVisualDropInfo) {
-		Node newVisualDropContainer = newVisualDropInfo.getDropContainer();
-		Node oldVisualDropContainer = oldVisualDropInfo.getDropContainer();
+		nsIDOMNode newVisualDropContainer = newVisualDropInfo.getDropContainer();
+		nsIDOMNode oldVisualDropContainer = oldVisualDropInfo.getDropContainer();
 
 		if (newVisualDropContainer.equals(oldVisualDropContainer)) {
 			newVisualDropInfo.setDropOffset(oldVisualDropInfo.getDropOffset());
 			return;
 		}
 		
-		Node child = oldVisualDropContainer;
+		nsIDOMNode child = oldVisualDropContainer;
 		while (child != null && child.getNodeType() != Node.DOCUMENT_NODE) {
-			Node parent = child.getParentNode();
+			nsIDOMNode parent = child.getParentNode();
 			if (newVisualDropContainer.equals(parent)) {
-				int offset = MozillaSupports.getOffset(child);
+				long offset = VisualDomUtil.getOffset(child);
 				Rectangle rect = getNodeBounds(child);
 				if (canInsertAfter(oldVisualDropInfo.getMouseX(), oldVisualDropInfo.getMouseY(), rect)) {
 					offset++;
@@ -1449,36 +1405,38 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 
 	public nsIDOMRange createDOMRange() {
-		return browser.createDOMRange();
+		return xulRunnerEditor.createDOMRange();
 	}
 
-	public nsIDOMRange createDOMRange(Node selectedNode) {
+	public nsIDOMRange createDOMRange(nsIDOMNode selectedNode) {
 		nsIDOMRange range = createDOMRange();
-		range.selectNode((nsIDOMNode)selectedNode);
+		range.selectNode(selectedNode);
 		return range;
 	}
 	
-	public static boolean isIncludeElement(Element visualElement) {
+	public static boolean isIncludeElement(nsIDOMElement visualElement) {
         return YES_STRING.equalsIgnoreCase(visualElement.getAttribute(INCLUDE_ELEMENT_ATTR));
 	}
 	
-	public static void markIncludeElement(Element visualElement) {
+	public static void markIncludeElement(nsIDOMElement visualElement) {
 		visualElement.setAttribute(INCLUDE_ELEMENT_ATTR, YES_STRING);
 	}
 	
-	private void setReadOnlyElement(Element node) {
+	protected void setReadOnlyElement(nsIDOMElement node) {
 		String style = node.getAttribute(VpeStyleUtil.ATTRIBUTE_STYLE);
 		style = VpeStyleUtil.setParameterInStyle(style, "-moz-user-modify", "read-only");
 		node.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
 	}
 	
 	void setMoveCursor(nsIDOMMouseEvent mouseEvent) {
-		Element selectedElement = browser.getSelectedElement();
-		if (selectedElement != null && canInnerDrag(selectedElement)) {
-			if (inDragArea(getNodeBounds(selectedElement), mouseEvent.getMousePoint())) {
-				dnd.setMoveCursor();
-			}
-		}
+		// TODO Max Areshkau figure out with selected element
+//		nsIDOMElement selectedElement = browser.getSelectedElement();
+//		if (selectedElement != null && canInnerDrag(selectedElement)) {
+//			if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil.getMousePoint(mouseEvent))) {
+//				// TODO Max Areshkau add DnD support
+//				dnd.setMoveCursor();
+//			}
+//		}
 	}
 	
 	private boolean inDragArea(Rectangle dragArea, Point mousePoint) {
@@ -1487,18 +1445,19 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					mousePoint.y < (dragArea.y + DRAG_AREA_HEIGHT); 
 	}
 	
-	Element getDragElement(nsIDOMMouseEvent mouseEvent) {
-		Element selectedElement = browser.getSelectedElement();
-		if (selectedElement != null && canInnerDrag(selectedElement)) {
-			if (inDragArea(getNodeBounds(selectedElement), mouseEvent.getMousePoint())) {
-				return selectedElement;
-			}
-		}
+	nsIDOMElement getDragElement(nsIDOMMouseEvent mouseEvent) {
+		// TODO Max Areshkau figure out with selected element
+//		nsIDOMElement selectedElement = browser.getSelectedElement();
+//		if (selectedElement != null && canInnerDrag(selectedElement)) {
+//			if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil.getMousePoint(mouseEvent))) {
+//				return selectedElement;
+//			}
+//		}
 		return null;
 	}
 	
 	VpeSourceInnerDragInfo getSourceInnerDragInfo(VpeVisualInnerDragInfo visualDragInfo) {
-		Node visualNode = visualDragInfo.getNode();
+		nsIDOMNode visualNode = visualDragInfo.getNode();
 		int offset = visualDragInfo.getOffset();
 		int length = visualDragInfo.getLength();
 		
@@ -1533,14 +1492,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return new VpeSourceInnerDragInfo(sourceNode, offset, length);
 	}
 	
-	/* Sergey Vasilyev
-	* for testing control mouse pointer from VpeController
-	*/
-	public void SetCursor(String aCursorName, int aLock) {
-		dnd.SetCursor(aCursorName, aLock);
-	}
-
-	public Node getOutputTextNode(Attr attr) {
+	public nsIDOMText getOutputTextNode(Attr attr) {
 		Element sourceElement = ((Attr)attr).getOwnerElement();
 		VpeElementMapping elementMapping = domMapping.getNearElementMapping(sourceElement);
 		if (elementMapping != null) {
@@ -1549,8 +1501,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return null;
 	}
 	
-	Element getLastSelectedElement() {
-		return browser.getSelectedElement();
+	nsIDOMElement getLastSelectedElement() {
+		// TODO Max Areshkau figure out with last selekted element
+//		return browser.getSelectedElement();
+		return null;
 	}
 	
 	public void pushIncludeStack(VpeIncludeInfo includeInfo) {
@@ -1575,7 +1529,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return false;
 	}
 	
-	private boolean isCurrentMainDocument() {
+	protected boolean isCurrentMainDocument() {
 		return includeStack.size() <= 1;
 	}
 	
@@ -1601,7 +1555,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		pageContext.dispose();
 	}
 	
-	private Map createXmlns(Element sourceNode) {
+	protected Map createXmlns(Element sourceNode) {
 		NamedNodeMap attrs = ((Element)sourceNode).getAttributes();
 		if (attrs != null) {
 			Map xmlnsMap = new HashMap();

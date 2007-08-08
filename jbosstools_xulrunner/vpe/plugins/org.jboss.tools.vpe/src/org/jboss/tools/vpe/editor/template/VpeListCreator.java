@@ -21,12 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
@@ -34,7 +28,14 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 public class VpeListCreator extends VpeAbstractCreator{
 	
 	
@@ -77,7 +78,7 @@ public class VpeListCreator extends VpeAbstractCreator{
 		}
 	}
 	
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		String strValue=null;
 		int listSize = 0;
 		if (layoutExpr != null) {
@@ -88,7 +89,7 @@ public class VpeListCreator extends VpeAbstractCreator{
 			}
 		}
 		
-		Element visualList = visualDocument.createElement("true".equals(strValue)?"ol":"ul");
+		nsIDOMElement visualList = visualDocument.createElement("true".equals(strValue)?HTML.TAG_OL:HTML.TAG_UL);
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(visualList);
 
 		for (int i = 0; i < propertyCreators.size(); i++) {
@@ -96,9 +97,8 @@ public class VpeListCreator extends VpeAbstractCreator{
 			if (creator != null) {
 				VpeCreatorInfo info = creator.create(pageContext, (Element) sourceNode, visualDocument, visualList, visualNodeMap);
 				if (info != null && info.getVisualNode() != null) {
-					Attr attr = (Attr)info.getVisualNode();
+					nsIDOMAttr attr = (nsIDOMAttr)info.getVisualNode();
 					visualList.setAttributeNode(attr);
-					MozillaSupports.release(attr);
 				}
 			}
 		}
@@ -122,7 +122,7 @@ public class VpeListCreator extends VpeAbstractCreator{
 				}
 				
 				for (int i = 0; i < listSize; i++) {
-					Element visualLi = visualDocument.createElement("li");
+					nsIDOMElement visualLi = visualDocument.createElement(HTML.TAG_LI);
 					
 					
 						VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualLi);

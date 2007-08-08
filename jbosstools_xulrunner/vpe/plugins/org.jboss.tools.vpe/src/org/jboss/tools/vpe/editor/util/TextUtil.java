@@ -252,8 +252,8 @@ public class TextUtil {
 		return sourceIndex;
 	}
 
-	public static int sourceInnerPosition(String visualText, int visualPosition) {
-		visualText = visualText.substring(0, Math.min(visualPosition, visualText.length()));
+	public static int sourceInnerPosition(String visualText, long visualPosition) {
+		visualText = visualText.substring(0, (int)Math.min(visualPosition, visualText.length()));
 		String sourceText = visualText.replaceAll(VISUAL_BREAK, SOURCE_BREAK);
 		return sourceText.length();
 	}

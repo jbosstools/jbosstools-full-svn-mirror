@@ -17,6 +17,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 
 public class VpeStyleCreator extends VpeAbstractCreator{
 	
@@ -26,7 +29,7 @@ public class VpeStyleCreator extends VpeAbstractCreator{
 	}
 
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode,
-			Document visualDocument, Element visualElement,
+			nsIDOMDocument visualDocument, nsIDOMElement visualElement,
 			Map visualNodeMap) {
 		
 		Node textNode = sourceNode.getFirstChild();
@@ -34,14 +37,14 @@ public class VpeStyleCreator extends VpeAbstractCreator{
 		if(textNode != null){
 			text = textNode.getNodeValue();
 		}
-		Node newStyle = pageContext.getVisualBuilder().addStyleNodeToHead(text);
+		nsIDOMNode newStyle = pageContext.getVisualBuilder().addStyleNodeToHead(text);
 		visualNodeMap.put(this, newStyle);
 		return null;
 	}
 
 	public void removeElement(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
 		
-		Node styleNode = (Node)visualNodeMap.get(this);
+		nsIDOMNode styleNode = (nsIDOMNode)visualNodeMap.get(this);
 		
 		if(styleNode != null){
 			pageContext.getVisualBuilder().removeStyleNodeFromHead(styleNode);
@@ -51,14 +54,14 @@ public class VpeStyleCreator extends VpeAbstractCreator{
 	}
 
 	public void refreshElement(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
-		Node oldStyleNode = (Node)visualNodeMap.get(this);
+		nsIDOMNode oldStyleNode = (nsIDOMNode)visualNodeMap.get(this);
 		
 		Node textNode = sourceElement.getFirstChild();
 		String text = null;
 		if(textNode != null){
 			text = textNode.getNodeValue();
 		}
-		Node newStyleNode;
+		nsIDOMNode newStyleNode;
 		if(oldStyleNode == null){
 			newStyleNode = pageContext.getVisualBuilder().addStyleNodeToHead(text);
 			visualNodeMap.put(this, newStyleNode);

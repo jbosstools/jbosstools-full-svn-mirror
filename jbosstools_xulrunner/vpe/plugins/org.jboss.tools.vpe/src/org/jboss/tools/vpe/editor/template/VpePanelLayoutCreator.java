@@ -29,6 +29,8 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.util.FileUtil;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
 
 public class VpePanelLayoutCreator extends VpeAbstractCreator {
 
@@ -164,7 +166,7 @@ public class VpePanelLayoutCreator extends VpeAbstractCreator {
 	
 
 	
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 
 		VpePanelLayoutElements layoutElements = new VpePanelLayoutElements(sourceNode, pageContext);
 		visualNodeMap.put(ATTR_PL_LAYOUT, layoutElements.getLayoutName());
@@ -312,7 +314,7 @@ public class VpePanelLayoutCreator extends VpeAbstractCreator {
 		}
 		public static int DEST=0, SOURCE=1, DEFAULT =2;
 		
-		static void mapAttributes(Element dest, Node source, String[][] map) {
+		static void mapAttributes(nsIDOMElement dest, Node source, String[][] map) {
 			for (int i = 0;i<map.length;i++) {
 				dest.setAttribute(map[i][DEST],getAttributeValue(source,map[i][SOURCE],map[i][DEFAULT]));
 			}
@@ -343,7 +345,7 @@ public class VpePanelLayoutCreator extends VpeAbstractCreator {
 		Document sourceDocument;
 		
 		
-		public PanelLayoutTable(Document visualDocument, Node source) {
+		public PanelLayoutTable(nsIDOMDocument visualDocument, Node source) {
 			table = new Table(visualDocument, source);
 			creatorInfo = new VpeCreatorInfo(table.getDomElement());	
 			Tr tr = table.crateRow();
@@ -416,25 +418,25 @@ public class VpePanelLayoutCreator extends VpeAbstractCreator {
 	}
 	
 	public interface ElementWrapper {
-		public Element getDomElement();
-		public Document getOwnerDocument();	
+		public nsIDOMElement getDomElement();
+		public nsIDOMDocument getOwnerDocument();	
 		public void setAttributeValue(String name, String value);
 	}
 	
 	public class DefaultNodeWrapper implements ElementWrapper {
 		
-		protected Element element;
+		protected nsIDOMElement element;
 		
-		public DefaultNodeWrapper(Element element) {
+		public DefaultNodeWrapper(nsIDOMElement element) {
 			this.element = element;
 		}
 
-		public Element getDomElement() {
+		public nsIDOMElement getDomElement() {
 			return element;
 		}
 		
-		public Document getOwnerDocument() {
-			return ((Document)element.getOwnerDocument());
+		public nsIDOMDocument getOwnerDocument() {
+			return element.getOwnerDocument();
 		}
 
 		public void setAttributeValue(String name, String value) {
@@ -445,7 +447,7 @@ public class VpePanelLayoutCreator extends VpeAbstractCreator {
 	
 	public class Table extends DefaultNodeWrapper {
 		
-		public Table(Document visualDocument,Node source ) {
+		public Table(nsIDOMDocument visualDocument,Node source ) {
 			super(visualDocument.createElement(PanelLayoutTable.TABLE));
 			VpePanelLayoutElements.mapAttributes(
 				getDomElement(),
@@ -455,7 +457,7 @@ public class VpePanelLayoutCreator extends VpeAbstractCreator {
 		}
 		
 		public Tr crateRow() {
-			Element tr = getOwnerDocument().createElement(PanelLayoutTable.TR);
+			nsIDOMElement tr = getOwnerDocument().createElement(PanelLayoutTable.TR);
 			getDomElement().appendChild(tr);
 			return new Tr(tr);
 		}
@@ -463,12 +465,12 @@ public class VpePanelLayoutCreator extends VpeAbstractCreator {
 	}
 	
 	public class Tr extends DefaultNodeWrapper {
-		public Tr(Element rowNode) {
+		public Tr(nsIDOMElement rowNode) {
 			super(rowNode);
 		}
 		
 		public Td createCell() {
-			Element tr = getOwnerDocument().createElement(PanelLayoutTable.TD);
+			nsIDOMElement tr = getOwnerDocument().createElement(PanelLayoutTable.TD);
 			getDomElement().appendChild(tr);
 			return new Td(tr);
 		}
@@ -482,9 +484,9 @@ public class VpePanelLayoutCreator extends VpeAbstractCreator {
 	}
 	
 	public class Td extends DefaultNodeWrapper {
-		Element cell = null;
+		nsIDOMElement cell = null;
 		
-		public Td(Element cellNode) {
+		public Td(nsIDOMElement cellNode) {
 			super(cellNode);
 			cell =  cellNode;
 		}
