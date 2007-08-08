@@ -142,7 +142,13 @@
         </imageobject>
 </mediaobject>
 </figure>
-<figure>
+     
+     <orderedlist continuation="continues">
+         <listitem><para>Click &quot;Add&quot; button to add a new jboss runtime.</para></listitem>
+         <listitem><para>Select JBoss, a division of Red Hat &gt; JBoss v4.2 and press Next.</para></listitem>
+     </orderedlist>
+
+     <figure>    
 <title>Selecting JBoss Runtime</title>
 <mediaobject> 
         <imageobject>
@@ -151,10 +157,7 @@
 </mediaobject>
 </figure>
 
-<orderedlist continuation="continues">
-<listitem><para>Click &quot;Add&quot; button to add a new jboss runtime.</para></listitem>
-<listitem><para>Select JBoss, a division of Red Hat &gt; JBoss v4.2 and press Next.</para></listitem>
-</orderedlist>
+
 
 <orderedlist continuation="continues">
 <listitem><para>In the next step make Red Hat Developer Studio to know where you have installed the server and define JRE.</para></listitem>
