@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.jboss.tools.vpe.mozilla.internal.swt.xpl;
 
-import org.jboss.tools.vpe.mozilla.browser.MozillaBrowser;
 
 public class nsIDOMNSEvent extends nsISupports {
 
@@ -53,7 +52,7 @@ public class nsIDOMNSEvent extends nsISupports {
 		int[] result = new int[] {0};
 		int rc = GetOriginalTarget(result);
 		if (rc != XPCOM.NS_OK) error(rc);
-		if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_ERROR_NO_INTERFACE);
+//		if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_ERROR_NO_INTERFACE);
 		return new nsIDOMEventTarget(result[0]);
 	}
 
@@ -61,7 +60,7 @@ public class nsIDOMNSEvent extends nsISupports {
 		int[] result = new int[] {0};
 		int rc = GetExplicitOriginalTarget(result);
 		if (rc != XPCOM.NS_OK) error(rc);
-		if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_ERROR_NO_INTERFACE);
+//		if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_ERROR_NO_INTERFACE);
 		return new nsIDOMEventTarget(result[0]);
 	}
 
@@ -69,7 +68,7 @@ public class nsIDOMNSEvent extends nsISupports {
 		int[] result = new int[] {0};
 		int rc = GetTmpRealOriginalTarget(result);
 		if (rc != XPCOM.NS_OK) error(rc);
-		if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_ERROR_NO_INTERFACE);
+//		if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_ERROR_NO_INTERFACE);
 		return new nsIDOMEventTarget(result[0]);
 	}
 }

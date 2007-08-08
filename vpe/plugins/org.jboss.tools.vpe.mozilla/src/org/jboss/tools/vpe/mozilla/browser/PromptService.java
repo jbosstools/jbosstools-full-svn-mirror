@@ -94,11 +94,11 @@ int Release() {
 	return refCount;
 }
 
-MozillaBrowser getBrowser(int aDOMWindow) {
+Object getBrowser(int aDOMWindow) {
 	int[] result = new int[1];
 	int rc = XPCOM.NS_GetServiceManager(result);
-	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
-	if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_NOINTERFACE);
+//	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
+//	if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_NOINTERFACE);
 	
 	nsIServiceManager serviceManager = new nsIServiceManager(result[0]);
 	result[0] = 0;
@@ -106,33 +106,33 @@ MozillaBrowser getBrowser(int aDOMWindow) {
 	byte[] aContractID = new byte[buffer.length + 1];
 	System.arraycopy(buffer, 0, aContractID, 0, buffer.length);
 	rc = serviceManager.GetServiceByContractID(aContractID, nsIWindowWatcher.NS_IWINDOWWATCHER_IID, result);
-	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
-	if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_NOINTERFACE);		
+//	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
+//	if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_NOINTERFACE);		
 	serviceManager.Release();
 	
 	nsIWindowWatcher windowWatcher = new nsIWindowWatcher(result[0]);
 	result[0] = 0;
 	rc = windowWatcher.GetChromeForWindow(aDOMWindow, result);
-	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
-	if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_NOINTERFACE);		
+//	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
+//	if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_NOINTERFACE);		
 	windowWatcher.Release();	
 	
 	nsIWebBrowserChrome webBrowserChrome = new nsIWebBrowserChrome(result[0]);
 	result[0] = 0;
 	rc = webBrowserChrome.QueryInterface(nsIEmbeddingSiteWindow.NS_IEMBEDDINGSITEWINDOW_IID, result);
-	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
-	if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_NOINTERFACE);		
+//	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
+//	if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_NOINTERFACE);		
 	webBrowserChrome.Release();
 	
 	nsIEmbeddingSiteWindow embeddingSiteWindow = new nsIEmbeddingSiteWindow(result[0]);
 	result[0] = 0;
 	rc = embeddingSiteWindow.GetSiteWindow(result);
-	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
-	if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_NOINTERFACE);		
+//	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
+//	if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_NOINTERFACE);		
 	embeddingSiteWindow.Release();
 	
 	Display display = Display.getCurrent();
-	return (MozillaBrowser)display.findWidget(result[0]); 
+	return display.findWidget(result[0]); 
 }
 
 String getLabel(int buttonFlag, int index, int buttonTitle) {
@@ -157,7 +157,7 @@ String getLabel(int buttonFlag, int index, int buttonTitle) {
 /* nsIPromptService */
 
 public int Alert(int parent, int dialogTitle, int text) {
-	MozillaBrowser browser = getBrowser(parent);
+	Object browser = getBrowser(parent);
 	
 	int length = XPCOM.nsCRT_strlen_PRUnichar(dialogTitle);
 	char[] dest = new char[length];
@@ -169,10 +169,10 @@ public int Alert(int parent, int dialogTitle, int text) {
 	XPCOM.memmove(dest, text, length * 2);
 	String textLabel = new String(dest);
 
-	MessageBox messageBox = new MessageBox(browser.getShell(), SWT.OK);
-	messageBox.setText(titleLabel);
-	messageBox.setMessage(textLabel);
-	messageBox.open();
+//	MessageBox messageBox = new MessageBox(browser.getShell(), SWT.OK);
+//	messageBox.setText(titleLabel);
+//	messageBox.setMessage(textLabel);
+//	messageBox.open();
 	return XPCOM.NS_OK;
 }
 
@@ -189,7 +189,7 @@ public int ConfirmCheck(int parent, int dialogTitle, int text, int checkMsg, int
 }
 
 public int ConfirmEx(int parent, int dialogTitle, int text, int buttonFlags, int button0Title, int button1Title, int button2Title, int checkMsg, int checkValue, int _retval) {
-	MozillaBrowser browser = getBrowser(parent);
+//	MozillaBrowser browser = getBrowser(parent);
 	
 	int length = XPCOM.nsCRT_strlen_PRUnichar(dialogTitle);
 	char[] dest = new char[length];
@@ -213,12 +213,12 @@ public int ConfirmEx(int parent, int dialogTitle, int text, int buttonFlags, int
 	String button2Label = getLabel(buttonFlags, nsIPromptService.BUTTON_POS_1, button0Title);
 	String button3Label = getLabel(buttonFlags, nsIPromptService.BUTTON_POS_2, button0Title);
 	
-	PromptDialog dialog = new PromptDialog(browser.getShell());
-	int[] check = new int[1], result = new int[1];
-	if (checkValue != 0) XPCOM.memmove(check, checkValue, 4);
-	dialog.confirmEx(titleLabel, textLabel, checkLabel, button1Label, button2Label, button3Label, check, result);
-	if (checkValue != 0) XPCOM.memmove(checkValue, check, 4);
-	XPCOM.memmove(_retval, result, 4);
+//	PromptDialog dialog = new PromptDialog(browser.getShell());
+//	int[] check = new int[1], result = new int[1];
+//	if (checkValue != 0) XPCOM.memmove(check, checkValue, 4);
+//	dialog.confirmEx(titleLabel, textLabel, checkLabel, button1Label, button2Label, button3Label, check, result);
+//	if (checkValue != 0) XPCOM.memmove(checkValue, check, 4);
+//	XPCOM.memmove(_retval, result, 4);
 	return XPCOM.NS_OK;
 }
 
@@ -227,7 +227,7 @@ public int Prompt(int parent, int dialogTitle, int text, int value, int checkMsg
 }
 
 public int PromptUsernameAndPassword(int parent, int dialogTitle, int text, int username, int password, int checkMsg, int checkValue, int _retval) {
-	MozillaBrowser browser = getBrowser(parent);
+//	MozillaBrowser browser = getBrowser(parent);
 	String titleLabel = null, textLabel, checkLabel = null;
 	String[] userLabel = new String[1], passLabel = new String[1];
 	char[] dest;
@@ -271,83 +271,83 @@ public int PromptUsernameAndPassword(int parent, int dialogTitle, int text, int 
 		checkLabel = new String(dest);
 	}
 	
-	PromptDialog dialog = new PromptDialog(browser.getShell());
-	int[] check = new int[1], result = new int[1];
-	if (checkValue != 0) XPCOM.memmove(check, checkValue, 4);
-	dialog.promptUsernameAndPassword(titleLabel, textLabel, checkLabel, userLabel, passLabel, check, result);
+//	PromptDialog dialog = new PromptDialog(browser.getShell());
+//	int[] check = new int[1], result = new int[1];
+//	if (checkValue != 0) XPCOM.memmove(check, checkValue, 4);
+//	dialog.promptUsernameAndPassword(titleLabel, textLabel, checkLabel, userLabel, passLabel, check, result);
 
-	XPCOM.memmove(_retval, result, 4);
-	if (result[0] == 1) {
+//	XPCOM.memmove(_retval, result, 4);
+//	if (result[0] == 1) {
 		/* 
 		* User selected OK. User name and password are returned as PRUnichar values. Any default
 		* value that we override must be freed using the nsIMemory service.
 		*/
-		int cnt, size, ptr;
-		char[] buffer;
-		if (userLabel[0] != null) {
-			cnt = userLabel[0].length();
-			buffer = new char[cnt + 1];
-			userLabel[0].getChars(0, cnt, buffer, 0);
-			size = buffer.length * 2;
-			ptr = XPCOM.PR_Malloc(size);
-			XPCOM.memmove(ptr, buffer, size);
-			XPCOM.memmove(username, new int[] {ptr}, 4);
-
-			if (userAddr[0] != 0) {
-				result[0] = 0;
-				int rc = XPCOM.NS_GetServiceManager(result);
-				if (rc != XPCOM.NS_OK) SWT.error(rc);
-				if (result[0] == 0) SWT.error(XPCOM.NS_NOINTERFACE);
-			
-				nsIServiceManager serviceManager = new nsIServiceManager(result[0]);
-				result[0] = 0;
-				byte[] tmp = XPCOM.NS_MEMORY_CONTRACTID.getBytes();
-				byte[] aContractID = new byte[tmp.length + 1];
-				System.arraycopy(tmp, 0, aContractID, 0, tmp.length);
-				rc = serviceManager.GetServiceByContractID(aContractID, nsIMemory.NS_IMEMORY_IID, result);
-				if (rc != XPCOM.NS_OK) SWT.error(rc);
-				if (result[0] == 0) SWT.error(XPCOM.NS_NOINTERFACE);		
-				serviceManager.Release();
-				
-				nsIMemory memory = new nsIMemory(result[0]);
-				result[0] = 0;
-				memory.Free(userAddr[0]);
-				memory.Release();
-			}
-		}
-		if (passLabel[0] != null) {
-			cnt = passLabel[0].length();
-			buffer = new char[cnt + 1];
-			passLabel[0].getChars(0, cnt, buffer, 0);
-			size = buffer.length * 2;
-			ptr = XPCOM.PR_Malloc(size);
-			XPCOM.memmove(ptr, buffer, size);
-			XPCOM.memmove(password, new int[] {ptr}, 4);
-			
-			if (passAddr[0] != 0) {
-				result[0] = 0;
-				int rc = XPCOM.NS_GetServiceManager(result);
-				if (rc != XPCOM.NS_OK) SWT.error(rc);
-				if (result[0] == 0) SWT.error(XPCOM.NS_NOINTERFACE);
-			
-				nsIServiceManager serviceManager = new nsIServiceManager(result[0]);
-				result[0] = 0;
-				byte[] tmp = XPCOM.NS_MEMORY_CONTRACTID.getBytes();
-				byte[] aContractID = new byte[tmp.length + 1];
-				System.arraycopy(tmp, 0, aContractID, 0, tmp.length);
-				rc = serviceManager.GetServiceByContractID(aContractID, nsIMemory.NS_IMEMORY_IID, result);
-				if (rc != XPCOM.NS_OK) SWT.error(rc);
-				if (result[0] == 0) SWT.error(XPCOM.NS_NOINTERFACE);		
-				serviceManager.Release();
-				
-				nsIMemory memory = new nsIMemory(result[0]);
-				result[0] = 0;
-				memory.Free(passAddr[0]);
-				memory.Release();
-			}
-		}
-	}
-	if (checkValue != 0) XPCOM.memmove(checkValue, check, 4);
+//		int cnt, size, ptr;
+//		char[] buffer;
+//		if (userLabel[0] != null) {
+//			cnt = userLabel[0].length();
+//			buffer = new char[cnt + 1];
+//			userLabel[0].getChars(0, cnt, buffer, 0);
+//			size = buffer.length * 2;
+//			ptr = XPCOM.PR_Malloc(size);
+//			XPCOM.memmove(ptr, buffer, size);
+//			XPCOM.memmove(username, new int[] {ptr}, 4);
+//
+//			if (userAddr[0] != 0) {
+//				result[0] = 0;
+//				int rc = XPCOM.NS_GetServiceManager(result);
+//				if (rc != XPCOM.NS_OK) SWT.error(rc);
+//				if (result[0] == 0) SWT.error(XPCOM.NS_NOINTERFACE);
+//			
+//				nsIServiceManager serviceManager = new nsIServiceManager(result[0]);
+//				result[0] = 0;
+//				byte[] tmp = XPCOM.NS_MEMORY_CONTRACTID.getBytes();
+//				byte[] aContractID = new byte[tmp.length + 1];
+//				System.arraycopy(tmp, 0, aContractID, 0, tmp.length);
+//				rc = serviceManager.GetServiceByContractID(aContractID, nsIMemory.NS_IMEMORY_IID, result);
+//				if (rc != XPCOM.NS_OK) SWT.error(rc);
+//				if (result[0] == 0) SWT.error(XPCOM.NS_NOINTERFACE);		
+//				serviceManager.Release();
+//				
+//				nsIMemory memory = new nsIMemory(result[0]);
+//				result[0] = 0;
+//				memory.Free(userAddr[0]);
+//				memory.Release();
+//			}
+//		}
+//		if (passLabel[0] != null) {
+//			cnt = passLabel[0].length();
+//			buffer = new char[cnt + 1];
+//			passLabel[0].getChars(0, cnt, buffer, 0);
+//			size = buffer.length * 2;
+//			ptr = XPCOM.PR_Malloc(size);
+//			XPCOM.memmove(ptr, buffer, size);
+//			XPCOM.memmove(password, new int[] {ptr}, 4);
+//			
+//			if (passAddr[0] != 0) {
+//				result[0] = 0;
+//				int rc = XPCOM.NS_GetServiceManager(result);
+//				if (rc != XPCOM.NS_OK) SWT.error(rc);
+//				if (result[0] == 0) SWT.error(XPCOM.NS_NOINTERFACE);
+//			
+//				nsIServiceManager serviceManager = new nsIServiceManager(result[0]);
+//				result[0] = 0;
+//				byte[] tmp = XPCOM.NS_MEMORY_CONTRACTID.getBytes();
+//				byte[] aContractID = new byte[tmp.length + 1];
+//				System.arraycopy(tmp, 0, aContractID, 0, tmp.length);
+//				rc = serviceManager.GetServiceByContractID(aContractID, nsIMemory.NS_IMEMORY_IID, result);
+//				if (rc != XPCOM.NS_OK) SWT.error(rc);
+//				if (result[0] == 0) SWT.error(XPCOM.NS_NOINTERFACE);		
+//				serviceManager.Release();
+//				
+//				nsIMemory memory = new nsIMemory(result[0]);
+//				result[0] = 0;
+//				memory.Free(passAddr[0]);
+//				memory.Release();
+//			}
+//		}
+//	}
+//	if (checkValue != 0) XPCOM.memmove(checkValue, check, 4);
 	return XPCOM.NS_OK;
 }
 

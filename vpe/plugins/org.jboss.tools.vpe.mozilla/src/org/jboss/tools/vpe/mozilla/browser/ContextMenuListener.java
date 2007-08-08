@@ -10,7 +10,7 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.mozilla.browser;
 
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMMouseEvent;
+import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.w3c.dom.Node;
 
 

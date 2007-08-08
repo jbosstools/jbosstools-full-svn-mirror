@@ -10,14 +10,15 @@
  *******************************************************************************/
 package org.jboss.tools.vpe.mozilla.browser;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.browser.CloseWindowListener;
-import org.eclipse.swt.browser.VisibilityWindowListener;
-import org.eclipse.swt.browser.WindowEvent;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.*;
+import org.eclipse.swt.widgets.Display;
+import org.jboss.tools.vpe.mozilla.internal.swt.xpl.XPCOM;
+import org.jboss.tools.vpe.mozilla.internal.swt.xpl.XPCOMObject;
+import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIBaseWindow;
+import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsID;
+import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsISupports;
+import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIWebBrowser;
+import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIWebBrowserChrome;
+import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIWindowCreator;
 
 
 class WindowCreator {
@@ -98,27 +99,27 @@ int CreateChromeWindow(int parent, int chromeFlags, int _retval) {
 	nsIWebBrowserChrome browserChromeParent = new nsIWebBrowserChrome(parent);
 	int[] aWebBrowser = new int[1];
 	int rc = browserChromeParent.GetWebBrowser(aWebBrowser);
-	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
-	if (aWebBrowser[0] == 0) MozillaBrowser.error(XPCOM.NS_ERROR_NO_INTERFACE);
+//	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
+//	if (aWebBrowser[0] == 0) MozillaBrowser.error(XPCOM.NS_ERROR_NO_INTERFACE);
 	
 	nsIWebBrowser webBrowser = new nsIWebBrowser(aWebBrowser[0]);
 	int[] result = new int[1];
 	rc = webBrowser.QueryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID, result);
-	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
-	if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_ERROR_NO_INTERFACE);
+//	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
+//	if (result[0] == 0) MozillaBrowser.error(XPCOM.NS_ERROR_NO_INTERFACE);
 	webBrowser.Release();
 	
 	nsIBaseWindow baseWindow = new nsIBaseWindow(result[0]);
 	result[0] = 0;
 	int[] aParentNativeWindow = new int[1];
 	rc = baseWindow.GetParentNativeWindow(aParentNativeWindow);
-	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
-	if (aParentNativeWindow[0] == 0) MozillaBrowser.error(XPCOM.NS_ERROR_NO_INTERFACE);
+//	if (rc != XPCOM.NS_OK) MozillaBrowser.error(rc);
+//	if (aParentNativeWindow[0] == 0) MozillaBrowser.error(XPCOM.NS_ERROR_NO_INTERFACE);
 	baseWindow.Release();
 
 	Display display = Display.getCurrent();
-	MozillaBrowser src = (MozillaBrowser)display.findWidget(aParentNativeWindow[0]);
-	MozillaBrowser browser = null;
+//	MozillaBrowser src = (MozillaBrowser)display.findWidget(aParentNativeWindow[0]);
+//	MozillaBrowser browser = null;
 	boolean doit = false;
 	if ((chromeFlags & nsIWebBrowserChrome.CHROME_MODAL) != 0) {
 		/*
@@ -129,26 +130,26 @@ int CreateChromeWindow(int parent, int chromeFlags, int _retval) {
 		* and a Browser to display an emulated HTML based print dialog. For this reason,
 		* modal requests are handled here and not exposed to the user.
 		*/
-		final Shell shell = new Shell(src.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-		shell.setLayout(new FillLayout());
-		browser = new MozillaBrowser(shell, SWT.NONE);
-		browser.addVisibilityWindowListener(new VisibilityWindowListener() {
-			public void hide(WindowEvent event) {
-			}
-			public void show(WindowEvent event) {
-				if (event.location != null) shell.setLocation(event.location);
-				if (event.size != null) {
-					Point size = event.size;
-					shell.setSize(shell.computeSize(size.x, size.y));
-				}
-				shell.open();
-			}
-		});
-		browser.addCloseWindowListener(new CloseWindowListener() {
-			public void close(WindowEvent event) {
-				shell.close();
-			}
-		});
+//		final Shell shell = new Shell(src.getShell(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+//		shell.setLayout(new FillLayout());
+//		browser = new MozillaBrowser(shell, SWT.NONE);
+//		browser.addVisibilityWindowListener(new VisibilityWindowListener() {
+//			public void hide(WindowEvent event) {
+//			}
+//			public void show(WindowEvent event) {
+//				if (event.location != null) shell.setLocation(event.location);
+//				if (event.size != null) {
+//					Point size = event.size;
+//					shell.setSize(shell.computeSize(size.x, size.y));
+//				}
+//				shell.open();
+//			}
+//		});
+//		browser.addCloseWindowListener(new CloseWindowListener() {
+//			public void close(WindowEvent event) {
+//				shell.close();
+//			}
+//		});
 		doit = true;
 	} else {
 //		 Edward
@@ -163,10 +164,10 @@ int CreateChromeWindow(int parent, int chromeFlags, int _retval) {
 */
 	}
 	if (doit) {
-		int address = browser.webBrowserChrome.getAddress();
-		nsIWebBrowserChrome webBrowserChrome = new nsIWebBrowserChrome(address);
-		webBrowserChrome.AddRef();
-		XPCOM.memmove(_retval, new int[] {address}, 4);
+//		int address = browser.webBrowserChrome.getAddress();
+//		nsIWebBrowserChrome webBrowserChrome = new nsIWebBrowserChrome(address);
+//		webBrowserChrome.AddRef();
+//		XPCOM.memmove(_retval, new int[] {address}, 4);
 	}
 	return doit ? XPCOM.NS_OK : XPCOM.NS_ERROR_NOT_IMPLEMENTED;
 }
