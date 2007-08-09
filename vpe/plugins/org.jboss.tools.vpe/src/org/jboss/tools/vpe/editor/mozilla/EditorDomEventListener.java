@@ -11,7 +11,7 @@
 package org.jboss.tools.vpe.editor.mozilla;
 
 
-import org.jboss.tools.vpe.mozilla.browser.ContextMenuListener;
+import org.mozilla.interfaces.nsIContextMenuListener;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMEvent;
@@ -20,7 +20,8 @@ import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMMutationEvent;
 import org.mozilla.interfaces.nsISelection;
 
-public interface EditorDomEventListener extends ContextMenuListener {
+
+public interface EditorDomEventListener extends nsIContextMenuListener {
 
 	// nsIDOMMutationListener
 	void subtreeModified(nsIDOMMutationEvent mutationEvent);

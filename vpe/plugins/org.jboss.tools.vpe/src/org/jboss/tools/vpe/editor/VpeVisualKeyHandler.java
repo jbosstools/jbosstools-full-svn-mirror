@@ -45,7 +45,6 @@ import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.util.FlatIterator;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIFrameSelection;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Attr;

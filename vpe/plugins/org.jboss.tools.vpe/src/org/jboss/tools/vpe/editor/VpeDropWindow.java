@@ -10,32 +10,46 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor;
 
-import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
-import org.eclipse.jface.util.*;
-import org.eclipse.jface.viewers.*;
+import org.eclipse.jface.util.DelegatingDropAdapter;
+import org.eclipse.jface.util.TransferDropTargetListener;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.dnd.*;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.DropTargetEvent;
+import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.HTMLTransfer;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wst.common.ui.internal.dnd.ObjectTransfer;
 import org.eclipse.wst.common.ui.internal.dnd.ViewerDropAdapter;
 import org.eclipse.wst.sse.core.internal.model.FactoryRegistry;
-import org.eclipse.wst.sse.ui.internal.contentoutline.*;
+import org.eclipse.wst.sse.ui.internal.contentoutline.IJFaceNodeAdapter;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
-import org.eclipse.wst.xml.ui.internal.contentoutline.*;
-import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
-import org.w3c.dom.Node;
-
+import org.eclipse.wst.xml.ui.internal.contentoutline.JFaceNodeContentProvider;
+import org.eclipse.wst.xml.ui.internal.contentoutline.JFaceNodeLabelProvider;
+import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
 import org.jboss.tools.common.model.ui.editors.dnd.context.DropContext;
+import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
 import org.jboss.tools.vpe.editor.dnd.context.JSPViewerDropAdapter;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMMouseEvent;
+import org.w3c.dom.Node;
 
 public class VpeDropWindow extends Window {
 	static final Color BACKGROUND_COLOR = new Color(null, 0xff, 0xff, 0xcd);
-	nsIDOMMouseEvent event;
 	IJSPTextEditor editor;
 	boolean active = false;
 	TreeViewer treeViewer;

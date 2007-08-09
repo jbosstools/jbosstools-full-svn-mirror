@@ -31,7 +31,6 @@ Provide-Package: org.jboss.tools.vpe,
  org.jboss.tools.vpe.editor.util,
  org.jboss.tools.vpe.messages,meta
 Require-Bundle: org.jboss.tools.common.model.ui,
- org.jboss.tools.vpe.mozilla,
  org.eclipse.jface.text,
  org.eclipse.jdt.core,
  org.jboss.tools.common,
