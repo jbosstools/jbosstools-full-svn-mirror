@@ -132,7 +132,7 @@
   <orderedlist>
   <listitem><para>Open the JBoss Server View by selecting Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View. You will see JBoss Server view.</para></listitem>
   <listitem><para>Right click anywhere in this view and select New Server.</para></listitem>
-<listitem><para>Select JBoss, a division of Red Hat &gt; JBoss v4.2, click the &quot;Installed Runtimes&quot; button to select a new installed runtime and press Next.</para></listitem>
+<listitem><para>Select JBoss, a division of Red Hat &gt; JBoss v4.2 and click the &quot;Installed Runtimes&quot; button to select a new installed runtime.</para></listitem>
 </orderedlist>
 <figure>
 <title>Selecting server type</title>
@@ -149,7 +149,7 @@
      </orderedlist>
 
      <figure>    
-<title>Selecting JBoss Runtime</title>
+<title>Installed Runtimes</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/jbossruntime2.png"/>
