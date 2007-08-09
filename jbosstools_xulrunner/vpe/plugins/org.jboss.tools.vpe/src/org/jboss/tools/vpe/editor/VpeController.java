@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.editor;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -144,6 +145,7 @@ import org.mozilla.interfaces.nsISelectionListener;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsISupportsArray;
 import org.mozilla.interfaces.nsITransferable;
+import org.mozilla.xpcom.Mozilla;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -1130,8 +1132,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			});
 		}
 	}
-	public void onShowContextMenu(int contextFlags, nsIDOMMouseEvent mouseEvent, Node node) {
-		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
+	
+	public void onShowContextMenu(long contextFlags, nsIDOMEvent event, nsIDOMNode node) {
+		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(event);
 		
 		if (visualNode != null) {
 			Node selectedSourceNode = null;
@@ -2415,6 +2418,14 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 
 	public void drop(Node node, Node parentNode, int offset) {
 		visualBuilder.innerDrop(node, parentNode, offset);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.mozilla.interfaces.nsISupports#queryInterface(java.lang.String)
+	 */
+	@Override
+	public nsISupports queryInterface(String arg0) {
+		return Mozilla.getInstance().queryInterface(this, arg0);
 	}
 
 }

@@ -11,14 +11,6 @@
 package org.jboss.tools.vpe.editor.mozilla;
 
 
-import org.jboss.tools.vpe.VpePlugin;
-import org.jboss.tools.vpe.mozilla.browser.MozillaDebug;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.VpeDnD;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.XPCOM;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.XPCOMObject;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIComponentManager;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsID;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIClipboardDragDropHooks;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDragSession;
