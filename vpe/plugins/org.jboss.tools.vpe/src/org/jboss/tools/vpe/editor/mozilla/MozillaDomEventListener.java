@@ -31,7 +31,6 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 //	private XPCOMObject resizeListener;
 	// TODO Max Areshkau add DnD
 //	private XPCOMObject dropListener;
-	private int refCount = 0;
 
 	private XulRunnerEditor visualEditor;
 	// TODO Max Areshkau add DnD
@@ -248,7 +247,6 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIClipboardDragDropHooks#allowDrop(org.mozilla.interfaces.nsIDOMEvent, org.mozilla.interfaces.nsIDragSession)
 	 */
-	@Override
 	public boolean allowDrop(nsIDOMEvent event, nsIDragSession dragSession) {
 		boolean canDrop = false;
 		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
@@ -274,7 +272,6 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIClipboardDragDropHooks#allowStartDrag(org.mozilla.interfaces.nsIDOMEvent)
 	 */
-	@Override
 	public boolean allowStartDrag(nsIDOMEvent arg0) {
 		return true;
 	}
@@ -282,7 +279,6 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIClipboardDragDropHooks#onCopyOrDrag(org.mozilla.interfaces.nsIDOMEvent, org.mozilla.interfaces.nsITransferable)
 	 */
-	@Override
 	public boolean onCopyOrDrag(nsIDOMEvent arg0, nsITransferable arg1) {
 		return true;
 	}
@@ -290,7 +286,6 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIClipboardDragDropHooks#onPasteOrDrop(org.mozilla.interfaces.nsIDOMEvent, org.mozilla.interfaces.nsITransferable)
 	 */
-	@Override
 	public boolean onPasteOrDrop(nsIDOMEvent event,	nsITransferable transferable) {
 		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent)event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 
@@ -309,7 +304,6 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsISupports#queryInterface(java.lang.String)
 	 */
-	@Override
 	public nsISupports queryInterface(String arg0) {
 		return Mozilla.queryInterface(this, arg0);
 	}
@@ -317,14 +311,12 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIDOMEventListener#handleEvent(org.mozilla.interfaces.nsIDOMEvent)
 	 */
-	@Override
 	public void handleEvent(nsIDOMEvent arg0) {
 	}
 
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsISelectionListener#notifySelectionChanged(org.mozilla.interfaces.nsIDOMDocument, org.mozilla.interfaces.nsISelection, short)
 	 */
-	@Override
 	public void notifySelectionChanged(nsIDOMDocument domDocument, nsISelection selection, short reason) {
 		if (editorDomEventListener != null) {
 			editorDomEventListener.notifySelectionChanged(domDocument, selection, reason);

@@ -164,7 +164,6 @@ public class MozillaBaseEventListener implements nsIClipboardDragDropHooks {
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIClipboardDragDropHooks#allowDrop(org.mozilla.interfaces.nsIDOMEvent, org.mozilla.interfaces.nsIDragSession)
 	 */
-	@Override
 	public boolean allowDrop(nsIDOMEvent event, nsIDragSession dragSession) {
 		event.preventDefault();
 		event.stopPropagation();
@@ -174,7 +173,6 @@ public class MozillaBaseEventListener implements nsIClipboardDragDropHooks {
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIClipboardDragDropHooks#allowStartDrag(org.mozilla.interfaces.nsIDOMEvent)
 	 */
-	@Override
 	public boolean allowStartDrag(nsIDOMEvent event) {
 		return false;
 	}
@@ -182,7 +180,6 @@ public class MozillaBaseEventListener implements nsIClipboardDragDropHooks {
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIClipboardDragDropHooks#onCopyOrDrag(org.mozilla.interfaces.nsIDOMEvent, org.mozilla.interfaces.nsITransferable)
 	 */
-	@Override
 	public boolean onCopyOrDrag(nsIDOMEvent event, nsITransferable transferable) {
 		return false;
 	}
@@ -190,7 +187,6 @@ public class MozillaBaseEventListener implements nsIClipboardDragDropHooks {
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIClipboardDragDropHooks#onPasteOrDrop(org.mozilla.interfaces.nsIDOMEvent, org.mozilla.interfaces.nsITransferable)
 	 */
-	@Override
 	public boolean onPasteOrDrop(nsIDOMEvent event,	nsITransferable transferable) {
 		return false;
 	}
@@ -198,7 +194,6 @@ public class MozillaBaseEventListener implements nsIClipboardDragDropHooks {
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsISupports#queryInterface(java.lang.String)
 	 */
-	@Override
 	public nsISupports queryInterface(String arg0) {
 		return Mozilla.queryInterface(this, arg0);
 	}
