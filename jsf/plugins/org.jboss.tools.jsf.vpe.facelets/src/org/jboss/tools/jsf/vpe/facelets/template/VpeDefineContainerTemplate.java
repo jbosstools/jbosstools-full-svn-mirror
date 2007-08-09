@@ -30,6 +30,9 @@ import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
 
 public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 	private static final String ATTR_TEMPLATE = "template";
@@ -42,7 +45,7 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 	}
 
 
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 		String fileName = null;
 		Attr attr = ((Element)sourceNode).getAttributeNode(ATTR_TEMPLATE);
 		if (attr != null && attr.getNodeValue().trim().length() > 0) {
@@ -106,8 +109,8 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 		}
 	}
 	
-	private VpeCreationData createInclude(Document sourceDocument, Document visualDocument) {
-		Element visualNewElement = visualDocument.createElement("div");
+	private VpeCreationData createInclude(Document sourceDocument, nsIDOMDocument visualDocument) {
+		nsIDOMElement visualNewElement = visualDocument.createElement(HTML.TAG_DIV);
 		VpeVisualDomBuilder.markIncludeElement(visualNewElement);
 		VpeCreationData creationData = new VpeCreationData(visualNewElement);
 		VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualNewElement);
@@ -129,7 +132,7 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 		
 	}
 	
-	protected abstract VpeCreationData createStub(String fileName, Node sourceElement, Document visualDocument);
+	protected abstract VpeCreationData createStub(String fileName, Node sourceElement, nsIDOMDocument visualDocument);
 
 	static class TemplateFileInfo {
 		IFile templateFile;
