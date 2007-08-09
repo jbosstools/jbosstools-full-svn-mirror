@@ -104,15 +104,11 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	}
 	
 	public nsIClipboardDragDropHookList getClipboardDragDropHookList() {
-		try {
 		nsIDocShell docShell = getDocShell();
 		
 		if (docShell != null) {
 			nsIClipboardDragDropHookList hookList = (nsIClipboardDragDropHookList) docShell.queryInterface(nsIClipboardDragDropHookList.NS_ICLIPBOARDDRAGDROPHOOKLIST_IID);
 			return hookList;
-		}
-		} catch (Throwable t) {
-			t.printStackTrace();
 		}
 		return null;
 	}
