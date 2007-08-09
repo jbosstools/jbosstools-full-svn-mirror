@@ -312,7 +312,6 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIWebProgressListener#onLocationChange(org.mozilla.interfaces.nsIWebProgress, org.mozilla.interfaces.nsIRequest, org.mozilla.interfaces.nsIURI)
 	 */
-	@Override
 	public void onLocationChange(nsIWebProgress arg0, nsIRequest arg1,
 			nsIURI arg2) {
 	}
@@ -320,7 +319,6 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIWebProgressListener#onProgressChange(org.mozilla.interfaces.nsIWebProgress, org.mozilla.interfaces.nsIRequest, int, int, int, int)
 	 */
-	@Override
 	public void onProgressChange(nsIWebProgress arg0, nsIRequest arg1,
 			int arg2, int arg3, int arg4, int arg5) {
 	}
@@ -328,14 +326,12 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIWebProgressListener#onSecurityChange(org.mozilla.interfaces.nsIWebProgress, org.mozilla.interfaces.nsIRequest, long)
 	 */
-	@Override
 	public void onSecurityChange(nsIWebProgress arg0, nsIRequest arg1, long arg2) {
 	}
 
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIWebProgressListener#onStateChange(org.mozilla.interfaces.nsIWebProgress, org.mozilla.interfaces.nsIRequest, long, long)
 	 */
-	@Override
 	public void onStateChange(nsIWebProgress aWebProgress, nsIRequest aRequest, long aStateFlags, long aStstus) {
 		if ((aStateFlags & nsIWebProgressListener.STATE_IS_WINDOW) != 0
 				&& (aStateFlags & nsIWebProgressListener.STATE_STOP) != 0) {
@@ -346,7 +342,6 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIWebProgressListener#onStatusChange(org.mozilla.interfaces.nsIWebProgress, org.mozilla.interfaces.nsIRequest, long, java.lang.String)
 	 */
-	@Override
 	public void onStatusChange(nsIWebProgress arg0, nsIRequest arg1, long aStatus, String message) {
 	}
 
@@ -355,14 +350,12 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsITooltipListener#onHideTooltip()
 	 */
-	@Override
 	public void onHideTooltip() {
 	}
 
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsITooltipListener#onShowTooltip(int, int, java.lang.String)
 	 */
-	@Override
 	public void onShowTooltip(int aXCoords, int aYCoords, String aTipText) {
 	}
 
