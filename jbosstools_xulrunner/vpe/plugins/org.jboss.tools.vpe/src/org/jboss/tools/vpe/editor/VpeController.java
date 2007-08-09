@@ -2423,7 +2423,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsISupports#queryInterface(java.lang.String)
 	 */
-	@Override
 	public nsISupports queryInterface(String arg0) {
 		return Mozilla.getInstance().queryInterface(this, arg0);
 	}
