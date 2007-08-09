@@ -47,7 +47,7 @@ import org.osgi.framework.Bundle;
 
 public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 		nsIWebProgressListener, nsITooltipListener {
-	private static String XULRUNNER_BUNDLE = "org.jboss.tools.vpe.xulrunner"; //$NON-NLS-1$
+	private static String XULRUNNER_BUNDLE = "org.jboss.tools.vpe.mozilla.xulrunner"; //$NON-NLS-1$
 	private static String XULRUNNER_ENTRY = "/xulrunner";
 	
 	// TEMPORARY CODE (@see org.eclipse.swt.browser.Mozilla)
