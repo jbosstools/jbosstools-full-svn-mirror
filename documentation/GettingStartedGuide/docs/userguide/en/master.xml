@@ -15,12 +15,11 @@
     
      <bookinfo>
         <title>Getting Started with Red Hat Developer Studio</title>
-	
-        <copyright>
+	                       <copyright>
 			<year>2007</year>
-			<holder>Red Hat</holder>
-	    </copyright>
-    	
+	                           <holder>Red Hat</holder>
+	                       </copyright>
+         <releaseinfo>Current Guide Version: beta 1.0</releaseinfo>
     </bookinfo>
 	
     
