@@ -696,10 +696,12 @@
   <xsl:param name="next" select="/foo"/>
   <xsl:param name="nav.context"/>
 
+  <xsl:variable name="show.title" select="not(self::book)"/>
+
   <xsl:variable name="home" select="/*[1]"/>
   <xsl:variable name="up" select="parent::*"/>
 
-  <xsl:variable name="row1" select="$navig.showtitles != 0"/>
+  <xsl:variable name="row1" select="$navig.showtitles != 0 and $show.title"/>
   <xsl:variable name="row2" select="count($prev) &gt; 0
                                     or (count($up) &gt; 0 
 					and generate-id($up) != generate-id($home)
