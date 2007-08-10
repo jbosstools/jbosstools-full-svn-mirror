@@ -15,6 +15,7 @@ import org.jboss.tools.jsf.vpe.richfaces.HtmlComponentUtil;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -107,7 +108,9 @@ public class RichFacesDataTableScrollerTemplate extends VpeAbstractTemplate {
 				.createElement(HtmlComponentUtil.HTML_TAG_TR);
 		tbody.appendChild(tr);
 		table.appendChild(tbody);
-		VpeCreationData creationData = new VpeCreationData(div);
+		
+		// TODO A. Yukhovich please fix it
+		VpeCreationData creationData = new VpeCreationData(null/*div*/);
 		/* Add scroll cells */
 		Element child1 = createCell(visualDocument, false,
 				LEFT_DOUBLE_SCROLL_SYMBOL, SCROLL_CELL);
@@ -187,6 +190,8 @@ public class RichFacesDataTableScrollerTemplate extends VpeAbstractTemplate {
 	/**
 	 * Method for remove attributes .
 	 */
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void removeAttribute(VpePageContext pageContext,
 			Element sourceElement, Document visualDocument, Node visualNode,
@@ -197,12 +202,15 @@ public class RichFacesDataTableScrollerTemplate extends VpeAbstractTemplate {
 		element.removeAttribute(name);
 
 	}
+	*/
 
 	/*
 	 * @see com.exadel.vpe.editor.template.VpeAbstractTemplate#setAttribute(com.exadel.vpe.editor.context.VpePageContext,
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String, java.lang.String)
 	 */
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement,
 			Document visualDocument, Node visualNode, Object data, String name,
@@ -225,16 +233,16 @@ public class RichFacesDataTableScrollerTemplate extends VpeAbstractTemplate {
 			int nodesLength = nodes.getLength();
 			if (nodesLength != size) {
 				if (size < nodesLength) {
-					/* Remove cells in datascroller */
+					// Remove cells in datascroller
 					for (int i = size; i < nodesLength; i++) {
 						tr.removeChild(nodes.item(size - 3));
 					}
 				} else {
-					/* Remove cells in datascroller */
+					// Remove cells in datascroller 
 					for (int i = 0; i < 3; i++) {
 						tr.removeChild(nodes.item(nodesLength - 3));
 					}
-					/* Add cells in datascroller */
+					// Add cells in datascroller 
 					for (int i = 0; i < (size - nodesLength); i++) {
 						Element cell = createCell(visualDocument, false, ""
 								+ (nodesLength - 5 + i), NUM_CELL);
@@ -255,7 +263,7 @@ public class RichFacesDataTableScrollerTemplate extends VpeAbstractTemplate {
 		element.setAttribute(name, value);
 
 	}
-
+	*/
 	/**
 	 * Method for parse style and get width.
 	 * 
@@ -317,5 +325,11 @@ public class RichFacesDataTableScrollerTemplate extends VpeAbstractTemplate {
 		Element tbody = (Element) tableList.item(0);
 		NodeList tbodyList = tbody.getChildNodes();
 		return (Element) tbodyList.item(0);
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

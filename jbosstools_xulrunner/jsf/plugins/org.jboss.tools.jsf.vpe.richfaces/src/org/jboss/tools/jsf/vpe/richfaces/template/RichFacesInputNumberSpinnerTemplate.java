@@ -14,6 +14,7 @@ import org.jboss.tools.jsf.vpe.richfaces.ComponentUtil;
 import org.jboss.tools.jsf.vpe.richfaces.HtmlComponentUtil;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -95,7 +96,8 @@ public class RichFacesInputNumberSpinnerTemplate extends AbstractRichFacesInputN
 		table.setAttribute("style", tmp);
 
 		// Create return variable contain template
-		VpeCreationData creationData = new VpeCreationData(table);
+		// TODO A. Yukhovich please fix it
+		VpeCreationData creationData = new VpeCreationData(null/*table*/);
 
 		return creationData;
 	}
@@ -197,6 +199,8 @@ public class RichFacesInputNumberSpinnerTemplate extends AbstractRichFacesInputN
 	 *      java.lang.Object, java.lang.String, java.lang.String)
 	 */
 	@Override
+	// TODO A. Yukhovich please fix it
+	/*
 	public void setAttribute(VpePageContext pageContext, Element sourceElement,
 			Document visualDocument, Node visualNode, Object data, String name,
 			String value) {
@@ -227,6 +231,7 @@ public class RichFacesInputNumberSpinnerTemplate extends AbstractRichFacesInputN
 		String strStyle =  getAttribute("style", sourceElement);
 		table.setAttribute(HtmlComponentUtil.HTML_STYLE_ATTR, strStyle);
 	}
+	*/
 
 	
 	
@@ -236,6 +241,12 @@ public class RichFacesInputNumberSpinnerTemplate extends AbstractRichFacesInputN
 	
 	public String getDefaultInputClass() {
 		return DEFAULT_INPUT_STYLE;
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

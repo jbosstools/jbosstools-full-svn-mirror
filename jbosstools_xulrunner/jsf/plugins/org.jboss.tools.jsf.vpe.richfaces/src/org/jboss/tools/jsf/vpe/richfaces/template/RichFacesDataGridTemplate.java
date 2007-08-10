@@ -37,7 +37,8 @@ public class RichFacesDataGridTemplate extends RichFacesDataTableTemplate {
 		Element table = visualDocument.createElement("table");
 		ComponentUtil.copyAttributes(sourceNode, table);
 
-		VpeCreationData creationData = new VpeCreationData(table);
+		// TODO A. Yukhovich please fix it
+		VpeCreationData creationData = new VpeCreationData(null/*table*/);
 
 		ComponentUtil.setCSSLink(pageContext, "dataTable/dataTable.css", "richFacesDataGrid");
 		String tableClass = sourceElement.getAttribute("styleClass");
@@ -97,7 +98,8 @@ public class RichFacesDataGridTemplate extends RichFacesDataTableTemplate {
 					tr.appendChild(td);
 					td.setAttribute("class", "dr-table-cell rich-table-cell " + getColumnClass(columnIndex));
 					if(!children.isEmpty()) {
-						VpeChildrenInfo childInfo = new VpeChildrenInfo(td);
+						// TODO A. Yukhovich please fix it
+						VpeChildrenInfo childInfo = new VpeChildrenInfo(null/*td*/);
 						for (Node child : children) {
 							childInfo.addSourceChild(child);
 						}
@@ -175,6 +177,8 @@ public class RichFacesDataGridTemplate extends RichFacesDataTableTemplate {
 		return elements;
 	}
 
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name) {
 		((Element)visualNode).removeAttribute(name);
@@ -184,4 +188,5 @@ public class RichFacesDataGridTemplate extends RichFacesDataTableTemplate {
 	public void setAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		((Element)visualNode).setAttribute(name, value);
 	}
+	*/
 }

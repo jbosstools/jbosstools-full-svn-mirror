@@ -20,6 +20,7 @@ import org.jboss.tools.jsf.vpe.richfaces.HtmlComponentUtil;
 import org.jboss.tools.jsf.vpe.richfaces.RichFacesTemplatesActivator;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -281,7 +282,8 @@ public class RichFacesInputNumberSliderTemplate extends
 			}
 		}
 
-		VpeCreationData creationData = new VpeCreationData(table1);
+		// TODO A. Yukhovich please fix it
+		VpeCreationData creationData = new VpeCreationData(null/*table1*/);
 		return creationData;
 	}
 
@@ -291,6 +293,7 @@ public class RichFacesInputNumberSliderTemplate extends
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String, java.lang.String)
 	 */
+	/*
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement,
 			Document visualDocument, Node visualNode, Object data, String name,
@@ -313,6 +316,7 @@ public class RichFacesInputNumberSliderTemplate extends
 		}
 		correctArrowPosition(sourceElement, visualNode);
 	}
+	*/
 
 	/**
 	 * 
@@ -637,6 +641,12 @@ public class RichFacesInputNumberSliderTemplate extends
 			String tmp = getAttribute("maxlength", sourceNode);
 			input.setAttribute("maxlength", tmp);
 		}
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

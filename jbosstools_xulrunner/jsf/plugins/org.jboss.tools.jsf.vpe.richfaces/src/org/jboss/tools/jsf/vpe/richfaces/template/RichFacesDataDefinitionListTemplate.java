@@ -16,6 +16,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -66,7 +67,9 @@ public class RichFacesDataDefinitionListTemplate extends VpeAbstractTemplate {
 				.createElement(HtmlComponentUtil.HTML_TAG_DL);
 		ComponentUtil.setCSSLink(pageContext, STYLE_RESOURCES_PATH,
 				"dataDefinitionList");
-		VpeCreationData creationData = new VpeCreationData(listElement);
+		
+		// TODO A. Yukhovich please fix it
+		VpeCreationData creationData = new VpeCreationData(null/*listElement*/);
 		Element el = null;
 		Node tempNode = null;
 		NodeList list = sourceNode.getChildNodes();
@@ -125,7 +128,8 @@ public class RichFacesDataDefinitionListTemplate extends VpeAbstractTemplate {
 					HtmlComponentUtil.HTML_CLASS_ATTR, "columnClass");
 		}
 		parentList.appendChild(dd);
-		VpeChildrenInfo vpeChildrenInfo = new VpeChildrenInfo(dd);
+		// TODO A. Yukhovich please fix it
+		VpeChildrenInfo vpeChildrenInfo = new VpeChildrenInfo(null/*dd*/);
 		vpeChildrenInfo.addSourceChild(childElement);
 		creationData.addChildrenInfo(vpeChildrenInfo);
 	}
@@ -152,7 +156,8 @@ public class RichFacesDataDefinitionListTemplate extends VpeAbstractTemplate {
 		correctAttribute((Element) sourceNode, dt, HEADER_CLASS_ATTR_NAME,
 				HtmlComponentUtil.HTML_CLASS_ATTR, "headerClass");
 		parentList.appendChild(dt);
-		VpeChildrenInfo child = new VpeChildrenInfo(dt);
+		// TODO A. Yukhovich please fix it
+		VpeChildrenInfo child = new VpeChildrenInfo(null/*dt*/);
 		child.addSourceChild(facetElement);
 		creationData.addChildrenInfo(child);
 	}
@@ -178,6 +183,8 @@ public class RichFacesDataDefinitionListTemplate extends VpeAbstractTemplate {
 			visualNode.removeAttribute(attrName);
 	}
 
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement,
 			Document visualDocument, Node visualNode, Object data, String name,
@@ -193,6 +200,7 @@ public class RichFacesDataDefinitionListTemplate extends VpeAbstractTemplate {
 		processAttributeChanges(pageContext, sourceElement, visualDocument,
 				visualNode, data, name);
 	}
+	*/
 
 	/**
 	 * Correct list style accordinly parameters
@@ -257,5 +265,11 @@ public class RichFacesDataDefinitionListTemplate extends VpeAbstractTemplate {
 				}
 			}
 		}
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

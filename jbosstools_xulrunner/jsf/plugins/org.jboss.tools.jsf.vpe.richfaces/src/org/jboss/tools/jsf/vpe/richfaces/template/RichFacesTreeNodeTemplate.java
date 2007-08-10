@@ -18,6 +18,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -81,7 +82,8 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 		Element tableRow = visualDocument
 				.createElement(HtmlComponentUtil.HTML_TAG_TR);
 		addAttributeToTableNode((Element) sourceNode, tableRow);
-		VpeCreationData vpeCreationData = new VpeCreationData(tableRow);
+		// TODO A. Yukhovich please fix it
+		VpeCreationData vpeCreationData = new VpeCreationData(null/*tableRow*/);
 		createBasicTree(pageContext, visualDocument, tableRow, sourceNode,
 				vpeCreationData);
 		return vpeCreationData;
@@ -204,7 +206,8 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 				.createElement(HtmlComponentUtil.HTML_TAG_TD);
 		addBasicNadeTitleAttributes(nodeTitle);
 		// Create mapping to Encode body
-		VpeChildrenInfo tdInfo = new VpeChildrenInfo(nodeTitle);
+		// TODO A. Yukhovich please fix it
+		VpeChildrenInfo tdInfo = new VpeChildrenInfo(null/*nodeTitle*/);
 
 		// Create mapping to Encode body
 		List<Node> children = ComponentUtil.getChildren((Element) sourceNode,
@@ -226,15 +229,17 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 				STYLE_CLASS_FOR_NODE_TITLE);
 	}
 
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement,
 			Document visualDocument, Node visualNode, Object data, String name,
 			String value) {
-		/*
-		 * processed only next attributes iconExpanded and icon, becouse tree
-		 * allways shows as expanded and information is it leaf or not contains
-		 * in model
-		 */
+		//
+		// processed only next attributes iconExpanded and icon, becouse tree
+		// allways shows as expanded and information is it leaf or not contains
+		// in model
+		//
 		if (NODE_ICON_EXPANDED_ATTR_NAME.equalsIgnoreCase(name)) {
 			Element expandedIconCell = (Element) visualNode.getChildNodes()
 					.item(0);
@@ -263,11 +268,11 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 	public void removeAttribute(VpePageContext pageContext,
 			Element sourceElement, Document visualDocument, Node visualNode,
 			Object data, String name) {
-		/*
-		 * processed only next attributes iconExpanded and icon, becouse tree
-		 * allways shows as expanded and information is it leaf or not contains
-		 * in model
-		 */
+		//
+		// processed only next attributes iconExpanded and icon, becouse tree
+		// allways shows as expanded and information is it leaf or not contains
+		// in model
+		//
 		String showLinesParam = ((Element) sourceElement.getParentNode())
 				.getAttribute(RichFacesTreeTemplate.SHOW_LINES_ATTR_NAME);
 		boolean showLinesValue = true;
@@ -324,6 +329,7 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 			img.setAttribute(ICON_PARAM_NAME, NODE_ICON_LEAF_ATTR_NAME);
 		}
 	}
+	*/
 
 	/**
 	 * 
@@ -355,5 +361,11 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 	private void addBasicAttributesToPicture(Element img) {
 		img.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR,
 				TREE_TABLE_PICTURE_STYLE_CLASS_NAME);
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

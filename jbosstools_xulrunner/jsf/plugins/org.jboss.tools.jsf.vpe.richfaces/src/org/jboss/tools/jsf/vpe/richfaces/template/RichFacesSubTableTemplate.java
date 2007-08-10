@@ -18,6 +18,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -30,10 +31,13 @@ public class RichFacesSubTableTemplate extends VpeAbstractTemplate {
 		super();
 	}
 
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		return true;
 	}
+	*/
 
 	/**
 	 * Encode columnGroup
@@ -70,14 +74,16 @@ public class RichFacesSubTableTemplate extends VpeAbstractTemplate {
 
 		if(creationData==null) {
 			// Method was called from create()
-			creationData = new VpeCreationData(tr);			
+			// TODO A. Yukhovich please fix it
+			creationData = new VpeCreationData(null/*tr*/);			
 		} else {
 			// Method was called from dataTable
 			parentVisualNode.appendChild(tr);
 		}
 
 		// Create mapping to Encode body
-		VpeChildrenInfo trInfo = new VpeChildrenInfo(tr);
+		// TODO A. Yukhovich please fix it
+		VpeChildrenInfo trInfo = new VpeChildrenInfo(null/*tr*/);
 		creationData.addChildrenInfo(trInfo);
 		List<Node> children = ComponentUtil.getChildren(sourceElement);
 		for (Node child : children) {
@@ -95,9 +101,11 @@ public class RichFacesSubTableTemplate extends VpeAbstractTemplate {
 					}
 					ComponentUtil.copyAttributes(sourceElement, tr);
 					if(parentVisualNode!=null) {
-						parentVisualNode.appendChild(tr);
+						// TODO A. Yukhovich please fix it
+						parentVisualNode.appendChild(null/*tr*/);
 					}
-					trInfo = new VpeChildrenInfo(tr);
+					// TODO A. Yukhovich please fix it
+					trInfo = new VpeChildrenInfo(null/*tr*/);
 					creationData.addChildrenInfo(trInfo);
 				}
 			}
@@ -181,6 +189,8 @@ public class RichFacesSubTableTemplate extends VpeAbstractTemplate {
 		return null;
 	}
 
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name) {
 		((Element)visualNode).removeAttribute(name);
@@ -189,5 +199,12 @@ public class RichFacesSubTableTemplate extends VpeAbstractTemplate {
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		((Element)visualNode).setAttribute(name, value);
+	}
+	*/
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

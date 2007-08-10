@@ -17,16 +17,20 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class RichFacesTabTemplate extends VpeAbstractTemplate {
 
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		return true;
 	}
+	*/
 
 	/**
 	 * Encode body of tab
@@ -54,7 +58,8 @@ public class RichFacesTabTemplate extends VpeAbstractTemplate {
 		Element td = visualDocument.createElement("td");
 
 		if(creationData==null) {
-			creationData = new VpeCreationData(td);
+			// TODO A. Yukhovich please fix it
+			creationData = new VpeCreationData(null/*td*/);
 		} else {
 			parentVisualElement.appendChild(td);
 		}
@@ -81,7 +86,8 @@ public class RichFacesTabTemplate extends VpeAbstractTemplate {
 		td.setAttribute("style", ComponentUtil.getAttribute(sourceElement, "contentStyle") + "; " + ComponentUtil.getAttribute(sourceElement, "style"));
 
 		List<Node> children = ComponentUtil.getChildren(sourceElement, true);
-		VpeChildrenInfo bodyInfo = new VpeChildrenInfo(td);
+		// TODO A. Yukhovich please fix it
+		VpeChildrenInfo bodyInfo = new VpeChildrenInfo(null/*td*/);
 		for (Node child : children) {
 			bodyInfo.addSourceChild(child);
 		}
@@ -194,5 +200,11 @@ public class RichFacesTabTemplate extends VpeAbstractTemplate {
 		img.setAttribute("width", "1");
 		img.setAttribute("height", "1");
 		img.setAttribute("border", "0");
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

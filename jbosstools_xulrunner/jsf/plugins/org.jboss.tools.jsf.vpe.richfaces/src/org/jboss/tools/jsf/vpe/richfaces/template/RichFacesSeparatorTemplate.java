@@ -15,6 +15,7 @@ import org.jboss.tools.jsf.vpe.richfaces.HtmlComponentUtil;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -81,7 +82,8 @@ public class RichFacesSeparatorTemplate extends VpeAbstractTemplate {
 				.createElement(HtmlComponentUtil.HTML_TAG_DIV);
 		Element line = visualDocument
 				.createElement(HtmlComponentUtil.HTML_TAG_DIV);
-		VpeCreationData creationData = new VpeCreationData(separator);
+		// TODO A. Yukhovich please fix it
+		VpeCreationData creationData = new VpeCreationData(null/*separator*/);
 		String width = sourceElement
 				.getAttribute(HtmlComponentUtil.HTML_ATR_WIDTH);
 		String height = sourceElement
@@ -119,6 +121,8 @@ public class RichFacesSeparatorTemplate extends VpeAbstractTemplate {
 	/**
 	 * Method for remove attributes in separator
 	 */
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void removeAttribute(VpePageContext pageContext,
 			Element sourceElement, Document visualDocument, Node visualNode,
@@ -170,12 +174,15 @@ public class RichFacesSeparatorTemplate extends VpeAbstractTemplate {
 			line.removeAttribute(name);
 		}
 	}
+	*/
 
 	/*
 	 * @see com.exadel.vpe.editor.template.VpeAbstractTemplate#setAttribute(com.exadel.vpe.editor.context.VpePageContext,
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String, java.lang.String)
 	 */
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement,
 			Document visualDocument, Node visualNode, Object data, String name,
@@ -259,6 +266,7 @@ public class RichFacesSeparatorTemplate extends VpeAbstractTemplate {
 			line.setAttribute(name, value);
 		}
 	}
+	*/
 
 	/**
 	 * Method add in size extention prefix(default 'px').
@@ -363,5 +371,11 @@ public class RichFacesSeparatorTemplate extends VpeAbstractTemplate {
 				+ (width == null ? DEFAULT_WIDTH : width) + ";");
 		newStyle.append((style == null ? "" : style));
 		return newStyle.toString();
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

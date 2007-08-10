@@ -17,15 +17,19 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class RichFacesPanelItemTemplate extends VpeAbstractTemplate {
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		return true;
 	}
+	*/
 
 	public static VpeCreationData encode(VpeCreationData creationData, Element sourceElement, Document visualDocument, Element parentVisualElement, boolean active,
 			String barStyleClass, String barStyle,
@@ -37,7 +41,8 @@ public class RichFacesPanelItemTemplate extends VpeAbstractTemplate {
 		Element div = visualDocument.createElement("div");
 
 		if(creationData==null) {
-			creationData = new VpeCreationData(div);
+			// TODO A. Yukhovich please fix it
+			creationData = new VpeCreationData(null/*div*/);
 		} else {
 			parentVisualElement.appendChild(div);
 		}
@@ -85,7 +90,8 @@ public class RichFacesPanelItemTemplate extends VpeAbstractTemplate {
 			td.setAttribute("style", tdStyle);
 
 			List<Node> children = ComponentUtil.getChildren(sourceElement, true);
-			VpeChildrenInfo bodyInfo = new VpeChildrenInfo(td);
+			// TODO A. Yukhovich please fix it
+			VpeChildrenInfo bodyInfo = new VpeChildrenInfo(null/*td*/);
 			for (Node child : children) {
 				bodyInfo.addSourceChild(child);
 			}
@@ -110,5 +116,11 @@ public class RichFacesPanelItemTemplate extends VpeAbstractTemplate {
 		if(label!=null) {
 			div.appendChild(visualDocument.createTextNode(label));
 		}
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

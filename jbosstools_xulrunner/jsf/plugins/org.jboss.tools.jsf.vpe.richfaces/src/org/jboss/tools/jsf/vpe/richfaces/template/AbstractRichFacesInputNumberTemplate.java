@@ -28,6 +28,8 @@ public abstract class  AbstractRichFacesInputNumberTemplate extends AbstractRich
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String)
 	 */
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void removeAttribute(VpePageContext pageContext,
 			Element sourceElement, Document visualDocument, Node visualNode,
@@ -39,6 +41,7 @@ public abstract class  AbstractRichFacesInputNumberTemplate extends AbstractRich
 				data, name, "");
 
 	}
+	*/
 	
 	/** 
 	 * Return a input size

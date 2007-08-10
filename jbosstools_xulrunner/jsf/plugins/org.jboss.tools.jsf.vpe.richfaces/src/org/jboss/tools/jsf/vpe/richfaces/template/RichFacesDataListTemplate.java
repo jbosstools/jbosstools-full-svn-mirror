@@ -16,7 +16,9 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
+// TODO A. Yukhovich please fix it
+//import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,11 +30,13 @@ public class RichFacesDataListTemplate extends VpeAbstractTemplate {
 	static final String STYLE_ATTR_NAME = "style";
 	static final String ROWS_ATTR_NAME = "rows";
 
-	
+	// TODO A. Yukhovich please fix if
+	/*
 	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		return true;
 	}
+	*/
 
 
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
@@ -49,7 +53,8 @@ public class RichFacesDataListTemplate extends VpeAbstractTemplate {
 				STYLE_ATTR_NAME,
 				HtmlComponentUtil.HTML_STYLE_ATTR, null, null);
 
-		VpeCreationData creatorInfo = new VpeCreationData(unorderedList);
+		// TODO A. Yukhovich please fix if
+		VpeCreationData creatorInfo = new VpeCreationData(null/*unorderedList*/);
 
 		int rows = -1;
 		try {
@@ -63,10 +68,12 @@ public class RichFacesDataListTemplate extends VpeAbstractTemplate {
 			listItem.setAttribute("class", "dr-list-item rich-list-item");
 			unorderedList.appendChild(listItem);
 			
-			VpeChildrenInfo info = new VpeChildrenInfo(listItem);
+			// TODO A. Yukhovich please fix if
+			VpeChildrenInfo info = null /* new VpeChildrenInfo(listItem)*/;
 			creatorInfo.addChildrenInfo(info);
 			encodeListItem(info, sourceElement);
-			MozillaSupports.release(listItem);
+// TODO A. Yukhovich please fix if
+//			MozillaSupports.release(listItem);
 		}
 		
 		return creatorInfo;
@@ -92,5 +99,12 @@ public class RichFacesDataListTemplate extends VpeAbstractTemplate {
 				}
 			}
 		}
+	}
+
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

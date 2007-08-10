@@ -23,7 +23,9 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.mozilla.interfaces.nsIDOMDocument;
+//TODO A. Yukhovich please fix if
+//import org.jboss.tools.vpe.editor.util.MozillaSupports;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -39,10 +41,13 @@ public class RichFacesToolBarGroupTemplate extends VpeAbstractTemplate {
 	
 	public static final String ATTR_LOCATION_RIGHT_VALUE = "right";
 	
+	// TODO A. Yukhovich please fix if
+	/*
 	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		return true;
 	}
+	*/
 
 	private class SourceToolBarGroupItem {
 		private Node toolBarGroupItem;
@@ -149,13 +154,14 @@ public class RichFacesToolBarGroupTemplate extends VpeAbstractTemplate {
 		
 		if (!sourceNode.getParentNode().getNodeName().endsWith(":" + RichFacesToolBarTemplate.TAG_NAME)) {
 			visualNode = RichFacesToolBarTemplate.createExceptionNode(visualDocument, "Parent should be toolBar");
-			
-			creationData = new VpeCreationData(visualNode);
+			// TODO A. Yukhovich please fix if
+			creationData = new VpeCreationData(null/*visualNode*/);
 		} else if (!RichFacesToolBarTemplate.isValidItemSeparatorName(itemSeparator)) {
 			visualNode = RichFacesToolBarTemplate.createExceptionNode(visualDocument,
 					"Unknown type of separator \"" + itemSeparator + "\"");
 			
-			creationData = new VpeCreationData(visualNode);
+			// TODO A. Yukhovich please fix if
+			creationData = new VpeCreationData(null/*visualNode*/);
 		} else {
 		
 			SourceToolBarGroupItems sourceToolBarGroupItems = new SourceToolBarGroupItems(sourceNode,
@@ -169,7 +175,8 @@ public class RichFacesToolBarGroupTemplate extends VpeAbstractTemplate {
 			Element row = visualDocument.createElement(HtmlComponentUtil.HTML_TAG_TR);
 			row.setAttribute(HtmlComponentUtil.HTML_ATTR_VALIGN, HtmlComponentUtil.HTML_ATTR_VALIGN_MIDDLE_VALUE);
 			
-			creationData = new VpeCreationData(visualNode);
+			// TODO A. Yukhovich please fix if
+			creationData = new VpeCreationData(null/*visualNode*/);
 			
 			Iterator<SourceToolBarGroupItem> iterator = sourceToolBarGroupItems.iterator();
 			while(iterator.hasNext()) {
@@ -184,7 +191,8 @@ public class RichFacesToolBarGroupTemplate extends VpeAbstractTemplate {
 							RichFacesToolBarTemplate.CONTENTSTYLE_ATTR_NAME,
 							HtmlComponentUtil.HTML_STYLE_ATTR, null, null);
 	
-					VpeChildrenInfo childrenInfo = new VpeChildrenInfo(cell);
+					// TODO A. Yukhovich please fix if
+					VpeChildrenInfo childrenInfo = new VpeChildrenInfo(null/*cell*/);
 					creationData.addChildrenInfo(childrenInfo);
 					childrenInfo.addSourceChild(toolBarGroupItem.getToolBarGroupItem());
 				} else {
@@ -197,23 +205,29 @@ public class RichFacesToolBarGroupTemplate extends VpeAbstractTemplate {
 					Element separatorImage = visualDocument.createElement(HtmlComponentUtil.HTML_TAG_IMG);
 					ComponentUtil.setImg(separatorImage, separatorImageUrl);
 					cell.appendChild(separatorImage);
-					MozillaSupports.release(separatorImage);
+					// TODO A. Yukhovich please fix if
+					// MozillaSupports.release(separatorImage);
 				}
 				
 				row.appendChild(cell);
-				MozillaSupports.release(cell);
+				// TODO A. Yukhovich please fix if
+				//MozillaSupports.release(cell);
 			}
 			
 			body.appendChild(row);
-			MozillaSupports.release(row);
+			// TODO A. Yukhovich please fix if
+			// MozillaSupports.release(row);
 			visualNode.appendChild(body);
-			MozillaSupports.release(body);
+			// TODO A. Yukhovich please fix if
+			// MozillaSupports.release(body);
 		}
 		
 		return creationData;
 	}
 	
 
+	// TODO A. Yukhovich please fix if
+	/*
 	@Override
 	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode,
 			Node visualNode, Object data) {
@@ -234,6 +248,14 @@ public class RichFacesToolBarGroupTemplate extends VpeAbstractTemplate {
 		}
 		
 		return parent;
+	}
+	*/
+
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 
