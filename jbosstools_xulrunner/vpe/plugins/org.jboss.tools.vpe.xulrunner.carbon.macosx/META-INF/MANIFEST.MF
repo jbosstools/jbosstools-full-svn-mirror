@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: XULRunner Mac OS X Carbon Plug-in
+Bundle-SymbolicName: org.jboss.tools.vpe.mozilla.xulrunner
+Bundle-Version: 1.8.1.3
+Bundle-Vendor: Red Hat, Inc.
+Eclipse-PlatformFilter: (& (osgi.ws=carbon) (osgi.os=macosx))
+Bundle-ClassPath: xulrunner/
