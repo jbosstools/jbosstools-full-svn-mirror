@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+	<extension 
+		point="org.jboss.tools.common.text.ext.hyperlinkPartitioner"
+		id="org.jboss.tools.common.text.ext.shale.hyperlinkPartitioner"
+		name="org.jboss.tools.common.text.ext.shale.hyperlinkPartitioner">
+
+		<hyperlinkPartitioner 
+         	id="org.jboss.tools.common.text.ext.shale.hyperlink.XMLShaleComponentJSFIDHyperlinkPartitioner"
+         	class="org.jboss.tools.shale.text.ext.hyperlink.XMLShaleComponentJSFIDHyperlinkPartitioner">
+         	<contentType id="org.eclipse.wst.xml.core.xmlsource">
+           		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+         			<axis path="*/jsfid/" />
+         			<axis path="/view/component/extends/" />
+         		</partitionType>
+         	</contentType>
+         	<contentType id="org.eclipse.core.runtime.xml">
+           		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+         			<axis path="*/jsfid/" />
+         			<axis path="/view/component/extends/" />
+         		</partitionType>
+         	</contentType>
+		</hyperlinkPartitioner>
+
+		<hyperlinkPartitioner 
+         	id="org.jboss.tools.common.text.ext.shale.hyperlink.XMLClassHyperlinkPartitioner"
+         	class="org.jboss.tools.common.text.ext.hyperlink.xml.XMLClassHyperlinkPartitioner">
+         	<contentType id="org.eclipse.wst.xml.core.xmlsource">
+         		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+         			<axis path="/dialogs/dialog/*/className/" />
+         		</partitionType>
+         	</contentType>
+         	<contentType id="org.eclipse.core.runtime.xml">
+         		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+         			<axis path="/dialogs/dialog/*/className/" />
+         		</partitionType>
+         	</contentType>
+		</hyperlinkPartitioner>
+
+		<hyperlinkPartitioner 
+         	id="org.jboss.tools.common.text.ext.shale.hyperlink.JSPShaleComponentJSFIDHyperlinkPartitioner"
+         	class="org.jboss.tools.shale.text.ext.hyperlink.JSPShaleComponentJSFIDHyperlinkPartitioner">
+         	<contentType id="org.eclipse.jst.jsp.core.jspsource">
+         		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+         			<axis path="*/jsfid/" />
+         		</partitionType>
+         	</contentType>
+         	<contentType id="org.eclipse.wst.html.core.htmlsource">
+         		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+         			<axis path="*/jsfid/" />
+         		</partitionType>
+         	</contentType>
+		</hyperlinkPartitioner>
+
+		<hyperlinkPartitioner 
+         	id="org.jboss.tools.common.text.ext.shale.hyperlink.JSFXMLLinkHyperlinkPartitioner"
+         	class="org.jboss.tools.jsf.text.ext.hyperlink.JSFXMLLinkHyperlinkPartitioner">
+         	<contentType id="org.eclipse.wst.xml.core.xmlsource">
+           		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+					<axis path="/dialogs/dialog/*/viewId/" />
+           		</partitionType>
+         	</contentType>
+         	<contentType id="org.eclipse.core.runtime.xml">
+           		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+					<axis path="/dialogs/dialog/*/viewId/" />
+           		</partitionType>
+         	</contentType>
+		</hyperlinkPartitioner>
+
+		<hyperlinkPartitioner 
+         	id="org.jboss.tools.common.text.ext.shale.hyperlink.JSPShaleManagedBeanNameHyperlinkPartitioner"
+         	class="org.jboss.tools.shale.text.ext.hyperlink.JSPShaleManagedBeanNameHyperlinkPartitioner">
+         	<contentType id="org.eclipse.jst.jsp.core.jspsource">
+         		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+         			<axis path="*/[http://struts.apache.org/shale/clay-plugin]:clay/managedBeanName/" />
+         		</partitionType>
+         	</contentType>
+         	<contentType id="org.eclipse.wst.html.core.htmlsource">
+         		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+         			<axis path="*/[http://struts.apache.org/shale/clay-plugin]:clay/managedBeanName/" />
+         		</partitionType>
+         	</contentType>
+		</hyperlinkPartitioner>
+
+	</extension>	
+
+	<extension 
+		point="org.jboss.tools.common.text.ext.hyperlink"
+		id="org.jboss.tools.common.text.ext.shale.hyperlink"
+		name="org.jboss.tools.common.text.ext.shale.hyperlink">
+  
+		<hyperlink 
+			class="org.jboss.tools.shale.text.ext.hyperlink.ShaleComponentJSFIDHyperlink" 
+			id="org.jboss.tools.common.text.ext.shale.hyperlink.ShaleComponentJSFIDHyperlink">
+			<contenttypeidentifier id="org.eclipse.jst.jsp.core.jspsource">
+            	<partitiontype id="org.jboss.tools.jst.jsp.JSP_ComponentJSFID" />
+			</contenttypeidentifier>
+			<contenttypeidentifier id="org.eclipse.wst.html.core.htmlsource">
+            	<partitiontype id="org.jboss.tools.jst.jsp.JSP_ComponentJSFID" />
+			</contenttypeidentifier>
+			<contenttypeidentifier id="org.eclipse.wst.xml.core.xmlsource">
+            	<partitiontype id="org.jboss.tools.common.text.xml.XML_ComponentJSFID" />
+			</contenttypeidentifier>
+			<contenttypeidentifier id="org.eclipse.core.runtime.xml">
+            	<partitiontype id="org.jboss.tools.common.text.xml.XML_ComponentJSFID" />
+			</contenttypeidentifier>
+		</hyperlink>
+
+	</extension>
+
+</plugin>
