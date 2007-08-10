@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Eclipse-LazyStart: true
+Bundle-Name: %pluginName
+Bundle-ClassPath: vpeproui.jar
+Bundle-Activator: org.jboss.tools.vpe.ui.pro.ProPlugin
+Bundle-ManifestVersion: 2
+Bundle-Vendor: %providerName
+Bundle-SymbolicName: org.jboss.tools.vpe.ui;singleton:=true
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.jboss.tools.vpe
+Export-Package: org.jboss.tools.vpe.ui.pro
+Bundle-Version: 2.0.0
+
