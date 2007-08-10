@@ -21,6 +21,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -144,6 +145,7 @@ public class ComponentUtil {
         }
 	}
 
+	// TDOD: Evgeny Zheleznyakov delete after work all components
 	/**
      * Adds image as attribute to IMG tag
      * 
@@ -151,6 +153,17 @@ public class ComponentUtil {
      * @param fileImageName
      */
     public static void setImg(Element img, String fileImageName) {
+        img.setAttribute("src", "file://" + getAbsoluteResourcePath(fileImageName));
+    }
+    
+    // TDOD: Evgeny Zheleznyakov Do not delete
+    /**
+     * Adds image as attribute to IMG tag
+     * 
+     * @param img
+     * @param fileImageName 
+     */
+    public static void setImg(nsIDOMElement img, String fileImageName) {
         img.setAttribute("src", "file://" + getAbsoluteResourcePath(fileImageName));
     }
 
