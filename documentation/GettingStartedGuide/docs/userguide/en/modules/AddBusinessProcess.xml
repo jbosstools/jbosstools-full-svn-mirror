@@ -458,23 +458,4 @@ enter the case exactly as indicated here:</para>
 integrated in a Seam application. We have also see how easy it is build these kinds of 
 applications using the Red Hat Developer Studio.</para>
 </section>
-<section id="TroubleshootingOnLinux">
-<?dbhtml filename="TroubleshootingOnLinux.html"?>
-<title>Troubleshooting on Linux</title>
-<para>Linux users may need to do the following to get the Eclipse distribution to work correctly 
-on their machines.</para>
-<orderedlist>
-<listitem>On Red Hat based Linux distributions  install the xpLib.i386 package</listitem>
-<listitem>ln -s libstdc++.so.5.0.7 libstdc++.so.5</listitem>
-<listitem>Open the RHDS perspective. If you see the  Help view open, close it and restart RHDS</listitem>
-<listitem>If none of these work, do the following
-<itemizedlist>
-<listitem>Clear the Eclipse log file, &lt;workspace&gt;\.metadata\.log</listitem>
-<listitem>Start Eclipse with the -debug option: 
-<para>eclipse -debug</para></listitem>
-<listitem>Post the Eclipse log file (&lt;workspace&gt;\.metadata\.log) on the forums.</listitem>
-</itemizedlist>
-</listitem>
-</orderedlist>
-</section>
     </chapter>

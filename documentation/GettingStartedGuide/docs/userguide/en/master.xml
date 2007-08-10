@@ -19,7 +19,9 @@
 			<year>2007</year>
 	                           <holder>Red Hat</holder>
 	                       </copyright>
-          <releaseinfo>Current Guide Version: 1.0.0.beta1</releaseinfo>
+          <releaseinfo>
+<para>Version: 1.0.0.beta1</para>
+<para>Note: This document is a work in progress and hence some sections might be incomplete and screenshots not 100% accurate.</para></releaseinfo>
     </bookinfo>
 	
     
@@ -31,6 +33,7 @@
 &GetStartSeamGen;
 &GenCURDDatabaseApp;
 &CURDAppWalkthrough;
-&AddBusinessProcess;
+<!-- TODO: drools used in this section is not available for eclipse .3.3 &AddBusinessProcess; -->
+
 
 </book>    

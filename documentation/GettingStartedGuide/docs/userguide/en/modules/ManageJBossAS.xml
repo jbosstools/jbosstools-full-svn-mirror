@@ -42,6 +42,7 @@
 </figure>
 
 <para>While launching Server output will be written to the Console view:</para>
+<!-- TODO: make a screenshot that doesn't show an exception! 
 <figure>
 <title>Console output</title>
 <mediaobject> 
@@ -49,7 +50,7 @@
             <imagedata fileref="images/consoleoutput.png"/>
         </imageobject>
 </mediaobject>
-</figure>
+</figure>-->
 <para>When server has started you should see &quot;Started&quot; right to its name in JBoss Server view (column &quot;Status&quot;).</para>
 <figure>
 <title>Server is started</title>
@@ -72,7 +73,7 @@
   <section id="StoppingJBoss">
   <?dbhtml filename="StoppingJBoss.html"?>
   <title>Stopping JBoss server</title>
-  <para>To stop the server select the Stop sign in JBoss Server View or right click the server name and press Stop.</para>
+  <para>To stop the server click the Stop icon in JBoss Server View or right click the server name and press Stop.</para>
   <figure>
 <title>Stopping server</title>
 <mediaobject> 
