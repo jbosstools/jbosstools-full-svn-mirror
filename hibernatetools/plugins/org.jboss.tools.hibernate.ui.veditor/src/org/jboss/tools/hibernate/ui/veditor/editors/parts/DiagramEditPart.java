@@ -54,7 +54,7 @@ import org.jboss.tools.hibernate.ui.veditor.editors.model.OrmShape;
 import org.jboss.tools.hibernate.ui.veditor.editors.model.Shape;
 import org.jboss.tools.hibernate.ui.veditor.editors.model.SpecialOrmShape;
 import org.jboss.tools.hibernate.ui.veditor.editors.model.SpecialRootClass;
-import org.jboss.tools.hibernate.ui.view.views.TextUtil;
+import org.jboss.tools.hibernate.ui.view.views.HibernateUtils;
 
 class DiagramEditPart extends OrmEditPart implements PropertyChangeListener {
 
@@ -129,7 +129,7 @@ class DiagramEditPart extends OrmEditPart implements PropertyChangeListener {
 				tempPoint = 40 + getChildrenFigurePreferredHeight(ormShape);
 			}
 			Table table = persistentClass.getTable();
-			ormShape = (OrmShape) hashMap.remove(TextUtil.getTableName(table));
+			ormShape = (OrmShape) hashMap.remove(HibernateUtils.getTableName(table));
 			if (ormShape != null) {
 				ormShape.setLocation(new Point(pointX, 20));
 				point = 40 + getChildrenFigurePreferredHeight(ormShape);
@@ -152,8 +152,7 @@ class DiagramEditPart extends OrmEditPart implements PropertyChangeListener {
 						.getOrmElement())).getProperty().getValue())
 						.getElement();
 				Table ownerTable = component.getOwner().getTable();
-				ormShape = (OrmShape) hashMap.remove(ownerTable.getSchema()
-						+ "." + ownerTable.getName());
+				ormShape = (OrmShape) hashMap.remove(HibernateUtils.getTableName(ownerTable));
 				// }
 				// if (ormShape != null ) {
 				// ormShape.setLocation(new Point(pointX,point));
@@ -208,8 +207,10 @@ class DiagramEditPart extends OrmEditPart implements PropertyChangeListener {
 		if (!isActive()) {
 			super.activate();
 			((ModelElement) getModel()).addPropertyChangeListener(this);
-			if(!getCastedModel().isLoadSuccessfull())
+			if(!getCastedModel().isLoadSuccessfull()){
 				autolayout();
+				getCastedModel().setDirty(false);
+			}
 			// restore();
 		}
 	}

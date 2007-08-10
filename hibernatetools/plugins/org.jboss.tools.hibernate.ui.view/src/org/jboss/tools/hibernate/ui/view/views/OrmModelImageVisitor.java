@@ -46,19 +46,28 @@ public class OrmModelImageVisitor implements /*IOrmModelVisitor, IHibernateMappi
 	public Object visitDatabaseColumn(Column column) {
 		if(column.isUnique()) {
 			return ViewPlugin.getImageDescriptor(BUNDLE.getString("OrmModelImageVisitor.DatabaseUniqueKeyColumn"));
+		}else if (HibernateUtils.isPrimaryKey(column)&& HibernateUtils.getTable(column) != null &&  HibernateUtils.isForeignKey(column)){
+			return ViewPlugin.getImageDescriptor(BUNDLE.getString("OrmModelImageVisitor.DatabasePrimaryForeignKeysColumn"));
+		} else if (HibernateUtils.isPrimaryKey(column)){
+			return ViewPlugin.getImageDescriptor(BUNDLE.getString("OrmModelImageVisitor.DatabasePrimaryKeyColumn")); //$NON-NLS-1$
+		} else if (HibernateUtils.getTable(column) != null &&  HibernateUtils.isForeignKey(column)){
+			return ViewPlugin.getImageDescriptor(BUNDLE.getString("OrmModelImageVisitor.DatabaseForeignKeyColumn")); //$NON-NLS-1$
 		} else return ViewPlugin.getImageDescriptor(BUNDLE.getString("OrmModelImageVisitor.DatabaseColumn")); //$NON-NLS-1$
 
 	}
-
+	
 	public Object visitPersistentField(Property field, Object argument) {
 		if (field !=null){
+			if(field.getPersistentClass().getIdentifierProperty() == field){
+				return ViewPlugin.getImageDescriptor(BUNDLE.getString("OrmModelImageVisitor.PersistentFieldSimple_id")); //$NON-NLS-1$
+			}
 			try {
 				if (field.getType().isCollectionType()) {
 					return ViewPlugin.getImageDescriptor(BUNDLE.getString("OrmModelImageVisitor.PersistentFieldCollection")); //$NON-NLS-1$		
 				}
 			} catch (Exception e) {}
 		}
-		return ViewPlugin.getImageDescriptor(BUNDLE.getString("OrmModelImageVisitor.PersistentFieldNot_mapped")); //$NON-NLS-1$		
+		return ViewPlugin.getImageDescriptor(BUNDLE.getString("OrmModelImageVisitor.PersistentFieldSimple")); //$NON-NLS-1$		
 	}
 
 	public Object visitComponentMapping(Component mapping) {

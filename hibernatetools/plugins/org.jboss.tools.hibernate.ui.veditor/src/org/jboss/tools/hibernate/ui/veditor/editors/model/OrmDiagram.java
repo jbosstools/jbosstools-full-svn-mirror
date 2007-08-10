@@ -41,6 +41,7 @@ import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Property;
 import org.hibernate.mapping.RootClass;
 import org.hibernate.mapping.SimpleValue;
+import org.hibernate.mapping.SingleTableSubclass;
 import org.hibernate.mapping.Subclass;
 import org.hibernate.mapping.Table;
 import org.hibernate.mapping.Value;
@@ -48,7 +49,7 @@ import org.hibernate.type.EntityType;
 import org.hibernate.type.Type;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.hibernate.ui.veditor.VisualEditorPlugin;
-import org.jboss.tools.hibernate.ui.view.views.TextUtil;
+import org.jboss.tools.hibernate.ui.view.views.HibernateUtils;
 
 public class OrmDiagram extends ModelElement {
 	
@@ -78,7 +79,7 @@ public class OrmDiagram extends ModelElement {
 		getOrCreatePersistentClass(ormElement, null);
 		expandModel(this);
 		load();
-		dirty = false;
+		setDirty(false);
 	}
 	
 	private IPath getStoreFolderPath() {
@@ -127,7 +128,7 @@ public class OrmDiagram extends ModelElement {
 			if (ormElement instanceof RootClass) {
 				childrenLocations[i] = ((RootClass)ormElement).getEntityName() + "@";
 			} else if (ormElement instanceof Table) {
-				childrenLocations[i] = ((Table)ormElement).getSchema() + "." + ((Table)ormElement).getName()+"@";
+				childrenLocations[i] = HibernateUtils.getTableName((Table)ormElement)+"@";
 // } else if (ormElement instanceof Component) {
 // childrenLocations[i] = ((Component)ormElement).getComponentClassName()+"@";
 			}
@@ -144,7 +145,7 @@ public class OrmDiagram extends ModelElement {
 		} else if (ormElement instanceof Table) {
 			ormShape = new OrmShape(ormElement);
 			getChildren().add(ormShape);
-			elements.put(TextUtil.getTableName((Table)ormElement), ormShape);
+			elements.put(HibernateUtils.getTableName((Table)ormElement), ormShape);
 		} else if (ormElement instanceof Property) {
 			SpecialRootClass specialRootClass = new SpecialRootClass((Property)ormElement);
 			ormShape = new SpecialOrmShape(specialRootClass);
@@ -163,7 +164,7 @@ public class OrmDiagram extends ModelElement {
 		if (ormElement instanceof RootClass) {
 			ormShape = elements.get(((RootClass)ormElement).getEntityName());
 		} else if (ormElement instanceof Table) {
-			ormShape = elements.get(TextUtil.getTableName((Table)ormElement));
+			ormShape = elements.get(HibernateUtils.getTableName((Table)ormElement));
 		} else if (ormElement instanceof Property) {
 			SpecialRootClass specialRootClass = new SpecialRootClass((Property)ormElement);
 			ormShape = elements.get(specialRootClass.getEntityName());
@@ -183,7 +184,7 @@ public class OrmDiagram extends ModelElement {
 			if(componentClassDatabaseTable == null && persistentClass.getTable() != null)
 				componentClassDatabaseTable = persistentClass.getTable();
 			if(componentClassDatabaseTable != null) {
-				shape = elements.get(TextUtil.getTableName(componentClassDatabaseTable));
+				shape = elements.get(HibernateUtils.getTableName(componentClassDatabaseTable));
 				if (shape == null) shape = getOrCreateDatabaseTable(componentClassDatabaseTable);
 				createConnections(classShape, shape);
 				if(!isConnectionExist(classShape, shape)){
@@ -278,7 +279,7 @@ public class OrmDiagram extends ModelElement {
 	private OrmShape getOrCreateDatabaseTable(Table databaseTable){
 		OrmShape tableShape = null;
 		if(databaseTable != null) {
-			String tableName = TextUtil.getTableName(databaseTable);
+			String tableName = HibernateUtils.getTableName(databaseTable);
 			tableShape = (OrmShape)elements.get(tableName);
 			if(tableShape == null) {
 				tableShape = createShape(databaseTable);
@@ -292,9 +293,6 @@ public class OrmDiagram extends ModelElement {
 							if (elements.get(cls.getEntityName()) == null)
 								getOrCreatePersistentClass(cls, null);
 						}
-// } else if (clazz instanceof SingleTableSubclass) {
-// SingleTableSubclass singleTableSubclass = (SingleTableSubclass)clazz;
-// getOrCreatePersistentClass(singleTableSubclass, null);
 					}
 				}
 			}			
@@ -410,8 +408,8 @@ public class OrmDiagram extends ModelElement {
 	protected void refreshComponentReferences(ComponentShape componentShape) {
 		OrmShape childShape = null;
 		Property property = (Property)componentShape.getOrmElement();
-		Type valueType = property.getValue().getType();
-		if (valueType.isCollectionType()) {
+//		Type valueType = property.getValue().getType();
+		if (property.getValue() instanceof Collection) {
 			Collection collection = (Collection)property.getValue();
 			Value component = collection.getElement();
 			if (component instanceof Component) {// valueType.isComponentType()
@@ -440,6 +438,7 @@ public class OrmDiagram extends ModelElement {
 				
 			} else if (collection.isOneToMany()) {
 				childShape = getOrCreateAssociationClass(property);
+if (childShape == null) return;
 				if(!isConnectionExist((Shape)(componentShape.getChildren().get(1)), childShape)){
 					new Connection((Shape)(componentShape.getChildren().get(1)), childShape);
 					((Shape)(componentShape.getChildren().get(1))).firePropertyChange(REFRESH, null, null);
@@ -497,7 +496,7 @@ public class OrmDiagram extends ModelElement {
 				Component component = (Component)((Collection)property.getValue()).getElement();
 				if (component != null) {
 					classShape = createShape(property);
-					OrmShape tableShape = (OrmShape)elements.get(component.getTable().getSchema() + "." + component.getTable().getName());
+					OrmShape tableShape = (OrmShape)elements.get(HibernateUtils.getTableName(component.getTable()));
 					if (tableShape == null) tableShape = getOrCreateDatabaseTable(component.getTable());
 						createConnections(classShape, tableShape);
 						if(!isConnectionExist(classShape, tableShape)){
@@ -527,16 +526,18 @@ public class OrmDiagram extends ModelElement {
 		OrmShape classShape = null;
 		OneToMany component = (OneToMany)((Collection)property.getValue()).getElement();
 		if (component != null) {
-			classShape = (OrmShape)elements.get(component.getAssociatedClass().getEntityName());
-			if (classShape == null) classShape = createShape(component.getAssociatedClass());
-			OrmShape tableShape = (OrmShape)elements.get(component.getAssociatedClass().getTable().getSchema() + "." + component.getAssociatedClass().getTable().getName());
-			if (tableShape == null) tableShape = getOrCreateDatabaseTable(component.getAssociatedClass().getTable());
-				createConnections(classShape, tableShape);
-				if(!isConnectionExist(classShape, tableShape)){
-					new Connection(classShape, tableShape);
-					classShape.firePropertyChange(REFRESH, null, null);
-					tableShape.firePropertyChange(REFRESH, null, null);
-				}
+			if (component.getAssociatedClass() instanceof RootClass) {
+				classShape = getOrCreatePersistentClass(component.getAssociatedClass(), null);
+				if (classShape == null) classShape = createShape(component.getAssociatedClass());
+				OrmShape tableShape = (OrmShape)elements.get(HibernateUtils.getTableName(component.getAssociatedClass().getTable()));
+				if (tableShape == null) tableShape = getOrCreateDatabaseTable(component.getAssociatedClass().getTable());
+					createConnections(classShape, tableShape);
+					if(!isConnectionExist(classShape, tableShape)){
+						new Connection(classShape, tableShape);
+						classShape.firePropertyChange(REFRESH, null, null);
+						tableShape.firePropertyChange(REFRESH, null, null);
+					}
+			}
 		}
 		return classShape;
 	}
@@ -549,7 +550,7 @@ public class OrmDiagram extends ModelElement {
 		if (element instanceof RootClass) {
 			key = ((RootClass)element).getEntityName();
 		} else if (element instanceof Table) {
-			key = TextUtil.getTableName((Table)element);
+			key = HibernateUtils.getTableName((Table)element);
 		} else if (element instanceof Property) {
 			Property property = (Property)element;
 			key = property.getPersistentClass().getEntityName() + "." + property.getName();
