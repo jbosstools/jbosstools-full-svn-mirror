@@ -26,6 +26,7 @@ import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -36,10 +37,13 @@ public class RichFacesToggleControlTemplate  extends VpeAbstractTemplate impleme
 	private static Map toggleMap = new HashMap();
 	private static Element storedSwitchSpan = null;
 
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		return true;
 	}
+	*/
 	
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
 
@@ -47,7 +51,8 @@ public class RichFacesToggleControlTemplate  extends VpeAbstractTemplate impleme
 
 		Element span = visualDocument.createElement("span");
 		storedSwitchSpan = span;
-		VpeCreationData creationData = new VpeCreationData(span);
+		// TODO A. Yukhovich please fix it
+		VpeCreationData creationData = new VpeCreationData(null/*span*/);
 
 		String forIds = sourceElement.getAttribute("for");
 		String value = sourceElement.getAttribute("value");
@@ -64,7 +69,8 @@ public class RichFacesToggleControlTemplate  extends VpeAbstractTemplate impleme
 		span.setAttribute("vpe-user-toggle-id", (switchToState == null ? "" : switchToState.trim()));
 
 		List<Node> children = ComponentUtil.getChildren(sourceElement);
-		VpeChildrenInfo bodyInfo = new VpeChildrenInfo(span);
+		// TODO A. Yukhovich please fix it
+		VpeChildrenInfo bodyInfo = new VpeChildrenInfo(null/*span*/);
 		//string shoudn't be null, if then it's crash application
 		if(value==null){
 			value="";
@@ -88,7 +94,8 @@ public class RichFacesToggleControlTemplate  extends VpeAbstractTemplate impleme
 	 * @param data Object <code>VpeCreationData</code>, built by a method <code>create</code>
 	 */
 	public void validate(VpePageContext pageContext, Node sourceNode, Document visualDocument, VpeCreationData data) {
-		super.validate(pageContext, sourceNode, visualDocument, data);
+		// TODO A. Yukhovich please fix it
+		// super.validate(pageContext, sourceNode, visualDocument, data);
 		if (storedSwitchSpan == null) return;
 		
 		String value = storedSwitchSpan.getAttribute("vpe-user-toggle-id");
@@ -165,6 +172,12 @@ public class RichFacesToggleControlTemplate  extends VpeAbstractTemplate impleme
 	
 	public void stopToggling(Node sourceNode) {
 		toggleMap.remove(sourceNode);
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

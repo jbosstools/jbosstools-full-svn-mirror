@@ -15,6 +15,7 @@ import org.jboss.tools.jsf.vpe.richfaces.HtmlComponentUtil;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -33,6 +34,12 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 
 	private String PAINT2D_CSS_FILE = "/paint2D/paint2D.css";
 
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -40,6 +47,8 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String)
 	 */
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void removeAttribute(VpePageContext pageContext,
 			Element sourceElement, Document visualDocument, Node visualNode,
@@ -59,7 +68,8 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 			img.removeAttribute(name);
 
 	}
-
+	*/
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -67,6 +77,8 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String, java.lang.String)
 	 */
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement,
 			Document visualDocument, Node visualNode, Object data, String name,
@@ -79,6 +91,7 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 		} else
 			img.setAttribute(name, value);
 	}
+	*/
 
 	/**
 	 * Create html instead rich:faces component.
@@ -91,6 +104,8 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 	 *            The document of the visual tree.
 	 * @return The information on the created node of the visual tree.
 	 */
+	// TODO A. Yukhovich please fix it
+	/*
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
 			Document visualDocument) {
 		Element img = visualDocument.createElement("img");
@@ -111,6 +126,7 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 		VpeCreationData creationData = new VpeCreationData(img);
 		return creationData;
 	}
+	*/
 
 	/**
 	 * Copy attributes from one node to another node.
@@ -118,6 +134,8 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 	 * @param sourceNode
 	 * @param distinitionNode
 	 */
+	// TODO A. Yukhovich please fix it
+	/*
 	private void copyAtrributes(Node sourceNode, Element distinitionNode,
 			Document visualDocument) {
 		NamedNodeMap sourceAttrbutes = sourceNode.getAttributes();
@@ -128,4 +146,11 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 			distinitionNode.setAttributeNode(attr);
 		}
 	}
+	
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	*/
 }

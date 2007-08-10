@@ -14,6 +14,7 @@ import org.jboss.tools.jsf.vpe.richfaces.ComponentUtil;
 import org.jboss.tools.jsf.vpe.richfaces.HtmlComponentUtil;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -173,10 +174,12 @@ public class RichFacesDataFilterSliderTemplate extends AbstractRichFacesTemplate
 		
 		parentDiv.appendChild(input);
 
-		VpeCreationData creationData = new VpeCreationData(parentDiv);
+		// TODO A. Yukhovich please fix it
+		VpeCreationData creationData = new VpeCreationData(null/*parentDiv*/);
 		return creationData;
 	}
 
+	// TODO A. Yukhovich please fix it
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -184,6 +187,7 @@ public class RichFacesDataFilterSliderTemplate extends AbstractRichFacesTemplate
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String)
 	 */
+	/*
 	@Override
 	public void removeAttribute(VpePageContext pageContext,
 			Element sourceElement, Document visualDocument, Node visualNode,
@@ -245,7 +249,9 @@ public class RichFacesDataFilterSliderTemplate extends AbstractRichFacesTemplate
 			element.removeAttribute(name);
 		}
 	}
-
+*/
+	
+	// TODO A. Yukhovich please fix it
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -253,6 +259,7 @@ public class RichFacesDataFilterSliderTemplate extends AbstractRichFacesTemplate
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String, java.lang.String)
 	 */
+	/*
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement,
 			Document visualDocument, Node visualNode, Object data, String name,
@@ -325,6 +332,7 @@ public class RichFacesDataFilterSliderTemplate extends AbstractRichFacesTemplate
 			parentDiv.setAttribute(name, value);
 		}
 	}
+	*/
 
 	/**
 	 * Method for create DIV tag and set attributes
@@ -468,5 +476,11 @@ public class RichFacesDataFilterSliderTemplate extends AbstractRichFacesTemplate
 				HtmlComponentUtil.HTML_VALUE_ATTR, 
 				value 
 				);
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

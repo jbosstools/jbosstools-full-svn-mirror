@@ -20,6 +20,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,10 +29,13 @@ public class RichFacesTabPanelTemplate extends VpeAbstractTemplate implements Vp
 
 	private static Map toggleMap = new HashMap();
 
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		return true;
 	}
+	*/
 
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
 
@@ -39,7 +43,8 @@ public class RichFacesTabPanelTemplate extends VpeAbstractTemplate implements Vp
 
 		Element table = visualDocument.createElement("table");
 
-		VpeCreationData creationData = new VpeCreationData(table);
+		// TODO A. Yukhovich please fix it
+		VpeCreationData creationData = new VpeCreationData(null/*table*/);
 
 		ComponentUtil.setCSSLink(pageContext, "tabPanel/tabPanel.css", "richFacesTabPanel");
 		table.setAttribute("class", "rich-tabpanel " + ComponentUtil.getAttribute(sourceElement, "styleClass"));
@@ -212,5 +217,11 @@ public class RichFacesTabPanelTemplate extends VpeAbstractTemplate implements Vp
 
 	public void stopToggling(Node sourceNode) {
 		toggleMap.remove(sourceNode);
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

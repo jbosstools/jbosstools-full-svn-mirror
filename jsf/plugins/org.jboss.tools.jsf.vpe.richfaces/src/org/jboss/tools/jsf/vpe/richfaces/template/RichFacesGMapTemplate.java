@@ -15,6 +15,7 @@ import org.jboss.tools.jsf.vpe.richfaces.HtmlComponentUtil;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -38,6 +39,7 @@ public class RichFacesGMapTemplate extends VpeAbstractTemplate {
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String)
 	 */
+	/*
 	@Override
 	public void removeAttribute(VpePageContext pageContext,
 			Element sourceElement, Document visualDocument, Node visualNode,
@@ -51,6 +53,7 @@ public class RichFacesGMapTemplate extends VpeAbstractTemplate {
 			img.removeAttribute(name);
 		}
 	}
+	*/
 
 	/*
 	 * (non-Javadoc)
@@ -59,6 +62,8 @@ public class RichFacesGMapTemplate extends VpeAbstractTemplate {
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String, java.lang.String)
 	 */
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement,
 			Document visualDocument, Node visualNode, Object data, String name,
@@ -73,6 +78,7 @@ public class RichFacesGMapTemplate extends VpeAbstractTemplate {
 				img.setAttribute(name,value);
 			}
 	}
+	*/
 
 	/**
 	 * Create html instead of rich:faces component.
@@ -93,14 +99,22 @@ public class RichFacesGMapTemplate extends VpeAbstractTemplate {
 		if(((Element)sourceNode).getAttribute(STYLE_CLASS_ATTR_NAME)!=null){
 			img.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR,((Element)sourceNode).getAttribute("styleClass"));
 			} 
-		VpeCreationData creationData = new VpeCreationData(img);
+		// TODO A. Yukhovich please fix it
+		VpeCreationData creationData = new VpeCreationData(null/*img*/);
 		return creationData;
 	}
 
+	// TODO A. Yukhovich please fix it
 	public void resize(VpePageContext pageContext, Element sourceElement,
 			Document visualDocument, Element visualElement, Object data,
 			int resizerConstrains, int top, int left, int width, int height) {
-		super.resize(pageContext, sourceElement, visualDocument, visualElement,
-				data, resizerConstrains, top, left, width, height);
+//		super.resize(pageContext, sourceElement, visualDocument, visualElement,
+//				data, resizerConstrains, top, left, width, height);
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -18,16 +18,20 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		return true;
 	}
+	*/
 
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
 
@@ -36,7 +40,8 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 		Element table = visualDocument.createElement("table");
 		ComponentUtil.copyAttributes(sourceNode, table);
 
-		VpeCreationData creationData = new VpeCreationData(table);
+		// TODO A. Yukhovich please fix it
+		VpeCreationData creationData = new VpeCreationData(null/*table*/);
 
 		ComponentUtil.setCSSLink(pageContext, "dataTable/dataTable.css", "richFacesDataTable");
 		String tableClass = sourceElement.getAttribute("styleClass");
@@ -138,7 +143,8 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 					} else {
 						tr.setAttribute("class", "dr-table-row rich-table-row");
 					}
-					trInfo = new VpeChildrenInfo(tr);
+					// TODO A. Yukhovich please fix it
+					trInfo = new VpeChildrenInfo(null/*tr*/);
 					tbody.appendChild(tr);
 					creationData.addChildrenInfo(trInfo);
 				}
@@ -150,7 +156,8 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 				RichFacesSubTableTemplate.DEFAULT_INSTANCE.encode(creationData, (Element)child, visualDocument, tbody);
 				tr = null;
 			} else {
-				VpeChildrenInfo childInfo = new VpeChildrenInfo(tbody);
+				// TODO A. Yukhovich please fix it
+				VpeChildrenInfo childInfo = new VpeChildrenInfo(null/*tbody*/);
 				childInfo.addSourceChild(child);
 				creationData.addChildrenInfo(childInfo);
 				tr = null;
@@ -178,7 +185,9 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 			if (captionStyle != null && captionStyle.length()>0) {
 				caption.setAttribute("style", captionStyle);
 			}
-			VpeChildrenInfo cap = new VpeChildrenInfo(caption);
+			
+			// TODO A. Yukhovich please fix it
+			VpeChildrenInfo cap = new VpeChildrenInfo(null/*caption*/);
 			cap.addSourceChild(captionFromFacet);
 			creationData.addChildrenInfo(cap);
 		}
@@ -200,7 +209,8 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 			}
 			Element facetBody = ComponentUtil.getFacet(column, facetName);
 
-			VpeChildrenInfo child = new VpeChildrenInfo(td);
+			// TODO A. Yukhovich please fix it
+			VpeChildrenInfo child = new VpeChildrenInfo(null/*td*/);
 			child.addSourceChild(facetBody);
 			creationData.addChildrenInfo(child);
 		}
@@ -237,7 +247,8 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 			}
 			td.setAttribute("scope", "colgroup");
 
-			VpeChildrenInfo child = new VpeChildrenInfo(td);
+			// TODO A. Yukhovich please fix it
+			VpeChildrenInfo child = new VpeChildrenInfo(null/*td*/);
 			child.addSourceChild(facetBody);
 			creationData.addChildrenInfo(child);
 		}
@@ -370,6 +381,8 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 		return count;
 	}
 
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name) {
 		((Element)visualNode).removeAttribute(name);
@@ -378,5 +391,12 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		((Element)visualNode).setAttribute(name, value);
+	}
+	*/
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

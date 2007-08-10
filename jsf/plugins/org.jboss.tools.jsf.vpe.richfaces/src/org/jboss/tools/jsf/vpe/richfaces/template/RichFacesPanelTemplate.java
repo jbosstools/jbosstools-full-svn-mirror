@@ -17,16 +17,20 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class RichFacesPanelTemplate extends VpeAbstractTemplate {
 
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		return true;
 	}
+	*/
 
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
 
@@ -34,7 +38,8 @@ public class RichFacesPanelTemplate extends VpeAbstractTemplate {
 
 		Element div = visualDocument.createElement("div");
 
-		VpeCreationData creationData = new VpeCreationData(div);
+		// TODO A. Yukhovich please fix it
+		VpeCreationData creationData = new VpeCreationData(null/*div*/);
 
 		ComponentUtil.setCSSLink(pageContext, "panel/panel.css", "richFacesPanel");
 		String styleClass = sourceElement.getAttribute("styleClass");
@@ -53,7 +58,8 @@ public class RichFacesPanelTemplate extends VpeAbstractTemplate {
 			headerDiv.setAttribute("class", "dr-pnl-h rich-panel-header " + (headerClass==null?"":headerClass));
 			headerDiv.setAttribute("style", ComponentUtil.getHeaderBackgoundImgStyle());
 
-			VpeChildrenInfo headerInfo = new VpeChildrenInfo(headerDiv);
+			// TODO A. Yukhovich please fix it
+			VpeChildrenInfo headerInfo = new VpeChildrenInfo(null/*headerDiv*/);
 			headerInfo.addSourceChild(header);
 			creationData.addChildrenInfo(headerInfo);
 		}
@@ -65,12 +71,19 @@ public class RichFacesPanelTemplate extends VpeAbstractTemplate {
 		bodyDiv.setAttribute("class", "dr-pnl-b rich-panel-body " + (bodyClass==null?"":bodyClass));
 
 		List<Node> children = ComponentUtil.getChildren(sourceElement, true);
-		VpeChildrenInfo bodyInfo = new VpeChildrenInfo(bodyDiv);
+		// TODO A. Yukhovich please fix it
+		VpeChildrenInfo bodyInfo = new VpeChildrenInfo(null/*bodyDiv*/);
 		for (Node child : children) {
 			bodyInfo.addSourceChild(child);
 		}
 		creationData.addChildrenInfo(bodyInfo);
 
 		return creationData;
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

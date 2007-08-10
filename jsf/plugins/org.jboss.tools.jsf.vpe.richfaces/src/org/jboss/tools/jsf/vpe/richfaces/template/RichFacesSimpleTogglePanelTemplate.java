@@ -21,6 +21,7 @@ import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -30,10 +31,13 @@ public class RichFacesSimpleTogglePanelTemplate extends VpeAbstractTemplate impl
 	private static Map toggleMap = new HashMap();
 	private Element storedSwitchDiv = null;
 	
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		return true;
 	}
+	*/
 
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
 
@@ -41,7 +45,8 @@ public class RichFacesSimpleTogglePanelTemplate extends VpeAbstractTemplate impl
 
 		Element div = visualDocument.createElement("div");
 
-		VpeCreationData creationData = new VpeCreationData(div);
+		// TODO A. Yukhovich please fix it
+		VpeCreationData creationData = new VpeCreationData(null/*div*/);
 
 		ComponentUtil.setCSSLink(pageContext, "simpleTogglePanel/simpleTogglePanel.css", "richFacesSimpleTogglePanel");
 		div.setAttribute("class", "dr-stglpnl rich-stglpanel " + ComponentUtil.getAttribute(sourceElement, "styleClass"));
@@ -74,7 +79,8 @@ public class RichFacesSimpleTogglePanelTemplate extends VpeAbstractTemplate impl
 		if(markerFacet==null) {
 			switchDiv.appendChild(visualDocument.createTextNode("" + defaultMarkerCode));
 		} else {
-			VpeChildrenInfo switchInfo = new VpeChildrenInfo(switchDiv);
+			// TODO A. Yukhovich please fix it
+			VpeChildrenInfo switchInfo = new VpeChildrenInfo(null/*switchDiv*/);
 			switchInfo.addSourceChild(markerFacet);
 			creationData.addChildrenInfo(switchInfo);
 		}
@@ -96,7 +102,8 @@ public class RichFacesSimpleTogglePanelTemplate extends VpeAbstractTemplate impl
 			td.setAttribute("class", "dr-stglpnl-b rich-stglpanel-body " + ComponentUtil.getAttribute(sourceElement, "bodyClass"));
 
 			List<Node> children = ComponentUtil.getChildren(sourceElement, true);
-			VpeChildrenInfo bodyInfo = new VpeChildrenInfo(td);
+			// TODO A. Yukhovich please fix it
+			VpeChildrenInfo bodyInfo = new VpeChildrenInfo(null/*td*/);
 			for (Node child : children) {
 				bodyInfo.addSourceChild(child);
 			}
@@ -114,7 +121,8 @@ public class RichFacesSimpleTogglePanelTemplate extends VpeAbstractTemplate impl
 	 * @param data Object <code>VpeCreationData</code>, built by a method <code>create</code>
 	 */
 	public void validate(VpePageContext pageContext, Node sourceNode, Document visualDocument, VpeCreationData data) {
-		super.validate(pageContext, sourceNode, visualDocument, data);
+		// TODO A. Yukhovich please fix it
+		//super.validate(pageContext, sourceNode, visualDocument, data);
 		if (storedSwitchDiv == null) return;
 		String value = storedSwitchDiv.getAttribute("vpe-user-toggle-id");
 		if ("true".equals(value) || "false".equals(value)) {
@@ -157,5 +165,11 @@ public class RichFacesSimpleTogglePanelTemplate extends VpeAbstractTemplate impl
 
 	public void stopToggling(Node sourceNode) {
 		toggleMap.remove(sourceNode);
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

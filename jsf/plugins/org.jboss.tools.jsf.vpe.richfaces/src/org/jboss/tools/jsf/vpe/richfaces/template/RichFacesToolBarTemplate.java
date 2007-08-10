@@ -23,7 +23,9 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.mozilla.interfaces.nsIDOMDocument;
+//TODO A. Yukhovich please fix if
+// import org.jboss.tools.vpe.editor.util.MozillaSupports;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -56,10 +58,13 @@ public class RichFacesToolBarTemplate extends VpeAbstractTemplate {
 	static final String WIDTH_ATTR_NAME = "width";
 	static final String HEIGHT_ATTR_NAME = "height";
 
+	// TODO A. Yukhovich please fix if
+	/*
 	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		return true;
 	}
+	*/
 
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
 			Document visualDocument) {
@@ -71,8 +76,8 @@ public class RichFacesToolBarTemplate extends VpeAbstractTemplate {
 		if (!isValidItemSeparatorName(itemSeparator)) {
 			visualNode = createExceptionNode(visualDocument,
 					"Unknown type of separator \"" + itemSeparator + "\"");
-			
-			creationData = new VpeCreationData(visualNode);
+			// TODO A. Yukhovich please fix it
+			creationData = new VpeCreationData(null/*visualNode*/);
 		} else {
 			SourceToolBarItems sourceToolBarItems = new SourceToolBarItems(sourceNode, itemSeparator);
 			String itemSeparatorImageUrl = getSeparatorImageUrlString(sourceToolBarItems.getItemSeparator());
@@ -96,7 +101,8 @@ public class RichFacesToolBarTemplate extends VpeAbstractTemplate {
 					STYLE_ATTR_NAME,
 					HtmlComponentUtil.HTML_STYLE_ATTR, style, style);
 	
-			creationData = new VpeCreationData(visualNode);
+			// TODO A. Yukhovich please fix if
+			creationData = new VpeCreationData(null/*visualNode*/);
 			
 			Element body = null, row = null, cell = null;
 	
@@ -119,7 +125,8 @@ public class RichFacesToolBarTemplate extends VpeAbstractTemplate {
 							toolBarItem.isToolBarGroupItem() ? "padding: 0px 0px 0px 0px;" : null,
 							toolBarItem.isToolBarGroupItem() ? "padding: 0px 0px 0px 0px;" : null);
 					
-					VpeChildrenInfo childrenInfo = new VpeChildrenInfo(cell);
+					// TODO A. Yukhovich please fix if
+					VpeChildrenInfo childrenInfo = new VpeChildrenInfo(null/*cell*/);
 					creationData.addChildrenInfo(childrenInfo);
 					childrenInfo.addSourceChild(toolBarItem.getToolBarItem());
 				} else {
@@ -132,19 +139,22 @@ public class RichFacesToolBarTemplate extends VpeAbstractTemplate {
 						Element separatorImage = visualDocument.createElement(HtmlComponentUtil.HTML_TAG_IMG);
 						ComponentUtil.setImg(separatorImage, itemSeparatorImageUrl);
 						cell.appendChild(separatorImage);
-						MozillaSupports.release(separatorImage);
+						// TODO A. Yukhovich please fix if
+						// MozillaSupports.release(separatorImage);
 					}
 				}
 				
 				row.appendChild(cell);
-				MozillaSupports.release(cell);
+				// TODO A. Yukhovich please fix if
+				// MozillaSupports.release(cell);
 			}
 	
 			// Empty column
 			cell = visualDocument.createElement(HtmlComponentUtil.HTML_TAG_TD);
 			cell.setAttribute(HtmlComponentUtil.HTML_WIDTH_ATTR, "100%");
 			row.appendChild(cell);
-			MozillaSupports.release(cell);
+			// TODO A. Yukhovich please fix if
+			// MozillaSupports.release(cell);
 	
 			iterator = sourceToolBarItems.getRightItemsIterator();
 			while (iterator.hasNext()) {
@@ -160,7 +170,8 @@ public class RichFacesToolBarTemplate extends VpeAbstractTemplate {
 							toolBarItem.isToolBarGroupItem() ? "padding: 0px;" : null,
 							toolBarItem.isToolBarGroupItem() ? "padding: 0px;" : null);
 					
-					VpeChildrenInfo childrenInfo = new VpeChildrenInfo(cell);
+					// TODO A. Yukhovich please fix if
+					VpeChildrenInfo childrenInfo = new VpeChildrenInfo(null/*cell*/);
 					creationData.addChildrenInfo(childrenInfo);
 					childrenInfo.addSourceChild(toolBarItem.getToolBarItem());
 				} else {
@@ -173,18 +184,22 @@ public class RichFacesToolBarTemplate extends VpeAbstractTemplate {
 						Element separatorImage = visualDocument.createElement(HtmlComponentUtil.HTML_TAG_IMG);
 						ComponentUtil.setImg(separatorImage, itemSeparatorImageUrl);
 						cell.appendChild(separatorImage);
-						MozillaSupports.release(separatorImage);
+						// TODO A. Yukhovich please fix if
+						// MozillaSupports.release(separatorImage);
 					}
 				}
 				
 				row.appendChild(cell);
-				MozillaSupports.release(cell);
+				// TODO A. Yukhovich please fix if
+				// MozillaSupports.release(cell);
 			}
 			
 			body.appendChild(row);
-			MozillaSupports.release(row);
+			// TODO A. Yukhovich please fix if
+			// MozillaSupports.release(row);
 			visualNode.appendChild(body);
-			MozillaSupports.release(body);
+			// TODO A. Yukhovich please fix if
+			// MozillaSupports.release(body);
 		}
 		
 		return creationData;
@@ -196,7 +211,8 @@ public class RichFacesToolBarTemplate extends VpeAbstractTemplate {
 		visualNode.setAttribute(HtmlComponentUtil.HTML_STYLE_ATTR, EXCEPTION_ATTR_STYLE_VALUE);
 		Text text = visualDocument.createTextNode(message);
 		visualNode.appendChild(text);
-		MozillaSupports.release(text);
+		// TODO A. Yukhovich please fix if
+		// MozillaSupports.release(text);
 		
 		return visualNode;
 	}
@@ -496,5 +512,11 @@ public class RichFacesToolBarTemplate extends VpeAbstractTemplate {
 		public String getItemSeparator() {
 			return itemSeparator;
 		}
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

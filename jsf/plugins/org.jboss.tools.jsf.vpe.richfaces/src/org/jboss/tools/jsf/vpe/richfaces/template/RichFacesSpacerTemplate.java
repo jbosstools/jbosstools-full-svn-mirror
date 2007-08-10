@@ -15,6 +15,7 @@ import org.jboss.tools.jsf.vpe.richfaces.HtmlComponentUtil;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -51,7 +52,8 @@ public class RichFacesSpacerTemplate extends VpeAbstractTemplate {
 			img.setAttribute("height", getSize((Element)sourceNode, "height"));
 		}
 
-		VpeCreationData creationData = new VpeCreationData(img);
+		// TODO A. Yukhovich please fix it
+		VpeCreationData creationData = new VpeCreationData(null/*img*/);
 
 		return creationData;
 	}
@@ -65,12 +67,20 @@ public class RichFacesSpacerTemplate extends VpeAbstractTemplate {
 		}
 	}
 
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/**
 	 * 
 	 * @see com.exadel.vpe.editor.template.VpeAbstractTemplate#setAttribute(com.exadel.vpe.editor.context.VpePageContext,
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String, java.lang.String)
 	 */
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement,
 			Document visualDocument, Node visualNode, Object data, String name,
@@ -83,4 +93,15 @@ public class RichFacesSpacerTemplate extends VpeAbstractTemplate {
 		img.setAttribute("width", getSize(sourceElement, "width"));
 		img.setAttribute("height", getSize(sourceElement, "height"));
 	}
+	*/
+
+	
+	// TODO A. Yukhovich please fix it
+	/*
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	*/
 }

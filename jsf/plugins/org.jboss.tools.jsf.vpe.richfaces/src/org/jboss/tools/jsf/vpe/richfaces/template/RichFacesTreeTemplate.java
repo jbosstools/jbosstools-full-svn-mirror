@@ -20,7 +20,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMNode;
 /**
  * Create template for rich:tree element.
  * 
@@ -75,7 +76,11 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
 		addBasicTreeAttributes(visualElement);
 		treeRow.appendChild(treeCell);
 		visualElement.appendChild(treeRow);
-		VpeCreationData vpeCreationData = new VpeCreationData(visualElement);
+		
+		// TODO A. Yukhovich please fix it
+		nsIDOMNode domNode = null;
+		VpeCreationData vpeCreationData = new VpeCreationData(domNode/*visualElement*/);
+		
 		parseTree(pageContext, sourceNode, visualDocument, vpeCreationData,
 				treeCell);
 		setStylesAttributesToTree(visualElement, (Element) sourceNode);
@@ -160,8 +165,9 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
 	 */
 	public void validate(VpePageContext pageContext, Node sourceNode,
 			Document visualDocument, VpeCreationData data) {
-		super.validate(pageContext, sourceNode, visualDocument, data);
-		revertTableRows(data.getNode());
+		// TODO A. Yukhovich please fix it
+		//super.validate(pageContext, sourceNode, visualDocument, data);
+		//revertTableRows(data.getNode());
 	}
 
 	/**
@@ -286,7 +292,8 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
 				if (tree == null) {
 
 					tree = createBasicTree(visualDocument);
-					vpeChildrenInfo = new VpeChildrenInfo(tree);
+					// TODO A. Yukhovich please fix it
+//					vpeChildrenInfo = new VpeChildrenInfo(tree);
 					vpeCreationData.addChildrenInfo(vpeChildrenInfo);
 					vpeChildrenInfo.addSourceChild(element);
 					childLast = tree;
@@ -295,7 +302,8 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
 
 					childTree = createBasicTree(visualDocument);
 					appendChildTree(childLast, childTree, visualDocument);
-					vpeChildrenInfo = new VpeChildrenInfo(childTree);
+					// TODO A. Yukhovich please fix it
+					//vpeChildrenInfo = new VpeChildrenInfo(childTree);
 					vpeCreationData.addChildrenInfo(vpeChildrenInfo);
 					vpeChildrenInfo.addSourceChild(element);
 					childLast = childTree;
@@ -330,6 +338,8 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
 		parentNode.appendChild(tr);
 	}
 
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement,
 			Document visualDocument, Node visualNode, Object data, String name,
@@ -350,7 +360,10 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
 			correctImage(pageContext, sourceElement, visualNode);
 		}
 	}
-
+	*/
+	
+	// TODO A. Yukhovich please fix it
+	/*
 	@Override
 	public void removeAttribute(VpePageContext pageContext,
 			Element sourceElement, Document visualDocument, Node visualNode,
@@ -369,7 +382,8 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
 			correctImage(pageContext, sourceElement, visualNode);
 		}
 	}
-
+	*/
+	
 	/**
 	 * Create simple tree node attribute.Used for creating more complex trees.
 	 * 
@@ -400,5 +414,11 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
 				TREE_TABLE_ATR_CELLPADDING_VALUE);
 		tree.setAttribute(HtmlComponentUtil.HTML_BORDER_ATTR,
 				TREE_TABLE_ATR_BORDER_VALUE);
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

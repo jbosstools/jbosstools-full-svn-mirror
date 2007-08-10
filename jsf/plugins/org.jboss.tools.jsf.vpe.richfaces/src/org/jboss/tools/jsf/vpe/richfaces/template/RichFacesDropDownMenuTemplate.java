@@ -18,7 +18,9 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.mozilla.interfaces.nsIDOMDocument;
+//TODO A. Yukhovich please fix if
+//import org.jboss.tools.vpe.editor.util.MozillaSupports;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -32,10 +34,13 @@ public class RichFacesDropDownMenuTemplate extends VpeAbstractTemplate {
 	private static final String ITEMCLASS_ATTR_NAME = "itemClass";
 	private static final String ITEMSTYLE_ATTR_NAME = "itemStyle";
 	
+	// TODO A. Yukhovich please fix if
+	/*
 	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		return true;
 	}
+	*/
 
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
 		Element sourceElement = (Element)sourceNode;
@@ -70,9 +75,9 @@ public class RichFacesDropDownMenuTemplate extends VpeAbstractTemplate {
 		
 		String ddmLabelFromFacet = getLabelFacet(sourceElement);
 		Map visualNodeMap = pageContext.getDomMapping().getVisualMap();
-		
-		VpeCreationData creatorInfo = new VpeCreationData(visualMenu);
-		VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualMenuLabel);
+		// TODO A. Yukhovich please fix if
+		VpeCreationData creatorInfo = new VpeCreationData(null/*visualMenu*/);
+		VpeChildrenInfo childrenInfo = new VpeChildrenInfo(null/*visualMenuLabel*/);
 		Node textLabel = null;
 		if (ddmLabelFromFacet != null) {
 			textLabel = visualDocument.createTextNode(ddmLabelFromFacet);
@@ -84,7 +89,8 @@ public class RichFacesDropDownMenuTemplate extends VpeAbstractTemplate {
 			creatorInfo.addChildrenInfo(childrenInfo);
 		}
 		visualMenu.appendChild(visualMenuLabel);
-		MozillaSupports.release(visualMenuLabel);
+		// TODO A. Yukhovich please fix if
+		//MozillaSupports.release(visualMenuLabel);
 		
 		return creatorInfo;
 	}
@@ -145,6 +151,8 @@ public class RichFacesDropDownMenuTemplate extends VpeAbstractTemplate {
 		return content;
 	}
 	
+	// TODO A. Yukhovich please fix if
+	/*
 	@Override
 	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name) {
 		processAttributeChanges(pageContext, sourceElement, visualDocument, visualNode, data, name);
@@ -154,6 +162,7 @@ public class RichFacesDropDownMenuTemplate extends VpeAbstractTemplate {
 	public void setAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
 		processAttributeChanges(pageContext, sourceElement, visualDocument, visualNode, data, name);
 	}
+	*/
 
 	/**
 	 * Correct list style accordinly parameters
@@ -240,6 +249,12 @@ public class RichFacesDropDownMenuTemplate extends VpeAbstractTemplate {
 			visualNode.setAttribute(htmlAttrName, defValue);
 		} else
 			visualNode.removeAttribute(attrName);
+	}
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
