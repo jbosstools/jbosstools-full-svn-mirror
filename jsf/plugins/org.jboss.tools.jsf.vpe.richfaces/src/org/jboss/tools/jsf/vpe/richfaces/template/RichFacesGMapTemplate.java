@@ -16,7 +16,8 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.mozilla.interfaces.nsIDOMDocument;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -39,21 +40,16 @@ public class RichFacesGMapTemplate extends VpeAbstractTemplate {
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String)
 	 */
-	/*
 	@Override
-	public void removeAttribute(VpePageContext pageContext,
-			Element sourceElement, Document visualDocument, Node visualNode,
-			Object data, String name) {
-		super.removeAttribute(pageContext, sourceElement, visualDocument,
-				visualNode, data, name);
-		Element img = (Element) visualNode;
+	public void removeAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name) {
+		super.removeAttribute(pageContext, sourceElement, visualDocument, visualNode, data, name);
+		nsIDOMElement img = (nsIDOMElement) visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 		if(STYLE_CLASS_ATTR_NAME.equals(name)){
-		img.removeAttribute(HtmlComponentUtil.HTML_CLASS_ATTR);
+			img.removeAttribute(HtmlComponentUtil.HTML_CLASS_ATTR);
 		} else{
 			img.removeAttribute(name);
 		}
 	}
-	*/
 
 	/*
 	 * (non-Javadoc)
@@ -62,15 +58,10 @@ public class RichFacesGMapTemplate extends VpeAbstractTemplate {
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String, java.lang.String)
 	 */
-	// TODO A. Yukhovich please fix it
-	/*
 	@Override
-	public void setAttribute(VpePageContext pageContext, Element sourceElement,
-			Document visualDocument, Node visualNode, Object data, String name,
-			String value) {
-		super.setAttribute(pageContext, sourceElement, visualDocument,
-				visualNode, data, name, value);
-		Element img = (Element) visualNode;
+	public void setAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name, String value) {
+		super.setAttribute(pageContext, sourceElement, visualDocument, visualNode, data, name, value);
+		nsIDOMElement img = (nsIDOMElement) visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 		img.setAttribute(name, value);
 		if(STYLE_CLASS_ATTR_NAME.equals(name)){
 			img.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR,value);
@@ -78,7 +69,6 @@ public class RichFacesGMapTemplate extends VpeAbstractTemplate {
 				img.setAttribute(name,value);
 			}
 	}
-	*/
 
 	/**
 	 * Create html instead of rich:faces component.
@@ -91,30 +81,19 @@ public class RichFacesGMapTemplate extends VpeAbstractTemplate {
 	 *            The document of the visual tree.
 	 * @return The information on the created node of the visual tree.
 	 */
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			Document visualDocument) {
-		Element img = visualDocument.createElement("img");
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
+		nsIDOMElement img = visualDocument.createElement("img");
 		ComponentUtil.setImg(img, IMAGE_NAME);
 		ComponentUtil.copyAttributes(sourceNode, img);
 		if(((Element)sourceNode).getAttribute(STYLE_CLASS_ATTR_NAME)!=null){
 			img.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR,((Element)sourceNode).getAttribute("styleClass"));
 			} 
-		// TODO A. Yukhovich please fix it
-		VpeCreationData creationData = new VpeCreationData(null/*img*/);
+		VpeCreationData creationData = new VpeCreationData(img);
 		return creationData;
 	}
 
-	// TODO A. Yukhovich please fix it
-	public void resize(VpePageContext pageContext, Element sourceElement,
-			Document visualDocument, Element visualElement, Object data,
-			int resizerConstrains, int top, int left, int width, int height) {
-//		super.resize(pageContext, sourceElement, visualDocument, visualElement,
-//				data, resizerConstrains, top, left, width, height);
+	public void resize(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Object data, int resizerConstrains, int top, int left, int width, int height) {
+		super.resize(pageContext, sourceElement, visualDocument, visualElement, data, resizerConstrains, top, left, width, height);
 	}
 
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

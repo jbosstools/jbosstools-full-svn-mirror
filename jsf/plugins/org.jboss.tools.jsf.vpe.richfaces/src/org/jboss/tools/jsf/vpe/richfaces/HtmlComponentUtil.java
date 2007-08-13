@@ -64,6 +64,9 @@ public class HtmlComponentUtil {
 	public static final String HTML_HEIGHT_ATTR = "height";
 
 	/** HTML_CLASS_ATTR * */
+	public static final String HTML_STYLECLASS_ATTR = "styleClass";
+
+	/** HTML_CLASS_ATTR * */
 	public static final String HTML_CLASS_ATTR = "class";
 
 	/** HTML_CELLSPACING_ATTR * */
@@ -104,6 +107,9 @@ public class HtmlComponentUtil {
 	
 	/** HTML_ROWSPAN_ATTR * */
 	public static final String HTML_ROWSPAN_ATTR = "rowspan";
+
+	/** HTML_ROW_ATTR * */
+	public static final String HTML_ROW_ATTR = "row";
 	
 	/** HTML_SIZE_ATTR * */
 	public static final String HTML_SIZE_ATTR = "size";

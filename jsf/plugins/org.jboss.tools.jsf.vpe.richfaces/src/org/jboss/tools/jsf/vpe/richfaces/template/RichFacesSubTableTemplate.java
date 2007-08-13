@@ -19,7 +19,8 @@ import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.mozilla.interfaces.nsIDOMDocument;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -31,13 +32,6 @@ public class RichFacesSubTableTemplate extends VpeAbstractTemplate {
 		super();
 	}
 
-	// TODO A. Yukhovich please fix it
-	/*
-	@Override
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		return true;
-	}
-	*/
 
 	/**
 	 * Encode columnGroup
@@ -47,13 +41,13 @@ public class RichFacesSubTableTemplate extends VpeAbstractTemplate {
 	 * @param parentVisualNode
 	 * @return
 	 */
-	public VpeCreationData encode(VpeCreationData creationData, Element sourceElement, Document visualDocument, Element parentVisualNode) {
+	public VpeCreationData encode(VpeCreationData creationData, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement parentVisualNode) {
 		if(creationData!=null) {
 			// Encode header
 			encodeHeader(creationData, sourceElement, visualDocument, parentVisualNode);
 		}
 
-		Element tr = visualDocument.createElement("tr");
+		nsIDOMElement tr = visualDocument.createElement("tr");
 		ComponentUtil.copyAttributes(sourceElement, tr);
 
 		boolean header = false;
@@ -74,16 +68,14 @@ public class RichFacesSubTableTemplate extends VpeAbstractTemplate {
 
 		if(creationData==null) {
 			// Method was called from create()
-			// TODO A. Yukhovich please fix it
-			creationData = new VpeCreationData(null/*tr*/);			
+			creationData = new VpeCreationData(tr);			
 		} else {
 			// Method was called from dataTable
 			parentVisualNode.appendChild(tr);
 		}
 
 		// Create mapping to Encode body
-		// TODO A. Yukhovich please fix it
-		VpeChildrenInfo trInfo = new VpeChildrenInfo(null/*tr*/);
+		VpeChildrenInfo trInfo = new VpeChildrenInfo(tr);
 		creationData.addChildrenInfo(trInfo);
 		List<Node> children = ComponentUtil.getChildren(sourceElement);
 		for (Node child : children) {
@@ -101,11 +93,9 @@ public class RichFacesSubTableTemplate extends VpeAbstractTemplate {
 					}
 					ComponentUtil.copyAttributes(sourceElement, tr);
 					if(parentVisualNode!=null) {
-						// TODO A. Yukhovich please fix it
-						parentVisualNode.appendChild(null/*tr*/);
+						parentVisualNode.appendChild(tr);
 					}
-					// TODO A. Yukhovich please fix it
-					trInfo = new VpeChildrenInfo(null/*tr*/);
+					trInfo = new VpeChildrenInfo(tr);
 					creationData.addChildrenInfo(trInfo);
 				}
 			}
@@ -120,26 +110,26 @@ public class RichFacesSubTableTemplate extends VpeAbstractTemplate {
 		return creationData;
 	}
 
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 		Element sourceElement = (Element)sourceNode;
 
 		VpeCreationData creationData = encode(null, sourceElement, visualDocument, null);
 		return creationData;
 	}
 
-	protected void encodeHeader(VpeCreationData creationData, Element sourceElement, Document visualDocument, Element parentVisualNode) {
+	protected void encodeHeader(VpeCreationData creationData, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement parentVisualNode) {
 		encodeHeaderOrFooter(creationData, sourceElement, visualDocument, parentVisualNode, "header", "dr-subtable-header rich-subtable-header", "dr-subtable-headercell rich-subtable-headercell");
 	}
 
-	protected void encodeFooter(VpeCreationData creationData, Element sourceElement, Document visualDocument, Element parentVisualNode) {
+	protected void encodeFooter(VpeCreationData creationData, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement parentVisualNode) {
 		encodeHeaderOrFooter(creationData, sourceElement, visualDocument, parentVisualNode, "footer", "dr-subtable-footer rich-subtable-footer", "dr-subtable-footercell rich-subtable-footercell");
 	}
 
-	protected void encodeHeaderOrFooter(VpeCreationData creationData, Element sourceElement, Document visualDocument, Element parentVisualNode, String facetName, String trClass, String tdClass) {
+	protected void encodeHeaderOrFooter(VpeCreationData creationData, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement parentVisualNode, String facetName, String trClass, String tdClass) {
 		ArrayList<Element> columns = RichFacesDataTableTemplate.getColumns(sourceElement);
 		ArrayList<Element> columnsHeaders = RichFacesDataTableTemplate.getColumnsWithFacet(columns, facetName);
 		if(!columnsHeaders.isEmpty()) {
-			Element tr = visualDocument.createElement("tr");
+			nsIDOMElement tr = visualDocument.createElement("tr");
 			parentVisualNode.appendChild(tr);
 			String styleClass = trClass;
 			if(styleClass!=null) {
@@ -189,22 +179,15 @@ public class RichFacesSubTableTemplate extends VpeAbstractTemplate {
 		return null;
 	}
 
-	// TODO A. Yukhovich please fix it
-	/*
 	@Override
-	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name) {
-		((Element)visualNode).removeAttribute(name);
+	public void removeAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name) {
+		nsIDOMElement visualElement = (nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID); 
+		visualElement.removeAttribute(name);
 	}
 
 	@Override
-	public void setAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		((Element)visualNode).setAttribute(name, value);
-	}
-	*/
-
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
+	public void setAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name, String value) {
+		nsIDOMElement visualElement = (nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID); 
+		visualElement.setAttribute(name, value);
 	}
 }

@@ -16,7 +16,8 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.mozilla.interfaces.nsIDOMDocument;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -34,17 +35,13 @@ public class RichFacesSpacerTemplate extends VpeAbstractTemplate {
 	 * 
 	 * @param pageContext
 	 *            Contains the information on edited page.
-	 * @param sourceNode
-	 *            The current node of the source tree.
-	 * @param visualDocument
-	 *            The document of the visual tree.
+	 * @param sourceNode The current node of the source tree.
+	 * @param visualDocument The document of the visual tree.
 	 * @return The information on the created node of the visual tree.
 	 */
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			Document visualDocument) {
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,	nsIDOMDocument visualDocument) {
 
-		Element img = visualDocument
-				.createElement(HtmlComponentUtil.HTML_TAG_IMG);
+		nsIDOMElement img = visualDocument.createElement(HtmlComponentUtil.HTML_TAG_IMG);
 		ComponentUtil.setImg(img, IMAGE_NAME);
 
 		if(sourceNode instanceof Element) {
@@ -52,8 +49,7 @@ public class RichFacesSpacerTemplate extends VpeAbstractTemplate {
 			img.setAttribute("height", getSize((Element)sourceNode, "height"));
 		}
 
-		// TODO A. Yukhovich please fix it
-		VpeCreationData creationData = new VpeCreationData(null/*img*/);
+		VpeCreationData creationData = new VpeCreationData(img);
 
 		return creationData;
 	}
@@ -67,41 +63,19 @@ public class RichFacesSpacerTemplate extends VpeAbstractTemplate {
 		}
 	}
 
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	/**
 	 * 
 	 * @see com.exadel.vpe.editor.template.VpeAbstractTemplate#setAttribute(com.exadel.vpe.editor.context.VpePageContext,
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String, java.lang.String)
 	 */
-	// TODO A. Yukhovich please fix it
-	/*
 	@Override
-	public void setAttribute(VpePageContext pageContext, Element sourceElement,
-			Document visualDocument, Node visualNode, Object data, String name,
-			String value) {
-		super.setAttribute(pageContext, sourceElement, visualDocument,
-				visualNode, data, name, value);
+	public void setAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name, String value) {
+		super.setAttribute(pageContext, sourceElement, visualDocument, visualNode, data, name, value);
 
-		Element img = (Element) visualNode;
+		nsIDOMElement img = (nsIDOMElement) visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 
 		img.setAttribute("width", getSize(sourceElement, "width"));
 		img.setAttribute("height", getSize(sourceElement, "height"));
 	}
-	*/
-
-	
-	// TODO A. Yukhovich please fix it
-	/*
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	*/
 }

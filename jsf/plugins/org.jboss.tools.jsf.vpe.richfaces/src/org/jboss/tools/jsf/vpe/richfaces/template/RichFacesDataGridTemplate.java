@@ -18,7 +18,9 @@ import org.jboss.tools.jsf.vpe.richfaces.ComponentUtil;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -28,17 +30,16 @@ public class RichFacesDataGridTemplate extends RichFacesDataTableTemplate {
 	private String[] rowClasses;
 	private String[] columnClasses;
 
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 
 		Element sourceElement = (Element)sourceNode;
 
 		initStyleClasses(sourceElement);
 
-		Element table = visualDocument.createElement("table");
+		nsIDOMElement table = visualDocument.createElement("table");
 		ComponentUtil.copyAttributes(sourceNode, table);
 
-		// TODO A. Yukhovich please fix it
-		VpeCreationData creationData = new VpeCreationData(null/*table*/);
+		VpeCreationData creationData = new VpeCreationData(table);
 
 		ComponentUtil.setCSSLink(pageContext, "dataTable/dataTable.css", "richFacesDataGrid");
 		String tableClass = sourceElement.getAttribute("styleClass");
@@ -46,7 +47,7 @@ public class RichFacesDataGridTemplate extends RichFacesDataTableTemplate {
 
 		// Encode colgroup definition.
 		int columnsLength = getColumnsCount(sourceElement);
-		Element colgroup = visualDocument.createElement("colgroup");
+		nsIDOMElement colgroup = visualDocument.createElement("colgroup");
 		colgroup.setAttribute("span", String.valueOf(columnsLength));
 		table.appendChild(colgroup);
 
@@ -56,7 +57,7 @@ public class RichFacesDataGridTemplate extends RichFacesDataTableTemplate {
 		// Encode Header
 		Element header = ComponentUtil.getFacet(sourceElement, "header");
 		if(header!=null) {
-			Element thead = visualDocument.createElement("thead");
+			nsIDOMElement thead = visualDocument.createElement("thead");
 			table.appendChild(thead);
 			String headerClass = (String) sourceElement.getAttribute("headerClass");
 			encodeTableHeaderOrFooterFacet(creationData, thead, columnsLength, visualDocument, header,
@@ -69,7 +70,7 @@ public class RichFacesDataGridTemplate extends RichFacesDataTableTemplate {
 		// Encode Footer
 		Element footer = ComponentUtil.getFacet(sourceElement, "footer");
 		if (footer != null) {
-			Element tfoot = visualDocument.createElement("tfoot");
+			nsIDOMElement tfoot = visualDocument.createElement("tfoot");
 			table.appendChild(tfoot);
 			String footerClass = (String) sourceElement.getAttribute("footerClass");
 			encodeTableHeaderOrFooterFacet(creationData, tfoot, columnsLength, visualDocument, footer,
@@ -79,7 +80,7 @@ public class RichFacesDataGridTemplate extends RichFacesDataTableTemplate {
 					footerClass, "td");
 		}
 
-		Element tbody = visualDocument.createElement("tbody");
+		nsIDOMElement tbody = visualDocument.createElement("tbody");
 		table.appendChild(tbody);
 
 		// Create mapping to Encode body
@@ -90,16 +91,15 @@ public class RichFacesDataGridTemplate extends RichFacesDataTableTemplate {
 		if(columnsLength>0) {
 			int rowIndex = 0;
 			for(int elementIndex = 0; elementIndex<elementsCount; rowIndex++) {
-				Element tr = visualDocument.createElement("tr");
+				nsIDOMElement tr = visualDocument.createElement("tr");
 				tbody.appendChild(tr);
 				tr.setAttribute("class", "dr-table-row rich-table-row " + getRowClass(rowIndex));
 				for(int columnIndex = 0; columnIndex<columnsLength && elementIndex<elementsCount; columnIndex++) {
-					Element td = visualDocument.createElement("td");
+					nsIDOMElement td = visualDocument.createElement("td");
 					tr.appendChild(td);
 					td.setAttribute("class", "dr-table-cell rich-table-cell " + getColumnClass(columnIndex));
 					if(!children.isEmpty()) {
-						// TODO A. Yukhovich please fix it
-						VpeChildrenInfo childInfo = new VpeChildrenInfo(null/*td*/);
+						VpeChildrenInfo childInfo = new VpeChildrenInfo(td);
 						for (Node child : children) {
 							childInfo.addSourceChild(child);
 						}
@@ -176,17 +176,17 @@ public class RichFacesDataGridTemplate extends RichFacesDataTableTemplate {
 
 		return elements;
 	}
-
-	// TODO A. Yukhovich please fix it
-	/*
+	
 	@Override
-	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name) {
-		((Element)visualNode).removeAttribute(name);
+	public void removeAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name) {
+		nsIDOMElement visualElement = (nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID); 
+		visualElement.removeAttribute(name);
 	}
 
 	@Override
-	public void setAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		((Element)visualNode).setAttribute(name, value);
+	public void setAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name, String value) {
+		nsIDOMElement visualElement = (nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID); 
+		visualElement.setAttribute(name, value);
 	}
-	*/
+
 }
