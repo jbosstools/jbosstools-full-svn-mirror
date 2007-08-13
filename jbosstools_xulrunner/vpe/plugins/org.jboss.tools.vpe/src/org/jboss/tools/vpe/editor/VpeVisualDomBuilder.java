@@ -950,7 +950,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	        if (node.getNodeType() == Node.ELEMENT_NODE) {
 	            if (HTML.TAG_LINK.equalsIgnoreCase(node.getNodeName())
 	            		|| isLinkReplacer(node) ) {
-		            nsIDOMElement element = (nsIDOMElement)node;
+		            nsIDOMElement element = (nsIDOMElement)node.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 		            if (ext_val.equalsIgnoreCase(element.getAttribute(VpeTemplateManager.ATTR_LINK_EXT))
 		            		&& href_val.equalsIgnoreCase(element.getAttribute(VpeTemplateManager.ATTR_LINK_HREF))) {
 		                return node;
@@ -1322,7 +1322,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			nsIDOMNode child = children.item(i);
 			if (child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 				if (domMapping.getNodeMapping(child) == null) {
-					resetTooltip((nsIDOMElement)child, titleValue);
+					resetTooltip((nsIDOMElement)child.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID), titleValue);
 				}
 			}
 		}
