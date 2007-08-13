@@ -11,16 +11,16 @@
   
   <title>Write Your First Web Application</title>
   
-  <para>The Red Hat Developer Studio provides sophisticated tools for enterprise applications. With the Red Hat Developer Studio, you can get started very quickly with a web prototype, and then scale up your application to include enterprise features (e.g., business processes, web services, etc.) using the same developer tools. It is a "scalable" RAD (Rapid Application Development) tool.</para>
+  <para>The Red Hat Developer Studio provides sophisticated tools for enterprise applications. With the Red Hat Developer Studio, you can get started very quickly with a web prototype, and then scale up your application to include enterprise features (e.g., business processes, web services, etc.) using the same developer tools. It is a &quot;scalable&quot; RAD (Rapid Application Development) tool.</para>
   
-  <para>A core element that makes the Red Hat Developer Studio "scalable" is the JBoss Seam framework. Seam is a fully featured application framework on top of Java EE 5. It is also one of the most popular enterprise Java framework today. Seam deeply integrates many other standard-based or open source frameworks (e.g., JSF, EJB3, JMS, Web Services, jBPM, JBoss Rules, Ajax4jsf, RichFaces, Facelets, Spring, iText, Quartz, TestNG etc.), and provides a single programming model for developers to "drive" those underlying frameworks via simple annotated POJOs (Plain Old Java Objects). It makes life easier for developers to tackle complex enterprise applications with many component frameworks.</para>
+  <para>A core element that makes the Red Hat Developer Studio &quot;scalable&quot; is the JBoss Seam framework. Seam is a fully featured application framework on top of Java EE 5. It is also one of the most popular enterprise Java framework today. Seam deeply integrates many other standard-based or open source frameworks (e.g., JSF, EJB3, JMS, Web Services, jBPM, JBoss Rules, Ajax4jsf, RichFaces, Facelets, Spring, iText, Quartz, TestNG etc.), and provides a single programming model for developers to &quot;drive&quot; those underlying frameworks via simple annotated POJOs (Plain Old Java Objects). It makes life easier for developers to tackle complex enterprise applications with many component frameworks.</para>
   
   <para>In this chapter, we will cover how to build a simple Seam web application in minutes with the Red Hat Developer Studio.</para>
   
   <section>
     <title>Create a Seam Project</title>
     
-    <para>To create a new web application in Seam, select "New > Project ... > Seam > Seam Project". You will be prompted to enter a name and a location directory for your new project. You will also be asked to choose a JBoss AS server to deploy the project. You must choose the JBoss AS 4.2.0 instance we had defined in the JBoss AS Server manager view.</para>
+    <para>To create a new web application in Seam, select &quot;New > Project ... > Seam > Seam Web Project&quot;. You will be prompted to enter a name and a location directory for your new project. You will also be asked to choose a JBoss AS server to deploy the project. You must choose the JBoss AS 4.2.0 instance we had defined in the JBoss AS Server manager view.</para>
     
     <figure>
       <title>Create a Seam project</title>
@@ -31,7 +31,7 @@
       </mediaobject>
     </figure>
     
-    <para>Next, you will be asked to select the "features" you want to use in your project. This allows Red Hat Developer Studio to setup the appropriate tooling for your project. Since JBoss Seam integrates all popular Java EE frameworks, you can select any combination of technologies from the list. Here, for this project, we will select Dynamic Web Module, Java, Java Persistence (JPA), JavaServer Faces (JSF), and Seam Facet for a typical database-driven web application.</para>
+    <para>Next, you will be asked to select the &quot;features&quot; you want to use in your project. This allows Red Hat Developer Studio to setup the appropriate tooling for your project. Since JBoss Seam integrates all popular Java EE frameworks, you can select any combination of technologies from the list. Here, for this project, we will select Dynamic Web Module, Java, Java Persistence (JPA), JavaServer Faces (JSF), and Seam Facet for a typical database-driven web application.</para>
     
     <figure>
       <title>Select toolings for the project</title>
@@ -102,7 +102,7 @@
   <section>
     <title>Build and Deploy the Seam Application</title>
     
-    <para>Once the application is generated, you can use the "Run on server" menu to build and deploy it into the JBoss AS runtime associated with the project. All you need is to start JBoss AS in the server manager, and load the browser at URL http://127.0.0.1:8080/MySeamProj/. You should see the following web page.</para>
+    <para>Once the application is generated, you can use the &quot;Run on server&quot; menu to build and deploy it into the JBoss AS runtime associated with the project. All you need is to start JBoss AS in the server manager, and load the browser at URL http://127.0.0.1:8080/MySeamProj/. You should see the following web page.</para>
     
     <figure>
       <title>The generated application in action</title>
@@ -144,7 +144,7 @@
   <section>
     <title>Add a Web Page and an Action</title>
     
-    <para>To add a new page and related UI action to the project, use the "New > Other ... > Seam > Seam Form" wizard. You are prompted to enter the name of the web page, the name for the Seam component that handles UI actions from the page, and UI action method name.</para>
+    <para>To add a new page and related UI action to the project, use the &quot;New > Other ... > Seam > Seam Form&quot; wizard. You are prompted to enter the name of the web page, the name for the Seam component that handles UI actions from the page, and UI action method name.</para>
     
     <figure>
       <title>New form for the application</title>
@@ -199,7 +199,7 @@
 </ui:composition>
 ]]></programlisting>
     
-    <para>The #{simpleAction.value} notation on the web page maps to the "value" property in the backend component named "simpleAction", and the #{simpleAction.hello} notation indicates that the hello() method is called when the button is clicked on. Here is the "simpleAction" named backend Seam component generated by the wizard.</para>
+    <para>The #{simpleAction.value} notation on the web page maps to the &quot;value&quot; property in the backend component named &quot;simpleAction&quot;, and the #{simpleAction.hello} notation indicates that the hello() method is called when the button is clicked on. Here is the &quot;simpleAction&quot; named backend Seam component generated by the wizard.</para>
     
     <programlisting role="JAVA"><![CDATA[
 @Name("simpleAction")
@@ -237,7 +237,7 @@ public class SimpleAction {
 }
 ]]></programlisting>
         
-    <para>Load the Simplepage.seam in the web browser. Type something in the text field and click on the "hello" button. A JSF message containing the input string is created by the SimpleAction.hello() method. The message is displayed on the page via the h:messages tag.</para>
+    <para>Load the Simplepage.seam in the web browser. Type something in the text field and click on the &quot;hello&quot; button. A JSF message containing the input string is created by the SimpleAction.hello() method. The message is displayed on the page via the h:messages tag.</para>
   
   </section>
   
@@ -283,7 +283,7 @@ public String getValue()
   <section>
     <title>Add a new UI Component</title>
     
-    <para>Now, let's add a little more logic to the application. We will add a new boolean property to the action component. If it is set to true, the action would capitalize the input string and display it on the web page. The following code in the SimpleAction class implements the logic.</para>
+    <para>Now, let&apos;s add a little more logic to the application. We will add a new boolean property to the action component. If it is set to true, the action would capitalize the input string and display it on the web page. The following code in the SimpleAction class implements the logic.</para>
     
     <programlisting role="JAVA"><![CDATA[
 @Name("simpleAction")
@@ -314,7 +314,8 @@ public class SimpleAction {
     <para>Finally, on the web page, we add a boolean selection box component. It is bound to the XXXX property on the backend component.</para>
     
     <programlisting role="JSP"><![CDATA[
-<h:selectBooleanCheckbox title="convertToCap"  value="#{simpleAction.convertToCap}" /> 
+<h:selectBooleanCheckbox title="convertToCap"
+  value="#{simpleAction.convertToCap}" /> 
 Capitalize the input?
 ]]></programlisting>
 
