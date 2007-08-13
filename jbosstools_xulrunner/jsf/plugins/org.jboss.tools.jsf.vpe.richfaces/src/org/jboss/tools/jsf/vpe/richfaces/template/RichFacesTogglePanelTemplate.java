@@ -23,6 +23,7 @@ import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -36,22 +37,14 @@ public class RichFacesTogglePanelTemplate extends VpeAbstractTemplate {
 	private static Map toggleMap = new HashMap();
 	private Map states = null;
 
-	// TODO A. Yukhovich please fix it
-	/*
-	@Override
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		return true;
-	}
-	*/
 	
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 
 		Element sourceElement = (Element)sourceNode;
 
-		Element div = visualDocument.createElement("div");
+		nsIDOMElement div = visualDocument.createElement("div");
 
-		// TODO A. Yukhovich please fix it
-		VpeCreationData creationData = new VpeCreationData(null/*div*/);
+		VpeCreationData creationData = new VpeCreationData(div);
 
 		states = getStates(sourceElement);
 		
@@ -68,8 +61,7 @@ public class RichFacesTogglePanelTemplate extends VpeAbstractTemplate {
 		}
 
 		if(bodyFacet!=null) {
-			// TODO A. Yukhovich please fix it
-			VpeChildrenInfo bodyInfo = new VpeChildrenInfo(null/*div*/);
+			VpeChildrenInfo bodyInfo = new VpeChildrenInfo(div);
 			bodyInfo.addSourceChild(bodyFacet);
 			creationData.addChildrenInfo(bodyInfo);
 		}
@@ -185,11 +177,5 @@ public class RichFacesTogglePanelTemplate extends VpeAbstractTemplate {
 
 	public void stopToggling(Node sourceNode) {
 		toggleMap.remove(sourceNode);
-	}
-
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

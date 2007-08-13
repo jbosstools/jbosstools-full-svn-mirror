@@ -21,7 +21,7 @@ import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.mozilla.interfaces.nsIDOMDocument;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -29,22 +29,14 @@ public class RichFacesPanelBarTemplate extends VpeAbstractTemplate implements Vp
 
 	private static Map toggleMap = new HashMap();
 
-	// TODO A. Yukhovich please fix it
-	/*
-	@Override
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		return true;
-	}
-	*/
 
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 
 		Element sourceElement = (Element)sourceNode;
 
-		Element div = visualDocument.createElement("div");
+		nsIDOMElement div = visualDocument.createElement("div");
 
-		// TODO A. Yukhovich please fix it
-		VpeCreationData creationData = new VpeCreationData(null/*div*/);
+		VpeCreationData creationData = new VpeCreationData(div);
 
 		ComponentUtil.setCSSLink(pageContext, "panelBar/panelBar.css", "richFacesPanelBar");
 		String styleClass = sourceElement.getAttribute("styleClass");
@@ -80,7 +72,6 @@ public class RichFacesPanelBarTemplate extends VpeAbstractTemplate implements Vp
 		}
 
 		div.setAttribute("style", styleValue.toString());
-
 		return creationData;
 	}
 
@@ -135,11 +126,5 @@ public class RichFacesPanelBarTemplate extends VpeAbstractTemplate implements Vp
 			}
 		}
 		return count;
-	}
-
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

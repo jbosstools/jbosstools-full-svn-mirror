@@ -21,7 +21,7 @@ import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.mozilla.interfaces.nsIDOMDocument;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -29,23 +29,13 @@ public class RichFacesTabPanelTemplate extends VpeAbstractTemplate implements Vp
 
 	private static Map toggleMap = new HashMap();
 
-	// TODO A. Yukhovich please fix it
-	/*
-	@Override
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		return true;
-	}
-	*/
-
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 
 		Element sourceElement = (Element)sourceNode;
 
-		Element table = visualDocument.createElement("table");
-
-		// TODO A. Yukhovich please fix it
-		VpeCreationData creationData = new VpeCreationData(null/*table*/);
-
+		nsIDOMElement table = visualDocument.createElement("table");
+		
+		VpeCreationData creationData = new VpeCreationData(table);
 		ComponentUtil.setCSSLink(pageContext, "tabPanel/tabPanel.css", "richFacesTabPanel");
 		table.setAttribute("class", "rich-tabpanel " + ComponentUtil.getAttribute(sourceElement, "styleClass"));
 		table.setAttribute("border", "0");
@@ -53,26 +43,26 @@ public class RichFacesTabPanelTemplate extends VpeAbstractTemplate implements Vp
 		table.setAttribute("cellspacing", "0");
 		table.setAttribute("style", getStyle(sourceElement));
 		
-		Element tbody = visualDocument.createElement("tbody");
+		nsIDOMElement tbody = visualDocument.createElement("tbody");
 		table.appendChild(tbody);
-		Element tr = visualDocument.createElement("tr");
+		nsIDOMElement tr = visualDocument.createElement("tr");
 		tbody.appendChild(tr);
-		Element td = visualDocument.createElement("td");
+		nsIDOMElement td = visualDocument.createElement("td");
 		tr.appendChild(td);
 		td.setAttribute("align", getHeaderAlignment(sourceElement));
 
-		Element inerTable = visualDocument.createElement("table");
+		nsIDOMElement inerTable = visualDocument.createElement("table");
 		td.appendChild(inerTable);
 		inerTable.setAttribute("border", "0");
 		inerTable.setAttribute("cellpadding", "0");
 		inerTable.setAttribute("cellspacing", "0");
 
 		// Encode header
-		Element inerTr = visualDocument.createElement("tr");
+		nsIDOMElement inerTr = visualDocument.createElement("tr");
 		inerTable.appendChild(inerTr);
-		Element inerTd = visualDocument.createElement("td");
+		nsIDOMElement inerTd = visualDocument.createElement("td");
 		inerTr.appendChild(inerTd);
-		Element img = visualDocument.createElement("img");
+		nsIDOMElement img = visualDocument.createElement("img");
 		inerTd.appendChild(img);
 		ComponentUtil.setImg(img, "common/spacer.gif");
 		img.setAttribute("width", "2");
@@ -89,9 +79,9 @@ public class RichFacesTabPanelTemplate extends VpeAbstractTemplate implements Vp
 				RichFacesTabTemplate.encodeHeader((Element)child, visualDocument, inerTr, active, ComponentUtil.getAttribute(sourceElement, "activeTabClass"), ComponentUtil.getAttribute(sourceElement, "inactiveTabClass"), ComponentUtil.getAttribute(sourceElement, "disabledTabClass"), String.valueOf(i));
 				i++;
 				// Add <td><img src="#{spacer}" height="1" alt="" border="0" style="#{this:encodeHeaderSpacing(context, component)}"/></td>
-				Element spaceTd = visualDocument.createElement("td");
+				nsIDOMElement spaceTd = visualDocument.createElement("td");
 				inerTr.appendChild(spaceTd);
-				Element spaceImg = visualDocument.createElement("img");
+				nsIDOMElement spaceImg = visualDocument.createElement("img");
 				spaceTd.appendChild(spaceImg);
 				ComponentUtil.setImg(spaceImg, "common/spacer.gif");
 				spaceImg.setAttribute("height", "1");
@@ -184,6 +174,7 @@ public class RichFacesTabPanelTemplate extends VpeAbstractTemplate implements Vp
 	}
 
 	private String getStyle(Element sourceElement) {
+	     
 		String widthAttrValue = sourceElement.getAttribute("width");
 		String heightAttrValue = sourceElement.getAttribute("height");
 		String styleAttrValue = sourceElement.getAttribute("style");
@@ -200,6 +191,7 @@ public class RichFacesTabPanelTemplate extends VpeAbstractTemplate implements Vp
 				style =ComponentUtil.addParameter(style, "height:" + height);
 			}
 		}
+	  
 		return style;
 	}
 
@@ -217,11 +209,5 @@ public class RichFacesTabPanelTemplate extends VpeAbstractTemplate implements Vp
 
 	public void stopToggling(Node sourceNode) {
 		toggleMap.remove(sourceNode);
-	}
-
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

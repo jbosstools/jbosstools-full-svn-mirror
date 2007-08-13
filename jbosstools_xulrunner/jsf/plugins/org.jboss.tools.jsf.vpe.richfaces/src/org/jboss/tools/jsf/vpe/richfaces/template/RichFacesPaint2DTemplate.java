@@ -41,7 +41,7 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 	 *      java.lang.Object, java.lang.String)
 	 */
 	@Override
-	public void removeAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode,			Object data, String name) {
+	public void removeAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name) {
 		super.removeAttribute(pageContext, sourceElement, visualDocument, visualNode, data, name);
 		nsIDOMElement img = (nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 		if (name.equals("styleClass")
