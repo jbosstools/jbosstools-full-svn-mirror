@@ -18,24 +18,17 @@ import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.mozilla.interfaces.nsIDOMDocument;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class RichFacesColumnTemplate extends VpeAbstractTemplate {
 
-	// TODO A. Yukhovich please fix it
-	/*
-	@Override
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		return true;
-	}
-	*/
-
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument  visualDocument) {
 		Element sourceElement = (Element)sourceNode;
 
-		Element td = visualDocument.createElement("td");
+		nsIDOMElement td = visualDocument.createElement("td");
 		if(isHeader(sourceElement)) {
 			td.setAttribute("class", "dr-table-headercell rich-table-headercell");
 		} else if(isFooter(sourceElement)) {
@@ -44,12 +37,10 @@ public class RichFacesColumnTemplate extends VpeAbstractTemplate {
 			td.setAttribute("class", "dr-table-cell rich-table-cell");			
 		}
 		ComponentUtil.copyAttributes(sourceNode, td);
-		// TODO A. Yukhovich please fix it
-		VpeCreationData creationData = new VpeCreationData(null/*td*/);
+		VpeCreationData creationData = new VpeCreationData(td);
 
 		// Create mapping to Encode body
-		// TODO A. Yukhovich please fix it
-		VpeChildrenInfo tdInfo = new VpeChildrenInfo(null/*td*/);
+		VpeChildrenInfo tdInfo = new VpeChildrenInfo(td);
 		List<Node> children = ComponentUtil.getChildren(sourceElement);
 		for (Node child : children) {
 			tdInfo.addSourceChild(child);
@@ -79,22 +70,15 @@ public class RichFacesColumnTemplate extends VpeAbstractTemplate {
 		return false;
 	}
 
-	// TODO A. Yukhovich please fix it
-	/*
 	@Override
-	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name) {
-		((Element)visualNode).removeAttribute(name);
+	public void removeAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name) {
+		nsIDOMElement visualElement = (nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID); 
+		visualElement.removeAttribute(name);
 	}
 
 	@Override
-	public void setAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		((Element)visualNode).setAttribute(name, value);
-	}
-	*/
-
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
+	public void setAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name, String value) {
+		nsIDOMElement visualElement = (nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID); 
+		visualElement.setAttribute(name, value);
 	}
 }

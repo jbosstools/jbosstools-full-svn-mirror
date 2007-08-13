@@ -16,64 +16,53 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
-// TODO A. Yukhovich please fix it
-//import org.jboss.tools.vpe.editor.util.MozillaSupports;
 import org.mozilla.interfaces.nsIDOMDocument;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * 
+ */
 public class RichFacesDataListTemplate extends VpeAbstractTemplate {
-
-	static final String STYLECLASS_ATTR_NAME = "styleClass";
-	static final String STYLE_ATTR_NAME = "style";
-	static final String ROWS_ATTR_NAME = "rows";
-
-	// TODO A. Yukhovich please fix if
-	/*
-	@Override
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		return true;
-	}
-	*/
+	/** CSS_FILE_NAME */
+	final static private String CSS_FILE_NAME = "dataList/dataList.css";
 
 
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 		Element sourceElement = (Element)sourceNode;
-		Element unorderedList = visualDocument.createElement("ul");
+		nsIDOMElement unorderedList = visualDocument.createElement("ul");
 
-		ComponentUtil.setCSSLink(pageContext, "dataList/dataList.css", "richFacesDataList");
+		ComponentUtil.setCSSLink(pageContext, CSS_FILE_NAME, "richFacesDataList");
 		ComponentUtil.copyAttributes(sourceNode, unorderedList);
 
 		ComponentUtil.correctAttribute(sourceElement, unorderedList,
-				STYLECLASS_ATTR_NAME,
-				HtmlComponentUtil.HTML_CLASS_ATTR, "dr-list rich-datalist", "dr-list rich-datalist");
+				HtmlComponentUtil.HTML_STYLECLASS_ATTR,
+				HtmlComponentUtil.HTML_CLASS_ATTR, 
+				"dr-list rich-datalist",
+				"dr-list rich-datalist");
 		ComponentUtil.correctAttribute(sourceElement, unorderedList,
-				STYLE_ATTR_NAME,
+				HtmlComponentUtil.HTML_STYLE_ATTR,
 				HtmlComponentUtil.HTML_STYLE_ATTR, null, null);
 
-		// TODO A. Yukhovich please fix if
-		VpeCreationData creatorInfo = new VpeCreationData(null/*unorderedList*/);
+		VpeCreationData creatorInfo = new VpeCreationData(unorderedList);
 
 		int rows = -1;
 		try {
-			rows = Integer.valueOf(sourceElement.getAttribute(ROWS_ATTR_NAME));
+			rows = Integer.valueOf(sourceElement.getAttribute(HtmlComponentUtil.HTML_ROW_ATTR));
 		} catch (Exception x) {
 			rows = -1;
 		}
 		
 		for (int i = 0; i < (rows == -1 ? 3 : rows); i++) {
-			Element listItem = visualDocument.createElement("li");
-			listItem.setAttribute("class", "dr-list-item rich-list-item");
+			nsIDOMElement listItem = visualDocument.createElement("li");
+			listItem.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, "dr-list-item rich-list-item");
 			unorderedList.appendChild(listItem);
 			
-			// TODO A. Yukhovich please fix if
-			VpeChildrenInfo info = null /* new VpeChildrenInfo(listItem)*/;
+			VpeChildrenInfo info = new VpeChildrenInfo(listItem);
 			creatorInfo.addChildrenInfo(info);
 			encodeListItem(info, sourceElement);
-// TODO A. Yukhovich please fix if
-//			MozillaSupports.release(listItem);
 		}
 		
 		return creatorInfo;
@@ -99,12 +88,5 @@ public class RichFacesDataListTemplate extends VpeAbstractTemplate {
 				}
 			}
 		}
-	}
-
-
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

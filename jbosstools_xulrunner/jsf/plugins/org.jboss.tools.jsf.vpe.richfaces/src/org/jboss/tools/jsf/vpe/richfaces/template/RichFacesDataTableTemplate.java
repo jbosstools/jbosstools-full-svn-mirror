@@ -19,29 +19,23 @@ import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.mozilla.interfaces.nsIDOMDocument;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
-	// TODO A. Yukhovich please fix it
-	/*
-	@Override
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		return true;
-	}
-	*/
 
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
+
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 
 		Element sourceElement = (Element)sourceNode;
 
-		Element table = visualDocument.createElement("table");
+		nsIDOMElement table = visualDocument.createElement("table");
 		ComponentUtil.copyAttributes(sourceNode, table);
 
-		// TODO A. Yukhovich please fix it
-		VpeCreationData creationData = new VpeCreationData(null/*table*/);
+		VpeCreationData creationData = new VpeCreationData(table);
 
 		ComponentUtil.setCSSLink(pageContext, "dataTable/dataTable.css", "richFacesDataTable");
 		String tableClass = sourceElement.getAttribute("styleClass");
@@ -50,7 +44,7 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 		// Encode colgroup definition.
 		ArrayList<Element> columns = getColumns(sourceElement);
 		int columnsLength = getColumnsCount(sourceElement, columns);
-		Element colgroup = visualDocument.createElement("colgroup");
+		nsIDOMElement colgroup = visualDocument.createElement("colgroup");
 		colgroup.setAttribute("span", String.valueOf(columnsLength));
 		table.appendChild(colgroup);
 
@@ -58,7 +52,7 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 		if (null != columnsWidth) {
 			String[] widths = columnsWidth.split(",");
 			for (int i = 0; i < widths.length; i++) {
-				Element col = visualDocument.createElement("col");
+				nsIDOMElement col = visualDocument.createElement("col");
 				col.setAttribute("width", widths[i]);
 				colgroup.appendChild(col);
 			}
@@ -71,7 +65,7 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 		Element header = ComponentUtil.getFacet(sourceElement, "header");
 		ArrayList<Element> columnsHeaders = getColumnsWithFacet(columns, "header");
 		if(header!=null || !columnsHeaders.isEmpty()) {
-			Element thead = visualDocument.createElement("thead");
+			nsIDOMElement thead = visualDocument.createElement("thead");
 			table.appendChild(thead);
 			String headerClass = (String) sourceElement.getAttribute("headerClass");
 			if(header != null) {
@@ -82,7 +76,7 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 						headerClass, "td");
 			}
 			if(!columnsHeaders.isEmpty()) {
-				Element tr = visualDocument.createElement("tr");
+				nsIDOMElement tr = visualDocument.createElement("tr");
 				thead.appendChild(tr);
 				String styleClass = encodeStyleClass(null, "dr-table-subheader rich-table-subheader", null, headerClass);
 				if(styleClass!=null) {
@@ -98,11 +92,11 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 		Element footer = ComponentUtil.getFacet(sourceElement, "footer");
 		ArrayList<Element> columnsFooters = getColumnsWithFacet(columns, "footer");
 		if (footer != null || !columnsFooters.isEmpty()) {
-			Element tfoot = visualDocument.createElement("tfoot");
+			nsIDOMElement tfoot = visualDocument.createElement("tfoot");
 			table.appendChild(tfoot);
 			String footerClass = (String) sourceElement.getAttribute("footerClass");
 			if(!columnsFooters.isEmpty()) {
-				Element tr = visualDocument.createElement("tr");
+				nsIDOMElement tr = visualDocument.createElement("tr");
 				tfoot.appendChild(tr);
 				String styleClass = encodeStyleClass(null, "dr-table-subfooter rich-table-subfooter", null, footerClass);
 				if(styleClass!=null) {
@@ -121,13 +115,13 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 			}
 		}
 
-		Element tbody = visualDocument.createElement("tbody");
+		nsIDOMElement tbody = visualDocument.createElement("tbody");
 		table.appendChild(tbody);
 
 		// Create mapping to Encode body
 		List<Node> children = ComponentUtil.getChildren(sourceElement);
 		boolean firstRow = true;
-		Element tr = null;
+		nsIDOMElement tr = null;
 		VpeChildrenInfo trInfo = null;
 		for (Node child : children) {
 			if(child.getNodeName().endsWith(":column")) {
@@ -143,8 +137,7 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 					} else {
 						tr.setAttribute("class", "dr-table-row rich-table-row");
 					}
-					// TODO A. Yukhovich please fix it
-					trInfo = new VpeChildrenInfo(null/*tr*/);
+					trInfo = new VpeChildrenInfo(tr);
 					tbody.appendChild(tr);
 					creationData.addChildrenInfo(trInfo);
 				}
@@ -156,8 +149,7 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 				RichFacesSubTableTemplate.DEFAULT_INSTANCE.encode(creationData, (Element)child, visualDocument, tbody);
 				tr = null;
 			} else {
-				// TODO A. Yukhovich please fix it
-				VpeChildrenInfo childInfo = new VpeChildrenInfo(null/*tbody*/);
+				VpeChildrenInfo childInfo = new VpeChildrenInfo(tbody);
 				childInfo.addSourceChild(child);
 				creationData.addChildrenInfo(childInfo);
 				tr = null;
@@ -167,14 +159,14 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 		return creationData;
 	}
 
-	protected void encodeCaption(VpeCreationData creationData, Element sourceElement, Document visualDocument, Element table) {
+	protected void encodeCaption(VpeCreationData creationData, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement table) {
 		//Encode caption
 		Element captionFromFacet = ComponentUtil.getFacet(sourceElement, "caption");
 		if (captionFromFacet != null) {
 			String captionClass = (String) table.getAttribute("captionClass");
 			String captionStyle = (String) table.getAttribute("captionStyle");
 
-			Element caption = visualDocument.createElement("caption");
+			nsIDOMElement caption = visualDocument.createElement("caption");
 			table.appendChild(caption);
 			if (captionClass != null && captionClass.length()>0) {
 				captionClass = "dr-table-caption rich-table-caption " + captionClass;
@@ -186,19 +178,18 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 				caption.setAttribute("style", captionStyle);
 			}
 			
-			// TODO A. Yukhovich please fix it
-			VpeChildrenInfo cap = new VpeChildrenInfo(null/*caption*/);
+			VpeChildrenInfo cap = new VpeChildrenInfo(caption);
 			cap.addSourceChild(captionFromFacet);
 			creationData.addChildrenInfo(cap);
 		}
 
 	}
 
-	public static void encodeHeaderOrFooterFacets(VpeCreationData creationData, Element parentTr, Document visualDocument, ArrayList<Element> headersOrFooters, String skinCellClass, String headerClass, String facetName, String element) {
+	public static void encodeHeaderOrFooterFacets(VpeCreationData creationData, nsIDOMElement parentTr, nsIDOMDocument visualDocument, ArrayList<Element> headersOrFooters, String skinCellClass, String headerClass, String facetName, String element) {
 		for (Element column : headersOrFooters) {
 			String classAttribute = facetName + "Class";
 			String columnHeaderClass = column.getAttribute(classAttribute);
-			Element td = visualDocument.createElement(element);
+			nsIDOMElement td = visualDocument.createElement(element);
 			parentTr.appendChild(td);
 			String styleClass = encodeStyleClass(null, skinCellClass, headerClass, columnHeaderClass);
 			td.setAttribute("class", styleClass);
@@ -209,14 +200,13 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 			}
 			Element facetBody = ComponentUtil.getFacet(column, facetName);
 
-			// TODO A. Yukhovich please fix it
-			VpeChildrenInfo child = new VpeChildrenInfo(null/*td*/);
+			VpeChildrenInfo child = new VpeChildrenInfo(td);
 			child.addSourceChild(facetBody);
 			creationData.addChildrenInfo(child);
 		}
 	}
 
-	protected void encodeTableHeaderOrFooterFacet(VpeCreationData creationData, Element parentTheadOrTfood, int columns, Document visualDocument, Element facetBody, String skinFirstRowClass, String skinRowClass, String skinCellClass, String facetBodyClass, String element) {
+	protected void encodeTableHeaderOrFooterFacet(VpeCreationData creationData, nsIDOMElement parentTheadOrTfood, int columns, nsIDOMDocument visualDocument, Element facetBody, String skinFirstRowClass, String skinRowClass, String skinCellClass, String facetBodyClass, String element) {
 		boolean isColumnGroup = facetBody.getNodeName().endsWith(":columnGroup");
 		boolean isSubTable = facetBody.getNodeName().endsWith(":subTable");
 		if(isColumnGroup) {
@@ -224,7 +214,7 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 		} else if(isSubTable) {
 			RichFacesSubTableTemplate.DEFAULT_INSTANCE.encode(creationData, facetBody, visualDocument, parentTheadOrTfood);
 		} else {
-			Element tr = visualDocument.createElement("tr");
+			nsIDOMElement tr = visualDocument.createElement("tr");
 			parentTheadOrTfood.appendChild(tr);
 
 			String styleClass = encodeStyleClass(null, skinFirstRowClass, facetBodyClass, null);
@@ -234,7 +224,7 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 			String style = ComponentUtil.getHeaderBackgoundImgStyle();
 			tr.setAttribute("style", style);
 
-			Element td = visualDocument.createElement(element);
+			nsIDOMElement td = visualDocument.createElement(element);
 			tr.appendChild(td);
 
 			styleClass = encodeStyleClass(null, skinCellClass, facetBodyClass, null);
@@ -247,8 +237,7 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 			}
 			td.setAttribute("scope", "colgroup");
 
-			// TODO A. Yukhovich please fix it
-			VpeChildrenInfo child = new VpeChildrenInfo(null/*td*/);
+			VpeChildrenInfo child = new VpeChildrenInfo(td);
 			child.addSourceChild(facetBody);
 			creationData.addChildrenInfo(child);
 		}
@@ -380,23 +369,17 @@ public class RichFacesDataTableTemplate extends VpeAbstractTemplate {
 		}
 		return count;
 	}
-
-	// TODO A. Yukhovich please fix it
-	/*
+	
 	@Override
-	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name) {
-		((Element)visualNode).removeAttribute(name);
+	public void removeAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name) {
+		nsIDOMElement visualElement = (nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID); 
+		visualElement.removeAttribute(name);
 	}
 
 	@Override
-	public void setAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		((Element)visualNode).setAttribute(name, value);
+	public void setAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name, String value) {
+		nsIDOMElement visualElement = (nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID); 
+		visualElement.setAttribute(name, value);
 	}
-	*/
 
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

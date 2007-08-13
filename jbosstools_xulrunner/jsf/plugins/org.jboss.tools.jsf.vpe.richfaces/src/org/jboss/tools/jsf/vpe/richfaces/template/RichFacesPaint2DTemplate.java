@@ -16,10 +16,9 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.mozilla.interfaces.nsIDOMDocument;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 /**
@@ -34,12 +33,6 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 
 	private String PAINT2D_CSS_FILE = "/paint2D/paint2D.css";
 
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -47,28 +40,18 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String)
 	 */
-	// TODO A. Yukhovich please fix it
-	/*
 	@Override
-	public void removeAttribute(VpePageContext pageContext,
-			Element sourceElement, Document visualDocument, Node visualNode,
-			Object data, String name) {
-		super.removeAttribute(pageContext, sourceElement, visualDocument,
-				visualNode, data, name);
-		Element img = (Element) visualNode;
+	public void removeAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode,			Object data, String name) {
+		super.removeAttribute(pageContext, sourceElement, visualDocument, visualNode, data, name);
+		nsIDOMElement img = (nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 		if (name.equals("styleClass")
-				&& sourceElement
-						.getAttribute(HtmlComponentUtil.HTML_WIDTH_ATTR) == null
-				&& sourceElement
-						.getAttribute(HtmlComponentUtil.HTML_HEIGHT_ATTR) == null) {
-			img
-					.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR,
-							"imgStyleClass");
+				&& sourceElement.getAttribute(HtmlComponentUtil.HTML_WIDTH_ATTR) == null
+				&& sourceElement.getAttribute(HtmlComponentUtil.HTML_HEIGHT_ATTR) == null) {
+			img.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR,"imgStyleClass");
 		} else
 			img.removeAttribute(name);
 
 	}
-	*/
 	
 	/*
 	 * (non-Javadoc)
@@ -77,21 +60,15 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String, java.lang.String)
 	 */
-	// TODO A. Yukhovich please fix it
-	/*
 	@Override
-	public void setAttribute(VpePageContext pageContext, Element sourceElement,
-			Document visualDocument, Node visualNode, Object data, String name,
-			String value) {
-		super.setAttribute(pageContext, sourceElement, visualDocument,
-				visualNode, data, name, value);
-		Element img = (Element) visualNode;
+	public void setAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name,	String value) {
+		super.setAttribute(pageContext, sourceElement, visualDocument, visualNode, data, name, value);
+		nsIDOMElement img = (nsIDOMElement) visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 		if (name.equals("styleClass")) {
 			img.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, value);
 		} else
 			img.setAttribute(name, value);
 	}
-	*/
 
 	/**
 	 * Create html instead rich:faces component.
@@ -104,11 +81,8 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 	 *            The document of the visual tree.
 	 * @return The information on the created node of the visual tree.
 	 */
-	// TODO A. Yukhovich please fix it
-	/*
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			Document visualDocument) {
-		Element img = visualDocument.createElement("img");
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
+		nsIDOMElement img = visualDocument.createElement("img");
 		ComponentUtil.setImg(img, IMAGE_NAME);
 		ComponentUtil.setCSSLink(pageContext, PAINT2D_CSS_FILE, "paint2d");
 		String attrValue = ((Element) sourceNode).getAttribute("styleClass");
@@ -122,35 +96,8 @@ public class RichFacesPaint2DTemplate extends VpeAbstractTemplate {
 					.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR,
 							"imgStyleClass");
 		}
-		copyAtrributes(sourceNode, img, visualDocument);
+		ComponentUtil.copyAttributes(sourceNode, img);
 		VpeCreationData creationData = new VpeCreationData(img);
 		return creationData;
 	}
-	*/
-
-	/**
-	 * Copy attributes from one node to another node.
-	 * 
-	 * @param sourceNode
-	 * @param distinitionNode
-	 */
-	// TODO A. Yukhovich please fix it
-	/*
-	private void copyAtrributes(Node sourceNode, Element distinitionNode,
-			Document visualDocument) {
-		NamedNodeMap sourceAttrbutes = sourceNode.getAttributes();
-		for (int i = 0; i < sourceAttrbutes.getLength(); i++) {
-			Attr attr = visualDocument.createAttribute(sourceAttrbutes.item(i)
-					.getNodeName());
-			attr.setNodeValue(sourceAttrbutes.item(i).getNodeValue());
-			distinitionNode.setAttributeNode(attr);
-		}
-	}
-	
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	*/
 }

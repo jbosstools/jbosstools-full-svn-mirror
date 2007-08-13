@@ -17,63 +17,48 @@ import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.mozilla.interfaces.nsIDOMDocument;
-//TODO A. Yukhovich please fix if
-//import org.jboss.tools.vpe.editor.util.MozillaSupports;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class RichFacesDataOrderedListTemplate  extends VpeAbstractTemplate {
+	/** CSS_FILE_NAME */
+	final static private String CSS_FILE_NAME = "dataOrderedList/dataOrderedList.css";
 
-	static final String STYLECLASS_ATTR_NAME = "styleClass";
-	static final String STYLE_ATTR_NAME = "style";
-	static final String ROWS_ATTR_NAME = "rows";
-
-	
-	// TODO A. Yukhovich please fix if
-	/*
-	@Override
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		return true;
-	}
-	*/
-
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 		Element sourceElement = (Element)sourceNode;
-		Element orderedList = visualDocument.createElement("ol");
+		nsIDOMElement orderedList = visualDocument.createElement("ol");
 		
-		ComponentUtil.setCSSLink(pageContext, "dataOrderedList/dataOrderedList.css", "richFacesDataOrderList");
+		ComponentUtil.setCSSLink(pageContext, CSS_FILE_NAME, "richFacesDataOrderList");
 		ComponentUtil.copyAttributes(sourceNode, orderedList);
 		
 		ComponentUtil.correctAttribute(sourceElement, orderedList,
-				STYLECLASS_ATTR_NAME,
-				HtmlComponentUtil.HTML_CLASS_ATTR, "dr-list rich-orderedlist", "dr-list rich-orderedlist");
+				HtmlComponentUtil.HTML_STYLECLASS_ATTR,
+				HtmlComponentUtil.HTML_CLASS_ATTR, 
+				"dr-list rich-orderedlist", 
+				"dr-list rich-orderedlist");
 		ComponentUtil.correctAttribute(sourceElement, orderedList,
-				STYLE_ATTR_NAME,
+				HtmlComponentUtil.HTML_STYLE_ATTR,
 				HtmlComponentUtil.HTML_STYLE_ATTR, null, null);
 
-		// TODO A. Yukhovich please fix if
-		VpeCreationData creatorInfo = new VpeCreationData(null/*orderedList*/);
+		VpeCreationData creatorInfo = new VpeCreationData(orderedList);
 
 		int rows = -1;
 		try {
-			rows = Integer.valueOf(sourceElement.getAttribute(ROWS_ATTR_NAME));
+			rows = Integer.valueOf(sourceElement.getAttribute(HtmlComponentUtil.HTML_ROW_ATTR));
 		} catch (Exception x) {
 			rows = -1;
 		}
 
 		for (int i = 0; i < (rows == -1 ? 3 : rows); i++) {
-			Element listItem = visualDocument.createElement("li");
+			nsIDOMElement listItem = visualDocument.createElement("li");
 			listItem.setAttribute("class", "dr-list-item rich-list-item");
 			orderedList.appendChild(listItem);
 			
-			// TODO A. Yukhovich please fix if
-			VpeChildrenInfo info = null /*new VpeChildrenInfo(listItem)*/;
+			VpeChildrenInfo info = new VpeChildrenInfo(listItem);
 			creatorInfo.addChildrenInfo(info);
 			encodeListItem(info, sourceElement);
-			// TODO A. Yukhovich please fix if
-			/*MozillaSupports.release(listItem);*/
 		}
 		
 		return creatorInfo;
@@ -99,11 +84,5 @@ public class RichFacesDataOrderedListTemplate  extends VpeAbstractTemplate {
 				}
 			}
 		}
-	}
-
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

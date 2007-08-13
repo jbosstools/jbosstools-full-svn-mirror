@@ -11,7 +11,8 @@
 package org.jboss.tools.jsf.vpe.richfaces.template;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -28,20 +29,17 @@ public abstract class  AbstractRichFacesInputNumberTemplate extends AbstractRich
 	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
 	 *      java.lang.Object, java.lang.String)
 	 */
-	// TODO A. Yukhovich please fix it
-	/*
 	@Override
 	public void removeAttribute(VpePageContext pageContext,
-			Element sourceElement, Document visualDocument, Node visualNode,
+			Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode,
 			Object data, String name) {
+		
 		super.removeAttribute(pageContext, sourceElement, visualDocument,
 				visualNode, data, name);
 
 		setAttribute(pageContext, sourceElement, visualDocument, visualNode,
 				data, name, "");
-
 	}
-	*/
 	
 	/** 
 	 * Return a input size

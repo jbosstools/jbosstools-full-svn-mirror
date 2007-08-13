@@ -207,6 +207,19 @@ public class ComponentUtil {
 		}
 	}
 
+    /**
+     * Copies all attributes from source node to visual node. 
+     * @param sourceNode
+     * @param visualNode
+     */
+	public static void copyAttributes(Node sourceNode, nsIDOMElement visualElement) {
+		NamedNodeMap namedNodeMap = sourceNode.getAttributes();
+		for (int i = 0; i < namedNodeMap.getLength(); i++) {
+			Node attribute = namedNodeMap.item(i);
+			visualElement.setAttribute(attribute.getNodeName(), attribute.getNodeValue());
+		}
+	}
+	
 	/**
 	 * Returns true if sourceNode is Facet
 	 * @param sourceNode
@@ -247,6 +260,20 @@ public class ComponentUtil {
 		return attribute;
 	}
 
+	/**
+	 * Returns value of attribute.
+	 * @param sourceElement
+	 * @param attributeName
+	 * @return
+	 */
+	public static String getAttribute(nsIDOMElement sourceElement, String attributeName) {
+		String attribute = sourceElement.getAttribute(attributeName);
+		if(attribute==null) {
+			attribute = "";
+		}
+		return attribute;
+	}
+	
 	/**
 	 * @param style
 	 * @param name
@@ -340,4 +367,26 @@ public class ComponentUtil {
 			visualNode.removeAttribute(attrName);
 	}
 
+	/**
+	 * Move attributes from sourceNode to html
+	 * @param sourceNode
+	 * @param visualNode
+	 * @param attrName
+	 * @param htmlAttrName
+	 * @param prefValue
+	 * @param defValue
+	 */
+	public static void correctAttribute(Element sourceNode, nsIDOMElement visualNode,
+			String attrName, String htmlAttrName, String prefValue, String defValue) {
+		String attrValue = ((Element) sourceNode).getAttribute(attrName);
+		if (prefValue != null && prefValue.trim().length() > 0 && attrValue != null) {
+			attrValue = prefValue.trim() + " " + attrValue;
+		}
+		if (attrValue != null) {
+			visualNode.setAttribute(htmlAttrName, attrValue);
+		} else if (defValue != null) {
+			visualNode.setAttribute(htmlAttrName, defValue);
+		} else
+			visualNode.removeAttribute(attrName);
+	}
 }
