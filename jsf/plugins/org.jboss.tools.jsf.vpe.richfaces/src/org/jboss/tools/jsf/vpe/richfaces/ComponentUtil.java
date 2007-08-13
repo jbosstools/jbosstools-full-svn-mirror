@@ -22,6 +22,8 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMNodeList;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -185,6 +187,7 @@ public class ComponentUtil {
     	return children;
     }
 
+    //TODO: Evgeny Zheleznyakov remove if not references
     /**
      * Returns all child source elements of component but facets.
      * @param sourceElement
@@ -193,7 +196,36 @@ public class ComponentUtil {
     public static List<Node> getChildren(Element sourceElement) {
     	return getChildren(sourceElement, false);
     }
+    
+    
+    /**
+     * Returns all child visual elements of component but facets.
+     * @param visualElement
+     * @param 
+     * @return returnTextNodes return child text nodes and elements or elements only;
+     */
+    public static List<nsIDOMNode> getChildren(nsIDOMElement visualElement, boolean returnTextNodes) {
+    	ArrayList<nsIDOMNode> children = new ArrayList<nsIDOMNode>();
+		nsIDOMNodeList nodeList = visualElement.getChildNodes();
+		for(int i=0; i<nodeList.getLength(); i++) {
+		    nsIDOMNode child = nodeList.item(i);
+			if((child instanceof nsIDOMElement || returnTextNodes) && (!child.getNodeName().equals("f:facet"))) {
+				children.add(child);
+			}
+		}
+    	return children;
+    }
+    
+    /**
+     * Returns all child visual elements of component but facets.
+     * @param visualElement
+     * @return
+     */
+    public static List<nsIDOMNode> getChildren(nsIDOMElement visualElement) {
+    	return getChildren(visualElement, false);
+    }    
 
+    //TODO: Evgeny zheleznyakov remove or not references
     /**
      * Copies all attributes from source node to visual node. 
      * @param sourceNode
@@ -246,6 +278,7 @@ public class ComponentUtil {
 		return style;
 	}
 
+	//TODO: Evgeny zheleznyakov remove or not references
 	/**
 	 * Returns value of attribute.
 	 * @param sourceElement
@@ -303,13 +336,14 @@ public class ComponentUtil {
 		return style + (s.length() == 0 || s.endsWith(";") ? "" : ";") + element;
 	}
 
+	//TODO: Evgeny zheleznyakov remove or not references
 	/** Adds image as attribute to IMG tag from users worcpace
 	 * @param pageContext Page Context
 	 * @param img	img element to which set picture
 	 * @param fileImageName image name
 	 * @param undefinedImgName default image when image is undefined
 	 */
-    public static void setImgFromResources(VpePageContext pageContext,Element img, String fileImageName, String undefinedImgName) {
+	public static void setImgFromResources(VpePageContext pageContext,Element img, String fileImageName, String undefinedImgName) {
     	IEditorInput input = pageContext.getEditPart().getEditorInput();
     	IPath inputPath = getInputParentPath(input);	
     	File file=new File(inputPath.toOSString()+File.separator+fileImageName);
@@ -320,6 +354,25 @@ public class ComponentUtil {
     	} else {
     		img.setAttribute(HtmlComponentUtil.HTML_ATR_SRC, undefinedImgName);
     	}
+	}
+    
+	/** Adds image as attribute to IMG tag from users worcpace
+	 * @param pageContext Page Context
+	 * @param img	img element to which set picture
+	 * @param fileImageName image name
+	 * @param undefinedImgName default image when image is undefined
+	 */
+    	public static void setImgFromResources(VpePageContext pageContext, nsIDOMElement img, String fileImageName, String undefinedImgName) {
+    	    IEditorInput input = pageContext.getEditPart().getEditorInput();
+    	    IPath inputPath = getInputParentPath(input);	
+    	    File file=new File(inputPath.toOSString()+File.separator+fileImageName);
+    	    if(file.exists()){
+		img.setAttribute(HtmlComponentUtil.HTML_ATR_SRC,
+				HtmlComponentUtil.FILE_PROTOCOL+inputPath.toOSString()+
+				File.separator+fileImageName);
+    	    } else {
+		img.setAttribute(HtmlComponentUtil.HTML_ATR_SRC, undefinedImgName);
+		}
 	}
 
     /**
@@ -343,6 +396,7 @@ public class ComponentUtil {
 	    return inputPath;
 	}
 	
+	//TODO: Evgeny zheleznyakov remove or not references
 	/**
 	 * Move attributes from sourceNode to html
 	 * 

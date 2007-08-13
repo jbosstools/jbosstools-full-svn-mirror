@@ -18,28 +18,23 @@ import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.mozilla.interfaces.nsIDOMDocument;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class RichFacesPanelTemplate extends VpeAbstractTemplate {
 
-	// TODO A. Yukhovich please fix it
-	/*
-	@Override
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		return true;
-	}
-	*/
 
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 
+	   
 		Element sourceElement = (Element)sourceNode;
 
-		Element div = visualDocument.createElement("div");
+		nsIDOMElement div = visualDocument.createElement("div");
 
-		// TODO A. Yukhovich please fix it
-		VpeCreationData creationData = new VpeCreationData(null/*div*/);
+		
+		VpeCreationData creationData = new VpeCreationData(div);
+		
 
 		ComponentUtil.setCSSLink(pageContext, "panel/panel.css", "richFacesPanel");
 		String styleClass = sourceElement.getAttribute("styleClass");
@@ -52,38 +47,30 @@ public class RichFacesPanelTemplate extends VpeAbstractTemplate {
 		// Encode Header
 		Node header = ComponentUtil.getFacet(sourceElement, "header", true);
 		if(header!=null) {
-			Element headerDiv = visualDocument.createElement("div");
+		    	nsIDOMElement headerDiv = visualDocument.createElement("div");
 			div.appendChild(headerDiv);
 			String headerClass = sourceElement.getAttribute("headerClass");
 			headerDiv.setAttribute("class", "dr-pnl-h rich-panel-header " + (headerClass==null?"":headerClass));
 			headerDiv.setAttribute("style", ComponentUtil.getHeaderBackgoundImgStyle());
 
-			// TODO A. Yukhovich please fix it
-			VpeChildrenInfo headerInfo = new VpeChildrenInfo(null/*headerDiv*/);
+			VpeChildrenInfo headerInfo = new VpeChildrenInfo(headerDiv);
 			headerInfo.addSourceChild(header);
 			creationData.addChildrenInfo(headerInfo);
 		}
 
 		// Encode Body
-		Element bodyDiv = visualDocument.createElement("div");
+		nsIDOMElement bodyDiv = visualDocument.createElement("div");
 		div.appendChild(bodyDiv);
 		String bodyClass = sourceElement.getAttribute("bodyClass");
 		bodyDiv.setAttribute("class", "dr-pnl-b rich-panel-body " + (bodyClass==null?"":bodyClass));
 
 		List<Node> children = ComponentUtil.getChildren(sourceElement, true);
-		// TODO A. Yukhovich please fix it
-		VpeChildrenInfo bodyInfo = new VpeChildrenInfo(null/*bodyDiv*/);
+		VpeChildrenInfo bodyInfo = new VpeChildrenInfo(bodyDiv);
 		for (Node child : children) {
 			bodyInfo.addSourceChild(child);
 		}
 		creationData.addChildrenInfo(bodyInfo);
 
 		return creationData;
-	}
-
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
