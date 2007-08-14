@@ -146,19 +146,7 @@ public class ComponentUtil {
             throw new RuntimeException("Can't get path for " + resourcePathInPlugin);
         }
 	}
-
-	// TDOD: Evgeny Zheleznyakov delete after work all components
-	/**
-     * Adds image as attribute to IMG tag
-     * 
-     * @param img
-     * @param fileImageName
-     */
-    public static void setImg(Element img, String fileImageName) {
-        img.setAttribute("src", "file://" + getAbsoluteResourcePath(fileImageName));
-    }
     
-    // TDOD: Evgeny Zheleznyakov Do not delete
     /**
      * Adds image as attribute to IMG tag
      * 
@@ -224,20 +212,6 @@ public class ComponentUtil {
     public static List<nsIDOMNode> getChildren(nsIDOMElement visualElement) {
     	return getChildren(visualElement, false);
     }    
-
-    //TODO: Evgeny zheleznyakov remove or not references
-    /**
-     * Copies all attributes from source node to visual node. 
-     * @param sourceNode
-     * @param visualNode
-     */
-	public static void copyAttributes(Node sourceNode, Element visualElement) {
-		NamedNodeMap namedNodeMap = sourceNode.getAttributes();
-		for (int i = 0; i < namedNodeMap.getLength(); i++) {
-			Node attribute = namedNodeMap.item(i);
-			visualElement.setAttribute(attribute.getNodeName(), attribute.getNodeValue());
-		}
-	}
 
     /**
      * Copies all attributes from source node to visual node. 
@@ -334,26 +308,6 @@ public class ComponentUtil {
 	public static String addParameter(String style, String element) {
 		String s = style.trim();
 		return style + (s.length() == 0 || s.endsWith(";") ? "" : ";") + element;
-	}
-
-	//TODO: Evgeny zheleznyakov remove or not references
-	/** Adds image as attribute to IMG tag from users worcpace
-	 * @param pageContext Page Context
-	 * @param img	img element to which set picture
-	 * @param fileImageName image name
-	 * @param undefinedImgName default image when image is undefined
-	 */
-	public static void setImgFromResources(VpePageContext pageContext,Element img, String fileImageName, String undefinedImgName) {
-    	IEditorInput input = pageContext.getEditPart().getEditorInput();
-    	IPath inputPath = getInputParentPath(input);	
-    	File file=new File(inputPath.toOSString()+File.separator+fileImageName);
-    	if(file.exists()){
-    		img.setAttribute(HtmlComponentUtil.HTML_ATR_SRC,
-    				HtmlComponentUtil.FILE_PROTOCOL+inputPath.toOSString()+
-    				File.separator+fileImageName);
-    	} else {
-    		img.setAttribute(HtmlComponentUtil.HTML_ATR_SRC, undefinedImgName);
-    	}
 	}
     
 	/** Adds image as attribute to IMG tag from users worcpace
