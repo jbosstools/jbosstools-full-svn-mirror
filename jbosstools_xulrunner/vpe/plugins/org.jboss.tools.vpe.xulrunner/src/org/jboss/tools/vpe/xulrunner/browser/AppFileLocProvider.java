@@ -40,7 +40,7 @@ public class AppFileLocProvider implements IAppFileLocProvider {
 			return new File(userDataPath, XPTI_FILE);
 		} else if ("GreD".equals(prop)) { // $NON-NLS-1$
 			return xulRunnerPath;
-		} else if ("GreComsD".equals(prop) || "ComsD".equals(prop)) { // $NON-NLS-1$
+		} else if ("GreComsD".equals(prop) || "ComsD".equals(prop)) { // $NON-NLS-1$ $NON-NLS-1$
 			return new File(xulRunnerPath, COMPONENTS_DIRECTORY);
 		}
 		
