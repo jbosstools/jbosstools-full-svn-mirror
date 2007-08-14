@@ -114,10 +114,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <title>Installing from the downloaded version</title>
    <itemizedlist>
    <listitem>
-   <para>Download the appropriate installation file for your platform from http://www.redhat.com/developers/rhds/</para>
+    <para>Download the appropriate installation file for your platform from <ulink  url="http://www.redhat.com/developers/rhds/index.html">Red Hat website</ulink>.</para>
    </listitem>
     <listitem>
-     <para>Run install.jar and follow the instructions presented by the installation wizard</para>
+     <para>Run rhdevstudio-linux-gtk-1.0.0.beta1.jar and follow the instructions presented by the installation wizard</para>
     </listitem>
    </itemizedlist>
    
@@ -204,7 +204,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <section id="Downloading">
   <title>Downloading</title>
   <para><emphasis role="bold">Where can I download a copy of Red Hat Developer Studio?</emphasis></para>
-  <para>Go to <ulink url="http://redhat.com/developers/rhds">Download Page</ulink></para>
+  <para>Go to <ulink url="http://www.redhat.com/developers/rhds/index.html">Download Page</ulink></para>
  </section>
  <section id="Installation_Issues">
   <title>Installation Issues</title>
