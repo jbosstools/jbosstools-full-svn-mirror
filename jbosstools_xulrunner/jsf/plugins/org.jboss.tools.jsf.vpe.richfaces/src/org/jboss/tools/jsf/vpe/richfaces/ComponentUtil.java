@@ -175,7 +175,6 @@ public class ComponentUtil {
     	return children;
     }
 
-    //TODO: Evgeny Zheleznyakov remove if not references
     /**
      * Returns all child source elements of component but facets.
      * @param sourceElement
@@ -251,8 +250,7 @@ public class ComponentUtil {
 		String style = "background-image: url(file:///" + imgPath.replace('\\', '/') + ");";
 		return style;
 	}
-
-	//TODO: Evgeny zheleznyakov remove or not references
+	
 	/**
 	 * Returns value of attribute.
 	 * @param sourceElement
@@ -348,31 +346,6 @@ public class ComponentUtil {
 		    inputPath = inputPath.removeLastSegments(1);
 		}
 	    return inputPath;
-	}
-	
-	//TODO: Evgeny zheleznyakov remove or not references
-	/**
-	 * Move attributes from sourceNode to html
-	 * 
-	 * @param sourceNode
-	 * @param visualNode
-	 * @param attrName
-	 * @param htmlAttrName
-	 * @param prefValue
-	 * @param defValue
-	 */
-	public static void correctAttribute(Element sourceNode, Element visualNode,
-			String attrName, String htmlAttrName, String prefValue, String defValue) {
-		String attrValue = ((Element) sourceNode).getAttribute(attrName);
-		if (prefValue != null && prefValue.trim().length() > 0 && attrValue != null) {
-			attrValue = prefValue.trim() + " " + attrValue;
-		}
-		if (attrValue != null) {
-			visualNode.setAttribute(htmlAttrName, attrValue);
-		} else if (defValue != null) {
-			visualNode.setAttribute(htmlAttrName, defValue);
-		} else
-			visualNode.removeAttribute(attrName);
 	}
 
 	/**
