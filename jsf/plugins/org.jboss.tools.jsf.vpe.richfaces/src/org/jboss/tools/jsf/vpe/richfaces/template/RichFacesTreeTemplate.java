@@ -241,9 +241,10 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
 	 * @param node
 	 */
 	private void revertTableRows(nsIDOMNode node) {
-		if (!(node instanceof nsIDOMElement)) {
-			return;
-		}
+	   
+		//if (!(node instanceof nsIDOMElement)) {
+		//	return;
+		//}
 		
 		nsIDOMNodeList list = node.getChildNodes();
 		if (node.getNodeName().equalsIgnoreCase(
