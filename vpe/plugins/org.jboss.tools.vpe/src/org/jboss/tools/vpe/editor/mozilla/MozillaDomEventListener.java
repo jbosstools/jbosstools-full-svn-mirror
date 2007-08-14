@@ -16,6 +16,7 @@ import org.mozilla.interfaces.nsIClipboardDragDropHooks;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMEventListener;
+import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDragSession;
 import org.mozilla.interfaces.nsISelection;
@@ -36,6 +37,19 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	// TODO Max Areshkau add DnD
 //	private VpeDnD dnd; 
 	private EditorDomEventListener editorDomEventListener;
+	
+	//possible events
+	public static final String MOUSEMOVEEVENTTYPE="mousemove";
+	
+	public static final String MOUSEDOWNEVENTTYPE="mousedown";
+	
+	public static final String MOUSEUPEVENTTYPE="mouseup";
+	
+	public static final String CLICKEVENTTYPE="click";
+	
+	public static final String KEYPRESS="keypress";
+	
+	public static final String DBLCLICK="dblclick";
 	
 	public MozillaDomEventListener() {
 		createCOMInterfaces();
@@ -95,6 +109,14 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 		editorDomEventListener = listener;
 	}
 
+	/**
+	 * Returns event handler
+	 * @return
+	 */
+	private EditorDomEventListener  getEditorDomEventListener(){
+		
+		return editorDomEventListener;
+	}
 	// TODO Alexey Yukhovich add resizer support
 //	// IVpeResizeListener
 //	int EndResizing(int usedHandle, int newTop, int newLeft, int newWidth, int newHeight, int aResizedObject) {
@@ -311,7 +333,41 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIDOMEventListener#handleEvent(org.mozilla.interfaces.nsIDOMEvent)
 	 */
-	public void handleEvent(nsIDOMEvent arg0) {
+	public void handleEvent(nsIDOMEvent domEvent) {	
+		
+		if(getEditorDomEventListener()==null){
+			
+			return;
+		} else if(MOUSEMOVEEVENTTYPE.equals(domEvent.getType())) {
+			
+			nsIDOMMouseEvent mouseEvent;
+			mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+			getEditorDomEventListener().mouseClick(mouseEvent);
+		} else if(MOUSEDOWNEVENTTYPE.equals(domEvent.getType())) {
+			
+			nsIDOMMouseEvent mouseEvent;
+			mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+			getEditorDomEventListener().mouseDown(mouseEvent);
+		} else if(MOUSEUPEVENTTYPE.equals(domEvent.getType())) {
+			
+			nsIDOMMouseEvent mouseEvent;
+			mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+			getEditorDomEventListener().mouseUp(mouseEvent);
+		} else if(CLICKEVENTTYPE.equals(domEvent.getType())) {
+			
+			nsIDOMMouseEvent mouseEvent;
+			mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+			getEditorDomEventListener().mouseUp(mouseEvent);
+		} else if(DBLCLICK.equals(domEvent.getType())) {
+			
+			nsIDOMMouseEvent mouseEvent;
+			mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+			getEditorDomEventListener().mouseDblClick(mouseEvent);
+		} else if(KEYPRESS.equals(domEvent.getType())) {
+			
+			nsIDOMKeyEvent keyEvent = (nsIDOMKeyEvent) domEvent.queryInterface(nsIDOMKeyEvent.NS_IDOMKEYEVENT_IID);
+			getEditorDomEventListener().keyPress(keyEvent);
+		}
 	}
 
 	/* (non-Javadoc)
