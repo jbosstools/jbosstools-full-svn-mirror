@@ -81,8 +81,8 @@ public class RichFacesInputNumberSliderTemplate extends
 	final private static Class<?>[] defaultArgsMappedMethods = new Class<?>[2];
 
 	static {
-		defaultArgsMappedMethods[0] = Element.class;
-		defaultArgsMappedMethods[1] = nsIDOMElement.class;
+		defaultArgsMappedMethods[0] = nsIDOMElement.class;
+		defaultArgsMappedMethods[1] = Element.class;
 	}
 
 	/**
@@ -263,8 +263,8 @@ public class RichFacesInputNumberSliderTemplate extends
 		// set a default values
 		//
 
-		Object[] inPatams = new Element[2];
-		inPatams[0] = (Element) table1;
+		Object[] inPatams = new Object[2];
+		inPatams[0] = table1;
 		inPatams[1] = sourceNode;
 
 		for (Map.Entry<String, Method> e : mapAttributeToMethod.entrySet()) {
@@ -298,8 +298,8 @@ public class RichFacesInputNumberSliderTemplate extends
 
 		Method function = mapAttributeToMethod.get(name);
 		if (function != null) {
-			Object[] inPatams = new Element[2];
-			inPatams[0] = (Element) visualNode;
+			Object[] inPatams = new Object[2];
+			inPatams[0] = visualNode;
 			inPatams[1] = sourceElement;
 			try {
 				function.invoke(this, inPatams);
@@ -497,18 +497,17 @@ public class RichFacesInputNumberSliderTemplate extends
 	 * @param visualNode
 	 * @param sourceNode
 	 */
-	public void setWidth(Element visualNode, Element sourceNode) {
-		Element table = visualNode;
-		String tmp = getAttribute(HtmlComponentUtil.HTML_WIDTH_ATTR, sourceNode);
-		if (tmp.length() == 0) {
-			tmp = parseStyleWidth(sourceNode);
-		}
-		if (tmp.length() == 0) {
-			table.setAttribute(HtmlComponentUtil.HTML_WIDTH_ATTR, "200px;");
-		} else {
-			table.setAttribute(HtmlComponentUtil.HTML_WIDTH_ATTR, tmp);
-		}
-
+	public void setWidth(nsIDOMElement visualNode, Element sourceNode) {
+	    nsIDOMElement table = visualNode;
+	    String tmp = getAttribute(HtmlComponentUtil.HTML_WIDTH_ATTR, sourceNode);
+	    if (tmp.length() == 0) {
+		tmp = parseStyleWidth(sourceNode);
+	    }
+	    if (tmp.length() == 0) {
+		table.setAttribute(HtmlComponentUtil.HTML_WIDTH_ATTR, "200px;");
+	    } else {
+		table.setAttribute(HtmlComponentUtil.HTML_WIDTH_ATTR, tmp);
+	    }
 	}
 
 	/**
@@ -516,7 +515,7 @@ public class RichFacesInputNumberSliderTemplate extends
 	 * @param visualNode
 	 * @param sourceNode
 	 */
-	public void setStyle(Element visualNode, Element sourceNode) {
+	public void setStyle(nsIDOMElement visualNode, Element sourceNode) {
 		/*
 		 * Element table= visualNode; String tmp =
 		 * getAttribute(HtmlComponentUtil.HTML_STYLE_ATTR,sourceNode);
@@ -607,10 +606,10 @@ public class RichFacesInputNumberSliderTemplate extends
 	 * @param visualNode
 	 * @param sourceNode
 	 */
-	public void setClass(Element visualNode, Element sourceNode) {
-		Element table = visualNode;
-		String tmp = getAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, sourceNode);
-		table.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR,
+	public void setClass(nsIDOMElement visualNode, Element sourceNode) {
+	    nsIDOMElement table = visualNode;
+	    String tmp = getAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, sourceNode);
+	    table.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR,
 				new StringBuffer().append(tmp).toString());
 	}
 
