@@ -10,10 +10,12 @@ public class AppFileLocProvider implements IAppFileLocProvider {
 	private File xulRunnerPath;
 	private File userDataPath;
 	
-	private final String PLUGINS_DIRECTORY = "plugins";
-	private final String HISTORY_FILE = "history.dat";
-	private final String COMPREG_FILE = "compreg.dat";
-	private final String XPTI_FILE = "xpti.dat";
+	private static final String PLUGINS_DIRECTORY = "plugins"; // $NON-NLS-1$
+	private static final String HISTORY_FILE = "history.dat"; // $NON-NLS-1$
+	private static final String COMPREG_FILE = "compreg.dat"; // $NON-NLS-1$
+	private static final String XPTI_FILE = "xpti.dat"; // $NON-NLS-1$
+	private static final String COMPONENTS_DIRECTORY = "components"; //$NON-NLS-1$
+	
 	
 	public AppFileLocProvider(File xulRunnerPath) {
 		this.xulRunnerPath = xulRunnerPath;
@@ -36,6 +38,10 @@ public class AppFileLocProvider implements IAppFileLocProvider {
 			return new File(userDataPath, COMPREG_FILE);
 		} else if ("XptiRegF".equals(prop)) { // $NON-NLS-1$
 			return new File(userDataPath, XPTI_FILE);
+		} else if ("GreD".equals(prop)) { // $NON-NLS-1$
+			return xulRunnerPath;
+		} else if ("GreComsD".equals(prop) || "ComsD".equals(prop)) { // $NON-NLS-1$
+			return new File(xulRunnerPath, COMPONENTS_DIRECTORY);
 		}
 		
 		return null;
