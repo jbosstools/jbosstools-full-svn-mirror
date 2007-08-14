@@ -85,8 +85,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private EditorDomEventListener editorDomEventListener;
 	private IVpeToolBarManager vpeToolBarManager;
 	private FormatControllerManager formatControllerManager = new FormatControllerManager();
-	private SelectionBar selectionBar = new SelectionBar();
-
+	
 	public void doSave(IProgressMonitor monitor) {
 	}
 
@@ -117,10 +116,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		this.controller = controller;
 		formatControllerManager.setVpeController(controller);
 		controller.setToolbarFormatControllerManager(formatControllerManager);
-		//Add the Selection Bar to listen VPE 
-		selectionBar.setVpeController(controller);
-//		editor.addControlListener(selectionBar);
-		controller.setSelectionBarController(selectionBar);
 	}
 
 	Link link = null;	
@@ -200,38 +195,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			}
 		});
 		verBar.pack();
-		
-		//Bottom Button to show/hide the Selection Bar
-		VpePlugin.getDefault().getPreferenceStore().setDefault(SELECT_BAR, "show"); //$NON-NLS-1$
-		VpePlugin.getDefault().savePluginPreferences();		
-		
-		ToolBar bt = new ToolBar(cmpVerticalToolbar, SWT.VERTICAL|SWT.FLAT|SWT.BOTTOM);
-		ToolItem bbt = new ToolItem(bt, SWT.FLAT | SWT.CHECK);
-		bbt.setToolTipText(VpeUIMessages.SHOW_HIDE_SELECTIONBAR);
-		bbt.setImage(ImageDescriptor.createFromFile(MozillaEditor.class, "icons/tag_line.gif").createImage()); //$NON-NLS-1$
-		boolean bshow;
-		if (VpePlugin.getDefault().getPreferenceStore().getString(SELECT_BAR).equals("show")){ //$NON-NLS-1$
-			bbt.setSelection(true);
-			bshow = true;			
-		}
-		else{ 
-			bbt.setSelection(false);
-			bshow = false;
-		}
-				
-		bbt.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				String preferenceValue = VpePlugin.getDefault().getPreferenceStore().getString(SELECT_BAR);
-				selectionBar.showBar(preferenceValue);
-				if (preferenceValue.equals("show")) { //$NON-NLS-1$
-					VpePlugin.getDefault().getPreferenceStore().setValue(SELECT_BAR, "hide"); //$NON-NLS-1$
-				}
-				else {
-					VpePlugin.getDefault().getPreferenceStore().setValue(SELECT_BAR, "show"); //$NON-NLS-1$
-					}
-				VpePlugin.getDefault().savePluginPreferences();
-			}			
-		});
 		
 		//Create a composite to the Editor
 		Composite cmpEd = new Composite (cmpEdTl, SWT.NATIVE);
@@ -318,8 +281,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	        link.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 	        Label fill = new Label(cmpEd, SWT.WRAP);		
 	        fill.setLayoutData(new GridData(GridData.FILL_BOTH));	        
-		}		
-		selectionBar.createToolBarComposite(cmpEdTl, bshow);
+		}
 	}
 
 	private ToolItem createToolItem(ToolBar parent, int type, String image, String toolTipText) {
@@ -354,10 +316,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			editor.dispose();
 			editor = null;
 		}
-		if (selectionBar != null) {
-			selectionBar.dispose();
-			selectionBar = null;
-		}		
 	}
 
 	public void setEditorLoadWindowListener(EditorLoadWindowListener listener) {

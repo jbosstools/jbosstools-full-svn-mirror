@@ -43,7 +43,7 @@ public class VpeUIMessages extends NLS {
 	public static String PREFERENCES;
 	public static String REFRESH;
 	public static String PAGE_DESIGN_OPTIONS;
-	public static String SHOW_HIDE_SELECTIONBAR;
+	public static String HIDE_SELECTIONBAR;
 	public static String MOZILLA_LOADING_ERROR;
 	public static String MOZILLA_LOADING_ERROR_LINK_TEXT;
 	public static String MOZILLA_LOADING_ERROR_LINK;
@@ -89,7 +89,9 @@ public class VpeUIMessages extends NLS {
 	public static String JUSTIFY;
 	public static String BULLETS;
 	public static String NUMBERING;
-
+	public static String CONFIRM_SELECTION_BAR_DIALOG_TITLE;
+	public static String CONFIRM_SELECTION_BAR_DIALOG_MESSAGE;
+	public static String CONFIRM_SELECTION_BAR_DIALOG_TOGGLE_MESSAGE;
 	
 	
 }

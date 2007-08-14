@@ -2407,7 +2407,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	}
 
 	public void selectionChanged(SelectionChangedEvent event) {
-		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
+		if (editPart.getVisualMode() != VpeEditorPart.PREVIEW_MODE) {
 			if(toolbarFormatControllerManager != null) toolbarFormatControllerManager.selectionChanged();
 			if(selectionBar != null) selectionBar.selectionChanged();		
 		}

@@ -73,36 +73,7 @@ public class SashForm extends Composite {
 		int mask = SWT.BORDER;
 		return style & mask;
 	}
-	public Point computeSize (int wHint, int hHint, boolean changed) {
-		checkWidget();
-		Control[] controls = getControls(true);
-		if (controls.length == 0) return new Point(wHint, hHint);
-		
-		int width = 0;
-		int height = 0;
-		boolean vertical = (orientation == SWT.VERTICAL);
-		if (vertical) {
-			height += (controls.length - 1) * SASH_WIDTH;
-		} else {
-			width += (controls.length - 1) * SASH_WIDTH;
-		}
-		for (int i = 0; i < controls.length; i++) {
-			if (vertical) {
-				Point size = controls[i].computeSize(wHint, SWT.DEFAULT);
-				height += size.y;	
-				width = Math.max(width, size.x);
-			} else {
-				Point size = controls[i].computeSize(SWT.DEFAULT, hHint);
-				width += size.x;
-				height = Math.max(height, size.y);
-			}
-		}
-		if (wHint != SWT.DEFAULT) width = wHint;
-		if (hHint != SWT.DEFAULT) height = hHint;
-		
-		return new Point(width, height);
-	}
-
+	
 	public int getOrientation() {
 		return orientation;
 	}
