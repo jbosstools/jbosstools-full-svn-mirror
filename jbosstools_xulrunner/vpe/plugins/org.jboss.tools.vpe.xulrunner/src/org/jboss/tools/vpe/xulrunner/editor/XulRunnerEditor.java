@@ -143,6 +143,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	
 	public nsITransferable createTransferable() {
 		nsIComponentManager componentManager = getComponentManager();
-		return (nsITransferable) componentManager.createInstanceByContractID(XPCOM.NS_ITRANSFERABLE_CONTRACTID, this, nsITransferable.NS_ITRANSFERABLE_IID);
+		return (nsITransferable) componentManager.createInstanceByContractID(XPCOM.NS_TRANSFERABLE_CONTRACTID, this, nsITransferable.NS_ITRANSFERABLE_IID);
 	}
 }

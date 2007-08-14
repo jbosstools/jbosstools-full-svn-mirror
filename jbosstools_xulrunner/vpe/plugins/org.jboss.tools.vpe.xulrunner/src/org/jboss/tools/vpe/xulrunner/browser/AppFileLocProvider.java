@@ -17,21 +17,24 @@ public class AppFileLocProvider implements IAppFileLocProvider {
 	
 	public AppFileLocProvider(File xulRunnerPath) {
 		this.xulRunnerPath = xulRunnerPath;
-		this.userDataPath = Platform.getLocation().append(".metadata/.plugins")
+		this.userDataPath = Platform.getLocation().append(".metadata/.plugins") // $NON-NLS-1$
 				.append(BrowserPlugin.PLUGIN_ID)
-				.append("xulrunner").toFile();
+				.append("xulrunner").toFile(); // $NON-NLS-1$
 	}
 	
 	public File getFile(String prop, boolean[] persistent) {
 		persistent[0] = false;
 		
-		if ("ProfD".equals(prop)) {
+		// TODO Sergey Vasilyev remove debug output
+		System.out.println("AppFileLocProvider.getFile(" + prop + ")");
+		
+		if ("ProfD".equals(prop)) { // $NON-NLS-1$
 			return userDataPath;
-		} else if ("UHist".equals(prop)) {
+		} else if ("UHist".equals(prop)) { // $NON-NLS-1$
 			return new File(userDataPath, HISTORY_FILE); 
-		} else if ("ComRegF".equals(prop)) {
+		} else if ("ComRegF".equals(prop)) { // $NON-NLS-1$
 			return new File(userDataPath, COMPREG_FILE);
-		} else if ("XptiRegF".equals(prop)) {
+		} else if ("XptiRegF".equals(prop)) { // $NON-NLS-1$
 			return new File(userDataPath, XPTI_FILE);
 		}
 		
@@ -39,7 +42,10 @@ public class AppFileLocProvider implements IAppFileLocProvider {
 	}
 
 	public File[] getFiles(String prop) {
-		if("APluginsDL".equals(prop)) {
+		// TODO Sergey Vasilyev remove debug output
+		System.out.println("AppFileLocProvider.getFiles(" + prop + ")");
+
+		if("APluginsDL".equals(prop)) { // $NON-NLS-1$
 			return new File[] {new File(xulRunnerPath, PLUGINS_DIRECTORY)};
 		}
 		

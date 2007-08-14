@@ -22,7 +22,9 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
+import org.mozilla.interfaces.nsIAppShell;
 import org.mozilla.interfaces.nsIBaseWindow;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIRequest;
@@ -36,6 +38,7 @@ import org.mozilla.interfaces.nsIWebBrowserFocus;
 import org.mozilla.interfaces.nsIWebNavigation;
 import org.mozilla.interfaces.nsIWebProgress;
 import org.mozilla.interfaces.nsIWebProgressListener;
+import org.mozilla.interfaces.nsIWindowWatcher;
 import org.mozilla.xpcom.Mozilla;
 import org.osgi.framework.Bundle;
 
@@ -76,7 +79,15 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 		}
 		
 		nsIComponentManager componentManager = mozilla.getComponentManager();
-		webBrowser = (nsIWebBrowser) componentManager.createInstance("F1EAC761-87E9-11d3-AF80-00A024FFC08C", null, nsIWebBrowser.NS_IWEBBROWSER_IID); //$NON-NLS-1$
+		nsIAppShell appShell = (nsIAppShell) componentManager.createInstance(XPCOM.NS_IAPPSHELL_CID, null, nsIAppShell.NS_IAPPSHELL_IID);
+		appShell.create(null, null);
+		appShell.spinup();
+				
+		nsIServiceManager serviceManager = mozilla.getServiceManager();
+		nsIWindowWatcher windowWatcher = (nsIWindowWatcher) serviceManager.getServiceByContractID(XPCOM.NS_WINDOWWATCHER_CONTRACTID, nsIWindowWatcher.NS_IWINDOWWATCHER_IID);
+		windowWatcher.setWindowCreator(new WindowCreator());
+		
+		webBrowser = (nsIWebBrowser) componentManager.createInstance(XPCOM.NS_IWEBBROWSER_CID, null, nsIWebBrowser.NS_IWEBBROWSER_IID); //$NON-NLS-1$
 		webBrowser.setContainerWindow(this);
 		nsIBaseWindow baseWindow = (nsIBaseWindow) webBrowser.queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID);
 		
@@ -357,16 +368,5 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 	 * @see org.mozilla.interfaces.nsITooltipListener#onShowTooltip(int, int, java.lang.String)
 	 */
 	public void onShowTooltip(int aXCoords, int aYCoords, String aTipText) {
-	}
-
-	/* (non-Javadoc)
-	 * @see org.eclipse.swt.widgets.Widget#dispose()
-	 */
-	@Override
-	public void dispose() {
-		if (mozilla != null) {
-			mozilla.termEmbedding();
-		}
-		super.dispose();
 	}
 }
