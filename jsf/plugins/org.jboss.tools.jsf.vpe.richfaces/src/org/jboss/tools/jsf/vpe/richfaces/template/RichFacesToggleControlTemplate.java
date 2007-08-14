@@ -27,7 +27,8 @@ import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.mozilla.interfaces.nsIDOMDocument;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -35,24 +36,16 @@ import org.w3c.dom.NodeList;
 public class RichFacesToggleControlTemplate  extends VpeAbstractTemplate implements VpeToggableTemplate {
 
 	private static Map toggleMap = new HashMap();
-	private static Element storedSwitchSpan = null;
-
-	// TODO A. Yukhovich please fix it
-	/*
-	@Override
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		return true;
-	}
-	*/
+	private static nsIDOMElement storedSwitchSpan = null;
 	
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 
 		Element sourceElement = (Element)sourceNode;
 
-		Element span = visualDocument.createElement("span");
+		nsIDOMElement span = visualDocument.createElement("span");
 		storedSwitchSpan = span;
-		// TODO A. Yukhovich please fix it
-		VpeCreationData creationData = new VpeCreationData(null/*span*/);
+		
+		VpeCreationData creationData = new VpeCreationData(span);
 
 		String forIds = sourceElement.getAttribute("for");
 		String value = sourceElement.getAttribute("value");
@@ -69,13 +62,12 @@ public class RichFacesToggleControlTemplate  extends VpeAbstractTemplate impleme
 		span.setAttribute("vpe-user-toggle-id", (switchToState == null ? "" : switchToState.trim()));
 
 		List<Node> children = ComponentUtil.getChildren(sourceElement);
-		// TODO A. Yukhovich please fix it
-		VpeChildrenInfo bodyInfo = new VpeChildrenInfo(null/*span*/);
+		VpeChildrenInfo bodyInfo = new VpeChildrenInfo(span);
 		//string shoudn't be null, if then it's crash application
 		if(value==null){
 			value="";
 		}
-		Node valueText = visualDocument.createTextNode(value);
+		nsIDOMNode valueText = visualDocument.createTextNode(value);
 		span.appendChild(valueText);
 		
 		for (Node child : children) {
@@ -93,9 +85,9 @@ public class RichFacesToggleControlTemplate  extends VpeAbstractTemplate impleme
 	 * @param visualDocument The document of the visual tree.
 	 * @param data Object <code>VpeCreationData</code>, built by a method <code>create</code>
 	 */
-	public void validate(VpePageContext pageContext, Node sourceNode, Document visualDocument, VpeCreationData data) {
-		// TODO A. Yukhovich please fix it
-		// super.validate(pageContext, sourceNode, visualDocument, data);
+	public void validate(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, VpeCreationData data) {
+		
+		super.validate(pageContext, sourceNode, visualDocument, data);
 		if (storedSwitchSpan == null) return;
 		
 		String value = storedSwitchSpan.getAttribute("vpe-user-toggle-id");
@@ -103,12 +95,13 @@ public class RichFacesToggleControlTemplate  extends VpeAbstractTemplate impleme
 		applyAttributeValueOnChildren("vpe-user-toggle-lookup-parent", "true", ComponentUtil.getChildren(storedSwitchSpan));
 	}
 	
-	private void applyAttributeValueOnChildren(String attrName, String attrValue, List<Node> children) {
+	private void applyAttributeValueOnChildren(String attrName, String attrValue, List<nsIDOMNode> children) {
 		if (children == null || attrName == null || attrValue == null) return;
 		
-		for (Node child : children) {
-			if (child instanceof Element) {
-				Element childElement = (Element)child;
+		for (nsIDOMNode child : children) {
+			if (child instanceof nsIDOMElement) {
+				nsIDOMElement childElement = (nsIDOMElement)child
+						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 				childElement.setAttribute(attrName, attrValue);
 				applyAttributeValueOnChildren(attrName, attrValue, ComponentUtil.getChildren(childElement));
 			}
@@ -145,8 +138,6 @@ public class RichFacesToggleControlTemplate  extends VpeAbstractTemplate impleme
 				}
 			}
 		}
-		
-		
 	}
 
 	private List<Element> findElementsById (Element root, String id) {
@@ -173,11 +164,4 @@ public class RichFacesToggleControlTemplate  extends VpeAbstractTemplate impleme
 	public void stopToggling(Node sourceNode) {
 		toggleMap.remove(sourceNode);
 	}
-
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

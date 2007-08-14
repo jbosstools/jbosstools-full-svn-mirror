@@ -165,9 +165,8 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
 	public void validate(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument, VpeCreationData data) {
 		super.validate(pageContext, sourceNode, visualDocument, data);
-		//TODO: Evgeny Zheleznyakov
-		nsIDOMNode node = data.getNode();
-		revertTableRows(node);
+		data.getChildrenInfoList().get(0);
+		revertTableRows(data.getNode());
 	}
 
 	/**
@@ -242,9 +241,11 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
 	 * @param node
 	 */
 	private void revertTableRows(nsIDOMNode node) {
+	    try {
 		if (!(node instanceof nsIDOMElement)) {
 			return;
 		}
+		
 		nsIDOMNodeList list = node.getChildNodes();
 		if (node.getNodeName().equalsIgnoreCase(
 				HtmlComponentUtil.HTML_TAG_TABLE)
@@ -260,6 +261,9 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
 		for (int i = 0; i < list2.getLength(); i++) {
 			revertTableRows(list2.item(i));
 		}
+	    }catch(Throwable t) {
+		t.printStackTrace();
+	    }
 	}
 
 	/**
@@ -357,10 +361,7 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
 						.equals(name)) {
 			correctImage(pageContext, sourceElement, visualNode);
 		}
-	}
-	
-	
-	
+	}	
 	
 	@Override
 	public void removeAttribute(VpePageContext pageContext,
