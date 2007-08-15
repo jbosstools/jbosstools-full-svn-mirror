@@ -198,11 +198,15 @@ public class SelectionBar extends Layout implements SelectionListener {
 		item.addSelectionListener(this);
 		item.setData(node);
 	    }
+
 	    item.setText(node.getNodeName());
 	    elementCounter++;
 	    node = node.getParentNode();
 	}
+
 	itemCount = elementCounter;
+	cmpToolBar.layout();
+	//bug was fixed when toolbar are not shown for resizeble components
 	cmpToolBar.layout();
     }
 
