@@ -26,10 +26,14 @@ import org.mozilla.interfaces.nsIDOMWindow;
 import org.mozilla.interfaces.nsIDocShell;
 import org.mozilla.interfaces.nsIDragService;
 import org.mozilla.interfaces.nsIDragSession;
+import org.mozilla.interfaces.nsIEditingSession;
 import org.mozilla.interfaces.nsIInterfaceRequestor;
+import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsITransferable;
+import org.mozilla.xpcom.Mozilla;
+import org.mozilla.xpcom.XPCOMException;
 
 /**
  * @author Sergey Vasilyev (svasilyev@exadel.com)
@@ -59,12 +63,17 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	public static final String TRANS_FLAVOR_kUnicodeMime = "text/unicode";
 	public static final String TRANS_FLAVOR_kNativeHTMLMime = "application/x-moz-nativehtml";
 	
+	/**Editor types */
+	public static final String AEDITOR_TYPE_HTML="html";
+	
+
 	/**
 	 * @param parent
 	 * @throws XulRunnerException
 	 */
 	public XulRunnerEditor(Composite parent) throws XulRunnerException {
 		super(parent);
+		
 	}
 
 	public boolean isMozillaDragFlavor() {
@@ -144,5 +153,24 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	public nsITransferable createTransferable() {
 		nsIComponentManager componentManager = getComponentManager();
 		return (nsITransferable) componentManager.createInstanceByContractID(XPCOM.NS_TRANSFERABLE_CONTRACTID, this, nsITransferable.NS_ITRANSFERABLE_IID);
+	}
+
+	/**
+	 * Returns selection controller which used in selection functionality
+	 * @return
+	 */
+	public nsISelection getSelection() {
+
+//		try{
+		nsIServiceManager serviceManager = Mozilla.getInstance().getServiceManager();
+		nsIEditingSession editingSession = (nsIEditingSession) serviceManager.getServiceByContractID
+		("@mozilla.org/editor/editingsession;1", nsIEditingSession.NS_IEDITINGSESSION_IID);
+		nsIDOMWindow domWindow = getWebBrowser().getContentDOMWindow();
+		nsISelection selection = domWindow.getSelection();
+		return selection;
+//		} catch(XPCOMException exception) {
+//			exception.printStackTrace();
+//		}
+//		return null;
 	}
 }
