@@ -53,10 +53,14 @@
       </mediaobject>
     </figure>
     
-    <para>Since you selected JPA and JSF tooling support, the project needs to incorporate the JAR files for those frameworks on its classpath. In the next two screens, you will be able to select where those library JARs come from. The easiest is just to select the JARs provided by the JBoss AS runtime associated with this project. That is why it is important to chose the right JBoss AS 4.2 runtime in the project setup window.</para>
     
-    <para>Ignore the database selection for now since we do not use an external database in this simple application. We can still use the embedded HSQL DB inside JBoss AS for development / testing purposes, as we will see soon.</para>
     
+    <para>Now you need to define a connection profile and choose a database. If you have no connections yet you should create the one.</para>
+    <orderedlist>
+    <listitem><para>Click &quot;Add connection&quot; link in the panel Connection.</para></listitem>
+    <listitem><para>Choose HSQLDB Connection Profile.</para></listitem>
+    <listitem><para>Give a name to your connection and some description. Click Next.</para></listitem>
+    </orderedlist>
     <figure>
       <title>Select provider for JPA JARs</title>
       <mediaobject> 
@@ -65,12 +69,99 @@
         </imageobject>
       </mediaobject>
     </figure>
+    <figure>
+      <title>Give a name to connection profile</title>
+      <mediaobject> 
+        <imageobject>
+          <imagedata fileref="images/connectionprofile.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    
+    <para>Now you need to specify driver and connection details.</para>
+    <figure>
+      <title>Give a name to connection profile</title>
+      <mediaobject> 
+        <imageobject>
+          <imagedata fileref="images/connectionprofile2.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    
+    <orderedlist continuation="continues">
+    <listitem><para>Click the Browse button near driver selection drop down list.</para></listitem>
+    <listitem><para>In the next dialog select Add button.</para></listitem>
+    <listitem><para>Select Hypersonic database: Hypersonic &gt; 1.8 &gt; Hypersonic DB.</para></listitem>
+    </orderedlist>
+    
+    <figure>
+      <title>Select database</title>
+      <mediaobject> 
+        <imageobject>
+          <imagedata fileref="images/connectionprofile3.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <para>You should make wizard to know where the driver is located.</para>
+    <figure>
+      <title>Add driver</title>
+      <mediaobject> 
+        <imageobject>
+          <imagedata fileref="images/connectionprofile4.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    
+    <orderedlist continuation="continues">
+    <listitem><para>Select hsqldb.jar in Driver File panel and click the button Remove jar/Zip.</para></listitem>
+    <listitem><para>Select Add jar/Zip.</para></listitem>
+    <listitem><para>Select hsqldb driver which is located in jboss-eap &gt; jboss-as &gt; server &gt; default &gt; lib folder of RHDS installation.</para></listitem>
+    </orderedlist>
+    <figure>
+      <title>Adding driver</title>
+      <mediaobject> 
+        <imageobject>
+          <imagedata fileref="images/connectionprofile5.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    
+    <orderedlist continuation="continues">
+    <listitem><para>Click OK, then click OK again. You will see a database added in wizard window.</para></listitem>
+    </orderedlist>
+    
+    <figure>
+      <title>Database added</title>
+      <mediaobject> 
+        <imageobject>
+          <imagedata fileref="images/connectionprofile6.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    
+    <orderedlist continuation="continues">
+    <listitem><para>Select Next to procede further. A summary diallog will be prompted.</para></listitem>
+    </orderedlist>
+        
+    <figure>
+      <title>Summary window</title>
+      <mediaobject> 
+        <imageobject>
+          <imagedata fileref="images/connectionprofile7.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    
+    <orderedlist continuation="continues">
+    <listitem><para>Click Finish button. Connection profile will be added. Click Finish again.</para></listitem>
+    </orderedlist>
+    <para>Since you selected JPA and JSF tooling support, the project needs to incorporate the JAR files for those frameworks on its classpath. In the next two screens, you will be able to select where those library JARs come from. The easiest is just to select the JARs provided by the JBoss AS runtime associated with this project. That is why it is important to chose the right JBoss AS 4.2 runtime in the project setup window.</para>
     
     <figure>
       <title>Select provider for JSF JARs</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/SeamNewProj05.png"/>
+          <imagedata fileref="images/SeamNewProj08.png"/>
         </imageobject>
       </mediaobject>
     </figure>
