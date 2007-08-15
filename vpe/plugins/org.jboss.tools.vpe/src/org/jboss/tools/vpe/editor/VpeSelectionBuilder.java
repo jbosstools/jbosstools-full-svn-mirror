@@ -20,6 +20,7 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
+import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.template.VpePseudoContentCreator;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
@@ -36,6 +37,7 @@ import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsIDOMRange;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionController;
+import org.mozilla.interfaces.nsISelectionDisplay;
 import org.mozilla.interfaces.nsISupports;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
@@ -49,17 +51,17 @@ public class VpeSelectionBuilder {
 	private VpeVisualDomBuilder visualBuilder;
 	// TODO Sergey Vasilyev figure out with press shell and selection controller
 //	private nsIPresShell presShell;
-	private nsISelectionController visualSelectionController;
+	private VpeSelectionController visualSelectionController;
 
-	VpeSelectionBuilder(VpeDomMapping domMapping, VpeSourceDomBuilder sourceBuilder, VpeVisualDomBuilder visualBuilder, nsISelectionController visualSelectionController) {	
+	VpeSelectionBuilder(VpeDomMapping domMapping, VpeSourceDomBuilder sourceBuilder, VpeVisualDomBuilder visualBuilder, VpeSelectionController visualSelectionController) {	
 //	VpeSelectionBuilder(VpeDomMapping domMapping, VpeSourceDomBuilder sourceBuilder, VpeVisualDomBuilder visualBuilder, nsIPresShell presShell, nsISelectionController visualSelectionController) {
 		this.domMapping = domMapping;
 		this.sourceBuilder = sourceBuilder;
 		this.visualBuilder = visualBuilder;
 		// TODO Sergey Vasilyev figure out with selection controller and press shell
 //		this.presShell = presShell;
-//		this.visualSelectionController = visualSelectionController;
-//		visualSelectionController.setSelectionFlags(nsISelectionDisplay.DISPLAY_ALL);
+		this.visualSelectionController = visualSelectionController;
+		visualSelectionController.setSelectionFlags(nsISelectionDisplay.DISPLAY_ALL);
 	}
 
 	void setVisualSelection(Node sourceNode, int caretPosition) {
@@ -328,7 +330,7 @@ public class VpeSelectionBuilder {
 	
 	void setClickContentAreaSelection(nsIDOMMouseEvent mouseEvent) {
 //		Node visualNode = mouseEvent.getTargetNode();
-//		nsISelection selection = visualSelectionController.getSelection();
+//		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
 //		Node anchorNode = selection.getAnchorNode();
 //		Node focusNode = selection.getFocusNode();
 	}
