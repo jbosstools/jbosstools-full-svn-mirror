@@ -62,6 +62,7 @@ import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsIDOMRange;
 import org.mozilla.interfaces.nsIDOMText;
+import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -782,10 +783,13 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	public boolean doToggle(nsIDOMNode visualNode) {
 		if (visualNode == null) return false;
-		
-		nsIDOMElement visualElement = (nsIDOMElement) (visualNode instanceof nsIDOMElement ? 
-				visualNode : visualNode.getParentNode());
-		
+		nsIDOMElement visualElement = null;
+		try{
+			
+		 visualElement = (nsIDOMElement) visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID); 
+		} catch(XPCOMException exception) {
+		 visualElement =  (nsIDOMElement) visualNode.getParentNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+		}
 		if (visualElement == null) return false;
 
 		nsIDOMAttr toggleIdAttr = visualElement.getAttributeNode("vpe-user-toggle-id");

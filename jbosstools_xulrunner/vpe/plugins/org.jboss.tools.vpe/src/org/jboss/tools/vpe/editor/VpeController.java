@@ -117,6 +117,7 @@ import org.jboss.tools.vpe.editor.menu.BaseActionManager.MyMenuManager;
 import org.jboss.tools.vpe.editor.mozilla.EditorDomEventListener;
 import org.jboss.tools.vpe.editor.mozilla.MozillaDropInfo;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
+import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.editor.template.VpeEditAnyDialog;
@@ -146,6 +147,7 @@ import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsISupportsArray;
 import org.mozilla.interfaces.nsITransferable;
 import org.mozilla.xpcom.Mozilla;
+import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -165,7 +167,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	// TODO Sergey Vasilyev figure out with nsIPressShell
 //	private nsIPresShell presShell;
 	// TODO Max Areshkau figure out with nsISelectionController
-//	private nsISelectionController visualSelectionController;
+	private VpeSelectionController visualSelectionController;
 	VpeDomMapping domMapping;
 	private VpeTemplateManager templateManager;
 	private VpeSourceDomBuilder sourceBuilder;
@@ -234,9 +236,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		// TODO Sergey Vasilyev figure out with nsIPressShell
 //		presShell = browser.getPresShell();
 		// TODO Max Areshkau figure out with nsISelectionController
-//		visualSelectionController = xulRunnerEditor.getSelectionController();
+		visualSelectionController = new VpeSelectionController(xulRunnerEditor.getSelection());
 		// TODO Max Areshkau figure out with VpeSelectionBuilder
-//		selectionBuilder = new VpeSelectionBuilder(domMapping, sourceBuilder, visualBuilder, presShell, visualSelectionController);
+		selectionBuilder = new VpeSelectionBuilder(domMapping, sourceBuilder, visualBuilder,  visualSelectionController);
 		visualKeyHandler = new VpeVisualKeyHandler(sourceEditor, domMapping, pageContext){
 			public void doSave(IProgressMonitor monitor){
 				editPart.doSave(monitor);
@@ -304,10 +306,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (visualEditor != null) {
 			visualEditor.setEditorDomEventListener(null);
 			// TODO Max Areshkau figure out with Selection Controller
-//			if (visualSelectionController != null) {
+			if (visualSelectionController != null) {
 //				visualSelectionController.Release();
-//				visualSelectionController = null;
-//			}
+				visualSelectionController = null;
+			}
 			// TODO Sergey Vasilyev figure out with Press Shell
 //			if (presShell != null) {
 //				presShell.Release();
@@ -775,9 +777,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	}
 	
 	public void mouseClick(nsIDOMMouseEvent mouseEvent) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
+//		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+//			return;
+//		}
+		try{
 		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 		if (visualNode != null) {
 			if (!mouseUpSelectionReasonFlag) {
@@ -794,6 +797,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			if (visualBuilder.doToggle(VisualDomUtil.getTargetNode(mouseEvent))) {
 				selectionBuilder.setClickContentAreaSelection();
 			}
+		}
+		} catch(Throwable exception) {
+			exception.printStackTrace();
 		}
 		switcher.stopActiveEditor(); 
 	}
@@ -840,11 +846,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 
 		try {
 			if (visualKeyHandler.keyPressHandler(keyEvent)) {
-//				switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
-//				sourceSelectionChanged1();
+				switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
+				sourceSelectionChanged1();
 				// TODO Max Areshkau figure out with Selection Controller
-//				visualSelectionController.setCaretEnabled(true);
-//				switcher.stopActiveEditor();
+				visualSelectionController.setCaretEnabled(true);
+				switcher.stopActiveEditor();
 			}
 		} catch (Exception e) {
 			VpePlugin.getPluginLog().logError(e);
@@ -873,7 +879,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				// Edward
 				sourceSelectionChanged(true);
 				// TODO Max Areshkau figure out with Selection 
-//				visualSelectionController.setCaretEnabled(true);
+				visualSelectionController.setCaretEnabled(true);
 				switcher.stopActiveEditor();
 			} else {
 				//adding calls of core event handlers, for example 'CTR+H' or 'CTRL+M' event handler dialog
