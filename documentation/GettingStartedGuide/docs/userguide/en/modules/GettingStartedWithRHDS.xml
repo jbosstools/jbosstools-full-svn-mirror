@@ -22,13 +22,13 @@
   <section id="InstallJDK50onLinux">
    <title>Installing and Configuring 32-bit Sun JDK 5.0 on Linux</title>
    <itemizedlist>
-    <listitem><para>Download the <ulink  url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0 (Java 2 Development Kit)</ulink> from Sun's website. 
-     Choose &quot;JDK 5.0 Update &lt;x&gt;&quot; (where x is the latest update number) for download and then select &quot;RPM in self-extracting&quot; file for Linux. Read the instructions on Sun's website for installing the JDK.</para></listitem>
-    <listitem><para>If you don't want to use SysV service scripts you can install the &quot;self-extracting file&quot; for Linux instead of choosing the &quot;RPM in self-extracting&quot; file. 
+    <listitem><para>Download the <ulink  url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0 (Java 2 Development Kit)</ulink> from Sun&apos;s website. 
+     Choose &quot;JDK 5.0 Update &lt;x&gt;&quot; (where x is the latest update number) for download and then select &quot;RPM in self-extracting&quot; file for Linux. Read the instructions on Sun&apos;s website for installing the JDK.</para></listitem>
+    <listitem><para>If you don&apos;t want to use SysV service scripts you can install the &quot;self-extracting file&quot; for Linux instead of choosing the &quot;RPM in self-extracting&quot; file. 
     In that case you can skip the next step mentioned here. But it is recommended to use the SysV service scripts for production servers.</para></listitem>
     <listitem><para>Download and install the appropriate -compat RPM from JPackage <ulink  url="ftp://jpackage.hmdc.harvard.edu/JPackage/1.7/generic/RPMS.non-free/">here</ulink>. 
     Please ensure you choose a matching version of the -compat package to the JDK you installed.</para></listitem>
-    <listitem><para>Create an environment variable that points to the JDK installation directory and call it JAVA_HOME. Add $JAVA_HOME/bin to the system path to be able to run java from the 
+    <listitem><para>Create an environment variable that points to the JDK installation directory and call it JAVA_HOME. Add <emphasis role="italic">$JAVA_HOME/bin</emphasis> to the system path to be able to run java from the 
     command line. You can do this by adding the following lines to the .bashrc file in your home directory.</para></listitem>
    </itemizedlist>
    <programlisting><![CDATA[#In this example /usr/java/jdk1.5.0_11 is the JDK installation directory.
@@ -42,7 +42,7 @@ export PATH=$PATH:$JAVA_HOME/bin]]></programlisting>
    
    <para>Set this variable for the user account doing the installation and also for the user account that will run the server.</para>
    <itemizedlist>
-    <listitem><para>If you have more than one version of JVM installed in your machine, make sure you are using the JDK1.5 installation as the default java and javac. 
+    <listitem><para>If you have more than one version of JVM installed in your machine, make sure you are using the JDK 1.5 installation as the default java and javac. 
      You can do this using the alternatives system. The alternatives system allows different versions of Java, from different sources to co-exist on your system.</para></listitem>
    </itemizedlist>
    <section id="SelectAlternativesforJava">
@@ -57,7 +57,7 @@ Selection    Command
    1           /usr/lib/jvm/jre-1.4.2-gcj/bin/java
 *+ 2           /usr/lib/jvm/jre-1.5.0-sun/bin/java
 Enter to keep the current selection[+], or type selection number:]]></programlisting>
-    <para>Make sure the Sun version [jre-1.5.0-sun in this case] is selected (marked with a '+' in the output), or select it by entering its number as prompted.</para>
+    <para>Make sure the Sun version [jre-1.5.0-sun in this case] is selected (marked with a &apos;+&apos; in the output), or select it by entering its number as prompted.</para>
     <itemizedlist>
      <listitem><para>Repeat the same for javac and java_sdk_1.5.0.</para></listitem>
     </itemizedlist>
@@ -95,12 +95,12 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <section id="InstallJDK50onWindows">
    <title>Installing and Configuring 32-bit Sun JDK 5.0 on Microsoft Windows</title>
    <itemizedlist>
-    <listitem><para>Download the <ulink  url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0 (Java 2 Development Kit)</ulink> from Sun's website. 
+    <listitem><para>Download the <ulink  url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0 (Java 2 Development Kit)</ulink> from Sun&apos;s website. 
     Choose &quot;JDK 5.0 Update &lt;x&gt;&quot; (where x is the latest update number) for download and then select your Windows Platform options to perform the installation.</para></listitem>
     <listitem><para>Create an environment variable called JAVA_HOME that points to the JDK installation directory, for example:</para></listitem>
    </itemizedlist>
    <programlisting><![CDATA[C:\Program Files\Java\jdk1.5.0_11\]]></programlisting>
-     <para>In order to run java from the command line add the jre\bin directory to your path, for example:</para>
+     <para>In order to run java from the command line add the <emphasis role="italic">jre\bin</emphasis> directory to your path, for example:</para>
    <programlisting><![CDATA[C:\Program Files\Java\jdk1.5.0_11\jre\bin]]></programlisting>
       <para>To do this, open the Control Panel from the Start Menu, switch to Classic View if necessary, open the System Control Panel applet, select the Advanced Tab, 
      and click on the Environment Variables button.</para>
@@ -214,10 +214,10 @@ on their machines.</para>
 
 <orderedlist>
 <listitem>On Red Hat based Linux distributions  install the xpLib.i386 package</listitem>
-<listitem>ln -s libstdc++.so.5.0.7 libstdc++.so.5</listitem>
+<listitem>Type ln -s libstdc++.so.5.0.7 libstdc++.so.5</listitem>
 <listitem>and/or use yum install libXp</listitem>
 <listitem>Open the RHDS perspective. If you see the  Help view open, close it and restart RHDS</listitem>
-<listitem>If none of these work, do the following
+<listitem>If none of these work, do the following:
 <itemizedlist>
 <listitem>Clear the Eclipse log file, &lt;workspace&gt;\.metadata\.log</listitem>
 <listitem>Start Eclipse with the -debug option: 
@@ -229,17 +229,17 @@ on their machines.</para>
 
 
   <para><emphasis role="bold">Do I need to have JBoss server installed to run Red Hat Developer Studio?</emphasis></para>
-  <para>No. Red Hat Developer Studio already comes bundled with JBoss server. We bundle it together so that you don't need to download any 
+  <para>No. Red Hat Developer Studio already comes bundled with JBoss server. We bundle it together so that you don&apos;t need to download any 
   additional software and can test your application in a Web browser right away.</para>
-  <para>If you want to use a different JBoss server installation, after Red Hat Developer Studio is installed open Servers View (select Window &gt; Show View &gt; Others &gt; Server &gt; Servers), then right click on this view &gt; New &gt; Server and follow the wizards steps to point to another Jboss server installation.</para>
+  <para>If you want to use a different JBoss server installation, after Red Hat Developer Studio is installed open Servers View (select <emphasis role="italic">Window &gt; Show View &gt; Others &gt; Server &gt; Servers</emphasis>), then right click on this <emphasis role="italic">view &gt; New &gt; Server</emphasis> and follow the wizards steps to point to another Jboss server installation.</para>
   <para>Red Hat Developer Studio works with any servlet container, not just JBoss. For more information on deployment, please see the Deploying Your Application section.</para>
  </section>
  <section id="Importing_Projects">
   <title>Importing Projects</title>
   <para><emphasis role="bold">I have an existing Struts or JSF project. Can I open the project in RHDS?</emphasis></para>
-  <para>Yes. From main menu select File &gt; Import &gt; Other &gt; JSF Project (or Struts Project) and follow wizards steps.</para>
+  <para>Yes. From main menu select <emphasis role="italic">File &gt; Import &gt; Other &gt; JSF Project (or Struts Project)</emphasis> and follow wizards steps.</para>
   <para><emphasis role="bold">Can I import a .war file?</emphasis></para>
-  <para>Yes. Select File &gt; Import &gt; Web &gt; WAR file. Then follow importing steps.</para>
+  <para>Yes. Select <emphasis role="italic">File &gt; Import &gt; Web &gt; WAR file</emphasis> Then follow importing steps.</para>
  </section>
  <section id="Troubleshooting">
   <title>Troubleshooting, Problems, Configuration, Error Messages</title>

@@ -20,7 +20,7 @@
   <section>
     <title>Create a Seam Project</title>
     
-    <para>To create a new web application in Seam, select &quot;New > Project ... > Seam > Seam Web Project&quot;. You will be prompted to enter a name and a location directory for your new project. You will also be asked to choose a JBoss AS server to deploy the project. You must choose the JBoss AS 4.2.0 instance we had defined in the JBoss AS Server manager view.</para>
+    <para>To create a new web application in Seam, select <emphasis role="italic">New > Project ... > Seam > Seam Web Project</emphasis>. You will be prompted to enter a name and a location directory for your new project. You will also be asked to choose a JBoss AS server to deploy the project. You must choose the JBoss AS 4.2.0 instance we had defined in the JBoss AS Server manager view.</para>
     
     <figure>
       <title>Create a Seam project</title>
