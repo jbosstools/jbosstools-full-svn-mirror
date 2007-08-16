@@ -163,7 +163,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	}
 
 	public void setAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		setAttribute(pageContext, sourceElement, (Map)data, name, value);
+		setAttribute(pageContext, sourceElement, (Map<?,?>)data, name, value);
 	}
 
 	public void removeAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name) {
@@ -228,7 +228,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	 * Deprecated
 	 */
 	public void refreshBundleValues(VpePageContext pageContext, Element sourceElement, Object data) {
-		refreshBundleValues(pageContext, sourceElement, (Map) data);
+		refreshBundleValues(pageContext, sourceElement, (Map<?,?>) data);
 	}
 	
 	private void refreshBundleValues(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {

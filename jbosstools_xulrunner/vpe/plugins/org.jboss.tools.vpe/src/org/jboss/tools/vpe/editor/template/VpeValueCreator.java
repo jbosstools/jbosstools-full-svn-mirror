@@ -12,11 +12,6 @@ package org.jboss.tools.vpe.editor.template;
 
 import java.util.Map;
 
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeSourceDomBuilder;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
@@ -28,6 +23,9 @@ import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMText;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 public class VpeValueCreator extends VpeAbstractCreator implements VpeOutputAttributes {
 	public static final String SIGNATURE_VPE_VALUE = ":vpe:value";
@@ -77,14 +75,14 @@ public class VpeValueCreator extends VpeAbstractCreator implements VpeOutputAttr
 		setValue(pageContext, sourceElement, visualNodeMap);
 	}
 	
-	private void setValue(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
+	private void setValue(VpePageContext pageContext, Element sourceElement, Map<?,?> visualNodeMap) {
 		String value;
 		if (expression != null) {
 			value = expression.exec(pageContext, sourceElement).stringValue();
 		} else {
 			value = "";
 		}
-		Node valueNode = (Node) visualNodeMap.get(this);
+		nsIDOMNode valueNode = (nsIDOMNode) visualNodeMap.get(this);
 		valueNode.setNodeValue(value);
 	}
 
