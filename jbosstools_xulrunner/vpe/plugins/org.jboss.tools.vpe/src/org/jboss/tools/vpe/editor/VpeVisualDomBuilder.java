@@ -535,7 +535,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			return false;
 		}
 		
-        if (YES_STRING.equalsIgnoreCase(((nsIDOMElement)visualNode).getAttribute(PSEUDO_ELEMENT_ATTR))) {
+        if (YES_STRING.equalsIgnoreCase(((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)).getAttribute(PSEUDO_ELEMENT_ATTR))) {
         	return true;
         }
 
@@ -1028,7 +1028,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	
 	static boolean isAnonElement(nsIDOMNode visualNode) {
 		if (visualNode != null && visualNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-			String attrValue = ((nsIDOMElement)visualNode).getAttribute(MOZ_ANONCLASS_ATTR);
+			String attrValue = ((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)).getAttribute(MOZ_ANONCLASS_ATTR);
 			
 			return attrValue != null && attrValue.length() > 0;
 		}
