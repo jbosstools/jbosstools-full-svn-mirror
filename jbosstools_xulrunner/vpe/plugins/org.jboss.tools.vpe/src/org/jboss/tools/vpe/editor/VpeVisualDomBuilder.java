@@ -57,6 +57,7 @@ import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMEventTarget;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
@@ -1444,19 +1445,29 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	
 	private boolean inDragArea(Rectangle dragArea, Point mousePoint) {
-		return dragArea.contains(mousePoint) &&
-					mousePoint.x < (dragArea.x + DRAG_AREA_WIDTH) && 
-					mousePoint.y < (dragArea.y + DRAG_AREA_HEIGHT); 
+		//TODO add drag and drop support
+//		return dragArea.contains(mousePoint) &&
+//					mousePoint.x < (dragArea.x + DRAG_AREA_WIDTH) && 
+//					mousePoint.y < (dragArea.y + DRAG_AREA_HEIGHT); 
+		return true;
 	}
 	
 	nsIDOMElement getDragElement(nsIDOMMouseEvent mouseEvent) {
 		// TODO Max Areshkau figure out with selected element
-//		nsIDOMElement selectedElement = browser.getSelectedElement();
-//		if (selectedElement != null && canInnerDrag(selectedElement)) {
-//			if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil.getMousePoint(mouseEvent))) {
-//				return selectedElement;
-//			}
-//		}
+		/*We use element on which was click
+		 * 
+		 */
+		try{
+		nsIDOMEventTarget eventTarget = mouseEvent.getTarget();
+		nsIDOMElement selectedElement = (nsIDOMElement) eventTarget.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+		if (selectedElement != null && canInnerDrag(selectedElement)) {
+			if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil.getMousePoint(mouseEvent))) {
+				return selectedElement;
+			}
+		}
+		} catch(XPCOMException exception) {
+			exception.printStackTrace();
+		}
 		return null;
 	}
 	

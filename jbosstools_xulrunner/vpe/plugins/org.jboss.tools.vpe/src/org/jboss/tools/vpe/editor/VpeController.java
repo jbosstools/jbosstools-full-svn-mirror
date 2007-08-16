@@ -777,9 +777,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	}
 	
 	public void mouseClick(nsIDOMMouseEvent mouseEvent) {
-//		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-//			return;
-//		}
+		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+			return;
+		}
 		try{
 		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 		if (visualNode != null) {
@@ -869,7 +869,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 		
 		visualEditor.hideResizer();
-		//TODO with this behaviour isn't works 'CTRL+M' 
 		switcher.stopActiveEditor();
 
 		

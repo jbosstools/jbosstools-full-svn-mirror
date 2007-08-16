@@ -51,7 +51,7 @@ public class VpeDomMapping {
 			Map.Entry<nsIDOMNode, VpeNodeMapping> entry = iter.next();
 			nsIDOMNode visualNode = entry.getKey();
 			if (!visualNode.equals(except)) {
-				visualMap.remove(visualNode);
+				iter.remove();
 			}
 		}
 		sourceMap.clear();
@@ -74,9 +74,23 @@ public class VpeDomMapping {
 	}
 	
 	public VpeNodeMapping getNodeMappingAtVisualNode(nsIDOMNode visualNode) {
-		if (visualNode != null) {
-			return visualMap.get(visualNode);
+
+		
+		Iterator<Map.Entry<nsIDOMNode, VpeNodeMapping>> iter = visualMap.entrySet().iterator();
+	//Map.get() doesn't work correctly for this situation	
+		while(iter.hasNext()){
+			Map.Entry<nsIDOMNode,VpeNodeMapping> element = iter.next();
+			nsIDOMNode key = element.getKey();
+			if(visualNode.equals(key)) {
+				
+				return element.getValue();
+			}
+
 		}
+//		
+//		if (visualNode != null) {
+//			return visualMap.get(visualNode);
+//		}
 		
 		return null;
 	}
