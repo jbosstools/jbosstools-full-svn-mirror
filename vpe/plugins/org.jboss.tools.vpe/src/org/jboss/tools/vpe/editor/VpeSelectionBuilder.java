@@ -236,7 +236,7 @@ public class VpeSelectionBuilder {
 							VisualSelectionInfo info = getVisualSelectedInfo(visualAnchorNode, visualAnchorOffset);
 							if (info != null) {
 								nsIDOMNode visualNode = info.node;
-								visualBuilder.setSelectionRectangle((nsIDOMElement)visualNode, false);
+								visualBuilder.setSelectionRectangle((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID), false);
 								Node sourceNode = domMapping.getNearSourceNode(visualNode);
 								int sourceStartOffset = ((IndexedRegion)sourceNode).getStartOffset();
 								int sourceEndOffset = ((IndexedRegion)sourceNode).getEndOffset();
@@ -1150,7 +1150,7 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 		if (visualNode != null && visualNode.getNodeType() == Node.ELEMENT_NODE &&
 				(HTML.TAG_INPUT.equalsIgnoreCase(visualNode.getNodeName()) || HTML.TAG_BUTTON.equalsIgnoreCase(visualNode.getNodeName()) || "SELECT".equalsIgnoreCase(visualNode.getNodeName())) &&
-				!selection.containsNode(visualNode, false) && visualBuilder.canInnerDrag((nsIDOMElement)visualNode)) { 
+				!selection.containsNode(visualNode, false) && visualBuilder.canInnerDrag((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))) { 
 			return (nsIDOMElement)visualNode;
 		}
 		return null;

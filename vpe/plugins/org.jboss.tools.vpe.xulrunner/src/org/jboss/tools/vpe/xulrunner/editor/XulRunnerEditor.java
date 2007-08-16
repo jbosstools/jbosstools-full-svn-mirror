@@ -121,7 +121,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		}
 		return null;
 	}
-	
+
 	public nsIDocShell getDocShell() {
 		nsIInterfaceRequestor interfaceRequestor = (nsIInterfaceRequestor) getWebBrowser().queryInterface(nsIInterfaceRequestor.NS_IINTERFACEREQUESTOR_IID);
 		return (nsIDocShell) interfaceRequestor.getInterface(nsIDocShell.NS_IDOCSHELL_IID);

@@ -667,7 +667,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 //		if (dragger != null) {
 //			return dragger.isDragEnabled();
 //		} else {
-			return false;
+			return true;
 //		}
 	}
 
