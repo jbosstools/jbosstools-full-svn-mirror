@@ -21,7 +21,7 @@
   <title>Starting JBoss server</title>
   <para>Starting JBoss server is quite simple. Red Hat Developer Studio allows you control its behaviour through a special toolbar: start it in a regular or debug mode, stop it, or restart it.</para>
   <orderedlist>
-  <listitem><para>To launch the server click the green-with-white-arrow icon on the JBoss Server View or right click server name in this view and select &quot;Start&quot;. If this view is not open select Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View:</para></listitem>
+  <listitem><para>To launch the server click the green-with-white-arrow icon on the JBoss Server View or right click server name in this view and select &quot;Start&quot;. If this view is not open select <emphasis role="italic">Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View</emphasis></para></listitem>
   </orderedlist>
   <figure>
 <title>Starting from icon</title>
@@ -87,7 +87,7 @@
   <section id="ServerPreferences">
   <?dbhtml filename="ServerPreferences.html"?>
   <title>Server Container Preferences</title>
-  <para>You can control how Red Hat Developer Studio interacts with servlet containers in Preferences. Select Window &gt; Preferences &gt; JBoss Tools &gt; JBoss Servers and switch to the desired server:</para>
+  <para>You can control how Red Hat Developer Studio interacts with servlet containers in Preferences. Select <emphasis role="italic">Window &gt; Preferences &gt; JBoss Tools &gt; JBoss Servers</emphasis> and switch to the desired server:</para>
   <figure>
 <title>Server preferences</title>
 <mediaobject> 
@@ -131,9 +131,9 @@
   <title>Adding and configuring JBoss server</title>
   <para>Now we should add just installed server into server manager in Red Hat Developer Studio.</para>
   <orderedlist>
-  <listitem><para>Open the JBoss Server View by selecting Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View. You will see JBoss Server view.</para></listitem>
+  <listitem><para>Open the JBoss Server View by selecting <emphasis role="italic">Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View</emphasis>. You will see JBoss Server view.</para></listitem>
   <listitem><para>Right click anywhere in this view and select New Server.</para></listitem>
-<listitem><para>Select JBoss, a division of Red Hat &gt; JBoss v4.2 and click the &quot;Installed Runtimes&quot; button to select a new installed runtime.</para></listitem>
+<listitem><para>Select <emphasis role="italic">JBoss, a division of Red Hat &gt; JBoss v4.2</emphasis> and click the &quot;Installed Runtimes&quot; button to select a new installed runtime.</para></listitem>
 </orderedlist>
 <figure>
 <title>Selecting server type</title>
@@ -146,7 +146,7 @@
      
      <orderedlist continuation="continues">
          <listitem><para>Click &quot;Add&quot; button to add a new jboss runtime.</para></listitem>
-         <listitem><para>Select JBoss, a division of Red Hat &gt; JBoss v4.2 and press Next.</para></listitem>
+         <listitem><para>Select <emphasis role="italic">JBoss, a division of Red Hat &gt; JBoss v4.2</emphasis> and press Next.</para></listitem>
      </orderedlist>
 
      <figure>    
@@ -186,7 +186,7 @@
         </imageobject>
 </mediaobject>
 </figure>
-  <para>A new runtime will now appear in the Preferences &gt; Server &gt; Installed Runtimes dialog.</para>
+  <para>A new runtime will now appear in the <emphasis role="italic">Preferences &gt; Server &gt; Installed Runtimes</emphasis> dialog.</para>
 <figure>
 <title>Runtime is added</title>
 <mediaobject> 

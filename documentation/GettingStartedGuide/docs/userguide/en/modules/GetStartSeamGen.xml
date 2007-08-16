@@ -20,7 +20,7 @@
   <section>
     <title>Create a Seam Project</title>
     
-    <para>To create a new web application in Seam, select &quot;New > Project ... > Seam > Seam Web Project&quot;. You will be prompted to enter a name and a location directory for your new project. You will also be asked to choose a JBoss AS server to deploy the project. You must choose the JBoss AS 4.2.0 instance we had defined in the JBoss AS Server manager view.</para>
+    <para>To create a new web application in Seam, select <emphasis role="italic">New > Project ... > Seam > Seam Web Project</emphasis>. You will be prompted to enter a name and a location directory for your new project. You will also be asked to choose a JBoss AS server to deploy the project. You must choose the JBoss AS 4.2.0 instance we had defined in the JBoss AS Server manager view.</para>
     
     <figure>
       <title>Create a Seam project</title>
@@ -82,7 +82,6 @@
     <orderedlist continuation="continues">
     <listitem><para>Click the Browse button near driver selection drop down list.</para></listitem>
     </orderedlist>
-   
     <figure>
       <title>Give a name to connection profile</title>
       <mediaobject> 
@@ -93,9 +92,8 @@
     </figure>
     
     <orderedlist continuation="continues">
-    
     <listitem><para>In the next dialog select Add button.</para></listitem>
-    <listitem><para>Select Hypersonic database: Hypersonic &gt; 1.8 &gt; Hypersonic DB.</para></listitem>
+    <listitem><para>Select Hypersonic database: <emphasis role="italic">Hypersonic &gt; 1.8 &gt; Hypersonic DB</emphasis></para></listitem>
     </orderedlist>
     
     <figure>
@@ -119,7 +117,7 @@
     <orderedlist continuation="continues">
     <listitem><para>Select hsqldb.jar in Driver File panel and click the button Remove jar/Zip.</para></listitem>
     <listitem><para>Select Add jar/Zip.</para></listitem>
-    <listitem><para>Select hsqldb driver which is located in jboss-eap &gt; jboss-as &gt; server &gt; default &gt; lib folder of RHDS installation.</para></listitem>
+    <listitem><para>Select hsqldb driver which is located in <emphasis role="italic">jboss-eap &gt; jboss-as &gt; server &gt; default &gt; lib</emphasis> folder of RHDS installation.</para></listitem>
     </orderedlist>
     <figure>
       <title>Adding driver</title>
@@ -208,7 +206,7 @@
       </mediaobject>
     </figure>
     
-    <para>To make simple changes to the page, you just need to double click on the view/index.xhtml file and edit it in the visual editor. Notice that the visual editor lets you both the XHTML code and the rendered page. The rendered view is designed to make it easy to find stuff in a complex XHTML page.</para>
+    <para>To make simple changes to the page, you just need to double click on the <emphasis role="italic">WebContent/home.xhtml file</emphasis> and edit it in the visual editor. Notice that the visual editor lets you both the XHTML code and the rendered page. The rendered view is designed to make it easy to find stuff in a complex XHTML page.</para>
     
     <figure>
       <title>Making changes in the visual editor</title>
@@ -219,7 +217,7 @@
       </mediaobject>
     </figure>
     
-    <para>Once you finished editing, save the file (File > Save), re-deploy the application, and reload the browser to see the changes.</para>
+    <para>Once you finished editing, save the file (<emphasis role="italic">File &gt; Save</emphasis>), re-deploy the application, and reload the browser to see the changes.</para>
     
     <figure>
       <title>The front page is changed</title>
@@ -239,7 +237,7 @@
   <section>
     <title>Add a Web Page and an Action</title>
     
-    <para>To add a new page and related UI action to the project, use the &quot;New > Other ... > Seam > Seam Form&quot; wizard. You are prompted to enter the name of the web page, the name for the Seam component that handles UI actions from the page, and UI action method name.</para>
+    <para>To add a new page and related UI action to the project, use the <emphasis role="italic">New &gt; Other ... &gt; Seam &gt; Seam Form</emphasis> wizard. You are prompted to enter the name of the web page, the name for the Seam component that handles UI actions from the page, and UI action method name.</para>
     
     <figure>
       <title>New form for the application</title>
