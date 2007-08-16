@@ -1166,7 +1166,7 @@
  </XModelEntity>
  <XModelEntity
   ImplementingClass="org.jboss.tools.shale.model.spring.ListObjectImpl"
-  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.spring.form.SpringFormLayoutData"
+  PROPERTIES="children=%Ordered%;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.spring.form.SpringFormLayoutData"
   XMLSUBPATH="list" name="SpringBeansList">
   <XChildrenEntities>
    <XChildEntity name="SpringBeansElementBean"/>
@@ -1326,7 +1326,7 @@
  </XModelEntity>
  <XModelEntity
   ImplementingClass="org.jboss.tools.shale.model.spring.ListObjectImpl"
-  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.spring.form.SpringFormLayoutData"
+  PROPERTIES="children=%Ordered%;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.spring.form.SpringFormLayoutData"
   XMLSUBPATH="map" name="SpringBeansMap">
   <XChildrenEntities>
    <XChildEntity name="SpringBeansEntry"/>
@@ -1809,7 +1809,7 @@
  </XModelEntity>
  <XModelEntity
   ImplementingClass="org.jboss.tools.shale.model.spring.ListObjectImpl"
-  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.spring.form.SpringFormLayoutData"
+  PROPERTIES="children=%Ordered%;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.spring.form.SpringFormLayoutData"
   XMLSUBPATH="set" name="SpringBeansSet">
   <XChildrenEntities>
    <XChildEntity name="SpringBeansElementBean"/>

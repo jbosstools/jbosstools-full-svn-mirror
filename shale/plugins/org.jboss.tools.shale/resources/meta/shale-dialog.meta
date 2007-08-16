@@ -24,7 +24,7 @@
   ImplementationLoadingClass="org.jboss.tools.common.model.loaders.impl.SimpleWebFileLoader"
   ImplementingClass="org.jboss.tools.common.model.filesystems.impl.SimpleFileImpl"
   ObjectEditorClass="%XML%"
-  PROPERTIES="formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.dialog.form.ShaleDialogFormLayoutData"
+  PROPERTIES="formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.dialog.form.ShaleDialogFormLayoutData"
   XMLSUBPATH="dialogs" name="FileShaleDialog">
   <XChildrenEntities>
    <XChildEntity name="ShaleDialog"/>
@@ -189,7 +189,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.dialog.form.ShaleDialogFormLayoutData"
+  PROPERTIES="children=%Ordered%;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.dialog.form.ShaleDialogFormLayoutData"
   XMLSUBPATH="action" name="ShaleAction">
   <XChildrenEntities>
    <XChildEntity name="ShaleTransition"/>
@@ -260,7 +260,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.dialog.form.ShaleDialogFormLayoutData"
+  PROPERTIES="children=%Ordered%;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.dialog.form.ShaleDialogFormLayoutData"
   XMLSUBPATH="dialog" name="ShaleDialog">
   <XChildrenEntities>
    <XChildEntity name="ShaleAction"/>
@@ -377,7 +377,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.dialog.form.ShaleDialogFormLayoutData"
+  PROPERTIES="children=%Ordered%;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.dialog.form.ShaleDialogFormLayoutData"
   XMLSUBPATH="end" name="ShaleEnd">
   <XChildrenEntities>
    <XChildEntity name="ShaleTransition"/>
@@ -455,7 +455,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.dialog.form.ShaleDialogFormLayoutData"
+  PROPERTIES="children=%Ordered%;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.dialog.form.ShaleDialogFormLayoutData"
   XMLSUBPATH="subdialog" name="ShaleSubdialog">
   <XChildrenEntities>
    <XChildEntity name="ShaleTransition"/>
@@ -526,7 +526,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.dialog.form.ShaleDialogFormLayoutData"
+  PROPERTIES="formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.dialog.form.ShaleDialogFormLayoutData"
   XMLSUBPATH="transition" name="ShaleTransition">
   <XChildrenEntities/>
   <XEntityRenderer>
@@ -581,7 +581,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.dialog.form.ShaleDialogFormLayoutData"
+  PROPERTIES="children=%Ordered%;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.dialog.form.ShaleDialogFormLayoutData"
   XMLSUBPATH="view" name="ShaleView">
   <XChildrenEntities>
    <XChildEntity name="ShaleTransition"/>

@@ -66,7 +66,7 @@
   ImplementationLoadingClass="org.jboss.tools.shale.model.clay.ClayConfigLoader"
   ImplementingClass="org.jboss.tools.shale.model.clay.FileClayImpl"
   ObjectEditorClass="%XML%"
-  PROPERTIES="formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  PROPERTIES="formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
   XMLSUBPATH="view" name="FileShaleClay">
   <XChildrenEntities>
    <XChildEntity name="ShaleClayComponent"/>
@@ -232,7 +232,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  PROPERTIES="formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
   XMLSUBPATH="actionListener" name="ShaleClayActionListener">
   <XChildrenEntities>
    <XChildEntity maxCount="1" name="ShaleClayAttributes" required="yes"/>
@@ -276,7 +276,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData" name="ShaleClayActionListenerFolder">
+  PROPERTIES="children=%Ordered%;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData" name="ShaleClayActionListenerFolder">
   <XChildrenEntities>
    <XChildEntity name="ShaleClayActionListener"/>
   </XChildrenEntities>
@@ -327,7 +327,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  PROPERTIES="children=%Ordered%;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
   XMLSUBPATH="attributes" name="ShaleClayAttributes">
   <XChildrenEntities>
    <XChildEntity name="ShaleClaySet"/>
@@ -385,7 +385,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="children=%EntityOrdered%;loaderKind=component;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  PROPERTIES="children=%EntityOrdered%;loaderKind=component;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
   XMLSUBPATH="component" name="ShaleClayComponent">
   <XChildrenEntities>
    <XChildEntity maxCount="1" name="ShaleClayAttributes" required="yes"/>
@@ -521,7 +521,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  PROPERTIES="formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
   XMLSUBPATH="converter" name="ShaleClayConverter">
   <XChildrenEntities>
    <XChildEntity maxCount="1" name="ShaleClayAttributes" required="yes"/>
@@ -569,7 +569,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="children=%EntityOrdered%;loaderKind=component;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  PROPERTIES="children=%EntityOrdered%;loaderKind=component;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
   XMLSUBPATH="element" name="ShaleClayElement">
   <XChildrenEntities>
    <XChildEntity maxCount="1" name="ShaleClayAttributes" required="yes"/>
@@ -701,7 +701,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData" name="ShaleClayElementFolder">
+  PROPERTIES="children=%Ordered%;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData" name="ShaleClayElementFolder">
   <XChildrenEntities>
    <XChildEntity name="ShaleClayElement"/>
   </XChildrenEntities>
@@ -988,7 +988,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  PROPERTIES="formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
   XMLSUBPATH="set" name="ShaleClaySet">
   <XChildrenEntities/>
   <XEntityRenderer>
@@ -1044,7 +1044,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  PROPERTIES="children=%Ordered%;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
   XMLSUBPATH="symbols" name="ShaleClaySymbols">
   <XChildrenEntities>
    <XChildEntity name="ShaleClaySet"/>
@@ -1101,7 +1101,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  PROPERTIES="formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
   XMLSUBPATH="validator" name="ShaleClayValidator">
   <XChildrenEntities>
    <XChildEntity maxCount="1" name="ShaleClayAttributes" required="yes"/>
@@ -1145,7 +1145,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData" name="ShaleClayValidatorFolder">
+  PROPERTIES="children=%Ordered%;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData" name="ShaleClayValidatorFolder">
   <XChildrenEntities>
    <XChildEntity name="ShaleClayValidator"/>
   </XChildrenEntities>
@@ -1196,7 +1196,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
+  PROPERTIES="formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData"
   XMLSUBPATH="valueChangeListener" name="ShaleClayValueListener">
   <XChildrenEntities>
    <XChildEntity maxCount="1" name="ShaleClayAttributes" required="yes"/>
@@ -1240,7 +1240,7 @@
   <XDependencies/>
  </XModelEntity>
  <XModelEntity ImplementingClass="%Custom%"
-  PROPERTIES="children=%Ordered%;formFactoryClassName=org.jboss.tools.common.model.ui.forms.LayouredFormFactory;formLayoutDataClassName=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData" name="ShaleClayValueListenerFolder">
+  PROPERTIES="children=%Ordered%;formFactory=%Default%;formLayout=org.jboss.tools.shale.ui.clay.form.ShaleClayFormLayoutData" name="ShaleClayValueListenerFolder">
   <XChildrenEntities>
    <XChildEntity name="ShaleClayValueListener"/>
   </XChildrenEntities>
