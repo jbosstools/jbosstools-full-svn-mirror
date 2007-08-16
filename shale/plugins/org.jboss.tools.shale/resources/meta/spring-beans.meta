@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE XModelEntityGroup PUBLIC "-//Red Hat, Inc.//DTD Meta 1.0//EN" "meta.dtd">
+<!DOCTYPE XModelEntityGroup PUBLIC "-//Red Hat, Inc.//DTD Meta 1.0//EN"
+                                   "meta.dtd">
 <XModelEntityGroup>
  <VERSION DEPENDS="Model:1.0" MODULE="Struts Editor" VERSION="1.0"/>
  <MAPPINGS>
@@ -40,39 +41,23 @@
   <XModelAttributes>
    <XModelAttribute default="Spring Beans Descriptor"
     loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute default="faces-config" name="name" xmlname="NAME">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute default="faces-config" name="name" xmlname="NAME"/>
    <XModelAttribute default="xml" name="extension" xmlname="EXTENSION">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute name="id" xmlname="id">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute name="id" xmlname="id"/>
    <XModelAttribute TRIM="no" name="comment" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
    <XModelAttribute loader="ElementType" name="_lateload" visibility="false">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute default="-//SPRING//DTD BEAN//EN" name="publicId" visibility="false">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute default="-//SPRING//DTD BEAN//EN" name="publicId" visibility="false"/>
    <XModelAttribute
     default="http://www.springframework.org/dtd/spring-beans.dtd"
-    name="systemId" visibility="false">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+    name="systemId" visibility="false"/>
    <XModelAttribute default="no" name="isIncorrect" visibility="false">
     <Constraint loader="List">
      <value name="yes"/>
@@ -80,10 +65,7 @@
     </Constraint>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute name="incorrectBody" visibility="false">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute name="incorrectBody" visibility="false"/>
    <XModelAttribute name="encoding">
     <Constraint loader="ListString">
      <value name="ISO-8859-1"/>
@@ -92,7 +74,6 @@
     <Editor name="ListString"/>
    </XModelAttribute>
    <XModelAttribute name="description" xmlname="description.#text">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
    <XModelAttribute default="false" name="default-lazy-init" xmlname="default-lazy-init">
@@ -256,19 +237,11 @@
   </XEntityRenderer>
   <XModelAttributes>
    <XModelAttribute default="alias" loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute PROPERTIES="save=always" name="name" xmlname="name">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute PROPERTIES="id=true;save=always" name="alias" xmlname="alias">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute PROPERTIES="save=always" name="name" xmlname="name"/>
+   <XModelAttribute PROPERTIES="id=true;save=always" name="alias" xmlname="alias"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -303,19 +276,11 @@
   </XEntityRenderer>
   <XModelAttributes>
    <XModelAttribute default="arg-type" loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute PROPERTIES="id=true" name="match" xmlname="match">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="value" xmlname="#text">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true" name="match" xmlname="match"/>
+   <XModelAttribute name="value" xmlname="#text"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -357,29 +322,17 @@
   </XEntityRenderer>
   <XModelAttributes>
    <XModelAttribute default="bean" loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
    <XModelAttribute name="description" xmlname="description.#text">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
-   <XModelAttribute name="name" xmlname="name">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute name="name" xmlname="name"/>
    <XModelAttribute name="class" xmlname="class">
-    <Constraint/>
     <Editor name="AccessibleJava"/>
    </XModelAttribute>
-   <XModelAttribute name="id" xmlname="id">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="parent" xmlname="parent">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute name="id" xmlname="id"/>
+   <XModelAttribute name="parent" xmlname="parent"/>
    <XModelAttribute default="false" name="abstract" xmlname="abstract">
     <Constraint loader="List">
      <value name="true"/>
@@ -423,28 +376,12 @@
     </Constraint>
     <Editor name="List"/>
    </XModelAttribute>
-   <XModelAttribute name="depends-on" xmlname="depends-on">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="init-method" xmlname="init-method">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="destroy-method" xmlname="destroy-method">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="factory-method" xmlname="factory-method">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="factory-bean" xmlname="factory-bean">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute name="depends-on" xmlname="depends-on"/>
+   <XModelAttribute name="init-method" xmlname="init-method"/>
+   <XModelAttribute name="destroy-method" xmlname="destroy-method"/>
+   <XModelAttribute name="factory-method" xmlname="factory-method"/>
+   <XModelAttribute name="factory-bean" xmlname="factory-bean"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -523,31 +460,16 @@
   </XEntityRenderer>
   <XModelAttributes>
    <XModelAttribute default="constructor-arg" loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
    <XModelAttribute name="description" xmlname="description.#text">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
-   <XModelAttribute name="index" xmlname="index">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="type" xmlname="type">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="ref" xmlname="ref">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="value" xmlname="value">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute name="index" xmlname="index"/>
+   <XModelAttribute name="type" xmlname="type"/>
+   <XModelAttribute name="ref" xmlname="ref"/>
+   <XModelAttribute name="value" xmlname="value"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -555,7 +477,7 @@
    <XActionItem kind="list" name="CreateActions">
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.bean"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      WizardClassName="%Default%" displayName="Element Bean..."
      kind="action" name="AddElementBean">
      <EntityData EntityName="SpringBeansElementBean">
@@ -564,7 +486,7 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.bean"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      WizardClassName="%Default%" displayName="Ref..." kind="action" name="AddRef">
      <EntityData EntityName="SpringBeansRef">
       <AttributeData AttributeName="bean" Mandatory="no"/>
@@ -572,7 +494,7 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.bean"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      WizardClassName="%Default%" displayName="ID Ref..." kind="action" name="AddIDRef">
      <EntityData EntityName="SpringBeansIDRef">
       <AttributeData AttributeName="bean" Mandatory="no"/>
@@ -580,7 +502,7 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      WizardClassName="%Default%" displayName="Value..." kind="action" name="AddValue">
      <EntityData EntityName="SpringBeansValue">
       <AttributeData AttributeName="value" Mandatory="no"/>
@@ -588,7 +510,7 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="Null..." kind="action" name="AddNull">
      <EntityData EntityName="SpringBeansNull">
       <AttributeData AttributeName="value" Mandatory="no"/>
@@ -596,25 +518,25 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="List..." kind="action" name="AddList">
      <EntityData EntityName="SpringBeansList"/>
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="Set..." kind="action" name="AddSet">
      <EntityData EntityName="SpringBeansSet"/>
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="Map..." kind="action" name="AddMap">
      <EntityData EntityName="SpringBeansMap"/>
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="Props..." kind="action" name="AddProps">
      <EntityData EntityName="SpringBeansProps"/>
     </XActionItem>
@@ -656,29 +578,17 @@
   <XModelAttributes>
    <XModelAttribute PROPERTIES="id=true" default="bean"
     loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
    <XModelAttribute name="description" xmlname="description.#text">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
-   <XModelAttribute PROPERTIES="presentation=true" name="name" xmlname="name">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute PROPERTIES="presentation=true" name="name" xmlname="name"/>
    <XModelAttribute name="class" xmlname="class">
-    <Constraint/>
     <Editor name="AccessibleJava"/>
    </XModelAttribute>
-   <XModelAttribute name="id" xmlname="id">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="parent" xmlname="parent">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute name="id" xmlname="id"/>
+   <XModelAttribute name="parent" xmlname="parent"/>
    <XModelAttribute default="false" name="abstract" xmlname="abstract">
     <Constraint loader="List">
      <value name="true"/>
@@ -722,34 +632,15 @@
     </Constraint>
     <Editor name="List"/>
    </XModelAttribute>
-   <XModelAttribute name="depends-on" xmlname="depends-on">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="init-method" xmlname="init-method">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="destroy-method" xmlname="destroy-method">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="factory-method" xmlname="factory-method">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="factory-bean" xmlname="factory-bean">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute name="depends-on" xmlname="depends-on"/>
+   <XModelAttribute name="init-method" xmlname="init-method"/>
+   <XModelAttribute name="destroy-method" xmlname="destroy-method"/>
+   <XModelAttribute name="factory-method" xmlname="factory-method"/>
+   <XModelAttribute name="factory-bean" xmlname="factory-bean"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
-   <XModelAttribute COPYABLE="no" name="index" visibility="false">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute COPYABLE="no" name="index" visibility="false"/>
   </XModelAttributes>
   <XActionItem kind="list">
    <XActionItem ICON="action.empty" displayName="New" group="1"
@@ -828,44 +719,24 @@
   <XModelAttributes>
    <XModelAttribute PROPERTIES="id=true" default="entry"
     loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute name="key" xmlname="key">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="key-ref" xmlname="key-ref">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="value" xmlname="value">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="value-ref" xmlname="value-ref">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute name="key" xmlname="key"/>
+   <XModelAttribute name="key-ref" xmlname="key-ref"/>
+   <XModelAttribute name="value" xmlname="value"/>
+   <XModelAttribute name="value-ref" xmlname="value-ref"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
-   <XModelAttribute COPYABLE="no" name="index" visibility="false">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute COPYABLE="no" name="key presentation" visibility="false">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute COPYABLE="no" name="index" visibility="false"/>
+   <XModelAttribute COPYABLE="no" name="key presentation" visibility="false"/>
   </XModelAttributes>
   <XActionItem kind="list">
    <XActionItem ICON="action.empty" displayName="New" group="1"
     kind="list" name="CreateActions">
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=key;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=key;significanceMessageClass=%Replace%"
      displayName="Key..." kind="action" name="AddKey">
      <EntityData EntityName="SpringBeansKey"/>
     </XActionItem>
@@ -951,23 +822,12 @@
   <XModelAttributes>
    <XModelAttribute PROPERTIES="id=true" default="idref"
     loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute PROPERTIES="presentation=true" name="bean" xmlname="bean">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="local" xmlname="local">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute COPYABLE="no" name="index" visibility="false">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute PROPERTIES="presentation=true" name="bean" xmlname="bean"/>
+   <XModelAttribute name="local" xmlname="local"/>
+   <XModelAttribute COPYABLE="no" name="index" visibility="false"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -1013,15 +873,10 @@
   </XEntityRenderer>
   <XModelAttributes>
    <XModelAttribute default="import" loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute PROPERTIES="id=true;save=always" name="resource" xmlname="resource">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true;save=always" name="resource" xmlname="resource"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -1067,11 +922,9 @@
   <XModelAttributes>
    <XModelAttribute PROPERTIES="id=true" default="key"
     loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -1079,7 +932,7 @@
    <XActionItem kind="list" name="CreateActions">
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.bean"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      WizardClassName="%Default%" displayName="Element Bean..."
      kind="action" name="AddElementBean">
      <EntityData EntityName="SpringBeansElementBean">
@@ -1088,7 +941,7 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.bean"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      WizardClassName="%Default%" displayName="Ref..." kind="action" name="AddRef">
      <EntityData EntityName="SpringBeansRef">
       <AttributeData AttributeName="bean" Mandatory="no"/>
@@ -1096,7 +949,7 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.bean"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      WizardClassName="%Default%" displayName="ID Ref..." kind="action" name="AddIDRef">
      <EntityData EntityName="SpringBeansIDRef">
       <AttributeData AttributeName="bean" Mandatory="no"/>
@@ -1104,7 +957,7 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      WizardClassName="%Default%" displayName="Value..." kind="action" name="AddValue">
      <EntityData EntityName="SpringBeansValue">
       <AttributeData AttributeName="value" Mandatory="no"/>
@@ -1112,7 +965,7 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="Null..." kind="action" name="AddNull">
      <EntityData EntityName="SpringBeansNull">
       <AttributeData AttributeName="value" Mandatory="no"/>
@@ -1120,25 +973,25 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="List..." kind="action" name="AddList">
      <EntityData EntityName="SpringBeansList"/>
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="Set..." kind="action" name="AddSet">
      <EntityData EntityName="SpringBeansSet"/>
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="Map..." kind="action" name="AddMap">
      <EntityData EntityName="SpringBeansMap"/>
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="Props..." kind="action" name="AddProps">
      <EntityData EntityName="SpringBeansProps"/>
     </XActionItem>
@@ -1187,15 +1040,10 @@
   <XModelAttributes>
    <XModelAttribute PROPERTIES="id=true" default="list"
     loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute COPYABLE="no" name="index" visibility="false">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute COPYABLE="no" name="index" visibility="false"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -1286,21 +1134,13 @@
   </XEntityRenderer>
   <XModelAttributes>
    <XModelAttribute default="lookup-method" loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute PROPERTIES="id=true;save=always" name="name" xmlname="name">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true;save=always" name="name" xmlname="name"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
-   <XModelAttribute name="bean" xmlname="bean">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute name="bean" xmlname="bean"/>
   </XModelAttributes>
   <XActionItem kind="list">
    <XActionItem ICON="action.copy" displayName="Copy" kind="list" name="CopyActions">
@@ -1339,15 +1179,10 @@
   <XModelAttributes>
    <XModelAttribute PROPERTIES="id=true" default="map"
     loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute COPYABLE="no" name="index" visibility="false">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute COPYABLE="no" name="index" visibility="false"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -1394,19 +1229,11 @@
   <XModelAttributes>
    <XModelAttribute PROPERTIES="id=true" default="null"
     loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute name="value" visibility="false" xmlname="#text">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute COPYABLE="no" name="index" visibility="false">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute name="value" visibility="false" xmlname="#text"/>
+   <XModelAttribute COPYABLE="no" name="index" visibility="false"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -1452,19 +1279,11 @@
   </XEntityRenderer>
   <XModelAttributes>
    <XModelAttribute default="prop" loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute PROPERTIES="id=true;save=always" name="key" xmlname="key">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="value" xmlname="#text">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true;save=always" name="key" xmlname="key"/>
+   <XModelAttribute name="value" xmlname="#text"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -1509,27 +1328,15 @@
   </XEntityRenderer>
   <XModelAttributes>
    <XModelAttribute default="property" loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
    <XModelAttribute name="description" xmlname="description.#text">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
-   <XModelAttribute PROPERTIES="id=true;save=always" name="name" xmlname="name">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="ref" xmlname="ref">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="value" xmlname="value">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true;save=always" name="name" xmlname="name"/>
+   <XModelAttribute name="ref" xmlname="ref"/>
+   <XModelAttribute name="value" xmlname="value"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -1537,7 +1344,7 @@
    <XActionItem kind="list" name="CreateActions">
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.bean"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      WizardClassName="%Default%" displayName="Element Bean..."
      kind="action" name="AddElementBean">
      <EntityData EntityName="SpringBeansElementBean">
@@ -1546,7 +1353,7 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.bean"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      WizardClassName="%Default%" displayName="Ref..." kind="action" name="AddRef">
      <EntityData EntityName="SpringBeansRef">
       <AttributeData AttributeName="bean" Mandatory="no"/>
@@ -1554,7 +1361,7 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.bean"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      WizardClassName="%Default%" displayName="ID Ref..." kind="action" name="AddIDRef">
      <EntityData EntityName="SpringBeansIDRef">
       <AttributeData AttributeName="bean" Mandatory="no"/>
@@ -1562,7 +1369,7 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      WizardClassName="%Default%" displayName="Value..." kind="action" name="AddValue">
      <EntityData EntityName="SpringBeansValue">
       <AttributeData AttributeName="value" Mandatory="no"/>
@@ -1570,7 +1377,7 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="Null..." kind="action" name="AddNull">
      <EntityData EntityName="SpringBeansNull">
       <AttributeData AttributeName="value" Mandatory="no"/>
@@ -1578,25 +1385,25 @@
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="List..." kind="action" name="AddList">
      <EntityData EntityName="SpringBeansList"/>
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="Set..." kind="action" name="AddSet">
      <EntityData EntityName="SpringBeansSet"/>
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="Map..." kind="action" name="AddMap">
      <EntityData EntityName="SpringBeansMap"/>
     </XActionItem>
     <XActionItem HandlerClassName="%DefaultReplaceUnique%"
      ICON="main.jsf.property"
-     PROPERTIES="child=;significanceMessageClass=org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl"
+     PROPERTIES="child=;significanceMessageClass=%Replace%"
      displayName="Props..." kind="action" name="AddProps">
      <EntityData EntityName="SpringBeansProps"/>
     </XActionItem>
@@ -1635,15 +1442,10 @@
   <XModelAttributes>
    <XModelAttribute PROPERTIES="id=true" default="props"
     loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute COPYABLE="no" name="index" visibility="false">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute COPYABLE="no" name="index" visibility="false"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -1690,27 +1492,13 @@
   <XModelAttributes>
    <XModelAttribute PROPERTIES="id=true" default="ref"
     loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute PROPERTIES="presentation=true" name="bean" xmlname="bean">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="local" xmlname="local">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="parent" xmlname="parent">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute COPYABLE="no" name="index" visibility="false">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute PROPERTIES="presentation=true" name="bean" xmlname="bean"/>
+   <XModelAttribute name="local" xmlname="local"/>
+   <XModelAttribute name="parent" xmlname="parent"/>
+   <XModelAttribute COPYABLE="no" name="index" visibility="false"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -1759,19 +1547,11 @@
   </XEntityRenderer>
   <XModelAttributes>
    <XModelAttribute default="replaced-method" loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute PROPERTIES="id=true" name="name" xmlname="name">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="replacer" xmlname="replacer">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute PROPERTIES="id=true" name="name" xmlname="name"/>
+   <XModelAttribute name="replacer" xmlname="replacer"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -1830,15 +1610,10 @@
   <XModelAttributes>
    <XModelAttribute PROPERTIES="id=true" default="set"
     loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute COPYABLE="no" name="index" visibility="false">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute COPYABLE="no" name="index" visibility="false"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
@@ -1930,19 +1705,11 @@
   <XModelAttributes>
    <XModelAttribute PROPERTIES="id=true" default="value"
     loader="ElementType" name="element type">
-    <Constraint/>
     <Editor name="Uneditable"/>
    </XModelAttribute>
-   <XModelAttribute PROPERTIES="presentation=true" name="value" xmlname="#text">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="index" visibility="false">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
+   <XModelAttribute PROPERTIES="presentation=true" name="value" xmlname="#text"/>
+   <XModelAttribute name="index" visibility="false"/>
    <XModelAttribute TRIM="no" name="comment" visibility="false" xmlname="#comment">
-    <Constraint/>
     <Editor name="Note"/>
    </XModelAttribute>
   </XModelAttributes>
