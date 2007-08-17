@@ -33,7 +33,6 @@ import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsITransferable;
 import org.mozilla.xpcom.Mozilla;
-import org.mozilla.xpcom.XPCOMException;
 
 /**
  * @author Sergey Vasilyev (svasilyev@exadel.com)

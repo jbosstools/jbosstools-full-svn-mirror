@@ -10,11 +10,6 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template.resize;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeTagDescription;
@@ -25,27 +20,32 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
 import org.jboss.tools.vpe.editor.util.SourceDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-// "position:absolute; top:200px; left:100px"
-
+/**
+ * 
+ */
 public class VpeResizer {
-	static final String TAG_WIDTH  = VpeTemplateManager.VPE_PREFIX + "width";
-	static final String TAG_HEIGHT = VpeTemplateManager.VPE_PREFIX + "height";
+	/** TAG_WIDTH */
+	private static final String TAG_WIDTH  = VpeTemplateManager.VPE_PREFIX + "width";
 	
-	static final String ATTRIBUTE_WIDTH                     = "width-attr";
-	static final String ATTRIBUTE_HEIGHT                    = "height-attr";
-	static final String ATTRIBUTE_TAG_XPATH                 = "tag-xpath";
-	static final String ATTRIBUTE_TEST                      = "test";
-	static final String ATTRIBUTE_DISABLE_ABSOLUTE_POSITION = "disable-absolute-position";
+	/** TAG_HEIGHT */
+	private static final String TAG_HEIGHT = VpeTemplateManager.VPE_PREFIX + "height";
 	
-	private TemplateResizeData horizontalData = null;
-	private TemplateResizeData verticalData   = null;
+	private static final String ATTRIBUTE_WIDTH                     = "width-attr";
+	private static final String ATTRIBUTE_HEIGHT                    = "height-attr";
+	private static final String ATTRIBUTE_TAG_XPATH                 = "tag-xpath";
+	private static final String ATTRIBUTE_TEST                      = "test";
+	private static final String ATTRIBUTE_DISABLE_ABSOLUTE_POSITION = "disable-absolute-position";
 	
-	public VpeResizer(){
-		
-	}
+	private TemplateResizeData horizontalData;
+	private TemplateResizeData verticalData;
 	
-	public void setResizeData(Element node){
+	public void setResizeData(Element node) {
 		TemplateResizeData resizeWidth = null;
 		TemplateResizeData resizeHeight = null;
 		
@@ -79,8 +79,21 @@ public class VpeResizer {
 			}
 		}
 	}
-	
-	public void resize(VpePageContext pageContext, Element sourceElement, Document visualDocument, Element visualElement, Object data, int resizeConstrant, int top, int left, int width, int height) {
+
+	/**
+	 * 
+	 * @param pageContext
+	 * @param sourceElement
+	 * @param visualDocument
+	 * @param visualElement
+	 * @param data
+	 * @param resizeConstrant
+	 * @param top
+	 * @param left
+	 * @param width
+	 * @param height
+	 */
+	public void resize(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Object data, int resizeConstrant, int top, int left, int width, int height) {
 		pageContext.getEditPart().getSourceEditor().getTextViewer().getUndoManager().beginCompoundChange();
 		if (pageContext.isAbsolutePosition() && (
 				resizeConstrant == VpeTagDescription.RESIZE_CONSTRAINS_BOTTOMLEFT||
@@ -104,6 +117,7 @@ public class VpeResizer {
 				runResize(pageContext, sourceElement, false, top, height, verticalData);
 			}
 		}
+		
 		pageContext.getEditPart().getSourceEditor().getTextViewer().getUndoManager().endCompoundChange();
 	}
 	
