@@ -25,7 +25,6 @@ import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDropInfo;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
-import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.template.resize.VpeResizer;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -45,8 +44,9 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	
 	protected boolean haveVisualPreview;
 	
-	// TODO Alexey Yukhovich add resizer support
-//	private VpeResizer resizer;\
+	/** a resizer instance */
+	private VpeResizer resizer;
+	
 	// TODO Max Areshkau add DnD support
 //	private VpeDnd dragger;
 	private TextFormatingData textFormatingData;
@@ -66,7 +66,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 
 	private int breakerType = BREAKER_TYPE_NONE;
 
-	static private HashSet inlineTags = new HashSet();
+	static private HashSet<String> inlineTags = new HashSet<String>();
 	static{
 		inlineTags.add("b");
 		inlineTags.add("i");
@@ -83,7 +83,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		inlineTags.add("button");
 		inlineTags.add("label");
 	}
-	static private HashMap tagResizeConstrans = new HashMap();
+	static private HashMap<String, Integer> tagResizeConstrans = new HashMap<String, Integer>();
 	static{
 		tagResizeConstrans.put("table", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_ALL));
 		tagResizeConstrans.put("tr", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_ALL));
@@ -97,7 +97,8 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		tagResizeConstrans.put("font", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
 		tagResizeConstrans.put("a", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
 	}
-	static private HashSet breakWithParagraphTags = new HashSet();
+	
+	static private HashSet<String> breakWithParagraphTags = new HashSet<String>();
 	static{
 		breakWithParagraphTags.add("b");
 		breakWithParagraphTags.add("a");
@@ -127,7 +128,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		breakWithParagraphTags.add("u");
 		breakWithParagraphTags.add("var");
 	}
-	static private HashSet breakWithoutParagraphTags = new HashSet();
+	static private HashSet<String> breakWithoutParagraphTags = new HashSet<String>();
 	static{
 		breakWithoutParagraphTags.add("p");
 		breakWithoutParagraphTags.add("address");
@@ -202,11 +203,10 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 	
 	private void initResizeHandler(Element templateSection) {
-		// TODO Alexey Yukhovich add resizer support
-//		if (resizer == null) {
-//			resizer = new VpeResizer();
-//			resizer.setResizeData(templateSection);
-//		}
+		if (resizer == null) {
+			resizer = new VpeResizer();
+			resizer.setResizeData(templateSection);
+		}
 	}
 	
 	private void initDndHandler(Element templateSection) {
@@ -647,10 +647,9 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param height Element height
 	 */
 	public void resize(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Object data, int resizerConstrains, int top, int left, int width, int height) {
-		// TODO Alexey Yukhovich add resizer supports
-//		if (resizer != null) {
-//			resizer.resize(pageContext, sourceElement, visualDocument, visualElement, data, resizerConstrains, top, left, width, height);
-//		}
+		if (resizer != null) {
+			resizer.resize(pageContext, sourceElement, visualDocument, visualElement, data, resizerConstrains, top, left, width, height);
+		}
 	}
 
 	/**

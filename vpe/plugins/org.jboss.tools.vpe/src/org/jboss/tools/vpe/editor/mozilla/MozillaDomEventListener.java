@@ -11,9 +11,13 @@
 package org.jboss.tools.vpe.editor.mozilla;
 
 import org.jboss.tools.vpe.editor.VpeController;
+import org.jboss.tools.vpe.xulrunner.editor.IVpeResizeListener;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIClipboardDragDropHooks;
+import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
 import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMElementCSSInlineStyle;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMEventListener;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
@@ -30,8 +34,7 @@ import org.mozilla.xpcom.Mozilla;
 
 class MozillaDomEventListener implements nsIClipboardDragDropHooks, 
 		nsIDOMEventListener, nsISelectionListener {
-	// TODO Alexey Yukhovich add resizer
-//	private XPCOMObject resizeListener;
+	private IVpeResizeListener resizeListener;
 	// TODO Max Areshkau add DnD
 //	private XPCOMObject dropListener;
 
@@ -60,14 +63,18 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	}
 
 	void createCOMInterfaces() {
-		// TODO Alexey Yukhovich add resizer
-		// IVpeResizeListener
-//		resizeListener = new XPCOMObject(new int[]{2,0,0,6}) {
-//			public int method0(int[] args) {return QueryInterface(args[0], args[1]);}
-//			public int method1(int[] args) {return AddRef();}
-//			public int method2(int[] args) {return Release();}
-//			public int method3(int[] args) {return EndResizing(args[0], args[1], args[2], args[3], args[4], args[5]);}
-//		};
+		resizeListener = new IVpeResizeListener() {
+			public void onEndResizing(int usedResizeMarkerHandle, int top,
+					int left, int width, int height,
+					nsIDOMElement resizedDomElement) {
+				endResizing(usedResizeMarkerHandle, top, left, width, height, resizedDomElement);
+			}
+
+			public nsISupports queryInterface(String uuid) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
 		
 		// TODO Max Areshkau add DnD
 		// VpeDnD
@@ -86,11 +93,9 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	}
 
 	void disposeCOMInterfaces() {
-		// TODO Alexey Yukhovich add resizer
-//		if (resizeListener != null) {
-//			resizeListener.dispose();
-//			resizeListener = null;
-//		}
+		if (resizeListener != null) {
+			resizeListener = null;
+		}
 		
 		// TODO Max Areshakau add DnD
 //		if (dropListener != null) {
@@ -114,6 +119,22 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	}
 
 	/**
+	 * @param usedHandle
+	 * @param newTop
+	 * @param newLeft
+	 * @param newWidth
+	 * @param newHeight
+	 * @param aResizedObject
+	 */
+	private void endResizing(int usedHandle, int newTop, int newLeft, int newWidth, int newHeight, nsIDOMElement aResizedObject) {
+		setStylePropertyPixels(aResizedObject, "top", newTop);
+		setStylePropertyPixels(aResizedObject, "left", newLeft);
+		setStylePropertyPixels(aResizedObject, "height", newHeight);
+		setStylePropertyPixels(aResizedObject, "width", newWidth);
+	}
+	
+	
+	/**
 	 * Returns event handler
 	 * @return
 	 */
@@ -121,12 +142,6 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 		
 		return editorDomEventListener;
 	}
-	// TODO Alexey Yukhovich add resizer support
-//	// IVpeResizeListener
-//	int EndResizing(int usedHandle, int newTop, int newLeft, int newWidth, int newHeight, int aResizedObject) {
-//		nsIDOMElement element = new nsIDOMElement(aResizedObject);
-//		return XPCOM.NS_OK;
-//	}
 	
 	// TODO Max Areshkau add DnD support
 //	VpeDnD getDnD() {
@@ -392,4 +407,46 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 			editorDomEventListener.notifySelectionChanged(domDocument, selection, reason);
 		}
 	}
+	
+	
+	/**
+	 * 
+	 * @param aElement
+	 * @param aProperty
+	 * @param aValue
+	 */
+	private void setStylePropertyPixels(nsIDOMElement aElement, String aProperty, int aValue) {
+		setStyle(aElement, aProperty, aValue + "px");
+	}
+	
+
+	/**
+	 * Set style for nsIDOMElement
+	 * @param domElement 
+	 * @param cssPropertyName
+	 * @param cssPropertyValue
+	 */
+	private void setStyle(nsIDOMElement domElement, String cssPropertyName, String cssPropertyValue) {
+		nsIDOMElementCSSInlineStyle inlineStyles = (nsIDOMElementCSSInlineStyle) domElement.queryInterface(nsIDOMElementCSSInlineStyle.NS_IDOMELEMENTCSSINLINESTYLE_IID);
+		
+	    if ( inlineStyles == null) {
+	    	return;
+	    }
+
+	    nsIDOMCSSStyleDeclaration cssDecl = inlineStyles.getStyle();
+
+	    if ( cssDecl == null) {
+	    	return;
+	    }
+
+	    if (cssPropertyValue.length() == 0 ) {
+			// an empty value means we have to remove the property
+	    	cssDecl.removeProperty(cssPropertyName);
+	    }  else {
+			// let's recreate the declaration as it was
+	    	String priority = cssDecl.getPropertyPriority(cssPropertyName);
+	    	cssDecl.setProperty(cssPropertyName, cssPropertyValue, priority);
+	    }
+	}
+
 }
