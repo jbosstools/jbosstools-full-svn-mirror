@@ -1516,9 +1516,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	
 	nsIDOMElement getLastSelectedElement() {
-		// TODO Max Areshkau figure out with last selekted element
-//		return browser.getSelectedElement();
-		return null;
+		// TODO Max Areshkau figure out with last selected element
+		//in mozilla user can select more than one element, but this 
+		//function can return only first element(think about this)
+	      
+		return (nsIDOMElement) xulRunnerEditor.getSelection().getAnchorNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 	}
 	
 	public void pushIncludeStack(VpeIncludeInfo includeInfo) {
