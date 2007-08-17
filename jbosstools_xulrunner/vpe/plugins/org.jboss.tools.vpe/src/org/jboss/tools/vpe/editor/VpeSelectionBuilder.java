@@ -787,7 +787,7 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 				nsIDOMNode parent = commonNode.getParentNode();
 				commonNode = parent;
 			}
-			return (nsIDOMElement)commonNode;
+			return (nsIDOMElement)commonNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 		} else {
 			return null;
 		}

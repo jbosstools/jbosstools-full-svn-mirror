@@ -235,9 +235,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		xulRunnerEditor = (XulRunnerEditor) visualEditor.getControl();
 		// TODO Sergey Vasilyev figure out with nsIPressShell
 //		presShell = browser.getPresShell();
-		// TODO Max Areshkau figure out with nsISelectionController
 		visualSelectionController = new VpeSelectionController(xulRunnerEditor.getSelection());
-		// TODO Max Areshkau figure out with VpeSelectionBuilder
 		selectionBuilder = new VpeSelectionBuilder(domMapping, sourceBuilder, visualBuilder,  visualSelectionController);
 		visualKeyHandler = new VpeVisualKeyHandler(sourceEditor, domMapping, pageContext){
 			public void doSave(IProgressMonitor monitor){
@@ -1138,6 +1136,14 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 	}
 	
+	/**
+	 * Calls when on when browser receive context menu event.
+	 * 
+	 * @param contextFlags -not used in this function, just for becouse this parametr
+	 * 			exist in nsIContextMenuListener
+	 * @param event  event from browser used here
+	 * @param node where this event are occur
+	 */
 	public void onShowContextMenu(long contextFlags, nsIDOMEvent event, nsIDOMNode node) {
 		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(event);
 		
@@ -1305,6 +1311,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 		
 		private boolean startActiveEditor(int newType) {
+			//TODO Max Areshkau( add in test purposes, remove after all)
 			System.out.print("start");
 			if (type == ACTIVE_EDITOR_NONE) {
 				if( newType == ACTIVE_EDITOR_SOURCE &&
@@ -1319,6 +1326,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 		
 		private void stopActiveEditor() {
+			//TODO Max Areshkau( add in test purposes, remove after all)
 			System.out.println("stop");
 			type = ACTIVE_EDITOR_NONE;
 		}

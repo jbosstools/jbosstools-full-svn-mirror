@@ -1201,7 +1201,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		if (visualNode != null) {
 			nsIDOMNode parent = visualNode.getParentNode();
 			if (parent != null && parent.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-				nsIDOMElement element = (nsIDOMElement)parent;
+				nsIDOMElement element = (nsIDOMElement)parent.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 				nsIDOMAttr style = element.getAttributeNode("style");
 				if (style != null) {
 					String styleValue = style.getNodeValue();
