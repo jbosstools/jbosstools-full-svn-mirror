@@ -62,6 +62,8 @@ import org.mozilla.interfaces.nsIDOMEventTarget;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
+import org.mozilla.interfaces.nsISelection;
+import org.mozilla.interfaces.nsISelectionPrivate;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
 	protected static final String INIT_URL = "file://" + (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath();
@@ -529,20 +531,22 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 
 	private void addSelectionListener() {
-		if (contentAreaEventListener != null) {
-			// TODO Max Areshkau figure out with selection listener
-//			nsISelectionController selectionController = visualEditor.getSelectionController();
-//			nsISelection selection = selectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
-//			nsISelectionPrivate selectionPrivate = selection.queryInterface(nsISelectionPrivate.NS_SELECTIONPRIVATE_IID);
-//			selectionPrivate.addSelectionListener(contentAreaEventListener);
+		if (contentAreaEventListener != null&&xulRunnerEditor!=null) {
+			
+			nsISelection selection = xulRunnerEditor.getSelection();
+			nsISelectionPrivate selectionPrivate = (nsISelectionPrivate) selection.queryInterface(nsISelectionPrivate.NS_ISELECTIONPRIVATE_IID);
+			selectionPrivate.addSelectionListener(contentAreaEventListener);
+			
 		}
 	}
 
 	private void removeSelectionListener() {
-		// TODO Max Areshkau figure out with selection listener
-//		nsISelectionController selectionController = visualEditor.getSelectionController();
-//		selectionController.removeSelectionListener(contentAreaEventListener.getSelectionListener());
-//		selectionController.Release();
+		if (contentAreaEventListener != null&&xulRunnerEditor!=null) {
+
+			nsISelection selection = xulRunnerEditor.getSelection();
+			nsISelectionPrivate selectionPrivate = (nsISelectionPrivate) selection.queryInterface(nsISelectionPrivate.NS_ISELECTIONPRIVATE_IID);
+			selectionPrivate.removeSelectionListener(contentAreaEventListener);
+		}
 	}
 
 	public void setSelectionRectangle(nsIDOMElement element, int resizerConstrains, boolean scroll) {
