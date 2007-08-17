@@ -62,8 +62,6 @@ import org.mozilla.interfaces.nsIDOMEventTarget;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
 	protected static final String INIT_URL = "file://" + (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath();

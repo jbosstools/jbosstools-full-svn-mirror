@@ -29,7 +29,7 @@ public abstract class VpePseudoContentCreator {
 	}
 	
 	public static boolean isPseudoElement(nsIDOMNode visualNode) {
-		return visualNode != null && visualNode.getNodeType() == Node.ELEMENT_NODE && "yes".equalsIgnoreCase(((Element)visualNode).getAttribute(PSEUDO_CONTENT_ATTR));
+		return visualNode != null && visualNode.getNodeType() == Node.ELEMENT_NODE && "yes".equalsIgnoreCase(((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)).getAttribute(PSEUDO_CONTENT_ATTR));
 	}
 	
 	public static nsIDOMNode getContainerForPseudoContent(nsIDOMNode visualNode) {
