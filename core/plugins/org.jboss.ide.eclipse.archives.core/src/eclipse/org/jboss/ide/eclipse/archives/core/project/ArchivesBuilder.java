@@ -110,6 +110,7 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 		for( int i = 0; i < projects.length; i++ ) {
 			final IProject proj = projects[i];
 			IResourceDelta delta = getDelta(proj);
+			if( delta == null ) continue;
 			try {
 				delta.accept(new IResourceDeltaVisitor () { 
 					public boolean visit(IResourceDelta delta) throws CoreException {
@@ -129,7 +130,6 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 					}
 				});
 			} catch( CoreException ce) {
-				
 			}
 		}
 	}
