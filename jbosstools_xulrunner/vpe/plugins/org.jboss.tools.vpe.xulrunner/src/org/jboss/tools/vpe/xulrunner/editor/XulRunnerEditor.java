@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
+import org.mozilla.interfaces.inIFlasher;
 import org.mozilla.interfaces.nsIClipboardDragDropHookList;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -33,6 +34,7 @@ import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsITransferable;
 import org.mozilla.xpcom.Mozilla;
+import java.util.regex.Pattern;
 
 /**
  * @author Sergey Vasilyev (svasilyev@exadel.com)
@@ -62,9 +64,23 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	public static final String TRANS_FLAVOR_kUnicodeMime = "text/unicode";
 	public static final String TRANS_FLAVOR_kNativeHTMLMime = "application/x-moz-nativehtml";
 	
-	/**Editor types */
-	public static final String AEDITOR_TYPE_HTML="html";
+	/**
+	 * xpcom flasher component which used to  draw lines
+	 */
+	private inIFlasher iFlasher;
 	
+	//flasher contact id
+	private static final String FLASHER_CIID="@mozilla.org/inspector/flasher;1";
+	
+	/**
+	 * RegExp for find expression 'display : none' in style string
+	 */
+	private static final  Pattern  PATTERN = Pattern.compile(".*\\s*(display)\\s*:\\s*(none)\\s*;.*",Pattern.CASE_INSENSITIVE+Pattern.DOTALL);
+
+	/**
+	 * Contains attribute name for style
+	 */
+	private static final String STYLE_ATTR="style";
 
 	/**
 	 * @param parent
@@ -172,11 +188,166 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 //		}
 //		return null;
 	}
+	
+	/**
+	 * Function created to restore functionality of MozillaBrowser
+	 * @return
+	 */
+	private nsIDOMElement getLastSelectedElement() {
+		//TODO Max Areshkau selection functionality
+	//return	(nsIDOMElement) getSelection().getAnchorNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+		return null;
+	}
+	/**
+	 * Function created to restore functionality of MozillaBrowser
+	 * @return
+	 */
+	private void setLastSelectedElement(nsIDOMElement lastSelectedElement) {
+		//TODO Max Areshkau selection functionality
+	}
+	/**
+	 * 
+	 */
+	/**
+	 * Draws rectangle around  the element.
+	 * @param element
+	 * @param resizerConstrains
+	 * @param scroll
+	 */
+	public void setSelectionRectangle(nsIDOMElement element, int resizerConstrains, boolean scroll) {
+		if (getIFlasher() == null) {
+			
+			return;
+		}
+		if (getLastSelectedElement() != null) {
+			
+			if(checkVisability(getLastSelectedElement())){
+				
+					if((getLastSelectedElement().getAttribute(VPEFLASHERCOLORATTRIBUTE)==null)||
+					(!getLastSelectedElement().getAttribute(VPEFLASHERCOLORATTRIBUTE).equals(flasherHiddentElementColor))) {
+				
+						getIFlasher().setColor(flasherVisialElementColor);
+					} else{
+						getIFlasher().setColor(flasherHiddentElementColor);
+					}
+					
+//					getIFlasher().repaintElement(getLastSelectedElement());
+					getIFlasher().drawElementOutline(getLastSelectedElement());
+			}else {
+				
+				getIFlasher().setColor(flasherHiddentElementColor);
+				nsIDOMElement domElement = findVisbleParentElement(getLastSelectedElement());
+				
+				if(domElement!=null) {
+					getIFlasher().drawElementOutline(getLastSelectedElement());				
+//					getIFlasher().repaintElement(domElement);
+				}
+				
+			}
 
-	public void setSelectionRectangle(nsIDOMElement element,
-			int resizerConstrains, boolean scroll) {
-		// TODO Max Areshkau restore selection functionality
+		} else if (element != null) {
+			
+			if(checkVisability(element)){
+				
+			
+				if((element.getAttribute(VPEFLASHERCOLORATTRIBUTE)==null)||
+					(!element.getAttribute(VPEFLASHERCOLORATTRIBUTE).equals(flasherHiddentElementColor))) {
+				
+				getIFlasher().setColor(flasherVisialElementColor);
+				}else {
+					getIFlasher().setColor(flasherHiddentElementColor);
+				}
+				getIFlasher().drawElementOutline(element);
+			}else {
+				
+				getIFlasher().setColor(flasherHiddentElementColor);
+				nsIDOMElement domElement = findVisbleParentElement(element);
+				
+				if(domElement!=null) {
+					
+					getIFlasher().drawElementOutline(domElement);
+				}
+			}
+
+			
+		}
+		//TODO Alexey Yukhovich resized functionality
+//		if (resizer != null) {
+//			if (element != null && resizerConstrains != 0) {
+//				resizer.Show(element, resizerConstrains);
+//			} else {
+//				resizer.Hide();
+//			}
+//		}
+
+		setLastSelectedElement(element);
+//		lastSelectedElement = element;
+//		lastResizerConstrains = resizerConstrains;
+	}
+	
+
+	/**
+	 * @return the iFlasher
+	 */
+	private inIFlasher getIFlasher() {
 		
+		if(iFlasher==null) {
+			nsIServiceManager serviceManager = Mozilla.getInstance().getServiceManager();
+			iFlasher = (inIFlasher) serviceManager.getServiceByContractID(FLASHER_CIID, inIFlasher.INIFLASHER_IID);
+			iFlasher.setThickness(2);
+		}
+		return iFlasher;
+	}
+	
+	/**Function created for checking if user can see element or not.
+	 * Element doesn't shows in VPE if it's has 'display:none;' attribute in style.
+	 * 
+	 * @param node for checking it's visability
+	 * @param iFlasher flasher which used for drawning border for elements  adn in 
+	 * 				which was setted color in depends of visability of element
+	 * 
+	 * @return false for hiddent elements and true for visble elements
+	 */
+	private boolean checkVisability(nsIDOMNode node){
+		
+		if(!(node instanceof nsIDOMElement)){		
+			
+			return true;
+		}
+		nsIDOMElement domElement = (nsIDOMElement) node;
+		
+		//TODO  add check not inline styles attribute such as styleclass
+		String inlineStyle = domElement.getAttribute(STYLE_ATTR);
+		
+			return inlineStyle==null?true:!PATTERN.matcher(inlineStyle).matches();
+	}
+	
+	/**
+	 * Finds visible nearest visible node for hidden node
+	 * 
+	 * @param element
+	 * 
+	 * @return nearest visible node or null if can't find
+	 */
+	private nsIDOMElement  findVisbleParentElement(nsIDOMElement element) {
+		
+		if(!(element.getParentNode() instanceof nsIDOMElement)) {
+			
+			return null;
+		}
+	
+		nsIDOMElement parentElement = (nsIDOMElement) element.getParentNode();
+		
+		while(parentElement!=null&&!checkVisability(parentElement)) {
+			if(checkVisability(parentElement)) {
+			
+				return parentElement;
+			}else {
+			
+				parentElement=(nsIDOMElement) parentElement.getParentNode() ;
+			}
+		}
+		return parentElement;
 	}
 
 }
