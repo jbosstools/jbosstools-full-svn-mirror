@@ -1305,6 +1305,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 		
 		private boolean startActiveEditor(int newType) {
+			System.out.print("start");
 			if (type == ACTIVE_EDITOR_NONE) {
 				if( newType == ACTIVE_EDITOR_SOURCE &&
 						editPart.getVisualMode() == VpeEditorPart.SOURCE_MODE) {
@@ -1318,6 +1319,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 		
 		private void stopActiveEditor() {
+			System.out.println("stop");
 			type = ACTIVE_EDITOR_NONE;
 		}
 	}

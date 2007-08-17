@@ -90,7 +90,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private nsIDOMElement visualContentArea;
 	private VpePageContext pageContext;
 	// TODO Max Areshkau figure out with DnD
-//	private VpeDnD dnd;
+	private VpeDnD dnd;
 	private nsIDOMNode headNode;
 	private List includeStack;
 	boolean rebuildFlag = false;
@@ -144,7 +144,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		this.visualDocument = visualEditor.getDomDocument();
 		this.visualContentArea = visualEditor.getContentArea();
 		// TODO Max Areshkau figure out 
-//		this.dnd = visualEditor.getLocalDnD();
+		this.dnd = new VpeDnD();
 		this.pageContext = pageContext;
 		this.headNode = visualEditor.getHeadNode();
 		// TODO Max Areshkau figure out
@@ -1359,9 +1359,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	
 	Rectangle getNodeBounds(nsIDOMNode visualNode) {
-		// TODO Max Areshkau add DnD support
-//		return dnd.getBounds(visualNode);
-		return null;
+		
+		return dnd.getBounds(visualNode);
 	}
 	
 	static boolean canInsertAfter(int x, int y, Rectangle rect) {

@@ -151,7 +151,7 @@ public class VpeSelectionBuilder {
 									if (info.startFlag) {
 										visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedNode, false);
 									} else {
-										visualParentElement = (nsIDOMElement)visualSelectedNode.getParentNode();
+										visualParentElement = (nsIDOMElement)visualSelectedNode.getParentNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 										visualBuilder.setSelectionRectangle(visualParentElement, false);
 									}
 									int offset = info.startFlag ? 0 : ((IndexedRegion)sourceNode).getEndOffset() -
