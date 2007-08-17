@@ -18,6 +18,8 @@ import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMEventListener;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
+import org.mozilla.interfaces.nsIDOMNSHTMLElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDragSession;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionListener;
@@ -50,6 +52,8 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	public static final String KEYPRESS="keypress";
 	
 	public static final String DBLCLICK="dblclick";
+	
+	public static final String CONTEXTMENUEVENTTYPE="contextmenu";
 	
 	public MozillaDomEventListener() {
 		createCOMInterfaces();
@@ -367,11 +371,15 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 			
 			nsIDOMKeyEvent keyEvent = (nsIDOMKeyEvent) domEvent.queryInterface(nsIDOMKeyEvent.NS_IDOMKEYEVENT_IID);
 			getEditorDomEventListener().keyPress(keyEvent);
+		} else if(CONTEXTMENUEVENTTYPE.equals(domEvent.getType())) {
+			//first param are null 0, because this not used in event handler
+			getEditorDomEventListener().onShowContextMenu(0, domEvent, (nsIDOMNode) domEvent.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID));
 		}
 		//not using default mozilla event handlers
 		domEvent.stopPropagation();
 		domEvent.preventDefault();
 		}catch(Throwable th) {
+			//TODO Max Areshkau remove when all will be adjusted
 			th.printStackTrace();
 		}
 	}

@@ -361,7 +361,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		}
 		if (xulRunnerEditor != null) {
 			// TODO Max Areshkau add context menu listener support
-//			visualEditor.setContextMenuListener(listener);
+//			xulRunnerEditor.setContextMenuListener(listener);
 		}
 	}
 
@@ -508,6 +508,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				contentAreaEventTarget.addEventListener("mouseup", contentAreaEventListener, false); //$NON-NLS-1$
 				contentAreaEventTarget.addEventListener("mousemove", contentAreaEventListener, false); //$NON-NLS-1$
 	
+				//context menu event handler(add by Max Areshkau)
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.CONTEXTMENUEVENTTYPE, contentAreaEventListener, false);
+
 				documentEventTarget = (nsIDOMEventTarget) getDomDocument().queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
 				documentEventTarget.addEventListener("keypress", contentAreaEventListener, false); //$NON-NLS-1$
 			} else {
@@ -552,7 +555,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	public void setSelectionRectangle(nsIDOMElement element, int resizerConstrains, boolean scroll) {
 		if (contentAreaEventListener != null) {
 			// TODO Max Areshkau add selection support
-//			visualEditor.setSelectionRectangle((nsIDOMElement)element, resizerConstrains, scroll);
+			xulRunnerEditor.setSelectionRectangle((nsIDOMElement)element, resizerConstrains, scroll);
 		}
 	}
 

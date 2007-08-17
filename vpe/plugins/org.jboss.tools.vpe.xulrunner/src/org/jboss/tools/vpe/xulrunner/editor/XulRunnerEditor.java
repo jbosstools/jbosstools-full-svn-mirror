@@ -173,4 +173,11 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 //		}
 //		return null;
 	}
+
+	public void setSelectionRectangle(nsIDOMElement element,
+			int resizerConstrains, boolean scroll) {
+		// TODO Max Areshkau restore selection functionality
+		
+	}
+
 }
