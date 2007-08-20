@@ -2359,8 +2359,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	public void setToolbarFormatControllerManager(FormatControllerManager formatControllerManager) {
 		toolbarFormatControllerManager = formatControllerManager;
 	}
-	public void setSelectionBarController(SelectionBar SelectionBar) {
-		selectionBar = SelectionBar;
+	public void setSelectionBarController(SelectionBar selectionBar) {
+		this.selectionBar = selectionBar;
 	}
 
 	public IStructuredModel getModel() {
