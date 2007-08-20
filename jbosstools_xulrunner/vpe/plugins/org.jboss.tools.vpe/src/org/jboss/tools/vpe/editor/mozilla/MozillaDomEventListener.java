@@ -391,8 +391,6 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 			getEditorDomEventListener().onShowContextMenu(0, domEvent, (nsIDOMNode) domEvent.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID));
 		}
 		//not using default mozilla event handlers
-		domEvent.stopPropagation();
-		domEvent.preventDefault();
 		}catch(Throwable th) {
 			//TODO Max Areshkau remove when all will be adjusted
 			th.printStackTrace();
