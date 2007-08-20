@@ -68,7 +68,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * xpcom flasher component which used to  draw lines
 	 */
 	private inIFlasher iFlasher;
-	
+	private nsIDocShell docShell = null;
 	//flasher contact id
 	private static final String FLASHER_CIID="@mozilla.org/inspector/flasher;1";
 	
@@ -138,8 +138,12 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	}
 
 	public nsIDocShell getDocShell() {
-		nsIInterfaceRequestor interfaceRequestor = (nsIInterfaceRequestor) getWebBrowser().queryInterface(nsIInterfaceRequestor.NS_IINTERFACEREQUESTOR_IID);
-		return (nsIDocShell) interfaceRequestor.getInterface(nsIDocShell.NS_IDOCSHELL_IID);
+		if (docShell == null) {
+			nsIInterfaceRequestor interfaceRequestor = (nsIInterfaceRequestor) getWebBrowser().queryInterface(nsIInterfaceRequestor.NS_IINTERFACEREQUESTOR_IID);
+			docShell = (nsIDocShell) interfaceRequestor.getInterface(nsIDocShell.NS_IDOCSHELL_IID);
+		}
+		
+		return docShell;
 	}
 	
 	public nsIDOMDocument getDOMDocument() {
