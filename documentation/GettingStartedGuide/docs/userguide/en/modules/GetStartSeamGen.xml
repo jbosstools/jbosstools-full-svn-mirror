@@ -13,14 +13,14 @@
   
   <para>The Red Hat Developer Studio provides sophisticated tools for enterprise applications. With the Red Hat Developer Studio, you can get started very quickly with a web prototype, and then scale up your application to include enterprise features (e.g., business processes, web services, etc.) using the same developer tools. It is a &quot;scalable&quot; RAD (Rapid Application Development) tool.</para>
   
-  <para>A core element that makes the Red Hat Developer Studio &quot;scalable&quot; is the JBoss Seam framework. Seam is a fully featured application framework on top of Java EE 5. It is also one of the most popular enterprise Java framework today. Seam deeply integrates many other standard-based or open source frameworks (e.g., JSF, EJB3, JMS, Web Services, jBPM, JBoss Rules, Ajax4jsf, RichFaces, Facelets, Spring, iText, Quartz, TestNG etc.), and provides a single programming model for developers to &quot;drive&quot; those underlying frameworks via simple annotated POJOs (Plain Old Java Objects). It makes life easier for developers to tackle complex enterprise applications with many component frameworks.</para>
+  <para>A core element that makes the Red Hat Developer Studio &quot;scalable&quot; is the JBoss <property>Seam</property> framework. <property>Seam</property> is a fully featured application framework on top of Java EE 5. It is also one of the most popular enterprise Java framework today. <property>Seam</property> deeply integrates many other standard-based or open source frameworks (e.g., JSF, EJB3, JMS, Web Services, jBPM, JBoss Rules, Ajax4jsf, RichFaces, Facelets, Spring, iText, Quartz, TestNG etc.), and provides a single programming model for developers to &quot;drive&quot; those underlying frameworks via simple annotated POJOs (Plain Old Java Objects). It makes life easier for developers to tackle complex enterprise applications with many component frameworks.</para>
   
-  <para>In this chapter, we will cover how to build a simple Seam web application in minutes with the Red Hat Developer Studio.</para>
+  <para>In this chapter, we will cover how to build a simple <property>Seam</property> web application in minutes with the Red Hat Developer Studio.</para>
   
   <section>
     <title>Create a Seam Project</title>
     
-    <para>To create a new web application in Seam, select <emphasis role="italic">New > Project ... > Seam > Seam Web Project</emphasis>. You will be prompted to enter a name and a location directory for your new project. You will also be asked to choose a JBoss AS server to deploy the project. You must choose the JBoss AS 4.2.0 instance we had defined in the JBoss AS Server manager view.</para>
+    <para>To create a new web application in <property>Seam</property>, select <emphasis>New &gt; Project ... &gt; Seam &gt; Seam Web Project</emphasis>. You will be prompted to enter a name and a location directory for your new project. You will also be asked to choose a JBoss AS server to deploy the project. You must choose the JBoss AS 4.2.0 instance we had defined in the JBoss AS Server manager view.</para>
     
     <figure>
       <title>Create a Seam project</title>
@@ -31,7 +31,7 @@
       </mediaobject>
     </figure>
     
-    <para>Next, you will be asked to select the &quot;features&quot; you want to use in your project. This allows Red Hat Developer Studio to setup the appropriate tooling for your project. Since JBoss Seam integrates all popular Java EE frameworks, you can select any combination of technologies from the list. Here, for this project, we will select Dynamic Web Module, Java, Java Persistence (JPA), JavaServer Faces (JSF), and Seam Facet for a typical database-driven web application.</para>
+    <para>Next, you will be asked to select the &quot;features&quot; you want to use in your project. This allows Red Hat Developer Studio to setup the appropriate tooling for your project. Since JBoss <property>Seam</property> integrates all popular Java EE frameworks, you can select any combination of technologies from the list. Here, for this project, we will select Dynamic Web Module, Java, Java Persistence (JPA), JavaServer Faces (JSF), and <property>Seam</property> Facet for a typical database-driven web application.</para>
     
     <figure>
       <title>Select toolings for the project</title>
@@ -93,7 +93,7 @@
     
     <orderedlist continuation="continues">
     <listitem><para>In the next dialog select Add button.</para></listitem>
-    <listitem><para>Select Hypersonic database: <emphasis role="italic">Hypersonic &gt; 1.8 &gt; Hypersonic DB</emphasis></para></listitem>
+    <listitem><para>Select Hypersonic database: <emphasis>Hypersonic &gt; 1.8 &gt; Hypersonic DB</emphasis></para></listitem>
     </orderedlist>
     
     <figure>
@@ -117,7 +117,7 @@
     <orderedlist continuation="continues">
     <listitem><para>Select hsqldb.jar in Driver File panel and click the button Remove jar/Zip.</para></listitem>
     <listitem><para>Select Add jar/Zip.</para></listitem>
-    <listitem><para>Select hsqldb driver which is located in <emphasis role="italic">jboss-eap &gt; jboss-as &gt; server &gt; default &gt; lib</emphasis> folder of RHDS installation.</para></listitem>
+    <listitem><para>Select hsqldb driver which is located in <emphasis>jboss-eap &gt; jboss-as &gt; server &gt; default &gt; lib</emphasis> folder of RHDS installation.</para></listitem>
     </orderedlist>
     <figure>
       <title>Adding driver</title>
@@ -168,7 +168,7 @@
       </mediaobject>
     </figure>
     
-    <para>The project setup wizard also asks you to configure how Seam generates code for the project. The Seam Home Folder should point to a valid Seam distribution. By default, it is set to the Seam distribution bundled in your Red Hat Developer Studio tool. For the deployment format, choose WAR deployment if you want to use POJOs for UI event handling and business logic; choose EAR deployment if you want to EJB3 beans for added features. In most web applications, the WAR deployment option would suffice. You should also enter Java packages for the entity beans (for database mapping) and session beans (for action handlers). All generated code will be placed in those packages. </para>
+    <para>The project setup wizard also asks you to configure how <property>Seam</property> generates code for the project. The <property>Seam</property> Home Folder should point to a valid <property>Seam</property> distribution. By default, it is set to the <property>Seam</property> distribution bundled in your Red Hat Developer Studio tool. For the deployment format, choose WAR deployment if you want to use POJOs for UI event handling and business logic; choose EAR deployment if you want to EJB3 beans for added features. In most web applications, the WAR deployment option would suffice. You should also enter Java packages for the entity beans (for database mapping) and session beans (for action handlers). All generated code will be placed in those packages. </para>
     
     <figure>
       <title>Enter Java packages for generated code</title>
@@ -206,7 +206,7 @@
       </mediaobject>
     </figure>
     
-    <para>To make simple changes to the page, you just need to double click on the <emphasis role="italic">WebContent/home.xhtml file</emphasis> and edit it in the visual editor. Notice that the visual editor lets you both the XHTML code and the rendered page. The rendered view is designed to make it easy to find stuff in a complex XHTML page.</para>
+    <para>To make simple changes to the page, you just need to double click on the <emphasis>WebContent/home.xhtml file</emphasis> and edit it in the visual editor. Notice that the visual editor lets you both the XHTML code and the rendered page. The rendered view is designed to make it easy to find stuff in a complex XHTML page.</para>
     
     <figure>
       <title>Making changes in the visual editor</title>
@@ -217,7 +217,7 @@
       </mediaobject>
     </figure>
     
-    <para>Once you finished editing, save the file (<emphasis role="italic">File &gt; Save</emphasis>), re-deploy the application, and reload the browser to see the changes.</para>
+    <para>Once you finished editing, save the file (<emphasis>File &gt; Save</emphasis>), re-deploy the application, and reload the browser to see the changes.</para>
     
     <figure>
       <title>The front page is changed</title>
@@ -237,7 +237,7 @@
   <section>
     <title>Add a Web Page and an Action</title>
     
-    <para>To add a new page and related UI action to the project, use the <emphasis role="italic">New &gt; Other ... &gt; Seam &gt; Seam Form</emphasis> wizard. You are prompted to enter the name of the web page, the name for the Seam component that handles UI actions from the page, and UI action method name.</para>
+    <para>To add a new page and related UI action to the project, use the <emphasis>New &gt; Other ... &gt; Seam &gt; Seam Form</emphasis> wizard. You are prompted to enter the name of the web page, the name for the <property>Seam</property> component that handles UI actions from the page, and UI action method name.</para>
     
     <figure>
       <title>New form for the application</title>
@@ -292,7 +292,7 @@
 </ui:composition>
 ]]></programlisting>
     
-    <para>The #{simpleAction.value} notation on the web page maps to the &quot;value&quot; property in the backend component named &quot;simpleAction&quot;, and the #{simpleAction.hello} notation indicates that the hello() method is called when the button is clicked on. Here is the &quot;simpleAction&quot; named backend Seam component generated by the wizard.</para>
+    <para>The #{simpleAction.value} notation on the web page maps to the &quot;value&quot; property in the backend component named &quot;simpleAction&quot;, and the #{simpleAction.hello} notation indicates that the hello() method is called when the button is clicked on. Here is the &quot;simpleAction&quot; named backend <property>Seam</property> component generated by the wizard.</para>
     
     <programlisting role="JAVA"><![CDATA[
 @Name("simpleAction")
@@ -348,7 +348,7 @@ public class SimpleAction {
       </mediaobject>
     </figure>
     
-    <para>Seam supports many different input validation annotations. To see an example, you can replace the @Length(max=10) annotation with the following. It would require the input string to have a first name and last name separated by a space. If the validation fails, the web page would print the customized error message.</para>
+    <para><property>Seam</property> supports many different input validation annotations. To see an example, you can replace the @Length(max=10) annotation with the following. It would require the input string to have a first name and last name separated by a space. If the validation fails, the web page would print the customized error message.</para>
     
     <programlisting role="JAVA"><![CDATA[
 @NotNull
@@ -428,7 +428,7 @@ Capitalize the input?
   <section>
     <title>Add Security to the Application</title>
     
-    <para>You have probably noticed that the web page template has a login link at the top of the page. You can use the Seam security framework to secure access to any web page or web action. You can implement the login logic in the XXXX method. In the following example, we just use hardcoded username and password. But you can easily change it to use database, LDAP or any other means.</para>
+    <para>You have probably noticed that the web page template has a login link at the top of the page. You can use the <property>Seam</property> security framework to secure access to any web page or web action. You can implement the login logic in the XXXX method. In the following example, we just use hardcoded username and password. But you can easily change it to use database, LDAP or any other means.</para>
     
     <programlisting role="JAVA"><![CDATA[
 ]]></programlisting>

@@ -28,7 +28,7 @@
     In that case you can skip the next step mentioned here. But it is recommended to use the SysV service scripts for production servers.</para></listitem>
     <listitem><para>Download and install the appropriate -compat RPM from JPackage <ulink  url="ftp://jpackage.hmdc.harvard.edu/JPackage/1.7/generic/RPMS.non-free/">here</ulink>. 
     Please ensure you choose a matching version of the -compat package to the JDK you installed.</para></listitem>
-    <listitem><para>Create an environment variable that points to the JDK installation directory and call it JAVA_HOME. Add <emphasis role="italic">$JAVA_HOME/bin</emphasis> to the system path to be able to run java from the 
+    <listitem><para>Create an environment variable that points to the JDK installation directory and call it JAVA_HOME. Add <emphasis>$JAVA_HOME/bin</emphasis> to the system path to be able to run java from the 
     command line. You can do this by adding the following lines to the .bashrc file in your home directory.</para></listitem>
    </itemizedlist>
    <programlisting><![CDATA[#In this example /usr/java/jdk1.5.0_11 is the JDK installation directory.
@@ -100,7 +100,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     <listitem><para>Create an environment variable called JAVA_HOME that points to the JDK installation directory, for example:</para></listitem>
    </itemizedlist>
    <programlisting><![CDATA[C:\Program Files\Java\jdk1.5.0_11\]]></programlisting>
-     <para>In order to run java from the command line add the <emphasis role="italic">jre\bin</emphasis> directory to your path, for example:</para>
+     <para>In order to run java from the command line add the <emphasis>jre\bin</emphasis> directory to your path, for example:</para>
    <programlisting><![CDATA[C:\Program Files\Java\jdk1.5.0_11\jre\bin]]></programlisting>
       <para>To do this, open the Control Panel from the Start Menu, switch to Classic View if necessary, open the System Control Panel applet, select the Advanced Tab, 
      and click on the Environment Variables button.</para>
@@ -231,27 +231,26 @@ on their machines.</para>
   <para><emphasis role="bold">Do I need to have JBoss server installed to run Red Hat Developer Studio?</emphasis></para>
   <para>No. Red Hat Developer Studio already comes bundled with JBoss server. We bundle it together so that you don&apos;t need to download any 
   additional software and can test your application in a Web browser right away.</para>
-  <para>If you want to use a different JBoss server installation, after Red Hat Developer Studio is installed open Servers View (select <emphasis role="italic">Window &gt; Show View &gt; Others &gt; Server &gt; Servers</emphasis>), then right click on this <emphasis role="italic">view &gt; New &gt; Server</emphasis> and follow the wizards steps to point to another Jboss server installation.</para>
+  <para>If you want to use a different JBoss server installation, after Red Hat Developer Studio is installed open Servers View (select <emphasis>Window &gt; Show View &gt; Others &gt; Server &gt; Servers</emphasis>), then right click on this <emphasis>view &gt; New &gt; Server</emphasis> and follow the wizards steps to point to another Jboss server installation.</para>
   <para>Red Hat Developer Studio works with any servlet container, not just JBoss. For more information on deployment, please see the Deploying Your Application section.</para>
  </section>
  <section id="Importing_Projects">
   <title>Importing Projects</title>
   <para><emphasis role="bold">I have an existing Struts or JSF project. Can I open the project in RHDS?</emphasis></para>
-  <para>Yes. From main menu select <emphasis role="italic">File &gt; Import &gt; Other &gt; JSF Project (or Struts Project)</emphasis> and follow wizards steps.</para>
+  <para>Yes. From main menu select <emphasis>File &gt; Import &gt; Other &gt; JSF Project (or Struts Project)</emphasis> and follow wizards steps.</para>
   <para><emphasis role="bold">Can I import a .war file?</emphasis></para>
-  <para>Yes. Select <emphasis role="italic">File &gt; Import &gt; Web &gt; WAR file</emphasis> Then follow importing steps.</para>
+  <para>Yes. Select <emphasis>File &gt; Import &gt; Web &gt; WAR file</emphasis>, then follow importing steps.</para>
  </section>
  <section id="Troubleshooting">
   <title>Troubleshooting, Problems, Configuration, Error Messages</title>
   <para><emphasis role="bold">Is it possible to increase the performance of Eclipse after installing your product? My Eclipse now crawls.</emphasis></para>
-  <para>Red Hat Developer Studio preconfigures eclipse via the eclipse.ini file to allocate extra memory, but if you for some reason are using your own version of Eclipse then
-  by default, Eclipse allocates only 128 Mb of memory whatever physical memory you actually have installed. You can significantly increase performance if you allocate more memory. For example:</para>
+  <para>Red Hat Developer Studio preconfigures eclipse via the eclipse.ini file to allocate extra memory, but if you for some reason need more memory then by default, you can manually make adjustments in this file. For example:</para>
   <para>-vmargs -Xms128m -Xmx512m -XX:MaxPermSize=128m</para>
 
     <para><emphasis role="bold">How can I add my own tag library to the Red Hat Palette?</emphasis></para>
-  <para>See <ulink url="http://labs.jboss.com/jbossjsftools/docs">Adding Tag Libraries</ulink> in JBossJSFTools Guide.</para>
+  <para>See <ulink url="http://www.redhat.com/developers/rhds/JSFTools/JavaServerFacesSupport.html#AddingTagLibraries21653">Adding Tag Libraries</ulink> in JBossJSFTools Guide.</para>
   <para><emphasis role="bold">I see the Oracle ADF Faces component library tags in the Red Hat Palette, but I can&apos;t seem to find the libraries for ADF. How do I use this component library with RHDS?</emphasis></para>
-  <para>See <ulink url="http://labs.jboss.com/jbossrhdsuserguide/docs">Adding Support for the Oracle ADF Components Library</ulink> in the RHDS User Guide.</para>
+  <para>See <ulink url="http://www.redhat.com/developers/rhds/JSFTools/JavaServerFacesSupport.html#AddingSupportForTheOracleADFComponentsLibraryOrAnyOtherSupport64">Adding Support for the Oracle ADF Components Library</ulink> in the RHDS User Guide.</para>
  </section>
 </section>
 
