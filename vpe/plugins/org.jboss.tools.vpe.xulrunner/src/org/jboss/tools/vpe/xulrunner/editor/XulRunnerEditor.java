@@ -229,16 +229,15 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * @return
 	 */
 	private nsIDOMElement getLastSelectedElement() {
-		//TODO Max Areshkau selection functionality
-	//return	(nsIDOMElement) getSelection().getAnchorNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-		return null;
+
+		return lastSelectedElement;
 	}
 	/**
 	 * Function created to restore functionality of MozillaBrowser
 	 * @return
 	 */
 	private void setLastSelectedElement(nsIDOMElement lastSelectedElement) {
-		//TODO Max Areshkau selection functionality
+		this.lastSelectedElement = lastSelectedElement;
 	}
 	/**
 	 * 
@@ -425,5 +424,38 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 			xulRunnerVpeResizer.hide();
 		}
 	}
-
+	
+	public void showSelectionRectangle() {
+		if (getIFlasher() != null && getLastSelectedElement() != null) {
+//			if (scrollRegtangleFlag) {
+//				scrollRegtangleFlag = false;
+//				selectionController.scrollSelectionIntoView();
+//			}
+			//checks visability of element
+			if(checkVisability(getLastSelectedElement())){
+				
+				if((getLastSelectedElement().getAttribute(VPEFLASHERCOLORATTRIBUTE)==null)||
+							(!getLastSelectedElement().getAttribute(VPEFLASHERCOLORATTRIBUTE).equals(flasherHiddentElementColor))) {
+				
+				getIFlasher().setColor(flasherVisialElementColor);
+				}else{
+					
+					getIFlasher().setColor(flasherHiddentElementColor);
+				}
+					
+				getIFlasher().drawElementOutline(getLastSelectedElement());
+			}else {
+				
+				getIFlasher().setColor(flasherHiddentElementColor);
+				nsIDOMElement domElement = findVisbleParentElement(getLastSelectedElement());
+				
+				if(domElement!=null) {
+					
+					getIFlasher().drawElementOutline(domElement);
+				}
+			}
+		}
+	}
 }
+
+
