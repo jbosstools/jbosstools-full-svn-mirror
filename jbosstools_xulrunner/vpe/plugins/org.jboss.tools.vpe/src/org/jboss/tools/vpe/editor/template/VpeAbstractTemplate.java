@@ -770,10 +770,10 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		if (inlineTags.contains(visualElement.getNodeName().toLowerCase())) {
 			tagDescription.setDisplayType(VpeTagDescription.DISPLAY_TYPE_INLINE);
 		}
-		// TODO Alexey Yukhovich add DnD support
-//		if (resizer != null) {
-//			resizer.modifyTagDescription(tagDescription);
-//		}
+		
+		if (resizer != null) {
+			resizer.modifyTagDescription(tagDescription);
+		}
 		return tagDescription;
 	}
 

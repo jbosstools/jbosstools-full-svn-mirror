@@ -11,18 +11,13 @@
 package org.jboss.tools.vpe.editor.mozilla;
 
 import org.jboss.tools.vpe.editor.VpeController;
-import org.jboss.tools.vpe.xulrunner.editor.IVpeResizeListener;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIClipboardDragDropHooks;
-import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
 import org.mozilla.interfaces.nsIDOMDocument;
-import org.mozilla.interfaces.nsIDOMElement;
-import org.mozilla.interfaces.nsIDOMElementCSSInlineStyle;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMEventListener;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
-import org.mozilla.interfaces.nsIDOMNSHTMLElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDragSession;
 import org.mozilla.interfaces.nsISelection;
@@ -34,7 +29,6 @@ import org.mozilla.xpcom.Mozilla;
 
 class MozillaDomEventListener implements nsIClipboardDragDropHooks, 
 		nsIDOMEventListener, nsISelectionListener {
-	private IVpeResizeListener resizeListener;
 	// TODO Max Areshkau add DnD
 //	private XPCOMObject dropListener;
 
@@ -63,18 +57,6 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	}
 
 	void createCOMInterfaces() {
-		resizeListener = new IVpeResizeListener() {
-			public void onEndResizing(int usedResizeMarkerHandle, int top,
-					int left, int width, int height,
-					nsIDOMElement resizedDomElement) {
-				endResizing(usedResizeMarkerHandle, top, left, width, height, resizedDomElement);
-			}
-
-			public nsISupports queryInterface(String uuid) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
 		
 		// TODO Max Areshkau add DnD
 		// VpeDnD
@@ -93,10 +75,6 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	}
 
 	void disposeCOMInterfaces() {
-		if (resizeListener != null) {
-			resizeListener = null;
-		}
-		
 		// TODO Max Areshakau add DnD
 //		if (dropListener != null) {
 //			dropListener.dispose();
@@ -118,21 +96,6 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 		editorDomEventListener = listener;
 	}
 
-	/**
-	 * @param usedHandle
-	 * @param newTop
-	 * @param newLeft
-	 * @param newWidth
-	 * @param newHeight
-	 * @param aResizedObject
-	 */
-	private void endResizing(int usedHandle, int newTop, int newLeft, int newWidth, int newHeight, nsIDOMElement aResizedObject) {
-		setStylePropertyPixels(aResizedObject, "top", newTop);
-		setStylePropertyPixels(aResizedObject, "left", newLeft);
-		setStylePropertyPixels(aResizedObject, "height", newHeight);
-		setStylePropertyPixels(aResizedObject, "width", newWidth);
-	}
-	
 	
 	/**
 	 * Returns event handler
@@ -405,46 +368,4 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 			editorDomEventListener.notifySelectionChanged(domDocument, selection, reason);
 		}
 	}
-	
-	
-	/**
-	 * 
-	 * @param aElement
-	 * @param aProperty
-	 * @param aValue
-	 */
-	private void setStylePropertyPixels(nsIDOMElement aElement, String aProperty, int aValue) {
-		setStyle(aElement, aProperty, aValue + "px");
-	}
-	
-
-	/**
-	 * Set style for nsIDOMElement
-	 * @param domElement 
-	 * @param cssPropertyName
-	 * @param cssPropertyValue
-	 */
-	private void setStyle(nsIDOMElement domElement, String cssPropertyName, String cssPropertyValue) {
-		nsIDOMElementCSSInlineStyle inlineStyles = (nsIDOMElementCSSInlineStyle) domElement.queryInterface(nsIDOMElementCSSInlineStyle.NS_IDOMELEMENTCSSINLINESTYLE_IID);
-		
-	    if ( inlineStyles == null) {
-	    	return;
-	    }
-
-	    nsIDOMCSSStyleDeclaration cssDecl = inlineStyles.getStyle();
-
-	    if ( cssDecl == null) {
-	    	return;
-	    }
-
-	    if (cssPropertyValue.length() == 0 ) {
-			// an empty value means we have to remove the property
-	    	cssDecl.removeProperty(cssPropertyName);
-	    }  else {
-			// let's recreate the declaration as it was
-	    	String priority = cssDecl.getPropertyPriority(cssPropertyName);
-	    	cssDecl.setProperty(cssPropertyName, cssPropertyValue, priority);
-	    }
-	}
-
 }
