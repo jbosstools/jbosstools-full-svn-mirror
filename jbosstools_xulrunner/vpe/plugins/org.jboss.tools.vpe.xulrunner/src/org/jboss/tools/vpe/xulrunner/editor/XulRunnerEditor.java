@@ -41,6 +41,12 @@ import java.util.regex.Pattern;
  *
  */
 public class XulRunnerEditor extends XulRunnerBrowser {
+	/** IVpeResizeListener */
+	private IVpeResizeListener resizeListener;
+
+	/** IXulRunnerVpeResizer */
+	private IXulRunnerVpeResizer xulRunnerVpeResizer;
+	
 	/**
 	 * color which used for highlight elements which user can see
 	 */
@@ -82,12 +88,29 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 */
 	private static final String STYLE_ATTR="style";
 
+	private nsIDOMElement lastSelectedElement;
+	private int lastResizerConstrains;
+
 	/**
 	 * @param parent
 	 * @throws XulRunnerException
 	 */
 	public XulRunnerEditor(Composite parent) throws XulRunnerException {
 		super(parent);
+		
+		
+		resizeListener = new IVpeResizeListener() {
+			public void onEndResizing(int usedResizeMarkerHandle, int top,
+					int left, int width, int height,
+					nsIDOMElement resizedDomElement) {
+				endResizing(usedResizeMarkerHandle, top, left, width, height, resizedDomElement);
+			}
+
+			public nsISupports queryInterface(String uuid) {
+				return null;
+			}
+		};
+
 		
 	}
 
@@ -118,6 +141,14 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	}
 	
 	public void onElementResize(nsIDOMElement element, int handle, int top, int left, int width, int height) {
+	}
+	
+	public void onLoadWindow() {
+	    if (getIXulRunnerVpeResizer() != null) {
+	    	getIXulRunnerVpeResizer().init(getDOMDocument());
+	    	getIXulRunnerVpeResizer().addResizeListener(resizeListener);
+	    }
+
 	}
 	
 	public nsIDragSession getCurrentDragSession() {
@@ -275,18 +306,18 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 
 			
 		}
-		//TODO Alexey Yukhovich resized functionality
-//		if (resizer != null) {
-//			if (element != null && resizerConstrains != 0) {
-//				resizer.Show(element, resizerConstrains);
-//			} else {
-//				resizer.Hide();
-//			}
-//		}
+
+		if (xulRunnerVpeResizer != null) {
+			if (element != null && resizerConstrains != 0) {
+				xulRunnerVpeResizer.show(element, resizerConstrains);
+			} else {
+				xulRunnerVpeResizer.hide();
+			}
+		}
 
 		setLastSelectedElement(element);
-//		lastSelectedElement = element;
-//		lastResizerConstrains = resizerConstrains;
+		lastSelectedElement = element;
+		lastResizerConstrains = resizerConstrains;
 	}
 	
 
@@ -302,6 +333,17 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		}
 		return iFlasher;
 	}
+	
+	
+	private IXulRunnerVpeResizer getIXulRunnerVpeResizer() {
+		
+		if (xulRunnerVpeResizer==null) {
+			xulRunnerVpeResizer = new XulRunnerVpeResizer();
+		}
+		return xulRunnerVpeResizer;
+	}
+	
+	
 	
 	/**Function created for checking if user can see element or not.
 	 * Element doesn't shows in VPE if it's has 'display:none;' attribute in style.
@@ -352,6 +394,36 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 			}
 		}
 		return parentElement;
+	}
+
+	/**
+	 * @param usedHandle
+	 * @param newTop
+	 * @param newLeft
+	 * @param newWidth
+	 * @param newHeight
+	 * @param aResizedObject
+	 */
+	private void endResizing(int usedHandle, int newTop, int newLeft, int newWidth, int newHeight, nsIDOMElement aResizedObject) {
+		onElementResize(aResizedObject, usedHandle, newTop, newLeft, newWidth, newHeight);
+	}
+	
+	/**
+	 * 
+	 */
+	public void showResizer() {
+		if (xulRunnerVpeResizer != null && lastSelectedElement != null && lastResizerConstrains != 0) {
+			xulRunnerVpeResizer.show(lastSelectedElement, lastResizerConstrains);
+		}
+	}
+
+	/**
+	 * Hide resizer markers
+	 */
+	public void hideResizer() {
+		if(xulRunnerVpeResizer != null) {
+			xulRunnerVpeResizer.hide();
+		}
 	}
 
 }
