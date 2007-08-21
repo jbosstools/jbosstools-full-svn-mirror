@@ -1328,6 +1328,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		private void stopActiveEditor() {
 			//TODO Max Areshkau( add in test purposes, remove after all)
 			System.out.println("stop");
+			onRefresh();
 			type = ACTIVE_EDITOR_NONE;
 		}
 	}
@@ -2440,6 +2441,28 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	 */
 	public nsISupports queryInterface(String arg0) {
 		return Mozilla.getInstance().queryInterface(this, arg0);
+	}
+	/**
+	 * Calls when editor content should be refreshed
+	 */
+	public void onRefresh() {
+		
+		getXulRunnerEditor().showSelectionRectangle();
+		
+	}
+
+	/**
+	 * @return the xulRunnerEditor
+	 */
+	public XulRunnerEditor getXulRunnerEditor() {
+		return xulRunnerEditor;
+	}
+
+	/**
+	 * @param xulRunnerEditor the xulRunnerEditor to set
+	 */
+	public void setXulRunnerEditor(XulRunnerEditor xulRunnerEditor) {
+		this.xulRunnerEditor = xulRunnerEditor;
 	}
 
 }
