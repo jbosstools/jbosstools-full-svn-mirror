@@ -521,17 +521,21 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		}
 	}
 
+	/**
+	 * Show resizer markers
+	 */
 	public void showResizer() {
 		if (contentAreaEventListener != null) {
-			// TODO Alexey Yukhovich add resizer support
-		//	xulRunnerEditor.showResizer();
+			xulRunnerEditor.showResizer();
 		}
 	}
 
+	/**
+	 * Hide resizer markers
+	 */
 	public void hideResizer() {
 		if (contentAreaEventListener != null) {
-			// TODO Alexey Yukhovich add resizer support
-//s			xulRunnerEditor.hideResizer();
+			xulRunnerEditor.hideResizer();
 		}
 	}
 
