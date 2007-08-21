@@ -136,7 +136,7 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 					break;
 				case SWT.KeyDown:
 					onKeyDown();
-					break;
+					break;				
 				}
 			}
 		};
