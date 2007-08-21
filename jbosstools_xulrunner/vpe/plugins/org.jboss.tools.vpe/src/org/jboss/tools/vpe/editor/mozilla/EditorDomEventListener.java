@@ -60,4 +60,8 @@ public interface EditorDomEventListener extends nsIContextMenuListener {
 
 	void onShowTooltip(int x, int y, String text);
 	void onHideTooltip();
+	/**
+	 * Calls when editor content changed, and we should highlight selected element.
+	 */
+	void onRefresh();
 }
