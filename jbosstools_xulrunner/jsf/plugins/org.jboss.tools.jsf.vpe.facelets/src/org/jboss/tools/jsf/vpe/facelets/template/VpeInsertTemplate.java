@@ -55,7 +55,7 @@ public class VpeInsertTemplate extends VpeAbstractTemplate {
 		return creationData;
 	}
 
-	public void validate(VpePageContext pageContext, Node sourceNode, Document visualDocument, VpeCreationData creationData) {
+	public void validate(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, VpeCreationData creationData) {
 		VpeIncludeInfo includeInfo = (VpeIncludeInfo)creationData.getData();
 		if (includeInfo != null) {
 			pageContext.getVisualBuilder().pushIncludeStack((VpeIncludeInfo)includeInfo);
