@@ -1,90 +1,86 @@
-<?xml version='1.0'?>
+<?xml version="1.0"?>
+
+<!--
+
+    This is the XSL HTML configuration file for the Hibernate
+    Reference Documentation.
+
+    It took me days to figure out this stuff and fix most of
+    the obvious bugs in the DocBook XSL distribution. Some of
+    the workarounds might not be appropriate with a newer version
+    of DocBook XSL. This file is released as part of Hibernate,
+    hence LGPL licensed.
+
+    christian@hibernate.org
+-->
+
+<!DOCTYPE xsl:stylesheet [
+    <!ENTITY db_xsl_path        "../support/docbook-xsl">
+]>
+
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version='1.0'>
+                version="1.0"
+                xmlns="http://www.w3.org/TR/xhtml1/transitional"
+                exclude-result-prefixes="#default">
+<xsl:import href="http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl"/>
+<xsl:include href="./collapsing-navigation.xsl"></xsl:include>
 
-<!-- ********************************************************************
-     $Id: html.xsl,v 1.1.1.1 2004/10/19 21:21:46 juntao Exp $
-     ********************************************************************
+<!--###################################################
+                     HTML Settings
+    ################################################### -->   
 
-     This file is part of the XSL DocBook Stylesheet distribution.
-     See ../README or http://nwalsh.com/docbook/xsl/ for copyright
-     and other information.
+    <xsl:param name="html.stylesheet">css/html.css</xsl:param>
 
-     ******************************************************************** -->
+    <!-- These extensions are required for table printing and other stuff -->
+    <xsl:param name="use.extensions">1</xsl:param>
+    <xsl:param name="tablecolumns.extension">0</xsl:param>
+    <xsl:param name="callout.extensions">1</xsl:param>
+    <xsl:param name="graphicsize.extension">0</xsl:param>
 
-<xsl:template name="anchor">
-  <xsl:param name="node" select="."/>
-  <xsl:param name="conditional" select="1"/>
-  <xsl:variable name="id">
-    <xsl:call-template name="object.id">
-      <xsl:with-param name="object" select="$node"/>
-    </xsl:call-template>
-  </xsl:variable>
-  <xsl:if test="$conditional = 0 or $node/@id">
-    <a name="{$id}"/>
-  </xsl:if>
-</xsl:template>
+<!--###################################################
+                      Table Of Contents
+    ################################################### -->   
 
-<xsl:template name="href.target.uri">
-  <xsl:param name="context" select="."/>
-  <xsl:param name="object" select="."/>
-  <xsl:text>#</xsl:text>
-  <xsl:call-template name="object.id">
-    <xsl:with-param name="object" select="$object"/>
-  </xsl:call-template>
-</xsl:template>
+    <!-- Generate the TOCs for named components only -->
+    <xsl:param name="generate.toc">
+        book   toc
+    </xsl:param>
+    
+    <!-- Show only Sections up to level 3 in the TOCs -->
+    <xsl:param name="toc.section.depth">3</xsl:param>
+    
+<!--###################################################
+                         Labels
+    ################################################### -->   
 
-<xsl:template name="href.target">
-  <xsl:param name="context" select="."/>
-  <xsl:param name="object" select="."/>
-  <xsl:text>#</xsl:text>
-  <xsl:call-template name="object.id">
-    <xsl:with-param name="object" select="$object"/>
-  </xsl:call-template>
-</xsl:template>
+    <!-- Label Chapters and Sections (numbering) -->
+    <xsl:param name="chapter.autolabel">1</xsl:param>
+    <xsl:param name="section.autolabel" select="1"/>
+    <xsl:param name="section.label.includes.component.label" select="1"/>
 
-<xsl:template name="href.target.with.base.dir">
-  <xsl:param name="object" select="."/>
-  <xsl:if test="$manifest.in.base.dir = 0">
-    <xsl:value-of select="$base.dir"/>
-  </xsl:if>
-  <xsl:call-template name="href.target">
-    <xsl:with-param name="object" select="$object"/>
-  </xsl:call-template>
-</xsl:template>
+<!--###################################################
+                         Callouts
+    ################################################### -->
 
-<xsl:template name="dingbat">
-  <xsl:param name="dingbat">bullet</xsl:param>
-  <xsl:call-template name="dingbat.characters">
-    <xsl:with-param name="dingbat" select="$dingbat"/>
-  </xsl:call-template>
-</xsl:template>
+    <!-- Don't use graphics, use a simple number style -->
+    <xsl:param name="callout.graphics">0</xsl:param>
 
-<xsl:template name="dingbat.characters">
-  <!-- now that I'm using the real serializer, all that dingbat malarky -->
-  <!-- isn't necessary anymore... -->
-  <xsl:param name="dingbat">bullet</xsl:param>
-  <xsl:choose>
-    <xsl:when test="$dingbat='bullet'">&#x2022;</xsl:when>
-    <xsl:when test="$dingbat='copyright'">&#x00A9;</xsl:when>
-    <xsl:when test="$dingbat='trademark'">&#x2122;</xsl:when>
-    <xsl:when test="$dingbat='trade'">&#x2122;</xsl:when>
-    <xsl:when test="$dingbat='registered'">&#x00AE;</xsl:when>
-    <xsl:when test="$dingbat='service'">(SM)</xsl:when>
-    <xsl:when test="$dingbat='nbsp'">&#x00A0;</xsl:when>
-    <xsl:when test="$dingbat='ldquo'">&#x201C;</xsl:when>
-    <xsl:when test="$dingbat='rdquo'">&#x201D;</xsl:when>
-    <xsl:when test="$dingbat='lsquo'">&#x2018;</xsl:when>
-    <xsl:when test="$dingbat='rsquo'">&#x2019;</xsl:when>
-    <xsl:when test="$dingbat='em-dash'">&#x2014;</xsl:when>
-    <xsl:when test="$dingbat='mdash'">&#x2014;</xsl:when>
-    <xsl:when test="$dingbat='en-dash'">&#x2013;</xsl:when>
-    <xsl:when test="$dingbat='ndash'">&#x2013;</xsl:when>
-    <xsl:otherwise>
-      <xsl:text>&#x2022;</xsl:text>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
+    <!-- Place callout marks at this column in annotated areas -->
+    <xsl:param name="callout.defaultcolumn">90</xsl:param>
 
+<!--###################################################
+                          Misc
+    ################################################### -->   
+
+    <!-- Placement of titles -->
+    <xsl:param name="formal.title.placement">
+        figure after
+        example before
+        equation before
+        table before
+        procedure before
+    </xsl:param>    
+    <xsl:template match="section[@role = 'NotInToc']//*"  mode="toc" />
+    <xsl:template match="chapter[@role = 'NotInToc']//section//*"  mode="toc" />
+	    
 </xsl:stylesheet>
-
