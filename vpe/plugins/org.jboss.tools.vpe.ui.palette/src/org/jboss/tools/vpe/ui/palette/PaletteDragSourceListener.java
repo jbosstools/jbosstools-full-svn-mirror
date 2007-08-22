@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.common.meta.action.XActionInvoker;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.plugin.ModelPlugin;
+import org.jboss.tools.common.model.ui.views.palette.PaletteInsertHelper;
 import org.jboss.tools.vpe.ui.palette.model.PaletteItem;
 
 public class PaletteDragSourceListener extends DragSourceAdapter {
@@ -52,7 +53,29 @@ public class PaletteDragSourceListener extends DragSourceAdapter {
 	}
 	public void dragSetData(DragSourceEvent event) {
 		if (TextTransfer.getInstance().isSupportedType(event.dataType)) {
-			event.data = "data"; //$NON-NLS-1$
+			List list = ((PaletteViewer)viewer).getSelectedEditParts();
+			XModelObject object = (list.size() == 0) ? null : getObject(list.get(0));
+			if(object != null) {
+				String[] d = new String[2];
+				d[0] = object.getAttributeValue("start text");
+				if(d[0] == null) d[0] = "";
+				d[1] = object.getAttributeValue("end text");
+				if(d[1] == null) d[1] = "";
+				
+				String defaultPrefix = object.getAttributeValue("default prefix");
+				String tag = object.getAttributeValue("name");
+				if(defaultPrefix == null) {
+					defaultPrefix = object.getParent().getAttributeValue("default prefix");
+				}
+				if(defaultPrefix != null && tag != null) {
+					PaletteInsertHelper.applyPrefix(d, "", tag, "xxx", defaultPrefix);
+				}
+				int i = d[0].indexOf('|');
+				if(i >= 0) d[0] = d[0].substring(0, i) + d[0].substring(i + 1);
+				event.data = d[0] + d[1];
+			} else {			
+				event.data = "data"; //$NON-NLS-1$
+			}
 		} else {
 ///			event.data = new String[] {"model object"};
 			event.data = "model object"; //$NON-NLS-1$
