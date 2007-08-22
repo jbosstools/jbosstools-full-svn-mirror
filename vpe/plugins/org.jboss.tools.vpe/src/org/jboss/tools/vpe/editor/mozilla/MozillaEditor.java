@@ -472,7 +472,13 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	
 				//context menu event handler(add by Max Areshkau)
 				contentAreaEventTarget.addEventListener(MozillaDomEventListener.CONTEXTMENUEVENTTYPE, contentAreaEventListener, false);
-
+				//drag drop event handlers
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGDROPEVENT, contentAreaEventListener, false);
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGENTEREVENT, contentAreaEventListener, false);
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGEXITEVENT, contentAreaEventListener, false);
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGGESTUREEVENT, contentAreaEventListener, false);
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGOVEREVENT, contentAreaEventListener, false);
+				
 				documentEventTarget = (nsIDOMEventTarget) getDomDocument().queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
 				documentEventTarget.addEventListener("keypress", contentAreaEventListener, false); //$NON-NLS-1$
 			} else {
