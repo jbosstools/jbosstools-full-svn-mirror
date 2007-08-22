@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="seamuc">
+  <!-- <?dbhtml filename="ManageJBossASFromRedHatDeveloperStudio.html"?> -->
+
+  <title>Seam project creation/development usecases</title>
+
+  <para>This covers usecases for creation, tests and deploy of projects
+  artifacts.</para>
+
+  <para>Codecompletion and navigation is not covered.</para>
+
+  <section>
+    <title>Overall Seam interaction</title>
+
+    <para>The following scenario should be as smooth as possible. </para>
+
+    <itemizedlist>
+      <listitem>
+        <para>New Seam Web Project</para>
+
+        <para>Ask user the minimal set of questions to make this work.</para>
+
+        <para>Sensible defaults should be used to minimize the need for users
+        to do anything</para>
+
+        <para>After finish is pressed one or more eclipse projects are created
+        and linked together correctly.</para>
+
+        <para>The project(s) should after this be deployable to an already
+        chosen server and testable!</para>
+      </listitem>
+
+      <listitem>
+        <para>Run tests</para>
+
+        <para>There won't be any tests initially, but the initial setup should
+        be ready.</para>
+
+        <para>This should run the microcontainer/embedded jboss.</para>
+      </listitem>
+
+      <listitem>
+        <para>Deploy and run project</para>
+
+        <para>Run &gt; Run As ... &gt; Run On Server should deploy to already
+        chosen server and show the main page.</para>
+
+        <para>If you choose Run On Server while having a .xhtml file
+        open/selected the browser should optimally open the corresponding
+        resource (e.g. login.xhtml -&gt; login.seam)</para>
+
+        <para></para>
+      </listitem>
+
+      <listitem>
+        <para>Debug </para>
+
+        <para>Debug &gt; Debug As ... &gt; Debug On Server should deploy to
+        already chosen server and show the main page.</para>
+
+        <para>Go to browser and click login, fill in user and password with
+        "max"/"max", click Login</para>
+
+        <para>Page should should "max" as logged in, click Logout, page should
+        now show max is logged out.</para>
+
+        <para>Put a breakpoint in Authenticator.java on the line with
+        log.info("authenticating #0", identity.getUsername());</para>
+
+        <para>Go to browser and click login, fill in user and password with
+        "max"/"max", click Login</para>
+
+        <para>Eclipse should now stop at the breakpoint with the source
+        already loaded and configured (no need to add project src to the
+        launch config)</para>
+
+        <para>Add the following lines to change the behavior to only let users
+        with different user/password in:</para>
+
+        <para>if(identity.getUsername().equals(identity.getPassword())) {
+        </para>
+
+        <para> FacesMessages.instance().add("sorry - password and username
+        need to be different."); </para>
+
+        <para> return false; </para>
+
+        <para>} </para>
+
+        <para>Press save, and eclipse's hotswap should be in effect.</para>
+
+        <para>Click continue and the browser should complain that the user
+        could not log in.</para>
+      </listitem>
+
+      <listitem>
+        <para>Edit an xhtml or another "web resource" like html, css etc. and
+        save, refresh browser should work instantly</para>
+
+        <para>Edit login.xhtml, add some text in the main paragraph. Save, go
+        to browser and press refresh - changes should be there.</para>
+
+        <para>On save files should be instantly available so users does not
+        have to wait for it. (WTP has a 5 second default delay;
+        usable?)</para>
+      </listitem>
+
+      <listitem>
+        <para>Edit or add a java class should be available after clicking
+        "Restart app"</para>
+
+        <para>Restart App should *not* require restart of the application
+        server; just the application.</para>
+
+        <para>JBoss allows touching of descriptors to trigger restart. See
+        seam-gen on how it is done technically.</para>
+      </listitem>
+
+      <listitem>
+        <para>New Action</para>
+
+        <para>Running new Action </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
+    <title>Seam New Project</title>
+
+    <para>New Seam Web Project should be as quickly done as possible and when
+    it is done the user should be asked to go to the Seam perspective (or the
+    JEE perspective should have Seam relevant views added).</para>
+
+    <para>(I am not sure if we should have a dedicated wizard that just shows
+    the minimal set of options and does not provide all the WTP options,
+    ...but we should work with both so using the normal wizard is probably the
+    best start)</para>
+
+    <para>There should be support for two types of projects: EAR and
+    WAR.</para>
+
+    <para>The best way to see what should go where is to use seam-gen to
+    generate two projects, one for war and the other for ear - when built
+    exploded-archives will contain the .ear/.war/.jar with the libs needed in
+    the various places.</para>
+
+    <section>
+      <title>War</title>
+
+      <para>A WAR project can only use Seam JavaBean and JPA Entity bean
+      components; it cannot use EJB3 Session beans etc. This means that Action
+      generation should by default generate JavaBean components and not EJB3
+      components when it is run against a WAR project.</para>
+
+      <para>A WAR project can in Seam 1.2.1.GA (not Seam 1.2.0.EAP) support
+      hotdeployment of classes put in WEB-INF/classes/dev (see seam-gen for
+      details), action classes are normally put there.</para>
+
+      <para>To run unittests we probably need a &lt;projectname&gt;-test
+      project that depends on the war project and contains the jars/resources
+      to run tests.</para>
+    </section>
+
+    <section>
+      <title>Ear</title>
+
+      <para>An EAR project can use the whole range of Seam components,
+      including EJB3 Session beans. Action's should by default generate EJB3
+      components</para>
+
+      <para>To run unittests we probably need a &lt;projectname&gt;-test
+      project that depends on the war project and contains the jars/resources
+      to run tests.</para>
+    </section>
+
+    <section>
+      <title>Libraries/Runtime environment</title>
+
+      <para>A project should be associated with a Seam runtime which defines
+      what version (1.2 or 2.0) the IDE should assume for the project + the
+      set of core libraries for seam. Exactly like one does for JDK
+      runtimes.</para>
+    </section>
+
+    <section>
+      <title>End Result</title>
+
+      <para>No warnings or errors in the project from any of our
+      validators.</para>
+    </section>
+  </section>
+
+  <section>
+    <title>Seam Generate Entities</title>
+
+    <para>Generate entities is in seam-gen is always reverse engineering from
+    the database and based on that a set of JPA entities are created and
+    corresponding CRUD pages and action classes generated. See seam-gen for
+    the details.</para>
+
+    <para>We should have a Generate Entities that allows exactly this, but
+    optimally also allows you to use your existing JPA entities as the basis
+    of the CRUD generation. Hibernate Tools can handle this today if it is
+    just told not to do reverse engineering; it will then just use all the
+    entities it can find on the classpath.</para>
+
+    <para>If we create a Hibernate Tools code generation users will have it
+    available in the Run &gt; Hibernate Code Generation and be able to run it
+    repeatedly; not sure though if seam-gen does more than simply let
+    hibernate tools do it. Needs to investigate.</para>
+  </section>
+
+  <section>
+    <title>Seam New Action</title>
+
+    <para></para>
+  </section>
+
+  <section>
+    <title>Seam New Form</title>
+
+    <para></para>
+  </section>
+</chapter>
