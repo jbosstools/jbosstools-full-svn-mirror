@@ -744,7 +744,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
-		nsIDOMElement visualDragElement = selectionBuilder.getDragElement(mouseEvent);		
+		nsIDOMElement visualDragElement = selectionBuilder.getDragElement(mouseEvent);
 		if (VpeDebug.printVisualMouseEvent) {
 			nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 			System.out.println("<<< mouseDown  targetNode: " + visualNode.getNodeName() + " (" + visualNode + ")  selectedElement: " + (visualDragElement != null ? visualDragElement.getNodeName() + " (" + visualDragElement + ")" : null)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$

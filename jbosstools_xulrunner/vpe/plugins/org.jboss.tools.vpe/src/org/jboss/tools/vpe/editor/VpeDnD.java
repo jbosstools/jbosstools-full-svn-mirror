@@ -14,6 +14,7 @@ package org.jboss.tools.vpe.editor;
 import org.eclipse.swt.graphics.Rectangle;
 import org.mozilla.interfaces.nsIDOMNSHTMLElement;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.xpcom.XPCOMException;
 
 /**
  * @author Max Areshkau
@@ -23,9 +24,17 @@ import org.mozilla.interfaces.nsIDOMNode;
 public class VpeDnD {
 
 	public Rectangle getBounds(nsIDOMNode visualNode) {
-		
+		try {
+			
 		nsIDOMNSHTMLElement domNSHTMLElement = (nsIDOMNSHTMLElement) visualNode.queryInterface(nsIDOMNSHTMLElement.NS_IDOMNSHTMLELEMENT_IID);
 		return new Rectangle(domNSHTMLElement.getOffsetLeft(), domNSHTMLElement.getOffsetTop(),domNSHTMLElement.getOffsetWidth(),domNSHTMLElement.getOffsetHeight());
-	}
+		
+		} catch(XPCOMException xpcomException) {
+			
+			//TODO Max Areshkau 
+			//If node not not implement nsIDOMNSHTMLElement, may be check best take a parent node 
+			return new Rectangle(0, 0, 0,0);
+		}
+		}
 
 }
