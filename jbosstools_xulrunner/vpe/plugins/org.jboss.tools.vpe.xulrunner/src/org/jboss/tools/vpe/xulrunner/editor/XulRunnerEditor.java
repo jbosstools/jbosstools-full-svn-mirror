@@ -228,7 +228,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * Function created to restore functionality of MozillaBrowser
 	 * @return
 	 */
-	private nsIDOMElement getLastSelectedElement() {
+	public nsIDOMElement getLastSelectedElement() {
 
 		return lastSelectedElement;
 	}
@@ -265,16 +265,16 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 						getIFlasher().setColor(flasherHiddentElementColor);
 					}
 					
-//					getIFlasher().repaintElement(getLastSelectedElement());
-					getIFlasher().drawElementOutline(getLastSelectedElement());
+					getIFlasher().repaintElement(getLastSelectedElement());
+//					getIFlasher().drawElementOutline(getLastSelectedElement());
 			}else {
 				
 				getIFlasher().setColor(flasherHiddentElementColor);
 				nsIDOMElement domElement = findVisbleParentElement(getLastSelectedElement());
 				
 				if(domElement!=null) {
-					getIFlasher().drawElementOutline(getLastSelectedElement());				
-//					getIFlasher().repaintElement(domElement);
+//					getIFlasher().drawElementOutline(getLastSelectedElement());				
+					getIFlasher().repaintElement(domElement);
 				}
 				
 			}
@@ -315,7 +315,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		}
 
 		setLastSelectedElement(element);
-		lastSelectedElement = element;
 		lastResizerConstrains = resizerConstrains;
 	}
 	
