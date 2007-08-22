@@ -1444,11 +1444,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	
 	private boolean inDragArea(Rectangle dragArea, Point mousePoint) {
-		//TODO add drag and drop support
+		//TODO add drag and drop support 
 //		return dragArea.contains(mousePoint) &&
 //					mousePoint.x < (dragArea.x + DRAG_AREA_WIDTH) && 
 //					mousePoint.y < (dragArea.y + DRAG_AREA_HEIGHT); 
-		return true;
+		return false;
 	}
 	
 	nsIDOMElement getDragElement(nsIDOMMouseEvent mouseEvent) {
@@ -1456,16 +1456,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		/*We use element on which was click
 		 * 
 		 */
-		try{
-		nsIDOMEventTarget eventTarget = mouseEvent.getTarget();
-		nsIDOMElement selectedElement = (nsIDOMElement) eventTarget.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			
+		nsIDOMElement selectedElement = xulRunnerEditor.getLastSelectedElement();
 		if (selectedElement != null && canInnerDrag(selectedElement)) {
 			if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil.getMousePoint(mouseEvent))) {
 				return selectedElement;
 			}
-		}
-		} catch(XPCOMException exception) {
-			exception.printStackTrace();
 		}
 		return null;
 	}

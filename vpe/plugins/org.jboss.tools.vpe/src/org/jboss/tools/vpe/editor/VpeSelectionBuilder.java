@@ -1151,7 +1151,7 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 		if (visualNode != null && visualNode.getNodeType() == Node.ELEMENT_NODE &&
 				(HTML.TAG_INPUT.equalsIgnoreCase(visualNode.getNodeName()) || HTML.TAG_BUTTON.equalsIgnoreCase(visualNode.getNodeName()) || "SELECT".equalsIgnoreCase(visualNode.getNodeName())) &&
 				!selection.containsNode(visualNode, false) && visualBuilder.canInnerDrag((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))) { 
-			return (nsIDOMElement)visualNode;
+			return (nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 		}
 		return null;
 	}
