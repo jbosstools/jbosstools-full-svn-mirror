@@ -42,7 +42,7 @@ public class VpeResizerMouseMotionListener implements nsIDOMEventListener {
 		if ( mouseEvent == null ) {
 			return;
 		}
-			
+		System.out.println("VpeResizerMouseMoti:  mouseMove");
 		vpeResizer.mouseMove(mouseEvent);	
 	}
 	

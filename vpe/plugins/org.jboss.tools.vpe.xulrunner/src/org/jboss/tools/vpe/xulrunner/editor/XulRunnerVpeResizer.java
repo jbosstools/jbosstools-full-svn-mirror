@@ -73,7 +73,8 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	private int originalX;
 	private int originalY;
 	
-	private int usedEResizeMarkerHandle;
+	/** bit-mask of used resize marker */
+	private int usedResizeMarker;
 	
 	private int  incrementFactorX;
 	private int  incrementFactorY;
@@ -134,8 +135,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jboss.vpe.mozilla.resizer.IVpeResizer#show(org.mozilla.interfaces.nsIDOMElement,
-	 *      int)
+	 * @see org.jboss.vpe.mozilla.resizer.IVpeResizer#show(org.mozilla.interfaces.nsIDOMElement,  int)
 	 */
 	public void show(nsIDOMElement domElement, int resizers) {
 		resizingObject = domElement;
@@ -454,28 +454,28 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		}
 		
 		if (locationStr.equals(RESIZER_MARKER_STRING_TOPLEFT)) {
-			usedEResizeMarkerHandle = RESIZER_MARKER_TOPLEFT;
+			usedResizeMarker = RESIZER_MARKER_TOPLEFT;
 			setResizeIncrements(1, 1, -1, -1, false);
 		}	else if (locationStr.equals(RESIZER_MARKER_STRING_TOP)) {
-			usedEResizeMarkerHandle = RESIZER_MARKER_TOP;
+			usedResizeMarker = RESIZER_MARKER_TOP;
 			setResizeIncrements(0, 1, 0, -1, false);
 		}	else if (locationStr.equals(RESIZER_MARKER_STRING_TOPRIGHT)) {
-			usedEResizeMarkerHandle = RESIZER_MARKER_TOPRIGHT;
+			usedResizeMarker = RESIZER_MARKER_TOPRIGHT;
 			setResizeIncrements(0, 1, 1, -1, false);
 		}	else if (locationStr.equals(RESIZER_MARKER_STRING_LEFT)) {
-			usedEResizeMarkerHandle = RESIZER_MARKER_LEFT;
+			usedResizeMarker = RESIZER_MARKER_LEFT;
 			setResizeIncrements(1, 0, -1, 0, false);
 		}	else if (locationStr.equals(RESIZER_MARKER_STRING_RIGHT)) {
-			usedEResizeMarkerHandle = RESIZER_MARKER_RIGHT;
+			usedResizeMarker = RESIZER_MARKER_RIGHT;
 			setResizeIncrements(0, 0, 1, 0, false);
 		}	else if (locationStr.equals(RESIZER_MARKER_STRING_BOTTOMLEFT)) {
-			usedEResizeMarkerHandle = RESIZER_MARKER_BOTTOMLEFT;
+			usedResizeMarker = RESIZER_MARKER_BOTTOMLEFT;
 			setResizeIncrements(1, 0, -1, 1, false);
 		}	else if (locationStr.equals(RESIZER_MARKER_STRING_BOTTOM)) {
-			usedEResizeMarkerHandle = RESIZER_MARKER_BOTTOM;
+			usedResizeMarker = RESIZER_MARKER_BOTTOM;
 			setResizeIncrements(0, 0, 0, 1, false);
 		}	else if (locationStr.equals(RESIZER_MARKER_STRING_BOTTOMRIGHT)) {
-			usedEResizeMarkerHandle = RESIZER_MARKER_BOTTOMRIGHT;
+			usedResizeMarker = RESIZER_MARKER_BOTTOMRIGHT;
 			setResizeIncrements(0, 0, 1, 1, false);
 		}
 
@@ -494,7 +494,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		}
 		
 		mouseMotionListener = new VpeResizerMouseMotionListener(this);
-		if ( mouseMotionListener != null ) {
+		if ( mouseMotionListener == null ) {
 			return;
 		}
 		
@@ -761,8 +761,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	 * @param aClientX
 	 * @param aClientY
 	 */
-	private void endResizing(int aClientX, int aClientY)
-	{
+	private void endResizing(int aClientX, int aClientY) {
 		if (resizingShadow == null) {
 			return;
 		}
@@ -777,17 +776,13 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		int width  = getNewResizingWidth(aClientX, aClientY);
 		int height = getNewResizingHeight(aClientX, aClientY);
 		
-		int listenersCount = objectResizeEventListeners.size();
-		if (listenersCount != 0) {
-			IVpeResizeListener listener;
-			int index;
-			for (index = 0; index < listenersCount; index++) {
-				listener = objectResizeEventListeners.get(index);
-				listener.onEndResizing(usedEResizeMarkerHandle,top,left,width,height,resizingObject);
+		if ( objectResizeEventListeners.size() != 0) {			
+			for ( IVpeResizeListener resizeListener : objectResizeEventListeners  ) {
+				resizeListener.onEndResizing(usedResizeMarker,top,left,width,height,resizingObject);
 			}
 		}
 		
-		usedEResizeMarkerHandle = 0;
+		usedResizeMarker = 0;
 	}
 	
 	/**
