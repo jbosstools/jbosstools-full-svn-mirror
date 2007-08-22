@@ -12,11 +12,12 @@
   <section>
     <title>Overall Seam interaction</title>
 
-    <para>The following scenario should be as smooth as possible. </para>
+    <para>The following scenario should be as smooth as possible and work for
+    both WAR and EAR. </para>
 
     <itemizedlist>
       <listitem>
-        <para>New Seam Web Project</para>
+        <para><emphasis role="bold">New Seam Web Project</emphasis></para>
 
         <para>Ask user the minimal set of questions to make this work.</para>
 
@@ -31,7 +32,7 @@
       </listitem>
 
       <listitem>
-        <para>Run tests</para>
+        <para><emphasis role="bold">Run tests</emphasis></para>
 
         <para>There won't be any tests initially, but the initial setup should
         be ready.</para>
@@ -40,7 +41,7 @@
       </listitem>
 
       <listitem>
-        <para>Deploy and run project</para>
+        <para><emphasis role="bold">Deploy and run project</emphasis></para>
 
         <para>Run &gt; Run As ... &gt; Run On Server should deploy to already
         chosen server and show the main page.</para>
@@ -53,7 +54,7 @@
       </listitem>
 
       <listitem>
-        <para>Debug </para>
+        <para><emphasis role="bold">Debug </emphasis></para>
 
         <para>Debug &gt; Debug As ... &gt; Debug On Server should deploy to
         already chosen server and show the main page.</para>
@@ -74,52 +75,118 @@
         already loaded and configured (no need to add project src to the
         launch config)</para>
 
-        <para>Add the following lines to change the behavior to only let users
-        with different user/password in:</para>
+        <para>Change the method to only let users with different user/password
+        in and put a message about the error:</para>
 
-        <para>if(identity.getUsername().equals(identity.getPassword())) {
-        </para>
+        <para></para>
 
-        <para> FacesMessages.instance().add("sorry - password and username
-        need to be different."); </para>
-
-        <para> return false; </para>
-
-        <para>} </para>
+        <programlisting>public boolean authenticate()
+    {
+        log.info("authenticating #0", identity.getUsername());
+        if(identity.getUsername().equals(identity.getPassword())) {
+         FacesMessages.instance().add("sorry - password and username need to be different.");
+         return false;
+        }
+        identity.addRole("admin");
+        return true;
+    }</programlisting>
 
         <para>Press save, and eclipse's hotswap should be in effect.</para>
 
         <para>Click continue and the browser should complain that the user
-        could not log in.</para>
+        could not log in and show the message "Sorry - password and username
+        need to be different." plus a Login Failed message.</para>
       </listitem>
 
       <listitem>
-        <para>Edit an xhtml or another "web resource" like html, css etc. and
-        save, refresh browser should work instantly</para>
+        <para><emphasis role="bold">Edit an xhtml or another "web resource"
+        like html, css etc. and save, refresh browser should work
+        instantly</emphasis></para>
 
         <para>Edit login.xhtml, add some text in the main paragraph. Save, go
         to browser and press refresh - changes should be there.</para>
 
-        <para>On save files should be instantly available so users does not
-        have to wait for it. (WTP has a 5 second default delay;
-        usable?)</para>
+        <para>On save the file should be instantly available so users does not
+        have to wait for it. (WTP has a 5 second default delay; can we make
+        that better ?)</para>
       </listitem>
 
       <listitem>
-        <para>Edit or add a java class should be available after clicking
-        "Restart app"</para>
+        <para><emphasis role="bold">Edit or add a java class should be
+        available after clicking "Restart app"</emphasis></para>
 
         <para>Restart App should *not* require restart of the application
         server; just the application.</para>
 
         <para>JBoss allows touching of descriptors to trigger restart. See
         seam-gen on how it is done technically.</para>
+
+        <para>Old exadel studio had a "touch web.xml" file; not sure if that
+        still works ? (I couldn't see a difference)</para>
       </listitem>
 
       <listitem>
-        <para>New Action</para>
+        <para><emphasis role="bold">New Action</emphasis></para>
 
-        <para>Running new Action </para>
+        <para>Run New Action.</para>
+
+        <table>
+          <title></title>
+
+          <tgroup cols="3">
+            <tbody>
+              <row>
+                <entry>Seam Project</entry>
+
+                <entry> default based on selection</entry>
+
+                <entry></entry>
+              </row>
+
+              <row>
+                <entry>Component Name</entry>
+
+                <entry>Enter ping</entry>
+
+                <entry>ping</entry>
+              </row>
+
+              <row>
+                <entry>Local Interface</entry>
+
+                <entry>Default based on component name</entry>
+
+                <entry>PingBean</entry>
+              </row>
+
+              <row>
+                <entry>Method</entry>
+
+                <entry>default based on component name</entry>
+
+                <entry>ping</entry>
+              </row>
+
+              <row>
+                <entry>Page</entry>
+
+                <entry>default based on component name</entry>
+
+                <entry>ping</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+
+        <para>Clicking finish should generate a class called PingBean.java
+        with @Name("ping") and corresponding ping.xhtml and
+        PingTest.java.</para>
+
+        <para>Go to browser and go to the page called /ping.seam and you
+        should have a input field where in you can enter text and the result
+        should come back on the next page.</para>
+
+        <para>The generated PingTest.java should be </para>
       </listitem>
     </itemizedlist>
   </section>
@@ -136,13 +203,20 @@
     ...but we should work with both so using the normal wizard is probably the
     best start)</para>
 
-    <para>There should be support for two types of projects: EAR and
-    WAR.</para>
+    <para>There should be support for two types of projects: EAR and WAR. Each
+    setup would require more than one project to work in eclipse and it would
+    probably make sense to define a working set that defines the Seam Project.
+    e.g. working set called "SeamPhoto" for a project called "SeamPhoto" and
+    the corresponding projects would be named "seamphoto.war",
+    "seamphoto.model", "seamphoto.ear", "seamphoto.test" (this names are
+    *defaults* and our code should not depend on the naming pattern to figure
+    out what kind a project is)</para>
 
     <para>The best way to see what should go where is to use seam-gen to
     generate two projects, one for war and the other for ear - when built
     exploded-archives will contain the .ear/.war/.jar with the libs needed in
-    the various places.</para>
+    the various places. the only thing not done by seam-gen is the seperation
+    of the test code/libs.</para>
 
     <section>
       <title>War</title>
@@ -171,6 +245,9 @@
       <para>To run unittests we probably need a &lt;projectname&gt;-test
       project that depends on the war project and contains the jars/resources
       to run tests.</para>
+
+      <para>Both the war, utility-jar and test project should be marked as a
+      Seam project.</para>
     </section>
 
     <section>
@@ -213,7 +290,13 @@
   <section>
     <title>Seam New Action</title>
 
-    <para></para>
+    <para>public boolean authenticate() { log.info("authenticating #0",
+    identity.getUsername());
+    if(identity.getUsername().equals(identity.getPassword())) {
+    FacesMessages.instance().add("sorry - password and username need to be
+    different."); return false; } //write your authentication logic here,
+    //return true if the authentication was //successful, false otherwise
+    identity.addRole("admin"); return true; }</para>
   </section>
 
   <section>
