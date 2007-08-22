@@ -54,9 +54,7 @@ public class VpeResizerMouseListener implements nsIDOMEventListener {
 			mouseDown(mouseEvent);
 		} else if (XulRunnerConstants.EVENT_NAME_MOUSEUP.equals(mouseEvent.getType())) {
 			mouseUp(mouseEvent);
-		} else if (XulRunnerConstants.EVENT_NAME_MOUSEMOVE.equals(mouseEvent.getType())) {
-			mouseMove(mouseEvent);
-		}
+		} 
 	}
 
 	/*
@@ -130,15 +128,5 @@ public class VpeResizerMouseListener implements nsIDOMEventListener {
 					vpeResizer.mouseUp(clientX, clientY, domElement);
 				}
 		 }
-	}
-
-	/**
-	 * processing event of mouseMove
-	 * 
-	 * @param mouseEvent
-	 *            a nsIDOMMouseEvent object
-	 */
-	private void mouseMove(nsIDOMMouseEvent mouseEvent) {
-		vpeResizer.mouseMove(mouseEvent);			
 	}
 }
