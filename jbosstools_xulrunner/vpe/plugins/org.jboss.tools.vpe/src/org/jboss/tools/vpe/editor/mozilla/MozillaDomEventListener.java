@@ -52,6 +52,16 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	
 	public static final String CONTEXTMENUEVENTTYPE="contextmenu";
 	
+	public static final String DRAGGESTUREEVENT = "draggesture";
+	
+	public static final String DRAGOVEREVENT = "dragover";
+	
+	public static final String DRAGDROPEVENT = "dragdrop";
+	
+	public static final String DRAGENTEREVENT = "dragenter";
+	
+	public static final String DRAGEXITEVENT = "dragexit";
+	
 	public MozillaDomEventListener() {
 		createCOMInterfaces();
 	}
@@ -132,6 +142,7 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 //	}
 //	
 //	// IVpeDropListener
+	//generates when drag event exist
 //	int CanDrag(int aDragEvent, int _retval, int aNode, int offset) {
 //		int canDrag = 0;
 //		
@@ -183,7 +194,7 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 //		XPCOM.memmove(offset, new int[] {0}, 4);
 //		return XPCOM.NS_OK;
 //	}
-//	
+	//generates on external drop event
 //	int CanDropExternal(int aDropEvent, int aFlavor, int aTransData, int _retval, int aNode, int offset) {
 //		int canDrop = 0;
 //		int aCaretParent = 0;
@@ -210,7 +221,7 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 //		XPCOM.memmove(offset, new int[] {caretOffset}, 4);
 //		return XPCOM.NS_OK;
 //	}
-//	
+//  	
 //	int DropExternal(int aDropEvent, int aFlavor, int aTransData, int aNode, int offset) {
 //		nsIDOMMouseEvent mouseEvent = nsIDOMEvent.queryMouseEvent(aDropEvent);
 //
@@ -251,6 +262,7 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIClipboardDragDropHooks#allowDrop(org.mozilla.interfaces.nsIDOMEvent, org.mozilla.interfaces.nsIDragSession)
 	 */
+	// checks is drop allowed
 	public boolean allowDrop(nsIDOMEvent event, nsIDragSession dragSession) {
 		boolean canDrop = false;
 		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
@@ -352,7 +364,7 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 		} else if(CONTEXTMENUEVENTTYPE.equals(domEvent.getType())) {
 			//first param are null 0, because this not used in event handler
 			getEditorDomEventListener().onShowContextMenu(0, domEvent, (nsIDOMNode) domEvent.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID));
-		}	
+		} 
 		
 		getEditorDomEventListener().onRefresh();
 		//not using default mozilla event handlers
