@@ -19,7 +19,7 @@ import org.w3c.dom.Node;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeTemplateSet {
-	private List templates = new ArrayList();
+	private List<VpeTemplateSet> templates = new ArrayList<VpeTemplateSet>();
 	private VpeTemplate defTemplate;
 	
 	VpeTemplateSet(){
@@ -37,7 +37,7 @@ public class VpeTemplateSet {
 
 	VpeTemplate getTemplate(VpePageContext pageContext, Node sourceNode, Set ifDependencySet) {
 		for (int i = 0; i < templates.size(); i++) {
-			VpeTemplateSet set = (VpeTemplateSet)templates.get(i);
+			VpeTemplateSet set = templates.get(i);
 			VpeTemplate template = set.getTemplate(pageContext, sourceNode, ifDependencySet);
 			if (template != null) {
 				return template;

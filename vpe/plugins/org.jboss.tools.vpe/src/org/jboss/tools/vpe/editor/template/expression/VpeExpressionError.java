@@ -12,6 +12,8 @@ package org.jboss.tools.vpe.editor.template.expression;
 
 public class VpeExpressionError extends Error {
 
+	private static final long serialVersionUID = 3620963302559253556L;
+
 	VpeExpressionError(String message) {
 		super(message);
 	}

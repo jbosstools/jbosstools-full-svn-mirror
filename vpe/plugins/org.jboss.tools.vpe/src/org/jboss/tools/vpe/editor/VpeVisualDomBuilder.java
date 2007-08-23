@@ -11,7 +11,6 @@
 package org.jboss.tools.vpe.editor;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -23,7 +22,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -87,7 +85,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private VpePageContext pageContext;
 	private VpeDnD dnd;
 	private Node headNode;
-	private List includeStack;
+	private List<VpeIncludeInfo> includeStack;
 	boolean rebuildFlag = false;
 	
 	private static final String EMPTY_STRING = ""; 
@@ -131,14 +129,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private static final String DOTTED_BORDER_STYLE_FOR_SPAN = "border : 1px solid #0051DD; color:#0051DD; background-color:#ECF3FF; padding-left: 3px;  padding-right: 3px;  line-height : 10px; font-family : arial; font-size : 10px; text-align:top; margin : 1px; -moz-user-modify : read-only";
 	
 	
-	static private HashSet unborderedSourceNodes = new HashSet();
+	static private HashSet<String> unborderedSourceNodes = new HashSet<String>();
 	static{
 		unborderedSourceNodes.add(TAG_HTML);
 		unborderedSourceNodes.add(TAG_HEAD);
 		unborderedSourceNodes.add(TAG_BODY);
 	}
 	
-	static private HashSet unborderedVisualNodes = new HashSet();
+	static private HashSet<String> unborderedVisualNodes = new HashSet<String>();
 	static{
 		unborderedVisualNodes.add(TAG_TBODY);
 		unborderedVisualNodes.add(TAG_THEAD);
@@ -167,7 +165,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	
 	public void buildDom(Document sourceDocument) {
-		includeStack = new ArrayList();
+		includeStack = new ArrayList<VpeIncludeInfo>();
 		IEditorInput input = pageContext.getEditPart().getEditorInput();
 		if (input instanceof IFileEditorInput) {
 			IFile file = ((IFileEditorInput)input).getFile();
@@ -310,7 +308,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		boolean registerFlag = isCurrentMainDocument();
 		switch (sourceNode.getNodeType()) {
 		case Node.ELEMENT_NODE:
-			Map xmlnsMap = createXmlns((Element)sourceNode);
+			Map<String, Integer> xmlnsMap = createXmlns((Element)sourceNode);
 			Set ifDependencySet = new HashSet();
 			pageContext.setCurrentVisualNode(visualOldContainer);
 			VpeTemplate template = templateManager.getTemplate(pageContext, (Element)sourceNode, ifDependencySet);
@@ -336,7 +334,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				registerNodes(elementMapping);
 			}
 			if (template.isChildren()) {
-				List childrenInfoList = creationData.getChildrenInfoList();
+				List<VpeChildrenInfo> childrenInfoList = creationData.getChildrenInfoList();
 				if (childrenInfoList == null) {
 					addChildren(template, sourceNode, visualNewElement != null ? visualNewElement : visualOldContainer);
 				} else {
@@ -397,12 +395,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 
-	private void addChildren(VpeTemplate containerTemplate, Node sourceContainer, Node visualOldContainer, List childrenInfoList) {
+	private void addChildren(VpeTemplate containerTemplate, Node sourceContainer, Node visualOldContainer, List<VpeChildrenInfo> childrenInfoList) {
 		for (int i = 0; i < childrenInfoList.size(); i++) {
-			VpeChildrenInfo info = (VpeChildrenInfo)childrenInfoList.get(i);
+			VpeChildrenInfo info = childrenInfoList.get(i);
 			Node visualParent = info.getVisualParent();
 			if (visualParent == null) visualParent = visualOldContainer;
-			List sourceChildren = info.getSourceChildren();
+			List<Node> sourceChildren = info.getSourceChildren();
 			int childrenCount = 0;
 			if (sourceChildren != null) {
 				for (int j = 0; j < sourceChildren.size(); j++) {
@@ -1601,10 +1599,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		pageContext.dispose();
 	}
 	
-	private Map createXmlns(Element sourceNode) {
+	private Map<String, Integer> createXmlns(Element sourceNode) {
 		NamedNodeMap attrs = ((Element)sourceNode).getAttributes();
 		if (attrs != null) {
-			Map xmlnsMap = new HashMap();
+			Map<String, Integer> xmlnsMap = new HashMap<String, Integer>();
 			for (int i = 0; i < attrs.getLength(); i++) {
 				addTaglib(sourceNode, xmlnsMap, attrs.item(i).getNodeName(), true);
 			}
@@ -1618,8 +1616,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private void setXmlnsAttribute(VpeElementMapping elementMapping, String name, String value) {
 		Element sourceElement = (Element)elementMapping.getSourceNode();
 		if (sourceElement != null) {
-			Map xmlnsMap = elementMapping.getXmlnsMap();
-			if (xmlnsMap == null) xmlnsMap = new HashMap();
+			Map<String, Integer> xmlnsMap = elementMapping.getXmlnsMap();
+			if (xmlnsMap == null) xmlnsMap = new HashMap<String, Integer>();
 			addTaglib(sourceElement, xmlnsMap, name, true);
 			elementMapping.setXmlnsMap(xmlnsMap.size() > 0 ? xmlnsMap : null);
 		}
@@ -1628,7 +1626,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private void removeXmlnsAttribute(VpeElementMapping elementMapping, String name) {
 		Element sourceElement = (Element)elementMapping.getSourceNode();
 		if (sourceElement != null) {
-			Map xmlnsMap = elementMapping.getXmlnsMap();
+			Map<String, Integer> xmlnsMap = elementMapping.getXmlnsMap();
 			if (xmlnsMap != null) {
 				Object id = xmlnsMap.remove(name);
 				if (id != null) {
@@ -1639,7 +1637,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 
-	private void addTaglib(Element sourceElement, Map xmlnsMap, String attrName, boolean ns) {
+	private void addTaglib(Element sourceElement, Map<String, Integer> xmlnsMap, String attrName, boolean ns) {
 		Attr attr = sourceElement.getAttributeNode(attrName);
 		if (ATTR_XMLNS.equals(attr.getPrefix())) {
 			xmlnsMap.put(attr.getNodeName(), new Integer(attr.hashCode()));

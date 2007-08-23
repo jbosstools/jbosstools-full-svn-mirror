@@ -41,7 +41,7 @@ public class VpeExpressionBuilder {
 	private String originalText;
 	private String text;
 	private boolean caseSensitive;
-	private Set dependencySet;
+	private Set<String> dependencySet;
 	
 	public VpeExpressionInfo buildPlainExpression(String text, boolean caseSensitive) throws VpeExpressionBuilderException {
 		if (text == null) {
@@ -53,7 +53,7 @@ public class VpeExpressionBuilder {
 			return new VpeExpressionInfo();
 		}
 		this.caseSensitive = caseSensitive;
-		dependencySet = new HashSet();
+		dependencySet = new HashSet<String>();
 		return new VpeExpressionInfo(build(), dependencySet.size() > 0 ? dependencySet : null); 
 	}
 	
@@ -62,8 +62,8 @@ public class VpeExpressionBuilder {
 			return new VpeExpressionInfo();
 		}
 		VpeExpressionBuilder builder = new VpeExpressionBuilder();
-		Set dependencySet = new HashSet();
-		List expressions = new ArrayList();
+		Set<String> dependencySet = new HashSet<String>();
+		List<VpeExpression> expressions = new ArrayList<VpeExpression>();
 		int len = text.length();
 		int startIndex = 0;
 		while (startIndex < len) {
@@ -193,7 +193,7 @@ public class VpeExpressionBuilder {
 			error("Function \'" + name + "\' is not found", namePos);
 		}
 		int bracketPos = currentPosition();
-		List params = new ArrayList();
+		List<VpeOperand> params = new ArrayList<VpeOperand>();
 		text = text.substring(1);
 		text = text.trim();
 		while (!end() && nextChar() != FUNC_BRACKET_RIGHT) {
@@ -212,7 +212,7 @@ public class VpeExpressionBuilder {
 		}
 		text = text.substring(1);
 		if (params.size() > 0) {
-			function.setParameters((VpeOperand[])params.toArray(new VpeOperand[params.size()]));
+			function.setParameters(params.toArray(new VpeOperand[params.size()]));
 		}
 		String[] signatures = function.getSignatures();
 		if (signatures != null) {
@@ -315,9 +315,10 @@ public class VpeExpressionBuilder {
 		throw new VpeExpressionBuilderException(originalText, message, pos);
 	}
 	
-	private void error(String message) throws VpeExpressionBuilderException {
-		error(message, currentPosition());
-	}
+	// Remove comment if need
+//	private void error(String message) throws VpeExpressionBuilderException {
+//		error(message, currentPosition());
+//	}
 	
 	private void undefinedCharacter(int pos) throws VpeExpressionBuilderException {
 		error("Undefined character \'" + originalText.charAt(pos) + '\'', pos);
@@ -343,7 +344,7 @@ public class VpeExpressionBuilder {
 		if (value.length() <= 1) {
 			return null;
 		}
-		boolean exprBracket;
+
 		if (value.charAt(0) == COMPL_EXPR_LEFT_BRACKET) {
 			if (value.charAt(value.length() - 1) == COMPL_EXPR_RIGHT_BRACKET) {
 				value = value.substring(1, value.length() - 1);

@@ -14,13 +14,13 @@ import java.util.Set;
 
 public class VpeExpressionInfo {
 	private VpeExpression expression;
-	private Set dependencySet;
+	private Set<String> dependencySet;
 	
 	VpeExpressionInfo() {
 		this(null, null);
 	}
 
-	VpeExpressionInfo(VpeExpression expression, Set dependencySet) {
+	VpeExpressionInfo(VpeExpression expression, Set<String> dependencySet) {
 		this.expression = expression;
 		this.dependencySet = dependencySet;
 	}
@@ -29,7 +29,7 @@ public class VpeExpressionInfo {
 		return expression;
 	}
 	
-	public Set getDependencySet() {
+	public Set<String> getDependencySet() {
 		return dependencySet;
 	}
 }

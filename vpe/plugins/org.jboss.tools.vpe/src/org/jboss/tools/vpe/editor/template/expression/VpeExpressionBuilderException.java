@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor.template.expression;
 
 public class VpeExpressionBuilderException extends Exception {
+	private static final long serialVersionUID = 2506700447659526980L;
 
 	public VpeExpressionBuilderException(String expression, String message, int pos) {
 		super("Expression: \"" + expression + "\"  pos=" + pos + "  " + message);
