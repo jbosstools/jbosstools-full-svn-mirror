@@ -13,7 +13,7 @@
     <title>Overall Seam interaction</title>
 
     <para>The following scenario should be as smooth as possible and work for
-    both WAR and EAR. </para>
+    both WAR and EAR.</para>
 
     <itemizedlist>
       <listitem>
@@ -138,7 +138,7 @@
               <row>
                 <entry>Seam Project</entry>
 
-                <entry> default based on selection</entry>
+                <entry>default based on selection</entry>
 
                 <entry></entry>
               </row>
@@ -186,7 +186,7 @@
         should have a input field where in you can enter text and the result
         should come back on the next page.</para>
 
-        <para>The generated PingTest.java should be </para>
+        <para>The generated PingTest.java should be</para>
       </listitem>
     </itemizedlist>
   </section>
@@ -251,6 +251,62 @@
     </section>
 
     <section>
+      <title>Exploded Deployment</title>
+
+      <para>JBoss exploded deployment works by having the archives exploded
+      (meaning unzipped) into the deploy directory.</para>
+
+      <para>We need to make sure this actually works - also with how WTP
+      deploys the EAR's. e.g. does WTP/our adapter deploy the WAR just like
+      seam-gen projects does ?</para>
+
+      <para></para>
+
+      <para>e.g. the EAR contains the WAR and JAR:</para>
+
+      <para>This will work:</para>
+
+      <programlisting>myproject.ear/
+  META-INF/application.xml
+  myproject.war/
+      WEB-INF/web.xml
+  myproject.jar/
+      META-INF/persistence.xml
+</programlisting>
+
+      <para>This will probably not work (all projects side-by-side):</para>
+
+      <programlisting>myproject.ear/
+  META-INF/application.xml
+myproject.war/
+  WEB-INF/web.xml
+myproject.jar/
+  META-INF/persistence.xml
+</programlisting>
+
+      <para></para>
+
+      <section>
+        <title>Hot-restart/touch</title>
+
+        <para>Doing hot restart is just a matter of touching the descriptors.
+        This is from seam-gen:</para>
+
+        <para>For EAR:</para>
+
+        <programlisting>&lt;target name="restart" depends="explode" description="Restart the exploded archive"&gt;
+  &lt;touch file="${ear.deploy.dir}/META-INF/application.xml"/&gt;
+&lt;/target&gt;</programlisting>
+
+        <para>For WAR:</para>
+
+        <programlisting>&lt;target name="restart" depends="explode" description="Restart the exploded archive"&gt;
+  &lt;touch file="${war.deploy.dir}/WEB-INF/web.xml"/&gt;
+&lt;/target&gt;</programlisting>
+      </section>
+    </section>
+
+    <section>
       <title>Libraries/Runtime environment</title>
 
       <para>A project should be associated with a Seam runtime which defines
@@ -285,6 +341,12 @@
     available in the Run &gt; Hibernate Code Generation and be able to run it
     repeatedly; not sure though if seam-gen does more than simply let
     hibernate tools do it. Needs to investigate.</para>
+
+    <para>Next to this document is a hsqldb folder with a hsqldb with data
+    that can be used with Seam Generate Entities to have a fully working
+    application.</para>
+
+    <para></para>
   </section>
 
   <section>
