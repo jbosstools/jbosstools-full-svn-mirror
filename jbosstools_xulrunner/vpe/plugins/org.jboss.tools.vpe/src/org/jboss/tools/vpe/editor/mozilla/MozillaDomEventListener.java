@@ -194,7 +194,7 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 //		XPCOM.memmove(offset, new int[] {0}, 4);
 //		return XPCOM.NS_OK;
 //	}
-	//generates on external drop event
+//	generates on external drop event
 //	int CanDropExternal(int aDropEvent, int aFlavor, int aTransData, int _retval, int aNode, int offset) {
 //		int canDrop = 0;
 //		int aCaretParent = 0;
@@ -364,7 +364,31 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 		} else if(CONTEXTMENUEVENTTYPE.equals(domEvent.getType())) {
 			//first param are null 0, because this not used in event handler
 			getEditorDomEventListener().onShowContextMenu(0, domEvent, (nsIDOMNode) domEvent.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID));
-		} 
+		} else if(DRAGGESTUREEVENT.equals(domEvent.getType())) {
+			//here was moved functionality from can drag function
+			System.out.print(DRAGGESTUREEVENT);
+			nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+
+			if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
+				boolean canDragFlag = editorDomEventListener.canInnerDrag(mouseEvent);
+				//TODO Max Areshkau think about using can -or not can drag if we can drag  we should 
+				//start drag session
+				System.out.println("Can drag"+canDragFlag);
+			}
+			//TODO Max Areshkau Drag gesture event
+		} else if(DRAGDROPEVENT.equals(domEvent.getType())) {
+			System.out.println(DRAGDROPEVENT);
+			//TODO Max Areshkau drag drop gesture event
+		} else if(DRAGENTEREVENT.equals(domEvent.getType())) {
+			System.out.println(DRAGENTEREVENT);
+			//TODO Max Areshkau drag enter event
+		} else if(DRAGEXITEVENT.equals(domEvent.getType())) {
+			System.out.println(DRAGEXITEVENT);
+			//TODO Max Areshkau drag enter event
+		} else if(DRAGOVEREVENT.equals(domEvent.getType())) {
+			System.out.println(DRAGOVEREVENT);
+			//TODO Max Areshkau drag over event
+		}
 		
 		getEditorDomEventListener().onRefresh();
 		//not using default mozilla event handlers

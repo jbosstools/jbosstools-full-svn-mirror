@@ -1203,7 +1203,7 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 					if (visualBuilder.getNodeBounds(selectedNode).contains(VisualDomUtil.getMousePoint(event))) {
 						switch(selectedNode.getNodeType()) {
 						case nsIDOMNode.ELEMENT_NODE:
-							info = new VpeVisualInnerDragInfo((nsIDOMElement)selectedNode);
+							info = new VpeVisualInnerDragInfo((nsIDOMElement)selectedNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
 							break;
 						case nsIDOMNode.TEXT_NODE:
 							info = new VpeVisualInnerDragInfo(selectedNode, 0, selectedNode.getNodeValue().length());

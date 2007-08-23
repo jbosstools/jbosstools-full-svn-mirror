@@ -2464,5 +2464,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	public void setXulRunnerEditor(XulRunnerEditor xulRunnerEditor) {
 		this.xulRunnerEditor = xulRunnerEditor;
 	}
+	
+	/**
+	 * Start drag session
+	 */
+	public void startDragSession() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

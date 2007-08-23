@@ -34,6 +34,7 @@ import org.eclipse.wst.xml.core.internal.document.NodeImpl;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.dnd.VpeDnD;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.css.CSSReferenceList;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
