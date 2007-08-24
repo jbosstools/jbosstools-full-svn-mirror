@@ -1613,4 +1613,20 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			pageContext.setTaglib(attr.hashCode(), attr.getNodeValue(), attr.getLocalName(), ns);
 		}
 	}
+
+	/**
+	 * @return the dnd
+	 */
+	public VpeDnD getDnd() {
+		
+		return dnd;
+	}
+
+	/**
+	 * @param dnd the dnd to set
+	 */
+	public void setDnd(VpeDnD dnd) {
+		
+		this.dnd = dnd;
+	}
 }

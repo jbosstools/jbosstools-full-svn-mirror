@@ -373,6 +373,7 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 				boolean canDragFlag = editorDomEventListener.canInnerDrag(mouseEvent);
 				//TODO Max Areshkau think about using can -or not can drag if we can drag  we should 
 				//start drag session
+				editorDomEventListener.startDragSession(domEvent);
 				System.out.println("Can drag"+canDragFlag);
 			}
 			//TODO Max Areshkau Drag gesture event
