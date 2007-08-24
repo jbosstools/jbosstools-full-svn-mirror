@@ -57,10 +57,8 @@
     
     <para>Now you need to define a connection profile and choose a database. If you have no connections yet you should create the one.</para>
     <orderedlist>
-    <listitem><para>Click &quot;Add connection&quot; link in the panel Connection.</para></listitem>
-    <listitem><para>Choose HSQLDB Connection Profile.</para></listitem>
-    <listitem><para>Give a name to your connection and some description. Click Next.</para></listitem>
-    </orderedlist>
+    <listitem><para>Click Next in the dialog &quot;JPA Facet&quot;</para></listitem>
+        </orderedlist>
     <figure>
       <title>Select provider for JPA JARs</title>
       <mediaobject> 
@@ -69,6 +67,36 @@
         </imageobject>
       </mediaobject>
     </figure>
+    <para>Since you selected JPA and JSF tooling support, the project needs to incorporate the JAR files for those frameworks on its classpath. In the next screen, you will be able to select where those library JARs come from. The easiest is just to select the JARs provided by the JBoss AS runtime associated with this project. That is why it is important to chose the right JBoss AS 4.2 runtime in the project setup window.</para>
+    <orderedlist continuation="continues">
+    <listitem><para>Check &quot;Server Supplied JSF Implementation&quot;. We will use JSF implementation that comes with JBoss server.</para></listitem>
+    <listitem><para>Click Next.</para></listitem>
+    </orderedlist>
+    <figure>
+      <title>Define JSF Implementation</title>
+      <mediaobject> 
+        <imageobject>
+          <imagedata fileref="images/SeamNewProj044.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    
+    <orderedlist continuation="continues">
+    <listitem><para>Click New button to create a new connection profile.</para></listitem>
+    </orderedlist>
+    
+    <figure>
+      <title>Create New Connection Profile</title>
+      <mediaobject> 
+        <imageobject>
+          <imagedata fileref="images/SeamNewProj045.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    
+    <orderedlist continuation="continues">
+    <listitem><para>Give a name to your connection and some description. Click Next.</para></listitem>
+    </orderedlist>
     <figure>
       <title>Give a name to connection profile</title>
       <mediaobject> 
@@ -80,71 +108,18 @@
     
     <para>Now you need to specify driver and connection details.</para>
     <orderedlist continuation="continues">
-    <listitem><para>Click the Browse button near driver selection drop down list.</para></listitem>
+    <listitem><para>Select Generic JDBC driver from the drop down list Click Next.</para></listitem>
     </orderedlist>
     <figure>
-      <title>Give a name to connection profile</title>
+      <title>Select Driver</title>
       <mediaobject> 
         <imageobject>
           <imagedata fileref="images/connectionprofile2.png"/>
         </imageobject>
       </mediaobject>
     </figure>
+    <para>A summary diallog will be prompted. Click Finish.</para>
     
-    <orderedlist continuation="continues">
-    <listitem><para>In the next dialog select Add button.</para></listitem>
-    <listitem><para>Select Hypersonic database: <emphasis>Hypersonic &gt; 1.8 &gt; Hypersonic DB</emphasis></para></listitem>
-    </orderedlist>
-    
-    <figure>
-      <title>Select database</title>
-      <mediaobject> 
-        <imageobject>
-          <imagedata fileref="images/connectionprofile3.png"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
-    <para>You should make wizard to know where the driver is located.</para>
-    <figure>
-      <title>Add driver</title>
-      <mediaobject> 
-        <imageobject>
-          <imagedata fileref="images/connectionprofile4.png"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
-    
-    <orderedlist continuation="continues">
-    <listitem><para>Select hsqldb.jar in Driver File panel and click the button Remove jar/Zip.</para></listitem>
-    <listitem><para>Select Add jar/Zip.</para></listitem>
-    <listitem><para>Select hsqldb driver which is located in <emphasis>jboss-eap &gt; jboss-as &gt; server &gt; default &gt; lib</emphasis> folder of RHDS installation.</para></listitem>
-    </orderedlist>
-    <figure>
-      <title>Adding driver</title>
-      <mediaobject> 
-        <imageobject>
-          <imagedata fileref="images/connectionprofile5.png"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
-    
-    <orderedlist continuation="continues">
-    <listitem><para>Click OK, then click OK again. You will see a database added in wizard window.</para></listitem>
-    </orderedlist>
-    
-    <figure>
-      <title>Database added</title>
-      <mediaobject> 
-        <imageobject>
-          <imagedata fileref="images/connectionprofile6.png"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
-    
-    <orderedlist continuation="continues">
-    <listitem><para>Select Next to procede further. A summary diallog will be prompted.</para></listitem>
-    </orderedlist>
-        
     <figure>
       <title>Summary window</title>
       <mediaobject> 
@@ -153,21 +128,6 @@
         </imageobject>
       </mediaobject>
     </figure>
-    
-    <orderedlist continuation="continues">
-    <listitem><para>Click Finish button. Connection profile will be added. Click Finish again.</para></listitem>
-    </orderedlist>
-    <para>Since you selected JPA and JSF tooling support, the project needs to incorporate the JAR files for those frameworks on its classpath. In the next two screens, you will be able to select where those library JARs come from. The easiest is just to select the JARs provided by the JBoss AS runtime associated with this project. That is why it is important to chose the right JBoss AS 4.2 runtime in the project setup window.</para>
-    
-    <figure>
-      <title>Select provider for JSF JARs</title>
-      <mediaobject> 
-        <imageobject>
-          <imagedata fileref="images/SeamNewProj08.png"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
-    
     <para>The project setup wizard also asks you to configure how <property>Seam</property> generates code for the project. The <property>Seam</property> Home Folder should point to a valid <property>Seam</property> distribution. By default, it is set to the <property>Seam</property> distribution bundled in your Red Hat Developer Studio tool. For the deployment format, choose WAR deployment if you want to use POJOs for UI event handling and business logic; choose EAR deployment if you want to EJB3 beans for added features. In most web applications, the WAR deployment option would suffice. You should also enter Java packages for the entity beans (for database mapping) and session beans (for action handlers). All generated code will be placed in those packages. </para>
     
     <figure>
@@ -178,30 +138,21 @@
         </imageobject>
       </mediaobject>
     </figure>
+    <para>Click on Finish to generate a project. The generated project contains all the necessary library JARs, XML configuration files, the ANT build script, as well as simple XHTML web pages and Java classes for the skeleton web application.</para>
     
-    <para>Click on Finish to generate the application. The generated project contains all the necessary library JARs, XML configuration files, the ANT build script, as well as simple XHTML web pages and Java classes for the skeleton web application.</para>
-    
-    <figure>
-      <title>The generated Seam web application</title>
-      <mediaobject> 
-        <imageobject>
-          <imagedata fileref="images/SeamNewProj07.png"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
     
   </section>
   
   <section>
     <title>Build and Deploy the Seam Application</title>
     
-    <para>Once the application is generated, you can use the &quot;Run on server&quot; menu to build and deploy it into the JBoss AS runtime associated with the project. All you need is to start JBoss AS in the server manager, and load the browser at URL http://127.0.0.1:8080/MySeamProj/. You should see the following web page.</para>
+    <para>Once the application is generated, you can use the &quot;Run on server&quot; menu to build and deploy it into the JBoss AS runtime associated with the project. All you need is to start JBoss AS in the server manager, and load the browser at URL http://localhost:8080/MySeamProj/. You should see the following web page.</para>
     
     <figure>
       <title>The generated application in action</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/xxxx.png"/>
+          <imagedata fileref="images/startedapplication.png"/>
         </imageobject>
       </mediaobject>
     </figure>
