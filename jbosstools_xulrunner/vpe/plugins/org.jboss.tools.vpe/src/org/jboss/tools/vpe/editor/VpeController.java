@@ -2468,9 +2468,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	/**
 	 * Start drag session
 	 */
-	public void startDragSession() {
-		// TODO Auto-generated method stub
+	public void startDragSession(nsIDOMEvent domEvent) {
 		
+		visualBuilder.getDnd().startDragSession(domEvent);
 	}
 
 }

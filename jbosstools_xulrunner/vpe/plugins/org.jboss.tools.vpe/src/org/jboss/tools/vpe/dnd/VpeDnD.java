@@ -13,12 +13,14 @@ package org.jboss.tools.vpe.dnd;
 
 import org.eclipse.swt.graphics.Rectangle;
 import org.mozilla.interfaces.nsIComponentManager;
-import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMNSHTMLElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDragService;
 import org.mozilla.interfaces.nsIServiceManager;
+import org.mozilla.interfaces.nsISupportsArray;
+import org.mozilla.interfaces.nsISupportsString;
+import org.mozilla.interfaces.nsITransferable;
 import org.mozilla.xpcom.Mozilla;
 import org.mozilla.xpcom.XPCOMException;
 
@@ -29,8 +31,14 @@ import org.mozilla.xpcom.XPCOMException;
  */
 public class VpeDnD {
 	
-	private static final String CID_DRAGSERVICE="@mozilla.org/widget/dragservice;1";
+	private static final String CID_DRAGSERVICE = "@mozilla.org/widget/dragservice;1";
+	private static final String CID_TRANSFERABLE = "@mozilla.org/widget/transferable;1";
+	private static final String CID_SUPPORTSSTRING = "@mozilla.org/supports-string;1";
+
 	private static final String CID_SUPPORTSARRAY = "@mozilla.org/supports-array;1";
+	
+	private static final String kVpeModelFlavor = "vpe/model";
+	private static final String kVpeModelTransport ="vpe/model";
 	/**
 	 *  service manager */
 	private nsIServiceManager serviceManager;
@@ -65,8 +73,46 @@ public class VpeDnD {
 	 */
 	public void startDragSession(nsIDOMEvent  domEvent) {
 		//TODO Max Areshkau 
-	}
+		nsISupportsArray transArray = (nsISupportsArray) getComponentManager()
+		.createInstanceByContractID(CID_SUPPORTSARRAY, null,
+				nsISupportsArray.NS_ISUPPORTSARRAY_IID);
+		transArray.appendElement(createTransferable());
+		getDragService().invokeDragSession((nsIDOMNode) domEvent.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID), transArray, null,
+				nsIDragService.DRAGDROP_ACTION_MOVE
+						| nsIDragService.DRAGDROP_ACTION_COPY
+						| nsIDragService.DRAGDROP_ACTION_LINK);
 
+		domEvent.stopPropagation();
+		domEvent.preventDefault();
+		
+	}
+	
+	/**
+	 * Creates transferable object to start drag session
+	 * 
+	 * @return transferable object
+	 */
+	private nsITransferable createTransferable() {
+		
+		nsITransferable iTransferable = (nsITransferable) componentManager
+						.createInstanceByContractID(CID_TRANSFERABLE, null,
+								nsITransferable.NS_ITRANSFERABLE_IID);
+		nsISupportsString transferData = (nsISupportsString) componentManager
+		.createInstanceByContractID(CID_SUPPORTSSTRING, null,
+				nsISupportsString.NS_ISUPPORTSSTRING_IID);
+		String data="vpe-element";
+		transferData.setData(data);
+		iTransferable.setTransferData("text/plain", transferData, data.length());
+		iTransferable.setTransferData("text/unicode", transferData,data.length()*2);
+		iTransferable.setTransferData("text/html", transferData, data.length()*2);
+		iTransferable.setTransferData("text/xml", transferData, data.length()*2);
+		iTransferable.setTransferData("text/rtf", transferData, data.length()*2);
+		iTransferable.setTransferData("text/enriched", transferData, data.length()*2);
+		iTransferable.setTransferData("text/richtext", transferData, data.length()*2);
+		iTransferable.setTransferData("text/t140", transferData, data.length()*2);
+		
+		return iTransferable;
+	}
 	/**
 	 * @return the componentManager
 	 */
@@ -98,7 +144,7 @@ public class VpeDnD {
 	public nsIDragService getDragService() {
 		
 		if(dragService==null) {
-			dragService = (nsIDragService) serviceManager
+			dragService = (nsIDragService) getServiceManager()
 			.getServiceByContractID(CID_DRAGSERVICE,
 					nsIDragService.NS_IDRAGSERVICE_IID);
 		}

@@ -64,5 +64,5 @@ public interface EditorDomEventListener extends nsIContextMenuListener {
 	 * Calls when editor content changed, and we should highlight selected element.
 	 */
 	void onRefresh();
-	void startDragSession();
+	void startDragSession(nsIDOMEvent domEvent);
 }
