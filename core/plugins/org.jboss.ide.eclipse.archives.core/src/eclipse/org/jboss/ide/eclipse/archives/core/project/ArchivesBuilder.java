@@ -92,10 +92,12 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 	protected void clean(IProgressMonitor monitor) throws CoreException {
 		IPath p = getProject().getLocation();
 		IArchiveModelNode root = ArchivesModel.instance().getRoot(p);
-		IArchiveNode[] nodes = root.getChildren(IArchiveNode.TYPE_ARCHIVE);
-		for( int i = 0; i < nodes.length; i++ ) {
-			IPath path = ((IArchive)nodes[i]).getArchiveFilePath();
-			TrueZipUtil.deleteAll(path);
+		if(root!=null) {
+			IArchiveNode[] nodes = root.getChildren(IArchiveNode.TYPE_ARCHIVE);
+			for( int i = 0; i < nodes.length; i++ ) {
+				IPath path = ((IArchive)nodes[i]).getArchiveFilePath();
+				TrueZipUtil.deleteAll(path);
+			}
 		}
 	}
 
@@ -147,20 +149,25 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 		final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 		final int count = workspaceRoot.getLocation().segmentCount();
 
-		ArchivesModel.instance().getRoot(getProject().getLocation()).accept(new IArchiveNodeVisitor () {
-			public boolean visit (IArchiveNode node) {
-				if (node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FILESET) {
-					IArchiveFileSet fileset = (IArchiveFileSet)node;
-					IPath p = fileset.getGlobalSourcePath();
-					if( workspaceRoot.getLocation().isPrefixOf(p)) {
-						IProject proj = workspaceRoot.getProject(p.segment(count));
-						set.add(proj);
+		IArchiveModelNode root = ArchivesModel.instance().getRoot(getProject().getLocation());
+		if(root!=null) {
+			root.accept(new IArchiveNodeVisitor () {
+				public boolean visit (IArchiveNode node) {
+					if (node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FILESET) {
+						IArchiveFileSet fileset = (IArchiveFileSet)node;
+						IPath p = fileset.getGlobalSourcePath();
+						if( workspaceRoot.getLocation().isPrefixOf(p)) {
+							IProject proj = workspaceRoot.getProject(p.segment(count));
+							set.add(proj);
+						}
 					}
+					return true;
 				}
-				return true;
-			}
-		});
-		return (IProject[]) set.toArray(new IProject[set.size()]);
+			});
+			return (IProject[]) set.toArray(new IProject[set.size()]);
+		} else {
+			return new IProject[0];
+		}
 	}
 	
 	/** 
