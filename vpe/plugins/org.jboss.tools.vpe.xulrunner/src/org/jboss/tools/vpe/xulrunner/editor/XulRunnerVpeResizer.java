@@ -386,8 +386,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	 * @param aOriginalObjectX
 	 * @param aOriginalObjectY
 	 */
-	private void setShadowPosition(nsIDOMElement shadowElement, int aOriginalObjectX, int aOriginalObjectY)
-	{
+	private void setShadowPosition(nsIDOMElement shadowElement, int aOriginalObjectX, int aOriginalObjectY)	{
 		setAnonymousElementPosition(aOriginalObjectX, aOriginalObjectY, shadowElement);
 	}
 
@@ -445,7 +444,6 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		
 		activeHandle = domElement;
 		activeHandle.setAttribute(XulRunnerConstants.STRING_MOZ_ACTIVATED, XulRunnerConstants.HTML_VALUE_TRUE);
-
 
 		String locationStr = activeHandle.getAttribute(XulRunnerConstants.HTML_ATTR_ANONLOCATION);
 
