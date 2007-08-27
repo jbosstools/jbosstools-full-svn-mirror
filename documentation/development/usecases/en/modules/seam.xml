@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="seamuc">
-  <!-- <?dbhtml filename="ManageJBossASFromRedHatDeveloperStudio.html"?> -->
-
   <title>Seam project creation/development usecases</title>
 
   <para>This covers usecases for creation, tests and deploy of projects
@@ -136,55 +134,57 @@
       <listitem>
         <para><emphasis role="bold">New Action</emphasis></para>
 
-        <para>Run New Action.</para>
+        <para><emphasis>Run new Action</emphasis></para>
 
-        <table>
-          <title></title>
+        <para><table>
+            <title></title>
 
-          <tgroup cols="3">
-            <tbody>
-              <row>
-                <entry>Seam Project</entry>
+            <tgroup cols="3">
+              <tbody>
+                <row>
+                  <entry>Seam Project</entry>
 
-                <entry>default based on selection</entry>
+                  <entry>default based on selection</entry>
 
-                <entry></entry>
-              </row>
+                  <entry></entry>
+                </row>
 
-              <row>
-                <entry>Component Name</entry>
+                <row>
+                  <entry>Component Name</entry>
 
-                <entry>Enter ping</entry>
+                  <entry>Enter ping</entry>
 
-                <entry>ping</entry>
-              </row>
+                  <entry>ping</entry>
+                </row>
 
-              <row>
-                <entry>Local Interface</entry>
+                <row>
+                  <entry>Local Interface</entry>
 
-                <entry>Default based on component name</entry>
+                  <entry>Default based on component name</entry>
 
-                <entry>PingBean</entry>
-              </row>
+                  <entry>PingBean</entry>
+                </row>
 
-              <row>
-                <entry>Method</entry>
+                <row>
+                  <entry>Method</entry>
 
-                <entry>default based on component name</entry>
+                  <entry>default based on component name</entry>
 
-                <entry>ping</entry>
-              </row>
+                  <entry>ping</entry>
+                </row>
 
-              <row>
-                <entry>Page</entry>
+                <row>
+                  <entry>Page</entry>
 
-                <entry>default based on component name</entry>
+                  <entry>default based on component name</entry>
 
-                <entry>ping</entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </table>
+                  <entry>ping</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table></para>
+
+        <para></para>
 
         <para>Clicking finish should generate a class called PingBean.java
         with @Name("ping") and corresponding ping.xhtml and
@@ -200,8 +200,91 @@
         web.xml" is there for wars so need something for ear's too)</para>
 
         <para>Go to browser and go to the page called /ping.seam and you
-        should have a input field where in you can enter text and the result
-        should come back on the next page.</para>
+        should have a button which when clicked sends you to a page with a
+        messag containing "Ping!".</para>
+
+        <para>If Seam hotdeploy is enabled you should be able to go directly
+        to "Go to browser" skipping the restart app.</para>
+
+        <para>Running the TestNG test should also just work and show a
+        greenbar.</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis role="bold">New Form</emphasis></para>
+
+        <para>Run New Form.<table>
+            <title></title>
+
+            <tgroup cols="3">
+              <tbody>
+                <row>
+                  <entry>Seam Project</entry>
+
+                  <entry>default based on selection</entry>
+
+                  <entry></entry>
+                </row>
+
+                <row>
+                  <entry>Component Name</entry>
+
+                  <entry>Enter form</entry>
+
+                  <entry>form</entry>
+                </row>
+
+                <row>
+                  <entry>Local Interface</entry>
+
+                  <entry>Default based on component name</entry>
+
+                  <entry>IForm</entry>
+                </row>
+
+                <row>
+                  <entry>Bean name:</entry>
+
+                  <entry>Default based on component name</entry>
+
+                  <entry>FormBean</entry>
+                </row>
+
+                <row>
+                  <entry>Method</entry>
+
+                  <entry>default based on component name</entry>
+
+                  <entry>form</entry>
+                </row>
+
+                <row>
+                  <entry>Page</entry>
+
+                  <entry>default based on component name</entry>
+
+                  <entry>form</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table></para>
+
+        <para>Clicking finish should generate a class called PingBean.java
+        with @Name("ping") and corresponding ping.xhtml and
+        PingTest.java.</para>
+
+        <para>The generated PingBeanTest.java should be in the action folder
+        (suggestion: WAR -&gt; src/action, EAR -&gt; ejb project src),
+        ping.xhtml in WebContent and the PingTest.java + related testng files
+        in the test src/ folder (suggestion project-test -&gt;
+        src/test).</para>
+
+        <para>Click the "Restart Application" button (today only "Touch
+        web.xml" is there for wars so need something for ear's too)</para>
+
+        <para>Go to browser and go to the page called /ping.seam and you
+        should have a button which when clicked sends you to a page with a
+        messag containing "Ping!".</para>
 
         <para>If Seam hotdeploy is enabled you should be able to go directly
         to "Go to browser" skipping the restart app.</para>
