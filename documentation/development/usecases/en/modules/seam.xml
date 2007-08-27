@@ -28,7 +28,7 @@
         and linked together correctly.</para>
 
         <para>The project(s) should after this be deployable to an already
-        chosen server and testable!</para>
+        chosen server and testable! (for both EAR and WAR)</para>
       </listitem>
 
       <listitem>
@@ -37,7 +37,14 @@
         <para>There won't be any tests initially, but the initial setup should
         be ready.</para>
 
-        <para>This should run the microcontainer/embedded jboss.</para>
+        <para>This should run the microcontainer/embedded jboss just as
+        seam-gen does.</para>
+
+        <para>Remember that the driver jar(s) needs to be available to this
+        project for the database related applications to run.</para>
+
+        <para>It also needs custom persistence.xml and other files to work
+        correctly. See seam-gen for the differences.</para>
       </listitem>
 
       <listitem>
@@ -62,8 +69,8 @@
         <para>Go to browser and click login, fill in user and password with
         "max"/"max", click Login</para>
 
-        <para>Page should should "max" as logged in, click Logout, page should
-        now show max is logged out.</para>
+        <para>Page should should show "max" as logged in, click Logout, page
+        should now show max is logged out.</para>
 
         <para>Put a breakpoint in Authenticator.java on the line with
         log.info("authenticating #0", identity.getUsername());</para>
@@ -116,7 +123,8 @@
         available after clicking "Restart app"</emphasis></para>
 
         <para>Restart App should *not* require restart of the application
-        server; just the application.</para>
+        server; just the application.(With seam hotdeploy (requires Seam
+        1.2.1) classes in META-INF/dev is automatically hotdeployed)</para>
 
         <para>JBoss allows touching of descriptors to trigger restart. See
         seam-gen on how it is done technically.</para>
@@ -182,11 +190,21 @@
         with @Name("ping") and corresponding ping.xhtml and
         PingTest.java.</para>
 
+        <para>The generated PingBeanTest.java should be in the action folder
+        (suggestion: WAR -&gt; src/action, EAR -&gt; ejb project src),
+        ping.xhtml in WebContent and the PingTest.java + related testng files
+        in the test src/ folder (suggestion project-test -&gt;
+        src/test).</para>
+
+        <para>Click the "Restart Application" button (today only "Touch
+        web.xml" is there for wars so need something for ear's too)</para>
+
         <para>Go to browser and go to the page called /ping.seam and you
         should have a input field where in you can enter text and the result
         should come back on the next page.</para>
 
-        <para>The generated PingTest.java should be</para>
+        <para>If Seam hotdeploy is enabled you should be able to go directly
+        to "Go to browser" skipping the restart app.</para>
       </listitem>
     </itemizedlist>
   </section>
@@ -207,10 +225,10 @@
     setup would require more than one project to work in eclipse and it would
     probably make sense to define a working set that defines the Seam Project.
     e.g. working set called "SeamPhoto" for a project called "SeamPhoto" and
-    the corresponding projects would be named "seamphoto.war",
-    "seamphoto.model", "seamphoto.ear", "seamphoto.test" (this names are
-    *defaults* and our code should not depend on the naming pattern to figure
-    out what kind a project is)</para>
+    the corresponding projects would be named "seamphoto", "seamphoto.ejb",
+    "seamphoto.ear", "seamphoto.test" (this names are *defaults* and our code
+    should not depend on the naming pattern to figure out what kind a project
+    is)</para>
 
     <para>The best way to see what should go where is to use seam-gen to
     generate two projects, one for war and the other for ear - when built
@@ -311,8 +329,8 @@ myproject.jar/
 
       <para>A project should be associated with a Seam runtime which defines
       what version (1.2 or 2.0) the IDE should assume for the project + the
-      set of core libraries for seam. Exactly like one does for JDK
-      runtimes.</para>
+      set of core libraries for seam (just derived from the homedir). Exactly
+      like one does for JDK runtimes.</para>
     </section>
 
     <section>
@@ -339,30 +357,11 @@ myproject.jar/
 
     <para>If we create a Hibernate Tools code generation users will have it
     available in the Run &gt; Hibernate Code Generation and be able to run it
-    repeatedly; not sure though if seam-gen does more than simply let
-    hibernate tools do it. Needs to investigate.</para>
+    repeatedly.</para>
 
     <para>Next to this document is a hsqldb folder with a hsqldb with data
     that can be used with Seam Generate Entities to have a fully working
     application.</para>
-
-    <para></para>
-  </section>
-
-  <section>
-    <title>Seam New Action</title>
-
-    <para>public boolean authenticate() { log.info("authenticating #0",
-    identity.getUsername());
-    if(identity.getUsername().equals(identity.getPassword())) {
-    FacesMessages.instance().add("sorry - password and username need to be
-    different."); return false; } //write your authentication logic here,
-    //return true if the authentication was //successful, false otherwise
-    identity.addRole("admin"); return true; }</para>
-  </section>
-
-  <section>
-    <title>Seam New Form</title>
 
     <para></para>
   </section>
