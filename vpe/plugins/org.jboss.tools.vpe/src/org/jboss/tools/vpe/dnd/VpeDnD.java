@@ -12,8 +12,12 @@
 package org.jboss.tools.vpe.dnd;
 
 import org.eclipse.swt.graphics.Rectangle;
+import org.jboss.tools.vpe.editor.VpeController;
+import org.jboss.tools.vpe.editor.mozilla.EditorDomEventListener;
+import org.jboss.tools.vpe.editor.mozilla.MozillaDropInfo;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMEvent;
+import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNSHTMLElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDragService;
@@ -149,6 +153,30 @@ public class VpeDnD {
 					nsIDragService.NS_IDRAGSERVICE_IID);
 		}
 		return dragService;
+	}
+	/**
+	 * Calls when drag over event ocure
+	 * @param event
+	 */
+	public void dragOver(nsIDOMEvent event, EditorDomEventListener editorDomEventListener) {
+		boolean canDrop = false;
+		
+		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+		//in this condition  early was check for xulelement
+		if (editorDomEventListener != null) {
+			if (getDragService().getCurrentSession().isDataFlavorSupported(VpeController.MODEL_FLAVOR)) {
+				MozillaDropInfo info = editorDomEventListener.canExternalDrop(mouseEvent, VpeController.MODEL_FLAVOR, "");
+				if (info != null) {
+					canDrop = info.canDrop();
+				}
+			}
+		}
+		//sets possability to drop current element here
+		System.out.println("["+canDrop+"]");
+		getDragService().getCurrentSession().setCanDrop(canDrop);
+		mouseEvent.preventDefault();
+		mouseEvent.stopPropagation();
+		
 	}
 
 }
