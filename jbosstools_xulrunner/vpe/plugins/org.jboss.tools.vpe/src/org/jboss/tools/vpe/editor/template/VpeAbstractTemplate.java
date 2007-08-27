@@ -25,6 +25,7 @@ import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDropInfo;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
+import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.template.resize.VpeResizer;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -48,7 +49,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	private VpeResizer resizer;
 	
 	// TODO Max Areshkau add DnD support
-//	private VpeDnd dragger;
+	private VpeDnd dragger;
 	private TextFormatingData textFormatingData;
 	private VpePseudoContentCreator pseudoContentCreator;
 
@@ -211,10 +212,10 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	
 	private void initDndHandler(Element templateSection) {
 		// TODO Max Areshkau add DnD support
-//		if (dragger == null) {
-//			dragger = new VpeDnd();
-//			dragger.setDndData(templateSection);
-//		}
+		if (getDragger() == null) {
+			setDragger(new VpeDnd());
+			getDragger().setDndData(templateSection);
+			}
 	}
 	
 	private void initTextFormatingHandler(Element templateSection) {
@@ -663,11 +664,12 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 */
 	public boolean canInnerDrag(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Object data) {
 		// TODO Max Areshkau add DnD support
-//		if (dragger != null) {
-//			return dragger.isDragEnabled();
-//		} else {
+		if (getDragger() != null) {
+			
+			return getDragger().isDragEnabled();
+		} else {
 			return true;
-//		}
+		}
 	}
 
 	/**
@@ -679,11 +681,11 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 */
 	public boolean canInnerDrop(VpePageContext pageContext, Node container, Node sourceDragNode) {
 		// TODO Max Areshkau add DnD support
-//		if (dragger != null) {
-//			return dragger.isDropEnabled(pageContext, container, sourceDragNode);
-//		} else {
+		if (dragger != null) {
+			return dragger.isDropEnabled(pageContext, container, sourceDragNode);
+		} else {
 			return false;
-//		}
+		}
 	}
 
 	/**
@@ -919,5 +921,20 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	
 	public boolean isHaveVisualPreview() {
 		return haveVisualPreview;
+	}
+
+	/**
+	 * @return the dragger
+	 */
+	public VpeDnd getDragger() {
+		
+		return dragger;
+	}
+
+	/**
+	 * @param dragger the dragger to set
+	 */
+	public void setDragger(VpeDnd dragger) {
+		this.dragger = dragger;
 	}
 }

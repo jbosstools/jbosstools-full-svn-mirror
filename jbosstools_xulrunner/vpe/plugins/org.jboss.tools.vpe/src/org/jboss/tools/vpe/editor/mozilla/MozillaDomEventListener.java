@@ -263,25 +263,27 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	 * @see org.mozilla.interfaces.nsIClipboardDragDropHooks#allowDrop(org.mozilla.interfaces.nsIDOMEvent, org.mozilla.interfaces.nsIDragSession)
 	 */
 	// checks is drop allowed
+	@Deprecated 
+	// functionality was moved to VpeDnD.dragOver
 	public boolean allowDrop(nsIDOMEvent event, nsIDragSession dragSession) {
 		boolean canDrop = false;
-		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
-
-		if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
-			if (dragSession.isDataFlavorSupported(VpeController.MODEL_FLAVOR)) {
-				MozillaDropInfo info = editorDomEventListener.canExternalDrop(mouseEvent, VpeController.MODEL_FLAVOR, "");
-				if (info != null && info.canDrop()) {
-					// TODO Sergey Vasilyev figures out with this drop
-					String nodeName = info.getCaretParent().getNodeName();
-					if ("input".equalsIgnoreCase(nodeName)) {
-						canDrop = true;
-					}
-				}
-			}
-		}
-		mouseEvent.preventDefault();
-		mouseEvent.stopPropagation();
-		
+//		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+//
+//		if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
+//			if (dragSession.isDataFlavorSupported(VpeController.MODEL_FLAVOR)) {
+//				MozillaDropInfo info = editorDomEventListener.canExternalDrop(mouseEvent, VpeController.MODEL_FLAVOR, "");
+//				if (info != null && info.canDrop()) {
+//					// TODO Sergey Vasilyev figures out with this drop
+//					String nodeName = info.getCaretParent().getNodeName();
+//					if ("input".equalsIgnoreCase(nodeName)) {
+//						canDrop = true;
+//					}
+//				}
+//			}
+//		}
+//		mouseEvent.preventDefault();
+//		mouseEvent.stopPropagation();
+//		
 		return canDrop;
 	}
 
@@ -366,18 +368,19 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 			getEditorDomEventListener().onShowContextMenu(0, domEvent, (nsIDOMNode) domEvent.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID));
 		} else if(DRAGGESTUREEVENT.equals(domEvent.getType())) {
 			//here was moved functionality from can drag function
-			System.out.print(DRAGGESTUREEVENT);
+//			System.out.print(DRAGGESTUREEVENT);
 			nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 
 			if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
 				boolean canDragFlag = editorDomEventListener.canInnerDrag(mouseEvent);
 				//TODO Max Areshkau think about using can -or not can drag if we can drag  we should 
 				//start drag session
-				editorDomEventListener.startDragSession(domEvent);
+				getEditorDomEventListener().startDragSession(domEvent);
 				System.out.println("Can drag"+canDragFlag);
 			}
 			//TODO Max Areshkau Drag gesture event
 		} else if(DRAGDROPEVENT.equals(domEvent.getType())) {
+			
 			System.out.println(DRAGDROPEVENT);
 			//TODO Max Areshkau drag drop gesture event
 		} else if(DRAGENTEREVENT.equals(domEvent.getType())) {
@@ -387,6 +390,8 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 			System.out.println(DRAGEXITEVENT);
 			//TODO Max Areshkau drag enter event
 		} else if(DRAGOVEREVENT.equals(domEvent.getType())) {
+			
+			getEditorDomEventListener().dragOver(domEvent);	
 			System.out.println(DRAGOVEREVENT);
 			//TODO Max Areshkau drag over event
 		}

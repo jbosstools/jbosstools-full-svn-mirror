@@ -1803,41 +1803,30 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	}
 	
 	public void dragOver(nsIDOMEvent event) {
-		nsIDragSession dragSession = xulRunnerEditor.getCurrentDragSession();
-//		int num = 
-		dragSession.getNumDropItems();
-		boolean isFlavor = dragSession.isDataFlavorSupported(ModelTransfer.MODEL);
+//		nsIDragSession dragSession = xulRunnerEditor.getCurrentDragSession();
+//
+//		boolean isFlavor = dragSession.isDataFlavorSupported(ModelTransfer.MODEL);
 
-		if (VpeDebug.printVisualDragDropEvent) {
-			System.out.println("<<< outerDragOver  isFlavor: " + isFlavor); //$NON-NLS-1$
-		}
-		
-		nsITransferable transferable = xulRunnerEditor.createTransferable();
-
-		transferable.addDataFlavor(XulRunnerEditor.TRANS_FLAVOR_kURLDataMime);
-		transferable.addDataFlavor(XulRunnerEditor.TRANS_FLAVOR_kFileMime);
-		transferable.addDataFlavor(XulRunnerEditor.TRANS_FLAVOR_kURLMime);
-
-		dragSession.getData(transferable, 0);
-
-		nsISupportsArray array = transferable.flavorsTransferableCanImport();
-//		int count = 
-			array.count();
-
-		nsISupportsArray array2 = transferable.flavorsTransferableCanExport();
-//		int count2 = 
-			array2.count();
-
-		
-		String[] flavors = new String[] {null};
-		nsISupports[] data = new nsISupports[] {null};
-		long[] length = new long[] {0};
-		transferable.getAnyTransferData(flavors, data, length);
-//		num = 
-		dragSession.getNumDropItems();
-		
-		dragSession.setCanDrop(true);
-		event.preventDefault();
+//		if (VpeDebug.printVisualDragDropEvent) {
+//			System.out.println("<<< outerDragOver  isFlavor: " + isFlavor); //$NON-NLS-1$
+//		}
+		visualBuilder.getDnd().dragOver(event, this);
+//		nsITransferable transferable = xulRunnerEditor.createTransferable();
+//
+//		transferable.addDataFlavor(XulRunnerEditor.TRANS_FLAVOR_kURLDataMime);
+//		transferable.addDataFlavor(XulRunnerEditor.TRANS_FLAVOR_kFileMime);
+//		transferable.addDataFlavor(XulRunnerEditor.TRANS_FLAVOR_kURLMime);
+//
+//		dragSession.getData(transferable, 0);
+//		
+//		String[] flavors = new String[] {null};
+//		nsISupports[] data = new nsISupports[] {null};
+//		long[] length = new long[] {0};
+//		transferable.getAnyTransferData(flavors, data, length);
+//
+//		
+//		dragSession.setCanDrop(true);
+//		event.preventDefault();
 	}
 		
 	public void _dragOver(nsIDOMEvent event) {
