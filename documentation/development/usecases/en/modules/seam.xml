@@ -205,6 +205,9 @@
 
         <para>If Seam hotdeploy is enabled you should be able to go directly
         to "Go to browser" skipping the restart app.</para>
+
+        <para>Running the TestNG test should also just work and show a
+        greenbar.</para>
       </listitem>
     </itemizedlist>
   </section>
