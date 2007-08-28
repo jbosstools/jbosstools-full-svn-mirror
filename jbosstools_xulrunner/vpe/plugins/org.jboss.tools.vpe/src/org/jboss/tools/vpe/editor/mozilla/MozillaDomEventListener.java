@@ -367,33 +367,27 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 			//first param are null 0, because this not used in event handler
 			getEditorDomEventListener().onShowContextMenu(0, domEvent, (nsIDOMNode) domEvent.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID));
 		} else if(DRAGGESTUREEVENT.equals(domEvent.getType())) {
-			//here was moved functionality from can drag function
-//			System.out.print(DRAGGESTUREEVENT);
 			nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 
 			if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
 				boolean canDragFlag = editorDomEventListener.canInnerDrag(mouseEvent);
-				//TODO Max Areshkau think about using can -or not can drag if we can drag  we should 
 				//start drag session
-				getEditorDomEventListener().startDragSession(domEvent);
-				System.out.println("Can drag"+canDragFlag);
+				if(canDragFlag) {
+					
+					getEditorDomEventListener().startDragSession(domEvent);
+					}
 			}
-			//TODO Max Areshkau Drag gesture event
 		} else if(DRAGDROPEVENT.equals(domEvent.getType())) {
-			
-			System.out.println(DRAGDROPEVENT);
-			//TODO Max Areshkau drag drop gesture event
+			// calls when drop event occure
+			getEditorDomEventListener().dragDrop(domEvent);
+			domEvent.stopPropagation();
+			domEvent.preventDefault();
 		} else if(DRAGENTEREVENT.equals(domEvent.getType())) {
-			System.out.println(DRAGENTEREVENT);
-			//TODO Max Areshkau drag enter event
+			//just ignore this event
 		} else if(DRAGEXITEVENT.equals(domEvent.getType())) {
-			System.out.println(DRAGEXITEVENT);
-			//TODO Max Areshkau drag enter event
+			//just ignore this event
 		} else if(DRAGOVEREVENT.equals(domEvent.getType())) {
-			
 			getEditorDomEventListener().dragOver(domEvent);	
-			System.out.println(DRAGOVEREVENT);
-			//TODO Max Areshkau drag over event
 		}
 		
 		getEditorDomEventListener().onRefresh();

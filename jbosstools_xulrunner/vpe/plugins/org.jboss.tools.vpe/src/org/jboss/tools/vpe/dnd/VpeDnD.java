@@ -106,6 +106,7 @@ public class VpeDnD {
 				nsISupportsString.NS_ISUPPORTSSTRING_IID);
 		String data="vpe-element";
 		transferData.setData(data);
+		iTransferable.setTransferData(VpeController.MODEL_FLAVOR, transferData, data.length());
 		iTransferable.setTransferData("text/plain", transferData, data.length());
 		iTransferable.setTransferData("text/unicode", transferData,data.length()*2);
 		iTransferable.setTransferData("text/html", transferData, data.length()*2);
@@ -165,18 +166,44 @@ public class VpeDnD {
 		//in this condition  early was check for xulelement
 		if (editorDomEventListener != null) {
 			if (getDragService().getCurrentSession().isDataFlavorSupported(VpeController.MODEL_FLAVOR)) {
-				MozillaDropInfo info = editorDomEventListener.canExternalDrop(mouseEvent, VpeController.MODEL_FLAVOR, "");
+				
+				MozillaDropInfo info;
+				
+				if(getDragService().getCurrentSession().getSourceNode()==null){
+					//external drag 
+					  info = editorDomEventListener.canExternalDrop(mouseEvent, VpeController.MODEL_FLAVOR, "");
+				} else {
+				    //internal drag
+					 info = editorDomEventListener.canInnerDrop(mouseEvent);
+				}
 				if (info != null) {
 					canDrop = info.canDrop();
 				}
 			}
 		}
 		//sets possability to drop current element here
-		System.out.println("["+canDrop+"]");
 		getDragService().getCurrentSession().setCanDrop(canDrop);
 		mouseEvent.preventDefault();
 		mouseEvent.stopPropagation();
 		
+	}
+	/**
+	 * Drop Event handler
+	 * @param domEvent
+	 * @param editorDomEventListener
+	 */
+	public void dragDrop(nsIDOMEvent domEvent, EditorDomEventListener editorDomEventListener) {
+		
+		if(editorDomEventListener!=null) {
+		
+			if(getDragService().getCurrentSession().getSourceDocument()==null) {
+				//in this case it's is  external drag
+				editorDomEventListener.externalDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID), VpeController.MODEL_FLAVOR, "");
+			} else {
+				// in this case it's is an internal drag
+				editorDomEventListener.innerDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID));
+			}
+		}
 	}
 
 }

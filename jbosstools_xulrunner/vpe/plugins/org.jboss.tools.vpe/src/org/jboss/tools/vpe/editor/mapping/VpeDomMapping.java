@@ -81,7 +81,7 @@ public class VpeDomMapping {
 		while(iter.hasNext()){
 			Map.Entry<nsIDOMNode,VpeNodeMapping> element = iter.next();
 			nsIDOMNode key = element.getKey();
-			if(visualNode.equals(key)) {
+			if(visualNode!=null&&visualNode.equals(key)) {
 				
 				return element.getValue();
 			}
