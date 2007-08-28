@@ -149,8 +149,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		this.pageContext = pageContext;
 		this.headNode = visualEditor.getHeadNode();
 		// TODO Max Areshkau figure out
-//		dropper = new VpeDnd();
-//		dropper.setDndData(false, true);
+		dropper = new VpeDnd();
+		dropper.setDndData(false, true);
 	}
 	
 	public void buildDom(Document sourceDocument) {
@@ -293,8 +293,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		boolean registerFlag = isCurrentMainDocument();
 		switch (sourceNode.getNodeType()) {
 		case Node.ELEMENT_NODE:
-			Map xmlnsMap = createXmlns((Element)sourceNode);
-			Set ifDependencySet = new HashSet();
+			Map<?,?> xmlnsMap = createXmlns((Element)sourceNode);
+			Set<?> ifDependencySet = new HashSet();
 			pageContext.setCurrentVisualNode(visualOldContainer);
 			VpeTemplate template = templateManager.getTemplate(pageContext, (Element)sourceNode, ifDependencySet);
 			VpeCreationData creationData = template.create(pageContext, sourceNode, visualDocument);
@@ -318,7 +318,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				registerNodes(elementMapping);
 			}
 			if (template.isChildren()) {
-				List childrenInfoList = creationData.getChildrenInfoList();
+				List<?> childrenInfoList = creationData.getChildrenInfoList();
 				if (childrenInfoList == null) {
 					addChildren(template, sourceNode, visualNewElement != null ? visualNewElement : visualOldContainer);
 				} else {
@@ -379,12 +379,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 
-	protected void addChildren(VpeTemplate containerTemplate, Node sourceContainer, nsIDOMNode visualOldContainer, List childrenInfoList) {
+	protected void addChildren(VpeTemplate containerTemplate, Node sourceContainer, nsIDOMNode visualOldContainer, List<?> childrenInfoList) {
 		for (int i = 0; i < childrenInfoList.size(); i++) {
 			VpeChildrenInfo info = (VpeChildrenInfo)childrenInfoList.get(i);
 			nsIDOMNode visualParent = info.getVisualParent();
 			if (visualParent == null) visualParent = visualOldContainer;
-			List sourceChildren = info.getSourceChildren();
+			List<?> sourceChildren = info.getSourceChildren();
 			int childrenCount = 0;
 			if (sourceChildren != null) {
 				for (int j = 0; j < sourceChildren.size(); j++) {
@@ -1130,9 +1130,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			}
 			if (!canDrop) {
 				if(!checkParentsTemplates) return new VpeSourceInnerDropInfo(container, offset, canDrop);
-				offset = ((NodeImpl)container).getIndex();
-				container = container.getParentNode();
-				return getSourceInnerDropInfo(dragNode, container, offset, false);
+//				offset = ((NodeImpl)container).getIndex();
+//				container = container.getParentNode();
+				//TODO Max Areshkau unclear logic , if we can drop on element why we trying to drop
+				// this on parent
+				//return getSourceInnerDropInfo(dragNode, container, offset, false);
+				return new VpeSourceInnerDropInfo(container, offset, canDrop);
 			}
 			break;
 		case Node.TEXT_NODE:

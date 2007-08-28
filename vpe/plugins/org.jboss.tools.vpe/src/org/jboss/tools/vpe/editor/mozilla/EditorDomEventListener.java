@@ -65,4 +65,10 @@ public interface EditorDomEventListener extends nsIContextMenuListener {
 	 */
 	void onRefresh();
 	void startDragSession(nsIDOMEvent domEvent);
+	
+	/**
+	 * Calls when drop event occures 
+	 * @param domEvent
+	 */
+	void dragDrop(nsIDOMEvent domEvent);
 }

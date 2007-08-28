@@ -2097,7 +2097,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				Node sourceDragNode = ((Document)getModel().getAdapter(Document.class)).createElement(tagname);
 				VpeVisualInnerDropInfo visualDropInfo = selectionBuilder.getInnerDropInfo(mouseEvent);
 				if (visualDropInfo.getDropContainer() != null) {
-					VpeSourceInnerDropInfo sourceDropInfo = visualBuilder.getSourceInnerDropInfo(sourceDragNode, visualDropInfo, true);
+				VpeSourceInnerDropInfo sourceDropInfo = visualBuilder.getSourceInnerDropInfo(sourceDragNode, visualDropInfo, true);
 					canDrop = sourceDropInfo.canDrop();
 					if (canDrop) {
 						VpeVisualInnerDropInfo newVisualDropInfo = visualBuilder.getInnerDropInfo(sourceDropInfo.getContainer(), sourceDropInfo.getOffset());
@@ -2460,6 +2460,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	public void startDragSession(nsIDOMEvent domEvent) {
 		
 		visualBuilder.getDnd().startDragSession(domEvent);
+	}
+
+	public void dragDrop(nsIDOMEvent domEvent) {
+		
+		visualBuilder.getDnd().dragDrop(domEvent,this);
 	}
 
 }
