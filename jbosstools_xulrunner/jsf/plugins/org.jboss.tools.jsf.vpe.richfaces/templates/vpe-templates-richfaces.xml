@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vpe:templates>
 
-	<vpe:template-taglib uri="http://richfaces.ajax4jsf.org/rich"
+	<vpe:template-taglib uri="http://richfaces.org/rich"
 		prefix="rich" />
 
 	<vpe:tag name="rich:paint2D" case-sensitive="yes">
@@ -455,4 +455,20 @@
 	    <vpe:template children="no" modify="no">
 	    </vpe:template>
     </vpe:tag>
+    			   
+    <vpe:tag name="rich:virtualEarth" case-sensitive="yes">
+    	<vpe:template children="no" modify="yes" 
+    			class="org.jboss.tools.jsf.vpe.richfaces.template.RichFacesVirtualEarthTemplate">
+    	
+    		<vpe:resize>
+    			<vpe:width width-attr="style.width" />
+				<vpe:height height-attr="style.height" />
+			</vpe:resize>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+				<vpe:drop container="no"></vpe:drop>
+			</vpe:dnd>
+		</vpe:template>
+    </vpe:tag>
+        
 </vpe:templates>
