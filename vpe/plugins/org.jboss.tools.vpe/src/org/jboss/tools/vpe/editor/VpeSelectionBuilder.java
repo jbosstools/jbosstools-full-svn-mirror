@@ -128,7 +128,7 @@ public class VpeSelectionBuilder {
 							nsIDOMNode containerForPseudoContent = VpePseudoContentCreator.getContainerForPseudoContent(visualNode);
 							if (containerForPseudoContent != null) {
 								sourceNode = domMapping.getNearSourceNode(containerForPseudoContent);
-								visualBuilder.setSelectionRectangle((nsIDOMElement)containerForPseudoContent, false);
+								visualBuilder.setSelectionRectangle((nsIDOMElement)containerForPseudoContent.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID), false);
 								sourceBuilder.setSelection(sourceNode, 0, 0, true);
 								visualSelectionController.setCaretEnabled(false);
 							} else {
