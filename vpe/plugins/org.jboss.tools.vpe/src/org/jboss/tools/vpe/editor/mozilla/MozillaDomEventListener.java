@@ -371,7 +371,7 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 
 			if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
 				boolean canDragFlag = editorDomEventListener.canInnerDrag(mouseEvent);
-				//start drag session
+				//start drag sessionvpe-element
 				if(canDragFlag) {
 					
 					getEditorDomEventListener().startDragSession(domEvent);
