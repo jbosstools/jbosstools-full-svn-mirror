@@ -23,6 +23,8 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.ui.IEditorInput;
@@ -1437,22 +1439,22 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	
 	void setMoveCursor(nsIDOMMouseEvent mouseEvent) {
-		// TODO Max Areshkau figure out with selected element
-//		nsIDOMElement selectedElement = browser.getSelectedElement();
-//		if (selectedElement != null && canInnerDrag(selectedElement)) {
-//			if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil.getMousePoint(mouseEvent))) {
-//				// TODO Max Areshkau add DnD support
-//				dnd.setMoveCursor();
-//			}
-//		}
+
+		nsIDOMElement selectedElement = xulRunnerEditor.getLastSelectedElement();
+
+		if (selectedElement != null && canInnerDrag(selectedElement)) {
+			if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil.getMousePoint(mouseEvent))) {
+				// TODO Max Areshkau add DnD support
+				//dnd.setMoveCursor();
+			}
+		}
 	}
 	
 	private boolean inDragArea(Rectangle dragArea, Point mousePoint) {
 		//TODO add drag and drop support 
-//		return dragArea.contains(mousePoint) &&
-//					mousePoint.x < (dragArea.x + DRAG_AREA_WIDTH) && 
-//					mousePoint.y < (dragArea.y + DRAG_AREA_HEIGHT); 
-		return false;
+		return dragArea.contains(mousePoint) &&
+					mousePoint.x < (dragArea.x + DRAG_AREA_WIDTH) && 
+					mousePoint.y < (dragArea.y + DRAG_AREA_HEIGHT); 
 	}
 	
 	nsIDOMElement getDragElement(nsIDOMMouseEvent mouseEvent) {
