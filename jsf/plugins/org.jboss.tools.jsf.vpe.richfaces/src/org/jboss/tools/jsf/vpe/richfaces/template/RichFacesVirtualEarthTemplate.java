@@ -28,9 +28,9 @@ import org.w3c.dom.Node;
  */
 public class RichFacesVirtualEarthTemplate extends VpeAbstractTemplate {
 
-	private static String EARTH_AERIAL = "/virtualearth/earth_aerial.jpg";
-	private static String EARTH_HYBRID = "/virtualearth/earth_hybrid.jpg";
-	private static String EARTH_ROAD = "/virtualearth/earth_road.jpg";
+	private static String EARTH_AERIAL = "/virtualearth/earth_aerial.png";
+	private static String EARTH_HYBRID = "/virtualearth/earth_hybrid.png";
+	private static String EARTH_ROAD = "/virtualearth/earth_road.png";
 
 	private static String MAP_STYLE_ATTRIBUTE_NAME = "mapStyle";
 
