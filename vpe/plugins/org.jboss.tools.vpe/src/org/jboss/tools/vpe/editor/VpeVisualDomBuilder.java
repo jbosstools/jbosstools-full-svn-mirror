@@ -58,14 +58,18 @@ import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMChromeWindow;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMEventGroup;
 import org.mozilla.interfaces.nsIDOMEventTarget;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsIDOMRange;
 import org.mozilla.interfaces.nsIDOMText;
+import org.mozilla.interfaces.nsIEventTarget;
+import org.mozilla.interfaces.nsIWebBrowserChrome;
 import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -1441,11 +1445,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	void setMoveCursor(nsIDOMMouseEvent mouseEvent) {
 
 		nsIDOMElement selectedElement = xulRunnerEditor.getLastSelectedElement();
-
 		if (selectedElement != null && canInnerDrag(selectedElement)) {
 			if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil.getMousePoint(mouseEvent))) {
-				// TODO Max Areshkau add DnD support
-				//dnd.setMoveCursor();
+					//change cursor
+					Cursor cursor1= new Cursor(xulRunnerEditor.getDisplay(),SWT.CURSOR_SIZEALL);
+					xulRunnerEditor.setCursor(cursor1);
 			}
 		}
 	}

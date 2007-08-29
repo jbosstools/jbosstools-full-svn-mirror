@@ -40,9 +40,7 @@ public class VpeDnD {
 	private static final String CID_SUPPORTSSTRING = "@mozilla.org/supports-string;1";
 
 	private static final String CID_SUPPORTSARRAY = "@mozilla.org/supports-array;1";
-	
-	private static final String kVpeModelFlavor = "vpe/model";
-	private static final String kVpeModelTransport ="vpe/model";
+
 	/**
 	 *  service manager */
 	private nsIServiceManager serviceManager;
@@ -98,10 +96,10 @@ public class VpeDnD {
 	 */
 	private nsITransferable createTransferable() {
 		
-		nsITransferable iTransferable = (nsITransferable) componentManager
+		nsITransferable iTransferable = (nsITransferable) getComponentManager()
 						.createInstanceByContractID(CID_TRANSFERABLE, null,
 								nsITransferable.NS_ITRANSFERABLE_IID);
-		nsISupportsString transferData = (nsISupportsString) componentManager
+		nsISupportsString transferData = (nsISupportsString) getComponentManager()
 		.createInstanceByContractID(CID_SUPPORTSSTRING, null,
 				nsISupportsString.NS_ISUPPORTSSTRING_IID);
 		String data="vpe-element";
