@@ -90,7 +90,7 @@ public class VpeSelectionBuilder {
 				if (sourceNode != null) {
 					switch (visualSelectedNode.getNodeType()) {
 					case nsIDOMNode.TEXT_NODE:
-						nsIDOMElement visualParentElement = (nsIDOMElement)visualSelectedNode.getParentNode();
+						nsIDOMElement visualParentElement = (nsIDOMElement)visualSelectedNode.getParentNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 						visualBuilder.setSelectionRectangle(visualParentElement, false);
 //						int pos = DataHelper.textPos(visualSelectedNode.getNodeValue(), selection.getFocusOffset());
 						int pos = selection.getFocusOffset();

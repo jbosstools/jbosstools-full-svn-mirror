@@ -10,6 +10,7 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.mozilla;
 
+import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIClipboardDragDropHooks;
@@ -344,11 +345,15 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 			nsIDOMMouseEvent mouseEvent;
 			mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 			getEditorDomEventListener().mouseDown(mouseEvent);
+//			domEvent.stopPropagation();
+//			domEvent.preventDefault();
 		} else if(MOUSEUPEVENTTYPE.equals(domEvent.getType())) {
 			
 			nsIDOMMouseEvent mouseEvent;
 			mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 			getEditorDomEventListener().mouseUp(mouseEvent);
+//			domEvent.stopPropagation();
+//			domEvent.preventDefault();
 		} else if(CLICKEVENTTYPE.equals(domEvent.getType())) {
 			
 			nsIDOMMouseEvent mouseEvent;
@@ -389,8 +394,27 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 		} else if(DRAGOVEREVENT.equals(domEvent.getType())) {
 			getEditorDomEventListener().dragOver(domEvent);	
 		}
+
+		/*
+		 * HACK 
+		 * We need wait some time while standart event will be handled
+		 * and in process event handles some components are repainted(like buttons)
+		 * and flasher are not repainted, so we should paint flasher
+		 */
+		Display.getCurrent().asyncExec(new Thread(){
+	         public void run() {
+	        	try {
+					sleep(50);
+					getEditorDomEventListener().onRefresh();
+				} catch (InterruptedException e) {
+					//JUST IGNORE exception
+					e.printStackTrace();
+				}
+	         }
+		});
 		
 		getEditorDomEventListener().onRefresh();
+
 		//not using default mozilla event handlers
 		}catch(Throwable th) {
 			//TODO Max Areshkau remove when all will be adjusted
