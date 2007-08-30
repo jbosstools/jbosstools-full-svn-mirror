@@ -43,7 +43,7 @@ public class RichFacesMessageTemplate extends VpeAbstractTemplate {
 	private static String INFO_MESSAGE = "Info message";
 	private static String WARNING_MESSAGE = "Warning message";
 
-	@Override
+	
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument) {
 		

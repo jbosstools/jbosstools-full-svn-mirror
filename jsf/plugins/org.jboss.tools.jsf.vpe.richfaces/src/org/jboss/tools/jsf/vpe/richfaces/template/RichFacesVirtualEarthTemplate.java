@@ -38,7 +38,6 @@ public class RichFacesVirtualEarthTemplate extends VpeAbstractTemplate {
 
 	private static String STYLE_CLASS_ATTR_NAME = "styleClass";
 
-	@Override
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument) {
 
