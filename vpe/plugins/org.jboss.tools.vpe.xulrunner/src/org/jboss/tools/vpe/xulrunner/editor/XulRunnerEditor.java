@@ -11,11 +11,16 @@
 
 package org.jboss.tools.vpe.xulrunner.editor;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
 import org.mozilla.interfaces.inIFlasher;
+import org.mozilla.interfaces.nsIBaseWindow;
 import org.mozilla.interfaces.nsIClipboardDragDropHookList;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -33,6 +38,7 @@ import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsITransferable;
+import org.mozilla.interfaces.nsIWebBrowser;
 import org.mozilla.xpcom.Mozilla;
 import java.util.regex.Pattern;
 
@@ -98,6 +104,24 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	public XulRunnerEditor(Composite parent) throws XulRunnerException {
 		super(parent);
 		
+		Listener l = new Listener() {
+
+			public void handleEvent(Event event) {
+				System.out.println("Activate");
+				Display.getCurrent().asyncExec(new Thread(){
+					public void run(){
+						showSelectionRectangle();
+					}
+				});
+			}};
+			addListener(SWT.Activate, l);
+			addListener(SWT.Paint, l);
+			addListener(SWT.Resize, l);
+			addListener(SWT.Show, l);
+			addListener(SWT.FocusIn, l);
+			addListener(SWT.FocusOut, l);
+			addListener(SWT.Selection, l);
+			addListener(SWT.Paint, l);
 		
 		resizeListener = new IVpeResizeListener() {
 			public void onEndResizing(int usedResizeMarkerHandle, int top,
@@ -375,6 +399,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 */
 	private nsIDOMElement  findVisbleParentElement(nsIDOMElement element) {
 		
+		//TODO Max Areshkau optimize code(do not calculate it each time)
 		if(!(element.getParentNode() instanceof nsIDOMElement)) {
 			
 			return null;
@@ -425,6 +450,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	}
 	
 	public void showSelectionRectangle() {
+	
+//		((nsIBaseWindow)getWebBrowser().queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(false);
 		if (getIFlasher() != null && getLastSelectedElement() != null) {
 //			if (scrollRegtangleFlag) {
 //				scrollRegtangleFlag = false;

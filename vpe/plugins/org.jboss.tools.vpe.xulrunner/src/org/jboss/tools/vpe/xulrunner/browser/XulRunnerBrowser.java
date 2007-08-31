@@ -67,7 +67,6 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 		super(parent, SWT.NONE);
 		
 		mozilla = Mozilla.getInstance();
-		
 		String xulRunnerPath = getXulRunnerPath(); 
 		
 		Boolean isXulRunnerInitialized = "true".equals(System.getProperty(XULRUNNER_INITIALIZED));
@@ -289,6 +288,7 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 	}
 
 	public nsIWebBrowser getWebBrowser() {
+		System.out.println("getWebBrouser");
 		return webBrowser;
 	}
 
@@ -298,6 +298,7 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 	}
 
 	public void setChromeFlags(long arg0) {
+		System.out.println("setChromeFlags");
 		chrome_flags = arg0;
 	}
 
@@ -325,6 +326,7 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 	 */
 	public void onLocationChange(nsIWebProgress arg0, nsIRequest arg1,
 			nsIURI arg2) {
+		System.out.println("On location change");
 	}
 
 	/* (non-Javadoc)
@@ -354,6 +356,7 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 	 * @see org.mozilla.interfaces.nsIWebProgressListener#onStatusChange(org.mozilla.interfaces.nsIWebProgress, org.mozilla.interfaces.nsIRequest, long, java.lang.String)
 	 */
 	public void onStatusChange(nsIWebProgress arg0, nsIRequest arg1, long aStatus, String message) {
+		System.out.println("on status change");
 	}
 
 	
