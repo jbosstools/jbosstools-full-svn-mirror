@@ -78,11 +78,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private static final int DRAG_AREA_HEIGHT = 10;
 	private static final String ATTR_XMLNS = "xmlns";
 	
-	private MozillaEditor visualEditor;
+	protected MozillaEditor visualEditor;
 	private MozillaBrowser browser; 
-	private Document visualDocument;
+	protected Document visualDocument;
 	private Element visualContentArea;
-	private VpePageContext pageContext;
+	protected VpePageContext pageContext;
 	private VpeDnD dnd;
 	private Node headNode;
 	private List<VpeIncludeInfo> includeStack;
@@ -346,18 +346,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			pageContext.setCurrentVisualNode(null);
 			if(border != null) return border;
 			else return visualNewElement;
-		case Node.TEXT_NODE:
-			String sourceText = sourceNode.getNodeValue();
-			if (sourceText.trim().length() <= 0) {
-				registerNodes(new VpeNodeMapping(sourceNode, null));
-				return null;
-			}
-			String visualText = TextUtil.visualText(sourceText);
-			Node visualNewTextNode = visualDocument.createTextNode(visualText);
-			if (registerFlag) {
-				registerNodes(new VpeNodeMapping(sourceNode, visualNewTextNode));
-			}
-			return visualNewTextNode;
+		case Node.TEXT_NODE:			
+			return createTextNode(sourceNode, registerFlag);
 		case Node.COMMENT_NODE:
 			if(!YES_STRING.equals(VpePreference.SHOW_COMMENTS.getValue())) {
 				return null;
@@ -371,7 +361,24 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return null;
 	}
 	
-	private Element createComment(Node sourceNode) {
+	protected Element createTextNode(Node sourceNode, boolean registerFlag ) {
+		String sourceText = sourceNode.getNodeValue();
+		if (sourceText.trim().length() <= 0) {
+			registerNodes(new VpeNodeMapping(sourceNode, null));
+			return null;
+		}
+		String visualText = TextUtil.visualText(sourceText);
+		Node visualNewTextNode = visualDocument.createTextNode(visualText);
+		if (registerFlag) {
+			registerNodes(new VpeNodeMapping(sourceNode, visualNewTextNode));
+		}
+			
+		Element visualNewTextElement = (Element) visualNewTextNode;
+		
+		return visualNewTextElement;
+	}
+	
+	protected Element createComment(Node sourceNode) {
 		Element div = visualDocument.createElement(TAG_DIV);
 		div.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, COMMENT_STYLE);
 		String value = COMMENT_PREFIX + sourceNode.getNodeValue() + COMMENT_SUFFIX;
@@ -380,7 +387,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return div;
 	}
 
-	private void addChildren(VpeTemplate containerTemplate, Node sourceContainer, Node visualContainer) {
+	protected void addChildren(VpeTemplate containerTemplate, Node sourceContainer, Node visualContainer) {
 		NodeList sourceNodes = sourceContainer.getChildNodes();
 		int len = sourceNodes.getLength();
 		int childrenCount = 0;
@@ -395,7 +402,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 
-	private void addChildren(VpeTemplate containerTemplate, Node sourceContainer, Node visualOldContainer, List<VpeChildrenInfo> childrenInfoList) {
+	protected void addChildren(VpeTemplate containerTemplate, Node sourceContainer, Node visualOldContainer, List<VpeChildrenInfo> childrenInfoList) {
 		for (int i = 0; i < childrenInfoList.size(); i++) {
 			VpeChildrenInfo info = childrenInfoList.get(i);
 			Node visualParent = info.getVisualParent();
@@ -1305,7 +1312,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return new VpeVisualInnerDropInfo(visualDropContainer, visualDropOffset, 0, 0); 
 	}
 	
-	private void setTooltip(Element sourceElement, Element visualElement) {
+	protected void setTooltip(Element sourceElement, Element visualElement) {
 		if (visualElement != null && sourceElement != null && !((ElementImpl)sourceElement).isJSPTag()) {
 			if ("HTML".equalsIgnoreCase(sourceElement.getNodeName())) return;
 			String titleValue = getTooltip(sourceElement);
@@ -1464,7 +1471,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		visualElement.setAttribute(INCLUDE_ELEMENT_ATTR, YES_STRING);
 	}
 	
-	private void setReadOnlyElement(Element node) {
+	protected void setReadOnlyElement(Element node) {
 		String style = node.getAttribute(VpeStyleUtil.ATTRIBUTE_STYLE);
 		style = VpeStyleUtil.setParameterInStyle(style, "-moz-user-modify", "read-only");
 		node.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
@@ -1573,7 +1580,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return false;
 	}
 	
-	private boolean isCurrentMainDocument() {
+	protected boolean isCurrentMainDocument() {
 		return includeStack.size() <= 1;
 	}
 	
@@ -1599,7 +1606,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		pageContext.dispose();
 	}
 	
-	private Map<String, Integer> createXmlns(Element sourceNode) {
+	protected Map<String, Integer> createXmlns(Element sourceNode) {
 		NamedNodeMap attrs = ((Element)sourceNode).getAttributes();
 		if (attrs != null) {
 			Map<String, Integer> xmlnsMap = new HashMap<String, Integer>();
