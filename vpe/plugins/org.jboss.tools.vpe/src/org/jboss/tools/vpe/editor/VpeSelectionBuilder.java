@@ -391,7 +391,7 @@ public class VpeSelectionBuilder {
 					offset = visualNode.getNodeValue().length();
 				}
 				selection.collapse(visualNode, offset);
-				nsIDOMElement visualParentElement = (nsIDOMElement) visualNode.getParentNode();
+				nsIDOMElement visualParentElement = (nsIDOMElement) visualNode.getParentNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 				visualBuilder.setSelectionRectangle(visualParentElement);
 				break;
 			case nsIDOMNode.ELEMENT_NODE:

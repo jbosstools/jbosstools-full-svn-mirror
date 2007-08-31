@@ -2435,8 +2435,21 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	 * Calls when editor content should be refreshed
 	 */
 	public void onRefresh() {
-		
-		getXulRunnerEditor().showSelectionRectangle();
+		//when we using separate thread to display selection rectangle 
+		//it's working more better than without
+		/*
+		 * HACK 
+		 * We need wait some time while standart event will be handled
+		 * and in process event handles some components are repainted(like buttons)
+		 * and flasher are not repainted, so we should paint flasher
+		 */
+		Display.getCurrent().asyncExec(new Thread(){
+			public void run(){
+				
+				getXulRunnerEditor().showSelectionRectangle();
+			}
+		});
+//		getXulRunnerEditor().showSelectionRectangle();
 		
 	}
 

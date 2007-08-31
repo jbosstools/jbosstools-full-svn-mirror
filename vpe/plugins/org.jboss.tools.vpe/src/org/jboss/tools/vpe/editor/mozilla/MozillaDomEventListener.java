@@ -10,7 +10,6 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.mozilla;
 
-import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIClipboardDragDropHooks;
@@ -393,25 +392,7 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 			//just ignore this event
 		} else if(DRAGOVEREVENT.equals(domEvent.getType())) {
 			getEditorDomEventListener().dragOver(domEvent);	
-		}
-
-		/*
-		 * HACK 
-		 * We need wait some time while standart event will be handled
-		 * and in process event handles some components are repainted(like buttons)
-		 * and flasher are not repainted, so we should paint flasher
-		 */
-		Display.getCurrent().asyncExec(new Thread(){
-	         public void run() {
-	        	try {
-					sleep(50);
-					getEditorDomEventListener().onRefresh();
-				} catch (InterruptedException e) {
-					//JUST IGNORE exception
-					e.printStackTrace();
-				}
-	         }
-		});
+		} 
 		
 		getEditorDomEventListener().onRefresh();
 
