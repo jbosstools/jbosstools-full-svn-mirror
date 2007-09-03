@@ -500,5 +500,12 @@
 			</vpe:dnd>
 		</vpe:template>
     </vpe:tag>
+    
+    <vpe:tag name="rich:toolTip" case-sensitive="yes">
+		<vpe:template children="no" modify="yes">
+			<span style="display:none">
+			</span>
+		</vpe:template>
+	</vpe:tag>
         
 </vpe:templates>
