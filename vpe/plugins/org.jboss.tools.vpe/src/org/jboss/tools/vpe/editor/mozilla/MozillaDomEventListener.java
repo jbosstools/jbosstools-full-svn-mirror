@@ -372,7 +372,7 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 			getEditorDomEventListener().onShowContextMenu(0, domEvent, (nsIDOMNode) domEvent.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID));
 		} else if(DRAGGESTUREEVENT.equals(domEvent.getType())) {
 			nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
-
+	
 			if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
 				boolean canDragFlag = editorDomEventListener.canInnerDrag(mouseEvent);
 				//start drag sessionvpe-element
@@ -395,7 +395,6 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 		} 
 		
 		getEditorDomEventListener().onRefresh();
-
 		//not using default mozilla event handlers
 		}catch(Throwable th) {
 			//TODO Max Areshkau remove when all will be adjusted
