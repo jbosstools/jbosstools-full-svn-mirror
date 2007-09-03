@@ -20,6 +20,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Path;
@@ -34,6 +36,7 @@ import org.eclipse.wst.xml.core.internal.document.NodeImpl;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.css.CSSReferenceList;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
@@ -66,6 +69,10 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 public class VpeVisualDomBuilder extends VpeDomBuilder {
+	/** REGEX_EL */
+	private static final Pattern REGEX_EL = Pattern.compile("[\\$|\\#]\\{.*\\}",  Pattern.MULTILINE + Pattern.DOTALL);
+
+	
 	private static final String PSEUDO_ELEMENT = "br";
 	private static final String PSEUDO_ELEMENT_ATTR = "vpe:pseudo-element";
 	private static final String INIT_ELEMENT_ATTR = "vpe:init-element";
@@ -361,21 +368,37 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return null;
 	}
 	
-	protected Element createTextNode(Node sourceNode, boolean registerFlag ) {
+	/**
+	 * Create a visual element for text node
+	 * @param sourceNode
+	 * @param registerFlag
+	 * @return a visual element for text node
+	 */
+	
+	protected Node createTextNode(Node sourceNode, boolean registerFlag ) {
 		String sourceText = sourceNode.getNodeValue();
 		if (sourceText.trim().length() <= 0) {
 			registerNodes(new VpeNodeMapping(sourceNode, null));
 			return null;
 		}
+	/*	
+		Matcher matcher_EL = REGEX_EL.matcher(sourceText);
+		if (matcher_EL.find()) {
+			BundleMap bundle = pageContext.getBundle();
+			int offset = pageContext.getVisualBuilder().getCurrentMainIncludeOffset();
+			if (offset == -1) offset = ((IndexedRegion)sourceNode).getStartOffset();
+			String jsfValue = bundle.getBundleValue(sourceText, offset);
+			sourceText  = jsfValue;
+		}
+*/		
 		String visualText = TextUtil.visualText(sourceText);
+
 		Node visualNewTextNode = visualDocument.createTextNode(visualText);
 		if (registerFlag) {
 			registerNodes(new VpeNodeMapping(sourceNode, visualNewTextNode));
 		}
-			
-		Element visualNewTextElement = (Element) visualNewTextNode;
-		
-		return visualNewTextElement;
+
+		return visualNewTextNode;
 	}
 	
 	protected Element createComment(Node sourceNode) {
