@@ -17,6 +17,7 @@ import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -44,8 +45,8 @@ public class RichFacesVirtualEarthTemplate extends VpeAbstractTemplate {
 		nsIDOMElement img = visualDocument
 				.createElement(HtmlComponentUtil.HTML_TAG_IMG);
 
-		String mapStyleValue = ((Element) sourceNode).getAttribute(
-				MAP_STYLE_ATTRIBUTE_NAME);
+		String mapStyleValue = ((Element) sourceNode)
+				.getAttribute(MAP_STYLE_ATTRIBUTE_NAME);
 
 		if (mapStyleValue != null && searchInMapStyleValues(mapStyleValue)) {
 			if (mapStyleValue.equalsIgnoreCase(MAP_STYLE_VALUES[0]))
@@ -66,11 +67,72 @@ public class RichFacesVirtualEarthTemplate extends VpeAbstractTemplate {
 		return new VpeCreationData(img);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.exadel.vpe.editor.template.VpeAbstractTemplate#setAttribute(com.exadel.vpe.editor.context.VpePageContext,
+	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
+	 *      java.lang.Object, java.lang.String, java.lang.String)
+	 */
+	public void setAttribute(VpePageContext pageContext, Element sourceElement,
+			nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data,
+			String name, String value) {
+
+		nsIDOMElement img = (nsIDOMElement) visualNode
+				.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+
+		if (name.equalsIgnoreCase(MAP_STYLE_ATTRIBUTE_NAME)) {
+			if (value.trim().equalsIgnoreCase("")
+					|| !searchInMapStyleValues(value)) {
+				ComponentUtil.setImg(img, EARTH_ROAD);
+				return;
+			}
+
+			if (value.equalsIgnoreCase(MAP_STYLE_VALUES[0]))
+				ComponentUtil.setImg(img, EARTH_ROAD);
+			else if (value.equalsIgnoreCase(MAP_STYLE_VALUES[1]))
+				ComponentUtil.setImg(img, EARTH_AERIAL);
+			else if (value.equalsIgnoreCase(MAP_STYLE_VALUES[2]))
+				ComponentUtil.setImg(img, EARTH_HYBRID);
+			return;
+		}
+
+		if (STYLE_CLASS_ATTR_NAME.equals(name))
+			img.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, value);
+		else
+			img.setAttribute(name, value);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.exadel.vpe.editor.template.VpeAbstractTemplate#removeAttribute(com.exadel.vpe.editor.context.VpePageContext,
+	 *      org.w3c.dom.Element, org.w3c.dom.Document, org.w3c.dom.Node,
+	 *      java.lang.Object, java.lang.String)
+	 */
+	public void removeAttribute(VpePageContext pageContext,
+			Element sourceElement, nsIDOMDocument visualDocument,
+			nsIDOMNode visualNode, Object data, String name) {
+
+		nsIDOMElement img = (nsIDOMElement) visualNode
+				.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+
+		if (name.equalsIgnoreCase(MAP_STYLE_ATTRIBUTE_NAME)) {
+			ComponentUtil.setImg(img, EARTH_ROAD);
+			return;
+		}
+
+		if (STYLE_CLASS_ATTR_NAME.equals(name))
+			img.removeAttribute(HtmlComponentUtil.HTML_CLASS_ATTR);
+		else
+			img.removeAttribute(name);
+	}
+
 	/**
 	 * 
 	 * @param value
 	 *            Value of mapStyle attribute
-	 * @return True or value of mapStyle attribute correct or false
+	 * @return True if value of mapStyle attribute correct or false
 	 */
 	private boolean searchInMapStyleValues(String mapStyleValue) {
 
