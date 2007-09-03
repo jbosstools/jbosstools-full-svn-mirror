@@ -20,6 +20,9 @@ public class HtmlComponentUtil {
 
 	/** HTML TAG DL */
 	public static final String HTML_TAG_DL = "dl";
+	
+	/** HTML TAG BR */
+	public static final String HTML_TAG_BR = "br";
 
 	/** HTML TAG DT */
 	public static final String HTML_TAG_DT = "dt";
@@ -32,7 +35,7 @@ public class HtmlComponentUtil {
 
 	/** HTML_TAG_TBODY * */
 	public static final String HTML_TAG_TBODY = "TBODY";
-
+	
 	/** HTML_TAG_TR * */
 	public static final String HTML_TAG_TR = "TR";
 
@@ -119,6 +122,12 @@ public class HtmlComponentUtil {
 	
 	/** HTML_TYPE_ATTR * */
 	public static final String HTML_TYPE_ATTR = "type";
+	
+	/** HTML_READONLY_ATTR * */
+	public static final String HTML_READONLY_ATTR = "readonly";
+	
+	/** HTML_TAG_BUTTON * */
+	public static final String HTML_TAG_BUTTON = "button";
 	
 	/** HTML_VALUE_ATTR * */
 	public static final String HTML_VALUE_ATTR = "value";
