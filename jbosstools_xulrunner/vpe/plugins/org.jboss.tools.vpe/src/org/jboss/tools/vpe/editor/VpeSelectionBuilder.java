@@ -105,12 +105,12 @@ public class VpeSelectionBuilder {
 						sourceBuilder.setSelection(sourceNode, pos, 0);
 						break;
 					case nsIDOMNode.ELEMENT_NODE:
-						if (VpeVisualDomBuilder.isIncludeElement((nsIDOMElement)visualSelectedNode)) {
-							visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedNode, false);
+						if (VpeVisualDomBuilder.isIncludeElement((nsIDOMElement)visualSelectedNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))) {
+							visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID), false);
 							visualSelectionController.setCaretEnabled(false);
 							sourceBuilder.setSelection(sourceNode, 0, 0);
 						} else if (sourceNode.getNodeType() == Node.COMMENT_NODE) {
-							visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedNode, false);
+							visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID), false);
 //							pos = DataHelper.textPos(visualNode.getNodeValue(), selection.getFocusOffset());
 							pos = selection.getFocusOffset();
 							try{
@@ -122,7 +122,7 @@ public class VpeSelectionBuilder {
 							}
 							sourceBuilder.setSelection(sourceNode, pos, 0);
 						} else if (visualBuilder.isContentArea(visualSelectedNode) && visualBuilder.isEmptyDocument()) {
-							visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedNode, false);
+							visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID), false);
 							sourceBuilder.setSelectionAtDocumentEnd();
 						} else {
 							nsIDOMNode containerForPseudoContent = VpePseudoContentCreator.getContainerForPseudoContent(visualNode);
@@ -142,14 +142,14 @@ public class VpeSelectionBuilder {
 								}
 								
 								if (!border && visualNode.getNodeType() == Node.TEXT_NODE && node == null) {
-									visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedNode, false);
+									visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID), false);
 									sourceBuilder.setAttributeSelection(visualNode, selection.getFocusOffset(), 0);
 									if (!visualBuilder.isTextEditable(visualNode)) {
 										visualSelectionController.setCaretEnabled(false);
 									}
 								} else {
 									if (info.startFlag) {
-										visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedNode, false);
+										visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID), false);
 									} else {
 										visualParentElement = (nsIDOMElement)visualSelectedNode.getParentNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 										visualBuilder.setSelectionRectangle(visualParentElement, false);
@@ -192,7 +192,7 @@ public class VpeSelectionBuilder {
 			if (sourceAncestor != null) {
 				switch (visualSelectedAncestor.getNodeType()) {
 				case Node.TEXT_NODE:
-					nsIDOMElement visualParentElement = (nsIDOMElement)visualSelectedAncestor.getParentNode();
+					nsIDOMElement visualParentElement = (nsIDOMElement)visualSelectedAncestor.getParentNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 					visualBuilder.setSelectionRectangle(visualParentElement, false);
 					
 //					int start = DataHelper.textPos(visualSelectedAncestor.getNodeValue(), selection.getAnchorOffset());
@@ -212,7 +212,7 @@ public class VpeSelectionBuilder {
 					break;
 				case Node.ELEMENT_NODE:
 					if (sourceAncestor.getNodeType() == Node.COMMENT_NODE) {
-						visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedAncestor, false);
+						visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedAncestor.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID), false);
 //						start = DataHelper.textPos(sourceAncestor.getNodeValue(), selection.getAnchorOffset());
 //						end = DataHelper.textPos(sourceAncestor.getNodeValue(), selection.getFocusOffset());
 						start = selection.getAnchorOffset();
@@ -243,7 +243,7 @@ public class VpeSelectionBuilder {
 								sourceBuilder.setSelection(sourceNode, 0, sourceEndOffset - sourceStartOffset);
 							}
 						} else {
-							visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedAncestor, false);
+							visualBuilder.setSelectionRectangle((nsIDOMElement)visualSelectedAncestor.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID), false);
 	
 							if (!border && visualAncestor.getNodeType() == Node.TEXT_NODE) {
 								sourceBuilder.setAttributeSelection(visualAncestor, visualAnchorOffset, visualFocusOffset - visualAnchorOffset);
@@ -406,7 +406,7 @@ public class VpeSelectionBuilder {
 							offset = text.length();
 						}
 						selection.collapse(visualText, offset);
-						visualBuilder.setSelectionRectangle((nsIDOMElement)visualNode);
+						visualBuilder.setSelectionRectangle((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
 					}
 				} else {
 					if (offset == 0) {
@@ -414,7 +414,7 @@ public class VpeSelectionBuilder {
 						nsIDOMNode visualParentNode = visualNode.getParentNode();
 						if (visualParentNode != null && visualParentNode.getNodeType() == Node.ELEMENT_NODE) {
 							selection.collapse(visualParentNode, offset);
-							visualBuilder.setSelectionRectangle((nsIDOMElement)visualNode);
+							visualBuilder.setSelectionRectangle((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
 						} else {
 							selection.removeAllRanges();
 							visualBuilder.setSelectionRectangle(null);
@@ -425,23 +425,23 @@ public class VpeSelectionBuilder {
 							if (appreciableVisualChild.getNodeType() == nsIDOMNode.TEXT_NODE) {
 								offset = appreciableVisualChild.getNodeValue().length();
 								selection.collapse(appreciableVisualChild, offset);
-								visualBuilder.setSelectionRectangle((nsIDOMElement)visualNode);
+								visualBuilder.setSelectionRectangle((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
 							} else {
 								offset = (int)VisualDomUtil.getOffset(appreciableVisualChild) + 1;
 								selection.collapse((nsIDOMNode)visualNode, offset);
-								visualBuilder.setSelectionRectangle((nsIDOMElement)visualNode);
+								visualBuilder.setSelectionRectangle((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
 							}
 						} else {
 							offset = 0;
 							selection.collapse(visualNode, offset);
-							visualBuilder.setSelectionRectangle((nsIDOMElement)visualNode);
+							visualBuilder.setSelectionRectangle((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
 						}
 					} else {
 						offset = (int)VisualDomUtil.getOffset(visualNode);
 						nsIDOMNode visualParentNode = visualNode.getParentNode();
 						if (visualParentNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 							selection.collapse(visualParentNode, offset);
-							visualBuilder.setSelectionRectangle((nsIDOMElement)visualParentNode);
+							visualBuilder.setSelectionRectangle((nsIDOMElement)visualParentNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
 						} else {
 							selection.removeAllRanges();
 							visualBuilder.setSelectionRectangle(null);
@@ -1181,14 +1181,28 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 		selection.removeAllRanges();
 		selection.collapse(visualParent, offset);
 		selection.extend(visualParent, offset + 1);
+		
 		setSelection(selection);
 	}
 	
 	VpeVisualInnerDragInfo getInnerDragInfo(nsIDOMMouseEvent event) {
 		VpeVisualInnerDragInfo info = null;
+	
 		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
 		nsIDOMNode focusNode = selection.getFocusNode();
 		nsIDOMNode anchorNode = selection.getAnchorNode();
+		//when we select input this function return null
+		//but we select elemnt
+		if(focusNode==null && anchorNode==null) {
+			
+			nsIDOMNode  visualNode =(nsIDOMNode) event.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
+			int offset = (int) VisualDomUtil.getOffset(visualNode);
+			selection.removeAllRanges();
+			selection.collapse(visualNode.getParentNode(), offset);
+			selection.extend(visualNode.getParentNode(), offset + 1);
+			focusNode = selection.getFocusNode();
+			anchorNode = selection.getAnchorNode();
+		}
 		if (focusNode != null && focusNode.equals(anchorNode)) {
 			int focusOffset = selection.getFocusOffset();
 			int anchorOffset = selection.getAnchorOffset();

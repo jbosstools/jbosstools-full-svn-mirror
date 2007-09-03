@@ -1312,7 +1312,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		
 		private boolean startActiveEditor(int newType) {
 			//TODO Max Areshkau( add in test purposes, remove after all)
-			System.out.print("start");
+//			System.out.print("start");
 			if (type == ACTIVE_EDITOR_NONE) {
 				if( newType == ACTIVE_EDITOR_SOURCE &&
 						editPart.getVisualMode() == VpeEditorPart.SOURCE_MODE) {
@@ -1327,7 +1327,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		
 		private void stopActiveEditor() {
 			//TODO Max Areshkau( add in test purposes, remove after all)
-			System.out.println("stop");
+//			System.out.println("stop");
 			onRefresh();
 			type = ACTIVE_EDITOR_NONE;
 		}
