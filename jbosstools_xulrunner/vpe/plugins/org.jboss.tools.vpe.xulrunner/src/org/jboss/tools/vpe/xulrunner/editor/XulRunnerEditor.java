@@ -11,6 +11,8 @@
 
 package org.jboss.tools.vpe.xulrunner.editor;
 
+import java.util.regex.Pattern;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -20,7 +22,6 @@ import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
 import org.mozilla.interfaces.inIFlasher;
-import org.mozilla.interfaces.nsIBaseWindow;
 import org.mozilla.interfaces.nsIClipboardDragDropHookList;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -32,15 +33,13 @@ import org.mozilla.interfaces.nsIDOMWindow;
 import org.mozilla.interfaces.nsIDocShell;
 import org.mozilla.interfaces.nsIDragService;
 import org.mozilla.interfaces.nsIDragSession;
-import org.mozilla.interfaces.nsIEditingSession;
 import org.mozilla.interfaces.nsIInterfaceRequestor;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsITransferable;
-import org.mozilla.interfaces.nsIWebBrowser;
 import org.mozilla.xpcom.Mozilla;
-import java.util.regex.Pattern;
+import org.mozilla.xpcom.XPCOMException;
 
 /**
  * @author Sergey Vasilyev (svasilyev@exadel.com)
@@ -235,9 +234,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	public nsISelection getSelection() {
 
 //		try{
-		nsIServiceManager serviceManager = Mozilla.getInstance().getServiceManager();
-		nsIEditingSession editingSession = (nsIEditingSession) serviceManager.getServiceByContractID
-		("@mozilla.org/editor/editingsession;1", nsIEditingSession.NS_IEDITINGSESSION_IID);
+//		nsIServiceManager serviceManager = Mozilla.getInstance().getServiceManager();
 		nsIDOMWindow domWindow = getWebBrowser().getContentDOMWindow();
 		nsISelection selection = domWindow.getSelection();
 		return selection;
@@ -377,11 +374,15 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 */
 	private boolean checkVisability(nsIDOMNode node){
 		
-		if(!(node instanceof nsIDOMElement)){		
+		nsIDOMElement domElement;
+		try{
 			
-			return true;
+		domElement = (nsIDOMElement) node.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+		
+		} catch(XPCOMException exception) {
+		//if we can cast it's is invisible elenebt
+			return false;
 		}
-		nsIDOMElement domElement = (nsIDOMElement) node;
 		
 		//TODO  add check not inline styles attribute such as styleclass
 		String inlineStyle = domElement.getAttribute(STYLE_ATTR);
@@ -398,14 +399,15 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 */
 	private nsIDOMElement  findVisbleParentElement(nsIDOMElement element) {
 		
-		//TODO Max Areshkau optimize code(do not calculate it each time)
-		if(!(element.getParentNode() instanceof nsIDOMElement)) {
-			
-			return null;
-		}
-	
-		nsIDOMElement parentElement = (nsIDOMElement) element.getParentNode();
+		nsIDOMElement parentElement;
 		
+	try {
+		
+		 parentElement = (nsIDOMElement) element.getParentNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+	} catch (XPCOMException ex) {
+		// if parent node isn't nsIDOMElement just return null;
+		return null;
+	}
 		while(parentElement!=null&&!checkVisability(parentElement)) {
 			if(checkVisability(parentElement)) {
 			
@@ -475,7 +477,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 				nsIDOMElement domElement = findVisbleParentElement(getLastSelectedElement());
 				
 				if(domElement!=null) {
-					
 					getIFlasher().drawElementOutline(domElement);
 				}
 			}
