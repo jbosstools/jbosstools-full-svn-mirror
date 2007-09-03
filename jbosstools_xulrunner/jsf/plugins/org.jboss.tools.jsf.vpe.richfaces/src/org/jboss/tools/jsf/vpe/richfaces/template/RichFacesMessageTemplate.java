@@ -29,38 +29,57 @@ import org.w3c.dom.NodeList;
  */
 public class RichFacesMessageTemplate extends VpeAbstractTemplate {
 
-	private static String PASSED_LABEL_ATTRIBUTE_NAME = "passedLabel";
-	private static String LABEL_CLASS_ATTRIBUTE_NAME = "labelClass";
-	private static String MARKER_CLASS_ATTRIBUTE_NAME = "markerClass";
-	private static String MARKER_STYLE_ATTRIBUTE_NAME = "markerStyle";
+	protected static String PASSED_LABEL_ATTRIBUTE_NAME = "passedLabel";
+	protected static String LABEL_CLASS_ATTRIBUTE_NAME = "labelClass";
+	protected static String MARKER_CLASS_ATTRIBUTE_NAME = "markerClass";
+	protected static String MARKER_STYLE_ATTRIBUTE_NAME = "markerStyle";
 
-	private static String ERROR_MARKER_CLASS_ATTRIBUTE_NAME = "errorMarkerClass";
-	private static String ERROR_LABEL_CLASS_ATTRIBUTE_NAME = "errorLabelClass";
-	private static String ERROR_CLASS_ATTRIBUTE_NAME = "errorClass";
+	protected static String ERROR_MARKER_CLASS_ATTRIBUTE_NAME = "errorMarkerClass";
+	protected static String ERROR_LABEL_CLASS_ATTRIBUTE_NAME = "errorLabelClass";
+	protected static String ERROR_CLASS_ATTRIBUTE_NAME = "errorClass";
 
-	private static String FATAL_MARKER_CLASS_ATTRIBUTE_NAME = "fatalMarkerClass";
-	private static String FATAL_LABEL_CLASS_ATTRIBUTE_NAME = "fatalLabelClass";
-	private static String FATAL_CLASS_ATTRIBUTE_NAME = "fatalClass";
+	protected static String FATAL_MARKER_CLASS_ATTRIBUTE_NAME = "fatalMarkerClass";
+	protected static String FATAL_LABEL_CLASS_ATTRIBUTE_NAME = "fatalLabelClass";
+	protected static String FATAL_CLASS_ATTRIBUTE_NAME = "fatalClass";
 
-	private static String INFO_MARKER_CLASS_ATTRIBUTE_NAME = "infoMarkerClass";
-	private static String INFO_LABEL_CLASS_ATTRIBUTE_NAME = "infoLabelClass";
-	private static String INFO_CLASS_ATTRIBUTE_NAME = "infoClass";
+	protected static String INFO_MARKER_CLASS_ATTRIBUTE_NAME = "infoMarkerClass";
+	protected static String INFO_LABEL_CLASS_ATTRIBUTE_NAME = "infoLabelClass";
+	protected static String INFO_CLASS_ATTRIBUTE_NAME = "infoClass";
 
-	private static String WARN_MARKER_CLASS_ATTRIBUTE_NAME = "warnMarkerClass";
-	private static String WARN_LABEL_CLASS_ATTRIBUTE_NAME = "warnLabelClass";
-	private static String WARN_CLASS_ATTRIBUTE_NAME = "warnClass";
+	protected static String WARN_MARKER_CLASS_ATTRIBUTE_NAME = "warnMarkerClass";
+	protected static String WARN_LABEL_CLASS_ATTRIBUTE_NAME = "warnLabelClass";
+	protected static String WARN_CLASS_ATTRIBUTE_NAME = "warnClass";
 
-	private static String ERROR_MESSAGE = "Error message";
-	private static String FATAL_MESSAGE = "Fatal message";
-	private static String INFO_MESSAGE = "Info message";
-	private static String WARNING_MESSAGE = "Warning message";
+	protected static String ERROR_MESSAGE = "Error message";
+	protected static String FATAL_MESSAGE = "Fatal message";
+	protected static String INFO_MESSAGE = "Info message";
+	protected static String WARNING_MESSAGE = "Warning message";
 
-	private static String[] markers = { "passedMarker", "errorMarker",
+	protected String passedLabelValue;
+	protected String labelClassValue;
+	protected String markerClassValue;
+	protected String markerStyleValue;
+	protected String errorMarkerClassValue;
+	protected String errorLabelClassValue;
+	protected String errorClassValue;
+	protected String fatalMarkerClassValue;
+	protected String fatalLabelClassValue;
+	protected String fatalClassValue;
+	protected String infoMarkerClassValue;
+	protected String infoLabelClassValue;
+	protected String infoClassValue;
+	protected String warnMarkerClassValue;
+	protected String warnLabelClassValue;
+	protected String warnClassValue;
+	protected String styleValue;
+	protected String styleClassValue;
+
+	protected static String[] markers = { "passedMarker", "errorMarker",
 			"fatalMarker", "infoMarker", "warnMarker" };
 
-	private static String FACET_TAG_NAME = "f:facet";
+	protected static String FACET_TAG_NAME = "f:facet";
 
-	private static String NAME_ATTRIBUTE_NAME = "name";
+	protected static String NAME_ATTRIBUTE_NAME = "name";
 
 	private nsIDOMElement td1; // passed marker
 	private nsIDOMElement td2; // passed label
@@ -81,56 +100,60 @@ public class RichFacesMessageTemplate extends VpeAbstractTemplate {
 	private nsIDOMElement td9; // warn marker
 	private nsIDOMElement td10; // warn label
 
-	private VpeCreationData creationData;
-
-	nsIDOMDocument vis;
+	protected VpeCreationData creationData;
 
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument) {
 
-		vis = visualDocument;
-
-		String passedLabelValue = ((Element) sourceNode)
+		passedLabelValue = ((Element) sourceNode)
 				.getAttribute(PASSED_LABEL_ATTRIBUTE_NAME);
-		String labelClassValue = ((Element) sourceNode)
+		labelClassValue = ((Element) sourceNode)
 				.getAttribute(LABEL_CLASS_ATTRIBUTE_NAME);
-		String markerClassValue = ((Element) sourceNode)
+		markerClassValue = ((Element) sourceNode)
 				.getAttribute(MARKER_CLASS_ATTRIBUTE_NAME);
-		String markerStyleValue = ((Element) sourceNode)
+		markerStyleValue = ((Element) sourceNode)
 				.getAttribute(MARKER_STYLE_ATTRIBUTE_NAME);
 
-		String errorMarkerClassValue = ((Element) sourceNode)
+		errorMarkerClassValue = ((Element) sourceNode)
 				.getAttribute(ERROR_MARKER_CLASS_ATTRIBUTE_NAME);
-		String errorLabelClassValue = ((Element) sourceNode)
+		errorLabelClassValue = ((Element) sourceNode)
 				.getAttribute(ERROR_LABEL_CLASS_ATTRIBUTE_NAME);
-		String errorClassValue = ((Element) sourceNode)
+		errorClassValue = ((Element) sourceNode)
 				.getAttribute(ERROR_CLASS_ATTRIBUTE_NAME);
 
-		String fatalMarkerClassValue = ((Element) sourceNode)
+		fatalMarkerClassValue = ((Element) sourceNode)
 				.getAttribute(FATAL_MARKER_CLASS_ATTRIBUTE_NAME);
-		String fatalLabelClassValue = ((Element) sourceNode)
+		fatalLabelClassValue = ((Element) sourceNode)
 				.getAttribute(FATAL_LABEL_CLASS_ATTRIBUTE_NAME);
-		String fatalClassValue = ((Element) sourceNode)
+		fatalClassValue = ((Element) sourceNode)
 				.getAttribute(FATAL_CLASS_ATTRIBUTE_NAME);
 
-		String infoMarkerClassValue = ((Element) sourceNode)
+		infoMarkerClassValue = ((Element) sourceNode)
 				.getAttribute(INFO_MARKER_CLASS_ATTRIBUTE_NAME);
-		String infoLabelClassValue = ((Element) sourceNode)
+		infoLabelClassValue = ((Element) sourceNode)
 				.getAttribute(INFO_LABEL_CLASS_ATTRIBUTE_NAME);
-		String infoClassValue = ((Element) sourceNode)
+		infoClassValue = ((Element) sourceNode)
 				.getAttribute(INFO_CLASS_ATTRIBUTE_NAME);
 
-		String warnMarkerClassValue = ((Element) sourceNode)
+		warnMarkerClassValue = ((Element) sourceNode)
 				.getAttribute(WARN_MARKER_CLASS_ATTRIBUTE_NAME);
-		String warnLabelClassValue = ((Element) sourceNode)
+		warnLabelClassValue = ((Element) sourceNode)
 				.getAttribute(WARN_LABEL_CLASS_ATTRIBUTE_NAME);
-		String warnClassValue = ((Element) sourceNode)
+		warnClassValue = ((Element) sourceNode)
 				.getAttribute(WARN_CLASS_ATTRIBUTE_NAME);
 
-		String styleValue = ((Element) sourceNode)
+		styleValue = ((Element) sourceNode)
 				.getAttribute(HtmlComponentUtil.HTML_STYLE_ATTR);
-		String styleClassValue = ((Element) sourceNode)
+		styleClassValue = ((Element) sourceNode)
 				.getAttribute(HtmlComponentUtil.HTML_STYLECLASS_ATTR);
+
+		createRichMessage(visualDocument, sourceNode);
+
+		return creationData;
+	}
+
+	protected void createRichMessage(nsIDOMDocument visualDocument,
+			Node sourceNode) {
 
 		// -------------------create common table
 		nsIDOMElement tableHeader = visualDocument
@@ -366,62 +389,6 @@ public class RichFacesMessageTemplate extends VpeAbstractTemplate {
 		tr5.appendChild(td9);
 		tr5.appendChild(td10);
 		td10.appendChild(warnText);
-
-		return creationData;
-	}
-
-	/**
-	 * 
-	 * @param td01
-	 */
-	private void addNotFacetComponent(nsIDOMElement td01, Node sourceNode) {
-
-		VpeChildrenInfo childrenInfo = new VpeChildrenInfo(td01);
-		creationData.addChildrenInfo(childrenInfo);
-
-		NodeList nodeList = sourceNode.getChildNodes();
-		for (int i = 0; i < nodeList.getLength(); i++)
-			if (!FACET_TAG_NAME.equalsIgnoreCase(nodeList.item(i).getNodeName()
-					.trim()))
-				childrenInfo.addSourceChild(nodeList.item(i));
-
-	}
-
-	/**
-	 * 
-	 * @param markerName
-	 *            Marker name
-	 * @return True if marker name correct or false
-	 */
-	private boolean searchInMarker(String markerName) {
-
-		if (markerName == null)
-			return false;
-
-		for (int i = 0; i < markers.length; i++)
-			if (markers[i].equalsIgnoreCase(markerName.trim()))
-				return true;
-		return false;
-	}
-
-	/**
-	 * 
-	 * @param td
-	 * @param elemFacet
-	 */
-	private void createVisualFacet(nsIDOMElement td, Element elemFacet) {
-		VpeChildrenInfo childrenInfo = new VpeChildrenInfo(td);
-		creationData.addChildrenInfo(childrenInfo);
-
-		NodeList nodeList = elemFacet.getChildNodes();
-
-		for (int i = 0; i < nodeList.getLength(); i++)
-			if (!(nodeList.item(i) instanceof Element))
-				continue;
-			else {
-				childrenInfo.addSourceChild(nodeList.item(i));
-				return;
-			}
 	}
 
 	/**
@@ -449,6 +416,60 @@ public class RichFacesMessageTemplate extends VpeAbstractTemplate {
 			Element sourceElement, nsIDOMDocument visualDocument,
 			nsIDOMElement visualNode, Object data, String name, String value) {
 		return true;
+	}
+
+	/**
+	 * 
+	 * @param td01
+	 */
+	protected void addNotFacetComponent(nsIDOMElement td01, Node sourceNode) {
+
+		VpeChildrenInfo childrenInfo = new VpeChildrenInfo(td01);
+		creationData.addChildrenInfo(childrenInfo);
+
+		NodeList nodeList = sourceNode.getChildNodes();
+		for (int i = 0; i < nodeList.getLength(); i++)
+			if (!FACET_TAG_NAME.equalsIgnoreCase(nodeList.item(i).getNodeName()
+					.trim()))
+				childrenInfo.addSourceChild(nodeList.item(i));
+
+	}
+
+	/**
+	 * 
+	 * @param markerName
+	 *            Marker name
+	 * @return True if marker name correct or false
+	 */
+	protected boolean searchInMarker(String markerName) {
+
+		if (markerName == null)
+			return false;
+
+		for (int i = 0; i < markers.length; i++)
+			if (markers[i].equalsIgnoreCase(markerName.trim()))
+				return true;
+		return false;
+	}
+
+	/**
+	 * 
+	 * @param td
+	 * @param elemFacet
+	 */
+	protected void createVisualFacet(nsIDOMElement td, Element elemFacet) {
+		VpeChildrenInfo childrenInfo = new VpeChildrenInfo(td);
+		creationData.addChildrenInfo(childrenInfo);
+
+		NodeList nodeList = elemFacet.getChildNodes();
+
+		for (int i = 0; i < nodeList.getLength(); i++)
+			if (!(nodeList.item(i) instanceof Element))
+				continue;
+			else {
+				childrenInfo.addSourceChild(nodeList.item(i));
+				return;
+			}
 	}
 }
 
