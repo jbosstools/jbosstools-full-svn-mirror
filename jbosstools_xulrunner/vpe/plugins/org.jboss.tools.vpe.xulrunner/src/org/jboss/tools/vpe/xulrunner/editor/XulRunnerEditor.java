@@ -104,24 +104,23 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	public XulRunnerEditor(Composite parent) throws XulRunnerException {
 		super(parent);
 		
-		Listener l = new Listener() {
+		Listener eventListenet = new Listener() {
 
 			public void handleEvent(Event event) {
-				System.out.println("Activate");
 				Display.getCurrent().asyncExec(new Thread(){
 					public void run(){
 						showSelectionRectangle();
 					}
 				});
 			}};
-			addListener(SWT.Activate, l);
-			addListener(SWT.Paint, l);
-			addListener(SWT.Resize, l);
-			addListener(SWT.Show, l);
-			addListener(SWT.FocusIn, l);
-			addListener(SWT.FocusOut, l);
-			addListener(SWT.Selection, l);
-			addListener(SWT.Paint, l);
+			addListener(SWT.Activate, eventListenet);
+			addListener(SWT.Paint, eventListenet);
+			addListener(SWT.Resize, eventListenet);
+			addListener(SWT.Show, eventListenet);
+			addListener(SWT.FocusIn, eventListenet);
+			addListener(SWT.FocusOut, eventListenet);
+			addListener(SWT.Selection, eventListenet);
+			addListener(SWT.Paint, eventListenet);
 		
 		resizeListener = new IVpeResizeListener() {
 			public void onEndResizing(int usedResizeMarkerHandle, int top,
