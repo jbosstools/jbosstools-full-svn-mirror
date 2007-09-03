@@ -5,6 +5,7 @@
 [<!ENTITY GettingStartedWithRHDS SYSTEM "modules/GettingStartedWithRHDS.xml">
 <!ENTITY  ManageJBossAS SYSTEM "modules/ManageJBossAS.xml">
 <!ENTITY GetStartSeamGen  SYSTEM "modules/GetStartSeamGen.xml">
+<!ENTITY DevelopAsimpleJSPWebApplication  SYSTEM "modules/DevelopAsimpleJSPWebApplication.xml">
 <!ENTITY GenCURDDatabaseApp SYSTEM "modules/GenCURDDatabaseApp.xml">
 <!ENTITY CURDAppWalkthrough SYSTEM "modules/CURDAppWalkthrough.xml">
 <!ENTITY AddBusinessProcess SYSTEM "modules/AddBusinessProcess.xml">
@@ -31,6 +32,7 @@
 &GettingStartedWithRHDS;
 &ManageJBossAS;
 &GetStartSeamGen;
+&DevelopAsimpleJSPWebApplication;
 &GenCURDDatabaseApp;
 &CURDAppWalkthrough;
 <!-- TODO: drools used in this section is not available for eclipse .3.3 &AddBusinessProcess; -->

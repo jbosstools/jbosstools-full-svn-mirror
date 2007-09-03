@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="DevelopASimpleWebApplication" xreflabel="DevelopASimpleWebApplication">
+	<?dbhtml filename="DevelopASimpleWebApplication.html"?>
+	<chapterinfo>
+    <keywordset>
+      <keyword>Red Hat Developer Studio</keyword>
+      <keyword>JSP</keyword>
+      <keyword>JSF</keyword>
+      <keyword>JBoss</keyword>
+    </keywordset>
+  </chapterinfo>
+	<title>Develop a simple JSP web application</title>
+	<para>In this chapter we are going to show you how to create a simple JSP application using the Red Hat Developer Studio. The completed application will ask a user to enter a name and click a button. The resulting new page will display the familiar message, &quot;Hello &lt;name&gt;!&quot;</para>
+<para>You will learn how to create such an application from the beginning, along the way demonstrating some of the powerful features of Red Hat Developer Studio. You will design the JSP application and then run the application from inside RHDS.</para>
+	<para>We&apos;ll assume that you have already launched Red Hat Developer Studio installed and
+also that the Red Hat perspective is the current perspective. (If not, make it active by selecting <emphasis>Window/Open Perspective/Red Hat Developer Studio</emphasis> from the menu bar or by selecting <emphasis>Window/
+Open Perspective/Other...</emphasis> from the menu bar and then selecting Red Hat Developer Studio from
+the Select Perspective dialog box.)</para>
+	<section id="SettingUpTheProject">
+		<?dbhtml filename="SettingUpTheProject.html"?>
+		<title>Setting Up the Project</title>
+		<para>We are first going to create a new project for the application.</para>
+		<orderedlist>
+     <listitem><para>Go to the menu bar and select <emphasis>File/New/Project...</emphasis></para></listitem>
+     <listitem><para>Select  <emphasis>Red Hat Developer Studio/JSF/JSF Project</emphasis> in the New Project dialog box</para></listitem>
+     <listitem><para>Click Next &gt;</para></listitem>
+     <listitem><para>Enter &quot;jsfHello&quot; as the project name</para></listitem>
+     <listitem><para>Leave everything else as is, and click Finish</para></listitem>
+     </orderedlist>
+     <figure>
+			<title>Create New JSF Project</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject1.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		</section>
+		
+		<section id="TheJSFApplicationConfigurationFile">
+		<?dbhtml filename="TheJSFApplicationConfigurationFile.html"?>
+		<title>The JSF Application Configuration File</title>
+		<para>A <emphasis>jsfHello</emphasis> node should appear in the upper-left Package Explorer view.</para>
+		<orderedlist continuation="continues">
+			<listitem><para>Click the right-pointing-arrow sign next to <emphasis>jsfHello</emphasis> to reveal the child nodes</para></listitem>
+			</orderedlist>
+			<figure>
+			<title>New JSF Project</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject2.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<orderedlist continuation="continues">
+			<listitem><para>Click the right-pointing-arrow sign next to WebContent under <emphasis>jsfHello</emphasis></para></listitem>
+			<listitem><para>Click the right-pointing-arrow sign next to WEB-INF under WebContent.</para></listitem>
+			<listitem><para>Then double-click on the faces-config.xml node to display the JSF application configuration file editor</para></listitem>
+		</orderedlist>
+		<para>The configuration file will be opened in Diagram View.</para>
+		<figure>
+			<title>Diagram View</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject3.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		</section>
+		
+		<section id="AddingNavigationToTheApplication">
+		<?dbhtml filename="AddingNavigationToTheApplication.html"?>
+		<title>Adding Navigation to the Application</title>
+		<para>In our simple application, the flow is defined as a single navigation rule connecting two views (presentation files). At this point, we will create the placeholders for the two JSP presentation files and then the navigation rule to connect them as views. Later, we will complete the coding for the JSP presentation files. With Red Hat Developer Studio, we can do all of this in the Diagram mode of the configuration file editor.</para>
+		<section id="AddingTwoViewsJSPPages">
+		<?dbhtml filename="AddingTwoViewsJSPPages.html"?>
+		<title>Adding Two Views (JSP Pages)</title>
+		<orderedlist continuation="continues">
+		<listitem><para>Right-click anywhere on the diagram and select <emphasis>New View...</emphasis> from the pop-up
+menu</para></listitem>
+		<listitem><para>In the dialog box, type <emphasis>pages/inputname</emphasis> as the value for From-view-id</para></listitem>
+		<listitem><para>Leave everything else as is</para></listitem>
+		<listitem><para>Click Finish</para></listitem>
+		</orderedlist>
+		<figure>
+			<title>Create New View</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject4.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>If you look in the Package Explorer view you should see a pages folder under WebContent and the icon of the just created view. Opening it will reveal the JSP file you just created.</para>
+		<figure>
+			<title>New View is created</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject5.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<orderedlist continuation="continues">
+		<listitem><para>Back on the diagram, right-click anywhere and select <emphasis>New View...</emphasis> from the popup menu.</para></listitem>
+		<listitem><para>In the dialog box, type <emphasis>pages/greeting</emphasis> as the value for From-view-id</para></listitem>
+		<listitem><para>Leave everything else as is</para></listitem>
+		<listitem><para>Click Finish</para></listitem>
+		</orderedlist>
+		<para>The second view is created.</para>
+		<figure>
+			<title>New View is created</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject6.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		</section>
+		<section id="CreatingTheTransitionNavigationRule">
+		<?dbhtml filename="CreatingTheTransitionNavigationRule.html"?>
+		<title>Creating the Transition (Navigation Rule)</title>
+		<para>Let&apos;s now create a navigation transition between these two views.</para>
+		<orderedlist continuation="continues">
+		<listitem><para>In the diagram, select the connection icon third from the top along the upper left
+side of the diagram
+		
+		<figure>
+			<title>Connection Icon</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/connectionicon.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		to get an arrow cursor with a two-pronged plug at the arrow&apos;s bottom</para></listitem>
+		<listitem><para>Click on the <emphasis>pages/inputname page</emphasis> icon and then click on the <emphasis>pages/greeting page</emphasis> icon</para></listitem>
+		</orderedlist>
+		<para>A transition should appear between the two icons.</para>
+		<figure>
+			<title>Transition between two views</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject7.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<orderedlist continuation="continues">
+		<listitem><para>Select <emphasis>File/Save</emphasis> from the menu bar to save the configuration file</para></listitem>
+		</orderedlist>
+		</section>
+		</section>
+		
+	<section id="AddingAManagedBeanToTheApplication">
+		<?dbhtml filename="AddingAManagedBeanToTheApplication.html"?>
+		<title>Adding a Managed Bean to the Application</title>
+		<para>To store data in the application, we will use a managed bean. Let&apos;s create it.</para>
+		<orderedlist continuation="continues">
+		<listitem><para>Click on the Tree tab at the bottom of the editing window</para></listitem>
+		<listitem><para>Select the Managed Beans node and then click the <emphasis>Add...</emphasis> button displayed along the right side of the editor window</para></listitem>
+		<listitem><para>Type in <emphasis>jsfHello.PersonBean</emphasis> for Class and <emphasis>personBean</emphasis> for Name. Leave Scope as is and Generate Source Code as is (checked).</para></listitem>
+		</orderedlist>
+		<figure>
+			<title>Create managed bean</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject8.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<orderedlist continuation="continues">
+		<listitem><para>Click Finish</para></listitem>
+		</orderedlist>
+		<para><emphasis>personBean</emphasis> will now be selected and three sections of information, &quot;Managed
+Bean&quot;, &quot;Properties&quot;, and &quot;Advanced&quot;, will be displayed about it.</para>
+			<orderedlist continuation="continues">
+		<listitem><para>Under the Properties section, click the <emphasis>Add...</emphasis> button.
+			<figure>
+			<title>Managed bean is created</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject9.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		</para></listitem>
+		</orderedlist>
+		<orderedlist continuation="continues">
+		<listitem><para>For <emphasis>Property-Name</emphasis> type in name. Leave everything else as is. (When <emphasis>Property-Class</emphasis> is not filled in, String is the assumed type.).</para></listitem>
+		<listitem><para>Click Finish.</para></listitem>
+		<listitem><para>Select the personBean node in the tree.</para></listitem>
+		<para>You should see this now:</para>
+		<figure>
+			<title>Managed bean with name property</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject10.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		</orderedlist>
+		<orderedlist continuation="continues">
+		<listitem><para>Select <emphasis>File/Save</emphasis> from the menu bar.</para></listitem>
+		</orderedlist>
+		</section>	
+		
+		<section id="EditingTheJSPViewFiles">
+		<?dbhtml filename="EditingTheJSPViewFiles.html"?>
+		<title>Editing the JSP View Files</title>
+		<para>Now we will finish editing the JSP files for our two &quot;views&quot; using Red&apos;s JSP Visual Page
+Editor.</para>
+
+<section id="inputnamejspView">
+		<?dbhtml filename="inputnamejspView.html"?>
+		<title>inputname.jsp view</title>
+		<orderedlist continuation="continues">
+<listitem><para>Click on the Diagram tab for the configuration file editor.</para></listitem>
+<listitem><para>Open the editor for this first JSP file by double-clicking on the /pages/inputname.
+jsp icon.</para></listitem>
+</orderedlist>
+<para>The Red Hat Visual Page Editor will open in a screen split between source code along the top and a WYSIWIG view along the bottom:</para>
+<figure>
+			<title>inputname.jsp in visual/source mode</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject11.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Some JSF code will already be in the file because we selected a template when creating the page.</para>
+		<orderedlist continuation="continues">
+<listitem><para>Select the Visual tab, so we can work with the editor completely in its WYSIWYG
+mode.</para></listitem>
+<listitem><para>To the right of the editor, in the Red Hat Palette, expand the JSF HTML palette folder by selecting it.</para>
+
+<figure>
+			<title>JSF HTML palette</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject12.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure></listitem>
+			<listitem><para>Click on &quot;form&quot; within this folder, drag the cursor over to the editor, and drop it inside the red box in the editor.</para></listitem></orderedlist>
+			<para>An &quot;Insert Tag&quot; dialog will be prompted</para>
+			<orderedlist continuation="continues">
+<listitem><para>In the value field next to <emphasis>id</emphasis>, type &quot;greeting&quot; and click on the Finish button.</para>
+<figure>
+			<title>Insert Tag dialog</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject13.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+</listitem>
+</orderedlist>
+<para>Another red box will appear inside the first red box.</para>
+<orderedlist continuation="continues">
+<listitem><para>Type &quot;Please enter name:&quot; inside the boxes.</para>
+<figure>
+			<title>Editing View</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject14.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+</listitem>
+<listitem><para>Select &quot;inputText&quot; within the JSF HTML palette folder and drag it into the innermost box in the editor after &quot;Please enter name: &quot;.</para></listitem>
+<listitem><para>In the attributes dialog, click in the value field next to the <emphasis role="italic"><property>&quot;value&quot;</property></emphasis> attribute and click on the <emphasis>...</emphasis> button.</para></listitem>
+
+<listitem><para>Then, select the <emphasis>Managed Beans/personBean/name</emphasis> node and click on the Ok button.</para>
+<figure>
+			<title>Select bean property</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject15.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+</listitem>
+<listitem><para>Back in the attributes dialog, select the Advanced tab, type in &quot;name&quot; as the value
+for the <emphasis role="italic"><property>&quot;id&quot;</property></emphasis> attribute, and then click on the Finish button.</para></listitem>
+<listitem><para>Select &quot;commandButton&quot; within the JSF HTML palette folder and drag it into the innermost box in the editor after the input box.</para></listitem>
+<listitem><para>In the attributes dialog, click in the &quot;value&quot; field next to the <emphasis role="italic"><property>&quot;action&quot;</property></emphasis> attribute and click on the <emphasis>...</emphasis> button.</para></listitem>
+<listitem><para>Then, select the <emphasis>View Actions/greeting</emphasis> node and click on the Ok button.</para></listitem>
+<listitem><para>Back in the attributes dialog box, type in &quot;Say Hello&quot; as the value for the <emphasis role="italic"><property>&quot;value&quot;</property></emphasis> attribute and then click on the Finish button.</para></listitem>
+</orderedlist>
+<para>The source coding should be something like this now:</para>
+<programlisting role="XML"><![CDATA[<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+<html>
+   <head>
+      <title></title>
+   </head>
+   <body>
+      <f:view>
+         <h:form id="greeting">
+                 Please enter a name:
+        <h:inputText value="#{personBean.name}" id="name"/>
+        <h:commandButton action="greeting" value="Say Hello"/>
+         </h:form>
+      </f:view>
+   </body>
+</html>
+]]></programlisting>
+<para>The editor should look like this:</para>
+<figure>
+			<title>inputname.jsp view</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject16.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<orderedlist continuation="continues">
+<listitem><para>Save the file by selecting <emphasis>File/Save</emphasis> from the menu bar.</para></listitem>
+</orderedlist>
+<para>As you see with Red Hat Visual Editor you can easily create JSF components on a page and bind them with managed bean and view actions.</para>
+		</section>
+		<section id="greetingjspView">
+		<?dbhtml filename="greetingjspView.html"?>
+		<title>greeting.jsp view</title>
+		<para>Let&apos;s now write a code for a greeting page that will display a name of the user.</para>
+		<orderedlist continuation="continues">
+<listitem><para>Click on the faces-config.xml tab to bring the diagram back.</para></listitem>
+<listitem><para>Open the editor for the second file by double-clicking on the <emphasis>/pages/greeting.jsp</emphasis> icon.</para></listitem>
+<listitem><para>Select the Visual tab, so we can work with the editor completely in its WYSIWYG mode.</para></listitem>
+<listitem><para>Type &quot;Hello &quot; (note space after hello) into the box.</para></listitem>
+<listitem><para>Select <emphasis role="italic"><property>outputText</property></emphasis> within the JSF HTML palette folder and drag it into the innermost box in the editor after &quot;Hello &quot;.</para></listitem>
+<listitem><para>In the attributes dialog, click in <emphasis>value</emphasis> field next to the <emphasis role="italic"><property>&quot;value&quot;</property></emphasis> attribute and click on the <emphasis>...</emphasis> button.</para></listitem>
+<listitem><para>Then, select the <emphasis>Managed Beans/personBean/name</emphasis> node, click on the Ok button,
+and then click on the Finish button.</para></listitem>
+<listitem><para>Right after the output field, type an exclamation point (!).</para></listitem>
+</orderedlist>
+<para>The source coding should be something like this now:</para>
+<programlisting role="XML"><![CDATA[<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+<html>
+    <head>
+       <title></title>
+    </head>
+    <body>
+       <f:view>
+          Hello <h:outputText value="#{personBean.name}"/>!
+       </f:view>
+   </body>
+</html>
+]]></programlisting>
+<orderedlist continuation="continues">
+<listitem><para>Save the file.</para></listitem>
+</orderedlist>
+		</section>
+		</section>
+		<section id="CreatingTheStartPage">
+		<?dbhtml filename="CreatingTheStartPage.html"?>
+		<title>Creating the Start Page</title>
+		<para>You also need to create a start page as an entry point into the application.</para>
+		<orderedlist continuation="continues">
+<listitem><para>In the Package Explorer view to the left, right-click <emphasis>jsfHello/WebContent</emphasis> and select
+<emphasis>New/JSP File</emphasis> .</para></listitem>
+<listitem><para>For Name type in &quot;index&quot;, for Template select &quot;JSPRedirect&quot;, and click Finish.</para></listitem>
+</orderedlist>
+<para>A JSP editor will open up on the newly created file.</para>
+<figure>
+			<title>index.jsp view</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject17.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+<orderedlist continuation="continues">
+<listitem><para>In the Source part of the split screen, type <emphasis>/pages/inputname.jsf</emphasis> in between the quotes for the page attribute.</para></listitem>
+</orderedlist>
+<para>The source coding should look like this now:</para>
+<programlisting role="XML"><![CDATA[<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+   <head></head>
+   <body>
+       <jsp:forward page="/pages/inputname.jsf" />
+   </body>
+</html>
+]]></programlisting>
+<para>Note the <emphasis>.jsf</emphasis> extension for the file name. This is a mapping defined in the web.xml file
+for the project for invoking JavaServer Faces when you run the application.</para>
+<orderedlist continuation="continues">
+<listitem><para>Select <emphasis>File/Save</emphasis> from the menu bar.</para></listitem>
+</orderedlist>
+		</section>
+		
+		<section id="RunningTheApplication1">
+		<?dbhtml filename="RunningTheApplication1.html"?>
+		<title>Running the Application</title>
+		<para>Everything is now ready for running our application—without having to leave Red Hat Developer Studio —
+by using the JBoss engine that comes with the RHDS. For controlling JBoss within Studio, there is a special view - JBoss Server View (if it is not open select <emphasis>Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View</emphasis>).</para>
+<figure>
+			<title>JBoss Server View</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject18.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<orderedlist continuation="continues">
+<listitem><para>Start up JBoss by clicking on the second icon from left.</para></listitem>
+</orderedlist>
+<para>After the messages in the Console tabbed view stop scrolling, JBoss server is available.</para>
+<orderedlist continuation="continues">
+<listitem><para>Click on the <emphasis>Run</emphasis> icon in the toolbar.</para>
+<figure>
+			<title>Run icon</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject19.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+</listitem>
+</orderedlist>
+<para>This is the equivalent of launching the browser and typing http://localhost:8080/
+jsfHello into your browser. Our JSF application should now appear.</para>
+		</section>
+		<section id="RunningTheApplication">
+		<?dbhtml filename="RunningTheApplication.html"?>
+		<title>Making changes to JSP page</title>
+		<para>Red Hat Developer Studio comes with JSP design-time preview features. When designing JSP pages you can easily preview how they will look during runtime. You can even attach your stylesheet to the preview.</para>
+		<para>Open the inputname.jsp page and after this line</para>
+		<programlisting role="XML"><![CDATA[<h:commandButton action="greeting" value="Say Hello"/>
+]]></programlisting>
+<para>Type the next script:</para>
+<programlisting role="XML"><![CDATA[<%= new 
+java.util.Date() %>
+]]></programlisting>
+<para>Then swich to Preview tab to see the changes.</para>
+		</section>
+		
+		<section id="WebXML">
+		<?dbhtml filename="WebXML.html"?>
+		<title>web.xml file</title>
+		<para>When you create a JSF project Red Hat Developer Studio is generating web.xml file for you. You don&apos;t need to write any configuration manually. The integrated web.xml editor comes both in source and tree modes.</para>
+		<figure>
+			<title>Web.xml editor in source mode</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject20.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		
+		<figure>
+			<title>Web.xml editor in tree mode</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject21.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		</section>
+		<section id="WarDeploy">
+		<?dbhtml filename="WarDeploy.html"?>
+		<title>Deploy with War archive</title>
+		<para>With Red Hat Developer Studio you can easily export your project in a <emphasis>.war</emphasis> and deploy to any web server.</para>
+		<para>Just right click the project folder in Package Explorer and select <emphasis>Export &gt; Web &gt; WAR file</emphasis></para>
+		<para>Then click Next &gt; and in Export dialog specify the destination of the <emphasis>.war</emphasis> file and press Finish.</para>
+		<figure>
+			<title>Export war file</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/newproject22.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		</section>
+</chapter>

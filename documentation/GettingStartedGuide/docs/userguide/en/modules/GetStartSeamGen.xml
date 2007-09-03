@@ -69,8 +69,8 @@
     </figure>
     <para>Since you selected JPA and JSF tooling support, the project needs to incorporate the JAR files for those frameworks on its classpath. In the next screen, you will be able to select where those library JARs come from. The easiest is just to select the JARs provided by the JBoss AS runtime associated with this project. That is why it is important to chose the right JBoss AS 4.2 runtime in the project setup window.</para>
     <orderedlist continuation="continues">
-    <listitem><para>Check &quot;Server Supplied JSF Implementation&quot;. We will use JSF implementation that comes with JBoss server.</para></listitem>
-    <listitem><para>Click Next.</para></listitem>
+    <listitem><para>Check &quot;Server Supplied JSF Implementation&quot;. We will use JSF implementation that comes with JBoss server</para></listitem>
+    <listitem><para>Click Next</para></listitem>
     </orderedlist>
     <figure>
       <title>Define JSF Implementation</title>

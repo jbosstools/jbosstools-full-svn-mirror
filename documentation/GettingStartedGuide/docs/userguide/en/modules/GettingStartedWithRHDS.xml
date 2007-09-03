@@ -13,27 +13,23 @@
  <section id="ConfigJavaEnvironment">
   <?dbhtml filename="ConfigJavaEnvironment.html"?>
   <title>Configuring Your Java Environment</title> 
-  <para>You must have a working installation of JDK 1.5 before you
-   install Red Hat Developer Studio. Currently it will only fully work
-   with a 32-bit JVM, not a 64-bit JVM. On a 64-bit JVM the visual
-   editor will fail to launch. Thus in this guide we will show you how
-   to install a 32-bit Sun JDK 5.0 on a Linux Platform and Microsoft
-   Windows Platform.</para>
+  <para>You must have a working installation of JDK 1.5 before you install Red Hat Developer Studio. Currently it will only fully work with a 32-bit JVM, not a 64-bit JVM. On a 64-bit JVM the visual editor will fail to launch. Thus in this guide we will show you how to install a 32-bit Sun JDK 5.0 on a Linux Platform and Microsoft Windows Platform.</para>
   <section id="InstallJDK50onLinux">
    <title>Installing and Configuring 32-bit Sun JDK 5.0 on Linux</title>
    <itemizedlist>
     <listitem><para>Download the <ulink  url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0 (Java 2 Development Kit)</ulink> from Sun&apos;s website. 
-     Choose &quot;JDK 5.0 Update &lt;x&gt;&quot; (where x is the latest update number) for download and then select &quot;RPM in self-extracting&quot; file for Linux. Read the instructions on Sun&apos;s website for installing the JDK.</para></listitem>
+     Choose &quot;JDK 5.0 Update &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) for download and then select &quot;RPM in self-extracting&quot; file for Linux. Read the instructions on Sun&apos;s website for installing the JDK.</para></listitem>
     <listitem><para>If you don&apos;t want to use SysV service scripts you can install the &quot;self-extracting file&quot; for Linux instead of choosing the &quot;RPM in self-extracting&quot; file. 
     In that case you can skip the next step mentioned here. But it is recommended to use the SysV service scripts for production servers.</para></listitem>
     <listitem><para>Download and install the appropriate -compat RPM from JPackage <ulink  url="ftp://jpackage.hmdc.harvard.edu/JPackage/1.7/generic/RPMS.non-free/">here</ulink>. 
     Please ensure you choose a matching version of the -compat package to the JDK you installed.</para></listitem>
     <listitem><para>Create an environment variable that points to the JDK installation directory and call it JAVA_HOME. Add <emphasis>$JAVA_HOME/bin</emphasis> to the system path to be able to run java from the 
-    command line. You can do this by adding the following lines to the .bashrc file in your home directory.</para></listitem>
-   </itemizedlist>
-   <programlisting><![CDATA[#In this example /usr/java/jdk1.5.0_11 is the JDK installation directory.
+    command line. You can do this by adding the following lines to the .bashrc file in your home directory.
+   <programlisting role="JAVA"><![CDATA[#In this example /usr/java/jdk1.5.0_11 is the JDK installation directory.
 export JAVA_HOME=/usr/java/jdk1.5.0_11
 export PATH=$PATH:$JAVA_HOME/bin]]></programlisting>
+</para></listitem>
+   </itemizedlist>
    <note>
     <title>Note:</title>
     <para>When you add $JAVA_HOME/bin to $PATH, you should add it <emphasis role="bold">before</emphasis> the old $PATH not after it. This way, the machine will pick up the new JVM first. 
@@ -50,7 +46,7 @@ export PATH=$PATH:$JAVA_HOME/bin]]></programlisting>
     <itemizedlist>
      <listitem><para>As root, type the following command at the shell prompt and you should see something like this:</para></listitem>
     </itemizedlist>
-    <programlisting><![CDATA[[root@vsr ~]$ /usr/sbin/alternatives --config java
+    <programlisting role="JAVA"><![CDATA[[root@vsr ~]$ /usr/sbin/alternatives --config java
 There are 2 programs which provide 'java'.
 Selection    Command
 -----------------------------------------------
@@ -61,7 +57,7 @@ Enter to keep the current selection[+], or type selection number:]]></programlis
     <itemizedlist>
      <listitem><para>Repeat the same for javac and java_sdk_1.5.0.</para></listitem>
     </itemizedlist>
-    <programlisting><![CDATA[[root@vsr ~]$ /usr/sbin/alternatives --config javac
+    <programlisting role="JAVA"><![CDATA[[root@vsr ~]$ /usr/sbin/alternatives --config javac
 There are 1 programs which provide 'javac'.
 	Selection   Command
 -----------------------------------------------
@@ -80,8 +76,7 @@ Enter to keep the current selection[+], or type selection number:]]></programlis
      <para>You can always override this step by setting the JAVA_HOME environment variable as explained in the previous step.</para>
     </note>
     <itemizedlist>
-     <listitem><para>Make sure that the java executable is in your path and that you are using an appropriate version. To verify your Java environment, type java -version
-      at the shell prompt and you should see something like this:</para></listitem>
+     <listitem><para>Make sure that the java executable is in your path and that you are using an appropriate version. To verify your Java environment, type &quot;java -version&quot; at the shell prompt and you should see something like this:</para></listitem>
     </itemizedlist>
     <programlisting><![CDATA[[root@vsr ~]$ java -version
 java version "1.5.0_11"
@@ -96,14 +91,13 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <title>Installing and Configuring 32-bit Sun JDK 5.0 on Microsoft Windows</title>
    <itemizedlist>
     <listitem><para>Download the <ulink  url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0 (Java 2 Development Kit)</ulink> from Sun&apos;s website. 
-    Choose &quot;JDK 5.0 Update &lt;x&gt;&quot; (where x is the latest update number) for download and then select your Windows Platform options to perform the installation.</para></listitem>
+    Choose &quot;JDK 5.0 Update &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) for download and then select your Windows Platform options to perform the installation.</para></listitem>
     <listitem><para>Create an environment variable called JAVA_HOME that points to the JDK installation directory, for example:</para></listitem>
    </itemizedlist>
-   <programlisting><![CDATA[C:\Program Files\Java\jdk1.5.0_11\]]></programlisting>
+   <para><emphasis>C:\Program Files\Java\jdk1.5.0_11\</emphasis></para>
      <para>In order to run java from the command line add the <emphasis>jre\bin</emphasis> directory to your path, for example:</para>
-   <programlisting><![CDATA[C:\Program Files\Java\jdk1.5.0_11\jre\bin]]></programlisting>
-      <para>To do this, open the Control Panel from the Start Menu, switch to Classic View if necessary, open the System Control Panel applet, select the Advanced Tab, 
-     and click on the Environment Variables button.</para>
+   <para><emphasis>C:\Program Files\Java\jdk1.5.0_11\jre\bin</emphasis></para>
+      <para>To do this, open the Control Panel from the Start Menu, switch to Classic View if necessary, open the System Control Panel applet, select the Advanced Tab, and click on the Environment Variables button.</para>
      
   </section>
  </section>
@@ -112,13 +106,17 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <title>Red Hat Developer Studio Installation</title>
   <section id="Instfromdownver">
    <title>Installing from the downloaded version</title>
+   <para>RHDS comes with simple installer, bundled with tested/pre-configured versions of Eclipse, Webtools, JBossEAP, and SpringIDE.</para>
    <itemizedlist>
    <listitem>
     <para>Download the appropriate installation file for your platform from <ulink  url="http://www.redhat.com/developers/rhds/index.html">Red Hat website</ulink>.</para>
    </listitem>
     <listitem>
-     <para>Run rhdevstudio-linux-gtk-1.0.0.beta1.jar and follow the instructions presented by the installation wizard</para>
-    </listitem>
+     <para>Run in console:</para>
+     <programlisting role="JAVA"><![CDATA[java -jar rhdevstudio-linux-gtk-1.0.0.beta1.jar
+]]></programlisting></listitem>
+      <listitem><para>and follow the instructions presented by the installation wizard</para></listitem>
+    
    </itemizedlist>
    
    <figure>
@@ -214,23 +212,30 @@ on their machines.</para>
 
 <orderedlist>
 <listitem>On Red Hat based Linux distributions  install the xpLib.i386 package</listitem>
-<listitem>Type ln -s libstdc++.so.5.0.7 libstdc++.so.5</listitem>
-<listitem>and/or use yum install libXp</listitem>
+<listitem>Type 
+<programlisting role="JAVA"><![CDATA[ln -s libstdc++.so.5.0.7 libstdc++.so.5
+]]></programlisting>
+</listitem>
+<listitem>and/or use
+<programlisting role="JAVA"><![CDATA[yum install libXp
+]]></programlisting>
+ </listitem>
 <listitem>Open the RHDS perspective. If you see the  Help view open, close it and restart RHDS</listitem>
 <listitem>If none of these work, do the following:
 <itemizedlist>
-<listitem>Clear the Eclipse log file, &lt;workspace&gt;\.metadata\.log</listitem>
+<listitem>Clear the Eclipse log file, <emphasis>&lt;workspace&gt;\.metadata\.log</emphasis></listitem>
 <listitem>Start Eclipse with the -debug option: 
-<para>eclipse -debug</para></listitem>
-<listitem>Post the Eclipse log file (&lt;workspace&gt;\.metadata\.log) on the forums.</listitem>
+<programlisting role="JAVA"><![CDATA[eclipse -debug
+]]></programlisting>
+</listitem>
+<listitem>Post the Eclipse log file (<emphasis>&lt;workspace&gt;\.metadata\.log</emphasis>) on the forums.</listitem>
 </itemizedlist>
 </listitem>
 </orderedlist>
 
 
   <para><emphasis role="bold">Do I need to have JBoss server installed to run Red Hat Developer Studio?</emphasis></para>
-  <para>No. Red Hat Developer Studio already comes bundled with JBoss server. We bundle it together so that you don&apos;t need to download any 
-  additional software and can test your application in a Web browser right away.</para>
+  <para>No. Red Hat Developer Studio already comes bundled with JBoss server. We bundle it together so that you don&apos;t need to download any additional software and can test your application in a Web browser right away.</para>
   <para>If you want to use a different JBoss server installation, after Red Hat Developer Studio is installed open Servers View (select <emphasis>Window &gt; Show View &gt; Others &gt; Server &gt; Servers</emphasis>), then right click on this <emphasis>view &gt; New &gt; Server</emphasis> and follow the wizards steps to point to another Jboss server installation.</para>
   <para>Red Hat Developer Studio works with any servlet container, not just JBoss. For more information on deployment, please see the Deploying Your Application section.</para>
  </section>
@@ -245,7 +250,9 @@ on their machines.</para>
   <title>Troubleshooting, Problems, Configuration, Error Messages</title>
   <para><emphasis role="bold">Is it possible to increase the performance of Eclipse after installing your product? My Eclipse now crawls.</emphasis></para>
   <para>Red Hat Developer Studio preconfigures eclipse via the eclipse.ini file to allocate extra memory, but if you for some reason need more memory then by default, you can manually make adjustments in this file. For example:</para>
-  <para>-vmargs -Xms128m -Xmx512m -XX:MaxPermSize=128m</para>
+  <programlisting role="JAVA"><![CDATA[-vmargs -Xms128m -Xmx512m -XX:MaxPermSize=128m
+]]></programlisting>
+  
 
     <para><emphasis role="bold">How can I add my own tag library to the Red Hat Palette?</emphasis></para>
   <para>See <ulink url="http://www.redhat.com/developers/rhds/JSFTools/JavaServerFacesSupport.html#AddingTagLibraries21653">Adding Tag Libraries</ulink> in JBossJSFTools Guide.</para>
