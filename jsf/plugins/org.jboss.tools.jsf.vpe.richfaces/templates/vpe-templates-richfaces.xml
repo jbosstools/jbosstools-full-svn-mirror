@@ -481,7 +481,7 @@
 			</vpe:resize>
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
-				<vpe:drop container="no"/>
+				<vpe:drop container="yes"/>
 			</vpe:dnd>
 		</vpe:template>
     </vpe:tag>
