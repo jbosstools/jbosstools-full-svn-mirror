@@ -11,14 +11,12 @@
 ******************************************************************************/ 
 package org.jboss.tools.vpe.dnd;
 
-import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.mozilla.EditorDomEventListener;
 import org.jboss.tools.vpe.editor.mozilla.MozillaDropInfo;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
-import org.mozilla.interfaces.nsIDOMNSHTMLElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDragService;
 import org.mozilla.interfaces.nsIServiceManager;
@@ -26,7 +24,6 @@ import org.mozilla.interfaces.nsISupportsArray;
 import org.mozilla.interfaces.nsISupportsString;
 import org.mozilla.interfaces.nsITransferable;
 import org.mozilla.xpcom.Mozilla;
-import org.mozilla.xpcom.XPCOMException;
 
 /**
  * @author Max Areshkau
@@ -55,38 +52,6 @@ public class VpeDnD {
 	 */
 	private nsIDragService dragService;
 
-	public Rectangle getBounds(nsIDOMNode visualNode) {
-		try {
-			
-		nsIDOMNSHTMLElement domNSHTMLElement = (nsIDOMNSHTMLElement) visualNode.queryInterface(nsIDOMNSHTMLElement.NS_IDOMNSHTMLELEMENT_IID);
-		int offsetLeft=domNSHTMLElement.getOffsetLeft();
-		int offsetTop =domNSHTMLElement.getOffsetTop();
-		while(true) {
-			
-			try{
-			
-				if(domNSHTMLElement.getOffsetParent()==null) {
-					break;
-				}
-					
-			domNSHTMLElement=(nsIDOMNSHTMLElement) domNSHTMLElement.getOffsetParent().queryInterface(nsIDOMNSHTMLElement.NS_IDOMNSHTMLELEMENT_IID);			
-			offsetLeft+=domNSHTMLElement.getOffsetLeft();
-			offsetTop+=domNSHTMLElement.getOffsetTop();
-			} catch(XPCOMException ex){
-				break;
-			}
-		}
-
-		return new Rectangle(offsetLeft, offsetTop,domNSHTMLElement.getOffsetWidth(),domNSHTMLElement.getOffsetHeight());
-		
-		} catch(XPCOMException xpcomException) {
-			
-			//TODO Max Areshkau 
-			//If node not not implement nsIDOMNSHTMLElement, may be check best take a parent node 
-			return new Rectangle(0, 0, 0,0);
-		}
-	}
-	
 	
 	/**
 	 * Starts drag session
