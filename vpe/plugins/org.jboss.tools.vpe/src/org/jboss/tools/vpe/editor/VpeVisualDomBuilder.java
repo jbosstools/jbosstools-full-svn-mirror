@@ -24,6 +24,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -33,7 +34,12 @@ import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.document.NodeImpl;
+import org.jboss.tools.common.model.XModel;
+import org.jboss.tools.common.model.XModelObject;
+import org.jboss.tools.common.model.project.IModelNature;
+import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.jst.web.model.helpers.WebAppHelper;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
@@ -156,7 +162,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		unborderedVisualNodes.add(TAG_BR);
 	}
 	private VpeDnd dropper;
-	
+	private boolean faceletFile;
 
 	public VpeVisualDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, VpeTemplateManager templateManager, MozillaEditor visualEditor, VpePageContext pageContext) {
 		super(domMapping, sorceAdapter, templateManager);
@@ -169,6 +175,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		this.headNode = visualEditor.getHeadNode();
 		dropper = new VpeDnd();
 		dropper.setDndData(false, true);
+		
+		if ( isFacelet() ) {
+			faceletFile = true;
+		} else {
+			faceletFile = false;
+		}
 	}
 	
 	public void buildDom(Document sourceDocument) {
@@ -381,16 +393,17 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			registerNodes(new VpeNodeMapping(sourceNode, null));
 			return null;
 		}
-	/*	
-		Matcher matcher_EL = REGEX_EL.matcher(sourceText);
-		if (matcher_EL.find()) {
-			BundleMap bundle = pageContext.getBundle();
-			int offset = pageContext.getVisualBuilder().getCurrentMainIncludeOffset();
-			if (offset == -1) offset = ((IndexedRegion)sourceNode).getStartOffset();
-			String jsfValue = bundle.getBundleValue(sourceText, offset);
-			sourceText  = jsfValue;
+
+		if (faceletFile) {
+			Matcher matcher_EL = REGEX_EL.matcher(sourceText);
+			if (matcher_EL.find()) {
+				BundleMap bundle = pageContext.getBundle();
+				int offset = pageContext.getVisualBuilder().getCurrentMainIncludeOffset();
+				if (offset == -1) offset = ((IndexedRegion)sourceNode).getStartOffset();
+				String jsfValue = bundle.getBundleValue(sourceText, offset);
+				sourceText  = jsfValue;
+			}
 		}
-*/		
 		String visualText = TextUtil.visualText(sourceText);
 
 		Node visualNewTextNode = visualDocument.createTextNode(visualText);
@@ -1673,5 +1686,36 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			xmlnsMap.put(attr.getNodeName(), new Integer(attr.hashCode()));
 			pageContext.setTaglib(attr.hashCode(), attr.getNodeValue(), attr.getLocalName(), ns);
 		}
+	}
+	
+	/**
+	 * Check this file is facelet
+	 * @return this if file is facelet, otherwize false
+	 */
+	private boolean isFacelet() {
+		boolean isFacelet = false;
+		
+		IEditorInput iEditorInput = pageContext.getEditPart().getEditorInput();
+		if ( iEditorInput instanceof IFileEditorInput ) {
+			IFileEditorInput iFileEditorInput = (IFileEditorInput) iEditorInput;
+			
+			IFile iFile = iFileEditorInput.getFile();
+		
+			IProject project = iFile.getProject();
+			IModelNature nature = EclipseResourceUtil.getModelNature(project);
+			XModel model = nature.getModel();
+			XModelObject webXML = WebAppHelper.getWebApp(model); 
+			XModelObject param = WebAppHelper.findWebAppContextParam(webXML, "javax.faces.DEFAULT_SUFFIX");
+			if ( param != null ) {
+				String value = param.getAttributeValue("param-value");
+		
+				if ( value.length() != 0 && iFile.getName().endsWith(value)) {
+					isFacelet = true;
+				}
+			}
+			
+		}
+		
+		return isFacelet;		
 	}
 }
