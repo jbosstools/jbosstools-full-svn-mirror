@@ -59,7 +59,25 @@ public class VpeDnD {
 		try {
 			
 		nsIDOMNSHTMLElement domNSHTMLElement = (nsIDOMNSHTMLElement) visualNode.queryInterface(nsIDOMNSHTMLElement.NS_IDOMNSHTMLELEMENT_IID);
-		return new Rectangle(domNSHTMLElement.getOffsetLeft(), domNSHTMLElement.getOffsetTop(),domNSHTMLElement.getOffsetWidth(),domNSHTMLElement.getOffsetHeight());
+		int offsetLeft=domNSHTMLElement.getOffsetLeft();
+		int offsetTop =domNSHTMLElement.getOffsetTop();
+		while(true) {
+			
+			try{
+			
+				if(domNSHTMLElement.getOffsetParent()==null) {
+					break;
+				}
+					
+			domNSHTMLElement=(nsIDOMNSHTMLElement) domNSHTMLElement.getOffsetParent().queryInterface(nsIDOMNSHTMLElement.NS_IDOMNSHTMLELEMENT_IID);			
+			offsetLeft+=domNSHTMLElement.getOffsetLeft();
+			offsetTop+=domNSHTMLElement.getOffsetTop();
+			} catch(XPCOMException ex){
+				break;
+			}
+		}
+
+		return new Rectangle(offsetLeft, offsetTop,domNSHTMLElement.getOffsetWidth(),domNSHTMLElement.getOffsetHeight());
 		
 		} catch(XPCOMException xpcomException) {
 			
@@ -68,6 +86,7 @@ public class VpeDnD {
 			return new Rectangle(0, 0, 0,0);
 		}
 	}
+	
 	
 	/**
 	 * Starts drag session
