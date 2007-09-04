@@ -55,21 +55,17 @@ import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
+import org.jboss.tools.vpe.editor.util.VpeDndUtil;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMAttr;
-import org.mozilla.interfaces.nsIDOMChromeWindow;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
-import org.mozilla.interfaces.nsIDOMEventGroup;
-import org.mozilla.interfaces.nsIDOMEventTarget;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsIDOMRange;
 import org.mozilla.interfaces.nsIDOMText;
-import org.mozilla.interfaces.nsIEventTarget;
-import org.mozilla.interfaces.nsIWebBrowserChrome;
 import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -1370,7 +1366,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	
 	Rectangle getNodeBounds(nsIDOMNode visualNode) {
 		
-		return dnd.getBounds(visualNode);
+		return VpeDndUtil.getBounds(visualNode);
 	}
 	
 	static boolean canInsertAfter(int x, int y, Rectangle rect) {
