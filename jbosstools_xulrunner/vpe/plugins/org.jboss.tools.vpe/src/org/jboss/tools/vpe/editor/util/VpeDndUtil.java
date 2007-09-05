@@ -55,6 +55,8 @@ public class VpeDndUtil {
 		nsIDOMNSHTMLElement domNSHTMLElement = (nsIDOMNSHTMLElement) visualNode.queryInterface(nsIDOMNSHTMLElement.NS_IDOMNSHTMLELEMENT_IID);
 		int offsetLeft=domNSHTMLElement.getOffsetLeft();
 		int offsetTop =domNSHTMLElement.getOffsetTop();
+		int offsetWidth=domNSHTMLElement.getOffsetWidth();
+		int offsetHeight=domNSHTMLElement.getOffsetHeight();
 		while(true) {
 			
 			try{
@@ -71,7 +73,7 @@ public class VpeDndUtil {
 			}
 		}
 
-		return new Rectangle(offsetLeft, offsetTop,domNSHTMLElement.getOffsetWidth(),domNSHTMLElement.getOffsetHeight());
+		return new Rectangle(offsetLeft, offsetTop,offsetWidth,offsetHeight);
 		
 		} catch(XPCOMException xpcomException) {
 			
