@@ -13,7 +13,7 @@ package org.jboss.tools.vpe.xulrunner.editor;
 
 
 import java.util.ArrayList;
-
+import org.eclipse.swt.graphics.Rectangle;
 import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -93,7 +93,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	
 	private nsIDOMElement activeHandle;
 
-	private ElementPositionAndDimention elementPositionAndDimention;
+	private Rectangle elementBounds;
 	
 	/** resizer marker top-left */
 	private nsIDOMElement markerTopLeft = null;
@@ -148,12 +148,12 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 
 		System.out.println("XulRunnerVpeResizer.show for element: " + resizingObject.getNodeName() );
 		
-		elementPositionAndDimention = DOMElementUtils.getElementPositionAndDimention(domElement);
+		elementBounds = XulRunnerVpeUtils.getElementBounds(domElement);
 		
-		if ((elementPositionAndDimention.getWidth() <= 0) || 
-			(elementPositionAndDimention.getWidth() > MAX_SIZE) || 
-			(elementPositionAndDimention.getHeight() <= 0) || 
-			(elementPositionAndDimention.getHeight() > MAX_SIZE)) return;
+		if ((elementBounds.width <= 0) || 
+			(elementBounds.width > MAX_SIZE) || 
+			(elementBounds.height <= 0) || 
+			(elementBounds.height > MAX_SIZE)) return;
 		
 		nsIDOMElement bodyElement = getRootElement();
 		
@@ -219,7 +219,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		
 		resizingShadow = createShadow(bodyElement, resizingObject);
 
-		setShadowPosition(resizingShadow, elementPositionAndDimention.getLeft(), elementPositionAndDimention.getTop());
+		setShadowPosition(resizingShadow, elementBounds.x, elementBounds.y);
 	}
 
 	
@@ -492,10 +492,10 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		resizingShadow.removeAttribute(XulRunnerConstants.HTML_ATTR_CLASS);
 
 		// position it
-		setShadowPosition(resizingShadow, elementPositionAndDimention.getLeft(), elementPositionAndDimention.getTop());
+		setShadowPosition(resizingShadow, elementBounds.x, elementBounds.y);
 
-		setStylePropertyPixels(resizingShadow, XulRunnerConstants.HTML_ATTR_WIDTH, elementPositionAndDimention.getWidth() );
-		setStylePropertyPixels(resizingShadow, XulRunnerConstants.HTML_ATTR_HEIGHT, elementPositionAndDimention.getTop() );
+		setStylePropertyPixels(resizingShadow, XulRunnerConstants.HTML_ATTR_WIDTH, elementBounds.width );
+		setStylePropertyPixels(resizingShadow, XulRunnerConstants.HTML_ATTR_HEIGHT, elementBounds.height );
 		
 		
 		if (mouseMotionListener !=  null) {
@@ -539,8 +539,8 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	 * @return
 	 */
 	private int getNewResizingX(int aX, int aY)	{
-		int resized = elementPositionAndDimention.getLeft() + getNewResizingIncrement(aX, aY, COEFFICIENT_TYPE.X) * incrementFactorX;
-		int max =   elementPositionAndDimention.getLeft() + elementPositionAndDimention.getWidth();
+		int resized = elementBounds.x+ getNewResizingIncrement(aX, aY, COEFFICIENT_TYPE.X) * incrementFactorX;
+		int max =   elementBounds.x + elementBounds.width;
 		return Math.min(resized, max);
 	}
 
@@ -551,8 +551,8 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	 * @return
 	 */
 	private int getNewResizingY(int aX, int aY)	{
-		int resized = elementPositionAndDimention.getTop() + getNewResizingIncrement(aX, aY, COEFFICIENT_TYPE.Y) * incrementFactorY;
-		int max =   elementPositionAndDimention.getTop() + elementPositionAndDimention.getHeight();
+		int resized = elementBounds.y + getNewResizingIncrement(aX, aY, COEFFICIENT_TYPE.Y) * incrementFactorY;
+		int max =   elementBounds.y + elementBounds.height;
 		return Math.min(resized, max);
 	}
 
@@ -563,7 +563,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	 * @return
 	 */
 	private int getNewResizingWidth(int aX, int aY)	{
-		int resized = elementPositionAndDimention.getWidth() +	getNewResizingIncrement(aX, aY, COEFFICIENT_TYPE.WIDTH) * incrementFactorWidth;
+		int resized = elementBounds.width +	getNewResizingIncrement(aX, aY, COEFFICIENT_TYPE.WIDTH) * incrementFactorWidth;
 		return Math.max(resized, 1);
 	}
 
@@ -574,7 +574,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	 * @return
 	 */
 	private int getNewResizingHeight(int aX, int aY) {
-		int resized = elementPositionAndDimention.getHeight() +	getNewResizingIncrement(aX, aY, COEFFICIENT_TYPE.HEIGHT) *	incrementFactorHeight;
+		int resized = elementBounds.height + getNewResizingIncrement(aX, aY, COEFFICIENT_TYPE.HEIGHT) *	incrementFactorHeight;
 		return Math.max(resized, 1);
 	}
 
@@ -647,10 +647,10 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	 * Set all positions of resizer's markers
 	 */
 	private void setAllResizersPosition() {
-		int left = elementPositionAndDimention.getLeft();
-		int top = elementPositionAndDimention.getTop();
-		int width = elementPositionAndDimention.getWidth();
-		int height = elementPositionAndDimention.getHeight();
+		int left = elementBounds.x;
+		int top = elementBounds.y;
+		int width = elementBounds.width;
+		int height = elementBounds.height;
 		
 		int resizerWidth = 5;
 		int resizerHeight = 5;
