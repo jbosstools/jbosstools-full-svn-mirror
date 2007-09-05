@@ -14,6 +14,7 @@ package org.jboss.tools.vpe.xulrunner.editor;
 import java.util.regex.Pattern;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -95,6 +96,10 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 
 	private nsIDOMElement lastSelectedElement;
 	private int lastResizerConstrains;
+	/**
+	 *  Scroll selection into view flag
+	 */
+	private boolean scrollRegtangleFlag = false;
 
 	/**
 	 * @param parent
@@ -275,6 +280,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		}
 		if (getLastSelectedElement() != null) {
 			
+			scrollRegtangleFlag = scroll && element != null;
+			
 			if(checkVisability(getLastSelectedElement())){
 				
 					if((getLastSelectedElement().getAttribute(VPEFLASHERCOLORATTRIBUTE)==null)||
@@ -301,6 +308,10 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 
 		} else if (element != null) {
 			
+			if (scroll) {
+				scrollToElement(element);
+				scrollRegtangleFlag = true;
+			}
 			if(checkVisability(element)){
 				
 			
@@ -454,10 +465,11 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	
 //		((nsIBaseWindow)getWebBrowser().queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(false);
 		if (getIFlasher() != null && getLastSelectedElement() != null) {
-//			if (scrollRegtangleFlag) {
-//				scrollRegtangleFlag = false;
-//				selectionController.scrollSelectionIntoView();
-//			}
+			if (scrollRegtangleFlag) {
+				scrollRegtangleFlag = false;
+					
+					scrollToElement(getLastSelectedElement());
+			}
 			//checks visability of element
 			if(checkVisability(getLastSelectedElement())){
 				
@@ -481,6 +493,16 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 				}
 			}
 		}
+	}
+	/**
+	 * Scrools viiew to some elements
+	 * @param element -element to which we should scroll 
+	 */
+	private void scrollToElement(nsIDOMElement element){	
+		nsIDOMWindow domWindow = getWebBrowser().getContentDOMWindow();
+		// get element positions on visual page
+		Rectangle rect=XulRunnerVpeUtils.getElementBounds(element);
+		domWindow.scrollTo(rect.x, rect.y);
 	}
 }
 
