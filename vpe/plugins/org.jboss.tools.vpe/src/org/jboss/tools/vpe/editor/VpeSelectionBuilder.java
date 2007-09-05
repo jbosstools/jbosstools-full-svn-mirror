@@ -38,7 +38,6 @@ import org.mozilla.interfaces.nsIDOMRange;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionController;
 import org.mozilla.interfaces.nsISelectionDisplay;
-import org.mozilla.interfaces.nsISupports;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -1280,8 +1279,11 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 //			if (frameSelection != null) {
 //				frameSelection.setMouseDownState(true);
 //			}
-			mouseEvent.preventDefault();
-			mouseEvent.stopPropagation();
+			
+			// was commented by Max Areshkau (with this  code scrolling doesn't works)
+			// 
+//			mouseEvent.preventDefault();
+//			mouseEvent.stopPropagation();
 		}
 	}
 	
