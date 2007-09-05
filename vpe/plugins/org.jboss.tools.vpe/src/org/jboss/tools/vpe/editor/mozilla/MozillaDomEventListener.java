@@ -344,15 +344,12 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 			nsIDOMMouseEvent mouseEvent;
 			mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 			getEditorDomEventListener().mouseDown(mouseEvent);
-//			domEvent.stopPropagation();
-//			domEvent.preventDefault();
+
 		} else if(MOUSEUPEVENTTYPE.equals(domEvent.getType())) {
 			
 			nsIDOMMouseEvent mouseEvent;
 			mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 			getEditorDomEventListener().mouseUp(mouseEvent);
-//			domEvent.stopPropagation();
-//			domEvent.preventDefault();
 		} else if(CLICKEVENTTYPE.equals(domEvent.getType())) {
 			
 			nsIDOMMouseEvent mouseEvent;
