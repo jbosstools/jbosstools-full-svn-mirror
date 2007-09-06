@@ -12,7 +12,6 @@ package org.jboss.tools.vpe.editor.mozilla;
 
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
-import org.mozilla.interfaces.nsIClipboardDragDropHooks;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMEventListener;
@@ -27,8 +26,7 @@ import org.mozilla.interfaces.nsITransferable;
 import org.mozilla.xpcom.Mozilla;
 
 
-class MozillaDomEventListener implements nsIClipboardDragDropHooks, 
-		nsIDOMEventListener, nsISelectionListener {
+class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListener {
 	// TODO Max Areshkau add DnD
 //	private XPCOMObject dropListener;
 
@@ -62,46 +60,6 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 	
 	public static final String DRAGEXITEVENT = "dragexit";
 	
-	public MozillaDomEventListener() {
-		createCOMInterfaces();
-	}
-
-	void createCOMInterfaces() {
-		
-		// TODO Max Areshkau add DnD
-		// VpeDnD
-//		dropListener = new XPCOMObject(new int[]{2,0,0,4,4,3,6,5}) {
-//			public int method0(int[] args) {return QueryInterface(args[0], args[1]);}
-//			public int method1(int[] args) {return AddRef();}
-//			public int method2(int[] args) {return Release();}
-//			public int method3(int[] args) {return CanDrag(args[0], args[1], args[2], args[3]);}
-//			public int method4(int[] args) {return CanDrop(args[0], args[1], args[2], args[3]);}
-//			public int method5(int[] args) {return Drop(args[0], args[1], args[2]);}
-//			public int method6(int[] args) {return CanDropExternal(args[0], args[1], args[2], args[3], args[4], args[5]);}
-//			public int method7(int[] args) {return DropExternal(args[0], args[1], args[2], args[3], args[4]);}
-//		};
-//	
-//		dnd = getDnD();
-	}
-
-	void disposeCOMInterfaces() {
-		// TODO Max Areshakau add DnD
-//		if (dropListener != null) {
-//			dropListener.dispose();
-//			dropListener = null;
-//		}
-	}
-
-	// TODO Max Areshkau add DnD support
-//	XPCOMObject getDropListener() {
-//		return dropListener;
-//	}
-
-	// TODO Max Areshkau add DnD support
-//	VpeDnD getLocalDnD() {
-//		return dnd;
-//	}
-
 	void setEditorDomEventListener(EditorDomEventListener listener) {
 		editorDomEventListener = listener;
 	}
@@ -116,125 +74,7 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 		return editorDomEventListener;
 	}
 	
-	// TODO Max Areshkau add DnD support
-//	VpeDnD getDnD() {
-//		int[] result = new int[] {0};
-//		int rc = XPCOM.NS_GetComponentManager(result);
-//		if (rc != XPCOM.NS_OK) {
-//			VpePlugin.getPluginLog().logError("(DND) GetComponentManager error " + rc);
-//		}
-//		if (result[0] == 0) {
-//			VpePlugin.getPluginLog().logError("(DND) GetComponentManager error NO_INTERFACE");
-//		}
-//		
-//		nsIComponentManager componentManager = new nsIComponentManager(result[0]);
-//		result[0] = 0;
-//		rc = componentManager.CreateInstance(XPCOM.VPE_DND_CID, 0, VpeDnD.VPE_DND_IID, result);
-//		if (rc != XPCOM.NS_OK) {
-//			VpePlugin.getPluginLog().logError("(DND) Create instance error " + rc);
-//		}
-//		if (result[0] == 0) {
-//			VpePlugin.getPluginLog().logError("(DND) Create instance error NO_INTERFACE");
-//		}
-//		componentManager.Release();
-//
-//		return new VpeDnD(result[0]);
-//	}
-//	
-//	// IVpeDropListener
-	//generates when drag event exist
-//	int CanDrag(int aDragEvent, int _retval, int aNode, int offset) {
-//		int canDrag = 0;
-//		
-//		nsIDOMMouseEvent mouseEvent = nsIDOMEvent.queryMouseEvent(aDragEvent);
-//
-//		if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
-//			boolean canDragFlag = editorDomEventListener.canInnerDrag(mouseEvent);
-//			canDrag = canDragFlag ? 1 : 0;
-//		}
-//		XPCOM.memmove(_retval, new int[] {canDrag}, 4);
-//		XPCOM.memmove(aNode, new int[] {0}, 4);
-//		XPCOM.memmove(offset, new int[] {0}, 4);
-//		return XPCOM.NS_OK;
-//	}
-//
-//	int CanDrop(int aDropEvent, int _retval, int aNode, int offset) {
-//		int canDrop = 0;
-//		int aCaretParent = 0;
-//		int caretOffset = 0;
-//
-//		nsIDOMMouseEvent mouseEvent = nsIDOMEvent.queryMouseEvent(aDropEvent);
-//
-//		if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
-////			nsIDOMNode visualNode = mouseEvent.getTargetNode();
-//			MozillaDropInfo info = editorDomEventListener.canInnerDrop(mouseEvent);
-//			if (info != null && info.canDrop()) {
-//				canDrop = 1;
-//				Node caretParent = info.getCaretParent();
-//				if (caretParent != null) {
-//					MozillaSupports.addRef(caretParent);
-//					aCaretParent = MozillaSupports.getAddress(caretParent);
-//					caretOffset = info.getCaretOffset();
-//				}
-//			}
-//		}
-//		XPCOM.memmove(_retval, new int[] {canDrop}, 4);
-//		XPCOM.memmove(aNode, new int[] {aCaretParent}, 4);
-//		XPCOM.memmove(offset, new int[] {caretOffset}, 4);
-//		return XPCOM.NS_OK;
-//	}
-//	
-//	int Drop(int aDropEvent, int aNode, int offset) {
-//		nsIDOMMouseEvent mouseEvent = nsIDOMEvent.queryMouseEvent(aDropEvent);
-//
-//		if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
-//			editorDomEventListener.innerDrop(mouseEvent);
-//		}
-//		XPCOM.memmove(aNode, new int[] {0}, 4);
-//		XPCOM.memmove(offset, new int[] {0}, 4);
-//		return XPCOM.NS_OK;
-//	}
-//	generates on external drop event
-//	int CanDropExternal(int aDropEvent, int aFlavor, int aTransData, int _retval, int aNode, int offset) {
-//		int canDrop = 0;
-//		int aCaretParent = 0;
-//		int caretOffset = 0;
-//
-//		nsIDOMMouseEvent mouseEvent = nsIDOMEvent.queryMouseEvent(aDropEvent);
-//		
-//		if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
-//			String flavor = new nsString(aFlavor).toString();
-//			String data = new nsString(aTransData).toString();
-//			MozillaDropInfo info = editorDomEventListener.canExternalDrop(mouseEvent, flavor, data);
-//			if (info != null) {
-//				canDrop = info.canDrop() ? 1 : 0;
-//				Node caretParent = info.getCaretParent();
-//				if (caretParent != null) {
-//					MozillaSupports.addRef(caretParent);
-//					aCaretParent = MozillaSupports.getAddress(caretParent);
-//					caretOffset = info.getCaretOffset();
-//				}
-//			}
-//		}
-//		XPCOM.memmove(_retval, new int[] {canDrop}, 4);
-//		XPCOM.memmove(aNode, new int[] {aCaretParent}, 4);
-//		XPCOM.memmove(offset, new int[] {caretOffset}, 4);
-//		return XPCOM.NS_OK;
-//	}
-//  	
-//	int DropExternal(int aDropEvent, int aFlavor, int aTransData, int aNode, int offset) {
-//		nsIDOMMouseEvent mouseEvent = nsIDOMEvent.queryMouseEvent(aDropEvent);
-//
-//		if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
-//			String flavor = new nsString(aFlavor).toString();
-//			String data = new nsString(aTransData).toString();
-//			editorDomEventListener.externalDrop(mouseEvent, flavor, data);
-//		}
-//		XPCOM.memmove(aNode, new int[] {0}, 4);
-//		XPCOM.memmove(offset, new int[] {0}, 4);
-////		return XPCOM.NS_OK;
-//		return XPCOM.NS_ERROR_ABORT;
-//	}
+
 	
 	boolean isXulElement(nsIDOMMouseEvent mouseEvent) {
 		// TODO Sergey Vasilyev figure out with getTmpRealOriginalTarget
@@ -253,52 +93,6 @@ class MozillaDomEventListener implements nsIClipboardDragDropHooks,
 
 	void setVisualEditor(XulRunnerEditor visualEditor) {
 		this.visualEditor = visualEditor;
-	}
-
-	/*-------------------------------------------*\
-	 *  nsIClipboardDragDropHooks implementation *
-	 *-------------------------------------------*/
-	
-	/* (non-Javadoc)
-	 * @see org.mozilla.interfaces.nsIClipboardDragDropHooks#allowDrop(org.mozilla.interfaces.nsIDOMEvent, org.mozilla.interfaces.nsIDragSession)
-	 */
-	// checks is drop allowed
-	@Deprecated 
-	// functionality was moved to VpeDnD.dragOver
-	public boolean allowDrop(nsIDOMEvent event, nsIDragSession dragSession) {
-		boolean canDrop = false;
-//		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
-//
-//		if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
-//			if (dragSession.isDataFlavorSupported(VpeController.MODEL_FLAVOR)) {
-//				MozillaDropInfo info = editorDomEventListener.canExternalDrop(mouseEvent, VpeController.MODEL_FLAVOR, "");
-//				if (info != null && info.canDrop()) {
-//					// TODO Sergey Vasilyev figures out with this drop
-//					String nodeName = info.getCaretParent().getNodeName();
-//					if ("input".equalsIgnoreCase(nodeName)) {
-//						canDrop = true;
-//					}
-//				}
-//			}
-//		}
-//		mouseEvent.preventDefault();
-//		mouseEvent.stopPropagation();
-//		
-		return canDrop;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.mozilla.interfaces.nsIClipboardDragDropHooks#allowStartDrag(org.mozilla.interfaces.nsIDOMEvent)
-	 */
-	public boolean allowStartDrag(nsIDOMEvent arg0) {
-		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.mozilla.interfaces.nsIClipboardDragDropHooks#onCopyOrDrag(org.mozilla.interfaces.nsIDOMEvent, org.mozilla.interfaces.nsITransferable)
-	 */
-	public boolean onCopyOrDrag(nsIDOMEvent arg0, nsITransferable arg1) {
-		return true;
 	}
 
 	/* (non-Javadoc)
