@@ -207,10 +207,12 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		if( root != null ) {
 			List list = Arrays.asList( getRoot(project, register, monitor).getAllChildren());
 			return (IArchive[]) list.toArray(new IArchive[list.size()]);
-		} else {
+		} else if( register) {
 			registerProject(project, monitor);
 			List list = Arrays.asList( getRoot(project, register, monitor).getAllChildren());
 			return (IArchive[]) list.toArray(new IArchive[list.size()]);
+		} else {
+			return new IArchive[] {};
 		}
 	}
 	
