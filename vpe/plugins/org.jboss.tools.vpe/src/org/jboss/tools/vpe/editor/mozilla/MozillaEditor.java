@@ -53,7 +53,6 @@ import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.toolbar.format.TextFormattingToolBar;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
-import org.jboss.tools.vpe.selbar.SelectionBar;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIClipboardDragDropHookList;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -548,7 +547,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private void addClipboardDragDropHooks() {
 		if (contentAreaEventListener != null) {
 			nsIClipboardDragDropHookList hookList = xulRunnerEditor.getClipboardDragDropHookList();
-			hookList.addClipboardDragDropHooks(contentAreaEventListener);
+//			hookList.addClipboardDragDropHooks(contentAreaEventListener);
 		} else if (baseEventListener != null) {
 			nsIClipboardDragDropHookList hookList = xulRunnerEditor.getClipboardDragDropHookList();
 			hookList.addClipboardDragDropHooks(baseEventListener);
@@ -558,7 +557,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private void removeClipboardDragDropHooks() {
 		if (contentAreaEventListener != null) {
 			nsIClipboardDragDropHookList hookList = xulRunnerEditor.getClipboardDragDropHookList();
-			hookList.removeClipboardDragDropHooks(contentAreaEventListener);
+//			hookList.removeClipboardDragDropHooks(contentAreaEventListener);
 		} else if (baseEventListener != null) {
 			nsIClipboardDragDropHookList hookList = xulRunnerEditor.getClipboardDragDropHookList();
 			hookList.removeClipboardDragDropHooks(baseEventListener);
