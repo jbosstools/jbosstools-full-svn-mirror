@@ -760,7 +760,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 						} else if (HTML.TAG_OPTION.equalsIgnoreCase(visualElementName)) {
 							updateElement(sourceElement.getParentNode());
 							return;
-						}
+						} else if (HTML.TAG_INPUT.equalsIgnoreCase(visualElementName)) {
+							updateElement(sourceElement);
+						} 
 					}
 					setXmlnsAttribute(elementMapping, name, value);
 					template.setAttribute(pageContext, sourceElement, visualDocument, visualElement, elementMapping.getData(), name, value);
