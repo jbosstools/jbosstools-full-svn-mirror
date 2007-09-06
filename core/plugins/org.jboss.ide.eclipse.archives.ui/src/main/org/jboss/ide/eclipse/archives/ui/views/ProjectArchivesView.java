@@ -82,8 +82,13 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 				
 				Object element = ((IStructuredSelection)selection).getFirstElement();
 				IProject project = getProject(element);
-				if( project != null ) 
+				if( project != null ) {
 					viewSelectionChanged(project);
+				} else {
+					if( getCurrentProject() != null && !getCurrentProject().exists() ) {
+						viewSelectionChanged(null);
+					}
+				}
 			}
 			
 			public IProject getProject (Object element) {
@@ -209,6 +214,7 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 		if( project == null ) {
 			this.project = null;
 			packageViewer.setInput(null);
+			book.showPage(noSelectionComposite);
 			return;
 		}
 		
