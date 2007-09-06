@@ -160,6 +160,7 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 	private void onFocusGained() {
 		nsIWebBrowserFocus webBrowserFocus = (nsIWebBrowserFocus) webBrowser.queryInterface(nsIWebBrowserFocus.NS_IWEBBROWSERFOCUS_IID);
 		webBrowserFocus.activate();
+		webBrowserFocus.setFocusAtFirstElement();
 	}
 	
 	private void onFocusLost() {

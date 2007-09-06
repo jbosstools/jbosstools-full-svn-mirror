@@ -502,7 +502,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		nsIDOMWindow domWindow = getWebBrowser().getContentDOMWindow();
 		// get element positions on visual page
 		Rectangle rect=XulRunnerVpeUtils.getElementBounds(element);
-		domWindow.scrollTo(rect.x, rect.y);
+		domWindow.scrollTo(rect.x-10, rect.y-10);
 	}
 }
 
