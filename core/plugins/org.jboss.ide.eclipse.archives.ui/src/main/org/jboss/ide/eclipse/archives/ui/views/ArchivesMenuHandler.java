@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -19,6 +20,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
 import org.jboss.ide.eclipse.archives.core.model.ArchiveNodeFactory;
@@ -85,6 +87,7 @@ public class ArchivesMenuHandler {
 	private void createMenu () {
 		newPackageManager = new MenuManager(ArchivesUIMessages.ProjectPackagesView_newPackageMenu_label, NEW_PACKAGE_MENU_ID);
 		addNewPackageActions(newPackageManager);
+		newPackageManager.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
 
 	private void createContextMenu () {
