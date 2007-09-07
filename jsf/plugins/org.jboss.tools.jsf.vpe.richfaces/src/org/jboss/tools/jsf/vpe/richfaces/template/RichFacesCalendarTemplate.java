@@ -283,7 +283,7 @@ public class RichFacesCalendarTemplate extends VpeAbstractTemplate {
 		days = 29;
 	}
 
-	int start = day - (dayN % NUM_DAYS_IN_WEEK + 1);
+	int start = day - (dayN % NUM_DAYS_IN_WEEK + cal.getFirstDayOfWeek() - 1);
 	if (start < 0)
 	    start += NUM_DAYS_IN_WEEK;
 	int weeks = (start + days) / NUM_DAYS_IN_WEEK;

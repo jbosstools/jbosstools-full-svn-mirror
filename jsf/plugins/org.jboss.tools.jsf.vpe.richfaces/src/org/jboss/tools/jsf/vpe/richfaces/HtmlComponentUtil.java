@@ -23,6 +23,18 @@ public class HtmlComponentUtil {
 	
 	/** HTML TAG BR */
 	public static final String HTML_TAG_BR = "br";
+	
+	/** HTML TAG COLGROUP */
+	public static final String HTML_TAG_COLGROUP = "colgroup";
+	
+	/** HTML TAG THEAD */
+	public static final String HTML_TAG_THEAD = "thead";
+	
+	/** HTML TAG TFOOT */
+	public static final String HTML_TAG_TFOOT = "tfoot";
+	
+	/** HTML TAG CAPTION */
+	public static final String HTML_TAG_CAPTION = "caption";
 
 	/** HTML TAG DT */
 	public static final String HTML_TAG_DT = "dt";
