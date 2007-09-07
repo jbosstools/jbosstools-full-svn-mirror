@@ -289,12 +289,23 @@ public class ArchivesMenuHandler {
 		
 		int response = dialog.open();
 		if (response == Dialog.OK) {
-			String folderName = dialog.getValue();
+			String[] folderPaths = dialog.getValue().split("[\\\\/]");
 			IArchiveNode selected = getSelectedNode();
+			IArchiveFolder current = null;
+			IArchiveFolder temp = null;
+			
+			for(int i = folderPaths.length-1; i >= 0 ; i-- ) {
+				temp = ArchiveNodeFactory.createFolder();
+				temp.setName(folderPaths[i]);
+				if( current == null ) 
+					current = temp;
+				else {
+					temp.addChild(current);
+					current = temp;
+				}
+			}
 
-			IArchiveFolder folder = ArchiveNodeFactory.createFolder();
-			folder.setName(folderName);
-			ArchivesModel.instance().attach(selected, folder, new NullProgressMonitor());
+			ArchivesModel.instance().attach(selected, current, new NullProgressMonitor());
 		}
 	}
 	
