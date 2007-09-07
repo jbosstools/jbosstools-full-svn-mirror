@@ -140,14 +140,11 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	public void show(nsIDOMElement domElement, int resizers) {
 				
 		if ( resizingObject != null ) {
-			System.out.println("XulRunnerVpeResizer.show before hide for element: " + resizingObject.getNodeName() );
 			hide();
 		}
 		
 		resizingObject = domElement;
 
-		System.out.println("XulRunnerVpeResizer.show for element: " + resizingObject.getNodeName() );
-		
 		elementBounds = XulRunnerVpeUtils.getElementBounds(domElement);
 		
 		if ((elementBounds.width <= 0) || 
@@ -227,10 +224,6 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	 * @see org.jboss.vpe.mozilla.resizer.IVpeResizer#hide()
 	 */
 	public void hide() {
-		if (  resizingObject != null ) {
-			System.out.println("XulRunnerVpeResizer.hide for element: " + resizingObject.getNodeName() );
-		}
-
 		nsIDOMElement bodyElement;
 		
 		bodyElement = getRootElement();

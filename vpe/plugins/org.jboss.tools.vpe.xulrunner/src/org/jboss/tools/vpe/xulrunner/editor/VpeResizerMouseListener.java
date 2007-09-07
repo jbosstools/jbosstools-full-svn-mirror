@@ -96,15 +96,11 @@ public class VpeResizerMouseListener implements nsIDOMEventListener {
 					nsIDOMElement domElement = (nsIDOMElement) eventTarget
 							.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 					if (domElement != null) {
-						System.out.println("ELEMENT IS: " + domElement.getNodeName());
 						int clientX = mouseEvent.getClientX();
 						int clientY = mouseEvent.getClientY();
 						
 						vpeResizer.mouseDown(clientX, clientY, domElement);
-					} else {
-						System.out.println("ELEMENT IS NULL ");
 					}
-				
 				} // if
 			} // if
 
