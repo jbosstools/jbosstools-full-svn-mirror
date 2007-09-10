@@ -55,7 +55,6 @@ public class RichFacesInsertTemplate extends VpeAbstractTemplate {
 	private static String STYLE = "style=";
 
 	private static String OPEN_BRACKET = "{";
-
 	private static String CLOSE_BRACKET = "}";
 
 	private static String SPACE = "&nbsp;";
@@ -63,6 +62,14 @@ public class RichFacesInsertTemplate extends VpeAbstractTemplate {
 	private static String SPAN_TAG = "<span style=\"color: rgb(255,255,255)\">_</span>";
 
 	private static String EMPTY_STRING = "";
+
+	private static String HTML = "html";
+	private static String XHTML = "xhtml";
+	private static String XML = "xml";
+	private static String JAVA = "java";
+	private static String CPP = "cpp";
+	private static String GROOVY = "groovy";
+	private static String LZX = "lzx";
 
 	private nsIDOMDocument visualDocument;
 
@@ -133,16 +140,14 @@ public class RichFacesInsertTemplate extends VpeAbstractTemplate {
 
 		HashMap<String, String> map = new HashMap<String, String>();
 
-		if (highlightValue.equalsIgnoreCase("html")
-				|| highlightValue.equalsIgnoreCase("xhtml")
-				|| highlightValue.equalsIgnoreCase("lzx"))
-			highlightValue = "xml";
-		if (highlightValue.equalsIgnoreCase("groovy")) {
-			highlightValue = "java";
-		}
-		if (highlightValue.equalsIgnoreCase("c++")) {
-			highlightValue = "cpp";
-		}
+		if (highlightValue.equalsIgnoreCase(HTML)
+				|| highlightValue.equalsIgnoreCase(XHTML)
+				|| highlightValue.equalsIgnoreCase(LZX))
+			highlightValue = XML;
+		if (highlightValue.equalsIgnoreCase(GROOVY))
+			highlightValue = JAVA;
+		if (highlightValue.equalsIgnoreCase("c++"))
+			highlightValue = CPP;
 
 		String sym = "." + highlightValue + "_";
 
@@ -202,7 +207,7 @@ public class RichFacesInsertTemplate extends VpeAbstractTemplate {
 	 *            value of highlight attribute
 	 * @return true of highlight value correct
 	 */
-	
+
 	private boolean serchInSupportedTypes(String highlightValue) {
 
 		if (highlightValue == null)
@@ -262,7 +267,7 @@ public class RichFacesInsertTemplate extends VpeAbstractTemplate {
 	 * @param data
 	 *            The arbitrary data, built by a method <code>create</code>
 	 * @param name
-	 *            Atrribute name
+	 *            Attribute name
 	 * @param value
 	 *            Attribute value
 	 * @return <code>true</code> if it is required to re-create an element at
