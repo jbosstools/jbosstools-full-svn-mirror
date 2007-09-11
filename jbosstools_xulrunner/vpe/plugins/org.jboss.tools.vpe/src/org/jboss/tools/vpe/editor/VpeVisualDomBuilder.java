@@ -143,7 +143,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	public VpeVisualDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, VpeTemplateManager templateManager, MozillaEditor visualEditor, VpePageContext pageContext) {
 		super(domMapping, sorceAdapter, templateManager);
 		this.visualEditor = visualEditor;
-		xulRunnerEditor = (XulRunnerEditor)visualEditor.getControl();
+		xulRunnerEditor = visualEditor.getXulRunnerEditor();
 		this.visualDocument = visualEditor.getDomDocument();
 		this.visualContentArea = visualEditor.getContentArea();
 		// TODO Max Areshkau figure out 

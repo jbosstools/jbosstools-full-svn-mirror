@@ -86,7 +86,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 	public VpePreviewDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, VpeTemplateManager templateManager, MozillaEditor visualEditor, VpePageContext pageContext) {
 		super(domMapping, sorceAdapter, templateManager, visualEditor, pageContext);
 		this.visualEditor = visualEditor;
-		browser = (XulRunnerEditor)visualEditor.getControl();
+		browser = visualEditor.getXulRunnerEditor();
 		this.visualDocument = visualEditor.getDomDocument();
 		this.visualContentArea = visualEditor.getContentArea();
 		this.pageContext = pageContext;
