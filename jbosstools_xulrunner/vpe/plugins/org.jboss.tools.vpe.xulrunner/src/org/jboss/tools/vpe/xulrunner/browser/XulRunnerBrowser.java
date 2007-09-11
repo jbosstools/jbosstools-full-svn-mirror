@@ -37,6 +37,7 @@ import org.mozilla.interfaces.nsIURI;
 import org.mozilla.interfaces.nsIWebBrowser;
 import org.mozilla.interfaces.nsIWebBrowserChrome;
 import org.mozilla.interfaces.nsIWebBrowserFocus;
+import org.mozilla.interfaces.nsIWebBrowserSetup;
 import org.mozilla.interfaces.nsIWebNavigation;
 import org.mozilla.interfaces.nsIWebProgress;
 import org.mozilla.interfaces.nsIWebProgressListener;
@@ -102,6 +103,10 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		webBrowser = (nsIWebBrowser) browser.getWebBrowser();
 //		webBrowser = (nsIWebBrowser) componentManager.createInstance(XPCOM.NS_IWEBBROWSER_CID, null, nsIWebBrowser.NS_IWEBBROWSER_IID); //$NON-NLS-1$
 //		webBrowser.setContainerWindow(this);
+
+		nsIWebBrowserSetup setup = (nsIWebBrowserSetup) webBrowser.queryInterface(nsIWebBrowserSetup.NS_IWEBBROWSERSETUP_IID);
+		setup.setProperty(nsIWebBrowserSetup.SETUP_IS_CHROME_WRAPPER, 1);
+		
 //		nsIBaseWindow baseWindow = (nsIBaseWindow) webBrowser.queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID);
 //		
 //		Rectangle rect = getClientArea();
