@@ -91,7 +91,11 @@ public class ClayGuiEditor extends AbstractSectionEditor {
 		if(gui != null) {
 			gui.dispose();
 			gui = null;
-			try { control.dispose(); } catch (Exception e) {}
+			try { 
+				control.dispose(); 
+			} catch (Exception e) {
+				ShaleUiPlugin.log(e);
+			}
 			control = null;
 		}
 	}

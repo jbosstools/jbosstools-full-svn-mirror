@@ -73,7 +73,11 @@ public class ClayCompoundEditor extends ObjectMultiPageEditor {
 	public void dispose() {
 		if(input != null) {
 			selectionProvider.setHost(null);
-			try { getSite().setSelectionProvider(null); } catch (Exception e) {}
+			try { 
+				getSite().setSelectionProvider(null); 
+			} catch (Exception e) {
+				ShaleUiPlugin.log(e);
+			}
 		}
 		super.dispose();
 		if(guiEditor != null) {
