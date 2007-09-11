@@ -229,7 +229,7 @@ public class XulRunnerBrowserView extends ViewPart {
 
    private void showMessage(String message) {
        MessageDialog.openInformation(
-           browser.getShell(),
+           browser.getBrowser().getShell(),
            "XulRunner Browser View",
            message);
    }
