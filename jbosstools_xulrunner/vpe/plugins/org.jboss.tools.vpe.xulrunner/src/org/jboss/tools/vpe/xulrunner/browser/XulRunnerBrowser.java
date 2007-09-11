@@ -23,13 +23,12 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
-import org.mozilla.interfaces.nsIAppShell;
 import org.mozilla.interfaces.nsIBaseWindow;
 import org.mozilla.interfaces.nsIComponentManager;
+import org.mozilla.interfaces.nsIPrefService;
 import org.mozilla.interfaces.nsIRequest;
 import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
@@ -41,7 +40,6 @@ import org.mozilla.interfaces.nsIWebBrowserFocus;
 import org.mozilla.interfaces.nsIWebNavigation;
 import org.mozilla.interfaces.nsIWebProgress;
 import org.mozilla.interfaces.nsIWebProgressListener;
-import org.mozilla.interfaces.nsIWindowWatcher;
 import org.mozilla.xpcom.Mozilla;
 import org.osgi.framework.Bundle;
 
@@ -60,6 +58,11 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	static final String XULRUNNER_INITIALIZED = "org.eclipse.swt.browser.XULRunnerInitialized"; //$NON-NLS-1$
 	static final String XULRUNNER_PATH = "org.eclipse.swt.browser.XULRunnerPath"; //$NON-NLS-1$
 
+	private static final String ROOT_BRANCH_NAME = ""; //$NON-NLS-1$
+	
+	private static final String PREFERENCE_DISABLEOPENDURINGLOAD = "dom.disable_open_during_load"; //$NON-NLS-1$
+	private static final String PREFERENCE_DISABLEWINDOWSTATUSCHANGE = "dom.disable_window_status_change"; //$NON-NLS-1$	
+	
 	private Mozilla mozilla = null;
 	private Browser browser = null;
 	private nsIWebBrowser webBrowser = null;
@@ -80,6 +83,12 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		}
 		
 		browser = new Browser(parent, SWT.MOZILLA);
+
+		// TODO Sergey Vasilyelv insert observer here
+		
+		// TODO Sergey Vasilyev add localization
+		setBoolRootPref(PREFERENCE_DISABLEOPENDURINGLOAD, true);
+		setBoolRootPref(PREFERENCE_DISABLEWINDOWSTATUSCHANGE, true);
 		
 //		nsIComponentManager componentManager = mozilla.getComponentManager();
 //		nsIAppShell appShell = (nsIAppShell) componentManager.createInstance(XPCOM.NS_IAPPSHELL_CID, null, nsIAppShell.NS_IAPPSHELL_IID);
@@ -185,6 +194,9 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		browser.setLayoutData(layoutData);
 	}
 	
+	/**
+	 * Decorate Widget.addListener(int eventType, Listener listener)
+	 */
 	public void addListener(int eventType, Listener listener) {
 		browser.addListener(eventType, listener);
 	}
@@ -304,6 +316,45 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	}
 
 	public void onLoadWindow() {
+	}
+
+	public nsIPrefService getPrefService() {
+		return (nsIPrefService) getServiceManager().getServiceByContractID(XPCOM.NS_PREFSERVICE_CONTRACTID, nsIPrefService.NS_IPREFSERVICE_IID);
+	}
+
+	
+	public void setBoolRootPref(String aPrefName, boolean aValue) {
+		getPrefService().getBranch(ROOT_BRANCH_NAME).setBoolPref(aPrefName, aValue ? 1 : 0);
+	}
+	
+	
+	public void setCharRootPref(String aPrefName, String aValue) {
+		getPrefService().getBranch(ROOT_BRANCH_NAME).setCharPref(aPrefName, aValue);
+	}
+	
+	
+	public void setComplexRootValue(String aPrefName, String aType, nsISupports aValue) {
+		getPrefService().getBranch(ROOT_BRANCH_NAME).setComplexValue(aPrefName, aType, aValue);
+	}
+	
+	public void setIntRootPref(String aPrefName, int aValue) {
+		getPrefService().getBranch(ROOT_BRANCH_NAME).setIntPref(aPrefName, aValue);
+	}
+	
+	public boolean getBoolRootPref(String aPrefName) {
+		return getPrefService().getBranch(ROOT_BRANCH_NAME).getBoolPref(aPrefName);
+	}
+
+	public String getCharRootPref(String aPrefName) {
+		return getPrefService().getBranch(ROOT_BRANCH_NAME).getCharPref(aPrefName);
+	}
+
+	public nsISupports getComplextRootPref(String aPrefName, String aType) {
+		return getPrefService().getBranch(ROOT_BRANCH_NAME).getComplexValue(aPrefName, aType);
+	}
+
+	public int getIntRootf(String aPrefName) {
+		return getPrefService().getBranch(ROOT_BRANCH_NAME).getIntPref(aPrefName);
 	}
 	
 	/*
