@@ -18,8 +18,11 @@ import java.net.URL;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
@@ -48,7 +51,7 @@ import org.osgi.framework.Bundle;
  *
  */
 
-public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
+public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		nsIWebProgressListener, nsITooltipListener {
 	private static String XULRUNNER_BUNDLE = "org.jboss.tools.vpe.mozilla.xulrunner"; //$NON-NLS-1$
 	private static String XULRUNNER_ENTRY = "/xulrunner";
@@ -58,14 +61,13 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 	static final String XULRUNNER_PATH = "org.eclipse.swt.browser.XULRunnerPath"; //$NON-NLS-1$
 
 	private Mozilla mozilla = null;
+	private Browser browser = null;
 	private nsIWebBrowser webBrowser = null;
 	private long chrome_flags = nsIWebBrowserChrome.CHROME_ALL;
 	
-	private boolean busyResizeFlag = false;
+//	private boolean busyResizeFlag = false;
 	
 	public XulRunnerBrowser(Composite parent) throws XulRunnerException {
-		super(parent, SWT.NONE);
-		
 		mozilla = Mozilla.getInstance();
 		String xulRunnerPath = getXulRunnerPath(); 
 		
@@ -77,81 +79,124 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 			System.setProperty(XULRUNNER_INITIALIZED, "true");
 		}
 		
-		nsIComponentManager componentManager = mozilla.getComponentManager();
-		nsIAppShell appShell = (nsIAppShell) componentManager.createInstance(XPCOM.NS_IAPPSHELL_CID, null, nsIAppShell.NS_IAPPSHELL_IID);
-		appShell.create(null, null);
-		appShell.spinup();
-				
-		nsIServiceManager serviceManager = mozilla.getServiceManager();
-		nsIWindowWatcher windowWatcher = (nsIWindowWatcher) serviceManager.getServiceByContractID(XPCOM.NS_WINDOWWATCHER_CONTRACTID, nsIWindowWatcher.NS_IWINDOWWATCHER_IID);
-		windowWatcher.setWindowCreator(new WindowCreator());
+		browser = new Browser(parent, SWT.MOZILLA);
 		
-		webBrowser = (nsIWebBrowser) componentManager.createInstance(XPCOM.NS_IWEBBROWSER_CID, null, nsIWebBrowser.NS_IWEBBROWSER_IID); //$NON-NLS-1$
-		webBrowser.setContainerWindow(this);
-		nsIBaseWindow baseWindow = (nsIBaseWindow) webBrowser.queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID);
+//		nsIComponentManager componentManager = mozilla.getComponentManager();
+//		nsIAppShell appShell = (nsIAppShell) componentManager.createInstance(XPCOM.NS_IAPPSHELL_CID, null, nsIAppShell.NS_IAPPSHELL_IID);
+//		appShell.create(null, null);
+//		appShell.spinup();
+//				
+//		nsIServiceManager serviceManager = mozilla.getServiceManager();
+//		nsIWindowWatcher windowWatcher = (nsIWindowWatcher) serviceManager.getServiceByContractID(XPCOM.NS_WINDOWWATCHER_CONTRACTID, nsIWindowWatcher.NS_IWINDOWWATCHER_IID);
+//		windowWatcher.setWindowCreator(new WindowCreator());
 		
-		Rectangle rect = getClientArea();
-		if (rect.isEmpty()) {
-			rect.height = 1;
-			rect.width = 1;
-		}
-		baseWindow.initWindow(handle, 0, 0, 0, rect.height, rect.width);
-		baseWindow.create();
-		baseWindow.setVisibility(true);
+		webBrowser = (nsIWebBrowser) browser.getWebBrowser();
+//		webBrowser = (nsIWebBrowser) componentManager.createInstance(XPCOM.NS_IWEBBROWSER_CID, null, nsIWebBrowser.NS_IWEBBROWSER_IID); //$NON-NLS-1$
+//		webBrowser.setContainerWindow(this);
+//		nsIBaseWindow baseWindow = (nsIBaseWindow) webBrowser.queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID);
+//		
+//		Rectangle rect = getClientArea();
+//		if (rect.isEmpty()) {
+//			rect.height = 1;
+//			rect.width = 1;
+//		}
+//		baseWindow.initWindow(handle, 0, 0, 0, rect.height, rect.width);
+//		baseWindow.create();
+//		baseWindow.setVisibility(true);
 		
-		Listener listener = new Listener(){
-			public void handleEvent (Event event) {
-				switch(event.type) {
-				case SWT.Dispose:
-						onDispose();
-						break;
-				case SWT.Activate:
-				case SWT.FocusIn:
-						onFocusGained();
-						break;
-				case SWT.Deactivate:
-					if (XulRunnerBrowser.this == event.display.getFocusControl()) {
-						onFocusLost();
-					}
-					break;
-				case SWT.Resize:
-				case SWT.Show:
-					/*
-					* Feature on GTK Mozilla.  Mozilla does not show up when
-					* its container (a GTK fixed handle) is made visible
-					* after having been hidden.  The workaround is to reset
-					* its size after the container has been made visible. 
-					*/
-					if (!busyResizeFlag) {
-						busyResizeFlag = true;
-						event.display.asyncExec(new Runnable() {
-							public void run() {
-								if (XulRunnerBrowser.this.isDisposed()) return;
-								onResize();
-								busyResizeFlag = false;
-							}
-						});
-					}
-					break;
-				case SWT.KeyDown:
-					onKeyDown();
-					break;				
-				}
-			}
-		};
-
-		addListener(SWT.Dispose, listener);
-		addListener(SWT.Resize, listener);
-		addListener(SWT.FocusIn, listener); 
-		addListener(SWT.KeyDown, listener);
-		addListener(SWT.Activate, listener);
-		addListener(SWT.Deactivate, listener);
-		addListener(SWT.Show, listener);
+//		Listener listener = new Listener(){
+//			public void handleEvent (Event event) {
+//				switch(event.type) {
+//				case SWT.Dispose:
+//						onDispose();
+//						break;
+//				case SWT.Activate:
+//				case SWT.FocusIn:
+//						onFocusGained();
+//						break;
+//				case SWT.Deactivate:
+//					if (browser == event.display.getFocusControl()) {
+//						onFocusLost();
+//					}
+//					break;
+//				case SWT.Resize:
+//				case SWT.Show:
+//					/*
+//					* Feature on GTK Mozilla.  Mozilla does not show up when
+//					* its container (a GTK fixed handle) is made visible
+//					* after having been hidden.  The workaround is to reset
+//					* its size after the container has been made visible. 
+//					*/
+//					if (!busyResizeFlag) {
+//						busyResizeFlag = true;
+//						event.display.asyncExec(new Runnable() {
+//							public void run() {
+//								if (browser.isDisposed()) return;
+//								onResize();
+//								busyResizeFlag = false;
+//							}
+//						});
+//					}
+//					break;
+//				case SWT.KeyDown:
+//					onKeyDown();
+//					break;				
+//				}
+//			}
+//		};
+//
+//		browser.addListener(SWT.Dispose, listener);
+//		browser.addListener(SWT.Resize, listener);
+//		browser.addListener(SWT.FocusIn, listener); 
+//		browser.addListener(SWT.KeyDown, listener);
+//		browser.addListener(SWT.Activate, listener);
+//		browser.addListener(SWT.Deactivate, listener);
+//		browser.addListener(SWT.Show, listener);
 		
 		webBrowser.addWebBrowserListener(this, nsIWebProgressListener.NS_IWEBPROGRESSLISTENER_IID);
 		webBrowser.addWebBrowserListener(this, nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
 	}
 
+	/**
+	 * Decorate Widget.getDisplay()
+	 */
+	public Display getDisplay() {
+		return browser.getDisplay();
+	}
+	
+	/**
+	 * Decorate Control.setCursor(org.eclipse.swt.graphics.Cursor)
+	 */
+	public void setCursor(Cursor cursor) {
+		browser.setCursor(cursor);		
+	}
+	
+	/**
+	 * Decorate Composite.setFocus()
+	 */
+	public boolean setFocus() {
+		return browser.setFocus();
+	}
+	
+	/**
+	 * Decorate Control.setLayoutData(Object)
+	 */
+	public void setLayoutData(Object layoutData) {
+		browser.setLayoutData(layoutData);
+	}
+	
+	public void addListener(int eventType, Listener listener) {
+		browser.addListener(eventType, listener);
+	}
+	
+	/**
+	 * Decorate Widget.dispose()
+	 */
+	public void dispose() {
+		browser.dispose();
+		
+	}
+	
 	private void onDispose() {
 		nsIBaseWindow baseWindow = (nsIBaseWindow) webBrowser.queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID);
 		baseWindow.destroy();
@@ -171,7 +216,7 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 	private void onResize() {
 		nsIBaseWindow baseWindow = (nsIBaseWindow) webBrowser.queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID);
 		
-		Rectangle rect = getClientArea();
+		Rectangle rect = browser.getClientArea();
 		if (rect.isEmpty()) {
 			rect.height = 1;
 			rect.width = 1;
@@ -369,5 +414,12 @@ public class XulRunnerBrowser extends Composite implements nsIWebBrowserChrome,
 	 * @see org.mozilla.interfaces.nsITooltipListener#onShowTooltip(int, int, java.lang.String)
 	 */
 	public void onShowTooltip(int aXCoords, int aYCoords, String aTipText) {
+	}
+
+	/**
+	 * @return the browser
+	 */
+	public Browser getBrowser() {
+		return browser;
 	}
 }
