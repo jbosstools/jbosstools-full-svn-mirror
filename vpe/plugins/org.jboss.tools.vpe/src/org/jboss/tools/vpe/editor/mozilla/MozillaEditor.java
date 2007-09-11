@@ -304,7 +304,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 //		removeClipboardDragDropHooks();
 
 		if (xulRunnerEditor != null) {
-			xulRunnerEditor.dispose();
+			xulRunnerEditor.getBrowser().dispose();
 			xulRunnerEditor = null;
 		}
 
@@ -342,11 +342,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 
 	public Menu getMenu() {
-		return xulRunnerEditor.getMenu();
+		return xulRunnerEditor.getBrowser().getMenu();
 	}
 
 	public Control getControl() {
-		return xulRunnerEditor;
+		return xulRunnerEditor.getBrowser();
 	}
 
 	// TODO Max Areshkau add DnD support
@@ -562,6 +562,13 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			nsIClipboardDragDropHookList hookList = xulRunnerEditor.getClipboardDragDropHookList();
 			hookList.removeClipboardDragDropHooks(baseEventListener);
 		}
+	}
+
+	/**
+	 * @return the xulRunnerEditor
+	 */
+	public XulRunnerEditor getXulRunnerEditor() {
+		return xulRunnerEditor;
 	}
 	
 }

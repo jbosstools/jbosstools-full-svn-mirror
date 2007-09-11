@@ -228,7 +228,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		
 		templateManager.addTemplateListener(this);
 
-		xulRunnerEditor = (XulRunnerEditor) visualEditor.getControl();
+		xulRunnerEditor = visualEditor.getXulRunnerEditor();
 		// TODO Sergey Vasilyev figure out with nsIPressShell
 //		presShell = browser.getPresShell();
 		visualSelectionController = new VpeSelectionController(xulRunnerEditor.getSelection());
@@ -878,7 +878,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				//adding calls of core event handlers, for example 'CTR+H' or 'CTRL+M' event handler dialog
 				Event keyboardEvent = new Event ();
 				//widget where event occur
-				keyboardEvent.widget = xulRunnerEditor;
+				keyboardEvent.widget = xulRunnerEditor.getBrowser();
 							
 				keyboardEvent.stateMask = (keyEvent.getAltKey() ? SWT.ALT : 0) | (keyEvent.getCtrlKey() ? SWT.CTRL : 0) | (keyEvent.getShiftKey() ? SWT.SHIFT : 0) | (keyEvent.getMetaKey() ? SWT.MOD1 : 0);
 				keyboardEvent.x=0;
