@@ -9,16 +9,12 @@
      ====================================================================== -->
 	
 <project name="project" default="default">
-    <description>
-            description
-    </description>
-		
 		<path id="emma.lib">
 			<fileset dir=".">
 		        <include name="*emma*.jar"/>
 		     </fileset>
 		</path>
-		<path id="rhds">
+		<path id="rhds.lib">
 			<fileset dir="./rhds/eclipse/plugins">
 		        	<include name="org.jboss.tools.*/*.jar"/>
 				<include name="org.jboss.tools.*.jar"/>
@@ -32,9 +28,7 @@
          ================================= -->
     <target name="default" description="" >
     	<emma enabled="true">
-			<instr mode="overwrite" instrpathref="rhds">
-
-			</instr>
+			<instr mode="overwrite" instrpathref="rhds.lib"/>
 		</emma>
     </target>
 </project>
