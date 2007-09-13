@@ -1703,17 +1703,18 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		
 			IProject project = iFile.getProject();
 			IModelNature nature = EclipseResourceUtil.getModelNature(project);
-			XModel model = nature.getModel();
-			XModelObject webXML = WebAppHelper.getWebApp(model); 
-			XModelObject param = WebAppHelper.findWebAppContextParam(webXML, "javax.faces.DEFAULT_SUFFIX");
-			if ( param != null ) {
-				String value = param.getAttributeValue("param-value");
-		
-				if ( value.length() != 0 && iFile.getName().endsWith(value)) {
-					isFacelet = true;
+			if (nature != null) { 
+				XModel model = nature.getModel();
+				XModelObject webXML = WebAppHelper.getWebApp(model); 
+				XModelObject param = WebAppHelper.findWebAppContextParam(webXML, "javax.faces.DEFAULT_SUFFIX");
+				if ( param != null ) {
+					String value = param.getAttributeValue("param-value");
+			
+					if ( value.length() != 0 && iFile.getName().endsWith(value)) {
+						isFacelet = true;
+					}
 				}
 			}
-			
 		}
 		
 		return isFacelet;		
