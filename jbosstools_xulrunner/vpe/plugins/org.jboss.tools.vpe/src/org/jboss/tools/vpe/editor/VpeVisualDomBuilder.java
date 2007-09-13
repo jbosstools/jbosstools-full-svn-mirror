@@ -92,7 +92,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private nsIDOMDocument visualDocument;
 	private nsIDOMElement visualContentArea;
 	private VpePageContext pageContext;
-	// TODO Max Areshkau figure out with DnD
 	private VpeDnD dnd;
 	private nsIDOMNode headNode;
 	private List includeStack;
@@ -146,11 +145,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		xulRunnerEditor = visualEditor.getXulRunnerEditor();
 		this.visualDocument = visualEditor.getDomDocument();
 		this.visualContentArea = visualEditor.getContentArea();
-		// TODO Max Areshkau figure out 
 		this.dnd = new VpeDnD();
 		this.pageContext = pageContext;
 		this.headNode = visualEditor.getHeadNode();
-		// TODO Max Areshkau figure out
 		dropper = new VpeDnd();
 		dropper.setDndData(false, true);
 	}
@@ -291,7 +288,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return border;
 	}
 		
-	private nsIDOMNode createNode(Node sourceNode, nsIDOMNode visualOldContainer) {
+	protected nsIDOMNode createNode(Node sourceNode, nsIDOMNode visualOldContainer) {
 		boolean registerFlag = isCurrentMainDocument();
 		switch (sourceNode.getNodeType()) {
 		case Node.ELEMENT_NODE:
@@ -1632,5 +1629,33 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	public void setDnd(VpeDnD dnd) {
 		
 		this.dnd = dnd;
+	}
+
+	/**
+	 * @return the pageContext
+	 */
+	protected VpePageContext getPageContext() {
+		return pageContext;
+	}
+
+	/**
+	 * @param pageContext the pageContext to set
+	 */
+	protected void setPageContext(VpePageContext pageContext) {
+		this.pageContext = pageContext;
+	}
+
+	/**
+	 * @return the visualDocument
+	 */
+	protected nsIDOMDocument getVisualDocument() {
+		return visualDocument;
+	}
+
+	/**
+	 * @param visualDocument the visualDocument to set
+	 */
+	protected void setVisualDocument(nsIDOMDocument visualDocument) {
+		this.visualDocument = visualDocument;
 	}
 }

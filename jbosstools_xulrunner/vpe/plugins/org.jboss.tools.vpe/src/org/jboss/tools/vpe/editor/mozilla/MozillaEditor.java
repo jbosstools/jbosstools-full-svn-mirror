@@ -83,6 +83,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private IVpeToolBarManager vpeToolBarManager;
 	private FormatControllerManager formatControllerManager = new FormatControllerManager();
 	private VpeController controller;
+	private Link link = null;	
 
 	public void doSave(IProgressMonitor monitor) {
 	}
@@ -114,8 +115,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		controller.setToolbarFormatControllerManager(formatControllerManager);
 	}
 
-	Link link = null;	
-	
 	public void createPartControl(final Composite parent) {
 		vpeToolBarManager = new VpeToolBarManager();
 		//Setting  Layout for the parent Composite
@@ -320,10 +319,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		if (contentAreaEventListener != null) {
 			contentAreaEventListener.setEditorDomEventListener(listener);
 		}
-		if (xulRunnerEditor != null) {
-			// TODO Max Areshkau add context menu listener support
-//			xulRunnerEditor.setContextMenuListener(listener);
-		}
 	}
 
 	public nsIDOMDocument getDomDocument() {
@@ -332,9 +327,25 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		}
 		return domDocument;
 	}
+	
+	/**
+	 * @param domDocument the domDocument to set
+	 */
+	protected void setDomDocument(nsIDOMDocument domDocument) {
+		
+		this.domDocument = domDocument;
+	}
 
 	public nsIDOMElement getContentArea() {
 		return contentArea;
+	}
+	/**
+	 * Sets content area element
+	 * @return
+	 */
+	protected void setContentArea(nsIDOMElement element) {
+		
+		 this.contentArea=element;
 	}
 
 	public nsIDOMNode getHeadNode() {
@@ -349,16 +360,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		return xulRunnerEditor.getBrowser();
 	}
 
-	// TODO Max Areshkau add DnD support
-//	public VpeDnD getLocalDnD() {
-//		if (contentAreaEventListener != null) {
-//			return contentAreaEventListener.getLocalDnD();
-//		}
-//		return null;
-//	}
-
 	protected nsIDOMElement findContentArea() {
-		nsIDOMElement area = null;
+		nsIDOMElement area = xulRunnerEditor.getDOMDocument().getDocumentElement();
 		nsIDOMNodeList nodeList = xulRunnerEditor.getDOMDocument().getElementsByTagName(HTML.TAG_BODY);
 		long length = nodeList.getLength();
 		for(long i=0; i<length; i++) {
@@ -372,7 +375,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				break;
 			}
 		}
-//		nsIDOMElement area = findContentArea(root);
+//		 area = findContentArea(root);
 		if (area == null) {
 			return null;
 		}
@@ -450,8 +453,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		contentArea = findContentArea();
 		addDomEventListeners();
 		addSelectionListener();
-		// TODO Max Areshkau figure out with clipboard drag drop hooks
-//		addClipboardDragDropHooks();
 		if (editorLoadWindowListener != null) {
 			editorLoadWindowListener.load();
 		}
@@ -467,7 +468,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				contentAreaEventTarget.addEventListener("click", contentAreaEventListener, false); //$NON-NLS-1$
 				contentAreaEventTarget.addEventListener("mousedown", contentAreaEventListener, false); //$NON-NLS-1$
 				contentAreaEventTarget.addEventListener("mouseup", contentAreaEventListener, false); //$NON-NLS-1$
-				contentAreaEventTarget.addEventListener("mousemove", contentAreaEventListener, false); //$NON-NLS-1$
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.MOUSEMOVEEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
 	
 				//context menu event handler(add by Max Areshkau)
 				contentAreaEventTarget.addEventListener(MozillaDomEventListener.CONTEXTMENUEVENTTYPE, contentAreaEventListener, false);
@@ -570,5 +571,34 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	public XulRunnerEditor getXulRunnerEditor() {
 		return xulRunnerEditor;
 	}
+
+	/**
+	 * @param xulRunnerEditor the xulRunnerEditor to set
+	 */
+	protected void setXulRunnerEditor(XulRunnerEditor xulRunnerEditor) {
+		this.xulRunnerEditor = xulRunnerEditor;
+	}
+
+	/**
+	 * @return the controller
+	 */
+	protected VpeController getController() {
+		return controller;
+	}
+
+	/**
+	 * @return the link
+	 */
+	protected Link getLink() {
+		return link;
+	}
+
+	/**
+	 * @param link the link to set
+	 */
+	protected void setLink(Link link) {
+		this.link = link;
+	}
+
 	
 }

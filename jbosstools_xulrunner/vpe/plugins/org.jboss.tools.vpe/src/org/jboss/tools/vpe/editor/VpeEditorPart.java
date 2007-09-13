@@ -360,7 +360,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				//Added by Max Areshkau
 				//was fixed bug(border which drawed by iflasher doesn't hide on MACOS when we swith
 				// to souce view)
-				if(Platform.getOS().equals(Platform.OS_MACOSX)) {
+				if(Platform.getOS().equals(Platform.OS_MACOSX)&&controller!=null) {
 					
 				controller.visualRefresh();
 				}
