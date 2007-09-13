@@ -323,7 +323,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return border;
 	}
 		
-	private Node createNode(Node sourceNode, Node visualOldContainer) {
+	protected Node createNode(Node sourceNode, Node visualOldContainer) {
 		boolean registerFlag = isCurrentMainDocument();
 		switch (sourceNode.getNodeType()) {
 		case Node.ELEMENT_NODE:
@@ -1196,7 +1196,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		case Node.ELEMENT_NODE:
 			VpeNodeMapping nodeMapping = domMapping.getNodeMapping(container);
 			if (nodeMapping != null && nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
-				canDrop = ((VpeElementMapping)nodeMapping).getTemplate().canInnerDrop(pageContext, container,  dragNode);
+			canDrop = ((VpeElementMapping)nodeMapping).getTemplate().canInnerDrop(pageContext, container,  dragNode);
 			}
 			if (!canDrop) {
 				if(!checkParentsTemplates) return new VpeSourceInnerDropInfo(container, offset, canDrop);

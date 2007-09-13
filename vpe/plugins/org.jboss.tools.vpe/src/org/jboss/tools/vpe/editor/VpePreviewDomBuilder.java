@@ -63,7 +63,8 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 	 * @param visualOldContainer
 	 * @return
 	 */
-	private Node createNode(Node sourceNode, Node visualOldContainer) {
+	@Override
+	protected Node createNode(Node sourceNode, Node visualOldContainer) {
 		boolean registerFlag = isCurrentMainDocument();
 		switch (sourceNode.getNodeType()) {
 		case Node.ELEMENT_NODE:
