@@ -355,7 +355,7 @@ public class RichFacesScrollableDataTableTemplate extends VpeAbstractTemplate {
 		td.setAttribute(HtmlComponentUtil.HTML_TABLE_COLSPAN, String
 			.valueOf(columns));
 	    }
-	    td.setAttribute("scope", "colgroup");
+	    td.setAttribute(HtmlComponentUtil.HTML_SCOPE_ATTR, HtmlComponentUtil.HTML_TAG_COLGROUP);
 
 	    VpeChildrenInfo child = new VpeChildrenInfo(td);
 	    child.addSourceChild(facetBody);
@@ -529,7 +529,29 @@ public class RichFacesScrollableDataTableTemplate extends VpeAbstractTemplate {
 	    nsIDOMNode visualNode, Object data, String name) {
 	nsIDOMElement visualElement = (nsIDOMElement) visualNode
 		.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-	visualElement.removeAttribute(name);
+	if (name.equalsIgnoreCase(HtmlComponentUtil.HTML_WIDTH_ATTR)) {
+	    String style = visualElement
+		    .getAttribute(HtmlComponentUtil.HTML_STYLE_ATTR);
+	    visualElement.removeAttribute(HtmlComponentUtil.HTML_STYLE_ATTR);
+	    style += "; " + HtmlComponentUtil.HTML_WIDTH_ATTR + " : "
+		    + DEFAULT_WIDTH + ";";
+	    visualElement
+		    .setAttribute(HtmlComponentUtil.HTML_STYLE_ATTR, style);
+
+	} else
+
+	if (name.equalsIgnoreCase(HtmlComponentUtil.HTML_HEIGHT_ATTR)) {
+	    String style = visualElement
+		    .getAttribute(HtmlComponentUtil.HTML_STYLE_ATTR);
+	    visualElement.removeAttribute(HtmlComponentUtil.HTML_STYLE_ATTR);
+	    style += "; " + HtmlComponentUtil.HTML_HEIGHT_ATTR + " : "
+		    + DEFAULT_HEIGHT + ";";
+	    visualElement
+		    .setAttribute(HtmlComponentUtil.HTML_STYLE_ATTR, style);
+
+	} else {
+	    visualElement.removeAttribute(name);
+	}
     }
 
     @Override

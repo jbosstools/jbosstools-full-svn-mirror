@@ -110,6 +110,9 @@ public class HtmlComponentUtil {
 
 	/** style */
 	public static final String HTML_STYLE_ATTR = "style";
+	
+	/** scope */
+	public static final String HTML_SCOPE_ATTR = "scope";
 
 	/** HTML_TABLE_ATR_ */
 	public static final String HTML_BORDER_ATTR = "border";
