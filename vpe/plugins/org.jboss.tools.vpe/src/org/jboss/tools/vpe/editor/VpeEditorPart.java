@@ -15,6 +15,7 @@ import java.beans.PropertyChangeListener;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
@@ -81,6 +82,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			"", "splitter_position2");
 	private static final QualifiedName SPLITTER_POSITION_KEY3 = new QualifiedName(
 			"", "splitter_position3");
+
 	private int controlCount = 0;
 
 	/** default web-browser */
@@ -352,8 +354,17 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 		case SOURCE_MODE:
 			selectionBar.showBar(showSelectionBar);
-			if (sourceContent != null)
+			if (sourceContent != null) {
 				sourceContent.setVisible(true);
+				
+				//Added by Max Areshkau
+				//was fixed bug(border which drawed by iflasher doesn't hide on MACOS when we swith
+				// to souce view)
+				if(Platform.getOS().equals(Platform.OS_MACOSX)) {
+					
+				controller.visualRefresh();
+				}
+			}
 			if (visualContent != null)
 				visualContent.setVisible(false);
 			if (previewContent != null) {
