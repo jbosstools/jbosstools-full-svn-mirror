@@ -77,8 +77,10 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private nsIDOMNode headNode;
 	private nsIDOMEventTarget contentAreaEventTarget;
 	private MozillaDomEventListener contentAreaEventListener = new MozillaDomEventListener();
+	//TODO Max Areshkau may be we need delete this
 	private MozillaBaseEventListener baseEventListener = null;
 	private EditorLoadWindowListener editorLoadWindowListener;
+	//
 	private EditorDomEventListener editorDomEventListener;
 	private IVpeToolBarManager vpeToolBarManager;
 	private FormatControllerManager formatControllerManager = new FormatControllerManager();
@@ -299,15 +301,17 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 	public void dispose() {
 		removeDomEventListeners();
-		// TODO Max Areshkau figure out with ClipboardDragDropHooks
-//		removeClipboardDragDropHooks();
-
+		if(getController()!=null) {
+			controller.dispose();
+			controller=null;
+		}
 		if (xulRunnerEditor != null) {
 			xulRunnerEditor.getBrowser().dispose();
 			xulRunnerEditor = null;
 		}
 
 		super.dispose();
+		
 	}
 
 	public void setEditorLoadWindowListener(EditorLoadWindowListener listener) {
@@ -582,7 +586,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	/**
 	 * @return the controller
 	 */
-	protected VpeController getController() {
+	public VpeController getController() {
 		return controller;
 	}
 

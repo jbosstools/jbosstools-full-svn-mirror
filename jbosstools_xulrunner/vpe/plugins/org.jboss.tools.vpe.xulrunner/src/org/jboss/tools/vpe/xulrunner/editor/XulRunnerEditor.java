@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.xulrunner.editor;
 
 import java.util.regex.Pattern;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -22,6 +23,7 @@ import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
 import org.mozilla.interfaces.inIFlasher;
+import org.mozilla.interfaces.nsIBaseWindow;
 import org.mozilla.interfaces.nsIClipboardDragDropHookList;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -116,12 +118,16 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 					}
 				});
 			}};
-			addListener(SWT.Activate, eventListenet);
+//			addListener(SWT.Activate, eventListenet);
 			addListener(SWT.Paint, eventListenet);
-			addListener(SWT.Resize, eventListenet);
+			//Commented by Max Areshkau (bug on Mac OS X10.4 
+			//when switch from visual to preview selection rectangle doen't disappear
+//			addListener(SWT.Resize, eventListenet);
 			addListener(SWT.Show, eventListenet);
 			addListener(SWT.FocusIn, eventListenet);
-			addListener(SWT.FocusOut, eventListenet);
+			//Commented by Max Areshkau (bug on Mac OS X10.4 
+			//when switch from visual to preview selection rectangle doen't disappear
+//			addListener(SWT.FocusOut, eventListenet);
 			addListener(SWT.Selection, eventListenet);
 			addListener(SWT.Paint, eventListenet);
 		
@@ -463,12 +469,13 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	public void showSelectionRectangle() {
 	
 //		((nsIBaseWindow)getWebBrowser().queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(false);
+
 		if (getIFlasher() != null && getLastSelectedElement() != null) {
 			if (scrollRegtangleFlag) {
 				scrollRegtangleFlag = false;
 					
 					scrollToElement(getLastSelectedElement());
-			}
+			} 
 			//checks visability of element
 			if(checkVisability(getLastSelectedElement())){
 				
@@ -490,6 +497,14 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 				if(domElement!=null) {
 					getIFlasher().drawElementOutline(domElement);
 				}
+			}
+		} else if(getIFlasher()!=null){
+			//Max Areshkau (bug on Mac OS X, when we swithc to preview grom other view, selection rectangle doesn't disappear
+			//TODO Max Areshkau (may be exist passability not draw selection on resize event when we swithes to other view)
+			try {
+			((nsIBaseWindow)getWebBrowser().queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
+			} catch(XPCOMException ex) {
+				//just ignore its
 			}
 		}
 	}
