@@ -184,7 +184,7 @@ packaging even if she is writing the most trivial web applications. With Red Hat
 			</mediaobject>
 		</figure>
 		<orderedlist continuation="continues">
-<listitem><para>Click the Run icon.</para></listitem>
+<listitem><para>Click the Run icon or right click your project folder and select <emphasis>Run on Server</emphasis>. If you haven&apos;t made any changes in web.xml file or cleared it out you can launch the application by right clicking the hello.jsp page and selecting <emphasis>Run on Server</emphasis>.</para></listitem>
 </orderedlist>
 <figure>
 			<title>Run project</title>
