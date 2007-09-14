@@ -22,6 +22,12 @@
          			<axis path="/view/component/extends/" />
          		</partitionType>
          	</contentType>
+         	<contentType id="org.jboss.tools.common.model.ui.xml">
+           		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+         			<axis path="*/jsfid/" />
+         			<axis path="/view/component/extends/" />
+         		</partitionType>
+         	</contentType>
 		</hyperlinkPartitioner>
 
 		<hyperlinkPartitioner 
@@ -33,6 +39,11 @@
          		</partitionType>
          	</contentType>
          	<contentType id="org.eclipse.core.runtime.xml">
+         		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+         			<axis path="/dialogs/dialog/*/className/" />
+         		</partitionType>
+         	</contentType>
+         	<contentType id="org.jboss.tools.common.model.ui.xml">
          		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
          			<axis path="/dialogs/dialog/*/className/" />
          		</partitionType>
@@ -63,6 +74,11 @@
            		</partitionType>
          	</contentType>
          	<contentType id="org.eclipse.core.runtime.xml">
+           		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+					<axis path="/dialogs/dialog/*/viewId/" />
+           		</partitionType>
+         	</contentType>
+         	<contentType id="org.jboss.tools.common.model.ui.xml">
            		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
 					<axis path="/dialogs/dialog/*/viewId/" />
            		</partitionType>
@@ -104,6 +120,9 @@
             	<partitiontype id="org.jboss.tools.common.text.xml.XML_ComponentJSFID" />
 			</contenttypeidentifier>
 			<contenttypeidentifier id="org.eclipse.core.runtime.xml">
+            	<partitiontype id="org.jboss.tools.common.text.xml.XML_ComponentJSFID" />
+			</contenttypeidentifier>
+			<contenttypeidentifier id="org.jboss.tools.common.model.ui.xml">
             	<partitiontype id="org.jboss.tools.common.text.xml.XML_ComponentJSFID" />
 			</contenttypeidentifier>
 		</hyperlink>
