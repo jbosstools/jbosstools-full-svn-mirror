@@ -111,7 +111,7 @@
 	display: block;
 }
 
-.dr-table-scroll {
-	overflow: scroll;
+.dr-table-hidden {
+	overflow: hidden;
 	border: solid 1px #C4C0C9;
 }
