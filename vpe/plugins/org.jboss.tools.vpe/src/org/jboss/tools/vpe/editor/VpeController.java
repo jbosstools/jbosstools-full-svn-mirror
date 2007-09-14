@@ -274,7 +274,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		pageContext.fireTaglibsChanged();
 	}
 
-	void dispose() {
+	public void dispose() {
 		switcher.destroyActiveEditor();
 		
 		if (templateManager != null) {

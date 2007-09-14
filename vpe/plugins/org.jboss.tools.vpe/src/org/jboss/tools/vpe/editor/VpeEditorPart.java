@@ -69,7 +69,6 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	private StructuredTextEditor sourceEditor = null;
 	private MozillaEditor visualEditor;
 	private IEditorPart activeEditor;
-	private VpeController controller;
 	private XModelTreeListener listener;
 	XModelObject optionsObject;
 	private SelectionBar selectionBar = new SelectionBar();
@@ -360,10 +359,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				//Added by Max Areshkau
 				//was fixed bug(border which drawed by iflasher doesn't hide on MACOS when we swith
 				// to souce view)
-				if(Platform.getOS().equals(Platform.OS_MACOSX)&&controller!=null) {
-					
-				controller.visualRefresh();
-				}
+//				if(Platform.getOS().equals(Platform.OS_MACOSX)&&controller!=null) {
+//					
+//				visualEditor.getController().visualRefresh();
+//				}
 			}
 			if (visualContent != null)
 				visualContent.setVisible(false);
@@ -393,9 +392,11 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		container.layout();
 		if (visualMode == SOURCE_MODE && type != SOURCE_MODE) {
 			visualMode = type;
-			if (controller != null) {
-				controller.visualRefresh();
-				controller.sourceSelectionChanged();
+			if (visualEditor.getController() != null) {
+				visualEditor.getController().visualRefresh();
+				if(type!=PREVIEW_MODE) {
+				visualEditor.getController().sourceSelectionChanged();
+				}
 			}
 		}
 		visualMode = type;
@@ -503,12 +504,12 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 						.setEditorLoadWindowListener(new EditorLoadWindowListener() {
 							public void load() {
 								visualEditor.setEditorLoadWindowListener(null);
-								controller = new VpeController(
-										VpeEditorPart.this);
-								selectionBar.setVpeController(controller);
-								controller.setSelectionBarController(selectionBar);
+								visualEditor.setController(new VpeController(
+										VpeEditorPart.this));
+								selectionBar.setVpeController(visualEditor.getController());
+								visualEditor.getController().setSelectionBarController(selectionBar);
 								try {
-									controller.init(sourceEditor, visualEditor);
+									visualEditor.getController().init(sourceEditor, visualEditor);
 								} catch (Exception e) {
 									VpePlugin.reportProblem(e);
 								}
@@ -614,11 +615,6 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				shell.removeShellListener(activationListener);
 			activationListener = null;
 		}
-		if (controller != null) {
-			controller.dispose();
-			controller = null;
-		}
-
 		// editor will disposed as part of multipart editor
 		if (sourceEditor != null) {
 			sourceEditor.dispose();
@@ -688,8 +684,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				fIsHandlingActivation = true;
 				try {
 					if (sourceEditor != null) {
-						if (controller != null) {
-							controller.refreshTemplates();
+						if (visualEditor.getController() != null) {
+							visualEditor.getController().refreshTemplates();
 						}
 						sourceEditor.safelySanityCheckState(getEditorInput());
 					}
@@ -701,7 +697,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	}
 
 	public VpeController getController() {
-		return controller;
+		return visualEditor.getController();
 	}
 
 }
