@@ -68,7 +68,7 @@ the Select Perspective dialog box.)</para>
 		<section id="EditingJSPPage">
 		<?dbhtml filename="EditingJSPPage.html"?>
 		<title>Editing JSP Page</title>
-		<para>Let&apos;s now make a little change so that jsp page displays that &quot;Hello World!&quot; message.</para>
+		<para>Let&apos;s now make a little change so that jsp page displays &quot;Hello World!&quot; message.</para>
 		<orderedlist continuation="continues">
 <listitem><para>Insert this line inside the <emphasis role="bold"><property>&lt;body&gt;</property></emphasis><emphasis role="bold"><property>&lt;/body&gt;</property></emphasis> tag:
 </para></listitem>
@@ -131,7 +131,7 @@ the Select Perspective dialog box.)</para>
 		<?dbhtml filename="DeployTheProject.html"?>
 		<title>Deploy the project</title>
 		<para>While creating any web project one is usually experiencing a pain writing ant scripts and managing the 
-packaging even if she is writing the most trivial web applications. With Red Hat Developer Studio you are saved from such a pain. All you need is start JBoss server and launch your application in your favorite browser.</para>
+packaging even if a developer is writing the most trivial web applications. With Red Hat Developer Studio you are saved from such a pain. All you need is start JBoss server and launch your application in your favorite browser.</para>
        <para>You can also create a war archive with RHDS&apos;s Archive Tools and export it to any web server.</para>
        <section id="WarConfig">
 		<?dbhtml filename="WarConfig.html"?>
