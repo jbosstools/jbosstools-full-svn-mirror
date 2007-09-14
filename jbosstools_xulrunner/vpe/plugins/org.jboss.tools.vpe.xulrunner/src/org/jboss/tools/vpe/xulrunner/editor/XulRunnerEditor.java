@@ -14,7 +14,6 @@ package org.jboss.tools.vpe.xulrunner.editor;
 import java.util.regex.Pattern;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -498,11 +497,9 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * Scrools viiew to some elements
 	 * @param element -element to which we should scroll 
 	 */
-	private void scrollToElement(nsIDOMElement element){	
-		nsIDOMWindow domWindow = getWebBrowser().getContentDOMWindow();
-		// get element positions on visual page
-		Rectangle rect=XulRunnerVpeUtils.getElementBounds(element);
-		domWindow.scrollTo(rect.x-10, rect.y-10);
+	private void scrollToElement(nsIDOMElement element){
+		
+		getIFlasher().scrollElementIntoView(element);
 	}
 }
 
