@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="DevelopASimpleWebApplication" xreflabel="DevelopASimpleWebApplication">
-	<?dbhtml filename="DevelopASimpleWebApplication.html"?>
+<chapter id="DevelopingASimpleWebApplication" xreflabel="DevelopingASimpleWebApplication">
+	<?dbhtml filename="DevelopingASimpleWebApplication.html"?>
 	<chapterinfo>
     <keywordset>
       <keyword>Red Hat Developer Studio</keyword>
@@ -8,16 +8,16 @@
       <keyword>JBoss</keyword>
     </keywordset>
   </chapterinfo>
-	<title>Develop a simple JSP web application</title>
-	<para>In this chapter we are going to show you how to create a simple JSP application using the Red Hat Developer Studio. The application will show a classic &quot;Hello World!&quot; on the page.</para>
-	<para>We&apos;ll assume that you have already launched Red Hat Developer Studio installed and
+	<title>Developing a simple JSP web application</title>
+	<para>In this you'll find out how to create a simple JSP application using the Red Hat Developer Studio. The application will show a classic &quot;Hello World!&quot; on the page.</para>
+	<para>We&apos;ll assume that you have already launched Red Hat Developer Studio and
 also that the Red Hat perspective is the current perspective. (If not, make it active by selecting <emphasis>Window/Open Perspective/Red Hat Developer Studio</emphasis> from the menu bar or by selecting <emphasis>Window/
 Open Perspective/Other...</emphasis> from the menu bar and then selecting Red Hat Developer Studio from
 the Select Perspective dialog box.)</para>
 	<section id="SettingUpTheProject">
 		<?dbhtml filename="SettingUpTheProject.html"?>
 		<title>Setting Up the Project</title>
-		<para>We are first going to create a new project for the application.</para>
+		<para>At first a new project for the application will be created.</para>
 		<orderedlist>
      <listitem><para>Go to the menu bar and select <emphasis>File/New/Project...</emphasis></para></listitem>
      <listitem><para>Select  <emphasis>Web/Dynamic Web Project</emphasis> in the New Project dialog box</para></listitem>
@@ -47,7 +47,7 @@ the Select Perspective dialog box.)</para>
 		<section id="CreatingJSPPage">
 		<?dbhtml filename="CreatingJSPPage.html"?>
 		<title>Creating JSP Page</title>
-		<para>In our simple application we need to create only one JSP page which will display a &quot;Hello World!&quot; message.</para>
+		<para>In our simple application we need to create only one JSP page which displays a &quot;Hello World!&quot; message.</para>
 		<orderedlist continuation="continues">
 <listitem><para>Right click <emphasis>WebContent &gt; New &gt; JSP.</emphasis></para></listitem>
 <listitem><para>Type &quot;hello.jsp&quot; for file name and click Next button.</para></listitem>
@@ -67,8 +67,8 @@ the Select Perspective dialog box.)</para>
 		<para>Our hello.jsp page will now appear in Project Explorer.</para>
 		<section id="EditingJSPPage">
 		<?dbhtml filename="EditingJSPPage.html"?>
-		<title>Editing JSP Page</title>
-		<para>Let&apos;s now make a little change so that jsp page displays &quot;Hello World!&quot; message.</para>
+		<title>Editing a JSP Page</title>
+		<para>Let&apos;s now make a little change so that a jsp page displays &quot;Hello World!&quot; message.</para>
 		<orderedlist continuation="continues">
 <listitem><para>Insert this line inside the <emphasis role="bold"><property>&lt;body&gt;</property></emphasis><emphasis role="bold"><property>&lt;/body&gt;</property></emphasis> tag:
 </para></listitem>
@@ -76,7 +76,7 @@ the Select Perspective dialog box.)</para>
 <programlisting role="XML"><![CDATA[<% out.println("Hello World!"); %>]]>
 </programlisting>
 
-<para>Notice that content assist is always available when you are typing:</para>
+<para>Notice that content assist functionality is always available when you are typing:</para>
 <figure>
 			<title>Content Assist in JSP page</title>
 			<mediaobject>
@@ -129,8 +129,8 @@ the Select Perspective dialog box.)</para>
 		
 		<section id="DeployTheProject">
 		<?dbhtml filename="DeployTheProject.html"?>
-		<title>Deploy the project</title>
-		<para>While creating any web project one is usually experiencing a pain writing ant scripts and managing the 
+		<title>Deploying the project</title>
+		<para>While creating any web project you could experience a pain writing ant scripts and managing the 
 packaging even if a developer is writing the most trivial web applications. With Red Hat Developer Studio you are saved from such a pain. All you need is start JBoss server and launch your application in your favorite browser.</para>
        <para>You can also create a war archive with RHDS&apos;s Archive Tools and export it to any web server.</para>
        <section id="WarConfig">
@@ -171,7 +171,7 @@ packaging even if a developer is writing the most trivial web applications. With
 		<section id="LaunchingTheProject">
 		<?dbhtml filename="LaunchingTheProject.html"?>
 		<title>Launch JSP Project</title>
-		<para>Let&apos;s now launch our project on server. We&apos;ll be using JBoss server that ships with Red Hat Developer Studio.</para>
+		<para>Let&apos;s now launch our project on server. We&apos;ll use JBoss server that is shiped with Red Hat Developer Studio.</para>
 		<orderedlist continuation="continues">
 <listitem><para>Start JBoss server from JBoss Server view by clicking the Start icon.</para></listitem>
 </orderedlist>
@@ -184,7 +184,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			</mediaobject>
 		</figure>
 		<orderedlist continuation="continues">
-<listitem><para>Click the Run icon or right click your project folder and select <emphasis>Run on Server</emphasis>. If you haven&apos;t made any changes in web.xml file or cleared it out you can launch the application by right clicking the hello.jsp page and selecting <emphasis>Run on Server</emphasis>.</para></listitem>
+<listitem><para>Click the Run icon or right click your project folder and select <emphasis>Run on Server</emphasis>. If you haven&apos;t made any changes in web.xml file or cleared it out you can launch the application by right clicking the hello.jsp page and selecting <emphasis>Run on the Server</emphasis>.</para></listitem>
 </orderedlist>
 <figure>
 			<title>Run project</title>
@@ -194,7 +194,7 @@ packaging even if a developer is writing the most trivial web applications. With
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>You should see in browser the next page:</para>
+		<para>You should see the next page in a browser :</para>
 		<figure>
 			<title>Running project</title>
 			<mediaobject>
