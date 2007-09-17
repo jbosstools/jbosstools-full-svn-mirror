@@ -13,7 +13,6 @@ package org.jboss.tools.vpe.xulrunner.editor;
 
 import java.util.regex.Pattern;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -82,8 +81,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 */
 	private inIFlasher iFlasher;
 	private nsIDocShell docShell = null;
-	//flasher contact id
-	private static final String FLASHER_CIID="@mozilla.org/inspector/flasher;1";
 	
 	/**
 	 * RegExp for find expression 'display : none' in style string
@@ -362,7 +359,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		
 		if(iFlasher==null) {
 			nsIServiceManager serviceManager = Mozilla.getInstance().getServiceManager();
-			iFlasher = (inIFlasher) serviceManager.getServiceByContractID(FLASHER_CIID, inIFlasher.INIFLASHER_IID);
+			iFlasher = (inIFlasher) serviceManager.getServiceByContractID(XPCOM.IN_FLASHER_CONTRACTID, inIFlasher.INIFLASHER_IID);
 			iFlasher.setThickness(2);
 		}
 		return iFlasher;
@@ -499,8 +496,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 				}
 			}
 		} else if(getIFlasher()!=null){
-			//Max Areshkau (bug on Mac OS X, when we swithc to preview grom other view, selection rectangle doesn't disappear
-			//TODO Max Areshkau (may be exist passability not draw selection on resize event when we swithes to other view)
+			//Max Areshkau (bug on Mac OS X, when we switch to preview from other view, selection rectangle doesn't disappear
+			//TODO Max Areshkau (may be exist passability not draw selection on resize event when we switches to other view)
 			try {
 			((nsIBaseWindow)getWebBrowser().queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
 			} catch(XPCOMException ex) {
