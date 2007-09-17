@@ -1,0 +1,2 @@
+org.jboss.tools.vpe.xulrunner/debug=true
+org.jboss.tools.vpe.xulrunner/debug/browser_start=false
