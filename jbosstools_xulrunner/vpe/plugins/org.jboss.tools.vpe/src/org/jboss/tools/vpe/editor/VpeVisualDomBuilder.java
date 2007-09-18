@@ -1457,11 +1457,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	
 	nsIDOMElement getDragElement(nsIDOMMouseEvent mouseEvent) {
-		// TODO Max Areshkau figure out with selected element
-		/*We use element on which was click
-		 * 
-		 */
-			
+		
 		nsIDOMElement selectedElement = xulRunnerEditor.getLastSelectedElement();
 		if (selectedElement != null && canInnerDrag(selectedElement)) {
 			if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil.getMousePoint(mouseEvent))) {

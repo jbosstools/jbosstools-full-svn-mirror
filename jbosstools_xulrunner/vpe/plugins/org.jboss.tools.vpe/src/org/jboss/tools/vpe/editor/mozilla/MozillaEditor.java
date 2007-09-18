@@ -526,7 +526,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 	public void setSelectionRectangle(nsIDOMElement element, int resizerConstrains, boolean scroll) {
 		if (contentAreaEventListener != null) {
-			// TODO Max Areshkau add selection support
 			xulRunnerEditor.setSelectionRectangle((nsIDOMElement)element, resizerConstrains, scroll);
 		}
 	}

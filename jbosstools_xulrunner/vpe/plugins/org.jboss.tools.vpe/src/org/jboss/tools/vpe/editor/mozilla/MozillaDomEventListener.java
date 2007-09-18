@@ -10,6 +10,7 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.mozilla;
 
+import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -31,8 +32,7 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 //	private XPCOMObject dropListener;
 
 	private XulRunnerEditor visualEditor;
-	// TODO Max Areshkau add DnD
-//	private VpeDnD dnd; 
+
 	private EditorDomEventListener editorDomEventListener;
 	
 	//possible events
@@ -123,7 +123,10 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 	/* (non-Javadoc)
 	 * @see org.mozilla.interfaces.nsIDOMEventListener#handleEvent(org.mozilla.interfaces.nsIDOMEvent)
 	 */
-	public void handleEvent(nsIDOMEvent domEvent) {	
+	public void handleEvent(nsIDOMEvent domEvent) {
+		//TODO To many information in LOG
+		//VpePlugin.getDefault().logInfo("VPE was handled+EventType is["+domEvent.getType()+"]");
+		
 		try{
 		if(getEditorDomEventListener()==null){
 			
@@ -186,10 +189,11 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 		} 
 		
 		getEditorDomEventListener().onRefresh();
-		//not using default mozilla event handlers
+
 		}catch(Throwable th) {
-			//TODO Max Areshkau remove when all will be adjusted
-			th.printStackTrace();
+
+			VpePlugin.getPluginLog().logError("Event Handling Error", th);
+			throw new RuntimeException(th);
 		}
 	}
 

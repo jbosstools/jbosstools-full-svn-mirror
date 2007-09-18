@@ -211,7 +211,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 	
 	private void initDndHandler(Element templateSection) {
-		// TODO Max Areshkau add DnD support
+
 		if (getDragger() == null) {
 			setDragger(new VpeDnd());
 			getDragger().setDndData(templateSection);
@@ -680,7 +680,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @return <code>true</code> The node can be dropped
 	 */
 	public boolean canInnerDrop(VpePageContext pageContext, Node container, Node sourceDragNode) {
-		// TODO Max Areshkau add DnD support
+
 		if (dragger != null) {
 			return dragger.isDropEnabled(pageContext, container, sourceDragNode);
 		} else {

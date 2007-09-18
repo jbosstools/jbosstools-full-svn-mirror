@@ -827,31 +827,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 		switcher.stopActiveEditor();
 	}
-
-	public void _keyPress(nsIDOMKeyEvent keyEvent) {
-		if (VpeDebug.printVisualKeyEvent) {
-			System.out.println("<<< keyPress  type: " + keyEvent.getType() + "  Ctrl: " + keyEvent.getCtrlKey() + "  Shift: " + keyEvent.getShiftKey() + "  CharCode: " + keyEvent.getCharCode() + "  KeyCode: " + keyEvent.getKeyCode()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-		}
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
-		visualEditor.hideResizer();
-		switcher.stopActiveEditor();
-
-		try {
-			if (visualKeyHandler.keyPressHandler(keyEvent)) {
-				switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
-				sourceSelectionChanged1();
-				// TODO Max Areshkau figure out with Selection Controller
-				visualSelectionController.setCaretEnabled(true);
-				switcher.stopActiveEditor();
-			}
-		} catch (Exception e) {
-			VpePlugin.getPluginLog().logError(e);
-			visualRefresh();
-		}
-	}
-
+	
 	public void keyPress(nsIDOMKeyEvent keyEvent) {
 		if (VpeDebug.printVisualKeyEvent) {
 			System.out.println("<<< keyPress  type: " + keyEvent.getType() + "  Ctrl: " + keyEvent.getCtrlKey() + "  Shift: " + keyEvent.getShiftKey() + "  CharCode: " + keyEvent.getCharCode() + "  KeyCode: " + keyEvent.getKeyCode()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
@@ -870,8 +846,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			if (visualKeyHandler.keyPressHandler(keyEvent)) {
 				switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
 				// Edward
-				sourceSelectionChanged(true);
-				// TODO Max Areshkau figure out with Selection 
+				sourceSelectionChanged(true); 
 				visualSelectionController.setCaretEnabled(true);
 				switcher.stopActiveEditor();
 			} else {
@@ -893,13 +868,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 					keyboardEvent.keyCode=(int)keyEvent.getKeyCode();			
 				}
 				//for maximaze/minimaze command(CTRL+M), we shouldn't call event listeners 
-				List possibleKeyStrokes = WorkbenchKeyboard.generatePossibleKeyStrokes(keyboardEvent);
+				List<?> possibleKeyStrokes = WorkbenchKeyboard.generatePossibleKeyStrokes(keyboardEvent);
 				IWorkbench iWorkbench = VpePlugin.getDefault().getWorkbench();
 				if(iWorkbench.hasService(IBindingService.class)){
 				IBindingService iBindingService = (IBindingService) iWorkbench.getService(IBindingService.class);
 
 				KeySequence sequenceBeforeKeyStroke = KeySequence.getInstance();
-					for (Iterator iterator = possibleKeyStrokes.iterator(); iterator
+					for (Iterator<?> iterator = possibleKeyStrokes.iterator(); iterator
 					.hasNext();){
 						KeySequence sequenceAfterKeyStroke = KeySequence.getInstance(
 								sequenceBeforeKeyStroke, (KeyStroke) iterator.next());
@@ -916,8 +891,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 						}
 					}
 				}
-				// TODO Sergey Vasilyev figure out with key handlers
-//				xulRunnerEditor.notifyListeners(keyboardEvent.type, keyboardEvent);
+				//sends xulrunner event to eclipse environment
+				getXulRunnerEditor().getBrowser().notifyListeners(keyboardEvent.type, keyboardEvent);
 				
 			}
 		} catch (Exception e) {
@@ -1307,8 +1282,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 		
 		private boolean startActiveEditor(int newType) {
-			//TODO Max Areshkau( add in test purposes, remove after all)
-//			System.out.print("start");
 			if (type == ACTIVE_EDITOR_NONE) {
 				if( newType == ACTIVE_EDITOR_SOURCE &&
 						editPart.getVisualMode() == VpeEditorPart.SOURCE_MODE) {
@@ -1322,8 +1295,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 		
 		private void stopActiveEditor() {
-			//TODO Max Areshkau( add in test purposes, remove after all)
-//			System.out.println("stop");
 			onRefresh();
 			type = ACTIVE_EDITOR_NONE;
 		}
@@ -1799,30 +1770,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	}
 	
 	public void dragOver(nsIDOMEvent event) {
-//		nsIDragSession dragSession = xulRunnerEditor.getCurrentDragSession();
-//
-//		boolean isFlavor = dragSession.isDataFlavorSupported(ModelTransfer.MODEL);
 
-//		if (VpeDebug.printVisualDragDropEvent) {
-//			System.out.println("<<< outerDragOver  isFlavor: " + isFlavor); //$NON-NLS-1$
-//		}
 		visualBuilder.getDnd().dragOver(event, this);
-//		nsITransferable transferable = xulRunnerEditor.createTransferable();
-//
-//		transferable.addDataFlavor(XulRunnerEditor.TRANS_FLAVOR_kURLDataMime);
-//		transferable.addDataFlavor(XulRunnerEditor.TRANS_FLAVOR_kFileMime);
-//		transferable.addDataFlavor(XulRunnerEditor.TRANS_FLAVOR_kURLMime);
-//
-//		dragSession.getData(transferable, 0);
-//		
-//		String[] flavors = new String[] {null};
-//		nsISupports[] data = new nsISupports[] {null};
-//		long[] length = new long[] {0};
-//		transferable.getAnyTransferData(flavors, data, length);
-//
-//		
-//		dragSession.setCanDrop(true);
-//		event.preventDefault();
+
 	}
 		
 	public void _dragOver(nsIDOMEvent event) {
