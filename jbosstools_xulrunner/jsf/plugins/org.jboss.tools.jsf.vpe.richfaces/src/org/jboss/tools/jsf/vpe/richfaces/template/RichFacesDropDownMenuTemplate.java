@@ -37,11 +37,9 @@ public class RichFacesDropDownMenuTemplate extends VpeAbstractTemplate {
 	
 
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
-	  
-	    
 	    VpeCreationData creatorInfo = null;
-	    try {
-		Element sourceElement = (Element)sourceNode;
+
+	    Element sourceElement = (Element)sourceNode;
 		nsIDOMElement visualMenu = visualDocument.createElement(HtmlComponentUtil.HTML_TAG_DIV);
  		
 		ComponentUtil.setCSSLink(pageContext, "dropDownMenu/dropDownMenu.css", "richFacesDropDownMenu");
@@ -54,8 +52,6 @@ public class RichFacesDropDownMenuTemplate extends VpeAbstractTemplate {
 		correctAttribute(sourceElement, visualMenu,
 				STYLE_ATTR_NAME,
 				HtmlComponentUtil.HTML_STYLE_ATTR, null, null);
-
-		Attr ddmLabelFromAttribute = sourceElement.getAttributeNode("value");
 
 		nsIDOMElement visualMenuLabel = visualDocument.createElement(HtmlComponentUtil.HTML_TAG_DIV);
 		visualMenuLabel.setAttribute("class", "dr-label-text-decor rich-label-text-decor");
@@ -71,61 +67,52 @@ public class RichFacesDropDownMenuTemplate extends VpeAbstractTemplate {
 
 		visualMenu.appendChild(visualMenuLabel);
 		
-		String ddmLabelFromFacet = getLabelFacet(sourceElement);
-		Map visualNodeMap = pageContext.getDomMapping().getVisualMap();
 		creatorInfo = new VpeCreationData(visualMenu);
 		VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualMenuLabel);
-		nsIDOMNode textLabel = null;
-		if (ddmLabelFromFacet != null) {
-			textLabel = visualDocument.createTextNode(ddmLabelFromFacet);
+		Element facetElement = getLabelFacet(sourceElement);
+
+		if (facetElement != null) {
+			childrenInfo.addSourceChild(facetElement);
 		} else {
-		    	String valueForLabel = ddmLabelFromAttribute == null
-		    			? ""
-		    			: ddmLabelFromAttribute.getValue();
-			textLabel = visualDocument.createTextNode(valueForLabel);
-		}
-		if (textLabel != null) {
+			Attr ddmLabelFromAttribute = sourceElement.getAttributeNode("value");
+	    	String valueForLabel = ddmLabelFromAttribute != null && ddmLabelFromAttribute.getValue() != null
+		    			? ddmLabelFromAttribute.getValue()
+		    			: "";
+		    nsIDOMNode textLabel = visualDocument.createTextNode(valueForLabel);
 			visualMenuLabel.appendChild(textLabel);
-			creatorInfo.addChildrenInfo(childrenInfo);
 		}
+
+		creatorInfo.addChildrenInfo(childrenInfo);
 		visualMenu.appendChild(visualMenuLabel);
-	}catch(Throwable t) {
-	    t.printStackTrace();
-	}
 		
 		return creatorInfo;
 	}
 	
-	private String getLabelFacet(Element sourceElement) {
-		String labelFacet = null;
-		NodeList children = sourceElement.getChildNodes();
 
-		int cnt = children != null ? children.getLength() : 0;
-		if (cnt > 0) {
-			for (int i = 0; i < cnt; i++) {
-				Node child = children.item(i);
-				if (child.getNodeType() == Node.ELEMENT_NODE &&
-						child.getNodeName().endsWith(":facet")) {
-					Element facetElement = (Element)child;
-					String facetName = facetElement.getAttribute("name");
-					if (LABEL_FACET_NAME.equals(facetName)) {
-						NodeList facetChildren = facetElement.getChildNodes();
-						int facetCnt = facetChildren != null ? facetChildren.getLength() : 0;
-						if (facetCnt > 0) {
-							for (int j = 0; j < facetCnt; j++) {
-								Node facetChild = facetChildren.item(i);
-								if (facetChild.getNodeType() == Node.ELEMENT_NODE &&
-										facetChild.getNodeName().endsWith(":verbatim")) {
-									labelFacet = getElementTextContent((Element)facetChild);
-									break;
-								}
-							}
+	
+	private Element getLabelFacet(Element sourceElement) {
+		if (sourceElement == null) {
+			return null;
+		}
+		
+		NodeList children = sourceElement.getChildNodes();
+		if (children != null) {
+			int size = children.getLength();
+			if (size > 0) {
+				for (int i=0; i<size; i++) {
+					Node child = children.item(i);
+					if (child.getNodeType() == Node.ELEMENT_NODE
+							&& child.getNodeName().endsWith(":facet")) {
+						Element facetElement = (Element)child;
+						if (LABEL_FACET_NAME.equals(facetElement.getAttribute("name"))) {
+							return facetElement;
 						}
 					}
 				}
 			}
 		}
-		return labelFacet;
+		
+		return null;
 	}
 	
 	private String getElementTextContent(Element element) {
