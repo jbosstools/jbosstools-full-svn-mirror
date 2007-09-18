@@ -13,11 +13,13 @@ package org.jboss.tools.vpe.xulrunner.editor;
 
 import java.util.regex.Pattern;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.jboss.tools.vpe.xulrunner.BrowserPlugin;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
@@ -240,15 +242,9 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 */
 	public nsISelection getSelection() {
 
-//		try{
-//		nsIServiceManager serviceManager = Mozilla.getInstance().getServiceManager();
 		nsIDOMWindow domWindow = getWebBrowser().getContentDOMWindow();
 		nsISelection selection = domWindow.getSelection();
 		return selection;
-//		} catch(XPCOMException exception) {
-//			exception.printStackTrace();
-//		}
-//		return null;
 	}
 	
 	/**
@@ -266,9 +262,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	private void setLastSelectedElement(nsIDOMElement lastSelectedElement) {
 		this.lastSelectedElement = lastSelectedElement;
 	}
-	/**
-	 * 
-	 */
+
 	/**
 	 * Draws rectangle around  the element.
 	 * @param element
@@ -295,14 +289,14 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 					}
 					
 					getIFlasher().repaintElement(getLastSelectedElement());
-//					getIFlasher().drawElementOutline(getLastSelectedElement());
+
 			}else {
 				
 				getIFlasher().setColor(flasherHiddentElementColor);
 				nsIDOMElement domElement = findVisbleParentElement(getLastSelectedElement());
 				
 				if(domElement!=null) {
-//					getIFlasher().drawElementOutline(getLastSelectedElement());				
+			
 					getIFlasher().repaintElement(domElement);
 				}
 				
@@ -495,13 +489,14 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 					getIFlasher().drawElementOutline(domElement);
 				}
 			}
-		} else if(getIFlasher()!=null){
+		} else if(getIFlasher()!=null&&Platform.getOSArch().equals(Platform.OS_MACOSX)){
 			//Max Areshkau (bug on Mac OS X, when we switch to preview from other view, selection rectangle doesn't disappear
 			//TODO Max Areshkau (may be exist passability not draw selection on resize event when we switches to other view)
 			try {
 			((nsIBaseWindow)getWebBrowser().queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
 			} catch(XPCOMException ex) {
 				//just ignore its
+				BrowserPlugin.getDefault().logInfo("repaint failed", ex);
 			}
 		}
 	}
