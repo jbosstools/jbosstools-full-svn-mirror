@@ -11,16 +11,16 @@
 	<title>Developing a simple JSP web application</title>
 	<para>In this you'll find out how to create a simple JSP application using the Red Hat Developer Studio. The application will show a classic &quot;Hello World!&quot; on the page.</para>
 	<para>We&apos;ll assume that you have already launched Red Hat Developer Studio and
-also that the Red Hat perspective is the current perspective. (If not, make it active by selecting <emphasis>Window/Open Perspective/Red Hat Developer Studio</emphasis> from the menu bar or by selecting <emphasis>Window/
-Open Perspective/Other...</emphasis> from the menu bar and then selecting Red Hat Developer Studio from
+also that the Red Hat perspective is the current perspective. (If not, make it active by selecting <emphasis><property>Window/Open Perspective/Red Hat Developer Studio</property></emphasis> from the menu bar or by selecting <emphasis><property>Window/
+Open Perspective/Other...</property></emphasis> from the menu bar and then selecting Red Hat Developer Studio from
 the Select Perspective dialog box.)</para>
 	<section id="SettingUpTheProject">
 		<?dbhtml filename="SettingUpTheProject.html"?>
 		<title>Setting Up the Project</title>
 		<para>At first a new project for the application will be created.</para>
 		<itemizedlist>
-     <listitem><para>Go to the menu bar and select <emphasis>File/New/Project...</emphasis></para></listitem>
-     <listitem><para>Select  <emphasis>Web/Dynamic Web Project</emphasis> in the New Project dialog box</para></listitem>
+     <listitem><para>Go to the menu bar and select <emphasis><property>File/New/Project...</property></emphasis></para></listitem>
+     <listitem><para>Select  <emphasis><property>Web/Dynamic Web Project</property></emphasis> in the New Project dialog box</para></listitem>
      <listitem><para>Click Next &gt;</para></listitem>
      <listitem><para>Enter &quot;jspHello&quot; as the project name</para></listitem>
      <listitem><para>Leave everything else as is, and click Finish</para></listitem>

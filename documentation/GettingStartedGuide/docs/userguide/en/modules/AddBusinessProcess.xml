@@ -181,7 +181,7 @@ end
 ]]></programlisting>
 <para>Notice that the IDE automatically highlights the syntax and provides auto-completion help.
  You may wonder how Seam knows to load the process-order.drl file for the application.</para>
- <para>If you look in the <emphasis>resources/WEB-INF/components.xml</emphasis> file we copied from the imported 
+ <para>If you look in the <emphasis><property>resources/WEB-INF/components.xml</property></emphasis> file we copied from the imported 
  rules-bpm project. It has an element pointing to the process-order.drl file.</para>
  <programlisting role="XML"><![CDATA[<drools:rule-base name="securityRules">
        <drools:rule-files>

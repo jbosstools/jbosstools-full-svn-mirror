@@ -157,7 +157,7 @@
       </mediaobject>
     </figure>
     
-    <para>To make simple changes to the page, you just need to double click on the <emphasis>WebContent/home.xhtml file</emphasis> and edit it in the visual editor. Notice that the visual editor lets you both the XHTML code and the rendered page. The rendered view is designed to make it easy to find stuff in a complex XHTML page.</para>
+    <para>To make simple changes to the page, you just need to double click on the <emphasis><property>WebContent/home.xhtml file</property></emphasis> and edit it in the visual editor. Notice that the visual editor lets you both the XHTML code and the rendered page. The rendered view is designed to make it easy to find stuff in a complex XHTML page.</para>
     
     <figure>
       <title>Making changes in the visual editor</title>
