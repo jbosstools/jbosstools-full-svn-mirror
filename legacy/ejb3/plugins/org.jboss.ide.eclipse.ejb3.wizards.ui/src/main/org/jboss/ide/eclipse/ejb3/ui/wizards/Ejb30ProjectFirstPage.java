@@ -26,8 +26,7 @@ import org.eclipse.wst.common.project.facet.core.runtime.IRuntime;
 import org.eclipse.wst.project.facet.ProductManager;
 import org.eclipse.wst.server.core.ServerCore;
 import org.eclipse.wst.web.internal.ResourceHandler;
-import org.jboss.ide.eclipse.as.core.runtime.EJB30SupportVerifier;
-import org.jboss.ide.eclipse.as.core.runtime.server.AbstractJBossServerRuntime;
+import org.jboss.ide.eclipse.as.classpath.core.ejb3.EJB30SupportVerifier;
 
 public class Ejb30ProjectFirstPage extends J2EEComponentFacetCreationWizardPage {
 	public static final String EJB30_FACET_ID = "jbide.ejb30";
