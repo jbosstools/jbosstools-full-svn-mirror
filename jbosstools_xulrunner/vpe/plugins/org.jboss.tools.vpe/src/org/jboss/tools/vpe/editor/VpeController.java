@@ -10,7 +10,6 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -23,9 +22,6 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.bindings.Binding;
-import org.eclipse.jface.bindings.keys.KeySequence;
-import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -55,10 +51,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.internal.keys.WorkbenchKeyboard;
-import org.eclipse.ui.keys.IBindingService;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.eclipse.wst.sse.core.internal.model.ModelLifecycleEvent;
 import org.eclipse.wst.sse.core.internal.provisional.IModelLifecycleListener;
@@ -866,30 +859,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				} else{
 					
 					keyboardEvent.keyCode=(int)keyEvent.getKeyCode();			
-				}
-				//for maximaze/minimaze command(CTRL+M), we shouldn't call event listeners 
-				List<?> possibleKeyStrokes = WorkbenchKeyboard.generatePossibleKeyStrokes(keyboardEvent);
-				IWorkbench iWorkbench = VpePlugin.getDefault().getWorkbench();
-				if(iWorkbench.hasService(IBindingService.class)){
-				IBindingService iBindingService = (IBindingService) iWorkbench.getService(IBindingService.class);
-
-				KeySequence sequenceBeforeKeyStroke = KeySequence.getInstance();
-					for (Iterator<?> iterator = possibleKeyStrokes.iterator(); iterator
-					.hasNext();){
-						KeySequence sequenceAfterKeyStroke = KeySequence.getInstance(
-								sequenceBeforeKeyStroke, (KeyStroke) iterator.next());
-						if(iBindingService.isPerfectMatch(sequenceAfterKeyStroke)){
-							final Binding binding = iBindingService.getPerfectMatch(sequenceAfterKeyStroke);
-							
-							if((binding!=null)
-								&& (binding.getParameterizedCommand()!=null)
-								&& (binding.getParameterizedCommand().getCommand()!=null)
-								&& (binding.getParameterizedCommand().getCommand().getId()!=null)
-								&&binding.getParameterizedCommand().getCommand().getId().equals(VpeController.MAXIMAZE_PART_ID)){
-								keyboardEvent.type = SWT.NONE;
-							}
-						}
-					}
 				}
 				//sends xulrunner event to eclipse environment
 				getXulRunnerEditor().getBrowser().notifyListeners(keyboardEvent.type, keyboardEvent);
