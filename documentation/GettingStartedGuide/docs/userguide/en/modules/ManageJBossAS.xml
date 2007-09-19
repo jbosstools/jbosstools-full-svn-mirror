@@ -20,9 +20,9 @@
   <?dbhtml filename="StartingServer.html"?>
   <title>Starting JBoss server</title>
   <para>Starting <property>JBoss server</property> is quite simple. Red Hat Developer Studio allows you control its behaviour through a special toolbar: start it in a regular or debug mode, stop it, or restart it.</para>
-  <orderedlist>
+  <itemizedlist>
   <listitem><para>To launch the server click the green-with-white-arrow icon on the <property>JBoss Server</property> View or right click server name in this view and select &quot;Start&quot;. If this view is not open select <emphasis>Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View</emphasis></para></listitem>
-  </orderedlist>
+  </itemizedlist>
   <figure>
 <title>Starting from icon</title>
 <mediaobject> 
@@ -116,25 +116,25 @@
  <section id="JBossInstalling">
   <?dbhtml filename="JBossInstalling.html"?>
   <title>JBoss AS Installation</title>
-  <orderedlist>
+  <itemizedlist>
 <listitem><para>Download the binary package of <property>JBoss 4.2.1</property> and save it on your computer: <ulink url="http://labs.jboss.com/jbossas/downloads">http://labs.jboss.com/jbossas/downloads</ulink></para></listitem>
-</orderedlist>
+</itemizedlist>
 <para>It does not matter where on your system you install <property>JBoss</property>. Note, however, that installing <property>JBoss</property> into a directory that has a name containing spaces causes problems in some situations with Sun-based VMs. So try to avoid using installation folders that have spaces in their names.</para>
 <para>There is no requirement for root access to run <property>JBoss</property> on UNIX/Linux systems because none of the default ports are within the 0-1023 privileged port range.</para>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>After you have the binary archive you want to install, use the JDK jar tool (or any other ZIP extraction tool) to extract the jboss-4.2.1.zip archive contents into a location of your choice. The jboss-4.2.1.tgz  archive is a gzipped tar file that requires a gnutar compatible tar which can handle the long pathnames in the archive. The extraction process will create a jboss-4.2.1 directory. </para></listitem>
-</orderedlist>
+</itemizedlist>
 </section>
  
  <section id="AddingJBossServer">
   <?dbhtml filename="AddingJBossServer.html"?>
   <title>Adding and configuring JBoss server</title>
   <para>Now we should add just installed server into server manager in Red Hat Developer Studio.</para>
-  <orderedlist>
+  <itemizedlist>
   <listitem><para>Open the <property>JBoss Server</property> View by selecting <emphasis>Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View</emphasis>. You will see <property>JBoss Server</property> view.</para></listitem>
   <listitem><para>Right click anywhere in this view and select New Server.</para></listitem>
 <listitem><para>Select <emphasis>JBoss, a division of Red Hat &gt; JBoss v4.2</emphasis> and click the &quot;Installed Runtimes&quot; button to select a new installed runtime.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <figure>
 <title>Selecting server type</title>
 <mediaobject> 
@@ -144,10 +144,10 @@
 </mediaobject>
 </figure>
      
-     <orderedlist continuation="continues">
+     <itemizedlist continuation="continues">
          <listitem><para>Click &quot;Add&quot; button to add a new jboss runtime.</para></listitem>
          <listitem><para>Select <emphasis>JBoss, a division of Red Hat &gt; JBoss v4.2</emphasis> and press Next.</para></listitem>
-     </orderedlist>
+     </itemizedlist>
 
      <figure>    
 <title>Installed Runtimes</title>
@@ -160,9 +160,9 @@
 
 
 
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
 <listitem><para>In the next step make Red Hat Developer Studio to know where you have installed the server and define JRE.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <figure>
 <title>Defining JBoss Runtime</title>
 <mediaobject> 
@@ -175,9 +175,9 @@
     <title>Note:</title>
     <para>When adding a new server you will need to specify what JRE to use. It is important to set this value to a full JDK, not JRE. Again, you need a full JDK to run Web applications, JRE will not be enough.</para>
 </note>
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
   <listitem><para>In the following window leave all settings default or give your name to a new jboss server and press Finish.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <figure>
 <title>Adding new runtime</title>
 <mediaobject> 
@@ -196,9 +196,9 @@
 </mediaobject>
 </figure>
 
-<orderedlist continuation="continues">
+<itemizedlist continuation="continues">
   <listitem><para>Click OK. Then select a new added runtime in Server runtime drop down list and click Next button twice.</para></listitem>
-</orderedlist>
+</itemizedlist>
 <figure>
 <title>Choosing runtime</title>
 <mediaobject> 
@@ -207,9 +207,9 @@
         </imageobject>
 </mediaobject>
 </figure>
-  <orderedlist continuation="continues">
+  <itemizedlist continuation="continues">
   <listitem><para>In the last wizard&apos;s dialog modify the projects that are configured on the server and click Finish.</para></listitem>
-  </orderedlist>
+  </itemizedlist>
   <figure>
 <title>Configuring Projects</title>
 <mediaobject> 
