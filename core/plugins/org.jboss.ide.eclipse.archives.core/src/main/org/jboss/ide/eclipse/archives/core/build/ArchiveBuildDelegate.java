@@ -61,6 +61,7 @@ public class ArchiveBuildDelegate {
 		EventManager.startedBuild(project);
 
 		IArchiveModelNode root = ArchivesModel.instance().getRoot(project);
+		if( root == null ) return;
 		IArchiveNode[] nodes = root.getChildren(IArchiveNode.TYPE_ARCHIVE);
 		for( int i = 0; i < nodes.length; i++ ) {
 			fullArchiveBuild(((IArchive)nodes[i]));
