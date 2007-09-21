@@ -108,6 +108,7 @@ public class DOMCreatingTest extends MozillaBrowserTest {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
+		delay(3000);
 		waitForJobs();
 		MozillaView mozilla
 			= ((MozillaView) PlatformUI.getWorkbench()
