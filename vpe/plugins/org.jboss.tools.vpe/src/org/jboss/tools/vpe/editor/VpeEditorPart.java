@@ -53,7 +53,6 @@ import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.ui.util.ModelUtilities;
-import org.jboss.tools.common.model.util.XModelTreeListenerSWTSync;
 import org.jboss.tools.jst.jsp.editor.IVisualEditor;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.VpePlugin;

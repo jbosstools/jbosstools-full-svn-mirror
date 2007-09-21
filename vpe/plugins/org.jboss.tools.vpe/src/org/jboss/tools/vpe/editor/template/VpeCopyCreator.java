@@ -25,8 +25,12 @@ import org.w3c.dom.NodeList;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 
 public class VpeCopyCreator extends VpeAbstractCreator {
+	
+	private static String STYLE_ATTR_NAME = "style";
+	
 	private boolean caseSensitive;
 	private HashSet attrSet;
 	private VpeCreator attrs[];
@@ -76,7 +80,7 @@ public class VpeCopyCreator extends VpeAbstractCreator {
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
 		Element visualNewElement = visualDocument.createElement(sourceNode.getNodeName());
 		visualNodeMap.put(this, visualNewElement);
-		addAttributes((Element)sourceNode, visualNewElement);
+		addAttributes((Element)sourceNode, visualNewElement, pageContext);
 		if (attrs != null) {
 			for (int i = 0; i < attrs.length; i++) {
 				VpeCreatorInfo attributeInfo = attrs[i].create(pageContext, (Element) sourceNode, visualDocument, visualNewElement, visualNodeMap);
@@ -110,17 +114,22 @@ public class VpeCopyCreator extends VpeAbstractCreator {
 		visualNodeMap.put(this, visualNode);
 	}
 
-	private void addAttributes(Element sourceElement, Element visualElement) {
+	private void addAttributes(Element sourceElement, Element visualElement, VpePageContext pageContext) {
 		NamedNodeMap sourceAttributes = sourceElement.getAttributes();
 		if (sourceAttributes == null) {
 			return;
 		}
 		int len = sourceAttributes.getLength();
 		for (int i = 0; i < len; i++) {
-			Attr sourceAttr = (Attr) sourceAttributes.item(i);
+			Attr sourceAttr = (Attr) sourceAttributes.item(i);			
 			String name = sourceAttr.getName();
+			
+			String value = sourceAttr.getValue();
+			if (name.equalsIgnoreCase(STYLE_ATTR_NAME))
+				value = VpeStyleUtil.addFullPathIntoURLValue(sourceAttr.getValue(), pageContext.getEditPart().getEditorInput());
+	
 			if (isAttribute(name)) {
-				visualElement.setAttribute(name, sourceAttr.getValue());
+				visualElement.setAttribute(name, value);
 			}
 		}
 	}

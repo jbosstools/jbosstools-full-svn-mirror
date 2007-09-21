@@ -17,6 +17,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 
 public class VpeStyleCreator extends VpeAbstractCreator{
 	
@@ -33,6 +34,7 @@ public class VpeStyleCreator extends VpeAbstractCreator{
 		String text = null;
 		if(textNode != null){
 			text = textNode.getNodeValue();
+			text = VpeStyleUtil.addFullPathIntoURLValue(text, pageContext.getEditPart().getEditorInput());
 		}
 		Node newStyle = pageContext.getVisualBuilder().addStyleNodeToHead(text);
 		visualNodeMap.put(this, newStyle);

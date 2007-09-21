@@ -10,6 +10,15 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.util;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.editors.text.ILocationProvider;
 import org.w3c.dom.Element;
 
 public class VpeStyleUtil {
@@ -30,6 +39,13 @@ public class VpeStyleUtil {
 	public static final String PX_STRING = "px";
 	public static final String SPACE_STRING = " ";
 	public static final String EMPTY_STRING = "";
+	
+	public static String ATTR_URL = "url";
+	public static String OPEN_BRACKET = "(";
+	public static String CLOSE_BRACKET = ")";
+	public static String FILE_PRTOCOL = "file:///";
+	public static String FILE_STR = "file:";
+	public static String FILE_SEPARAROT = "/";
 	
 	
 	// sets parameter position in atribute style to absolute value
@@ -225,5 +241,184 @@ public class VpeStyleUtil {
 		
 		return result;
 	}
+	
+	/**
+	 * 
+	 * @param value
+	 *            Css string
+	 * @param input
+	 *            The editor input
+	 * @return format style string
+	 */
+	public static String addFullPathIntoURLValue(String value,
+			IEditorInput input) {
 
+		String urls[] = value.split(ATTR_URL);
+
+		if (urls.length == 1)
+			return value;
+
+		String finalStr = EMPTY_STRING;
+		for (int i = 1; i < urls.length; i++) {
+
+			urls[i] = urls[i].replace("\'", EMPTY_STRING);
+			urls[i] = ATTR_URL + urls[i];
+
+			int startAttr = urls[i].indexOf(ATTR_URL);
+
+			int startPathIndex = urls[i].indexOf(OPEN_BRACKET, startAttr);
+			int endPathIndex = urls[i].indexOf(CLOSE_BRACKET,
+					startPathIndex + 1);
+
+			if (startPathIndex == -1 || endPathIndex == -1)
+				continue;
+
+			String filePath = urls[i].substring(startPathIndex + 1,
+					endPathIndex);
+			if (filePath.indexOf(FILE_STR) != -1)
+				continue;
+
+			if (!new File(filePath).isAbsolute())
+				filePath = getFilePath(input, filePath);
+
+			filePath = FILE_PRTOCOL + filePath;
+			URL url = null;
+			try {
+				url = new URL(filePath);
+			} catch (MalformedURLException e) {
+				continue;
+			}
+			filePath = url.toString();
+
+			String firstPartValue = urls[i].substring(0, startPathIndex + 1);
+			String secondPartValue = urls[i].substring(endPathIndex, urls[i]
+					.length());
+
+			urls[i] = firstPartValue + filePath + secondPartValue;
+		}
+		for (int i = 0; i < urls.length; i++)
+			finalStr += urls[i];
+		return finalStr;
+	}
+
+	/**
+	 * 
+	 * @param nput
+	 *            The editor input
+	 * @param fileName
+	 *            Relative path file
+	 * @return Absolute path file
+	 */
+	public static String getFilePath(IEditorInput input, String fileName) {
+		IPath inputPath = getInputParentPath(input);
+		return inputPath.toOSString() + File.separator + fileName;
+	}
+
+	/**
+	 * 
+	 * @param input
+	 *            The editor input
+	 * @return Path
+	 */
+	public static IPath getInputParentPath(IEditorInput input) {
+		IPath inputPath = null;
+		if (input instanceof ILocationProvider) {
+			inputPath = ((ILocationProvider) input).getPath(input);
+		} else if (input instanceof IFileEditorInput) {
+			IFile inputFile = ((IFileEditorInput) input).getFile();
+			if (inputFile != null) {
+				inputPath = inputFile.getLocation();
+			}
+		}
+		if (inputPath != null && !inputPath.isEmpty()) {
+			inputPath = inputPath.removeLastSegments(1);
+		}
+		return inputPath;
+	}
+
+	/**
+	 * 
+	 * @param value
+	 *            Css string
+	 * @param href_val
+	 *            Path of css file
+	 * @return Format style string
+	 */
+	public static String addFullPathIntoURLValue(String value, String href_val) {
+
+		String urls[] = value.split(ATTR_URL);
+
+		if (urls.length == 1)
+			return value;
+
+		String finalStr = EMPTY_STRING;
+
+		for (int i = 1; i < urls.length; i++) {
+
+			urls[i] = urls[i].replace("\'", EMPTY_STRING);
+			urls[i] = ATTR_URL + urls[i];
+
+			int startAttr = urls[i].indexOf(ATTR_URL);
+
+			int startPathIndex = urls[i].indexOf(OPEN_BRACKET, startAttr);
+			int endPathIndex = urls[i].indexOf(CLOSE_BRACKET,
+					startPathIndex + 1);
+
+			String filePath = urls[i].substring(startPathIndex + 1,
+					endPathIndex);
+			if (filePath.indexOf(FILE_STR) != -1)
+				continue;
+
+			if (!new File(filePath).isAbsolute())
+				filePath = getAbsolutePathImage(filePath, href_val);
+			else
+				filePath = FILE_PRTOCOL + filePath;
+
+			URL url = null;
+			try {
+				url = new URL(filePath);
+			} catch (MalformedURLException e) {
+				continue;
+			}
+			filePath = url.toString();
+
+			String firstPartValue = urls[i].substring(0, startPathIndex + 1);
+			String secondPartValue = urls[i].substring(endPathIndex, urls[i]
+					.length());
+
+			urls[i] = firstPartValue + filePath + secondPartValue;
+		}
+		for (int i = 0; i < urls.length; i++)
+			finalStr += urls[i];
+		return finalStr;
+	}
+
+	/**
+	 * 
+	 * @param pathImgRelative
+	 *            Relative path img file
+	 * @param pathCssAbsolute
+	 *            Absolute path css file
+	 * @return Absolute path img file
+	 */
+	private static String getAbsolutePathImage(String pathImgRelative,
+			String pathCssAbsolute) {
+
+		int k = 0;
+		int j = 0;
+		URL url = null;
+		try {
+			url = new URL(pathCssAbsolute);
+		} catch (MalformedURLException e) {
+			
+		}
+		pathCssAbsolute = url.toString();
+		while (j != -1) {
+			j = pathCssAbsolute.indexOf(FILE_SEPARAROT, j + 1);
+			if (j == -1)
+				break;
+			k = j;
+		}
+		return pathCssAbsolute.substring(0, k + 1) + pathImgRelative;
+	}
 }
