@@ -925,8 +925,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				while ((str = in.readLine()) != null) {
 					styleText.append(str);
 				}
+
+				String styleForParse = styleText.toString();
+				styleForParse = VpeStyleUtil.addFullPathIntoURLValue(styleForParse, href_val);
+				
 				in.close();
-				nsIDOMText textNode = visualDocument.createTextNode(styleText.toString());
+				nsIDOMText textNode = visualDocument.createTextNode(styleForParse);
 				linkNode.appendChild(textNode);
 				return linkNode;
 			} catch (FileNotFoundException fnfe) {
