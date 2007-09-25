@@ -125,8 +125,7 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 	 */
 	public void handleEvent(nsIDOMEvent domEvent) {
 		//TODO To many information in LOG
-		//VpePlugin.getDefault().logInfo("VPE was handled+EventType is["+domEvent.getType()+"]");
-		
+		//VpePlugin.getDefault().logInfo("VPE was handled+EventType is["+domEvent.getType()+"]");	
 		try{
 		if(getEditorDomEventListener()==null){
 			

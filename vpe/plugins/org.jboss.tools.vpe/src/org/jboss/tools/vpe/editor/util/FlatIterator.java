@@ -12,7 +12,7 @@ package org.jboss.tools.vpe.editor.util;
 
 import org.eclipse.wst.xml.core.internal.document.TextImpl;
 import org.w3c.dom.Node;
-
+//TODO Max Areshkau used to iterate over the nodes in navigatio by keys, but if we click left
 public class FlatIterator {
 
 	public static Node previous(Node forNode) {
