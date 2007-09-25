@@ -322,6 +322,11 @@
     the various places. the only thing not done by seam-gen is the seperation
     of the test code/libs.</para>
 
+    <para>I've added a projectexample dir next to this document that has an
+    working EAR project structure including test project. Note this layout is
+    just an example of what works - I have e.g. not verifed that all relevant
+    libs are included, just that it runs with the basic setup.</para>
+
     <section>
       <title>War</title>
 
