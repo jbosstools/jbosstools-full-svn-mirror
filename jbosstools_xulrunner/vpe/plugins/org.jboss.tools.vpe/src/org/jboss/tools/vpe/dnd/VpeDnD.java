@@ -58,7 +58,6 @@ public class VpeDnD {
 	 * @param dragetElement
 	 */
 	public void startDragSession(nsIDOMEvent  domEvent) {
-		//TODO Max Areshkau 
 		nsISupportsArray transArray = (nsISupportsArray) getComponentManager()
 		.createInstanceByContractID(CID_SUPPORTSARRAY, null,
 				nsISupportsArray.NS_ISUPPORTSARRAY_IID);

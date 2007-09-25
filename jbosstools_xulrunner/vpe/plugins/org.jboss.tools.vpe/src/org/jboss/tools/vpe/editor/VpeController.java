@@ -122,6 +122,7 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
+import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.VpeDndUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.selbar.SelectionBar;
@@ -189,6 +190,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	public final static String MODEL_FLAVOR = ModelTransfer.MODEL; //$NON-NLS-1$
 	
 	public VpeController(VpeEditorPart editPart){
+
 		this.editPart = editPart;
 		dropWindow = new VpeDropWindow(editPart.getSite().getShell());
 	}
@@ -405,11 +407,15 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	}
 
 	// INodeSelectionListener implementation
+	//TODO Max Areshkau remove if don't used
+	//looks like that this method can be removed
 	public void nodeSelectionChanged(NodeSelectionChangedEvent event) {
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
-		List nodes = event.getSelectedNodes();
+		//TODO Max Areshkau Improve selection notification
+		// do not use event.getSelectedNodes(), use instead base selection notification
+		List<?> nodes = event.getSelectedNodes();
 		if (nodes != null && nodes.size() > 0) {
 			Node sourceNode = (Node)nodes.get(0);
 			if (VpeDebug.printSourceSelectionEvent) {
@@ -423,6 +429,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	}
 
 	// ITextSelectionListener implementation
+	//TODO Max Areshau looks like this method don't used
 	public void textSelectionChanged(TextSelectionChangedEvent event) {
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
@@ -2393,6 +2400,20 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	public void dragDrop(nsIDOMEvent domEvent) {
 		
 		visualBuilder.getDnd().dragDrop(domEvent,this);
+	}
+
+	/**
+	 * @return the selectionBuilder
+	 */
+	public VpeSelectionBuilder getSelectionBuilder() {
+		return selectionBuilder;
+	}
+
+	/**
+	 * @param selectionBuilder the selectionBuilder to set
+	 */
+	public void setSelectionBuilder(VpeSelectionBuilder selectionBuilder) {
+		this.selectionBuilder = selectionBuilder;
 	}
 
 }
