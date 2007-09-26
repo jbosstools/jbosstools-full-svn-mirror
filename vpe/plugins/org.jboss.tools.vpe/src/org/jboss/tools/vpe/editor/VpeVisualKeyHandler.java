@@ -53,6 +53,7 @@ import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsISelection;
+import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Node;
@@ -1632,13 +1633,17 @@ public class VpeVisualKeyHandler {
 		int minlenght = Integer.MAX_VALUE;
 		int currentLenght = 0;
 		for(nsIDOMNode nsDOMNode : elements) {
+			
 			currentLenght=Integer.MAX_VALUE;
+			try{
 			domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				
 			if(nearestElement==null) {
 				nearestElement=domElement;
 				continue;
 			}
 			domElementRect = XulRunnerVpeUtils.getElementBounds(domElement);
+			
 			if(domElementRect.y<curentElementRect.y) {
 				currentLenght= curentElementRect.y-domElementRect.y;
 			
@@ -1649,7 +1654,11 @@ public class VpeVisualKeyHandler {
 					>Math.abs(curentElementRect.x-domElementRect.x)) {
 				minlenght=currentLenght;
 				nearestElement=domElement;
+				}
 			}
+		}catch(XPCOMException ex){
+				//just ignore
+				//if we cann't cast to nsIDOMELemen -> it's not visual element
 			}
 		}	
 	return nearestElement;
@@ -1671,23 +1680,32 @@ public class VpeVisualKeyHandler {
 		int currentLenght = 0;
 		for(nsIDOMNode nsDOMNode : elements) {
 			currentLenght=Integer.MAX_VALUE;
-			domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-			if(nearestElement==null) {
-				nearestElement=domElement;
-				continue;
-			}
-			domElementRect = XulRunnerVpeUtils.getElementBounds(domElement);
-			if(domElementRect.y>curentElementRect.y) {
-				currentLenght= domElementRect.y-curentElementRect.y;
+			try{
+				domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+
+				if(nearestElement==null) {
+					
+					nearestElement=domElement;
+					continue;
+				}
+				domElementRect = XulRunnerVpeUtils.getElementBounds(domElement);
+				if(domElementRect.y>curentElementRect.y) {
+					
+					currentLenght= domElementRect.y-curentElementRect.y;
 			
-			if(currentLenght < minlenght) {
-				minlenght = currentLenght;
-				nearestElement=domElement;
-			} else if(currentLenght==minlenght&&Math.abs(curentElementRect.x-XulRunnerVpeUtils.getElementBounds(nearestElement).x)
-					>Math.abs(curentElementRect.x-domElementRect.x)) {
-				minlenght=currentLenght;
-				nearestElement=domElement;
+			    if(currentLenght < minlenght) {
+					
+			    	minlenght = currentLenght;
+			    	nearestElement=domElement;
+			    } else if(currentLenght==minlenght&&Math.abs(curentElementRect.x-XulRunnerVpeUtils.getElementBounds(nearestElement).x)
+			    		>Math.abs(curentElementRect.x-domElementRect.x)) {
+			    	minlenght=currentLenght;
+			    	nearestElement=domElement;
+			    }
 			}
+		}catch(XPCOMException exception){
+				//just ignore
+				//if we cann't cast to nsIDOMELemen -> it's not visual element
 			}
 		}	
 	return nearestElement;
@@ -1709,24 +1727,31 @@ public class VpeVisualKeyHandler {
 		int currentLenght = 0;
 		for(nsIDOMNode nsDOMNode : elements) {
 			currentLenght=Integer.MAX_VALUE;
-			domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-			if(nearestElement==null) {
-				nearestElement=domElement;
-				continue;
-			}
-			domElementRect = XulRunnerVpeUtils.getElementBounds(domElement);
-			if(domElementRect.x>curentElementRect.x) {
-				currentLenght= domElementRect.x-curentElementRect.x;
+				try{
+					domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+					
+					if(nearestElement==null) {
+						nearestElement=domElement;
+						continue;
+					}
+					domElementRect = XulRunnerVpeUtils.getElementBounds(domElement);
+					
+					if(domElementRect.x>curentElementRect.x) {
+						currentLenght= domElementRect.x-curentElementRect.x;
 			
-			if(currentLenght < minlenght) {
-				minlenght = currentLenght;
-				nearestElement=domElement;
-			} else if(currentLenght==minlenght&&Math.abs(curentElementRect.y-XulRunnerVpeUtils.getElementBounds(nearestElement).y)
-					>Math.abs(curentElementRect.y-domElementRect.y)) {
-				minlenght=currentLenght;
-				nearestElement=domElement;
-			}
-			}
+						if(currentLenght < minlenght) {
+							minlenght = currentLenght;
+							nearestElement=domElement;
+						} else if(currentLenght==minlenght&&Math.abs(curentElementRect.y-XulRunnerVpeUtils.getElementBounds(nearestElement).y)
+								>Math.abs(curentElementRect.y-domElementRect.y)) {
+							minlenght=currentLenght;
+							nearestElement=domElement;
+						}
+					}
+				}catch(XPCOMException ex) {
+					//just ignore
+					//if we cann't cast to nsIDOMELemen -> it's not visual element
+				}
 		}	
 	return nearestElement;
 	}
@@ -1747,24 +1772,32 @@ public class VpeVisualKeyHandler {
 		int currentLenght = 0;
 		for(nsIDOMNode nsDOMNode : elements) {
 			currentLenght=Integer.MAX_VALUE;
-			domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-			if(nearestElement==null) {
-				nearestElement=domElement;
-				continue;
+			try{
+				domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				
+				if(nearestElement==null) {
+					nearestElement=domElement;
+					continue;
+				}
+				domElementRect = XulRunnerVpeUtils.getElementBounds(domElement);
+				
+				if(domElementRect.x<curentElementRect.x) {
+					
+					currentLenght= curentElementRect.x-domElementRect.x;
+					if(currentLenght < minlenght) {
+						minlenght = currentLenght;
+						nearestElement=domElement;
+					} else if(currentLenght==minlenght&&Math.abs(curentElementRect.y-XulRunnerVpeUtils.getElementBounds(nearestElement).y)
+							>Math.abs(curentElementRect.y-domElementRect.y)) {
+							minlenght=currentLenght;
+							nearestElement=domElement;
+					}
+				}
+				}catch (XPCOMException ex) {
+				//just ignore exception
+				//if we cann't cast to nsIDOMELemen -> it's not visual element
 			}
-			domElementRect = XulRunnerVpeUtils.getElementBounds(domElement);
-			if(domElementRect.x<curentElementRect.x) {
-				currentLenght= curentElementRect.x-domElementRect.x;
 			
-			if(currentLenght < minlenght) {
-				minlenght = currentLenght;
-				nearestElement=domElement;
-			} else if(currentLenght==minlenght&&Math.abs(curentElementRect.y-XulRunnerVpeUtils.getElementBounds(nearestElement).y)
-					>Math.abs(curentElementRect.y-domElementRect.y)) {
-				minlenght=currentLenght;
-				nearestElement=domElement;
-			}
-			}
 		}	
 	return nearestElement;
 	}
