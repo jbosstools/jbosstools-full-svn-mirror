@@ -44,7 +44,7 @@ public class VpeStyleUtil {
 	public static String ATTR_URL = "url";
 	public static String OPEN_BRACKET = "(";
 	public static String CLOSE_BRACKET = ")";
-	public static String FILE_PRTOCOL = "file:///";
+	public static String FILE_PRTOCOL = "file://";
 	public static String FILE_STR = "file:";
 	public static String FILE_SEPARAROT = "/";
 
