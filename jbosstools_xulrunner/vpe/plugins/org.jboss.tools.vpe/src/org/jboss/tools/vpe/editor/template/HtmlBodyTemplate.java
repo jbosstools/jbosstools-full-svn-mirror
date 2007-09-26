@@ -15,6 +15,7 @@ import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,6 +29,7 @@ public class HtmlBodyTemplate extends VpeAbstractTemplate {
 
 	private nsIDOMElement bodyOld;
 	private static String STYLE_FOR_DIV = "width: 100%; height: 100%";
+	private static String ID = "id";
 
 	/**
 	 * 
@@ -37,8 +39,22 @@ public class HtmlBodyTemplate extends VpeAbstractTemplate {
 
 		goToTree(visualDocument.getChildNodes().item(0));
 
+		nsIDOMNamedNodeMap attrsMap = bodyOld.getAttributes();
+		long len = attrsMap.getLength();
+		int j = 0;
+		for (int i = 0; i < len; i++) {
+			nsIDOMNode attr = attrsMap.item(j);
+			if (ID.equalsIgnoreCase(attr.getNodeName())) {
+				j++;
+				continue;
+			}
+			bodyOld.removeAttribute(attr.getNodeName());
+		}
+
 		for (int i = 0; i < sourceNode.getAttributes().getLength(); i++) {
 			String name = sourceNode.getAttributes().item(i).getNodeName();
+			if(ID.equalsIgnoreCase(name))
+				continue;
 			String value = sourceNode.getAttributes().item(i).getNodeValue();
 			// all full path for 'url'
 			if (VpeStyleUtil.ATTRIBUTE_STYLE.equalsIgnoreCase(name))
