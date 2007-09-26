@@ -147,8 +147,6 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 public class VpeController implements INodeAdapter, IModelLifecycleListener, INodeSelectionListener, ITextSelectionListener, SelectionListener, EditorDomEventListener, VpeTemplateListener, XModelTreeListener, ResourceReferenceListListener, ISelectionChangedListener, IVisualController {
-	//id of command which is maximazed/minimazed editor
-	private static final String MAXIMAZE_PART_ID="org.eclipse.ui.window.maximizePart";
 	
 	StructuredTextEditor sourceEditor;
 	private MozillaEditor visualEditor;

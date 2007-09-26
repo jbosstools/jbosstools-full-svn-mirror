@@ -78,12 +78,6 @@ public class VpeVisualKeyHandler {
 	public static final int VK_HOME 			= 0x24;
 	public static final int VK_END 				= 0x23;
 	
-	//directions for looking nearest node when we are using navigation keys
-	private static final int UP=0;
-	private static final int DOWN=1;
-	private static final int LEFT=2;
-	private static final int RIGHT=3;
-
     StructuredTextEditor sourceEditor;
 	VpeDomMapping domMapping;
 	VpePageContext pageContext;
@@ -176,14 +170,13 @@ public class VpeVisualKeyHandler {
 		if (keyCode == VK_ENTER) {
 			return split();
 		} else if (keyCode == VK_LEFT && !shiftKey) {
-			//TODO Max Areshkau (Optimize Move Left)
 			return  moveLeft();
 		} else if (keyCode == VK_UP && !shiftKey) {
-			return moveUp(false);
+			return moveUp();
 		} else if (keyCode == VK_RIGHT && !shiftKey) {
 			return moveRight();
 		} else if (keyCode == VK_DOWN && !shiftKey) {
-			return moveDown(false);
+			return moveDown();
 		} else if (keyCode == VK_HOME && !shiftKey) {
 			return moveHome(false);
 		} else if (keyCode == VK_END && !shiftKey) {
@@ -1348,153 +1341,32 @@ public class VpeVisualKeyHandler {
 		}
 		return false;
 	}
-	
+	/**
+	 * Moves to right element focus
+	 * @return
+	 */
 	private boolean moveRight() {
-		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(sourceEditor);
-		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
-		if (selection == null || selection.getFocusNode() == null) 
-			return false; 
-
-		// We're in the visible attribute
-		if (selection.getFocusAttribute() != null) {
-			if (isVisualEditableForNode(selection.getFocusNode())) {
-				AttrImpl attr = (AttrImpl)selection.getFocusAttribute();
-				
-				Point range = selection.getFocusAttributeRange();
-				if (range != null) {
-					int eo = range.x + range.y;
-					int attrSelStart = ((ElementImpl)attr.getOwnerElement()).getStartOffset() + ((AttrImpl)attr).getValueRegion().getStart() + 1 + eo;
-					
-					if (eo + 1 <= ((AttrImpl)attr).getValue().length()) { 
-						setSourceFocus(attrSelStart + 1);
-						return true;
-					} else {
-						return moveCursorToNextVisualNode(selection.getFocusNode());
-					}
-				}
-			} else {
-				return moveCursorToNextVisualNode(selection.getFocusNode());
-			}
-		} else {
-			if (selection.getFocusNode().getNodeType() == Node.TEXT_NODE ||
-					selection.getFocusNode().getNodeType() == Node.COMMENT_NODE) {
-				int so = ((IndexedRegion)selection.getFocusNode()).getStartOffset();
-				int eo = ((IndexedRegion)selection.getFocusNode()).getEndOffset();
-				if (selection.getFocusOffset() >= eo-so) {
-					return moveCursorToNextVisualNode(selection.getFocusNode());
-				}
-				int fo = selection.getFocusOffset();
-				char[] chars = ((TextImpl)selection.getFocusNode()).getValueSource().toCharArray();
-				
-				String sourceValue=((TextImpl)selection.getFocusNode()).getValueSource();
-				String nodeValue=selection.getFocusNode().getNodeValue();				
-				
-				int visualOffser=TextUtil.visualPosition(sourceValue, fo);
-
-				int sourseOffset=TextUtil.sourcePosition(sourceValue, nodeValue, visualOffser+1);
-				int diff = sourseOffset-fo;
-				if(isTextToSkip(chars, fo + diff-1)){
-				while ((fo + diff < chars.length) && isTextToSkip(chars, fo + diff)) {
-					diff++;
-				}
-				}
-				if (fo + diff > chars.length||diff==0) {
-					return moveCursorToNextVisualNode(selection.getFocusNode());
-				}
-				setSourceFocus(so + fo + diff);
-				
-				return true;
-			} else if (selection.getFocusNode().getNodeType() == Node.ELEMENT_NODE) {
-				// Move to second position of the visual attribute (because we're placed 
-				//   either before first char of visual attribute or not in visual attribute 
-				//   but still in the beginning of the element
-				return moveCursorToNextVisualNode(selection.getFocusNode());
-			}
-		}
+		nsIDOMElement visualELement = getNearestNodeinRightDirection(getSelectedNode());
+		Node sourceNode = domMapping.getSourceNode(visualELement);
 		
+		if(sourceNode!=null) {
+			//set selection to node
+			setSourceFocus(((IndexedRegion)sourceNode).getStartOffset());
+			return true;
+		}
 		return false;
 	}
 
 	//moves selection to left
 	private boolean moveLeft() {
+		nsIDOMElement visualELement = getNearestNodeinLeftDirection(getSelectedNode());
+		Node sourceNode = domMapping.getSourceNode(visualELement);
 		
-		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(sourceEditor);
-		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
-		if (selection == null || selection.getFocusNode() == null) {
-	
-			return false; 
+		if(sourceNode!=null) {
+			//set selection to node
+			setSourceFocus(((IndexedRegion)sourceNode).getStartOffset());
+			return true;
 		}
-		// We're in the visible attribute
-		if (selection.getFocusAttribute() != null) {
-			if (isVisualEditableForNode(selection.getFocusNode())) {
-				AttrImpl attr = (AttrImpl)selection.getFocusAttribute();
-				
-				Point range = selection.getFocusAttributeRange();
-				if (range != null) {
-					int eo = range.x + range.y;
-					int attrSelStart = ((ElementImpl)attr.getOwnerElement()).getStartOffset() + ((AttrImpl)attr).getValueRegion().getStart() + 1 + eo;
-					
-					if (eo > 0) { 
-						setSourceFocus(attrSelStart - 1);
-						return true;
-					} 
-//					else {
-//						return moveCursorToPrevVisualNode(selection.getFocusNode());
-//					}
-				}
-			} 
-//			else {
-//				return moveCursorToPrevVisualNode(selection.getFocusNode());
-//			}
-		} else {
-			if (selection.getFocusNode().getNodeType() == Node.TEXT_NODE ||
-					selection.getFocusNode().getNodeType() == Node.COMMENT_NODE) {
-				int so = ((IndexedRegion)selection.getFocusNode()).getStartOffset();
-				int eo = ((IndexedRegion)selection.getFocusNode()).getEndOffset();
-				
-//				if (selection.getFocusOffset() <= 0) {
-//					
-//					return moveCursorToPrevVisualNode(selection.getFocusNode());
-//				}
-				int fo = selection.getFocusOffset();
-
-
-				
-				char[] chars = ((TextImpl)selection.getFocusNode()).getValueSource().toCharArray();
-				String sourceValue=((TextImpl)selection.getFocusNode()).getValueSource();
-				String nodeValue=selection.getFocusNode().getNodeValue();
-				
-				int visualOffser=TextUtil.visualPosition(sourceValue, fo);
-				int sourseOffset=TextUtil.sourcePosition(sourceValue, nodeValue, visualOffser-1);
-				int diff = sourseOffset-fo;
-				boolean cicle=false;
-				
-				while ((fo + diff >= 0)&&(fo+diff<chars.length) && isTextToSkip(chars, fo + diff)) {
-					diff--;
-					cicle=true;
-				}
-				
-				if(cicle==true){
-					diff++;
-				}
-
-//				if (fo + diff < 0||diff==0) {
-//
-//					return moveCursorToPrevVisualNode(selection.getFocusNode());
-//				}
-
-				setSourceFocus(so + fo + diff);
-				return true;
-			} 
-//			else if (selection.getFocusNode().getNodeType() == Node.ELEMENT_NODE) {
-//				// Move to second position of the visual attribute (because we're placed 
-//				//   either before first char of visual attribute or not in visual attribute 
-//				//   but still in the beginning of the element
-//
-//				return moveCursorToPrevVisualNode(selection.getFocusNode());
-//			}
-		}
-		
 		return false;
 	}
 	
@@ -1689,27 +1561,37 @@ public class VpeVisualKeyHandler {
 		return node;
 	}
 
-	private boolean moveUp(boolean extend) {
+	/**
+	 * Moves cursor to UP ELement
+	 * @return if moving was successful return true, else return false
+	 */
+	//TODO Max Areshkau  when we at higest node ad automatic downcast
+	private boolean moveUp() {
 		
-		VpeDebugUtil.debugInfo("MoveUp\n");
-		
-		nsIDOMElement visualELement = getNearestNode(getSelectedNode(), UP);
+		nsIDOMElement visualELement = getNearestNodeinUpDirection(getSelectedNode());
 		Node sourceNode = domMapping.getSourceNode(visualELement);
-		setSourceFocus(((IndexedRegion)sourceNode).getStartOffset());
-		if(visualELement!=null) {
-			VpeDebugUtil.debugInfo("["+visualELement.getNodeName()+"]");
-		//	pageContext.getEditPart().getController().getXulRunnerEditor().setSelectionRectangle(element, resizerConstrains, scroll)
+		
+		if(sourceNode!=null) {
+			//set selection to node
+			setSourceFocus(((IndexedRegion)sourceNode).getStartOffset());
+			return true;
 		}
-// TODO Max Areshkau figure out
-//		frameSelection.lineMove(false, extend);
-		return true;
+		return false;
 	}
+	/**
+	 * Moves cursor to down element
+	 * @return if moving was successful return true, else return false
+	 */
+	private boolean moveDown() {
 
-	private boolean moveDown(boolean extend) {
-		VpeDebugUtil.debugInfo("moveDown()");
-// TODO Max Areshkau figure out
-//		frameSelection.lineMove(true, extend);
-		return true;
+		nsIDOMElement visualELement = getNearestNodeinDownDirection(getSelectedNode());
+		Node sourceNode = domMapping.getSourceNode(visualELement);
+		if(sourceNode!=null) {
+			//set selection to node
+			setSourceFocus(((IndexedRegion)sourceNode).getStartOffset());
+			return true;
+		}
+		return false;
 	}
 
 	private boolean moveHome(boolean extend) {		
@@ -1733,13 +1615,12 @@ public class VpeVisualKeyHandler {
 //		frameSelection.characterMove(false, extend);
 		return true;
 	}
+	
 	/**
-	 * 
 	 * @param currentNode - node from which we will be look nearest node
-	 * @param direction - direction on which we will be look for node
-	 * @return nearest node in one of four directions(UP, DOWN, LEFT, RIGHT)
+	 * @return nearest node in UP direction
 	 */
-	private nsIDOMElement getNearestNode(nsIDOMElement currentNode, int direction) {
+	private nsIDOMElement getNearestNodeinUpDirection(nsIDOMElement currentNode) {
 		if(currentNode==null) { 
 			return null;
 		}
@@ -1750,7 +1631,6 @@ public class VpeVisualKeyHandler {
 		nsIDOMElement domElement;
 		int minlenght = Integer.MAX_VALUE;
 		int currentLenght = 0;
-		//TODO Max Areshkau optimize cycle
 		for(nsIDOMNode nsDOMNode : elements) {
 			currentLenght=Integer.MAX_VALUE;
 			domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
@@ -1759,32 +1639,137 @@ public class VpeVisualKeyHandler {
 				continue;
 			}
 			domElementRect = XulRunnerVpeUtils.getElementBounds(domElement);
-			if(UP==direction&&domElementRect.y<curentElementRect.y) {
+			if(domElementRect.y<curentElementRect.y) {
 				currentLenght= curentElementRect.y-domElementRect.y;
 			
 			if(currentLenght < minlenght) {
 				minlenght = currentLenght;
 				nearestElement=domElement;
-				VpePlugin.getPluginLog().logInfo("current node is"+nearestElement.getNodeName());
 			} else if(currentLenght==minlenght&&Math.abs(curentElementRect.x-XulRunnerVpeUtils.getElementBounds(nearestElement).x)
 					>Math.abs(curentElementRect.x-domElementRect.x)) {
 				minlenght=currentLenght;
 				nearestElement=domElement;
-				VpePlugin.getPluginLog().logInfo("current node is"+nearestElement.getNodeName());
 			}
 			}
+		}	
+	return nearestElement;
+	}
+	/**
+	 * @param currentNode - node from which we will be look nearest node
+	 * @return nearest node in UP direction
+	 */
+	private nsIDOMElement getNearestNodeinDownDirection(nsIDOMElement currentNode) {
+		if(currentNode==null) { 
+			return null;
 		}
-		
+		Collection<nsIDOMNode> elements = domMapping.getVisualMap().keySet();
+		nsIDOMElement nearestElement=null;
+		Rectangle curentElementRect = XulRunnerVpeUtils.getElementBounds(currentNode);
+		Rectangle domElementRect=null;
+		nsIDOMElement domElement;
+		int minlenght = Integer.MAX_VALUE;
+		int currentLenght = 0;
+		for(nsIDOMNode nsDOMNode : elements) {
+			currentLenght=Integer.MAX_VALUE;
+			domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			if(nearestElement==null) {
+				nearestElement=domElement;
+				continue;
+			}
+			domElementRect = XulRunnerVpeUtils.getElementBounds(domElement);
+			if(domElementRect.y>curentElementRect.y) {
+				currentLenght= domElementRect.y-curentElementRect.y;
+			
+			if(currentLenght < minlenght) {
+				minlenght = currentLenght;
+				nearestElement=domElement;
+			} else if(currentLenght==minlenght&&Math.abs(curentElementRect.x-XulRunnerVpeUtils.getElementBounds(nearestElement).x)
+					>Math.abs(curentElementRect.x-domElementRect.x)) {
+				minlenght=currentLenght;
+				nearestElement=domElement;
+			}
+			}
+		}	
+	return nearestElement;
+	}
+	/**
+	 * @param currentNode - node from which we will be look nearest node
+	 * @return nearest node in Right direction
+	 */
+	private nsIDOMElement getNearestNodeinRightDirection(nsIDOMElement currentNode) {
+		if(currentNode==null) { 
+			return null;
+		}
+		Collection<nsIDOMNode> elements = domMapping.getVisualMap().keySet();
+		nsIDOMElement nearestElement=null;
+		Rectangle curentElementRect = XulRunnerVpeUtils.getElementBounds(currentNode);
+		Rectangle domElementRect=null;
+		nsIDOMElement domElement;
+		int minlenght = Integer.MAX_VALUE;
+		int currentLenght = 0;
+		for(nsIDOMNode nsDOMNode : elements) {
+			currentLenght=Integer.MAX_VALUE;
+			domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			if(nearestElement==null) {
+				nearestElement=domElement;
+				continue;
+			}
+			domElementRect = XulRunnerVpeUtils.getElementBounds(domElement);
+			if(domElementRect.x>curentElementRect.x) {
+				currentLenght= domElementRect.x-curentElementRect.x;
+			
+			if(currentLenght < minlenght) {
+				minlenght = currentLenght;
+				nearestElement=domElement;
+			} else if(currentLenght==minlenght&&Math.abs(curentElementRect.y-XulRunnerVpeUtils.getElementBounds(nearestElement).y)
+					>Math.abs(curentElementRect.y-domElementRect.y)) {
+				minlenght=currentLenght;
+				nearestElement=domElement;
+			}
+			}
+		}	
+	return nearestElement;
+	}
+	/**
+	 * @param currentNode - node from which we will be look nearest node
+	 * @return nearest node in Left direction
+	 */
+	private nsIDOMElement getNearestNodeinLeftDirection(nsIDOMElement currentNode) {
+		if(currentNode==null) { 
+			return null;
+		}
+		Collection<nsIDOMNode> elements = domMapping.getVisualMap().keySet();
+		nsIDOMElement nearestElement=null;
+		Rectangle curentElementRect = XulRunnerVpeUtils.getElementBounds(currentNode);
+		Rectangle domElementRect=null;
+		nsIDOMElement domElement;
+		int minlenght = Integer.MAX_VALUE;
+		int currentLenght = 0;
+		for(nsIDOMNode nsDOMNode : elements) {
+			currentLenght=Integer.MAX_VALUE;
+			domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			if(nearestElement==null) {
+				nearestElement=domElement;
+				continue;
+			}
+			domElementRect = XulRunnerVpeUtils.getElementBounds(domElement);
+			if(domElementRect.x<curentElementRect.x) {
+				currentLenght= curentElementRect.x-domElementRect.x;
+			
+			if(currentLenght < minlenght) {
+				minlenght = currentLenght;
+				nearestElement=domElement;
+			} else if(currentLenght==minlenght&&Math.abs(curentElementRect.y-XulRunnerVpeUtils.getElementBounds(nearestElement).y)
+					>Math.abs(curentElementRect.y-domElementRect.y)) {
+				minlenght=currentLenght;
+				nearestElement=domElement;
+			}
+			}
+		}	
 	return nearestElement;
 	}
 
 
-	private boolean moveRight(boolean extend) {
-		// TODO Max Areshkau figure out
-//		frameSelection.characterMove(true, extend);
-		VpePlugin.getDefault().logInfo("MoveRight");
-		return true;
-	}
 	
 	private VpeSelectionBuilder getSelectionBuilder() {
 
