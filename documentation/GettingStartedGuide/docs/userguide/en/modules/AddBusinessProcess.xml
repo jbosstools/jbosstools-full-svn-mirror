@@ -363,7 +363,7 @@ bean</listitem>
  Order button to the Orders.xhtml file.</para>
  <para>You can add the new button right next to the existing &quot;Add orderdetails&quot; button. 
  Copy/paste the following button code in the actionButtons region:</para>
- <programlisting role="JSP"><![CDATA[<s:button id="buttonId" value="Process Order"
+ <programlisting role="XML"><![CDATA[<s:button id="buttonId" value="Process Order"
 		  action="#{orderProcessor.startProcess}"
 		  view="/Orders.xhtml"/>
 ]]></programlisting>
