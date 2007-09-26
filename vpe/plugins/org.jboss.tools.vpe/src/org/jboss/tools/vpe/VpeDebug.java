@@ -25,7 +25,7 @@ public class VpeDebug {
 
 	public static final boolean visualAddPseudoElement = false;
 
-	public static final boolean visualContextMenuDumpSource = false;
+	public static final boolean visualContextMenuDumpSource = true;
 	public static final boolean visualContextMenuDumpMapping = false;
 
 	public static final boolean visualContextMenuTest = false;

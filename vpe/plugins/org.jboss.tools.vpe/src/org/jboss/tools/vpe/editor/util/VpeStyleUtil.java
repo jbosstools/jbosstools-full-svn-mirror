@@ -30,6 +30,7 @@ public class VpeStyleUtil {
 	public static final String PARAMETER_LEFT = "left";
 	public static final String PARAMETER_WIDTH = "width";
 	public static final String PARAMETER_HEIGHT = "height";
+	public static final String PARAMETR_BACKGROND = "background";
 
 	public static final String VALUE_ABSOLUTE = "absolute";
 	
@@ -335,6 +336,34 @@ public class VpeStyleUtil {
 		}
 		return inputPath;
 	}
+	
+	/**
+	 * 
+	 * @param value
+	 *            Css string
+	 * @param input
+	 *            The editor input
+	 * @return format style string
+	 */
+	public static String addFullPathIntoBackgroundValue(String value,
+			IEditorInput input) {
+
+		if (value.indexOf(FILE_STR) != -1)
+			return value;
+
+		if (!new File(value).isAbsolute())
+			value = getFilePath(input, value);
+
+		value = FILE_PRTOCOL + value;
+		URL url = null;
+		try {
+			url = new URL(value);
+		} catch (MalformedURLException e) {
+			return value;
+		}
+
+		return url.toString();
+	}
 
 	/**
 	 * 
@@ -410,7 +439,7 @@ public class VpeStyleUtil {
 		try {
 			url = new URL(pathCssAbsolute);
 		} catch (MalformedURLException e) {
-			
+			return pathImgRelative;
 		}
 		pathCssAbsolute = url.toString();
 		while (j != -1) {

@@ -125,9 +125,7 @@ public class VpeCopyCreator extends VpeAbstractCreator {
 			String name = sourceAttr.getName();
 			
 			String value = sourceAttr.getValue();
-			if (name.equalsIgnoreCase(STYLE_ATTR_NAME))
-				value = VpeStyleUtil.addFullPathIntoURLValue(sourceAttr.getValue(), pageContext.getEditPart().getEditorInput());
-	
+				
 			if (isAttribute(name)) {
 				visualElement.setAttribute(name, value);
 			}

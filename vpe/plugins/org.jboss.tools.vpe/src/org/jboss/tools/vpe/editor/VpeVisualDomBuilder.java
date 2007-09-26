@@ -58,6 +58,7 @@ import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
+import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.MozillaSupports;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
@@ -335,6 +336,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			pageContext.setCurrentVisualNode(null);
 			Element visualNewElement;
 			visualNewElement = (Element)creationData.getNode();
+			
+			if (visualNewElement != null)
+				correctVisualAttribute(visualNewElement);
+			
 			Element border = null;
 			setTooltip((Element)sourceNode, visualNewElement);
 			if (YES_STRING.equals(VpePreference.SHOW_BORDER_FOR_ALL_TAGS.getValue()) && visualNewElement != null) {
@@ -378,6 +383,26 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			return visualNewComment;
 		}
 		return null;
+	}
+	
+	private void correctVisualAttribute(Element element) {
+
+		String styleValue = element.getAttribute(HTML.TAG_STYLE);
+		String backgroundValue = element
+				.getAttribute(VpeStyleUtil.PARAMETR_BACKGROND);
+
+		if (styleValue != null) {
+			styleValue = VpeStyleUtil.addFullPathIntoURLValue(styleValue,
+					pageContext.getEditPart().getEditorInput());
+			element.setAttribute(HTML.TAG_STYLE, styleValue);
+		}
+		if (backgroundValue != null) {
+			backgroundValue = VpeStyleUtil
+					.addFullPathIntoBackgroundValue(backgroundValue,
+							pageContext.getEditPart().getEditorInput());
+			element.setAttribute(VpeStyleUtil.PARAMETR_BACKGROND,
+					backgroundValue);
+		}
 	}
 	
 	/**
