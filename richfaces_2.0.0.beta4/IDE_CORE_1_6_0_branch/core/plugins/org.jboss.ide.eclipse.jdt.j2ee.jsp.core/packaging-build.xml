@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="_generation_" name="Packaging Generator">
+<target name="_generation_" depends="N10004,N10051"/>
+<target name="N10004" description="jasper-runtime.jar">
+<mkdir dir="lib/jasper-5.0.27"/>
+<jar destfile="lib/jasper-5.0.27/jasper-runtime.jar">
+<zipfileset dir="bin" includes="org/apache/jasper/Constants.class"/>
+<zipfileset dir="bin" includes="org/apache/jasper/JasperException.class"/>
+<zipfileset dir="bin" includes="org/apache/jasper/compiler/Localizer.class"/>
+<zipfileset dir="bin" includes="org/apache/jasper/resources/**"/>
+<zipfileset dir="bin" includes="org/apache/jasper/runtime/**"/>
+<zipfileset dir="bin" includes="org/apache/jasper/security/**"/>
+<zipfileset dir="bin" includes="org/apache/jasper/util/**"/>
+</jar>
+</target>
+<target name="N10051" description="jasper-runtime.jar">
+<mkdir dir="libsrc/jasper-5.0.27"/>
+<jar destfile="libsrc/jasper-5.0.27/jasper-runtime.jar">
+<zipfileset dir="jasper-src" includes="org/apache/jasper/Constants.java"/>
+<zipfileset dir="jasper-src" includes="org/apache/jasper/JasperException.java"/>
+<zipfileset dir="jasper-src" includes="org/apache/jasper/compiler/Localizer.java"/>
+<zipfileset dir="jasper-src" includes="org/apache/jasper/resources/**"/>
+<zipfileset dir="jasper-src" includes="org/apache/jasper/runtime/**"/>
+<zipfileset dir="jasper-src" includes="org/apache/jasper/security/**"/>
+<zipfileset dir="jasper-src" includes="org/apache/jasper/util/**"/>
+</jar>
+</target>
+</project>

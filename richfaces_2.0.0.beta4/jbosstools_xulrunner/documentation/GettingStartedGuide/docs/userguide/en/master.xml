@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+"../../../../resources/support/docbook-dtd/docbookx.dtd"
+
+[<!ENTITY GettingStartedWithRHDS SYSTEM "modules/GettingStartedWithRHDS.xml">
+<!ENTITY AjaxCRUDApplicationWithSeamAndRichFaces  SYSTEM "modules/AjaxCRUDApplicationWithSeamAndRichFaces.xml">
+<!--<!ENTITY BusinessProcessAndRulesApplication  SYSTEM "modules/BusinessProcessAndRulesApplication.xml">-->
+]>
+
+<book>
+    
+     <bookinfo>
+        <title>Getting Started with Red Hat Developer Studio</title>
+	
+        <copyright>
+			<year>2007</year>
+			<holder>Red Hat</holder>
+	    </copyright>
+    	
+    </bookinfo>
+	
+    
+    <toc/>  
+    
+
+&GettingStartedWithRHDS;
+&AjaxCRUDApplicationWithSeamAndRichFaces;
+<!--&BusinessProcessAndRulesApplication;-->
+    <!--
+        &GettingStartedGuideforJavaServerFaces;
+    -->
+    
+	
+</book>    

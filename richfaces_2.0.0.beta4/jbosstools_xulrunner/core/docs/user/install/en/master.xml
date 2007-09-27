@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding="iso-8859-1"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+                      "../../../../docbook-support/support/docbook-dtd/docbookx.dtd"
+[
+<!ENTITY preface SYSTEM "../../common/preface.xml">
+<!ENTITY introduction          SYSTEM "../../common/introduction.xml">
+<!ENTITY installation                 SYSTEM "modules/installation.xml">
+<!ENTITY xdocletUpgrade                SYSTEM "modules/xdoclet-upgrade.xml">
+]>
+
+<book lang="en">
+    <bookinfo>
+        <title>JBoss Eclipse IDE 1.5 Installation Guide</title>
+        <subtitle>A guide for installing JBoss Eclipse IDE 1.5.</subtitle>
+        <releaseinfo>1.5</releaseinfo>
+    </bookinfo>
+    
+    <toc/>
+    
+&preface;
+&introduction; 
+&installation;
+&xdocletUpgrade;
+
+</book>

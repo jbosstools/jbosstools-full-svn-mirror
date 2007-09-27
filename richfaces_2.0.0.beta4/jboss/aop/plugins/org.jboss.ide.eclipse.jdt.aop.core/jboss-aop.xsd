@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	JBoss, the OpenSource J2EE webOS
+	Distributable under LGPL license.
+	See terms of license at gnu.org.
+	
+	andrew oswald  May 11, 2004 
+ -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="1.0">
+	<xsd:element name="aop" type="AOPType"/>
+	
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jxb:globalBindings fixedAttributeAsConstantProperty="true"/>		
+		</xsd:appinfo>
+	</xsd:annotation>
+	
+	<!--
+		| AOPType
+	 -->
+	<xsd:complexType name="AOPType">
+		<xsd:sequence>
+			<xsd:element name="aspect" type="Aspect" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property name="Aspects"/>
+					</xsd:appinfo>
+				</xsd:annotation>					
+			</xsd:element>
+			<xsd:element name="interceptor" type="Interceptor" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property name="Interceptors"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pointcut" type="Pointcut" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property name="Pointcuts"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="bind" type="Binding" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property name="Bindings"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--
+		| Binding
+	 -->
+	<xsd:complexType name="Binding">
+		<xsd:sequence>
+			<xsd:element name="interceptor" type="Interceptor" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property name="Interceptors"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="interceptor-ref" type="InterceptorRef" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property name="InterceptorRefs"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="advice" type="Advice" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property name="Advised"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="pointcut" type="xsd:string"/>
+	</xsd:complexType>
+	<!--
+		| Interceptor
+	 -->
+	<xsd:complexType name="Interceptor">
+		<xsd:attribute name="class" type="xsd:string">
+			<!-- inline annotation to override reserved name -->
+			<xsd:annotation>
+				<xsd:appinfo>
+					<jxb:property name="Clazz"/>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="name" type="xsd:string" use="optional"/>
+		<xsd:attribute name="factory" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+	<!--
+	    | InterceptorRef
+	-->
+	<xsd:complexType name="InterceptorRef">
+		<xsd:attribute name="name" type="xsd:string"/>
+	</xsd:complexType>
+	<!--
+		| Aspect
+	-->
+	<xsd:complexType name="Aspect">
+		<xsd:attribute name="class" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<jxb:property name="Clazz"/>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="scope" type="AspectScope" default="PER_VM"/>
+	</xsd:complexType>
+	<!--
+		| Aspect Scope
+	-->
+	<xsd:simpleType name="AspectScope">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PER_VM"/>
+			<xsd:enumeration value="PER_CLASS"/>
+			<xsd:enumeration value="PER_INSTANCE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--
+		| Advice
+	-->
+	<xsd:complexType name="Advice">
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="aspect" type="xsd:string"/>
+	</xsd:complexType>
+	<!--
+		| Pointcut
+	 -->
+	<xsd:complexType name="Pointcut">
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="expr" type="xsd:string" use="required"/>
+	</xsd:complexType>
+</xsd:schema>

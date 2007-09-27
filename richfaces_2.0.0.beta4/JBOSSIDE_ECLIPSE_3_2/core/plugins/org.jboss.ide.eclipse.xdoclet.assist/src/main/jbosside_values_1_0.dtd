@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT values (value*)>
+<!ELEMENT value (path, parsing?)>
+<!ATTLIST value
+	name CDATA #REQUIRED
+>
+<!ELEMENT path EMPTY>
+<!ATTLIST path
+	name CDATA #REQUIRED
+>
+<!ELEMENT parsing EMPTY>

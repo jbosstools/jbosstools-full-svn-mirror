@@ -1,0 +1,60 @@
+<project default="build.requirement">
+	<loadproperties srcFile="build.properties"/>
+	<taskdef classpath="../../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
+
+	<target name="build.requirement">
+		<var name="script.extension" value="sh"/>
+		<var name="jwsdp.executable" value="${jwsdp.unix.installer}"/>
+		<var name="build.archive" value="${build.unix.archive}"/>
+		
+		<if>
+			<contains string="${os.name}" substring="Windows"/>
+			<then>
+				<var name="script.extension" value="bat"/>
+				<var name="jwsdp.executable" value="${jwsdp.win32.installer}"/>
+				<var name="build.archive" value="${build.win32.archive}"/>
+			</then>
+		</if>
+		
+		<ant antfile="../webtools/buildDriver.xml" target="build.driver" inheritall="true">
+			<property name="driver.properties" value="${basedir}/build.properties"/>
+			<property name="requirement" value="jwsdp"/>
+			<property name="build.uri" value="${build.uri}"/>
+			<property name="build.archive" value="${build.archive}"/>
+		</ant>
+				
+		<if>
+			<not><contains string="${os.name}" substring="Windows"/></not>
+			<then>
+				<exec executable="chmod">
+					<arg line="755 ${jwsdp.executable}"/>
+				</exec>
+			</then>
+		</if>
+	
+		<if>
+			<not>
+				<available file="${jwsdp.basedir}" type="dir"/>
+			</not>
+			<then>
+				<echo>extracting jwsdp into ${jwsdp.basedir}..</echo>
+				<exec executable="${jwsdp.executable}">
+					<arg line="-is:javahome ${java.home}"/>
+					<arg line='-P installLocation="${jwsdp.basedir}"'/>
+					<arg line="-silent"/>
+				</exec>
+			</then>
+		</if>
+
+		<propertyregex property="escaped.basedir"
+			defaultValue="${basedir}"
+			input="${basedir}"
+			regexp="\\"
+			replace="/"/>
+		
+		<echo file="return.properties">
+			jwsdp.home=${escaped.basedir}/${jwsdp.basedir}
+			jwsdp.xjcScriptName=xjc.${script.extension}
+		</echo>
+	</target>
+</project>

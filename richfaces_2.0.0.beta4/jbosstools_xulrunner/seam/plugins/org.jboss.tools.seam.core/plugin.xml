@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         id="seambuilder"
+         name="Seam Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="false">
+         <run
+               class="org.jboss.tools.seam.core.SeamCoreBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="seam"
+         name="Seam Project Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.jboss.tools.seam.internal.core.SeamProject">
+         </run>
+      </runtime>
+      <builder
+            id="org.jboss.tools.seam.core.seambuilder">
+      </builder>
+   </extension>
+   <extension
+         id="seamProblem"
+         name="Seam Problem"
+         point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.wst.validation.problemmarker"/>
+      	<persistent
+            value="true">
+      	</persistent>
+   </extension>
+   <extension
+         point="org.eclipse.wst.common.project.facet.core.facets">
+      <project-facet
+            id="jst.seam">
+         <label>
+            Seam Facet
+         </label>
+         <description>
+            Seam facet description
+         </description>
+      </project-facet>
+      <project-facet-version
+            facet="jst.seam"
+            version="2.0">
+         <constraint>
+            <and>
+               <requires
+                     facet="jst.web"
+                     version="[2.4">
+               </requires>
+               <requires
+                     facet="jst.jsf"
+                     version="[1.1">
+               </requires>
+               <requires
+                     facet="jst.java"
+                     version="[5.0">
+               </requires>
+            </and>
+         </constraint>
+      </project-facet-version>
+      <action
+            facet="jst.seam"
+            id="jst.seam.2.0.install"
+            type="install"
+            version="2.0">
+         <delegate
+               class="org.jboss.tools.seam.internal.core.project.facet.SeamFacetInstallDelegete">
+         </delegate>
+         <config-factory
+               class="org.jboss.tools.seam.internal.core.project.facet.SeamFacetInstallDataModelProvider">
+         </config-factory>
+      </action>
+      <action
+            facet="jst.seam"
+            id="jst.seam.2.0.uninstall"
+            type="uninstall"
+            version="2.0">
+         <delegate
+               class="org.jboss.tools.seam.internal.core.project.facet.SeamFacetUninstallDelegate">
+         </delegate>
+      </action>
+   </extension>
+   <extension
+         point="org.eclipse.wst.common.project.facet.core.runtimes">
+      <supported>
+         <facet
+               id="jst.seam"
+               version="2.0">
+         </facet>
+         <runtime-component
+               any="true">
+         </runtime-component>
+      </supported>
+   </extension>
+ <extension
+       point="org.eclipse.wst.common.project.facet.core.presets">
+       <static-preset
+           id="preset.jst.seam.v2_0">
+	    <label>Seam 2.0 project</label>
+	    <facet id="jst.java" version="5.0" />
+	    <facet id="jst.web" version="2.4"/>
+	    <facet id="jst.jsf" version="1.1" />
+	    <facet id="jst.seam" version="2.0"/>
+     <description>
+        Seam 2.0 project
+     </description>
+     </static-preset>
+ </extension>
+
+   <extension
+        point="org.eclipse.wst.validation.validator"
+		id="SeamAnnatationValidator"
+		name="Seam Annatation Validator">
+		<validator>
+			<projectNature id="org.jboss.tools.seam.core.seam" />
+			<filter
+				objectClass="org.eclipse.core.resources.IFile"
+				nameFilter="*.java"/>
+			<markerId
+               markerIdValue="seamProblem">
+         	</markerId>
+			<helper 
+				class="org.jboss.tools.seam.internal.core.validation.SeamJavaHelper">
+			</helper>
+			<run
+         		class="org.jboss.tools.seam.internal.core.validation.SeamJavaValidator"
+         		incremental="true"
+         		fullBuild="true"
+         	/>
+		</validator>
+	</extension>
+
+	<extension
+         id="SeamAnnatationValidatorMarker"
+         name="Seam Annatation Validator Marker"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.wst.validation.problemmarker">
+      </super>
+   </extension>
+</plugin>
