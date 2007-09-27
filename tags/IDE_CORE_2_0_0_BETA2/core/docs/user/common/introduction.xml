@@ -1,0 +1,14 @@
+<chapter id="introduction">
+    <title>Introduction to JBossIDE</title>
+    <para>
+    	JBossIDE offers you:
+    	<itemizedlist>
+    		<listitem>Extensive and intuitive support for XDoclet.</listitem>
+    		<listitem>The debugging and monitoring of JBoss servers and the controlling of their life cycles.</listitem>
+    		<listitem>An easy way to configure the packaging layout of archives (packed or exploded)</listitem>
+    		<listitem>A simple way to deploy the packaged and/or exploded archive to a JBoss server</listitem>
+    		<listitem>Several J2EE wizards to ease and simplify J2EE development.</listitem>
+    		<listitem>Source code editors for JSP, HTML, and XML</listitem>
+    	</itemizedlist>
+    </para>
+</chapter>

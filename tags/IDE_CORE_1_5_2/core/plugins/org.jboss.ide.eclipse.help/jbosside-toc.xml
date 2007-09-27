@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="JBoss Eclipse IDE User Guide">
+	<topic label="JBoss Eclipse IDE Installation Guide">
+		<link toc="install-toc.xml"/>
+	</topic>
+	<topic label="JBoss Eclipse IDE Tutorial">
+		<link toc="tutorial-toc.xml"/>
+	</topic>
+</toc>

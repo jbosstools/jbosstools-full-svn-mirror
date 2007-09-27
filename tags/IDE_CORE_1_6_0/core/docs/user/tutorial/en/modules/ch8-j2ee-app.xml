@@ -1,0 +1,74 @@
+<chapter id="j2ee.app">
+	<title>The J2EE Application</title>
+	<para>
+		This project is intended to be a complete J2EE application. We are going to create some additional files to have all the materials needed to build it.
+	</para>
+	<informaltable frame="none">
+	<tgroup cols="2" align="left" colsep="1" rowsep="1">
+		<tbody>
+			<row>
+				<entry>
+					<procedure>
+						<title>Creating the application.xml</title>
+						<step>Right click on the <literal>src/META-INF</literal> folder, and choose <literal>New</literal> &gt; <literal>Other...</literal>.</step>
+						<step>Choose <literal>JBoss-IDE</literal> &gt; <literal>Descriptors</literal> &gt; <literal>EAR 1.3 Deployment Descriptor</literal>, and click <literal>Next</literal>.</step>
+					</procedure>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/new-app-xml-wizard.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					Make sure <literal>application.xml</literal> is the name of the file, and click <literal>Finish</literal>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/new-app-xml-wizard-2.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					Your <literal>META-INF</literal> directory should now look like this:
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/project-after-app-xml.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+		</tbody>
+	</tgroup>
+	</informaltable>
+	<para>
+		Now double click on the <literal>application.xml</literal> to open it, and make sure the content looks like this (most of the content is already there for you):
+	</para>
+	<programlisting><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE application PUBLIC
+	"-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN"
+	"http://java.sun.com/dtd/application_1_3.dtd">
+<application>
+	<display-name>Sum Application</display-name>
+	<module>
+		<ejb>FiboEJB.jar</ejb>
+	</module>
+	<module>
+		<web>
+			<web-uri>FiboWeb.war</web-uri>
+			<context-root>/fibo</context-root>
+		</web>
+	</module>
+</application>
+	]]>
+	</programlisting>
+</chapter>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><?eclipse version="3.0"?>
+<fragment id="org.jboss.tools.vpe.mozilla.win32" name="Visual Page Editor Win32 Fragment" plugin-id="org.jboss.tools.vpe.mozilla" plugin-version="2.0.0" provider-name="%providerName" version="2.0.0">
+
+   <runtime>
+   </runtime>
+
+</fragment>
