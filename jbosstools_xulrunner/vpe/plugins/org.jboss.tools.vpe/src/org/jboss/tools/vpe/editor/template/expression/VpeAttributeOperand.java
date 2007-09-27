@@ -17,11 +17,9 @@ import org.w3c.dom.Node;
 
 public class VpeAttributeOperand extends VpeOperand {
 	private String name;
-	private boolean caseSensitive;
 
 	VpeAttributeOperand(String name, boolean caseSensitive) {
 		this.name = name;
-		this.caseSensitive = caseSensitive;
 	}
 	
 	int getPriority() {
@@ -33,8 +31,8 @@ public class VpeAttributeOperand extends VpeOperand {
 
 		try {
 			value = ((Element)sourceNode).getAttribute(name);
-			if (!caseSensitive) {
-				value = (value == null ? "" : value.toLowerCase());
+			if (value == null) {
+				value = "";
 			}
 		} catch (Exception e) {
 //			throw new VpeExpressionError(x.getMessage());
