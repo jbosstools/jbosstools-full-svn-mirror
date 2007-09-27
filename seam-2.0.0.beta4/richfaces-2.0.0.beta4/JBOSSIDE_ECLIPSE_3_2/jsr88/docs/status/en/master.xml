@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding="iso-8859-1"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+                      "../../../docbook-support/support/docbook-dtd/docbookx.dtd"
+[
+<!ENTITY intro SYSTEM "modules/intro.xml">
+]>
+
+<book lang="en">
+    <bookinfo>
+        <title>JBOSS IDE: JSR-88 Deployment Plugin</title>
+        <subtitle>The current status of the JSR-88 Deployment Plug-in</subtitle>
+        <releaseinfo>1.0</releaseinfo>
+    </bookinfo>
+    
+    <toc/>
+    
+&intro;
+</book>

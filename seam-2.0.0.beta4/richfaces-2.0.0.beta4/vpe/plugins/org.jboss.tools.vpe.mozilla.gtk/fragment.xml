@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><?eclipse version="3.0"?>
+<fragment id="org.jboss.tools.vpe.mozilla.gtk" name="Gtk Fragment" plugin-id="org.jboss.tools.vpe.mozilla" plugin-version="2.0.0" provider-name="RedHat" version="2.0.0">
+
+   <runtime>
+      <library name="gtk.jar">
+         <export name="*"/>
+      </library>
+   </runtime>
+
+</fragment>

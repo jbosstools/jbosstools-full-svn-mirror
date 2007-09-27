@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<vpe:templates-list>
+	<vpe:templates file="vpe-templates-myfaces.xml"/>
+	
+	<vpe:templates file="vpe-templates-html.xml"/>
+
+	<vpe:templates file="vpe-templates-jsp.xml"/>
+
+	<vpe:templates file="vpe-templates-jsf.xml"/>
+
+	<vpe:templates file="vpe-templates-struts.xml"/>
+
+	<vpe:templates file="vpe-templates-adf.xml"/>
+
+</vpe:templates-list>

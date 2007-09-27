@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Seam UI Tets Plug-in
+Bundle-SymbolicName: org.jboss.tools.seam.ui.test
+Bundle-Version: 1.0.0
+Bundle-Vendor: Red Hat, Inc.
+Require-Bundle: org.junit
+Export-Package: org.jboss.tools.seam.ui.test,
+ org.jboss.tools.seam.ui.test.view,
+ org.jboss.tools.seam.ui.test.wizard
+Bundle-ClassPath: seam-ui.jar

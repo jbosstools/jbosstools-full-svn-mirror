@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Example6ResourceTracking Plug-in
+Bundle-SymbolicName: Example6ResourceTracking; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: example6ResourceTracking.Example6ResourceTrackingPlugin
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.jdt,
+ org.eclipse.jdt.core,
+ org.eclipse.jdt.ui,
+ org.eclipse.ui.intro
+Eclipse-AutoStart: true

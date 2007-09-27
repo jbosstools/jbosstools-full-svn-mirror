@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="jbosside-toc.xml"
+            primary="true"/>
+      <toc
+            file="install-toc.xml"
+            primary="false"/>
+      <toc
+            file="tutorial-toc.xml"
+            primary="false"/>
+   </extension>
+   <extension
+         point="org.eclipse.help.ui.searchEngine">
+      <engine
+            enabled="true"
+            engineTypeId="org.eclipse.help.ui.web"
+            id="org.jboss.ide.eclipse.help.JBossSearch"
+            label="JBoss Wiki / Forums">
+         <description>
+            Search for any topic on the JBoss user forums and Wiki
+         </description>
+         <param
+               name="url"
+               value="http://www.jboss.com/search.jsp?query={expression}"/>
+      </engine>
+   </extension>
+
+</plugin>

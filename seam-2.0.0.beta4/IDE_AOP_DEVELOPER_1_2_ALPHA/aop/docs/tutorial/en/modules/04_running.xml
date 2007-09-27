@@ -1,0 +1,31 @@
+<chapter id="Running">
+	<title>Running your AOP app</title>
+	
+	<para>Right-click on your project, and select
+	<literal>run-&gt;run as...</literal>.</para>
+	
+	<figure id="RunAs">
+	   <mediaobject>
+	      <imageobject>
+			<imagedata align="center" fileref="images/04_run_as.gif"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	
+	
+	<para>Right-click on <literal>JBoss AOP Application</literal> and 
+	select <literal>new</literal>. Make <emphasis>SURE</emphasis> the 
+	project and main class are set properly.</para>
+	
+	<figure id="RunConfig">
+	   <mediaobject>
+	      <imageobject>
+			<imagedata align="center" fileref="images/04_run_config.gif"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	
+	
+	<para>Apply the changes and run your application</para>
+		
+</chapter>

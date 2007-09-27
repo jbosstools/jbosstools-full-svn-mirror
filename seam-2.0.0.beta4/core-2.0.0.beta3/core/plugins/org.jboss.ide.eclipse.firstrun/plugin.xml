@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension-point id="FirstRunWizardPage" name="org.jboss.ide.eclipse.firstrun.wizard" schema="schema/org.jboss.ide.eclipse.firstrun.exsd"/>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup class="org.jboss.ide.eclipse.firstrun.FirstRunStartup"/>
+   </extension>
+   <extension
+         point="org.jboss.ide.eclipse.firstrun.FirstRunWizardPage">
+      <UpgradeWizard
+            WizardPage="org.jboss.ide.eclipse.firstrun.wizard.pages.FirstRunInfoPage"
+            fromVersion="1.5.*"
+            id="org.jboss.ide.eclipse.firstrun.Info16"
+            name="org.jboss.ide.eclipse.firstrun.UpgradeWizard1"
+            toVersion="1.6.*"
+            weight="0"/>
+      <UpgradeWizard
+            WizardPage="org.jboss.ide.eclipse.firstrun.wizard.pages.FirstRunFinalPage"
+            fromVersion="1.5.*"
+            id="org.jboss.ide.eclipse.firstrun.FinalPage16"
+            name="org.jboss.ide.eclipse.firstrun.UpgradeWizard2"
+            toVersion="1.6.*"
+            weight="100"/>
+   </extension>
+   <extension
+         point="org.jboss.ide.eclipse.firstrun.FirstRunWizardPage">
+      <UpgradeWizard
+            WizardPage="org.jboss.ide.eclipse.firstrun.wizard.pages.upgrade20.FirstRunFinalPage20"
+            fromVersion="1.6.*"
+            id="org.jboss.ide.eclipse.firstrun.FinalPage20"
+            toVersion="2.0.0.*"
+            weight="100"/>
+      <UpgradeWizard
+            WizardPage="org.jboss.ide.eclipse.firstrun.wizard.pages.upgrade20.FirstRunInfoPage20"
+            fromVersion="1.6.*"
+            id="org.jboss.ide.eclipse.firstrun.Info20"
+            toVersion="2.0.*"
+            weight="0"/>
+   </extension>
+
+</plugin>

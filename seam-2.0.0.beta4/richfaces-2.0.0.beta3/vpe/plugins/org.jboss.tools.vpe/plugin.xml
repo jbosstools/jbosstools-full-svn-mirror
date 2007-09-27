@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension-point id="templates" name="Path to xml file with templates definitionj" schema="schema/templates.exsd"/>
+
+   <extension point="org.jboss.tools.common.model.meta">
+      <meta path="meta/vpe.meta"/>
+   </extension>
+
+   <extension point="org.jboss.tools.common.model.keys">
+      <keys path="help/keys-vpe.properties"/>
+   </extension>
+   <extension
+         point="org.jboss.tools.vpe.templates">
+      <templates
+            name="Oracle ADF"
+            path="templates/vpe-templates-adf.xml"/>
+      <templates
+            name="HTML"
+            path="templates/vpe-templates-html.xml"/>
+      <templates
+            name="JSF Reference Implementation"
+            path="templates/vpe-templates-jsf.xml"/>
+      <templates
+            name="JSP Tags"
+            path="templates/vpe-templates-jsp.xml"/>
+      <templates
+            name="Apache MyFaces"
+            path="templates/vpe-templates-myfaces.xml"/>
+      <templates
+            name="Struts"
+            path="templates/vpe-templates-struts.xml"/>
+   </extension>
+   <extension
+         point="org.jboss.tools.common.model.resourceMapping">
+      <mapping
+          loader="org.jboss.tools.vpe"
+          priority="1"
+          kind="class"
+          paths=".vpe."
+      />
+   </extension>
+    <extension point="org.jboss.tools.common.model.classes">
+       <xclass id="org.jboss.tools.vpe.editor.css.VpeAddReferenceSupport"
+	class="org.jboss.tools.vpe.editor.css.VpeAddReferenceSupport"/>
+    </extension>
+</plugin>
