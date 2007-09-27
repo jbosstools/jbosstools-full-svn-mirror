@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+
+<head>
+<meta http-equiv="CONTENT-TYPE" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Release Notes</title>
+</head>
+
+<body>
+
+<h1 align="center">Release notes for JBoss-IDE 1.2.1</h1>
+<h2>Content</h2>
+<ul>
+  <li><a href="#Introduction">Introduction</a></li>
+  <li><a href="#require">System Requirements</a></li>
+  <li><a href="#install">Installation Notes</a></li>
+  <li><a href="#New_Features">New Features</a></li>
+  <li><a href="#Fixed_Bugs">Fixed bugs</a></li>
+  <li><a href="#problems">Known problems</a></li>
+  <li><a href="#Deployer_Plugin">Deployer Plugin</a></li>
+  <li><a href="#XDoclet_Modules">XDoclet Modules</a></li>
+  <li><a href="#JBoss-IDE_file_structure">JBoss-IDE File Structure</a></li>
+  <li><a href="#Disabling">Disabling</a></li>
+  <li><a href="#uninstall">Uninstalling</a></li>
+  <li><a href="#building">Building from source</a></li>
+</ul>
+<h2><a name="Introduction"></a>Introduction</h2>
+This is a maintenance release. It's supposed to be installed and updated via the Eclipse Install/Update Manager. See <a href="#install">Installation Notes</a>.
+<h2><a name="require"></a>System Requirements</h2>
+<ul>
+  <li>Eclipse 2.1.1 or greater.</li>
+  <li>Version 1.3 or 1.4 of the Java 2 Runtime Environment. A JDK is needed for running JBoss 3.x.x inside Eclipse.</li>
+</ul>
+<h2 align="left"><a name="install"></a>Installation Notes</h2>
+<h3>Eclipse Install/Update Manager&nbsp;</h3>
+<ol>
+  <li>Start Eclipse.</li>
+  <li>Select the Install/Update Perspective via <span style="font-weight: bold;">Help &gt; Software Updates &gt; Update Manager </span>or <span style="font-weight: bold;">Window
+    &gt; Open Perspective &gt; Install/Update</span></li>
+  <li><span style="font-weight: bold;"></span>Select <span style="font-weight: bold;">New &gt; Site Bookmark</span> from the context menu of the&nbsp; <span style="font-weight: bold;">Feature
+    Update</span> view. In the dialog fill the name with an unused one and the URL with <a href="http://jboss.sourceforge.net/jbosside/updates">http://jboss.sourceforge.net/jbosside/updates</a></li>
+  <li>When you open the newly created node there is a child node called JBoss-IDE 1.0. By opening this child node you get nodes for all versions of JBoss-IDE
+    belonging to this category. Select the version you want to install and some information about this version is shown in the <span style="font-weight: bold;">Preview
+    </span>view. If this version or a higher one is not already installed the <span style="font-weight: bold;">Preview </span>view offers you an <span style="font-weight: bold;">Install
+    </span>button which you have to click if you want to install this version.</li>
+</ol>
+<ol>
+</ol>
+<blockquote>
+  <b>Tips :</b>
+</blockquote>
+<ul>
+  <li><span class="petitgris">If you are behind a proxy you have to go to&nbsp;</span><span style="font-weight: bold;">Window &gt; Preferences &gt; Install/Update,</span>
+    select <span style="font-weight: bold;">Enable HTTP Proxy connection </span>and insert values for <span style="font-weight: bold;">Host Address </span>and <span style="font-weight: bold;">Port.</span></li>
+  <li><span class="petitgris">You can let Eclipse check if new updates of JBoss-IDE are available by selecting </span><span style="font-weight: bold;">Help &gt;
+    Software Updates &gt; New Updates.</span> Via <span style="font-weight: bold;">Window &gt; Preferences &gt; Install/Update </span>you can choose for which
+    changes of versions Eclipse is supposed to look.</li>
+  <li>Have a look at the Eclipse documentation to get more information about the Install/Update Manager.</li>
+</ul>
+<h3>Manual Installation</h3>
+<ol>
+  <li>Download <code>org.jboss.ide.eclipse_1.2.1.bin.dist.zip</code> from Sourceforge site.</li>
+  <li>Unzip the file to the home directory of Eclipse.</li>
+</ol>
+<h2><a name="New_Features"></a>New Features</h2>
+<ul>
+  <li>No new features as it is a maintenance release</li>
+  <li>Some experimental functionnalities have been disabled mainly because of
+    use of Eclipse internal API. As these features use internal API, future
+    version can break them.</li>
+</ul>
+<h2><a name="Fixed_Bugs"></a>Fixed Bugs</h2>
+<ul>
+  <li>Bug #794462 : can't set default server</li>
+  <li>Bug #808728 : Packaging Plugin get confused with multi-project</li>
+  <li>Bug #812911 : NullPointerException when adding a Doclet</li>
+  <li>Bug #815214 : -classpath option doesn't work</li>
+  <li>Patch #798557 : Fix for JDK 1.3.1 support</li>
+  <li>Patch #798560 : JBoss IDE Exception reporting fix</li>
+</ul>
+<h2><a name="problems"></a>Known Problems</h2>
+<ul>
+  <li>JBoss-IDE has not been tested on Eclipse 3.0M3. As it is a non final
+    release, API changes can still occurs. They will be taken into account later.<br>
+    Currently, users must be aware that the Launcher plugin is broken is used
+    under Eclipse 3.0M3 as many API have changes in the debug layer of Eclipse.</li>
+</ul>
+<h2><a name="Deployer_Plugin"></a>Deployer Plugin</h2>
+<p>JBoss-IDE a two different type of target for deployement : File System and
+Main Deployer. Here are some notes about the last one :</p>
+<ul>
+  <li>The Main Deployer deployment target is based on the JMX Console Web
+    Application bundled with the JBoss Server. When using this kind of target,
+    you have to be sure that the JMX Console is deployed inside a running JBoss
+    instance. The deployement target sends HTTP requests to the JMX Console, in
+    order to control the Main Deployer MBean.</li>
+  <li>As the JBoss 3.x.x series are not consitant, there are some differences
+    between the JMX Console bundled with JBoss 3.0.x and a JMX Console bundled
+    with JBoss 3.2.x. In the case of the Main Deployer deployment target, the
+    difference is in the HTTP query string used. Here is the query for JBoss
+    3.0.x series: <code>/jmx-console/HtmlAdaptor?action=invokeOpByName&amp;name=jboss.system:service%3DMainDeployer&amp;methodName={0}&amp;argType=java.net.URL&amp;arg=</code>
+  </li>
+</ul>
+<h2><a name="XDoclet_Modules"></a>XDoclet Modules</h2>
+<ul>
+  <li>JBoss-IDE look for the XDoclet modules in the directory <code>ECLIPSE_HOME/plugins/org.jboss.ide.eclipse.xdoclet.core_1.2.0/</code>. You can add or remove
+    modules from this directory as you like. After such a change you have to refresh the XDoclet module list and data.&nbsp;
+    When the XDoclet code assist is
+    used the first time after Eclipse has been restarted it looks for the cache and if the cache is there it just takes a couple of seconds to load the data. Go
+    to <span style="font-weight: bold;">Window &gt; Preferences &gt; JBoss-IDE &gt; XDoclet </span>for refreshing module list and to <span style="font-weight: bold;">Window
+    &gt; Preferences &gt; JBoss-IDE &gt; XDoclet &gt; Assist </span>to force the data cache to be
+    regenerated.</li>
+</ul>
+<h2><a name="JBoss-IDE_file_structure"></a>JBoss-IDE file structure</h2>
+JBoss-IDE 1.2.1 adds following directories to Eclipse.
+<ul>
+  <li><code>ECLIPSE_HOME/features/org.jboss.ide.eclipse_1.2.1</code></li>
+  <li><code>ECLIPSE_HOME/plugins/org.apache.xalan_2.4.1</code></li>
+  <li><code>ECLIPSE_HOME/plugins/org.jboss.ide.eclipse.core_1.2.1</code></li>
+  <li><code>ECLIPSE_HOME/plugins/org.jboss.ide.eclipse.deployer.core_1.2.1</code></li>
+  <li><code>ECLIPSE_HOME/plugins/org.jboss.ide.eclipse.deployer.ui_1.2.1</code></li>
+  <li><code>ECLIPSE_HOME/plugins/org.jboss.ide.eclipse.launcher.core_1.2.1</code></li>
+  <li><code>ECLIPSE_HOME/plugins/org.jboss.ide.eclipse.launcher.ui_1.2.1</code></li>
+  <li><code>ECLIPSE_HOME/plugins/org.jboss.ide.eclipse.packaging.core_1.2.1</code></li>
+  <li><code>ECLIPSE_HOME/plugins/org.jboss.ide.eclipse.packaging.ui_1.2.1</code></li>
+  <li><code>ECLIPSE_HOME/plugins/org.jboss.ide.eclipse.ui_1.2.1</code></li>
+  <li><code>ECLIPSE_HOME/plugins/org.jboss.ide.eclipse.xdoclet.assist_1.2.1</code></li>
+  <li><code>ECLIPSE_HOME/plugins/org.jboss.ide.eclipse.xdoclet.core_1.2.1</code></li>
+  <li><code>ECLIPSE_HOME/plugins/org.jboss.ide.eclipse.xdoclet.run_1.2.1</code></li>
+  <li><code>ECLIPSE_HOME/plugins/org.jboss.ide.eclipse.xdoclet.ui_1.2.1</code></li>
+</ul>
+<h2><a name="Disabling"></a>Disabling</h2>
+You can disable JBoss-IDE by choosing the installed version in the Install/Update Manager via the <span style="font-weight: bold;">Install Configuration</span>
+view then selecting the <span style="font-weight: bold;">Disable</span> button in the <span style="font-weight: bold;">Preview</span> 
+view. The JBoss-IDE files
+don't get removed from disk via this mechanism and you can easily enable JBoss-IDE
+again.
+<h2><a name="uninstall"></a>Uninstalling</h2>
+<ol>
+  <li>Delete all directories listes in the section <a href="#JBoss-IDE_file_structure">file structure</a>.</li>
+  <li>You will need to restart Eclipse for the changes to take effect</li>
+</ol>
+<ol>
+</ol>
+<h2><a name="building"></a>Building from source</h2>
+See the <a href="http://osdn.dl.sourceforge.net/sourceforge/jboss/build_howto_1.2.0.html">built-howto</a> for
+JBoss-IDE.
+
+</body>
+
+</html>

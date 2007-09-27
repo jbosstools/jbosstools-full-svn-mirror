@@ -1,0 +1,58 @@
+/*******************************************************************************
+ * Copyright (c) 2007 Exadel, Inc. and Red Hat, Inc.
+ * Distributed under license by Red Hat, Inc. All rights reserved.
+ * This program is made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
+ ******************************************************************************/ 
+package org.jboss.tools.vpe.editor.template;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+import org.jboss.tools.vpe.editor.context.VpePageContext;
+
+public class VpeTextPseudoContentCreator extends VpePseudoContentCreator {
+	private String text;
+	private String attrName;
+
+	public VpeTextPseudoContentCreator(String text, String attrName) {
+		this.text = text;
+		if (attrName != null) {
+			attrName = attrName.trim();
+			if (attrName.length() > 0) {
+				this.attrName = attrName;
+			}
+		}
+	}
+
+	public void setPseudoContent(VpePageContext pageContext, Node sourceContainer, Node visualContainer, Document visualDocument) {
+		Element visualNewElement = visualDocument.createElement("span");
+		setPseudoAttribute(visualNewElement);
+		String text = this.text;
+		if (text == null) {
+			if (sourceContainer.getNodeType() == Node.ELEMENT_NODE) {
+				String name = null;
+				if (attrName != null) {
+					name = ((Element)sourceContainer).getAttribute(attrName);
+					if (name != null) {
+						name = name.trim();
+					}
+				}
+				if (name == null || attrName.length() <= 0) {
+					name = ((Element)sourceContainer).getNodeName();
+				}
+				text = "Insert Content for " + name;
+			} else {
+				text = "Insert Content";
+			}
+		}
+		Node newTextNode = visualDocument.createTextNode(text);
+		visualNewElement.appendChild(newTextNode);
+		visualContainer.appendChild(visualNewElement);
+	}
+}
