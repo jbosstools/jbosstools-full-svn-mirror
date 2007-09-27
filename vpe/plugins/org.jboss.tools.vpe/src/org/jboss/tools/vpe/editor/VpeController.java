@@ -122,10 +122,10 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
-import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.VpeDndUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.selbar.SelectionBar;
+import org.jboss.tools.vpe.xulrunner.browser.util.DOMTreeDumper;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -1056,10 +1056,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 
 		if (VpeDebug.visualContextMenuDumpSource) {
 			manager.add(new Action("Dump Source") { //$NON-NLS-1$
-				public void  run() {
-					throw new RuntimeException("Not Implemented");
-//					DOMTreeDumper dumper = new DOMTreeDumper();
-//					dumper.dumpToStream(System.out, visualEditor.getDomDocument());
+				public void  run() {	
+					DOMTreeDumper dumper = new DOMTreeDumper();
+					dumper.dumpToStream(System.out, visualEditor.getDomDocument());
 				}
 			});
 		}
