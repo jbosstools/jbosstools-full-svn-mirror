@@ -10,7 +10,615 @@
     </keywordset>
   </chapterinfo>
 	<title>RAD development of a simple JSF application</title>
-        <para>In this chapter you will see how to create a simple JSF application being based on <property>&quot;RAD&quot;</property> philosophy. We will develop an application simulating a game of Craps. The user will &quot;roll&quot; two dice by entering two numbers and clicking two buttons and the program will announce if the user won or not depending on the program&apos;s logic.</para>
+        <para>In this chapter you will see how to create a simple JSF application being based on <property>&quot;RAD&quot;</property> philosophy. We will create the familiar Guess Number application. The scenario is as follows. A user is asked to guess a number between 0 and 100. If the guess is correct, a success page is displayed with a link to play again. If the guess is incorrect, a message is printed notifying the user that a smaller or a larger number should be entered and the game continues.</para>
       <para>We&apos;ll show you how to create such an application from scratch, along the way demonstrating powerful features of Red Hat Developer Studio such as project templating, Visual Page Editor, code completion and others. You will design the
-JSF application and then run the application from inside Red Hat Developer Studio using the bundled JBoss server.</para>  
+JSF application and then run the application from inside Red Hat Developer Studio using the bundled JBoss server.</para>
+<section id="SettingUpTheProject12">
+<?dbhtml filename="SettingUpTheProject12.html"?>
+<title>Setting up the project</title>
+<para>We will create a JSF 1.2 project using an integrated RHDS&apos;s new project wizard and predefined templates.</para>
+<para>In Web Projects View (if it is not open select <emphasis>Window &gt; Show View &gt; Others &gt; Red Hat Developer Studio &gt; Web Projects View</emphasis>) click &quot;Create New JSF Project&quot; button.</para>
+<figure>
+<title>Create New JSF Project</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad1.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<para>Put &quot;GuessNumber&quot; as a project name, in &quot;JSF Environment&quot; drop down list choose JSF 1.2.</para>
+<para>Leave everything else as it is and click Finish.</para>
+<para>Our project will appear in Project Explorer and Web Projects Views. As you can see Red Had Developer Studio has created for us the whole skeleton for the project with all needed libraries, faces-config.xml and web.xml files.</para>
+<figure>
+<title>New JSF Project</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad2.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+</section> 
+<section id="CreatingJSPPages">
+<?dbhtml filename="CreatingJSPPages.html"?>
+<title>Creating JSP Pages</title>
+<para>Our application has two pages. The first page is inputnumber.jsp. It prompts the user to enter a number. If the guess is incorrect, the same page will be redisplayed with a message indicating whether a smaller or a larger number should be tried. The second page is success.jsp. This page will be shown after the user guesses the number correctly. From this page you also have the option to play the game again.</para>
+
+<para>On the first page inputnumber.jsp user will enter a number.</para>
+<itemizedlist>
+<listitem><para>Open faces-config.xml file.</para></listitem>
+<listitem><para>Right click anywhere on the diagram mode.</para></listitem>
+<listitem><para>From the context menu select <emphasis>New View</emphasis></para></listitem>
+</itemizedlist>
+<figure>
+<title>Create New View</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad3.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<itemizedlist>
+
+<listitem><para>Type <emphasis>pages/inputname</emphasis> as the value for &quot;From-view-id&quot;</para></listitem>
+<listitem><para>Leave everything else as is and click Finish.</para></listitem>
+<listitem><para>In the same way create another jsf view. Type &quot;pages/success&quot; as the value for &quot;From-view-id&quot;</para></listitem>
+<listitem><para>Select <emphasis>File &gt; Save</emphasis></para></listitem>
+</itemizedlist>
+<para>On the diagram you will see the two created views.</para>
+<figure>
+<title>New Views</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad4.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+</section>
+<section id="CreatingTransition">
+<?dbhtml filename="CreatingTransition.html"?>
+<title>Creating Transition between two views</title>
+<para>We should now create connection between jsp pages.</para>
+<itemizedlist>
+<listitem><para>In the diagram, select the connection icon third from the top along the upper left side of the diagram to get an arrow cursor with a two-pronged plug at the arrow&apos;s bottom.
+<figure>
+<title>Create connection</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad5.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+</para></listitem>
+<listitem><para>Click on the <emphasis>pages/inputname</emphasis> page icon and then click on the <emphasis>pages/greeting</emphasis> page icon.</para></listitem>
+</itemizedlist>
+<para>A transition should appear between the two icons of views.</para>
+<figure>
+<title>Created connection</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad6.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<itemizedlist>
+<listitem><para>Select <emphasis>File/Save</emphasis> from the menu bar.</para></listitem>
+</itemizedlist>
+</section>
+<section id="CreatingResourceFile">
+<?dbhtml filename="CreatingResourceFile.html"?>
+<title>Creating Resource File</title>
+<para>Red Hat Developer Studio allows to quickly create a resource file. Using this feature you can collect text messages in one central place. A resource file is just a file with a <emphasis>.properties</emphasis> extension. The messages stored in resource file can be displayed to the user on a Web page during application execution. </para>
+<para>With resource file first, you don&apos;t hard code anything into the JSP pages. And second, it makes it easier to translate your application to other languages. All you have to do is to translate all your messages to the other language and save them in a new properties file with a name that ends with the appropriate ISO-639 language code.</para>
+<para>It is a good idea to keep your resources inside the <emphasis>JavaSource</emphasis> folder, where you keep your .java files. Every time you build the project, all <emphasis>.properties</emphasis> files will then be copied to the <emphasis>classes</emphasis> folder by default.</para>
+<itemizedlist>
+<listitem><para>Right click <emphasis>JavaSource</emphasis> folder and select <emphasis>New &gt; Folder</emphasis></para></listitem>
+<listitem><para>Type &quot;game&quot; for Folder name and click Finish</para></listitem>
+</itemizedlist>
+<para>We will store in this folder our resource file and java bean.</para>
+<itemizedlist>
+<listitem><para>Right click game folder and select <emphasis>New &gt; Properties File</emphasis></para></listitem>
+<listitem><para>Type <emphasis>messages</emphasis> as the value for <emphasis>name</emphasis> attribute and click Finish</para></listitem>
+</itemizedlist>
+<para>Red Hat Developer Studio will automatically open messages.properties file for editing.</para>
+<figure>
+<title>messages.properties file</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad62.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<itemizedlist>
+<listitem><para>Click <emphasis>Add</emphasis> button</para></listitem>
+<listitem><para>Type <emphasis role="italic"><property>how_to_play</property></emphasis> for &quot;name&quot; and <emphasis role="italic"><property>Please pick a number between 0 and 100.</property></emphasis> for value</para></listitem>
+<listitem><para>Click Finish</para></listitem>
+<listitem><para>In such a way add the next properties:</para></listitem>
+</itemizedlist>
+<programlisting role="JAVA"><![CDATA[makeguess_button=Make Guess
+trayagain_button=Play Again?
+success_text=How cool.. You have guessed the number, {0} is correct! 
+tryagain_smaller=Oops..incorrect guess. Please try a smaller number.
+tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
+]]></programlisting>
+<itemizedlist>
+<listitem><para>Click <emphasis>File &gt; Save</emphasis> from the menu bar</para></listitem>
+</itemizedlist>
+<para>Your .properties file should now look like follows:</para>
+<figure>
+<title>Properties are added</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad63.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+</section>
+
+<section id="CreatingJavaBean">
+<?dbhtml filename="CreatingJavaBean.html"?>
+<title>Creating Java Bean</title>
+<para>Now we create a Java bean that will hold business logic of our application.</para>
+<itemizedlist>
+<listitem><para>Right click <emphasis>game</emphasis> folder</para></listitem>
+<listitem><para>Select <emphasis>New &gt; Class</emphasis></para></listitem>
+<listitem><para>Type <emphasis>NumberBean</emphasis></para> for bean name</listitem>
+</itemizedlist>
+<para>A java bean is created.</para>
+<itemizedlist>
+<listitem><para>Declare the variable of user entered number:</para></listitem>
+</itemizedlist>
+<programlisting role="JAVA"><![CDATA[Integer userNumber;
+]]></programlisting>
+<para>Red Hat Studio allows to quickly generate getters and setters for java bean.</para>
+<itemizedlist>
+<listitem><para>Right click NumberBean.java in Package Explorer</para></listitem>
+<listitem><para>Select <emphasis>Source &gt; Generate Getters and Setters...</emphasis></para></listitem>
+<listitem><para>Check <emphasis>userNumber</emphasis> box and click OK
+<figure>
+<title>Generate Getters and Setters</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad64.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+</para></listitem>
+<listitem><para>Add the declaration of the second variable</para></listitem>
+</itemizedlist>
+<programlisting role="JAVA"><![CDATA[int randomNumber;
+]]></programlisting>
+<itemizedlist>
+<listitem><para>.. other bean methods:</para></listitem>
+</itemizedlist>
+<programlisting role="JAVA"><![CDATA[public NumberBean () 
+{
+    randomNumber = (int)(Math.random()*100);
+    System.out.println ( "Random number: "+randomNumber);
+  }
+  public String playagain () 
+  {
+    FacesContext context = FacesContext.getCurrentInstance();
+    HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+    session.invalidate();
+    return "playagain"; 
+  }
+  public String checkGuess () 
+  {
+     
+    // if guessed, return 'success' for navigation
+    if ( userNumber.intValue() == randomNumber ) 
+    {
+      return "success";
+    }
+else 
+   {
+      FacesContext context = FacesContext.getCurrentInstance();
+      ResourceBundle bundle = ResourceBundle.getBundle("game.messages", context.getViewRoot().getLocale());
+      String msg = "";
+      // if number bigger, get appropriate message
+      if ( userNumber.intValue() > randomNumber ) 
+         msg = bundle.getString("tryagain_smaller");
+      else // if number smaller, get appropriate message
+         msg = bundle.getString("tryagain_bigger");      
+      // add message to be displayed on the page via <h:messages> tag
+      context.addMessage (null, new FacesMessage(msg)); 
+      // return 'tryagain' for navigation
+      return "tryagain";
+    }
+  }
+]]></programlisting>
+<itemizedlist>
+<listitem><para>And the import declarations:</para></listitem>
+</itemizedlist>
+<programlisting role="JAVA"><![CDATA[import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import javax.faces.application.FacesMessage;
+import java.util.Locale;
+import java.util.ResourceBundle;
+]]></programlisting>
+<para>The whole java bean should look as follows:</para>
+<programlisting role="JAVA"><![CDATA[import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import javax.faces.application.FacesMessage;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+public class NumberBean 
+{
+  Integer userNumber; 
+  int randomNumber; // random number generated by application
+public Integer getUserNumber () 
+  {
+    return userNumber;
+  }
+  public void setUserNumber (Integer value)
+  {
+     this.userNumber = value;
+  }
+  
+  // constructor, generates random number
+  public NumberBean () 
+  {
+    randomNumber = (int)(Math.random()*100);
+    System.out.println ( 
+   "Random number: " + randomNumber);
+  }
+  
+  public String playagain () 
+  {
+    FacesContext context = FacesContext.getCurrentInstance();
+    HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+    session.invalidate();
+    return "playagain"; 
+  }
+  
+  // check if user guessed the number
+  public String checkGuess () 
+  {
+    // if guessed, return 'success' for navigation
+    if ( userNumber.intValue() == randomNumber )
+    {
+      return "success";
+    }
+    // incorrect guess
+    else 
+   {
+      // get a reference to properties file to retrieve messages
+      FacesContext context = FacesContext.getCurrentInstance();
+      ResourceBundle bundle = ResourceBundle.getBundle("game.messages", context.getViewRoot().getLocale());
+      String msg = "";
+      // if number is bigger, get appropriate message
+      if ( userNumber.intValue() > randomNumber ) 
+         msg = bundle.getString("tryagain_smaller");
+      else // if number smaller, get appropriate message
+         msg = bundle.getString("tryagain_bigger");
+      
+      // add message to be displayed on the page via <h:messages> tag
+      context.addMessage (null, new FacesMessage(msg)); 
+      // return 'tryagain' for navigation
+      return "tryagain";
+    }
+  }
+}
+]]></programlisting>
+</section>
+
+<section id="EditingFacesConfig">
+<?dbhtml filename="EditingFacesConfig.html"?>
+<title>Editing faces-config.xml File</title>
+<para>This file holds our two navigation rules and defines the backing bean used.</para>
+<itemizedlist>
+<listitem><para>Open faces-config.xml file in source mode.</para></listitem>
+<listitem><para>Add here one more navigation rule and a managed bean declarations that the content of the file looks like this:</para></listitem>
+</itemizedlist>
+<programlisting role="XML"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="1.2" xmlns="http://java.sun.com/xml/ns/javaee
+xmlns:xi="http://www.w3.org/2001/XInclude"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2_.xsd">
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+      <from-outcome>playagain</from-outcome> 
+      <to-view-id>/pages/inputnumber.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/pages/inputnumber.jsp</from-view-id>
+    <navigation-case>
+      <from-outcome>success</from-outcome> 
+      <to-view-id>/pages/success.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <managed-bean>
+    <managed-bean-name>NumberBean</managed-bean-name>
+    <managed-bean-class>game.NumberBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+                 
+</faces-config>
+]]></programlisting>
+<para>The first navigation rule states that from any page (<property>*</property> stands for any page) an outcome of playagain will take you to <emphasis>/pages/inputnumber.jsp</emphasis>. Outcome values are returned from backing bean methods in this example. The second navigation rule states that if you are at the page <emphasis>/pages/inputnumber.jsp</emphasis>, and the outcome is success, then navigate to the <emphasis>/pages/success.jsp</emphasis> page. 
+</para>
+</section>
+<section id="EditingTheJSPViewFiles2">
+<?dbhtml filename="EditingTheJSPViewFiles2.html"?>
+<title>Editing the JSP View Files</title>
+<para>Now we will finish editing the JSP files for our two &quot;views&quot; using Red Hat&apos;s Visual Page
+Editor.</para>
+<section id="EditingInputjsp">
+<?dbhtml filename="EditingInputjsp.html"?>
+<title>Editing inputname.jsp page</title>
+<para>On this page we will have an output text component displaying a message, a text field for user&apos;s number entering and a button for input submission.</para>
+<itemizedlist>
+<listitem><para>Open inputnumber.jsp by double-clicking on the <emphasis>/pages/inputnamber.
+jsp</emphasis> icon</para></listitem>
+</itemizedlist>
+<para>The Visual Page Editor will open in a screen split between source code along the top and
+a WYSIWIG view along the bottom. You can see that some JSF code will be already generated as we choose a template when creating the page.</para>
+<para>At the beginning we will create a <emphasis role="bold"><property>&lt;h:form&gt;</property></emphasis> component where will put all others components.</para>
+<itemizedlist>
+<listitem><para>Place the mouse cursor inside <emphasis role="bold"><property>&lt;f:view&gt;</property></emphasis><emphasis role="bold"><property>&lt;/f:view&gt;</property></emphasis></para></listitem>
+<listitem><para>Go to JBoss Tools Palette and expand JSF HTML folder by selecting it</para></listitem>
+<listitem><para>Click on <emphasis role="bold"><property>&lt;h:form&gt;</property></emphasis> tag
+<figure>
+<title>Insert h:form</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad7.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+</para></listitem>
+<listitem><para>In the dialog Insert Tag select <emphasis>id</emphasis> and click on this line below the value header. A blinking cursor will appear in a input text field inviting to enter a value of id
+<figure>
+<title>Define id of form</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad8.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+</para></listitem>
+<listitem><para>Type &quot;inputNumbers&quot; and click Finish</para></listitem>
+</itemizedlist>
+<para>In source view you can see the declaration of form.</para>
+<figure>
+<title>Created form</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad9.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<para>First let&apos;s declare the properties file in inputnumber.jsp page using the loadBundle JSF tag.</para>
+<itemizedlist>
+<listitem><para>Put this declaration in the top of the page, right after the first two lines:</para></listitem>
+</itemizedlist>
+<programlisting role="XML"><![CDATA[<f:loadBundle basename="game.messages" var="msg"/>
+]]></programlisting>
+<para>As always Red Hat Studio provides code assist:</para>
+<figure>
+<title>Code assist</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad10.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<itemizedlist>
+<listitem><para>Switch to Visual tab, so we can work with the editor completely in its WYSIWYG mode.</para></listitem>
+<listitem><para>Click on <emphasis>outputText</emphasis>, drag the cursor over to the editor, and drop it inside the blue box in the editor.</para></listitem>
+
+<listitem><para>Select <emphasis>value</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
+<listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
+</itemizedlist>
+<para>RHDS will nicely propose us to choose within available values:</para>
+<figure>
+<title>Choose Value</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad11.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<itemizedlist>
+<listitem><para>Expand <emphasis>Resource Bundles &gt; msg</emphasis></para></listitem>
+<listitem><para>Select &quot;how_to_play&quot; value and click Ok. Then click Finish
+<figure>
+<title>Selecting Value</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad12.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+</para></listitem>
+</itemizedlist>
+<para>The text will appear on the page:</para>
+<figure>
+<title>Created outputText component</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad13.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<itemizedlist>
+<listitem><para>Switch to Source mode and insert <emphasis role="bold"><property>&lt;br/&gt;</property></emphasis> tag after <emphasis role="bold"><property>&lt;h:outputText&gt;</property></emphasis> component to make a new line.</para></listitem>
+<listitem><para>Click Save button.</para></listitem>
+<listitem><para>On the Palette Click on <emphasis>inputText</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the text.</para></listitem>
+<listitem><para>Select <emphasis>value</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
+<listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
+<listitem><para>Expand <emphasis>Managed Beans &gt; NumberBean</emphasis></para></listitem>
+<listitem><para>Select &quot;userNumber&quot; value and click Ok.</para></listitem>
+<listitem><para>Switch <emphasis>Advanced</emphasis> tab</para></listitem>
+<listitem><para>Select <emphasis>id</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
+<listitem><para>Type &quot;userNumber&quot; in text field</para></listitem>
+<listitem><para>Select <emphasis>required</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
+<listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
+<listitem><para>Expand <emphasis>Enumeration</emphasis> and select <emphasis>true</emphasis> as a value</para></listitem>
+</itemizedlist>
+<figure>
+<title>Add required attribute</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad14.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<itemizedlist>
+<listitem><para>Click Ok, then click Finish</para></listitem>
+<listitem><para>Go to Source mode</para></listitem>
+<listitem><para>Add the validation attribute to <emphasis role="bold"><property>&lt;f:validateLongRange&gt;</property></emphasis> for user input validation</para></listitem></itemizedlist>
+<programlisting role="XML"><![CDATA[<h:inputText id="userNumber" value="#{NumberBean.userNumber}" required="true">
+           <f:validateLongRange minimum="0" maximum="100"/>
+</h:inputText>
+]]></programlisting>
+<itemizedlist>
+<listitem><para>Click Save button</para></listitem>
+<listitem><para>Again select Visual mode</para></listitem>
+<listitem><para>On the Palette Click on <emphasis>commandButton</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the inputText component.</para></listitem>
+<listitem><para>In the editing dialog select <emphasis>value</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
+<listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
+<listitem><para>Expand <emphasis>Resource Bundles &gt; msg</emphasis> and select <emphasis>makeguess_button</emphasis> as a value</para></listitem>
+<listitem><para>Click Ok</para></listitem>
+<listitem><para>Select <emphasis>action</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
+<listitem><para>Type &quot;NumberBean.checkGuess&quot; in text field</para></listitem>
+<listitem><para>Click Finish</para></listitem>
+<listitem><para>In Source mode add <emphasis role="bold"><property>&lt;br/&gt;</property></emphasis> tags between <emphasis role="bold"><property>&lt;outputText&gt;</property></emphasis>, <emphasis role="bold"><property>&lt;inputText&gt;</property></emphasis> and <emphasis role="bold"><property>&lt;commandButton&gt;</property></emphasis> components to place them on different lines</para></listitem>
+</itemizedlist>
+<para>inputnumber.jsp page should look like this:</para>
+<programlisting role="XML"><![CDATA[<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+<f:loadBundle basename="game.messages" var="msg"/>
+
+<html>
+ <f:view>
+     <h:form id="inputNumbers">
+      <h:outputText value="#{msg.how_to_play}"/>
+      <br/>
+      <h:messages style="color: blue"/>
+      <br/>
+      <h:inputText id="userNumber" value="#{NumberBean.userNumber}" required="true">
+           <f:validateLongRange minimum="0" maximum="100"/>
+      </h:inputText>
+     <br/><br/>
+     <h:commandButton value="#{msg.makeguess_button}" action="#{NumberBean.checkGuess}"/>  
+   </h:form>
+ </f:view>
+</html>
+]]></programlisting>
+</section>
+<section id="EditingSuccessJsp">
+<?dbhtml filename="EditingSuccessJsp.html"?>
+<title>Editing success.jsp page</title>
+<para>In the same way like inputnumber.jsp edit success.jsp page. Its whole source should be the next:</para>
+<programlisting role="XML"><![CDATA[<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+<f:loadBundle basename="game.messages" var="msg"/>
+
+<html>
+ <f:view>
+   <h:form id="result">
+     <h:outputFormat value="#{msg.success_text}">
+       <f:param value="#{NumberBean.userNumber}"/>
+     </h:outputFormat>
+     <br/><br/>
+     <h:commandButton value="#{msg.trayagain_button}" action="#{NumberBean.playagain}"/>
+   </h:form>
+ </f:view>
+</html>
+]]></programlisting>
+<para>Again you can use code assist provided by RHDS when editing jsp page:</para>
+<figure>
+<title>Code Assist for &lt;f:param&gt;</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad15.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<para>This page, success.jsp, is shown if the user correctly guessed the number. The <emphasis role="bold"><property>&lt;h:outputFormat&gt;</property></emphasis> tag will get the value of success_text from the properties file. The {0} in success_text will be substituted for by the value of the value attribute within the <emphasis role="bold"><property>&lt;f:param&gt;</property></emphasis> tag during runtime.</para>
+<para>At the end, we have a button which allows us to replay the game. The action value references a backing bean method. In this case, the method only terminates the current session so that when we are shown the first page, the input text box is clear and a new random number is generated.</para>
+<itemizedlist>
+<listitem><para>Switch to Preview mode to see how this page will look in browser:</para></listitem>
+</itemizedlist>
+<figure>
+<title>success.jsp in Preview mode</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/newrad16.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+</section>
+</section>
+ <section id="CreatingIndexjsp">
+<?dbhtml filename="CreatingIndexjsp.html"?>
+<title>Creating index.jsp page</title>
+<para>The index.jsp page is the entry point of our application. It&apos;s just forwarding to inputnumber.jsp page.</para>
+<itemizedlist>
+<listitem><para>Right click <emphasis>WebContent &gt; New &gt; JSP File</emphasis></para></listitem>
+<listitem><para>Type &quot;index&quot; for name field and choose JSPRedirect as a template</para></listitem>
+<listitem><para>Click Finish</para></listitem>
+<listitem><para>The source for this page should be like follows:</para></listitem>
+</itemizedlist>
+<programlisting role="XML"><![CDATA[<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+ <body>
+  <jsp:forward page="/pages/inputnumber.jsf" />
+ </body>
+</html>
+
+]]></programlisting>
+<para>Note the <emphasis>.jsf</emphasis> extension of page. It means that we trigger the JSF controller servlet to handle the page according the servlet mapping in faces-config.xml file.</para>
+</section>
+<section id="RunningTheApplication33">
+<?dbhtml filename="RunningTheApplication33.html"?>
+<title>Running the Application</title>
+<para>Everything is ready to run the application.</para>
+<itemizedlist>
+<listitem><para>Start up JBoss server by clicking on the Start icon in JBoss Server view. (If JBoss is already running, stop it by clicking on the red icon and then start it again. After the messages in the Console tabbed view stop scrolling, JBoss is available.</para></listitem>
+<listitem><para>Click on the Red Hat run icon in the toolbar</para></listitem>
+<listitem><para>Play with the application by entering correct as well as incorrect values</para></listitem>
+</itemizedlist>
+<figure>
+<title>A user is asked to enter a number between 0 and 100</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/default.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<figure>
+<title>User input is validated and an error message is displayed if invalid input was entered</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/default.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+<figure>
+<title>After the user enters a guess, the application tells the user if a smaller or a larger number should be tried</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/default.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+<figure>
+<title>A user guesses correctly</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/default.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+</section>
 </chapter>
