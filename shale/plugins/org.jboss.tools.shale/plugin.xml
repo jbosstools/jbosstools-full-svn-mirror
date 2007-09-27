@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension point="org.jboss.tools.common.model.meta">
+      <meta path="meta/shale-dialog.meta">
+      </meta>
+      <meta path="meta/shale-clay.meta">
+      </meta>
+      <meta path="meta/spring-beans.meta">
+      </meta>
+      <meta path="meta/shale-projects.meta">
+      </meta>
+   </extension>
+   <extension point="org.jboss.tools.common.model.keys">
+      <keys path="help/keys-shale.properties">
+      </keys>
+   </extension>
+
+   <extension point="org.jboss.tools.common.model.classes">
+		<xclass id="org.jboss.tools.shale.model.clay.ClayConfigFilteredTreeConstraint"
+			class="org.jboss.tools.shale.model.clay.ClayConfigFilteredTreeConstraint"/>
+		<xclass id="org.jboss.tools.shale.model.clay.ClayConfigLoader"
+			class="org.jboss.tools.shale.model.clay.ClayConfigLoader"/>
+		<xclass id="org.jboss.tools.shale.model.clay.ClayProcessImpl"
+			class="org.jboss.tools.shale.model.clay.ClayProcessImpl"/>
+		<xclass id="org.jboss.tools.shale.model.clay.ClayProcessItemImpl"
+			class="org.jboss.tools.shale.model.clay.ClayProcessItemImpl"/>
+		<xclass id="org.jboss.tools.shale.model.clay.ClayProcessItemOutputImpl"
+			class="org.jboss.tools.shale.model.clay.ClayProcessItemOutputImpl"/>
+		<xclass id="org.jboss.tools.shale.model.clay.FileClayImpl"
+			class="org.jboss.tools.shale.model.clay.FileClayImpl"/>
+		<xclass id="org.jboss.tools.shale.model.clay.ShaleClayEntityRecognizer"
+			class="org.jboss.tools.shale.model.clay.ShaleClayEntityRecognizer"/>
+		<xclass id="org.jboss.tools.shale.model.clay.handlers.DeleteClayConfigFileHandler"
+			class="org.jboss.tools.shale.model.clay.handlers.DeleteClayConfigFileHandler"/>
+		<xclass id="org.jboss.tools.shale.model.clay.handlers.RenameClayConfigFileHandler"
+			class="org.jboss.tools.shale.model.clay.handlers.RenameClayConfigFileHandler"/>
+		<xclass id="org.jboss.tools.shale.model.clay.helpers.ClayUpdateManager"
+			class="org.jboss.tools.shale.model.clay.helpers.ClayUpdateManager"/>
+		<xclass id="org.jboss.tools.shale.model.dialog.ShaleDialogEntityRecognizer"
+			class="org.jboss.tools.shale.model.dialog.ShaleDialogEntityRecognizer"/>
+		<xclass id="org.jboss.tools.shale.model.dialog.handlers.DeleteDialogConfigFileHandler"
+			class="org.jboss.tools.shale.model.dialog.handlers.DeleteDialogConfigFileHandler"/>
+		<xclass id="org.jboss.tools.shale.model.dialog.handlers.OpenPageHandler"
+			class="org.jboss.tools.shale.model.dialog.handlers.OpenPageHandler"/>
+		<xclass id="org.jboss.tools.shale.model.dialog.handlers.RenameDialogConfigFileHandler"
+			class="org.jboss.tools.shale.model.dialog.handlers.RenameDialogConfigFileHandler"/>
+		<xclass id="org.jboss.tools.shale.model.pv.JSFProjectShaleConfiguration"
+			class="org.jboss.tools.shale.model.pv.JSFProjectShaleConfiguration"/>
+		<xclass id="org.jboss.tools.shale.model.pv.JSFProjectsTreeConstraint"
+			class="org.jboss.tools.shale.model.pv.JSFProjectsTreeConstraint"/>
+		<xclass id="org.jboss.tools.shale.model.pv.ShalePromptingProvider"
+			class="org.jboss.tools.shale.model.pv.ShalePromptingProvider"/>
+		<xclass id="org.jboss.tools.shale.model.spring.ConstructorArgObjectImpl"
+			class="org.jboss.tools.shale.model.spring.ConstructorArgObjectImpl"/>
+		<xclass id="org.jboss.tools.shale.model.spring.ListObjectImpl"
+			class="org.jboss.tools.shale.model.spring.ListObjectImpl"/>
+		<xclass id="org.jboss.tools.shale.model.spring.SpringBeansAnyObjectImpl"
+			class="org.jboss.tools.shale.model.spring.SpringBeansAnyObjectImpl"/>
+		<xclass id="org.jboss.tools.shale.model.spring.SpringBeansBeanObjectImpl"
+			class="org.jboss.tools.shale.model.spring.SpringBeansBeanObjectImpl"/>
+		<xclass id="org.jboss.tools.shale.model.spring.SpringBeansEntityRecognizer"
+			class="org.jboss.tools.shale.model.spring.SpringBeansEntityRecognizer"/>
+		<xclass id="org.jboss.tools.shale.model.spring.SpringBeansEntryObjectImpl"
+			class="org.jboss.tools.shale.model.spring.SpringBeansEntryObjectImpl"/>
+		<xclass id="org.jboss.tools.shale.model.spring.SpringBeansLoader"
+			class="org.jboss.tools.shale.model.spring.SpringBeansLoader"/>
+		<xclass id="org.jboss.tools.shale.model.spring.handlers.DeleteSpringBeansConfigFileHandler"
+			class="org.jboss.tools.shale.model.spring.handlers.DeleteSpringBeansConfigFileHandler"/>
+		<xclass id="org.jboss.tools.shale.model.spring.handlers.RenameSpringBeansConfigFileHandler"
+			class="org.jboss.tools.shale.model.spring.handlers.RenameSpringBeansConfigFileHandler"/>
+			
+		<xclass id="org.jboss.tools.shale.model.dialog.handlers.CreateDialogConfigFileSupport"
+			class="org.jboss.tools.shale.model.dialog.handlers.CreateDialogConfigFileSupport"/>
+		<xclass id="org.jboss.tools.shale.model.clay.handlers.CreateClayConfigFileSupport"
+			class="org.jboss.tools.shale.model.clay.handlers.CreateClayConfigFileSupport"/>
+		<xclass id="org.jboss.tools.shale.model.spring.handlers.CreateSpringBeansConfigFileSupport"
+			class="org.jboss.tools.shale.model.spring.handlers.CreateSpringBeansConfigFileSupport"/>
+		<xclass id="org.jboss.tools.shale.model.clay.handlers.CreateAttributeSupport"
+			class="org.jboss.tools.shale.model.clay.handlers.CreateAttributeSupport"/>
+		<xclass id="org.jboss.tools.shale.model.pv.handlers.EditShaleConfigurationSupport"
+			class="org.jboss.tools.shale.model.pv.handlers.EditShaleConfigurationSupport"/>
+   </extension>
+
+</plugin>
