@@ -1,5 +1,0 @@
-plugin@org.jbpm.core=%cvsTag%,%jbpm-cvs-root%,,jbpm.ide/org.jbpm.core/
-plugin@org.jbpm.db=%cvsTag%,%jbpm-cvs-root%,,jbpm.ide/org.jbpm.db/
-plugin@org.jbpm.help=%cvsTag%,%jbpm-cvs-root%,,jbpm.ide/org.jbpm.help/
-plugin@org.jbpm.ui=%cvsTag%,%jbpm-cvs-root%,,jbpm.ide/org.jbpm.ui/
-feature@org.jbpm.feature=%cvsTag%,%jbpm-cvs-root%,,jbpm.ide/org.jbpm.feature/
