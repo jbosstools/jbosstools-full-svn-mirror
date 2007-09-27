@@ -1,9 +1,0 @@
-<chapter id="intro">
-	<title>Introduction</title>
-	
-	<section>
-		<title>Introduction</title>
-		<para>Welcome to the JBossIDE Build System (otherwise known as releng). To succesfully build JBossIDE, you will
-		need to first go through a few setup steps to prepare the build environment.</para>
-	</section>
-</chapter>
