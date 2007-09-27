@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<vpe:templates>
+    <vpe:tag name="br" case-sensitive="no">
+	    <vpe:template children="no" modify="no">
+			<vpe:copy attrs="style,class,clear"/>
+	    </vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="f:verbatim" case-sensitive="yes">
+	    <vpe:template children="yes" modify="yes">
+			<span title="{tagstring()}"></span>
+	    </vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:inputText" case-sensitive="yes">
+	    <vpe:template children="no" modify="no">
+			<input type="text" value="{@value}" class="{@styleClass}" style="{@style}" title="{tagstring()}"/>
+	    </vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:inputTextarea" case-sensitive="yes">
+	    <vpe:template children="yes" modify="no">
+			<textarea class="{@styleClass}" style="{@style}" rows="{@rows}" cols="{@cols}" title="{tagstring()}">
+				<vpe:value expr="@value"/>
+			</textarea>
+	    </vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:inputSecret" case-sensitive="yes">
+	    <vpe:template children="no" modify="no">
+			<input type="password" value="{@value}" class="{@styleClass}" style="{@style}" title="{tagstring()}"/>
+	    </vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:inputHidden" case-sensitive="yes">
+	    <vpe:template children="no" modify="no">
+			<input type="text" value="{@value}" class="{@styleClass}" style="{@style}border-style:dotted;" title="{tagstring()}"/>
+	    </vpe:template>
+    </vpe:tag>
+
+<!-- Проблема с указанием в качестве value HTML-тега (25 of 4) -->
+    <vpe:tag name="h:outputText" case-sensitive="yes">
+		<vpe:template children="no" modify="yes">
+			<span class="{@styleClass}" style="{@style}" title="{tagstring()}">
+				<vpe:value expr="@value"/>
+			</span>
+		</vpe:template>
+    </vpe:tag>
+
+<!-- Проблема с подстановкой значений вложенных параметров (26 of 4) -->
+    <vpe:tag name="h:outputFormat" case-sensitive="yes">
+		<vpe:template children="no" modify="yes">
+			<span title="{tagstring()}">
+				<vpe:value expr="@value"/>
+			</span>
+		</vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:graphicImage" case-sensitive="yes">
+		<vpe:template children="no" modify="yes">
+			<img src="{src(@value)}" width="{@width}" height="{@height}" class="{@styleClass}" style="{@style}" title="{tagstring()}"/>
+		</vpe:template>
+    </vpe:tag>
+
+<!-- Проблема с адресацией от приложения (30 of 4) -->
+    <vpe:tag name="h:commandButton" case-sensitive="yes">
+		<vpe:if test="@type=''">
+			<vpe:template children="no" modify="no">
+				<input type="submit" value="{@value}" class="{@styleClass}" style="{@style}" title="{tagstring()}"/>
+			</vpe:template>
+		</vpe:if>
+		<vpe:if test="(@type='button')|(@type='reset')|(@type='submit')">
+			<vpe:template children="no" modify="no">
+				<input type="{@type}" value="{@value}" class="{@styleClass}" style="{@style}" title="{tagstring()}"/>
+			</vpe:template>
+		</vpe:if>
+		<vpe:if test="@type='image'">
+			<vpe:template children="no" modify="no">
+				<input type="{@type}" src="{src(@image)}" value="{@value}" class="{@styleClass}" style="{@style}" title="{tagstring()}"/>
+			</vpe:template>
+		</vpe:if>
+    </vpe:tag>
+
+<!-- Проблема с вложенным параметром (31 of 4) -->
+    <vpe:tag name="h:commandLink" case-sensitive="yes">
+	    <vpe:template children="yes" modify="yes">
+			<span class="{@styleClass}" style="color:blue;text-decoration:underline;{@style}" title="{tagstring()}">
+				<vpe:value expr="@value"/>
+			</span>
+	    </vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:outputLink" case-sensitive="yes">
+	    <vpe:template children="yes" modify="yes">
+			<span class="{@styleClass}" style="color:blue;text-decoration:underline;{@style}" title="{tagstring()}"/>
+	    </vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:outputLabel" case-sensitive="yes">
+	    <vpe:template children="no" modify="yes">
+			<span style="{@style}" class="{@styleClass}" title="{tagstring()}">
+				<vpe:value expr="@value"/>
+			</span>
+	    </vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:selectBooleanCheckbox" case-sensitive="yes">
+	    <vpe:template children="no" modify="no">
+			<input type="checkbox" disabled="on" checked="{@value}" class="{@styleClass}" style="{@style}" border="{@border}" title="{tagstring()}"/>
+	    </vpe:template>
+    </vpe:tag>
+
+
+<!-- 
+	Проблема с вложенными f:selectItem (42 of 4) и f:selectItems (50 of 4)
+	Возможна проблема с нечувствительностью к регистру lineDirection/pageDirection (44 of 4)
+-->
+    <vpe:tag name="h:selectManyCheckbox" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<!--vpe:grid layout="{@layout}" border="{@border}" title="{tagstring()}" style="{@style}" class="{@styleClass}"/-->
+			<vpe:grid layout="{@layout}" border="{@border}" title="{tagstring()}" style="{@style}" class="{@styleClass}"/>
+		</vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:selectOneRadio" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<vpe:grid layout="{@layout}" border="{@border}" title="{tagstring()}"/>
+		</vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:selectOneListbox" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<select size="{@size}" style="{@style}" class="{@styleClass}" title="{tagstring()}"/>
+		</vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:selectManyListbox" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<select size="{@size}" style="{@style}" class="{@styleClass}" title="{tagstring()}"/>
+		</vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:selectOneMenu" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<select style="{@style}" class="{@styleClass}" title="{tagstring()}"/>
+		</vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:selectManyMenu" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<select style="{@style}" class="{@styleClass}" title="{tagstring()}"/>
+		</vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="f:selectItem" case-sensitive="yes">
+		<vpe:if test="hasinparents('h:selectManyCheckbox')">
+			<vpe:template children="no" modify="yes">
+				<span title="{tagstring()}">
+					<input type="checkbox"/>
+					<vpe:value expr="@itemLabel"/>
+				</span>
+			</vpe:template>
+		</vpe:if>
+		<vpe:if test="hasinparents('h:selectOneRadio')">
+			<vpe:template children="no" modify="yes">
+				<span title="{tagstring()}">
+					<input type="radio"/>
+					<vpe:value expr="@itemLabel"/>
+				</span>
+			</vpe:template>
+		</vpe:if>
+		<vpe:if test="hasinparents('h:selectOneListbox')|
+						hasinparents('h:selectManyListbox')|
+						hasinparents('h:selectOneMenu')|
+						hasinparents('h:selectManyMenu')">
+			<vpe:template children="no" modify="yes">
+				<option value="{@itemValue}" title="{tagstring()}">
+					<vpe:value expr="@itemLabel"/>
+				</option>
+			</vpe:template>
+		</vpe:if>
+    </vpe:tag>
+
+    <vpe:tag name="f:selectItems" case-sensitive="yes">
+		<vpe:if test="hasinparents('h:selectManyCheckbox')">
+			<vpe:template children="no" modify="yes">
+				<span title="{tagstring()}">
+					<input type="checkbox"/>
+					<vpe:value expr="@itemLabel"/>
+				</span>
+			</vpe:template>
+		</vpe:if>
+		<vpe:if test="hasinparents('h:selectOneRadio')">
+			<vpe:template children="no" modify="yes">
+				<span title="{tagstring()}">
+					<input type="radio"/>
+					<vpe:value expr="@itemLabel"/>
+				</span>
+			</vpe:template>
+		</vpe:if>
+		<vpe:if test="hasinparents('h:selectOneListbox')|
+						hasinparents('h:selectManyListbox')|
+						hasinparents('h:selectOneMenu')|
+						hasinparents('h:selectManyMenu')">
+			<vpe:template children="no" modify="yes">
+				<option value="{@itemValue}" title="{tagstring()}">
+					<vpe:value expr="@value"/>
+				</option>
+			</vpe:template>
+		</vpe:if>
+
+    </vpe:tag>
+
+
+
+    <!--vpe:tag name="h:message" case-sensitive="yes">
+		<vpe:template children="no" modify="no">
+			<span>Message text</span>
+		</vpe:template>
+    </vpe:tag-->
+
+
+    <vpe:tag name="h:selectOneMenu" case-sensitive="yes">
+	    <vpe:template children="yes" modify="no">
+			<select>
+			</select>
+	    </vpe:template>
+    </vpe:tag>
+
+
+
+    <vpe:tag name="h:panelGroup" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<span style="{@style}" class="{@styleClass}" title="{tagstring()}"/>
+		</vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:panelGrid" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<vpe:grid border="{@border}" style="{@style}" class="{@styleClass}" width="{@width}" frame="{@frame}" rules="{@rules}" 
+						cellspacing="{@cellspacing}" cellpadding="{@cellpadding}" bgcolor="{@bgcolor}" title="{tagstring()}" table-size="{@columns}"/>
+		</vpe:template>
+    </vpe:tag>
+
+
+
+
+    <vpe:tag name="h:dataTable" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<vpe:grid border="{@border}" style="{@style}" class="{@styleClass}" title="{tagstring()}"/>
+		</vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:column" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<span/>
+		</vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="f:facet" case-sensitive="yes">
+		<vpe:if test="parentname()='h:column'">
+			<vpe:template children="yes" modify="yes">
+				<div/>
+			</vpe:template>
+		</vpe:if>
+    </vpe:tag>
+
+
+
+
+
+
+<!-- 
+	Проблема с селектированием элемента: в мозилле селектируется заголовок а не рамка
+-->
+	<vpe:template children="yes" modify="yes">
+		<div align="left" style="margin:1px;padding:1px 3px 1px 3px; -moz-outline:solid;-moz-outline-width:1px;-moz-outline-color:#000000" title="{tagstring()}">
+			<font color="red" size="1" style="-moz-user-modify:read-only;background-color:#FFFF00">
+				<b><vpe:value expr="name()"/></b>
+			</font><br/>
+		</div>
+	</vpe:template>
+</vpe:templates>
