@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!ELEMENT variables (variable*)>
-<!ELEMENT variable EMPTY>
-<!ATTLIST variable
-	name CDATA #REQUIRED
-	pattern CDATA #REQUIRED
-	systemvariable CDATA #REQUIRED
->
