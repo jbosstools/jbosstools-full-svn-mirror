@@ -13,6 +13,7 @@
         <para>In this chapter you will see how to create a simple JSF application being based on <property>&quot;RAD&quot;</property> philosophy. We will create the familiar Guess Number application. The scenario is as follows. A user is asked to guess a number between 0 and 100. If the guess is correct, a success page is displayed with a link to play again. If the guess is incorrect, a message is printed notifying the user that a smaller or a larger number should be entered and the game continues.</para>
       <para>We&apos;ll show you how to create such an application from scratch, along the way demonstrating powerful features of Red Hat Developer Studio such as project templating, Visual Page Editor, code completion and others. You will design the
 JSF application and then run the application from inside Red Hat Developer Studio using the bundled JBoss server.</para>
+
 <section id="SettingUpTheProject12">
 <?dbhtml filename="SettingUpTheProject12.html"?>
 <title>Setting up the project</title>
@@ -26,6 +27,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
         </imageobject>
 </mediaobject>
 </figure>
+
 <para>Put &quot;GuessNumber&quot; as a project name, in &quot;JSF Environment&quot; drop down list choose JSF 1.2.</para>
 <para>Leave everything else as it is and click Finish.</para>
 <para>Our project will appear in Project Explorer and Web Projects Views. As you can see Red Had Developer Studio has created for us the whole skeleton for the project with all needed libraries, faces-config.xml and web.xml files.</para>
@@ -33,10 +35,11 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>New JSF Project</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad2.png"/>
+            <imagedata depth="22cm" fileref="images/newrad2.png"/>
         </imageobject>
 </mediaobject>
 </figure>
+
 </section> 
 <section id="CreatingJSPPages">
 <?dbhtml filename="CreatingJSPPages.html"?>
@@ -53,7 +56,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>Create New View</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad3.png"/>
+            <imagedata scale="80" fileref="images/newrad3.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -69,11 +72,12 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>New Views</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad4.png"/>
+            <imagedata scale="80" fileref="images/newrad4.png"/>
         </imageobject>
 </mediaobject>
 </figure>
 </section>
+
 <section id="CreatingTransition">
 <?dbhtml filename="CreatingTransition.html"?>
 <title>Creating Transition between two views</title>
@@ -84,7 +88,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>Create connection</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad5.png"/>
+            <imagedata scale="80" fileref="images/newrad5.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -96,7 +100,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>Created connection</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad6.png"/>
+            <imagedata scale="80" fileref="images/newrad6.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -124,7 +128,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>messages.properties file</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad62.png"/>
+            <imagedata scale="80" fileref="images/newrad62.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -148,7 +152,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 <title>Properties are added</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad63.png"/>
+            <imagedata scale="80" fileref="images/newrad63.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -178,7 +182,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 <title>Generate Getters and Setters</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad64.png"/>
+            <imagedata scale="80" fileref="images/newrad64.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -368,7 +372,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Insert h:form</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad7.png"/>
+            <imagedata scale="80" fileref="images/newrad7.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -378,7 +382,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Define id of form</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad8.png"/>
+            <imagedata scale="80" fileref="images/newrad8.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -390,7 +394,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Created form</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad9.png"/>
+            <imagedata scale="80" fileref="images/newrad9.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -405,7 +409,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Code assist</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad10.png"/>
+            <imagedata scale="80" fileref="images/newrad10.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -421,7 +425,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Choose Value</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad11.png"/>
+            <imagedata scale="80" fileref="images/newrad11.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -432,7 +436,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Selecting Value</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad12.png"/>
+            <imagedata scale="80" fileref="images/newrad12.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -443,7 +447,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Created outputText component</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad13.png"/>
+            <imagedata scale="80" fileref="images/newrad13.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -466,7 +470,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Add required attribute</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad14.png"/>
+            <imagedata scale="80" fileref="images/newrad14.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -538,7 +542,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Code Assist for &lt;f:param&gt;</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad15.png"/>
+            <imagedata scale="80" fileref="images/newrad15.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -551,7 +555,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>success.jsp in Preview mode</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad16.png"/>
+            <imagedata scale="80" fileref="images/newrad16.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -590,7 +594,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>A user is asked to enter a number between 0 and 100</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/default.png"/>
+            <imagedata scale="80" fileref="images/default.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -598,7 +602,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>User input is validated and an error message is displayed if invalid input was entered</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/default.png"/>
+            <imagedata scale="80" fileref="images/default.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -607,7 +611,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>After the user enters a guess, the application tells the user if a smaller or a larger number should be tried</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/default.png"/>
+            <imagedata scale="80" fileref="images/default.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -616,7 +620,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>A user guesses correctly</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/default.png"/>
+            <imagedata scale="80" fileref="images/default.png"/>
         </imageobject>
 </mediaobject>
 </figure>
