@@ -98,10 +98,10 @@ the Select Perspective dialog box.)</para>
 		
 		<section id="WebXML">
 		<?dbhtml filename="WebXML.html"?>
-		<title>Web.xml File</title>
+		<title>web.xml file</title>
 		<para>When you are creating web project the wizard creates the web.xml for you automatically.  The web.xml file editor provided by Red Hat Developer Studio is available in two modes: design and source.</para>
 		<figure>
-			<title>Web.xml in design mode</title>
+			<title>web.xml in design mode</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/webxmldesign.png"/>
@@ -109,7 +109,7 @@ the Select Perspective dialog box.)</para>
 			</mediaobject>
 		</figure>
 		<figure>
-			<title>Web.xml in source mode</title>
+			<title>web.xml in source mode</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/webxmlsource.png"/>
@@ -131,12 +131,76 @@ the Select Perspective dialog box.)</para>
 		<?dbhtml filename="DeployTheProject.html"?>
 		<title>Deploying the project</title>
 		<para>While creating any web project you could experience a pain writing ant scripts and managing the 
-packaging even if a developer is writing the most trivial web applications. With Red Hat Developer Studio you are saved from such a pain. All you need is start JBoss server and launch your application in your favorite browser.</para>
+packaging even if a developer is writing the most trivial web applications. With Red Hat Developer Studio you are saved from such a pain. All you need is to start JBoss server and launch your application in your favorite browser.</para>
        <para>You can also create a war archive with RHDS&apos;s Archive Tools and export it to any web server.</para>
        <section id="WarConfig">
 		<?dbhtml filename="WarConfig.html"?>
-		<title>WAR config</title>
-		<para>TO BE DONE</para>
+		<title>WAR Config</title>
+		<para>Project archives managing is available through <emphasis>Project archives</emphasis> view.</para>
+		<itemizedlist>
+		<listitem><para>Select <emphasis>Window &gt; Show view &gt; Other &gt; JBoss Tools &gt; Project archives</emphasis> from menu bar</para></listitem>
+		<listitem><para>Select a project in Package Explorer you want to be archived</para></listitem>
+		</itemizedlist>
+		<para>In Project Archives you will see available archive types for the project:</para>
+		<figure>
+			<title>Project Archives</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/simplejspwebapplication.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<itemizedlist>
+		<listitem><para>Click, for example, <emphasis>WA</emphasis> option to create war archive</para></listitem>
+		</itemizedlist>
+		<para>In the dialog New WAR you can see automatically selected default values</para>
+		<figure>
+			<title>New WAR archive</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/simplejspwebapplication2.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<itemizedlist>
+		<listitem><para>Click Next to see a stub archive configuration for your project:
+		<figure>
+			<title>Stub Archive Configuration</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/simplejspwebapplication3.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		</para></listitem>
+		<listitem><para>Click Finish. The <emphasis>.war</emphasis> file will appear in Package Explorer and in Project archives view as structure tree:
+		<figure>
+			<title>Archive is created</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/simplejspwebapplication4.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<figure>
+			<title>Archive in Project archives view</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/simplejspwebapplication5.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		</para></listitem>
+		</itemizedlist>
+		<para>Via Project archives view you could now edit your archive, add new folders, publish to server, and so on:</para>
+		<figure>
+			<title>Configure archive</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/simplejspwebapplication6.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 		</section>
 		
 		<section id="AutoRedeploy">
