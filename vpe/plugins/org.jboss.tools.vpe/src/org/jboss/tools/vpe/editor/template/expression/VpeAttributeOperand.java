@@ -33,8 +33,8 @@ public class VpeAttributeOperand extends VpeOperand {
 
 		try {
 			value = ((Element)sourceNode).getAttribute(name);
-			if (!caseSensitive) {
-				value = (value == null ? "" : value.toLowerCase());
+			if (value == null) {
+				value = "";
 			}
 		} catch (Exception e) {
 //			throw new VpeExpressionError(x.getMessage());
