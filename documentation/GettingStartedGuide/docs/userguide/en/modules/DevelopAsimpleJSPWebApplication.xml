@@ -9,7 +9,7 @@
     </keywordset>
   </chapterinfo>
 	<title>Developing a simple JSP web application</title>
-	<para>In this you'll find out how to create a simple JSP application using the Red Hat Developer Studio. The application will show a classic &quot;Hello World!&quot; on the page.</para>
+	<para>In this chapter you'll find out how to create a simple JSP application using the Red Hat Developer Studio. The application will show a classic &quot;Hello World!&quot; on the page.</para>
 	<para>We&apos;ll assume that you have already launched Red Hat Developer Studio and
 also that the Red Hat perspective is the current perspective. (If not, make it active by selecting <emphasis><property>Window/Open Perspective/Red Hat Developer Studio</property></emphasis> from the menu bar or by selecting <emphasis><property>Window/
 Open Perspective/Other...</property></emphasis> from the menu bar and then selecting Red Hat Developer Studio from
@@ -50,11 +50,11 @@ the Select Perspective dialog box.)</para>
 		<para>In our simple application we need to create only one JSP page which displays a &quot;Hello World!&quot; message.</para>
 		<itemizedlist continuation="continues">
 <listitem><para>Right click <emphasis>WebContent &gt; New &gt; JSP.</emphasis></para></listitem>
-<listitem><para>Type &quot;hello.jsp&quot; for file name and click Next button.</para></listitem>
+<listitem><para>Type &quot;hello.jsp&quot; for a file name and click the <emphasis><property>Next</property></emphasis> button.</para></listitem>
 </itemizedlist>
 <para>In the next window you can choose a template for your jsp page and see its preview.</para>
 <itemizedlist continuation="continues">
-<listitem><para>Select &quot;New JSP File (xhtml)&quot; template and click Finish button.</para></listitem>
+<listitem><para>Select &quot;New JSP File (xhtml)&quot; template and click <emphasis><property>Finish</property></emphasis> button.</para></listitem>
 </itemizedlist>
 <figure>
 			<title>Create JSP Page</title>
@@ -235,7 +235,7 @@ packaging even if a developer is writing the most trivial web applications. With
 		<section id="LaunchingTheProject">
 		<?dbhtml filename="LaunchingTheProject.html"?>
 		<title>Launch JSP Project</title>
-		<para>Let&apos;s now launch our project on server. We&apos;ll use JBoss server that is shiped with Red Hat Developer Studio.</para>
+		<para>Let&apos;s now launch our project on server. We&apos;ll use JBoss server that is shipped with Red Hat Developer Studio.</para>
 		<itemizedlist continuation="continues">
 <listitem><para>Start JBoss server from JBoss Server view by clicking the Start icon.</para></listitem>
 </itemizedlist>
