@@ -18,7 +18,8 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <?dbhtml filename="SettingUpTheProject12.html"?>
 <title>Setting up the project</title>
 <para>We will create a JSF 1.2 project using an integrated RHDS&apos;s new project wizard and predefined templates.</para>
-<para>In Web Projects View (if it is not open select <emphasis>Window &gt; Show View &gt; Others &gt; Red Hat Developer Studio &gt; Web Projects View</emphasis>) click &quot;Create New JSF Project&quot; button.</para>
+<itemizedlist>
+<listitem><para>In Web Projects View (if it is not open select <emphasis>Window &gt; Show View &gt; Others &gt; Red Hat Developer Studio &gt; Web Projects View</emphasis>) click &quot;Create New JSF Project&quot; button.
 <figure>
 <title>Create New JSF Project</title>
 <mediaobject> 
@@ -27,9 +28,10 @@ JSF application and then run the application from inside Red Hat Developer Studi
         </imageobject>
 </mediaobject>
 </figure>
-
-<para>Put &quot;GuessNumber&quot; as a project name, in &quot;JSF Environment&quot; drop down list choose JSF 1.2.</para>
-<para>Leave everything else as it is and click Finish.</para>
+</para></listitem>
+<listitem><para>Put &quot;GuessNumber&quot; as a project name, in &quot;JSF Environment&quot; drop down list choose JSF 1.2.</para></listitem>
+<listitem><para>Leave everything else as it is and click Finish</para></listitem>
+</itemizedlist>
 <para>Our project will appear in Project Explorer and Web Projects Views. As you can see Red Had Developer Studio has created for us the whole skeleton for the project with all needed libraries, faces-config.xml and web.xml files.</para>
 <figure>
 <title>New JSF Project</title>
@@ -48,8 +50,8 @@ JSF application and then run the application from inside Red Hat Developer Studi
 
 <para>On the first page inputnumber.jsp you will enter a number.</para>
 <itemizedlist>
-<listitem><para>Open faces-config.xml file.</para></listitem>
-<listitem><para>Right click anywhere on the diagram mode.</para></listitem>
+<listitem><para>Open faces-config.xml file</para></listitem>
+<listitem><para>Right click anywhere on the diagram mode</para></listitem>
 <listitem><para>From the context menu select <emphasis>New View</emphasis></para></listitem>
 </itemizedlist>
 <figure>
@@ -63,7 +65,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <itemizedlist>
 
 <listitem><para>Type <emphasis>pages/inputname</emphasis> as the value for &quot;From-view-id&quot;</para></listitem>
-<listitem><para>Leave everything else as is and click <emphasis><property>Finish</property></emphasis>.</para></listitem>
+<listitem><para>Leave everything else as is and click Finish</para></listitem>
 <listitem><para>In the same way create another jsf view. Type &quot;pages/success&quot; as the value for &quot;From-view-id&quot;</para></listitem>
 <listitem><para>Select <emphasis>File &gt; Save</emphasis></para></listitem>
 </itemizedlist>
@@ -83,7 +85,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>Creating Transition between two views</title>
 <para>We should now create connection between jsp pages.</para>
 <itemizedlist>
-<listitem><para>In the diagram, select the connection icon third from the top along the upper left side of the diagram to get an arrow cursor with a two-pronged plug at the arrow&apos;s bottom.
+<listitem><para>In the diagram, select the connection icon third from the top along the upper left side of the diagram to get an arrow cursor with a two-pronged plug at the arrow&apos;s bottom
 <figure>
 <title>Create connection</title>
 <mediaobject> 
@@ -93,7 +95,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 </mediaobject>
 </figure>
 </para></listitem>
-<listitem><para>Click on the <emphasis>pages/inputname</emphasis> page icon and then click on the <emphasis>pages/greeting</emphasis> page icon.</para></listitem>
+<listitem><para>Click on the <emphasis>pages/inputname</emphasis> page icon and then click on the <emphasis>pages/greeting</emphasis> page icon</para></listitem>
 </itemizedlist>
 <para>A transition should appear between the two icons of views.</para>
 <figure>
@@ -105,7 +107,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 </mediaobject>
 </figure>
 <itemizedlist>
-<listitem><para>Select <emphasis>File/Save</emphasis> from the menu bar.</para></listitem>
+<listitem><para>Select <emphasis>File/Save</emphasis> from the menu bar</para></listitem>
 </itemizedlist>
 </section>
 <section id="CreatingResourceFile">
@@ -165,7 +167,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 <itemizedlist>
 <listitem><para>Right click <emphasis>game</emphasis> folder</para></listitem>
 <listitem><para>Select <emphasis>New &gt; Class</emphasis></para></listitem>
-<listitem><para>Type <emphasis>NumberBean</emphasis></para> for bean name</listitem>
+<listitem><para>Type <emphasis>NumberBean</emphasis> for bean name</para></listitem>
 </itemizedlist>
 <para>A java bean is created.</para>
 <itemizedlist>
@@ -312,7 +314,7 @@ public Integer getUserNumber ()
 <title>Editing faces-config.xml File</title>
 <para>This file holds our two navigation rules and defines the backing bean used.</para>
 <itemizedlist>
-<listitem><para>Open faces-config.xml file in source mode.</para></listitem>
+<listitem><para>Open faces-config.xml file in source mode</para></listitem>
 <listitem><para>Add here one more navigation rule and a managed bean declarations that the content of the file looks like this:</para></listitem>
 </itemizedlist>
 <programlisting role="XML"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -414,8 +416,8 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </mediaobject>
 </figure>
 <itemizedlist>
-<listitem><para>Switch to Visual tab, so we can work with the editor completely in its WYSIWYG mode.</para></listitem>
-<listitem><para>Click on <emphasis>outputText</emphasis>, drag the cursor over to the editor, and drop it inside the blue box in the editor.</para></listitem>
+<listitem><para>Switch to Visual tab, so we can work with the editor completely in its WYSIWYG mode</para></listitem>
+<listitem><para>Click on <emphasis>outputText</emphasis>, drag the cursor over to the editor, and drop it inside the blue box in the editor</para></listitem>
 
 <listitem><para>Select <emphasis>value</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
 <listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
@@ -452,13 +454,13 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </mediaobject>
 </figure>
 <itemizedlist>
-<listitem><para>Switch to Source mode and insert <emphasis role="bold"><property>&lt;br/&gt;</property></emphasis> tag after <emphasis role="bold"><property>&lt;h:outputText&gt;</property></emphasis> component to make a new line.</para></listitem>
-<listitem><para>Click Save button.</para></listitem>
-<listitem><para>On the Palette Click on <emphasis>inputText</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the text.</para></listitem>
+<listitem><para>Switch to Source mode and insert <emphasis role="bold"><property>&lt;br/&gt;</property></emphasis> tag after <emphasis role="bold"><property>&lt;h:outputText&gt;</property></emphasis> component to make a new line</para></listitem>
+<listitem><para>Click Save button</para></listitem>
+<listitem><para>On the Palette Click on <emphasis>inputText</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the text</para></listitem>
 <listitem><para>Select <emphasis>value</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
 <listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
 <listitem><para>Expand <emphasis>Managed Beans &gt; NumberBean</emphasis></para></listitem>
-<listitem><para>Select &quot;userNumber&quot; value and click Ok.</para></listitem>
+<listitem><para>Select &quot;userNumber&quot; value and click Ok</para></listitem>
 <listitem><para>Switch <emphasis>Advanced</emphasis> tab</para></listitem>
 <listitem><para>Select <emphasis>id</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
 <listitem><para>Type &quot;userNumber&quot; in text field</para></listitem>
@@ -467,7 +469,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <listitem><para>Expand <emphasis>Enumeration</emphasis> and select <emphasis>true</emphasis> as a value</para></listitem>
 </itemizedlist>
 <figure>
-<title>Add required attribute</title>
+<title>Add &quot;required&quot; attribute</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/newrad14.png"/>
@@ -485,7 +487,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <itemizedlist>
 <listitem><para>Click Save button</para></listitem>
 <listitem><para>Again select Visual mode</para></listitem>
-<listitem><para>On the Palette Click on <emphasis>commandButton</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the inputText component.</para></listitem>
+<listitem><para>On the Palette Click on <emphasis>commandButton</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the inputText component</para></listitem>
 <listitem><para>In the editing dialog select <emphasis>value</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
 <listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
 <listitem><para>Expand <emphasis>Resource Bundles &gt; msg</emphasis> and select <emphasis>makeguess_button</emphasis> as a value</para></listitem>
@@ -586,7 +588,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Running the Application</title>
 <para>Everything is ready to run the application.</para>
 <itemizedlist>
-<listitem><para>Start up JBoss server by clicking on the Start icon in JBoss Server view. (If JBoss is already running, stop it by clicking on the red icon and then start it again. After the messages in the Console tabbed view stop scrolling, JBoss is available.</para></listitem>
+<listitem><para>Start up JBoss server by clicking on the Start icon in JBoss Server view. (If JBoss is already running, stop it by clicking on the red icon and then start it again. After the messages in the Console tabbed view stop scrolling, JBoss is available</para></listitem>
 <listitem><para>Click on the Red Hat run icon in the toolbar</para></listitem>
 <listitem><para>Play with the application by entering correct as well as incorrect values</para></listitem>
 </itemizedlist>
