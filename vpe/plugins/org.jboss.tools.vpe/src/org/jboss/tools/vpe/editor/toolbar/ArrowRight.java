@@ -33,11 +33,8 @@ public class ArrowRight extends Canvas{
 	}
 
 	void paintControl(PaintEvent e) {
-	     GC gc = e.gc;
-	     int x = 1;
 	     if (image != null) {
-	         gc.drawImage(image, x, 1); 
-	         x = image.getBounds().width + 5;
+	         e.gc.drawImage(image, image.getBounds().width + 5, 1); 
 	     }
 	 }
 

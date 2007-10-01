@@ -1925,25 +1925,37 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (VpeDebug.printVisualInnerDragDropEvent) {
 			System.out.print("<<<<<< canInnerDrag"); //$NON-NLS-1$
 		}
+		
 		if (innerDragInfo != null) {
 			innerDragInfo.Release();
 			innerDragInfo = null;
 		}
+		
 		boolean canDrag = false;
 		VpeVisualInnerDragInfo dragInfo = selectionBuilder.getInnerDragInfo(event);
+
 		if (dragInfo != null) {
 			Node dragNode = dragInfo.getNode();
+		
 			if (VpeDebug.printVisualInnerDragDropEvent) {
 				System.out.print(" dragNode: " + dragNode.getNodeName() + "(" + MozillaSupports.getAddress(dragNode) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
+			
 			switch (dragNode.getNodeType()) {
 			case Node.ELEMENT_NODE:
 				canDrag = visualBuilder.canInnerDrag((Element)dragNode);
+				break;
 			case Node.TEXT_NODE:
 				canDrag = visualBuilder.isTextEditable(dragNode);
+				break;
+			default:
+				// Do nothing
+				break;
 			}
+			
 			if (canDrag) {
 				VpeSourceInnerDragInfo sourceInnerDragInfo = visualBuilder.getSourceInnerDragInfo(dragInfo);
+
 				if (sourceInnerDragInfo.getNode() != null) {
 					innerDragInfo = dragInfo;
 					InnerDragBuffer.object = sourceInnerDragInfo.getNode();
@@ -1956,13 +1968,16 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 					canDrag = false;
 				}
 			} 
+			
 			if (!canDrag) {
 				dragInfo.Release();
 			}
 		}
+		
 		if (VpeDebug.printVisualInnerDragDropEvent) {
 			System.out.println("  canDrag: " + canDrag); //$NON-NLS-1$
 		}
+		
 		return canDrag;
 	}
 	
@@ -2081,6 +2096,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 //		if(s.getT()) {
 //			return new MozillaDropInfo(false, null, 0);
 //		}
+		
 		onHideTooltip();
 
 		if(dropWindow.active) {
@@ -2090,6 +2106,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				return new MozillaDropInfo(false, null, 0);
 			}
 		}
+		
 		if(mouseEvent.isAltKey()) {
 			Node visualNode = mouseEvent.getTargetNode();
 			Node sourceNode = domMapping.getNearSourceNode(visualNode);
@@ -2109,6 +2126,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				return new MozillaDropInfo(false, null, 0);
 			}
 		}
+		
 		boolean canDrop = false;
 		Node caretParent = null;
 		int caretOffset = 0;

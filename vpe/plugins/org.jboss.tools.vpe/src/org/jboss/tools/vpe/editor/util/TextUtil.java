@@ -338,13 +338,11 @@ public class TextUtil {
 	}
 
 	public static boolean isWhitespace(char sourceString) {
-		String visualString = visualText((new Character(sourceString)).toString());
 		return SPCHARS.indexOf(sourceString) != -1;
 	}
 	
 	public static boolean isWhitespaceText(String sourceString) {
 		if (sourceString != null && sourceString.length() > 0) {
-			char[] chars = sourceString.toCharArray();
 			for (int i = 0; i < sourceString.length(); i++) {
 				if (!TextUtil.isWhitespace(sourceString.charAt(i))) 
 					return false;

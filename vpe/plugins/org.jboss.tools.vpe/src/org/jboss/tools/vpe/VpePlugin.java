@@ -10,6 +10,7 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe;
 
+import org.eclipse.core.runtime.Platform;
 import org.jboss.tools.common.log.BaseUIPlugin;
 import org.jboss.tools.common.log.IPluginLog;
 import org.jboss.tools.common.reporting.ProblemReportingHelper;
@@ -23,26 +24,13 @@ public class VpePlugin extends BaseUIPlugin {
 	//The shared instance.
 	private static VpePlugin plugin;
 	//Resource bundle.
-//	private ResourceBundle resourceBundle;
 	
 	/**
 	 * The constructor.
 	 */
 	public VpePlugin() {
 		super();
-//		final String VPE_PLUGIN_RESOURCE_BUNDLE_ID
-//				= "org.jboss.tools.vpe.VpePluginResources";
 		plugin = this;
-//		try {
-//			resourceBundle
-//					= ResourceBundle.getBundle(VPE_PLUGIN_RESOURCE_BUNDLE_ID);
-//		} catch (MissingResourceException x) {
-//			LogHelper.logError(VpePlugin.PLUGIN_ID,
-//					"ResourceBundle " + VPE_PLUGIN_RESOURCE_BUNDLE_ID
-//							+ " is missing.",
-//					x);
-//			resourceBundle = null;
-//		}
 	}
 
 	/**
@@ -63,6 +51,11 @@ public class VpePlugin extends BaseUIPlugin {
 	 * Returns the shared instance.
 	 */
 	public static VpePlugin getDefault() {
+		if (plugin == null) {
+			// plugin will be initialized in constructor
+			Platform.getBundle(PLUGIN_ID);
+		}
+		
 		return plugin;
 	}
 

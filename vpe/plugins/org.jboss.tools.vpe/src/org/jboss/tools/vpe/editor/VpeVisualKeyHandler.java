@@ -780,7 +780,7 @@ public class VpeVisualKeyHandler {
 	}
 	private Node getNextFlatNode (Node node) {
 		for (Node next = FlatIterator.next(node); next != null; next = FlatIterator.next(next)) {
-			if (getVisualNode(next) != null || next.getNodeType() == Node.TEXT_NODE);
+			if (getVisualNode(next) != null || next.getNodeType() == Node.TEXT_NODE)
 				return next;
 		}
 		return null;
