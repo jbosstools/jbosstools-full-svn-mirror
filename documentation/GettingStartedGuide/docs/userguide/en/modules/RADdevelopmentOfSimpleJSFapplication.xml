@@ -28,6 +28,10 @@ JSF application and then run the application from inside Red Hat Developer Studi
         </imageobject>
 </mediaobject>
 </figure>
+
+<para>Put &quot;GuessNumber&quot; as a project name, in &quot;JSF Environment&quot; drop down list choose JSF 1.2.</para>
+<para>Leave everything else as it is and click <emphasis><property>Finish</property></emphasis>.</para>
+<para>The project will appear in Project Explorer and Web Projects Views. As you can see Red Had Developer Studio has created for you the whole skeleton for the project with all needed libraries, faces-config.xml and web.xml files.</para>
 </para></listitem>
 <listitem><para>Put &quot;GuessNumber&quot; as a project name, in &quot;JSF Environment&quot; drop down list choose JSF 1.2.</para></listitem>
 <listitem><para>Leave everything else as it is and click Finish</para></listitem>
@@ -46,7 +50,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <section id="CreatingJSPPages">
 <?dbhtml filename="CreatingJSPPages.html"?>
 <title>Creating JSP Pages</title>
-<para>Our application has two pages. The first page is inputnumber.jsp. It prompts you to enter a number. If the guess is incorrect, the same page will be redisplayed with a message indicating whether a smaller or a larger number should be tried. The second page is success.jsp. This page will be shown after you guess the number correctly. From this page you also have the option to play the game again.</para>
+<para>The application has two pages. The first page is inputnumber.jsp. It prompts you to enter a number. If the guess is incorrect, the same page will be redisplayed with a message indicating whether a smaller or a larger number should be tried. The second page is success.jsp. This page will be shown after you guess the number correctly. From this page you also have the option to play the game again.</para>
 
 <para>On the first page inputnumber.jsp you will enter a number.</para>
 <itemizedlist>
@@ -69,7 +73,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <listitem><para>In the same way create another jsf view. Type &quot;pages/success&quot; as the value for &quot;From-view-id&quot;</para></listitem>
 <listitem><para>Select <emphasis>File &gt; Save</emphasis></para></listitem>
 </itemizedlist>
-<para>On the diagram you will see the two created views.</para>
+<para>On the diagram you will see two created views.</para>
 <figure>
 <title>New Views</title>
 <mediaobject> 
@@ -365,7 +369,7 @@ jsp</emphasis> icon</para></listitem>
 </itemizedlist>
 <para>The Visual Page Editor will open in a screen split between source code along the top and
 a WYSIWIG view along the bottom. You can see that some JSF code will be already generated as we choose a template when creating the page.</para>
-<para>At the beginning we will create a <emphasis role="bold"><property>&lt;h:form&gt;</property></emphasis> component where will put all others components.</para>
+<para>At the beginning it's necessary to create a <emphasis role="bold"><property>&lt;h:form&gt;</property></emphasis> component where all others components are put.</para>
 <itemizedlist>
 <listitem><para>Place the mouse cursor inside <emphasis role="bold"><property>&lt;f:view&gt;</property></emphasis><emphasis role="bold"><property>&lt;/f:view&gt;</property></emphasis></para></listitem>
 <listitem><para>Go to JBoss Tools Palette and expand JSF HTML folder by selecting it</para></listitem>
@@ -389,9 +393,9 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </mediaobject>
 </figure>
 </para></listitem>
-<listitem><para>Type &quot;inputNumbers&quot; and click Finish</para></listitem>
+<listitem><para>Type &quot;inputNumbers&quot; and click <emphasis><property>Finish</property></emphasis></para></listitem>
 </itemizedlist>
-<para>In source view you can see the declaration of form.</para>
+<para>In source view you can see the declaration of a form.</para>
 <figure>
 <title>Created form</title>
 <mediaobject> 
@@ -402,7 +406,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </figure>
 <para>First let&apos;s declare the properties file in inputnumber.jsp page using the loadBundle JSF tag.</para>
 <itemizedlist>
-<listitem><para>Put this declaration in the top of the page, right after the first two lines:</para></listitem>
+<listitem><para>Put this declaration on the top of a page, right after the first two lines:</para></listitem>
 </itemizedlist>
 <programlisting role="XML"><![CDATA[<f:loadBundle basename="game.messages" var="msg"/>
 ]]></programlisting>
@@ -422,7 +426,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <listitem><para>Select <emphasis>value</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
 <listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
 </itemizedlist>
-<para>RHDS will nicely propose us to choose within available values:</para>
+<para>RHDS will nicely propose you to choose within available values:</para>
 <figure>
 <title>Choose Value</title>
 <mediaobject> 
@@ -433,7 +437,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </figure>
 <itemizedlist>
 <listitem><para>Expand <emphasis>Resource Bundles &gt; msg</emphasis></para></listitem>
-<listitem><para>Select &quot;how_to_play&quot; value and click Ok. Then click Finish
+<listitem><para>Select &quot;how_to_play&quot; value and click Ok. Then click <emphasis><property>Finish</property></emphasis>
 <figure>
 <title>Selecting Value</title>
 <mediaobject> 
@@ -454,6 +458,9 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </mediaobject>
 </figure>
 <itemizedlist>
+<listitem><para>Switch to Source mode and insert <emphasis role="bold"><property>&lt;br/&gt;</property></emphasis> tag after <emphasis role="bold"><property>&lt;h:outputText&gt;</property></emphasis> component to make a new line.</para></listitem>
+<listitem><para>Click <emphasis><property>Save</property></emphasis> button.</para></listitem>
+<listitem><para>On the Palette Click on <emphasis>inputText</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the text.</para></listitem>
 <listitem><para>Switch to Source mode and insert <emphasis role="bold"><property>&lt;br/&gt;</property></emphasis> tag after <emphasis role="bold"><property>&lt;h:outputText&gt;</property></emphasis> component to make a new line</para></listitem>
 <listitem><para>Click Save button</para></listitem>
 <listitem><para>On the Palette Click on <emphasis>inputText</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the text</para></listitem>
@@ -477,7 +484,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </mediaobject>
 </figure>
 <itemizedlist>
-<listitem><para>Click Ok, then click Finish</para></listitem>
+<listitem><para>Click <emphasis><property>Ok</property></emphasis>, then click <emphasis><property>Finish</property></emphasis></para></listitem>
 <listitem><para>Go to Source mode</para></listitem>
 <listitem><para>Add the validation attribute to <emphasis role="bold"><property>&lt;f:validateLongRange&gt;</property></emphasis> for your input validation</para></listitem></itemizedlist>
 <programlisting role="XML"><![CDATA[<h:inputText id="userNumber" value="#{NumberBean.userNumber}" required="true">
@@ -485,8 +492,9 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </h:inputText>
 ]]></programlisting>
 <itemizedlist>
-<listitem><para>Click Save button</para></listitem>
+<listitem><para>Click <emphasis><property>Save</property></emphasis> button</para></listitem>
 <listitem><para>Again select Visual mode</para></listitem>
+<listitem><para>On the Palette, click on <emphasis>commandButton</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the inputText component.</para></listitem>
 <listitem><para>On the Palette Click on <emphasis>commandButton</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the inputText component</para></listitem>
 <listitem><para>In the editing dialog select <emphasis>value</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
 <listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
@@ -522,7 +530,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <section id="EditingSuccessJsp">
 <?dbhtml filename="EditingSuccessJsp.html"?>
 <title>Editing success.jsp page</title>
-<para>In the same way like inputnumber.jsp edit success.jsp page. Its whole source should be the next:</para>
+<para>In the same way like inputnumber.jsp, edit success.jsp page. Its whole source should be the next:</para>
 <programlisting role="XML"><![CDATA[<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
 <f:loadBundle basename="game.messages" var="msg"/>
@@ -549,9 +557,9 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </mediaobject>
 </figure>
 <para>This page, success.jsp, is shown if you correctly guessed the number. The <emphasis role="bold"><property>&lt;h:outputFormat&gt;</property></emphasis> tag will get the value of success_text from the properties file. The {0} in success_text will be substituted for by the value of the value attribute within the <emphasis role="bold"><property>&lt;f:param&gt;</property></emphasis> tag during runtime.</para>
-<para>At the end, we have a button which allows us to replay the game. The action value references a backing bean method. In this case, the method only terminates the current session so that when we are shown the first page, the input text box is clear and a new random number is generated.</para>
+<para>At the end, you have a button which allows you to replay the game. The action value references a backing bean method. In this case, the method only terminates the current session so that when you are shown the first page, the input text box is clear and a new random number is generated.</para>
 <itemizedlist>
-<listitem><para>Switch to Preview mode to see how this page will look in browser:</para></listitem>
+<listitem><para>Switch to Preview mode to see how this page will look in a browser:</para></listitem>
 </itemizedlist>
 <figure>
 <title>success.jsp in Preview mode</title>
@@ -570,8 +578,8 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <itemizedlist>
 <listitem><para>Right click <emphasis>WebContent &gt; New &gt; JSP File</emphasis></para></listitem>
 <listitem><para>Type &quot;index&quot; for name field and choose JSPRedirect as a template</para></listitem>
-<listitem><para>Click Finish</para></listitem>
-<listitem><para>The source for this page should be like follows:</para></listitem>
+<listitem><para>Click <emphasis><property>Finish</property></emphasis></para></listitem>
+<listitem><para>The source for this page should be like the following:</para></listitem>
 </itemizedlist>
 <programlisting role="XML"><![CDATA[<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
@@ -581,13 +589,14 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </html>
 
 ]]></programlisting>
-<para>Note the <emphasis>.jsf</emphasis> extension of page. It means that we trigger the JSF controller servlet to handle the page according the servlet mapping in faces-config.xml file.</para>
+<para>Note the <emphasis>.jsf</emphasis> extension of a page. It means that we trigger the JSF controller servlet to handle the page according the servlet mapping in faces-config.xml file.</para>
 </section>
 <section id="RunningTheApplication33">
 <?dbhtml filename="RunningTheApplication33.html"?>
 <title>Running the Application</title>
 <para>Everything is ready to run the application.</para>
 <itemizedlist>
+<listitem><para>Start up JBoss server by clicking on the Start icon in JBoss Server view. (If JBoss is already running, stop it by clicking on the red icon and then start it again. After the messages in the Console tabbed view stops scrolling, JBoss is available.</para></listitem>
 <listitem><para>Start up JBoss server by clicking on the Start icon in JBoss Server view. (If JBoss is already running, stop it by clicking on the red icon and then start it again. After the messages in the Console tabbed view stop scrolling, JBoss is available</para></listitem>
 <listitem><para>Click on the Red Hat run icon in the toolbar</para></listitem>
 <listitem><para>Play with the application by entering correct as well as incorrect values</para></listitem>
@@ -610,7 +619,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </figure>
 
 <figure>
-<title>After you enter a guess, the application tells the user if a smaller or a larger number should be tried</title>
+<title>After you enter a guess, the application tells you whether a smaller or a larger number should be tried</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/default.png"/>
@@ -619,7 +628,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </figure>
 
 <figure>
-<title>You guess correctly</title>
+<title>Your guess is correct</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/default.png"/>
