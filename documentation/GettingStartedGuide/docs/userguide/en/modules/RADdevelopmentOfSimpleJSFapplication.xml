@@ -10,7 +10,7 @@
     </keywordset>
   </chapterinfo>
 	<title>RAD development of a simple JSF application</title>
-        <para>In this chapter you will see how to create a simple JSF application being based on <property>&quot;RAD&quot;</property> philosophy. We will create the familiar Guess Number application. The scenario is as follows. A user is asked to guess a number between 0 and 100. If the guess is correct, a success page is displayed with a link to play again. If the guess is incorrect, a message is printed notifying the user that a smaller or a larger number should be entered and the game continues.</para>
+        <para>In this chapter you will see how to create a simple JSF application being based on <property>&quot;RAD&quot;</property> philosophy. We will create the familiar Guess Number application. The scenario is as follows. You are asked to guess a number between 0 and 100. If the guess is correct, a success page is displayed with a link to play again. If the guess is incorrect, a message is printed notifying the user that a smaller or a larger number should be entered and the game continues.</para>
       <para>We&apos;ll show you how to create such an application from scratch, along the way demonstrating powerful features of Red Hat Developer Studio such as project templating, Visual Page Editor, code completion and others. You will design the
 JSF application and then run the application from inside Red Hat Developer Studio using the bundled JBoss server.</para>
 
@@ -44,9 +44,9 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <section id="CreatingJSPPages">
 <?dbhtml filename="CreatingJSPPages.html"?>
 <title>Creating JSP Pages</title>
-<para>Our application has two pages. The first page is inputnumber.jsp. It prompts the user to enter a number. If the guess is incorrect, the same page will be redisplayed with a message indicating whether a smaller or a larger number should be tried. The second page is success.jsp. This page will be shown after the user guesses the number correctly. From this page you also have the option to play the game again.</para>
+<para>Our application has two pages. The first page is inputnumber.jsp. It prompts you to enter a number. If the guess is incorrect, the same page will be redisplayed with a message indicating whether a smaller or a larger number should be tried. The second page is success.jsp. This page will be shown after you guess the number correctly. From this page you also have the option to play the game again.</para>
 
-<para>On the first page inputnumber.jsp user will enter a number.</para>
+<para>On the first page inputnumber.jsp you will enter a number.</para>
 <itemizedlist>
 <listitem><para>Open faces-config.xml file.</para></listitem>
 <listitem><para>Right click anywhere on the diagram mode.</para></listitem>
@@ -56,14 +56,14 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>Create New View</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad3.png"/>
+            <imagedata  fileref="images/newrad3.png"/>
         </imageobject>
 </mediaobject>
 </figure>
 <itemizedlist>
 
 <listitem><para>Type <emphasis>pages/inputname</emphasis> as the value for &quot;From-view-id&quot;</para></listitem>
-<listitem><para>Leave everything else as is and click Finish.</para></listitem>
+<listitem><para>Leave everything else as is and click <emphasis><property>Finish</property></emphasis>.</para></listitem>
 <listitem><para>In the same way create another jsf view. Type &quot;pages/success&quot; as the value for &quot;From-view-id&quot;</para></listitem>
 <listitem><para>Select <emphasis>File &gt; Save</emphasis></para></listitem>
 </itemizedlist>
@@ -72,7 +72,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>New Views</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad4.png"/>
+            <imagedata  fileref="images/newrad4.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -88,7 +88,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>Create connection</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad5.png"/>
+            <imagedata  fileref="images/newrad5.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -100,7 +100,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>Created connection</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad6.png"/>
+            <imagedata  fileref="images/newrad6.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -111,7 +111,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <section id="CreatingResourceFile">
 <?dbhtml filename="CreatingResourceFile.html"?>
 <title>Creating Resource File</title>
-<para>Red Hat Developer Studio allows to quickly create a resource file. Using this feature you can collect text messages in one central place. A resource file is just a file with a <emphasis>.properties</emphasis> extension. The messages stored in resource file can be displayed to the user on a Web page during application execution. </para>
+<para>Red Hat Developer Studio allows to quickly create a resource file. Using this feature you can collect text messages in one central place. A resource file is just a file with a <emphasis>.properties</emphasis> extension. The messages stored in resource file can be displayed to you on a Web page during application execution. </para>
 <para>With resource file first, you don&apos;t hard code anything into the JSP pages. And second, it makes it easier to translate your application to other languages. All you have to do is to translate all your messages to the other language and save them in a new properties file with a name that ends with the appropriate ISO-639 language code.</para>
 <para>It is a good idea to keep your resources inside the <emphasis>JavaSource</emphasis> folder, where you keep your .java files. Every time you build the project, all <emphasis>.properties</emphasis> files will then be copied to the <emphasis>classes</emphasis> folder by default.</para>
 <itemizedlist>
@@ -128,7 +128,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>messages.properties file</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad62.png"/>
+            <imagedata  fileref="images/newrad62.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -152,7 +152,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 <title>Properties are added</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad63.png"/>
+            <imagedata  fileref="images/newrad63.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -169,7 +169,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 </itemizedlist>
 <para>A java bean is created.</para>
 <itemizedlist>
-<listitem><para>Declare the variable of user entered number:</para></listitem>
+<listitem><para>Declare the variable of your entered number:</para></listitem>
 </itemizedlist>
 <programlisting role="JAVA"><![CDATA[Integer userNumber;
 ]]></programlisting>
@@ -182,7 +182,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 <title>Generate Getters and Setters</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad64.png"/>
+            <imagedata  fileref="images/newrad64.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -372,7 +372,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Insert h:form</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad7.png"/>
+            <imagedata  fileref="images/newrad7.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -382,7 +382,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Define id of form</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad8.png"/>
+            <imagedata  fileref="images/newrad8.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -394,7 +394,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Created form</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad9.png"/>
+            <imagedata  fileref="images/newrad9.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -409,7 +409,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Code assist</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad10.png"/>
+            <imagedata  fileref="images/newrad10.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -425,7 +425,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Choose Value</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad11.png"/>
+            <imagedata  fileref="images/newrad11.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -436,7 +436,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Selecting Value</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad12.png"/>
+            <imagedata  fileref="images/newrad12.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -447,7 +447,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Created outputText component</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad13.png"/>
+            <imagedata  fileref="images/newrad13.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -470,14 +470,14 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Add required attribute</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad14.png"/>
+            <imagedata  fileref="images/newrad14.png"/>
         </imageobject>
 </mediaobject>
 </figure>
 <itemizedlist>
 <listitem><para>Click Ok, then click Finish</para></listitem>
 <listitem><para>Go to Source mode</para></listitem>
-<listitem><para>Add the validation attribute to <emphasis role="bold"><property>&lt;f:validateLongRange&gt;</property></emphasis> for user input validation</para></listitem></itemizedlist>
+<listitem><para>Add the validation attribute to <emphasis role="bold"><property>&lt;f:validateLongRange&gt;</property></emphasis> for your input validation</para></listitem></itemizedlist>
 <programlisting role="XML"><![CDATA[<h:inputText id="userNumber" value="#{NumberBean.userNumber}" required="true">
            <f:validateLongRange minimum="0" maximum="100"/>
 </h:inputText>
@@ -542,11 +542,11 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Code Assist for &lt;f:param&gt;</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad15.png"/>
+            <imagedata  fileref="images/newrad15.png"/>
         </imageobject>
 </mediaobject>
 </figure>
-<para>This page, success.jsp, is shown if the user correctly guessed the number. The <emphasis role="bold"><property>&lt;h:outputFormat&gt;</property></emphasis> tag will get the value of success_text from the properties file. The {0} in success_text will be substituted for by the value of the value attribute within the <emphasis role="bold"><property>&lt;f:param&gt;</property></emphasis> tag during runtime.</para>
+<para>This page, success.jsp, is shown if you correctly guessed the number. The <emphasis role="bold"><property>&lt;h:outputFormat&gt;</property></emphasis> tag will get the value of success_text from the properties file. The {0} in success_text will be substituted for by the value of the value attribute within the <emphasis role="bold"><property>&lt;f:param&gt;</property></emphasis> tag during runtime.</para>
 <para>At the end, we have a button which allows us to replay the game. The action value references a backing bean method. In this case, the method only terminates the current session so that when we are shown the first page, the input text box is clear and a new random number is generated.</para>
 <itemizedlist>
 <listitem><para>Switch to Preview mode to see how this page will look in browser:</para></listitem>
@@ -555,7 +555,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>success.jsp in Preview mode</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/newrad16.png"/>
+            <imagedata  fileref="images/newrad16.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -591,36 +591,36 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <listitem><para>Play with the application by entering correct as well as incorrect values</para></listitem>
 </itemizedlist>
 <figure>
-<title>A user is asked to enter a number between 0 and 100</title>
+<title>You are asked to enter a number between 0 and 100</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/default.png"/>
+            <imagedata  fileref="images/default.png"/>
         </imageobject>
 </mediaobject>
 </figure>
 <figure>
-<title>User input is validated and an error message is displayed if invalid input was entered</title>
+<title>Your input is validated and an error message is displayed if invalid input was entered</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/default.png"/>
-        </imageobject>
-</mediaobject>
-</figure>
-
-<figure>
-<title>After the user enters a guess, the application tells the user if a smaller or a larger number should be tried</title>
-<mediaobject> 
-        <imageobject>
-            <imagedata scale="80" fileref="images/default.png"/>
+            <imagedata  fileref="images/default.png"/>
         </imageobject>
 </mediaobject>
 </figure>
 
 <figure>
-<title>A user guesses correctly</title>
+<title>After you enter a guess, the application tells the user if a smaller or a larger number should be tried</title>
 <mediaobject> 
         <imageobject>
-            <imagedata scale="80" fileref="images/default.png"/>
+            <imagedata  fileref="images/default.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+<figure>
+<title>You guess correctly</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata  fileref="images/default.png"/>
         </imageobject>
 </mediaobject>
 </figure>

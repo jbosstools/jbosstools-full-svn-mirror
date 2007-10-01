@@ -18,7 +18,7 @@
       process engine are two production-ready open source products supported by Red Hat. It is 
       very easy to incorporate rules and business processes into a Seam web application using the 
       Red Hat Developer Studio. In this section, we further re-factor the CRUD application we
-       already have and add support for an &quot;order management&quot; process. The user scenario is to 
+       already have and add support for an &quot;order management&quot; process.User scenario is to 
        simulate the following process and rules:</para>
        <itemizedlist>
        <listitem>The site administrator logs in and sees a list of outstanding orders</listitem>
