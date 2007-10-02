@@ -21,3 +21,4 @@ Export-Package: org.jboss.ide.eclipse.archives.ui,
  org.jboss.ide.eclipse.archives.ui.views,
  org.jboss.ide.eclipse.archives.ui.wizards,
  org.jboss.ide.eclipse.archives.ui.wizards.pages
+Bundle-Vendor: JBoss, a division of Red Hat
