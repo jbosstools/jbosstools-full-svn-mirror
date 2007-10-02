@@ -20,11 +20,11 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.jst.jsp.core.internal.contentmodel.TaglibController;
-import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TLDCMDocumentManager;
 import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TaglibTracker;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.wst.html.core.internal.contentmodel.HTMLElementDeclaration;
+import org.eclipse.wst.html.core.internal.provisional.HTMLCMProperties;
 import org.eclipse.wst.html.ui.internal.HTMLUIPlugin;
 import org.eclipse.wst.html.ui.internal.contentassist.HTMLContentAssistProcessor;
 import org.eclipse.wst.html.ui.internal.preferences.HTMLUIPreferenceNames;
@@ -32,13 +32,19 @@ import org.eclipse.wst.sse.core.internal.provisional.text.IStructuredDocumentReg
 import org.eclipse.wst.sse.core.internal.provisional.text.ITextRegion;
 import org.eclipse.wst.sse.core.internal.provisional.text.ITextRegionList;
 import org.eclipse.wst.xml.core.internal.contentmodel.CMAttributeDeclaration;
+import org.eclipse.wst.xml.core.internal.contentmodel.CMDocument;
 import org.eclipse.wst.xml.core.internal.contentmodel.CMElementDeclaration;
 import org.eclipse.wst.xml.core.internal.contentmodel.CMNamedNodeMap;
+import org.eclipse.wst.xml.core.internal.contentmodel.modelquery.ModelQuery;
+import org.eclipse.wst.xml.core.internal.contentmodel.modelquery.ModelQueryAction;
 import org.eclipse.wst.xml.core.internal.contentmodel.util.DOMNamespaceHelper;
 import org.eclipse.wst.xml.core.internal.document.AttrImpl;
+import org.eclipse.wst.xml.core.internal.modelquery.ModelQueryUtil;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.eclipse.wst.xml.core.internal.regions.DOMRegionContext;
+import org.eclipse.wst.xml.core.internal.ssemodelquery.ModelQueryAdapter;
 import org.eclipse.wst.xml.ui.internal.contentassist.ContentAssistRequest;
+import org.eclipse.wst.xml.ui.internal.contentassist.NonValidatingModelQueryAction;
 import org.eclipse.wst.xml.ui.internal.contentassist.XMLRelevanceConstants;
 import org.eclipse.wst.xml.ui.internal.editor.XMLEditorPluginImageHelper;
 import org.eclipse.wst.xml.ui.internal.editor.XMLEditorPluginImages;
@@ -56,6 +62,8 @@ import org.jboss.tools.common.model.util.ELParser;
 import org.jboss.tools.common.reporting.ProblemReportingHelper;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.editor.TLDRegisterHelper;
+import org.jboss.tools.jst.jsp.jspeditor.TLDEditorDocumentManager;
+import org.jboss.tools.jst.jsp.jspeditor.XHTMLTaglibController;
 import org.jboss.tools.jst.jsp.outline.ValueHelper;
 import org.jboss.tools.jst.jsp.support.kb.FaceletsJsfCResource;
 import org.jboss.tools.jst.jsp.support.kb.WTPKbdBeanMethodResource;
@@ -69,6 +77,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author Igels
@@ -398,6 +407,11 @@ public class RedHatHtmlContentAssistProcessor extends HTMLContentAssistProcessor
 		} catch(Exception e) {
 			JspEditorPlugin.getPluginLog().logError(e);
 		}
+		
+		if (kbProposals.size() == 0) {
+			
+		}
+		
 		for (Iterator iter = kbProposals.iterator(); iter.hasNext();) {
 			KbProposal kbProposal = (KbProposal) iter.next();
 			if(ignoreProposal(kbProposal)) {
@@ -481,7 +495,7 @@ public class RedHatHtmlContentAssistProcessor extends HTMLContentAssistProcessor
 
 	public void updateActiveContentAssistProcessor(IDocument document) {
 		if(tldManager==null) {
-			TLDCMDocumentManager manager = TaglibController.getTLDCMDocumentManager(document);
+			TLDEditorDocumentManager manager = XHTMLTaglibController.getTLDCMDocumentManager(document);
 			if (manager != null) {
 				List list = manager.getTaglibTrackers();
 				for(int i=0; i<list.size(); i++) {
@@ -539,4 +553,93 @@ public class RedHatHtmlContentAssistProcessor extends HTMLContentAssistProcessor
 		jspActiveCAP = new JSPActiveContentAssistProcessor();
 		jspActiveCAP.init();
 	}
+	
+	protected List getAvailableChildrenAtIndex(Element parent, int index, int validityChecking) {
+		List list = new ArrayList();
+		List additionalElements = getAdditionalChildren(new ArrayList(), parent, index);
+		for (int i = 0; i < additionalElements.size(); i++) {
+			ModelQueryAction insertAction = new NonValidatingModelQueryAction((CMElementDeclaration) additionalElements.get(i), ModelQueryAction.INSERT, 0, parent.getChildNodes().getLength(), null);
+			list.add(insertAction);
+		}
+
+		// add allowed children of implicit tags that don't already exist
+		NodeList children = parent.getChildNodes();
+		List childNames = new ArrayList();
+		if (children != null) {
+			for (int i = 0; i < children.getLength(); i++) {
+				Node child = children.item(i);
+				if (child.getNodeType() == Node.ELEMENT_NODE)
+					childNames.add(child.getNodeName().toLowerCase());
+			}
+		}
+		List allActions = new ArrayList();
+		Iterator iterator = list.iterator();
+		ModelQuery modelQuery = ModelQueryUtil.getModelQuery(parent.getOwnerDocument());
+		while (iterator.hasNext()) {
+			ModelQueryAction action = (ModelQueryAction) iterator.next();
+			allActions.add(action);
+			if (action.getCMNode() instanceof HTMLElementDeclaration) {
+				HTMLElementDeclaration ed = (HTMLElementDeclaration) action.getCMNode();
+				String ommission = (String) ed.getProperty(HTMLCMProperties.OMIT_TYPE);
+				if (!childNames.contains(ed.getNodeName().toLowerCase()) && ((ommission != null) && (ommission.equals(HTMLCMProperties.Values.OMIT_BOTH)))) {
+					List implicitValidActions = new ArrayList();
+					modelQuery.getInsertActions(parent, ed, 0, ModelQuery.INCLUDE_CHILD_NODES, ModelQuery.VALIDITY_NONE, implicitValidActions);
+					if (implicitValidActions != null) {
+						Iterator implicitValidActionsIterator = implicitValidActions.iterator();
+						while (implicitValidActionsIterator.hasNext()) {
+							ModelQueryAction insertAction = new NonValidatingModelQueryAction(((ModelQueryAction) implicitValidActionsIterator.next()).getCMNode(), ModelQueryAction.INSERT, 0, parent.getChildNodes().getLength(), null);
+							allActions.add(insertAction);
+						}
+					}
+				}
+			}
+		}
+		return allActions;
+	}
+	
+	private List getAdditionalChildren(List elementDecls, Node node, int childIndex) {
+		if (node instanceof IDOMNode) {
+			/*
+			 * find the location of the intended insertion as it will give us
+			 * the correct offset for checking position dependent CMDocuments
+			 */
+			int textInsertionOffset = 0;
+			NodeList children = node.getChildNodes();
+			if (children.getLength() >= childIndex && childIndex >= 0) {
+				Node nodeAlreadyAtIndex = children.item(childIndex);
+				if (nodeAlreadyAtIndex instanceof IDOMNode)
+					textInsertionOffset = ((IDOMNode) nodeAlreadyAtIndex).getEndOffset();
+			}
+			else {
+				textInsertionOffset = ((IDOMNode) node).getStartOffset();
+			}
+			TLDEditorDocumentManager mgr = XHTMLTaglibController.getTLDCMDocumentManager(((IDOMNode) node).getStructuredDocument());
+			if (mgr != null) {
+				List moreCMDocuments = mgr.getCMDocumentTrackers(textInsertionOffset);
+				if (moreCMDocuments != null) {
+					for (int i = 0; i < moreCMDocuments.size(); i++) {
+						CMDocument doc = (CMDocument) moreCMDocuments.get(i);
+						CMNamedNodeMap elements = doc.getElements();
+						if (elements != null) {
+							for (int j = 0; j < elements.getLength(); j++) {
+								CMElementDeclaration ed = (CMElementDeclaration) elements.item(j);
+								elementDecls.add(ed);
+							}
+						}
+					}
+				}
+			}
+
+			// get position dependent CMDocuments and insert their tags as
+			// proposals
+
+			ModelQueryAdapter mqAdapter = null;
+			if (node.getNodeType() == Node.DOCUMENT_NODE)
+				mqAdapter = (ModelQueryAdapter) ((IDOMNode) node).getAdapterFor(ModelQueryAdapter.class);
+			else
+				mqAdapter = (ModelQueryAdapter) ((IDOMNode) node.getOwnerDocument()).getAdapterFor(ModelQueryAdapter.class);
+		}
+		return elementDecls;
+	}
+
 }
