@@ -355,7 +355,7 @@ public class SimpleAction {
 <p><b>Hello, #{simpleAction.value}</b></p> 
 ]]></programlisting>
 
-    <para>Finally, on the web page, we add a boolean selection box component. It is bound to the XXXX property on the backend component.</para>
+    <para>Finally, on the web page, we add a boolean selection box component. It is bound to the <emphasis><property>convertToCap</property></emphasis> property on the backend component.</para>
     
     <programlisting role="XML"><![CDATA[
 <h:selectBooleanCheckbox title="convertToCap"
