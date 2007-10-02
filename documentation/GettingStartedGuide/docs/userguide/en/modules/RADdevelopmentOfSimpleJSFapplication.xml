@@ -117,17 +117,17 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <section id="CreatingResourceFile">
 <?dbhtml filename="CreatingResourceFile.html"?>
 <title>Creating Resource File</title>
-<para>Red Hat Developer Studio allows to quickly create a resource file. Using this feature you can collect text messages in one central place. A resource file is just a file with a <emphasis>.properties</emphasis> extension. The messages stored in resource file can be displayed to you on a Web page during application execution. </para>
+<para>Red Hat Developer Studio allows to  create quickly a resource file. Using this feature you can collect text messages in one central place. A resource file is just a file with a <emphasis>.properties</emphasis> extension. The messages stored in resource file can be displayed to you on a Web page during application execution. </para>
 <para>With resource file first, you don&apos;t hard code anything into the JSP pages. And second, it makes it easier to translate your application to other languages. All you have to do is to translate all your messages to the other language and save them in a new properties file with a name that ends with the appropriate ISO-639 language code.</para>
 <para>It is a good idea to keep your resources inside the <emphasis>JavaSource</emphasis> folder, where you keep your .java files. Every time you build the project, all <emphasis>.properties</emphasis> files will then be copied to the <emphasis>classes</emphasis> folder by default.</para>
 <itemizedlist>
 <listitem><para>Right click <emphasis>JavaSource</emphasis> folder and select <emphasis>New &gt; Folder</emphasis></para></listitem>
-<listitem><para>Type &quot;game&quot; for Folder name and click Finish</para></listitem>
+<listitem><para>Type &quot;game&quot; for Folder name and click <emphasis><property>Finish</property></emphasis></para></listitem>
 </itemizedlist>
 <para>We will store in this folder our resource file and java bean.</para>
 <itemizedlist>
 <listitem><para>Right click game folder and select <emphasis>New &gt; Properties File</emphasis></para></listitem>
-<listitem><para>Type <emphasis>messages</emphasis> as the value for <emphasis>name</emphasis> attribute and click Finish</para></listitem>
+<listitem><para>Type <emphasis>messages</emphasis> as the value for <emphasis>name</emphasis> attribute and click <emphasis><property>Finish</property></emphasis></para></listitem>
 </itemizedlist>
 <para>Red Hat Developer Studio will automatically open messages.properties file for editing.</para>
 <figure>
@@ -141,7 +141,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <itemizedlist>
 <listitem><para>Click <emphasis>Add</emphasis> button</para></listitem>
 <listitem><para>Type <emphasis role="italic"><property>how_to_play</property></emphasis> for &quot;name&quot; and <emphasis role="italic"><property>Please pick a number between 0 and 100.</property></emphasis> for value</para></listitem>
-<listitem><para>Click Finish</para></listitem>
+<listitem><para>Click <emphasis><property>Finish</property></emphasis></para></listitem>
 <listitem><para>In such a way add the next properties:</para></listitem>
 </itemizedlist>
 <programlisting role="JAVA"><![CDATA[makeguess_button=Make Guess
@@ -183,7 +183,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 <itemizedlist>
 <listitem><para>Right click NumberBean.java in Package Explorer</para></listitem>
 <listitem><para>Select <emphasis>Source &gt; Generate Getters and Setters...</emphasis></para></listitem>
-<listitem><para>Check <emphasis>userNumber</emphasis> box and click OK
+<listitem><para>Check <emphasis>userNumber</emphasis> box and click <emphasis><property>OK</property></emphasis>
 <figure>
 <title>Generate Getters and Setters</title>
 <mediaobject> 
@@ -316,9 +316,9 @@ public Integer getUserNumber ()
 <section id="EditingFacesConfig">
 <?dbhtml filename="EditingFacesConfig.html"?>
 <title>Editing faces-config.xml File</title>
-<para>This file holds our two navigation rules and defines the backing bean used.</para>
+<para>This file holds two navigation rules and defines the backing bean used.</para>
 <itemizedlist>
-<listitem><para>Open faces-config.xml file in source mode</para></listitem>
+<listitem><para>Open faces-config.xml file in a source mode</para></listitem>
 <listitem><para>Add here one more navigation rule and a managed bean declarations that the content of the file looks like this:</para></listitem>
 </itemizedlist>
 <programlisting role="XML"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -420,7 +420,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </mediaobject>
 </figure>
 <itemizedlist>
-<listitem><para>Switch to Visual tab, so we can work with the editor completely in its WYSIWYG mode</para></listitem>
+<listitem><para>Switch to Visual tab, so it could be possible to work with the editor completely in its WYSIWYG mode</para></listitem>
 <listitem><para>Click on <emphasis>outputText</emphasis>, drag the cursor over to the editor, and drop it inside the blue box in the editor</para></listitem>
 
 <listitem><para>Select <emphasis>value</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
@@ -437,7 +437,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </figure>
 <itemizedlist>
 <listitem><para>Expand <emphasis>Resource Bundles &gt; msg</emphasis></para></listitem>
-<listitem><para>Select &quot;how_to_play&quot; value and click Ok. Then click <emphasis><property>Finish</property></emphasis>
+<listitem><para>Select &quot;how_to_play&quot; value and click <emphasis><property>Ok</property></emphasis>. Then click <emphasis><property>Finish</property></emphasis>
 <figure>
 <title>Selecting Value</title>
 <mediaobject> 
@@ -460,10 +460,10 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <itemizedlist>
 <listitem><para>Switch to Source mode and insert <emphasis role="bold"><property>&lt;br/&gt;</property></emphasis> tag after <emphasis role="bold"><property>&lt;h:outputText&gt;</property></emphasis> component to make a new line.</para></listitem>
 <listitem><para>Click <emphasis><property>Save</property></emphasis> button.</para></listitem>
-<listitem><para>On the Palette Click on <emphasis>inputText</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the text.</para></listitem>
-<listitem><para>Switch to Source mode and insert <emphasis role="bold"><property>&lt;br/&gt;</property></emphasis> tag after <emphasis role="bold"><property>&lt;h:outputText&gt;</property></emphasis> component to make a new line</para></listitem>
-<listitem><para>Click Save button</para></listitem>
-<listitem><para>On the Palette Click on <emphasis>inputText</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the text</para></listitem>
+<listitem><para>On the Palette click on <emphasis>inputText</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the text.</para></listitem>
+<listitem><para>Switch to a Source mode and insert <emphasis role="bold"><property>&lt;br/&gt;</property></emphasis> tag after <emphasis role="bold"><property>&lt;h:outputText&gt;</property></emphasis> component to make a new line</para></listitem>
+<listitem><para>Click <emphasis><property>Save</property></emphasis> button</para></listitem>
+<listitem><para>On the Palette click on <emphasis>inputText</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the text</para></listitem>
 <listitem><para>Select <emphasis>value</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
 <listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
 <listitem><para>Expand <emphasis>Managed Beans &gt; NumberBean</emphasis></para></listitem>
@@ -495,14 +495,14 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <listitem><para>Click <emphasis><property>Save</property></emphasis> button</para></listitem>
 <listitem><para>Again select Visual mode</para></listitem>
 <listitem><para>On the Palette, click on <emphasis>commandButton</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the inputText component.</para></listitem>
-<listitem><para>On the Palette Click on <emphasis>commandButton</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the inputText component</para></listitem>
+<listitem><para>On the Palette click on <emphasis>commandButton</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the inputText component</para></listitem>
 <listitem><para>In the editing dialog select <emphasis>value</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
 <listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
 <listitem><para>Expand <emphasis>Resource Bundles &gt; msg</emphasis> and select <emphasis>makeguess_button</emphasis> as a value</para></listitem>
 <listitem><para>Click Ok</para></listitem>
 <listitem><para>Select <emphasis>action</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
 <listitem><para>Type &quot;NumberBean.checkGuess&quot; in text field</para></listitem>
-<listitem><para>Click Finish</para></listitem>
+<listitem><para>Click <emphasis><property>Finish</property></emphasis></para></listitem>
 <listitem><para>In Source mode add <emphasis role="bold"><property>&lt;br/&gt;</property></emphasis> tags between <emphasis role="bold"><property>&lt;outputText&gt;</property></emphasis>, <emphasis role="bold"><property>&lt;inputText&gt;</property></emphasis> and <emphasis role="bold"><property>&lt;commandButton&gt;</property></emphasis> components to place them on different lines</para></listitem>
 </itemizedlist>
 <para>inputnumber.jsp page should look like this:</para>
