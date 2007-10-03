@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
+import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.formatter.IContentFormatter;
 import org.eclipse.jface.text.formatter.MultiPassContentFormatter;
 import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
@@ -142,4 +143,5 @@ public class ExtendedStructuredTextViewerConfigurationHTML extends StructuredTex
 		formatter.setMasterStrategy(new StructuredFormattingStrategy(new HTMLFormatProcessor()));
 		return formatter;
 	}
+	
 }

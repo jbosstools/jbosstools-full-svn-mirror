@@ -259,6 +259,19 @@ public class ValueHelper {
 				wtpKbConnector.registerResource(resource);
 			}
 			return true;
+		} else {
+			TLDEditorDocumentManager manager2 = XHTMLTaglibController.getTLDCMDocumentManager(document);
+			if(manager2 != null) {
+				List list = manager2.getTaglibTrackers();
+				for (int i = 0; i < list.size(); i++) {
+					TaglibTracker tracker = (TaglibTracker)list.get(i);
+					if(tracker == null) continue;
+					String version = TLDVersionHelper.getTldVersion(tracker);
+					KbTldResource resource = new KbTldResource(tracker.getURI(), "", tracker.getPrefix(), version);
+					wtpKbConnector.registerResource(resource);
+				}
+				return true;			
+		}
 		}
 		return false;
 	}

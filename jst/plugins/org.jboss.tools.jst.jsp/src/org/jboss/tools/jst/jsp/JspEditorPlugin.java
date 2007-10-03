@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.ui.text.JavaTextTools;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jst.jsp.core.taglib.TaglibIndex;
 import org.eclipse.jst.jsp.ui.internal.JSPUIPlugin;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
@@ -30,7 +31,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.jboss.tools.common.log.BaseUIPlugin;
 import org.jboss.tools.common.log.IPluginLog;
 import org.jboss.tools.common.text.xml.XmlEditorPlugin;
+import org.jboss.tools.jst.jsp.jspeditor.XHTMLTaglibController;
 import org.jboss.tools.jst.jsp.preferences.JSPOccurrencePreferenceConstants;
+import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
@@ -41,7 +44,18 @@ public class JspEditorPlugin extends BaseUIPlugin {
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
 	
-	public static final String PLUGIN_ID = "org.jboss.tools.jst.jsp"; 
+	public static final String PLUGIN_ID = "org.jboss.tools.jst.jsp";
+	
+	
+	public static final boolean DEBIG_TLDCMDOCUMENT_MANAGER;
+	public static final boolean DEBIG_TLDCMDOCUMENT_CACHE; 
+	public static final boolean DEBIG_INFO;
+	
+	static {
+		DEBIG_TLDCMDOCUMENT_MANAGER = "true".equalsIgnoreCase(Platform.getDebugOption( PLUGIN_ID + "/debug/tldcmdocument/manager"));
+		DEBIG_TLDCMDOCUMENT_CACHE = "true".equalsIgnoreCase(Platform.getDebugOption( PLUGIN_ID + "/debug/tldcmdocument/cache"));
+		DEBIG_INFO = "true".equalsIgnoreCase(Platform.getDebugOption( PLUGIN_ID + "/debug/info"));
+	}
 
 
 	/**
@@ -159,4 +173,23 @@ public class JspEditorPlugin extends BaseUIPlugin {
 	public static IPluginLog getPluginLog() {
 		return getDefault();
 	}
+
+
+	@Override
+	public void start(BundleContext context) throws Exception {
+		super.start(context);
+		
+		TaglibIndex.startup();
+		XHTMLTaglibController.startup();
+	}
+
+
+	@Override
+	public void stop(BundleContext context) throws Exception {
+		
+		TaglibIndex.shutdown();
+		super.stop(context);
+	}
+	
+	
 }
