@@ -19,6 +19,7 @@ import org.eclipse.jst.jsp.core.taglib.ITaglibIndexListener;
 import org.eclipse.jst.jsp.core.taglib.TaglibIndex;
 import org.eclipse.wst.sse.core.internal.provisional.text.IStructuredDocument;
 import org.eclipse.wst.sse.core.internal.text.BasicStructuredDocument;
+import org.eclipse.wst.xml.core.internal.parser.XMLSourceParser;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 
 public class XHTMLTaglibController implements IDocumentSetupParticipant{
@@ -91,7 +92,7 @@ public class XHTMLTaglibController implements IDocumentSetupParticipant{
 				info.document = (IStructuredDocument) document;
 				info.textFileBuffer = (ITextFileBuffer) buffer;
 				info.tldDocumentManager = new TLDEditorDocumentManager();
-				info.tldDocumentManager.setSourceParser((JSPSourceParser) info.document.getParser());
+				info.tldDocumentManager.setSourceParser((XMLSourceParser) info.document.getParser());
 				synchronized (INSTANCE.documentMap) {
 					INSTANCE.documentMap.put(document, info);
 				}
