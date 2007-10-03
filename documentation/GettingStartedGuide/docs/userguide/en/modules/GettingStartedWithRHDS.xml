@@ -104,6 +104,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <section id="Instfromdownver">
    <title>Installing from the downloaded version</title>
    <para>RHDS comes with a simple installer, bundled with tested/pre-configured versions of Eclipse, Webtools, JBossEAP, Seam, and SpringIDE.</para>
+  
    <itemizedlist>
    <listitem>
     <para>Download the appropriate installation file for your platform from <ulink  url="http://www.redhat.com/developers/rhds/index.html">Red Hat website</ulink>.</para>
@@ -112,9 +113,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      <para>Run in console:</para>
      <programlisting role="JAVA"><![CDATA[java -jar rhdevstudio-linux-gtk-1.0.0.beta1.jar
 ]]></programlisting></listitem>
-      <listitem><para>and follow the instructions presented by the installation wizard</para></listitem>
-    
-   </itemizedlist>
+      <listitem><para>Follow the instructions presented by the installation wizard</para></listitem>
+       </itemizedlist>
    
    <figure>
     <title>Red Hat Developer Studio Installation Wizard</title>
@@ -125,37 +125,63 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     </mediaobject>
    </figure>
    
-   <para>Installation process includes all required platforms to run Red Hat Developer Studio:</para>
    <itemizedlist>
-    <listitem>
-     <para>Eclipse 3.3</para>
-    </listitem>
-    <listitem>
-     <para>JBoss J2EE Application Server</para>
-     </listitem>
-     </itemizedlist>
+    <listitem><para>Provide the installation path</para></listitem>
+    <listitem><para>Select Java VM</para></listitem>
+   </itemizedlist>
+   
      <figure>
-      <title>JBoss J2EE Application Server installing</title>
+      <title>Select Java VM</title>
+      <mediaobject> 
+       <imageobject>
+        <imagedata fileref="images/install3.png"/>
+       </imageobject>
+      </mediaobject>
+     </figure>
+  
+   <para>Selecting <emphasis><property>Default Java VM</property></emphasis> you set default Java VM of your system (to verify your Java environment, type &quot;java -version&quot; in console).</para>
+   <para>Selecting <emphasis><property>Specific Java VM</property></emphasis> you can provide the path to non-default Java VM.</para>
+   
+   <note>
+    <title>Note:</title>
+    <para>Red Hat Developer Studio needs Java 5 and doesn't work with gij Java.</para>
+   </note>
+   
+   <itemizedlist>
+    <listitem><para>Installation process includes JBoss Enterprise Application Platform. Select <emphasis><property>Yes</property></emphasis> to use it in Red Hat Developer Studio.</para></listitem>
+   </itemizedlist>  
+   
+<para></para>
+   
+      <figure>
+       <title>JBoss Enterprise Application Platform installing</title>
       <imageobject>
         <imagedata fileref="images/install2.png"/>
        </imageobject>
-     </figure>
+      </figure>
+   <para></para>
      <note>
       <title>Note:</title>
-      <para>The installer installs JBoss J2EE Application Server for running your applications if you select this option during the installation process. 
+      <para>The installer installs JBoss Enterprise Application Platform for running your applications if you select this option during the installation process. 
       If you want to use a different server than ours, you can change the setting in Red Hat Developer Studio.</para>
      </note>
-    
+   
+    <itemizedlist>
+     <listitem><para>Check your installation paths and see the components will be installed. Click <emphasis><property>Next</property></emphasis> to start installation.</para></listitem>
+    </itemizedlist>
+   
+      <para></para>
+   
+   <figure>
+    <title>Summary information</title>
+    <imageobject>
+     <imagedata fileref="images/install4.png"/>
+    </imageobject>
+   </figure>
+
   </section>  
-<!--  <section id="InstallingthroughTheUpdateSite">
-  <?dbhtml filename="InstallingthroughTheUpdateSite.html"?>
-   <title>Installing via update Site</title>
-   TBD
   </section>
--->
-  </section>
- 
-   <section id="Upgrading">
+    <section id="Upgrading">
    <?dbhtml filename="Upgrading.html"?>
    <title>Upgrading</title>
    <para>To upgrade, just uninstall your current version and install the new one.</para>
