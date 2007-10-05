@@ -41,7 +41,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>New JSF Project</title>
 <mediaobject> 
         <imageobject>
-            <imagedata depth="22cm" fileref="images/newrad2.png"/>
+            <imagedata fileref="images/newrad2.png"/>
         </imageobject>
 </mediaobject>
 </figure>
