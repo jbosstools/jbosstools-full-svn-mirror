@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vpe:templates>
 
-	<vpe:template-taglib uri="http://richfaces.org/rich"
-		prefix="rich" />
+	<vpe:template-taglib uri="http://richfaces.org/rich" prefix="rich" />
+	<vpe:template-taglib uri="http://richfaces.ajax4jsf.org/rich" prefix="rich" />
+		
 
 	<vpe:tag name="rich:paint2D" case-sensitive="yes">
 		<vpe:template children="no" modify="yes"
