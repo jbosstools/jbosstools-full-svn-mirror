@@ -360,7 +360,7 @@ public class VpeDataTableElements {
 				nsIDOMNode child = children.item(i);
 				if (tagName.equalsIgnoreCase(child.getNodeName())) {
 					if (ind == index) {
-						return (nsIDOMElement)child;
+						return (nsIDOMElement)child.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 					} else {
 						ind++;
 					}
