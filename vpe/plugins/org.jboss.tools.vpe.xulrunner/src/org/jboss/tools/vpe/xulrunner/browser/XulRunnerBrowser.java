@@ -97,6 +97,9 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		browser = new Browser(parent, SWT.MOZILLA);
 
 		webBrowser = (nsIWebBrowser) browser.getWebBrowser();
+		if (webBrowser == null) {
+			throw new XulRunnerException("nsIWebBrowser is not available"); // $NON-NLS-1$
+		}
 		
 		setBoolRootPref(PREFERENCE_DISABLEOPENDURINGLOAD, true);
 		setBoolRootPref(PREFERENCE_DISABLEWINDOWSTATUSCHANGE, true);
