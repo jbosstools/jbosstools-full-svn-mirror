@@ -27,12 +27,8 @@ JSF application and then run the application from inside Red Hat Developer Studi
             <imagedata fileref="images/newrad1.png"/>
         </imageobject>
 </mediaobject>
-</figure>
+</figure></para></listitem>
 
-<para>Put &quot;GuessNumber&quot; as a project name, in &quot;JSF Environment&quot; drop down list choose JSF 1.2.</para>
-<para>Leave everything else as it is and click <emphasis><property>Finish</property></emphasis>.</para>
-<para>The project will appear in Project Explorer and Web Projects Views. As you can see Red Had Developer Studio has created for you the whole skeleton for the project with all needed libraries, faces-config.xml and web.xml files.</para>
-</para></listitem>
 <listitem><para>Put &quot;GuessNumber&quot; as a project name, in &quot;JSF Environment&quot; drop down list choose JSF 1.2.</para></listitem>
 <listitem><para>Leave everything else as it is and click Finish</para></listitem>
 </itemizedlist>
@@ -486,7 +482,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <itemizedlist>
 <listitem><para>Click <emphasis><property>Ok</property></emphasis>, then click <emphasis><property>Finish</property></emphasis></para></listitem>
 <listitem><para>Go to Source mode</para></listitem>
-<listitem><para>Add the validation attribute to <emphasis role="bold"><property>&lt;f:validateLongRange&gt;</property></emphasis> for your input validation</para></listitem></itemizedlist>
+<listitem><para>Add the validation attribute to <emphasis role="bold"><property>&lt;f:validateLongRange&gt;</property></emphasis> for user input validation</para></listitem></itemizedlist>
 <programlisting role="XML"><![CDATA[<h:inputText id="userNumber" value="#{NumberBean.userNumber}" required="true">
            <f:validateLongRange minimum="0" maximum="100"/>
 </h:inputText>
@@ -589,14 +585,13 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </html>
 
 ]]></programlisting>
-<para>Note the <emphasis>.jsf</emphasis> extension of a page. It means that we trigger the JSF controller servlet to handle the page according the servlet mapping in faces-config.xml file.</para>
+<para>Note the <emphasis>.jsf</emphasis> extension of a page. It means that we trigger the JSF controller servlet to handle the page according the servlet mapping in the faces-config.xml file.</para>
 </section>
 <section id="RunningTheApplication33">
 <?dbhtml filename="RunningTheApplication33.html"?>
 <title>Running the Application</title>
 <para>Everything is ready to run the application.</para>
 <itemizedlist>
-<listitem><para>Start up JBoss server by clicking on the Start icon in JBoss Server view. (If JBoss is already running, stop it by clicking on the red icon and then start it again. After the messages in the Console tabbed view stops scrolling, JBoss is available.</para></listitem>
 <listitem><para>Start up JBoss server by clicking on the Start icon in JBoss Server view. (If JBoss is already running, stop it by clicking on the red icon and then start it again. After the messages in the Console tabbed view stop scrolling, JBoss is available</para></listitem>
 <listitem><para>Click on the Red Hat run icon in the toolbar</para></listitem>
 <listitem><para>Play with the application by entering correct as well as incorrect values</para></listitem>
