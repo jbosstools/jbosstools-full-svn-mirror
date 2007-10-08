@@ -600,7 +600,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>You are asked to enter a number between 0 and 100</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/default.png"/>
+            <imagedata  fileref="images/guessnumber.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -608,7 +608,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Your input is validated and an error message is displayed if invalid input was entered</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/default.png"/>
+            <imagedata  fileref="images/guessnumber2.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -617,7 +617,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>After you enter a guess, the application tells you whether a smaller or a larger number should be tried</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/default.png"/>
+            <imagedata  fileref="images/guessnumber3.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -626,7 +626,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Your guess is correct</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/default.png"/>
+            <imagedata  fileref="images/guessnumber4.png"/>
         </imageobject>
 </mediaobject>
 </figure>
