@@ -96,6 +96,8 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		
 		browser = new Browser(parent, SWT.MOZILLA);
 
+		webBrowser = (nsIWebBrowser) browser.getWebBrowser();
+		
 		setBoolRootPref(PREFERENCE_DISABLEOPENDURINGLOAD, true);
 		setBoolRootPref(PREFERENCE_DISABLEWINDOWSTATUSCHANGE, true);
 		

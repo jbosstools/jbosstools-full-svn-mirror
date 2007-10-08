@@ -11,14 +11,14 @@ import org.osgi.framework.BundleContext;
 public class BrowserPlugin extends BaseUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jboss.tools.vpe.xulrunner";
+	public static final String PLUGIN_ID = "org.jboss.tools.vpe.xulrunner"; // $NON-NLS-1$
 	
 	public static final boolean DEBUG_BROWSERSTART;
 	// The shared instance
 	private static BrowserPlugin plugin;
 	
 	static {
-		DEBUG_BROWSERSTART = "true".equals(Platform.getDebugOption(PLUGIN_ID + "/debug/browser_start"));
+		DEBUG_BROWSERSTART = "true".equals(Platform.getDebugOption(PLUGIN_ID + "/debug/browser_start"));  // $NON-NLS-1$  // $NON-NLS-1$
 	}
 	
 	/**
