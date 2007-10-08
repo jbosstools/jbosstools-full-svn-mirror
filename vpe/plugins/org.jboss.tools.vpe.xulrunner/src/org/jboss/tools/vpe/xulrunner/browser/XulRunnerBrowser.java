@@ -52,7 +52,7 @@ import org.osgi.framework.Bundle;
 
 public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		nsIWebProgressListener, nsITooltipListener {
-	private static String XULRUNNER_BUNDLE = "org.jboss.tools.vpe.mozilla.xulrunner"; //$NON-NLS-1$
+	private static String XULRUNNER_BUNDLE;
 	private static String XULRUNNER_ENTRY = "/xulrunner";
 	
 	// TEMPORARY CODE (@see org.eclipse.swt.browser.Mozilla)
@@ -68,104 +68,39 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	private Browser browser = null;
 	private nsIWebBrowser webBrowser = null;
 	private long chrome_flags = nsIWebBrowserChrome.CHROME_ALL;
-	
-//	private boolean busyResizeFlag = false;
+
+	static {
+		XULRUNNER_BUNDLE = (new StringBuffer("org.mozilla.xulrunner")) // $NON-NLS-1$
+			.append(".").append(Platform.getWS()) // $NON-NLS-1$
+			.append(".").append(Platform.getOS()) // $NON-NLS-1$
+			.toString();
+		
+		if (!Platform.OS_MACOSX.equals(Platform.getOS())) {
+			XULRUNNER_BUNDLE = (new StringBuffer(XULRUNNER_BUNDLE))
+				.append(".").append(Platform.getOSArch())
+				.toString();
+		}
+	}
 	
 	public XulRunnerBrowser(Composite parent) throws XulRunnerException {
 		mozilla = Mozilla.getInstance();
 		String xulRunnerPath = getXulRunnerPath(); 
 		
-		Boolean isXulRunnerInitialized = "true".equals(System.getProperty(XULRUNNER_INITIALIZED));
+		Boolean isXulRunnerInitialized = "true".equals(System.getProperty(XULRUNNER_INITIALIZED)); // $NON-NLS-1$
 		if (!isXulRunnerInitialized) {
 			File file = new File(xulRunnerPath);
 			mozilla.initialize(file);
 			mozilla.initEmbedding(file, file, new AppFileLocProvider(file));
-			System.setProperty(XULRUNNER_INITIALIZED, "true");
+			System.setProperty(XULRUNNER_INITIALIZED, "true"); // $NON-NLS-1$
 		}
 		
 		browser = new Browser(parent, SWT.MOZILLA);
 
-		// TODO Sergey Vasilyelv insert observer here
-		
-		// TODO Sergey Vasilyev add localization
 		setBoolRootPref(PREFERENCE_DISABLEOPENDURINGLOAD, true);
 		setBoolRootPref(PREFERENCE_DISABLEWINDOWSTATUSCHANGE, true);
 		
-//		nsIComponentManager componentManager = mozilla.getComponentManager();
-//		nsIAppShell appShell = (nsIAppShell) componentManager.createInstance(XPCOM.NS_IAPPSHELL_CID, null, nsIAppShell.NS_IAPPSHELL_IID);
-//		appShell.create(null, null);
-//		appShell.spinup();
-//				
-//		nsIServiceManager serviceManager = mozilla.getServiceManager();
-//		nsIWindowWatcher windowWatcher = (nsIWindowWatcher) serviceManager.getServiceByContractID(XPCOM.NS_WINDOWWATCHER_CONTRACTID, nsIWindowWatcher.NS_IWINDOWWATCHER_IID);
-//		windowWatcher.setWindowCreator(new WindowCreator());
-		
-		webBrowser = (nsIWebBrowser) browser.getWebBrowser();
-//		webBrowser = (nsIWebBrowser) componentManager.createInstance(XPCOM.NS_IWEBBROWSER_CID, null, nsIWebBrowser.NS_IWEBBROWSER_IID); //$NON-NLS-1$
-//		webBrowser.setContainerWindow(this);
-
 		nsIWebBrowserSetup setup = (nsIWebBrowserSetup) webBrowser.queryInterface(nsIWebBrowserSetup.NS_IWEBBROWSERSETUP_IID);
 		setup.setProperty(nsIWebBrowserSetup.SETUP_IS_CHROME_WRAPPER, 1);
-		
-//		nsIBaseWindow baseWindow = (nsIBaseWindow) webBrowser.queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID);
-//		
-//		Rectangle rect = getClientArea();
-//		if (rect.isEmpty()) {
-//			rect.height = 1;
-//			rect.width = 1;
-//		}
-//		baseWindow.initWindow(handle, 0, 0, 0, rect.height, rect.width);
-//		baseWindow.create();
-//		baseWindow.setVisibility(true);
-		
-//		Listener listener = new Listener(){
-//			public void handleEvent (Event event) {
-//				switch(event.type) {
-//				case SWT.Dispose:
-//						onDispose();
-//						break;
-//				case SWT.Activate:
-//				case SWT.FocusIn:
-//						onFocusGained();
-//						break;
-//				case SWT.Deactivate:
-//					if (browser == event.display.getFocusControl()) {
-//						onFocusLost();
-//					}
-//					break;
-//				case SWT.Resize:
-//				case SWT.Show:
-//					/*
-//					* Feature on GTK Mozilla.  Mozilla does not show up when
-//					* its container (a GTK fixed handle) is made visible
-//					* after having been hidden.  The workaround is to reset
-//					* its size after the container has been made visible. 
-//					*/
-//					if (!busyResizeFlag) {
-//						busyResizeFlag = true;
-//						event.display.asyncExec(new Runnable() {
-//							public void run() {
-//								if (browser.isDisposed()) return;
-//								onResize();
-//								busyResizeFlag = false;
-//							}
-//						});
-//					}
-//					break;
-//				case SWT.KeyDown:
-//					onKeyDown();
-//					break;				
-//				}
-//			}
-//		};
-//
-//		browser.addListener(SWT.Dispose, listener);
-//		browser.addListener(SWT.Resize, listener);
-//		browser.addListener(SWT.FocusIn, listener); 
-//		browser.addListener(SWT.KeyDown, listener);
-//		browser.addListener(SWT.Activate, listener);
-//		browser.addListener(SWT.Deactivate, listener);
-//		browser.addListener(SWT.Show, listener);
 		
 		webBrowser.addWebBrowserListener(this, nsIWebProgressListener.NS_IWEBPROGRESSLISTENER_IID);
 		webBrowser.addWebBrowserListener(this, nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
@@ -212,38 +147,6 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	public void dispose() {
 		browser.dispose();
 		
-	}
-	
-	private void onDispose() {
-		nsIBaseWindow baseWindow = (nsIBaseWindow) webBrowser.queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID);
-		baseWindow.destroy();
-	}
-	
-	private void onFocusGained() {
-		nsIWebBrowserFocus webBrowserFocus = (nsIWebBrowserFocus) webBrowser.queryInterface(nsIWebBrowserFocus.NS_IWEBBROWSERFOCUS_IID);
-		webBrowserFocus.activate();
-		webBrowserFocus.setFocusAtFirstElement();
-	}
-	
-	private void onFocusLost() {
-		nsIWebBrowserFocus webBrowserFocus = (nsIWebBrowserFocus) webBrowser.queryInterface(nsIWebBrowserFocus.NS_IWEBBROWSERFOCUS_IID);
-		webBrowserFocus.deactivate();
-	}
-	
-	private void onResize() {
-		nsIBaseWindow baseWindow = (nsIBaseWindow) webBrowser.queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID);
-		
-		Rectangle rect = browser.getClientArea();
-		if (rect.isEmpty()) {
-			rect.height = 1;
-			rect.width = 1;
-		}
-		
-		baseWindow.setPositionAndSize(rect.x, rect.y, rect.width, rect.height, true);
-	}
-	
-	private void onKeyDown() {
-		System.out.println("XulRunnerBrowser.onKeyDown()");
 	}
 	
 	public static String getXulRunnerBundle() {
