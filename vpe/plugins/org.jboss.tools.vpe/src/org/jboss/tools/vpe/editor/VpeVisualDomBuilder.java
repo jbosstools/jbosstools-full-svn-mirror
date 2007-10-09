@@ -636,7 +636,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	
 	private void addPseudoElementImpl(Node visualParent) {
 		if (!templateManager.isWithoutPseudoElementContainer(visualParent.getNodeName())) {
-			if (VpeDebug.visualAddPseudoElement) {
+			if (VpeDebug.VISUAL_ADD_PSEUDO_ELEMENT) {
 				System.out.println("-------------------- addPseudoElement: " + visualParent.getNodeName());
 			}
 			Element visualPseudoElement = visualDocument.createElement(PSEUDO_ELEMENT);

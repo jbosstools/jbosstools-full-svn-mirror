@@ -82,7 +82,7 @@ public class VpePlugin extends BaseUIPlugin {
 //	}
 
 	public static void reportProblem(Exception throwable) {
-		if (VpeDebug.usePrintStackTrace) {
+		if (VpeDebug.USE_PRINT_STACK_TRACE) {
 			throwable.printStackTrace();
 		} else {
 			ProblemReportingHelper.reportProblem(PLUGIN_ID, throwable);

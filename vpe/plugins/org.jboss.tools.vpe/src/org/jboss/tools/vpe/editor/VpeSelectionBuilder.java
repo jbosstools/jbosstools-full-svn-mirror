@@ -86,7 +86,7 @@ public class VpeSelectionBuilder {
 				if (visualSelectedNode == null) {
 					visualSelectedNode = visualNode;
 				}
-				if (VpeDebug.printVisualSelectionEvent) {
+				if (VpeDebug.PRINT_VISUAL_SELECTION_EVENT) {
 					System.out.println("      visualNode: " + visualSelectedNode.getNodeName() + "(" + MozillaSupports.getAddress(visualSelectedNode) + ")(" + MozillaSupports.getRefCount(visualSelectedNode) + ")  sourceNode: " + (sourceNode == null ? null : sourceNode.getNodeName()) + "  node: " + node);
 				}
 				if (sourceNode != null) {
@@ -343,7 +343,7 @@ public class VpeSelectionBuilder {
 	}
 	
 	Node setContextMenuSelection(Node visualNode) {
-		if (VpeDebug.printVisualContextMenuEvent) {
+		if (VpeDebug.PRINT_VISUAL_CONTEXTMENU_EVENT) {
 			System.out.println(">>>>>>>>>>>>>> onShowContextMenu  visualNode: " + visualNode.getNodeName() + "(" + MozillaSupports.getAddress(visualNode) + ")");
 		}
 		visualSelectionController.setCaretEnabled(false);
@@ -674,7 +674,7 @@ public class VpeSelectionBuilder {
 				visualAnchorOffset = MozillaSupports.getOffset(visualAnchorNode);
 				if (!anchorStartFlag) visualAnchorOffset++;
 			}
-			if (VpeDebug.printSourceSelectionEvent) {
+			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 				System.out.println("setVisualSelection");
 				System.out.println("                     visualAnchorNode: " + visualAnchorNode.getNodeName() + "(" + MozillaSupports.getAddress(visualAnchorNode) + ")  visualAnchorContainer: " + visualAnchorContainer.getNodeName() + "(" + MozillaSupports.getAddress(visualAnchorContainer) + ")  visualAnchorOffset: " + visualAnchorOffset +  "  anchorStartFlag: " + anchorStartFlag);
 			}
@@ -717,7 +717,7 @@ public class VpeSelectionBuilder {
 				visualFocusOffset = MozillaSupports.getOffset(visualFocusNode);
 				if (!focusStartFlag) visualFocusOffset++;
 			}
-			if (VpeDebug.printSourceSelectionEvent) {
+			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 				System.out.println("                     visualFocusNode: " +
 						(visualFocusNode != null ? 
 								visualFocusNode.getNodeName() + "(" + MozillaSupports.getAddress(visualFocusNode) + ")" : null) + 

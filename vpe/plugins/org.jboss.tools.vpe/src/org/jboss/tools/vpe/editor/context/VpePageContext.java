@@ -366,7 +366,7 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		List newTaglibs = getTagLibs();
 		List delTaglibs = new ArrayList();
 		if (buildTaglibsDifferences(newTaglibs, delTaglibs)) {
-			if (VpeDebug.printSourceMutationEvent) {
+			if (VpeDebug.PRINT_SOURCE_MUTATION_EVENT) {
 				System.out.println(">>> TaglibsChanged");
 			}
 			for (int i = 0; i < taglibListeners.length; i++) {
