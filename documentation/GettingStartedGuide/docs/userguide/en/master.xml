@@ -10,7 +10,7 @@
 <!ENTITY GenCURDDatabaseApp SYSTEM "modules/GenCURDDatabaseApp.xml">
 <!ENTITY CURDAppWalkthrough SYSTEM "modules/CURDAppWalkthrough.xml">
 <!ENTITY AddBusinessProcess SYSTEM "modules/AddBusinessProcess.xml">
-
+<!ENTITY testNG SYSTEM "modules/testNG.xml">
 ]>
 
 <book>
@@ -37,6 +37,7 @@
 &RADdevelopmentOfSimpleJSFapplication;
 &GenCURDDatabaseApp;
 &CURDAppWalkthrough;
+&testNG;
 <!-- TODO: drools used in this section is not available for eclipse .3.3 &AddBusinessProcess; -->
 
 
