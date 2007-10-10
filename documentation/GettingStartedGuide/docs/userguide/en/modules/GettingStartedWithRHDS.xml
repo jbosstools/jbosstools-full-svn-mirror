@@ -180,7 +180,67 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </figure>
 
   </section>  
-  </section>
+    </section>
+ <section id="Welcome">
+  <title>Welcome to Red Hat Developer Studio</title>
+  <para>The welcome page is the first page you see when you first launch Red Hat Developer Studio. </para>
+  
+  <figure>
+   <title>Welcome to Red Hat Developer Studio</title>
+   <imageobject>
+    <imagedata fileref="images/welcome1.png"/>
+   </imageobject>
+  </figure>
+
+  <para>With the help of its page you will be able:</para>
+   <itemizedlist>
+    <listitem><para>to get quick access to Getting Started Documentation (guides, tutorials and viewlets)</para></listitem>
+   </itemizedlist>
+  
+  <figure>
+   <title>Getting Started Documentation</title>
+   <imageobject>
+    <imagedata fileref="images/welcome2.png"/>
+   </imageobject>
+  </figure>
+  
+  <itemizedlist>
+   <listitem><para>to create new Seam, jBPM Process, JSF or Struts projects using RHDS wizards</para></listitem>
+  </itemizedlist>
+  
+  <figure>
+   <title>Create New...</title>
+   <imageobject>
+    <imagedata fileref="images/welcome3.png"/>
+   </imageobject>
+  </figure>
+  
+  <itemizedlist>
+   <listitem><para>to get short description of perspectives that RHDS offers for more productive development</para></listitem>
+  </itemizedlist>
+  
+  <figure>
+   <title>Perspectives</title>
+   <imageobject>
+    <imagedata fileref="images/welcome4.png"/>
+   </imageobject>
+  </figure>
+  
+    <itemizedlist>
+   <listitem><para>to visit Red Hat Developer Studio web resources.</para></listitem>
+  </itemizedlist>
+    
+  <figure>
+   <title>Web Resources</title>
+   <imageobject>
+    <imagedata fileref="images/welcome5.png"/>
+   </imageobject>
+  </figure>
+  
+  <para>Start work with Red Hat Developer Studio by clicking on <emphasis><property>Workbench</property></emphasis> button or simply close the welcome page.</para>
+  
+ </section>
+ 
     <section id="Upgrading">
    <?dbhtml filename="Upgrading.html"?>
    <title>Upgrading</title>
