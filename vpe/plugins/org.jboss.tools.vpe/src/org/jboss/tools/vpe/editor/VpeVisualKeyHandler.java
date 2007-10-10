@@ -96,7 +96,7 @@ public class VpeVisualKeyHandler {
 		} else {
 			handled = nonctrlKeyPressHandler(keyEvent);
 		}
-		if (VpeDebug.printVisualKeyEvent) {
+		if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
 			System.out.println("    handled: " + handled);
 		}
 		if (handled) {
@@ -255,7 +255,7 @@ public class VpeVisualKeyHandler {
 			}
 
 			Node focusNode = selection.getFocusNode();
-			if (VpeDebug.printVisualKeyEvent) {
+			if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
 				System.out.println(">>>   1. VpeVisualKeyHandler.deleteRight(): focusNode = " + focusNode + "   |   focusOffset = " + selection.getFocusOffset());
 			}
 			if (focusNode != null) {
@@ -523,7 +523,7 @@ public class VpeVisualKeyHandler {
 			}
 
 			Node focusNode = selection.getFocusNode();
-			if (VpeDebug.printVisualKeyEvent) {
+			if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
 				System.out.println(">>>   1. VpeVisualKeyHandler.deleteLeft(): focusNode = " + focusNode + "   |   focusOffset = " + selection.getFocusOffset());
 			}
 			if (focusNode != null) {

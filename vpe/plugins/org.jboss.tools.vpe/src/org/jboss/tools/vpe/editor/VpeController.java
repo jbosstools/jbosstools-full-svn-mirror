@@ -327,7 +327,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 //		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 //			return;
 //		}
-		if (VpeDebug.printSourceMutationEvent) {
+		if (VpeDebug.PRINT_SOURCE_MUTATION_EVENT) {
 			printSourceEvent(notifier, eventType, feature, oldValue, newValue, pos);
 		}
 		if(visualBuilder==null) {
@@ -416,7 +416,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		List<?> nodes = event.getSelectedNodes();
 		if (nodes != null && nodes.size() > 0) {
 			Node sourceNode = (Node)nodes.get(0);
-			if (VpeDebug.printSourceSelectionEvent) {
+			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 				System.out.println(">>>>>>>>>>>>>> nodeSelectionChanged  sourceNode: " + sourceNode.getNodeName() + "  " + event.getCaretPosition()); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			if (event.getSource() instanceof IContentOutlinePage) {
@@ -432,7 +432,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
-		if (VpeDebug.printSourceSelectionEvent) {
+		if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 			System.out.println(">>>>>>>>>>>>>> textSelectionChanged  " + event.getSource()); //$NON-NLS-1$
 		}
 //		if (event.getSource() instanceof StyledText) {
@@ -446,7 +446,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
-		if (VpeDebug.printSourceSelectionEvent) {
+		if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 			System.out.println(">>>>>>>>>>>>>> widgetSelected"); //$NON-NLS-1$
 		}
 		if (event.getSource() instanceof StyledText) {
@@ -456,7 +456,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	}
 
 	public void widgetDefaultSelected(SelectionEvent event) {
-		if (VpeDebug.printSourceSelectionEvent) {
+		if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 			System.out.println(">>>>>>>>>>>>>> widgetDefaultSelected"); //$NON-NLS-1$
 		}
 	}
@@ -490,7 +490,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			anchorOffset = focusOffset;
 		}
 
-		if (VpeDebug.printSourceSelectionEvent) {
+		if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 			System.out.println("sourceSelectionChanged"); //$NON-NLS-1$
 			System.out.println("               anchorNode: " + anchorNode.getNodeName() + "  anchorOffset: " + anchorOffset); //$NON-NLS-1$ //$NON-NLS-2$
 			System.out.println("               focusNode: " + focusNode.getNodeName() + "  focusOffset: " + focusOffset + "  focusPosition: " + focusPosition); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -556,7 +556,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			anchorOffset = focusOffset;
 		}
 
-		if (VpeDebug.printSourceSelectionEvent) {
+		if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 			System.out.println("sourceSelectionChanged1"); //$NON-NLS-1$
 			System.out.println("               anchorNode: " + anchorNode.getNodeName() + "  anchorOffset: " + anchorOffset); //$NON-NLS-1$ //$NON-NLS-2$
 			System.out.println("               focusNode: " + focusNode.getNodeName() + "  focusOffset: " + focusOffset + "  focusPosition: " + focusPosition); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -603,7 +603,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			return;
 		}
 		if (event.getType() == ModelLifecycleEvent.MODEL_RELEASED) {
-			if (VpeDebug.printSourceModelLifecycleEvent) {
+			if (VpeDebug.PRINT_SOURCE_MODEL_LIFECYCLE_EVENT) {
 				System.out.println(">>> processPostModelEvent: " + event.toString()); //$NON-NLS-1$
 			}
 			visualBuilder.setSelectionRectangle(null);
@@ -626,7 +626,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
-		if (VpeDebug.printVisualMutationEvent) {
+		if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
 			printVisualEvent(mutationEvent);
 		}
 		switcher.stopActiveEditor();
@@ -636,7 +636,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
-		if (VpeDebug.printVisualMutationEvent) {
+		if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
 			printVisualEvent(mutationEvent);
 		}
 		nsIDOMNode targetNode = mutationEvent.getRelatedNode();
@@ -651,7 +651,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
-		if (VpeDebug.printVisualMutationEvent) {
+		if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
 			printVisualEvent(mutationEvent);
 		}
 		nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
@@ -667,7 +667,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
-		if (VpeDebug.printVisualMutationEvent) {
+		if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
 			printVisualEvent(mutationEvent);
 		}
 		switcher.stopActiveEditor();
@@ -677,7 +677,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
-		if (VpeDebug.printVisualMutationEvent) {
+		if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
 			printVisualEvent(mutationEvent);
 		}
 		switcher.stopActiveEditor();
@@ -687,7 +687,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
-		if (VpeDebug.printVisualMutationEvent) {
+		if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
 			printVisualEvent(mutationEvent);
 		}
 		switcher.stopActiveEditor();
@@ -698,7 +698,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
-		if (VpeDebug.printVisualMutationEvent) {
+		if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
 			printVisualEvent(mutationEvent);
 		}
 		nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
@@ -711,7 +711,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			mouseUpSelectionReasonFlag = (reason & nsISelectionListener.MOUSEUP_REASON) > 0;
 			if (mouseUpSelectionReasonFlag || reason == nsISelectionListener.NO_REASON || reason == nsISelectionListener.KEYPRESS_REASON || reason == nsISelectionListener.SELECTALL_REASON || (reason & nsISelectionListener.MOUSEDOWN_REASON) > 0) {
-				if (VpeDebug.printVisualSelectionEvent) {
+				if (VpeDebug.PRINT_VISUAL_SELECTION_EVENT) {
 					System.out.println("<<< notifySelectionChanged: " + reason); //$NON-NLS-1$
 				}
 				selectionBuilder.setSelection(selection);
@@ -739,7 +739,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			return;
 		}
 		nsIDOMElement visualDragElement = selectionBuilder.getDragElement(mouseEvent);
-		if (VpeDebug.printVisualMouseEvent) {
+		if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
 			nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 			System.out.println("<<< mouseDown  targetNode: " + visualNode.getNodeName() + " (" + visualNode + ")  selectedElement: " + (visualDragElement != null ? visualDragElement.getNodeName() + " (" + visualDragElement + ")" : null)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		}
@@ -757,7 +757,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
-		if (VpeDebug.printVisualMouseEvent) {
+		if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
 			System.out.println("<<< mouseUp"); //$NON-NLS-1$
 		}
 		if (mouseDownSelectionFlag) {
@@ -776,7 +776,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 		if (visualNode != null) {
 			if (!mouseUpSelectionReasonFlag) {
-				if (VpeDebug.printVisualMouseEvent) {
+				if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
 					System.out.println("<<< mouseClick  visualNode: " + visualNode.getNodeName() + " (" + visualNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				}
 				if (visualBuilder.isContentArea(visualNode)) {
@@ -805,7 +805,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			if (!sourceBuilder.openBundleEditors(visualNode)) {
 			    sourceBuilder.openIncludeEditor(visualNode);
 			}
-			if (VpeDebug.printVisualMouseEvent) {
+			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
 				System.out.println("<<< mouseDblClick  visualNode: " + visualNode.getNodeName() + " (" + visualNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
 		}
@@ -818,7 +818,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 		if (visualNode != null) {
-			if (VpeDebug.printVisualMouseEvent) {
+			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
 				System.out.println("<<< mouseMove  visualNode: " + visualNode.getNodeName() + " (" + visualNode + ")");
 			}
 			visualBuilder.setMoveCursor(mouseEvent);		
@@ -827,7 +827,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	}
 	
 	public void keyPress(nsIDOMKeyEvent keyEvent) {
-		if (VpeDebug.printVisualKeyEvent) {
+		if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
 			System.out.println("<<< keyPress  type: " + keyEvent.getType() + "  Ctrl: " + keyEvent.getCtrlKey() + "  Shift: " + keyEvent.getShiftKey() + "  CharCode: " + keyEvent.getCharCode() + "  KeyCode: " + keyEvent.getKeyCode()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		}
 
@@ -1054,7 +1054,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			});
 		}
 
-		if (VpeDebug.visualContextMenuDumpSource) {
+		if (VpeDebug.VISUAL_CONTEXTMENU_DUMP_SOURCE) {
 			manager.add(new Action("Dump Source") { //$NON-NLS-1$
 				public void  run() {	
 					DOMTreeDumper dumper = new DOMTreeDumper();
@@ -1063,7 +1063,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			});
 		}
 		
-		if (VpeDebug.visualContextMenuDumpMapping) {
+		if (VpeDebug.VISUAL_CONTEXTMENU_DUMP_MAPPING) {
 			manager.add(new Action("Dump Mapping") {  //$NON-NLS-1$
 				public void  run() {
 					printMapping();
@@ -1071,7 +1071,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			});
 		}
 		
-		if (VpeDebug.visualContextMenuTest) {
+		if (VpeDebug.VISUAL_CONTEXTMENU_TEST) {
 			manager.add(new VpeAction("Test", node) {  //$NON-NLS-1$
 				public void  run() {
 					test(actionNode);
@@ -1729,13 +1729,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
     }
     
 	public void dragEnter(nsIDOMEvent event) {
-		if (VpeDebug.printVisualDragDropEvent) {
+		if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
 			System.out.println("<<<<<<<<<<<<<<<<<<<< DragEnter"); //$NON-NLS-1$
 		}
 	}
 
 	public void dragExit(nsIDOMEvent event) {
-		if (VpeDebug.printVisualDragDropEvent) {
+		if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
 			System.out.println("<<<<<<<<<<<<<<<<<<<< dragExit"); //$NON-NLS-1$
 		}
 		// TODO Sergey Vasilyev figure out with drag caret
@@ -1752,7 +1752,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
-		if (VpeDebug.printVisualDragDropEvent) {
+		if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
 			System.out.println("<<<<<<<<<<<<<<<<<<<< dragOver"); //$NON-NLS-1$
 		}
 		
@@ -1783,14 +1783,14 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	}
 
 	public void drop(nsIDOMEvent event) {
-		if (VpeDebug.printVisualDragDropEvent) {
+		if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
 			System.out.println("<<< outerDrop"); //$NON-NLS-1$
 		}
 		event.preventDefault();
 	}
 
 	public void _drop(nsIDOMEvent event) {
-		if (VpeDebug.printVisualDragDropEvent) {
+		if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
 			System.out.println("<<<<<<<<<<<<<<<<<<<< dragDrop"); //$NON-NLS-1$
 		}
 		boolean canDrop = !xulRunnerEditor.isMozillaDragFlavor();
@@ -1808,7 +1808,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				caretInfo.showCaret();
 				caretInfo.hideCaret();
 				Point range = caretInfo.getSourceSelectionRange();
-				if (VpeDebug.printVisualDragDropEvent) {
+				if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
 					System.out.println("                     Drop Position: " + range.x + "  " + range.y); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				VpeDndUtil.drop((IModelObjectEditorInput)sourceEditor.getEditorInput(), (ISourceViewer)sourceEditor.getAdapter(ISourceViewer.class), new VpeSelectionProvider(range.x, range.y));
@@ -1824,7 +1824,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	public boolean canInnerDrag(nsIDOMMouseEvent event) {
 		onHideTooltip();
 
-		if (VpeDebug.printVisualInnerDragDropEvent) {
+		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 			System.out.print("<<<<<< canInnerDrag"); //$NON-NLS-1$
 		}
 		if (innerDragInfo != null) {
@@ -1835,7 +1835,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		VpeVisualInnerDragInfo dragInfo = selectionBuilder.getInnerDragInfo(event);
 		if (dragInfo != null) {
 			nsIDOMNode dragNode = dragInfo.getNode();
-			if (VpeDebug.printVisualInnerDragDropEvent) {
+			if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 				System.out.print(" dragNode: " + dragNode.getNodeName() + "(" + dragNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
 			switch (dragNode.getNodeType()) {
@@ -1862,7 +1862,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				dragInfo.Release();
 			}
 		}
-		if (VpeDebug.printVisualInnerDragDropEvent) {
+		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 			System.out.println("  canDrag: " + canDrag); //$NON-NLS-1$
 		}
 		return canDrag;
@@ -1893,7 +1893,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				return null;
 			}
 		}
-		if (VpeDebug.printVisualInnerDragDropEvent) {
+		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 			System.out.print("<<<<<< canInnerDrop"); //$NON-NLS-1$
 		}
 		boolean canDrop = false;;
@@ -1902,7 +1902,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (innerDragInfo != null) {
 			VpeVisualInnerDropInfo visualDropInfo = selectionBuilder.getInnerDropInfo(event);
 			if (visualDropInfo.getDropContainer() != null) {
-				if (VpeDebug.printVisualInnerDragDropEvent) {
+				if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 					System.out.print("  x: " + visualDropInfo.getMouseX() + "  y: " + visualDropInfo.getMouseY() +  //$NON-NLS-1$ //$NON-NLS-2$
 							"  container: " + visualDropInfo.getDropContainer().getNodeName() +  //$NON-NLS-1$
 							"(" + visualDropInfo.getDropContainer() + ")" + //$NON-NLS-1$ //$NON-NLS-2$
@@ -1924,7 +1924,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			}
 			visualDropInfo.Release();
 		}
-		if (VpeDebug.printVisualInnerDragDropEvent) {
+		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 			System.out.println("  canDrop: " + canDrop); //$NON-NLS-1$
 		}
 		return new MozillaDropInfo(canDrop, caretParent, caretOffset);
@@ -1933,13 +1933,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	public void innerDrop(nsIDOMMouseEvent event) {
 		onHideTooltip();
 
-		if (VpeDebug.printVisualInnerDragDropEvent) {
+		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 			System.out.print("<<<<<< innerDrop"); //$NON-NLS-1$
 		}
 		if (innerDragInfo != null) {
 			VpeVisualInnerDropInfo visualDropInfo = selectionBuilder.getInnerDropInfo(event);
 			if (visualDropInfo.getDropContainer() != null) {
-				if (VpeDebug.printVisualInnerDragDropEvent) {
+				if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 					System.out.print("  container: " + visualDropInfo.getDropContainer().getNodeName() +  //$NON-NLS-1$
 							"(" + visualDropInfo.getDropContainer() + ")" +  //$NON-NLS-1$ //$NON-NLS-2$
 							"  offset: " + visualDropInfo.getDropOffset()); //$NON-NLS-1$
@@ -1962,7 +1962,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				}
 			}
 		}
-		if (VpeDebug.printVisualInnerDragDropEvent) {
+		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 			System.out.println();
 		}
 	}
@@ -2040,7 +2040,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				VpePlugin.reportProblem(ex);
 			}
 		}
-		if (VpeDebug.printVisualInnerDragDropEvent) {
+		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 			System.out.println("  canDrop: " + canDrop + (canDrop ? "  container: " + caretParent.getNodeName() + "  offset: " + caretOffset : "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		}
 		return new MozillaDropInfo(canDrop, caretParent, caretOffset);
@@ -2116,7 +2116,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 		
 		if (visualDropInfo.getDropContainer() != null) {
-			if (VpeDebug.printVisualInnerDragDropEvent) {
+			if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 				System.out.println("  drop!  container: " + visualDropInfo.getDropContainer().getNodeName()); //$NON-NLS-1$
 			}
 			externalDropAny(flavor, data, range, sourceDropInfo == null?null:sourceDropInfo.getContainer());
@@ -2299,7 +2299,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
-		if (VpeDebug.printSourceSelectionEvent) {
+		if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 			System.out.println(">>>>>>>>>>>>>> selectionChanged  " + event.getSource()); //$NON-NLS-1$
 		}
 		sourceSelectionChanged();
@@ -2325,7 +2325,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 		
 		if (visualDropInfo.getDropContainer() != null) {
-			if (VpeDebug.printVisualInnerDragDropEvent) {
+			if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 				System.out.println("  drop!  container: " + visualDropInfo.getDropContainer().getNodeName()); //$NON-NLS-1$
 			}
 			final String finalFlavor = flavor;

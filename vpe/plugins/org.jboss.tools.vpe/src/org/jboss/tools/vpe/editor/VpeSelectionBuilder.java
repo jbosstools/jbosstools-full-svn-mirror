@@ -83,7 +83,7 @@ public class VpeSelectionBuilder {
 				if (visualSelectedNode == null) {
 					visualSelectedNode = visualNode;
 				}
-				if (VpeDebug.printVisualSelectionEvent) {
+				if (VpeDebug.PRINT_VISUAL_SELECTION_EVENT) {
 					System.out.println("      visualNode: " + visualSelectedNode.getNodeName() + "(" + visualSelectedNode + ")  sourceNode: " + (sourceNode == null ? null : sourceNode.getNodeName()) + "  node: " + node);
 				}
 				if (sourceNode != null) {
@@ -335,7 +335,7 @@ public class VpeSelectionBuilder {
 	}
 	
 	Node setContextMenuSelection(nsIDOMNode visualNode) {
-		if (VpeDebug.printVisualContextMenuEvent) {
+		if (VpeDebug.PRINT_VISUAL_CONTEXTMENU_EVENT) {
 			System.out.println(">>>>>>>>>>>>>> onShowContextMenu  visualNode: " + visualNode.getNodeName() + "(" + visualNode + ")");
 		}
 		visualSelectionController.setCaretEnabled(false);
@@ -647,7 +647,7 @@ public class VpeSelectionBuilder {
 				visualAnchorOffset = VisualDomUtil.getOffset(visualAnchorNode);
 				if (!anchorStartFlag) visualAnchorOffset++;
 			}
-			if (VpeDebug.printSourceSelectionEvent) {
+			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 				System.out.println("setVisualSelection");
 				System.out.println("                     visualAnchorNode: " + visualAnchorNode.getNodeName() + "(" + visualAnchorNode + ")  visualAnchorContainer: " + visualAnchorContainer.getNodeName() + "(" + visualAnchorContainer + ")  visualAnchorOffset: " + visualAnchorOffset +  "  anchorStartFlag: " + anchorStartFlag);
 			}
@@ -689,7 +689,7 @@ public class VpeSelectionBuilder {
 				visualFocusOffset = VisualDomUtil.getOffset(visualFocusNode);
 				if (!focusStartFlag) visualFocusOffset++;
 			}
-			if (VpeDebug.printSourceSelectionEvent) {
+			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 				System.out.println("                     visualFocusNode: " +
 						(visualFocusNode != null ? 
 								visualFocusNode.getNodeName() + "(" + visualFocusNode + ")" : null) + 

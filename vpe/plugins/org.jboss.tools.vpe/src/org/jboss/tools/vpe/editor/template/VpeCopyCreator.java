@@ -17,7 +17,6 @@ import java.util.Map;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
-import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -113,7 +112,7 @@ public class VpeCopyCreator extends VpeAbstractCreator {
 	public void setAttribute(VpePageContext pageContext, Element sourceElement,
 			Map visualNodeMap, String name, String value) {
 		if (isAttribute(name)) {
-			Element visualElement = (Element) visualNodeMap.get(this);
+			nsIDOMElement visualElement = (nsIDOMElement) visualNodeMap.get(this);
 			visualElement.setAttribute(name, value);
 		}
 	}

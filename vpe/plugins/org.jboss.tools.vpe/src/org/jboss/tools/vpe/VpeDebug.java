@@ -10,27 +10,52 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe;
 
+import org.eclipse.core.runtime.Platform;
+
 public class VpeDebug {
-	public static final boolean printSourceMutationEvent = false;
-	public static final boolean printSourceSelectionEvent = false;
-	public static final boolean printSourceModelLifecycleEvent = false;
+	public static final boolean PRINT_SOURCE_MUTATION_EVENT;
+	public static final boolean PRINT_SOURCE_SELECTION_EVENT;
+	public static final boolean PRINT_SOURCE_MODEL_LIFECYCLE_EVENT;
 
-	public static final boolean printVisualMutationEvent = false;
-	public static final boolean printVisualSelectionEvent = false;
-	public static final boolean printVisualContextMenuEvent = false;
-	public static final boolean printVisualMouseEvent = false;
-	public static final boolean printVisualDragDropEvent = false;
-	public static final boolean printVisualKeyEvent = false;
-	public static final boolean printVisualInnerDragDropEvent = false;
+	public static final boolean PRINT_VISUAL_MUTATION_EVENT;
+	public static final boolean PRINT_VISUAL_SELECTION_EVENT;
+	public static final boolean PRINT_VISUAL_CONTEXTMENU_EVENT;
+	public static final boolean PRINT_VISUAL_MOUSE_EVENT;
+	public static final boolean PRINT_VISUAL_DRAGDROP_EVENT;
+	public static final boolean PRINT_VISUAL_KEY_EVENT;
+	public static final boolean PRINT_VISUAL_INNER_DRAGDROP_EVENT;
 
-	public static final boolean visualAddPseudoElement = false;
+	public static final boolean VISUAL_ADD_PSEUDO_ELEMENT;
 
-	public static final boolean visualContextMenuDumpSource = false;
-	public static final boolean visualContextMenuDumpMapping = false;
+	public static final boolean VISUAL_CONTEXTMENU_DUMP_SOURCE;
+	public static final boolean VISUAL_CONTEXTMENU_DUMP_MAPPING;
 
-	public static final boolean visualContextMenuTest = false;
+	public static final boolean VISUAL_CONTEXTMENU_TEST;
 
 	// usePrintStackTrace = false - The exception is sent on our site 
 	// usePrintStackTrace = true - The exception is printed through printStackTrace 
-	public static final boolean usePrintStackTrace = false;
+	public static final boolean USE_PRINT_STACK_TRACE;
+	
+	static {
+		PRINT_SOURCE_MUTATION_EVENT = "true".equals(Platform.getDebugOption("/debug/source/mutation_event")); // $NON-NSL-1$ // $NON-NSL-1$
+		PRINT_SOURCE_SELECTION_EVENT = "true".equals(Platform.getDebugOption("/debug/source/selection_event")); // $NON-NSL-1$ // $NON-NSL-1$
+		PRINT_SOURCE_MODEL_LIFECYCLE_EVENT = "true".equals(Platform.getDebugOption("/debug/source/model_lifecycle_event")); // $NON-NSL-1$ // $NON-NSL-1$
+
+		PRINT_VISUAL_MUTATION_EVENT = "true".equals(Platform.getDebugOption("/debug/visual/mutation_event")); // $NON-NSL-1$ // $NON-NSL-1$
+		PRINT_VISUAL_SELECTION_EVENT = "true".equals(Platform.getDebugOption("/debug/visual/selection_event")); // $NON-NSL-1$ // $NON-NSL-1$
+		PRINT_VISUAL_CONTEXTMENU_EVENT = "true".equals(Platform.getDebugOption("/debug/visual/contextmenu_event")); // $NON-NSL-1$ // $NON-NSL-1$
+		PRINT_VISUAL_MOUSE_EVENT = "true".equals(Platform.getDebugOption("/debug/visual/mouse_event")); // $NON-NSL-1$ // $NON-NSL-1$
+		PRINT_VISUAL_DRAGDROP_EVENT = "true".equals(Platform.getDebugOption("/debug/visual/dragdrop_event")); // $NON-NSL-1$ // $NON-NSL-1$
+		PRINT_VISUAL_KEY_EVENT = "true".equals(Platform.getDebugOption("/debug/visual/key_event")); // $NON-NSL-1$ // $NON-NSL-1$
+		PRINT_VISUAL_INNER_DRAGDROP_EVENT = "true".equals(Platform.getDebugOption("/debug/visual/inner_dragdrop_event")); // $NON-NSL-1$ // $NON-NSL-1$
+
+		VISUAL_ADD_PSEUDO_ELEMENT = "true".equals(Platform.getDebugOption("/debug/visual/add_pseudo_element")); // $NON-NSL-1$ // $NON-NSL-1$
+
+		VISUAL_CONTEXTMENU_DUMP_SOURCE = "true".equals(Platform.getDebugOption("/debug/visual/contextmenu/dump_source")); // $NON-NSL-1$ // $NON-NSL-1$
+		VISUAL_CONTEXTMENU_DUMP_MAPPING = "true".equals(Platform.getDebugOption("/debug/visual/contextmenu/dump_mapping")); // $NON-NSL-1$ // $NON-NSL-1$
+
+		VISUAL_CONTEXTMENU_TEST = "true".equals(Platform.getDebugOption("/debug/visual/contextmenu/show_test")); // $NON-NSL-1$ // $NON-NSL-1$
+
+		USE_PRINT_STACK_TRACE = "true".equals(Platform.getDebugOption("/debug/use_PrintStackTrace")); // $NON-NSL-1$ // $NON-NSL-1$
+	}
 }
