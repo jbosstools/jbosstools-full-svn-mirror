@@ -206,7 +206,7 @@ packaging even if a developer is writing the most trivial web applications. With
 		<section id="AutoRedeploy">
 		<?dbhtml filename="AutoRedeploy.html"?>
 		<title>Auto redeploy</title>
-		<para>TO BE DONE</para>
+		<para>When you are creating a web application and register it on JBoss server it is automatically deployed into <emphasis>/deploy</emphasis> directory of the server. RHDS comes with the feature of auto-redeploy. It means that you don&apos;t need to restart JBoss. Any changes made in the application in exploded format will trigger a redeployment on the server.</para>
 		</section>
 		</section>
 		
@@ -263,7 +263,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<title>Running project</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/default.png"/>
+					<imagedata fileref="images/newprojectjsp20.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
