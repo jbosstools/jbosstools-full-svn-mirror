@@ -20,8 +20,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Cursor;
@@ -33,10 +36,16 @@ import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.document.NodeImpl;
+import org.jboss.tools.common.model.XModel;
+import org.jboss.tools.common.model.XModelObject;
+import org.jboss.tools.common.model.project.IModelNature;
+import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.jst.web.model.helpers.WebAppHelper;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.dnd.VpeDnD;
+import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.css.CSSReferenceList;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
@@ -76,6 +85,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class VpeVisualDomBuilder extends VpeDomBuilder {
+	/** REGEX_EL */
+	private static final Pattern REGEX_EL = Pattern.compile("[\\$|\\#]\\{.*\\}",  Pattern.MULTILINE + Pattern.DOTALL);
+	
 	private static final String PSEUDO_ELEMENT = "br";
 	private static final String PSEUDO_ELEMENT_ATTR = "vpe:pseudo-element";
 	private static final String INIT_ELEMENT_ATTR = "vpe:init-element";
@@ -97,6 +109,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private nsIDOMNode headNode;
 	private List includeStack;
 	boolean rebuildFlag = false;
+	
+	/** faceletFile */
+	private boolean faceletFile = false;
 
 	private static final String ATTR_VPE = "vpe";
 	private static final String ATTR_VPE_INLINE_LINK_VALUE = "inlinelink";
@@ -151,6 +166,13 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		this.headNode = visualEditor.getHeadNode();
 		dropper = new VpeDnd();
 		dropper.setDndData(false, true);
+		
+		if ( isFacelet() ) {
+			faceletFile = true;
+		} else {
+			faceletFile = false;
+		}
+
 	}
 
 	public void buildDom(Document sourceDocument) {
@@ -382,18 +404,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			else
 				return visualNewElement;
 		case Node.TEXT_NODE:
-			String sourceText = sourceNode.getNodeValue();
-			if (sourceText.trim().length() <= 0) {
-				registerNodes(new VpeNodeMapping(sourceNode, null));
-				return null;
-			}
-			String visualText = TextUtil.visualText(sourceText);
-			nsIDOMText visualNewTextNode = visualDocument
-					.createTextNode(visualText);
-			if (registerFlag) {
-				registerNodes(new VpeNodeMapping(sourceNode, visualNewTextNode));
-			}
-			return visualNewTextNode;
+			return createTextNode(sourceNode, registerFlag);
 		case Node.COMMENT_NODE:
 			if (!YES_STRING.equals(VpePreference.SHOW_COMMENTS.getValue())) {
 				return null;
@@ -1934,5 +1945,71 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 */
 	protected void setVisualDocument(nsIDOMDocument visualDocument) {
 		this.visualDocument = visualDocument;
+	}
+	
+	/**
+	 * Check this file is facelet
+	 * @return this if file is facelet, otherwize false
+	 */
+	private boolean isFacelet() {
+		boolean isFacelet = false;
+		
+		IEditorInput iEditorInput = pageContext.getEditPart().getEditorInput();
+		if ( iEditorInput instanceof IFileEditorInput ) {
+			IFileEditorInput iFileEditorInput = (IFileEditorInput) iEditorInput;
+			
+			IFile iFile = iFileEditorInput.getFile();
+		
+			IProject project = iFile.getProject();
+			IModelNature nature = EclipseResourceUtil.getModelNature(project);
+			if (nature != null) { 
+				XModel model = nature.getModel();
+				XModelObject webXML = WebAppHelper.getWebApp(model); 
+				XModelObject param = WebAppHelper.findWebAppContextParam(webXML, "javax.faces.DEFAULT_SUFFIX");
+				if ( param != null ) {
+					String value = param.getAttributeValue("param-value");
+			
+					if ( value.length() != 0 && iFile.getName().endsWith(value)) {
+						isFacelet = true;
+					}
+				}
+			}
+		}
+		
+		return isFacelet;		
+	}
+
+	/**
+	 * Create a visual element for text node
+	 * @param sourceNode
+	 * @param registerFlag
+	 * @return a visual element for text node
+	 */
+	
+	protected nsIDOMNode createTextNode(Node sourceNode, boolean registerFlag ) {
+		String sourceText = sourceNode.getNodeValue();
+		if (sourceText.trim().length() <= 0) {
+			registerNodes(new VpeNodeMapping(sourceNode, null));
+			return null;
+		}
+
+		if (faceletFile) {
+			Matcher matcher_EL = REGEX_EL.matcher(sourceText);
+			if (matcher_EL.find()) {
+				BundleMap bundle = pageContext.getBundle();
+				int offset = pageContext.getVisualBuilder().getCurrentMainIncludeOffset();
+				if (offset == -1) offset = ((IndexedRegion)sourceNode).getStartOffset();
+				String jsfValue = bundle.getBundleValue(sourceText, offset);
+				sourceText  = jsfValue;
+			}
+		}
+		String visualText = TextUtil.visualText(sourceText);
+
+		nsIDOMNode visualNewTextNode = visualDocument.createTextNode(visualText);
+		if (registerFlag) {
+			registerNodes(new VpeNodeMapping(sourceNode, visualNewTextNode));
+		}
+
+		return visualNewTextNode;
 	}
 }

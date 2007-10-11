@@ -101,18 +101,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			getPageContext().setCurrentVisualNode(null);
 			return visualNewElement;
 		case Node.TEXT_NODE:
-			//TODO Max Areshkau merge with old version
-			String sourceText = sourceNode.getNodeValue();
-			if (sourceText.trim().length() <= 0) {
-				registerNodes(new VpeNodeMapping(sourceNode, null));
-				return null;
-			}
-			String visualText = TextUtil.visualText(sourceText);
-			nsIDOMNode visualNewTextNode = getVisualDocument().createTextNode(visualText);
-			if (registerFlag) {
-				registerNodes(new VpeNodeMapping(sourceNode, visualNewTextNode));
-			}
-			return visualNewTextNode;
+			return createTextNode(sourceNode, registerFlag);
 		case Node.COMMENT_NODE:
 			if(!YES_STRING.equals(VpePreference.SHOW_COMMENTS.getValue())) {
 				return null;
