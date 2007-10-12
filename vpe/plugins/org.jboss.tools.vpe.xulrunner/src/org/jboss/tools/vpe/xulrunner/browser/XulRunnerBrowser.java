@@ -15,20 +15,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Dictionary;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
-import org.mozilla.interfaces.nsIBaseWindow;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIPrefService;
 import org.mozilla.interfaces.nsIRequest;
@@ -38,7 +35,6 @@ import org.mozilla.interfaces.nsITooltipListener;
 import org.mozilla.interfaces.nsIURI;
 import org.mozilla.interfaces.nsIWebBrowser;
 import org.mozilla.interfaces.nsIWebBrowserChrome;
-import org.mozilla.interfaces.nsIWebBrowserFocus;
 import org.mozilla.interfaces.nsIWebBrowserSetup;
 import org.mozilla.interfaces.nsIWebNavigation;
 import org.mozilla.interfaces.nsIWebProgress;
@@ -86,15 +82,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	}
 	
 	public XulRunnerBrowser(Composite parent) throws XulRunnerException {
-		String xulRunnerPath = getXulRunnerPath(); 
-		
-		Boolean isXulRunnerInitialized = "true".equals(System.getProperty(XULRUNNER_INITIALIZED)); // $NON-NLS-1$
-		if (!isXulRunnerInitialized) {
-			File file = new File(xulRunnerPath);
-			mozilla.initialize(file);
-			mozilla.initEmbedding(file, file, new AppFileLocProvider(file));
-			System.setProperty(XULRUNNER_INITIALIZED, "true"); // $NON-NLS-1$
-		}
+		initXulRunner();
 		
 		browser = new Browser(parent, SWT.MOZILLA);
 
@@ -111,6 +99,18 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		
 		webBrowser.addWebBrowserListener(this, nsIWebProgressListener.NS_IWEBPROGRESSLISTENER_IID);
 		webBrowser.addWebBrowserListener(this, nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
+	}
+
+	public synchronized void initXulRunner() throws XulRunnerException {
+		String xulRunnerPath = getXulRunnerPath(); 
+		
+		Boolean isXulRunnerInitialized = "true".equals(System.getProperty(XULRUNNER_INITIALIZED)); // $NON-NLS-1$
+		if (!isXulRunnerInitialized) {
+			File file = new File(xulRunnerPath);
+			mozilla.initialize(file);
+			mozilla.initEmbedding(file, file, new AppFileLocProvider(file));
+			System.setProperty(XULRUNNER_INITIALIZED, "true"); // $NON-NLS-1$
+		}
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		return XULRUNNER_BUNDLE;
 	}
 
-	private String getXulRunnerPath() throws XulRunnerException {
+	public synchronized static String getXulRunnerPath() throws XulRunnerException {
 		String xulRunnerPath = System.getProperty(XULRUNNER_PATH);
 		if (xulRunnerPath == null) {
 			GREVersionRange[] greRanges = {new GREVersionRange(XULRUNNER_LOWER_VERSION, true, XULRUNNER_HIGHER_VERSION, true)};
@@ -205,15 +205,6 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		
 		return xulRunnerPath;
 	}
-
-	/**
-	 * @return
-	 */
-	private File getXULRunnerPathFromMozilla() {
-		File xulRunnerFile = null;
-		return xulRunnerFile;
-	}
-
 
 	public nsIServiceManager getServiceManager() {
 		return mozilla.getServiceManager();
