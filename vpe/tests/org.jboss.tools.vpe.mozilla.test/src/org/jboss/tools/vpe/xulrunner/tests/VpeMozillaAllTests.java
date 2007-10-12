@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.mozilla.tests;
+package org.jboss.tools.vpe.xulrunner.tests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

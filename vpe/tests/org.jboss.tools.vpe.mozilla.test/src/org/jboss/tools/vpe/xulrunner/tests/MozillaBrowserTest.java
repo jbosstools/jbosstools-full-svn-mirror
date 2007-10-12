@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.mozilla.tests;
+package org.jboss.tools.vpe.xulrunner.tests;
 
 import junit.framework.TestCase;
 
@@ -16,7 +16,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.jboss.tools.vpe.mozilla.view.MozillaView;
+import org.jboss.tools.vpe.xulrunner.view.MozillaView;
 
 public class MozillaBrowserTest extends TestCase {
 	public static final String VIEW_ID

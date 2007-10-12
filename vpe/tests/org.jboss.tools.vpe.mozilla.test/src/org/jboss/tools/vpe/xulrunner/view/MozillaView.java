@@ -8,15 +8,16 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.mozilla.view;
+package org.jboss.tools.vpe.xulrunner.view;
 
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
+import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
 
-import org.jboss.tools.vpe.mozilla.browser.MozillaBrowser;
+
 
 
 /**
@@ -26,7 +27,7 @@ import org.jboss.tools.vpe.mozilla.browser.MozillaBrowser;
 
 public class MozillaView extends ViewPart {
 	private static final String INIT_URL = "about:buildconfig";
-	private MozillaBrowser browser;
+	private XulRunnerBrowser browser;
 
 	/**
 	 * The constructor.

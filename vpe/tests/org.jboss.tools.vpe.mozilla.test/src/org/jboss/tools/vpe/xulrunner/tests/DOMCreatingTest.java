@@ -8,12 +8,12 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.mozilla.tests;
+package org.jboss.tools.vpe.xulrunner.tests;
 
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMDocument;
 import org.jboss.tools.vpe.mozilla.browser.MozillaBrowser;
-import org.jboss.tools.vpe.mozilla.view.MozillaView;
+import org.jboss.tools.vpe.xulrunner.view.MozillaView;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -26,7 +26,7 @@ import org.w3c.dom.Text;
  * @author Max Areshkau
  * 
  */
-public class DOMCreatingTest extends MozillaBrowserTest {
+public class DOMCreatingTest extends XulRunnerBrowserTest {
 
 	/**
 	 * Contains brouser instamce
