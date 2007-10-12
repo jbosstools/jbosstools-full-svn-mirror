@@ -41,19 +41,7 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 	 */
 	public VpePlugin() {
 		super();
-//		final String VPE_PLUGIN_RESOURCE_BUNDLE_ID
-//				= "org.jboss.tools.vpe.VpePluginResources";
 		plugin = this;
-//		try {
-//			resourceBundle
-//					= ResourceBundle.getBundle(VPE_PLUGIN_RESOURCE_BUNDLE_ID);
-//		} catch (MissingResourceException x) {
-//			LogHelper.logError(VpePlugin.PLUGIN_ID,
-//					"ResourceBundle " + VPE_PLUGIN_RESOURCE_BUNDLE_ID
-//							+ " is missing.",
-//					x);
-//			resourceBundle = null;
-//		}
 	}
 
 	/**
@@ -76,28 +64,6 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 	public static VpePlugin getDefault() {
 		return plugin;
 	}
-
-//	/**
-//	 * Returns the string from the plugin's resource bundle,
-//	 * or 'key' if not found.
-//	 */
-//	public static String getResourceString(String key) {
-//		ResourceBundle bundle = VpePlugin.getDefault().getResourceBundle();
-//		try {
-//			return (bundle != null) ? bundle.getString(key) : key;
-//		} catch (MissingResourceException e) {
-//			VpePlugin.getPluginLog()
-//					.logError("Resource " + key + " is missing.", e);
-//			return key;
-//		}
-//	}
-
-//	/**
-//	 * Returns the plugin's resource bundle,
-//	 */
-//	public ResourceBundle getResourceBundle() {
-//		return resourceBundle;
-//	}
 
 	public static void reportProblem(Exception throwable) {
 		if (VpeDebug.USE_PRINT_STACK_TRACE) {
@@ -129,7 +95,6 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 		return getDefault();
 	}
 
-	@Override
 	public void earlyStartup() {
 		/* init xulrunner path for */ 
 		try {
