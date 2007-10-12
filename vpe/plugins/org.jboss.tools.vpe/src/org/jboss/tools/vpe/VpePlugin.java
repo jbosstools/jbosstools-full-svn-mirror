@@ -15,16 +15,21 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IStartup;
+import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.common.log.BaseUIPlugin;
 import org.jboss.tools.common.log.IPluginLog;
 import org.jboss.tools.common.reporting.ProblemReportingHelper;
+import org.jboss.tools.vpe.xulrunner.XulRunnerException;
+import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
  */
-public class VpePlugin extends BaseUIPlugin {
+public class VpePlugin extends BaseUIPlugin implements IStartup {
 	public final static String PLUGIN_ID = "org.jboss.tools.vpe";
 	//The shared instance.
 	private static VpePlugin plugin;
@@ -123,4 +128,16 @@ public class VpePlugin extends BaseUIPlugin {
 	public static IPluginLog getPluginLog() {
 		return getDefault();
 	}
+
+	@Override
+	public void earlyStartup() {
+		/* init xulrunner path for */ 
+		try {
+			XulRunnerBrowser.getXulRunnerPath();
+		} catch (Throwable t) {
+			// Ignore this. Will catch it when use Visual Editor 
+		}
+	}
+	
+	
 }
