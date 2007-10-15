@@ -10,8 +10,10 @@
  ******************************************************************************/
 package org.jboss.tools.jsf.vpe.richfaces.template;
 
+import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.jboss.tools.jsf.vpe.richfaces.ComponentUtil;
 import org.jboss.tools.jsf.vpe.richfaces.HtmlComponentUtil;
+import org.jboss.tools.jsf.vpe.richfaces.RichFacesTemplatesActivator;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
@@ -20,6 +22,7 @@ import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
+import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -140,7 +143,7 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
      */
     private void setAttributeToTree(nsIDOMNode node, String attrName,
 	    String attrValue) {
-	if (!(node instanceof nsIDOMElement)) {
+	if (!(node instanceof Element)) {
 	    return;
 	}
 	if (node.getNodeName().equalsIgnoreCase(
@@ -169,6 +172,8 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
      *                Object <code>VpeCreationData</code>, built by a method
      *                <code>create</code>
      */
+
+    @Override
     public void validate(VpePageContext pageContext, Node sourceNode,
 	    nsIDOMDocument visualDocument, VpeCreationData data) {
 	super.validate(pageContext, sourceNode, visualDocument, data);
@@ -180,21 +185,40 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
      * 
      * @param node
      */
+    /**
+     * Revert tree elements in right order.
+     * 
+     * @param node
+     */
     private void revertTableRows(nsIDOMNode node) {
 
-	nsIDOMNodeList list = node.getChildNodes();
-	if (node.getNodeName().equalsIgnoreCase(HtmlComponentUtil.HTML_TAG_DIV)
-		&& list.getLength() == 2) {
-	    nsIDOMNode table1 = list.item(0);
-	    nsIDOMNode table2 = list.item(1);
-	    node.removeChild(table1);
-	    node.removeChild(table2);
-	    node.appendChild(table2);
-	    node.appendChild(table1);
-	}
-	nsIDOMNodeList list2 = node.getChildNodes();
-	for (int i = 0; i < list2.getLength(); i++) {
-	    revertTableRows(list2.item(i));
+	try {
+	    nsIDOMNodeList list = node.getChildNodes();
+	    nsIDOMElement element = (nsIDOMElement) node
+		    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+	    String id = element
+		    .getAttribute(RichFacesTreeNodesAdaptorTemplate.ID_ATTR_NAME);
+	    if (id == null)
+		id = "";
+	    if (node.getNodeName().equalsIgnoreCase(
+		    HtmlComponentUtil.HTML_TAG_DIV)
+		    && list.getLength() == 2
+		    && !(id
+			    .equalsIgnoreCase(RichFacesTreeNodesAdaptorTemplate.TREE_NODES_ADAPTOR_NAME) || id
+			    .equalsIgnoreCase(RichFacesTreeNodesAdaptorTemplate.RECURSIVE_TREE_NODES_ADAPTOR_NAME))) {
+		nsIDOMNode table1 = list.item(0);
+		nsIDOMNode table2 = list.item(1);
+		node.removeChild(table1);
+		node.removeChild(table2);
+		node.appendChild(table2);
+		node.appendChild(table1);
+	    }
+	    nsIDOMNodeList list2 = node.getChildNodes();
+	    for (int i = 0; i < list2.getLength(); i++) {
+		revertTableRows(list2.item(i));
+	    }
+	} catch (XPCOMException e) {
+	    return;
 	}
     }
 

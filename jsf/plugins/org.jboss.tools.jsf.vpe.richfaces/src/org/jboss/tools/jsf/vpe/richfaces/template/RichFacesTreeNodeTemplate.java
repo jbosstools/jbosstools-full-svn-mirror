@@ -224,9 +224,9 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 	// creates icon with status of node(collapsed or not) node
 	nsIDOMElement td1 = visualDocument
 		.createElement(HtmlComponentUtil.HTML_TAG_TD);
-
 	// sets icon node
-	if (!isLastElement(sourceNode) && isAdaptorChild(sourceNode)) {
+	if (!isLastElement(sourceNode) && isAdaptorChild(sourceNode)
+		&& !isHasNextAdaptorElement(sourceNode)) {
 	    backgroundLinePath = RichFacesTemplatesActivator
 		    .getPluginResourcePath()
 		    + ICON_LINE;
@@ -238,7 +238,32 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 		    (Element) sourceNode, iconNode, NODE_ICON_ATTR_NAME,
 		    showLinesValue == true ? ICON_NODE_WITH_LINE
 			    : ICON_NODE_WITHOUT_LINES);
-	} else if ((isAdaptorChild(sourceNode) && isLastElement(sourceNode) && isLastElementAfterAdaptor(sourceNode))
+	} else if (!isLastElement(sourceNode) && isAdaptorChild(sourceNode)
+		&& isHasNextAdaptorElement(sourceNode)) {
+	    backgroundLinePath = RichFacesTemplatesActivator
+		    .getPluginResourcePath()
+		    + ICON_LINE;
+	    setAttributeForPictureNode(pageContext, visualDocument,
+		    (Element) sourceNode, td1, NODE_ICON_EXPANDED_ATTR_NAME,
+		    showLinesValue == true ? ICON_EXPANDED_ADAPTER_WITH_LINES
+			    : ICON_EXPANDED_ADAPTER_WITHOUT_LINES);
+	    setAttributeForPictureNode(pageContext, visualDocument,
+		    (Element) sourceNode, iconNode, NODE_ICON_ATTR_NAME,
+		    showLinesValue == true ? ICON_NODE_WITH_LINES
+			    : ICON_NODE_WITHOUT_LINES);
+	    if (showLinesValue) {
+		String path = RichFacesTemplatesActivator
+			.getPluginResourcePath()
+			+ ICON_LEFT_LINE;
+		iconNode.setAttribute(HtmlComponentUtil.HTML_STYLE_ATTR,
+			"background-image: url(file://" + path + "); "
+				+ NODE_LINES_STYLE);
+	    }
+	} else if ((isAdaptorChild(sourceNode) && isLastElement(sourceNode) && (isLastElementAfterAdaptor(sourceNode) == isAdaptorInTree(sourceNode)) /*
+																			 * &&
+																			 * (isAdaptorInTree(sourceNode) ==
+																			 * isLastElementAfterAdaptor(sourceNode))
+																			 */)
 		|| (!isAdaptorChild(sourceNode) && isLastElement(sourceNode))) {
 	    backgroundLinePath = RichFacesTemplatesActivator
 		    .getPluginResourcePath()
@@ -315,8 +340,8 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 	    nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data,
 	    String name, String value) {
 	/*
-	 * processed only next attributes iconExpanded and icon, becouse tree
-	 * allways shows as expanded and information is it leaf or not contains
+	 * processed only next attributes iconExpanded and icon, because tree
+	 * always shows as expanded and information is it leaf or not contains
 	 * in model
 	 */
 	if (NODE_ICON_EXPANDED_ATTR_NAME.equalsIgnoreCase(name)) {
@@ -326,7 +351,6 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 	    nsIDOMElement img = (nsIDOMElement) expandedIconCell
 		    .getChildNodes().item(0).queryInterface(
 			    nsIDOMElement.NS_IDOMELEMENT_IID);
-
 	    ComponentUtil.setImgFromResources(pageContext, img, value,
 		    UNDEFINED_ICON);
 	    img.setAttribute(ICON_PARAM_NAME, "");
@@ -336,7 +360,6 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 		    .item(1).queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 	    nsIDOMElement img = (nsIDOMElement) iconCell.getChildNodes()
 		    .item(0).queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-
 	    ComponentUtil.setImgFromResources(pageContext, img, value,
 		    UNDEFINED_ICON);
 	    img.setAttribute(ICON_PARAM_NAME, "");
@@ -346,7 +369,6 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 		    .item(1).queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 	    nsIDOMElement img = (nsIDOMElement) iconCell.getChildNodes()
 		    .item(0).queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-
 	    ComponentUtil.setImgFromResources(pageContext, img, value,
 		    UNDEFINED_ICON);
 	    img.setAttribute(ICON_PARAM_NAME, "");
@@ -358,8 +380,8 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 	    Element sourceElement, nsIDOMDocument visualDocument,
 	    nsIDOMNode visualNode, Object data, String name) {
 	/*
-	 * processed only next attributes iconExpanded and icon, becouse tree
-	 * allways shows as expanded and information is it leaf or not contains
+	 * processed only next attributes iconExpanded and icon, because tree
+	 * always shows as expanded and information is it leaf or not contains
 	 * in model
 	 */
 
@@ -371,7 +393,6 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 	    nsIDOMElement img = (nsIDOMElement) expandedIconCell
 		    .getChildNodes().item(0).queryInterface(
 			    nsIDOMElement.NS_IDOMELEMENT_IID);
-
 	    String parentAttrName = ((Element) sourceElement.getParentNode())
 		    .getAttribute(NODE_ICON_EXPANDED_ATTR_NAME);
 	    if (parentAttrName == null || parentAttrName.length() == 0) {
@@ -392,7 +413,6 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 
 	    nsIDOMElement img = (nsIDOMElement) iconCell.getChildNodes()
 		    .item(0).queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-
 	    String parentAttrName = ((Element) sourceElement.getParentNode())
 		    .getAttribute(NODE_ICON_ATTR_NAME);
 	    if (parentAttrName == null || parentAttrName.length() == 0) {
@@ -411,7 +431,6 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 		    .item(1).queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 	    nsIDOMElement img = (nsIDOMElement) iconCell.getChildNodes()
 		    .item(0).queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-
 	    String parentAttrName = ((Element) sourceElement.getParentNode())
 		    .getAttribute(NODE_ICON_LEAF_ATTR_NAME);
 	    if (parentAttrName == null || parentAttrName.length() == 0) {
@@ -424,60 +443,6 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 	    }
 	    img.setAttribute(ICON_PARAM_NAME, NODE_ICON_LEAF_ATTR_NAME);
 	}
-    }
-
-    /**
-     * 
-     * @param sourceNode
-     * @return
-     */
-    private boolean isAdaptorChild(Node sourceNode) {
-	Node parentNode = sourceNode.getParentNode();
-	if (!(parentNode instanceof Element)) {
-	    return true;
-	}
-
-	String treeNodesAdaptorName = sourceNode.getPrefix() + ":"
-		+ RichFacesTreeTemplate.TREE_NODES_ADAPTOR;
-	String treeRecursiveNodesAdaptorName = sourceNode.getPrefix() + ":"
-		+ RichFacesTreeTemplate.TREE_RECURSIVE_NODES_ADAPTOR;
-	if (parentNode.getNodeName().equals(treeNodesAdaptorName)
-		|| parentNode.getNodeName().equals(
-			treeRecursiveNodesAdaptorName)) {
-	    return true;
-	}
-	return false;
-    }
-
-    /**
-     * 
-     * @param parentTree
-     * @param sourceNode
-     * @return
-     */
-    private boolean isLastElement(Node sourceNode) {
-	Node parentTree = sourceNode.getParentNode();
-	if (!(parentTree instanceof Element)) {
-	    return true;
-	}
-	NodeList childs = parentTree.getChildNodes();
-	String treeNodeName = parentTree.getPrefix() + ":"
-		+ RichFacesTreeTemplate.TREE_NODE_NAME;
-	String treeNodesAdaptorName = parentTree.getPrefix() + ":"
-		+ RichFacesTreeTemplate.TREE_NODES_ADAPTOR;
-	String treeRecursiveNodesAdaptorName = parentTree.getPrefix() + ":"
-		+ RichFacesTreeTemplate.TREE_RECURSIVE_NODES_ADAPTOR;
-	Node lastElement = null;
-	Node el = null;
-	for (int i = 0; i < childs.getLength(); i++) {
-	    el = childs.item(i);
-	    if (el.getNodeName().equals(treeNodeName)
-		    || el.getNodeName().equals(treeNodesAdaptorName)
-		    || el.getNodeName().equals(treeRecursiveNodesAdaptorName)) {
-		lastElement = el;
-	    }
-	}
-	return sourceNode.equals(lastElement);
     }
 
     /**
@@ -509,6 +474,101 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 	    }
 	}
 	return sourceNode.equals(lastElement);
+    }
+
+    /**
+     * Node is Adaptor child
+     * 
+     * @param sourceNode
+     * @return
+     */
+    private boolean isAdaptorChild(Node sourceNode) {
+	Node parentNode = sourceNode.getParentNode();
+	if (!(parentNode instanceof Element)) {
+	    return true;
+	}
+
+	String treeNodesAdaptorName = sourceNode.getPrefix() + ":"
+		+ RichFacesTreeTemplate.TREE_NODES_ADAPTOR;
+	String treeRecursiveNodesAdaptorName = sourceNode.getPrefix() + ":"
+		+ RichFacesTreeTemplate.TREE_RECURSIVE_NODES_ADAPTOR;
+	if (parentNode.getNodeName().equals(treeNodesAdaptorName)
+		|| parentNode.getNodeName().equals(
+			treeRecursiveNodesAdaptorName)) {
+	    return true;
+	}
+	return false;
+    }
+
+    /**
+     * Node is last element
+     * 
+     * @param parentTree
+     * @param sourceNode
+     * @return
+     */
+    private boolean isLastElement(Node sourceNode) {
+	Node parentTree = sourceNode.getParentNode();
+	if (!(parentTree instanceof Element)) {
+	    return true;
+	}
+	NodeList childs = parentTree.getChildNodes();
+	String treeNodeName = parentTree.getPrefix() + ":"
+		+ RichFacesTreeTemplate.TREE_NODE_NAME;
+	String treeNodesAdaptorName = parentTree.getPrefix() + ":"
+		+ RichFacesTreeTemplate.TREE_NODES_ADAPTOR;
+	String treeRecursiveNodesAdaptorName = parentTree.getPrefix() + ":"
+		+ RichFacesTreeTemplate.TREE_RECURSIVE_NODES_ADAPTOR;
+	Node lastElement = null;
+	Node el = null;
+	for (int i = 0; i < childs.getLength(); i++) {
+	    el = childs.item(i);
+	    if (el.getNodeName().equals(treeNodeName)
+		    || el.getNodeName().equals(treeNodesAdaptorName)
+		    || el.getNodeName().equals(treeRecursiveNodesAdaptorName)) {
+		lastElement = el;
+	    }
+	}
+	return sourceNode.equals(lastElement);
+    }
+
+    /**
+     * Next element is Adaptor
+     * 
+     * @param sourceNode
+     * @return
+     */
+    private boolean isHasNextAdaptorElement(Node sourceNode) {
+	Node parentTree = sourceNode.getParentNode();
+	if (!(parentTree instanceof Element)) {
+	    return true;
+	}
+	NodeList childs = parentTree.getChildNodes();
+	String treeNodesAdaptorName = parentTree.getPrefix() + ":"
+		+ RichFacesTreeTemplate.TREE_NODES_ADAPTOR;
+	String treeRecursiveNodesAdaptorName = parentTree.getPrefix() + ":"
+		+ RichFacesTreeTemplate.TREE_RECURSIVE_NODES_ADAPTOR;
+	Node lastElement = null;
+	Node el = null;
+
+	for (int i = 0; i < childs.getLength(); i++) {
+	    el = childs.item(i);
+	    if (!(el instanceof Element)) {
+		continue;
+	    }
+
+	    if (lastElement != null) {
+		break;
+	    }
+	    if (el.equals(sourceNode)) {
+		lastElement = el;
+	    }
+	}
+	if (el.getNodeName().equals(treeNodesAdaptorName)
+		|| el.getNodeName().equals(treeRecursiveNodesAdaptorName)) {
+	    return true;
+	}
+	return false;
     }
 
     /**
@@ -567,6 +627,7 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
     }
 
     /**
+     * Node has element after adaptor
      * 
      * @param sourceNode
      * @return
@@ -577,5 +638,31 @@ public class RichFacesTreeNodeTemplate extends VpeAbstractTemplate {
 	    return true;
 	}
 	return isLastElement(nodeAdaptor);
+    }
+
+    /**
+     * 
+     * @param sourceNode
+     * @return
+     */
+    private boolean isAdaptorInTree(Node sourceNode) {
+	Node adaptorNode = sourceNode.getParentNode();
+	if (!(adaptorNode instanceof Element)) {
+	    return true;
+	}
+	String treeNodesAdaptorName = adaptorNode.getPrefix() + ":"
+		+ RichFacesTreeTemplate.TREE_NODES_ADAPTOR;
+	String treeRecursiveNodesAdaptorName = adaptorNode.getPrefix() + ":"
+		+ RichFacesTreeTemplate.TREE_RECURSIVE_NODES_ADAPTOR;
+	if (adaptorNode.getNodeName().equals(treeNodesAdaptorName)
+		|| adaptorNode.getNodeName().equals(
+			treeRecursiveNodesAdaptorName)) {
+	    Node treeNode = adaptorNode.getParentNode();
+	    String treeName = treeNode.getPrefix() + ":" + TREE_NAME;
+	    if (treeNode.getNodeName().equals(treeName)) {
+		return true;
+	    }
+	}
+	return false;
     }
 }
