@@ -20,6 +20,7 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -120,13 +121,13 @@ public class VpeCopyCreator extends VpeAbstractCreator {
 	public void removeAttribute(VpePageContext pageContext,
 			Element sourceElement, Map visualNodeMap, String name) {
 		if (isAttribute(name)) {
-			Element visualElement = (Element) visualNodeMap.get(this);
+			nsIDOMElement visualElement = (nsIDOMElement) visualNodeMap.get(this);
 			visualElement.removeAttribute(name);
 		}
 	}
 
 	public void pseudo(VpePageContext pageContext, Node sourceNode,
-			Node visualNode, Map visualNodeMap) {
+			nsIDOMNode visualNode, Map visualNodeMap) {
 		visualNodeMap.put(this, visualNode);
 	}
 
