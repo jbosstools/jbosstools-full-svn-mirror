@@ -282,11 +282,11 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <para><emphasis role="bold">What version of Eclipse does Red Hat Developer Studio support?</emphasis></para>
   <para>Red Hat Developer Studio works with Eclipse 3.3</para>
   </section> -->
- <section id="Downloading">
+ <!--<section id="Downloading">
   <title>Downloading</title>
   <para><emphasis role="bold">Where can I download a copy of Red Hat Developer Studio?</emphasis></para>
   <para>Go to <ulink url="http://www.redhat.com/developers/rhds/index.html">Download Page</ulink></para>
- </section>
+ </section>-->
  <section id="Installation_Issues">
   <title>Installation Issues</title>
   <para><emphasis role="bold">Visual Editor does not start under Linux</emphasis></para>
@@ -349,7 +349,7 @@ on their machines.</para>
 <title>Other relevant resources on the topic</title>
 <para>RHDS on JBoss: <ulink url="http://labs.jboss.com/rhdevstudio/">Red Hat Developer Studio</ulink></para>
 <para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Forum</ulink></para>
-<para>Download: <ulink url="http://www.exadel.com/web/portal/download/esp35">RHDS Download</ulink></para>
+<para>Download: <ulink url="http://www.redhat.com/developers/rhds/index.html">RHDS Download</ulink></para>
 </section>
 </chapter>
 
