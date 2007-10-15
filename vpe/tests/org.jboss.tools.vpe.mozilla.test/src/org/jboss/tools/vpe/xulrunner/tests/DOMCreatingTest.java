@@ -11,14 +11,14 @@
 package org.jboss.tools.vpe.xulrunner.tests;
 
 import org.eclipse.ui.PlatformUI;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMDocument;
-import org.jboss.tools.vpe.mozilla.browser.MozillaBrowser;
-import org.jboss.tools.vpe.xulrunner.view.MozillaView;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
+import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
+import org.jboss.tools.vpe.xulrunner.view.XulRunnerView;
+import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMNodeList;
+import org.mozilla.interfaces.nsIDOMText;
 
 /**
  * This class used for testing mozilla interfaces.
@@ -31,20 +31,20 @@ public class DOMCreatingTest extends XulRunnerBrowserTest {
 	/**
 	 * Contains brouser instamce
 	 */
-	private MozillaBrowser mozillaBrowser;
+	private XulRunnerEditor xulrunnerBrowser;
 
 	/**
 	 * Tests possability add and remove dom elements.
 	 * 
 	 */
 	public void testAddRemovingDOMElements() {
-		Element root = mozillaBrowser.getDOMDocumentElement();
-		nsIDOMDocument domDocument = mozillaBrowser.getDOMDocument();
-		Element child = domDocument.createElement("test-element");
+	    	nsIDOMDocument domDocument = xulrunnerBrowser.getDOMDocument();
+		nsIDOMElement root = domDocument.getDocumentElement();
+		nsIDOMElement child = domDocument.createElement("test-element");
 		root.appendChild(child);
 		assertTrue("We doen't have elements to remove", root.getChildNodes()
 				.getLength() > 0);
-		for (int i = root.getChildNodes().getLength() - 1; i >= 0; i--) {
+		for (long i = root.getChildNodes().getLength() - 1; i >= 0; i--) {
 			root.removeChild(root.getChildNodes().item(i));
 		}
 		root.appendChild(child);
@@ -57,37 +57,37 @@ public class DOMCreatingTest extends XulRunnerBrowserTest {
 	 * 
 	 * @throws Exception
 	 */
-	public void testMozillaCreatingDOM() throws Exception {
+	public void testXulRunnerCreatingDOM() throws Exception {
 		String chieldName = "H";
 		String attrName = "color";
 		String attrValue = "TEST_VALUE";
-		assertNotNull(mozillaBrowser);
-		nsIDOMDocument domDocument = mozillaBrowser.getDOMDocument();
-		Element root = mozillaBrowser.getDOMDocumentElement();
+		assertNotNull(xulrunnerBrowser);
+		nsIDOMDocument domDocument = xulrunnerBrowser.getDOMDocument();
+		nsIDOMElement root = domDocument.getDocumentElement();
 
-		for (int i = root.getChildNodes().getLength() - 1; i >= 0; i--) {
+		for (long i = root.getChildNodes().getLength() - 1; i >= 0; i--) {
 			root.removeChild(root.getChildNodes().item(i));
 		}
 		// checks of creating elements with attributes and chield nodes
-		Element child = domDocument.createElement("test-element");
+		nsIDOMElement child = domDocument.createElement("test-element");
 		for (int i = 0; i < 4; i++) {
 			child.appendChild(domDocument.createElement(chieldName + i));
 		}
 		for (int i = 0; i < 3; i++) {
 			child.setAttribute(attrName + i, attrValue + i);
 		}
-		Attr attr = domDocument.createAttribute(attrName + 3);
+		nsIDOMAttr attr = domDocument.createAttribute(attrName + 3);
 		attr.setValue(attrValue + 3);
 		child.setAttributeNode(attr);
 		// append child element to root element
 		root.appendChild(child);
-		Node toCheck = root.getChildNodes().item(0);
+		nsIDOMNode toCheck = root.getChildNodes().item(0);
 		assertEquals("We haven't add child element", toCheck.getNodeName(),
 				child.getNodeName());
 
 		assertEquals("Number of child nodes do not coincide", 4,child
 				.getChildNodes().getLength());
-		NodeList nodeList = child.getChildNodes();
+		nsIDOMNodeList nodeList = child.getChildNodes();
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			assertEquals("Child node doesn't concide", nodeList.item(i)
 					.getNodeName(), chieldName + i);
@@ -99,7 +99,7 @@ public class DOMCreatingTest extends XulRunnerBrowserTest {
 			assertEquals("Attribute values doesn't coinside", toCheck.getAttributes()
 					.item(i).getNodeValue(), attrValue + i);
 		}
-		Text text = domDocument.createTextNode("TEST");
+		nsIDOMText text = domDocument.createTextNode("TEST");
 		root.appendChild(text);
 		assertEquals("Dom element hasn't been created", "TEST", text
 				.getNodeValue());
@@ -109,13 +109,13 @@ public class DOMCreatingTest extends XulRunnerBrowserTest {
 	protected void setUp() throws Exception {
 		super.setUp();
 		waitForJobs();
-		MozillaView mozilla
-			= ((MozillaView) PlatformUI.getWorkbench()
+		XulRunnerView xulrunner
+			= ((XulRunnerView) PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().showView(VIEW_ID));
 		waitForJobs();
 		delay(3000);
 		
-		mozillaBrowser = mozilla.getBrowser();
+		xulrunnerBrowser = xulrunner.getBrowser();
 	}
 
 	@Override
