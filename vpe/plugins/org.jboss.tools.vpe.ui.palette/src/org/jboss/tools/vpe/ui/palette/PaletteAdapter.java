@@ -53,7 +53,7 @@ public class PaletteAdapter implements IPaletteAdapter {
 		model = PaletteModel.getInstance(paletteContents);
 		viewer = new PaletteViewer(viewPart);
 		palette = viewer.createControl(root);
-		viewer.setContextMenu(new PaletteContextMenuProvider(viewer));
+		
 		viewer.setPaletteViewerPreferences(new PaletteViewerPreferences());
 		PaletteRoot paletteRoot = model.getPaletteRoot();
 		viewer.setPaletteRoot(paletteRoot);
