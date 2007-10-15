@@ -16,7 +16,6 @@ import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -39,8 +38,8 @@ public class VpeCompositionTemplate extends VpeDefineContainerTemplate {
 		
 		return new VpeCreationData(container);
 	}
-	
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
+	@Override
+	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument,nsIDOMElement visualNode, Object data, String name, String value) {
 		return true;
 	}
 }
