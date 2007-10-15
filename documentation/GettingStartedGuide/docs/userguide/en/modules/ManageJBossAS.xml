@@ -14,7 +14,7 @@
  <para>Red Hat Developer Studio ships with <property>JBoss EAP v.4.2</property> bundled. When you followed the default installation of Red Hat Developer Studio, you should already have a <property>JBoss 4.2 server</property> installed and defined. To run <property>JBoss AS 4.2</property> you need JDK 1.5., JDK 6 is not formally supported yet, although you may be able to start the server with it.</para>
  <section id="JBossbundled">
   <?dbhtml filename="JBossbundled.html"?>
-  <title>How to Manage the JBoss AS Mundled in RHDS</title>
+  <title>How to Manage the JBoss AS Bundled in RHDS</title>
   <para></para>
   <section id="StartingServer">
   <?dbhtml filename="StartingServer.html"?>
