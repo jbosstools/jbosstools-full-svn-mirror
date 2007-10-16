@@ -13,7 +13,6 @@ package org.jboss.tools.vpe.editor.template;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
@@ -163,11 +162,11 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	}
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name, String value) {
-		setAttribute(pageContext, sourceElement, (Map<?,?>)data, name, value);
+		setAttribute(pageContext, sourceElement, (Map<VpeTemplate,?>)data, name, value);
 	}
 	@Override
 	public void removeAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name) {
-		removeAttribute(pageContext, sourceElement, (Map<?,?>)data, name);
+		removeAttribute(pageContext, sourceElement, (Map<VpeTemplate,?>)data, name);
 	}
 	@Override
 	public void beforeRemove(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
@@ -310,7 +309,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	private String getPageLocale(VpePageContext pageContext, IDOMElement sourceElement) {
 		IStructuredModel model = null;
 		try {	
-			List taglibs = pageContext.getTagLibs();
+			List<TaglibData> taglibs = pageContext.getTagLibs();
 			// Find F tracker
 			TaglibData fTD = null;
 			for (int i = 0; i < taglibs.size(); i++) {
@@ -358,10 +357,10 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	 */
 	@Override
 	public void openIncludeEditor(VpePageContext pageContext, Element sourceElement, Object data) {
-		openIncludeEditor(pageContext, sourceElement, (Map) data);
+		openIncludeEditor(pageContext, sourceElement, (Map<?,?>) data);
 	}
 	
-	private void openIncludeEditor(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
+	private void openIncludeEditor(VpePageContext pageContext, Element sourceElement, Map<?,?> visualNodeMap) {
 		if (sourceElement != null) {
 		    String file = null;
 		    if ("jsp:directive.include".equals(sourceElement.getNodeName())) {
@@ -464,16 +463,6 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		visualElement.setAttribute(ATTR_STYLE, style);
 	}
 	
-	private boolean getCurrentSelect() {
-		VpeCreator[] creators = dependencyMap.getCreators(VpeValueCreator.SIGNATURE_VPE_VALUE);
-		for (int i = 0; i < creators.length; i++) {
-			if (creators[i] instanceof VpeOutputAttributes) {
-				return false;
-			}
-		}
-		return true;
-	}
-
 	private boolean getCurrentModify(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
 		if (!modify || !dependencyFromBundle) {
 			return modify;
@@ -539,7 +528,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		}
 	}
 
-	private void setAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name, String value) {
+	private void setAttribute(VpePageContext pageContext, Element sourceElement, Map<VpeTemplate,?> visualNodeMap, String name, String value) {
 		if (creator != null) {
 			setAttribute(dependencyMap.getCreators(VpeExpressionBuilder.SIGNATURE_ANY_ATTR), pageContext, sourceElement, visualNodeMap, name, value);
 			setAttribute(dependencyMap.getCreators(VpeExpressionBuilder.attrSignature(name, caseSensitive)), pageContext, sourceElement, visualNodeMap, name, value);
@@ -547,7 +536,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		}
 	}
 
-	private void removeAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name) {
+	private void removeAttribute(VpePageContext pageContext, Element sourceElement, Map<VpeTemplate,?> visualNodeMap, String name) {
 		if (creator != null) {
 			removeAttribute(dependencyMap.getCreators(VpeExpressionBuilder.SIGNATURE_ANY_ATTR), pageContext, sourceElement, visualNodeMap, name);
 			removeAttribute(dependencyMap.getCreators(VpeExpressionBuilder.attrSignature(name, caseSensitive)), pageContext, sourceElement, visualNodeMap, name);
