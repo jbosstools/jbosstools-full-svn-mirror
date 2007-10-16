@@ -10,10 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.jsf.vpe.richfaces.template;
 
-import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.jboss.tools.jsf.vpe.richfaces.ComponentUtil;
 import org.jboss.tools.jsf.vpe.richfaces.HtmlComponentUtil;
-import org.jboss.tools.jsf.vpe.richfaces.RichFacesTemplatesActivator;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
@@ -143,18 +141,19 @@ public class RichFacesTreeTemplate extends VpeAbstractTemplate {
      */
     private void setAttributeToTree(nsIDOMNode node, String attrName,
 	    String attrValue) {
-	if (!(node instanceof Element)) {
+	try {
+	    nsIDOMElement element = (nsIDOMElement) node
+		    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+	    if (node.getNodeName().equalsIgnoreCase(
+		    HtmlComponentUtil.HTML_TAG_TABLE)) {
+		element.setAttribute(attrName, attrValue);
+	    }
+	    nsIDOMNodeList list2 = node.getChildNodes();
+	    for (int i = 0; i < list2.getLength(); i++) {
+		setAttributeToTree(list2.item(i), attrName, attrValue);
+	    }
+	} catch (XPCOMException exception) {
 	    return;
-	}
-	if (node.getNodeName().equalsIgnoreCase(
-		HtmlComponentUtil.HTML_TAG_TABLE)) {
-	    ((nsIDOMElement) node
-		    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
-		    .setAttribute(attrName, attrValue);
-	}
-	nsIDOMNodeList list2 = node.getChildNodes();
-	for (int i = 0; i < list2.getLength(); i++) {
-	    setAttributeToTree(list2.item(i), attrName, attrValue);
 	}
     }
 
