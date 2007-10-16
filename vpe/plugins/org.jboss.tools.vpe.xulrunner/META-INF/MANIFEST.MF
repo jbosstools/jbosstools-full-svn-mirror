@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Browser (XULRunner) Plug-in
+Bundle-SymbolicName: org.jboss.tools.vpe.xulrunner;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.jboss.tools.vpe.xulrunner.BrowserPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.mozilla.xpcom,
+ org.jboss.tools.common
+Eclipse-LazyStart: true
+Export-Package: org.jboss.tools.vpe.xulrunner;uses:="org.eclipse.jface.resource,org.eclipse.ui.plugin,org.osgi.framework",
+ org.jboss.tools.vpe.xulrunner.browser;uses:="org.mozilla.interfaces,org.eclipse.swt.widgets,org.mozilla.xpcom",
+ org.jboss.tools.vpe.xulrunner.browser.util,
+ org.jboss.tools.vpe.xulrunner.editor
+Bundle-ClassPath: .
+Bundle-Vendor: Red Hat, Inc.
