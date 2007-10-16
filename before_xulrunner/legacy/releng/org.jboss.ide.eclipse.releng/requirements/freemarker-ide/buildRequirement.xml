@@ -1,0 +1,11 @@
+<project default="build.requirement">
+
+	<target name="build.requirement">
+		<property name="unzip.dest" value="${eclipseInstallDir}/eclipse"/>
+		
+		<ant antfile="../webtools/buildDriver.xml" target="build.driver" inheritall="true">
+			  <property name="driver.properties" value="${basedir}/build.properties"/>
+			  <property name="requirement" value="freemarker-ide"/>
+		</ant>
+	</target>
+</project>

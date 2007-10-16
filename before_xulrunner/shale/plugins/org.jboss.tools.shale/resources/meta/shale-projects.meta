@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE XModelEntityGroup PUBLIC "-//Red Hat, Inc.//DTD Meta 1.0//EN" "meta.dtd">
+<XModelEntityGroup>
+ <VERSION DEPENDS="Model:1.0" MODULE="Struts Editor" VERSION="1.0"/>
+ <MAPPINGS>
+  <MAPPING name="FilteredTreeConstraints">
+   <PAIR name="JSFProjects$2" value="org.jboss.tools.shale.model.pv.JSFProjectsTreeConstraint"/>
+  </MAPPING>
+  <MAPPING name="FilteredTrees"/>
+ </MAPPINGS>
+ <ICONS>
+  <GROUP name="action">
+   <GROUP name="new">
+    <GROUP name="jsf"/>
+    <ICON name="importProject" path="images/jsf/new_project.gif"/>
+    <ICON name="jsfProject" path="images/jsf/new_project.gif"/>
+   </GROUP>
+  </GROUP>
+  <GROUP name="main">
+   <GROUP name="jsf">
+    <ICON name="project" path="images/jsf/jsf_project.gif"/>
+   </GROUP>
+  </GROUP>
+ </ICONS>
+ <GlobalActions kind="list"/>
+ <XModelEntity name="EditShaleConfigurationWizard">
+  <XChildrenEntities/>
+  <XEntityRenderer/>
+  <XModelAttributes>
+   <XModelAttribute name="dialog config files">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute name="clay config files">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute name="clay template suffix">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute name="chain config files">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute name="context config files">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute default="false" name="shale filter">
+    <Constraint loader="List">
+     <value name="true"/>
+     <value name="false"/>
+    </Constraint>
+    <Editor name="CheckBox"/>
+   </XModelAttribute>
+   <XModelAttribute name="shale filter mapping">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+   <XModelAttribute default="false" name="chain listener">
+    <Constraint loader="List">
+     <value name="true"/>
+     <value name="false"/>
+    </Constraint>
+    <Editor name="CheckBox"/>
+   </XModelAttribute>
+   <XModelAttribute default="false" name="clay listener">
+    <Constraint loader="List">
+     <value name="true"/>
+     <value name="false"/>
+    </Constraint>
+    <Editor name="CheckBox"/>
+   </XModelAttribute>
+   <XModelAttribute default="false" name="spring listener">
+    <Constraint loader="List">
+     <value name="true"/>
+     <value name="false"/>
+    </Constraint>
+    <Editor name="CheckBox"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list"/>
+  <XDependencies/>
+ </XModelEntity>
+ <XModelEntity
+  ImplementingClass="org.jboss.tools.shale.model.pv.JSFProjectShaleConfiguration" name="JSFProjectShaleConfiguration">
+  <XChildrenEntities/>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="main.file.folder" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute default="Shale" name="name" xmlname="NAME">
+    <Constraint/>
+    <Editor name="Uneditable"/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem ICON="action.empty" displayName="New" group="1"
+    kind="list" name="CreateActions">
+    <XActionItem ICON="action.newattribute" displayName="File"
+     kind="list" name="CreateFiles">
+     <XActionItem displayName="JSF" kind="list" name="JSF">
+      <XActionItem
+       HandlerClassName="org.jboss.tools.jsf.model.pv.handler.JSFProjectsConfigurationRedirectHandler"
+       ICON="main.shale.dialog-config"
+       PROPERTIES="actionpath=CreateActions/CreateFiles/JSF/Shale/CreateShaleDialog"
+       displayName="Shale Dialog Descriptor" kind="action" name="CreateShaleDialog">
+       <EntityData EntityName="CreateFacesConfigHelper">
+        <AttributeData AttributeName="folder"/>
+        <AttributeData AttributeName="separator" Mandatory="no"/>
+        <AttributeData AttributeName="name"/>
+        <AttributeData AttributeName="register in web.xml" Mandatory="no"/>
+       </EntityData>
+      </XActionItem>
+      <XActionItem
+       HandlerClassName="org.jboss.tools.jsf.model.pv.handler.JSFProjectsConfigurationRedirectHandler"
+       ICON="main.shale.clay-config"
+       PROPERTIES="actionpath=CreateActions/CreateFiles/JSF/Shale/CreateShaleClay"
+       displayName="Shale Clay Descriptor" kind="action" name="CreateShaleClay">
+       <EntityData EntityName="CreateFacesConfigHelper">
+        <AttributeData AttributeName="folder"/>
+        <AttributeData AttributeName="separator" Mandatory="no"/>
+        <AttributeData AttributeName="name"/>
+        <AttributeData AttributeName="register in web.xml" Mandatory="no"/>
+       </EntityData>
+      </XActionItem>
+      <XActionItem
+       HandlerClassName="org.jboss.tools.jsf.model.pv.handler.JSFProjectsConfigurationRedirectHandler"
+       ICON="action.new.jsf.faces-config"
+       PROPERTIES="actionpath=CreateActions/CreateFiles/JSF/Shale/CreateSpringBeans"
+       displayName="Spring Beans Descriptor" kind="action" name="CreateSpringBeans">
+       <EntityData EntityName="CreateFacesConfigHelper">
+        <AttributeData AttributeName="folder"/>
+        <AttributeData AttributeName="separator" Mandatory="no"/>
+        <AttributeData AttributeName="name"/>
+        <AttributeData AttributeName="register in web.xml" Mandatory="no"/>
+       </EntityData>
+      </XActionItem>
+     </XActionItem>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem kind="list" name="Edit Actions">
+    <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
+     PROPERTIES="support=org.jboss.tools.shale.model.pv.handlers.EditShaleConfigurationSupport"
+     displayName="Edit Shale Configuration" kind="action" name="EditConfiguration">
+     <EntityData EntityName="EditShaleConfigurationWizard">
+      <AttributeData AttributeName="dialog config files" Mandatory="no"/>
+      <AttributeData AttributeName="clay config files" Mandatory="no"/>
+      <AttributeData AttributeName="clay template suffix" Mandatory="no"/>
+      <AttributeData AttributeName="chain config files" Mandatory="no"/>
+      <AttributeData AttributeName="context config files" Mandatory="no"/>
+      <AttributeData AttributeName="shale filter" Mandatory="no"/>
+      <AttributeData AttributeName="shale filter mapping" Mandatory="no"/>
+      <AttributeData AttributeName="chain listener" Mandatory="no"/>
+      <AttributeData AttributeName="clay listener" Mandatory="no"/>
+      <AttributeData AttributeName="spring listener" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem ICON="action.empty" kind="list" name="Properties">
+    <XActionItem HIDE="always" displayName="Help" kind="action" name="Help"/>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <XEntityExtension name="JSFProjectConfiguration">
+  <XChildrenEntities>
+   <XChildEntity maxCount="1" name="JSFProjectShaleConfiguration" required="yes"/>
+  </XChildrenEntities>
+  <XActionItem kind="list"/>
+ </XEntityExtension>
+</XModelEntityGroup>

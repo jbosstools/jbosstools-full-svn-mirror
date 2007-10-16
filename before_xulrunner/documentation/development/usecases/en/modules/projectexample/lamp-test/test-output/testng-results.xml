@@ -1,0 +1,22 @@
+<testng-results>
+  <reporter-output>
+  </reporter-output>
+  <suite name="Ping Tests">
+    <groups>
+    </groups>
+    <test name="Ping Test">
+      <class name="org.domain.lamp.session.PingTest">
+        <test-method status="PASS" signature="test()" name="test" duration-ms="304" started-at="2007-08-27T11:54:05Z" finished-at="2007-08-27T11:54:05Z">
+        </test-method>
+        <test-method status="PASS" signature="cleanup()" name="cleanup" is-config="true" duration-ms="2" started-at="2007-08-27T11:54:05Z" finished-at="2007-08-27T11:54:05Z">
+        </test-method>
+        <test-method status="PASS" signature="begin()" name="begin" is-config="true" duration-ms="0" started-at="2007-08-27T11:54:05Z" finished-at="2007-08-27T11:54:05Z">
+        </test-method>
+        <test-method status="PASS" signature="init()" name="init" is-config="true" duration-ms="2573" started-at="2007-08-27T11:54:02Z" finished-at="2007-08-27T11:54:05Z">
+        </test-method>
+        <test-method status="PASS" signature="end()" name="end" is-config="true" duration-ms="2" started-at="2007-08-27T11:54:05Z" finished-at="2007-08-27T11:54:05Z">
+        </test-method>
+      </class>
+    </test>
+  </suite>
+</testng-results>
