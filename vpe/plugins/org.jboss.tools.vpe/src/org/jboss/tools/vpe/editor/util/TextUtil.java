@@ -252,8 +252,8 @@ public class TextUtil {
 		return sourceIndex;
 	}
 
-	public static int sourceInnerPosition(String visualText, int visualPosition) {
-		visualText = visualText.substring(0, Math.min(visualPosition, visualText.length()));
+	public static int sourceInnerPosition(String visualText, long visualPosition) {
+		visualText = visualText.substring(0, (int)Math.min(visualPosition, visualText.length()));
 		String sourceText = visualText.replaceAll(VISUAL_BREAK, SOURCE_BREAK);
 		return sourceText.length();
 	}
@@ -338,11 +338,13 @@ public class TextUtil {
 	}
 
 	public static boolean isWhitespace(char sourceString) {
+		String visualString = visualText((new Character(sourceString)).toString());
 		return SPCHARS.indexOf(sourceString) != -1;
 	}
 	
 	public static boolean isWhitespaceText(String sourceString) {
 		if (sourceString != null && sourceString.length() > 0) {
+			char[] chars = sourceString.toCharArray();
 			for (int i = 0; i < sourceString.length(); i++) {
 				if (!TextUtil.isWhitespace(sourceString.charAt(i))) 
 					return false;

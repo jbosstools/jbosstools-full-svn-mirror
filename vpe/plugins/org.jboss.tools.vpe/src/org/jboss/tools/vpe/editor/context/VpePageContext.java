@@ -58,6 +58,7 @@ import org.jboss.tools.vpe.editor.css.TaglibReferenceList;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.FileUtil;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -78,7 +79,7 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 	private List lastTaglibs = new ArrayList();
 	private boolean taglibChanged = false;
 	WtpKbConnector connector;	
-	private Node currentVisualNode;
+	private nsIDOMNode currentVisualNode;
 	
 	public VpePageContext(VpeTemplateManager templateManager, BundleMap bundle, VpeEditorPart editPart) {
 		this.templateManager = templateManager;
@@ -431,11 +432,11 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		return false;
 	}
 	
-	public Node getCurrentVisualNode() {
+	public nsIDOMNode getCurrentVisualNode() {
 		return currentVisualNode;
 	}
 	
-	public void setCurrentVisualNode(Node currentVisualNode) {
+	public void setCurrentVisualNode(nsIDOMNode currentVisualNode) {
 		this.currentVisualNode = currentVisualNode;
 	}
 

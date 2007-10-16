@@ -20,12 +20,6 @@ import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDropInfo;
@@ -34,6 +28,15 @@ import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.template.resize.VpeResizer;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMText;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 public abstract class VpeAbstractTemplate implements VpeTemplate {
 	protected boolean caseSensitive;
@@ -42,7 +45,10 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	
 	protected boolean haveVisualPreview;
 	
+	/** a resizer instance */
 	private VpeResizer resizer;
+	
+	// TODO Max Areshkau add DnD support
 	private VpeDnd dragger;
 	private TextFormatingData textFormatingData;
 	private VpePseudoContentCreator pseudoContentCreator;
@@ -61,7 +67,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 
 	private int breakerType = BREAKER_TYPE_NONE;
 
-	static private HashSet inlineTags = new HashSet();
+	static private HashSet<String> inlineTags = new HashSet<String>();
 	static{
 		inlineTags.add("b");
 		inlineTags.add("i");
@@ -78,7 +84,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		inlineTags.add("button");
 		inlineTags.add("label");
 	}
-	static private HashMap tagResizeConstrans = new HashMap();
+	static private HashMap<String, Integer> tagResizeConstrans = new HashMap<String, Integer>();
 	static{
 		tagResizeConstrans.put("table", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_ALL));
 		tagResizeConstrans.put("tr", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_ALL));
@@ -92,7 +98,8 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		tagResizeConstrans.put("font", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
 		tagResizeConstrans.put("a", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
 	}
-	static private HashSet breakWithParagraphTags = new HashSet();
+	
+	static private HashSet<String> breakWithParagraphTags = new HashSet<String>();
 	static{
 		breakWithParagraphTags.add("b");
 		breakWithParagraphTags.add("a");
@@ -122,7 +129,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		breakWithParagraphTags.add("u");
 		breakWithParagraphTags.add("var");
 	}
-	static private HashSet breakWithoutParagraphTags = new HashSet();
+	static private HashSet<String> breakWithoutParagraphTags = new HashSet<String>();
 	static{
 		breakWithoutParagraphTags.add("p");
 		breakWithoutParagraphTags.add("address");
@@ -204,10 +211,11 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 	
 	private void initDndHandler(Element templateSection) {
-		if (dragger == null) {
-			dragger = new VpeDnd();
-			dragger.setDndData(templateSection);
-		}
+
+		if (getDragger() == null) {
+			setDragger(new VpeDnd());
+			getDragger().setDndData(templateSection);
+			}
 	}
 	
 	private void initTextFormatingHandler(Element templateSection) {
@@ -270,7 +278,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param visualDocument The document of the visual tree.
 	 * @param data Object <code>VpeCreationData</code>, built by a method <code>create</code>
 	 */
-	public void validate(VpePageContext pageContext, Node sourceNode, Document visualDocument, VpeCreationData data) {
+	public void validate(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, VpeCreationData data) {
 	}
 
 	IRegion fCurrentRegionToFormat = null;
@@ -327,7 +335,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param formatter Interface for formatting the source text
 	 * @return <code>true</code> if the key is processed
 	 */
-	public boolean nonctrlKeyPressHandler(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, Node visualNode, Object data, int charCode, VpeSourceSelection selection, ITextFormatter formatter) {
+	public boolean nonctrlKeyPressHandler(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, nsIDOMNode visualNode, Object data, long charCode, VpeSourceSelection selection, ITextFormatter formatter) {
 		switch (breakerType) {
 		case BREAKER_TYPE_IGNORE:
 			return true;
@@ -338,7 +346,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		}
 	}
 	
-	private boolean nonctrlKeyPressHandlerImpl(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, Node visualNode, Object data, int charCode, VpeSourceSelection selection, ITextFormatter formatter) {
+	private boolean nonctrlKeyPressHandlerImpl(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, nsIDOMNode visualNode, Object data, long charCode, VpeSourceSelection selection, ITextFormatter formatter) {
 		clearRegionToFormat();
 		Node focusNode = selection.getFocusNode();
 		int focusNodeType = focusNode.getNodeType();
@@ -601,7 +609,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param visualNode The current node of the visual tree.
 	 * @param data The arbitrary data, built by a method <code>create</code>
 	 */
-	public void beforeRemove(VpePageContext pageContext, Node sourceNode, Node visualNode, Object data) {
+	public void beforeRemove(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
 	}
 
 	/**
@@ -614,7 +622,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @return For this node of an source tree the method update is invoked.
 	 * If null, that is invoked update for current source node
 	 */
-	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode, Node visualNode, Object data) {
+	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
 		return null;
 	}
 
@@ -639,7 +647,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param width Element width
 	 * @param height Element height
 	 */
-	public void resize(VpePageContext pageContext, Element sourceElement, Document visualDocument, Element visualElement, Object data, int resizerConstrains, int top, int left, int width, int height) {
+	public void resize(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Object data, int resizerConstrains, int top, int left, int width, int height) {
 		if (resizer != null) {
 			resizer.resize(pageContext, sourceElement, visualDocument, visualElement, data, resizerConstrains, top, left, width, height);
 		}
@@ -654,11 +662,13 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param data The arbitrary data, built by a method <code>create</code>
 	 * @return <code>true</code> The element can be dragged
 	 */
-	public boolean canInnerDrag(VpePageContext pageContext, Element sourceElement, Document visualDocument, Element visualElement, Object data) {
-		if (dragger != null) {
-			return dragger.isDragEnabled();
+	public boolean canInnerDrag(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Object data) {
+		// TODO Max Areshkau add DnD support
+		if (getDragger() != null) {
+			
+			return getDragger().isDragEnabled();
 		} else {
-			return false;
+			return true;
 		}
 	}
 
@@ -670,6 +680,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @return <code>true</code> The node can be dropped
 	 */
 	public boolean canInnerDrop(VpePageContext pageContext, Node container, Node sourceDragNode) {
+
 		if (dragger != null) {
 			return dragger.isDropEnabled(pageContext, container, sourceDragNode);
 		} else {
@@ -684,9 +695,10 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param dropInfo The information on the drop container
 	 */
 	public void innerDrop(VpePageContext pageContext, VpeSourceInnerDragInfo dragInfo, VpeSourceInnerDropInfo dropInfo) {
-		if (dragger != null) {
-			dragger.drop(pageContext, dragInfo, dropInfo);
-		}
+		// TODO Max Areshkau add DnD support
+//		if (dragger != null) {
+//			dragger.drop(pageContext, dragInfo, dropInfo);
+//		}
 	}
 	
 	protected String deleteFromString(String data, String begin, String end){
@@ -715,7 +727,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param value Attribute value
 	 * @return <code>true</code> if it is required to re-create an element at a modification of attribute, <code>false</code> otherwise.
 	 */
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
+	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualNode, Object data, String name, String value) {
 		return false;
 	}
 
@@ -754,12 +766,13 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param data The arbitrary data, built by a method <code>create</code>
 	 * @return <code>VpeTagDescription</code>
 	 */
-	public VpeTagDescription getTagDescription(VpePageContext pageContext, Element sourceElement, Document visualDocument, Element visualElement, Object data){
+	public VpeTagDescription getTagDescription(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Object data){
 		VpeTagDescription tagDescription = new VpeTagDescription();
 
 		if (inlineTags.contains(visualElement.getNodeName().toLowerCase())) {
 			tagDescription.setDisplayType(VpeTagDescription.DISPLAY_TYPE_INLINE);
 		}
+		
 		if (resizer != null) {
 			resizer.modifyTagDescription(tagDescription);
 		}
@@ -777,7 +790,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param name Attribute name.
 	 * @param value Attribute value.
 	 */
-	public void setAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
+	public void setAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name, String value) {
 	}
 
 	/**
@@ -789,7 +802,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param data The arbitrary data, built by a method <code>create</code>
 	 * @param name Attribute name.
 	 */
-	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name) {
+	public void removeAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name) {
 	}
 
 	/**
@@ -810,7 +823,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param data The arbitrary data, built by a method <code>create</code>
 	 * @return Text node or null
 	 */
-	public Node getOutputTextNode(VpePageContext pageContext, Element sourceElement, Object data) {
+	public nsIDOMText getOutputTextNode(VpePageContext pageContext, Element sourceElement, Object data) {
 		return null;
 	}
 
@@ -894,7 +907,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param visualContainer The current element of the visual tree.
 	 * @param visualDocument The document of the visual tree.
 	 */
-	public void setPseudoContent(VpePageContext pageContext, Node sourceContainer, Node visualContainer, Document visualDocument) {
+	public void setPseudoContent(VpePageContext pageContext, Node sourceContainer, nsIDOMNode visualContainer, nsIDOMDocument visualDocument) {
 		if (pseudoContentCreator != null) {
 			pseudoContentCreator.setPseudoContent(pageContext, sourceContainer, visualContainer, visualDocument);
 		} else {
@@ -908,5 +921,20 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	
 	public boolean isHaveVisualPreview() {
 		return haveVisualPreview;
+	}
+
+	/**
+	 * @return the dragger
+	 */
+	public VpeDnd getDragger() {
+		
+		return dragger;
+	}
+
+	/**
+	 * @param dragger the dragger to set
+	 */
+	public void setDragger(VpeDnd dragger) {
+		this.dragger = dragger;
 	}
 }

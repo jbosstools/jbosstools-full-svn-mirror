@@ -10,15 +10,15 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor;
 
-import org.w3c.dom.Node;
+import org.mozilla.interfaces.nsIDOMNode;
 
 public class VpeVisualInnerDropInfo {
-	private Node dropContainer;
-	private int dropOffset;
+	private nsIDOMNode dropContainer;
+	private long dropOffset;
 	private int mouseX;
 	private int mouseY;
 
-	public VpeVisualInnerDropInfo(Node dropContainer, int dropOffset, int mouseX, int mouseY) {
+	public VpeVisualInnerDropInfo(nsIDOMNode dropContainer, long dropOffset, int mouseX, int mouseY) {
 		this.dropContainer = dropContainer;
 		this.dropOffset = dropOffset;
 		this.mouseX = mouseX;
@@ -26,14 +26,14 @@ public class VpeVisualInnerDropInfo {
 		
 	}
 	
-	public Node getDropContainer() {
+	public nsIDOMNode getDropContainer() {
 		return dropContainer;
 	}
 	
-	public int getDropOffset() {
+	public long getDropOffset() {
 		return dropOffset;
 	}
-	public void setDropOffset(int dropOffset) {
+	public void setDropOffset(long dropOffset) {
 		this.dropOffset = dropOffset;
 	}
 	

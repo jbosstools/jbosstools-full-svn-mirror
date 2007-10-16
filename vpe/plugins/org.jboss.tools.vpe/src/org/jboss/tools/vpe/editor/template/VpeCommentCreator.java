@@ -13,13 +13,16 @@ package org.jboss.tools.vpe.editor.template;
 import java.util.Map;
 
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMNodeList;
+import org.mozilla.interfaces.nsIDOMText;
 import org.w3c.dom.Comment;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeCommentCreator extends VpeAbstractCreator implements VpeOutputComment {
 	public static final String SIGNATURE_VPE_COMMENT = ":vpe:comment";
@@ -31,30 +34,29 @@ public class VpeCommentCreator extends VpeAbstractCreator implements VpeOutputCo
 		dependencyMap.setCreator(this, SIGNATURE_VPE_COMMENT);
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		if(!"yes".equals(VpePreference.SHOW_COMMENTS.getValue())) {
 			return null;
 		}
-		Element div = visualDocument.createElement("div");
+		nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
 		div.setAttribute("style", COMMENT_STYLE);
 		String value = COMMENT_PREFIX + sourceNode.getNodeValue() + COMMENT_SUFFIX;
-		Node text = visualDocument.createTextNode(value);
+		nsIDOMText text = visualDocument.createTextNode(value);
 		div.appendChild(text);
-//		visualNodeMap.put(this, new VisualElements(div, text));
 		visualNodeMap.put(this, div);
 		return new VpeCreatorInfo(div);
 	}
 
 	public void setOutputCommentValue(VpePageContext pageContext, Comment sourceComment, Map visualNodeMap) {
 		String commentValue = "";
-		Element div = (Element)visualNodeMap.get(this);
+		nsIDOMElement div = (nsIDOMElement)visualNodeMap.get(this);
 		if (div != null) {
-			NodeList children = div.getChildNodes();
+			nsIDOMNodeList children = div.getChildNodes();
 			if (children != null) {
-				int len = children.getLength();
-				for (int i = 0; i < len; i++) {
-					Node text = children.item(i);
-					if (text.getNodeType() == Node.TEXT_NODE) {
+				long len = children.getLength();
+				for (long i = 0; i < len; i++) {
+					nsIDOMNode text = children.item(i);
+					if (text.getNodeType() == nsIDOMNode.TEXT_NODE) {
 						String value = text.getNodeValue();
 						if (value.length() > 0) {
 							commentValue = value;

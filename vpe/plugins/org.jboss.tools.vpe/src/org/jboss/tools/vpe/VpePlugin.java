@@ -10,20 +10,31 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe;
 
+import java.io.IOException;
+import java.net.URL;
+
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IStartup;
+import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.common.log.BaseUIPlugin;
 import org.jboss.tools.common.log.IPluginLog;
 import org.jboss.tools.common.reporting.ProblemReportingHelper;
+import org.jboss.tools.vpe.xulrunner.XulRunnerException;
+import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
  * The main plugin class to be used in the desktop.
  */
-public class VpePlugin extends BaseUIPlugin {
+public class VpePlugin extends BaseUIPlugin implements IStartup {
 	public final static String PLUGIN_ID = "org.jboss.tools.vpe";
 	//The shared instance.
 	private static VpePlugin plugin;
 	//Resource bundle.
+//	private ResourceBundle resourceBundle;
 	
 	/**
 	 * The constructor.
@@ -51,35 +62,8 @@ public class VpePlugin extends BaseUIPlugin {
 	 * Returns the shared instance.
 	 */
 	public static VpePlugin getDefault() {
-		if (plugin == null) {
-			// plugin will be initialized in constructor
-			Platform.getBundle(PLUGIN_ID);
-		}
-		
 		return plugin;
 	}
-
-//	/**
-//	 * Returns the string from the plugin's resource bundle,
-//	 * or 'key' if not found.
-//	 */
-//	public static String getResourceString(String key) {
-//		ResourceBundle bundle = VpePlugin.getDefault().getResourceBundle();
-//		try {
-//			return (bundle != null) ? bundle.getString(key) : key;
-//		} catch (MissingResourceException e) {
-//			VpePlugin.getPluginLog()
-//					.logError("Resource " + key + " is missing.", e);
-//			return key;
-//		}
-//	}
-
-//	/**
-//	 * Returns the plugin's resource bundle,
-//	 */
-//	public ResourceBundle getResourceBundle() {
-//		return resourceBundle;
-//	}
 
 	public static void reportProblem(Exception throwable) {
 		if (VpeDebug.USE_PRINT_STACK_TRACE) {
@@ -89,7 +73,36 @@ public class VpePlugin extends BaseUIPlugin {
 		}
 	}
 	
+	public String getResourcePath(String resourceName) {
+		Bundle bundle = Platform.getBundle(PLUGIN_ID);
+		
+		if (bundle != null) {
+			URL url = bundle.getEntry(resourceName);
+			
+			if (url != null) {
+				try {
+					return FileLocator.resolve(url).getPath();
+				} catch (IOException ioe) {
+					logError(ioe);
+				}
+			}
+		}
+		
+		return null;
+	}
+	
 	public static IPluginLog getPluginLog() {
 		return getDefault();
 	}
+
+	public void earlyStartup() {
+		/* init xulrunner path for */ 
+		try {
+			XulRunnerBrowser.getXulRunnerPath();
+		} catch (Throwable t) {
+			// Ignore this. Will catch it when use Visual Editor 
+		}
+	}
+	
+	
 }

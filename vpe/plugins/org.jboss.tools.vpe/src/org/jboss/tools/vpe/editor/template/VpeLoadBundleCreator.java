@@ -20,6 +20,8 @@ import org.w3c.dom.Node;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
 
 public class VpeLoadBundleCreator extends VpeAbstractCreator {
 	private static final String ATTR_BASENAME = "basename";
@@ -34,7 +36,7 @@ public class VpeLoadBundleCreator extends VpeAbstractCreator {
 		dependencyMap.setCreator(this, VpeExpressionBuilder.attrSignature(ATTR_VAR, true));
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		setBundle(pageContext, (Element)sourceNode);
 		return null;
 	}

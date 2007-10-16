@@ -3,6 +3,8 @@
 <plugin>
    <extension-point id="templates" name="Path to xml file with templates definitionj" schema="schema/templates.exsd"/>
 
+	<extension point="org.eclipse.ui.startup" />
+	
    <extension point="org.jboss.tools.common.model.meta">
       <meta path="meta/vpe.meta"/>
    </extension>
@@ -45,6 +47,6 @@
 	class="org.jboss.tools.vpe.editor.css.VpeAddReferenceSupport"/>
     </extension>
 	<extension point="org.eclipse.ui.preferencePages">
-		<page category="org.jboss.tools.common.xstudio.editors" class="org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage" id="org.jboss.tools.vpe.editor" name="Visual Page Editor"></page>
-	</extension>    
+      <page category="org.jboss.tools.common.xstudio.editors" class="org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage" id="org.jboss.tools.vpe.editor" name="Visual Page Editor"></page>
+   	</extension>    
 </plugin>

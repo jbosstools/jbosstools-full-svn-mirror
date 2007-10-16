@@ -13,7 +13,7 @@ package org.jboss.tools.vpe.editor.template;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.w3c.dom.Element;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.w3c.dom.Node;
 
 /**
@@ -21,10 +21,10 @@ import org.w3c.dom.Node;
  */
 
 public class VpeChildrenInfo {
-	private Element visualParent;
+	private nsIDOMElement visualParent;
 	private List<Node> sourceChildren;
 
-	public VpeChildrenInfo(Element visualParent) {
+	public VpeChildrenInfo(nsIDOMElement visualParent) {
 		this.visualParent = visualParent;
 	}
 	
@@ -32,7 +32,7 @@ public class VpeChildrenInfo {
 	 * Returns the container of the visual tree for adding new nodes.
 	 * @return The container of the visual tree for adding new nodes.
 	 */
-	public Element getVisualParent() {
+	public nsIDOMElement getVisualParent() {
 		return visualParent;
 	}
 	

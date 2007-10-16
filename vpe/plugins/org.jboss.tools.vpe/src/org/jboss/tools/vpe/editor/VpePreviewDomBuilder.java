@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
@@ -24,7 +23,10 @@ import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -33,14 +35,10 @@ import org.w3c.dom.Node;
  * @author A. Yukhovich
  */
 public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
-	
-	boolean rebuildFlag = false;
-	
-	
 
-	private static final String TAG_DIV      = "div";
-	
-	
+
+	boolean rebuildFlag = false;
+
 	
 	private static final String YES_STRING   = "yes";
 	
@@ -54,9 +52,9 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 	 */
 	public VpePreviewDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, VpeTemplateManager templateManager, MozillaEditor visualEditor, VpePageContext pageContext) {
 		super(domMapping, sorceAdapter, templateManager, visualEditor, pageContext);
+
 	}
 	
-
 	/**
 	 * 
 	 * @param sourceNode
@@ -64,26 +62,26 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 	 * @return
 	 */
 	@Override
-	protected Node createNode(Node sourceNode, Node visualOldContainer) {
+	protected nsIDOMNode createNode(Node sourceNode, nsIDOMNode visualOldContainer) {
 		boolean registerFlag = isCurrentMainDocument();
 		switch (sourceNode.getNodeType()) {
 		case Node.ELEMENT_NODE:
 			Map xmlnsMap = createXmlns((Element)sourceNode);
 			Set ifDependencySet = new HashSet();
-			pageContext.setCurrentVisualNode(visualOldContainer);
-			VpeTemplate template = templateManager.getTemplate(pageContext, (Element)sourceNode, ifDependencySet);
+			getPageContext().setCurrentVisualNode(visualOldContainer);
+			VpeTemplate template = templateManager.getTemplate(getPageContext(), (Element)sourceNode, ifDependencySet);
 			VpeCreationData creationData;
 			
 			if ( template.isHaveVisualPreview() ) {
-				creationData = template.create(pageContext, sourceNode, visualDocument);
+				creationData = template.create(getPageContext(), sourceNode, getVisualDocument());
 			} else {
-				Element tempHTMLElement = visualDocument.createElement(TAG_DIV);
+				nsIDOMElement tempHTMLElement = getVisualDocument().createElement(HTML.TAG_DIV);
 				creationData = new VpeCreationData(tempHTMLElement);				
 			}
 			
-			pageContext.setCurrentVisualNode(null);
-			Element visualNewElement;
-			visualNewElement = (Element)creationData.getNode();
+			getPageContext().setCurrentVisualNode(null);
+			nsIDOMElement visualNewElement;
+			visualNewElement = (nsIDOMElement)creationData.getNode();
 			setTooltip((Element)sourceNode, visualNewElement);
 
 			if (!isCurrentMainDocument() && visualNewElement != null) {
@@ -91,24 +89,24 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			}
 
 			if (template.isChildren()) {
-				List childrenInfoList = creationData.getChildrenInfoList();
+				List<?> childrenInfoList = creationData.getChildrenInfoList();
 				if (childrenInfoList == null) {
 					addChildren(template, sourceNode, visualNewElement != null ? visualNewElement : visualOldContainer);
 				} else {
 					addChildren(template, sourceNode, visualOldContainer, childrenInfoList);
 				}
 			}
-			pageContext.setCurrentVisualNode(visualOldContainer);
-			template.validate(pageContext, (Element)sourceNode, visualDocument, creationData);
-			pageContext.setCurrentVisualNode(null);
+			getPageContext().setCurrentVisualNode(visualOldContainer);
+			template.validate(getPageContext(), (Element)sourceNode, getVisualDocument(), creationData);
+			getPageContext().setCurrentVisualNode(null);
 			return visualNewElement;
-		case Node.TEXT_NODE:			
+		case Node.TEXT_NODE:
 			return createTextNode(sourceNode, registerFlag);
 		case Node.COMMENT_NODE:
 			if(!YES_STRING.equals(VpePreference.SHOW_COMMENTS.getValue())) {
 				return null;
 			}
-			Element visualNewComment = createComment(sourceNode);
+			nsIDOMElement visualNewComment = createComment(sourceNode);
 			if (registerFlag) {
 				registerNodes(new VpeNodeMapping(sourceNode, visualNewComment));
 			}
@@ -116,5 +114,5 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 		}
 		return null;
 	}
-	
+
 }

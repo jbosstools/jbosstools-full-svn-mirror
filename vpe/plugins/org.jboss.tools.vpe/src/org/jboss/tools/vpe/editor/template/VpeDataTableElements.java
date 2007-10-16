@@ -13,8 +13,11 @@ package org.jboss.tools.vpe.editor.template;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMNodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -28,7 +31,7 @@ public class VpeDataTableElements {
 
 	public static class SourceDataTableElements {
 		private Node tableHeader;
-		private List columns;
+		private List<SourceColumnElements> columns;
 		private Node tableFooter;
 
 		public SourceDataTableElements(Node dataTableNode) {
@@ -50,7 +53,7 @@ public class VpeDataTableElements {
 						} else if (!isColumn && isFacet && attrName != null && "footer".equals(attrName.getNodeValue())) {
 							tableFooter = node;
 						} else if (isColumn) {
-							if (columns == null) columns = new ArrayList();
+							if (columns == null) columns = new ArrayList<SourceColumnElements>();
 							columns.add(new SourceColumnElements(node));
 						}
 					}
@@ -132,7 +135,7 @@ public class VpeDataTableElements {
 	public static class SourceColumnElements {
 		private Node column;
 		private Node header;
-		private List body;
+		private List<Node> body;
 		private Node footer;
 
 		public SourceColumnElements(Node columnNode) {
@@ -154,16 +157,14 @@ public class VpeDataTableElements {
 						} else if (isFacet && attrName != null && "footer".equals(attrName.getNodeValue())) {
 							footer = node;
 						} else {
-							if (body == null) body = new ArrayList();
-							body.add(node);
+							getBody().add(node);
 						}
 					}
 				}
 				if(!hasBody()) {
 					Node text = VpeCreatorUtil.getTextChildNode(columnNode);
 					if(text!=null) {
-						if (body == null) body = new ArrayList();
-						body.add(text);
+						getBody().add(text);
 					}
 				}
 			}
@@ -177,11 +178,14 @@ public class VpeDataTableElements {
 			return body != null && body.size() > 0;
 		}
 
-		public List getBody() {
+		public List<Node> getBody() {
+			if (body == null)
+				body = new ArrayList<Node>();
+			
 			return body;
 		}
 
-		public void setBody(List body) {
+		public void setBody(List<Node> body) {
 			this.body = body;
 		}
 
@@ -225,156 +229,138 @@ public class VpeDataTableElements {
 	}
 
 	public static class VisualDataTableElements {
-		private Element header;
-		private Element tableHeaderRow;
-//		private Element tableHeaderCell;
-		private Element columnsHeaderRow;
+		private nsIDOMElement header;
+		private nsIDOMElement tableHeaderRow;
+		private nsIDOMElement columnsHeaderRow;
 
-		private Element body;
-		private Element bodyRow;
+		private nsIDOMElement body;
+		private nsIDOMElement bodyRow;
 
-		private Element footer;
-		private Element columnsFooterRow;
-//		private Element tableFooterCell;
-		private Element tableFooterRow;
-
-		private List columns;
+		private nsIDOMElement footer;
+		private nsIDOMElement columnsFooterRow;
+		private nsIDOMElement tableFooterRow;
 
 		public VisualDataTableElements() {
 		}
-		public VisualDataTableElements(Element header, Element body, Element footer) {
+		
+		public VisualDataTableElements(nsIDOMElement header, nsIDOMElement body, nsIDOMElement footer) {
 			this.header = header;
 			this.body = body;
 			this.footer = footer;
 		}
 		
-		private VisualColumnElements getColumn(int index) {
-			if (columns != null && index < getColumnCount()) return (VisualColumnElements)columns.get(index);
-			return null;
-		}
-
-		private int getColumnCount() {
-			if (columns != null) return columns.size();
-			return 0;
-		}
-
-		private List getColumns() {
-			if (columns == null) columns = new ArrayList();
-			return columns;
-		}
-
-		public Element getBody() {
+		public nsIDOMElement getBody() {
 			return body;
 		}
 
-		public void setBody(Element body) {
+		public void setBody(nsIDOMElement body) {
 			this.body = body;
 		}
 
-		public Element getBodyRow() {
+		public nsIDOMElement getBodyRow() {
 			return bodyRow;
 		}
 
-		public void setBodyRow(Element bodyRow) {
+		public void setBodyRow(nsIDOMElement bodyRow) {
 			this.bodyRow = bodyRow;
 		}
 
-		public Element getColumnsFooterRow() {
+		public nsIDOMElement getColumnsFooterRow() {
 			return columnsFooterRow;
 		}
 
-		public void setColumnsFooterRow(Element columnsFooterRow) {
+		public void setColumnsFooterRow(nsIDOMElement columnsFooterRow) {
 			this.columnsFooterRow = columnsFooterRow;
 		}
 
-		public Element getColumnsHeaderRow() {
+		public nsIDOMElement getColumnsHeaderRow() {
 			return columnsHeaderRow;
 		}
 
-		public void setColumnsHeaderRow(Element columnsHeaderRow) {
+		public void setColumnsHeaderRow(nsIDOMElement columnsHeaderRow) {
 			this.columnsHeaderRow = columnsHeaderRow;
 		}
 
-		public Element getFooter() {
+		public nsIDOMElement getFooter() {
 			return footer;
 		}
 
-		public void setFooter(Element footer) {
+		public void setFooter(nsIDOMElement footer) {
 			this.footer = footer;
 		}
 
-		public Element getHeader() {
+		public nsIDOMElement getHeader() {
 			return header;
 		}
 
-		public void setHeader(Element header) {
+		public void setHeader(nsIDOMElement header) {
 			this.header = header;
 		}
 
-		public Element getTableFooterRow() {
+		public nsIDOMElement getTableFooterRow() {
 			return tableFooterRow;
 		}
 
-		public void setTableFooterRow(Element tableFooterRow) {
+		public void setTableFooterRow(nsIDOMElement tableFooterRow) {
 			this.tableFooterRow = tableFooterRow;
 		}
 
-		public Element getTableHeaderRow() {
+		public nsIDOMElement getTableHeaderRow() {
 			return tableHeaderRow;
 		}
 
-		public void setTableHeaderRow(Element tableHeaderRow) {
+		public void setTableHeaderRow(nsIDOMElement tableHeaderRow) {
 			this.tableHeaderRow = tableHeaderRow;
 		}
 	}
 
 	public static class VisualColumnElements {
-		private Element headerCell;
-		private Element bodyCell;
-		private Element footerCell;
+		private nsIDOMElement headerCell;
+		private nsIDOMElement bodyCell;
+		private nsIDOMElement footerCell;
 
-		private boolean isEmpty() {
-			return headerCell == null && bodyCell == null && footerCell == null;
-		}
+//		private boolean isEmpty() {
+//			return headerCell == null && bodyCell == null && footerCell == null;
+//		}
 
-		public Element getBodyCell() {
+		public nsIDOMElement getBodyCell() {
 			return bodyCell;
 		}
 
-		public void setBodyCell(Element bodyCell) {
+		public void setBodyCell(nsIDOMElement bodyCell) {
 			this.bodyCell = bodyCell;
 		}
 
-		public Element getFooterCell() {
+		public nsIDOMElement getFooterCell() {
 			return footerCell;
 		}
 
-		public void setFooterCell(Element footerCell) {
+		public void setFooterCell(nsIDOMElement footerCell) {
 			this.footerCell = footerCell;
 		}
 
-		public Element getHeaderCell() {
+		public nsIDOMElement getHeaderCell() {
 			return headerCell;
 		}
 
-		public void setHeaderCell(Element headerCell) {
+		public void setHeaderCell(nsIDOMElement headerCell) {
 			this.headerCell = headerCell;
 		}
 	}
 
-	public static Element getNamedChild(Node visualParent, String tagName) {
+	public static nsIDOMElement getNamedChild(nsIDOMNode visualParent, String tagName) {
 		return getNamedChild(visualParent, tagName, 0);
 	}
-	public static Element getNamedChild(Node visualParent, String tagName, int index) {
+	public static nsIDOMElement getNamedChild(nsIDOMNode visualParent, String tagName, int index) {
 		if (visualParent != null) {
 			int ind = 0;
-			NodeList children = visualParent.getChildNodes();
-			int count = children != null ? children.getLength() : 0;
-			for (int i = 0; i < count; i++) {
-				Node child = children.item(i);
+			nsIDOMNodeList children = visualParent.getChildNodes();
+			long count = children != null ? children.getLength() : 0;
+			for (long i = 0; i < count; i++) {
+				nsIDOMNode child = children.item(i);
 				if (tagName.equalsIgnoreCase(child.getNodeName())) {
 					if (ind == index) {
-						return (Element)child;
+						return (nsIDOMElement)child.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 					} else {
 						ind++;
 					}
@@ -384,11 +370,11 @@ public class VpeDataTableElements {
 		return null;
 	}
 
-	public static VisualDataTableElements getVisualDataTableElements(Node visualParent) {
+	public static VisualDataTableElements getVisualDataTableElements(nsIDOMNode visualParent) {
 		VisualDataTableElements visualDataTableElements = new VisualDataTableElements(
-					VpeDataTableElements.getNamedChild(visualParent, "thead"),
-					VpeDataTableElements.getNamedChild(visualParent, "tbody"),
-					VpeDataTableElements.getNamedChild(visualParent, "tfoot")
+					VpeDataTableElements.getNamedChild(visualParent, HTML.TAG_THEAD),
+					VpeDataTableElements.getNamedChild(visualParent, HTML.TAG_TBODY),
+					VpeDataTableElements.getNamedChild(visualParent, HTML.TAG_TFOOT)
 			);
 
 		visualDataTableElements.setTableHeaderRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getHeader(), "tr"));
@@ -400,8 +386,8 @@ public class VpeDataTableElements {
 		return visualDataTableElements;
 	}
 
-	public static Element makeCell(Node row, int index, String cellTag, Document visualDocument) {
-		Element visualCell = null;
+	public static nsIDOMElement makeCell(nsIDOMNode row, int index, String cellTag, nsIDOMDocument visualDocument) {
+		nsIDOMElement visualCell = null;
 		if (visualDocument != null && row != null) {
 			visualCell = visualDocument.createElement(cellTag);
 			if (index >= row.getChildNodes().getLength()) {

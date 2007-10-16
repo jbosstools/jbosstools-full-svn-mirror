@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
 import java.util.ArrayList;
@@ -15,17 +15,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
+import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
-import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 
 public class VpeCopyCreator extends VpeAbstractCreator {
 	
@@ -34,20 +34,22 @@ public class VpeCopyCreator extends VpeAbstractCreator {
 	private boolean caseSensitive;
 	private HashSet attrSet;
 	private VpeCreator attrs[];
-	
-	VpeCopyCreator(Element copyElement, VpeDependencyMap dependencyMap, boolean caseSensitive) {
+
+	VpeCopyCreator(Element copyElement, VpeDependencyMap dependencyMap,
+			boolean caseSensitive) {
 		this.caseSensitive = caseSensitive;
 		build(copyElement, dependencyMap);
 	}
 
 	private void build(Element copyElement, VpeDependencyMap dependencyMap) {
 		dependencyMap.setCreator(this, VpeExpressionBuilder.SIGNATURE_ANY_ATTR);
-		Attr attrsAttr = copyElement.getAttributeNode(VpeTemplateManager.ATTR_COPY_ATTRS);
+		Attr attrsAttr = copyElement
+				.getAttributeNode(VpeTemplateManager.ATTR_COPY_ATTRS);
 		if (attrsAttr != null) {
 			attrSet = new HashSet();
 			String attrsValue = attrsAttr.getValue();
 			String[] attrsArr = attrsValue.split(",");
-			for (int i = 0; i < attrsArr.length; i++) { 
+			for (int i = 0; i < attrsArr.length; i++) {
 				String attr = attrsArr[i].trim();
 				if (attr.length() > 0) {
 					attrSet.add(caseSensitive ? attr : attr.toLowerCase());
@@ -58,74 +60,90 @@ public class VpeCopyCreator extends VpeAbstractCreator {
 		if (copyChildren != null) {
 			int len = copyChildren.getLength();
 			if (len > 0) {
-				List creatorAttrs = new ArrayList(len); 
+				List creatorAttrs = new ArrayList(len);
 				for (int i = 0; i < len; i++) {
 					Node innerNode = copyChildren.item(i);
-					if (innerNode.getNodeType() == Node.ELEMENT_NODE &&
-							VpeTemplateManager.TAG_ATTRIBUTE.equals(innerNode.getNodeName())) {
-						String attrName = ((Element)innerNode).getAttribute(VpeTemplateManager.ATTR_ATTRIBUTE_NAME).trim();
+					if (innerNode.getNodeType() == Node.ELEMENT_NODE
+							&& VpeTemplateManager.TAG_ATTRIBUTE
+									.equals(innerNode.getNodeName())) {
+						String attrName = ((Element) innerNode).getAttribute(
+								VpeTemplateManager.ATTR_ATTRIBUTE_NAME).trim();
 						if (attrName.length() > 0) {
-							String attrValue = ((Element)innerNode).getAttribute(VpeTemplateManager.ATTR_ATTRIBUTE_VALUE).trim();
-							creatorAttrs.add(new VpeAttributeCreator(attrName, attrValue, dependencyMap, caseSensitive));
+							String attrValue = ((Element) innerNode)
+									.getAttribute(
+											VpeTemplateManager.ATTR_ATTRIBUTE_VALUE)
+									.trim();
+							creatorAttrs.add(new VpeAttributeCreator(attrName,
+									attrValue, dependencyMap, caseSensitive));
 						}
 					}
 				}
 				if (creatorAttrs.size() > 0) {
-					attrs = (VpeCreator[]) creatorAttrs.toArray(new VpeCreator[creatorAttrs.size()]);
+					attrs = (VpeCreator[]) creatorAttrs
+							.toArray(new VpeCreator[creatorAttrs.size()]);
 				}
 			}
 		}
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
-		Element visualNewElement = visualDocument.createElement(sourceNode.getNodeName());
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument, nsIDOMElement visualElement,
+			Map visualNodeMap) {
+		nsIDOMElement visualNewElement = visualDocument
+				.createElement(sourceNode.getNodeName());
 		visualNodeMap.put(this, visualNewElement);
-		addAttributes((Element)sourceNode, visualNewElement, pageContext);
+		addAttributes((Element) sourceNode, visualNewElement, pageContext);
 		if (attrs != null) {
 			for (int i = 0; i < attrs.length; i++) {
-				VpeCreatorInfo attributeInfo = attrs[i].create(pageContext, (Element) sourceNode, visualDocument, visualNewElement, visualNodeMap);
+				VpeCreatorInfo attributeInfo = attrs[i].create(pageContext,
+						(Element) sourceNode, visualDocument, visualNewElement,
+						visualNodeMap);
 				if (attributeInfo != null) {
-					Attr newVisualAttribute = (Attr)attributeInfo.getVisualNode();
+					nsIDOMAttr newVisualAttribute = (nsIDOMAttr) attributeInfo
+							.getVisualNode();
 					if (newVisualAttribute != null) {
 						visualNewElement.setAttributeNode(newVisualAttribute);
-						MozillaSupports.release(newVisualAttribute);
 					}
 				}
 			}
 		}
 		return new VpeCreatorInfo(visualNewElement);
 	}
-	
-	public void setAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name, String value) {
+
+	public void setAttribute(VpePageContext pageContext, Element sourceElement,
+			Map visualNodeMap, String name, String value) {
 		if (isAttribute(name)) {
-			Element visualElement = (Element) visualNodeMap.get(this);
+			nsIDOMElement visualElement = (nsIDOMElement) visualNodeMap.get(this);
 			visualElement.setAttribute(name, value);
 		}
 	}
 
-	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name) {
+	public void removeAttribute(VpePageContext pageContext,
+			Element sourceElement, Map visualNodeMap, String name) {
 		if (isAttribute(name)) {
-			Element visualElement = (Element) visualNodeMap.get(this);
+			nsIDOMElement visualElement = (nsIDOMElement) visualNodeMap.get(this);
 			visualElement.removeAttribute(name);
 		}
 	}
 
-	public void pseudo(VpePageContext pageContext, Node sourceNode, Node visualNode, Map visualNodeMap) {
+	public void pseudo(VpePageContext pageContext, Node sourceNode,
+			nsIDOMNode visualNode, Map visualNodeMap) {
 		visualNodeMap.put(this, visualNode);
 	}
 
-	private void addAttributes(Element sourceElement, Element visualElement, VpePageContext pageContext) {
+	private void addAttributes(Element sourceElement,
+			nsIDOMElement visualElement, VpePageContext pageContext) {
 		NamedNodeMap sourceAttributes = sourceElement.getAttributes();
 		if (sourceAttributes == null) {
 			return;
 		}
 		int len = sourceAttributes.getLength();
 		for (int i = 0; i < len; i++) {
-			Attr sourceAttr = (Attr) sourceAttributes.item(i);			
+			Attr sourceAttr = (Attr) sourceAttributes.item(i);
 			String name = sourceAttr.getName();
-			
+
 			String value = sourceAttr.getValue();
-				
+
 			if (isAttribute(name)) {
 				visualElement.setAttribute(name, value);
 			}

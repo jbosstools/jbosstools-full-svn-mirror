@@ -18,6 +18,8 @@ import org.w3c.dom.Node;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
 
 public class VpeTaglibCreator extends VpeAbstractCreator {
 	private static final String ATTR_URI = "uri";
@@ -32,7 +34,7 @@ public class VpeTaglibCreator extends VpeAbstractCreator {
 		dependencyMap.setCreator(this, VpeExpressionBuilder.attrSignature(ATTR_PREFIX, true));
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		setTaglib(pageContext, (Element)sourceNode);
 		return null;
 	}

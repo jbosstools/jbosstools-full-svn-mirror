@@ -15,19 +15,17 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
-import org.jboss.tools.vpe.mozilla.browser.MozillaBrowser;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMElement;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.nsIDOMNode;
-
 public class VpeDomMapping {
-	private Map sourceMap = new HashMap();
-	private Map visualMap = new HashMap();
+	private Map<Node, VpeNodeMapping> sourceMap = new HashMap<Node, VpeNodeMapping>();
+	private Map<nsIDOMNode, VpeNodeMapping> visualMap = new HashMap<nsIDOMNode, VpeNodeMapping>();
 	private VpePageContext pageContext;
 	
 	public VpeDomMapping(VpePageContext pageContext) {
@@ -46,68 +44,83 @@ public class VpeDomMapping {
 		}
 	}
 	
-	public void clear(Node except) {
-		Set entrySet = visualMap.entrySet();
-		Iterator iter = entrySet.iterator();
+	public void clear(nsIDOMNode except) {
+		Set<Map.Entry<nsIDOMNode, VpeNodeMapping>> entrySet = visualMap.entrySet();
+		Iterator<Map.Entry<nsIDOMNode, VpeNodeMapping>> iter = entrySet.iterator();
 		while (iter.hasNext()) {
-			Map.Entry entry = (Map.Entry)iter.next();
-			Object key = entry.getKey();
-			if (key instanceof Node) {
-				Node visualNode = (Node) entry.getKey();
-				if (!visualNode.equals(except)) {
-					MozillaSupports.release(visualNode);
-				}
+			Map.Entry<nsIDOMNode, VpeNodeMapping> entry = iter.next();
+			nsIDOMNode visualNode = entry.getKey();
+			if (!visualNode.equals(except)) {
+				iter.remove();
 			}
 		}
 		sourceMap.clear();
-		visualMap.clear();
 	}
 	
 	public VpeNodeMapping getNodeMapping(Node node) {
-		if (node instanceof nsIDOMNode) {
-			return getNodeMappingAtVisualNode(node);
-		} else {
-			return getNodeMappingAtSourceNode(node);
-		}
+		return getNodeMappingAtSourceNode(node);
+	}
+
+	public VpeNodeMapping getNodeMapping(nsIDOMNode node) {
+		return getNodeMappingAtVisualNode(node);
 	}
 	
 	public VpeNodeMapping getNodeMappingAtSourceNode(Node sourceNode) {
 		if (sourceNode != null) {
-			return (VpeNodeMapping) sourceMap.get(sourceNode);
+			return sourceMap.get(sourceNode);
 		}
+		
 		return null;
 	}
 	
-	public VpeNodeMapping getNodeMappingAtVisualNode(Node visualNode) {
-		if (visualNode != null) {
-			return (VpeNodeMapping) visualMap.get(visualNode);
+	public VpeNodeMapping getNodeMappingAtVisualNode(nsIDOMNode visualNode) {
+
+		
+		Iterator<Map.Entry<nsIDOMNode, VpeNodeMapping>> iter = visualMap.entrySet().iterator();
+	//Map.get() doesn't work correctly for this situation	
+		while(iter.hasNext()){
+			Map.Entry<nsIDOMNode,VpeNodeMapping> element = iter.next();
+			nsIDOMNode key = element.getKey();
+			if(visualNode!=null&&visualNode.equals(key)) {
+				
+				return element.getValue();
+			}
+
 		}
+//		
+//		if (visualNode != null) {
+//			return visualMap.get(visualNode);
+//		}
+		
 		return null;
 	}
 	
-	public Node getVisualNode(Node sourceNode) {
+	public nsIDOMNode getVisualNode(Node sourceNode) {
 		VpeNodeMapping nodeMapping = getNodeMapping(sourceNode);
 		if (nodeMapping != null) {
 			return nodeMapping.getVisualNode();
 		}
+		
 		return null;
 	}
 	
-	public Node getSourceNode(Node visualNode) {
+	public Node getSourceNode(nsIDOMNode visualNode) {
 		VpeNodeMapping nodeMapping = getNodeMapping(visualNode);
 		if (nodeMapping != null) {
 			return nodeMapping.getSourceNode();
 		}
+		
 		return null;
 	}
 	
 	public VpeNodeMapping getNearNodeMapping(Node node) {
-		if (node instanceof nsIDOMNode) {
-			return getNearNodeMappingAtVisualNode(node);
-		} else {
-			return getNearNodeMappingAtSourceNode(node);
-		}
+		return getNearNodeMappingAtSourceNode(node);
 	}
+	
+	public VpeNodeMapping getNearNodeMapping(nsIDOMNode node) {
+		return getNearNodeMappingAtVisualNode(node);
+	}
+
 	
 	public VpeNodeMapping getNearNodeMappingAtSourceNode(Node sourceNode) {
 		VpeNodeMapping nodeMapping = getNodeMappingAtSourceNode(sourceNode);
@@ -116,11 +129,11 @@ public class VpeDomMapping {
 			
 			if(sourceNode!=null && nodeMapping != null) {			
 				
-				Node nearVisualNode = nodeMapping.getVisualNode();
-				if(nearVisualNode instanceof Element){	
+				nsIDOMNode nearVisualNode = nodeMapping.getVisualNode();
+				if(nearVisualNode instanceof nsIDOMElement){	
 					
-					Element visualElement = (Element) nearVisualNode;
-					visualElement.removeAttribute(MozillaBrowser.VPEFLASHERCOLORATTRIBUTE);
+					nsIDOMElement visualElement = (nsIDOMElement) nearVisualNode;
+					visualElement.removeAttribute(XulRunnerEditor.VPEFLASHERCOLORATTRIBUTE);
 				}
 			}
 		}
@@ -129,18 +142,18 @@ public class VpeDomMapping {
 			nodeMapping = getNodeMappingAtSourceNode(sourceNode);
 			
 			if(sourceNode!=null && nodeMapping != null) {			
-				Node nearVisualNode = nodeMapping.getVisualNode();
-				if(nearVisualNode instanceof Element){	
-					Element visualElement = (Element) nearVisualNode;
-					visualElement.setAttribute(MozillaBrowser.VPEFLASHERCOLORATTRIBUTE, 
-							MozillaBrowser.flasherHiddentElementColor);
+				nsIDOMNode nearVisualNode = nodeMapping.getVisualNode();
+				if(nearVisualNode instanceof nsIDOMElement){	
+					nsIDOMElement visualElement = (nsIDOMElement) nearVisualNode;
+					visualElement.setAttribute(XulRunnerEditor.VPEFLASHERCOLORATTRIBUTE, 
+							XulRunnerEditor.flasherHiddentElementColor);
 				}
 			} 
 		}
 		return nodeMapping;
 	}
 
-	public VpeNodeMapping getNearNodeMappingAtVisualNode(Node visualNode) {
+	public VpeNodeMapping getNearNodeMappingAtVisualNode(nsIDOMNode visualNode) {
 		VpeNodeMapping nodeMapping = getNodeMappingAtVisualNode(visualNode);
 		while (visualNode != null && nodeMapping == null) {
 			visualNode = visualNode.getParentNode();
@@ -176,13 +189,13 @@ public class VpeDomMapping {
 	}
 
 	public VpeElementMapping getNearElementMapping(Node node) {
-		if (node instanceof nsIDOMNode) {
-			return getNearElementMappingAtVisualNode(node);
-		} else {
-			return getNearElementMappingAtSourceNode(node);
-		}
+		return getNearElementMappingAtSourceNode(node);
 	}
 
+	public VpeElementMapping getNearElementMapping(nsIDOMNode node) {
+		return getNearElementMappingAtVisualNode(node);
+	}
+	
 	public VpeElementMapping getNearElementMappingAtSourceNode(Node sourceNode) {
 		VpeNodeMapping nodeMapping = getNearNodeMappingAtSourceNode(sourceNode);
 		if (nodeMapping != null) {
@@ -196,7 +209,7 @@ public class VpeDomMapping {
 		return null;
 	}
 
-	public VpeElementMapping getNearElementMappingAtVisualNode(Node visualNode) {
+	public VpeElementMapping getNearElementMappingAtVisualNode(nsIDOMNode visualNode) {
 		VpeNodeMapping nodeMapping = getNearNodeMappingAtVisualNode(visualNode);
 		if (nodeMapping != null) {
 			switch (nodeMapping.getType()) {
@@ -209,7 +222,7 @@ public class VpeDomMapping {
 		return null;
 	}
 	
-	public Node getNearVisualNode_(Node sourceNode) {
+	public nsIDOMNode getNearVisualNode_(Node sourceNode) {
 		VpeNodeMapping nodeMapping = getNearNodeMapping(sourceNode);
 		if (nodeMapping != null) {
 			return nodeMapping.getVisualNode();
@@ -217,7 +230,7 @@ public class VpeDomMapping {
 		return null;
 	}
 	
-	public Node getNearVisualNode(Node sourceNode) {
+	public nsIDOMNode getNearVisualNode(Node sourceNode) {
 		if (sourceNode == null) return null;
 		VpeNodeMapping nodeMapping = getNearNodeMappingAtSourceNode(sourceNode);
 		if (nodeMapping != null) {
@@ -232,7 +245,7 @@ public class VpeDomMapping {
 		return null;
 	}
 	
-	public Node getNearSourceNode(Node visualNode) {
+	public Node getNearSourceNode(nsIDOMNode visualNode) {
 		VpeNodeMapping nodeMapping = getNearNodeMapping(visualNode);
 		if (nodeMapping != null) {
 			return nodeMapping.getSourceNode();
@@ -240,8 +253,8 @@ public class VpeDomMapping {
 		return null;
 	}
 	
-	public Node remove(Node sourceNode) {
-		Node visualNode = getVisualNode(sourceNode);
+	public nsIDOMNode remove(Node sourceNode) {
+		nsIDOMNode visualNode = getVisualNode(sourceNode);
 //		if (visualNode != null) {
 			removeImpl(sourceNode);
 //		}
@@ -253,25 +266,13 @@ public class VpeDomMapping {
 		if (sourceChildren != null) {
 			int len = sourceChildren.getLength();
 			for (int i = 0; i < len; i++) {
-				Node sourceChild = sourceChildren.item(i);
-				VpeNodeMapping nodeMapping = removeImpl(sourceChild);
-				if (nodeMapping != null) {
-					if (nodeMapping.getVisualNode() != null) {
-						MozillaSupports.release(nodeMapping.getVisualNode());
-					}
-					if (nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
-						VpeElementMapping elementMapping = (VpeElementMapping)nodeMapping;
-						if (elementMapping.getBorder() != null) {
-							MozillaSupports.release(elementMapping.getBorder());
-						}
-					}
-				}
+				removeImpl(sourceChildren.item(i));
 			}
 		}
 	}
 	
 	private VpeNodeMapping removeImpl(Node sourceNode) {
-		Node visualNode = null;
+		nsIDOMNode visualNode = null;
 		VpeNodeMapping nodeMapping = (VpeNodeMapping)sourceMap.remove(sourceNode);
 		if (nodeMapping != null) {
 			visualNode = nodeMapping.getVisualNode();
@@ -306,8 +307,8 @@ public class VpeDomMapping {
 			Map.Entry entry = (Map.Entry)iter.next();
 			VpeNodeMapping nodeMapping = (VpeNodeMapping)entry.getValue(); 
 			Node sourceNode = nodeMapping.getSourceNode();
-			Node visualNode = nodeMapping.getVisualNode(); 
-			System.out.println("sourceNode: " + sourceNode.getNodeName() + " (" + sourceNode.hashCode() + ")    visualNode: " + (visualNode != null ? visualNode.getNodeName() + " (" + visualNode.hashCode() + ")  refCount: " + MozillaSupports.getRefCount(visualNode) : null));
+			nsIDOMNode visualNode = nodeMapping.getVisualNode(); 
+			System.out.println("sourceNode: " + sourceNode.getNodeName() + " (" + sourceNode.hashCode() + ")    visualNode: " + (visualNode != null ? visualNode.getNodeName() + " (" + visualNode.hashCode() + ")" : null));
 		}
 		System.out.println("Visual DOM Mapping ------------------------------------");
 		entrySet = visualMap.entrySet();
@@ -316,12 +317,12 @@ public class VpeDomMapping {
 			Map.Entry entry = (Map.Entry)iter.next();
 			VpeNodeMapping nodeMapping = (VpeNodeMapping)entry.getValue(); 
 			Node sourceNode = nodeMapping.getSourceNode();
-			Node visualNode = nodeMapping.getVisualNode(); 
-			System.out.println("sourceNode: " + (sourceNode != null ? sourceNode.getNodeName() + " (" + sourceNode.hashCode() + ")" : null) + "    visualNode: " + visualNode.getNodeName() + " (" + visualNode.hashCode() + ")  refCount: " + MozillaSupports.getRefCount(visualNode));
+			nsIDOMNode visualNode = nodeMapping.getVisualNode(); 
+			System.out.println("sourceNode: " + (sourceNode != null ? sourceNode.getNodeName() + " (" + sourceNode.hashCode() + ")" : null) + "    visualNode: " + visualNode.getNodeName() + " (" + visualNode.hashCode() + ")");
 		}
 	}
 
-	public Map getVisualMap() {
+	public Map<nsIDOMNode, VpeNodeMapping> getVisualMap() {
 		return visualMap;
 	}
 }

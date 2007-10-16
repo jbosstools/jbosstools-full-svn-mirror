@@ -10,21 +10,22 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.VpeResizer;
+import org.jboss.tools.vpe.xulrunner.editor.IXulRunnerVpeResizer;
 
 public class VpeTagDescription {
 	public static final int DISPLAY_TYPE_NONE = 0;
 	public static final int DISPLAY_TYPE_BLOCK = 1;
 	public static final int DISPLAY_TYPE_INLINE = 2;
 
-	public static final int RESIZE_CONSTRAINS_TOPLEFT = VpeResizer.eTopLeft;
-	public static final int RESIZE_CONSTRAINS_TOP = VpeResizer.eTop;
-	public static final int RESIZE_CONSTRAINS_TOPRIGHT = VpeResizer.eTopRight;
-	public static final int RESIZE_CONSTRAINS_LEFT = VpeResizer.eLeft;
-	public static final int RESIZE_CONSTRAINS_RIGHT = VpeResizer.eRight;
-	public static final int RESIZE_CONSTRAINS_BOTTOMLEFT = VpeResizer.eBottomLeft;
-	public static final int RESIZE_CONSTRAINS_BOTTOM = VpeResizer.eBottom;
-	public static final int RESIZE_CONSTRAINS_BOTTOMRIGHT = VpeResizer.eBottomRight;
+	public static final int RESIZE_CONSTRAINS_TOPLEFT = IXulRunnerVpeResizer.RESIZER_MARKER_TOPLEFT;
+	public static final int RESIZE_CONSTRAINS_TOP = IXulRunnerVpeResizer.RESIZER_MARKER_TOP;
+	public static final int RESIZE_CONSTRAINS_TOPRIGHT = IXulRunnerVpeResizer.RESIZER_MARKER_TOPRIGHT;
+	public static final int RESIZE_CONSTRAINS_LEFT = IXulRunnerVpeResizer.RESIZER_MARKER_LEFT;
+	public static final int RESIZE_CONSTRAINS_RIGHT = IXulRunnerVpeResizer.RESIZER_MARKER_RIGHT;
+	public static final int RESIZE_CONSTRAINS_BOTTOMLEFT = IXulRunnerVpeResizer.RESIZER_MARKER_BOTTOMLEFT;
+	public static final int RESIZE_CONSTRAINS_BOTTOM = IXulRunnerVpeResizer.RESIZER_MARKER_BOTTOM;
+	public static final int RESIZE_CONSTRAINS_BOTTOMRIGHT = IXulRunnerVpeResizer.RESIZER_MARKER_BOTTOMRIGHT;
+
 	public static final int RESIZE_CONSTRAINS_NONE = 0;
 	public static final int RESIZE_CONSTRAINS_ALL = RESIZE_CONSTRAINS_TOPLEFT | RESIZE_CONSTRAINS_TOP | RESIZE_CONSTRAINS_TOPRIGHT | RESIZE_CONSTRAINS_LEFT | RESIZE_CONSTRAINS_RIGHT | RESIZE_CONSTRAINS_BOTTOMLEFT | RESIZE_CONSTRAINS_BOTTOM | RESIZE_CONSTRAINS_BOTTOMRIGHT;
 

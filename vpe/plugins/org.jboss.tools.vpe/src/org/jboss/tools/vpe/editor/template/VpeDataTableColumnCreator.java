@@ -12,15 +12,18 @@ package org.jboss.tools.vpe.editor.template;
 
 import java.util.Map;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeDataTableElements.SourceColumnElements;
 import org.jboss.tools.vpe.editor.template.VpeDataTableElements.VisualColumnElements;
 import org.jboss.tools.vpe.editor.template.VpeDataTableElements.VisualDataTableElements;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 	private boolean caseSensitive;
@@ -29,29 +32,29 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 		this.caseSensitive = caseSensitive;
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 
 		int index = getColumnIndex(sourceNode);
 
 		VpeCreatorInfo creatorInfo = null;
 
-		Node visualParent = null;
-		Node visualNode = pageContext.getCurrentVisualNode();
+		nsIDOMNode visualParent = null;
+		nsIDOMNode visualNode = pageContext.getCurrentVisualNode();
 		if (visualNode != null) {
 			visualParent = visualNode.getParentNode();
 		}
 
 		SourceColumnElements columnElements = new SourceColumnElements(sourceNode);
-		if (visualParent != null && visualParent.getNodeName().equalsIgnoreCase("table") && columnElements != null) {
+		if (visualParent != null && HTML.TAG_TABLE.equalsIgnoreCase(visualParent.getNodeName()) && columnElements != null) {
 			VisualDataTableElements visualDataTableElements = VpeDataTableElements.getVisualDataTableElements(visualParent);
-			Element col = visualDocument.createElement("col");
-			Element colgroup = VpeDataTableElements.getNamedChild(visualParent, "colgroup", 0);
+			nsIDOMElement col = visualDocument.createElement(HTML.TAG_COL);
+			nsIDOMElement colgroup = VpeDataTableElements.getNamedChild(visualParent, HTML.TAG_COLGROUP, 0);
 			creatorInfo = new VpeCreatorInfo(col);
 			VisualColumnElements visualColumnElements = new VisualColumnElements();
 			if (colgroup != null) {
 				colgroup.appendChild(col);
 				VpeChildrenInfo info = null;
-				Element cell = VpeDataTableElements.makeCell(visualDataTableElements.getColumnsHeaderRow(), index, "th", visualDocument);
+				nsIDOMElement cell = VpeDataTableElements.makeCell(visualDataTableElements.getColumnsHeaderRow(), index, HTML.TAG_TH, visualDocument);
 				info = new VpeChildrenInfo(cell);
 				if (columnElements.hasHeader()) {
 					info.addSourceChild(columnElements.getHeader());
@@ -59,7 +62,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 				creatorInfo.addChildrenInfo(info);
 				visualColumnElements.setHeaderCell(cell);
 
-				cell = VpeDataTableElements.makeCell(visualDataTableElements.getColumnsFooterRow(), index, "td", visualDocument);
+				cell = VpeDataTableElements.makeCell(visualDataTableElements.getColumnsFooterRow(), index, HTML.TAG_TD, visualDocument);
 				info = new VpeChildrenInfo(cell);
 				if (columnElements.hasFooter()) {
 					info.addSourceChild(columnElements.getFooter());
@@ -67,7 +70,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 				creatorInfo.addChildrenInfo(info);
 				visualColumnElements.setFooterCell(cell);
 				
-				cell = VpeDataTableElements.makeCell(visualDataTableElements.getBodyRow(), index, "TD", visualDocument);
+				cell = VpeDataTableElements.makeCell(visualDataTableElements.getBodyRow(), index, HTML.TAG_TD, visualDocument);
 				NodeList list = sourceNode.getChildNodes();
 				int cnt = list != null ? list.getLength() : 0;
 				if (cnt > 0) {
@@ -131,7 +134,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 		}
 	}
 
-	private static void removeChild(Element child) {
+	private static void removeChild(nsIDOMElement child) {
 		if (child != null && child.getParentNode() != null) {
 			child.getParentNode().removeChild(child);
 		}

@@ -13,18 +13,18 @@ package org.jboss.tools.vpe.editor.template;
 import java.util.Map;
 import java.util.Set;
 
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 public class VpeLinkCreator extends VpeAbstractCreator {
 	private boolean caseSensitive;
@@ -67,18 +67,18 @@ public class VpeLinkCreator extends VpeAbstractCreator {
 		}
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		String href_value = getExprValue(pageContext, hrefExpr, sourceNode);
 		String rel_value = getExprValue(pageContext, relExpr, sourceNode);
 
-		Node newNode = pageContext.getVisualBuilder().addLinkNodeToHead(href_value, "no");
+		nsIDOMNode newNode = pageContext.getVisualBuilder().addLinkNodeToHead(href_value, "no");
 		visualNodeMap.put(this, newNode);
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(null);
 		return creatorInfo;
 	}
 
 	public void removeElement(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
-	    Node linkNode = (Node)visualNodeMap.get(this);
+	    nsIDOMNode linkNode = (nsIDOMNode)visualNodeMap.get(this);
 		if(linkNode != null){
 			pageContext.getVisualBuilder().removeLinkNodeFromHead(linkNode);
 			visualNodeMap.remove(this);
@@ -90,8 +90,8 @@ public class VpeLinkCreator extends VpeAbstractCreator {
 		String href_value = getExprValue(pageContext, hrefExpr, sourceElement);
 		String rel_value = getExprValue(pageContext, relExpr, sourceElement);
 
-		Node oldNode = (Node)visualNodeMap.get(this);
-		Node newNode;
+		nsIDOMNode oldNode = (nsIDOMNode)visualNodeMap.get(this);
+		nsIDOMNode newNode;
 		if(oldNode == null){
 			newNode = pageContext.getVisualBuilder().addLinkNodeToHead(href_value, "no");
 		}else{

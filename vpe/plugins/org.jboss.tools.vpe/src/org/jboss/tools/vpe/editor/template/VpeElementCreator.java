@@ -24,6 +24,8 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
 
 public class VpeElementCreator extends VpeAbstractCreator {
 	private boolean caseSensitive;
@@ -47,12 +49,12 @@ public class VpeElementCreator extends VpeAbstractCreator {
 		}
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		if (expression != null) {
 			visualNodeMap.put(this, visualElement);
 			VpeValue vpeValue = expression.exec(pageContext, sourceNode);
 			if (vpeValue != null && vpeValue.stringValue().length() > 0) {
-				Element newVisualElement = visualDocument.createElement(vpeValue.stringValue());
+				nsIDOMElement newVisualElement = visualDocument.createElement(vpeValue.stringValue());
 				return new VpeCreatorInfo(newVisualElement);
 			}
 		}

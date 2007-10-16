@@ -12,22 +12,15 @@ package org.jboss.tools.vpe.editor.template.dnd;
 
 import java.util.HashSet;
 
-import org.w3c.dom.Attr;
+import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
+import org.jboss.tools.vpe.editor.VpeSourceInnerDropInfo;
+import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
-
-import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
-import org.jboss.tools.vpe.editor.VpeSourceInnerDropInfo;
-import org.jboss.tools.vpe.editor.VpeVisualInnerDragInfo;
-import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
-import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
-import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
-import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
-import org.jboss.tools.vpe.mozilla.internal.swt.xpl.DataHelper;
 
 
 public class VpeDnd {

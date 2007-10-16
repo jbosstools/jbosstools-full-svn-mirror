@@ -14,12 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
@@ -27,7 +21,15 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class VpePanelGridCreator extends VpeAbstractCreator {
 
@@ -113,7 +115,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 		}
 	}
 
-	public VpeCreatorInfo _create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo _create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		int tableSize = 1;
 		if (tableSizeExpr != null) {
 			VpeValue vpeValue = tableSizeExpr.exec(pageContext, sourceNode);
@@ -130,7 +132,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 			}
 		}
 		
-		Element visualTable = visualDocument.createElement("table");
+		nsIDOMElement visualTable = visualDocument.createElement(HTML.TAG_TABLE);
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(visualTable);
 
 		if (propertyCreators != null) {
@@ -139,9 +141,8 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 				if (creator != null) {
 					VpeCreatorInfo info = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
 					if (info != null && info.getVisualNode() != null) {
-						Attr attr = (Attr)info.getVisualNode();
+						nsIDOMAttr attr = (nsIDOMAttr)info.getVisualNode();
 						visualTable.setAttributeNode(attr);
-						MozillaSupports.release(attr);
 					}
 				}
 			}
@@ -180,34 +181,32 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 				}
 				int rowCount = (childrenCount + tableSize - 1) / tableSize;
 
-				Element visualHead = null;
-				Element visualFoot = null;
-				Element visualBody = visualDocument.createElement("tbody");
+				nsIDOMElement visualHead = null;
+				nsIDOMElement visualFoot = null;
+				nsIDOMElement visualBody = visualDocument.createElement(HTML.TAG_TBODY);
 				visualTable.appendChild(visualBody);
 				if (header != null || footer != null) {
 					if (header != null) {
-						visualHead = visualDocument.createElement("thead");
+						visualHead = visualDocument.createElement(HTML.TAG_THEAD);
 						visualTable.appendChild(visualHead);
-						MozillaSupports.release(visualHead);
 					}
 					if (footer != null) {
-						visualFoot = visualDocument.createElement("tfoot");
+						visualFoot = visualDocument.createElement(HTML.TAG_TFOOT);
 						visualTable.appendChild(visualFoot);
-						MozillaSupports.release(visualFoot);
 					}
 				}
 				List rowClasses = getClasses(rowClassesExpr, sourceNode, pageContext);
 				List columnClasses = getClasses(columnClassesExpr, sourceNode, pageContext);
 				int rci = 0, cci = 0;
 				for (int i = 0; i < rowCount; i++) {
-					Element visualRow = visualDocument.createElement("tr");
+					nsIDOMElement visualRow = visualDocument.createElement(HTML.TAG_TD);
 					if (rowClasses.size() > 0) {
 						visualRow.setAttribute("class", rowClasses.get(rci).toString());
 						rci++;
 						if (rci >= rowClasses.size()) rci = 0;
 					}
 					for (int j = 0; j < tableSize; j++) {
-						Element visualCell = visualDocument.createElement("td");
+						nsIDOMElement visualCell = visualDocument.createElement("td");
 						if (columnClasses.size() > 0) {
 							visualCell.setAttribute("class", columnClasses.get(rci).toString());
 							cci++;
@@ -230,18 +229,16 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 						visualTable.appendChild(visualRow);
 					}
 				}
-				MozillaSupports.release(visualBody);
-				makeSpecial(header, visualHead, visualDocument, tableSize, creatorInfo, "th", headerClassExpr, pageContext);
-				makeSpecial(footer, visualFoot, visualDocument, tableSize, creatorInfo, "td", footerClassExpr, pageContext);
+				makeSpecial(header, visualHead, visualDocument, tableSize, creatorInfo, HTML.TAG_TH, headerClassExpr, pageContext);
+				makeSpecial(footer, visualFoot, visualDocument, tableSize, creatorInfo, HTML.TAG_TD, footerClassExpr, pageContext);
 
 				for (int i = 0; i < propertyCreators.size(); i++) {
 					VpeCreator creator = (VpeCreator)propertyCreators.get(i);
 					if (creator != null) {
 						VpeCreatorInfo info = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
 						if (info != null && info.getVisualNode() != null) {
-							Attr attr = (Attr)info.getVisualNode();
+							nsIDOMAttr attr = (nsIDOMAttr)info.getVisualNode();
 							visualTable.setAttributeNode(attr);
-							MozillaSupports.release(attr);
 						}
 					}
 				}
@@ -251,7 +248,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 		return creatorInfo;
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		int tableSize = 1;
 		if (tableSizeExpr != null) {
 			VpeValue vpeValue = tableSizeExpr.exec(pageContext, sourceNode);
@@ -266,7 +263,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 			}
 		}
 		
-		Element visualTable = visualDocument.createElement("table");
+		nsIDOMElement visualTable = visualDocument.createElement(HTML.TAG_TABLE);
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(visualTable);
 
 		if (propertyCreators != null) {
@@ -275,9 +272,8 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 				if (creator != null) {
 					VpeCreatorInfo info = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
 					if (info != null && info.getVisualNode() != null) {
-						Attr attr = (Attr)info.getVisualNode();
+						nsIDOMAttr attr = (nsIDOMAttr)info.getVisualNode();
 						visualTable.setAttributeNode(attr);
-						MozillaSupports.release(attr);
 					}
 				}
 			}
@@ -314,34 +310,32 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 				}
 				int rowCount = (childrenCount + tableSize - 1) / tableSize;
 
-				Element visualHead = null;
-				Element visualFoot = null;
-				Element visualBody = visualDocument.createElement("tbody");
+				nsIDOMElement visualHead = null;
+				nsIDOMElement visualFoot = null;
+				nsIDOMElement visualBody = visualDocument.createElement(HTML.TAG_BODY);
 				visualTable.appendChild(visualBody);
 				if (header != null || footer != null) {
 					if (header != null) {
-						visualHead = visualDocument.createElement("thead");
+						visualHead = visualDocument.createElement(HTML.TAG_THEAD);
 						visualTable.appendChild(visualHead);
-						MozillaSupports.release(visualHead);
 					}
 					if (footer != null) {
-						visualFoot = visualDocument.createElement("tfoot");
+						visualFoot = visualDocument.createElement(HTML.TAG_TFOOT);
 						visualTable.appendChild(visualFoot);
-						MozillaSupports.release(visualFoot);
 					}
 				}
 				List rowClasses = getClasses(rowClassesExpr, sourceNode, pageContext);
 				List columnClasses = getClasses(columnClassesExpr, sourceNode, pageContext);
 				int rci = 0, cci = 0;
 				for (int i = 0; i < rowCount; i++) {
-					Element visualRow = visualDocument.createElement("tr");
+					nsIDOMElement visualRow = visualDocument.createElement(HTML.TAG_TR);
 					if (rowClasses.size() > 0) {
 						visualRow.setAttribute("class", rowClasses.get(rci).toString());
 						rci++;
 						if (rci >= rowClasses.size()) rci = 0;
 					}
 					for (int j = 0; j < tableSize; j++) {
-						Element visualCell = visualDocument.createElement("td");
+						nsIDOMElement visualCell = visualDocument.createElement(HTML.TAG_TD);
 						if (columnClasses.size() > 0) {
 							visualCell.setAttribute("class", columnClasses.get(cci).toString());
 							cci++;
@@ -364,7 +358,6 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 						visualTable.appendChild(visualRow);
 					}
 				}
-				MozillaSupports.release(visualBody);
 				makeSpecial(header, visualHead, visualDocument, tableSize, creatorInfo, "th", headerClassExpr, pageContext);
 				makeSpecial(footer, visualFoot, visualDocument, tableSize, creatorInfo, "td", footerClassExpr, pageContext);
 
@@ -373,9 +366,8 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 					if (creator != null) {
 						VpeCreatorInfo info = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
 						if (info != null && info.getVisualNode() != null) {
-							Attr attr = (Attr)info.getVisualNode();
+							nsIDOMAttr attr = (nsIDOMAttr)info.getVisualNode();
 							visualTable.setAttributeNode(attr);
-							MozillaSupports.release(attr);
 						}
 					}
 				}
@@ -399,11 +391,11 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 		return b;
 	}
 
-	private void makeSpecial(Node header, Element visualHead, Document visualDocument, int tableSize, VpeCreatorInfo creatorInfo, String cellTag, VpeExpression headerClassExpr, VpePageContext pageContext) {
+	private void makeSpecial(Node header, nsIDOMElement visualHead, nsIDOMDocument visualDocument, int tableSize, VpeCreatorInfo creatorInfo, String cellTag, VpeExpression headerClassExpr, VpePageContext pageContext) {
 		if (header != null && visualHead != null) {
-			Element visualRow = visualDocument.createElement("tr");
+			nsIDOMElement visualRow = visualDocument.createElement(HTML.TAG_TR);
 			visualHead.appendChild(visualRow);
-			Element visualCell = visualDocument.createElement(cellTag);
+			nsIDOMElement visualCell = visualDocument.createElement(cellTag);
 			visualCell.setAttribute("colspan", "" + tableSize);
 			if (headerClassExpr != null && header.getParentNode() != null) {
 				String headerClass = headerClassExpr.exec(pageContext, header.getParentNode()).stringValue();

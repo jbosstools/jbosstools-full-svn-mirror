@@ -16,11 +16,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
@@ -28,7 +23,14 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
-import org.jboss.tools.vpe.editor.util.MozillaSupports;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 public class VpeAnyCreator extends VpeAbstractCreator {
 	static final String CLASS_TAG_BLOCK = "__any__tag__block";
@@ -183,14 +185,14 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 		}
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
-		Element div = visualDocument.createElement("div");
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
+		nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(div);
 
-		Element span = visualDocument.createElement("span");
+		nsIDOMElement span = visualDocument.createElement(HTML.TAG_SPAN);
 		div.appendChild(span);
 		if(showIconBool){
-			Element img = visualDocument.createElement("img");
+			nsIDOMElement img = visualDocument.createElement(HTML.TAG_IMG);
 			img.setAttribute("src","any.gif");
 			img.setAttribute("width","16");
 			img.setAttribute("height","16");
@@ -206,9 +208,8 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 				if (creator != null) {
 					VpeCreatorInfo info = creator.create(pageContext, (Element) sourceNode, visualDocument, div, visualNodeMap);
 					if (info != null && info.getVisualNode() != null) {
-						Attr attr = (Attr)info.getVisualNode();
+						nsIDOMAttr attr = (nsIDOMAttr)info.getVisualNode();
 						div.setAttributeNode(attr);
-						MozillaSupports.release(attr);
 					}
 				}
 			}
@@ -217,13 +218,13 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 		setStyles(pageContext, sourceNode, div, span);
 
 		String valueStr = getExprValue(pageContext, valueExpr, sourceNode);
-		Node valueNode = visualDocument.createTextNode(valueStr);
+		nsIDOMNode valueNode = visualDocument.createTextNode(valueStr);
 		span.appendChild(valueNode);
 		creatorInfo.addDependencySet(dependencySet);
 		return creatorInfo;
 	}
 
-	private void setStyles(VpePageContext pageContext, Node sourceNode, Element div, Element span) {
+	private void setStyles(VpePageContext pageContext, Node sourceNode, nsIDOMElement div, nsIDOMElement span) {
 		boolean display = true;
 		boolean displayBlock = true;
 
@@ -312,10 +313,10 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 	}
 
 	private class VisualElements {
-		private Element div;
-		private Element span;
+		private nsIDOMElement div;
+		private nsIDOMElement span;
 
-		private VisualElements(Element div, Element span) {
+		private VisualElements(nsIDOMElement div, nsIDOMElement span) {
 			this.div = div;
 			this.span = span;
 		}

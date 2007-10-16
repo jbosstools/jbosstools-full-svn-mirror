@@ -66,239 +66,238 @@ public class SelectionBar extends Layout implements SelectionListener {
     final static String PREFERENCE_STATUS_BAR_ENABLE = "yes";
     final static String PREFERENCE_STATUS_BAR_DISABLE = "no";
 
-    public Composite createToolBarComposite(Composite parent, boolean show) {
+	public Composite createToolBarComposite(Composite parent, boolean show) {
+		splitter = new Splitter(parent, SWT.NONE);
+		splitter.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		/*
+		 * The empty composite
+		 */
+		cmpTlEmpty = new Composite(splitter, SWT.NONE) {
+			public Point computeSize(int wHint, int hHint, boolean changed) {
+				Point point = super.computeSize(wHint, hHint, changed);
+				point.y = 1;
+				return point;
+			}
+		};
 
-	splitter = new Splitter(parent, SWT.NONE);
-	splitter.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-	/*
-	 * The empty composite
-	 */
-	cmpTlEmpty = new Composite(splitter, SWT.NONE) {
-	    public Point computeSize(int wHint, int hHint, boolean changed) {
-		Point point = super.computeSize(wHint, hHint, changed);
-		point.y = 1;
-		return point;
-	    }
-	};
+		cmpTlEmpty.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-	cmpTlEmpty.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		// Main composite of the visible splitter
+		cmpToolBar = new Composite(splitter, SWT.NONE);
+		cmpToolBar.setLayout(this);
 
-	// Main composite of the visible splitter
-	cmpToolBar = new Composite(splitter, SWT.NONE);
-	cmpToolBar.setLayout(this);
+		GridLayout layoutTl = new GridLayout(1, false);
+		layoutTl.marginBottom = 0;
+		layoutTl.marginHeight = 0;
+		layoutTl.marginWidth = 0;
+		layoutTl.verticalSpacing = 0;
+		layoutTl.horizontalSpacing = 0;
 
-	GridLayout layoutTl = new GridLayout(1, false);
-	layoutTl.marginBottom = 0;
-	layoutTl.marginHeight = 0;
-	layoutTl.marginWidth = 0;
-	layoutTl.verticalSpacing = 0;
-	layoutTl.horizontalSpacing = 0;
+		// Middle composite, witch contain the selectbar
+		cmpBar = new Composite(cmpToolBar, SWT.NONE);
+		cmpBar.setLayout(layoutTl);
+		cmpBar.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-	// Middle composite, witch contain the selectbar
-	cmpBar = new Composite(cmpToolBar, SWT.NONE);
-	cmpBar.setLayout(layoutTl);
-	cmpBar.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		closeBar = new Composite(cmpToolBar, SWT.NONE);
+		closeBar.setLayout(layoutTl);
+		closeBar.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-	closeBar = new Composite(cmpToolBar, SWT.NONE);
-	closeBar.setLayout(layoutTl);
-	closeBar.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		closeSelectionBar = new ToolBar(closeBar, SWT.HORIZONTAL | SWT.FLAT);
+		ToolItem closeItem = new ToolItem(closeSelectionBar, SWT.FLAT);
+		closeItem.setImage(PlatformUI.getWorkbench().getSharedImages()
+				.getImage(ISharedImages.IMG_TOOL_DELETE));
+		closeItem.setToolTipText(VpeUIMessages.HIDE_SELECTIONBAR);
+		closeItem.addListener(SWT.Selection, new Listener() {
 
-	closeSelectionBar = new ToolBar(closeBar, SWT.HORIZONTAL | SWT.FLAT);
-	ToolItem closeItem = new ToolItem(closeSelectionBar, SWT.FLAT);
-	closeItem.setImage(PlatformUI.getWorkbench().getSharedImages()
-		.getImage(ISharedImages.IMG_TOOL_DELETE));
-	closeItem.setToolTipText(VpeUIMessages.HIDE_SELECTIONBAR);
-	closeItem.addListener(SWT.Selection, new Listener() {
-
-	    public void handleEvent(Event event) {
-		boolean toggleState = VpePreference.ALWAYS_HIDE_SELECTION_BAR_WITHOUT_PROMT
-			.getValue().equals(PREFERENCE_STATUS_BAR_ENABLE);
-		XModelObject optionsObject = ModelUtilities
-			.getPreferenceModel().getByPath(
-				VpePreference.VPE_EDITOR_PATH);
-		if (!toggleState) {
-		    MessageDialogWithToggle dialog = MessageDialogWithToggle
-			    .openOkCancelConfirm(
-				    PlatformUI.getWorkbench()
-					    .getActiveWorkbenchWindow()
-					    .getShell(),
-				    VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TITLE,
-				    VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_MESSAGE,
-				    VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TOGGLE_MESSAGE,
-				    false, null, null);
-		    if (dialog.getReturnCode() != IDialogConstants.OK_ID) {
-			return;
-		    }
-		    if (dialog.getToggleState()) {
-			optionsObject
-				.setAttributeValue(
-					VpePreference.ATT_ALWAYS_HIDE_SELECTION_BAR_WITHOUT_PROMT,
-					PREFERENCE_STATUS_BAR_ENABLE);
-		    }
+			public void handleEvent(Event event) {
+				boolean toggleState = VpePreference.ALWAYS_HIDE_SELECTION_BAR_WITHOUT_PROMT
+						.getValue().equals(PREFERENCE_STATUS_BAR_ENABLE);
+				XModelObject optionsObject = ModelUtilities
+						.getPreferenceModel().getByPath(
+								VpePreference.VPE_EDITOR_PATH);
+				if (!toggleState) {
+					MessageDialogWithToggle dialog = MessageDialogWithToggle
+							.openOkCancelConfirm(
+									PlatformUI.getWorkbench()
+											.getActiveWorkbenchWindow()
+											.getShell(),
+									VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TITLE,
+									VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_MESSAGE,
+									VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TOGGLE_MESSAGE,
+									false, null, null);
+					if (dialog.getReturnCode() != IDialogConstants.OK_ID) {
+						return;
+					}
+					if (dialog.getToggleState()) {
+						optionsObject
+								.setAttributeValue(
+										VpePreference.ATT_ALWAYS_HIDE_SELECTION_BAR_WITHOUT_PROMT,
+										PREFERENCE_STATUS_BAR_ENABLE);
+					}
+				}
+				optionsObject.setAttributeValue(
+						VpePreference.ATT_SHOW_SELECTION_TAG_BAR,
+						PREFERENCE_STATUS_BAR_DISABLE);
+				showBar(PREFERENCE_STATUS_BAR_DISABLE);
+			}
+		});
+		// Create selection bar
+		selBar = new ToolBar(cmpBar, SWT.HORIZONTAL | SWT.FLAT);
+		if (show == true) {
+			splitter.setVisible(cmpTlEmpty, false);
+			splitter.setVisible(cmpToolBar, true);
+		} else {
+			splitter.setVisible(cmpTlEmpty, true);
+			splitter.setVisible(cmpToolBar, false);
 		}
-		optionsObject.setAttributeValue(
-			VpePreference.ATT_SHOW_SELECTION_TAG_BAR,
-			PREFERENCE_STATUS_BAR_DISABLE);
-		showBar(PREFERENCE_STATUS_BAR_DISABLE);
-	    }
-	});
-	// Create selection bar
-	selBar = new ToolBar(cmpBar, SWT.HORIZONTAL | SWT.FLAT);
-	if (show == true) {
-	    splitter.setVisible(cmpTlEmpty, false);
-	    splitter.setVisible(cmpToolBar, true);
-	} else {
-	    splitter.setVisible(cmpTlEmpty, true);
-	    splitter.setVisible(cmpToolBar, false);
-	}
 
-	return splitter;
-    }
+		return splitter;
+	}
 
     public void showBar(String show) {
-	if (show.equals(PREFERENCE_STATUS_BAR_ENABLE)) {
-	    splitter.setVisible(cmpToolBar, true);
-	    splitter.setVisible(cmpTlEmpty, false);
-	    splitter.getParent().layout(true, true);
-	} else {
-	    splitter.setVisible(cmpToolBar, false);
-	    splitter.setVisible(cmpTlEmpty, true);
-	    splitter.getParent().layout(true, true);
+		if (PREFERENCE_STATUS_BAR_ENABLE.equals(show)) {
+			splitter.setVisible(cmpToolBar, true);
+			splitter.setVisible(cmpTlEmpty, false);
+			splitter.getParent().layout(true, true);
+		} else {
+			splitter.setVisible(cmpToolBar, false);
+			splitter.setVisible(cmpTlEmpty, true);
+			splitter.getParent().layout(true, true);
+		}
 	}
-    }
 
     public void setVpeController(VpeController vpeController) {
-	this.vpeController = vpeController;
-    }
+		this.vpeController = vpeController;
+	}
 
     public void selectionChanged() {
+		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(
+				vpeController.getSourceEditor());
+		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
+		if (selection == null) {
+			return;
+		}
 
-	VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(
-		vpeController.getSourceEditor());
-	VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
-	if (selection == null) {
-	    return;
+		// Node node = selection.getFocusNode();
+		Node node = selection.getStartNode();
+		if (node != null && node.getNodeType() == Node.TEXT_NODE) {
+			node = node.getParentNode();
+		}
+
+		int elementCounter = 0;
+		while (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
+			ToolItem item = null;
+			if (selBar.getItemCount() > elementCounter) {
+				item = selBar.getItem(selBar.getItemCount() - elementCounter
+						- 1);
+				item.setData(node);
+			} else {
+				item = new ToolItem(selBar, SWT.FLAT, 0);
+				item.addSelectionListener(this);
+				item.setData(node);
+			}
+
+			item.setText(node.getNodeName());
+			elementCounter++;
+			node = node.getParentNode();
+		}
+
+		itemCount = elementCounter;
+		cmpToolBar.layout();
+		// bug was fixed when toolbar are not shown for resizeble components
+		cmpToolBar.layout();
 	}
 
-	// Node node = selection.getFocusNode();
-	Node node = selection.getStartNode();
-	if (node != null && node.getNodeType() == Node.TEXT_NODE) {
-	    node = node.getParentNode();
+    protected Point computeSize(Composite composite, int wHint, int hHint, boolean flushCache) {
+		Point point = selBar.computeSize(SWT.DEFAULT, hHint);
+		point.y = closeBar.getSize().y;
+		return point;
 	}
-
-	int elementCounter = 0;
-	while (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
-	    ToolItem item = null;
-	    if (selBar.getItemCount() > elementCounter) {
-		item = selBar.getItem(selBar.getItemCount() - elementCounter
-			- 1);
-		item.setData(node);
-	    } else {
-		item = new ToolItem(selBar, SWT.FLAT, 0);
-		item.addSelectionListener(this);
-		item.setData(node);
-	    }
-
-	    item.setText(node.getNodeName());
-	    elementCounter++;
-	    node = node.getParentNode();
-	}
-
-	itemCount = elementCounter;
-	cmpToolBar.layout();
-	//bug was fixed when toolbar are not shown for resizeble components
-	cmpToolBar.layout();
-    }
-
-    protected Point computeSize(Composite composite, int wHint, int hHint,
-	    boolean flushCache) {
-	Point point = selBar.computeSize(SWT.DEFAULT, hHint);
-	point.y = closeBar.getSize().y;
-	return point;
-    }
 
     protected void layout(Composite composite, boolean flushCache) {
-	Rectangle rect = null;
-	try {
-	    rect = composite.getBounds();
-	} catch (SWTException e) {
-	    VpePlugin.getPluginLog().logError(e);
+		Rectangle rect = null;
+		try {
+			rect = composite.getBounds();
+		} catch (SWTException e) {
+			VpePlugin.getPluginLog().logError(e);
+		}
+
+		Rectangle closeBarRect = closeSelectionBar.getItem(0).getBounds();
+		rect.width -= closeBarRect.width;
+
+		int allItems = selBar.getItems().length;
+		if (allItems == 0) {
+			cmpBar.setBounds(new Rectangle(rect.x, rect.y, rect.width,
+					closeBarRect.height));
+			closeBar.setBounds(new Rectangle(rect.width, rect.y, rect.width
+					+ closeBarRect.width, closeBarRect.height));
+			return;
+		}
+		Rectangle r = selBar.getItem(allItems - 1).getBounds();
+		int width = r.x + r.width;
+		int height = r.height;
+
+		if (allItems >= itemCount) {
+			int x = 0;
+
+			if (itemCount == 0) {
+				x = selBar.getBounds().width;
+			} else {
+				x = selBar.getItem(allItems - itemCount).getBounds().x;
+			}
+			
+			rect.x -= x;
+
+			if (rect.width < (r.x + r.width - Math.abs(rect.x) + 10)) {
+				rect.x -= (r.x + r.width - Math.abs(rect.x)) - rect.width;
+			}
+			
+			cmpBar.setBounds(new Rectangle(rect.x, 0, width, height));
+			selBar.setSize(width, closeBarRect.height);
+			closeBar.setBounds(new Rectangle(rect.width, rect.y, rect.width
+					+ closeBarRect.width, closeBarRect.height));
+		}
 	}
-
-	Rectangle closeBarRect = closeSelectionBar.getItem(0).getBounds();
-	rect.width -= closeBarRect.width;
-
-	int allItems = selBar.getItems().length;
-	if (allItems == 0) {
-	    cmpBar.setBounds(new Rectangle(rect.x, rect.y, rect.width,
-		    closeBarRect.height));
-	    closeBar.setBounds(new Rectangle(rect.width, rect.y, rect.width
-		    + closeBarRect.width, closeBarRect.height));
-	    return;
-	}
-	Rectangle r = selBar.getItem(allItems - 1).getBounds();
-	int width = r.x + r.width;
-	int height = r.height;
-
-	if (allItems >= itemCount) {
-	    int x = 0;
-
-	    if (itemCount == 0) {
-		x = selBar.getBounds().width;
-	    } else {
-		x = selBar.getItem(allItems - itemCount).getBounds().x;
-	    }
-	    rect.x -= x;
-
-	    if (rect.width < (r.x + r.width - Math.abs(rect.x) + 10)) {
-		rect.x -= (r.x + r.width - Math.abs(rect.x)) - rect.width;
-	    }
-	    cmpBar.setBounds(new Rectangle(rect.x, 0, width, height));
-	    selBar.setSize(width, closeBarRect.height);
-	    closeBar.setBounds(new Rectangle(rect.width, rect.y, rect.width
-		    + closeBarRect.width, closeBarRect.height));
-	}
-    }
 
     public void dispose() {
-	if (!selBar.isDisposed()) {
-	    for (int i = 0; i < selBar.getItemCount(); i++) {
-		if (!selBar.getItem(i).isDisposed()) {
-		    selBar.getItem(i).removeSelectionListener(this);
+		if (!selBar.isDisposed()) {
+			for (int i = 0; i < selBar.getItemCount(); i++) {
+				if (!selBar.getItem(i).isDisposed()) {
+					selBar.getItem(i).removeSelectionListener(this);
+				}
+			}
 		}
-	    }
-	}
-	if (!closeSelectionBar.isDisposed()) {
-	    for (int i = 0; i < closeSelectionBar.getItemCount(); i++) {
-		if (!closeSelectionBar.getItem(i).isDisposed()) {
-		    closeSelectionBar.getItem(i).removeSelectionListener(this);
+		if (!closeSelectionBar.isDisposed()) {
+			for (int i = 0; i < closeSelectionBar.getItemCount(); i++) {
+				if (!closeSelectionBar.getItem(i).isDisposed()) {
+					closeSelectionBar.getItem(i).removeSelectionListener(this);
+				}
+			}
 		}
-	    }
 	}
-    }
 
     public void widgetSelected(SelectionEvent e) {
-	ToolItem toolItem = (ToolItem) e.widget;
-	int offset = ((ElementImpl) (Node) toolItem.getData()).getStartOffset();
-	setSourceFocus(offset);
-    }
+		ToolItem toolItem = (ToolItem) e.widget;
+		int offset = ((ElementImpl) toolItem.getData()).getStartOffset();
+		setSourceFocus(offset);
+	}
 
-    public void widgetDefaultSelected(SelectionEvent e) {
-    }
+	public void widgetDefaultSelected(SelectionEvent e) {
+	}
 
-    private void setSourceFocus(int offset) {
-	vpeController.getPageContext().getSourceBuilder()
-		.getStructuredTextViewer().setSelectedRange(offset, 0);
-	vpeController.getPageContext().getSourceBuilder()
-		.getStructuredTextViewer().revealRange(offset, 0);
-    }
+	private void setSourceFocus(int offset) {
+		vpeController.getPageContext().getSourceBuilder()
+				.getStructuredTextViewer().setSelectedRange(offset, 0);
+		vpeController.getPageContext().getSourceBuilder()
+				.getStructuredTextViewer().revealRange(offset, 0);
+	}
 
     public String toString() {
-	StringBuffer st = new StringBuffer("CountItem: ");
-	st.append(itemCount);
-	st.append(" Parent Composite: " + cmpToolBar.getBounds().width);
-	st.append(" Midle composite: " + cmpBar.getBounds().width);
-	st.append(" Bar : " + selBar.getBounds().width);
-	return st.toString();
-    }
+		StringBuffer st = new StringBuffer("CountItem: ");
+		st.append(itemCount);
+		st.append(" Parent Composite: " + cmpToolBar.getBounds().width);
+		st.append(" Midle composite: " + cmpBar.getBounds().width);
+		st.append(" Bar : " + selBar.getBounds().width);
+		return st.toString();
+	}
 }

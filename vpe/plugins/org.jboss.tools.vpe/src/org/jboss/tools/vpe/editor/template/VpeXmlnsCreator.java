@@ -20,6 +20,8 @@ import org.w3c.dom.Node;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
 
 public class VpeXmlnsCreator extends VpeAbstractCreator {
 	private static final String ATTR_XMLNS = "xmlns";
@@ -34,7 +36,7 @@ public class VpeXmlnsCreator extends VpeAbstractCreator {
 		}
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		NamedNodeMap attrs = ((Element)sourceNode).getAttributes();
 		if (attrs != null) {
 			for (int i = 0; i < attrs.getLength(); i++) {

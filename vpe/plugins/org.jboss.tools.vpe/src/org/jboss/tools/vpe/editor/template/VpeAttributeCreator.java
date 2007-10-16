@@ -12,11 +12,6 @@ package org.jboss.tools.vpe.editor.template;
 
 import java.util.Map;
 
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
@@ -24,6 +19,11 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
+import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 public class VpeAttributeCreator extends VpeAbstractCreator {
 	private String name;
@@ -46,14 +46,14 @@ public class VpeAttributeCreator extends VpeAbstractCreator {
 		}
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, Document visualDocument, Element visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		if (expression != null) {
 			if (visualNodeMap != null) {
 				visualNodeMap.put(this, visualElement);
 			}
 			VpeValue vpeValue = expression.exec(pageContext, sourceNode);
 			if (vpeValue != null && vpeValue.stringValue().length() > 0) {
-				Attr newVisualAttribute = visualDocument.createAttribute(name);
+				nsIDOMAttr newVisualAttribute = visualDocument.createAttribute(name);
 				newVisualAttribute.setValue(vpeValue.stringValue());
 				return new VpeCreatorInfo(newVisualAttribute);
 			}
@@ -71,7 +71,7 @@ public class VpeAttributeCreator extends VpeAbstractCreator {
 	
 	private void setValue(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
 		if (expression != null) {
-			Element visualElement = (Element) visualNodeMap.get(this);
+			nsIDOMElement visualElement = (nsIDOMElement) visualNodeMap.get(this);
 			VpeValue vpeValue = expression.exec(pageContext, sourceElement);
 			if (vpeValue != null && vpeValue.stringValue().length() > 0) {
 				visualElement.setAttribute(this.name, vpeValue.stringValue());

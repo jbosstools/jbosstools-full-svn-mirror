@@ -13,7 +13,10 @@ package org.jboss.tools.vpe.editor.template;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
-import org.w3c.dom.Document;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNamedNodeMap;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -24,19 +27,34 @@ import org.w3c.dom.Node;
  */
 public class HtmlBodyTemplate extends VpeAbstractTemplate {
 
-	private Element bodyOld;
+	private nsIDOMElement bodyOld;
 	private static String STYLE_FOR_DIV = "width: 100%; height: 100%";
+	private static String ID = "id";
 
 	/**
 	 * 
 	 */
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
-			Document visualDocument) {
+			nsIDOMDocument visualDocument) {
 
 		goToTree(visualDocument.getChildNodes().item(0));
 
+		nsIDOMNamedNodeMap attrsMap = bodyOld.getAttributes();
+		long len = attrsMap.getLength();
+		int j = 0;
+		for (int i = 0; i < len; i++) {
+			nsIDOMNode attr = attrsMap.item(j);
+			if (ID.equalsIgnoreCase(attr.getNodeName())) {
+				j++;
+				continue;
+			}
+			bodyOld.removeAttribute(attr.getNodeName());
+		}
+
 		for (int i = 0; i < sourceNode.getAttributes().getLength(); i++) {
 			String name = sourceNode.getAttributes().item(i).getNodeName();
+			if(ID.equalsIgnoreCase(name))
+				continue;
 			String value = sourceNode.getAttributes().item(i).getNodeValue();
 			// all full path for 'url'
 			if (VpeStyleUtil.ATTRIBUTE_STYLE.equalsIgnoreCase(name))
@@ -50,7 +68,7 @@ public class HtmlBodyTemplate extends VpeAbstractTemplate {
 
 		}
 
-		Element div = visualDocument.createElement(HTML.TAG_DIV);
+		nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
 		div.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, STYLE_FOR_DIV);
 
 		return new VpeCreationData(div);
@@ -60,12 +78,13 @@ public class HtmlBodyTemplate extends VpeAbstractTemplate {
 	 * 
 	 * @param node
 	 */
-	private void goToTree(Node node) {
+	private void goToTree(nsIDOMNode node) {
 
 		for (int i = 0; i < node.getChildNodes().getLength(); i++)
 			if (HTML.TAG_BODY.equalsIgnoreCase(node.getChildNodes().item(i)
 					.getNodeName()))
-				bodyOld = (Element) node.getChildNodes().item(i);
+				bodyOld = (nsIDOMElement) node.getChildNodes().item(i)
+						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 			else
 				goToTree(node.getChildNodes().item(i));
 	}
@@ -92,8 +111,8 @@ public class HtmlBodyTemplate extends VpeAbstractTemplate {
 	 *         a modification of attribute, <code>false</code> otherwise.
 	 */
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
-			Element sourceElement, Document visualDocument,
-			Element visualNode, Object data, String name, String value) {
+			Element sourceElement, nsIDOMDocument visualDocument,
+			nsIDOMElement visualNode, Object data, String name, String value) {
 		return true;
 	}
 }

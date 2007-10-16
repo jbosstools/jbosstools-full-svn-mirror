@@ -13,7 +13,6 @@ package org.jboss.tools.vpe.editor.template;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
@@ -23,6 +22,11 @@ import org.jboss.tools.vpe.editor.VpeSourceDomBuilder;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMText;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -60,14 +64,14 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	private VpeCreator creator = null;
 	private VpeDependencyMap dependencyMap;
 	private boolean dependencyFromBundle;
-	
+	@Override
 	protected void init(Element templateElement) {
 		dependencyMap = new VpeDependencyMap(caseSensitive);
 		super.init(templateElement);
 		dependencyMap.validate();
 		dependencyFromBundle = dependencyMap.contains(VpeExpressionBuilder.SIGNATURE_JSF_VALUE);
 	}
-	
+	@Override
 	protected void initTemplateSection(Element templateSection) {
 		if (creator == null) {
 			String name = templateSection.getNodeName();
@@ -133,16 +137,16 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		}
 	}
 	
-	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, Document visualDocument) {
-		Map visualNodeMap = new HashMap();
+	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
+		Map<VpeTemplate, ModifyInfo> visualNodeMap = new HashMap<VpeTemplate, ModifyInfo> ();
 		VpeCreatorInfo creatorInfo = createVisualElement(pageContext, (Element)sourceNode, visualDocument, null, visualNodeMap);
-		Element newVisualElement = null;
+		nsIDOMElement newVisualElement = null;
 		if (creatorInfo != null) {
-			newVisualElement = (Element)creatorInfo.getVisualNode();
+			newVisualElement = (nsIDOMElement)creatorInfo.getVisualNode();
 		}
 		VpeCreationData creationData = new VpeCreationData(newVisualElement);
 		if (creatorInfo != null) {
-			List childrenInfoList = creatorInfo.getChildrenInfoList();
+			List<VpeChildrenInfo> childrenInfoList = creatorInfo.getChildrenInfoList();
 			if (childrenInfoList != null) {
 				for (int i = 0; i < childrenInfoList.size(); i++) {
 					creationData.addChildrenInfo((VpeChildrenInfo)childrenInfoList.get(i));
@@ -152,39 +156,39 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		creationData.setData(visualNodeMap);
 		return creationData;
 	}
-
-	public void validate(VpePageContext pageContext, Node sourceNode, Document visualDocument, VpeCreationData creationdata) {
-		validateVisualElement(pageContext, (Element)sourceNode, visualDocument, null, (Element)creationdata.getNode(), (Map)creationdata.getData());
+	@Override
+	public void validate(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, VpeCreationData creationdata) {
+		validateVisualElement(pageContext, (Element)sourceNode, visualDocument, null, (nsIDOMElement)creationdata.getNode(), (Map<VpeTemplate,ModifyInfo>)creationdata.getData());
 	}
-
-	public void setAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
-		setAttribute(pageContext, sourceElement, (Map)data, name, value);
+	@Override
+	public void setAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name, String value) {
+		setAttribute(pageContext, sourceElement, (Map<VpeTemplate,?>)data, name, value);
 	}
-
-	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name) {
-		removeAttribute(pageContext, sourceElement, (Map)data, name);
+	@Override
+	public void removeAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name) {
+		removeAttribute(pageContext, sourceElement, (Map<VpeTemplate,?>)data, name);
 	}
-
-	public void beforeRemove(VpePageContext pageContext, Node sourceNode, Node visualNode, Object data) {
-		removeElement(pageContext, (Element)sourceNode, (Map) data);
+	@Override
+	public void beforeRemove(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
+		removeElement(pageContext, (Element)sourceNode, (Map<VpeTemplate,?>) data);
 	}
-	
+	@Override
 	public boolean isChildren() {
 		return creator == null ? false : children;
 	}
 	
-	private VpeCreatorInfo createVisualElement(VpePageContext pageContext, Element sourceElement, Document visualDocument, Element visualParent, Map visualNodeMap) {
+	private VpeCreatorInfo createVisualElement(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualParent, Map<VpeTemplate,ModifyInfo> visualNodeMap) {
 		if (creator == null) {
 			return null;
 		}
 		
 		VpeCreatorInfo elementInfo = creator.create(pageContext, sourceElement, visualDocument, visualParent, visualNodeMap);
 		if (elementInfo != null) {
-			Element visualElement = (Element)elementInfo.getVisualNode();
+			nsIDOMElement visualElement = (nsIDOMElement)elementInfo.getVisualNode();
 			if (visualElement != null) {
 				boolean curModify = getCurrentModify(pageContext, sourceElement, visualNodeMap);
 				makeModify(visualElement, curModify);
-				if (!"INPUT".equalsIgnoreCase(visualElement.getNodeName()) && dependencyFromBundle && !curModify) {
+				if (!HTML.TAG_INPUT.equalsIgnoreCase(visualElement.getNodeName()) && dependencyFromBundle && !curModify) {
 					String style = visualElement.getAttribute(ATTR_STYLE);
 					visualElement.setAttribute(ATTR_STYLE, style + ATTR_CURSOR_POINTER);
 				}
@@ -197,13 +201,13 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		return elementInfo;
 	}
 
-	private void validateVisualElement(VpePageContext pageContext, Element sourceElement, Document visualDocument, Element visualParent, Element visualElement, Map visualNodeMap) {
+	private void validateVisualElement(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualParent, nsIDOMElement visualElement, Map<VpeTemplate,ModifyInfo> visualNodeMap) {
 		if (creator != null) {
 			creator.validate(pageContext, sourceElement, visualDocument, visualParent, visualElement, visualNodeMap);
 		}
 	}
-
-	public boolean nonctrlKeyPressHandler(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, Node visualNode, Object data, int charCode, VpeSourceSelection selection, ITextFormatter formatter) {
+	@Override
+	public boolean nonctrlKeyPressHandler(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, nsIDOMNode visualNode, Object data, long charCode, VpeSourceSelection selection, ITextFormatter formatter) {
 		if (creator != null) {
 			boolean done = creator.nonctrlKeyPressHandler(pageContext, sourceDocument,  sourceNode, data, charCode, selection, formatter);
 			if (done) {
@@ -222,11 +226,12 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	 * 
 	 * Deprecated
 	 */
+	@Override
 	public void refreshBundleValues(VpePageContext pageContext, Element sourceElement, Object data) {
-		refreshBundleValues(pageContext, sourceElement, (Map) data);
+		refreshBundleValues(pageContext, sourceElement, (Map<VpeTemplate,ModifyInfo>) data);
 	}
 	
-	private void refreshBundleValues(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
+	private void refreshBundleValues(VpePageContext pageContext, Element sourceElement, Map<VpeTemplate,ModifyInfo> visualNodeMap) {
 		if (dependencyFromBundle) {
 			VpeCreator[] creators = dependencyMap.getCreators(VpeExpressionBuilder.SIGNATURE_JSF_VALUE);
 			for (int i = 0; i < creators.length; i++) {
@@ -240,6 +245,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	 * 
 	 * Deprecated
 	 */
+	@Override
 	public int getType() {
 		return type;
 	}
@@ -248,6 +254,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	 * 
 	 * Deprecated
 	 */
+	@Override
 	public VpeAnyData getAnyData() {
 		VpeAnyData data = null;
 		if (getType() == TYPE_ANY && creator != null) {
@@ -271,11 +278,12 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	 * 
 	 * Deprecated
 	 */
+	@Override
 	public void openBundleEditors(VpePageContext pageContext, Element sourceElement, Object data) {
-		openBundleEditors(pageContext, sourceElement, (Map) data);
+		openBundleEditors(pageContext, sourceElement, (Map<VpeTemplate,nsIDOMElement>) data);
 	}
 	
-	private void openBundleEditors(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
+	private void openBundleEditors(VpePageContext pageContext, Element sourceElement, Map<VpeTemplate,nsIDOMElement> visualNodeMap) {
 		if (dependencyFromBundle) {
 			VpeCreator[] creators = dependencyMap.getCreators(VpeExpressionBuilder.SIGNATURE_JSF_VALUE);
 			for (int i = 0; i < creators.length; i++) {
@@ -301,7 +309,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	private String getPageLocale(VpePageContext pageContext, IDOMElement sourceElement) {
 		IStructuredModel model = null;
 		try {	
-			List taglibs = pageContext.getTagLibs();
+			List<TaglibData> taglibs = pageContext.getTagLibs();
 			// Find F tracker
 			TaglibData fTD = null;
 			for (int i = 0; i < taglibs.size(); i++) {
@@ -347,11 +355,12 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	 * 
 	 * Deprecated
 	 */
+	@Override
 	public void openIncludeEditor(VpePageContext pageContext, Element sourceElement, Object data) {
-		openIncludeEditor(pageContext, sourceElement, (Map) data);
+		openIncludeEditor(pageContext, sourceElement, (Map<?,?>) data);
 	}
 	
-	private void openIncludeEditor(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
+	private void openIncludeEditor(VpePageContext pageContext, Element sourceElement, Map<?,?> visualNodeMap) {
 		if (sourceElement != null) {
 		    String file = null;
 		    if ("jsp:directive.include".equals(sourceElement.getNodeName())) {
@@ -369,11 +378,12 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	 * 
 	 * Deprecated
 	 */
+	@Override
 	public void setSourceAttributeValue(VpePageContext pageContext, Element sourceElement, Object data) {
-		setSourceAttributeValue(pageContext, sourceElement, (Map)data);
+		setSourceAttributeValue(pageContext, sourceElement, (Map<?,?>)data);
 	}
 
-	private void setSourceAttributeValue(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
+	private void setSourceAttributeValue(VpePageContext pageContext, Element sourceElement, Map<?,?> visualNodeMap) {
 		VpeCreator[] creators = dependencyMap.getCreators(VpeValueCreator.SIGNATURE_VPE_VALUE);
 		for (int i = 0; i < creators.length; i++) {
 			if (creators[i] instanceof VpeOutputAttributes) {
@@ -382,7 +392,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		}
 		changeModify(pageContext, sourceElement, visualNodeMap);
 	}
-
+	@Override
 	public String[] getOutputAtributeNames() {
 		VpeCreator[] creators = dependencyMap.getCreators(VpeValueCreator.SIGNATURE_VPE_VALUE);
 		for (int i = 0; i < creators.length; i++) {
@@ -392,12 +402,12 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		}
 		return null;
 	}
-
-	public Node getOutputTextNode(VpePageContext pageContext, Element sourceElement, Object data) {
+	@Override
+	public nsIDOMText getOutputTextNode(VpePageContext pageContext, Element sourceElement, Object data) {
 		VpeCreator[] creators = dependencyMap.getCreators(VpeValueCreator.SIGNATURE_VPE_VALUE);
 		for (int i = 0; i < creators.length; i++) {
 			if (creators[i] instanceof VpeOutputAttributes) {
-				return (Node)((VpeOutputAttributes)creators[i]).getOutputTextNode(pageContext, sourceElement, (Map)data);
+				return ((VpeOutputAttributes)creators[i]).getOutputTextNode(pageContext, sourceElement, (Map<?,?>)data);
 			}
 		}
 		return null;
@@ -407,6 +417,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	 * 
 	 * Deprecated
 	 */
+	@Override
 	public void setSourceAttributeSelection(VpePageContext pageContext, Element sourceElement, int offset, int length, Object data) {
 		setSourceAttributeSelection(pageContext, sourceElement, offset, length, (Map) data);
 	}
@@ -427,11 +438,11 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		changeModify(pageContext, sourceElement, visualNodeMap);
 	}
 	
-	static void makeModify(Element visualElement, boolean modify) {
+	static void makeModify(nsIDOMElement visualElement, boolean modify) {
 		String s = ATTR_STYLE_MODIFY_NAME + ":" + 
 				(modify ? ATTR_STYLE_MODIFY_READ_WRITE_VALUE : ATTR_STYLE_MODIFY_READ_ONLY_VALUE);
 		String style = visualElement.getAttribute(ATTR_STYLE);
-		if (style.length() > 0) {
+		if (style != null && style.length() > 0) {
 			if (style.indexOf(ATTR_STYLE_MODIFY_NAME) >= 0) {
 				String[] items =  style.split(";");
 				style = "";
@@ -452,16 +463,6 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		visualElement.setAttribute(ATTR_STYLE, style);
 	}
 	
-	private boolean getCurrentSelect() {
-		VpeCreator[] creators = dependencyMap.getCreators(VpeValueCreator.SIGNATURE_VPE_VALUE);
-		for (int i = 0; i < creators.length; i++) {
-			if (creators[i] instanceof VpeOutputAttributes) {
-				return false;
-			}
-		}
-		return true;
-	}
-
 	private boolean getCurrentModify(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
 		if (!modify || !dependencyFromBundle) {
 			return modify;
@@ -492,10 +493,10 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	}
 	
 	private static class ModifyInfo {
-		private Element visualElement;
+		private nsIDOMElement visualElement;
 		private boolean modify;
 		
-		private ModifyInfo(Element visualElement, boolean modify) {
+		private ModifyInfo(nsIDOMElement visualElement, boolean modify) {
 			this.visualElement = visualElement;
 			this.modify = modify;
 		}
@@ -505,6 +506,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	 * 
 	 * Deprecated
 	 */
+	@Override
 	public boolean isOutputAttributes() {
 		VpeCreator[] creators = dependencyMap.getCreators(VpeValueCreator.SIGNATURE_VPE_VALUE);
 		for (int i = 0; i < creators.length; i++) {
@@ -517,7 +519,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 
 
 //////////////////////////////////////////////
-	private void removeElement(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
+	private void removeElement(VpePageContext pageContext, Element sourceElement, Map<VpeTemplate,?> visualNodeMap) {
 		if (creator != null) {
 			if (dependencyFromBundle) {
 				pageContext.removeBundleDependency(sourceElement);
@@ -526,7 +528,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		}
 	}
 
-	private void setAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name, String value) {
+	private void setAttribute(VpePageContext pageContext, Element sourceElement, Map<VpeTemplate,?> visualNodeMap, String name, String value) {
 		if (creator != null) {
 			setAttribute(dependencyMap.getCreators(VpeExpressionBuilder.SIGNATURE_ANY_ATTR), pageContext, sourceElement, visualNodeMap, name, value);
 			setAttribute(dependencyMap.getCreators(VpeExpressionBuilder.attrSignature(name, caseSensitive)), pageContext, sourceElement, visualNodeMap, name, value);
@@ -534,7 +536,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		}
 	}
 
-	private void removeAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name) {
+	private void removeAttribute(VpePageContext pageContext, Element sourceElement, Map<VpeTemplate,?> visualNodeMap, String name) {
 		if (creator != null) {
 			removeAttribute(dependencyMap.getCreators(VpeExpressionBuilder.SIGNATURE_ANY_ATTR), pageContext, sourceElement, visualNodeMap, name);
 			removeAttribute(dependencyMap.getCreators(VpeExpressionBuilder.attrSignature(name, caseSensitive)), pageContext, sourceElement, visualNodeMap, name);
@@ -542,35 +544,34 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		}
 	}
 
-	private void setAttribute(VpeCreator[] creators, VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name, String value) {
+	private void setAttribute(VpeCreator[] creators, VpePageContext pageContext, Element sourceElement, Map<VpeTemplate,?> visualNodeMap, String name, String value) {
 		for (int i = 0; i < creators.length; i++) {
 			creators[i].setAttribute(pageContext, sourceElement, visualNodeMap, name, value);
 		}
 	}
 	
-	private void removeAttribute(VpeCreator[] creators, VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name) {
+	private void removeAttribute(VpeCreator[] creators, VpePageContext pageContext, Element sourceElement, Map<VpeTemplate,?> visualNodeMap, String name) {
 		for (int i = 0; i < creators.length; i++) {
 			creators[i].removeAttribute(pageContext, sourceElement, visualNodeMap, name);
 		}
 	}
-
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
+	@Override
+	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualNode, Object data, String name, String value) {
 		if (creator != null) {
 			return creator.isRecreateAtAttrChange(pageContext, sourceElement, visualDocument, visualNode, data, name, value);
 		}
 		return false;
 	}
-
-	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode, Node visualNode, Object data) {
+	@Override
+	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
 		// TODO Sergey Vasilyev redevelop JSF's facet template
 		if (sourceNode.getNodeName().endsWith(":facet")) {
 			return sourceNode.getParentNode();
 		}
-
+		
 		if (creator != null) {
-			return creator.getNodeForUptate(pageContext, sourceNode, visualNode, (Map)data);
+			return creator.getNodeForUptate(pageContext, sourceNode, visualNode, (Map<VpeTemplate,?>)data);
 		}
-
 		return null;
 	}
 }
