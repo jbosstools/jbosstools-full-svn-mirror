@@ -14,6 +14,7 @@ package org.jboss.tools.vpe.editor.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.eclipse.core.runtime.Platform;
+import org.jboss.tools.vpe.VpeDebug;
 
 /**
  * @author Max Areshkau (mareshkau@exadel.com)
@@ -35,6 +36,15 @@ public class VpeDebugUtil {
 		if(Platform.inDebugMode()) {
 
 			System.out.print(formatter.format(new Date())+":"+ msg);
+		}
+	}
+	/**
+	 * 
+	 */
+	public static void debugVPEDnDEvents(String msg) {
+		if(VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
+			
+			System.out.println(formatter.format(new Date())+":"+ msg);
 		}
 	}
 }

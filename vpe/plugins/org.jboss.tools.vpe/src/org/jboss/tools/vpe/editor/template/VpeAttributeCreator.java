@@ -71,7 +71,7 @@ public class VpeAttributeCreator extends VpeAbstractCreator {
 	
 	private void setValue(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
 		if (expression != null) {
-			Element visualElement = (Element) visualNodeMap.get(this);
+			nsIDOMElement visualElement = (nsIDOMElement) visualNodeMap.get(this);
 			VpeValue vpeValue = expression.exec(pageContext, sourceElement);
 			if (vpeValue != null && vpeValue.stringValue().length() > 0) {
 				visualElement.setAttribute(this.name, vpeValue.stringValue());

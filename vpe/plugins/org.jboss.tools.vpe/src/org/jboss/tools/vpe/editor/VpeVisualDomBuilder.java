@@ -348,7 +348,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		switch (sourceNode.getNodeType()) {
 		case Node.ELEMENT_NODE:
 			Map<?, ?> xmlnsMap = createXmlns((Element) sourceNode);
-			Set<?> ifDependencySet = new HashSet();
+			Set<Node> ifDependencySet = new HashSet<Node>();
 			pageContext.setCurrentVisualNode(visualOldContainer);
 			VpeTemplate template = templateManager.getTemplate(pageContext,
 					(Element) sourceNode, ifDependencySet);

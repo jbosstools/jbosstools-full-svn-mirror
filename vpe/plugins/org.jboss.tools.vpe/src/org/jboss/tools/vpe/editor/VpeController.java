@@ -324,9 +324,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	}
 
 	public void notifyChanged(INodeNotifier notifier, int eventType, Object feature, Object oldValue, Object newValue, int pos) {
-//		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-//			return;
-//		}
+		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+			return;
+		}
 		if (VpeDebug.PRINT_SOURCE_MUTATION_EVENT) {
 			printSourceEvent(notifier, eventType, feature, oldValue, newValue, pos);
 		}
