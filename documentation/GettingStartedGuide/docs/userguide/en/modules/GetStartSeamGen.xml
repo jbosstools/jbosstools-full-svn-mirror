@@ -418,7 +418,7 @@ import org.jboss.seam.security.identity;
 <para>Downloads: <ulink url="http://labs.jboss.com/jbossseam/download">JBoss Seam Downloads</ulink></para>
 <para>Jira: <ulink url="http://jira.jboss.org/jira/browse/JBSEAM">Jira issue tracker</ulink></para>
 <para>Rules Framework: <ulink url="http://www.jboss.com/products/rules">JBoss Rules</ulink></para>
-<para>Seam Tools:New and Noteworthy: <ulink url="http://fisheye.jboss.org/browse/~raw,r=3993/JBossTools/trunk/documentation/whatsnew/seam/seam-news-1.0.0.beta2.html">What&apos;s new and noteworthy</ulink></para>
+<para>Seam Tools - New and Noteworthy: <ulink url="http://fisheye.jboss.org/browse/~raw,r=3993/JBossTools/trunk/documentation/whatsnew/seam/seam-news-1.0.0.beta2.html">What&apos;s new and noteworthy</ulink></para>
 
 </section>
 </chapter>
