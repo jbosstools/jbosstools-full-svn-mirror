@@ -55,9 +55,10 @@ public class RichFacesPanelMenuTemplate extends VpeAbstractTemplate implements
 
 		String width = sourceElement.getAttribute(WIDTH_ATTR_PANELMENU);
 		String style = sourceElement.getAttribute(STYLE_ATTR_PANELMENU);
-		String styleClass = sourceElement.getAttribute(STYLECLASS_ATTR_PANELMENU);
-		
-		if(width != null) {
+		String styleClass = sourceElement
+				.getAttribute(STYLECLASS_ATTR_PANELMENU);
+
+		if (width != null) {
 			style += "" + "; width:" + width;
 		}
 
@@ -149,8 +150,8 @@ public class RichFacesPanelMenuTemplate extends VpeAbstractTemplate implements
 	}
 
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
-			Element sourceElement, Document visualDocument, Node visualNode,
-			Object data, String name, String value) {
+			Element sourceElement, nsIDOMDocument visualDocument,
+			nsIDOMElement visualNode, Object data, String name, String value) {
 		return true;
 	}
 }
