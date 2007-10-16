@@ -37,7 +37,7 @@ public class PaletteItem extends ToolEntry implements PaletteXModelObject {
 		setLabel("" + xobject.getModelEntity().getRenderer().getTitle(xobject)); //$NON-NLS-1$
 		XModelObjectImageDescriptor icon = new XModelObjectImageDescriptor(xobject);
 		setSmallIcon(icon);
-		setLargeIcon(icon);
+		setLargeIcon(new LargeImageDescriptor(xobject));
 		String description = xobject.getAttributeValue("description"); //$NON-NLS-1$
 			///XModelObjectLoaderUtil.loadFromXMLAttribute(xobject.getAttributeValue("description"));
 		this.description = (description != null && description.trim().length() > 0) ? description : null;
