@@ -38,6 +38,7 @@ import org.mozilla.interfaces.nsIDOMRange;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionController;
 import org.mozilla.interfaces.nsISelectionDisplay;
+import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -1193,12 +1194,25 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 		//when we select input this function return null
 		//but we select elemnt
 		if(focusNode==null && anchorNode==null) {
-			
+		
 			nsIDOMNode  visualNode =(nsIDOMNode) event.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
+			//fix of JBIDE-1097
+			if(HTML.TAG_SPAN.equalsIgnoreCase(visualNode.getNodeName()))
+			{
+				if(visualBuilder.getXulRunnerEditor().getLastSelectedElement()!=null&&!visualBuilder.getNodeBounds(visualBuilder.getXulRunnerEditor().getLastSelectedElement()).contains(VisualDomUtil.getMousePoint(event))){
+					return null;
+				}
+			}
 			int offset = (int) VisualDomUtil.getOffset(visualNode);
 			selection.removeAllRanges();
 			selection.collapse(visualNode.getParentNode(), offset);
+			try {
 			selection.extend(visualNode.getParentNode(), offset + 1);
+			} catch(XPCOMException ex) {
+				//just ignore exception
+				// throws when we trying drag element which already resizing
+				return null;
+			}
 			focusNode = selection.getFocusNode();
 			anchorNode = selection.getAnchorNode();
 		}

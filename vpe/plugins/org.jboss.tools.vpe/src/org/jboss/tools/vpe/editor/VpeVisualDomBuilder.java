@@ -2012,4 +2012,18 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 		return visualNewTextNode;
 	}
+
+	/**
+	 * @return the xulRunnerEditor
+	 */
+	public XulRunnerEditor getXulRunnerEditor() {
+		return xulRunnerEditor;
+	}
+
+	/**
+	 * @param xulRunnerEditor the xulRunnerEditor to set
+	 */
+	public void setXulRunnerEditor(XulRunnerEditor xulRunnerEditor) {
+		this.xulRunnerEditor = xulRunnerEditor;
+	}
 }

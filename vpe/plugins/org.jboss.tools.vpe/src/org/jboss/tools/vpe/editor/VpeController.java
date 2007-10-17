@@ -887,6 +887,16 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		sourceSelectionChanged();
 	}
 	
+	public void dragGesture(nsIDOMEvent domEvent) {
+
+		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+			boolean canDragFlag = canInnerDrag(mouseEvent);
+			//start drag sessionvpe-element
+			if(canDragFlag) {				
+				startDragSession(domEvent);
+				}
+	}
+	
 	private void createMenuForNode(Node node, MenuManager manager) {
 		createMenuForNode(node, manager, false);
 	}

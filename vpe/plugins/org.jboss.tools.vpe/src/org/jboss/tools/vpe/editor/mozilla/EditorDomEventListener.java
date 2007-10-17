@@ -48,6 +48,11 @@ public interface EditorDomEventListener extends nsIContextMenuListener {
 	void dragExit(nsIDOMEvent event);
 	void dragOver(nsIDOMEvent event);
 	void drop(nsIDOMEvent event);
+	/**
+	 * Drag gesture event handler
+	 * @param event xulrunner drag event
+	 */
+	void dragGesture(nsIDOMEvent event);
 
 	boolean canInnerDrag(nsIDOMMouseEvent mouseEvent);
 	MozillaDropInfo canInnerDrop(nsIDOMMouseEvent mouseEvent);
