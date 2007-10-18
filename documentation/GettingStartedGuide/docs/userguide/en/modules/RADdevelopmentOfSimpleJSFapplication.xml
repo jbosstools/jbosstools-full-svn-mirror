@@ -10,7 +10,7 @@
     </keywordset>
   </chapterinfo>
 	<title>RAD development of a simple JSF application</title>
-        <para>In this chapter you will see how to create a simple JSF application being based on <property>&quot;RAD&quot;</property> philosophy. We will create the familiar Guess Number application. The scenario is as follows. You are asked to guess a number between 0 and 100. If the guess is correct, a success page is displayed with a link to play again. If the guess is incorrect, a message is printed notifying the user that a smaller or a larger number should be entered and the game continues.</para>
+        <para>In this chapter you will see how to create a simple JSF application being based on <property>&quot;RAD&quot;</property> philosophy. We will create the familiar Guess Number application. The scenario is the following. You are asked to guess a number between 0 and 100. If the guess is correct, a success page is displayed with a link to play again. If the guess is incorrect, a message is printed notifying the user that a smaller or a larger number should be entered and the game continues.</para>
       <para>We&apos;ll show you how to create such an application from scratch, along the way demonstrating powerful features of Red Hat Developer Studio such as project templating, Visual Page Editor, code completion and others. You will design the
 JSF application and then run the application from inside Red Hat Developer Studio using the bundled JBoss server.</para>
 

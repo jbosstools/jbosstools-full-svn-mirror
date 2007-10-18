@@ -22,8 +22,8 @@ the Select Perspective dialog box.)</para>
      <listitem><para>Go to the menu bar and select <emphasis><property>File/New/Project...</property></emphasis></para></listitem>
      <listitem><para>Select  <emphasis><property>Web/Dynamic Web Project</property></emphasis> in the New Project dialog box</para></listitem>
      <listitem><para>Click Next &gt;</para></listitem>
-     <listitem><para>Enter &quot;jspHello&quot; as the project name</para></listitem>
-     <listitem><para>Leave everything else as is, and click Finish</para></listitem>
+     <listitem><para>Enter &quot;jspHello&quot; as a project name</para></listitem>
+     <listitem><para>Leave everything else as is, and click <emphasis><property>Finish</property></emphasis></para></listitem>
      </itemizedlist>
      <figure>
 			<title>Create New Web Project</title>
@@ -85,7 +85,7 @@ the Select Perspective dialog box.)</para>
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>After changes are made your hello.jsp page should look like this:</para>
+		<para>After changes made your hello.jsp page should look like this:</para>
 		<figure>
 			<title>Hello.jsp page</title>
 			<mediaobject>
