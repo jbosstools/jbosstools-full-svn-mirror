@@ -108,8 +108,7 @@
 
   </section>
   </section>
-  
-<section id="JBossInstances">
+  <section id="JBossInstances">
   <?dbhtml filename="JBossInstances.html"?>
   <title>How to Manage JBoss AS Instances in RHDS</title>
   <para>Although Red Hat Developer Studio works closely with <property>JBoss EAP 4.2</property> we do not ultimately tie you to any particular server for deployment. There are some servers that Studio supports directly (via the bundled Eclipse WTP plug-ins). Suppose you want to deploy the application to <property>JBoss 4.2.1 server</property>. First of all you need to install it.</para>
@@ -232,4 +231,155 @@
 
  
   </section>
- </chapter>
+   
+    
+    <section id="Server Manager Features">
+        <?dbhtml filename="JBossbundled.html"?>
+        <title>Server Manager Features</title>
+    <para>The JBoss AS Perspective is similar to the Java perspective, but it contains a few additional views, as well as an addition to the workbench toolbar. Two of the additional views are standard views, specifically the <property>Console view</property> and the <property>Properties view</property>. The other two views that are added are the <property>Archives View</property>  and the <property>JBoss Servers View</property>.</para>
+        
+          
+      <section id="JBossServersView">
+            <?dbhtml filename="JBossServerView.html"?>
+            <title>The JBoss Servers View</title>
+          <para>This chapter will focus on the the JBoss Server's View and it's related workbench toolbar actionsets. The JBoss Servers View is based on the Webtool's view, Servers View. The top half of the JBoss Servers View essentially embeds the original Servers View directly into it, making slight changes to the context menu.
+            A second half was added to provide additional information about the server selected in the top half. In the image provided, categories in the second half include which modules are currently deployed.</para>
+            
+            <figure>
+                <title>The JBoss Servers View</title>
+                <mediaobject> 
+                    <imageobject>
+                        <imagedata fileref="images/jbossserverview.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+      
+    
+    <para>In order to access the view's preferences, you should access <emphasis><property>Window -> Preferences -> JBoss IDE -> JBoss Servers
+        -> View</property></emphasis>. This preference page allows you to select which view extensions you want on or off, the order they appear
+        in the view, as well as any other extension-specific preferences that may be available.</para>
+    <figure>
+        <title>View Preferences</title>
+        <mediaobject> 
+            <imageobject>
+                <imagedata fileref="images/Enableprefer.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+    <para>Extender is meant to provide additional functionality relevent to the server selected in the top half of the view. If a standard server element is selected from above, some
+        of the extensions may still provide the additional information. Others may not. 
+       
+        So, let's look at the currently available extensions to the JBoss Server's View.</para>
+    <figure>
+        <title>View Extensions</title>
+        <mediaobject> 
+            <imageobject>
+                <imagedata fileref="images/JBVExtensions.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+    <para>The <property>modules</property> section shows what modules are currently deployed to the server, and allows you to remove them
+        from the server, or force a full republish upon them. It only shows which modules have been deployed through eclipse,
+        not any and all modules that happen to be in the deploy directory.</para>
+    <figure>
+    <title>Modules Action</title>
+    <mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/JBVModulesactions.png"/>
+        </imageobject>
+    </mediaobject>
+    </figure>
+    <para>The Event Log will show relevent information to your server's startup, shutdown, and publish processes. This allows
+        you to keep an eye on what's going on (such as automatic incremental deployment if you have it enabled).
+        The only action available is to clear the event log. However if the properties view is opened, you can receive further
+        information on each event log item (when available).</para>
+    <figure>
+        <title>Event Log Actions</title>
+        <mediaobject> 
+            <imageobject>
+                <imagedata fileref="images/JBVEventlogactions.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+    <figure>
+        <title></title>
+        <mediaobject> 
+            <imageobject>
+                <imagedata fileref="images/JBVServerisstopped.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+    <para>The XML Configuration category allows you to quickly browse to descriptor files in your server's deploy directory and
+        check or change the values. It's use requires the properties view. Basically, an xpath is a path used to access
+        some specific part of an xml document.</para>
+    <figure>
+        <title>XML Configuration and Properties</title>
+        <mediaobject> 
+            <imageobject>
+                <imagedata fileref="images/JBVxmlconfigandprop.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+          <para>The view itself contains only a list of categories. By right-clicking on XML Configuration, you can create a new category.
+              Ports is provided by default and is filled with many of the most commonly used ports in the JBoss Server</para>
+          <figure>
+              <title>Adding New Category</title>
+              <mediaobject> 
+                  <imageobject>
+                      <imagedata fileref="images/JBSVaddingcategory.png"/>
+                  </imageobject>
+              </mediaobject>
+          </figure>
+          <para>The view itself contains only a list of categories. By right-clicking on XML XPaths, you can create a new category.
+              Ports is provided by default and is filled with many of the most commonly used ports in the JBoss Server.</para>
+          <figure>
+              <title>Adding New XPath</title>
+              <mediaobject> 
+                  <imageobject>
+                      <imagedata fileref="images/JBSVAddxpath.png"/>
+                  </imageobject>
+              </mediaobject>
+          </figure>
+          <para>To begin, you can either right-click on a category in the view, or when browsing a category in the properties view,
+              right-clicking anywhere. This will allow you to select New XPath. After that, the dialog shown below will appear.</para>
+          <figure>
+              <title>Adding New XPath</title>
+              <mediaobject> 
+                  <imageobject>
+                      <imagedata fileref="images/JBSVAddinganxpath.png"/>
+                  </imageobject>
+              </mediaobject>
+          </figure>
+          <para>As you type, the fields autocomplete to help you locate exactly what xpath you're looking for. The goal here is to
+              get an end result where the xpath matches up with an easily changed property. With that in mind, if the property
+              you want to change is the text of an element, then the final field Attribute Name
+                  should be left blank and your xpath should end with port.
+                  If, on the other hand, your desired field is the port attribute of &lt;fieldName port="35"&gt;, then your xpath will end
+                      with fieldName and your Attribute Name will be "port".
+                      When finished, you can click preview to see how many matches you have for that particular xpath, as shown below.</para>
+          <figure>
+             <title>XPath Preview</title>
+              <mediaobject> 
+                  <imageobject>
+                      <imagedata fileref="images/JBSVxpathpreview.png"/>
+                  </imageobject>
+              </mediaobject>
+          </figure>
+      </section>
+    
+    <section id="Deploy to Server">
+        <?dbhtml filename="DeployToServer.html"?>
+        <title>Deploy to Server</title>
+        <para>There is a <property>Deploy to server</property> in the context menu of files to allow single file deployement. To deploy these non-WTP files/projects right click on the file (-ds.xml, .ear, .jar etc.) and select <emphasis><property>Deploy To server</property></emphasis> and it will be automatically deployed.</para>
+        <figure>
+            <title>Deploy to Sever</title>
+            <mediaobject> 
+                <imageobject>
+                    <imagedata fileref="images/deploytoserver.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>The deployed files are listed side-by-side with other <property>modules</property> that are deployed to the server.</para>
+    </section>
+</section>
+</chapter>
