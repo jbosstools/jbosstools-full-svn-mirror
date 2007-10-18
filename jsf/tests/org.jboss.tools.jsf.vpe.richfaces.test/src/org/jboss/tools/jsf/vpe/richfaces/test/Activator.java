@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.test.richfaces;
+package org.jboss.tools.jsf.vpe.richfaces.test;
 
 import java.net.URL;
 
@@ -24,7 +24,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "org.jboss.tools.vpe.test.richfaces";
+    public static final String PLUGIN_ID = "org.jboss.tools.jsf.vpe.richfaces.test";
 
     // The shared instance
     private static Activator plugin;

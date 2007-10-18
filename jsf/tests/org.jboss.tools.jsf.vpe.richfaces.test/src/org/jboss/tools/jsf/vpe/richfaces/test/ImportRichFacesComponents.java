@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.test.richfaces;
+package org.jboss.tools.jsf.vpe.richfaces.test;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.test.richfaces;
+package org.jboss.tools.jsf.vpe.richfaces.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
