@@ -90,9 +90,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <itemizedlist>
     <listitem><para>Download the <ulink  url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0 (Java 2 Development Kit)</ulink> from Sun&apos;s website. 
     Choose &quot;JDK 5.0 Update &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) for download and then select your Windows Platform options to perform the installation.</para></listitem>
-    <listitem><para>Create an environment variable called JAVA_HOME that points to the JDK installation directory, for example:</para></listitem>
+    <listitem><para>Create an environment variable called JAVA_HOME that points to the JDK installation directory, for example:
+<para><emphasis>C:\Program Files\Java\jdk1.5.0_11\</emphasis></para></para></listitem>
    </itemizedlist>
-   <para><emphasis>C:\Program Files\Java\jdk1.5.0_11\</emphasis></para>
+   
      <para>In order to run java from the command line, add the <emphasis>jre\bin</emphasis> directory to your path, for example:</para>
    <para><emphasis>C:\Program Files\Java\jdk1.5.0_11\jre\bin</emphasis></para>
       <para>To do this, open the Control Panel from the Start Menu, switch to Classic View if necessary, open the System Control Panel applet (System), select the Advanced Tab, and click on the Environment Variables button.</para>
