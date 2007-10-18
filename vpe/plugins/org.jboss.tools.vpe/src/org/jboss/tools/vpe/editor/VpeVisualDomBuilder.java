@@ -64,12 +64,14 @@ import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
+import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.VpeDndUtil;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMHTMLInputElement;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -217,6 +219,15 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private boolean addNode(Node sourceNode, nsIDOMNode visualNextNode,
 			nsIDOMNode visualContainer) {
 		nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer);
+		//Fix for JBIDE-1097
+		try {
+			if(visualNewNode!=null) {
+			nsIDOMHTMLInputElement iDOMInputElement = (nsIDOMHTMLInputElement) visualNewNode.queryInterface(nsIDOMHTMLInputElement.NS_IDOMHTMLINPUTELEMENT_IID);
+			iDOMInputElement.setReadOnly(true);
+			}
+		} catch(XPCOMException ex) {
+			//just ignore this exception
+		}
 		if (visualNewNode != null) {
 			if (visualNextNode == null) {
 				visualContainer.appendChild(visualNewNode);
