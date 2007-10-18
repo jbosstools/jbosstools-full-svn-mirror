@@ -772,8 +772,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
-		try{
 		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
+		
 		if (visualNode != null) {
 			if (!mouseUpSelectionReasonFlag) {
 				if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
@@ -789,9 +789,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			if (visualBuilder.doToggle(VisualDomUtil.getTargetNode(mouseEvent))) {
 				selectionBuilder.setClickContentAreaSelection();
 			}
-		}
-		} catch(Throwable exception) {
-			exception.printStackTrace();
 		}
 		switcher.stopActiveEditor(); 
 	}
