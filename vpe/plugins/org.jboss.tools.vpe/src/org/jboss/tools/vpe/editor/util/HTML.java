@@ -51,4 +51,6 @@ public final class HTML {
 	
 	
 	public static final String ATTR_ID 		= "ID";
+	public static final String ATTR_TYPE	="TYPE";
+	public static final String ATTR_TEXT	="TEXT";
 }
