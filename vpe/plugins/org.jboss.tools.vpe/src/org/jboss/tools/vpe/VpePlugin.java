@@ -30,7 +30,7 @@ import org.osgi.framework.BundleContext;
  * The main plugin class to be used in the desktop.
  */
 public class VpePlugin extends BaseUIPlugin implements IStartup {
-	public final static String PLUGIN_ID = "org.jboss.tools.vpe";
+	public final static String PLUGIN_ID = "org.jboss.tools.vpe"; // $NON-NLS-1$
 	//The shared instance.
 	private static VpePlugin plugin;
 	//Resource bundle.
@@ -98,7 +98,10 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 	public void earlyStartup() {
 		/* init xulrunner path for */ 
 		try {
-			XulRunnerBrowser.getXulRunnerPath();
+			String xulRunnerPath = XulRunnerBrowser.getXulRunnerPath();
+			if ("true".equals(Platform.getDebugOption(PLUGIN_ID + "/debug/earlyStartup"))) { // $NON-NLS-1$ // $NON-NLS-1$
+				logInfo("earlyStartup: XULRunner path is: " + xulRunnerPath);
+			}
 		} catch (Throwable t) {
 			// Ignore this. Will catch it when use Visual Editor 
 		}
