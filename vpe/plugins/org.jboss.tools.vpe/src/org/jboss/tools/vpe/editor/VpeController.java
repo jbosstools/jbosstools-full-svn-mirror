@@ -293,7 +293,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		
 		if (visualEditor != null) {
 			visualEditor.setEditorDomEventListener(null);
-			// TODO Max Areshkau figure out with Selection Controller
 			if (visualSelectionController != null) {
 //				visualSelectionController.Release();
 				visualSelectionController = null;
@@ -406,8 +405,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	}
 
 	// INodeSelectionListener implementation
-	//TODO Max Areshkau remove if don't used
-	//looks like that this method can be removed
 	public void nodeSelectionChanged(NodeSelectionChangedEvent event) {
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
@@ -531,70 +528,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		sourceSelectionChanged(showCaret);
 		switcher.stopActiveEditor();
 	}
-	
-	private void sourceSelectionChanged1() {
-		Point range = sourceEditor.getTextViewer().getSelectedRange();
-		int anchorPosition = range.x;
-		int focusPosition = range.x + range.y;
-		boolean extendFlag = range.y != 0;
-		boolean reversionFlag = extendFlag && anchorPosition == VpeSelectionHelper.getCaretOffset(sourceEditor);
-		if (reversionFlag) {
-			anchorPosition = focusPosition;
-			focusPosition = range.x;
-		}
-		Node focusNode = getSourceNodeAt(focusPosition);
-		if (focusNode == null) {
-			return;
-		}
-		int focusOffset = getSourceNodeOffset1(focusNode, focusPosition, !reversionFlag);
-		Node anchorNode = null;
-		int anchorOffset = 0;
-		if (extendFlag) {
-			anchorNode = getSourceNodeAt(anchorPosition);
-			anchorOffset = getSourceNodeOffset1(anchorNode, anchorPosition, reversionFlag);
-		} else {
-			anchorNode = focusNode;
-			anchorOffset = focusOffset;
-		}
-
-		if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-			System.out.println("sourceSelectionChanged1"); //$NON-NLS-1$
-			System.out.println("               anchorNode: " + anchorNode.getNodeName() + "  anchorOffset: " + anchorOffset); //$NON-NLS-1$ //$NON-NLS-2$
-			System.out.println("               focusNode: " + focusNode.getNodeName() + "  focusOffset: " + focusOffset + "  focusPosition: " + focusPosition); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		}
-		try{
-			if(anchorNode.getNodeType() == Node.TEXT_NODE || anchorNode.getNodeType() == Node.ATTRIBUTE_NODE){
-				IndexedRegion region = (IndexedRegion)anchorNode;
-				String text;
-				if (anchorNode.getNodeType() == Node.TEXT_NODE) {
-					text = sourceEditor.getTextViewer().getDocument().get(region.getStartOffset(), region.getEndOffset()-region.getStartOffset());
-				} else {
-					text = ((AttrImpl)anchorNode).getValueRegionText();
-				}
-				anchorOffset = TextUtil.visualPosition(text, anchorOffset);
-			}
-			if(focusNode.getNodeType() == Node.TEXT_NODE || focusNode.getNodeType() == Node.ATTRIBUTE_NODE){
-				IndexedRegion region = (IndexedRegion)focusNode;
-				String text;
-				if (focusNode.getNodeType() == Node.TEXT_NODE) {
-					text = sourceEditor.getTextViewer().getDocument().get(region.getStartOffset(), region.getEndOffset()-region.getStartOffset());
-				} else {
-					text = ((AttrImpl)focusNode).getValueRegionText();
-				}
-				focusOffset = TextUtil.visualPosition(text, focusOffset);
-			}
-		}catch(Exception ex){
-			VpePlugin.reportProblem(ex);
-		}
-
-		if (anchorOffset == 2 && anchorNode == focusNode && anchorNode.getNodeType() == Node.ELEMENT_NODE) {
-			selectionBuilder.setVisualSelection(anchorNode, anchorOffset, focusNode, focusOffset, reversionFlag, false, true);
-		} else {
-			selectionBuilder.setVisualSelection(anchorNode, anchorOffset, focusNode, focusOffset, reversionFlag, false, true);
-		}
-//		toolbarFormatControllerManager.selectionChanged();
-	}
-	
+		
 	// IModelLifecycleListener implementation
 	public void processPreModelEvent(ModelLifecycleEvent event) {
 	}
@@ -721,19 +655,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 	}
 
-	public void _mouseDown(nsIDOMMouseEvent mouseEvent) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
-		nsIDOMElement visualAppropriateElement = selectionBuilder.getAppropriateElementForSelection(mouseEvent);
-		if (visualAppropriateElement != null) {
-			nsIDOMElement visualElement = visualBuilder.getDragElement(visualAppropriateElement);
-			if (visualElement != null) {
-				selectionBuilder.setVisualElementSelection(visualElement);
-			}
-		}
-		switcher.stopActiveEditor();
-	}
 
 	public void mouseDown(nsIDOMMouseEvent mouseEvent) {
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
@@ -1804,38 +1725,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			System.out.println("<<< outerDrop"); //$NON-NLS-1$
 		}
 		event.preventDefault();
-	}
-
-	public void _drop(nsIDOMEvent event) {
-		if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
-			System.out.println("<<<<<<<<<<<<<<<<<<<< dragDrop"); //$NON-NLS-1$
-		}
-		boolean canDrop = !xulRunnerEditor.isMozillaDragFlavor();
-		if (canDrop) {
-			Clipboard clipboard = new Clipboard(Display.getCurrent());
-			canDrop = clipboard.getContents(ModelTransfer.getInstance()) != null;
-		}
-		if (canDrop) {
-			canDrop = VpeDndUtil.isDropEnabled((IModelObjectEditorInput)sourceEditor.getEditorInput());
-		}
-		if (canDrop) {
-			VpeVisualCaretInfo caretInfo = selectionBuilder.getVisualCaretInfo(event);
-			canDrop = caretInfo.exist();
-			if (canDrop) {
-				caretInfo.showCaret();
-				caretInfo.hideCaret();
-				Point range = caretInfo.getSourceSelectionRange();
-				if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
-					System.out.println("                     Drop Position: " + range.x + "  " + range.y); //$NON-NLS-1$ //$NON-NLS-2$
-				}
-				VpeDndUtil.drop((IModelObjectEditorInput)sourceEditor.getEditorInput(), (ISourceViewer)sourceEditor.getAdapter(ISourceViewer.class), new VpeSelectionProvider(range.x, range.y));
-			}
-		}
-		xulRunnerEditor.hideDragCaret();
-		if (!canDrop) {
-			event.stopPropagation();
-			event.preventDefault();
-		}
 	}
 
 	public boolean canInnerDrag(nsIDOMMouseEvent event) {

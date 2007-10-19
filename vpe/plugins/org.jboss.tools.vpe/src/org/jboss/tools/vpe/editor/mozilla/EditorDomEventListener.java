@@ -36,10 +36,6 @@ public interface EditorDomEventListener extends nsIContextMenuListener {
 	void mouseUp(nsIDOMMouseEvent mouseEvent);
 	void mouseClick(nsIDOMMouseEvent mouseEvent);
 	void mouseDblClick(nsIDOMMouseEvent mouseEvent);
-//	void mouseOver(nsIDOMMouseEvent mouseEvent);
-//	void mouseOut(nsIDOMMouseEvent mouseEvent);
-//	void keyDown(nsIDOMKeyEvent keyEvent);
-//	void keyUp(nsIDOMKeyEvent keyEvent);
 	void mouseMove(nsIDOMMouseEvent mouseEvent);
 	void keyPress(nsIDOMKeyEvent keyEvent);
 	void elementResized(nsIDOMElement element, int resizerConstrains, int top, int left, int width, int height);

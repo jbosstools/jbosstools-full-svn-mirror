@@ -28,8 +28,6 @@ import org.mozilla.xpcom.Mozilla;
 
 
 class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListener {
-	// TODO Max Areshkau add DnD
-//	private XPCOMObject dropListener;
 
 	private XulRunnerEditor visualEditor;
 
