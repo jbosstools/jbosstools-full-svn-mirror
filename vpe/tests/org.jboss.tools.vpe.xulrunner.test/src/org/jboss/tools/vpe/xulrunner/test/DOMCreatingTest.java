@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.xulrunner.tests;
+package org.jboss.tools.vpe.xulrunner.test;
 
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;

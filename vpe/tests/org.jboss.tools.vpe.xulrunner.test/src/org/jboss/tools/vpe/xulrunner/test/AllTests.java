@@ -8,15 +8,15 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.xulrunner.tests;
+package org.jboss.tools.vpe.xulrunner.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class VpeXulRunnerAllTests {
+public class AllTests {
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite("Test for " + VpeXulRunnerAllTests.class.getName());
+		TestSuite suite = new TestSuite("Test for " + AllTests.class.getName());
 		//add test cases for dom elements
 		suite.addTestSuite(DOMCreatingTest.class);		
 		return suite;

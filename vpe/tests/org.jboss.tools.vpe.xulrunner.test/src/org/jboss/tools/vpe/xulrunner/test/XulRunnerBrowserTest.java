@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.xulrunner.tests;
+package org.jboss.tools.vpe.xulrunner.test;
 
 import junit.framework.TestCase;
 
@@ -58,7 +58,7 @@ public class XulRunnerBrowserTest extends TestCase {
 	    delay(1000);
     }
 
-    public void testMozillaBrowser() throws PartInitException {
+    public void testXulRunnerBrowser() throws PartInitException {
 	waitForJobs();
 	XulRunnerView mozillaView = (XulRunnerView) PlatformUI.getWorkbench()
 		.getActiveWorkbenchWindow().getActivePage().showView(VIEW_ID);
