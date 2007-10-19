@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: XulRunner Tests Plug-in
+Bundle-SymbolicName: org.jboss.tools.vpe.xulrunner.test;singleton:=true
+Bundle-Version: 2.0.0
+Bundle-Vendor: Red Hat, Inc.
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.junit,
+ org.jboss.tools.common,
+ org.jboss.tools.vpe.xulrunner,
+ org.mozilla.xpcom
+Eclipse-LazyStart: true
+Export-Package: org.jboss.tools.vpe.xulrunner.tests,
+ org.jboss.tools.vpe.xulrunner.view
+Bundle-ClassPath: vpe-mozilla-tests.jar

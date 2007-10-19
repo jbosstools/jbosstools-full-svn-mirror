@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="org.jboss.tools.vpe.xulrunner.view"
+            name="VPE Tests"/>
+      <view
+            category="org.jboss.tools.vpe.xulrunner.view"
+            class="org.jboss.tools.vpe.xulrunner.view.XulRunnerView"
+            id="org.jboss.tools.vpe.xulrunner.view.XulRunnerView"
+            name="XulRunner View"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+         <view
+               id="org.jboss.tools.vpe.xulrunner.view.XulRunnerView"
+               ratio="0.5"
+               relationship="right"
+               relative="org.eclipse.ui.views.TaskList" />
+      </perspectiveExtension>
+   </extension>
+</plugin>
