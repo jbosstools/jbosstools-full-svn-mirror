@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Tests Plug-in
 Bundle-SymbolicName: org.jboss.tools.vpe.test;singleton:=true
 Bundle-Version: 2.0.0
-Bundle-Activator: org.jboss.tools.vpe.tests.VpeTestPlugin
+Bundle-Activator: org.jboss.tools.vpe.test.VpeTestPlugin
 Bundle-Vendor: RedHat
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -11,5 +11,5 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.common,
  org.jboss.tools.vpe
 Eclipse-LazyStart: true
-Export-Package: org.jboss.tools.vpe.tests
+Export-Package: org.jboss.tools.vpe.test
 Bundle-ClassPath: vpe-tests.jar
