@@ -11,7 +11,7 @@
     </keywordset>
   </chapterinfo>
  <title>Manage JBoss AS from Red Hat Developer Studio</title>
- <para>Red Hat Developer Studio ships with <property>JBoss EAP v.4.2</property> bundled. When you followed the default installation of Red Hat Developer Studio, you should already have a <property>JBoss 4.2 server</property> installed and defined. To run <property>JBoss AS 4.2</property> you need JDK 1.5., JDK 6 is not formally supported yet, although you may be able to start the server with it.</para>
+    <para>Red Hat Developer Studio ships with <property>JBoss EAP v.4.2</property> bundled. When you followed the default installation of Red Hat Developer Studio, you should already have a JBoss 4.2 server installed and defined. To run JBoss AS 4.2 you need <property>JDK 1.5.</property>, JDK 6 is not formally supported yet, although you may be able to start the server with it.</para>
  <section id="JBossbundled">
   <?dbhtml filename="JBossbundled.html"?>
   <title>How to Manage the JBoss AS Bundled in RHDS</title>
@@ -19,12 +19,12 @@
   <section id="StartingServer">
   <?dbhtml filename="StartingServer.html"?>
   <title>Starting JBoss server</title>
-  <para>Starting <property>JBoss server</property> is quite simple. Red Hat Developer Studio allows you to control its behaviour with the help of a special toolbar: where you could start it in a regular or debug mode, stop it, or restart it.</para>
+  <para>Starting <property>JBoss server</property> is quite simple. Red Hat Developer Studio allows you to control its behaviour with the help of a special toolbar: where you could start it in a regular or debug mode, stop it or restart it.</para>
   <itemizedlist>
       <listitem><para>To launch the server click the green-with-white-arrow icon on the <property>JBoss Server View </property>or right click server name in this view and select <emphasis><property>Start</property></emphasis>. If this view is not open, select <emphasis><property>Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View</property></emphasis></para></listitem>
   </itemizedlist>
   <figure>
-<title>Starting From Icon</title>
+<title>Starting from Icon</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/startingfromicon.png"/>
@@ -41,10 +41,10 @@
 </mediaobject>
 </figure>
 
-<para>While launching, Server output is written to the Console view:</para>
+<para>While launching, server output is written to the Console view:</para>
 
 <figure>
-<title>Console output</title>
+<title>Console Output</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/consoleoutput.png"/>
@@ -53,14 +53,14 @@
 </figure>
       <para>When the server is started you should see <emphasis><property>Started</property></emphasis> right to its name in <property>JBoss Server View</property> (column &quot;Status&quot;).</para>
 <figure>
-<title>Server is Started</title>
+<title>Server Is Started</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/serverstarted.png"/>
         </imageobject>
 </mediaobject>
 </figure>
-      <para>To see event log after the server is started, expand <property>Event Log</property> branch beneath <property>JBoss Server View</property>:</para>
+      <para>To see event log after the server is started, expand <property>Event Log</property> branch beneath JBoss Server View:</para>
 <figure>
 <title>Event Log</title>
 <mediaobject> 
@@ -72,10 +72,10 @@
   </section>
   <section id="StoppingJBoss">
   <?dbhtml filename="StoppingJBoss.html"?>
-  <title>Stopping JBoss server</title>
-  <para>To stop the server, click the <emphasis><property>Stop</property></emphasis> icon in <property>JBoss Server View </property> or right click the server name and press <emphasis><property>Stop</property></emphasis>.</para>
+  <title>Stopping JBoss Server</title>
+  <para>To stop the server, click the <emphasis><property>Stop</property></emphasis> icon in JBoss Server View  or right click the server name and press <emphasis><property>Stop</property></emphasis>.</para>
   <figure>
-<title>Stopping server</title>
+<title>Stopping Server</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/stoppingserver2.png"/>
@@ -87,18 +87,18 @@
   <section id="ServerPreferences">
   <?dbhtml filename="ServerPreferences.html"?>
   <title>Server Container Preferences</title>
-      <para>You can control how Red Hat Developer Studio interacts with servlet containers in Preferences. Select <emphasis><property>Window &gt; Preferences &gt; JBoss Tools &gt; JBoss Servers</property></emphasis> and switch to the desired server:</para>
+      <para>You can control how Red Hat Developer Studio interacts with <property>servlet containers</property> in Preferences. Select <emphasis><property>Window > Preferences > JBoss Tools > JBoss Servers</property></emphasis> and switch to the desired server:</para>
   <figure>
-<title>Server preferences</title>
+<title>Server Preferences</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/serverpreferences.png"/>
         </imageobject>
 </mediaobject>
 </figure>
-      <para>Also you can double click the server name in <property>JBoss Server View</property> and open an overview of the server. Here you can specify some common settings: host name, server name, runtime and so on.</para>
+      <para>Also you can double click the server name in JBoss Server View and open an overview of the server. Here you can specify some common settings: host name, server name, runtime and so on.</para>
 <figure>
-<title>Server overview</title>
+<title>Server Overview</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/serveroverview.png"/>
@@ -136,12 +136,12 @@
   <title>Adding and configuring JBoss server</title>
   <para>Now we should add just installed server into server manager in Red Hat Developer Studio.</para>
   <itemizedlist>
-  <listitem><para>Open the <property>JBoss Server</property> View by selecting <emphasis>Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View</emphasis>. You will see <property>JBoss Server</property> view.</para></listitem>
-  <listitem><para>Right click anywhere in this view and select New Server.</para></listitem>
-<listitem><para>Select <emphasis>JBoss, a division of Red Hat &gt; JBoss v4.2</emphasis> and click the &quot;Installed Runtimes&quot; button to select a new installed runtime.</para></listitem>
+  <listitem><para>Open the JBoss Server View by selecting <emphasis><property>Window > Show View > Other > Server > JBoss Server View</property></emphasis>. You will see JBoss Server view.</para></listitem>
+      <listitem><para>Right click anywhere in this view and select <emphasis><property>New Server</property></emphasis>.</para></listitem>
+      <listitem><para>Select <emphasis><property>JBoss, a division of Red Hat > JBoss v4.2</property></emphasis> and click the <emphasis><property>Installed Runtimes</property></emphasis> button to select a new installed runtime.</para></listitem>
 </itemizedlist>
 <figure>
-<title>Selecting server type</title>
+<title>Selecting Server Type</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/servertype.png"/>
@@ -150,8 +150,8 @@
 </figure>
      
      <itemizedlist continuation="continues">
-         <listitem><para>Click &quot;Add&quot; button to add a new jboss runtime.</para></listitem>
-         <listitem><para>Select <emphasis>JBoss, a division of Red Hat &gt; JBoss v4.2</emphasis> and press Next.</para></listitem>
+         <listitem><para>Click <emphasis><property>Add</property></emphasis> button to add a new jboss runtime.</para></listitem>
+         <listitem><para>Select <emphasis><property>JBoss, a division of Red Hat > JBoss v4.2</property></emphasis> and press <emphasis><property>Next</property></emphasis>.</para></listitem>
      </itemizedlist>
 
      <figure>    
@@ -181,19 +181,19 @@
     <para>When adding a new server you will need to specify what JRE to use. It is important to set this value to a full JDK, not JRE. Again, you need a full JDK to run Web applications, JRE will not be enough.</para>
 </note>
 <itemizedlist continuation="continues">
-  <listitem><para>In the following window leave all settings default or give your name to a new jboss server and press Finish.</para></listitem>
+    <listitem><para>In the following window leave all settings default or give your name to a new jboss server and press <emphasis><property>Finish</property></emphasis>.</para></listitem>
 </itemizedlist>
 <figure>
-<title>Adding new runtime</title>
+<title>Adding New Runtime</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/addingjbossserver.png"/>
         </imageobject>
 </mediaobject>
 </figure>
-  <para>A new runtime will now appear in the <emphasis>Preferences &gt; Server &gt; Installed Runtimes</emphasis> dialog.</para>
+     <para>A new runtime will now appear in the <emphasis><property>Preferences > Server > Installed Runtimes</property></emphasis> dialog.</para>
 <figure>
-<title>Runtime is added</title>
+<title>Runtime Is Added</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/addedruntime.png"/>
@@ -202,10 +202,10 @@
 </figure>
 
 <itemizedlist continuation="continues">
-  <listitem><para>Click OK. Then select a new added runtime in Server runtime drop down list and click Next button twice.</para></listitem>
+    <listitem><para>Click <emphasis><property>OK</property></emphasis>. Then select a new added runtime in Server runtime drop down list and click <emphasis><property>Next</property></emphasis> button twice.</para></listitem>
 </itemizedlist>
 <figure>
-<title>Choosing runtime</title>
+<title>Choosing Runtime</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/choosingruntime.png"/>
@@ -213,7 +213,7 @@
 </mediaobject>
 </figure>
   <itemizedlist continuation="continues">
-  <listitem><para>In the last wizard&apos;s dialog modify the projects that are configured on the server and click Finish.</para></listitem>
+      <listitem><para>In the last wizard&apos;s dialog modify the projects that are configured on the server and click <emphasis><property>Finish</property></emphasis>.</para></listitem>
   </itemizedlist>
   <figure>
 <title>Configuring Projects</title>
@@ -223,7 +223,7 @@
         </imageobject>
 </mediaobject>
 </figure>
-     <para>A new JBoss server should now appear in <property>JBoss Server View</property>.</para>  
+     <para>A new JBoss server should now appear in JBoss Server View.</para>  
 <figure>
 <title>New JBoss Server</title>
 <mediaobject> 
@@ -245,14 +245,13 @@
         
         <section id="JBossASPerspective">
             <title>JBoss AS Perspective</title>
-            <para>The <property>JBoss AS</property> Perspective is similar to the Java perspective, but it contains a few additional views, as well as an addition to the workbench
-                toolbar. Two of the additional views are standard views, specifically the <property>Console </property> view and the <property>Properties</property> view. 
+            <para>The <property>JBoss AS</property> Perspective is similar to the Java perspective, but it contains a few additional views. Two of the additional views are standard views, specifically the <property>Console </property> view and the <property>Properties</property> view. 
                 The other two views that are added are the <property>Project archives</property> view  and the <property>JBoss Servers View</property>.</para>
       
       <section id="JBossServersView">
             <?dbhtml filename="JBossServerView.html"?>
             <title>The JBoss Servers View</title>
-          <para>This chapter will focus on the the JBoss Server's View and it's related workbench toolbar actionsets. The JBoss Servers View is based on the Webtool's view, Servers View. The top half of the JBoss Servers View essentially embeds the original Servers View directly into it, making slight changes to the context menu.
+          <para>This chapter will focus on the the JBoss Server's View. The JBoss Servers View is based on the Webtool's view, Servers View. The top half of the JBoss Servers View essentially embeds the original Servers View directly into it, making slight changes to the context menu.
             A second half was added to provide additional information about the server selected in the top half. In the image provided, categories in the second half include which modules are currently deployed.</para>
             
             <figure>
@@ -265,7 +264,7 @@
             </figure>
       
     
-    <para>In order to access the view's preferences, you should access <emphasis><property>Window > Preferences > JBoss IDE > JBoss Servers > View</property></emphasis>. 
+    <para>In order to access the view's preferences, you should access <emphasis><property>Window > Preferences > JBoss Tools > JBoss Servers > View</property></emphasis>. 
         This preference page allows you to select which view extensions you want on or off, the order they appear
         in the view, as well as any other extension-specific preferences that may be available.</para>
     <figure>
@@ -330,8 +329,8 @@
             </imageobject>
         </mediaobject>
     </figure>
-          <para>The view itself contains only a list of categories. By right-clicking on XML Configuration, you can create a new category.
-              Ports is provided by default and is filled with many of the most commonly used ports in the JBoss Server</para>
+          <para>The view itself contains only a list of categories. By right-clicking on <emphasis><property>XML Configuration</property></emphasis>, you can create a new category.
+              Ports are provided by default and is filled with many of the most commonly used ports in the JBoss Server.</para>
           <figure>
               <title>Adding New Category</title>
               <mediaobject> 
@@ -340,8 +339,7 @@
                   </imageobject>
               </mediaobject>
           </figure>
-          <para>The view itself contains only a list of categories. By right-clicking on XML XPaths, you can create a new category.
-              Ports is provided by default and is filled with many of the most commonly used ports in the JBoss Server.</para>
+          <para>By right-clicking on <emphasis><property>Ports</property></emphasis>, you can create a new XPaths.</para>
           <figure>
               <title>Adding New XPath</title>
               <mediaobject> 
@@ -350,8 +348,7 @@
                   </imageobject>
               </mediaobject>
           </figure>
-          <para>To begin, you can either right-click on a category in the view, or when browsing a category in the properties view,
-              right-clicking anywhere. This will allow you to select New XPath. After that, the dialog shown below will appear.</para>
+          <para>After that, the dialog shown below will appear.</para>
           <figure>
               <title>Adding New XPath</title>
               <mediaobject> 
@@ -366,7 +363,7 @@
                   should be left blank and your xpath should end with port.
                   If, on the other hand, your desired field is the port attribute of &lt;fieldName port="35"&gt;, then your xpath will end
                       with fieldName and your Attribute Name will be "port".
-                      When finished, you can click preview to see how many matches you have for that particular xpath, as shown below.</para>
+                      When finished, you can click <emphasis><property>preview</property></emphasis> to see how many matches you have for that particular xpath, as shown below.</para>
           <figure>
              <title>XPath Preview</title>
               <mediaobject> 
@@ -387,12 +384,12 @@
                     root, etc. None of these have any effect on the functionality of the packaging plugin.</para>
                 
                 <section id="Creating an archive">
-                    <title>Creating an archive</title>
+                    <title>Creating an Archive</title>
                     <para>When creating a new archive, you have some different options at your disposal. If the project has no <property>.packages</property> file, your 
-                        options will be presented to you all at once for you to choose from (as above). Otherwise you will right-click inside the view and select New Archive
+                        options will be presented to you all at once for you to choose from (as above). Otherwise you will right-click inside the view and select <emphasis><property>New Archive</property></emphasis>
                         to see your archive type options.</para>
                     <figure>
-                        <title>Create an archive</title>
+                        <title>Create an Archive</title>
                         <mediaobject> 
                             <imageobject>
                                 <imagedata fileref="images/archives1.png"/>
@@ -437,7 +434,7 @@
                 <section id="View Actions">
                     <title>View Actions</title>
                     <figure>
-                        <title>Context menu on the item</title>
+                        <title>Context Menu on the Item</title>
                         <mediaobject> 
                             <imageobject>
                                 <imagedata fileref="images/archives3.png"/>
