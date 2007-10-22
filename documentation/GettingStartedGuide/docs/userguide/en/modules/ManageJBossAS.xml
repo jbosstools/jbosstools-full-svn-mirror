@@ -11,7 +11,7 @@
     </keywordset>
   </chapterinfo>
  <title>Manage JBoss AS from Red Hat Developer Studio</title>
-    <para>Red Hat Developer Studio ships with <property>JBoss EAP v.4.2</property> bundled. When you followed the default installation of Red Hat Developer Studio, you should already have a JBoss 4.2 server installed and defined. To run JBoss AS 4.2 you need <property>JDK 1.5.</property>, JDK 6 is not formally supported yet, although you may be able to start the server with it.</para>
+    <para>Red Hat Developer Studio ships with <property>JBoss EAP v.4.2</property> bundled. When you followed the default installation of Red Hat Developer Studio, you should already have a JBoss 4.2 server installed and defined. To run JBoss AS 4.2 you need JDK 1.5, JDK 6 is not formally supported yet, although you may be able to start the server with it.</para>
  <section id="JBossbundled">
   <?dbhtml filename="JBossbundled.html"?>
   <title>How to Manage the JBoss AS Bundled in RHDS</title>
@@ -87,7 +87,7 @@
   <section id="ServerPreferences">
   <?dbhtml filename="ServerPreferences.html"?>
   <title>Server Container Preferences</title>
-      <para>You can control how Red Hat Developer Studio interacts with <property>servlet containers</property> in Preferences. Select <emphasis><property>Window > Preferences > JBoss Tools > JBoss Servers</property></emphasis> and switch to the desired server:</para>
+      <para>You can control how Red Hat Developer Studio interacts with servlet containers in Preferences. Select <emphasis><property>Window > Preferences > JBoss Tools > JBoss Servers</property></emphasis> and switch to the desired server:</para>
   <figure>
 <title>Server Preferences</title>
 <mediaobject> 
@@ -287,8 +287,8 @@
             </imageobject>
         </mediaobject>
     </figure>
-    <para>The <property>modules</property> section shows what modules are currently deployed to the server, and allows you to remove them
-        from the server, or force a full republish upon them. It only shows which modules have been deployed through eclipse,
+    <para>The <property>Modules</property> section shows what modules are currently deployed to the server, and allows you to remove them
+        from the server, or force a full republish upon them. It only shows which modules have been deployed through Eclipse,
         not any and all modules that happen to be in the deploy directory.</para>
     <figure>
     <title>Modules Action</title>
@@ -298,7 +298,7 @@
         </imageobject>
     </mediaobject>
     </figure>
-    <para>The Event Log will show relevent information to your server's startup, shutdown, and publish processes. This allows
+          <para>The <property>Event Log</property> will show relevent information to your server's startup, shutdown, and publish processes. This allows
         you to keep an eye on what's going on (such as automatic incremental deployment if you have it enabled).
         The only action available is to clear the event log. However if the properties view is opened, you can receive further
         information on each event log item (when available).</para>
@@ -311,18 +311,18 @@
         </mediaobject>
     </figure>
     <figure>
-        <title></title>
+        <title>Stopping the Server</title>
         <mediaobject> 
             <imageobject>
                 <imagedata fileref="images/JBVServerisstopped.png"/>
             </imageobject>
         </mediaobject>
     </figure>
-    <para>The XML Configuration category allows you to quickly browse to descriptor files in your server's deploy directory and
-        check or change the values. It's use requires the properties view. Basically, an xpath is a path used to access
+          <para>The <property>XML Configuration</property> category allows you to quickly browse to descriptor files in your server's deploy directory and
+        check or change the values. It's use requires the Properties view. Basically, XML Configuration are XML XPaths where a xpath is a path used to access
         some specific part of an xml document.</para>
     <figure>
-        <title>XML Configuration and Properties</title>
+        <title>XML Configuration and Properties View</title>
         <mediaobject> 
             <imageobject>
                 <imagedata fileref="images/JBVxmlconfigandprop.png"/>
@@ -363,7 +363,7 @@
                   should be left blank and your xpath should end with port.
                   If, on the other hand, your desired field is the port attribute of &lt;fieldName port="35"&gt;, then your xpath will end
                       with fieldName and your Attribute Name will be "port".
-                      When finished, you can click <emphasis><property>preview</property></emphasis> to see how many matches you have for that particular xpath, as shown below.</para>
+                      When finished, you can click <emphasis><property>Preview</property></emphasis> to see how many matches you have for that particular xpath, as shown below.</para>
           <figure>
              <title>XPath Preview</title>
               <mediaobject> 
@@ -378,7 +378,7 @@
                 <para>Every application, whether plain old Java, J2EE, or some other language altogether, needs to be packaged in some way. In Java-related projects, 
                     many people use ANT. Red Hat Developer Studio comes with our own archives tool with a bit easier and less-verbose XML and a handy user interface.</para>
                 <para>The Project Archives plugin consists primarily of a view to set up each packaging configuration. Each project can enable or disable its builder, or depend on the global setting.</para>
-                <para>The packaging configuration for each project is stored in that project's root folder, and is in a file named .packages, which has a fairly simple XML
+                <para>The packaging configuration for each project is stored in that project's root folder, and is in a file named <property>.packages</property>, which has a fairly simple XML
                     structure. Modifying the file by hand is neither required nor reccommended, and using the UI is the official way of modifying your packaging structure.</para>
                 <para>Aside from the builder, the other preferences for the plugin are mostly cosmetic, allowing you to show full or truncated paths, show the project at the
                     root, etc. None of these have any effect on the functionality of the packaging plugin.</para>
@@ -469,7 +469,7 @@
     <section id="Deploy to Server">
         <?dbhtml filename="DeployToServer.html"?>
         <title>Deploy to Server</title>
-        <para>In the context menu of files there is a <property>Deploy to server</property> option that allows a single file deployment. To deploy these non-WTP files/projects right click on the file (-ds.xml, .ear, .jar etc.) and select <emphasis><property>Deploy To server</property></emphasis> and it will be automatically deployed.</para>
+        <para>In the context menu of files there is a <property>Deploy To Server</property> option that allows a single file deployment. To deploy these non-WTP files/projects right click on the file (-ds.xml, .ear, .jar etc.) and select <emphasis><property>Deploy To server</property></emphasis> and it will be automatically deployed.</para>
         <figure>
             <title>Deploy to Sever</title>
             <mediaobject> 
