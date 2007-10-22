@@ -21,7 +21,7 @@
   <title>Starting JBoss server</title>
   <para>Starting <property>JBoss server</property> is quite simple. Red Hat Developer Studio allows you to control its behaviour with the help of a special toolbar: where you could start it in a regular or debug mode, stop it, or restart it.</para>
   <itemizedlist>
-  <listitem><para>To launch the server click the green-with-white-arrow icon on the <property>JBoss Server View </property>or right click server name in this view and select <emphasis><property>Start</property></emphasis>. If this view is not open, select <emphasis>Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View</emphasis></para></listitem>
+      <listitem><para>To launch the server click the green-with-white-arrow icon on the <property>JBoss Server View </property>or right click server name in this view and select <emphasis><property>Start</property></emphasis>. If this view is not open, select <emphasis><property>Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View</property></emphasis></para></listitem>
   </itemizedlist>
   <figure>
 <title>Starting From Icon</title>
@@ -51,7 +51,7 @@
         </imageobject>
 </mediaobject>
 </figure>
-<para>When the server is started you should see &quot;Started&quot; right to its name in <property>JBoss Server</property> view (column &quot;Status&quot;).</para>
+      <para>When the server is started you should see <emphasis><property>Started</property></emphasis> right to its name in <property>JBoss Server View</property> (column &quot;Status&quot;).</para>
 <figure>
 <title>Server is Started</title>
 <mediaobject> 
@@ -60,7 +60,7 @@
         </imageobject>
 </mediaobject>
 </figure>
-<para>To see event log after the server is started, expand &quot;Event Log&quot; branch beneath <property>JBoss Server</property> View:</para>
+      <para>To see event log after the server is started, expand <property>Event Log</property> branch beneath <property>JBoss Server View</property>:</para>
 <figure>
 <title>Event Log</title>
 <mediaobject> 
@@ -82,12 +82,12 @@
         </imageobject>
 </mediaobject>
 </figure>
-<para>When the server is stopped you will see &quot;Stopped&quot; next to its name in the Status column.</para>
+      <para>When the server is stopped you will see <emphasis><property>Stopped</property></emphasis> next to its name in the Status column.</para>
   </section>
   <section id="ServerPreferences">
   <?dbhtml filename="ServerPreferences.html"?>
   <title>Server Container Preferences</title>
-  <para>You can control how Red Hat Developer Studio interacts with servlet containers in Preferences. In order to do this, select <emphasis>Window &gt; Preferences &gt; JBoss Tools &gt; JBoss Servers</emphasis> and switch to the desired server:</para>
+      <para>You can control how Red Hat Developer Studio interacts with servlet containers in Preferences. Select <emphasis><property>Window &gt; Preferences &gt; JBoss Tools &gt; JBoss Servers</property></emphasis> and switch to the desired server:</para>
   <figure>
 <title>Server preferences</title>
 <mediaobject> 
@@ -96,7 +96,7 @@
         </imageobject>
 </mediaobject>
 </figure>
-<para>Also you can double click the server name in <property>JBoss Server</property> view and open an overview of the server. Here you can specify some common settings: host name, server name, runtime and so on.</para>
+      <para>Also you can double click the server name in <property>JBoss Server View</property> and open an overview of the server. Here you can specify some common settings: host name, server name, runtime and so on.</para>
 <figure>
 <title>Server overview</title>
 <mediaobject> 
@@ -118,8 +118,14 @@
   <itemizedlist>
 <listitem><para>Download the binary package of <property>JBoss 4.2.1</property> and save it on your computer: <ulink url="http://labs.jboss.com/jbossas/downloads">http://labs.jboss.com/jbossas/downloads</ulink></para></listitem>
 </itemizedlist>
-<para>It does not matter where on your system you install <property>JBoss</property>. Note, however, that installing <property>JBoss</property> into a directory that has a name containing spaces causes problems in some situations with Sun-based VMs. Thus, try to avoid using installation folders that have spaces in their names.</para>
-<para>There is no requirement for root access to run <property>JBoss</property> on UNIX/Linux systems because none of the default ports are within the 0-1023 privileged port range.</para>
+     <para>It does not matter where on your system you install JBoss server.</para>
+     
+     <note>
+         <title>Note:</title>
+         <para>The installation of JBoss server into a directory that has a name containing spaces provokes problems in some situations with Sun-based VMs. Try to avoid using installation folders that have spaces in their names.</para>
+     </note>
+    
+ <para>There is no requirement for root access to run JBoss Server on UNIX/Linux systems because none of the default ports are within the 0-1023 privileged port range.</para>
 <itemizedlist continuation="continues">
 <listitem><para>After you have the binary archive you want to install, use the JDK jar tool (or any other ZIP extraction tool) to extract the jboss-4.2.1.zip archive contents into a location of your choice. The jboss-4.2.1.tgz  archive is a gzipped tar file that requires a gnutar compatible tar which can handle the long pathnames in the archive. The extraction process will create a jboss-4.2.1 directory. </para></listitem>
 </itemizedlist>
@@ -217,7 +223,7 @@
         </imageobject>
 </mediaobject>
 </figure>
-<para>A new <property>JBoss server</property> should now appear in <property>JBoss Server</property> View.</para>  
+     <para>A new JBoss server should now appear in <property>JBoss Server View</property>.</para>  
 <figure>
 <title>New JBoss Server</title>
 <mediaobject> 
@@ -234,11 +240,15 @@
    
     
     <section id="Server Manager Features">
-        <?dbhtml filename="JBossbundled.html"?>
+        <?dbhtml filename="ServerManagerFeatures.html"?>
         <title>Server Manager Features</title>
-    <para>The JBoss AS Perspective is similar to the Java perspective, but it contains a few additional views, as well as an addition to the workbench toolbar. Two of the additional views are standard views, specifically the <property>Console view</property> and the <property>Properties view</property>. The other two views that are added are the <property>Archives View</property>  and the <property>JBoss Servers View</property>.</para>
         
-          
+        <section id="JBossASPerspective">
+            <title>JBoss AS Perspective</title>
+            <para>The <property>JBoss AS</property> Perspective is similar to the Java perspective, but it contains a few additional views, as well as an addition to the workbench
+                toolbar. Two of the additional views are standard views, specifically the <property>Console </property> view and the <property>Properties</property> view. 
+                The other two views that are added are the <property>Project archives</property> view  and the <property>JBoss Servers View</property>.</para>
+      
       <section id="JBossServersView">
             <?dbhtml filename="JBossServerView.html"?>
             <title>The JBoss Servers View</title>
@@ -255,8 +265,8 @@
             </figure>
       
     
-    <para>In order to access the view's preferences, you should access <emphasis><property>Window -> Preferences -> JBoss IDE -> JBoss Servers
-        -> View</property></emphasis>. This preference page allows you to select which view extensions you want on or off, the order they appear
+    <para>In order to access the view's preferences, you should access <emphasis><property>Window > Preferences > JBoss IDE > JBoss Servers > View</property></emphasis>. 
+        This preference page allows you to select which view extensions you want on or off, the order they appear
         in the view, as well as any other extension-specific preferences that may be available.</para>
     <figure>
         <title>View Preferences</title>
@@ -366,11 +376,103 @@
               </mediaobject>
           </figure>
       </section>
-    
+            <section id="Project_archivesView">
+                <title>Project archives View</title>
+                <para>Every application, whether plain old Java, J2EE, or some other language altogether, needs to be packaged in some way. In Java-related projects, 
+                    many people use ANT. Red Hat Developer Studio comes with our own archives tool with a bit easier and less-verbose XML and a handy user interface.</para>
+                <para>The Project Archives plugin consists primarily of a view to set up each packaging configuration. Each project can enable or disable its builder, or depend on the global setting.</para>
+                <para>The packaging configuration for each project is stored in that project's root folder, and is in a file named .packages, which has a fairly simple XML
+                    structure. Modifying the file by hand is neither required nor reccommended, and using the UI is the official way of modifying your packaging structure.</para>
+                <para>Aside from the builder, the other preferences for the plugin are mostly cosmetic, allowing you to show full or truncated paths, show the project at the
+                    root, etc. None of these have any effect on the functionality of the packaging plugin.</para>
+                
+                <section id="Creating an archive">
+                    <title>Creating an archive</title>
+                    <para>When creating a new archive, you have some different options at your disposal. If the project has no <property>.packages</property> file, your 
+                        options will be presented to you all at once for you to choose from (as above). Otherwise you will right-click inside the view and select New Archive
+                        to see your archive type options.</para>
+                    <figure>
+                        <title>Create an archive</title>
+                        <mediaobject> 
+                            <imageobject>
+                                <imagedata fileref="images/archives1.png"/>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                    <para>JAR is the standard archive type, and does very little configuration, leaving most of the work up to you. You can customize the name, add folders, 
+                    filesets, and inner jars to it.</para>
+                    <para>The other types, for the most part, simply start off with a default setting, usually the jar with some specific children based on an expected
+                    structure of the project. For example, if the project is a dynamic web project, and you create a WAR archive, the archive will be created with a few filesets relevant to the known structure of the project.</para>
+                    
+                    <para>Because the first page of all new archive wizards are the same, and it is also the only page in the New Jar Wizard, that page is shown below.</para>
+                    <figure>
+                        <title>New JAR Wizard</title>
+                        <mediaobject> 
+                            <imageobject>
+                                <imagedata fileref="images/archives2.png"/>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                    
+                    <para>The page is pretty simple. All it asks is for the name of your new archive, a destination, which we'll get to in a moment, and whether the archive 
+                    is exploded or packaged up.</para>
+                    <para>The destination of an archive can be anywhere on the filesystem, anywhere in the workspace, inside some other archive, or inside a folder
+                        declared inside an archive. You can browse to workspace or filesystem destinations by clicking on their respective buttons. To select a destination
+                        inside some other archive, you'll need to press the <property>Workspace...</property> button. At the bottom of the list, you'll see archives that have been declared in the
+                        workspace.</para>
+                    <section id="CreatingaFolder">
+                        <title>Creating a Folder</title>
+                        <para>Creating a folder is much easier. You simply right-click on an archive or folder you want your new folder to be a child under. The only piece of 
+                            required information is naming the file.</para>
+                    </section>
+                    <section id="CreatingaFileSet">
+                        <title>Creating a FileSet</title>
+                        <para>To create a new fileset, you click on an available target location such as an archive, a nested archive, or a folder within an archive, and select 
+                            New Fileset. The New Fileset Wizard requires a destination (where the files will go), and a root directory (or where the files are coming from). 
+                            The source can be anywhere in the workspace or from the filesystem at large.</para>
+                        <para>Below that, the fileset requires only an includes pattern and an excludes pattern. As you type in either of these fields, the preview viewer should
+                            update itself with which files are matched.</para>
+                    </section>
+                    </section>
+                <section id="View Actions">
+                    <title>View Actions</title>
+                    <figure>
+                        <title>Context menu on the item</title>
+                        <mediaobject> 
+                            <imageobject>
+                                <imagedata fileref="images/archives3.png"/>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                    <para>The context menu on the items in the view is extendable, but there are several that come standard. The first is the <property>Build Archive</property> action, enabled
+                        only on top-level archives, which initiates a full build on that archive. Editing and deleting nodes are also standard actions, with deletion not needing
+                        an explanation. The edit action brings up the wizard associated with that particular node type and allows the details to be changed. The final action
+                        contribution here is the ability to publish to a declared server.</para>
+                </section>
+                <section id="PublishToServer">
+                    <title>Publish to Server</title>
+                    <figure>
+                        <title>Context menu on the item</title>
+                        <mediaobject> 
+                            <imageobject>
+                                <imagedata fileref="images/archives4.png"/>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                    <para>The dialog above appears after selecting <property>Publish To Server</property>. To simply publish once, you just select the server(s) that you want, and finish. 
+                        If you want the Publish to Server action on that particular Archive to always publish to that set of servers, then check the appropriate checkbox. 
+                        And finally, to enable automatic publishing upon build events, check the last checkbox.</para>
+                    <para>The automatic publishing feature is nice if, for example, your package's destination (where it is built) is a temporary folder and you want the 
+                        archive published to several servers. If you only really want your archive published to one server, it might be easier to have the archive's destination
+                        folder be the deploy folder of the server.</para>
+                </section>
+            </section>
+      </section>
+        
     <section id="Deploy to Server">
         <?dbhtml filename="DeployToServer.html"?>
         <title>Deploy to Server</title>
-        <para>There is a <property>Deploy to server</property> in the context menu of files to allow single file deployement. To deploy these non-WTP files/projects right click on the file (-ds.xml, .ear, .jar etc.) and select <emphasis><property>Deploy To server</property></emphasis> and it will be automatically deployed.</para>
+        <para>In the context menu of files there is a <property>Deploy to server</property> option that allows a single file deployment. To deploy these non-WTP files/projects right click on the file (-ds.xml, .ear, .jar etc.) and select <emphasis><property>Deploy To server</property></emphasis> and it will be automatically deployed.</para>
         <figure>
             <title>Deploy to Sever</title>
             <mediaobject> 
@@ -379,7 +481,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>The deployed files are listed side-by-side with other <property>modules</property> that are deployed to the server.</para>
+        <para>The deployed files are listed side-by-side with other modules that are deployed to the server.</para>
     </section>
 </section>
 </chapter>
