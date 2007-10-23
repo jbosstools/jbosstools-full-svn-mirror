@@ -366,6 +366,12 @@
 		</vpe:template>
 	</vpe:tag>
 
+	<vpe:tag name="br" case-sensitive="no">
+		<vpe:template children="no" modify="yes">
+			<vpe:copy attrs="id,style,class,clear" />
+		</vpe:template>
+	</vpe:tag>
+
 	<vpe:tag name="button" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
 			<vpe:copy attrs="id,style,class,value">
