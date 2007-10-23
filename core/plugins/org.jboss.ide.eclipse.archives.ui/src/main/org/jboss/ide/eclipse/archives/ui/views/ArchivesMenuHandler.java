@@ -2,7 +2,11 @@ package org.jboss.ide.eclipse.archives.ui.views;
 
 import java.util.Arrays;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuListener;
@@ -179,7 +183,12 @@ public class ArchivesMenuHandler {
 		
 		buildAction = new ActionWithDelegate("", ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_BUILD_PACKAGES)) {
 			public void run() {
-				buildSelectedNode();
+				new Job("Build Archive Node") {
+					protected IStatus run(IProgressMonitor monitor) {
+						buildSelectedNode();
+						return Status.OK_STATUS;
+					}
+				}.schedule();
 			}
 
 			public IStructuredSelection getSelection() {
