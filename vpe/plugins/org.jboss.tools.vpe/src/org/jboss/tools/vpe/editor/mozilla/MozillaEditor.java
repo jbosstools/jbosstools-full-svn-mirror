@@ -467,41 +467,44 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			if (contentAreaEventListener != null) {
 				contentAreaEventListener.setVisualEditor(xulRunnerEditor);
 				contentAreaEventTarget = (nsIDOMEventTarget) contentArea.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
-				// TODO Max Areshkau add DnD support
-//				contentAreaEventListener.getLocalDnD().Init(visualEditor.getDOMDocument(),visualEditor.getPresShell(), contentAreaEventListener.getDropListener());
-				contentAreaEventTarget.addEventListener("click", contentAreaEventListener, false); //$NON-NLS-1$
-				contentAreaEventTarget.addEventListener("mousedown", contentAreaEventListener, false); //$NON-NLS-1$
-				contentAreaEventTarget.addEventListener("mouseup", contentAreaEventListener, false); //$NON-NLS-1$
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.MOUSEMOVEEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
-	
-				//context menu event handler(add by Max Areshkau)
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.CONTEXTMENUEVENTTYPE, contentAreaEventListener, false);
-				//drag drop event handlers
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGDROPEVENT, contentAreaEventListener, false);
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGENTEREVENT, contentAreaEventListener, false);
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGEXITEVENT, contentAreaEventListener, false);
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGGESTUREEVENT, contentAreaEventListener, false);
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGOVEREVENT, contentAreaEventListener, false);
 				
+				//add mozilla event handlers
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.CLICKEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.MOUSEDOWNEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.MOUSEUPEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.MOUSEMOVEEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.CONTEXTMENUEVENTTYPE, contentAreaEventListener, false);//$NON-NLS-1$
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGDROPEVENT, contentAreaEventListener, false);//$NON-NLS-1$
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGENTEREVENT, contentAreaEventListener, false);//$NON-NLS-1$
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGEXITEVENT, contentAreaEventListener, false);//$NON-NLS-1$
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGGESTUREEVENT, contentAreaEventListener, false);//$NON-NLS-1$
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGOVEREVENT, contentAreaEventListener, false);//$NON-NLS-1$
+				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DBLCLICK, contentAreaEventListener, false);//$NON-NLS-1$
 				documentEventTarget = (nsIDOMEventTarget) getDomDocument().queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
-				documentEventTarget.addEventListener("keypress", contentAreaEventListener, false); //$NON-NLS-1$
+				documentEventTarget.addEventListener(MozillaDomEventListener.KEYPRESS, contentAreaEventListener, false); //$NON-NLS-1$
 			} else {
 				baseEventListener = new MozillaBaseEventListener();
-				// TODO Max Areshkau add DnD support
-//				baseEventListener.getLocalDnD().Init(visualEditor.getDOMDocument(),visualEditor.getPresShell(), baseEventListener.getDropListener());
 			}
 		}
 	}
 
 	private void removeDomEventListeners() {
 		if (contentAreaEventTarget != null && contentAreaEventListener != null) {
-			contentAreaEventTarget.removeEventListener("click", contentAreaEventListener, false); //$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener("mousedown", contentAreaEventListener, false); //$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener("mouseup", contentAreaEventListener, false); //$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener("mousemove", contentAreaEventListener, false); //$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.CLICKEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.MOUSEDOWNEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.MOUSEUPEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.MOUSEMOVEEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.CONTEXTMENUEVENTTYPE, contentAreaEventListener, false);//$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DRAGDROPEVENT, contentAreaEventListener, false);//$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DRAGENTEREVENT, contentAreaEventListener, false);//$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DRAGEXITEVENT, contentAreaEventListener, false);//$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DRAGGESTUREEVENT, contentAreaEventListener, false);//$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DRAGOVEREVENT, contentAreaEventListener, false);//$NON-NLS-1$
+			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DBLCLICK, contentAreaEventListener, false);//$NON-NLS-1$
+		
 		}
 		if (domDocument != null && documentEventTarget != null) {
-			documentEventTarget.removeEventListener("keypress", contentAreaEventListener, false); //$NON-NLS-1$
+			documentEventTarget.removeEventListener(MozillaDomEventListener.KEYPRESS, contentAreaEventListener, false); //$NON-NLS-1$
 		}
 	}
 
@@ -545,26 +548,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	public void hideResizer() {
 		if (contentAreaEventListener != null) {
 			xulRunnerEditor.hideResizer();
-		}
-	}
-
-	private void addClipboardDragDropHooks() {
-		if (contentAreaEventListener != null) {
-			nsIClipboardDragDropHookList hookList = xulRunnerEditor.getClipboardDragDropHookList();
-//			hookList.addClipboardDragDropHooks(contentAreaEventListener);
-		} else if (baseEventListener != null) {
-			nsIClipboardDragDropHookList hookList = xulRunnerEditor.getClipboardDragDropHookList();
-			hookList.addClipboardDragDropHooks(baseEventListener);
-		}
-	}
-
-	private void removeClipboardDragDropHooks() {
-		if (contentAreaEventListener != null) {
-			nsIClipboardDragDropHookList hookList = xulRunnerEditor.getClipboardDragDropHookList();
-//			hookList.removeClipboardDragDropHooks(contentAreaEventListener);
-		} else if (baseEventListener != null) {
-			nsIClipboardDragDropHookList hookList = xulRunnerEditor.getClipboardDragDropHookList();
-			hookList.removeClipboardDragDropHooks(baseEventListener);
 		}
 	}
 
