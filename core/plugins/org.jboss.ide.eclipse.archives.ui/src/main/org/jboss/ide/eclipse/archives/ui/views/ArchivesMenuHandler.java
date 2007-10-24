@@ -183,9 +183,10 @@ public class ArchivesMenuHandler {
 		
 		buildAction = new ActionWithDelegate("", ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_BUILD_PACKAGES)) {
 			public void run() {
+				final Object selected = getSelectedObject();
 				new Job("Build Archive Node") {
 					protected IStatus run(IProgressMonitor monitor) {
-						buildSelectedNode();
+						buildSelectedNode(selected);
 						return Status.OK_STATUS;
 					}
 				}.schedule();
@@ -358,8 +359,7 @@ public class ArchivesMenuHandler {
 		}
 	}
 	
-	private void buildSelectedNode() {
-		Object selected = getSelectedObject();
+	private void buildSelectedNode(Object selected) {
 		if( selected == null ) return;
 		if (selected instanceof IArchiveNode &&  
 				((IArchiveNode)selected).getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
