@@ -27,7 +27,7 @@ public class TextUtil {
 		textSet.put(new Character('&'),"&amp;");
 		textSet.put(new Character('<'),"&lt;");
 		textSet.put(new Character('>'),"&gt;");
-		textSet.put(new Character(' '),"&nbsp;");
+//		textSet.put(new Character(' '),"&nbsp;");
 		textSet.put(new Character('\u00A1'),"&iexcl;");
 		textSet.put(new Character('\u00A2'),"&cent;");
 		textSet.put(new Character('\u00A3'),"&pound;");
