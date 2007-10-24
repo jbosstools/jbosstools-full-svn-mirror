@@ -227,7 +227,9 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 				return;
 		}
 		
-		if( ArchivesModelCore.packageFileExists(project.getLocation()) ) { 
+		if( !project.isAccessible() ) {
+			 book.showPage(noSelectionComposite);
+		} else if(  ArchivesModelCore.packageFileExists(project.getLocation()) ) {
 			if( ArchivesModelCore.projectRegistered(project.getLocation()))
 				book.showPage(viewerComposite);
 			else {
@@ -273,7 +275,7 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 		IProject[] projects2 = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 		ArrayList list = new ArrayList();
 		for( int i = 0; i < projects2.length; i++ ) {
-			if( ArchivesModelCore.packageFileExists(projects2[i].getLocation())) {
+			if( projects2[i].isAccessible() && ArchivesModelCore.packageFileExists(projects2[i].getLocation())) {
 				list.add(projects2[i]);
 			}
 		}
