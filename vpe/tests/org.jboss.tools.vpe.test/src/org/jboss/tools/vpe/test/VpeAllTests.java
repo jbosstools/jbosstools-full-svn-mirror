@@ -21,7 +21,7 @@ import junit.framework.TestSuite;
  * 
  */
 
-public class AllTests extends TestCase{
+public class VpeAllTests extends TestCase{
 	
 	public static Test suite(){
 		TestSuite suite = new TestSuite("Tests for vpe");
