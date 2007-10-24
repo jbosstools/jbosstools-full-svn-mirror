@@ -13,10 +13,10 @@ package org.jboss.tools.vpe.xulrunner.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class AllTests {
+public class XulRunnerAllTests {
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite("Test for " + AllTests.class.getName());
+		TestSuite suite = new TestSuite("Test for " + XulRunnerAllTests.class.getName());
 		//add test cases for dom elements
 		suite.addTestSuite(DOMCreatingTest.class);		
 		return suite;
