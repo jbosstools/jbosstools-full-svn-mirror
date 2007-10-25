@@ -212,7 +212,18 @@
         </imageobject>
 </mediaobject>
 </figure>
-  <itemizedlist continuation="continues">
+<itemizedlist>
+      <listitem><para>In the next dialog verify a <property>JBoss</property> runtime information and if something is unfair go back and correct it.</para></listitem>
+  </itemizedlist>
+  <figure>
+<title>Configuring Projects</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/choosingruntime23.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+  <itemizedlist>
       <listitem><para>In the last wizard&apos;s dialog modify the projects that are configured on the server and click <emphasis><property>Finish</property></emphasis>.</para></listitem>
   </itemizedlist>
   <figure>
@@ -319,7 +330,7 @@
         </mediaobject>
     </figure>
           <para>The <property>XML Configuration</property> category allows you to quickly browse to descriptor files in your server's deploy directory and
-        check or change the values. It's use requires the Properties view. Basically, XML Configuration are XML XPaths where a xpath is a path used to access
+        check or change the values. Its use requires the Properties view. Basically, XML Configuration are XML XPaths where a xpath is a path used to access
         some specific part of an xml document.</para>
     <figure>
         <title>XML Configuration and Properties View</title>
