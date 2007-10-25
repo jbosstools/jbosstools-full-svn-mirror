@@ -6,6 +6,7 @@ import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.events.EventManager;
@@ -59,8 +60,10 @@ public class ModelChangeListener implements IArchiveModelListener {
 		if( isTopLevelArchive(delta.getPostNode())) 
 			EventManager.startedBuildingArchive((IArchive)delta.getPostNode());
 
-		
-		if( (delta.getKind() & IArchiveNodeDelta.REMOVED) != 0 ) {
+		if( (delta.getKind() & IArchiveNodeDelta.UNKNOWN_CHANGE) != 0 ) {
+			nodeRemoved(delta.getPreNode());
+			nodeAdded(delta.getPostNode());
+		} if( (delta.getKind() & IArchiveNodeDelta.REMOVED) != 0 ) {
 			nodeRemoved(delta.getPreNode());
 		} else if( (delta.getKind() & IArchiveNodeDelta.ADDED) != 0 ) {
 			nodeAdded(delta.getPostNode());
@@ -136,11 +139,18 @@ public class ModelChangeListener implements IArchiveModelListener {
 	
 	
 	private void nodeAdded(IArchiveNode added) {
-		if( added.getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
+		if( added == null ) return;
+		
+		if( added.getNodeType() == IArchiveNode.TYPE_MODEL) {
+			IArchiveNode[] archives = ((IArchiveModelNode)added).getChildren(IArchiveNode.TYPE_ARCHIVE);
+			for( int i = 0; i < archives.length; i++ ) {
+				nodeAdded(archives[i]);
+			}
+		} else if( added.getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
 			// create the package
 			ModelTruezipBridge.createFile(added);
 		} else if( added.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FOLDER ) {
-			// create hte folder
+			// create the folder
 			ModelTruezipBridge.createFile(added);
 		}
 		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(added);
@@ -154,7 +164,16 @@ public class ModelChangeListener implements IArchiveModelListener {
 	
 	
 	private void nodeRemoved(IArchiveNode removed) {
-		if( removed.getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
+		if( removed == null ) return;
+		if( removed.getNodeType() == IArchiveNode.TYPE_MODEL ) {
+			// remove all top level items
+			IArchiveNode[] kids = removed.getChildren(IArchiveNode.TYPE_ARCHIVE);
+			for( int i = 0; i < kids.length; i++ ) {
+				ModelTruezipBridge.deleteArchive((IArchive)kids[i]);
+			}
+			postChange(removed);
+			return;
+		} else if( removed.getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
 			ModelTruezipBridge.deleteArchive((IArchive)removed);
 			postChange(removed);
 			return;
@@ -166,7 +185,7 @@ public class ModelChangeListener implements IArchiveModelListener {
 			}
 			postChange(removed);
 			return;
-		}
+		} 
 
 		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(removed);
 		for( int i = 0; i < filesets.length; i++ ) {

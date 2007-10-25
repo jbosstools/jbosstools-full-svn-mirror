@@ -22,6 +22,7 @@
 package org.jboss.ide.eclipse.archives.core;
 
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Plugin;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding;
 import org.osgi.framework.BundleContext;
@@ -30,7 +31,8 @@ import org.osgi.framework.BundleContext;
  * The activator class controls the plug-in life cycle
  * @author rstryker
  *
- */public class ArchivesCorePlugin extends Plugin {
+ */
+public class ArchivesCorePlugin extends Plugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.jboss.ide.eclipse.archives.core";
@@ -54,6 +56,7 @@ import org.osgi.framework.BundleContext;
 		
 		// Load the workspace version of ArchivesCore
 		ArchivesCore core = new WorkspaceArchivesCore();
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(new WorkspaceChangeListener());
 	}
 
 	/*

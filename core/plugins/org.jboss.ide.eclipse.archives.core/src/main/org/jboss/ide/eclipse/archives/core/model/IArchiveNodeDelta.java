@@ -86,6 +86,11 @@ public interface IArchiveNodeDelta {
 	public static final int DESCENDENT_CHANGED 	= 0x400;
 	
 	/**
+	 * An unknown change has occurred. Best to reshow the entire module
+	 */
+	public static final int UNKNOWN_CHANGE = 0x800;
+	
+	/**
 	 * Return the delta kind
 	 * @return
 	 */

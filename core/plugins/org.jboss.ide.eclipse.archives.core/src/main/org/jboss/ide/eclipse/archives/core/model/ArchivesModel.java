@@ -243,10 +243,12 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 					return;
 				}
 				root = new ArchiveModelNode(project, packages, this);
+				ArchiveModelNode oldRoot = (ArchiveModelNode)archivesRoot.get(project);
 				xbPackages.put(project, packages);
 				archivesRoot.put(project, root);
 				createPackageNodeImpl(project, packages, null);
 				root.clearDeltas();
+				fireRegisterProjectEvent(oldRoot, root);
 				monitor.worked(1);
 			} catch (FileNotFoundException e) {
 				Trace.trace(getClass(), e);
@@ -257,6 +259,23 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 			xbPackages.put(project, packages);
 			archivesRoot.put(project, new ArchiveModelNode(project, packages, this));
 		}
+	}
+	
+	protected void fireRegisterProjectEvent(final ArchiveModelNode oldRoot, final ArchiveModelNode newRoot) {
+		IArchiveNodeDelta delta = new IArchiveNodeDelta() {
+			public IArchiveNodeDelta[] getAddedChildrenDeltas() {return null;}
+			public IArchiveNodeDelta[] getAllAffectedChildren() {return null;}
+			public INodeDelta getAttributeDelta(String key) {return null;}
+			public String[] getAttributesWithDeltas() {return null;}
+			public IArchiveNodeDelta[] getChangedDescendentDeltas() {return null;}
+			public int getKind() {return IArchiveNodeDelta.UNKNOWN_CHANGE;}
+			public IArchiveNode getPostNode() {return newRoot;}
+			public IArchiveNode getPreNode() { return oldRoot; }
+			public String[] getPropertiesWithDeltas() {return null;}
+			public INodeDelta getPropertyDelta(String key) {return null;}
+			public IArchiveNodeDelta[] getRemovedChildrenDeltas() {return null;}
+		};
+		EventManager.fireDelta(delta);
 	}
 	
 	public ArchiveNodeImpl createPackageNodeImpl (IPath project, XbPackageNode node, IArchiveNode parent) {
