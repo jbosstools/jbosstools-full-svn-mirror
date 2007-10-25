@@ -312,7 +312,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 
 				nsIDOMElement visualHead = null;
 				nsIDOMElement visualFoot = null;
-				nsIDOMElement visualBody = visualDocument.createElement(HTML.TAG_BODY);
+				nsIDOMElement visualBody = visualDocument.createElement(HTML.TAG_TBODY);
 				visualTable.appendChild(visualBody);
 				if (header != null || footer != null) {
 					if (header != null) {
