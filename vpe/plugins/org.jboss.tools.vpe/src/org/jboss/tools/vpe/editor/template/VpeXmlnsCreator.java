@@ -60,7 +60,7 @@ public class VpeXmlnsCreator extends VpeAbstractCreator {
 	private void addTaglib(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String attrName) {
 		Attr attr = sourceElement.getAttributeNode(attrName);
 		if (ATTR_XMLNS.equals(attr.getPrefix())) {
-			visualNodeMap.put(attr.getNodeName(), new Integer(attr.hashCode()));
+			visualNodeMap.put(attr.getNodeName(), Integer.valueOf(attr.hashCode()));
 			pageContext.setTaglib(attr.hashCode(), attr.getNodeValue(), attr.getLocalName(), true);
 		}
 	}

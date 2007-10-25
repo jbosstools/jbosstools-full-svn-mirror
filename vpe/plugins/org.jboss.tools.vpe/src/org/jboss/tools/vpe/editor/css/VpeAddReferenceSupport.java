@@ -42,7 +42,7 @@ public class VpeAddReferenceSupport extends SpecialWizardSupport {
 			object.setAttributeValue("prefix", css.getProperties());
 		}
 		Properties p = new Properties();
-		p.put("scope", new Integer(css.getScope()));
+		p.put("scope",Integer.valueOf(css.getScope()));
 		p.put("list", list);
 		if(file != null) p.put("file", file);
 		XActionInvoker.invoke(action, object, p);
@@ -115,7 +115,7 @@ public class VpeAddReferenceSupport extends SpecialWizardSupport {
 			getTarget().setAttributeValue("prefix", p0.getProperty("prefix"));
 		}
 		int scope = getSelectedScope(p0); 
-		getProperties().put("scope", new Integer(scope));
+		getProperties().put("scope", Integer.valueOf(scope));
 	}
 	
 	int getSelectedScope(Properties p0) {

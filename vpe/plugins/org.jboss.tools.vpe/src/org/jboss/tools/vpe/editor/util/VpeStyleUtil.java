@@ -132,8 +132,8 @@ public class VpeStyleUtil {
 			if (valuePosition >= 0) {
 				int endPosition = style.indexOf(PX_STRING, valuePosition);
 				if (endPosition >= 0) {
-					return new Integer(style.substring(valuePosition + 1,
-							endPosition).trim()).intValue();
+					return Integer.parseInt(style.substring(valuePosition + 1,
+							endPosition).trim());
 				}
 			}
 		}

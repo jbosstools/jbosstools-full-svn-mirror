@@ -86,17 +86,17 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 	static private HashMap<String, Integer> tagResizeConstrans = new HashMap<String, Integer>();
 	static{
-		tagResizeConstrans.put("table", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_ALL));
-		tagResizeConstrans.put("tr", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_ALL));
-		tagResizeConstrans.put("br", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("b", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("i", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("u", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("sub", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("sup", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("strike", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("font", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("a", new Integer(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
+		tagResizeConstrans.put("table", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_ALL));
+		tagResizeConstrans.put("tr", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_ALL));
+		tagResizeConstrans.put("br", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
+		tagResizeConstrans.put("b", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
+		tagResizeConstrans.put("i", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
+		tagResizeConstrans.put("u", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
+		tagResizeConstrans.put("sub", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
+		tagResizeConstrans.put("sup", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
+		tagResizeConstrans.put("strike", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
+		tagResizeConstrans.put("font", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
+		tagResizeConstrans.put("a", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
 	}
 	
 	static private HashSet<String> breakWithParagraphTags = new HashSet<String>();

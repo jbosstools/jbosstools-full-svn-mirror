@@ -1905,7 +1905,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			String attrName, boolean ns) {
 		Attr attr = sourceElement.getAttributeNode(attrName);
 		if (ATTR_XMLNS.equals(attr.getPrefix())) {
-			xmlnsMap.put(attr.getNodeName(), new Integer(attr.hashCode()));
+			xmlnsMap.put(attr.getNodeName(), Integer.valueOf(attr.hashCode()));
 			pageContext.setTaglib(attr.hashCode(), attr.getNodeValue(), attr
 					.getLocalName(), ns);
 		}
