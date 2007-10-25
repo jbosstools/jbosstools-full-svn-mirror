@@ -70,6 +70,11 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	private Browser browser = null;
 	private nsIWebBrowser webBrowser = null;
 	private long chrome_flags = nsIWebBrowserChrome.CHROME_ALL;
+	
+	/**
+	 * used to indicate that xulrunner was loaded
+	 */
+	private static  boolean XULRUNNER_LOADING_INDICATOR=false;
 
 	static {
 		XULRUNNER_BUNDLE = (new StringBuffer("org.mozilla.xulrunner")) // $NON-NLS-1$
@@ -161,16 +166,26 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	}
 
 	public synchronized static String getXulRunnerPath() throws XulRunnerException {
+		//this function should be call
 		String xulRunnerPath = System.getProperty(XULRUNNER_PATH);
 		if (xulRunnerPath == null) {
+
 			GREVersionRange[] greRanges = {new GREVersionRange(XULRUNNER_LOWER_VERSION, true, XULRUNNER_HIGHER_VERSION, true)};
 			File xulRunnerFile  = null;
 
 			try {
-				xulRunnerFile = Mozilla.getGREPathWithProperties(greRanges, null);
+				if(!XULRUNNER_LOADING_INDICATOR) {
+					
+					XULRUNNER_LOADING_INDICATOR=true;
+					//this function should be call
+					xulRunnerFile = Mozilla.getGREPathWithProperties(greRanges, null);
+				} else {
+					
+					xulRunnerFile = null;
+				}
 			} catch (FileNotFoundException fnfe) {
 				// Ignre this exception. Will try to get XULRunner from plugin
-			}
+			} 
 			
 			if (xulRunnerFile == null
 					|| !xulRunnerFile.exists()) {
