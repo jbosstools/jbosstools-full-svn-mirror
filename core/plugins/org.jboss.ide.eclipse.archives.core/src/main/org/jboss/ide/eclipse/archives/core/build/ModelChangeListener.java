@@ -169,7 +169,7 @@ public class ModelChangeListener implements IArchiveModelListener {
 			// remove all top level items
 			IArchiveNode[] kids = removed.getChildren(IArchiveNode.TYPE_ARCHIVE);
 			for( int i = 0; i < kids.length; i++ ) {
-				ModelTruezipBridge.deleteArchive((IArchive)kids[i]);
+				nodeRemoved(kids[i]);
 			}
 			postChange(removed);
 			return;

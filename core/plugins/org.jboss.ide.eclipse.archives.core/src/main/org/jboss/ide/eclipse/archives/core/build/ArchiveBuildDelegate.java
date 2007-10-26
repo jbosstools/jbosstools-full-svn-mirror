@@ -101,7 +101,7 @@ public class ArchiveBuildDelegate {
 	 * @param fileset The fileset to match
 	 * @param topLevel The top level archive that the fileset belongs to
 	 */
-	public void fullFilesetBuild(IArchiveFileSet fileset, IArchive topLevel) {
+	protected void fullFilesetBuild(IArchiveFileSet fileset, IArchive topLevel) {
 		EventManager.startedCollectingFileSet(fileset);
 		
 		// reset the scanner. It *is* a full build afterall
