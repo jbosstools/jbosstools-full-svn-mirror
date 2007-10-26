@@ -29,7 +29,7 @@ the Select Perspective dialog box.)</para>
 			<title>Create New Web Project</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/newproject1.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/newproject1.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -38,7 +38,7 @@ the Select Perspective dialog box.)</para>
 			<title>New Web Project</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/newproject2.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/newproject2.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -60,7 +60,7 @@ the Select Perspective dialog box.)</para>
 			<title>Create JSP Page</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/newproject3.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/newproject3.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -81,7 +81,7 @@ the Select Perspective dialog box.)</para>
 			<title>Content Assist in JSP page</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/newproject4.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/newproject4.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -90,7 +90,7 @@ the Select Perspective dialog box.)</para>
 			<title>Hello.jsp page</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/newproject5.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/newproject5.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -104,7 +104,7 @@ the Select Perspective dialog box.)</para>
 			<title>web.xml in design mode</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/webxmldesign.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/webxmldesign.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -112,7 +112,7 @@ the Select Perspective dialog box.)</para>
 			<title>web.xml in source mode</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/webxmlsource.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/webxmlsource.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -146,7 +146,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<title>Project Archives</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/simplejspwebapplication.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/simplejspwebapplication.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -158,7 +158,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<title>New WAR archive</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/simplejspwebapplication2.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/simplejspwebapplication2.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -168,7 +168,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<title>Stub Archive Configuration</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/simplejspwebapplication3.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/simplejspwebapplication3.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -178,7 +178,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<title>Archive is created</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/simplejspwebapplication4.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/simplejspwebapplication4.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -186,7 +186,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<title>Archive in Project archives view</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/simplejspwebapplication5.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/simplejspwebapplication5.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -197,7 +197,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<title>Configure archive</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/simplejspwebapplication6.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/simplejspwebapplication6.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -227,7 +227,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<title>Preview Page</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/default.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/default.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -243,7 +243,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<title>Starting server</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/startingfromicon.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/startingfromicon.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -254,7 +254,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<title>Run project</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/newproject19.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/newproject19.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -263,7 +263,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<title>Running project</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/newprojectjsp20.png"/>
+					<imagedata fileref="images/DevelopSimpleJSP/newprojectjsp20.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>

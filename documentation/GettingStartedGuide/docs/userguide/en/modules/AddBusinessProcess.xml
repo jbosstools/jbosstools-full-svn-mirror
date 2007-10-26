@@ -56,7 +56,7 @@ click on the Next button.</listitem>
 <title>Importing Project</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ProjectImporting.png"/>
+            <imagedata fileref="images/AddBusinessProcess/ProjectImporting.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -71,7 +71,7 @@ that is available in the rules-bpm directory of your tutorial distribution code.
 <title>Selecting Directory To Import</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ImportDirectory.png"/>
+            <imagedata fileref="images/AddBusinessProcess/ImportDirectory.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -85,7 +85,7 @@ directory, you will see numerous files as shown below. We will look at these fil
 <title>Project Structure</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ProjectStructure.png"/>
+            <imagedata fileref="images/AddBusinessProcess/ProjectStructure.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -97,7 +97,7 @@ directory, you will see numerous files as shown below. We will look at these fil
 <title>AntBuild</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/AntBuild.png"/>
+            <imagedata fileref="images/AddBusinessProcess/AntBuild.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -127,7 +127,7 @@ directory, you will see numerous files as shown below. We will look at these fil
 <title>New Rules File</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/NewRulesFile.png"/>
+            <imagedata fileref="images/AddBusinessProcess/NewRulesFile.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -205,7 +205,7 @@ end
 <title>Creating New File Resource</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/CreatingNewFileResource.png"/>
+            <imagedata fileref="images/AddBusinessProcess/CreatingNewFileResource.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -227,7 +227,7 @@ Graphical Process Designer</emphasis>.</listitem>
 <title>Opening Graphical Process Designer</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/GraphicalProcessDesigner.png"/>
+            <imagedata fileref="images/AddBusinessProcess/GraphicalProcessDesigner.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -247,7 +247,7 @@ that based on the icon on the node as shown below. Draw a rectangle on the canva
 <title>Diagram View</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/DiagramView.png"/>
+            <imagedata fileref="images/AddBusinessProcess/DiagramView.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -271,7 +271,7 @@ that based on the icon on the node as shown below. Draw a rectangle on the canva
 <title>Node Entering</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/NodeEntering.png"/>
+            <imagedata fileref="images/AddBusinessProcess/NodeEntering.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -284,7 +284,7 @@ node enter, and you will see action1. The Outline view may be hidden or on the l
 <title>Outline View</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/OutlineView.png"/>
+            <imagedata fileref="images/AddBusinessProcess/OutlineView.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -297,7 +297,7 @@ node enter, and you will see action1. The Outline view may be hidden or on the l
 <title>Action Handler</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ActionHandler.png"/>
+            <imagedata fileref="images/AddBusinessProcess/ActionHandler.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -402,7 +402,7 @@ click &quot;Done&quot;. Please enter the case exactly as indicated here:</para>
 <title>Order Edit Page</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/OrderEditPage.png"/>
+            <imagedata fileref="images/AddBusinessProcess/OrderEditPage.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -411,7 +411,7 @@ click &quot;Done&quot;. Please enter the case exactly as indicated here:</para>
 <title>Order Details</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/OrderDetails.png"/>
+            <imagedata fileref="images/AddBusinessProcess/OrderDetails.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -421,7 +421,7 @@ click &quot;Done&quot;. Please enter the case exactly as indicated here:</para>
 <title>Console View</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ConsoleView.png"/>
+            <imagedata fileref="images/AddBusinessProcess/ConsoleView.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -431,7 +431,7 @@ enter the case exactly as indicated here:</para>
 <title>Changing Status Field</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ChangingStatusField.png"/>
+            <imagedata fileref="images/AddBusinessProcess/AddBusinessProcess/ChangingStatusField.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -440,7 +440,7 @@ enter the case exactly as indicated here:</para>
 <title>Invoking Process Order</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/InvokingProcessOrder.png"/>
+            <imagedata fileref="images/AddBusinessProcess/InvokingProcessOrder.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -450,7 +450,7 @@ enter the case exactly as indicated here:</para>
 <title>Console Panel</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ConsolePanel.png"/>
+            <imagedata fileref="images/AddBusinessProcess/ConsolePanel.png"/>
         </imageobject>
 </mediaobject>
 </figure>

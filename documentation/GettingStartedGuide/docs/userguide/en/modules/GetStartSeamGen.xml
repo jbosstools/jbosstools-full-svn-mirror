@@ -26,7 +26,7 @@
       <title>Create a Seam project</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/SeamNewProj01.png"/>
+          <imagedata fileref="images/WriteYourFirst/SeamNewProj01.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -37,7 +37,7 @@
       <title>Select toolings for the project</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/SeamNewProj02.png"/>
+          <imagedata fileref="images/WriteYourFirst/SeamNewProj02.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -48,7 +48,7 @@
       <title>Select directory names for web pages and Java files</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/SeamNewProj03.png"/>
+          <imagedata fileref="images/WriteYourFirst/SeamNewProj03.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -63,7 +63,7 @@
       <title>Select provider for JPA JARs</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/SeamNewProj04.png"/>
+          <imagedata fileref="images/WriteYourFirst/SeamNewProj04.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -76,7 +76,7 @@
       <title>Define JSF Implementation</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/SeamNewProj044.png"/>
+          <imagedata fileref="images/WriteYourFirst/SeamNewProj044.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -89,7 +89,7 @@
       <title>Enter Java packages for generated code</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/SeamNewProj045.png"/>
+          <imagedata fileref="images/WriteYourFirst/SeamNewProj045.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -107,7 +107,7 @@
       <title>The generated application in action</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/startedapplication.png"/>
+          <imagedata fileref="images/WriteYourFirst/startedapplication.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -118,7 +118,7 @@
       <title>Making changes in the visual editor</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/SeamJsfEditor.png"/>
+          <imagedata fileref="images/WriteYourFirst/SeamJsfEditor.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -129,7 +129,7 @@
       <title>The front page is changed</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/xxxx.png"/>
+          <imagedata fileref="images/WriteYourFirst/xxxx.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -149,7 +149,7 @@
       <title>New form for the application</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/newseamproj22.png"/>
+          <imagedata fileref="images/WriteYourFirst/newseamproj22.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -201,7 +201,7 @@
       <title>Generated form</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/newseamproj23.png"/>
+          <imagedata fileref="images/WriteYourFirst/newseamproj23.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -256,7 +256,7 @@ public class SimpleAction {
       <title>The input validation in action</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/xxxx.png"/>
+          <imagedata fileref="images/WriteYourFirst/xxxx.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -279,7 +279,7 @@ public String getValue()
       <title>More input validation</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/xxxx.png"/>
+          <imagedata fileref="images/WriteYourFirst/xxxx.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -328,7 +328,7 @@ Capitalize the input?
       <title>Add UI components and business logic</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/xxxx.png"/>
+          <imagedata fileref="images/WriteYourFirst/xxxx.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -369,7 +369,7 @@ Capitalize the input?
       <title>Access control for action methods</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/xxxx.png"/>
+          <imagedata fileref="images/WriteYourFirst/xxxx.png"/>
         </imageobject>
       </mediaobject>
     </figure>

@@ -121,7 +121,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     <title>Red Hat Developer Studio Installation Wizard</title>
     <mediaobject> 
      <imageobject>
-      <imagedata fileref="images/install.png"/>
+      <imagedata fileref="images/GetStartRHDS/install.png"/>
      </imageobject>
     </mediaobject>
    </figure>
@@ -135,7 +135,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
       <title>Select Java VM</title>
       <mediaobject> 
        <imageobject>
-        <imagedata fileref="images/install3.png"/>
+        <imagedata fileref="images/GetStartRHDS/install3.png"/>
        </imageobject>
       </mediaobject>
      </figure>
@@ -157,7 +157,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
       <figure>
        <title>JBoss Enterprise Application Platform installing</title>
       <imageobject>
-        <imagedata fileref="images/install2.png"/>
+        <imagedata fileref="images/GetStartRHDS/install2.png"/>
        </imageobject>
       </figure>
    <para></para>
@@ -176,7 +176,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <figure>
     <title>Summary information</title>
     <imageobject>
-     <imagedata fileref="images/install4.png"/>
+     <imagedata fileref="images/GetStartRHDS/install4.png"/>
     </imageobject>
    </figure>
 
@@ -189,7 +189,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <figure>
    <title>Welcome to Red Hat Developer Studio</title>
    <imageobject>
-    <imagedata fileref="images/welcome1.png"/>
+    <imagedata fileref="images/GetStartRHDS/welcome1.png"/>
    </imageobject>
   </figure>
 
@@ -201,7 +201,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <figure>
    <title>Getting Started Documentation</title>
    <imageobject>
-    <imagedata fileref="images/welcome2.png"/>
+    <imagedata fileref="images/GetStartRHDS/welcome2.png"/>
    </imageobject>
   </figure>
   
@@ -212,7 +212,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <figure>
    <title>Create New...</title>
    <imageobject>
-    <imagedata fileref="images/welcome3.png"/>
+    <imagedata fileref="images/GetStartRHDS/welcome3.png"/>
    </imageobject>
   </figure>
   
@@ -223,7 +223,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <figure>
    <title>Perspectives</title>
    <imageobject>
-    <imagedata fileref="images/welcome4.png"/>
+    <imagedata fileref="images/GetStartRHDS/welcome4.png"/>
    </imageobject>
   </figure>
   
@@ -234,7 +234,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <figure>
    <title>Web Resources</title>
    <imageobject>
-    <imagedata fileref="images/welcome5.png"/>
+    <imagedata fileref="images/GetStartRHDS/welcome5.png"/>
    </imageobject>
   </figure>
   

@@ -24,7 +24,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>Create New JSF Project</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad1.png"/>
+            <imagedata fileref="images/RADdevelopment/newrad1.png"/>
         </imageobject>
 </mediaobject>
 </figure></para></listitem>
@@ -37,7 +37,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>New JSF Project</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newrad2.png"/>
+            <imagedata fileref="images/RADdevelopment/newrad2.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -58,7 +58,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>Create New View</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad3.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad3.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -74,7 +74,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>New Views</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad4.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad4.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -90,7 +90,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>Create connection</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad5.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad5.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -102,7 +102,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>Created connection</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad6.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad6.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -130,7 +130,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>messages.properties file</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad62.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad62.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -154,7 +154,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 <title>Properties are added</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad63.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad63.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -184,7 +184,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 <title>Generate Getters and Setters</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad64.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad64.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -374,7 +374,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Insert h:form</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad7.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad7.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -384,7 +384,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Define id of form</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad8.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad8.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -396,7 +396,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Created form</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad9.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad9.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -411,7 +411,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Code assist</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad10.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad10.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -427,7 +427,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Choose Value</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad11.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad11.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -438,7 +438,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Selecting Value</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad12.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad12.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -449,7 +449,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Created outputText component</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad13.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad13.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -475,7 +475,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Add &quot;required&quot; attribute</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad14.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad14.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -548,7 +548,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Code Assist for &lt;f:param&gt;</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad15.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad15.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -561,7 +561,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>success.jsp in Preview mode</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/newrad16.png"/>
+            <imagedata  fileref="images/RADdevelopment/newrad16.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -600,7 +600,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>You are asked to enter a number between 0 and 100</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/guessnumber.png"/>
+            <imagedata  fileref="images/RADdevelopment/guessnumber.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -608,7 +608,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Your input is validated and an error message is displayed if invalid input was entered</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/guessnumber2.png"/>
+            <imagedata  fileref="images/RADdevelopment/guessnumber2.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -617,7 +617,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>After you enter a guess, the application tells you whether a smaller or a larger number should be tried</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/guessnumber3.png"/>
+            <imagedata  fileref="images/RADdevelopment/guessnumber3.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -626,7 +626,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Your guess is correct</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/guessnumber4.png"/>
+            <imagedata  fileref="images/RADdevelopment/guessnumber4.png"/>
         </imageobject>
 </mediaobject>
 </figure>

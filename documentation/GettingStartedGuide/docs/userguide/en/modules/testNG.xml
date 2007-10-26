@@ -48,7 +48,7 @@
             <title>Seam Web Project creation</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG1.png"/>
+                    <imagedata fileref="images/testNG/testNG1.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -61,7 +61,7 @@
             <title>New Seam Project Wizard</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG2.png"/>
+                    <imagedata fileref="images/testNG/testNG2.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -74,7 +74,7 @@
             <title>New Seam Project Facets</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG29.png"/>
+                    <imagedata fileref="images/testNG/testNG29.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -86,7 +86,7 @@
             <title>New Seam Project Facets</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG30.png"/>
+                    <imagedata fileref="images/testNG/testNG30.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -100,7 +100,7 @@
             <title>Adding JSF capabilities</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG3.png"/>
+                    <imagedata fileref="images/testNG/testNG3.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -113,7 +113,7 @@
             <title>Select deployment type</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG4.png"/>
+                    <imagedata fileref="images/testNG/testNG4.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -126,7 +126,7 @@
             <title>Seam-test project</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG5.png"/>
+                    <imagedata fileref="images/testNG/testNG5.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -139,7 +139,7 @@
             <title>Seam Action creation</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG6.png"/>
+                    <imagedata fileref="images/testNG/testNG6.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -152,7 +152,7 @@
             <title>New Seam Action wizard</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG7.png"/>
+                    <imagedata fileref="images/testNG/testNG7.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -163,7 +163,7 @@
             <title>Created Action</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG8.png"/>
+                    <imagedata fileref="images/testNG/testNG8.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -172,7 +172,7 @@
             <title>Java Classes</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG9.png"/>
+                    <imagedata fileref="images/testNG/testNG9.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -185,7 +185,7 @@
             <title>Run TestNG</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG10.png"/>
+                    <imagedata fileref="images/testNG/testNG10.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -197,7 +197,7 @@
             <title>Test is finished</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG10a.png"/>
+                    <imagedata fileref="images/testNG/testNG10a.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -210,7 +210,7 @@
             <title>Opening TestNG Results in Web Browser</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG11.png"/>
+                    <imagedata fileref="images/testNG/testNG11.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -219,7 +219,7 @@
             <title>TestNG Results</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG12.png"/>
+                    <imagedata fileref="images/testNG/testNG12.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -228,7 +228,7 @@
             <title>TestNG Information</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG13.png"/>
+                    <imagedata fileref="images/testNG/testNG13.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -237,7 +237,7 @@
             <title>ActionLocal Test Details</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/testNG14.png"/>
+                    <imagedata fileref="images/testNG/testNG14.png"/>
                 </imageobject>
             </mediaobject>
         </figure>

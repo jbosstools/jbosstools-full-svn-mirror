@@ -27,7 +27,7 @@
 <title>Starting from Icon</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/startingfromicon.png"/>
+            <imagedata fileref="images/ManageJBossAS/startingfromicon.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -36,7 +36,7 @@
 <title>Starting from JBoss Server View</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/startingfromserversview.png"/>
+            <imagedata fileref="images/ManageJBossAS/startingfromserversview.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -47,7 +47,7 @@
 <title>Console Output</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/consoleoutput.png"/>
+            <imagedata fileref="images/ManageJBossAS/consoleoutput.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -56,7 +56,7 @@
 <title>Server Is Started</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/serverstarted.png"/>
+            <imagedata fileref="images/ManageJBossAS/serverstarted.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -65,7 +65,7 @@
 <title>Event Log</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/eventlog.png"/>
+            <imagedata fileref="images/ManageJBossAS/eventlog.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -78,7 +78,7 @@
 <title>Stopping Server</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/stoppingserver2.png"/>
+            <imagedata fileref="images/ManageJBossAS/stoppingserver2.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -92,7 +92,7 @@
 <title>Server Preferences</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/serverpreferences.png"/>
+            <imagedata fileref="images/ManageJBossAS/serverpreferences.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -101,7 +101,7 @@
 <title>Server Overview</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/serveroverview.png"/>
+            <imagedata fileref="images/ManageJBossAS/serveroverview.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -144,7 +144,7 @@
 <title>Selecting Server Type</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/servertype.png"/>
+            <imagedata fileref="images/ManageJBossAS/servertype.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -158,7 +158,7 @@
 <title>Installed Runtimes</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/jbossruntime2.png"/>
+            <imagedata fileref="images/ManageJBossAS/jbossruntime2.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -172,7 +172,7 @@
 <title>Defining JBoss Runtime</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/jbossruntime.png"/>
+            <imagedata fileref="images/ManageJBossAS/jbossruntime.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -187,7 +187,7 @@
 <title>Adding New Runtime</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/addingjbossserver.png"/>
+            <imagedata fileref="images/ManageJBossAS/addingjbossserver.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -196,7 +196,7 @@
 <title>Runtime Is Added</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/addedruntime.png"/>
+            <imagedata fileref="images/ManageJBossAS/addedruntime.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -208,7 +208,7 @@
 <title>Choosing Runtime</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/choosingruntime.png"/>
+            <imagedata fileref="images/ManageJBossAS/choosingruntime.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -219,7 +219,7 @@
 <title>Configuring Projects</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/choosingruntime23.png"/>
+            <imagedata fileref="images/ManageJBossAS/choosingruntime23.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -230,7 +230,7 @@
 <title>Configuring Projects</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/configuringprojects.png"/>
+            <imagedata fileref="images/ManageJBossAS/configuringprojects.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -239,7 +239,7 @@
 <title>New JBoss Server</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/newjbossserver.png"/>
+            <imagedata fileref="images/ManageJBossAS/newjbossserver.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -269,7 +269,7 @@
                 <title>The JBoss Servers View</title>
                 <mediaobject> 
                     <imageobject>
-                        <imagedata fileref="images/jbossserverview.png"/>
+                        <imagedata fileref="images/ManageJBossAS/jbossserverview.png"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -282,7 +282,7 @@
         <title>View Preferences</title>
         <mediaobject> 
             <imageobject>
-                <imagedata fileref="images/Enableprefer.png"/>
+                <imagedata fileref="images/ManageJBossAS/Enableprefer.png"/>
             </imageobject>
         </mediaobject>
     </figure>
@@ -294,7 +294,7 @@
         <title>View Extensions</title>
         <mediaobject> 
             <imageobject>
-                <imagedata fileref="images/JBVExtensions.png"/>
+                <imagedata fileref="images/ManageJBossAS/JBVExtensions.png"/>
             </imageobject>
         </mediaobject>
     </figure>
@@ -305,7 +305,7 @@
     <title>Modules Action</title>
     <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/JBVModulesactions.png"/>
+            <imagedata fileref="images/ManageJBossAS/JBVModulesactions.png"/>
         </imageobject>
     </mediaobject>
     </figure>
@@ -317,7 +317,7 @@
         <title>Event Log Actions</title>
         <mediaobject> 
             <imageobject>
-                <imagedata fileref="images/JBVEventlogactions.png"/>
+                <imagedata fileref="images/ManageJBossAS/JBVEventlogactions.png"/>
             </imageobject>
         </mediaobject>
     </figure>
@@ -325,7 +325,7 @@
         <title>Stopping the Server</title>
         <mediaobject> 
             <imageobject>
-                <imagedata fileref="images/JBVServerisstopped.png"/>
+                <imagedata fileref="images/ManageJBossAS/JBVServerisstopped.png"/>
             </imageobject>
         </mediaobject>
     </figure>
@@ -336,7 +336,7 @@
         <title>XML Configuration and Properties View</title>
         <mediaobject> 
             <imageobject>
-                <imagedata fileref="images/JBVxmlconfigandprop.png"/>
+                <imagedata fileref="images/ManageJBossAS/JBVxmlconfigandprop.png"/>
             </imageobject>
         </mediaobject>
     </figure>
@@ -346,7 +346,7 @@
               <title>Adding New Category</title>
               <mediaobject> 
                   <imageobject>
-                      <imagedata fileref="images/JBSVaddingcategory.png"/>
+                      <imagedata fileref="images/ManageJBossAS/JBSVaddingcategory.png"/>
                   </imageobject>
               </mediaobject>
           </figure>
@@ -355,7 +355,7 @@
               <title>Adding New XPath</title>
               <mediaobject> 
                   <imageobject>
-                      <imagedata fileref="images/JBSVAddxpath.png"/>
+                      <imagedata fileref="images/ManageJBossAS/JBSVAddxpath.png"/>
                   </imageobject>
               </mediaobject>
           </figure>
@@ -364,7 +364,7 @@
               <title>Adding New XPath</title>
               <mediaobject> 
                   <imageobject>
-                      <imagedata fileref="images/JBSVAddinganxpath.png"/>
+                      <imagedata fileref="images/ManageJBossAS/JBSVAddinganxpath.png"/>
                   </imageobject>
               </mediaobject>
           </figure>
@@ -379,7 +379,7 @@
              <title>XPath Preview</title>
               <mediaobject> 
                   <imageobject>
-                      <imagedata fileref="images/JBSVxpathpreview.png"/>
+                      <imagedata fileref="images/ManageJBossAS/JBSVxpathpreview.png"/>
                   </imageobject>
               </mediaobject>
           </figure>
@@ -403,7 +403,7 @@
                         <title>Create an Archive</title>
                         <mediaobject> 
                             <imageobject>
-                                <imagedata fileref="images/archives1.png"/>
+                                <imagedata fileref="images/ManageJBossAS/archives1.png"/>
                             </imageobject>
                         </mediaobject>
                     </figure>
@@ -417,7 +417,7 @@
                         <title>New JAR Wizard</title>
                         <mediaobject> 
                             <imageobject>
-                                <imagedata fileref="images/archives2.png"/>
+                                <imagedata fileref="images/ManageJBossAS/archives2.png"/>
                             </imageobject>
                         </mediaobject>
                     </figure>
@@ -448,7 +448,7 @@
                         <title>Context Menu on the Item</title>
                         <mediaobject> 
                             <imageobject>
-                                <imagedata fileref="images/archives3.png"/>
+                                <imagedata fileref="images/ManageJBossAS/archives3.png"/>
                             </imageobject>
                         </mediaobject>
                     </figure>
@@ -463,7 +463,7 @@
                         <title>Context menu on the item</title>
                         <mediaobject> 
                             <imageobject>
-                                <imagedata fileref="images/archives4.png"/>
+                                <imagedata fileref="images/ManageJBossAS/archives4.png"/>
                             </imageobject>
                         </mediaobject>
                     </figure>
@@ -485,7 +485,7 @@
             <title>Deploy to Sever</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/deploytoserver.png"/>
+                    <imagedata fileref="images/ManageJBossAS/deploytoserver.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
