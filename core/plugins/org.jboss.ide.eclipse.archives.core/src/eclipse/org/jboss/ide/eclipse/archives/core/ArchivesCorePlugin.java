@@ -24,7 +24,6 @@ package org.jboss.ide.eclipse.archives.core;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Plugin;
-import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding;
 import org.osgi.framework.BundleContext;
 
 /**
