@@ -72,6 +72,6 @@ public class FirstRunInfoPage20 extends AbstractFirstRunPage {
    }
    
    public boolean isDefaultPage() {
-	   return true;
+	   return false;
    }
 }

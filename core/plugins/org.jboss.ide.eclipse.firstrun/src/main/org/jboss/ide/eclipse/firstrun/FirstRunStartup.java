@@ -30,60 +30,55 @@ import org.jboss.ide.eclipse.firstrun.wizard.FirstRunWizard;
 
 public class FirstRunStartup implements IStartup {
 
-   public void earlyStartup() {
+	public void earlyStartup() {
 
-      try {
-         Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-               try {
-            	   // legacyMethod();
-                   IPreferenceStore store = FirstRunPlugin.getDefault().getPreferenceStore();
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				IPreferenceStore store = FirstRunPlugin.getDefault()
+						.getPreferenceStore();
 
-            	   String currentVersion = CorePlugin.getCurrentVersion();
-            	   String workspaceLatest = store.getString(FirstRunPlugin.FIRST_RUN_PROPERTY_LATEST_VERSION);
-            	   
-            	   // TODO: uncomment
-            	   // short circuit if already done
-            	   int compare = CorePlugin.compare(currentVersion, workspaceLatest);
-            	   if( workspaceLatest != null && compare <= 0) return; 
-            	   
-            	   if( workspaceLatest.equals("") ) {
-            		   // this isn't set... are we at least at 1.6?
-            		   boolean at16 = false;
-            	       if (store.contains(FirstRunPlugin.FIRST_RUN_PROPERTY)) {
-            	    	   at16 = store.getBoolean(FirstRunPlugin.FIRST_RUN_PROPERTY);
-            	       }
-            	       
-            	       if( at16 ) {
-            	    	   workspaceLatest = "1.6.0.GA";
-            	       } else {
-            	    	   // we're either pre-1.6, or its a new workspace
-            	    	   workspaceLatest = FirstRunPlugin.NEW_WORKSPACE;
-            	       }
-            	   }
-            	   
-            	   showWizard(workspaceLatest);
-            	   store.setValue(FirstRunPlugin.FIRST_RUN_PROPERTY_LATEST_VERSION, currentVersion);
-               } catch (Exception e) {
-                  e.printStackTrace();
-               }
-            }
-         });
-      }
-      catch (Exception e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
-      }
-   }
+				String currentVersion = CorePlugin.getCurrentVersion();
+				String workspaceLatest = store
+						.getString(FirstRunPlugin.FIRST_RUN_PROPERTY_LATEST_VERSION);
 
-   
-   private void showWizard(String workspaceLatest) {
-       FirstRunWizard wizard = new FirstRunWizard(workspaceLatest);
-       
-       // short circuit if no pages
-       if( wizard.numPages() == 0 ) return;
-       
-       WizardDialog dialog = new WizardDialog(null, wizard);
-       dialog.open();
-   }
+				// short circuit if already done
+				int compare = CorePlugin.compare(currentVersion,
+						workspaceLatest);
+				if (workspaceLatest != null && compare <= 0)
+					return;
+
+				if (workspaceLatest.equals("")) {
+					// this isn't set... are we at least at 1.6?
+					boolean at16 = false;
+					if (store.contains(FirstRunPlugin.FIRST_RUN_PROPERTY)) {
+						at16 = store
+								.getBoolean(FirstRunPlugin.FIRST_RUN_PROPERTY);
+					}
+
+					if (at16) {
+						workspaceLatest = "1.6.0.GA";
+					} else {
+						// we're either pre-1.6, or its a new workspace
+						workspaceLatest = FirstRunPlugin.NEW_WORKSPACE;
+					}
+				}
+
+				showWizard(workspaceLatest);
+				store.setValue(
+						FirstRunPlugin.FIRST_RUN_PROPERTY_LATEST_VERSION,
+						currentVersion);
+			}
+		});
+	}
+
+	private void showWizard(String workspaceLatest) {
+		FirstRunWizard wizard = new FirstRunWizard(workspaceLatest);
+
+		// short circuit if no pages
+		if (wizard.numPages() == 0)
+			return;
+
+		WizardDialog dialog = new WizardDialog(null, wizard);
+		dialog.open();
+	}
 }
