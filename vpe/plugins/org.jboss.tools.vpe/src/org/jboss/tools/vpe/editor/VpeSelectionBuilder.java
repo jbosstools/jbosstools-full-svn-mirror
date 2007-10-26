@@ -637,9 +637,9 @@ public class VpeSelectionBuilder {
 				if (len > 0) {
 					visualAnchorContainer = visualNodes.item(0); 
 					String text = visualAnchorContainer.getNodeValue();
-					if (sourceAnchorOffset <= text.length()) {
+					if (text!=null&& sourceAnchorOffset <= text.length()) {
 						visualAnchorOffset = sourceAnchorOffset;
-					} else {
+					} else if (text!=null) {
 						visualAnchorOffset = text.length();
 					}
 				}
@@ -679,9 +679,9 @@ public class VpeSelectionBuilder {
 				if (len > 0) {
 					visualFocusContainer = visualNodes.item(0); 
 					String text = visualFocusContainer.getNodeValue();
-					if (sourceFocusOffset <= text.length()) {
+					if (text!=null&&sourceFocusOffset <= text.length()) {
 						visualFocusOffset = sourceFocusOffset;
-					} else {
+					} else if(text!=null) {
 						visualFocusOffset = text.length();
 					}
 				}
