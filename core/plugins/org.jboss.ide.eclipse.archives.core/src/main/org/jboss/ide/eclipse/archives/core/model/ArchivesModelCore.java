@@ -24,8 +24,11 @@ package org.jboss.ide.eclipse.archives.core.model;
 import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
+import org.jboss.ide.eclipse.archives.core.ArchivesCorePlugin;
 import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
 
 /**
@@ -88,14 +91,20 @@ public class ArchivesModelCore {
 
 	
 	public static IPath[] findMatchingPaths(IPath root, String includes, String excludes) {
-		DirectoryScanner scanner  = 
-			DirectoryScannerFactory.createDirectoryScanner(root, includes, excludes, true);
-		String[] files = scanner.getIncludedFiles();
-		IPath[] paths = new IPath[files.length];
-		for( int i = 0; i < files.length; i++ ) {
-			paths[i] = new Path(files[i]);
+		try {
+			DirectoryScanner scanner  = 
+				DirectoryScannerFactory.createDirectoryScanner(root, includes, excludes, true);
+			String[] files = scanner.getIncludedFiles();
+			IPath[] paths = new IPath[files.length];
+			for( int i = 0; i < files.length; i++ ) {
+				paths[i] = new Path(files[i]);
+			}
+			return paths;
+		} catch( IllegalStateException ise ) {
+			IStatus status = new Status(IStatus.WARNING, ArchivesCorePlugin.PLUGIN_ID, "Error creating directory scanner", ise);
+			ArchivesCorePlugin.getDefault().getLog().log(status);
+			return new IPath[]{};
 		}
-		return paths;
 	}
 	
 }

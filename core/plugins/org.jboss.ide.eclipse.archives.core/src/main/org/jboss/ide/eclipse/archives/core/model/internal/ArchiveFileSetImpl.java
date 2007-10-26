@@ -25,7 +25,10 @@ import java.util.ArrayList;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
+import org.jboss.ide.eclipse.archives.core.ArchivesCorePlugin;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension;
@@ -71,7 +74,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	 */
 	public synchronized IPath[] findMatchingPaths () {
 		getScanner();  // ensure up to date
-		return (IPath[]) matchingPaths.toArray(new IPath[matchingPaths.size()]);
+		return matchingPaths == null ? new IPath[0] : (IPath[]) matchingPaths.toArray(new IPath[matchingPaths.size()]);
 	}
 	
 	/*
@@ -139,20 +142,24 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		if( scanner == null || rescanRequired) {
 			rescanRequired = false;
 
-			// new scanner
-			scanner = DirectoryScannerFactory.createDirectoryScanner(
-					getGlobalSourcePath(), getIncludesPattern(), getExcludesPattern(), true);
-			
-			// cache the paths
-			ArrayList paths = new ArrayList();
-			IPath sp = getGlobalSourcePath();
-			String matched[] = scanner.getIncludedFiles();
-			for (int i = 0; i < matched.length; i++) {
-				IPath path = sp.append(new Path(matched[i]));
-				paths.add(path);
+			try {
+				// new scanner
+				scanner = DirectoryScannerFactory.createDirectoryScanner(
+						getGlobalSourcePath(), getIncludesPattern(), getExcludesPattern(), true);
+				
+				// cache the paths
+				ArrayList paths = new ArrayList();
+				IPath sp = getGlobalSourcePath();
+				String matched[] = scanner.getIncludedFiles();
+				for (int i = 0; i < matched.length; i++) {
+					IPath path = sp.append(new Path(matched[i]));
+					paths.add(path);
+				}
+				matchingPaths = paths;
+			} catch( IllegalStateException ise ) {
+				IStatus status = new Status(IStatus.WARNING, ArchivesCorePlugin.PLUGIN_ID, "Could not create directory scanner", ise);
+				ArchivesCorePlugin.getDefault().getLog().log(status);
 			}
-
-			matchingPaths = paths;
 		}
 		return scanner;
 	}
