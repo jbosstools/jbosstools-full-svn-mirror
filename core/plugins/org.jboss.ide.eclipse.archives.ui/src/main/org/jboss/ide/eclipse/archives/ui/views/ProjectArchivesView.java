@@ -311,10 +311,26 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 			public void run () {
 				for( int i = 0; i < topChanges.length; i++ ) {
 					if( topChanges.length == 1 && topChanges[0] instanceof IArchiveModelNode) {
-						packageViewer.setInput(ArchivesModel.instance().getRoot(project.getLocation()));
+						// we have a changed IArchiveModelNode. Something's different
+						IArchiveModelNode inputModel = (IArchiveModelNode) packageViewer.getInput();
+						IArchiveModelNode newModel = (IArchiveModelNode)topChanges[0];
+						if( inputModel != null ) {
+							if( inputModel.getProjectPath().equals(newModel.getProjectPath()) && inputModel != newModel ) {
+								// they have the same path but are different objects. 
+								// Model was probably reloaded from disk and could be completely different
+								packageViewer.setInput(newModel);	
+								packageViewer.expandAll();
+								return;
+							} else {
+								packageViewer.refresh();
+								return;
+							}
+						} 
 						book.showPage(viewerComposite);
-					} else 
+					} else {
+						// just refresh whatever is the top changed element (archive probably)
 						packageViewer.refresh(topChanges[i]);
+					}
 				}
 			}
 		});
