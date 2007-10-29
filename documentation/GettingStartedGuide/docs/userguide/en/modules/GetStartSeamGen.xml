@@ -83,16 +83,28 @@
     
     <para>We will also use a default Hibernate Dialect - <emphasis>org.hibernate.dialect.HSQLDialect</emphasis> and deploy as a <emphasis>war</emphasis> archive.</para>
         
-    <para>The project setup wizard also asks you to configure how <property>Seam</property> generates code for the project. The <property>Seam</property> Home Folder should point to a valid <property>Seam</property> distribution. By default, it is set to the <property>Seam</property> distribution bundled in your Red Hat Developer Studio tool. For the deployment format, choose WAR deployment if you want to use POJOs for UI event handling and business logic; choose EAR deployment if you want to EJB3 beans for added features. In most web applications, the WAR deployment option would suffice. You should also enter Java packages for the entity beans (for database mapping) and session beans (for action handlers). All generated code will be placed in those packages. </para>
+    <para>The project setup wizard also asks you to configure how <property>Seam</property> generates code for the project. The <property>Seam</property> Home Folder should point to a valid <property>Seam</property> distribution. By default, it is set to the <property>Seam</property> distribution bundled in your Red Hat Developer Studio tool. If you need another one choose it from the drop down list box:</para>
     
     <figure>
-      <title>Enter Java packages for generated code</title>
+      <title>Enter Java Packages for Generated Code</title>
       <mediaobject> 
         <imageobject>
           <imagedata fileref="images/WriteYourFirst/SeamNewProj045.png"/>
         </imageobject>
       </mediaobject>
     </figure>
+<para>If in this list there is no Seam runtime you want to use add it through <emphasis>Window &gt; Preferences &gt; JBoss Tools &gt; Web &gt; Seam</emphasis> or just click <emphasis>Add</emphasis> button near the Seam Runtime list:</para>
+<figure>
+      <title>Add New Seam Runtime</title>
+      <mediaobject> 
+        <imageobject>
+          <imagedata fileref="images/WriteYourFirst/SeamNewProj050.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+<para>For the deployment format, choose WAR deployment if you want to use POJOs for UI event handling and business logic; choose EAR deployment if you want to EJB3 beans for added features. In most web applications, the WAR deployment option would suffice. You should also enter Java packages for the entity beans (for database mapping) and session beans (for action handlers). All generated code will be placed in those packages. </para>
+
     <para>Click on Finish to generate a project. The generated project contains all the necessary library JARs, XML configuration files, the ANT build script, as well as simple XHTML web pages and Java classes for the skeleton web application.</para>
     
     
