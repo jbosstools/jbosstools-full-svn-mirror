@@ -54,7 +54,8 @@ public class WorkspaceChangeListener implements IResourceChangeListener {
 		try {
 			delta.accept(new IResourceDeltaVisitor() {
 				public boolean visit(IResourceDelta delta) throws CoreException {
-					if( delta.getResource() != null && delta.getResource().getLocation().lastSegment().equals(ArchivesModel.PROJECT_PACKAGES_FILE)) {
+					if( delta.getResource() != null && delta.getResource().getLocation() != null && 
+							delta.getResource().getLocation().lastSegment().equals(ArchivesModel.PROJECT_PACKAGES_FILE)) {
 						projects.add(delta.getResource().getProject());
 					}
 					return true;
