@@ -8,6 +8,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.QualifiedName;
+import org.jboss.ide.eclipse.archives.core.ArchivesCorePlugin;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
@@ -29,21 +31,31 @@ public class ModelChangeListenerWithRefresh extends ModelChangeListener {
 	protected void postChange(IArchiveNode node) {
 		IArchive pack = node.getRootArchive();
 		if( pack != null ) {
-			if( pack.isDestinationInWorkspace() ) {
-				// refresh the root package node
-				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-				IResource res = root.getContainerForLocation(pack.getGlobalDestinationPath());
-				if( res != null ) {
-					try {
-						res.getParent().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
-					} catch( CoreException ce ) {
-					}
-				}
-			}
 			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 			IContainer proj = root.getContainerForLocation(pack.getProjectPath());
 			try {
-				proj.getFile(new Path(ArchivesModel.PROJECT_PACKAGES_FILE)).refreshLocal(IResource.DEPTH_ONE, new NullProgressMonitor());
+				proj.setSessionProperty(new QualifiedName(ArchivesCorePlugin.PLUGIN_ID, "localname"), "inUse");
+				if( pack.isDestinationInWorkspace() ) {
+					// refresh the root package node
+					IResource res = root.getContainerForLocation(pack.getGlobalDestinationPath());
+					if( res != null ) {
+						try {
+							// refresh infinitely in case the output is exploded
+							res.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+						} catch( CoreException ce ) {
+						}
+					}
+				}
+				
+				try {
+					proj.getFile(new Path(ArchivesModel.PROJECT_PACKAGES_FILE)).refreshLocal(IResource.DEPTH_ONE, new NullProgressMonitor());
+				} catch( CoreException ce ) {
+				}
+			} catch( CoreException ce ) {
+			}
+			
+			try {
+				proj.setSessionProperty(new QualifiedName(ArchivesCorePlugin.PLUGIN_ID, "localname"), null);
 			} catch( CoreException ce ) {
 			}
 			
