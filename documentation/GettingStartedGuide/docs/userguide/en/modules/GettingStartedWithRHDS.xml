@@ -155,7 +155,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 <para></para>
    
       <figure>
-       <title>JBoss Enterprise Application Platform installing</title>
+    <title>JBoss Enterprise Application Platform Installing</title>
       <imageobject>
         <imagedata fileref="images/GetStartRHDS/install2.png"/>
        </imageobject>
@@ -174,7 +174,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
       <para></para>
    
    <figure>
-    <title>Summary information</title>
+    <title>Summary Information</title>
     <imageobject>
      <imagedata fileref="images/GetStartRHDS/install4.png"/>
     </imageobject>

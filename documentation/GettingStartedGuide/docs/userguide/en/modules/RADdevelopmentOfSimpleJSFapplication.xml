@@ -19,7 +19,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>Setting up the project</title>
 <para>We will create a JSF 1.2 project using an integrated RHDS&apos;s new project wizard and predefined templates.</para>
 <itemizedlist>
-<listitem><para>In Web Projects View (if it is not open select <emphasis>Window &gt; Show View &gt; Others &gt; Red Hat Developer Studio &gt; Web Projects View</emphasis>) click &quot;Create New JSF Project&quot; button.
+    <listitem><para>In Web Projects View (if it is not open select <emphasis><property>Window &gt; Show View &gt; Others &gt; JBoss Tools Web &gt; Web Projects View</property></emphasis>) click <emphasis><property>Create New JSF Project</property></emphasis> button.
 <figure>
 <title>Create New JSF Project</title>
 <mediaobject> 
@@ -29,8 +29,8 @@ JSF application and then run the application from inside Red Hat Developer Studi
 </mediaobject>
 </figure></para></listitem>
 
-<listitem><para>Put &quot;GuessNumber&quot; as a project name, in &quot;JSF Environment&quot; drop down list choose JSF 1.2.</para></listitem>
-<listitem><para>Leave everything else as it is and click Finish</para></listitem>
+<listitem><para>Put <property>GuessNumber</property> as a project name, in JSF Environment drop down list choose <property>JSF 1.2.</property></para></listitem>
+<listitem><para>Leave everything else as it is and click <emphasis><property>Finish</property></emphasis></para></listitem>
 </itemizedlist>
 <para>Our project will appear in Project Explorer and Web Projects Views. As you can see Red Had Developer Studio has created for us the whole skeleton for the project with all needed libraries, faces-config.xml and web.xml files.</para>
 <figure>
@@ -50,9 +50,9 @@ JSF application and then run the application from inside Red Hat Developer Studi
 
 <para>On the first page inputnumber.jsp you will enter a number.</para>
 <itemizedlist>
-<listitem><para>Open faces-config.xml file</para></listitem>
+    <listitem><para>Open <emphasis><property>faces-config.xml</property></emphasis> file</para></listitem>
 <listitem><para>Right click anywhere on the diagram mode</para></listitem>
-<listitem><para>From the context menu select <emphasis>New View</emphasis></para></listitem>
+<listitem><para>From the context menu select <emphasis><property>New View</property></emphasis></para></listitem>
 </itemizedlist>
 <figure>
 <title>Create New View</title>
@@ -64,10 +64,10 @@ JSF application and then run the application from inside Red Hat Developer Studi
 </figure>
 <itemizedlist>
 
-<listitem><para>Type <emphasis>pages/inputname</emphasis> as the value for &quot;From-view-id&quot;</para></listitem>
-<listitem><para>Leave everything else as is and click Finish</para></listitem>
-<listitem><para>In the same way create another jsf view. Type &quot;pages/success&quot; as the value for &quot;From-view-id&quot;</para></listitem>
-<listitem><para>Select <emphasis>File &gt; Save</emphasis></para></listitem>
+    <listitem><para>Type <emphasis><property>pages/inputnumber</property></emphasis> as the value for <emphasis><property>From-view-id</property></emphasis></para></listitem>
+    <listitem><para>Leave everything else as is and click <emphasis><property>Finish</property></emphasis></para></listitem>
+    <listitem><para>In the same way create another jsf view. Type <emphasis><property>pages/success</property></emphasis> as the value for <emphasis><property>From-view-id</property></emphasis></para></listitem>
+<listitem><para>Select <emphasis><property>File &gt; Save</property></emphasis></para></listitem>
 </itemizedlist>
 <para>On the diagram you will see two created views.</para>
 <figure>
@@ -85,9 +85,9 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>Creating Transition between two views</title>
 <para>We should now create connection between jsp pages.</para>
 <itemizedlist>
-<listitem><para>In the diagram, select the connection icon third from the top along the upper left side of the diagram to get an arrow cursor with a two-pronged plug at the arrow&apos;s bottom
+    <listitem><para>In the diagram, select the <emphasis><property>Create New Connection</property></emphasis> icon third from the top along the upper left side of the diagram to get an arrow cursor with a two-pronged plug at the arrow&apos;s bottom
 <figure>
-<title>Create connection</title>
+<title>Create Connection</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/RADdevelopment/newrad5.png"/>
@@ -95,11 +95,11 @@ JSF application and then run the application from inside Red Hat Developer Studi
 </mediaobject>
 </figure>
 </para></listitem>
-<listitem><para>Click on the <emphasis>pages/inputname</emphasis> page icon and then click on the <emphasis>pages/greeting</emphasis> page icon</para></listitem>
+<listitem><para>Click on the <emphasis><property>pages/inputnumber</property></emphasis> page icon and then click on the <emphasis><property>pages/success</property></emphasis> page icon</para></listitem>
 </itemizedlist>
 <para>A transition should appear between the two icons of views.</para>
 <figure>
-<title>Created connection</title>
+<title>Created Connection</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/RADdevelopment/newrad6.png"/>
@@ -107,7 +107,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 </mediaobject>
 </figure>
 <itemizedlist>
-<listitem><para>Select <emphasis>File/Save</emphasis> from the menu bar</para></listitem>
+<listitem><para>Select <emphasis><property>File &gt; Save</property></emphasis> from the menu bar</para></listitem>
 </itemizedlist>
 </section>
 <section id="CreatingResourceFile">
@@ -115,19 +115,19 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <title>Creating Resource File</title>
 <para>Red Hat Developer Studio allows to  create quickly a resource file. Using this feature you can collect text messages in one central place. A resource file is just a file with a <emphasis>.properties</emphasis> extension. The messages stored in resource file can be displayed to you on a Web page during application execution. </para>
 <para>With resource file first, you don&apos;t hard code anything into the JSP pages. And second, it makes it easier to translate your application to other languages. All you have to do is to translate all your messages to the other language and save them in a new properties file with a name that ends with the appropriate ISO-639 language code.</para>
-<para>It is a good idea to keep your resources inside the <emphasis>JavaSource</emphasis> folder, where you keep your .java files. Every time you build the project, all <emphasis>.properties</emphasis> files will then be copied to the <emphasis>classes</emphasis> folder by default.</para>
+<para>It is a good idea to keep your resources inside the <emphasis><property>JavaSource</property></emphasis> folder, where you keep your .java files. Every time you build the project, all <emphasis>.properties</emphasis> files will then be copied to the <emphasis>classes</emphasis> folder by default.</para>
 <itemizedlist>
-<listitem><para>Right click <emphasis>JavaSource</emphasis> folder and select <emphasis>New &gt; Folder</emphasis></para></listitem>
-<listitem><para>Type &quot;game&quot; for Folder name and click <emphasis><property>Finish</property></emphasis></para></listitem>
+<listitem><para>Right click <emphasis><property>JavaSource</property></emphasis> folder and select <emphasis><property>New &gt; Folder</property></emphasis></para></listitem>
+    <listitem><para>Type <emphasis><property>game</property></emphasis> for Folder name and click <emphasis><property>Finish</property></emphasis></para></listitem>
 </itemizedlist>
 <para>We will store in this folder our resource file and java bean.</para>
 <itemizedlist>
-<listitem><para>Right click game folder and select <emphasis>New &gt; Properties File</emphasis></para></listitem>
-<listitem><para>Type <emphasis>messages</emphasis> as the value for <emphasis>name</emphasis> attribute and click <emphasis><property>Finish</property></emphasis></para></listitem>
+    <listitem><para>Right click  on <emphasis><property>game folder</property></emphasis> and select <emphasis><property>New &gt; Properties File</property></emphasis></para></listitem>
+<listitem><para>Type <emphasis><property>messages</property></emphasis> as the value for &quot;name&quot; attribute and click <emphasis><property>Finish</property></emphasis></para></listitem>
 </itemizedlist>
-<para>Red Hat Developer Studio will automatically open messages.properties file for editing.</para>
+<para>Red Hat Developer Studio will automatically open <property>messages.properties</property> file for editing.</para>
 <figure>
-<title>messages.properties file</title>
+<title>Messages.properties File</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/RADdevelopment/newrad62.png"/>
@@ -135,7 +135,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 </mediaobject>
 </figure>
 <itemizedlist>
-<listitem><para>Click <emphasis>Add</emphasis> button</para></listitem>
+<listitem><para>Click <emphasis><property>Add</property></emphasis> button</para></listitem>
 <listitem><para>Type <emphasis role="italic"><property>how_to_play</property></emphasis> for &quot;name&quot; and <emphasis role="italic"><property>Please pick a number between 0 and 100.</property></emphasis> for value</para></listitem>
 <listitem><para>Click <emphasis><property>Finish</property></emphasis></para></listitem>
 <listitem><para>In such a way add the next properties:</para></listitem>
@@ -147,11 +147,11 @@ tryagain_smaller=Oops..incorrect guess. Please try a smaller number.
 tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 ]]></programlisting>
 <itemizedlist>
-<listitem><para>Click <emphasis>File &gt; Save</emphasis> from the menu bar</para></listitem>
+<listitem><para>Click <emphasis><property>File &gt; Save</property></emphasis> from the menu bar</para></listitem>
 </itemizedlist>
 <para>Your .properties file should now look like follows:</para>
 <figure>
-<title>Properties are added</title>
+<title>Properties are Added</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/RADdevelopment/newrad63.png"/>
@@ -165,9 +165,9 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 <title>Creating Java Bean</title>
 <para>Now we create a Java bean that will hold business logic of our application.</para>
 <itemizedlist>
-<listitem><para>Right click <emphasis>game</emphasis> folder</para></listitem>
-<listitem><para>Select <emphasis>New &gt; Class</emphasis></para></listitem>
-<listitem><para>Type <emphasis>NumberBean</emphasis> for bean name</para></listitem>
+<listitem><para>Right click <emphasis><property>game folder</property></emphasis></para></listitem>
+<listitem><para>Select <emphasis><property>New &gt; Class</property></emphasis></para></listitem>
+<listitem><para>Type <emphasis><property>NumberBean</property></emphasis> for bean name</para></listitem>
 </itemizedlist>
 <para>A java bean is created.</para>
 <itemizedlist>
@@ -177,9 +177,9 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 ]]></programlisting>
 <para>Red Hat Studio allows to quickly generate getters and setters for java bean.</para>
 <itemizedlist>
-<listitem><para>Right click NumberBean.java in Package Explorer</para></listitem>
-<listitem><para>Select <emphasis>Source &gt; Generate Getters and Setters...</emphasis></para></listitem>
-<listitem><para>Check <emphasis>userNumber</emphasis> box and click <emphasis><property>OK</property></emphasis>
+    <listitem><para>Right click <emphasis><property>NumberBean.java</property></emphasis> in Package Explorer</para></listitem>
+<listitem><para>Select <emphasis><property>Source &gt; Generate Getters and Setters...</property></emphasis></para></listitem>
+<listitem><para>Check <emphasis><property>userNumber</property></emphasis> box and click <emphasis><property>OK</property></emphasis>
 <figure>
 <title>Generate Getters and Setters</title>
 <mediaobject> 
@@ -353,15 +353,15 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
 <section id="EditingTheJSPViewFiles2">
 <?dbhtml filename="EditingTheJSPViewFiles2.html"?>
 <title>Editing the JSP View Files</title>
-<para>Now we will finish editing the JSP files for our two &quot;views&quot; using Red Hat&apos;s Visual Page
+<para>Now we will finish editing the JSP files for our two &quot;views&quot; using  Visual Page
 Editor.</para>
 <section id="EditingInputjsp">
 <?dbhtml filename="EditingInputjsp.html"?>
 <title>Editing inputname.jsp page</title>
 <para>On this page we will have an output text component displaying a message, a text field for user&apos;s number entering and a button for input submission.</para>
 <itemizedlist>
-<listitem><para>Open inputnumber.jsp by double-clicking on the <emphasis>/pages/inputnamber.
-jsp</emphasis> icon</para></listitem>
+<listitem><para>Open inputnumber.jsp by double-clicking on the <emphasis><property>/pages/inputnamber.
+jsp</property></emphasis> icon</para></listitem>
 </itemizedlist>
 <para>The Visual Page Editor will open in a screen split between source code along the top and
 a WYSIWIG view along the bottom. You can see that some JSF code will be already generated as we choose a template when creating the page.</para>
@@ -379,9 +379,9 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </mediaobject>
 </figure>
 </para></listitem>
-<listitem><para>In the dialog Insert Tag select <emphasis>id</emphasis> and click on this line below the value header. A blinking cursor will appear in a input text field inviting to enter a value of id
+<listitem><para>In the dialog Insert Tag select <emphasis><property>id</property></emphasis> and click on this line below the value header. A blinking cursor will appear in a input text field inviting to enter a value of id
 <figure>
-<title>Define id of form</title>
+<title>Define Id of Form</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/RADdevelopment/newrad8.png"/>
@@ -389,11 +389,11 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </mediaobject>
 </figure>
 </para></listitem>
-<listitem><para>Type &quot;inputNumbers&quot; and click <emphasis><property>Finish</property></emphasis></para></listitem>
+<listitem><para>Type <emphasis><property>inputNumbers</property></emphasis> and click <emphasis><property>Finish</property></emphasis></para></listitem>
 </itemizedlist>
 <para>In source view you can see the declaration of a form.</para>
 <figure>
-<title>Created form</title>
+<title>Created Form</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/RADdevelopment/newrad9.png"/>
@@ -408,7 +408,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 ]]></programlisting>
 <para>As always Red Hat Studio provides code assist:</para>
 <figure>
-<title>Code assist</title>
+<title>Code Assist</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/RADdevelopment/newrad10.png"/>
@@ -417,10 +417,10 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </figure>
 <itemizedlist>
 <listitem><para>Switch to Visual tab, so it could be possible to work with the editor completely in its WYSIWYG mode</para></listitem>
-<listitem><para>Click on <emphasis>outputText</emphasis>, drag the cursor over to the editor, and drop it inside the blue box in the editor</para></listitem>
+<listitem><para>Click on <emphasis><property>outputText</property></emphasis>, drag the cursor over to the editor, and drop it inside the blue box in the editor</para></listitem>
 
-<listitem><para>Select <emphasis>value</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
-<listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
+<listitem><para>Select <emphasis><property>value</property></emphasis> and click on this line below &quot;value&quot; header</para></listitem>
+<listitem><para>Click <property>...</property> button next to the value field</para></listitem>
 </itemizedlist>
 <para>RHDS will nicely propose you to choose within available values:</para>
 <figure>
@@ -432,8 +432,8 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </mediaobject>
 </figure>
 <itemizedlist>
-<listitem><para>Expand <emphasis>Resource Bundles &gt; msg</emphasis></para></listitem>
-<listitem><para>Select &quot;how_to_play&quot; value and click <emphasis><property>Ok</property></emphasis>. Then click <emphasis><property>Finish</property></emphasis>
+<listitem><para>Expand <emphasis><property>Resource Bundles &gt; msg</property></emphasis></para></listitem>
+    <listitem><para>Select <emphasis><property>how_to_play</property></emphasis> value and click <emphasis><property>Ok</property></emphasis>. Then click <emphasis><property>Finish</property></emphasis>
 <figure>
 <title>Selecting Value</title>
 <mediaobject> 
@@ -446,7 +446,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </itemizedlist>
 <para>The text will appear on the page:</para>
 <figure>
-<title>Created outputText component</title>
+<title>Created OutputText Component</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/RADdevelopment/newrad13.png"/>
@@ -456,23 +456,23 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <itemizedlist>
 <listitem><para>Switch to Source mode and insert <emphasis role="bold"><property>&lt;br/&gt;</property></emphasis> tag after <emphasis role="bold"><property>&lt;h:outputText&gt;</property></emphasis> component to make a new line.</para></listitem>
 <listitem><para>Click <emphasis><property>Save</property></emphasis> button.</para></listitem>
-<listitem><para>On the Palette click on <emphasis>inputText</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the text.</para></listitem>
+<listitem><para>On the Palette click on <emphasis><property>inputText</property></emphasis>, drag the cursor over to the editor, and drop it inside the editor after the text.</para></listitem>
 <listitem><para>Switch to a Source mode and insert <emphasis role="bold"><property>&lt;br/&gt;</property></emphasis> tag after <emphasis role="bold"><property>&lt;h:outputText&gt;</property></emphasis> component to make a new line</para></listitem>
 <listitem><para>Click <emphasis><property>Save</property></emphasis> button</para></listitem>
-<listitem><para>On the Palette click on <emphasis>inputText</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the text</para></listitem>
-<listitem><para>Select <emphasis>value</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
-<listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
-<listitem><para>Expand <emphasis>Managed Beans &gt; NumberBean</emphasis></para></listitem>
-<listitem><para>Select &quot;userNumber&quot; value and click Ok</para></listitem>
-<listitem><para>Switch <emphasis>Advanced</emphasis> tab</para></listitem>
-<listitem><para>Select <emphasis>id</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
-<listitem><para>Type &quot;userNumber&quot; in text field</para></listitem>
-<listitem><para>Select <emphasis>required</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
-<listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
-<listitem><para>Expand <emphasis>Enumeration</emphasis> and select <emphasis>true</emphasis> as a value</para></listitem>
+<listitem><para>On the Palette click on <emphasis><property>inputText</property></emphasis>, drag the cursor over to the editor, and drop it inside the editor after the text</para></listitem>
+<listitem><para>Select <emphasis><property>value</property></emphasis> and click on this line below &quot;value&quot; header</para></listitem>
+<listitem><para>Click <property>...</property> button next to the value field</para></listitem>
+<listitem><para>Expand <emphasis><property>Managed Beans &gt; NumberBean</property></emphasis></para></listitem>
+    <listitem><para>Select <emphasis><property>userNumber</property></emphasis> value and click <emphasis><property>Ok</property></emphasis></para></listitem>
+<listitem><para>Switch <emphasis><property>Advanced</property></emphasis> tab</para></listitem>
+<listitem><para>Select <emphasis><property>id</property></emphasis> and click on this line below &quot;value&quot; header</para></listitem>
+    <listitem><para>Type <emphasis><property>userNumber</property></emphasis> in text field</para></listitem>
+<listitem><para>Select <emphasis><property>required</property></emphasis> and click on this line below &quot;value&quot; header</para></listitem>
+<listitem><para>Click <property>...</property> button next to the value field</para></listitem>
+<listitem><para>Expand <emphasis><property>Enumeration</property></emphasis> and select <emphasis><property>true</property></emphasis> as a value</para></listitem>
 </itemizedlist>
 <figure>
-<title>Add &quot;required&quot; attribute</title>
+<title>Add &quot;required&quot; Attribute</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/RADdevelopment/newrad14.png"/>
@@ -489,15 +489,14 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 ]]></programlisting>
 <itemizedlist>
 <listitem><para>Click <emphasis><property>Save</property></emphasis> button</para></listitem>
-<listitem><para>Again select Visual mode</para></listitem>
-<listitem><para>On the Palette, click on <emphasis>commandButton</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the inputText component.</para></listitem>
-<listitem><para>On the Palette click on <emphasis>commandButton</emphasis>, drag the cursor over to the editor, and drop it inside the editor after the inputText component</para></listitem>
-<listitem><para>In the editing dialog select <emphasis>value</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
-<listitem><para>Click <emphasis>...</emphasis> button next to the value field</para></listitem>
-<listitem><para>Expand <emphasis>Resource Bundles &gt; msg</emphasis> and select <emphasis>makeguess_button</emphasis> as a value</para></listitem>
-<listitem><para>Click Ok</para></listitem>
-<listitem><para>Select <emphasis>action</emphasis> and click on this line below &quot;value&quot; header</para></listitem>
-<listitem><para>Type &quot;NumberBean.checkGuess&quot; in text field</para></listitem>
+    <listitem><para>Again select <emphasis><property>Visual</property></emphasis> mode</para></listitem>
+<listitem><para>On the Palette, click on <emphasis><property>commandButton</property></emphasis>, drag the cursor over to the editor, and drop it inside the editor after the inputText component.</para></listitem>
+<listitem><para>In the editing dialog select <emphasis><property>value</property></emphasis> and click on this line below &quot;value&quot; header</para></listitem>
+<listitem><para>Click <property>...</property> button next to the value field</para></listitem>
+<listitem><para>Expand <emphasis><property>Resource Bundles &gt; msg</property></emphasis> and select <emphasis><property>makeguess_button</property></emphasis> as a value</para></listitem>
+    <listitem><para>Click <emphasis><property>Ok</property></emphasis></para></listitem>
+<listitem><para>Select <emphasis><property>action</property></emphasis> and click on this line below &quot;value&quot; header</para></listitem>
+    <listitem><para>Type <emphasis><property>NumberBean.checkGuess</property></emphasis> in text field</para></listitem>
 <listitem><para>Click <emphasis><property>Finish</property></emphasis></para></listitem>
 <listitem><para>In Source mode add <emphasis role="bold"><property>&lt;br/&gt;</property></emphasis> tags between <emphasis role="bold"><property>&lt;outputText&gt;</property></emphasis>, <emphasis role="bold"><property>&lt;inputText&gt;</property></emphasis> and <emphasis role="bold"><property>&lt;commandButton&gt;</property></emphasis> components to place them on different lines</para></listitem>
 </itemizedlist>
@@ -558,7 +557,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <listitem><para>Switch to Preview mode to see how this page will look in a browser:</para></listitem>
 </itemizedlist>
 <figure>
-<title>success.jsp in Preview mode</title>
+<title>Success.jsp in Preview Mode</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/RADdevelopment/newrad16.png"/>
@@ -572,8 +571,8 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Creating index.jsp page</title>
 <para>The index.jsp page is the entry point of our application. It&apos;s just forwarding to inputnumber.jsp page.</para>
 <itemizedlist>
-<listitem><para>Right click <emphasis>WebContent &gt; New &gt; JSP File</emphasis></para></listitem>
-<listitem><para>Type &quot;index&quot; for name field and choose JSPRedirect as a template</para></listitem>
+<listitem><para>Right click <emphasis><property>WebContent &gt; New &gt; JSP File</property></emphasis></para></listitem>
+    <listitem><para>Type <emphasis><property>index</property></emphasis> for name field and choose <emphasis><property>JSPRedirect</property></emphasis> as a template</para></listitem>
 <listitem><para>Click <emphasis><property>Finish</property></emphasis></para></listitem>
 <listitem><para>The source for this page should be like the following:</para></listitem>
 </itemizedlist>
@@ -592,12 +591,12 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Running the Application</title>
 <para>Everything is ready to run the application.</para>
 <itemizedlist>
-<listitem><para>Start up JBoss server by clicking on the Start icon in JBoss Server view. (If JBoss is already running, stop it by clicking on the red icon and then start it again. After the messages in the Console tabbed view stop scrolling, JBoss is available</para></listitem>
-<listitem><para>Click on the Red Hat run icon in the toolbar</para></listitem>
+    <listitem><para>Start up JBoss server by clicking on the <emphasis><property>Start</property></emphasis> icon in JBoss Server view. (If JBoss is already running, stop it by clicking on the red icon and then start it again. After the messages in the Console tabbed view stop scrolling, JBoss is available</para></listitem>
+    <listitem><para>Click on the <emphasis><property>Red Hat</property></emphasis> run icon in the toolbar</para></listitem>
 <listitem><para>Play with the application by entering correct as well as incorrect values</para></listitem>
 </itemizedlist>
 <figure>
-<title>You are asked to enter a number between 0 and 100</title>
+<title>You are Asked to Enter a Number Between 0 and 100</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/RADdevelopment/guessnumber.png"/>
@@ -605,7 +604,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </mediaobject>
 </figure>
 <figure>
-<title>Your input is validated and an error message is displayed if invalid input was entered</title>
+<title>Your Input is Validated and an Error Message is Displayed if Invalid Input was Entered</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/RADdevelopment/guessnumber2.png"/>
@@ -614,7 +613,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </figure>
 
 <figure>
-<title>After you enter a guess, the application tells you whether a smaller or a larger number should be tried</title>
+<title>After You Enter a Guess, the Application Tells You Whether a Smaller or a Larger Number Should be Tried</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/RADdevelopment/guessnumber3.png"/>
@@ -623,7 +622,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </figure>
 
 <figure>
-<title>Your guess is correct</title>
+<title>Your Guess is Correct</title>
 <mediaobject> 
         <imageobject>
             <imagedata  fileref="images/RADdevelopment/guessnumber4.png"/>

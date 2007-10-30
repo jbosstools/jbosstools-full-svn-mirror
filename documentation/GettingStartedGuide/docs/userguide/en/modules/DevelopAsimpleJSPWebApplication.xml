@@ -11,17 +11,16 @@
 	<title>Developing a simple JSP web application</title>
 	<para>In this chapter you'll find out how to create a simple JSP application using the Red Hat Developer Studio. The application will show a classic &quot;Hello World!&quot; on the page.</para>
 	<para>We&apos;ll assume that you have already launched Red Hat Developer Studio and
-also that the Red Hat perspective is the current perspective. (If not, make it active by selecting <emphasis><property>Window/Open Perspective/Red Hat Developer Studio</property></emphasis> from the menu bar or by selecting <emphasis><property>Window/
-Open Perspective/Other...</property></emphasis> from the menu bar and then selecting Red Hat Developer Studio from
+also that the Web Development perspective is the current perspective. (If not, make it active by selecting <emphasis><property>Window &gt; Open Perspective &gt; Web Development</property></emphasis> from the menu bar or by selecting <emphasis><property>Window &gt; Open Perspective &gt; Other...</property></emphasis> from the menu bar and then selecting Web Development from
 the Select Perspective dialog box.)</para>
 	<section id="SettingUpTheProject">
 		<?dbhtml filename="SettingUpTheProject.html"?>
 		<title>Setting Up the Project</title>
 		<para>At first a new project for the application will be created.</para>
 		<itemizedlist>
-     <listitem><para>Go to the menu bar and select <emphasis><property>File/New/Project...</property></emphasis></para></listitem>
-     <listitem><para>Select  <emphasis><property>Web/Dynamic Web Project</property></emphasis> in the New Project dialog box</para></listitem>
-     <listitem><para>Click Next &gt;</para></listitem>
+     <listitem><para>Go to the menu bar and select <emphasis><property>File &gt; New &gt; Project...</property></emphasis></para></listitem>
+     <listitem><para>Select  <emphasis><property>Web &gt; Dynamic Web Project</property></emphasis> in the New Project dialog box</para></listitem>
+     <listitem><para>Click <emphasis><property>Next</property></emphasis> </para></listitem>
      <listitem><para>Enter &quot;jspHello&quot; as a project name</para></listitem>
      <listitem><para>Leave everything else as is, and click <emphasis><property>Finish</property></emphasis></para></listitem>
      </itemizedlist>
@@ -49,12 +48,12 @@ the Select Perspective dialog box.)</para>
 		<title>Creating JSP Page</title>
 		<para>In our simple application we need to create only one JSP page which displays a &quot;Hello World!&quot; message.</para>
 		<itemizedlist continuation="continues">
-<listitem><para>Right click <emphasis>WebContent &gt; New &gt; JSP.</emphasis></para></listitem>
+<listitem><para>Right click <emphasis><property>WebContent &gt; New &gt; JSP</property></emphasis>.</para></listitem>
 <listitem><para>Type &quot;hello.jsp&quot; for a file name and click the <emphasis><property>Next</property></emphasis> button.</para></listitem>
 </itemizedlist>
 <para>In the next window you can choose a template for your jsp page and see its preview.</para>
 <itemizedlist continuation="continues">
-<listitem><para>Select &quot;New JSP File (xhtml)&quot; template and click <emphasis><property>Finish</property></emphasis> button.</para></listitem>
+<listitem><para>Select <emphasis><property>New JSP File (xhtml)</property></emphasis> template and click <emphasis><property>Finish</property></emphasis> button.</para></listitem>
 </itemizedlist>
 <figure>
 			<title>Create JSP Page</title>
@@ -78,7 +77,7 @@ the Select Perspective dialog box.)</para>
 
 <para>Notice that content assist functionality is always available when you are typing:</para>
 <figure>
-			<title>Content Assist in JSP page</title>
+			<title>Content Assist in JSP Page</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/DevelopSimpleJSP/newproject4.png"/>
@@ -87,7 +86,7 @@ the Select Perspective dialog box.)</para>
 		</figure>
 		<para>After changes made your hello.jsp page should look like this:</para>
 		<figure>
-			<title>Hello.jsp page</title>
+			<title>Hello.jsp Page</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/DevelopSimpleJSP/newproject5.png"/>
@@ -101,7 +100,7 @@ the Select Perspective dialog box.)</para>
 		<title>web.xml file</title>
 		<para>When you are creating web project the wizard creates the web.xml for you automatically.  The web.xml file editor provided by Red Hat Developer Studio is available in two modes: design and source.</para>
 		<figure>
-			<title>web.xml in design mode</title>
+			<title>Web.xml in Design Mode</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/DevelopSimpleJSP/webxmldesign.png"/>
@@ -109,7 +108,7 @@ the Select Perspective dialog box.)</para>
 			</mediaobject>
 		</figure>
 		<figure>
-			<title>web.xml in source mode</title>
+			<title>Web.xml in Source Mode</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/DevelopSimpleJSP/webxmlsource.png"/>
@@ -118,7 +117,7 @@ the Select Perspective dialog box.)</para>
 		</figure>
 		<para>Both modes are fully synchronized. Let&apos;s add mapping to our hello.jsp page in web.xml file.</para>
 		<itemizedlist>
-			<listitem><para>Switch to source mode.</para></listitem>
+			<listitem><para>Switch to <property>source</property> mode.</para></listitem>
 			<listitem><para>Add the next code into <emphasis role="bold"><property>&lt;welcome-file-list&gt;</property></emphasis>:</para></listitem>
 		</itemizedlist>
 		<programlisting role="XML"><![CDATA[<welcome-file>hello.jsp</welcome-file>
@@ -136,9 +135,9 @@ packaging even if a developer is writing the most trivial web applications. With
        <section id="WarConfig">
 		<?dbhtml filename="WarConfig.html"?>
 		<title>WAR Config</title>
-		<para>Project archives managing is available through <emphasis>Project archives</emphasis> view.</para>
+		<para>Project archives managing is available through <property>Project archives</property> view.</para>
 		<itemizedlist>
-		<listitem><para>Select <emphasis>Window &gt; Show view &gt; Other &gt; JBoss Tools &gt; Project archives</emphasis> from menu bar</para></listitem>
+		<listitem><para>Select <emphasis><property>Window &gt; Show view &gt; Other &gt; JBoss Tools &gt; Project archives</property></emphasis> from menu bar</para></listitem>
 		<listitem><para>Select a project in Package Explorer you want to be archived</para></listitem>
 		</itemizedlist>
 		<para>In Project Archives you will see available archive types for the project:</para>
@@ -155,7 +154,7 @@ packaging even if a developer is writing the most trivial web applications. With
 		</itemizedlist>
 		<para>In the dialog New WAR you can see automatically selected default values</para>
 		<figure>
-			<title>New WAR archive</title>
+			<title>New WAR Archive</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/DevelopSimpleJSP/simplejspwebapplication2.png"/>
@@ -163,7 +162,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			</mediaobject>
 		</figure>
 		<itemizedlist>
-		<listitem><para>Click Next to see a stub archive configuration for your project:
+		<listitem><para>Click <emphasis><property>Next</property></emphasis> to see a stub archive configuration for your project:
 		<figure>
 			<title>Stub Archive Configuration</title>
 			<mediaobject>
@@ -173,9 +172,9 @@ packaging even if a developer is writing the most trivial web applications. With
 			</mediaobject>
 		</figure>
 		</para></listitem>
-		<listitem><para>Click Finish. The <emphasis>.war</emphasis> file will appear in Package Explorer and in Project archives view as structure tree:
+			<listitem><para>Click <emphasis><property>Finish</property></emphasis>. The <emphasis>.war</emphasis> file will appear in Package Explorer and in Project archives view as structure tree:
 		<figure>
-			<title>Archive is created</title>
+			<title>Archive is Created</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/DevelopSimpleJSP/simplejspwebapplication4.png"/>
@@ -183,7 +182,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			</mediaobject>
 		</figure>
 		<figure>
-			<title>Archive in Project archives view</title>
+			<title>Archive in Project Archives View</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/DevelopSimpleJSP/simplejspwebapplication5.png"/>
@@ -194,7 +193,7 @@ packaging even if a developer is writing the most trivial web applications. With
 		</itemizedlist>
 		<para>Via Project archives view you could now edit your archive, add new folders, publish to server, and so on:</para>
 		<figure>
-			<title>Configure archive</title>
+			<title>Configure Archive</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/DevelopSimpleJSP/simplejspwebapplication6.png"/>
@@ -220,7 +219,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<programlisting role="XML"><![CDATA[<%= new java.util.Date() %>
 ]]></programlisting>
 		<itemizedlist>
-			<listitem><para>Click Save button.</para></listitem>
+			<listitem><para>Click <emphasis><property>Save</property></emphasis> button.</para></listitem>
 			<listitem><para>Switch to Preview page by clicking Preview tab at the bottom of the page. You will see how the page will look at runtime.</para></listitem>
 			</itemizedlist>
 		<figure>
@@ -240,7 +239,7 @@ packaging even if a developer is writing the most trivial web applications. With
 <listitem><para>Start JBoss server from JBoss Server view by clicking the Start icon.</para></listitem>
 </itemizedlist>
 <figure>
-			<title>Starting server</title>
+			<title>Starting Server</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/DevelopSimpleJSP/startingfromicon.png"/>
@@ -248,10 +247,10 @@ packaging even if a developer is writing the most trivial web applications. With
 			</mediaobject>
 		</figure>
 		<itemizedlist continuation="continues">
-<listitem><para>Click the Run icon or right click your project folder and select <emphasis>Run on Server</emphasis>. If you haven&apos;t made any changes in web.xml file or cleared it out you can launch the application by right clicking the hello.jsp page and selecting <emphasis>Run on the Server</emphasis>.</para></listitem>
+<listitem><para>Click the Run icon or right click your project folder and select <emphasis><property>Run on Server</property></emphasis>. If you haven&apos;t made any changes in web.xml file or cleared it out you can launch the application by right clicking the hello.jsp page and selecting <emphasis><property>Run on the Server</property></emphasis>.</para></listitem>
 </itemizedlist>
 <figure>
-			<title>Run project</title>
+			<title>Run Project</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/DevelopSimpleJSP/newproject19.png"/>
@@ -260,7 +259,7 @@ packaging even if a developer is writing the most trivial web applications. With
 		</figure>
 		<para>You should see the next page in a browser :</para>
 		<figure>
-			<title>Running project</title>
+			<title>Running Project</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/DevelopSimpleJSP/newprojectjsp20.png"/>

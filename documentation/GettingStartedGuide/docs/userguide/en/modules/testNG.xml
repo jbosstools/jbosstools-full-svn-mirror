@@ -12,7 +12,7 @@
     <section>
  <title>What is TestNG?</title>
         <para><property>TestNG</property> (&quot;Testing, the Next Generation&quot;) is a Java unit testing framework that aims to overcome many limitations of JUnit. 
-            <property>TestNG</property> introduces some new functionalities that make it more powerful and easier to use, such as:</para>
+            TestNG introduces some new functionalities that make it more powerful and easier to use, such as:</para>
      <itemizedlist>
       <listitem><para>JDK 5 Annotations (JDK 1.4 is also supported with JavaDoc annotations)</para></listitem>
       <listitem><para>Flexible test configuration</para></listitem>
@@ -41,11 +41,11 @@
         <title>How to use the generated Seam-test project to run Seam tests in Red Hat Developer Studio</title>
         
         <itemizedlist>
-            <listitem><para>Create a new Seam Web Project using New Project wizard or main menu <emphasis>File &gt; New &gt; Project &gt; Seam &gt; Seam Web Project</emphasis></para></listitem>
+            <listitem><para>Create a new Seam Web Project using New Project wizard or main menu <emphasis><property>File &gt; New &gt; Project &gt; Seam &gt; Seam Web Project</property></emphasis></para></listitem>
         </itemizedlist>
                 
         <figure>
-            <title>Seam Web Project creation</title>
+            <title>Seam Web Project Creation</title>
             <mediaobject> 
                 <imageobject>
                     <imagedata fileref="images/testNG/testNG1.png"/>
@@ -67,7 +67,7 @@
         </figure>
         
 <itemizedlist>
-      <listitem><para>Check the needed boxes and click <emphasis>Next</emphasis></para></listitem>
+      <listitem><para>Check the needed boxes and click <emphasis><property>Next</property></emphasis></para></listitem>
   </itemizedlist>
   
         <figure>
@@ -79,7 +79,7 @@
             </mediaobject>
         </figure>
 <itemizedlist>
-      <listitem><para>Click <emphasis>Next</emphasis> in the &quot;Web Module&quot; wizard&apos;s dialog</para></listitem>
+      <listitem><para>Click <emphasis><property>Next</property></emphasis> in the &quot;Web Module&quot; wizard&apos;s dialog</para></listitem>
   </itemizedlist>
   
         <figure>
@@ -93,11 +93,11 @@
 
 
         <itemizedlist>
-            <listitem><para>Check <emphasis>Server Supplied JSF Implementation</emphasis></para></listitem>
+            <listitem><para>Check <emphasis><property>Server Supplied JSF Implementation</property></emphasis></para></listitem>
         </itemizedlist>
         
         <figure>
-            <title>Adding JSF capabilities</title>
+            <title>Adding JSF Capabilities</title>
             <mediaobject> 
                 <imageobject>
                     <imagedata fileref="images/testNG/testNG3.png"/>
@@ -106,11 +106,11 @@
         </figure>
         
         <itemizedlist>
-            <listitem><para>Select <emphasis>ear</emphasis> next to <emphasis>Deploy as:</emphasis> field</para></listitem>
+            <listitem><para>Select <emphasis><property>ear</property></emphasis> next to <emphasis><property>Deploy as:</property></emphasis> field</para></listitem>
         </itemizedlist>
         
         <figure>
-            <title>Select deployment type</title>
+            <title>Select Deployment Type</title>
             <mediaobject> 
                 <imageobject>
                     <imagedata fileref="images/testNG/testNG4.png"/>
@@ -119,11 +119,11 @@
         </figure>
         
         <itemizedlist>
-            <listitem><para>After project is created you will have the generated Seam-test project that is setup to run <property>TestNG</property> directly against the proper libraries and server runtime libraries</para></listitem>
+            <listitem><para>After project is created you will have the generated Seam-test project that is setup to run TestNG directly against the proper libraries and server runtime libraries</para></listitem>
         </itemizedlist>
         
         <figure>
-            <title>Seam-test project</title>
+            <title>Seam-test Project</title>
             <mediaobject> 
                 <imageobject>
                     <imagedata fileref="images/testNG/testNG5.png"/>
@@ -132,11 +132,11 @@
         </figure>
         
         <itemizedlist>
-            <listitem><para>Add Seam Action to your project via <emphasis>New &gt; Seam Action</emphasis></para></listitem>
+            <listitem><para>Add Seam Action to your project via <emphasis><property>New &gt; Seam Action</property></emphasis></para></listitem>
         </itemizedlist>
         
         <figure>
-            <title>Seam Action creation</title>
+            <title>Seam Action Creation</title>
             <mediaobject> 
                 <imageobject>
                     <imagedata fileref="images/testNG/testNG6.png"/>
@@ -149,7 +149,7 @@
         </itemizedlist>
         
         <figure>
-            <title>New Seam Action wizard</title>
+            <title>New Seam Action Wizard</title>
             <mediaobject> 
                 <imageobject>
                     <imagedata fileref="images/testNG/testNG7.png"/>
@@ -178,7 +178,7 @@
         </figure>
         
         <itemizedlist>
-            <listitem><para>Select <emphasis>ActionLocalTest.xml</emphasis> in Seam-test project and run the test via right click <emphasis>Run As &gt; TestNG Suite</emphasis></para></listitem>
+            <listitem><para>Select <emphasis><property>ActionLocalTest.xml</property></emphasis> in Seam-test project and run the test via right click <emphasis><property>Run As &gt; TestNG Suite</property></emphasis></para></listitem>
         </itemizedlist>
         
         <figure>
@@ -190,11 +190,11 @@
             </mediaobject>
         </figure>
         
-        <para>The test process will start and its ouput will be written in Console. After the messages in the Console tabbed view stop scrollig <property>TestNG</property> is finished.</para>
+        <para>The test process will start and its ouput will be written in Console. After the messages in the Console tabbed view stop scrollig TestNG is finished.</para>
         
         
         <figure>
-            <title>Test is finished</title>
+            <title>Test is Finished</title>
             <mediaobject> 
                 <imageobject>
                     <imagedata fileref="images/testNG/testNG10a.png"/>
@@ -203,7 +203,7 @@
         </figure>
 
         <itemizedlist>
-            <listitem><para>After running <property>TestNG</property> you will have the test results in <emphasis>test-output</emphasis> folder in Seam-test project (press F5 to refresh the Package Explorer view). Open <emphasis><property>index.html</property></emphasis> file with web browser</para></listitem>
+            <listitem><para>After running TestNG you will have the test results in <emphasis>test-output</emphasis> folder in Seam-test project (press F5 to refresh the Package Explorer view). Open <emphasis><property>index.html</property></emphasis> file with web browser</para></listitem>
         </itemizedlist>
         
         <figure>
@@ -223,7 +223,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>The <property>TestNG</property> information is split up into two panes in browser. You can select a result on the left-hand pane and its details will be displayed on the right-hand one.</para>
+        <para>The TestNG information is split up into two panes in browser. You can select a result on the left-hand pane and its details will be displayed on the right-hand one.</para>
         <figure>
             <title>TestNG Information</title>
             <mediaobject> 

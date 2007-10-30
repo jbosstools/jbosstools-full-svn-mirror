@@ -53,7 +53,7 @@
 </figure>
       <para>When the server is started you should see <emphasis><property>Started</property></emphasis> right to its name in <property>JBoss Server View</property> (column &quot;Status&quot;).</para>
 <figure>
-<title>Server Is Started</title>
+<title>Server is Started</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/ManageJBossAS/serverstarted.png"/>
@@ -87,7 +87,7 @@
   <section id="ServerPreferences">
   <?dbhtml filename="ServerPreferences.html"?>
   <title>Server Container Preferences</title>
-      <para>You can control how Red Hat Developer Studio interacts with servlet containers in Preferences. Select <emphasis><property>Window > Preferences > JBoss Tools > JBoss Servers</property></emphasis> and switch to the desired server:</para>
+      <para>You can control how Red Hat Developer Studio interacts with servlet containers in Preferences. Select <emphasis><property>Window &gt; Preferences &gt; JBoss Tools &gt; JBoss Servers</property></emphasis> and switch to the desired server:</para>
   <figure>
 <title>Server Preferences</title>
 <mediaobject> 
@@ -136,9 +136,9 @@
   <title>Adding and configuring JBoss server</title>
   <para>Now we should add just installed server into server manager in Red Hat Developer Studio.</para>
   <itemizedlist>
-  <listitem><para>Open the JBoss Server View by selecting <emphasis><property>Window > Show View > Other > Server > JBoss Server View</property></emphasis>. You will see JBoss Server view.</para></listitem>
+  <listitem><para>Open the JBoss Server View by selecting <emphasis><property>Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View</property></emphasis>. You will see JBoss Server view.</para></listitem>
       <listitem><para>Right click anywhere in this view and select <emphasis><property>New Server</property></emphasis>.</para></listitem>
-      <listitem><para>Select <emphasis><property>JBoss, a division of Red Hat > JBoss v4.2</property></emphasis> and click the <emphasis><property>Installed Runtimes</property></emphasis> button to select a new installed runtime.</para></listitem>
+      <listitem><para>Select <emphasis><property>JBoss, a division of Red Hat &gt; JBoss v4.2</property></emphasis> and click the <emphasis><property>Installed Runtimes</property></emphasis> button to select a new installed runtime.</para></listitem>
 </itemizedlist>
 <figure>
 <title>Selecting Server Type</title>
@@ -151,7 +151,7 @@
      
      <itemizedlist continuation="continues">
          <listitem><para>Click <emphasis><property>Add</property></emphasis> button to add a new jboss runtime.</para></listitem>
-         <listitem><para>Select <emphasis><property>JBoss, a division of Red Hat > JBoss v4.2</property></emphasis> and press <emphasis><property>Next</property></emphasis>.</para></listitem>
+         <listitem><para>Select <emphasis><property>JBoss, a division of Red Hat &gt; JBoss v4.2</property></emphasis> and press <emphasis><property>Next</property></emphasis>.</para></listitem>
      </itemizedlist>
 
      <figure>    
@@ -191,9 +191,9 @@
         </imageobject>
 </mediaobject>
 </figure>
-     <para>A new runtime will now appear in the <emphasis><property>Preferences > Server > Installed Runtimes</property></emphasis> dialog.</para>
+     <para>A new runtime will now appear in the <emphasis><property>Preferences &gt; Server &gt; Installed Runtimes</property></emphasis> dialog.</para>
 <figure>
-<title>Runtime Is Added</title>
+<title>Runtime is Added</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/ManageJBossAS/addedruntime.png"/>
@@ -275,7 +275,7 @@
             </figure>
       
     
-    <para>In order to access the view's preferences, you should access <emphasis><property>Window > Preferences > JBoss Tools > JBoss Servers > View</property></emphasis>. 
+    <para>In order to access the view's preferences, you should access <emphasis><property>Window &gt; Preferences &gt; JBoss Tools &gt; JBoss Servers &gt; View</property></emphasis>. 
         This preference page allows you to select which view extensions you want on or off, the order they appear
         in the view, as well as any other extension-specific preferences that may be available.</para>
     <figure>
@@ -460,7 +460,7 @@
                 <section id="PublishToServer">
                     <title>Publish to Server</title>
                     <figure>
-                        <title>Context menu on the item</title>
+                        <title>Context Menu on the Item</title>
                         <mediaobject> 
                             <imageobject>
                                 <imagedata fileref="images/ManageJBossAS/archives4.png"/>
