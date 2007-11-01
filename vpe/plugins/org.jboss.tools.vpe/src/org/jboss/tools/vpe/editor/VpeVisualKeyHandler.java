@@ -406,7 +406,8 @@ public class VpeVisualKeyHandler {
 				
 				//delete whitespaces 
 				int endPos = 0;
-				while(TextUtil.isWhitespace(((TextImpl)focusNode).getValueSource().toCharArray()[offset+endPos])){
+				char[] chars = ((TextImpl)focusNode).getValueSource().toCharArray();
+				while(chars.length > (offset+endPos) && TextUtil.isWhitespace(chars[offset+endPos])){
 					endPos++;
 				}
 				Point range = sourceEditor.getTextViewer().getSelectedRange();
