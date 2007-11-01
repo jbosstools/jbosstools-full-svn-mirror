@@ -241,26 +241,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return false;
 	}
 
-	private boolean reCreateNode(nsIDOMNode visualOldNode, Node sourceNode, nsIDOMNode visualContainer) {
-		nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer);
-		try {
-			if (visualNewNode != null) {
-				nsIDOMHTMLInputElement iDOMInputElement = (nsIDOMHTMLInputElement) visualNewNode.queryInterface(nsIDOMHTMLInputElement.NS_IDOMHTMLINPUTELEMENT_IID);
-				iDOMInputElement.setReadOnly(true);
-			}
-		} catch(XPCOMException ex) {
-			//just ignore this exception
-		}
-		if (visualNewNode != null) {
-			visualContainer.replaceChild(visualOldNode, visualNewNode);
-			return true;
-		}
-		else {
-			visualContainer.removeChild(visualOldNode);
-		}
-		return false;
-	}
-	
 	private nsIDOMElement createBorder(Node sourceNode,
 			nsIDOMElement visualNode, boolean block) {
 		nsIDOMElement border = null;
@@ -819,7 +799,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			nsIDOMNode visualContainer = visualOldNode.getParentNode();
 			nsIDOMNode visualNextNode = visualOldNode.getNextSibling();
 			if (visualContainer != null) {
-				reCreateNode(visualOldNode, sourceNode, visualContainer);
+				visualContainer.removeChild(visualOldNode);
+				addNode(sourceNode, visualNextNode, visualContainer);
 			}
 		} else {
 			if (sourceNode.getNodeType() == Node.TEXT_NODE) {
@@ -2022,9 +2003,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	protected nsIDOMNode createTextNode(Node sourceNode, boolean registerFlag ) {
 		String sourceText = sourceNode.getNodeValue();
 		if (sourceText.trim().length() <= 0) {
-			if (registerFlag) {
-				registerNodes(new VpeNodeMapping(sourceNode, null));
-			}
+			registerNodes(new VpeNodeMapping(sourceNode, null));
 			return null;
 		}
 
