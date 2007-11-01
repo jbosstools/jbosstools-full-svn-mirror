@@ -12,44 +12,35 @@
 package org.jboss.tools.vpe.xulrunner.editor;
 
 import org.eclipse.swt.graphics.Rectangle;
+import org.mozilla.interfaces.nsIBoxObject;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
-import org.mozilla.interfaces.nsIDOMNSHTMLElement;
+import org.mozilla.interfaces.nsIDOMNSDocument;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.xpcom.XPCOMException;
 
 /**
- * @author A. Yukhovich
+ * @author dsakovich@exadel.com
  */
 public class XulRunnerVpeUtils {
 
-	/**
-	 * @param domElement
-	 * @return
-	 */
-	static public Rectangle getElementBounds(nsIDOMElement domElement) {
-		try {
-			nsIDOMNSHTMLElement domNSHTMLElement = (nsIDOMNSHTMLElement) domElement.queryInterface(nsIDOMNSHTMLElement.NS_IDOMNSHTMLELEMENT_IID);
-			int offsetLeft = domNSHTMLElement.getOffsetLeft();
-			int offsetTop = domNSHTMLElement.getOffsetTop();
-			int width = domNSHTMLElement.getOffsetWidth();
-			int height = domNSHTMLElement.getOffsetHeight();
-			
-			while (true) {
-				try {
-					if (domNSHTMLElement.getOffsetParent() == null) {
-						break;
-					}
+    /**
+     * @param domElement
+     * @return Rectangle
+     */
+    static public Rectangle getElementBounds(nsIDOMNode domNode) {
+	try {
+	    nsIDOMElement domElement = (nsIDOMElement) domNode
+		    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+	    nsIDOMDocument document = domElement.getOwnerDocument();
+	    nsIDOMNSDocument nsDocument = (nsIDOMNSDocument) document
+		    .queryInterface(nsIDOMNSDocument.NS_IDOMNSDOCUMENT_IID);
+	    nsIBoxObject boxObject = nsDocument.getBoxObjectFor(domElement);
+	    return new Rectangle(boxObject.getX(), boxObject.getY(), boxObject
+		    .getWidth(), boxObject.getHeight());
 
-					domNSHTMLElement = (nsIDOMNSHTMLElement) domNSHTMLElement.getOffsetParent().queryInterface(nsIDOMNSHTMLElement.NS_IDOMNSHTMLELEMENT_IID);
-					offsetLeft += domNSHTMLElement.getOffsetLeft();
-					offsetTop += domNSHTMLElement.getOffsetTop();
-				} catch (XPCOMException ex) {
-					break;
-				}
-			}
-			return new Rectangle(offsetLeft, offsetTop, width, height);
-
-		} catch (XPCOMException xpcomException) {
-			return new Rectangle(0, 0, 0, 0);
-		}
+	} catch (XPCOMException xpcomException) {
+	    return new Rectangle(0, 0, 0, 0);
 	}
+    }
 }
