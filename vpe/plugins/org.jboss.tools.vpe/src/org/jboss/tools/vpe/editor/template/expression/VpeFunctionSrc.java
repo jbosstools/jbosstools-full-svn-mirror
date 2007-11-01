@@ -45,7 +45,7 @@ public class VpeFunctionSrc extends VpeFunction {
 		IPath tagPath = new Path(tagValue);
 		if (tagPath.isEmpty()) return new VpeValue(getUnresolved());
 
-		String device = tagPath.getDevice();
+		String device = (tagPath.getDevice()==null?tagPath.segment(0):tagPath.getDevice());
 		if (device != null && 
 		        ("http:".equalsIgnoreCase(device) || "file:".equalsIgnoreCase(device))) return new VpeValue(tagValue);
 
