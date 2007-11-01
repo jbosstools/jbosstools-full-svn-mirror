@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1089,8 +1090,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_EXT, ext_val);
 			try {
 				StringBuffer styleText = new StringBuffer(EMPTY_STRING);
+				URL url = new URL((new Path(href_val)).setDevice("").toOSString());
+				String fileName=url.getFile();
 				BufferedReader in = new BufferedReader(new FileReader(
-						(new Path(href_val)).setDevice("").toOSString()));
+						(fileName)));
 				String str = EMPTY_STRING;
 				while ((str = in.readLine()) != null) {
 					styleText.append(str);
