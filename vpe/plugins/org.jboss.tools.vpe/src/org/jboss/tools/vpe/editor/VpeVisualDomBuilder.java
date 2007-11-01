@@ -1090,7 +1090,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_EXT, ext_val);
 			try {
 				StringBuffer styleText = new StringBuffer(EMPTY_STRING);
-				URL url = new URL((new Path(href_val)).setDevice("").toOSString());
+				URL url = new URL((new Path(href_val)).toOSString());
 				String fileName=url.getFile();
 				BufferedReader in = new BufferedReader(new FileReader(
 						(fileName)));
