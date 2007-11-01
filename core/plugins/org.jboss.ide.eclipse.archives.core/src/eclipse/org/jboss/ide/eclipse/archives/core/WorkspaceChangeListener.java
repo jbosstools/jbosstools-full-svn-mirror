@@ -52,15 +52,17 @@ public class WorkspaceChangeListener implements IResourceChangeListener {
 		
 		IResourceDelta delta = event.getDelta();
 		try {
-			delta.accept(new IResourceDeltaVisitor() {
-				public boolean visit(IResourceDelta delta) throws CoreException {
-					if( delta.getResource() != null && delta.getResource().getLocation() != null && 
-							delta.getResource().getLocation().lastSegment().equals(ArchivesModel.PROJECT_PACKAGES_FILE)) {
-						projects.add(delta.getResource().getProject());
+			if(delta!=null) {
+				delta.accept(new IResourceDeltaVisitor() {
+					public boolean visit(IResourceDelta delta) throws CoreException {
+						if( delta.getResource() != null && delta.getResource().getLocation() != null && 
+								delta.getResource().getLocation().lastSegment().equals(ArchivesModel.PROJECT_PACKAGES_FILE)) {
+							projects.add(delta.getResource().getProject());
+						}
+						return true;
 					}
-					return true;
-				}
-			});
+				});
+			}
 		} catch( CoreException ce ) {
 		}
 		Iterator i = projects.iterator();
