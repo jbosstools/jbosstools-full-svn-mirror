@@ -168,6 +168,14 @@ public class VpeTemplateManager {
 	private Set<String> withoutWhitespaceContainerSet = new HashSet<String>();
 	private Set<String> withoutPseudoElementContainerSet = new HashSet<String>();
 	
+	/**
+	 * Added by Max Areshkau(mareshkau@exadel.com)
+	 *  This property identify namespace which should be used to load some specific class.
+	 *  For example in rich:dataTable can be h:column, but rich:dataTable is separate plugin,
+	 *  so to render h:column we should load the specific class for h:column from richfaces template
+	 */
+	private static final String NAMESPACE_IDENTIFIER_ATTRIBUTE="namespaceIdentifier";
+	
 	static {
 //		withoutWhitespaceContainer.
 	}
@@ -747,9 +755,17 @@ public class VpeTemplateManager {
 	private VpeTemplate createTemplate(Element templateElement,IConfigurationElement confElement, boolean caseSensitive) {
 		VpeTemplate template = null;
 		String templateClassName = templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_CLASS);
+		String nameSpaceIdentifyer = templateElement.getAttribute(VpeTemplateManager.NAMESPACE_IDENTIFIER_ATTRIBUTE);
 		if (templateClassName != null && templateClassName.length() > 0) {
 			try {
-				Bundle bundle = Platform.getBundle(confElement.getNamespaceIdentifier());
+				Bundle bundle;
+				if(nameSpaceIdentifyer==null||nameSpaceIdentifyer.length()==0) {
+				
+					bundle = Platform.getBundle(confElement.getNamespaceIdentifier());
+				} else {
+					
+					bundle = Platform.getBundle(nameSpaceIdentifyer);
+				}
 				Class templateClass = bundle.loadClass(templateClassName);
 				template = (VpeTemplate)templateClass.newInstance();
 			} catch (Exception e) {
