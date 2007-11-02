@@ -320,15 +320,15 @@ on their machines.</para>
 
   <para><emphasis role="bold">Do I need to have JBoss server installed to run Red Hat Developer Studio?</emphasis></para>
   <para>No. Red Hat Developer Studio already comes bundled with JBoss server. We bundle it together so that you don&apos;t need to download any additional software and can test your application in a Web browser right away.</para>
-  <para>If you want to use a different JBoss server installation, after Red Hat Developer Studio is installed open Servers View (select <emphasis>Window &gt; Show View &gt; Others &gt; Server &gt; Servers</emphasis>), then right click on this <emphasis>view &gt; New &gt; Server</emphasis> and follow the wizards steps to point to another Jboss server installation.</para>
+  <para>If you want to use a different JBoss server installation, after Red Hat Developer Studio is installed open Servers View (select <emphasis><property>Window &gt; Show View &gt; Others &gt; Server &gt; Servers</property></emphasis>), then right click on this <emphasis><property>view &gt; New &gt; Server</property></emphasis> and follow the wizards steps to point to another Jboss server installation.</para>
   <para>Red Hat Developer Studio works with any servlet container, not just JBoss. For more information on deployment, please see the Deploying Your Application section.</para>
  </section>
  <section id="Importing_Projects">
   <title>Importing Projects</title>
   <para><emphasis role="bold">I have an existing Struts or JSF project. Can I open the project in RHDS?</emphasis></para>
-  <para>Yes. From main menu select <emphasis>File &gt; Import &gt; Other &gt; JSF Project (or Struts Project)</emphasis> and follow wizards steps.</para>
+  <para>Yes. From main menu select <emphasis><property>File &gt; Import &gt; Other &gt; JSF Project (or Struts Project)</property></emphasis> and follow wizards steps.</para>
   <para><emphasis role="bold">Can I import a .war file?</emphasis></para>
-  <para>Yes. Select <emphasis>File &gt; Import &gt; Web &gt; WAR file</emphasis>, then follow importing steps.</para>
+  <para>Yes. Select <emphasis><property>File &gt; Import &gt; Web &gt; WAR file</property></emphasis>, then follow importing steps.</para>
  </section>
  <section id="Troubleshooting">
   <title>Troubleshooting, Problems, Configuration, Error Messages</title>

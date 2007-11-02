@@ -12,7 +12,7 @@
     <section>
  <title>What is TestNG?</title>
         <para><property>TestNG</property> (&quot;Testing, the Next Generation&quot;) is a Java unit testing framework that aims to overcome many limitations of JUnit. 
-            <property>TestNG</property> introduces some new functionalities that make it more powerful and easier to use, such as:</para>
+            TestNG introduces some new functionalities that make it more powerful and easier to use, such as:</para>
      <itemizedlist>
       <listitem><para>JDK 5 Annotations (JDK 1.4 is also supported with JavaDoc annotations).</para></listitem>
       <listitem><para>Flexible test configuration.</para></listitem>
@@ -80,7 +80,7 @@
         </figure>
         
         <itemizedlist>
-            <listitem><para>Select <property>EAR</property> next to <emphasis><property>Deploy as:</property></emphasis> field.</para></listitem>
+            <listitem><para>Select <emphasis><property>EAR</property></emphasis> next to <emphasis><property>Deploy as:</property></emphasis> field.</para></listitem>
         </itemizedlist>
         
         <figure>
@@ -194,7 +194,7 @@
             </mediaobject>
         </figure>
         
-        <para>After clicking on <property>ActionLocal Tests</property> link you will see the Results for ActionLocal Tests.</para>
+        <para>After clicking on <emphasis><property>ActionLocal Tests</property></emphasis> link you will see the Results for ActionLocal Tests.</para>
         
         <figure>
             <title>Test Information</title>

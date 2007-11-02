@@ -150,7 +150,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			</mediaobject>
 		</figure>
 		<itemizedlist>
-		<listitem><para>Click, for example, <emphasis>WAR</emphasis> option to create war archive</para></listitem>
+		<listitem><para>Click, for example, <emphasis><property>WAR</property></emphasis> option to create war archive</para></listitem>
 		</itemizedlist>
 		<para>In the dialog New WAR you can see automatically selected default values</para>
 		<figure>
