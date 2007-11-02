@@ -124,65 +124,66 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 	public void handleEvent(nsIDOMEvent domEvent) {
 		try{
 			
-		if(getEditorDomEventListener()==null){
-			
-			return;
-		} else if(MOUSEMOVEEVENTTYPE.equals(domEvent.getType())) {
-			
-			nsIDOMMouseEvent mouseEvent;
-			mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
-			getEditorDomEventListener().mouseMove(mouseEvent);
-		} else if(MOUSEDOWNEVENTTYPE.equals(domEvent.getType())) {
-			 
-			nsIDOMMouseEvent mouseEvent;
-			mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
-			getEditorDomEventListener().mouseDown(mouseEvent);
-
-		} else if(MOUSEUPEVENTTYPE.equals(domEvent.getType())) {
-			 
-			nsIDOMMouseEvent mouseEvent;
-			mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
-			getEditorDomEventListener().mouseUp(mouseEvent);
-		} else if(CLICKEVENTTYPE.equals(domEvent.getType())) {
-			 
-			nsIDOMMouseEvent mouseEvent;
-			mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
-			getEditorDomEventListener().mouseClick(mouseEvent);
-		} else if(DBLCLICK.equals(domEvent.getType())) {
-			 
-			nsIDOMMouseEvent mouseEvent;
-			mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
-			getEditorDomEventListener().mouseDblClick(mouseEvent);
-		} else if(KEYPRESS.equals(domEvent.getType())) {
-			 
-			nsIDOMKeyEvent keyEvent = (nsIDOMKeyEvent) domEvent.queryInterface(nsIDOMKeyEvent.NS_IDOMKEYEVENT_IID);
-			getEditorDomEventListener().keyPress(keyEvent);
-		} else if(CONTEXTMENUEVENTTYPE.equals(domEvent.getType())) {
-			
-			//first param are null 0, because this not used in event handler
-			getEditorDomEventListener().onShowContextMenu(0, domEvent, (nsIDOMNode) domEvent.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID));
-		} else if(DRAGGESTUREEVENT.equals(domEvent.getType())) {
-			
-			if(getEditorDomEventListener()!=null) {
+			if(getEditorDomEventListener()==null){
+				
+				return;
+			} else if(MOUSEMOVEEVENTTYPE.equals(domEvent.getType())) {
+				
+				nsIDOMMouseEvent mouseEvent;
+				mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+				getEditorDomEventListener().mouseMove(mouseEvent);
+			} else if(MOUSEDOWNEVENTTYPE.equals(domEvent.getType())) {
+				 
+				nsIDOMMouseEvent mouseEvent;
+				mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+				getEditorDomEventListener().mouseDown(mouseEvent);
 	
-				getEditorDomEventListener().dragGesture(domEvent);
-			}
-		} else if(DRAGDROPEVENT.equals(domEvent.getType())) {
-			// calls when drop event occure
-		 
-			getEditorDomEventListener().dragDrop(domEvent);
-			domEvent.stopPropagation();
-			domEvent.preventDefault();
-		} else if(DRAGENTEREVENT.equals(domEvent.getType())) {
-			//just ignore this event
-		} else if(DRAGEXITEVENT.equals(domEvent.getType())) {
-			//just ignore this event
-		} else if(DRAGOVEREVENT.equals(domEvent.getType())) {
-			
-			getEditorDomEventListener().dragOver(domEvent);	
-		} 
+			} else if(MOUSEUPEVENTTYPE.equals(domEvent.getType())) {
+				 
+				nsIDOMMouseEvent mouseEvent;
+				mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+				getEditorDomEventListener().mouseUp(mouseEvent);
+			} else if(CLICKEVENTTYPE.equals(domEvent.getType())) {
+				 
+				nsIDOMMouseEvent mouseEvent;
+				mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+				getEditorDomEventListener().mouseClick(mouseEvent);
+			} else if(DBLCLICK.equals(domEvent.getType())) {
+				 
+				nsIDOMMouseEvent mouseEvent;
+				mouseEvent = (nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+				getEditorDomEventListener().mouseDblClick(mouseEvent);
+			} else if(KEYPRESS.equals(domEvent.getType())) {
+				 
+				nsIDOMKeyEvent keyEvent = (nsIDOMKeyEvent) domEvent.queryInterface(nsIDOMKeyEvent.NS_IDOMKEYEVENT_IID);
+				getEditorDomEventListener().keyPress(keyEvent);
+			} else if(CONTEXTMENUEVENTTYPE.equals(domEvent.getType())) {
+				
+				//first param are null 0, because this not used in event handler
+				getEditorDomEventListener().onShowContextMenu(0, domEvent, (nsIDOMNode) domEvent.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID));
+			} else if(DRAGGESTUREEVENT.equals(domEvent.getType())) {
+				
+				if(getEditorDomEventListener()!=null) {
 		
-		getEditorDomEventListener().onRefresh();
+					getEditorDomEventListener().dragGesture(domEvent);
+				}
+			} else if(DRAGDROPEVENT.equals(domEvent.getType())) {
+				// calls when drop event occure
+			 
+				getEditorDomEventListener().dragDrop(domEvent);
+				domEvent.stopPropagation();
+				domEvent.preventDefault();
+			} else if(DRAGENTEREVENT.equals(domEvent.getType())) {
+				//just ignore this event
+			} else if(DRAGEXITEVENT.equals(domEvent.getType())) {
+				//just ignore this event
+			} else if(DRAGOVEREVENT.equals(domEvent.getType())) {
+				
+				getEditorDomEventListener().dragOver(domEvent);	
+			} 
+			if(getEditorDomEventListener()!=null) {
+				getEditorDomEventListener().onRefresh();
+			}
 
 		}catch(Throwable th) {
 
