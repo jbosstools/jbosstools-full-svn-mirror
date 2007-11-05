@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+"../../../resources/support/docbook-dtd/docbookx.dtd"
+
+[<!ENTITY IntroductionToClassicReferenceManual SYSTEM "modules/IntroductionToClassicReferenceManual.xml">
+<!--<!ENTITY GettingStartedGuideforJSFwithHibernate  SYSTEM "modules/GettingStartedGuideforJSFwithHibernate.xml"> -->
+<!--<!ENTITY BusinessProcessAndRulesApplication  SYSTEM "modules/BusinessProcessAndRulesApplication.xml">-->
+<!ENTITY GettingStartedGuideforJavaServerFaces SYSTEM "modules/GettingStartedGuideforJavaServerFaces.xml">
+<!ENTITY GettingStartedForCreatingaJSFApplication SYSTEM "modules/GettingStartedForCreatingaJSFApplication.xml">
+<!ENTITY GettingStartedGuideforCreatingaStrutsApplication  SYSTEM "modules/GettingStartedGuideforCreatingaStrutsApplication.xml">
+<!ENTITY GettingStartedStrutsValidationExamples  SYSTEM "modules/GettingStartedStrutsValidationExamples.xml">
+]>
+
+<book>
+    
+    <bookinfo>
+        <title>JSF and Struts Classic Reference Manual</title>
+        
+        <copyright>
+            <year>2007</year>
+            <holder>Red Hat</holder>
+        </copyright>
+        
+    </bookinfo>
+    
+    
+    <toc/>  
+    
+    
+    &IntroductionToClassicReferenceManual;
+    <!--&GettingStartedGuideforJSFwithHibernate; -->
+    <!--&BusinessProcessAndRulesApplication;-->
+    &GettingStartedForCreatingaJSFApplication;
+    &GettingStartedGuideforCreatingaStrutsApplication;
+    &GettingStartedStrutsValidationExamples;
+    <!--
+        &GettingStartedGuideforJavaServerFaces;
+    -->
+    
+    
+</book>    

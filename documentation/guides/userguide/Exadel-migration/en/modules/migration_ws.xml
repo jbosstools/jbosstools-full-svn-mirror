@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="migration_ws" xreflabel="migration_ws">
+ <?dbhtml filename="migration_ws.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>Red Hat Developer Studio</keyword>
+            <keyword>RHDS</keyword>
+            <keyword>Exadel Studio Pro</keyword>
+            </keywordset>
+    </chapterinfo>
+    
+ <title>Migrate workspace</title>
+ <para>You will not be able to run projects in Red Hat Developer Studio
+  using <property>Exadel Studio workspace</property>. In this case, project capabilities and settings specified in Exadel Studio will be lost. The simplest way to avoid this, is to copy your projects in <property>Red Hat Developer Studio workspace</property> and make an import as it is described in the following chapters.</para>
+</chapter>
