@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+"../../resources/support/docbook-dtd/docbookx.dtd"
+
+[<!ENTITY  migration SYSTEM "modules/migration.xml">
+<!ENTITY  migrationwar SYSTEM "modules/migration_war.xml">
+<!ENTITY intro_migration SYSTEM "modules/intro_migration.xml">
+<!ENTITY migration_ws SYSTEM "modules/migration_ws.xml">
+]>
+
+<book>
+    <bookinfo>
+        <title>Exadel Studio Migration Guide</title>
+	
+        <copyright>
+			<year>2007</year>
+			<holder>Red Hat</holder>
+	    </copyright>
+        <releaseinfo>Current Guide Version: 1.0.0.beta2</releaseinfo>
+    	
+    	
+    </bookinfo>
+	<toc/>  
+&intro_migration;
+&migration_ws;
+&migration;
+&migrationwar;   
+
+	
+</book>    
