@@ -66,9 +66,9 @@ server side validation. You need to enable validation as a part of the project, 
 <itemizedlist continuation="continues">
 <listitem><para>Double-click inputname.jsp under <emphasis><property>StrutsHello > WEB-ROOT(WebContent) > pages</property></emphasis> to open it for editing</para></listitem>
 <listitem><para>Find the  tag near the top and hit Return to make a new line under it</para></listitem>
-    <listitem><para>In the JBoss Tools Palette view to the right, open the HTML folder and click on the javascript tag</para></listitem>
+    <listitem><para>In the JBoss Tools Palette view to the right, open the Struts HTML folder and click on the javascript tag</para></listitem>
 <listitem><para>Back in the editor, just in front of the closing slash for this inserted tag, hit Ctrl+Space and select &quot;formName&quot; from the prompting menu</para></listitem>
-<listitem><para>Over in the Web Projects view, select GetNameForm under the <emphasis><property>StrutsHello > Configuration > default > struts-config.xml > form-beans</property></emphasis> node, drag it, and drop it between the quotes in the editor</para></listitem>
+<listitem><para>Over in the Web Projects view, select GetNameForm under the <emphasis><property>StrutsHello &gt; Configuration &gt; default &gt; struts-config.xml &gt; form-beans</property></emphasis> node, drag it, and drop it between the quotes in the editor</para></listitem>
 <listitem><para>Modify the <emphasis role="bold"><property>&lt;html:form&gt;</property></emphasis> tag by inserting this attribute:</para></listitem>
 </itemizedlist>
 <programlisting role="XML"><![CDATA[onsubmit="return validateGetNameForm(this)"
