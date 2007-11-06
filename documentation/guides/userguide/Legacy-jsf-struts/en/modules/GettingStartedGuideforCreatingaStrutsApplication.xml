@@ -52,10 +52,10 @@ the code a little bit later.</para>
      
 <listitem><para>We will keep our presentation files in this folder</para></listitem>
 
-<listitem><para>Right-click the pages folder and select <emphasis><property>New > File > JSP...</property></emphasis> </para></listitem>
-     <listitem><para>For Name type in inputname (the JSP extension will be automatically added to the file), for Template select <emphasis><property>StrutsForm</property></emphasis> and then click on the <emphasis><property>Finish</property></emphasis> button</para></listitem>
+<listitem><para>Right-click the pages folder and select <emphasis><property>New &gt; JSP File...</property></emphasis> </para></listitem>
+     <listitem><para>For Name type in <emphasis><property>inputname</property></emphasis> (the JSP extension will be automatically added to the file), for Template select <emphasis><property>StrutsForm</property></emphasis> and then click on the <emphasis><property>Finish</property></emphasis> button</para></listitem>
 <listitem><para>Right-click the pages folder again and select <emphasis><property>New > File > JSP...</property></emphasis></para></listitem>
-     <listitem><para>For Name type in greeting, for Template leave as Blank, and then click on the <emphasis><property>Finish</property></emphasis> button</para></listitem>
+     <listitem><para>For Name type in <emphasis><property>greeting</property></emphasis>, for Template leave as Blank, and then click on the <emphasis><property>Finish</property></emphasis> button</para></listitem>
  </itemizedlist>
 <para>Just leave these files as is for now.</para>
         </section>
@@ -109,8 +109,7 @@ and drop it to the right of the <emphasis><property>/pages/inputname.jsp</proper
     <listitem><para>Click <emphasis><property>Finish</property></emphasis></para></listitem>
 </itemizedlist>
             
-<para>The <emphasis><property>/greeting</property></emphasis> action should appear in two places, in the diagram and also under the action-mappings node under the struts-config.xml node in the Outline view. Also, note the
-asterisk to the right of the name, struts-config.xml, in the Outline view showing that the file has been changed, but not saved to disk.</para>
+<para>The <emphasis><property>/greeting</property></emphasis> action should appear in four places, in the diagram, under the action-mappings node, under the struts-config.xml node in Tree view, in Web Projects view and in the Outline view. Also, note the asterisk to the right of the name, struts-config.xml, in the Outline view showing that the file has been changed, but not saved to disk.</para>
     </section>
         <section id="CreatingaLink">
          <title>Creating a Link</title>
@@ -319,7 +318,7 @@ public class GetNameForm extends org.apache.struts.action.ActionForm
      
      <programlisting role="JAVA"><![CDATA[String name = ((GetNameForm)form).getName();
 String greeting = "Hello, "+name+"!";
-((GetNameForm)form).setGreetName(greeting);
+((GetNameForm)form).setName(greeting);
 return mapping.findForward(FORWARD_sayHello);
 
 The final version of GreetingAction.java should look like this:
@@ -348,7 +347,7 @@ public class GreetingAction extends org.apache.struts.action.Action
 	{
 		String name = ((GetNameForm)form).getName();
 		String greeting = "Hello, "+name+"!";
-		((GetNameForm)form).setGreetName(greeting);
+		((GetNameForm)form).setName(greeting);
 		return mapping.findForward(FORWARD_sayHello);
 	}
 }

@@ -41,20 +41,20 @@ server side validation. You need to enable validation as a part of the project, 
  from the context menu</para></listitem>
 
 <listitem><para>Drag up the sample.applResources icon until you can drop it on the resources folder under struts-config.xml</para></listitem>
-<listitem><para>Select<emphasis><property> File > Save </property></emphasis>All from the menu bar</para></listitem>
-<listitem><para>Select validation.xml under the <emphasis><property>StrutsHello > Validation</property></emphasis> node and double-click it to open it with the JBoss Tools Validation Editor</para></listitem>
-<listitem><para>Expand the form-beans node under the <emphasis><property>StrutsHello > Configuration > default > struts-config.xml node.</property></emphasis> Then, drag the form bean GetNameForm and drop it onto a formset (default) in the <property>Validation</property> Editor</para></listitem>
-<listitem><para>In the Validation Editor, expand the formset node, right-click GetNameForm, and select <emphasis><property>Add Field...</property></emphasis> from the context menu</para></listitem>
+<listitem><para>Select<emphasis><property> File &gt; Save </property></emphasis>All from the menu bar</para></listitem>
+<listitem><para>Select validation.xml under the <emphasis><property>StrutsHello &gt; Validation</property></emphasis> node and double-click it to open it with the JBoss Tools XML Editor</para></listitem>
+<listitem><para>Expand the form-beans node under the <emphasis><property>StrutsHello > Configuration > default > struts-config.xml node.</property></emphasis> Then, drag the form bean GetNameForm and drop it onto a formset (default) in the <property>XML</property> Editor</para></listitem>
+<listitem><para>In the Validation Editor, expand the formset node, right-click GetNameForm, and select <emphasis><property>Create Field...</property></emphasis> from the context menu</para></listitem>
 <listitem><para>Enter a name for Property in the dialog box</para></listitem>
 <listitem><para>In the properties for the name field to the right of the &quot;tree&quot; for the validation.xml file, click on the <emphasis><property>Change...</property></emphasis>button next to the Depends entry field</para></listitem>
-<listitem><para>In the displayed double list, select required from the left list and then click <emphasis><property>Add</property></emphasis></para></listitem>
+<listitem><para>In the displayed double list, select <emphasis><property>required</property></emphasis> from the left list and then click <emphasis><property>Add</property></emphasis></para></listitem>
     <listitem><para>Click <emphasis><property>Ok</property></emphasis></para></listitem>
 <listitem><para>Right-click name and select <emphasis><property>Add Arg...</property></emphasis> from the context menu</para></listitem>
 <listitem><para>In the Add Arg dialog box, click on the <emphasis><property>Change...</property></emphasis>button next to the <emphasis><property>Key</property></emphasis> field</para></listitem>
     <listitem><para>In the Key dialog box that appears now, click on the <emphasis><property>Add</property></emphasis> button</para></listitem>
     <listitem><para>Enter &quot;name.required&quot; in the Name field, and enter a person&apos;s name in the Value field</para></listitem>
     <listitem><para>Click <emphasis><property>Finish</property></emphasis>, then <emphasis><property>Ok</property></emphasis>, and then <emphasis><property>Ok</property></emphasis> again</para></listitem>
-<listitem><para>Select <emphasis><property>File > Save All</property></emphasis> from the menu bar</para></listitem>
+<listitem><para>Select <emphasis><property>File &gt; Save All</property></emphasis> from the menu bar</para></listitem>
 </itemizedlist>
 </section>
 
