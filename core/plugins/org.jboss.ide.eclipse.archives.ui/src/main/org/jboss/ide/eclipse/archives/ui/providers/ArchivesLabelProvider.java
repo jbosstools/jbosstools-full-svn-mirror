@@ -97,12 +97,16 @@ public class ArchivesLabelProvider implements ILabelProvider {
 	private String getPackageFileSetText (IArchiveFileSet fileset) {
 		boolean showFullPath = PrefsInitializer.getBoolean(
 				PrefsInitializer.PREF_SHOW_FULL_FILESET_ROOT_DIR);
+		boolean inWorkspace = fileset.isInWorkspace();
+		
 		String text = "";
 		if (fileset.getIncludesPattern() != null)
 			text += fileset.getIncludesPattern() + ": ";
 		
 		if (showFullPath) {
 			text += fileset.getGlobalSourcePath().toString();
+		} else if( inWorkspace ){
+			text += fileset.getSourcePath().toString();
 		} else {
 			text += fileset.getGlobalSourcePath().lastSegment();
 		}
