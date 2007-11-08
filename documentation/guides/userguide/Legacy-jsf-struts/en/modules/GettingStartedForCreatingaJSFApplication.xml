@@ -44,7 +44,7 @@ selecting <emphasis><property>Window > Open Perspective > Web Development</prope
         <title>Package Explorer View</title>
         <mediaobject> 
             <imageobject>
-                <imagedata fileref="images/pev.png"/>
+                <imagedata fileref="images/GSGJSF/pev.png"/>
             </imageobject>
         </mediaobject>
     </figure>
@@ -59,7 +59,7 @@ selecting <emphasis><property>Window > Open Perspective > Web Development</prope
     <title>Configuration File Editor</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ConfigEditor.png"/>
+            <imagedata fileref="images/GSGJSF/ConfigEditor.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -102,7 +102,7 @@ side of the diagram</para></listitem>
     <title>Connection Icon</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/arrow.png"/>
+            <imagedata fileref="images/GSGJSF/arrow.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -116,7 +116,7 @@ side of the diagram</para></listitem>
 <title>Transition Between Two Icons</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/connection.png"/>
+            <imagedata fileref="images/GSGJSF/connection.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -150,7 +150,7 @@ Class is not filled in, String is the assumed type)</para></listitem>
 <title>Tree View in Config Editor</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ConfigEditor2.png"/>
+            <imagedata fileref="images/GSGJSF/ConfigEditor2.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -178,7 +178,7 @@ a WYSIWIG view along the bottom:</para>
     <title>Visual Page Editor</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/visual.png" />
+            <imagedata fileref="images/GSGJSF/visual.png" />
         </imageobject>
 </mediaobject>
 </figure>
@@ -193,7 +193,7 @@ by selecting it</para></listitem>
     <title>JBoss Tools Palette</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/RHDSpalette.png" />
+            <imagedata fileref="images/GSGJSF/RHDSpalette.png" />
         </imageobject>
 </mediaobject>
 </figure>
@@ -244,7 +244,7 @@ innermost box in the editor after the input box</para></listitem>
     <title>Visual Page Editor</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/visual2.png"/>
+            <imagedata fileref="images/GSGJSF/visual2.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -327,7 +327,7 @@ by using the JBoss engine that comes with the Red Hat Developer Studio plug-in. 
     <title>JBoss Server View</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/running.png"/>
+            <imagedata fileref="images/GSGJSF/running.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -341,7 +341,7 @@ stop it by clicking on the red icon and then start it again. Remember, the JSF r
     <title>Red Hat Run Icon</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/run.png"/>
+            <imagedata fileref="images/GSGJSF/run.png"/>
         </imageobject>
 </mediaobject>
 </figure>

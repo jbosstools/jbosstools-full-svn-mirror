@@ -109,7 +109,7 @@ server side validation. You need to enable validation as a part of the project, 
     <title>Run Icon</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/run.png"/>
+            <imagedata fileref="images/GSGStrutsValid/run.png"/>
         </imageobject>
 </mediaobject>
 </figure>
