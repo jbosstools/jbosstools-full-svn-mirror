@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="IntroductionToClassicReferenceManual" xreflabel="IntroductionToClassicReferenceManual">
-  <?dbhtml filename="IntroductionToClassicReferenceManual.html"?>
+<chapter id="introduction" xreflabel="introduction">
+  <?dbhtml filename="introduction.html"?>
   <chapterinfo>
     <keywordset>
       <keyword>Red Hat Developer Studio</keyword>

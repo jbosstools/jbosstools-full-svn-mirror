@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<chapter id="GettingStartedGuideforJavaServerFaces" xreflabel="GettingStartedGuideforJavaServerFaces">
-    <?dbhtml filename="GettingStartedGuideforJavaServerFaces.html"?>
+<chapter id="gsg_jsf" xreflabel="gsg_jsf">
+    <?dbhtml filename="gsg_jsf.html"?>
     <title>Getting Started Guide for Java Server Faces</title>
     <chapterinfo>
         <keywordset>

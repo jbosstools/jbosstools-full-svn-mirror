@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<chapter id="GettingStartedStrutsValidationExamples" xreflabel="GettingStartedStrutsValidationExamples">
-  <?dbhtml filename="GettingStartedStrutsValidationExamples.html"?>
+<chapter id="struts_validation" xreflabel="struts_validation">
+  <?dbhtml filename="struts_validation.html"?>
   <chapterinfo>
         <keywordset>
             <keyword>Red Hat Developer Studio</keyword>

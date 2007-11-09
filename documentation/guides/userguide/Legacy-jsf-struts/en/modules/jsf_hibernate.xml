@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<chapter id="GettingStartedGuideforJSFwithHibernate" xreflabel="GettingStartedGuideforJSFwithHibernate">
-    <?dbhtml filename="GettingStartedGuideforJSFwithHibernate.html"?>
+<chapter id="jsf_hibernate" xreflabel="jsf_hibernate">
+    <?dbhtml filename="jsf_hibernate.html"?>
 	<title>Getting Started Guide for JSF with Hibernate</title>
 <para>In this guide, we will show you how to take a very simple ready-made JSF application and convert it to use a database with the help of RHDS. After downloading, we will first set up and run the application without persistence, and then with persistence.</para>
 <para>The application itself is a simple JSF-based application that asks the user to enter a UserID. It tries to locate a record for the entered User ID (entered during the application session).</para>

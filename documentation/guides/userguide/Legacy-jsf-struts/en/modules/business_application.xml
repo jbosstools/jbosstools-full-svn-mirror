@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="BusinessProcessAndRulesApplication" xreflabel="BusinessProcessAndRulesApplication">
-    <?dbhtml filename="BusinessProcessAndRulesApplication.html"?>
+<chapter id="business_application" xreflabel="business_application">
+    <?dbhtml filename="business_application.html"?>
     <chapterinfo>
         <keywordset>
             <keyword>Business process</keyword>
@@ -49,7 +49,7 @@
 Those files are very simple and we will review them as we go along with the tutorial. We import 
 them here to reduce potential typos and other errors in the tutorial.</para>
 <orderedlist>
-<listitem>Choose the <emphasis><property>File > Import ...</emphasis> menu and then select <emphasis><property>General > Existing</property></emphasis> project into workspace and 
+<listitem>Choose the <emphasis><property>File > Import ...</property></emphasis> menu and then select <emphasis><property>General > Existing</property></emphasis> project into workspace and 
 click on the Next button.</listitem>
 </orderedlist>
 <figure>

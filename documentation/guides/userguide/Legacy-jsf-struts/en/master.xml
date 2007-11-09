@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
 "../../../resources/support/docbook-dtd/docbookx.dtd"
 
-[<!ENTITY IntroductionToClassicReferenceManual SYSTEM "modules/IntroductionToClassicReferenceManual.xml">
-<!--<!ENTITY GettingStartedGuideforJSFwithHibernate  SYSTEM "modules/GettingStartedGuideforJSFwithHibernate.xml"> -->
-<!--<!ENTITY BusinessProcessAndRulesApplication  SYSTEM "modules/BusinessProcessAndRulesApplication.xml">-->
-<!ENTITY GettingStartedGuideforJavaServerFaces SYSTEM "modules/GettingStartedGuideforJavaServerFaces.xml">
-<!ENTITY GettingStartedForCreatingaJSFApplication SYSTEM "modules/GettingStartedForCreatingaJSFApplication.xml">
-<!ENTITY GettingStartedGuideforCreatingaStrutsApplication  SYSTEM "modules/GettingStartedGuideforCreatingaStrutsApplication.xml">
-<!ENTITY GettingStartedStrutsValidationExamples  SYSTEM "modules/GettingStartedStrutsValidationExamples.xml">
+[<!ENTITY introduction SYSTEM "modules/introduction.xml">
+<!--<!ENTITY jsf_hibernate  SYSTEM "modules/jsf_hibernate.xml"> -->
+<!--<!ENTITY business_application  SYSTEM "modules/business_application.xml">-->
+<!ENTITY gsg_jsf SYSTEM "modules/gsg_jsf.xml">
+<!ENTITY jsf_application SYSTEM "modules/jsf_application.xml">
+<!ENTITY struts_application  SYSTEM "modules/struts_application.xml">
+<!ENTITY struts_validation  SYSTEM "modules/struts_validation.xml">
 ]>
 
 <book>
@@ -27,15 +27,13 @@
     <toc/>  
     
     
-    &IntroductionToClassicReferenceManual;
-    <!--&GettingStartedGuideforJSFwithHibernate; -->
-    <!--&BusinessProcessAndRulesApplication;-->
-    &GettingStartedForCreatingaJSFApplication;
-    &GettingStartedGuideforCreatingaStrutsApplication;
-    &GettingStartedStrutsValidationExamples;
-    <!--
-        &GettingStartedGuideforJavaServerFaces;
-    -->
+    &introduction;
+    <!--&jsf_hibernate; -->
+    <!--&business_application;-->
+    &jsf_application;
+    &struts_application;
+    &struts_validation;
+    <!--&gsg_jsf; -->
     
     
 </book>    

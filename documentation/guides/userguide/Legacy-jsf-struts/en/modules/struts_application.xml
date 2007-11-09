@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<chapter id="GettingStartedGuideforCreatingaStrutsApplication" xreflabel="GettingStartedGuideforCreatingaStrutsApplication">
-    <?dbhtml filename="GettingStartedGuideforCreatingaStrutsApplication.html"?>
+<chapter id="struts_application" xreflabel="struts_application">
+    <?dbhtml filename="struts_application.html"?>
     <title>Getting Started Guide for Creating a Struts Application</title>
     <para>We are going to show you how to create a simple <emphasis><property>Struts application</property></emphasis> using the Red Hat Developer Studio. The completed application will ask a user to enter a name and click a button.
         The resulting new page will display the familiar message, &quot;Hello &lt;name&gt;!&quot;</para>
