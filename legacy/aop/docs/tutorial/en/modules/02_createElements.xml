@@ -1,0 +1,338 @@
+<chapter id="Creating Elements">
+	<title>Creating Aop Elements</title>
+
+	<section><title>Setup</title>
+		<informaltable frame="none">
+			<tgroup cols="2" align="left" colsep="0" rowsep="0">
+				<tbody>
+					<row>
+						<entry valign="top">
+		<para>For the setup of the following examples, I've 
+		created two different POJO's. </para>
+		
+		<para>The first, <literal>MyPojo1</literal>,
+		has two member variables: <literal>myString</literal> and 
+		<literal>myInt</literal>, along with getters and setters for both.</para>
+		
+		<para>The second POJO class, <literal>MyPojo2</literal>, contains only one
+		member variable, <literal>myString</literal>, along with both a getter
+		and a setter.</para>
+		
+		<para>I have also created a simple Interceptor called
+		<literal>PojoInterceptor</literal>, which implements the 
+		<literal>Interceptor</literal> interface (two methods: 
+		getName, and invoke(Invocation arg0)). </para>
+		
+		<para>When expanded, the package explorer view should resemble 
+		the image to the right.</para>
+		</entry>
+		<entry><mediaobject><imageobject>
+				<imagedata align="center" fileref="images/02_expandedPackage.gif"/>
+		</imageobject></mediaobject></entry>
+</row></tbody></tgroup></informaltable>
+	</section>
+	
+	<section><title>Creating a named pointcut</title>
+		<para>A pointcut expression is an expression
+		that is used to refer to one or many joinpoints
+		distributed throughout the classes in your Java AOP Project.
+		The expression language is defined in the AOP tutorials 
+		and other resources and includes support for wildcards
+		which can help you create an expression that matches
+		a specific group of classes.</para>
+		
+		<para>To turn one specific java field or method into a named
+		pointcut, you can right-click on the java element in either the
+		<literal>Outline</literal> or <literal>Package Explorer</literal>
+		views, and select <literal>JBoss AOP-&gt;Convert to Pointcut...</literal>.
+		There, you'll be able to name it.</para>
+		
+		<para>To create a named pointcut with a more
+		generic wizard, you should right-click on 
+		the <literal>Pointcut</literal> element in the 
+		<literal>Aspect Manager View</literal>. Then, select 
+		<literal>Create Pointcut</literal></para>
+		
+		<para>In the resulting dialog box, if you fill in name 
+		with some string value, and expression with 
+		<literal>execution(* *->getMyString(..))</literal>, 
+		and then click the preview box, the dialog should
+		display back to you which classes and which methods 
+		that expression matches.</para>
+		
+		<para>Directly below, as you type, and if your expression is not 
+		syntactically correct, an error message will be displayed to try to 
+		point out where the error is.</para>
+		<para> </para>
+		<mediaobject><imageobject>
+				<imagedata align="center" fileref="images/02_CreatePointcutSyntaxError.gif"/>
+		</imageobject></mediaobject>
+		<para> </para>
+		
+		<para>If the syntax is correct, however, the preview button becomes
+		enabled and the dialog box will present the matching java elements.</para>
+		
+		<mediaobject><imageobject>
+				<imagedata align="center" fileref="images/02_CreatePointcut.gif"/>
+		</imageobject></mediaobject>
+		
+		<para>Should the user need more assistance in creating a pointcut
+		expression, they can click on the <literal>Wizard</literal> button
+		for assistance. The wizard will help you create new expressions from 
+		scratch, but is not currently able to modify an expression
+		that is already created.</para>
+		
+		<para>The wizard consists of a scrolling composite, which can have
+		the number of rows changed via two buttons. The pulldown for 
+		each row consists of every acceptable expression type, in this
+		case for pointcuts. Method expressions, Type expressions, Field expressions,
+		and others are all acceptable to create pointcut expressions. More
+		documentation on this topic can be found on the JBoss AOP main site.</para>
+		
+		<para>Also included in the pulldown is the possibility to reference OTHER 
+		named pointcuts. </para>
+		
+		<para><emphasis>What is NOT included in the wizard</emphasis> is 
+		the ability to add parenthesis or the negation symbol (!). 
+		However, these can be manually added to the expression afterwards
+		in the main expression textbox.</para> 
+		
+		<para>From the pulldown, you can select a joinpoint
+		that references a type, a field, a method or a constructor. Once 
+		you've chosen from the pulldown, you can click <literal>Modify</literal>
+		to complete the remaining pieces of the expression. </para>
+		
+		<para>Once modifying your expression's details, you'll be faced with 
+		a large number of controls. Most of the text fields provide 
+		content assistance and completion (by pressing ctrl+i to invoke it.)
+		If modifying a method expression, which is the one with the most controls,
+		you'll find sections for designating information about a matching element's
+		return type, containing class type, a pattern for the method's name, 
+		as well as areas to designate parameters and exceptions.</para>
+		
+		<para><emphasis>NOTE: Many of the fields provide content assistance.
+		Pressing <literal>ctrl+space</literal> will invoke this feature</emphasis></para>
+		
+		<informaltable frame="none">
+			<tgroup cols="2" align="left" colsep="0" rowsep="0">
+				<tbody>
+					<row>
+						<entry valign="top">
+		<para>Return type and Class type both use a generic Type composite,
+		and its pulldown looks like the one to the right, offering class,
+		instanceof, annotation, or typedef as options. (Typedefs are
+		named expressions that represent a class type, not a method or field.)
+		The parameters composite also has these four options, but it 
+		accepts several if the user requires.</para>
+		</entry>
+		<entry><mediaobject><imageobject>
+				<imagedata align="center" fileref="images/02_typePatternPulldown.gif"/>
+		</imageobject></mediaobject></entry>
+</row></tbody></tgroup></informaltable>
+		
+		<para>Upon selecting <literal>typedefs</literal> from the pulldown, 
+		the textbox at the right will turn into another dropdown listing
+		all declared typedefs. If none are declared, the list will be 
+		empty.</para>
+		
+		<para>The sections for parameters and exceptions is currently
+		implemented in a non-intuitive way, and bears a bit of explaining.
+		For a matching element to have ANY parameters, in the provided
+		text box, type <literal>..</literal> and click <literal>add</literal>.
+		For the matching element to have NO parameters, leave the section blank.
+		The exceptions are implemented differently, and leaving it blank will
+		allow the method to throw exceptions of ANY type. Adding
+		exception types to this box only requires the method to have the
+		specified exceptions, not contain ONLY those elements.</para>
+		
+		<para>I welcome you to test out this wizard and use the preview
+		button often to make sure you are getting the desired results.</para>
+	
+	</section>
+	
+	
+	
+	
+	<section><title>Binding the Pointcut</title>
+		<para>We now have a named pointcut, but it does not
+		perform any action. It only references some group of 
+		methods, fields, or types. The next step is to bind this 
+		expression along with some combination of interceptors 
+		or advice. To begin, we right-click on the <literal>Bindings</literal>
+		item in the <literal>Aspect Manager View</literal>, and select
+		<literal>Create new Binding</literal></para>
+		
+		<figure id="bindingDialog">
+		   <mediaobject>
+		      <imageobject>
+				<imagedata align="center" fileref="images/02_binding_new.gif"/>
+		      </imageobject>
+		      <caption><para>Creating a Binding</para></caption>
+		   </mediaobject>
+		</figure>
+		
+		<para>When the dialog appears, you can do one of two things.
+		If you already have a pointcut you'd like to use, you can click on the
+		<literal>Choose...</literal> button and select your pointcut from the
+		resultant list of pointcuts you have already defined. If you'd like
+		to craft your own again, you can select <literal>edit</literal>,
+		which will display the pointcut creation dialog as before with the single
+		exception that the pointcut will not be named. </para>
+		
+		<para>Once a pointcut is created or selected, you can add
+		interceptors or aspect advice to the lists, and 
+		apply those elements to your pointcut. We can select 
+		<literal>Add</literal> for the interceptors, and 
+		the interceptor we defined should be at the top of the list.
+		You are welcome, of course, to use from any of the 
+		provided interceptors from the JBoss AOP Aspect Library.</para>
+		
+		<para>Once you accept this binding and click <literal>OK</literal>, 
+		the binding will be added to the xml descriptor file, and 
+		the model will be updated. Markers will be added to matching 
+		methods, fields, and types. These markers will be described in 
+		a later chapter.</para>
+	</section>
+	
+	<section><title>Creating Typedefs</title>
+	
+		<para>Creating Typedefs closely resembles the process for creating
+		named pointcut expressions. Every typedef must be named. They cannot
+		refer to methods or fields; only classes. </para>
+		
+		<para>To create a named typedef, you should right-click on 
+		the <literal>Typedefs</literal> element in the 
+		<literal>Aspect Manager View</literal>. Then, select 
+		<literal>Create Typedef</literal></para>
+		
+		<para>The resulting dialog should look very familiar. 
+		The only difference will be that the pulldowns will contain
+		fewer types of expressions and will not have the option of 
+		selecting a named pointcut. </para>
+		
+		<para>The dialog works the same way as the last, with both the wizard
+		and preview boxes. When you are satisified with your typedef, 
+		you can select <literal>OK</literal>, which will save the typedef
+		to the descriptor file. The internal model will be updated. 
+		Matching classes will be marked with an image in their editor window
+		to delineate them as matched. </para>
+		
+	</section>
+	
+	<section><title>Creating Introductions</title>
+		<para>An Introduction is a way to force some class you already
+		have to implement an interface it does not already implement. 
+		Introductions can optionally have mixins, which will provide the 
+		implementation for those interfaces. If no mixins are supplied, 
+		a default implementation is provided by JBoss AOP (return nulls, etc).
+		</para>
+		
+		<section><title>Setup</title>
+			<para>Before we start, I created a new Interface called 
+			<literal>IntroPojoInterface</literal> with one method.
+			The method had the following signature:</para>
+			<para><literal>public void IntroductionMethod();</literal></para>
+			
+			<para>I also created an implementing class called 
+			<literal>IntroPojoMixin</literal> which had a method
+			by the same signature.</para>
+		</section>
+		
+		<section><title>Creating the Introduction</title>
+			<para>To create an introduction, you should right-click on 
+			the <literal>Introductions</literal> element in the 
+			<literal>Aspect Manager View</literal>. Then, select 
+			<literal>Create Introduction</literal>.
+			The dialog should look like the one shown below.
+			</para>
+		
+			<figure id="introductionDialog">
+			   <mediaobject>
+			      <imageobject>
+					<imagedata align="center" fileref="images/02_create_intro.gif"/>
+			      </imageobject>
+			      <caption><para>Creating an Introduction</para></caption>
+			   </mediaobject>
+			</figure>
+			
+			<para><emphasis>NOTE: Many of the fields provide content assistance.
+			Pressing <literal>ctrl+space</literal> will invoke this feature</emphasis></para>
+			
+			<para>The top line is the class expression which describes
+			what group of classes this introduction is going to refer to. 
+			In the image shown, any class which contains the method 
+			<literal>getMyString</literal>, with any combination (or none) of 
+			parameters, will be affected by this Introduction.</para>
+			
+			<para>The next section is where you can add interfaces. A 
+			default implementation of EVERY method in this list of 
+			interfaces will be injected into any class that matches the above
+			type expression.</para>
+			
+			<para>Following that is the mixin section. Here, you can add
+			a list of mixins, each of which contains a similar list of
+			interfaces, but also provides a field to designate a class
+			as the implementation of that group of interfaces.</para>
+			
+		<informaltable frame="none">
+			<tgroup cols="2" align="left" colsep="0" rowsep="0">
+				<tbody>
+					<row>
+						<entry valign="top">
+			<para>To create a mixin, right-click on the list area and select
+			<literal>Create New Mixin</literal>. A mixin will appear in 
+			the list. </para>
+			
+			<para>To MODIFY this mixin, click on it. The lists and text
+			fields below will fill automatically with the values from
+			the mixin. Any modifications to these fields will 
+			instantly update the mixin that is selected.</para>
+			
+			</entry>
+			<entry>
+				<figure id="createMixin">
+				   <mediaobject>
+				      <imageobject>
+						<imagedata align="center" fileref="images/02_create_mixin.gif"/>
+				      </imageobject>
+				   </mediaobject>
+				</figure>
+			
+			</entry>
+		</row></tbody></tgroup></informaltable>
+		
+		<para>The <literal>construction</literal> field is updated with the 
+		class you provide above it, but you can change the construction field 
+		on your own as well. What that field represents is what java code will
+		be called to create your mixin implementation class. If your
+		implementation class requires no parameters, then the generic 
+		<literal>new yourclass()</literal> will suffice. 
+		The other most common construction text would be to pass in 
+		<literal>this</literal> as the first parameter. </para>
+		
+		<para>Of course, this all depends on your implementations.</para>
+		
+				<figure id="completedMixin">
+				   <mediaobject>
+				      <imageobject>
+						<imagedata align="center" fileref="images/02_completed_mixin.gif"/>
+				      </imageobject>
+				      <caption><para>What your completed mixin should look like.</para></caption>
+				   </mediaobject>
+				</figure>
+		<para>When your introduction and their mixins are
+		finalized, clicking <literal>ok</literal> and 
+		closing the dialog will update the aop descriptor
+		file. The internal model will be updated. 
+		Matching classes will be marked with an image in their 
+		editor window to delineate them as matched. </para>
+		</section>
+
+
+	</section>
+</chapter>
+
+
+	
+
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%org.jboss.ide.eclipse.ui.wizards.webservices"
+            parentCategory="org.jboss.ide.eclipse.ui.wizards"
+            id="org.jboss.ide.eclipse.ui.wizards.webservices">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            name="Web Services Test Client"
+            icon="icons/full/ctool16/newclass_wiz.gif"
+            category="org.jboss.ide.eclipse.ui.wizards/org.jboss.ide.eclipse.ui.wizards.webservices"
+            class="org.jboss.ide.eclipse.jdt.ws.ui.wizards.webservices.NewWebServicesTestClientWizard"
+            id="org.jboss.ide.eclipse.jdt.ws.ui.wizards.webservices.NewWebServicesTestClientWizard">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.jdt.ui.classpathContainerPage">
+      <classpathContainerPage
+            name="%org.jboss.ide.eclipse.jdt.core.classpath.wsi-1.0"
+            class="org.jboss.ide.eclipse.jdt.ws.ui.pages.WSI10ClasspathContainerPage"
+            id="org.jboss.ide.eclipse.jdt.core.classpath.wsi-1.0">
+      </classpathContainerPage>
+      <classpathContainerPage
+            name="%org.jboss.ide.eclipse.jdt.core.classpath.axis-1.2"
+            class="org.jboss.ide.eclipse.jdt.ws.ui.pages.Axis12ClasspathContainerPage"
+            id="org.jboss.ide.eclipse.jdt.core.classpath.axis-1.2">
+      </classpathContainerPage>
+   </extension>
+
+</plugin>
