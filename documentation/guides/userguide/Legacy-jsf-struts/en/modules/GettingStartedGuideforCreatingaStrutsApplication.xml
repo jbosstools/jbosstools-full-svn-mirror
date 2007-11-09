@@ -9,14 +9,14 @@ the way demonstrating some of the powerful features of Red Hat Developer Studio.
 application, generate stub code for the application, fill in the stub coding, compile the application,
 and run the application all from inside Red Hat Developer Studio.</para>
 <para>We assume that you have already launched Eclipse with Red Hat Developer Studio installed and also that the Web Development perspective is the current perspective. (If not,
-    make it active by selecting <emphasis><property>Window > Open Perspective > Other > Web Development</property></emphasis> from the menu bar.)</para>
+    make it active by selecting <emphasis><property>Window &gt; Open Perspective &gt; Other &gt; Web Development</property></emphasis> from the menu bar.)</para>
 
     <section id="StartingUp">
     <title>Starting Up</title>   
 <para>We are first going to create a new project for the application.</para>
  <itemizedlist>
-<listitem><para>Go to the menu bar and select <emphasis><property>File > New > Project...</property></emphasis>.</para></listitem>
-<listitem><para>Select <emphasis><property>JBoss Tools Web > Struts > Struts Project</property></emphasis> in the New Project dialog box</para></listitem>
+<listitem><para>Go to the menu bar and select <emphasis><property>File &gt; New &gt; Project...</property></emphasis>.</para></listitem>
+<listitem><para>Select <emphasis><property>JBoss Tools Web &gt; Struts &gt; Struts Project</property></emphasis> in the New Project dialog box</para></listitem>
 <listitem><para>Click <emphasis><property>Next </property></emphasis></para></listitem>
 <listitem><para>Enter &quot;StrutsHello&quot; as the project name</para></listitem>
      <listitem><para>Leave everything else as is, and click <emphasis><property>Next</property></emphasis></para></listitem>
@@ -374,7 +374,12 @@ public class GreetingAction extends org.apache.struts.action.Action
 ]]></programlisting>
 
      <listitem><para>Select the <emphasis><property>Visual</property></emphasis> pane of the editor</para></listitem>
-     <listitem><para>Then, in the JBoss Tools Palette, expand the <emphasis><property>Struts Form</property></emphasis> library, select <emphasis><property>text</property></emphasis>, and drag it onto the box</para></listitem>
+     <listitem><para>Then, in the JBoss Tools Palette, expand the <emphasis><property>Struts Form</property></emphasis> library, select <emphasis><property>text</property></emphasis>, and drag it onto the box
+		 <note>
+    <title>Note:</title>
+    <para>By default there are only four groups on the JBoss Tools Palette. If you wish to make some group visible click the <emphasis><property>Show/Hide</property></emphasis> button on the top of palette and in the prompted dialog check the group (or groups) you want to be shown.</para>
+   </note>
+     </para></listitem>
  </itemizedlist>
                 <figure>
                     <title>JBoss Tools Palette</title>
