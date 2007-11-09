@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="migration_ws" xreflabel="migration_ws">
- <?dbhtml filename="migration_ws.html"?>
+<chapter id="workspace" xreflabel="workspace">
+ <?dbhtml filename="workspace.html"?>
     <chapterinfo>
         <keywordset>
             <keyword>Red Hat Developer Studio</keyword>

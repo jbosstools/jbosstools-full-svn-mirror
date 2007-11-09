@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="intro_migration" xreflabel="intro_migration">
- <?dbhtml filename="intro_migration.html"?>
+<chapter id="introduction" xreflabel="introduction">
+ <?dbhtml filename="introduction.html"?>
     <chapterinfo>
         <keywordset>
             <keyword>Red Hat Developer Studio</keyword>

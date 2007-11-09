@@ -2,10 +2,10 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
 "../../../resources/support/docbook-dtd/docbookx.dtd"
 
-[<!ENTITY  migration SYSTEM "modules/migration.xml">
-<!ENTITY  migrationwar SYSTEM "modules/migration_war.xml">
-<!ENTITY intro_migration SYSTEM "modules/intro_migration.xml">
-<!ENTITY migration_ws SYSTEM "modules/migration_ws.xml">
+[<!ENTITY  jsf_struts SYSTEM "modules/jsf_struts.xml">
+<!ENTITY  jsf_struts_war SYSTEM "modules/jsf_struts_war.xml">
+<!ENTITY introduction SYSTEM "modules/introduction.xml">
+<!ENTITY workspace SYSTEM "modules/workspace.xml">
 ]>
 
 <book>
@@ -21,10 +21,10 @@
     	
     </bookinfo>
 	<toc/>  
-&intro_migration;
-&migration_ws;
-&migration;
-&migrationwar;   
+&introduction;
+&workspace;
+&jsf_struts;
+&jsf_struts_war;   
 
 	
 </book>    
