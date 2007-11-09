@@ -105,9 +105,29 @@
 
 <para>For the deployment format, choose WAR deployment if you want to use POJOs for UI event handling and business logic; choose EAR deployment if you want to EJB3 beans for added features. In most web applications, the WAR deployment option would suffice. You should also enter Java packages for the entity beans (for database mapping) and session beans (for action handlers). All generated code will be placed in those packages. </para>
 
-    <para>Click on <emphasis><property>Finish</property></emphasis> to generate a project. The generated project contains all the necessary library JARs, XML configuration files, the ANT build script, as well as simple XHTML web pages and Java classes for the skeleton web application.</para>
-    
-    
+    <para>Click on <emphasis><property>Finish</property></emphasis> to generate a project. The generated project contains all the necessary library JARs, XML configuration files, the ANT build script, as well as simple XHTML web pages and Java classes for the skeleton web application. The project will be shown in Project Explorer as well as in <emphasis><property>Seam Components</property></emphasis> view. If Seam Components view is not open select <emphasis><property>Window &gt; Show View &gt; Seam Components</property></emphasis>.</para>
+    <figure>
+      <title>Seam Components View</title>
+      <mediaobject> 
+        <imageobject>
+          <imagedata fileref="images/WriteYourFirst/SeamNewProj051.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <para>You can hide unused Seam components from this view.</para>
+    <itemizedlist>
+		<listitem><para>Click the button <emphasis><property>Menu</property></emphasis> on the top of the view (down-pointing arrow)</para></listitem>
+		<listitem><para>Choose <emphasis><property>Customize View..</property></emphasis></para></listitem>
+		<listitem><para>In the dialog <emphasis><property>Available Customization</property></emphasis> check the filter you want to apply under the <emphasis><property>Filters</property></emphasis> tab</para></listitem>
+    </itemizedlist>
+    <figure>
+      <title>Seam Components Filtering</title>
+      <mediaobject> 
+        <imageobject>
+          <imagedata fileref="images/WriteYourFirst/SeamNewProj052.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
   </section>
   
   <section>
