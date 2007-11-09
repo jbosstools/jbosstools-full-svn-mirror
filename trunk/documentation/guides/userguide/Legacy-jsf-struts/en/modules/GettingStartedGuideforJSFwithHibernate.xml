@@ -1,0 +1,514 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<chapter id="GettingStartedGuideforJSFwithHibernate" xreflabel="GettingStartedGuideforJSFwithHibernate">
+    <?dbhtml filename="GettingStartedGuideforJSFwithHibernate.html"?>
+	<title>Getting Started Guide for JSF with Hibernate</title>
+<para>In this guide, we will show you how to take a very simple ready-made JSF application and convert it to use a database with the help of RHDS. After downloading, we will first set up and run the application without persistence, and then with persistence.</para>
+<para>The application itself is a simple JSF-based application that asks the user to enter a UserID. It tries to locate a record for the entered User ID (entered during the application session).</para>
+<para>If the record is found, details are displayed. If the record is not found, you are asked to create this record. This application, of course, only runs as long as the JBoss server is running. Once we stop the server all of the data is lost as all information is saved only in the application session context.</para>
+<para>With the help of RHDS, we will convert this application to use the lightweight hsqldb database (included with the downloaded project). We will use RHDS special features for object-relational mapping for this conversion. After the conversion, even if we restart the server, the data we entered will have been saved in a database and thus available to the application.</para>
+<para>Before we start, we assume that you have installed RHDS with JBoss server.</para>
+
+<section id="InstallingTheProject">
+<?dbhtml filename="InstallingTheProject.html"?>
+<title>Installing the Project</title>
+<para>We are first going to download and import this project (ormHibernate3-jsf) into Eclipse.</para>
+
+<itemizedlist>
+<listitem><para>Download: http://webdownload.exadel.com/dirdownloads/ormhib/examples/ormHibernate3-jsf.zip</para></listitem>
+<listitem><para>Unzip this file into your Eclipse workspace folder</para></listitem>
+<listitem><para>Launch Eclipse</para></listitem>
+<listitem><para>In Eclipse, select <emphasis><property>File/Import/JSF Project</property></emphasis></para></listitem>
+<listitem><para>Click Next</para></listitem>
+<listitem><para>Browse to where the project was unzipped</para></listitem>
+<listitem><para>Find the web.xml file inside the WebContent folder in the WEB-INF folder, select it, and Click Finish</para></listitem>
+</itemizedlist>
+<para>The ormHibernate3-jsf project should appear in the Package Explorer with a standard Web application 
+structure. As we mentioned before, this is a JSF application. To see the JSF configuration file, browse to
+ <emphasis><property>WebContent/WEB-INF/faces-config.xml</property></emphasis>.</para>
+<para>In the JavaSource folder, you will find the following Java source files. We will briefly explain these
+ files and then run the application.</para>
+ <table>
+         <title>JavaSource Folder</title>
+         <tgroup cols="2">
+            <thead>
+               <row>
+                  <entry>Class Name</entry>
+                  <entry>Description</entry>
+               </row>
+            </thead>
+            <tbody>
+               <row>
+                  <entry>demo/Address.java</entry>
+                  <entry>holds the user address</entry>
+               </row>
+               <row>
+               <entry>demo/User.java</entry>
+               <entry>holds user information</entry>
+               </row>
+               <row>
+               <entry>demo/GetUserIdBean.java</entry>
+               <entry>holds user Id and determines navigation (JSF Backing Bean)</entry>
+               </row>
+               <row>
+               <entry>demo/UserFormBean.java</entry>
+               <entry>holds new user input (JSF Backing Bean)</entry>
+               </row>
+               <row>
+               <entry>demo.bundle/Messages.properties</entry>
+               <entry>holds label messages used in the application</entry>
+               </row>
+            </tbody>
+         </tgroup>
+      </table>
+</section>
+
+<section id="RunningWithoutADatabase">
+<?dbhtml filename="RunningWithoutADatabase.html"?>
+<title>Running Without a Database</title>
+
+<para>We are ready to run this project in a Web browser and see how it looks. We don&apos;t need to
+ compile these classes, because Red Hat Developer Studio did it for us when we imported the project.</para>
+
+<itemizedlist continuation="continues">
+<listitem><para>Start JBoss</para></listitem>
+<listitem><para>Click on the Run icon from the toolbar</para></listitem>
+<listitem><para>Go ahead and play with the application</para></listitem>
+</itemizedlist>
+<para>Initially users don&apos;t exist, so entering any ID will prompt you to enter user details. Once you have saved a user, you can go back to the main page by clicking on the Back to Login Page link. If you then enter that user&apos;s id again, the application will locate and display the user&apos;s details.</para>
+
+</section>
+
+<section id="ConvertingforUseWithaDatabase">
+<?dbhtml filename="ConvertingforUseWithaDatabase.html"?><title>Converting for Use With a Database</title>
+<para>Now we are ready to convert this application to use with a database with the help of Red Hat Developer Studio. To convert the application for use with a database, we need to set things up in three different places:</para>
+
+
+<itemizedlist><listitem><para>The Application</para></listitem></itemizedlist>
+<itemizedlist><listitem><para>The Database</para></listitem></itemizedlist>
+<itemizedlist><listitem><para>The Application Server</para></listitem></itemizedlist>
+
+</section>
+
+<section id="SettingUpTheApplication">
+<?dbhtml filename="SettingUpTheApplication.html"?>
+<title>Setting up the Application</title>
+<para>Let&apos;s start by using Red Hat Developer Studio with the application project. First, we create 
+the object/relational mapping from our simple object model to a database schema after adding <property>Hibernate</property> capabilities to our project.</para>
+<itemizedlist continuation="continues">
+<listitem><para>Right-click on ormHibernate3-jsf in the Package Explorer view and select Red Hat</para></listitem>
+<listitem><para><emphasis><property>Studio/Add Hibernate Capability...</property></emphasis> from the context menu</para></listitem>
+<listitem><para>Click on Yes in the dialog box with Add Hibernate Jars selected</para></listitem>
+<listitem><para>In the Configuration Wizard, click twice in the Value field for dialect and select org.hibernate.dialect.HSQLDialect from the pop-up menu</para></listitem>
+<listitem><para>Click Finish</para></listitem>
+<listitem><para>Select Object to Schema for the Mapping Approach</para></listitem>
+</itemizedlist>
+<para>We are only interested in saving the <emphasis role="italic"><property>&quot;User&quot;</property></emphasis> class in a database, so we are going to create a mapping for the <emphasis role="italic"><property>&quot;User&quot;</property></emphasis> class to a database table.</para>
+<itemizedlist continuation="continues">
+<listitem><para>In the Persistent Classes Wizard dialog that appears next, click on the SelectClasses</para></listitem>
+<listitem><para>Leave all other values as they are in the next dialog box and click Finish</para></listitem>
+</itemizedlist>
+</section>
+
+<section id="EditTheHibernateConfiguration">
+<?dbhtml filename="EditTheHibernateConfiguration.html"?>
+<title>Edit the Hibernate Configuration</title>
+<para>Afterwards, the <property>Hibernate</property> configuration file, hibernate.cfg.xml, will appear in an editor window. 
+So, let&apos;s adjust this file first.</para>
+
+<itemizedlist continuation="continues">
+<listitem><para>Replace these two lines:</para></listitem>
+</itemizedlist>
+
+
+<programlisting role="XML"><![CDATA[<property
+name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
+<property name="hibernate.connection.url">jdbc:hsqldb:hsql:[hostname]</property>
+]]></programlisting>
+
+<para>With this single line:</para>
+
+<programlisting role="XML"><![CDATA[
+<property name="hibernate.connection.datasource">java:comp/env/
+jdbc/kickstart</property>
+]]></programlisting>
+<para>(Make sure there is one line in the file and not two lines as displayed because of wordwrapping.)</para>
+<para>Your file should now look like this:</para>
+
+<programlisting role="XML"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration
+DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+<session-factory>
+<property name="hibernate.connection.datasource">java:comp/env/jdbc/
+kickstart</property>
+<property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect/>
+property>
+<mapping resource="demo/User.hbm.xml"/>
+</session-factory>
+</hibernate-configuration>
+]]></programlisting>
+<itemizedlist continuation="continues">
+<listitem><para>Save the file</para></listitem>
+</itemizedlist>
+</section>
+
+<section id="EdittheMappingFile">
+<?dbhtml filename="EdittheMappingFile.html"?>
+<title>Edit the Mapping File</title>
+<para>Next, we need to make on slight change to the mapping file User.hbm.xml.</para>
+
+<itemizedlist continuation="continues">
+<listitem><para>In the ORM Explorer view, reveal the 
+<emphasis><property>ormHibernate3-jsf/JavaSource/hibernate.cfg.xml/demo/User > user node</property></emphasis>, right-click it, and select 
+Open Mapping from the context menu</para></listitem>
+<listitem><para>In the editor that opens up for the mapping file, just change the <emphasis role="italic"><property>&quot;class&quot;</property></emphasis> attribute for generator to a value of assigned and you&apos;re done with this file</para></listitem>
+</itemizedlist>
+
+
+<para>Here is what the edited User.hbm.xml file should now look like:</para>
+
+<programlisting role="XML"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+<para>"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"></para>
+<hibernate-mapping package="demo">
+<class name="User" table="user" optimistic-lock="none">
+<id name="id" type="string" unsaved-value="null" column="id">
+<generator class="assigned"/>
+</id>
+<property name="firstName" type="string" column="first_name"/>
+<property name="lastName" type="string" column="last_name"/>
+<property name="email" type="string" column="email"/>
+<component name="address" update="true" insert="true" class="demo.Address">
+<property name="city" type="string" column="address_city"/>
+<property name="state" type="string" column="address_state"/>
+<property name="street" type="string" column="address_street"/>
+<property name="zip" type="string" column="address_zip"/>
+</component>
+</class>
+</hibernate-mapping>
+]]></programlisting>
+
+
+<itemizedlist continuation="continues">
+<listitem><para>Save the file</para></listitem>
+</itemizedlist>
+</section>
+<section id="AddAGeneralClassForIncorporatingHibernate">
+<?dbhtml filename="AddAGeneralClassForIncorporatingHibernate.html"?>
+<title>Add a General Class for Incorporating Hibernate</title>
+<para>Next, we will need to create a special <emphasis role="italic"><property>&quot;Java&quot;</property></emphasis> class for incorporating <property>Hibernate</property> into our application.</para>
+
+<itemizedlist continuation="continues">
+<listitem><para>Switch to the Package Explorer view and create the class,
+HibernateHelper.java, in <emphasis><property>JavaSource/demo</property></emphasis> with this content and save it</para></listitem>
+</itemizedlist>
+<programlisting role="JAVA"><![CDATA[package demo;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+public class HibernateHelper {
+/**
+* Reference to SessionFactory.
+*/
+private static SessionFactory sf;
+public static final ThreadLocal session = new ThreadLocal();
+public static synchronized void init() {
+if (sf != null) return;
+System.out.println("Initializing Hibernate");
+try {
+Configuration cfg = new Configuration().configure();
+sf = cfg.buildSessionFactory();
+} catch (Exception he) {
+System.err.println("Unable to create session factory from
+configuration");
+he.printStackTrace();
+throw new RuntimeException("Unable to create session factory from
+configuration", he);
+}
+System.out.println("Hibernate initialized");
+}
+/**
+* Return the SessionFactory.
+* @return The SessionFactory for this application session
+*/
+public static SessionFactory sessionFactory() {
+if (sf == null) init();
+return sf;
+}
+public static void destroy() {
+if (sf != null) {
+try {
+sf.close();
+} catch (HibernateException he) {
+he.printStackTrace();
+}
+}
+sf = null;
+System.out.println("Hibernate resources released");
+}
+/**
+* Closes an hibernate {@link Session}, releasing its resources.
+* @throws HibernateException if an hibernate error occurs
+*/
+public static void closeSession() throws HibernateException {
+Session s = (Session)session.get();
+session.set(null);
+if (s != null) {
+s.close();
+}
+}
+/**
+* Returns an hibernate {@link Session} from the session factory.
+* @return an hibernate {@link Session}
+* @throws HibernateException if an error occurs
+*/
+public static Session openSession() throws HibernateException {
+if (sf == null) init();
+Session s = (Session)session.get();
+if (s == null) {
+s = sf.openSession();
+session.set(s);
+}
+return (s);
+}
+}
+]]></programlisting>
+</section>
+
+<section id="EdittheTwoBeanClasses">
+<?dbhtml filename="EdittheTwoBeanClasses.html"?>
+<title>Edit the Two Bean Classes</title>
+
+<para>We also need to modify the two bean classes in our application to &quot;Hibernate-ize&quot; them.</para>
+
+<itemizedlist continuation="continues">
+<listitem><para>Modify the <emphasis role="italic"><property>&quot;GetUserIdBean.java&quot;</property></emphasis> class in <emphasis><property>JavaSource/demo</property></emphasis> by adding these imports:
+
+</para></listitem>
+</itemizedlist>
+<programlisting role="JAVA"><![CDATA[import org.hibernate.Session;
+import javax.faces.application.FacesMessage;
+]]></programlisting>
+<itemizedlist continuation="continues">
+<listitem><para>Then, replace the action() method with this code and save</para></listitem>
+
+</itemizedlist>
+<programlisting role="JAVA"><![CDATA[{
+public String action()
+throws Exception
+UserFormBean ufb;
+User user;
+String actionResult = "inputuser"; // new user by default
+Map sessionMap =
+FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+if (sessionMap != null) {
+ufb = new UserFormBean();
+ufb.setId(id);
+try {
+Session hSession = HibernateHelper.openSession();
+user = (User)hSession.get(User.class, id);
+HibernateHelper.closeSession();
+} catch (Exception e) {
+FacesContext context = FacesContext.getCurrentInstance();
+context.addMessage(null, new
+FacesMessage(FacesMessage.SEVERITY_ERROR,e.toString(), null));
+return "failed";
+}
+if (user==null || !user.getId().equals(id)) {
+user = new User();
+user.setId(id);
+sessionMap.put("user", user);
+} else {
+// fill UserFormBean with user information
+loadUser(ufb,user);
+actionResult="greeting";
+}
+sessionMap.put("UserFormBean", ufb);
+}
+return actionResult;
+}
+private void loadUser(UserFormBean userForm,User user) {
+userForm.setId(user.getId());
+userForm.setFirstName(user.getFirstName());
+userForm.setLastName(user.getLastName());
+userForm.setEmail(user.getEmail());
+userForm.setStreet(user.getAddress().getStreet());
+userForm.setCity(user.getAddress().getCity());
+userForm.setState(user.getAddress().getState());
+userForm.setZip(user.getAddress().getZip());
+}
+]]></programlisting>
+
+<itemizedlist continuation="continues">
+<listitem><para>Modify the <emphasis role="italic"><property>&quot;UserFormBean.java&quot;</property></emphasis> class in <emphasis><property>JavaSource/demo</property></emphasis> by adding these imports:</para></listitem>
+</itemizedlist>
+<programlisting role="JAVA"><![CDATA[import org.hibernate.Session;
+import org.hibernate.Transaction;
+]]></programlisting>
+<itemizedlist continuation="continues">
+<listitem><para>Then, replace the save() method with this code and save the class</para></listitem>
+</itemizedlist>
+<programlisting role="JAVA"><![CDATA[public String save() throws Exception {
+Map sessionMap =
+FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+if (sessionMap != null) {
+UserFormBean ufb=(UserFormBean)sessionMap.get("UserFormBean");
+try {
+Session hSession = HibernateHelper.openSession();
+Transaction tran = hSession.beginTransaction();
+User user = (User)hSession.get(User.class, id);
+if (user == null) {
+user = new User();
+user.setId(id);
+hSession.save(user);
+}
+saveUser(ufb, user);
+tran.commit();
+HibernateHelper.closeSession();
+} catch (Exception e) {
+return "failed";
+}
+}
+return "greeting";
+}
+]]></programlisting>
+
+</section>
+
+<section id="SettinguptheDatabase">
+<?dbhtml filename="SettinguptheDatabase.html"?>
+<title>Setting up the Database</title>
+<para>To set up the database end, we need to use Red Hat Developer Studio and our HSQL database engine to create a 
+database table corresponding to the class we are trying to persist and make the database available.</para>
+
+</section>
+<section id="CreatingtheDatabaseTable">
+<?dbhtml filename="CreatingtheDatabaseTable.html"?>
+<title>Creating the Database Table</title>
+<para>Let&apos;s first create the script for our database table in Red Hat Developer Studio.</para>
+<itemizedlist continuation="continues">
+<listitem><para>In the ORM Explorer view, right-click on <emphasis><property>JavaSource/hibernate.cfg.xml</property></emphasis> and select &quot;Generate DDL Wizard&quot;</para></listitem>
+
+<listitem><para>Select HSQL as the Dialect and leave Location as is</para></listitem>
+<listitem><para>Click Finish</para></listitem>
+</itemizedlist>
+<para>A DDL file called schema.sql will be created in the root of the project and will be opened in an
+ editor window.</para>
+ </section>
+ <section id="MakingTheDatabaseAvailableForTheApplication">
+ <?dbhtml filename="MakingTheDatabaseAvailableForTheApplication.html"?>
+<title>Making the Database Available for the Application</title>
+<para>The databse server, HSQLDB, is provided with the project. It&apos;s located in the <emphasis><property>ormHibernate3-jsf/hsqldb</property></emphasis> folder.</para>
+<itemizedlist continuation="continues">
+<listitem><para>Start the database server: <emphasis><property>.../ormHibernate3-jsf/hsqldb/bin/server.bat</property></emphasis></para></listitem>
+<listitem><para>In a separate window, start the admin tool: <emphasis><property>.../ormHibernate3-jsf/hsqldb/bin/dbadmin.bat</property></emphasis></para></listitem>
+</itemizedlist>
+<para>This will launch a small GUI application, HSQL Database Manager.</para>
+<itemizedlist continuation="continues">
+<listitem><para>Leave all values as they are, only change URL: to the following: <emphasis><property>jdbc:hsqldb:hsql://localhost</property></emphasis></para></listitem>
+<listitem><para>Click OK</para></listitem>
+<listitem><para>Select <emphasis><property>File/Open Script...</property></emphasis>from the menu bar of HSQL Database Manager</para></listitem>
+<listitem><para>Find and open the DDL file we just created</para></listitem>
+<listitem><para>Click Execute back in the main screen of the Database Manager</para></listitem>
+<listitem><para>Select <emphasis><property>View/Refresh Tree</property></emphasis> from the menu bar</para></listitem>
+</itemizedlist>
+<para>The User database should now appear in the expand/collapse tree to the left.</para>
+<itemizedlist continuation="continues">
+<listitem><para>Select<emphasis><property> File/Exit </property></emphasis>from the menu bar</para></listitem>
+<listitem><para>Stop the database server: <emphasis><property>.../ormHibernate3-jsf/hsqldb/bin/shutdown.bat</property></emphasis></para></listitem>
+</itemizedlist>
+</section>
+
+<section id="SettinguptheApplicationServer">
+<?dbhtml filename="SettinguptheApplicationServer.html"?>
+<title>Setting up the Application Server</title>
+
+<para>Finally, we need to set up the application server before we can run the database-enabled application in a Web browser. To do this, we&apos;ll need to modify the application context in the JBoss server.xml file.</para>
+<itemizedlist continuation="continues">
+<listitem><para>Stop the JBoss server, if it&apos;s running</para></listitem>
+<listitem><para>Locate the server.xml file in the Package Explorer view under the JBoss Server
+node under JBoss Server view</para></listitem>
+<listitem><para>Double-click the file to open an editor on it</para></listitem>
+<listitem><para>Find the Context tag for your application in the file. It will have a path attribute
+with a value of <emphasis role="italic"><property>&quot;/ormHibernate3-jsf&quot;</property></emphasis></para></listitem>
+</itemizedlist>
+<para>You&apos;ll need to convert this &quot;empty&quot; XML element into one with beginning and ending tags,
+so we can insert the special resource tags for JBoss to run this application with a database.</para>
+<itemizedlist continuation="continues">
+<listitem><para>Delete the closing slash at the end of the Context tag</para></listitem>
+<listitem><para>Insert a blank line after the tag and then start another line</para></listitem>
+<listitem><para>On this line, insert a closing tag:</para></listitem>
+</itemizedlist>
+<programlisting role="JAVA"><![CDATA[</Context>
+]]></programlisting>
+<itemizedlist continuation="continues">
+<listitem><para>On the blank line between the starting and ending tags, add the following resource definition coding</para></listitem>
+</itemizedlist>
+<programlisting role="XML"><![CDATA[<Resource name="jdbc/kickstart" scope="Shareable"
+type="javax.sql.DataSource"/>
+<ResourceParams name="jdbc/kickstart">
+<parameter>
+<name>factory</name>
+<value>org.apache.commons.dbcp.BasicDataSourceFactory</
+value>
+</parameter>
+<parameter>
+<name>url</name>
+<value>jdbc:hsqldb:hsql://localhost</value>
+</parameter>
+<parameter>
+<name>driverClassName</name>
+<value>org.hsqldb.jdbcDriver</value>
+</parameter>
+<parameter>
+<name>username</name>
+<value>sa</value>
+</parameter>
+<parameter>
+<name>password</name>
+<value></value>
+</parameter>
+<parameter>
+<name>maxWait</name>
+<value>3000</value>
+</parameter>
+<parameter>
+<name>maxIdle</name>
+<value>100</value>
+</parameter>
+<parameter>
+<name>maxActive</name>
+<value>10</value>
+</parameter>
+</ResourceParams>
+]]></programlisting>
+<itemizedlist continuation="continues">
+<listitem><para>Finally, copy <emphasis><property>../ormHibernate3-jsf/hsqldb/lib/hsqldb.jar</property></emphasis> to your
+JBoss <emphasis><property>...server/default/lib</property></emphasis> folder</para></listitem>
+</itemizedlist>
+</section>
+
+<section id="RunningOurNewApplication">
+<?dbhtml filename="RunningOurNewApplication.html"?>
+<title>Running Our New Application</title>
+<itemizedlist continuation="continues">
+<listitem><para>Start the database server: <emphasis><property>.../ormHibernate3-jsf/hsqldb/bin/server.bat</property></emphasis></para></listitem>
+<listitem><para>Start the JBoss server</para></listitem>
+<listitem><para>Run the application</para></listitem>
+</itemizedlist>
+<para>Play with the application. Restart JBoss and the database server. If you run the application again and enter a user that you already saved, the application should retrieve it from the database and display its details.</para>
+</section>
+
+<section id="OtherRelevantResourcesOnTheTopic">
+<?dbhtml filename="OtherRelevantResourcesOnTheTopic.html"?>
+<title>Other relevant resources on the topic</title>
+<para>Hibernate on JBoss: <ulink url="http://www.jboss.org/products/hibernate">Hibernate Framework</ulink></para>
+
+<para>Hibernate Annotations: <ulink url="http://docs.jboss.org/ejb3/app-server/HibernateAnnotations/reference/en/html_single/index.html">Hibernate Annotations</ulink></para>
+<para>Downloads: <ulink url="http://www.hibernate.org/6.html">Hibernate Download</ulink></para>
+<para>Wiki: <ulink url="http://www.jboss.org/wiki/Wiki.jsp?page=JBossHibernate">Hibernate Wiki</ulink></para>
+
+</section>
+
+</chapter>
