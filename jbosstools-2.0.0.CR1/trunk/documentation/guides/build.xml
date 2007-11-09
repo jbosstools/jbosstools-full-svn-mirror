@@ -1,0 +1,15 @@
+<project name="All Docs" default="build" basedir=".">
+	
+	<target name="build">
+		<subant target="">
+			<fileset dir="." includes="userguide/*/build.xml"/>
+		</subant>
+	</target>
+	
+	<target name="clean">
+		<subant target="clean">
+			<fileset dir="." includes="userguide/*/build.xml"/>
+		</subant>		
+	</target>
+	     
+     </project>
