@@ -121,7 +121,7 @@ and drop it to the right of the <emphasis><property>/pages/inputname.jsp</proper
                 <title>Create New Connection Icon</title>
                 <mediaobject> 
                     <imageobject>
-                        <imagedata fileref="images/GSGStruts/arrow.png"/>
+                        <imagedata fileref="images/struts_application/struts_application_1.png"/>
                     </imageobject>
                 </mediaobject>
                 </figure>
@@ -140,7 +140,7 @@ and drop it to the right of the <emphasis><property>/pages/inputname.jsp</proper
                 <title>Create New Connection Icon</title>
                 <mediaobject> 
                     <imageobject>
-                        <imagedata fileref="images/GSGStruts/arrow.png"/>
+                        <imagedata fileref="images/struts_application/struts_application_1.png"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -175,7 +175,7 @@ and drop it to the right of the <emphasis><property>/pages/inputname.jsp</proper
                 <title>Diagram View</title>
                 <mediaobject> 
                     <imageobject>
-                        <imagedata fileref="images/GSGStruts/Diagram.png"/>
+                        <imagedata fileref="images/struts_application/struts_application_2.png"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -385,7 +385,7 @@ public class GreetingAction extends org.apache.struts.action.Action
                     <title>JBoss Tools Palette</title>
                     <mediaobject> 
                         <imageobject>
-                            <imagedata fileref="images/GSGStruts/RH_Palette.png" />
+                            <imagedata fileref="images/struts_application/struts_application_3.png" />
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -400,7 +400,7 @@ public class GreetingAction extends org.apache.struts.action.Action
                     <title>Editor Window</title>
                     <mediaobject> 
                         <imageobject>
-                            <imagedata fileref="images/GSGStruts/strinputname.png" />
+                            <imagedata fileref="images/struts_application/struts_application_4.png" />
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -443,7 +443,7 @@ public class GreetingAction extends org.apache.struts.action.Action
                     <title>Editor Window</title>
                     <mediaobject> 
                         <imageobject>
-                            <imagedata fileref="images/GSGStruts/strgreeting.png" />
+                            <imagedata fileref="images/struts_application/struts_application_5.png" />
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -486,7 +486,7 @@ public class GreetingAction extends org.apache.struts.action.Action
             <title>JBoss Server Panel</title>
             <mediaobject> 
                 <imageobject>
-                    <imagedata fileref="images/GSGStruts/running.png"/>
+                    <imagedata fileref="images/struts_application/struts_application_6.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
