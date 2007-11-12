@@ -335,7 +335,7 @@ by using the JBoss engine that comes with the Red Hat Developer Studio plug-in. 
 <listitem><para>Start up JBoss by clicking on the icon in JBoss Server view. (If JBoss is already running,
 stop it by clicking on the red icon and then start it again. Remember, the JSF run-time requires restarting the servlet engine when any changes have been made.) After the messages in the Console tabbed view stop scrolling, JBoss is available</para></listitem>
 
-<listitem><para>Click on the Red Hat run icon in the toolbar:</para></listitem>
+<listitem><para>Click the Run icon or right click your project folder and select <emphasis><property>Run As &gt; Run on Server</property></emphasis>:</para></listitem>
 </itemizedlist>
 <figure>
     <title>Red Hat Run Icon</title>
