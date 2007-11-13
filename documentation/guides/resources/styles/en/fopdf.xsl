@@ -284,19 +284,7 @@
     <xsl:param name="table.frame.border.thickness">0.1pt</xsl:param>
     <xsl:param name="table.cell.border.thickness">0.1pt</xsl:param>
     
-    <xsl:attribute-set name="table.table.properties">
-                         <xsl:attribute name="keep-together.within-column">auto</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="table.properties">
-                        <xsl:attribute name="keep-together.within-column">auto</xsl:attribute>
-    </xsl:attribute-set>
     
-    
-    <!--###################################################
-                             Images
-        ################################################### -->
-    
-    <xsl:param name="default.image.width" select="'175mm'"></xsl:param>
     
     <!--###################################################
                              Labels
