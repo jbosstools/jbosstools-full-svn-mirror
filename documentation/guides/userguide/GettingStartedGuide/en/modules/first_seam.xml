@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="GetStartSeamGen" xreflabel="GetStartSeamGen">
-  <?dbhtml filename="GetStartSeamGen.html"?>
+<chapter id="first_seam" xreflabel="first_seam">
+  <?dbhtml filename="first_seam.html"?>
   <chapterinfo>
     <keywordset>
       <keyword>Red Hat Developer Studio</keyword>
@@ -26,7 +26,7 @@
       <title>Create a Seam Project</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/SeamNewProj01.png"/>
+          <imagedata fileref="images/first_seam/first_seam_1.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -37,7 +37,7 @@
       <title>Select Toolings for the Project</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/SeamNewProj02.png"/>
+          <imagedata fileref="images/first_seam/first_seam_2.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -48,7 +48,7 @@
       <title>Select Directory Names for Web Pages and Java Files</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/SeamNewProj03.png"/>
+          <imagedata fileref="images/first_seam/first_seam_3.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -63,7 +63,7 @@
       <title>Select Provider for JPA JARs</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/SeamNewProj04.png"/>
+          <imagedata fileref="images/first_seam/first_seam_4.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -76,7 +76,7 @@
       <title>Define JSF Implementation</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/SeamNewProj044.png"/>
+          <imagedata fileref="images/first_seam/first_seam_5.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -89,7 +89,7 @@
       <title>Enter Java Packages for Generated Code</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/SeamNewProj045.png"/>
+          <imagedata fileref="images/first_seam/first_seam_6.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -98,7 +98,7 @@
       <title>Add New Seam Runtime</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/SeamNewProj050.png"/>
+          <imagedata fileref="images/first_seam/first_seam_7.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -110,7 +110,7 @@
       <title>Seam Components View</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/SeamNewProj051.png"/>
+          <imagedata fileref="images/first_seam/first_seam_8.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -124,7 +124,7 @@
       <title>Seam Components Filtering</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/SeamNewProj052.png"/>
+          <imagedata fileref="images/first_seam/first_seam_9.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -139,7 +139,7 @@
       <title>The Generated Application in Action</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/startedapplication.png"/>
+          <imagedata fileref="images/first_seam/first_seam_10.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -150,7 +150,7 @@
       <title>Making Changes in the Visual Editor</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/SeamJsfEditor.png"/>
+          <imagedata fileref="images/first_seam/first_seam_11.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -161,7 +161,7 @@
       <title>The Front Page is Changed</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/xxxx.png"/>
+          <imagedata fileref="images/first_seam/first_seam_12.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -181,7 +181,7 @@
       <title>New Form for the Application</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/newseamproj22.png"/>
+          <imagedata fileref="images/first_seam/first_seam_13.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -233,7 +233,7 @@
       <title>Generated Form</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/newseamproj23.png"/>
+          <imagedata fileref="images/first_seam/first_seam_14.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -288,7 +288,7 @@ public class SimpleAction {
       <title>The Input Validation in Action</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/xxxx.png"/>
+          <imagedata fileref="images/first_seam/first_seam_15.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -311,7 +311,7 @@ public String getValue()
       <title>More Input Validation</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/xxxx.png"/>
+          <imagedata fileref="images/first_seam/first_seam_16.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -360,7 +360,7 @@ Capitalize the input?
       <title>Add UI Components and Business Logic</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/xxxx.png"/>
+          <imagedata fileref="images/first_seam/first_seam_17.png"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -401,7 +401,7 @@ Capitalize the input?
       <title>Access Control for Action Methods</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/WriteYourFirst/xxxx.png"/>
+          <imagedata fileref="images/first_seam/first_seam_18.png"/>
         </imageobject>
       </mediaobject>
     </figure>

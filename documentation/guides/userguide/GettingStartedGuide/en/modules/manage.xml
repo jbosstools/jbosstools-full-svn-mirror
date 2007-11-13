@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="ManageJBossASFromRedHatDeveloperStudio" xreflabel="ManageJBossASFromRedHatDeveloperStudio">
-  <?dbhtml filename="ManageJBossASFromRedHatDeveloperStudio.html"?>
+<chapter id="manage" xreflabel="manage">
+    <?dbhtml filename="manage.html"?>
   <chapterinfo>
     <keywordset>
       <keyword>Red Hat Developer Studio</keyword>
@@ -27,7 +27,7 @@
 <title>Starting from Icon</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/startingfromicon.png"/>
+            <imagedata fileref="images/manage/manage_1.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -36,7 +36,7 @@
 <title>Starting from JBoss Server View</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/startingfromserversview.png"/>
+            <imagedata fileref="images/manage/manage_2.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -47,7 +47,7 @@
 <title>Console Output</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/consoleoutput.png"/>
+            <imagedata fileref="images/manage/manage_3.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -56,7 +56,7 @@
 <title>Server is Started</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/serverstarted.png"/>
+            <imagedata fileref="images/manage/manage_4.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -65,7 +65,7 @@
 <title>Event Log</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/eventlog.png"/>
+            <imagedata fileref="images/manage/manage_5.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -78,7 +78,7 @@
 <title>Stopping Server</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/stoppingserver2.png"/>
+            <imagedata fileref="images/manage/manage_6.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -92,7 +92,7 @@
 <title>Server Preferences</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/serverpreferences.png"/>
+            <imagedata fileref="images/manage/manage_7.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -101,7 +101,7 @@
 <title>Server Overview</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/serveroverview.png"/>
+            <imagedata fileref="images/manage/manage_8.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -144,7 +144,7 @@
 <title>Selecting Server Type</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/servertype.png"/>
+            <imagedata fileref="images/manage/manage_9.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -158,7 +158,7 @@
 <title>Installed Runtimes</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/jbossruntime2.png"/>
+            <imagedata fileref="images/manage/manage_10.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -172,7 +172,7 @@
 <title>Defining JBoss Runtime</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/jbossruntime.png"/>
+            <imagedata fileref="images/manage/manage_11.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -187,7 +187,7 @@
 <title>Adding New Runtime</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/addingjbossserver.png"/>
+            <imagedata fileref="images/manage/manage_12.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -196,7 +196,7 @@
 <title>Runtime is Added</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/addedruntime.png"/>
+            <imagedata fileref="images/manage/manage_13.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -208,7 +208,7 @@
 <title>Choosing Runtime</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/choosingruntime.png"/>
+            <imagedata fileref="images/manage/manage_14.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -219,7 +219,7 @@
 <title>Configuring Projects</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/choosingruntime23.png"/>
+            <imagedata fileref="images/manage/manage_15.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -230,7 +230,7 @@
 <title>Configuring Projects</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/configuringprojects.png"/>
+            <imagedata fileref="images/manage/manage_16.png"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -239,7 +239,7 @@
 <title>New JBoss Server</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/ManageJBossAS/newjbossserver.png"/>
+            <imagedata fileref="images/manage/manage_17.png"/>
         </imageobject>
 </mediaobject>
 </figure>
