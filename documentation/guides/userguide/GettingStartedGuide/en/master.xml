@@ -2,9 +2,9 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
 "../../../resources/support/docbook-dtd/docbookx.dtd"
 
-[<!ENTITY GettingStartedWithRHDS SYSTEM "modules/GettingStartedWithRHDS.xml">
-<!ENTITY  ManageJBossAS SYSTEM "modules/ManageJBossAS.xml">
-<!ENTITY GetStartSeamGen  SYSTEM "modules/GetStartSeamGen.xml">
+[<!ENTITY getting_started SYSTEM "modules/getting_started.xml">
+<!ENTITY  manage SYSTEM "modules/manage.xml">
+<!ENTITY first_seam  SYSTEM "modules/first_seam.xml">
 
 ]>
 
@@ -25,9 +25,9 @@
     <toc/>  
     
 
-&GettingStartedWithRHDS;
-&ManageJBossAS;
-&GetStartSeamGen;
+&getting_started;
+&manage;
+&first_seam;
 
 
 
