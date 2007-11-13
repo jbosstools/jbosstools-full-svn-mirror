@@ -5,7 +5,8 @@
 [<!ENTITY getting_started SYSTEM "modules/getting_started.xml">
 <!ENTITY  manage SYSTEM "modules/manage.xml">
 <!ENTITY first_seam  SYSTEM "modules/first_seam.xml">
-
+<!ENTITY jsp_application  SYSTEM "modules/jsp_application.xml">
+<!ENTITY rad_jsf_application  SYSTEM "modules/rad_jsf_application.xml">
 ]>
 
 <book>
@@ -28,7 +29,8 @@
 &getting_started;
 &manage;
 &first_seam;
-
+&jsp_application;
+&rad_jsf_application;
 
 
 </book>    
