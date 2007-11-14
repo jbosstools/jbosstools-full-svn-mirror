@@ -20,7 +20,7 @@
   <section>
     <title>Create a Seam Project</title>
     
-    <para>To create a new web application in <property>Seam</property>, select <emphasis><property>New &gt; Project ... &gt; Seam &gt; Seam Web Project</property></emphasis>. You will be prompted to enter a name and a location directory for your new project. You will also be asked to choose a JBoss AS server to deploy the project. You must choose the JBoss AS 4.2.0 instance we had defined in the JBoss AS Server manager view.</para>
+    <para>To create a new web application in <property>Seam</property>, select <emphasis><property>New &gt; Project ... &gt; Seam &gt; Seam Web Project</property></emphasis>. You will be prompted to enter a name and a location directory for your new project. The wizard has an option for selecting the actual Server (and not just WTP runtime) that will be used for the project. This allow the wizard to correctly identify where the needed datasource and driver libraries need to go.</para>
     
     <figure>
       <title>Create a Seam Project</title>
@@ -31,7 +31,7 @@
       </mediaobject>
     </figure>
     
-    <para>Next, you will be asked to select the &quot;features&quot; you want to use in your project. This allows Red Hat Developer Studio to setup the appropriate tooling for your project. Since JBoss Seam integrates all popular Java EE frameworks, you can select any combination of technologies from the list. Here, for this project, we will select Dynamic Web Module, Java, Java Persistence (JPA), JavaServer Faces (JSF), and Seam Facet for a typical database-driven web application.</para>
+    <para>Next, you will be asked to select the &quot;features&quot; you want to use in your project. This allows Red Hat Developer Studio to setup the appropriate tooling for your project. Since JBoss Seam integrates all popular Java EE frameworks, you can select any combination of technologies from the list. Here, for this project, we will select Dynamic Web Module, Java, Java Persistence (JPA), JavaServer Faces (JSF), and Seam Facet for a typical database-driven web application. </para>
     
     <figure>
       <title>Select Toolings for the Project</title>
@@ -41,7 +41,16 @@
         </imageobject>
       </mediaobject>
     </figure>
-    
+    <para>In this screen you can also bring up server runtimes panel by clicking <emphasis><property>Show Runtimes</property></emphasis> in the bottom right corner. This panel shows available server runtimes. Then this button will be changed into <emphasis><property>Hide Runtimes</property></emphasis> one.</para>
+    <para>Click <emphasis><property>Next</property></emphasis> to proceed further.</para>
+    <figure>
+      <title>Available Server Runtimes</title>
+      <mediaobject> 
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_2_a.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
     <para>A dynamic web application contains both web pages and Java code. The wizard will ask you where you want to put those files. You can just leave the default values.</para>
     
     <figure>
@@ -51,23 +60,11 @@
           <imagedata fileref="images/first_seam/first_seam_3.png"/>
         </imageobject>
       </mediaobject>
-    </figure>
+    </figure>  
     
     
-    
-    <para>We will use a default connection provided by RHDS.</para>
-    <orderedlist>
-    <listitem><para>Click <emphasis><property>Next</property></emphasis> in the dialog <property>JPA Facet</property></para></listitem>
-        </orderedlist>
-    <figure>
-      <title>Select Provider for JPA JARs</title>
-      <mediaobject> 
-        <imageobject>
-          <imagedata fileref="images/first_seam/first_seam_4.png"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
-    <para>Since you selected JPA and JSF tooling support, the project needs to incorporate the JAR files for those frameworks on its classpath. In the next screen, you will be able to select where those library JARs come from. The easiest is just to select the JARs provided by the JBoss AS runtime associated with this project. That is why it is important to chose the right JBoss AS 4.2 runtime in the project setup window.</para>
+    <para>We will use a default pre-configured HSQLDB connection provided by RHDS.</para>
+    <para>In the next screen, you will be able to select where those library JARs come from. The easiest is just to select the JARs provided by the JBoss AS runtime associated with this project. That is why it is important to chose the right JBoss AS 4.2 runtime in the project setup window.</para>
     <orderedlist continuation="continues">
       <listitem><para>Check <emphasis><property>Server Supplied JSF Implementation</property></emphasis>. We will use JSF implementation that comes with JBoss server</para></listitem>
       <listitem><para>Click <emphasis><property>Next</property></emphasis></para></listitem>
@@ -83,7 +80,7 @@
     
     <para>We will also use a default Hibernate Dialect - <emphasis>org.hibernate.dialect.HSQLDialect</emphasis> and deploy as a <emphasis>war</emphasis> archive.</para>
         
-    <para>The project setup wizard also asks you to configure how Seam generates code for the project. The Seam Home Folder should point to a valid Seam distribution. By default, it is set to the Seam distribution bundled in your Red Hat Developer Studio tool. If you need another one choose it from the drop down list box:</para>
+    <para>The project setup wizard also asks you to configure how Seam generates code for the project. The Seam Home Folder should point to a valid Seam distribution. By default, it is set to the Seam distribution bundled in your Red Hat Developer Studio tool. If you need another one choose setting up the appropriate check box:</para>
     
     <figure>
       <title>Enter Java Packages for Generated Code</title>
