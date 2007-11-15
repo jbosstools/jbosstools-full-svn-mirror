@@ -366,9 +366,6 @@ Capitalize the input?
     
     <para>You have probably noticed that the web page template has a login link at the top of the page. You can use the Seam security framework to secure access to any web page or web action. You can implement the login logic in the <emphasis><property>checkLoggedIn</property></emphasis> method. In the following example, we just use hardcoded username and password. But you can easily change it to use database, LDAP or any other means.</para>
     
-    <programlisting role="JAVA"><![CDATA[
-]]></programlisting>
-
     <para>Then, on the action method, you can use the <emphasis>@AroundInvoke</emphasis> annotation to specify that it is only invoked by authenticated users.</para>
     
     <programlisting role="JAVA"><![CDATA[public class LoggedInInterceptor 
@@ -389,7 +386,7 @@ Capitalize the input?
 }
 ]]></programlisting>
 
-    <para>Now, re-deploy the application and try the action button. The application redirects to the <emphasis>login</emphasis> page asking for login credentials. The method is invoked after you successfully logged in.</para>
+    <para>Now, re-deploy the application and try the action button. The application redirects to the <emphasis><property>login</property></emphasis> page asking for login credentials. The method is invoked after you successfully logged in.</para>
     
     <figure>
       <title>Access Control for Action Methods</title>
@@ -400,7 +397,7 @@ Capitalize the input?
       </mediaobject>
     </figure>
     
-    <para>We can also secure web pages. You can edit the <emphasis>Authenticator.java</emphasis> file to put an access constraint on the login page.</para>
+    <para>We can also secure web pages. You can edit the <emphasis><property>Authenticator.java</property></emphasis> file to put an access constraint on the login page.</para>
     
     <programlisting role="JAVA"><![CDATA[package.org.domain.MySeamProj.session;
 import org.jboss.seam.annotations.In;
@@ -427,7 +424,7 @@ import org.jboss.seam.security.identity;
     }
 ]]></programlisting>
 
-    <para>You can try to load the http://localhost:8080/MySeamProj/ URL in the browser and it will redirect to ask for login.</para>
+    <para>You can try to load the <emphasis><property>http://localhost:8080/MySeamProj/</property></emphasis> URL in the browser and it will redirect to ask for login.</para>
   
   </section>
   
