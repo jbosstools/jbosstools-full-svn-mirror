@@ -102,6 +102,8 @@ public class ArchivesModelCore {
 		} catch( IllegalStateException ise ) {
 			ArchivesCoreLog.log(IStatus.WARNING, "Error creating directory scanner", ise);
 			return new IPath[]{};
+		} catch( NullPointerException npe ) {
+			return new IPath[]{};
 		}
 	}
 	
