@@ -2199,9 +2199,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	public void selectionChanged(SelectionChangedEvent event) {
 		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
 			if(toolbarFormatControllerManager != null) toolbarFormatControllerManager.selectionChanged();
-			if(selectionBar != null) selectionBar.selectionChanged();		
 		}
 
+		if(selectionBar != null) selectionBar.selectionChanged();
+		
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
@@ -2268,13 +2269,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		 * and in process event handles some components are repainted(like buttons)
 		 * and flasher are not repainted, so we should paint flasher
 		 */
-		Display.getCurrent().asyncExec(new Thread(){
+
+		Display.getDefault().asyncExec(new Thread(){
 			public void run(){
 				
 				getXulRunnerEditor().showSelectionRectangle();
 			}
 		});
-//		getXulRunnerEditor().showSelectionRectangle();
 		
 	}
 
