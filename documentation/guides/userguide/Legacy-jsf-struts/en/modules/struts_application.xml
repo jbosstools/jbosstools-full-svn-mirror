@@ -313,17 +313,18 @@ public class GetNameForm extends org.apache.struts.action.ActionForm
              <title>GreetingAction.java</title>
  <itemizedlist continuation="continues">
 <listitem><para>Open GreetingAction.java for editing</para></listitem>
-<listitem><para>Inside the execute method, delete the TO DO and throw lines and add the following:</para></listitem>
+<listitem><para>Inside the execute method, delete the TO DO lines and add the following:</para></listitem>
  </itemizedlist>
      
      <programlisting role="JAVA"><![CDATA[String name = ((GetNameForm)form).getName();
 String greeting = "Hello, "+name+"!";
 ((GetNameForm)form).setName(greeting);
 return mapping.findForward(FORWARD_sayHello);
+]]></programlisting>
 
-The final version of GreetingAction.java should look like this:
-package sample;
+<para>The final version of GreetingAction.java should look like this:</para>
 
+<programlisting role="JAVA"><![CDATA[package sample;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
