@@ -2,7 +2,6 @@ package org.jboss.ide.eclipse.archives.ui.wizards.pages;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -28,6 +27,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 import org.eclipse.ui.ide.IDE;
+import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelCore;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
@@ -291,19 +291,21 @@ public class FilesetInfoWizardPage extends WizardPage {
 				
 				if (fileset.getGlobalSourcePath() != null) {
 					rootDir = fileset.getGlobalSourcePath();
-					rootDirText.setText(rootDir.toString());
 					rootDirIsWorkspaceRelative = fileset.isInWorkspace();
+					rootDirText.setText(rootDir.toString());
 				}
 		} else {
-			rootProjectLabel.setText(parentNode.getProjectPath().lastSegment());
+			IProject[] project = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+			for( int i = 0; i < project.length; i++ ) 
+				if( project[i].getLocation().equals(parentNode.getProjectPath()))
+					rootProjectLabel.setText(project[i].getName());
 			rootDirIsWorkspaceRelative = true;
 			rootDir = parentNode.getProjectPath();
-			rootDirText.setText(rootDir.toString());
 		}
 	}
 	
 	private void changePreview() {
-		IPath root = rootDir; //isRootDirWorkspaceRelative() ? ResourcesPlugin.getWorkspace().getRoot().getLocation().append(rootDir) : rootDir;
+		IPath root = rootDir; 
 		IPath paths[] = ArchivesModelCore.findMatchingPaths(root, includesText.getText(), excludesText.getText());
 		previewComposite.setInput(paths);
 	}
@@ -324,8 +326,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 			if (project != null) {
 				IPath relativePath = path.removeFirstSegments(1);
 				rootProjectLabel.setText(project.getName());
-				
-				rootDir = ResourcesPlugin.getWorkspace().getRoot().getLocation().append(path);
+				rootDir = ArchivesCore.getInstance().getVariables().getProjectPath(projectName);
 				if (!relativePath.isEmpty()) {
 					rootDirText.setText(relativePath.toString());
 				} else {
