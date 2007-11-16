@@ -2,6 +2,7 @@ package org.jboss.ide.eclipse.archives.ui.wizards.pages;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -296,7 +297,16 @@ public class FilesetInfoWizardPage extends WizardPage {
 		} else {
 			rootProjectLabel.setText(parentNode.getProjectPath().lastSegment());
 			rootDirIsWorkspaceRelative = true;
-			rootDir = ResourcesPlugin.getWorkspace().getRoot().getProject(parentNode.getProjectPath().lastSegment()).getLocation();
+			
+			// Done since the parentNode.getProjectPath() project might be *outside* the workspace. Shouldn't the parentNode have a getProject() instead ? 
+			IContainer[] findContainersForLocation = ResourcesPlugin.getWorkspace().getRoot().findContainersForLocation(parentNode.getProjectPath());
+			for (int i = 0; i < findContainersForLocation.length; i++) {
+				IContainer container = findContainersForLocation[i];
+				if(container.getType()==IResource.PROJECT) {
+					rootDir = container.getLocation();
+					continue;
+				}
+			}
 		}
 	}
 	

@@ -91,6 +91,8 @@ public class ArchivesModelCore {
 	
 	public static IPath[] findMatchingPaths(IPath root, String includes, String excludes) {
 		try {
+			if(root==null) return new IPath[0];
+			
 			DirectoryScanner scanner  = 
 				DirectoryScannerFactory.createDirectoryScanner(root, includes, excludes, true);
 			String[] files = scanner.getIncludedFiles();
@@ -101,8 +103,6 @@ public class ArchivesModelCore {
 			return paths;
 		} catch( IllegalStateException ise ) {
 			ArchivesCoreLog.log(IStatus.WARNING, "Error creating directory scanner", ise);
-			return new IPath[]{};
-		} catch( NullPointerException npe ) {
 			return new IPath[]{};
 		}
 	}
