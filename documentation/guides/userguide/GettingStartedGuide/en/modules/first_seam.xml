@@ -152,7 +152,7 @@
       </mediaobject>
     </figure>
     
-    <para>Once you finished editing, save the file (<emphasis><property>File &gt; Save</property></emphasis>), re-deploy the application, and reload the browser to see the changes.</para>
+    <para>Once you finished editing, save the file (<emphasis><property>File &gt; Save</property></emphasis>), and reload the browser to see the changes.</para>
     
     <figure>
       <title>The Front Page is Changed</title>
