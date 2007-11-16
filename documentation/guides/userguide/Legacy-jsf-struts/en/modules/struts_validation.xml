@@ -31,22 +31,47 @@ Getting Started Guide for Creating a Struts Application. You should have the Red
 server side validation. You need to enable validation as a part of the project, define an error message, and tie it into an appropriate part of the application.</para>
 
 <itemizedlist>
-<listitem><para>Right-click on a plug-ins node under the <emphasis><property>StrutsHello > Configuration > default > struts-config.xml</property></emphasis> node in the Web Projects view and select <emphasis><property>Create Special Plugin > Validators</property></emphasis> from the context menu</para></listitem>
+<listitem><para>Right-click on a &quot;plug-ins&quot; node under the <emphasis><property>StrutsHello &gt; Configuration &gt; default &gt; struts-config.xml</property></emphasis> node in the Web Projects view and select <emphasis><property>Create Special Plugin &gt; Validators</property></emphasis> from the context menu</para></listitem>
 <listitem><para>Further down in the Web Projects view, right-click on the 
-<emphasis><property>StrutsHello > ResourceBundles</property></emphasis> node and select <emphasis><property> New > Properties File...</property></emphasis>from the context menu</para></listitem>
+<emphasis><property>StrutsHello &gt; ResourceBundles</property></emphasis> node and select <emphasis><property> New &gt; Properties File...</property></emphasis>from the context menu</para></listitem>
 <listitem><para>In the dialog box, click on the <emphasis><property>Browse...</property></emphasis>button next to the Folder field, expand the
     JavaSource folder in this next dialog box, select the sample subfolder, and click on the <emphasis><property>OK</property></emphasis> button</para></listitem>
-    <listitem><para>Back in the first dialog box, type in applResources for the Name field and click on the <emphasis><property>Finish</property></emphasis> button</para></listitem>
-<listitem><para>Right-click on a newly created file and select <emphasis><property>Add > Default Error Messages</property></emphasis>
+    <listitem><para>Back in the first dialog box, type in &quot;applResources&quot; for the Name field and click on the <emphasis><property>Finish</property></emphasis> button</para></listitem>
+<listitem><para>Right-click on a newly created file and select <emphasis><property>Add &gt; Default Error Messages</property></emphasis>
  from the context menu</para></listitem>
 
 <listitem><para>Drag up the sample.applResources icon until you can drop it on the resources folder under struts-config.xml</para></listitem>
 <listitem><para>Select<emphasis><property> File &gt; Save </property></emphasis>All from the menu bar</para></listitem>
 <listitem><para>Select validation.xml under the <emphasis><property>StrutsHello &gt; Validation</property></emphasis> node and double-click it to open it with the JBoss Tools XML Editor</para></listitem>
-<listitem><para>Expand the form-beans node under the <emphasis><property>StrutsHello > Configuration > default > struts-config.xml node.</property></emphasis> Then, drag the form bean GetNameForm and drop it onto a formset (default) in the <property>XML</property> Editor</para></listitem>
+</itemizedlist>
+<para>Here you must create a Formset.</para>
+<itemizedlist>
+<listitem><para>In the validation.xml file editor click the button <emphasis><property>Create Formset</property></emphasis> on the panel <emphasis><property>Formsets</property></emphasis></para></listitem>
+<listitem><para>In the dialog <emphasis><property>Add Formset</property></emphasis> fill the fields <emphasis><property>Language</property></emphasis> and <emphasis><property>Country</property></emphasis> or just leave them empty to create a default formset. Click <emphasis><property>OK</property></emphasis></para></listitem>
+</itemizedlist>
+<figure>
+    <title>Create Formset</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/struts_validation/struts_validation.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<itemizedlist>
+<listitem><para>Expand the &quot;form-beans&quot; node under the <emphasis><property>StrutsHello &gt; Configuration &gt; default &gt; struts-config.xml node.</property></emphasis> Then, drag the form bean &quot;GetNameForm&quot; and drop it onto a formset in the <property>XML</property> Editor</para></listitem>
 <listitem><para>In the Validation Editor, expand the formset node, right-click GetNameForm, and select <emphasis><property>Create Field...</property></emphasis> from the context menu</para></listitem>
-<listitem><para>Enter a name for Property in the dialog box</para></listitem>
-<listitem><para>In the properties for the name field to the right of the &quot;tree&quot; for the validation.xml file, click on the <emphasis><property>Change...</property></emphasis>button next to the Depends entry field</para></listitem>
+<listitem><para>Enter a name for Property in the dialog box. A new property will be created:</para></listitem>
+</itemizedlist>
+<figure>
+    <title>New Property Is Added</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/struts_validation/struts_validation_2.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<itemizedlist>
+<listitem><para>In the Properties view for the name field to the right of the &quot;tree&quot; for the validation.xml file, click on the <emphasis><property>Change...</property></emphasis>button next to the Depends entry field</para></listitem>
 <listitem><para>In the displayed double list, select <emphasis><property>required</property></emphasis> from the left list and then click <emphasis><property>Add</property></emphasis></para></listitem>
     <listitem><para>Click <emphasis><property>Ok</property></emphasis></para></listitem>
 <listitem><para>Right-click name and select <emphasis><property>Add Arg...</property></emphasis> from the context menu</para></listitem>
