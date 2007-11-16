@@ -297,16 +297,8 @@ public class FilesetInfoWizardPage extends WizardPage {
 		} else {
 			rootProjectLabel.setText(parentNode.getProjectPath().lastSegment());
 			rootDirIsWorkspaceRelative = true;
-			
-			// Done since the parentNode.getProjectPath() project might be *outside* the workspace. Shouldn't the parentNode have a getProject() instead ? 
-			IContainer[] findContainersForLocation = ResourcesPlugin.getWorkspace().getRoot().findContainersForLocation(parentNode.getProjectPath());
-			for (int i = 0; i < findContainersForLocation.length; i++) {
-				IContainer container = findContainersForLocation[i];
-				if(container.getType()==IResource.PROJECT) {
-					rootDir = container.getLocation();
-					continue;
-				}
-			}
+			rootDir = parentNode.getProjectPath();
+			rootDirText.setText(rootDir.toString());
 		}
 	}
 	
