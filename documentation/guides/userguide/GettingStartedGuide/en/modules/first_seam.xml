@@ -63,7 +63,6 @@
     </figure>  
     
     
-    <para>We will use a default pre-configured HSQLDB connection provided by RHDS.</para>
     <para>In the next screen, you will be able to select where those library JARs come from. The easiest is just to select the JARs provided by the JBoss AS runtime associated with this project. That is why it is important to chose the right JBoss AS 4.2 runtime in the project setup window.</para>
     <orderedlist continuation="continues">
       <listitem><para>Check <emphasis><property>Server Supplied JSF Implementation</property></emphasis>. We will use JSF implementation that comes with JBoss server</para></listitem>
