@@ -366,7 +366,7 @@ public class GreetingAction extends org.apache.struts.action.Action
                 <para>In this page, the user will enter any name and click the <emphasis><property>submit</property></emphasis> button. Then, the greeting action will be called through the form.</para>
  <itemizedlist continuation="continues">
      <listitem><para>Click on the <emphasis><property>inputname.jsp</property></emphasis> tab in the Editing area to bring its editor forward</para></listitem>
-<listitem><para>In the Web Projects view, expand <emphasis><property>StrutsHello > Configuration > default > strutsconfig.xml > action-mappings</property></emphasis> and select <emphasis><property>/greeting</property></emphasis></para></listitem>
+<listitem><para>In the Web Projects view, expand <emphasis><property>StrutsHello &gt; Configuration &gt; default &gt; struts-config.xml &gt; action-mappings</property></emphasis> and select <emphasis><property>/greeting</property></emphasis></para></listitem>
 <listitem><para>Drag it and drop it between the quotes for the <emphasis role="italic"><property>&quot;action&quot;</property></emphasis> attribute to the <emphasis role="bold"><property>&lt;html:form&gt;</property></emphasis> element in the Source pane of the editor</para></listitem>
 <listitem><para>Then type this text on a new line just below this line:</para></listitem>
  
