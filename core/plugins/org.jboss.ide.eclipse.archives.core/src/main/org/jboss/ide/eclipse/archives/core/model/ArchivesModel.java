@@ -256,8 +256,10 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		} else {
 			// file not found, just create some default xbpackages and insert them
 			XbPackages packages = new XbPackages();
+			ArchiveModelNode root2 = new ArchiveModelNode(project, packages, this);
 			xbPackages.put(project, packages);
-			archivesRoot.put(project, new ArchiveModelNode(project, packages, this));
+			archivesRoot.put(project, root2);
+			fireRegisterProjectEvent(null, root2);
 		}
 	}
 	
