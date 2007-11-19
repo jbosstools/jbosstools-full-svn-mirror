@@ -204,8 +204,9 @@ public class ModelUtil {
 	
 	public static IPath workspacePathToAbsolutePath (IPath workspacePath) {
 		String projectName = workspacePath.segment(0);
+		if( projectName == null ) return null;
 		IPath projectPath = ArchivesCore.getInstance().getVariables().getProjectPath(projectName);
-		
+		if( projectPath == null ) return null;
 		return projectPath.append(workspacePath.removeFirstSegments(1));
 	}
 }
