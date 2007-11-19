@@ -58,11 +58,10 @@ public class FilesetWizard extends Wizard {
 		fileset.setExcludesPattern(page1.getExcludes());
 		fileset.setIncludesPattern(page1.getIncludes());
 		if( page1.isRootDirWorkspaceRelative()) {
-			int workspaceLength = ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString().length();
-			fileset.setSourcePath(new Path(page1.getRootDir().substring(workspaceLength)));
+			fileset.setSourcePath(new Path(page1.getWorkspaceRelativeRootDir()));
 			fileset.setInWorkspace(true);
 		} else {
-			fileset.setSourcePath(new Path(page1.getRootDir()));
+			fileset.setSourcePath(new Path(page1.getAbsoluteRootDir()));
 			fileset.setInWorkspace(false);
 		}
 	}
