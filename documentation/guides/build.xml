@@ -1,5 +1,16 @@
 <project name="All Docs" default="build" basedir=".">
 	
+	<tstamp>
+          <format property="timestamp" pattern="d-MMMM-yyyy hh:mm z"/>
+	</tstamp>
+	
+	<!-- Copying the index file first to have index even though some of the build steps fail -->
+	<copy overwrite="true" file="userguide/nightly-build-index.html" tofile="build/index.html">
+		<filterset>
+			<filter token="TIMESTAMP" value="${timestamp}"/>
+		</filterset>
+	</copy>
+	
 	<target name="build">
 		<subant target="">
 			<fileset dir="." includes="userguide/*/build.xml"/>
@@ -12,4 +23,5 @@
 		</subant>		
 	</target>
 	     
+	
      </project>
