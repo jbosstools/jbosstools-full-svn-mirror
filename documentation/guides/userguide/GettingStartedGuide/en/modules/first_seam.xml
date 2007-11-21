@@ -31,7 +31,7 @@
       </mediaobject>
     </figure>
     
-    <para>Next, you will be asked to select the &quot;features&quot; you want to use in your project. This allows Red Hat Developer Studio to setup the appropriate tooling for your project. Since JBoss Seam integrates all popular Java EE frameworks, you can select any combination of technologies from the list. Here, for this project, we will select Dynamic Web Module, Java, Java Persistence (JPA), JavaServer Faces (JSF), and Seam Facet for a typical database-driven web application. </para>
+    <para>Next, you will be asked to select the &quot;features&quot; you want to use in your project. This allows Red Hat Developer Studio to setup the appropriate tooling for your project. Since JBoss Seam integrates all popular Java EE frameworks, you can select any combination of technologies from the list. Here, for this project, we will select Dynamic Web Module, Java, JavaServer Faces (JSF), and Seam Facet for a typical database-driven web application. </para>
     
     <figure>
       <title>Select Toolings for the Project</title>
