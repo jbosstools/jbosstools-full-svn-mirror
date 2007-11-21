@@ -21,6 +21,7 @@
  */
 package org.jboss.ide.eclipse.archives.core.model.other.internal;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -49,11 +50,15 @@ public class WorkspacePreferenceManager extends AbstractPreferenceInitializer im
 
 	private static IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 	private static IResource getResource(IPath path) {
-		if( path != null && workspaceRoot.getLocation().isPrefixOf(path) ) {
-			String relative = path.toOSString().substring(workspaceRoot.getLocation().toOSString().length()+1);
-			return workspaceRoot.getProject(relative);
+		if( path != null ) {
+			IProject[] projects = workspaceRoot.getProjects();
+			if( projects != null ) {
+				for( int i = 0; i < projects.length; i++ ) {
+					if( projects[i].getLocation().equals(path))
+						return projects[i];
+				}
+			}
 		}
-			
 		return null;
 	}
 	
