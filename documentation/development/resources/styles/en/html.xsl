@@ -15,15 +15,18 @@
 -->
 
 <!DOCTYPE xsl:stylesheet [
-    <!ENTITY db_xsl_path        "../../support/docbook-xsl/">
+    <!ENTITY db_xsl_path        "../../support/docbook-xsl">
 ]>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0"
                 xmlns="http://www.w3.org/TR/xhtml1/transitional"
                 exclude-result-prefixes="#default">
-                
+
 <xsl:import href="&db_xsl_path;/html/docbook.xsl"/>
+<xsl:include href="./collapsing-navigation.xsl"></xsl:include>
+<xsl:include href="./highlight.xsl"></xsl:include>
+
 
 <!--###################################################
                      HTML Settings
@@ -46,8 +49,8 @@
         book   toc
     </xsl:param>
     
-    <!-- Show only Sections up to level 3 in the TOCs -->
-    <xsl:param name="toc.section.depth">3</xsl:param>
+    <!-- Show only Sections up to level 5 in the TOCs -->
+    <xsl:param name="toc.section.depth">5</xsl:param>
     
 <!--###################################################
                          Labels
@@ -82,5 +85,5 @@
     </xsl:param>    
     <xsl:template match="section[@role = 'NotInToc']//*"  mode="toc" />
     <xsl:template match="chapter[@role = 'NotInToc']//section//*"  mode="toc" />
-    
+	    
 </xsl:stylesheet>

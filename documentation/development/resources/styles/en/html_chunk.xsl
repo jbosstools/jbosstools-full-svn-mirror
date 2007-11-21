@@ -25,6 +25,10 @@
                 
 <xsl:import href="&db_xsl_path;/html/chunk.xsl"/>
 
+<xsl:include href="./collapsing-navigation.xsl"></xsl:include>
+<xsl:include href="./highlight.xsl"></xsl:include>
+
+
 <!--###################################################
                      HTML Settings
     ################################################### -->   
@@ -48,8 +52,8 @@
         book   toc
     </xsl:param>
     
-    <!-- Show only Sections up to level 3 in the TOCs -->
-    <xsl:param name="toc.section.depth">3</xsl:param>
+    <!-- Show only Sections up to level 5 in the TOCs -->
+    <xsl:param name="toc.section.depth">5</xsl:param>
 
 <!--###################################################
                          Labels
