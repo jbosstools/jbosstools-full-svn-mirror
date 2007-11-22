@@ -16,7 +16,10 @@
 			<year>2007</year>
 			<holder>Red Hat</holder>
 	    </copyright>
-        <releaseinfo>Current Guide Version: 1.0.0.beta2</releaseinfo>
+          <releaseinfo>
+<para>Version: 1.0.0.GA</para>
+</releaseinfo>
+    </bookinfo>
     	
     	
     </bookinfo>
