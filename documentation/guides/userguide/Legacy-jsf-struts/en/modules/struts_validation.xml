@@ -43,9 +43,7 @@ server side validation. You need to enable validation as a part of the project, 
 <listitem><para>Drag up the sample.applResources icon until you can drop it on the resources folder under struts-config.xml</para></listitem>
 <listitem><para>Select<emphasis><property> File &gt; Save </property></emphasis>All from the menu bar</para></listitem>
 <listitem><para>Select validation.xml under the <emphasis><property>StrutsHello &gt; Validation</property></emphasis> node and double-click it to open it with the JBoss Tools XML Editor</para></listitem>
-</itemizedlist>
-<para>Here you must create a Formset.</para>
-<itemizedlist>
+<listitem><para>Here you must create a Formset.</para></listitem>
 <listitem><para>In the validation.xml file editor click the button <emphasis><property>Create Formset</property></emphasis> on the panel <emphasis><property>Formsets</property></emphasis></para></listitem>
 <listitem><para>In the dialog <emphasis><property>Add Formset</property></emphasis> fill the fields <emphasis><property>Language</property></emphasis> and <emphasis><property>Country</property></emphasis> or just leave them empty to create a default formset. Click <emphasis><property>OK</property></emphasis></para></listitem>
 </itemizedlist>
