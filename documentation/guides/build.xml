@@ -1,5 +1,5 @@
 <project name="All Docs" default="build" basedir=".">
-	
+
 	<tstamp>
           <format property="timestamp" pattern="d-MMMM-yyyy hh:mm z"/>
 	</tstamp>
