@@ -222,7 +222,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<listitem><para>Click <emphasis><property>Save</property></emphasis> button.</para></listitem>
 			<listitem><para>Switch to Preview page by clicking Preview tab at the bottom of the page. You will see how the page will look at runtime.</para></listitem>
 			</itemizedlist>
-		<figure>
+<!--		<figure>
 			<title>Preview Page</title>
 			<mediaobject>
 				<imageobject>
@@ -230,6 +230,7 @@ packaging even if a developer is writing the most trivial web applications. With
 				</imageobject>
 			</mediaobject>
 		</figure>
+-->		
 		</section>
 		<section id="LaunchingTheProject">
 		<?dbhtml filename="LaunchingTheProject.html"?>
