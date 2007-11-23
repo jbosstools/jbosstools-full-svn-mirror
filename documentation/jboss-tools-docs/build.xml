@@ -17,10 +17,12 @@
 			<fileset dir="${root-dir}">
 				<include name="*/docs/reference/build.xml"/>
 				<include name="*/docs/userguide/build.xml"/>
+				<include name="documentation/guides/build.xml"/>
 			</fileset>
+			<!--
 			<filelist>
-				<file name="${root-dir}/documentation/guides/build.xml"/>
-			</filelist>
+				<file name="${basedir}/../guides/build.xml"/>
+			</filelist-->
 		</subant>
 		<!--antcall target="move"></antcall-->
 	</target>
