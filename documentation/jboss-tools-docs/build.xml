@@ -1,0 +1,45 @@
+<project default="build-documentation">
+	
+	<property name="build-dir" location="${basedir}/build"></property>
+	<property name="root-dir" location="${basedir}/../.."></property>
+	
+	<target name="clean">
+		<!--delete dir="${build-dir}" failonerror="false"></delete-->
+	</target>
+	
+	<target name="build-documentation" depends="clean">
+		
+		<mkdir dir="${build-dir}"/>
+		
+		<subant>
+			<property name="no.clean" value="true"></property>
+			<property name="doc-root" location="${build-dir}"></property>
+			<fileset dir="${root-dir}">
+				<include name="*/docs/reference/build.xml"/>
+				<include name="*/docs/userguide/build.xml"/>
+			</fileset>
+			<filelist>
+				<file name="${root-dir}/documentation/guides/build.xml"/>
+			</filelist>
+		</subant>
+		<!--antcall target="move"></antcall-->
+	</target>
+
+	<target name="move">
+		<mkdir dir="${build-dir}/g"/>
+		<move todir="${build-dir}/g" includeemptydirs="true">
+			<fileset dir="${build-dir}">
+				<include name="**/*"/>
+				<exclude name="${build-dir}/g"/>
+			</fileset>
+			<mapper type="regexp" from="^(.*)/en/(.*)" to="\1/\2">
+			</mapper>
+		</move>
+		<move todir="${build-dir}" includeemptydirs="yes">
+			<fileset dir="${build-dir}/g">
+				<include name="**/*"/>
+			</fileset>
+		</move>
+		<delete dir="${build-dir}/g"></delete>
+	</target>
+</project>
