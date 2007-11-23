@@ -1,7 +1,10 @@
 <project name="Documentation" default="all.doc" basedir=".">
 
     <!-- Set the following property to generate the doco in the output folder -->
-    <property name="build.dir" value="${basedir}/../../build/legacy-jsf-struts"/>
+	<property name="modulename" value="legacy-jsf-struts"></property>
+	<condition property="build.dir" value="${doc-root}/${modulename}" else="${basedir}/../../build/legacy-jsf-struts">
+		<isset property="doc-root"/>
+	</condition>
 
     <property name="pdf.name"              value="Legacy-jsf-struts.pdf" />
     <import file="../../resources/support.xml" />

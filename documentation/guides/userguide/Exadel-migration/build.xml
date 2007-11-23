@@ -1,8 +1,11 @@
 <project name="Documentation" default="all.doc" basedir=".">
 
+ 	<property name="modulename" value="Exadel-migration"></property>
+	<condition property="build.dir" value="${doc-root}/${modulename}" else="${basedir}/../../build/Exadel-migration">
+		<isset property="doc-root"/>
+	</condition>
     <!-- Set the following property to generate the doco in the output folder -->
-    <property name="build.dir" value="${basedir}/../../build/Exadel-migration"/>
-
+ 
     <property name="pdf.name"              value="Exadel-migration.pdf" />
     <import file="../../resources/support.xml" />
 
