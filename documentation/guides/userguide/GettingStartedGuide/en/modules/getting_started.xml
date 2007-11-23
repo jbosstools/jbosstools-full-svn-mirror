@@ -10,6 +10,13 @@
     </keywordset>
   </chapterinfo>
  <title>Getting Started with Red Hat Developer Studio</title>
+ 
+ <section id="intro1">
+  <title>What is RHDS?</title>
+  <para>Red Hat Developer Studio is a set of eclipse-based development tools that are pre-configured for JBoss Enterprise Middleware Platforms and Red Hat Enterprise
+   Linux. Developers are not required to use Red Hat Developer Studio to develop on JBoss Enterprise Middleware and/or Red Hat Linux. But, many find these pre-configured
+   tools offer significant time-savings and value, making them more productive and speeding time to deployment.</para>
+ </section>
  <section id="ConfigJavaEnvironment">
   <?dbhtml filename="ConfigJavaEnvironment.html"?>
   <title>Configuring Your Java Environment</title> 
@@ -112,7 +119,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </listitem>
     <listitem>
      <para>Run in console:</para>
-     <programlisting role="JAVA"><![CDATA[java -jar rhdevstudio-linux-gtk-1.0.0.beta2.jar
+     <programlisting role="JAVA"><![CDATA[java -jar rhdevstudio-linux-gtk-1.0.0.CR1.jar
 ]]></programlisting></listitem>
       <listitem><para>Follow the instructions presented by the installation wizard</para></listitem>
        </itemizedlist>
@@ -183,7 +190,17 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </section>
      <section id="JBossToolsInstall">
      <title>JBoss Tools Installation</title> 
-      <para>If you want to install the JBoss Tools plugins for Eclipse, you need the following:</para>
+      <para>JBoss Tools is an umbrella project for the JBoss developed plugins that will make it into Red Hat Developer Studio. The JBoss Tools modules are:</para>
+      <itemizedlist>
+       <listitem><para>JBoss AS Tools</para></listitem>
+       <listitem><para>Seam Tools</para></listitem>
+       <listitem><para>Hibernate Tools</para></listitem>
+       <listitem><para>Visual Page Editor</para></listitem>
+       <listitem><para>JST Tools</para></listitem>
+       <listitem><para>JBPM Tools</para></listitem>
+      </itemizedlist>
+      
+      <para>To install the JBoss Tools plugins for Eclipse, you need the following:</para>
       <itemizedlist>
        <listitem><para>Get Eclipse 3.3.1 and Web Tools 2.0.1</para></listitem>
       </itemizedlist>

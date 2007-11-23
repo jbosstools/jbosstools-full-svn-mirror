@@ -13,7 +13,7 @@
   
   <para>The Red Hat Developer Studio provides sophisticated tools for enterprise applications. With the Red Hat Developer Studio, you can get started very quickly with a web prototype, and then scale up your application to include enterprise features (e.g., business processes, web services, etc.) using the same developer tools. It is a &quot;scalable&quot; RAD (Rapid Application Development) tool.</para>
   
-  <para>A core element that makes the Red Hat Developer Studio &quot;scalable&quot; is the JBoss <property>Seam framework</property>. Seam is a fully featured application framework on top of Java EE 5. It is also one of the most popular enterprise Java framework today. Seam deeply integrates many other standard-based or open source frameworks (e.g., JSF, EJB3, JMS, Web Services, jBPM, JBoss Rules, Ajax4jsf, RichFaces, Facelets, Spring, iText, Quartz, TestNG, etc.), and provides a single programming model for developers to &quot;drive&quot; those underlying frameworks via simple annotated POJOs (Plain Old Java Objects). It makes life easier for developers to tackle complex enterprise applications with many component frameworks.</para>
+  <para>A core element that makes the Red Hat Developer Studio &quot;scalable&quot; is the <property>JBoss Seam</property> framework.</para>
   
   <para>In this chapter, we will cover how to build a simple Seam web application in minutes with the Red Hat Developer Studio.</para>
   
