@@ -4,8 +4,8 @@
     <title>Getting Started Guide for Java Server Faces</title>
     <chapterinfo>
         <keywordset>
-            <keyword>Red Hat Developer Studio</keyword>
-            <keyword>RHDS</keyword>
+            <keyword>JBoss Developer Studio</keyword>
+            <keyword>JBDS</keyword>
             <keyword>Java</keyword>
             <keyword>JSF Component</keyword>
              </keywordset>
@@ -55,19 +55,19 @@ Step5, Step6, and Step7. Each folder contains only one subfolder named &quot;tic
 contains a working example that represents the result up to that particular step. Additionally, a
 folder named Step0 contains the skeleton for starting the JSF project.</para>
 <para>For this tutorial, you can use any tools that allow you to work directly with source code. We
-recommend you to use Red Hat Developer Studio. Developer Studio allows the running of JSF applications
+recommend you to use JBoss Developer Studio. Developer Studio allows the running of JSF applications
 without redeployment. This is extremely important when you play with the code by adding new
 features to test how they work. At the same time, Developer Studio allows you to have full control over
 the source code. We even recommend turning on the &quot;Use Source Tab as a default for multi-tab
 editors&quot; option in the Preferences Editor (<emphasis><property>Red Hat>Editors</property></emphasis> section). You can always use the GUI
 feature of Developer Studio later to slash the development time when you start to understand enough
 how things works on the source code level. The provided example is fully adapted to work with
-Red Hat Developer Studio.</para>
-<para>Red Hat Developer Studio allows debugging Web applications in the same manner in which you can
+JBoss Developer Studio.</para>
+<para>JBoss Developer Studio allows debugging Web applications in the same manner in which you can
 debug a regular Java application within the Eclipse environment. This is an extremely important
 feature for learning.</para>
 <para>To start working with the tutorial example, copy the &quot;ticker&quot; folder to a new place on the
-disk. If you use Red Hat Developer Studio, copy this folder to the Eclipse workspace folder (or wherever you
+disk. If you use JBoss Developer Studio, copy this folder to the Eclipse workspace folder (or wherever you
 usually keep projects) and then import this project using the <emphasis><property>Eclipse File>Import</property></emphasis> menu. Leave
 the server.xml registration option checked on the second screen of wizard. This allows you to
 change and then run an application without any special redeployment.</para>
@@ -293,7 +293,7 @@ you add <emphasis role="bold"><property>&lt;h:gridPanel&gt;</property></emphasis
 <para>At this point, our first step has been finished. We can compile, deploy, and run the result
 application. If you use Ant to do this job, run Ant so that the ticker.war file is copied to the
 servlet container to run.</para>
-<para>If you&apos;re using Red Hat Developer Studio, click the Start Tomcat Server button on the toolbar, and then
+<para>If you&apos;re using JBoss Developer Studio, click the Start Tomcat Server button on the toolbar, and then
 click the Run Web Application button. The default browser should be launched and show the
 result of page rendering.</para>
 <figure>
@@ -421,7 +421,7 @@ writer.endElement("div");
 <para>In the first added line, we have taken the value of the style attribute, checked if it&apos;s set, and
 then assigned the style attribute with the new value. Do not forget to check for null, otherwise
 you will get a NullPointer Exception when a tag without this attribute set is rendered.</para>
-<para>Now, we are done with the style attribute. If you use Red Hat Developer Studio just click the Run Web
+<para>Now, we are done with the style attribute. If you use JBoss Developer Studio just click the Run Web
 Application button to get a result. If you are using an Ant script, run it, deploy the result war file
 under the servlet container, then launch your browser and type the application URL.</para>
 <para>The result page should see the box with dark blue border and the Hello JSF Component text

@@ -3,7 +3,7 @@
   <?dbhtml filename="first_seam.html"?>
   <chapterinfo>
     <keywordset>
-      <keyword>Red Hat Developer Studio</keyword>
+      <keyword>JBoss Developer Studio</keyword>
       <keyword>Seam</keyword>
       <keyword>JBoss</keyword>
       </keywordset>
@@ -11,11 +11,11 @@
   
   <title>Write Your First Seam Web Application</title>
   
-  <para>The Red Hat Developer Studio provides sophisticated tools for enterprise applications. With the Red Hat Developer Studio, you can get started very quickly with a web prototype, and then scale up your application to include enterprise features (e.g., business processes, web services, etc.) using the same developer tools. It is a &quot;scalable&quot; RAD (Rapid Application Development) tool.</para>
+  <para>The JBoss Developer Studio provides sophisticated tools for enterprise applications. With the JBoss Developer Studio, you can get started very quickly with a web prototype, and then scale up your application to include enterprise features (e.g., business processes, web services, etc.) using the same developer tools. It is a &quot;scalable&quot; RAD (Rapid Application Development) tool.</para>
   
-  <para>A core element that makes the Red Hat Developer Studio &quot;scalable&quot; is the <property>JBoss Seam</property> framework.</para>
+  <para>A core element that makes the JBoss Developer Studio &quot;scalable&quot; is the <property>JBoss Seam</property> framework.</para>
   
-  <para>In this chapter, we will cover how to build a simple Seam web application in minutes with the Red Hat Developer Studio.</para>
+  <para>In this chapter, we will cover how to build a simple Seam web application in minutes with the JBoss Developer Studio.</para>
   
   <section>
     <title>Create a Seam Project</title>
@@ -31,7 +31,7 @@
       </mediaobject>
     </figure>
     
-    <para>Next, you will be asked to select the &quot;features&quot; you want to use in your project. This allows Red Hat Developer Studio to setup the appropriate tooling for your project. Since JBoss Seam integrates all popular Java EE frameworks, you can select any combination of technologies from the list. Here, for this project, we will select Dynamic Web Module, Java, JavaServer Faces (JSF), and Seam Facet for a typical database-driven web application. </para>
+    <para>Next, you will be asked to select the &quot;features&quot; you want to use in your project. This allows JBoss Developer Studio to setup the appropriate tooling for your project. Since JBoss Seam integrates all popular Java EE frameworks, you can select any combination of technologies from the list. Here, for this project, we will select Dynamic Web Module, Java, JavaServer Faces (JSF), and Seam Facet for a typical database-driven web application. </para>
     
     <figure>
       <title>Select Toolings for the Project</title>
@@ -79,7 +79,7 @@
     
     <para>We will also use a default Hibernate Dialect - <emphasis>org.hibernate.dialect.HSQLDialect</emphasis> and deploy as a <emphasis>war</emphasis> archive.</para>
         
-    <para>The project setup wizard also asks you to configure how Seam generates code for the project. The Seam Home Folder should point to a valid Seam distribution. By default, it is set to the Seam distribution bundled in your Red Hat Developer Studio tool. If you need another one choose setting up the appropriate check box:</para>
+    <para>The project setup wizard also asks you to configure how Seam generates code for the project. The Seam Home Folder should point to a valid Seam distribution. By default, it is set to the Seam distribution bundled in your JBoss Developer Studio tool. If you need another one choose setting up the appropriate check box:</para>
     
     <figure>
       <title>Enter Java Packages for Generated Code</title>

@@ -2,11 +2,11 @@
 <chapter id="jsf_hibernate" xreflabel="jsf_hibernate">
     <?dbhtml filename="jsf_hibernate.html"?>
 	<title>Getting Started Guide for JSF with Hibernate</title>
-<para>In this guide, we will show you how to take a very simple ready-made JSF application and convert it to use a database with the help of RHDS. After downloading, we will first set up and run the application without persistence, and then with persistence.</para>
+<para>In this guide, we will show you how to take a very simple ready-made JSF application and convert it to use a database with the help of JBDS. After downloading, we will first set up and run the application without persistence, and then with persistence.</para>
 <para>The application itself is a simple JSF-based application that asks the user to enter a UserID. It tries to locate a record for the entered User ID (entered during the application session).</para>
 <para>If the record is found, details are displayed. If the record is not found, you are asked to create this record. This application, of course, only runs as long as the JBoss server is running. Once we stop the server all of the data is lost as all information is saved only in the application session context.</para>
-<para>With the help of RHDS, we will convert this application to use the lightweight hsqldb database (included with the downloaded project). We will use RHDS special features for object-relational mapping for this conversion. After the conversion, even if we restart the server, the data we entered will have been saved in a database and thus available to the application.</para>
-<para>Before we start, we assume that you have installed RHDS with JBoss server.</para>
+<para>With the help of JBDS, we will convert this application to use the lightweight hsqldb database (included with the downloaded project). We will use JBDS special features for object-relational mapping for this conversion. After the conversion, even if we restart the server, the data we entered will have been saved in a database and thus available to the application.</para>
+<para>Before we start, we assume that you have installed JBDS with JBoss server.</para>
 
 <section id="InstallingTheProject">
 <?dbhtml filename="InstallingTheProject.html"?>
@@ -67,7 +67,7 @@ structure. As we mentioned before, this is a JSF application. To see the JSF con
 <title>Running Without a Database</title>
 
 <para>We are ready to run this project in a Web browser and see how it looks. We don&apos;t need to
- compile these classes, because Red Hat Developer Studio did it for us when we imported the project.</para>
+ compile these classes, because JBoss Developer Studio did it for us when we imported the project.</para>
 
 <itemizedlist continuation="continues">
 <listitem><para>Start JBoss</para></listitem>
@@ -80,7 +80,7 @@ structure. As we mentioned before, this is a JSF application. To see the JSF con
 
 <section id="ConvertingforUseWithaDatabase">
 <?dbhtml filename="ConvertingforUseWithaDatabase.html"?><title>Converting for Use With a Database</title>
-<para>Now we are ready to convert this application to use with a database with the help of Red Hat Developer Studio. To convert the application for use with a database, we need to set things up in three different places:</para>
+<para>Now we are ready to convert this application to use with a database with the help of JBoss Developer Studio. To convert the application for use with a database, we need to set things up in three different places:</para>
 
 
 <itemizedlist><listitem><para>The Application</para></listitem></itemizedlist>
@@ -92,7 +92,7 @@ structure. As we mentioned before, this is a JSF application. To see the JSF con
 <section id="SettingUpTheApplication">
 <?dbhtml filename="SettingUpTheApplication.html"?>
 <title>Setting up the Application</title>
-<para>Let&apos;s start by using Red Hat Developer Studio with the application project. First, we create 
+<para>Let&apos;s start by using JBoss Developer Studio with the application project. First, we create 
 the object/relational mapping from our simple object model to a database schema after adding <property>Hibernate</property> capabilities to our project.</para>
 <itemizedlist continuation="continues">
 <listitem><para>Right-click on ormHibernate3-jsf in the Package Explorer view and select Red Hat</para></listitem>
@@ -379,14 +379,14 @@ return "greeting";
 <section id="SettinguptheDatabase">
 <?dbhtml filename="SettinguptheDatabase.html"?>
 <title>Setting up the Database</title>
-<para>To set up the database end, we need to use Red Hat Developer Studio and our HSQL database engine to create a 
+<para>To set up the database end, we need to use JBoss Developer Studio and our HSQL database engine to create a 
 database table corresponding to the class we are trying to persist and make the database available.</para>
 
 </section>
 <section id="CreatingtheDatabaseTable">
 <?dbhtml filename="CreatingtheDatabaseTable.html"?>
 <title>Creating the Database Table</title>
-<para>Let&apos;s first create the script for our database table in Red Hat Developer Studio.</para>
+<para>Let&apos;s first create the script for our database table in JBoss Developer Studio.</para>
 <itemizedlist continuation="continues">
 <listitem><para>In the ORM Explorer view, right-click on <emphasis><property>JavaSource/hibernate.cfg.xml</property></emphasis> and select &quot;Generate DDL Wizard&quot;</para></listitem>
 

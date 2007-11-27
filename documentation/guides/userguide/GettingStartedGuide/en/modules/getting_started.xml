@@ -3,24 +3,24 @@
  <?dbhtml filename="getting_started.html"?>
   <chapterinfo>
     <keywordset>
-      <keyword>Red Hat Developer Studio</keyword>
+      <keyword>JBoss Developer Studio</keyword>
       <keyword>Eclipse</keyword>
       <keyword>Java</keyword>
       <keyword>JBoss</keyword>
     </keywordset>
   </chapterinfo>
- <title>Getting Started with Red Hat Developer Studio</title>
+ <title>Getting Started with JBoss Developer Studio</title>
  
  <section id="intro1">
-  <title>What is RHDS?</title>
-  <para>Red Hat Developer Studio is a set of eclipse-based development tools that are pre-configured for JBoss Enterprise Middleware Platforms and Red Hat Enterprise
-   Linux. Developers are not required to use Red Hat Developer Studio to develop on JBoss Enterprise Middleware and/or Red Hat Linux. But, many find these pre-configured
+  <title>What is JBDS?</title>
+  <para>JBoss Developer Studio is a set of eclipse-based development tools that are pre-configured for JBoss Enterprise Middleware Platforms and Red Hat Enterprise
+   Linux. Developers are not required to use JBoss Developer Studio to develop on JBoss Enterprise Middleware and/or Red Hat Linux. But, many find these pre-configured
    tools offer significant time-savings and value, making them more productive and speeding time to deployment.</para>
  </section>
  <section id="ConfigJavaEnvironment">
   <?dbhtml filename="ConfigJavaEnvironment.html"?>
   <title>Configuring Your Java Environment</title> 
-  <para>You must have a working installation of JDK 1.5 before you install Red Hat Developer Studio. Currently it will only fully work with a 32-bit JVM, not a 64-bit JVM. On a 64-bit JVM the visual editor fails to launch. Thus in this guide we will show you how to install a 32-bit Sun JDK 5.0 on a Linux Platform and Microsoft Windows Platform.</para>
+  <para>You must have a working installation of JDK 1.5 before you install JBoss Developer Studio. Currently it will only fully work with a 32-bit JVM, not a 64-bit JVM. On a 64-bit JVM the visual editor fails to launch. Thus in this guide we will show you how to install a 32-bit Sun JDK 5.0 on a Linux Platform and Microsoft Windows Platform.</para>
   <section id="InstallJDK50onLinux">
    <title>Installing and Configuring 32-bit Sun JDK 5.0 on Linux</title>
    <itemizedlist>
@@ -106,16 +106,16 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
       <para>To do this, open the Control Panel from the Start Menu, switch to Classic View if necessary, open the System Control Panel applet (System), select the Advanced Tab, and click on the Environment Variables button.</para>
     </section>
  </section>
-    <section id="InstallingRHDS">
+    <section id="InstallingJBDS">
   <?dbhtml filename="InstallingRHDS.html"?>
-  <title>Red Hat Developer Studio Installation</title>
+  <title>JBoss Developer Studio Installation</title>
   <section id="Instfromdownver">
    <title>Installing from the downloaded version</title>
-   <para>RHDS comes with a simple installer, bundled with tested/pre-configured versions of Eclipse, Webtools, JBossEAP, Seam, and SpringIDE.</para>
+   <para>JBDS comes with a simple installer, bundled with tested/pre-configured versions of Eclipse, Webtools, JBossEAP, Seam, and SpringIDE.</para>
   
    <itemizedlist>
    <listitem>
-    <para>Download the appropriate installation file for your platform from <ulink  url="http://www.redhat.com/developers/rhds/index.html">Red Hat website</ulink>.</para>
+    <para>Download the appropriate installation file for your platform from <ulink  url="http://www.redhat.com/developers/jbds/index.html">Red Hat website</ulink>.</para>
    </listitem>
     <listitem>
      <para>Run in console:</para>
@@ -125,7 +125,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
        </itemizedlist>
    
    <figure>
-    <title>Red Hat Developer Studio Installation Wizard</title>
+    <title>JBoss Developer Studio Installation Wizard</title>
     <mediaobject> 
      <imageobject>
       <imagedata fileref="images/getting_started/getting_started_1.png"/>
@@ -152,11 +152,11 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    
    <note>
     <title>Note:</title>
-    <para>Red Hat Developer Studio needs Java 5 and doesn't work with gij Java.</para>
+    <para>JBoss Developer Studio needs Java 5 and doesn't work with gij Java.</para>
    </note>
    
    <itemizedlist>
-    <listitem><para>Installation process includes JBoss Enterprise Application Platform. Select <emphasis><property>Yes</property></emphasis> to use it in Red Hat Developer Studio.</para></listitem>
+    <listitem><para>Installation process includes JBoss Enterprise Application Platform. Select <emphasis><property>Yes</property></emphasis> to use it in JBoss Developer Studio.</para></listitem>
    </itemizedlist>  
    
 <para></para>
@@ -171,7 +171,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      <note>
       <title>Note:</title>
       <para>The installer installs JBoss Enterprise Application Platform for running your applications if you select this option during the installation process. 
-      If you want to use a different server than ours, you can change the setting in Red Hat Developer Studio.</para>
+      If you want to use a different server than ours, you can change the setting in JBoss Developer Studio.</para>
      </note>
    
     <itemizedlist>
@@ -190,7 +190,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </section>
      <section id="JBossToolsInstall">
      <title>JBoss Tools Installation</title> 
-      <para>JBoss Tools is an umbrella project for the JBoss developed plugins that will make it into Red Hat Developer Studio. The JBoss Tools modules are:</para>
+      <para>JBoss Tools is an umbrella project for the JBoss developed plugins that will make it into JBoss Developer Studio. The JBoss Tools modules are:</para>
       <itemizedlist>
        <listitem><para>JBoss AS Tools</para></listitem>
        <listitem><para>Seam Tools</para></listitem>
@@ -219,11 +219,11 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      </section>
  
  <section id="Welcome">
-  <title>Welcome to Red Hat Developer Studio</title>
-  <para>The welcome page is the first page you see when you first launch Red Hat Developer Studio. </para>
+  <title>Welcome to JBoss Developer Studio</title>
+  <para>The welcome page is the first page you see when you first launch JBoss Developer Studio. </para>
   
   <figure>
-   <title>Welcome to Red Hat Developer Studio</title>
+   <title>Welcome to JBoss Developer Studio</title>
    <imageobject>
     <imagedata fileref="images/getting_started/getting_started_5.png"/>
    </imageobject>
@@ -242,7 +242,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </figure>
   
   <itemizedlist>
-   <listitem><para>to create new Seam, jBPM Process, JSF or Struts projects using RHDS wizards</para></listitem>
+   <listitem><para>to create new Seam, jBPM Process, JSF or Struts projects using JBDS wizards</para></listitem>
   </itemizedlist>
   
   <figure>
@@ -253,7 +253,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </figure>
   
   <itemizedlist>
-   <listitem><para>to get short description of perspectives that RHDS offers for more productive development</para></listitem>
+   <listitem><para>to get short description of perspectives that JBDS offers for more productive development</para></listitem>
   </itemizedlist>
   
   <figure>
@@ -264,7 +264,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </figure>
   
     <itemizedlist>
-   <listitem><para>to visit Red Hat Developer Studio web resources.</para></listitem>
+   <listitem><para>to visit JBoss Developer Studio web resources.</para></listitem>
   </itemizedlist>
     
   <figure>
@@ -274,7 +274,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </imageobject>
   </figure>
   
-  <para>Start work with Red Hat Developer Studio by clicking on <emphasis><property>Workbench</property></emphasis> button or simply close the welcome page.</para>
+  <para>Start work with JBoss Developer Studio by clicking on <emphasis><property>Workbench</property></emphasis> button or simply close the welcome page.</para>
   
  </section>
  
@@ -287,18 +287,18 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <?dbhtml filename="Uninstalling.html"?>
    <title>Uninstalling</title>
   <itemizedlist>
-  <listitem>Make sure Red Hat Developer Studio is not running</listitem>
-  <listitem>Uninstall your current version of Red Hat Developer Studio by running uninstaller</listitem>
+  <listitem>Make sure JBoss Developer Studio is not running</listitem>
+  <listitem>Uninstall your current version of JBoss Developer Studio by running uninstaller</listitem>
 </itemizedlist>
  </section>
   <section id="Support">
    <?dbhtml filename="Support.html"?>
    <title>Support</title>
     <para>If you have comments or questions, you can discuss them at our
-    <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">Red Hat Developer Studio Forum</ulink>.</para>
+    <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Developer Studio Forum</ulink>.</para>
    <para>When writing to the forum for questions, please include the following information:</para>
    <orderedlist>
-    <listitem><para>Red Hat Developer Studio version</para></listitem>
+    <listitem><para>JBoss Developer Studio version</para></listitem>
     <listitem><para>Exact error message</para></listitem>
     <listitem><para>Steps to reproduce the issue</para></listitem>
    </orderedlist>
@@ -306,23 +306,23 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 <section id="FAQ">
  <?dbhtml filename="FAQ.html"?>
  <title>FAQ</title>
- <para>For easy reference to Red Hat Developer Studio related questions, our FAQ provides answers to our most &quot;popular&quot; questions.
+ <para>For easy reference to JBoss Developer Studio related questions, our FAQ provides answers to our most &quot;popular&quot; questions.
   The sections of questions are organized by type. </para>
 <!-- <section id="Before_Installing">
   <title>Before Installing, Tutorials, Examples, Readme Files</title>
   <para><emphasis role="bold">I'm looking for examples, do you have any?</emphasis></para>
   <para>Yes, simply go to our <ulink url="http://exadel.com/web/portal/products/Tutorials">tutorials page</ulink></para>
-  <para><emphasis role="bold">Where can I find the Red Hat Developer Studio readme file?</emphasis></para>
+  <para><emphasis role="bold">Where can I find the JBoss Developer Studio readme file?</emphasis></para>
   <para>It's located at this page: <ulink url="http://www.exadel.com/web/portal/products/ReleaseNotes">Release Notes</ulink></para>
-  <para><emphasis role="bold">Where can I find some documentation for Red Hat Developer Studio?</emphasis></para>
+  <para><emphasis role="bold">Where can I find some documentation for JBoss Developer Studio?</emphasis></para>
   <para>Try these resources: <ulink url="http://www.exadel.com/exadelstudio/help/">User Guide</ulink></para>
-  <para><emphasis role="bold">What version of Eclipse does Red Hat Developer Studio support?</emphasis></para>
-  <para>Red Hat Developer Studio works with Eclipse 3.3</para>
+  <para><emphasis role="bold">What version of Eclipse does JBoss Developer Studio support?</emphasis></para>
+  <para>JBoss Developer Studio works with Eclipse 3.3</para>
   </section> -->
  <!--<section id="Downloading">
   <title>Downloading</title>
-  <para><emphasis role="bold">Where can I download a copy of Red Hat Developer Studio?</emphasis></para>
-  <para>Go to <ulink url="http://www.redhat.com/developers/rhds/index.html">Download Page</ulink></para>
+  <para><emphasis role="bold">Where can I download a copy of JBoss Developer Studio?</emphasis></para>
+  <para>Go to <ulink url="http://www.redhat.com/developers/jbds/index.html">Download Page</ulink></para>
  </section>-->
  <section id="Installation_Issues">
   <title>Installation Issues</title>
@@ -340,7 +340,7 @@ on their machines.</para>
 <programlisting role="JAVA"><![CDATA[yum install libXp
 ]]></programlisting>
  </listitem>
-<listitem>Open the RHDS perspective. If you see the  Help view open, close it and restart RHDS</listitem>
+<listitem>Open the JBDS perspective. If you see the  Help view open, close it and restart JBDS</listitem>
 <listitem>If none of these work, do the following:
 <itemizedlist>
 <listitem>Clear the Eclipse log file, <emphasis>&lt;workspace&gt;\.metadata\.log</emphasis></listitem>
@@ -354,14 +354,14 @@ on their machines.</para>
 </orderedlist>
 
 
-  <para><emphasis role="bold">Do I need to have JBoss server installed to run Red Hat Developer Studio?</emphasis></para>
-  <para>No. Red Hat Developer Studio already comes bundled with JBoss server. We bundle it together so that you don&apos;t need to download any additional software and can test your application in a Web browser right away.</para>
-  <para>If you want to use a different JBoss server installation, after Red Hat Developer Studio is installed open Servers View (select <emphasis><property>Window &gt; Show View &gt; Others &gt; Server &gt; Servers</property></emphasis>), then right click on this <emphasis><property>view &gt; New &gt; Server</property></emphasis> and follow the wizards steps to point to another Jboss server installation.</para>
-  <para>Red Hat Developer Studio works with any servlet container, not just JBoss. For more information on deployment, please see the Deploying Your Application section.</para>
+  <para><emphasis role="bold">Do I need to have JBoss server installed to run JBoss Developer Studio?</emphasis></para>
+  <para>No. JBoss Developer Studio already comes bundled with JBoss server. We bundle it together so that you don&apos;t need to download any additional software and can test your application in a Web browser right away.</para>
+  <para>If you want to use a different JBoss server installation, after JBoss Developer Studio is installed open Servers View (select <emphasis><property>Window &gt; Show View &gt; Others &gt; Server &gt; Servers</property></emphasis>), then right click on this <emphasis><property>view &gt; New &gt; Server</property></emphasis> and follow the wizards steps to point to another Jboss server installation.</para>
+  <para>JBoss Developer Studio works with any servlet container, not just JBoss. For more information on deployment, please see the Deploying Your Application section.</para>
  </section>
  <section id="Importing_Projects">
   <title>Importing Projects</title>
-  <para><emphasis role="bold">I have an existing Struts or JSF project. Can I open the project in RHDS?</emphasis></para>
+  <para><emphasis role="bold">I have an existing Struts or JSF project. Can I open the project in JBDS?</emphasis></para>
   <para>Yes. From main menu select <emphasis><property>File &gt; Import &gt; Other &gt; JSF Project (or Struts Project)</property></emphasis> and follow wizards steps.</para>
   <para><emphasis role="bold">Can I import a .war file?</emphasis></para>
   <para>Yes. Select <emphasis><property>File &gt; Import &gt; Web &gt; WAR file</property></emphasis>, then follow importing steps.</para>
@@ -369,24 +369,24 @@ on their machines.</para>
  <section id="Troubleshooting">
   <title>Troubleshooting, Problems, Configuration, Error Messages</title>
   <para><emphasis role="bold">Is it possible to increase the performance of Eclipse after installing your product? My Eclipse now crawls.</emphasis></para>
-  <para>Red Hat Developer Studio preconfigures eclipse via the eclipse.ini file to allocate extra memory, but if you for some reason need more memory then by default, you can manually make adjustments in this file. For example:</para>
+  <para>JBoss Developer Studio preconfigures eclipse via the eclipse.ini file to allocate extra memory, but if you for some reason need more memory then by default, you can manually make adjustments in this file. For example:</para>
   <programlisting role="JAVA"><![CDATA[-vmargs -Xms128m -Xmx512m -XX:MaxPermSize=128m
 ]]></programlisting>
   
 
     <para><emphasis role="bold">How can I add my own tag library to the Red Hat Palette?</emphasis></para>
-  <para>See <ulink url="http://www.redhat.com/developers/rhds/JSFTools/JavaServerFacesSupport.html#AddingTagLibraries21653">Adding Tag Libraries</ulink> in JBossJSFTools Guide.</para>
-  <para><emphasis role="bold">I see the Oracle ADF Faces component library tags in the Red Hat Palette, but I can&apos;t seem to find the libraries for ADF. How do I use this component library with RHDS?</emphasis></para>
-  <para>See <ulink url="http://www.redhat.com/developers/rhds/JSFTools/JavaServerFacesSupport.html#AddingSupportForTheOracleADFComponentsLibraryOrAnyOtherSupport64">Adding Support for the Oracle ADF Components Library</ulink> in the RHDS User Guide.</para>
+  <para>See <ulink url="http://www.redhat.com/developers/jbds/JSFTools/JavaServerFacesSupport.html#AddingTagLibraries21653">Adding Tag Libraries</ulink> in JBossJSFTools Guide.</para>
+  <para><emphasis role="bold">I see the Oracle ADF Faces component library tags in the Red Hat Palette, but I can&apos;t seem to find the libraries for ADF. How do I use this component library with JBDS?</emphasis></para>
+  <para>See <ulink url="http://www.redhat.com/developers/jbds/JSFTools/JavaServerFacesSupport.html#AddingSupportForTheOracleADFComponentsLibraryOrAnyOtherSupport64">Adding Support for the Oracle ADF Components Library</ulink> in the JBDS User Guide.</para>
  </section>
 </section>
 
 <section id="OtherRelevantResourcesOnTheTopic33">
 <?dbhtml filename="OtherRelevantResourcesOnTheTopic33.html"?>
 <title>Other relevant resources on the topic</title>
-<para>RHDS on JBoss: <ulink url="http://labs.jboss.com/rhdevstudio/">Red Hat Developer Studio</ulink></para>
+<para>JBDS on JBoss: <ulink url="http://labs.jboss.com/rhdevstudio/">JBoss Developer Studio</ulink></para>
 <para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Forum</ulink></para>
-<para>Download: <ulink url="http://www.redhat.com/developers/rhds/index.html">RHDS Download</ulink></para>
+<para>Download: <ulink url="http://www.redhat.com/developers/jbds/index.html">JBDS Download</ulink></para>
 </section>
 </chapter>
 

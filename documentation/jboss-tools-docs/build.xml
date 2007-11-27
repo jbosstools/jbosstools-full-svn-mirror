@@ -9,8 +9,10 @@
 	
 	<target name="build-documentation" depends="clean">
 		
+
 		<mkdir dir="${build-dir}"/>
-		
+
+                <copy tofile="${build-dir}/index.html" overwrite="true" file="index.html"/>		
 		<subant>
 			<property name="no.clean" value="true"></property>
 			<property name="doc-root" location="${build-dir}"></property>

@@ -14,8 +14,8 @@
 		        <include name="*emma*.jar"/>
 		     </fileset>
 		</path>
-		<path id="rhds.lib">
-			<fileset dir="./rhds/eclipse/plugins">
+		<path id="jbds.lib">
+			<fileset dir="./jbds/eclipse/plugins">
 		        	<include name="org.jboss.tools.*/*.jar"/>
 				<include name="org.jboss.tools.*.jar"/>
 		     	</fileset>
@@ -28,7 +28,7 @@
          ================================= -->
     <target name="default" description="" >
     	<emma enabled="true">
-			<instr mode="overwrite" instrpathref="rhds.lib"/>
+			<instr mode="overwrite" instrpathref="jbds.lib"/>
 		</emma>
     </target>
 </project>

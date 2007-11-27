@@ -3,7 +3,7 @@
     <?dbhtml filename="rad_jsf_application.html"?>
 	<chapterinfo> 
     <keywordset>
-      <keyword>Red Hat Developer Studio</keyword>
+      <keyword>JBoss Developer Studio</keyword>
       <keyword>JSF</keyword>
       <keyword>JBoss</keyword>
       <keyword>RAD</keyword>
@@ -11,13 +11,13 @@
   </chapterinfo>
 	<title>RAD development of a simple JSF application</title>
         <para>In this chapter you will see how to create a simple JSF application being based on <property>&quot;RAD&quot;</property> philosophy. We will create the familiar Guess Number application. The scenario is the following. You are asked to guess a number between 0 and 100. If the guess is correct, a success page is displayed with a link to play again. If the guess is incorrect, a message is printed notifying the user that a smaller or a larger number should be entered and the game continues.</para>
-      <para>We&apos;ll show you how to create such an application from scratch, along the way demonstrating powerful features of Red Hat Developer Studio such as project templating, Visual Page Editor, code completion and others. You will design the
-JSF application and then run the application from inside Red Hat Developer Studio using the bundled JBoss server.</para>
+      <para>We&apos;ll show you how to create such an application from scratch, along the way demonstrating powerful features of JBoss Developer Studio such as project templating, Visual Page Editor, code completion and others. You will design the
+JSF application and then run the application from inside JBoss Developer Studio using the bundled JBoss server.</para>
 
 <section id="SettingUpTheProject12">
 <?dbhtml filename="SettingUpTheProject12.html"?>
 <title>Setting up the project</title>
-<para>We will create a JSF 1.2 project using an integrated RHDS&apos;s new project wizard and predefined templates.</para>
+<para>We will create a JSF 1.2 project using an integrated JBDS&apos;s new project wizard and predefined templates.</para>
 <itemizedlist>
     <listitem><para>In Web Projects View (if it is not open select <emphasis><property>Window &gt; Show View &gt; Others &gt; JBoss Tools Web &gt; Web Projects View</property></emphasis>) click <emphasis><property>Create New JSF Project</property></emphasis> button.
 <figure>
@@ -113,7 +113,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
 <section id="CreatingResourceFile">
 <?dbhtml filename="CreatingResourceFile.html"?>
 <title>Creating Resource File</title>
-<para>Red Hat Developer Studio allows to  create quickly a resource file. Using this feature you can collect text messages in one central place. A resource file is just a file with a <emphasis>.properties</emphasis> extension. The messages stored in resource file can be displayed to you on a Web page during application execution. </para>
+<para>JBoss Developer Studio allows to  create quickly a resource file. Using this feature you can collect text messages in one central place. A resource file is just a file with a <emphasis>.properties</emphasis> extension. The messages stored in resource file can be displayed to you on a Web page during application execution. </para>
 <para>With resource file first, you don&apos;t hard code anything into the JSP pages. And second, it makes it easier to translate your application to other languages. All you have to do is to translate all your messages to the other language and save them in a new properties file with a name that ends with the appropriate ISO-639 language code.</para>
 <para>It is a good idea to keep your resources inside the <emphasis><property>JavaSource</property></emphasis> folder, where you keep your .java files. Every time you build the project, all <emphasis>.properties</emphasis> files will then be copied to the <emphasis>classes</emphasis> folder by default.</para>
 <itemizedlist>
@@ -125,7 +125,7 @@ JSF application and then run the application from inside Red Hat Developer Studi
     <listitem><para>Right click  on <emphasis><property>game folder</property></emphasis> and select <emphasis><property>New &gt; Properties File</property></emphasis></para></listitem>
 <listitem><para>Type <emphasis><property>messages</property></emphasis> as the value for &quot;name&quot; attribute and click <emphasis><property>Finish</property></emphasis></para></listitem>
 </itemizedlist>
-<para>Red Hat Developer Studio will automatically open <property>messages.properties</property> file for editing.</para>
+<para>JBoss Developer Studio will automatically open <property>messages.properties</property> file for editing.</para>
 <figure>
 <title>Messages.properties File</title>
 <mediaobject> 
@@ -422,7 +422,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <listitem><para>Select <emphasis><property>value</property></emphasis> and click on this line below &quot;value&quot; header</para></listitem>
 <listitem><para>Click <property>...</property> button next to the value field</para></listitem>
 </itemizedlist>
-<para>RHDS will nicely propose you to choose within available values:</para>
+<para>JBDS will nicely propose you to choose within available values:</para>
 <figure>
 <title>Choose Value</title>
 <mediaobject> 
@@ -542,7 +542,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
  </f:view>
 </html>
 ]]></programlisting>
-<para>Again you can use code assist provided by RHDS when editing jsp page:</para>
+<para>Again you can use code assist provided by JBDS when editing jsp page:</para>
 <figure>
 <title>Code Assist for &lt;f:param&gt;</title>
 <mediaobject> 

@@ -3,14 +3,14 @@
 	<?dbhtml filename="jsp_application.html"?>
 	<chapterinfo>
     <keywordset>
-      <keyword>Red Hat Developer Studio</keyword>
+      <keyword>JBoss Developer Studio</keyword>
       <keyword>JSP</keyword>
       <keyword>JBoss</keyword>
     </keywordset>
   </chapterinfo>
 	<title>Developing a simple JSP web application</title>
-	<para>In this chapter you'll find out how to create a simple JSP application using the Red Hat Developer Studio. The application will show a classic &quot;Hello World!&quot; on the page.</para>
-	<para>We&apos;ll assume that you have already launched Red Hat Developer Studio and
+	<para>In this chapter you'll find out how to create a simple JSP application using the JBoss Developer Studio. The application will show a classic &quot;Hello World!&quot; on the page.</para>
+	<para>We&apos;ll assume that you have already launched JBoss Developer Studio and
 also that the Web Development perspective is the current perspective. (If not, make it active by selecting <emphasis><property>Window &gt; Open Perspective &gt; Web Development</property></emphasis> from the menu bar or by selecting <emphasis><property>Window &gt; Open Perspective &gt; Other...</property></emphasis> from the menu bar and then selecting Web Development from
 the Select Perspective dialog box.)</para>
 	<section id="SettingUpTheProject">
@@ -98,7 +98,7 @@ the Select Perspective dialog box.)</para>
 		<section id="WebXML">
 		<?dbhtml filename="WebXML.html"?>
 		<title>web.xml file</title>
-		<para>When you are creating web project the wizard creates the web.xml for you automatically.  The web.xml file editor provided by Red Hat Developer Studio is available in two modes: design and source.</para>
+		<para>When you are creating web project the wizard creates the web.xml for you automatically.  The web.xml file editor provided by JBoss Developer Studio is available in two modes: design and source.</para>
 		<figure>
 			<title>Web.xml in Design Mode</title>
 			<mediaobject>
@@ -130,8 +130,8 @@ the Select Perspective dialog box.)</para>
 		<?dbhtml filename="DeployTheProject.html"?>
 		<title>Deploying the project</title>
 		<para>While creating any web project you could experience a pain writing ant scripts and managing the 
-packaging even if a developer is writing the most trivial web applications. With Red Hat Developer Studio you are saved from such a pain. All you need is to start JBoss server and launch your application in your favorite browser.</para>
-       <para>You can also create a war archive with RHDS&apos;s Archive Tools and export it to any web server.</para>
+packaging even if a developer is writing the most trivial web applications. With JBoss Developer Studio you are saved from such a pain. All you need is to start JBoss server and launch your application in your favorite browser.</para>
+       <para>You can also create a war archive with JBDS&apos;s Archive Tools and export it to any web server.</para>
        <section id="WarConfig">
 		<?dbhtml filename="WarConfig.html"?>
 		<title>WAR Config</title>
@@ -205,14 +205,14 @@ packaging even if a developer is writing the most trivial web applications. With
 		<section id="AutoRedeploy">
 		<?dbhtml filename="AutoRedeploy.html"?>
 		<title>Auto redeploy</title>
-		<para>When you are creating a web application and register it on JBoss server it is automatically deployed into <emphasis>/deploy</emphasis> directory of the server. RHDS comes with the feature of auto-redeploy. It means that you don&apos;t need to restart JBoss. Any changes made in the application in exploded format will trigger a redeployment on the server.</para>
+		<para>When you are creating a web application and register it on JBoss server it is automatically deployed into <emphasis>/deploy</emphasis> directory of the server. JBDS comes with the feature of auto-redeploy. It means that you don&apos;t need to restart JBoss. Any changes made in the application in exploded format will trigger a redeployment on the server.</para>
 		</section>
 		</section>
 		
 		<section id="Previewtab">
 		<?dbhtml filename="Previewtab.html"?>
 		<title>JSP Page Preview</title>
-		<para>RHDS comes with JSP design-time preview features. When designing JSP pages you can easily preview how they will look during runtime. You can even attach your stylesheet to the preview.</para>
+		<para>JBDS comes with JSP design-time preview features. When designing JSP pages you can easily preview how they will look during runtime. You can even attach your stylesheet to the preview.</para>
 		<itemizedlist>
 			<listitem><para>Make a little change to hello.jsp page, e.g. put this code snippet:</para></listitem>
 			</itemizedlist>
@@ -235,7 +235,7 @@ packaging even if a developer is writing the most trivial web applications. With
 		<section id="LaunchingTheProject">
 		<?dbhtml filename="LaunchingTheProject.html"?>
 		<title>Launch JSP Project</title>
-		<para>Let&apos;s now launch our project on server. We&apos;ll use JBoss server that is shipped with Red Hat Developer Studio.</para>
+		<para>Let&apos;s now launch our project on server. We&apos;ll use JBoss server that is shipped with JBoss Developer Studio.</para>
 		<itemizedlist continuation="continues">
 <listitem><para>Start JBoss server from JBoss Server view by clicking the Start icon.</para></listitem>
 </itemizedlist>

@@ -3,23 +3,23 @@
     <?dbhtml filename="manage.html"?>
   <chapterinfo>
     <keywordset>
-      <keyword>Red Hat Developer Studio</keyword>
+      <keyword>JBoss Developer Studio</keyword>
       <keyword>Eclipse</keyword>
       <keyword>Deploy</keyword>
       <keyword>Deployment</keyword>
       <keyword>JBoss</keyword>
     </keywordset>
   </chapterinfo>
- <title>Manage JBoss AS from Red Hat Developer Studio</title>
-    <para>Red Hat Developer Studio ships with <property>JBoss EAP v.4.2</property> bundled. When you followed the default installation of Red Hat Developer Studio, you should already have a JBoss 4.2 server installed and defined. To run JBoss AS 4.2 you need JDK 1.5, JDK 6 is not formally supported yet, although you may be able to start the server with it.</para>
+ <title>Manage JBoss AS from JBoss Developer Studio</title>
+    <para>JBoss Developer Studio ships with <property>JBoss EAP v.4.2</property> bundled. When you followed the default installation of JBoss Developer Studio, you should already have a JBoss 4.2 server installed and defined. To run JBoss AS 4.2 you need JDK 1.5, JDK 6 is not formally supported yet, although you may be able to start the server with it.</para>
  <section id="JBossbundled">
   <?dbhtml filename="JBossbundled.html"?>
-  <title>How to Manage the JBoss AS Bundled in RHDS</title>
+  <title>How to Manage the JBoss AS Bundled in JBDS</title>
   <para></para>
   <section id="StartingServer">
   <?dbhtml filename="StartingServer.html"?>
   <title>Starting JBoss server</title>
-  <para>Starting <property>JBoss server</property> is quite simple. Red Hat Developer Studio allows you to control its behaviour with the help of a special toolbar: where you could start it in a regular or debug mode, stop it or restart it.</para>
+  <para>Starting <property>JBoss server</property> is quite simple. JBoss Developer Studio allows you to control its behaviour with the help of a special toolbar: where you could start it in a regular or debug mode, stop it or restart it.</para>
   <itemizedlist>
       <listitem><para>To launch the server click the green-with-white-arrow icon on the <property>JBoss Server View </property>or right click server name in this view and select <emphasis><property>Start</property></emphasis>. If this view is not open, select <emphasis><property>Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View</property></emphasis></para></listitem>
   </itemizedlist>
@@ -87,7 +87,7 @@
   <section id="ServerPreferences">
   <?dbhtml filename="ServerPreferences.html"?>
   <title>Server Container Preferences</title>
-      <para>You can control how Red Hat Developer Studio interacts with servlet containers in Preferences. Select <emphasis><property>Window &gt; Preferences &gt; JBoss Tools &gt; JBoss Servers</property></emphasis> and switch to the desired server:</para>
+      <para>You can control how JBoss Developer Studio interacts with servlet containers in Preferences. Select <emphasis><property>Window &gt; Preferences &gt; JBoss Tools &gt; JBoss Servers</property></emphasis> and switch to the desired server:</para>
   <figure>
 <title>Server Preferences</title>
 <mediaobject> 
@@ -110,8 +110,8 @@
   </section>
   <section id="JBossInstances">
   <?dbhtml filename="JBossInstances.html"?>
-  <title>How to Manage JBoss AS Instances in RHDS</title>
-  <para>Although Red Hat Developer Studio works closely with <property>JBoss EAP 4.2</property> we do not ultimately tie you to any particular server for deployment. There are some servers that Studio supports directly (via the bundled Eclipse WTP plug-ins). Suppose you want to deploy the application to <property>JBoss 4.2.1 server</property>. First of all you need to install it.</para>
+  <title>How to Manage JBoss AS Instances in JBDS</title>
+  <para>Although JBoss Developer Studio works closely with <property>JBoss EAP 4.2</property> we do not ultimately tie you to any particular server for deployment. There are some servers that Studio supports directly (via the bundled Eclipse WTP plug-ins). Suppose you want to deploy the application to <property>JBoss 4.2.1 server</property>. First of all you need to install it.</para>
  <section id="JBossInstalling">
   <?dbhtml filename="JBossInstalling.html"?>
   <title>JBoss AS Installation</title>
@@ -134,7 +134,7 @@
  <section id="AddingJBossServer">
   <?dbhtml filename="AddingJBossServer.html"?>
   <title>Adding and configuring JBoss server</title>
-  <para>Now we should add just installed server into server manager in Red Hat Developer Studio.</para>
+  <para>Now we should add just installed server into server manager in JBoss Developer Studio.</para>
   <itemizedlist>
   <listitem><para>Open the JBoss Server View by selecting <emphasis><property>Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View</property></emphasis>. You will see JBoss Server view.</para></listitem>
       <listitem><para>Right click anywhere in this view and select <emphasis><property>New Server</property></emphasis>.</para></listitem>
@@ -166,7 +166,7 @@
 
 
 <itemizedlist continuation="continues">
-<listitem><para>In the next step make Red Hat Developer Studio to know where you have installed the server and define JRE.</para></listitem>
+<listitem><para>In the next step make JBoss Developer Studio to know where you have installed the server and define JRE.</para></listitem>
 </itemizedlist>
 <figure>
 <title>Defining JBoss Runtime</title>

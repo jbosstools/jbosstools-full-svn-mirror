@@ -3,7 +3,7 @@
   <?dbhtml filename="introduction.html"?>
   <chapterinfo>
     <keywordset>
-      <keyword>Red Hat Developer Studio</keyword>
+      <keyword>JBoss Developer Studio</keyword>
       <keyword>Eclipse</keyword>
       <keyword>Java</keyword>
       <keyword>JBoss</keyword>
@@ -11,6 +11,6 @@
   </chapterinfo>
  <title>Introduction</title>
   <para>The following chapters describe how to deal with classic/old style of JSF and Struts development. We recommend users to 
-use <ulink url="http://www.redhat.com/developers/rhds/Getting_Started/GetStartSeamGen.html">JBoss Seam</ulink> to simplify development, but until then you can read about classical JSF and Struts usage here.</para>
+use <ulink url="http://www.redhat.com/developers/jbds/Getting_Started/GetStartSeamGen.html">JBoss Seam</ulink> to simplify development, but until then you can read about classical JSF and Struts usage here.</para>
 </chapter>
 

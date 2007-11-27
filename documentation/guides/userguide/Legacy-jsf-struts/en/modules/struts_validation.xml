@@ -3,7 +3,7 @@
   <?dbhtml filename="struts_validation.html"?>
   <chapterinfo>
         <keywordset>
-            <keyword>Red Hat Developer Studio</keyword>
+            <keyword>JBoss Developer Studio</keyword>
             <keyword>Struts</keyword>
             <keyword>Struts Validation</keyword>
             </keywordset>
@@ -14,13 +14,13 @@
 including Struts, can use a common Jakarta Validation Framework for streamlining this aspect of Web 
 application development. The Validation Framework allows you to define validation rules and then apply these rules on the client-side or the server-side.</para>
 
-    <para>Red Hat Developer Studio makes using the <property>Validation Framework</property> in Struts even easier with the help of a specialized editor for the XML files that controls validation in a project. In this document, we&apos;ll show you how this all works by creating some simple client-side validation and server-side validation examples.</para>
+    <para>JBoss Developer Studio makes using the <property>Validation Framework</property> in Struts even easier with the help of a specialized editor for the XML files that controls validation in a project. In this document, we&apos;ll show you how this all works by creating some simple client-side validation and server-side validation examples.</para>
 
 <section id="StartingPoint">
 <?dbhtml filename="StartingPoint.html"?>
 <title>Starting Point</title>
 <para>The example assumes that you have already created our sample &quot;StrutsHello&quot; application from the 
-Getting Started Guide for Creating a Struts Application. You should have the Red Hat Developer Studio perspective
+Getting Started Guide for Creating a Struts Application. You should have the JBoss Developer Studio perspective
  open on this StrutsHello project.</para>
 </section>
 
@@ -262,6 +262,6 @@ org.apache.struts.validator.ValidatorForm
 <section id="OtherResource">
 <?dbhtml filename="OtherResource.html"?>
 <title>Other Resources</title>
-<para>You can also read <ulink url="http://www.redhat.com/developers/rhds/JSFTools/Struts.html">Struts</ulink> chapter in our &quot;JBoss JSF Tools&quot; guide for more information on this topic.</para>
+<para>You can also read <ulink url="http://www.redhat.com/developers/jbds/JSFTools/Struts.html">Struts</ulink> chapter in our &quot;JBoss JSF Tools&quot; guide for more information on this topic.</para>
 </section>
 </chapter>
