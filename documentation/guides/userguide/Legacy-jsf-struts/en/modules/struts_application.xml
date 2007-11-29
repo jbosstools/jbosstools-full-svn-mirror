@@ -48,11 +48,11 @@ the code a little bit later.</para>
  <itemizedlist continuation="continues">
      <listitem><para>Bring the Web Projects view to the front of the Package Explorer view by selecting the <emphasis><property>Web Projects</property></emphasis> tab next to that tab.</para></listitem>
      <listitem><para>Right-click the <emphasis><property>StrutsHello > WEB-ROOT (WebContent)</property></emphasis> folder in the Web Projects view and select <emphasis><property>New > Folder...</property></emphasis></para></listitem>
-     <listitem><para>Enter pages for a folder name and click <emphasis><property>Finish</property></emphasis></para></listitem>
+     <listitem><para>Enter <emphasis><property>pages</property></emphasis> for a folder name and click <emphasis><property>Finish</property></emphasis></para></listitem>
      
 <listitem><para>We will keep our presentation files in this folder</para></listitem>
 
-<listitem><para>Right-click the pages folder and select <emphasis><property>New &gt; JSP File...</property></emphasis> </para></listitem>
+<listitem><para>Right-click the pages folder and select <emphasis><property>New &gt; Fila &gt; JSP...</property></emphasis> </para></listitem>
      <listitem><para>For Name type in <emphasis><property>inputname</property></emphasis> (the JSP extension will be automatically added to the file), for Template select <emphasis><property>StrutsForm</property></emphasis> and then click on the <emphasis><property>Finish</property></emphasis> button</para></listitem>
 <listitem><para>Right-click the pages folder again and select <emphasis><property>New > File > JSP...</property></emphasis></para></listitem>
      <listitem><para>For Name type in <emphasis><property>greeting</property></emphasis>, for Template leave as Blank, and then click on the <emphasis><property>Finish</property></emphasis> button</para></listitem>

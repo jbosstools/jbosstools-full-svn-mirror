@@ -85,13 +85,14 @@ menu</para></listitem>
         <para>If you look in the Package Explorer view you should see a <emphasis><property>pages</property></emphasis> folder under WebContent. Opening it 
 will reveal the JSP file you just created</para>
 </listitem>
-<listitem><para>Back on the diagram, right-click anywhere and select <emphasis><property>New View...</property></emphasis> from the popup
+<listitem><para>Back on the diagram, right-click anywhere and select <emphasis><property>New View...</property></emphasis> from the pop-up
 menu</para></listitem>
 <listitem><para>In the dialog box, type <emphasis><property>pages/greeting</property></emphasis> as the value for From-view-id</para></listitem>
 <listitem><para>Leave everything else as is</para></listitem>
     <listitem><para>Click <emphasis><property>Finish</property></emphasis></para></listitem>
 </itemizedlist>
-<section id="CreatingTheTransition(NavigationRule)">
+
+    <section id="CreatingTheTransition(NavigationRule)">
 <?dbhtml filename="CreatingTheTransition(NavigationRule).html"?>
 <title>Creating the Transition (Navigation Rule)</title>
 <itemizedlist continuation="continues">
@@ -137,7 +138,7 @@ the right side of the editor window</para></listitem>
     <listitem><para>Type in <emphasis><property>jsfHello.PersonBean</property></emphasis> for Class and <emphasis><property>personBean</property></emphasis> for Name. Leave
 Scope as is and Generate Source Code as is (checked)</para></listitem>
     <listitem><para>Click <emphasis><property>Finish</property></emphasis></para></listitem>
-    <listitem><para>personBean will now be selected and three sections of information, <emphasis><property>Managed
+    <listitem><para>personBean will now be selected and three sections of information: <emphasis><property>Managed
         Bean</property></emphasis>, <emphasis><property>Properties</property></emphasis>, and <emphasis><property>Advanced</property></emphasis>, will be displayed about it. Under the Properties
 section, click the <emphasis><property>Add...</property></emphasis> button</para></listitem>
     <listitem><para>Type in <emphasis><property>name</property></emphasis> for Property-Name. Leave everything else as is. (When Property-
@@ -163,7 +164,7 @@ Class is not filled in, String is the assumed type)</para></listitem>
 <?dbhtml filename="EditingTheJSPViewFiles.html"?>
 <title>Editing the JSP View Files</title>
 
-<para>Now we will finish editing the JSP files for our two &quot;views&quot; using Red Hat JSP Visual Page.</para>
+<para>Now we will finish editing the JSP files for our two &quot;views&quot; using JSP Visual Page.</para>
 <section id="Inputname.jsp">
 <title>inputname.jsp</title>
 <itemizedlist continuation="continues">
@@ -182,7 +183,7 @@ a WYSIWIG view along the bottom:</para>
         </imageobject>
 </mediaobject>
 </figure>
-<para>Some JSF code will already be in the file because we selected a template when creating the page.</para>
+    <para>Some JSF code is already in the file, because we have chosen a template to create a page.</para>
 <itemizedlist continuation="continues">
     <listitem><para>Select the <emphasis><property>Visual</property></emphasis> tab, so we can work with the editor completely in its WYSIWYG
 mode</para></listitem>
