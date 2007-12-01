@@ -119,7 +119,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </listitem>
     <listitem>
      <para>Run in console:</para>
-     <programlisting role="JAVA"><![CDATA[java -jar rhdevstudio-linux-gtk-1.0.0.CR1.jar
+     <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-linux-gtk-1.0.0.GA.jar
 ]]></programlisting></listitem>
       <listitem><para>Follow the instructions presented by the installation wizard</para></listitem>
        </itemizedlist>
