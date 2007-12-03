@@ -4,7 +4,7 @@
 	<property name="root-dir" location="${basedir}/../.."></property>
 	
 	<target name="clean">
-		<!--delete dir="${build-dir}" failonerror="false"></delete-->
+		<delete dir="${build-dir}" failonerror="false"></delete>
 	</target>
 	
 	<target name="build-documentation" depends="clean">
