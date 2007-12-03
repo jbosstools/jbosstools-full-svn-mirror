@@ -110,8 +110,10 @@
   </section>
   <section id="JBossInstances">
   <?dbhtml filename="JBossInstances.html"?>
-  <title>How to Manage JBoss AS Instances in JBDS</title>
-  <para>Although JBoss Developer Studio works closely with <property>JBoss EAP 4.2</property> we do not ultimately tie you to any particular server for deployment. There are some servers that Studio supports directly (via the bundled Eclipse WTP plug-ins). Suppose you want to deploy the application to <property>JBoss 4.2.1 server</property>. First of all you need to install it.</para>
+  <title>How to Use Your Own JBoss AS Instance with JBDS</title>
+  <para>Although JBoss Developer Studio works closely with <property>JBoss EAP 4.2</property> we do not ultimately tie you to any particular server for deployment. There are some servers that Studio supports directly (via the bundled Eclipse WTP plug-ins). 
+      
+     In this section we discuss how to manage self-installed JBoss AS. Suppose you want to deploy the application to <property>JBoss 4.2.1 server</property>. First of all you need to install it.</para>
  <section id="JBossInstalling">
   <?dbhtml filename="JBossInstalling.html"?>
   <title>JBoss AS Installation</title>
