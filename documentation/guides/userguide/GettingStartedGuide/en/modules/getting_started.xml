@@ -374,9 +374,9 @@ on their machines.</para>
 ]]></programlisting>
   
 
-    <para><emphasis role="bold">How can I add my own tag library to the Red Hat Palette?</emphasis></para>
+    <para><emphasis role="bold">How can I add my own tag library to the JBoss Tools Palette?</emphasis></para>
   <para>See <ulink url="http://www.redhat.com/developers/jbds/JSFTools/JavaServerFacesSupport.html#AddingTagLibraries21653">Adding Tag Libraries</ulink> in JBossJSFTools Guide.</para>
-  <para><emphasis role="bold">I see the Oracle ADF Faces component library tags in the Red Hat Palette, but I can&apos;t seem to find the libraries for ADF. How do I use this component library with JBDS?</emphasis></para>
+  <para><emphasis role="bold">I see the Oracle ADF Faces component library tags in the JBoss Tools Palette, but I can&apos;t seem to find the libraries for ADF. How do I use this component library with JBDS?</emphasis></para>
   <para>See <ulink url="http://www.redhat.com/developers/jbds/JSFTools/JavaServerFacesSupport.html#AddingSupportForTheOracleADFComponentsLibraryOrAnyOtherSupport64">Adding Support for the Oracle ADF Components Library</ulink> in the JBDS User Guide.</para>
  </section>
 </section>

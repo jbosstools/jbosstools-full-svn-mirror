@@ -175,7 +175,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 </itemizedlist>
 <programlisting role="JAVA"><![CDATA[Integer userNumber;
 ]]></programlisting>
-<para>Red Hat Studio allows to quickly generate getters and setters for java bean.</para>
+<para>JBDS allows to quickly generate getters and setters for java bean.</para>
 <itemizedlist>
     <listitem><para>Right click <emphasis><property>NumberBean.java</property></emphasis> in Package Explorer</para></listitem>
 <listitem><para>Select <emphasis><property>Source &gt; Generate Getters and Setters...</property></emphasis></para></listitem>
@@ -406,7 +406,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 </itemizedlist>
 <programlisting role="XML"><![CDATA[<f:loadBundle basename="game.messages" var="msg"/>
 ]]></programlisting>
-<para>As always Red Hat Studio provides code assist:</para>
+<para>As always JBDS provides code assist:</para>
 <figure>
 <title>Code Assist</title>
 <mediaobject> 
@@ -591,8 +591,8 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Running the Application</title>
 <para>Everything is ready to run the application.</para>
 <itemizedlist>
-    <listitem><para>Start up JBoss server by clicking on the <emphasis><property>Start</property></emphasis> icon in JBoss Server view. (If JBoss is already running, stop it by clicking on the red icon and then start it again. After the messages in the Console tabbed view stop scrolling, JBoss is available</para></listitem>
-    <listitem><para>Click on the <emphasis><property>Red Hat</property></emphasis> run icon in the toolbar</para></listitem>
+    <listitem><para>Start up JBoss server by clicking on the <emphasis><property>Start</property></emphasis> icon in JBoss Server view. (If JBoss is already running, stop it by clicking on the red icon and then start it again. After the messages in the Console tabbed view stop scrolling, JBoss is available)</para></listitem>
+    <listitem><para>Right-click on project <emphasis>Run AS &gt; Run on Server<property></property></emphasis></para></listitem>
 <listitem><para>Play with the application by entering correct as well as incorrect values</para></listitem>
 </itemizedlist>
 <figure>
