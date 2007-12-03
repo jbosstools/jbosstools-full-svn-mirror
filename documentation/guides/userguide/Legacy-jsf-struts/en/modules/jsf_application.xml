@@ -339,7 +339,7 @@ stop it by clicking on the red icon and then start it again. Remember, the JSF r
 <listitem><para>Click the Run icon or right click your project folder and select <emphasis><property>Run As &gt; Run on Server</property></emphasis>:</para></listitem>
 </itemizedlist>
 <figure>
-    <title>Red Hat Run Icon</title>
+    <title>Run Icon</title>
 <mediaobject> 
         <imageobject>
             <imagedata fileref="images/jsf_application/jsf_application_10.png"/>
