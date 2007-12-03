@@ -1,0 +1,15 @@
+<project default="convert">
+
+	<path id="groovy-classpath">
+		<fileset dir="lib" includes="**/*.jar"/>
+	</path>
+	
+	<target name="convert">
+		<property name="packaging-path" value="/home/marshall/Workspaces/jbosside/pojp/.packaging"/>
+		
+		<java classpathref="groovy-classpath" classname="groovy.lang.GroovyShell">
+			<arg line="src/org/jboss/tools/archives/PackagingConverter.groovy"/>
+			<arg line="${packaging-path}"/>
+		</java>
+	</target>
+</project>
