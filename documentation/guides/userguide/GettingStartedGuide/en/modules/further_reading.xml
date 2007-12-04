@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="further_reading" xreflabel="further_reading">
+    <?dbhtml filename="further_reading.html"?>
+  <chapterinfo>
+    <keywordset>
+      <keyword>JBoss Developer Studio</keyword>
+      <keyword>Eclipse</keyword>
+      <keyword>Deploy</keyword>
+      <keyword>Deployment</keyword>
+      <keyword>JBoss</keyword>
+    </keywordset>
+  </chapterinfo>
+ 
+    <title>Further Reading</title>
+    
+  <para>
+    <emphasis role="bold">Seam Dev Tools Reference Guide</emphasis> 
+    <ulink url="../../../seam/en/html/index.html">(html)</ulink> <ulink url="../../../seam/en/html_single/index.html">(html single)</ulink> <ulink url="../../../seam/en/pdf/Seam_Dev_Tools_Reference_Guide.pdf">(PDF)</ulink>
+  </para>
+  
+  <para>
+    <emphasis role="bold">Visual Web Tools Reference Guide</emphasis> 
+    <ulink url="../../../jsf/en/html/index.html">(html)</ulink> <ulink url="../../../jsf/en/html_single/index.html">(html single)</ulink> <ulink url="../../../jsf/en/pdf/Visual_Web_Tools_Reference_Guide.pdf">(PDF)</ulink>
+  </para>
+  
+  <para>
+    <emphasis role="bold">JBoss Server Manager Reference Guide</emphasis> 
+    <ulink url="../../../as/en/html/index.html">(html)</ulink> <ulink url="../../../as/en/html_single/index.html">(html single)</ulink> <ulink url="../../../as/en/pdf/server_manager_guide.pdf">(PDF)</ulink>
+  </para>
+    
+  <para>
+    <emphasis role="bold">jBPM Tools Reference Guide</emphasis> 
+    <ulink url="../../../jbpm/en/html/index.html">(html)</ulink> <ulink url="../../../jbpm/en/html_single/index.html">(html single)</ulink> <ulink url="../../../jbpm/en/pdf/jBPM_Tools_Ref.pdf">(PDF)</ulink>
+  </para>
+  
+  <para>
+    <emphasis role="bold">Hibernate Tools Reference Guide</emphasis> 
+    <ulink url="../../../hibernatetools/en/html/index.html">(html)</ulink> <ulink url="../../../hibernatetools/en/html_single/index.html">(html single)</ulink> <ulink url="../../../hibernatetools/en/pdf/hibernate_tools.pdf">(PDF)</ulink>
+  </para>
+  
+  <para>
+    <emphasis role="bold">Legacy-jsf-struts guide</emphasis> 
+    <ulink url="../../../legacy-jsf-struts/en/html/index.html">(html)</ulink> <ulink url="../../../legacy-jsf-struts/en/html_single/index.html">(html single)</ulink> <ulink url="../../../legacy-jsf-struts/en/pdf/legacy-jsf-struts.pdf">(PDF)</ulink>
+  </para>
+  
+  <para>
+    <emphasis role="bold">Exadel Studio Migration Guide</emphasis> 
+    <ulink url="../../../Exadel-migration/en/html/index.html">(html)</ulink> <ulink url="../../../Exadel-migration/en/html_single/index.html">(html single)</ulink> <ulink url="../../../Exadel-migration/en/pdf/exadel-migration.pdf">(PDF)</ulink>
+  </para>
+    
+  
+</chapter>
