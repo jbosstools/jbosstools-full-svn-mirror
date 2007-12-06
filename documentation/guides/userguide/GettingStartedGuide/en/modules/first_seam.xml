@@ -360,32 +360,27 @@ Capitalize the input?
   
   </section>
   
-  <section>
+  <section id="AddSecurity">
     <title>Add Security to the Application</title>
     
-    <para>You have probably noticed that the web page template has a login link at the top of the page. You can use the Seam security framework to secure access to any web page or web action. You can implement the login logic in the <emphasis><property>checkLoggedIn</property></emphasis> method. In the following example, we just use hardcoded username and password. But you can easily change it to use database, LDAP or any other means.</para>
+    <para>You have probably noticed that the web page template has a login link at the top of the page. You can use the Seam security framework to secure access to 
+      any web page or web action. We just use hardcoded username and password but you can easily change it to use database, LDAP or any other means. 
+      The simplest use case for Seam security is to add a declarative security in <property>pages.xml</property> (<emphasis><property>WebContent > WEB-INF > pages.xml</property></emphasis>) like this:</para>
     
-    <para>Then, on the action method, you can use the <emphasis>@AroundInvoke</emphasis> annotation to specify that it is only invoked by authenticated users.</para>
-    
-    <programlisting role="JAVA"><![CDATA[public class LoggedInInterceptor 
-    {
-   @AroundInvoke
-   public Object checkLoggedIn(InvocationContext invocation) throws Exception 
-   {   
-      boolean isLoggedIn = Contexts.getSessionContext().get("loggedIn")!=null;
-      if (isLoggedIn) {
-         //the user is already logged in
-         return invocation.proceed();
-      }
-      else {
-         //the user is not logged in, fwd to login page
-         return "login";
-      }
-   }
-}
-]]></programlisting>
+    <programlisting role="XML"><![CDATA[<!DOCTYPE pages PUBLIC
+                     "-//JBoss/Seam Pages Configuration DTD 1.2//EN"
+                     "http://jboss.com/products/seam/pages-1.2.dtd">
 
-    <para>Now, re-deploy the application and try the action button. The application redirects to the <emphasis><property>login</property></emphasis> page asking for login credentials. The method is invoked after you successfully logged in.</para>
+<pages no-conversation-view-id="/home.xhtml"
+                 login-view-id="/login.xhtml">
+...
+
+ <page view-id="/simpleAction.xhtml" login-required="true"/>
+    
+</pages>]]></programlisting>
+    
+    
+    <para>Re-deploy the application and try the action button. The application redirects to the <emphasis><property>login</property></emphasis> page asking for login credentials. The method is invoked after you successfully logged in.</para>
     
     <figure>
       <title>Access Control for Action Methods</title>
@@ -396,35 +391,6 @@ Capitalize the input?
       </mediaobject>
     </figure>
     
-    <para>We can also secure web pages. You can edit the <emphasis><property>Authenticator.java</property></emphasis> file to put an access constraint on the login page.</para>
-    
-    <programlisting role="JAVA"><![CDATA[package.org.domain.MySeamProj.session;
-import org.jboss.seam.annotations.In;
-import org.jboss.seam.annotations.Logger;
-import org.jboss.seam.annotations.Name;
-import org.jboss.seam.log.Log;
-import org.jboss.seam.security.identity;
-    
-    @Name ("authenticator")
-    public class Authenticator
-    {
-      @Logger Log log;
-      @In Identity identity;
-      
-      public boolean authenticate()
-      {
-        log.info("authenticating #0", identity.getUserName());
-        //write your authentication logic here,
-        //return true if the authentication was
-        //successful, false otherwise
-        identity.addRole("admin");
-        return true;
-        }
-    }
-]]></programlisting>
-
-    <para>You can try to load the <emphasis><property>http://localhost:8080/MySeamProj/</property></emphasis> URL in the browser and it will redirect to ask for login.</para>
-  
   </section>
   
 
