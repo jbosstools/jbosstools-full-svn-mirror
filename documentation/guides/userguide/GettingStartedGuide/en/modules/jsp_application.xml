@@ -9,6 +9,12 @@
     </keywordset>
   </chapterinfo>
 	<title>Developing a simple JSP web application</title>
+	
+	<note>
+		<title>Note:</title>
+		<para>We highly recommend developing in <property>Seam</property>. This chapter is for users who for some reason cannot use Seam.</para>
+	</note>
+	
 	<para>In this chapter you'll find out how to create a simple JSP application using the JBoss Developer Studio. The application will show a classic &quot;Hello World!&quot; on the page.</para>
 	<para>We&apos;ll assume that you have already launched JBoss Developer Studio and
 also that the Web Development perspective is the current perspective. (If not, make it active by selecting <emphasis><property>Window &gt; Open Perspective &gt; Web Development</property></emphasis> from the menu bar or by selecting <emphasis><property>Window &gt; Open Perspective &gt; Other...</property></emphasis> from the menu bar and then selecting Web Development from
