@@ -11,6 +11,6 @@
   </chapterinfo>
  <title>Introduction</title>
   <para>The following chapters describe how to deal with classic/old style of JSF and Struts development. We recommend users to 
-    use <ulink url="../../../../../../Seam/docs/build/reference/en/html/create_new_seam.html">JBoss Seam</ulink> to simplify development, but until then you can read about classical JSF and Struts usage here.</para>
+    use <ulink url="../../../seam/en/html/create_new_seam.html">JBoss Seam</ulink> to simplify development, but until then you can read about classical JSF and Struts usage here.</para>
 </chapter>
 
