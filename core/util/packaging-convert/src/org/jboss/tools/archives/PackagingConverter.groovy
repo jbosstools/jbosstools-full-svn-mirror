@@ -50,8 +50,9 @@ class PackagingConverter {
 	  println "Backing up to .project.bak, and saving to .project in " + projectDir + "..."
 	  saveProject()
 	
-	  println "Converting JBossIDE 1.x packages to JBossTools/RHDS archives..."
+	  println "Converting JBossIDE 1.x packages to JBoss Tools archives..."
 	  convertPackaging()
+	  println "Done. Restart Eclipse with JBoss Tools to see changes."
   }
 	  
   def updateBuilder () {
