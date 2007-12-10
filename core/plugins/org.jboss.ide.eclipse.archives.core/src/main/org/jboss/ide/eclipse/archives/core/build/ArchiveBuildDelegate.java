@@ -79,6 +79,9 @@ public class ArchiveBuildDelegate {
 		EventManager.startedBuildingArchive(pkg);
 		
 		ModelTruezipBridge.deleteArchive(pkg);
+		if( !pkg.getGlobalDestinationPath().toFile().exists() ) {
+			pkg.getGlobalDestinationPath().toFile().mkdirs();
+		}
 		ModelTruezipBridge.createFile(pkg);
 		
 		// force create all folders
