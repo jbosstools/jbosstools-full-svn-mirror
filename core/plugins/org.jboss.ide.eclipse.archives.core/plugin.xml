@@ -33,4 +33,15 @@
       <initializer class="org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspacePreferenceManager"/>
    </extension>
 
+
+
+	<!-- LEGACY - JBIDE-1041 -->
+   <extension
+         point="org.eclipse.core.runtime.contentTypes">
+      <file-association
+            file-names="packaging-build.xml"
+            content-type="org.eclipse.ant.core.antBuildFile">
+      </file-association>
+   </extension>
+
 </plugin>
