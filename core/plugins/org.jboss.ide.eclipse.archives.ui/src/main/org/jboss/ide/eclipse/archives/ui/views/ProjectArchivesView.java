@@ -328,6 +328,7 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 					} else {
 						// just refresh whatever is the top changed element (archive probably)
 						packageViewer.refresh(topChanges[i]);
+						packageViewer.expandToLevel(topChanges[i], 1);
 					}
 				}
 			}
