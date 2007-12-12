@@ -31,49 +31,32 @@ import org.jboss.ide.eclipse.archives.ui.providers.ArchivesLabelProvider;
 
 public class ArchiveNodeDestinationDialog extends ElementTreeSelectionDialog {
 
-	private boolean showWorkspace, showNodes;
-	
-	 public ArchiveNodeDestinationDialog(Shell parent, Object destination, boolean showWorkspace, boolean showNodes) {
-		 super(parent, new DestinationLabelProvider(), new DestinationContentProvider());
-		 setAllowMultiple(false);
-		 setTitle(ArchivesUIMessages.PackageNodeDestinationDialog_title);
-		 
-		 this.showWorkspace = showWorkspace;
-		 this.showNodes = showNodes;
-		 setupDestinationList();
+	public ArchiveNodeDestinationDialog(Shell parent, Object destination,
+			boolean showWorkspace, boolean showNodes) {
+		super(parent, new DestinationLabelProvider(),
+				new DestinationContentProvider(showWorkspace, showNodes));
+		setAllowMultiple(false);
+		setTitle(ArchivesUIMessages.PackageNodeDestinationDialog_title);
+		setInput(ResourcesPlugin.getWorkspace());
 	}
-	 
-	 private void setupDestinationList () {
-		 ArrayList destinations = new ArrayList();
 
-		 if (showWorkspace) {
-			 destinations.addAll(Arrays.asList(ResourcesPlugin.getWorkspace().getRoot().getProjects()));
-		 }
-		 
-		 IProgressMonitor monitor = new NullProgressMonitor();
-		 
-		 if( showNodes ) {
-			 // add ALL packages from ALL projects
-			 IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-			 for( int i = 0; i < projects.length; i++ ) {
-				 if( projects[i].isAccessible()) {
-					 destinations.addAll(Arrays.asList(
-							 ArchivesModel.instance().getProjectArchives(projects[i].getLocation(), true, monitor)));
-				 }
-			 }
-		 }
-		 
-		 setInput(destinations);
-	 }
-	 
-	 private static class DestinationContentProvider implements ITreeContentProvider {
-		 private static final Object[] NO_CHILDREN = new Object[0];
-		 
+	private static class DestinationContentProvider implements
+			ITreeContentProvider {
+		private static final Object[] NO_CHILDREN = new Object[0];
+		private boolean showWorkspace, showNodes;
+
+		public DestinationContentProvider(boolean showWorkspace,
+				boolean showNodes) {
+			this.showWorkspace = showWorkspace;
+			this.showNodes = showNodes;
+		}
+
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof IArchiveNode) {
 				IArchiveNode node = (IArchiveNode) parentElement;
-				List children = new ArrayList(Arrays.asList(node.getAllChildren()));
-		 		for (Iterator iter = children.iterator(); iter.hasNext(); ) {
+				List children = new ArrayList(Arrays.asList(node
+						.getAllChildren()));
+				for (Iterator iter = children.iterator(); iter.hasNext();) {
 					IArchiveNode child = (IArchiveNode) iter.next();
 					if (child.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FILESET)
 						iter.remove();
@@ -81,17 +64,24 @@ public class ArchiveNodeDestinationDialog extends ElementTreeSelectionDialog {
 				return children.toArray();
 			} else if (parentElement instanceof IContainer) {
 				IContainer container = (IContainer) parentElement;
-				try {
-					IResource members[] = container.members();
-					List folders = new ArrayList();
-					for (int i = 0; i < members.length; i++) {
-						if (members[i].getType() == IResource.FOLDER) folders.add(members[i]);
+				ArrayList result = new ArrayList();
+				if (showWorkspace) {
+					try {
+						IResource members[] = container.members();
+						for (int i = 0; i < members.length; i++) {
+							if (members[i].getType() == IResource.FOLDER)
+								result.add(members[i]);
+						}
+					} catch (CoreException e) {
 					}
-					
-					return folders.toArray();
-				} catch (CoreException e) {
-					// swallow
 				}
+				if (showNodes && parentElement instanceof IProject) {
+					result.addAll(Arrays.asList(ArchivesModel.instance()
+							.getProjectArchives(
+									((IProject) parentElement).getLocation(),
+									true, new NullProgressMonitor())));
+				}
+				return result.toArray();
 			}
 			return NO_CHILDREN;
 		}
@@ -112,30 +102,52 @@ public class ArchiveNodeDestinationDialog extends ElementTreeSelectionDialog {
 		}
 
 		public Object[] getElements(Object inputElement) {
-			if (inputElement instanceof Collection)
-				return ((Collection)inputElement).toArray();
-			
-			return NO_CHILDREN;
+			 ArrayList destinations = new ArrayList();
+
+			 if (showWorkspace) {
+				 destinations.addAll(Arrays.asList(ResourcesPlugin.getWorkspace().getRoot().getProjects()));
+			 }
+			 
+			 IProgressMonitor monitor = new NullProgressMonitor();
+			 
+			 if( showNodes ) {
+				 // add ALL packages from ALL projects
+				 IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+				 for( int i = 0; i < projects.length; i++ ) {
+					 if( projects[i].isAccessible()) {
+						 List tmp = Arrays.asList(
+								 ArchivesModel.instance().getProjectArchives(projects[i].getLocation(), true, monitor));
+						 if( tmp.size() > 0 && !destinations.contains(projects[i]))
+							 destinations.add(projects[i]);
+					 }
+				 }
+			 }
+			 return destinations.toArray();
 		}
 
-		public void dispose() {}
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {}
-	 }
-	 
-	 private static class DestinationLabelProvider implements ILabelProvider {
+		public void dispose() {
+		}
+
+		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+		}
+	}
+
+	private static class DestinationLabelProvider implements ILabelProvider {
 		private ArchivesLabelProvider delegate;
-		 
-		public DestinationLabelProvider  ()  {
+
+		public DestinationLabelProvider() {
 			delegate = new ArchivesLabelProvider();
 		}
-		
+
 		public Image getImage(Object element) {
 			if (element instanceof IArchiveNode) {
 				return delegate.getImage(element);
 			} else if (element instanceof IProject) {
-				return PlatformUI.getWorkbench().getSharedImages().getImage(IDE.SharedImages.IMG_OBJ_PROJECT);
+				return PlatformUI.getWorkbench().getSharedImages().getImage(
+						IDE.SharedImages.IMG_OBJ_PROJECT);
 			} else if (element instanceof IFolder) {
-				return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER);
+				return PlatformUI.getWorkbench().getSharedImages().getImage(
+						ISharedImages.IMG_OBJ_FOLDER);
 			}
 			return null;
 		}
@@ -144,7 +156,7 @@ public class ArchiveNodeDestinationDialog extends ElementTreeSelectionDialog {
 			if (element instanceof IArchiveNode) {
 				return delegate.getText(element);
 			} else if (element instanceof IContainer) {
-				return ((IContainer)element).getName();
+				return ((IContainer) element).getName();
 			}
 			return "";
 		}
@@ -161,6 +173,6 @@ public class ArchiveNodeDestinationDialog extends ElementTreeSelectionDialog {
 
 		public void removeListener(ILabelProviderListener listener) {
 		}
-		 
-	 }
+
+	}
 }

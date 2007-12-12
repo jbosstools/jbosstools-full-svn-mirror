@@ -5,11 +5,7 @@ import java.util.Iterator;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -25,26 +21,21 @@ import org.eclipse.ui.ide.IDE;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
-import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
-import org.jboss.ide.eclipse.archives.ui.dialogs.ArchiveNodeDestinationDialog;
 import org.jboss.ide.eclipse.archives.ui.util.DestinationChangeListener;
 
-public class ArchiveNodeDestinationComposite extends Composite {
+public abstract class ArchiveNodeDestinationComposite extends Composite {
 
 	protected Composite parent;
 	protected Label destinationImage;
 	protected Text destinationText;
-	protected Button destinationBrowseButton;
 	protected Object nodeDestination;
-	protected boolean editable;
-	protected ArrayList listeners;
+	protected ArrayList<DestinationChangeListener> listeners;
 	
 	public ArchiveNodeDestinationComposite(Composite parent, int style, Object destination) {
 		super(parent, style);
 		this.parent = parent;
 		this.nodeDestination = destination;
-		this.editable = true;
-		this.listeners = new ArrayList();
+		this.listeners = new ArrayList<DestinationChangeListener>();
 		
 		createComposite();
 	}
@@ -73,16 +64,7 @@ public class ArchiveNodeDestinationComposite extends Composite {
 		updateDestinationViewer();
 	}
 	
-	protected void fillBrowseComposite(Composite browseComposite) {
-		destinationBrowseButton = new Button(browseComposite, SWT.PUSH); 
-		destinationBrowseButton.setText(ArchivesUIMessages.PackageNodeDestinationComposite_destinationBrowseButton_label);
-		destinationBrowseButton.addSelectionListener(new SelectionAdapter () {
-			public void widgetSelected(SelectionEvent e) {
-				openDestinationDialog();
-			}
-		});
-		destinationBrowseButton.setEnabled(editable);
-	}
+	protected abstract void fillBrowseComposite(Composite browseComposite);
 	
 	private FormData createFormData(Object topStart, int topOffset, Object bottomStart, int bottomOffset, 
 									Object leftStart, int leftOffset, Object rightStart, int rightOffset) {
@@ -110,110 +92,66 @@ public class ArchiveNodeDestinationComposite extends Composite {
 		
 		return data;
 	}
-	
-	protected void openDestinationDialog ()
-	{
-		ArchiveNodeDestinationDialog dialog = new ArchiveNodeDestinationDialog(getShell(), nodeDestination, true, true);
-		if (nodeDestination != null)
-			dialog.setInitialSelection(nodeDestination);
-		
-		int response = dialog.open();
-		if (response == Dialog.OK)
-		{
-			Object object = dialog.getResult()[0];
-			nodeDestination = object;
-			
-			updateDestinationViewer();
-			fireDestinationChanged();
-		}
-	}
-	
-	public void setPackageNodeDestination (Object destination)
-	{
+
+	public void setPackageNodeDestination (Object destination) {
+		System.out.println("setting destination to " + destination);
 		nodeDestination = destination;
 		updateDestinationViewer();
+		fireDestinationChanged();
 	}
 	
-	protected void setDestinationImage (Image image)
-	{
-		destinationImage.setImage(image);
-	}
-	
-	protected void setDestinationText (String text)
-	{
-		destinationText.setText(text);
-	}
-	
-	protected void updateDestinationViewer ()
-	{
+	protected void updateDestinationViewer () {
 		if (nodeDestination == null) return;
 		destinationText.setText("");
 		
-		if (nodeDestination instanceof IArchive)
-		{
+		if (nodeDestination instanceof IArchive) {
 			IArchive pkg = (IArchive) nodeDestination;
-			
-			if (pkg.isTopLevel())
-			{
-				setDestinationText(pkg.getName());
-			} else {
-				setDestinationText(pkg.getRootArchiveRelativePath().toOSString());
-			}
-			if (pkg.isExploded()) {
-				setDestinationImage(ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_PACKAGE_EXPLODED));
-			} else {
-				setDestinationImage(ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_PACKAGE));
-			}
-		}
-		else if (nodeDestination instanceof IArchiveFolder)
-		{
+			String txt = pkg.isTopLevel() ? pkg.getName() : pkg.getRootArchiveRelativePath().toOSString();
+			String imgKey = pkg.isExploded() ? ArchivesSharedImages.IMG_PACKAGE_EXPLODED : ArchivesSharedImages.IMG_PACKAGE;
+
+			destinationText.setText(txt);
+			destinationImage.setImage(ArchivesSharedImages.getImage(imgKey));
+		} else if (nodeDestination instanceof IArchiveFolder) {
 			IArchiveFolder folder = (IArchiveFolder) nodeDestination;
-			setDestinationText(folder.getRootArchiveRelativePath().toString());
-			setDestinationImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER));
-		}
-		else if (nodeDestination instanceof IProject)
-		{
+			destinationText.setText(folder.getRootArchiveRelativePath().toString());
+			destinationImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER));
+		} else if (nodeDestination instanceof IProject) {
 			IProject project = (IProject) nodeDestination;
-			setDestinationText(project.getName());
-			setDestinationImage(PlatformUI.getWorkbench().getSharedImages().getImage(IDE.SharedImages.IMG_OBJ_PROJECT));
-		}
-		else if (nodeDestination instanceof IFolder)
-		{
+			destinationText.setText(project.getName());
+			destinationImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(IDE.SharedImages.IMG_OBJ_PROJECT));
+		} else if (nodeDestination instanceof IFolder) {
 			IFolder folder = (IFolder) nodeDestination;
-			setDestinationText("/" + folder.getProject().getName() + "/" + folder.getProjectRelativePath().toString());
-			setDestinationImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER));
+			destinationText.setText("/" + folder.getProject().getName() + "/" + folder.getProjectRelativePath().toString());
+			destinationImage.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER));
 		}
 	}
 	
-	public Object getPackageNodeDestination ()
-	{
+	
+	/**
+	 * The current destination
+	 * @return
+	 */
+	
+	public Object getPackageNodeDestination () {
 		return nodeDestination;
 	}
-
-	public void setEditable(boolean editable) {
-		this.editable = editable;
-		if (destinationBrowseButton != null)
-		{
-			destinationBrowseButton.setEnabled(editable);
-		}
-	}
 	
-	public void addDestinationChangeListener (DestinationChangeListener listener)
-	{
+	
+	/*
+	 * Destination change listeners
+	 */
+	
+	public void addDestinationChangeListener (DestinationChangeListener listener) {
 		listeners.add(listener);
 	}
 	
-	public void removeDestinationChangeListener (DestinationChangeListener listener)
-	{
+	public void removeDestinationChangeListener (DestinationChangeListener listener) {
 		listeners.remove(listener);
 	}
 	
-	private void fireDestinationChanged ()
-	{
-		for (Iterator iter = listeners.iterator(); iter.hasNext(); )
-		{
-			DestinationChangeListener listener = (DestinationChangeListener) iter.next();
-			listener.destinationChanged(nodeDestination);
+	private void fireDestinationChanged () {
+		for (Iterator<DestinationChangeListener> iter = listeners.iterator(); iter.hasNext(); ) {
+			((DestinationChangeListener) iter.next()).destinationChanged(nodeDestination);
 		}
 	}
 }

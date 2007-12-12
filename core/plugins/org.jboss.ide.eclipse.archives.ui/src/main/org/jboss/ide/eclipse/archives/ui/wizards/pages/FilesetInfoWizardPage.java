@@ -33,6 +33,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
+import org.jboss.ide.eclipse.archives.ui.util.composites.ArchiveFilesetDestinationComposite;
 import org.jboss.ide.eclipse.archives.ui.util.composites.ArchiveNodeDestinationComposite;
 import org.jboss.ide.eclipse.archives.ui.util.composites.FilesetPreviewComposite;
 
@@ -128,6 +129,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 		previewGroup.setText(ArchivesUIMessages.FilesetInfoWizardPage_previewGroup_label);
 		return previewGroup;
 	}
+	
 	private Group createInfoGroup(Composite mainComposite) {
 		Group infoGroup = new Group(mainComposite, SWT.NONE);
 		infoGroup.setText(ArchivesUIMessages.FilesetInfoWizardPage_infoGroup_title);
@@ -143,7 +145,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 
 		// destination row
 		Label destinationKey = new Label(infoGroup, SWT.NONE);
-		destinationComposite = new ArchiveNodeDestinationComposite(infoGroup, SWT.NONE, parentNode);
+		destinationComposite = new ArchiveFilesetDestinationComposite(infoGroup, SWT.NONE, parentNode);
 
 		destinationKey.setLayoutData(createFormData(0,10,null,0,null,5, 0, max));
 		destinationComposite.setLayoutData(createFormData(0,5,null,0,destinationKey,5, 100, -5));

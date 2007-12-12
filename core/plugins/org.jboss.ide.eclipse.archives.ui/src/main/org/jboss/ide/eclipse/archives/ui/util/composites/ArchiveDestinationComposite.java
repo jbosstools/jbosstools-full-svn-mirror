@@ -3,6 +3,7 @@ package org.jboss.ide.eclipse.archives.ui.util.composites;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -13,6 +14,7 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
+import org.jboss.ide.eclipse.archives.ui.dialogs.ArchiveNodeDestinationDialog;
 
 public class ArchiveDestinationComposite extends ArchiveNodeDestinationComposite {
 
@@ -23,11 +25,6 @@ public class ArchiveDestinationComposite extends ArchiveNodeDestinationComposite
 		super(parent, style, destination);
 	}
 	
-//	public PackageDestinationComposite (Composite parent, int style, GridData textLayoutData, GridData buttonLayoutData, Object destination)
-//	{
-//		super (parent, style, textLayoutData, buttonLayoutData, destination);
-//	}
-//	
 	protected void fillBrowseComposite(Composite parent) {
 		Composite browseComposite = new Composite(parent, SWT.NONE);
 		browseComposite.setLayout(new GridLayout(2, false));
@@ -49,44 +46,37 @@ public class ArchiveDestinationComposite extends ArchiveNodeDestinationComposite
 		});
 	}
 	
-	protected void browseFilesystem ()
-	{
+	protected void openDestinationDialog() {
+		ArchiveNodeDestinationDialog dialog = new ArchiveNodeDestinationDialog(getShell(), nodeDestination, true, true);
+		if (nodeDestination != null)
+			dialog.setInitialSelection(nodeDestination);
+		
+		if (dialog.open() == Dialog.OK) 
+			setPackageNodeDestination(dialog.getResult()[0]);
+	}
+	
+	protected void browseFilesystem () {
 		DirectoryDialog dialog = new DirectoryDialog(getShell());
 		String currentPath = destinationText.getText();
-		if (currentPath != null && currentPath.length() > 0 && !inWorkspace)
-		{
+		if (currentPath != null && currentPath.length() > 0 && !inWorkspace) {
 			dialog.setFilterPath(destinationText.getText());
 		}
 		
 		String path = dialog.open();
-		if (path != null)
-		{
-			nodeDestination = new Path(path);
-			updateDestinationViewer();
-		}
+		if (path != null) 
+			setPackageNodeDestination(new Path(path));
 	}
 	
-	protected void updateDestinationViewer()
-	{
+	protected void updateDestinationViewer() {
 		super.updateDestinationViewer();
 
-		if (nodeDestination instanceof IPath)
-		{
+		if (nodeDestination instanceof IPath) {
 			inWorkspace = false;
 			IPath path = (IPath) nodeDestination;
-			setDestinationText(path.toString());
-			setDestinationImage(ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_EXTERNAL_FILE));
-		}
-		else if (nodeDestination instanceof IContainer || nodeDestination instanceof IArchiveNode)
-		{
+			destinationText.setText(path.toString());
+			destinationImage.setImage(ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_EXTERNAL_FILE));
+		} else if (nodeDestination instanceof IContainer || nodeDestination instanceof IArchiveNode) {
 			inWorkspace = true;
 		}
-	}
-	
-	public void setEditable(boolean editable) {
-		super.setEditable(editable);
-		
-		workspaceBrowseButton.setEnabled(editable);
-		filesystemBrowseButton.setEnabled(editable);
 	}
 }
