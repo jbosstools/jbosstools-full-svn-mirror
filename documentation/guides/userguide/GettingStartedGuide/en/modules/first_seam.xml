@@ -135,7 +135,7 @@
       <title>The Generated Application in Action</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/first_seam/first_seam_10.png"/>
+          <imagedata fileref="images/first_seam/first_seam_10.png" scale="75"/>
         </imageobject>
       </mediaobject>
     </figure>
@@ -146,7 +146,7 @@
       <title>Making Changes in the Visual Editor</title>
       <mediaobject> 
         <imageobject>
-          <imagedata fileref="images/first_seam/first_seam_11.png"/>
+          <imagedata fileref="images/first_seam/first_seam_11.png" scale="75"/>
         </imageobject>
       </mediaobject>
     </figure>

@@ -65,7 +65,7 @@ the Select Perspective dialog box.)</para>
 			<title>Create JSP Page</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/jsp_application/jsp_application_3.png"/>
+					<imagedata fileref="images/jsp_application/jsp_application_3.png" scale="75"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -191,7 +191,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<title>Archive in Project Archives View</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/jsp_application/jsp_application_12.png"/>
+					<imagedata fileref="images/jsp_application/jsp_application_12.png" scale="75"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -202,7 +202,7 @@ packaging even if a developer is writing the most trivial web applications. With
 			<title>Configure Archive</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/jsp_application/jsp_application_13.png"/>
+					<imagedata fileref="images/jsp_application/jsp_application_13.png" scale="75"/>
 				</imageobject>
 			</mediaobject>
 		</figure>

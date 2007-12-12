@@ -417,7 +417,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Code Assist</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/rad_jsf_application/rad_jsf_application_13.png"/>
+            <imagedata  fileref="images/rad_jsf_application/rad_jsf_application_13.png" scale="75"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -553,7 +553,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Code Assist for &lt;f:param&gt;</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/rad_jsf_application/rad_jsf_application_18.png"/>
+            <imagedata  fileref="images/rad_jsf_application/rad_jsf_application_18.png" scale="75"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -605,7 +605,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>You are Asked to Enter a Number Between 0 and 100</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/rad_jsf_application/rad_jsf_application_20.png"/>
+            <imagedata  fileref="images/rad_jsf_application/rad_jsf_application_20.png" scale="75"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -613,7 +613,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Your Input is Validated and an Error Message is Displayed if Invalid Input was Entered</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/rad_jsf_application/rad_jsf_application_21.png"/>
+            <imagedata  fileref="images/rad_jsf_application/rad_jsf_application_21.png" scale="75"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -622,7 +622,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>After You Enter a Guess, the Application Tells You Whether a Smaller or a Larger Number Should be Tried</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/rad_jsf_application/rad_jsf_application_22.png"/>
+            <imagedata  fileref="images/rad_jsf_application/rad_jsf_application_22.png" scale="75"/>
         </imageobject>
 </mediaobject>
 </figure>
@@ -631,7 +631,7 @@ a WYSIWIG view along the bottom. You can see that some JSF code will be already 
 <title>Your Guess is Correct</title>
 <mediaobject> 
         <imageobject>
-            <imagedata  fileref="images/rad_jsf_application/rad_jsf_application_23.png"/>
+            <imagedata  fileref="images/rad_jsf_application/rad_jsf_application_23.png" scale="75"/>
         </imageobject>
 </mediaobject>
 </figure>
