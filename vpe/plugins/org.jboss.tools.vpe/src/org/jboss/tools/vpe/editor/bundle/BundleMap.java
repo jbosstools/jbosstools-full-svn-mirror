@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -78,10 +77,10 @@ public class BundleMap {
 		if (!hasJsfProjectNatureType() || !(editor.getEditorInput() instanceof IFileEditorInput)) return;
 		IProject project = ((IFileEditorInput)editor.getEditorInput()).getFile().getProject();
 		XModel model = EclipseResourceUtil.getModelNature(project).getModel();
-		List l = WebPromptingProvider.getInstance().getList(model, WebPromptingProvider.JSF_REGISTERED_BUNDLES, null, null);
+		List<Object> l = WebPromptingProvider.getInstance().getList(model, WebPromptingProvider.JSF_REGISTERED_BUNDLES, null, null);
 		if(l == null || l.size() < 2 || !(l.get(1) instanceof Map)) return;
-		Map map = (Map)l.get(1);
-		Iterator it = map.keySet().iterator();
+		Map<?,?> map = (Map<?,?>)l.get(1);
+		Iterator<?> it = map.keySet().iterator();
 		while(it.hasNext()) {
 			String uri = it.next().toString();
 			String prefix = map.get(uri).toString();
@@ -220,24 +219,7 @@ public class BundleMap {
 	}
 	
 	private static String[] getJavaProjectSrcLocations(IProject project) {
-		String[] EMPTY = new String[0];
-		if(project == null || !project.isOpen()) return EMPTY;
-		try {
-			if(!project.hasNature(JavaCore.NATURE_ID)) return EMPTY;
-			IJavaProject javaProject = JavaCore.create(project);		
-			IClasspathEntry[] es = javaProject.getRawClasspath();
-			ArrayList<String> l = new ArrayList<String>();
-			for (int i = 0; i < es.length; i++) {
-				if(es[i].getEntryKind() != IClasspathEntry.CPE_SOURCE) continue;
-				l.add(project.findMember(es[i].getPath().removeFirstSegments(1)).getLocation().toString());
-				try {
-					l.add(project.findMember(es[i].getOutputLocation().removeFirstSegments(1)).getLocation().toString());
-				} catch (Exception e) { } 
-			}
-			return (String[])l.toArray(new String[0]);
-		} catch (Exception e) {
-			return EMPTY;
-		}
+		return EclipseResourceUtil.getJavaProjectSrcLocations(project);
 	}
 	
 	private void removeBundle(int hashCode, boolean refresh) {
