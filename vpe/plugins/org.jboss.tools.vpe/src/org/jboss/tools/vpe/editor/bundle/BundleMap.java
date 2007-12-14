@@ -108,6 +108,7 @@ public class BundleMap {
 			IEditorInput ei = editor.getEditorInput();
 			if(!(ei instanceof IFileEditorInput)) return false;
 			IProject project = ((IFileEditorInput)ei).getFile().getProject();
+			if (!project.exists() || !project.isOpen()) return false;
 
 			for (int i = 0; i < JSF_PROJECT_NATURES.length; i++) {
 				if (project.getNature(JSF_PROJECT_NATURES[i]) != null) 
