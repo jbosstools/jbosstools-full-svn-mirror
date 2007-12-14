@@ -72,7 +72,7 @@ public class VpeFunctionSrc extends VpeFunction {
 		        file = ((IFileEditorInput)input).getFile();
 		    }
 
-		    if (file != null) {
+		    if (null != file) {
 			    ResourceReference resourceReference = null;
 				if ("/".equals(tagValue.substring(0, 1))) {
 					resourceReference = pageContext.getRuntimeAbsoluteFolder(file);
@@ -86,13 +86,15 @@ public class VpeFunctionSrc extends VpeFunction {
 					location = resourceReference.getLocation();
 				}
 				
-				if (location == null) {
+				if (null == location && null != file.getLocation()) {
 					location = file.getLocation().toFile().getParent();
 				}
 
-				File f = new File(location + File.separator + tagValue);
-				if (f.exists()) {
-					return new VpeValue(getPrefix() + f.getPath());
+				if (null != location) {
+					File f = new File(location + File.separator + tagValue);
+					if (f.exists()) {
+						return new VpeValue(getPrefix() + f.getPath());
+					}
 				}
 		    }
 		}
