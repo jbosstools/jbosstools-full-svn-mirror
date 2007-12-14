@@ -261,7 +261,7 @@ that based on the icon on the node as shown below. Draw a rectangle on the canva
 <title>Associate process nodes with Java code</title>
 <para>With the business process in the designer, we can now associate each node with Java code.
  The Java code is executed when the node is reached in the process, and the Java code determines
-  the outcome of each node – hence the next node in the process.</para>
+  the outcome of each node hence the next node in the process.</para>
    <para>Let&apos;s go through the exercise for the &quot;Check Inventory&quot; node first.</para>
    <orderedlist>
    <listitem>Right click on the &quot;Check Inventory&quot; node in the designer and select <emphasis><property>Add 

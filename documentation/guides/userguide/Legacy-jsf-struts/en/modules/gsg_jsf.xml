@@ -878,7 +878,7 @@ binding="#{BannerPageBean.ticker}">
 </body>
 </html>
 ]]></programlisting>
-<para>The <emphasis role="italic"><property>&quot;binding&quot;</property></emphasis> attribute of our component refers to the “ticker” property of the backing bean.
+<para>The <emphasis role="italic"><property>&quot;binding&quot;</property></emphasis> attribute of our component refers to the ticker property of the backing bean.
 The buttons <emphasis role="italic"><property>&quot;action&quot;</property></emphasis> attribute calls the corresponding method.</para>
 <para>We are done with step 5. When you launch your application you can see our fancy box and
 two buttons above them. Click the &quot;Turn Off&quot; button and the box disappears, click the &quot;Turn
