@@ -65,10 +65,12 @@ import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
+import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMChromeWindow;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMHTMLInputElement;
@@ -101,6 +103,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     private static final int DRAG_AREA_WIDTH = 10;
     private static final int DRAG_AREA_HEIGHT = 10;
     private static final String ATTR_XMLNS = "xmlns";
+    private static final String ATTR_DRAG_AVAILABLE_CLASS="__drag__available_style";
 
     private MozillaEditor visualEditor;
     private XulRunnerEditor xulRunnerEditor;
@@ -1717,14 +1720,23 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	nsIDOMElement selectedElement = xulRunnerEditor
 		.getLastSelectedElement();
 	if (selectedElement != null && canInnerDrag(selectedElement)) {
-	    if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil
+		 String styleClasses = selectedElement.getAttribute(HTML.ATTR_CLASS);
+		if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil
 		    .getMousePoint(mouseEvent))) {
 		// change cursor
-		Cursor cursor1 = new Cursor(xulRunnerEditor.getDisplay(),
-			SWT.CURSOR_SIZEALL);
-		xulRunnerEditor.setCursor(cursor1);
+			    if(styleClasses==null || !(styleClasses.contains(ATTR_DRAG_AVAILABLE_CLASS))){
+			    //change cursor style to move
+			    	styleClasses=ATTR_DRAG_AVAILABLE_CLASS+" "+styleClasses;
+			    } 
+	    } else {
+	    //change cursor style to normal
+	    	if(styleClasses!=null) {
+	    		
+	    		styleClasses=styleClasses.replaceAll(ATTR_DRAG_AVAILABLE_CLASS, "");
+	    	}
 	    }
-	}
+		selectedElement.setAttribute(HTML.ATTR_CLASS, styleClasses);
+		}
     }
 
     private boolean inDragArea(Rectangle dragArea, Point mousePoint) {
