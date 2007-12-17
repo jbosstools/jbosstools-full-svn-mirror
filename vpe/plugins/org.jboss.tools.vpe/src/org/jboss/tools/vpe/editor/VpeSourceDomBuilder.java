@@ -28,6 +28,7 @@ import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
+import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
@@ -162,6 +163,10 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 	}
 	
 	void setSelection(Node sourceNode, int offset, int length, boolean innerFlag) {
+		if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+			System.out.println("VpeSourceDomBuilder.setSelection: offset " + offset + 
+					" length " + length + " innerFlag " + innerFlag);
+		}
 		if (sourceNode != null) {
 			int start = ((IndexedRegion)sourceNode).getStartOffset() + offset;
 			if (innerFlag && offset == 0 && sourceNode instanceof ElementImpl) {

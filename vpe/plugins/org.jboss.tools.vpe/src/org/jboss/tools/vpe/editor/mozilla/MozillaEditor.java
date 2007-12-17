@@ -71,14 +71,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 	static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
 	private XulRunnerEditor xulRunnerEditor;
-	private nsIDOMDocument domDocument;
 	private nsIDOMEventTarget documentEventTarget;
 	private nsIDOMElement contentArea;
 	private nsIDOMNode headNode;
 	private nsIDOMEventTarget contentAreaEventTarget;
 	private MozillaDomEventListener contentAreaEventListener = new MozillaDomEventListener();
-	//TODO Max Areshkau may be we need delete this
-	private MozillaBaseEventListener baseEventListener = null;
 	private EditorLoadWindowListener editorLoadWindowListener;
 	//
 	private EditorDomEventListener editorDomEventListener;
@@ -326,18 +323,10 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 
 	public nsIDOMDocument getDomDocument() {
-		if (domDocument == null) {
-			domDocument = xulRunnerEditor.getDOMDocument();
+		if (null != xulRunnerEditor) {
+			return xulRunnerEditor.getDOMDocument();
 		}
-		return domDocument;
-	}
-	
-	/**
-	 * @param domDocument the domDocument to set
-	 */
-	protected void setDomDocument(nsIDOMDocument domDocument) {
-		
-		this.domDocument = domDocument;
+		return null;
 	}
 
 	public nsIDOMElement getContentArea() {
@@ -482,8 +471,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DBLCLICK, contentAreaEventListener, false);//$NON-NLS-1$
 				documentEventTarget = (nsIDOMEventTarget) getDomDocument().queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
 				documentEventTarget.addEventListener(MozillaDomEventListener.KEYPRESS, contentAreaEventListener, false); //$NON-NLS-1$
-			} else {
-				baseEventListener = new MozillaBaseEventListener();
 			}
 		}
 	}
@@ -503,7 +490,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DBLCLICK, contentAreaEventListener, false);//$NON-NLS-1$
 		
 		}
-		if (domDocument != null && documentEventTarget != null) {
+		if (documentEventTarget != null) {
 			documentEventTarget.removeEventListener(MozillaDomEventListener.KEYPRESS, contentAreaEventListener, false); //$NON-NLS-1$
 		}
 	}

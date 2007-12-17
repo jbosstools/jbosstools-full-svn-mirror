@@ -689,7 +689,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			return;
 		}
 		if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-			System.out.println("<<< mouseUp"); //$NON-NLS-1$
+			System.out.println("<<< mouseUp " + (mouseDownSelectionFlag ? "true" : "false")); //$NON-NLS-1$
 		}
 		if (mouseDownSelectionFlag) {
 			mouseEvent.preventDefault();
@@ -2311,6 +2311,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	 */
 	public VpeSelectionBuilder getSelectionBuilder() {
 		return selectionBuilder;
+	}
+	
+	/**
+	 * @return the sourceBuilder
+	 */
+	public VpeSourceDomBuilder getSourceBuilder() {
+		return sourceBuilder;
 	}
 
 	/**

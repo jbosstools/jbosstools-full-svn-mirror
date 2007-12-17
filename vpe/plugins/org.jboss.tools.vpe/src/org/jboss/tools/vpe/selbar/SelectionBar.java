@@ -286,9 +286,9 @@ public class SelectionBar extends Layout implements SelectionListener {
 	}
 
 	private void setSourceFocus(int offset) {
-		vpeController.getPageContext().getSourceBuilder()
+		vpeController.getSourceBuilder()
 				.getStructuredTextViewer().setSelectedRange(offset, 0);
-		vpeController.getPageContext().getSourceBuilder()
+		vpeController.getSourceBuilder()
 				.getStructuredTextViewer().revealRange(offset, 0);
 	}
 

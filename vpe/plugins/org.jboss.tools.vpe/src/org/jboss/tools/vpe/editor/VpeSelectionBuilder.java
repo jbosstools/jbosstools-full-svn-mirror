@@ -69,6 +69,9 @@ public class VpeSelectionBuilder {
 	}
 	
 	public void setSelection(nsISelection selection) {
+		if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+			System.out.println("VpeSelectionBuilder.setSelection: selection.getIsCollapsed() " + selection.getIsCollapsed()); 
+		}
 		if (selection.getIsCollapsed()) {
 			VisualSelectionInfo info = getVisualFocusSelectedInfo(selection);
 			if (info != null) {
@@ -367,12 +370,22 @@ public class VpeSelectionBuilder {
 	private Node getSelectedTextOnly(nsIDOMNode element) {
 		Node selectedText = null;
 		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
+		if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+			System.out.println("VpeSelectionBuilder.getSelectedTextOnly: selection " +
+					(selection) +
+					" selection.getIsCollapsed() " + 
+					(selection.getIsCollapsed()));
+		}
 		if (!selection.getIsCollapsed()) {
 			nsIDOMNode anchorNode = selection.getAnchorNode();
 			nsIDOMNode focusNode = selection.getFocusNode();
 			if (anchorNode != null && anchorNode.getNodeType() == Node.TEXT_NODE && anchorNode.equals(focusNode)) {
 				nsIDOMNode anchorParent = anchorNode.getParentNode();
 				if (anchorParent != null) {
+					if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+						System.out.println("VpeSelectionBuilder.getSelectedTextOnly: anchorParent.equals(element) " + 
+								(anchorParent.equals(element)));
+					}
 					if (anchorParent.equals(element)) {
 						selectedText = domMapping.getSourceNode(anchorNode);
 					}

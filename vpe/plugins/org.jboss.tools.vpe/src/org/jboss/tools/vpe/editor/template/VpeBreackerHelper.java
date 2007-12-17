@@ -16,14 +16,14 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.VpeSourceDomBuilder;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.mozilla.interfaces.nsIDOMNode;
 
 public class VpeBreackerHelper {
 
-	public static boolean selectItem(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, nsIDOMNode visualNode, Object data, long charCode, VpeSourceSelection selection) {
+	public static boolean selectItem(VpeSourceDomBuilder sourceBuilder, Document sourceDocument,  Node sourceNode, nsIDOMNode visualNode, Object data, long charCode, VpeSourceSelection selection) {
 		Attr attr = selection.getFocusAttribute();
 		if (attr != null) {
 			Point range = selection.getFocusAttributeRange();
@@ -43,7 +43,7 @@ public class VpeBreackerHelper {
 					if (newAttr != null) {
 						newAttr.setNodeValue(newAttr.getNodeValue().substring(0, range.x));
 					}
-					pageContext.getSourceBuilder().setAttributeSelection((Attr)attr, 0, 0);
+					sourceBuilder.setAttributeSelection((Attr)attr, 0, 0);
 					return true;
 				}
 			}
@@ -51,7 +51,7 @@ public class VpeBreackerHelper {
 		return false;
 	}
 
-	public static boolean breakInline(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, Node visualNode, Object data, int charCode, VpeSourceSelection selection) {
+	public static boolean breakInline(VpeSourceDomBuilder sourceBuilder, Document sourceDocument,  Node sourceNode, Node visualNode, Object data, int charCode, VpeSourceSelection selection) {
 		Attr attr = selection.getFocusAttribute();
 		if (attr != null) {
 			Point range = selection.getFocusAttributeRange();
@@ -72,7 +72,7 @@ public class VpeBreackerHelper {
 					if (newAttr != null) {
 						newAttr.setNodeValue(newAttr.getNodeValue().substring(0, range.x));
 					}
-					pageContext.getSourceBuilder().setAttributeSelection((Attr)attr, 0, 0);
+					sourceBuilder.setAttributeSelection((Attr)attr, 0, 0);
 				}
 				Node parent = selectItemNode.getParentNode();
 				if (parent != null) {
@@ -85,7 +85,7 @@ public class VpeBreackerHelper {
 					selectItemNode = parent.removeChild(newSelectItemNode);
 					p2.appendChild(newSelectItemNode);
 
-					pageContext.getSourceBuilder().getStructuredTextViewer()
+					sourceBuilder.getStructuredTextViewer()
 					.setSelectedRange(((IndexedRegion)p1).getStartOffset(), ((IndexedRegion)p2).getEndOffset() - ((IndexedRegion)p1).getStartOffset());
 
 					return true;

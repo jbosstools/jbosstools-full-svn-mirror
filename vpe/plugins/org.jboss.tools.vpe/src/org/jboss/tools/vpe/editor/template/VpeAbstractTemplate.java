@@ -340,7 +340,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		case BREAKER_TYPE_IGNORE:
 			return true;
 		case BREAKER_TYPE_SELECTITEM:
-			return VpeBreackerHelper.selectItem(pageContext, sourceDocument,  sourceNode, visualNode, data, charCode, selection);
+			return VpeBreackerHelper.selectItem(pageContext.getSourceBuilder(), sourceDocument,  sourceNode, visualNode, data, charCode, selection);
 		default:
 			return nonctrlKeyPressHandlerImpl(pageContext, sourceDocument,  sourceNode, visualNode, data, charCode, selection, formatter);
 		}
