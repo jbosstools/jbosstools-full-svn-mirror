@@ -48,12 +48,14 @@ public class VpeLoadBundleCreator extends VpeAbstractCreator {
 
 	public void setAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name, String value) {
 		setBundle(pageContext, sourceElement);
-		pageContext.refreshBundleValues();
+		//vitali: temp solution
+		pageContext.getVisualContext().refreshBundleValues();
 	}
 
 	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name) {
 		setBundle(pageContext, sourceElement);
-		pageContext.refreshBundleValues();
+		//vitali: temp solution
+		pageContext.getVisualContext().refreshBundleValues();
 	}
 	
 	private void setBundle(VpePageContext pageContext, Element sourceElement) {

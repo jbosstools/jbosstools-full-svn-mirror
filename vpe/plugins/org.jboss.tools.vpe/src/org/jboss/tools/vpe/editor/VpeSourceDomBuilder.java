@@ -55,8 +55,8 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 	private VpePageContext pageContext;
 	private StructuredTextEditor sourceEditor;
 	
-	public VpeSourceDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, VpeTemplateManager templateManager, StructuredTextEditor sourceEditor, VpePageContext pageContext) {
-		super(domMapping, sorceAdapter, templateManager);
+	public VpeSourceDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, StructuredTextEditor sourceEditor, VpePageContext pageContext) {
+		super(domMapping, sorceAdapter);
 		this.sourceEditor = sourceEditor;
 		structuredTextViewer = sourceEditor.getTextViewer();
 		outline = (IContentOutlinePage)sourceEditor.getAdapter(IContentOutlinePage.class);
@@ -224,6 +224,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 				Set ifDependencySet = new HashSet();
 				//VpeVisualDomBuilder visualBuildet = 
 					pageContext.getVisualBuilder();
+				VpeTemplateManager templateManager = VpeTemplateManager.getInstance();
 				VpeTemplate template = templateManager.getTemplate(pageContext, sourceNewElement, ifDependencySet);
 				registerNodes(new VpeElementMapping(sourceNewElement, (nsIDOMElement)visualNewNode, null, template, ifDependencySet, null));
 				addChildren(visualNewNode, sourceNewElement);

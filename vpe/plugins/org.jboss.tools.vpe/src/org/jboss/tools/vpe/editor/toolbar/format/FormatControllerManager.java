@@ -82,7 +82,7 @@ public class FormatControllerManager {
 					 ElementImpl elementImpl = (ElementImpl)newNode;
 					 int startOffset = elementImpl.getStartOffset();
 					 int startEndOffset = elementImpl.getStartEndOffset();
-					 StructuredTextViewer viewer = getVpeController().getPageContext().getSourceBuilder().getStructuredTextViewer();
+					 StructuredTextViewer viewer = getVpeController().getSourceBuilder().getStructuredTextViewer();
 					 try {
 						String newSelectedTagValue = viewer.getDocument().get(startOffset, startEndOffset-startOffset);
 						if(currentSelectedTagValue!=null && currentSelectedTagValue.equals(newSelectedTagValue)) {

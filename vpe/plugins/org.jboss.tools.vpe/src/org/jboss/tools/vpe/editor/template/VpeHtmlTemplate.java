@@ -307,9 +307,9 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	private static final String PREFIX_SEPARATOR = ":";
 
 	private String getPageLocale(VpePageContext pageContext, IDOMElement sourceElement) {
-		IStructuredModel model = null;
-		try {	
-			List<TaglibData> taglibs = pageContext.getTagLibs();
+		try {
+			//vitali: temp solution
+			List<TaglibData> taglibs = pageContext.getVisualContext().getTagLibs();
 			// Find F tracker
 			TaglibData fTD = null;
 			for (int i = 0; i < taglibs.size(); i++) {
@@ -345,8 +345,6 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		} catch (Exception e) {
 			VpePlugin.getPluginLog().logError(e);
 			return null;
-		} finally {
-			if (model != null)	model.releaseFromRead();
 		}
 	}
 

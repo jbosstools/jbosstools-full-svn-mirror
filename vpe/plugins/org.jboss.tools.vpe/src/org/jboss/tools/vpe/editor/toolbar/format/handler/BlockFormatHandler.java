@@ -47,7 +47,7 @@ public class BlockFormatHandler extends FormatHandler {
 
 		Node selectedNode = manager.getCurrentSelectedNodeInfo().getNode();
 
-		StructuredTextViewer viewer = manager.getVpeController().getPageContext().getSourceBuilder().getStructuredTextViewer();
+		StructuredTextViewer viewer = manager.getVpeController().getSourceBuilder().getStructuredTextViewer();
 
 		Node replacedNode = null;
 		Node parentNode = selectedNode.getParentNode();

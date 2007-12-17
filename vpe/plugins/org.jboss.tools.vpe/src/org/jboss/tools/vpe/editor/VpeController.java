@@ -89,6 +89,7 @@ import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.model.util.ModelFeatureFactory;
 import org.jboss.tools.common.model.util.XModelTreeListenerSWTSync;
 import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
+import org.jboss.tools.jst.jsp.editor.IVisualContext;
 import org.jboss.tools.jst.jsp.editor.IVisualController;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.jst.web.tld.TLDToPaletteHelper;
@@ -158,7 +159,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	// TODO Max Areshkau figure out with nsISelectionController
 	private VpeSelectionController visualSelectionController;
 	VpeDomMapping domMapping;
-	private VpeTemplateManager templateManager;
 	private VpeSourceDomBuilder sourceBuilder;
 	public VpeVisualDomBuilder visualBuilder;
 	private VpeSelectionBuilder selectionBuilder;
@@ -202,13 +202,15 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 		this.visualEditor = visualEditor;
 		visualEditor.setController(this);
-		templateManager = VpeTemplateManager.getInstance();
 		bundle = new BundleMap();
 		bundle.init(sourceEditor);
-		pageContext = new VpePageContext(templateManager, bundle, editPart);
+		pageContext = new VpePageContext(bundle, editPart);
+		// vitali - temp solution
+		pageContext.setVisualContext(getPageContext());
+
 		domMapping = new VpeDomMapping(pageContext);
-		sourceBuilder = new VpeSourceDomBuilder(domMapping, this, templateManager, sourceEditor, pageContext);
-		visualBuilder = new VpeVisualDomBuilder(domMapping, this, templateManager, visualEditor, pageContext);
+		sourceBuilder = new VpeSourceDomBuilder(domMapping, this, sourceEditor, pageContext);
+		visualBuilder = new VpeVisualDomBuilder(domMapping, this, visualEditor, pageContext);
 		pageContext.setSourceDomBuilder(sourceBuilder);
 		pageContext.setVisualDomBuilder(visualBuilder);
 		IDOMModel sourceModel = (IDOMModel)getModel();
@@ -220,6 +222,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		visualBuilder.refreshExternalLinks();
 		visualBuilder.buildDom(sourceDocument);
 		
+		VpeTemplateManager templateManager = VpeTemplateManager.getInstance();
 		templateManager.addTemplateListener(this);
 
 		xulRunnerEditor = visualEditor.getXulRunnerEditor();
@@ -265,15 +268,16 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		relativeFolderReferenceListListener = RelativeFolderReferenceList.getInstance();
 		relativeFolderReferenceListListener.addChangeListener(this);
 		
-		pageContext.fireTaglibsChanged();
+		//vitali
+		//pageContext.fireTaglibsChanged();
 	}
 
 	public void dispose() {
 		switcher.destroyActiveEditor();
 		
-		if (templateManager != null) {
-			templateManager.removeTemplateListener(this);
-		}
+		VpeTemplateManager templateManager = VpeTemplateManager.getInstance();
+		templateManager.removeTemplateListener(this);
+
 		if (visualBuilder != null) {
 			visualBuilder.dispose();
 			visualBuilder = null;
@@ -396,10 +400,14 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			break;
 		}
 		if (visualBuilder.rebuildFlag) {
-			pageContext.fireTaglibsChanged();
-		} else if (pageContext.isTaglibChanged()) {
+			//vitali
+			//pageContext.fireTaglibsChanged();
+		//vitali
+		//} else if (pageContext.isTaglibChanged()) {
+		} else if (true) {
 			visualRefreshImpl();
-			pageContext.fireTaglibsChanged();
+			//vitali
+			//pageContext.fireTaglibsChanged();
 		}
 		switcher.stopActiveEditor();
 	}
@@ -551,7 +559,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			visualBuilder.setSelectionRectangle(null);
 			IDOMDocument sourceDocument = sourceModel.getDocument();
 			visualBuilder.rebuildDom(sourceDocument);
-			pageContext.fireTaglibsChanged();
+			//vitali
+			//pageContext.fireTaglibsChanged();
 		}
 		switcher.stopActiveEditor();
 	}
@@ -906,7 +915,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 							data.setName(actionNode.getNodeName());
 						}
 						data = editAnyData(sourceEditor, isCorrectNS, data);
-						if (data != null && data.isChanged()) templateManager.setAnyTemplate(data);
+						if (data != null && data.isChanged()) {
+							VpeTemplateManager.getInstance().setAnyTemplate(data);
+						}
 					}
 				});
 
@@ -1099,7 +1110,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			return;
 		}
 		visualRefreshImpl();
-		pageContext.fireTaglibsChanged();
+		//vitali
+		//pageContext.fireTaglibsChanged();
 
 		switcher.stopActiveEditor();
 	}
@@ -1236,8 +1248,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 		if (bundle != null) {
 			bundle.refresh();
-			if (pageContext != null) {
-				pageContext.refreshBundleValues();
+			if (getPageContext() != null) {
+				getPageContext().refreshBundleValues();
 			}
 		}
 		switcher.stopActiveEditor();
@@ -1247,16 +1259,16 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (includeList.includesRefresh()) {
 			visualRefresh();
 		}
-		if (templateManager != null) {
-			templateManager.reload();
-		}
+		VpeTemplateManager templateManager = VpeTemplateManager.getInstance();
+		templateManager.reload();
+
 		if (bundle != null) {
 			bundle.refresh();
-			if (pageContext != null) {
+			if (getPageContext() != null) {
 				if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 					return;
 				}
-				pageContext.refreshBundleValues();
+				getPageContext().refreshBundleValues();
 				switcher.stopActiveEditor();
 			}
 		}
@@ -1642,8 +1654,12 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		}
 	}
 
+	public VpeVisualDomBuilder getVisualBuilder(){
+		return visualBuilder;
+	}
+
     public void refreshExternalLinks() {
-        pageContext.getVisualBuilder().refreshExternalLinks();
+        getVisualBuilder().refreshExternalLinks();
     }
 
     public IPath getPath() {
@@ -1658,7 +1674,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 
     public void changed(Object source) {
     	if(cssReferenceListListener == source) {
-    		pageContext.getVisualBuilder().refreshExternalLinks();
+    		getVisualBuilder().refreshExternalLinks();
     	} else if (absoluteFolderReferenceListListener == source ||
     				relativeFolderReferenceListListener == source ||
     				taglibReferenceListListener == source) {
@@ -2159,8 +2175,12 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		tip = null;
 	}
 	
-	public VpePageContext getPageContext() {
-		return pageContext;
+	public IVisualContext getPageContext() {
+		IVisualContext visualContext = null;
+		if (sourceEditor instanceof IJSPTextEditor) {
+			visualContext = ((IJSPTextEditor)sourceEditor).getPageContext();
+		}
+		return visualContext;
 	}
 
 	public StructuredTextEditor getSourceEditor() {
@@ -2318,6 +2338,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	 */
 	public VpeSourceDomBuilder getSourceBuilder() {
 		return sourceBuilder;
+	}
+	
+	public VpeEditorPart getVpeEditorPart() {
+		return editPart;
 	}
 
 	/**

@@ -47,14 +47,12 @@ public class MozillaPreview extends MozillaEditor {
 
 	private EditorLoadWindowListener editorLoadWindowListener;
 	private EditorDomEventListener editorDomEventListener;
-	private VpeTemplateManager templateManager;	
 	private VpePageContext pageContext;
 	private StructuredTextEditor sourceEditor;
 	private VpeEditorPart editPart;
 	private IDOMDocument sourceDocument;
 
 	public MozillaPreview(VpeEditorPart editPart, StructuredTextEditor sourceEditor) {
-		setTemplateManager(VpeTemplateManager.getInstance());
 		setSourceEditor(sourceEditor);
 		setEditPart(editPart);
 	}
@@ -164,11 +162,11 @@ public class MozillaPreview extends MozillaEditor {
 		BundleMap bundle = new BundleMap();
 		bundle.init(getSourceEditor());
 		
-		setPageContext(new VpePageContext(getTemplateManager(), bundle, getEditPart()));
+		setPageContext(new VpePageContext(bundle, getEditPart()));
 		
 		VpeDomMapping domMapping = new VpeDomMapping(getPageContext());
-		VpeSourceDomBuilder sourceBuilder = new VpeSourceDomBuilder(domMapping, null, getTemplateManager(), getSourceEditor(), getPageContext());		
-		VpeVisualDomBuilder visualBuilder = new VpePreviewDomBuilder(domMapping, null, getTemplateManager(), this, getPageContext());
+		VpeSourceDomBuilder sourceBuilder = new VpeSourceDomBuilder(domMapping, null, getSourceEditor(), getPageContext());		
+		VpeVisualDomBuilder visualBuilder = new VpePreviewDomBuilder(domMapping, null, this, getPageContext());
 		getPageContext().setSourceDomBuilder(sourceBuilder);
 		getPageContext().setVisualDomBuilder(visualBuilder);
 
@@ -227,26 +225,6 @@ public class MozillaPreview extends MozillaEditor {
 	private void setEditPart(VpeEditorPart editPart) {
 		this.editPart = editPart;
 	}
-
-
-
-	/**
-	 * @return the templateManager
-	 */
-	private VpeTemplateManager getTemplateManager() {
-		return templateManager;
-	}
-
-
-
-	/**
-	 * @param templateManager the templateManager to set
-	 */
-	private void setTemplateManager(VpeTemplateManager templateManager) {
-		this.templateManager = templateManager;
-	}
-
-
 
 	/**
 	 * @return the sourceEditor

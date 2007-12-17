@@ -10,6 +10,7 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.context;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -66,8 +67,28 @@ import org.w3c.dom.Node;
  * Contains the information on edited page.
  */
 
-public class VpePageContext implements VpeTaglibManager, IVisualContext {
-	private VpeTemplateManager templateManager;
+// vitali: Attention!!! this is refactoring intermediate version
+// because of bugfixing
+// http://jira.jboss.com/jira/browse/JBIDE-788 and
+// http://jira.jboss.com/jira/browse/JBIDE-1457
+
+//public class VpePageContext implements IVisualContext {
+public class VpePageContext {
+	
+	// vitali: time solution - set connector from JSPTextEditorPageContext
+	public WtpKbConnector getConnector() {
+		return getVisualContext().getConnector();
+	}
+	IVisualContext visualContext;
+	public void setVisualContext(IVisualContext visualContext) {
+		this.visualContext = visualContext;
+	}
+	public IVisualContext getVisualContext() {
+		return visualContext;
+	}
+	
+	
+	
 	private ArrayList taglibs = new ArrayList();
 	private Map taglibMap = new HashMap();
 	private VpeTaglibListener[] taglibListeners = new VpeTaglibListener[0];
@@ -81,47 +102,40 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 	WtpKbConnector connector;	
 	private nsIDOMNode currentVisualNode;
 	
-	public VpePageContext(VpeTemplateManager templateManager, BundleMap bundle, VpeEditorPart editPart) {
-		this.templateManager = templateManager;
+	public VpePageContext(BundleMap bundle, VpeEditorPart editPart) {
 		this.bundle = bundle;
 		this.editPart = editPart;
 	}
 	
-	public VpeSourceDomBuilder getSourceBuilder(){
+	//public VpeSourceDomBuilder getSourceBuilder(){
+	//	return sourceBuilder;
+	//}
+	
+	// vitali: delete this function with the class  
+	public void setSourceDomBuilder(VpeSourceDomBuilder sourceBuilder) {
+		this.sourceBuilder = sourceBuilder;
+		//refreshConnector();
+	}
+	public VpeSourceDomBuilder getSourceBuilder() {
 		return sourceBuilder;
 	}
 	
-	public boolean isAbsolutePosition(){
-		if("yes".equals(VpePreference.USE_ABSOLUTE_POSITION.getValue()))return true;
-		else return false;
-	}
-	
-	public void setSourceDomBuilder(VpeSourceDomBuilder sourceBuilder) {
-		this.sourceBuilder = sourceBuilder;
-		refreshConnector();
-	}
-	
-	public void refreshConnector() {
-		try {
-			IDocument document = sourceBuilder.getStructuredTextViewer().getDocument();
-			connector = (WtpKbConnector)KbConnectorFactory.getIntstance().createConnector(KbConnectorType.JSP_WTP_KB_CONNECTOR, document);
-		} catch (Exception e) {
-			VpePlugin.getPluginLog().logError(e);
-		}
-	}
-	
+	// vitali: delete this function with the class - use VpeController
 	public VpeVisualDomBuilder getVisualBuilder(){
 		return visualBuilder;
 	}
 	
+	// vitali: delete this function with the class - delete from MozillaPreview
 	public void setVisualDomBuilder(VpeVisualDomBuilder visualBuilder) {
 		this.visualBuilder = visualBuilder;
 	}
 	
+	// vitali: delete this function with the class - use VpeController->getVisualBuilder()
 	public VpeDomMapping getDomMapping ()  {
 		return visualBuilder.getDomMapping();
 	}
 	
+	// vitali: delete this function with the class
 	public void clearAll() {
 		taglibs.clear();
 		taglibMap.clear();
@@ -129,11 +143,13 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		bundle.clearAll();
 	}
 	
+	// vitali: delete this function with the class
 	public void dispose() {
 		bundle.dispose();
 		clearAll();
 	}
 	
+	// vitali: delete this function with the class - from all places
 	public void setTaglib(int id, String newUri, String newPrefix, boolean ns) {
 		for (int i = 0; i < taglibs.size(); i++) {
 			TaglibData taglib = (TaglibData)taglibs.get(i);
@@ -156,12 +172,14 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		}
 	}
 	
+	// vitali: put taglibMap to VpeTemplateManager
 	public String getTemplateTaglibPrefix(String sourceTaglibPrefix) {
 		return (String) taglibMap.get(sourceTaglibPrefix);
 	}
 	
 	private void rebuildTaglibMap() {
 		taglibMap.clear();
+		VpeTemplateManager templateManager = VpeTemplateManager.getInstance();
 		Set prefixSet = new HashSet();
 		for (int i = 0; i < taglibs.size(); i++) {
 			TaglibData taglib = (TaglibData)taglibs.get(i);
@@ -176,13 +194,17 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		}
 		taglibChanged = true;
 		
+		/** /
 		try {
 			registerTaglibs(connector, this, getSourceBuilder().getStructuredTextViewer().getDocument());
 		} catch (Exception e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
+		/**/
 	}
 
+	/** /
+	// vitali: parent
 	public void addTaglibListener(VpeTaglibListener listener) {
 		if (listener != null) {
 			VpeTaglibListener[] newTaglibListeners = new VpeTaglibListener[taglibListeners.length + 1];
@@ -192,6 +214,7 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		}
 	}
 	
+	// vitali: parent
 	public void removeTaglibListener(VpeTaglibListener listener) {
 		if (listener == null || taglibListeners.length == 0) return;
 		int index = -1;
@@ -211,19 +234,28 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		System.arraycopy(taglibListeners, index + 1, newTaglibListeners, index, taglibListeners.length - index - 1);
 		taglibListeners = newTaglibListeners;
 	}
+	/**/
 	
+	// vitali: delete this function with the class - save and getBundle() from other place
+	// for examle visualBuilder
 	public BundleMap getBundle() {
 		return bundle;
 	}
 
+	// vitali: delete this function with the class - save and getBundle() from other place
+	// for examle visualBuilder
 	public void addBundleDependency(Element sourceNode) {
 		bundleDependencySet.add(sourceNode);
 	}
 	
+	// vitali: delete this function with the class - save and getBundle() from other place
+	// for examle visualBuilder
 	public void removeBundleDependency(Element sourceNode) {
 		bundleDependencySet.remove(sourceNode);
 	}
 	
+	/** /
+	// vitali: parent
 	public void refreshBundleValues() {
 		Iterator iterator = bundleDependencySet.iterator();
 		while (iterator.hasNext()) {
@@ -231,7 +263,10 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 			visualBuilder.refreshBundleValues(sourceElement);
 		}
 	}
+	/**/
 	
+	// vitali: put this function in to JSPTextEditorPageContext
+	// VpeController ask JSPTextEditorPageContext via sourceEditor
 	public boolean isCorrectNS(Node sourceNode) {
 		String sourcePrefix = sourceNode.getPrefix();
 		if (sourcePrefix == null || ((ElementImpl)sourceNode).isJSPTag()) {
@@ -246,6 +281,8 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		return false;
 	}
 	
+	// vitali: 2 places - RichFacesDataDefinitionListTemplate & VpeController
+	// should implement this function & get taglibs from sourceEditor->JSPTextEditorPageContext
 	public String getSourceTaglibUri(Node sourceNode) {
 		String sourcePrefix = sourceNode.getPrefix();
 		if (sourcePrefix == null || ((ElementImpl)sourceNode).isJSPTag()) {
@@ -260,10 +297,12 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		return null;
 	}
 
+	// vitali: 24 places - !!! use other way to get VpeEditorPart
 	public VpeEditorPart getEditPart() {
 		return editPart;
 	}
 
+	// vitali: this is not right place to the function - put in into editPart - VpeEditorPart
 	public void openIncludeFile(String file) {
 		IEditorInput input = editPart.getEditorInput();
 		IWorkbenchPage workbenchPage = VpePlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage();
@@ -277,7 +316,8 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		}
 	}
 
-	public ResourceReference[] getIncludeTaglibs() {
+	// vitali: public - can be protected!
+	protected ResourceReference[] getIncludeTaglibs() {
 		IEditorInput input = getEditPart().getEditorInput();
 		IFile file = null;
 		if (input instanceof IFileEditorInput) {
@@ -290,7 +330,8 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 	    return resourceReferences;
 	}
 
-	public ResourceReference[] getIncludeCss() {
+	// vitali: public - can be protected!
+	protected ResourceReference[] getIncludeCss() {
 		IEditorInput input = getEditPart().getEditorInput();
 		IFile file = null;
 		if (input instanceof IFileEditorInput) {
@@ -303,6 +344,8 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		return resourceReferences;
 	}
 
+	// vitali: 1 place - VpeVisualDomBuilder - put this into VpeVisualDomBuilder
+	// and getIncludeTaglibs and getIncludeCss
 	public void installIncludeElements() {
 		ResourceReference[] list = getIncludeTaglibs();
 		for (int i = 0; i < list.length; i++) {
@@ -316,22 +359,8 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		}
 	}
 
-	public ResourceReference getRuntimeRelativeFolder(IFile file) {
-		ResourceReference[] list = RelativeFolderReferenceList.getInstance().getAllResources(file);
-		if (list.length > 0) {
-			return list[list.length - 1];
-		}
-		return null;
-	}
-
-	public ResourceReference getRuntimeAbsoluteFolder(IFile file) {
-		ResourceReference[] list = AbsoluteFolderReferenceList.getInstance().getAllResources(file);
-		if (list.length > 0) {
-			return list[list.length - 1];
-		}
-		return null;
-	}
-
+	/** /
+	// vitali: parent
 	public List<TaglibData> getTagLibs() {
 		List<TaglibData> clone = new ArrayList<TaglibData>();
 		Iterator iter = taglibs.iterator();
@@ -343,7 +372,9 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		}
 		return clone;
 	}
+	/**/
 	
+	// vitali: public
 	private boolean  buildTaglibsDifferences(List newTaglibs, List delTaglibs) {
 		Iterator lastIter = lastTaglibs.iterator();
 		while (lastIter.hasNext()) {
@@ -363,6 +394,8 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		return newTaglibs.size() > 0 || delTaglibs.size() > 0;
 	}
 	
+	/** /
+	// vitali: 5 places - all in VpeController - 
 	public void fireTaglibsChanged() {
 		List newTaglibs = getTagLibs();
 		List delTaglibs = new ArrayList();
@@ -378,6 +411,7 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		}
 		taglibChanged = false;
 	}
+	/**/
 	
 	private void fireTaglibChanged(VpeTaglibListener taglibListener, List newTaglibs, List delTaglibs) {
 		Iterator iter = delTaglibs.iterator();
@@ -392,16 +426,21 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		}
 	}
 	
+	// vitali: 1 place VpeController - 
 	public boolean isTaglibChanged() {
 		if (!taglibChanged) return false;
-		List newTaglibs = getTagLibs();
+		//vitali
+		List newTaglibs = null;//getTagLibs();
 		List delTaglibs = new ArrayList();
 		return buildTaglibsDifferences(newTaglibs, delTaglibs);
 	}
 	
+	/** /
+	// vitali: parent
 	public WtpKbConnector getConnector() {
 		return connector;
 	}
+	/**/
 
 	boolean registerTaglibs(WtpKbConnector wtpKbConnector, VpeTaglibManager taglibManager, IDocument document) {
 		if(wtpKbConnector == null) return false;
@@ -432,10 +471,16 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		return false;
 	}
 	
+	// vitali: 2 places - VpeDataTableColumnCreator & VpeDataTableCreator
 	public nsIDOMNode getCurrentVisualNode() {
 		return currentVisualNode;
 	}
 	
+	// vitali: 8 places in VpePreviewDomBuilder & VpeVisualDomBuilder
+	// use - setCurrentVisualNode(XXX)
+	//      - getCurrentVisualNode()
+	// then - setCurrentVisualNode(null)
+	// just use other way to send current node as parameter
 	public void setCurrentVisualNode(nsIDOMNode currentVisualNode) {
 		this.currentVisualNode = currentVisualNode;
 	}

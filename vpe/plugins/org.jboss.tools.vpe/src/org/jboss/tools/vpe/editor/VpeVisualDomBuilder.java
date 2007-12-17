@@ -159,9 +159,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     private VpeDnd dropper;
 
     public VpeVisualDomBuilder(VpeDomMapping domMapping,
-	    INodeAdapter sorceAdapter, VpeTemplateManager templateManager,
-	    MozillaEditor visualEditor, VpePageContext pageContext) {
-	super(domMapping, sorceAdapter, templateManager);
+	    INodeAdapter sorceAdapter, MozillaEditor visualEditor, VpePageContext pageContext) {
+	super(domMapping, sorceAdapter);
 	this.visualEditor = visualEditor;
 	xulRunnerEditor = visualEditor.getXulRunnerEditor();
 	this.visualDocument = visualEditor.getDomDocument();
@@ -186,11 +185,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	if (input instanceof IFileEditorInput) {
 	    IFile file = ((IFileEditorInput) input).getFile();
 	    if (file != null) {
-		includeStack.add(new VpeIncludeInfo(null, file, pageContext
+		includeStack.add(new VpeIncludeInfo(null, file, visualEditor.getController()
 			.getSourceBuilder().getSourceDocument()));
 	    }
 	}
-	pageContext.refreshConnector();
 	pageContext.installIncludeElements();
 	addChildren(null, sourceDocument, visualContentArea);
 	registerNodes(new VpeNodeMapping(sourceDocument, visualContentArea));
@@ -365,6 +363,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    Map<?, ?> xmlnsMap = createXmlns((Element) sourceNode);
 	    Set<Node> ifDependencySet = new HashSet<Node>();
 	    pageContext.setCurrentVisualNode(visualOldContainer);
+		VpeTemplateManager templateManager = VpeTemplateManager.getInstance();
 	    VpeTemplate template = templateManager.getTemplate(pageContext,
 		    (Element) sourceNode, ifDependencySet);
 
@@ -676,17 +675,18 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     private void addPseudoElementImpl(nsIDOMNode visualParent) {
-	if (!templateManager.isWithoutPseudoElementContainer(visualParent
-		.getNodeName())) {
-	    if (VpeDebug.VISUAL_ADD_PSEUDO_ELEMENT) {
-		System.out.println("-------------------- addPseudoElement: "
-			+ visualParent.getNodeName());
-	    }
-	    nsIDOMElement visualPseudoElement = visualDocument
-		    .createElement(PSEUDO_ELEMENT);
-	    visualPseudoElement.setAttribute(PSEUDO_ELEMENT_ATTR, "yes");
-	    visualParent.appendChild(visualPseudoElement);
-	}
+		VpeTemplateManager templateManager = VpeTemplateManager.getInstance();
+		if (!templateManager.isWithoutPseudoElementContainer(visualParent
+			.getNodeName())) {
+			if (VpeDebug.VISUAL_ADD_PSEUDO_ELEMENT) {
+			System.out.println("-------------------- addPseudoElement: "
+				+ visualParent.getNodeName());
+			}
+			nsIDOMElement visualPseudoElement = visualDocument
+				.createElement(PSEUDO_ELEMENT);
+			visualPseudoElement.setAttribute(PSEUDO_ELEMENT_ATTR, "yes");
+			visualParent.appendChild(visualPseudoElement);
+		}
     }
 
     public boolean isEmptyElement(nsIDOMNode visualParent) {
