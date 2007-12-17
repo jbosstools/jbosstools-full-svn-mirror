@@ -11,6 +11,8 @@
 package org.jboss.tools.vpe.editor.template.expression;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -41,6 +43,15 @@ public class VpeFunctionSrc extends VpeFunction {
 	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
 		String tagValue = getParameter(0).exec(pageContext, sourceNode).stringValue();
 		tagValue = processValue(pageContext, sourceNode, tagValue);
+		
+		// decode string from utf 
+		try {
+			tagValue = URLDecoder.decode(tagValue,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 
 		IPath tagPath = new Path(tagValue);
 		if (tagPath.isEmpty()) return new VpeValue(getUnresolved());
