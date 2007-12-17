@@ -179,7 +179,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <itemizedlist>
     <listitem>
      <para>Download the appropriate installation file for your platform from <ulink
-       url="http://www.redhat.com/developers/rhds/">Red Hat website</ulink>.</para>
+      url="http://www.jboss.com/products/devstudio">Red Hat website</ulink>.</para>
     </listitem>
     <listitem>
      <para>Run in console:</para>
@@ -532,8 +532,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <para>
     <emphasis role="bold">How can I add my own tag library to the JBoss Tools Palette?</emphasis>
    </para>
-   <para>See <ulink url="AddingCustomJSFTagsToTheRedHatPalette7433">Adding Tag Libraries</ulink> in
-    JBossJSFTools Guide.</para>
+   <para>See <ulink url="../../../jsf/en/html/palette.html">Adding Tag Libraries</ulink> in Visual Web Tools Guide.</para>
    <para>
     <emphasis role="bold">I see the Oracle ADF Faces component library tags in the JBoss Tools
      Palette, but I can&apos;t seem to find the libraries for ADF. How do I use this component
@@ -553,6 +552,6 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <para>Forum: <ulink
     url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
    Forum</ulink></para>
-  <para>Download: <ulink url="http://www.redhat.com/developers/rhds/">JBDS Download</ulink></para>
+  <para>Download: <ulink url="http://www.jboss.com/products/devstudio">JBDS Download</ulink></para>
  </section>
 </chapter>
