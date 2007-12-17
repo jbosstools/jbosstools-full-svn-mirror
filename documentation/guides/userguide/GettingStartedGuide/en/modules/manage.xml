@@ -11,11 +11,12 @@
     </keywordset>
   </chapterinfo>
  <title>Manage JBoss AS from JBoss Developer Studio</title>
+    <para>In this chapter we'll focus more on how to operate the JBoss AS from JBoss Developer Studio.</para>
     <para>JBoss Developer Studio ships with <property>JBoss EAP v.4.2</property> bundled. When you followed the default installation of JBoss Developer Studio, you should already have a JBoss 4.2 server installed and defined. To run JBoss AS 4.2 you need JDK 1.5, JDK 6 is not formally supported yet, although you may be able to start the server with it.</para>
  <section id="JBossbundled">
   <?dbhtml filename="JBossbundled.html"?>
   <title>How to Manage the JBoss AS Bundled in JBDS</title>
-  <para></para>
+     <para>This section covers the basics of working with the JBoss server directly supported by JBDS via bundled plug-in.</para>
   <section id="StartingServer">
   <?dbhtml filename="StartingServer.html"?>
   <title>Starting JBoss server</title>
@@ -248,4 +249,5 @@
 
   </section>
   </section>
+    <para>Now, we are ready to create the first web application.</para>
 </chapter>
