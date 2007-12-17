@@ -2038,11 +2038,13 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	nsIDOMNode visualNewTextNode = visualDocument
 		.createTextNode(visualText);
+	nsIDOMElement element = visualDocument.createElement(HTML.TAG_SPAN);
+	element.appendChild(visualNewTextNode);
 	if (registerFlag) {
-	    registerNodes(new VpeNodeMapping(sourceNode, visualNewTextNode));
+	    registerNodes(new VpeNodeMapping(sourceNode, element));
 	}
 
-	return visualNewTextNode;
+	return element;
     }
 
     /**
