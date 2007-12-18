@@ -363,7 +363,12 @@ public class VpeSelectionBuilder {
 			visualSelectedNode = visualNode;
 		}
 		setVisualSelectionAtVisualNode(visualSelectedNode, 0);
-		sourceBuilder.setSelection(sourceNode, 0, 0);
+		//added by Max Areshkau in scope of JBIDE-1209
+		if(sourceNode.getNodeType()!=Node.TEXT_NODE) {
+				sourceBuilder.setSelection(sourceNode, 0, 0);
+		} else if(sourceNode.getNodeType()==Node.TEXT_NODE) {
+			sourceBuilder.setSelection(sourceNode, 1, 0);
+		}
 		return sourceNode;
 	}
 	

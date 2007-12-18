@@ -37,6 +37,7 @@ import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.TextUtil;
+import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
@@ -318,6 +319,10 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 //					if (info != null) {
 //						info.setSourceCommentValue(pageContext, (Comment)sourceParent);
 //					}
+					//Added by Max Areshkau in scope of bug JBIDE-1209
+				} else if (sourceParent.getNodeType()==Node.TEXT_NODE) {
+					
+					setSelection(sourceParent, 1, 0);
 				}
 			}
 		}
