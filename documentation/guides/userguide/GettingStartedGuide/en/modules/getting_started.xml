@@ -275,6 +275,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </section>
   <section id="JBossToolsInstall">
    <title>JBoss Tools Installation</title>
+   <para>Here, let&apos;s consider the installation of the JBoss Tools modules.</para>
    <para>JBoss Tools is an umbrella project for the JBoss developed plugins that will make it into
     JBoss Developer Studio. The JBoss Tools modules are:</para>
    <itemizedlist>

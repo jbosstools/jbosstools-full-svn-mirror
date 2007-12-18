@@ -16,7 +16,7 @@
  <section id="JBossbundled">
   <?dbhtml filename="JBossbundled.html"?>
   <title>How to Manage the JBoss AS Bundled in JBDS</title>
-     <para>This section covers the basics of working with the JBoss server directly supported by JBDS via bundled plug-in.</para>
+     <para>This section covers the basics of working with the JBoss server supported directly by JBDS via bundled plug-in.</para>
   <section id="StartingServer">
   <?dbhtml filename="StartingServer.html"?>
   <title>Starting JBoss server</title>
