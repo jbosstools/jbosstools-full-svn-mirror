@@ -281,6 +281,9 @@ public class VpeDomMapping {
 			}
 			if (nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
 				VpeElementMapping elementMapping = (VpeElementMapping)nodeMapping;
+			    /**/
+				// vitali TODO: this is wrong temporary way - get rid of it 
+				//-
 				Map xmlnsMap = elementMapping.getXmlnsMap();
 				if (xmlnsMap != null) {
 					for (Iterator iter = xmlnsMap.values().iterator(); iter.hasNext();) {
@@ -288,6 +291,7 @@ public class VpeDomMapping {
 					}
 					elementMapping.setXmlnsMap(null);
 				}
+				/**/
 				if (elementMapping.getBorder() != null) {
 					visualMap.remove(elementMapping.getBorder());
 				}

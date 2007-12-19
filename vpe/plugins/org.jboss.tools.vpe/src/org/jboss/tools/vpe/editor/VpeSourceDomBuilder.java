@@ -386,7 +386,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		return structuredTextViewer;
 	}
 	
-	Document getSourceDocument() {
+	public Document getSourceDocument() {
 		return sourceDocument;
 	}
 }

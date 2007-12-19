@@ -356,6 +356,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		if (null != previewContent) {
 			if (flagPC) {
 				getWB();
+				getWB().rebuildDom();
 			}
 			previewContent.setVisible(flagPC);
 		}

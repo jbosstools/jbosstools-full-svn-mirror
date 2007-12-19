@@ -27,6 +27,8 @@ import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
+import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
+import org.jboss.tools.jst.jsp.editor.IVisualContext;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.VpePreviewDomBuilder;
@@ -151,9 +153,8 @@ public class MozillaPreview extends MozillaEditor {
 
 	//TODO Max Areshkau logic error (we should first call buildDom and only then we can call rebuildDom)
 	public void rebuildDom() {
-		if(getPageContext()!=null&&getPageContext().getVisualBuilder()!=null&&getSourceDocument()!=null) {
-			
-		getPageContext().getVisualBuilder().rebuildDom(getSourceDocument());
+		if (null != pageContext && null != pageContext.getVisualBuilder() && null != getSourceDocument()) {
+			pageContext.getVisualBuilder().rebuildDom(getSourceDocument());
 		}
 	}
 
@@ -162,13 +163,15 @@ public class MozillaPreview extends MozillaEditor {
 		BundleMap bundle = new BundleMap();
 		bundle.init(getSourceEditor());
 		
-		setPageContext(new VpePageContext(bundle, getEditPart()));
+		pageContext = new VpePageContext(bundle, getEditPart());
 		
-		VpeDomMapping domMapping = new VpeDomMapping(getPageContext());
-		VpeSourceDomBuilder sourceBuilder = new VpeSourceDomBuilder(domMapping, null, getSourceEditor(), getPageContext());		
-		VpeVisualDomBuilder visualBuilder = new VpePreviewDomBuilder(domMapping, null, this, getPageContext());
-		getPageContext().setSourceDomBuilder(sourceBuilder);
-		getPageContext().setVisualDomBuilder(visualBuilder);
+		// vitali - temp solution
+		pageContext.setVisualContext(getPageContext());
+		VpeDomMapping domMapping = new VpeDomMapping(pageContext);
+		VpeSourceDomBuilder sourceBuilder = new VpeSourceDomBuilder(domMapping, null, getSourceEditor(), pageContext);
+		VpeVisualDomBuilder visualBuilder = new VpePreviewDomBuilder(domMapping, null, this, pageContext);
+		pageContext.setSourceBuilder(sourceBuilder);
+		pageContext.setVisualBuilder(visualBuilder);
 
 		IDOMModel sourceModel = (IDOMModel)getSourceEditor().getModel();
 		setSourceDocument(sourceModel.getDocument());
@@ -179,7 +182,7 @@ public class MozillaPreview extends MozillaEditor {
 	/**
 	 * @return the sourceDocument
 	 */
-	protected IDOMDocument getSourceDocument() {
+	public IDOMDocument getSourceDocument() {
 		return sourceDocument;
 	}
 
@@ -190,25 +193,13 @@ public class MozillaPreview extends MozillaEditor {
 		this.sourceDocument = sourceDocument;
 	}
 
-
-
-	/**
-	 * @return the pageContext
-	 */
-	private VpePageContext getPageContext() {
-		return pageContext;
+	public IVisualContext getPageContext() {
+		IVisualContext visualContext = null;
+		if (sourceEditor instanceof IJSPTextEditor) {
+			visualContext = ((IJSPTextEditor)sourceEditor).getPageContext();
+		}
+		return visualContext;
 	}
-
-
-
-	/**
-	 * @param pageContext the pageContext to set
-	 */
-	private void setPageContext(VpePageContext pageContext) {
-		this.pageContext = pageContext;
-	}
-
-
 
 	/**
 	 * @return the editPart
@@ -216,7 +207,6 @@ public class MozillaPreview extends MozillaEditor {
 	private VpeEditorPart getEditPart() {
 		return editPart;
 	}
-
 
 
 	/**
@@ -232,8 +222,6 @@ public class MozillaPreview extends MozillaEditor {
 	private StructuredTextEditor getSourceEditor() {
 		return sourceEditor;
 	}
-
-
 
 	/**
 	 * @param sourceEditor the sourceEditor to set

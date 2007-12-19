@@ -66,7 +66,11 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 		boolean registerFlag = isCurrentMainDocument();
 		switch (sourceNode.getNodeType()) {
 		case Node.ELEMENT_NODE:
+		    /**/
+			// vitali TODO: this is wrong temporary way - get rid of it 
+			//-
 			Map xmlnsMap = createXmlns((Element)sourceNode);
+			/**/
 			Set ifDependencySet = new HashSet();
 			getPageContext().setCurrentVisualNode(visualOldContainer);
 			VpeTemplateManager templateManager = VpeTemplateManager.getInstance();

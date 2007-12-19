@@ -82,6 +82,7 @@ public class VpePageContext {
 	IVisualContext visualContext;
 	public void setVisualContext(IVisualContext visualContext) {
 		this.visualContext = visualContext;
+		VpeTemplateManager.getInstance().initVisualContext(visualContext);
 	}
 	public IVisualContext getVisualContext() {
 		return visualContext;
@@ -107,26 +108,21 @@ public class VpePageContext {
 		this.editPart = editPart;
 	}
 	
-	//public VpeSourceDomBuilder getSourceBuilder(){
-	//	return sourceBuilder;
-	//}
-	
-	// vitali: delete this function with the class  
-	public void setSourceDomBuilder(VpeSourceDomBuilder sourceBuilder) {
+	//+
+	public void setSourceBuilder(VpeSourceDomBuilder sourceBuilder) {
 		this.sourceBuilder = sourceBuilder;
-		//refreshConnector();
 	}
+	//+
 	public VpeSourceDomBuilder getSourceBuilder() {
 		return sourceBuilder;
 	}
 	
-	// vitali: delete this function with the class - use VpeController
+	//+
 	public VpeVisualDomBuilder getVisualBuilder(){
 		return visualBuilder;
 	}
-	
-	// vitali: delete this function with the class - delete from MozillaPreview
-	public void setVisualDomBuilder(VpeVisualDomBuilder visualBuilder) {
+	//+
+	public void setVisualBuilder(VpeVisualDomBuilder visualBuilder) {
 		this.visualBuilder = visualBuilder;
 	}
 	
@@ -150,6 +146,7 @@ public class VpePageContext {
 	}
 	
 	// vitali: delete this function with the class - from all places
+	//-
 	public void setTaglib(int id, String newUri, String newPrefix, boolean ns) {
 		for (int i = 0; i < taglibs.size(); i++) {
 			TaglibData taglib = (TaglibData)taglibs.get(i);
@@ -171,13 +168,19 @@ public class VpePageContext {
 			rebuildTaglibMap();
 		}
 	}
-	
-	// vitali: put taglibMap to VpeTemplateManager
+
+	//+
 	public String getTemplateTaglibPrefix(String sourceTaglibPrefix) {
+		// vitali TODO: this is wrong temporary way - get rid of it 
 		return (String) taglibMap.get(sourceTaglibPrefix);
+		// vitali TODO: this is right way to use - for refactoring
+		//return getVisualContext().getTemplateTaglibPrefix(sourceTaglibPrefix);
 	}
 	
+	//-
 	private void rebuildTaglibMap() {
+		/**/
+		// vitali TODO: this is wrong temporary way - get rid of it 
 		taglibMap.clear();
 		VpeTemplateManager templateManager = VpeTemplateManager.getInstance();
 		Set prefixSet = new HashSet();
@@ -193,7 +196,6 @@ public class VpePageContext {
 			}
 		}
 		taglibChanged = true;
-		
 		/** /
 		try {
 			registerTaglibs(connector, this, getSourceBuilder().getStructuredTextViewer().getDocument());

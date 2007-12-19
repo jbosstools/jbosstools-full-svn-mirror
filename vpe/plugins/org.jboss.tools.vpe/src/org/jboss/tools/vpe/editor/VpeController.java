@@ -211,8 +211,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		domMapping = new VpeDomMapping(pageContext);
 		sourceBuilder = new VpeSourceDomBuilder(domMapping, this, sourceEditor, pageContext);
 		visualBuilder = new VpeVisualDomBuilder(domMapping, this, visualEditor, pageContext);
-		pageContext.setSourceDomBuilder(sourceBuilder);
-		pageContext.setVisualDomBuilder(visualBuilder);
+		pageContext.setSourceBuilder(sourceBuilder);
+		pageContext.setVisualBuilder(visualBuilder);
 		IDOMModel sourceModel = (IDOMModel)getModel();
 		if (sourceModel == null) {
 			return;

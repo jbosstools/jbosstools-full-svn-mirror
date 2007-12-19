@@ -185,8 +185,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	if (input instanceof IFileEditorInput) {
 	    IFile file = ((IFileEditorInput) input).getFile();
 	    if (file != null) {
-		includeStack.add(new VpeIncludeInfo(null, file, visualEditor.getController()
-			.getSourceBuilder().getSourceDocument()));
+		includeStack.add(new VpeIncludeInfo(null, file, visualEditor.getSourceDocument()));
 	    }
 	}
 	pageContext.installIncludeElements();
@@ -360,7 +359,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	boolean registerFlag = isCurrentMainDocument();
 	switch (sourceNode.getNodeType()) {
 	case Node.ELEMENT_NODE:
+	    /**/
+		// vitali TODO: this is wrong temporary way - get rid of it 
+		//-
 	    Map<?, ?> xmlnsMap = createXmlns((Element) sourceNode);
+	    /**/
 	    Set<Node> ifDependencySet = new HashSet<Node>();
 	    pageContext.setCurrentVisualNode(visualOldContainer);
 		VpeTemplateManager templateManager = VpeTemplateManager.getInstance();
@@ -395,7 +398,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		VpeElementMapping elementMapping = new VpeElementMapping(
 			(Element) sourceNode, visualNewElement, border,
 			template, ifDependencySet, creationData.getData());
+	    /**/
+		// vitali TODO: this is wrong temporary way - get rid of it 
+		//-
 		elementMapping.setXmlnsMap(xmlnsMap);
+		/**/
 		registerNodes(elementMapping);
 	    }
 	    if (template.isChildren()) {
@@ -900,7 +907,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			    updateElement(sourceElement);
 			}
 		    }
+		    /**/
+			// vitali TODO: this is wrong temporary way - get rid of it 
+			//-
 		    setXmlnsAttribute(elementMapping, name, value);
+		    /**/
 		    template.setAttribute(pageContext, sourceElement,
 			    visualDocument, visualElement, elementMapping
 				    .getData(), name, value);
@@ -1006,7 +1017,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			name, null)) {
 		    updateElement(sourceElement);
 		} else {
+		    /**/
+			// vitali TODO: this is wrong temporary way - get rid of it 
+			//-
 		    removeXmlnsAttribute(elementMapping, name);
+		    /**/
 		    template.removeAttribute(pageContext, sourceElement,
 			    visualDocument, (nsIDOMElement) elementMapping
 				    .getVisualNode(), elementMapping.getData(),
@@ -1872,6 +1887,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	pageContext.dispose();
     }
 
+    /**/
+	// vitali TODO: this is wrong temporary way - get rid of it 
+	//-
     protected Map createXmlns(Element sourceNode) {
 	NamedNodeMap attrs = ((Element) sourceNode).getAttributes();
 	if (attrs != null) {
@@ -1886,7 +1904,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	return null;
     }
+    /**/
 
+    /**/
+	// vitali TODO: this is wrong temporary way - get rid of it 
+	//-
     private void setXmlnsAttribute(VpeElementMapping elementMapping,
 	    String name, String value) {
 	Element sourceElement = (Element) elementMapping.getSourceNode();
@@ -1898,7 +1920,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    elementMapping.setXmlnsMap(xmlnsMap.size() > 0 ? xmlnsMap : null);
 	}
     }
+    /**/
 
+    /**/
+	// vitali TODO: this is wrong temporary way - get rid of it 
+	//-
     private void removeXmlnsAttribute(VpeElementMapping elementMapping,
 	    String name) {
 	Element sourceElement = (Element) elementMapping.getSourceNode();
@@ -1915,16 +1941,22 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    }
 	}
     }
+    /**/
 
+    /**/
+	// vitali TODO: this is wrong temporary way - get rid of it 
+	//-
     private void addTaglib(Element sourceElement, Map xmlnsMap,
 	    String attrName, boolean ns) {
 	Attr attr = sourceElement.getAttributeNode(attrName);
 	if (ATTR_XMLNS.equals(attr.getPrefix())) {
-	    xmlnsMap.put(attr.getNodeName(), Integer.valueOf(attr.hashCode()));
+		//vitali
+	    //xmlnsMap.put(attr.getNodeName(), Integer.valueOf(attr.hashCode()));
 	    pageContext.setTaglib(attr.hashCode(), attr.getNodeValue(), attr
 		    .getLocalName(), ns);
 	}
     }
+    /**/
 
     /**
      * @return the dnd

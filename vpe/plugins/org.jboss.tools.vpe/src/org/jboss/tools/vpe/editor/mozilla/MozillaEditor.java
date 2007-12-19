@@ -43,6 +43,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.part.EditorPart;
+import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.css.VpeResourcesDialog;
@@ -63,6 +64,7 @@ import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionPrivate;
+import org.w3c.dom.Document;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
 	protected static final String INIT_URL = "file://" + (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath();
@@ -557,6 +559,20 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 */
 	public VpeController getController() {
 		return controller;
+	}
+
+	public IDOMDocument getSourceDocument() {
+		if (null == getController()) {
+			return null;
+		}
+		if (null == getController().getSourceBuilder()) {
+			return null;
+		}
+		Document doc = getController().getSourceBuilder().getSourceDocument();
+		if (doc instanceof IDOMDocument) {
+			return (IDOMDocument)doc;
+		}
+		return null;
 	}
 
 	/**
