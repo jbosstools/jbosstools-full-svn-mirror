@@ -201,7 +201,8 @@
 
   <section>
     <title>Build and Deploy the Seam Application</title>
-
+    
+    <para>Here, we will show you how to deploy our web project to the server and then view the application as a web site from a URL.</para>
     <para>Once the application is generated, you can use the &quot;Run on server&quot; menu
       to build and deploy it into the JBoss AS runtime associated with the project. All you need is
       to start JBoss AS in the server manager, and load the browser at URL

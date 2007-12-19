@@ -533,7 +533,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
     <section id="EditingTheJSPViewFiles2">
         <?dbhtml filename="EditingTheJSPViewFiles2.html"?>
         <title>Editing the JSP View Files</title>
-        <para>Now we will finish editing the JSP files for our two &quot;views&quot; using
+        <para>Now, we will finish editing the JSP files for our two &quot;views&quot; using
             Visual Page Editor.</para>
         <section id="EditingInputjsp">
             <?dbhtml filename="EditingInputjsp.html"?>
