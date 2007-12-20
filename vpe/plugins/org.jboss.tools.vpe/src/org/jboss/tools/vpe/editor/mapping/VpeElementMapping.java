@@ -22,11 +22,7 @@ import org.w3c.dom.Element;
 public class VpeElementMapping extends VpeNodeMapping {
 	private VpeTemplate template;
 	private Set ifDependencySet;
-    /**/
-    //vitali
-	//-
 	private Map xmlnsMap;
-	/**/
 	private Object data;
 	private nsIDOMElement border;
 	
@@ -48,19 +44,13 @@ public class VpeElementMapping extends VpeNodeMapping {
 		return template;
 	}
 	
-    /**/
-	// vitali TODO: this is wrong temporary way - get rid of it 
-	//-
 	public Map getXmlnsMap() {
 		return xmlnsMap;
 	}
 	
-	// vitali TODO: this is wrong temporary way - get rid of it 
-	//-
 	public void setXmlnsMap(Map xmlnsMap) {
 		this.xmlnsMap = xmlnsMap;
 	}
-	/**/
 	
 	public Object getData() {
 		return data;

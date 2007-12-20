@@ -33,8 +33,6 @@ import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.jst.web.tld.IFilePathEncoder;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.jboss.tools.vpe.editor.css.AbsoluteFolderReferenceList;
-import org.jboss.tools.vpe.editor.css.RelativeFolderReferenceList;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
 import org.w3c.dom.Node;
 
@@ -88,10 +86,10 @@ public class VpeFunctionSrc extends VpeFunction {
 		    if (null != file) {
 			    ResourceReference resourceReference = null;
 				if ("/".equals(tagValue.substring(0, 1))) {
-					resourceReference = getRuntimeAbsoluteFolder(file);
+					resourceReference = pageContext.getRuntimeAbsoluteFolder(file);
 					tagValue = tagValue.substring(1);
 				} else {
-					resourceReference = getRuntimeRelativeFolder(file);
+					resourceReference = pageContext.getRuntimeRelativeFolder(file);
 				}
 
 				String location = null;
@@ -113,22 +111,6 @@ public class VpeFunctionSrc extends VpeFunction {
 		}
 
 		return new VpeValue(getUnresolved());
-	}
-
-	public static ResourceReference getRuntimeRelativeFolder(IFile file) {
-		ResourceReference[] list = RelativeFolderReferenceList.getInstance().getAllResources(file);
-		if (list.length > 0) {
-			return list[list.length - 1];
-		}
-		return null;
-	}
-
-	public static ResourceReference getRuntimeAbsoluteFolder(IFile file) {
-		ResourceReference[] list = AbsoluteFolderReferenceList.getInstance().getAllResources(file);
-		if (list.length > 0) {
-			return list[list.length - 1];
-		}
-		return null;
 	}
 
 	protected IPath getInputParentPath(IEditorInput input) {

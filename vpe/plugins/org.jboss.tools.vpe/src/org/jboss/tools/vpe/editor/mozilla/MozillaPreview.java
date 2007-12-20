@@ -27,8 +27,6 @@ import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
-import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
-import org.jboss.tools.jst.jsp.editor.IVisualContext;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.VpePreviewDomBuilder;
@@ -49,12 +47,14 @@ public class MozillaPreview extends MozillaEditor {
 
 	private EditorLoadWindowListener editorLoadWindowListener;
 	private EditorDomEventListener editorDomEventListener;
+	private VpeTemplateManager templateManager;	
 	private VpePageContext pageContext;
 	private StructuredTextEditor sourceEditor;
 	private VpeEditorPart editPart;
 	private IDOMDocument sourceDocument;
 
 	public MozillaPreview(VpeEditorPart editPart, StructuredTextEditor sourceEditor) {
+		setTemplateManager(VpeTemplateManager.getInstance());
 		setSourceEditor(sourceEditor);
 		setEditPart(editPart);
 	}
@@ -153,8 +153,9 @@ public class MozillaPreview extends MozillaEditor {
 
 	//TODO Max Areshkau logic error (we should first call buildDom and only then we can call rebuildDom)
 	public void rebuildDom() {
-		if (null != pageContext && null != pageContext.getVisualBuilder() && null != getSourceDocument()) {
-			pageContext.getVisualBuilder().rebuildDom(getSourceDocument());
+		if(getPageContext()!=null&&getPageContext().getVisualBuilder()!=null&&getSourceDocument()!=null) {
+			
+		getPageContext().getVisualBuilder().rebuildDom(getSourceDocument());
 		}
 	}
 
@@ -163,15 +164,13 @@ public class MozillaPreview extends MozillaEditor {
 		BundleMap bundle = new BundleMap();
 		bundle.init(getSourceEditor());
 		
-		pageContext = new VpePageContext(bundle, getEditPart());
+		setPageContext(new VpePageContext(getTemplateManager(), bundle, getEditPart()));
 		
-		// vitali - temp solution
-		pageContext.setVisualContext(getPageContext());
-		VpeDomMapping domMapping = new VpeDomMapping(pageContext);
-		VpeSourceDomBuilder sourceBuilder = new VpeSourceDomBuilder(domMapping, null, getSourceEditor(), pageContext);
-		VpeVisualDomBuilder visualBuilder = new VpePreviewDomBuilder(domMapping, null, this, pageContext);
-		pageContext.setSourceBuilder(sourceBuilder);
-		pageContext.setVisualBuilder(visualBuilder);
+		VpeDomMapping domMapping = new VpeDomMapping(getPageContext());
+		VpeSourceDomBuilder sourceBuilder = new VpeSourceDomBuilder(domMapping, null, getTemplateManager(), getSourceEditor(), getPageContext());		
+		VpeVisualDomBuilder visualBuilder = new VpePreviewDomBuilder(domMapping, null, getTemplateManager(), this, getPageContext());
+		getPageContext().setSourceDomBuilder(sourceBuilder);
+		getPageContext().setVisualDomBuilder(visualBuilder);
 
 		IDOMModel sourceModel = (IDOMModel)getSourceEditor().getModel();
 		setSourceDocument(sourceModel.getDocument());
@@ -182,7 +181,7 @@ public class MozillaPreview extends MozillaEditor {
 	/**
 	 * @return the sourceDocument
 	 */
-	public IDOMDocument getSourceDocument() {
+	protected IDOMDocument getSourceDocument() {
 		return sourceDocument;
 	}
 
@@ -193,13 +192,25 @@ public class MozillaPreview extends MozillaEditor {
 		this.sourceDocument = sourceDocument;
 	}
 
-	public IVisualContext getPageContext() {
-		IVisualContext visualContext = null;
-		if (sourceEditor instanceof IJSPTextEditor) {
-			visualContext = ((IJSPTextEditor)sourceEditor).getPageContext();
-		}
-		return visualContext;
+
+
+	/**
+	 * @return the pageContext
+	 */
+	private VpePageContext getPageContext() {
+		return pageContext;
 	}
+
+
+
+	/**
+	 * @param pageContext the pageContext to set
+	 */
+	private void setPageContext(VpePageContext pageContext) {
+		this.pageContext = pageContext;
+	}
+
+
 
 	/**
 	 * @return the editPart
@@ -209,6 +220,7 @@ public class MozillaPreview extends MozillaEditor {
 	}
 
 
+
 	/**
 	 * @param editPart the editPart to set
 	 */
@@ -216,12 +228,34 @@ public class MozillaPreview extends MozillaEditor {
 		this.editPart = editPart;
 	}
 
+
+
+	/**
+	 * @return the templateManager
+	 */
+	private VpeTemplateManager getTemplateManager() {
+		return templateManager;
+	}
+
+
+
+	/**
+	 * @param templateManager the templateManager to set
+	 */
+	private void setTemplateManager(VpeTemplateManager templateManager) {
+		this.templateManager = templateManager;
+	}
+
+
+
 	/**
 	 * @return the sourceEditor
 	 */
 	private StructuredTextEditor getSourceEditor() {
 		return sourceEditor;
 	}
+
+
 
 	/**
 	 * @param sourceEditor the sourceEditor to set

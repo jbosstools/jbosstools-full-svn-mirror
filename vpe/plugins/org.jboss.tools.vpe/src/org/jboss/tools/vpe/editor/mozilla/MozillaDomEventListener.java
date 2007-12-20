@@ -10,7 +10,6 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.mozilla;
 
-import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
@@ -197,11 +196,6 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 	 * @see org.mozilla.interfaces.nsISelectionListener#notifySelectionChanged(org.mozilla.interfaces.nsIDOMDocument, org.mozilla.interfaces.nsISelection, short)
 	 */
 	public void notifySelectionChanged(nsIDOMDocument domDocument, nsISelection selection, short reason) {
-		if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-			System.out.println("MozillaDomEventListener.notifySelectionChanged: editorDomEventListener " + 
-					(editorDomEventListener) + " reason " + 
-					(reason));
-		}
 		if (editorDomEventListener != null) {
 			editorDomEventListener.notifySelectionChanged(domDocument, selection, reason);
 		}

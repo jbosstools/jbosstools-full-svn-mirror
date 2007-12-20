@@ -12,7 +12,6 @@ package org.jboss.tools.vpe.editor.template.dnd;
 
 import java.util.HashSet;
 
-import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDropInfo;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
@@ -105,7 +104,7 @@ public class VpeDnd {
 	}
 	
 	public boolean isDropEnabled(VpePageContext pageContext, Node container, Node node){
-		if(!VpePreference.isAbsolutePosition() && isAncestor(container, node)) return false;
+		if(!pageContext.isAbsolutePosition() && isAncestor(container, node)) return false;
 		if(isContainer){
 			if(enabledTags != null && enabledTags.size() > 0){
 				String name = node.getNodeType() == Node.ELEMENT_NODE ? node.getLocalName().toLowerCase() : node.getNodeName();

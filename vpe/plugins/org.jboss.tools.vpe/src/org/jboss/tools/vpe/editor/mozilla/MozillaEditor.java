@@ -43,7 +43,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.part.EditorPart;
-import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.css.VpeResourcesDialog;
@@ -64,7 +63,6 @@ import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionPrivate;
-import org.w3c.dom.Document;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
 	protected static final String INIT_URL = "file://" + (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath();
@@ -73,11 +71,14 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 	static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
 	private XulRunnerEditor xulRunnerEditor;
+	private nsIDOMDocument domDocument;
 	private nsIDOMEventTarget documentEventTarget;
 	private nsIDOMElement contentArea;
 	private nsIDOMNode headNode;
 	private nsIDOMEventTarget contentAreaEventTarget;
 	private MozillaDomEventListener contentAreaEventListener = new MozillaDomEventListener();
+	//TODO Max Areshkau may be we need delete this
+	//private MozillaBaseEventListener baseEventListener = null;
 	private EditorLoadWindowListener editorLoadWindowListener;
 	//
 	private EditorDomEventListener editorDomEventListener;
@@ -325,10 +326,18 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 
 	public nsIDOMDocument getDomDocument() {
-		if (null != xulRunnerEditor) {
-			return xulRunnerEditor.getDOMDocument();
+		if (domDocument == null) {
+			domDocument = xulRunnerEditor.getDOMDocument();
 		}
-		return null;
+		return domDocument;
+	}
+	
+	/**
+	 * @param domDocument the domDocument to set
+	 */
+	protected void setDomDocument(nsIDOMDocument domDocument) {
+		
+		this.domDocument = domDocument;
 	}
 
 	public nsIDOMElement getContentArea() {
@@ -473,6 +482,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DBLCLICK, contentAreaEventListener, false);//$NON-NLS-1$
 				documentEventTarget = (nsIDOMEventTarget) getDomDocument().queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
 				documentEventTarget.addEventListener(MozillaDomEventListener.KEYPRESS, contentAreaEventListener, false); //$NON-NLS-1$
+			} else {
+				//baseEventListener = new MozillaBaseEventListener();
 			}
 		}
 	}
@@ -492,7 +503,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DBLCLICK, contentAreaEventListener, false);//$NON-NLS-1$
 		
 		}
-		if (documentEventTarget != null) {
+		if (domDocument != null && documentEventTarget != null) {
 			documentEventTarget.removeEventListener(MozillaDomEventListener.KEYPRESS, contentAreaEventListener, false); //$NON-NLS-1$
 		}
 	}
@@ -559,20 +570,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 */
 	public VpeController getController() {
 		return controller;
-	}
-
-	public IDOMDocument getSourceDocument() {
-		if (null == getController()) {
-			return null;
-		}
-		if (null == getController().getSourceBuilder()) {
-			return null;
-		}
-		Document doc = getController().getSourceBuilder().getSourceDocument();
-		if (doc instanceof IDOMDocument) {
-			return (IDOMDocument)doc;
-		}
-		return null;
 	}
 
 	/**

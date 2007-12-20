@@ -10,7 +10,6 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template.resize;
 
-import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeTagDescription;
@@ -96,7 +95,7 @@ public class VpeResizer {
 	 */
 	public void resize(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Object data, int resizeConstrant, int top, int left, int width, int height) {
 		pageContext.getEditPart().getSourceEditor().getTextViewer().getUndoManager().beginCompoundChange();
-		if (VpePreference.isAbsolutePosition() && (
+		if (pageContext.isAbsolutePosition() && (
 				resizeConstrant == VpeTagDescription.RESIZE_CONSTRAINS_BOTTOMLEFT||
 				resizeConstrant == VpeTagDescription.RESIZE_CONSTRAINS_LEFT||
 				resizeConstrant == VpeTagDescription.RESIZE_CONSTRAINS_TOPLEFT||
