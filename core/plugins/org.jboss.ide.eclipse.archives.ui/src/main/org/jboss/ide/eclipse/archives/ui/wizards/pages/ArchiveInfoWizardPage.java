@@ -182,7 +182,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 			{
 				IArchive subPackage = (IArchive) subPackages[i];
 				if (subPackage.getName().equals(packageNameText.getText())
-					&& (!archive.equals(this.archive)))
+					&& (!subPackage.equals(this.archive)))
 				{
 					setErrorMessage(
 						ArchivesUIMessages.bind(
