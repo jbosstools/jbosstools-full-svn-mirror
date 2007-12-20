@@ -34,7 +34,7 @@ import org.osgi.framework.BundleContext;
 public class ArchivesCorePlugin extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jboss.ide.eclipse.archives.core";
+	public static final String PLUGIN_ID = ArchivesCore.PLUGIN_ID;
 
 	// The shared instance
 	private static ArchivesCorePlugin plugin;

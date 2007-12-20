@@ -7,6 +7,7 @@ import org.jboss.ide.eclipse.archives.core.model.other.IRuntimeVariables;
 
 public abstract class ArchivesCore {
 
+	public static final String PLUGIN_ID = "org.jboss.ide.eclipse.archives.core";
 	private static ArchivesCore instance;
 	// Due to classloader restrictions we won't be able to lazy load, but that should be ok as long
 	// as we keep the construction of ArchivesCore subclasses to a minimum

@@ -2,6 +2,7 @@ package org.jboss.ide.eclipse.archives.core.model.other;
 
 import java.net.URL;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 
 public interface IRuntimeVariables {
@@ -13,8 +14,11 @@ public interface IRuntimeVariables {
 	 */
 	public boolean isDebugging(String option);
 	public IPath getProjectPath(String projectName);
-	
-//	public IPath getWorkspacePath();
+	public String getProjectName(IPath path);
 	public URL getBindingSchema();
 	public URL getBindingLog4j();
+	
+	// allow for variable replacement
+	public String performStringSubstitution(String expression,	boolean reportUndefinedVariables) throws CoreException;
+
 }
