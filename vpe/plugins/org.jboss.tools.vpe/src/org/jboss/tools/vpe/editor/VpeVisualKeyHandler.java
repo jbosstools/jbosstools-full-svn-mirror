@@ -113,7 +113,7 @@ public class VpeVisualKeyHandler {
 			case VK_F4:
 				IWorkbenchPage workbenchPage = VpePlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage();
 				if(keyEvent.getShiftKey()) workbenchPage.closeAllEditors(true);
-				else workbenchPage.closeEditor(getController().getVpeEditorPart().getParentEditor(),true);
+				else workbenchPage.closeEditor(pageContext.getEditPart().getParentEditor(),true);
 				break;
 			case VK_HOME:
 				if (keyEvent.getShiftKey()) {
@@ -379,11 +379,11 @@ public class VpeVisualKeyHandler {
 				if(focusNode.getNodeType() == Node.TEXT_NODE){
 					IndexedRegion region = (IndexedRegion)focusNode;
 					try{
-						String sourceText = getStructuredTextViewer().getDocument().get(region.getStartOffset(), region.getEndOffset()-region.getStartOffset());
+						String sourceText = sourceEditor.getTextViewer().getDocument().get(region.getStartOffset(), region.getEndOffset()-region.getStartOffset());
 						String escString = TextUtil.isEcsToRight(sourceText, offset);
 						if(escString != null){
-							Point range = getStructuredTextViewer().getSelectedRange();
-							getStructuredTextViewer().getTextWidget().replaceTextRange(range.x, escString.length(), "");
+							Point range = sourceEditor.getTextViewer().getSelectedRange();
+							sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x, escString.length(), "");
 							atLeastOneCharIsDeleted = true;
 							continue;
 						}
@@ -410,8 +410,8 @@ public class VpeVisualKeyHandler {
 				while(chars.length > (offset+endPos) && TextUtil.isWhitespace(chars[offset+endPos])){
 					endPos++;
 				}
-				Point range = getStructuredTextViewer().getSelectedRange();
-				getStructuredTextViewer().getTextWidget().replaceTextRange(range.x, endPos, "");
+				Point range = sourceEditor.getTextViewer().getSelectedRange();
+				sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x, endPos, "");
 				selection = sourceSelectionBuilder.getSelection();
 				atLeastOneCharIsDeleted = true;
 				break;
@@ -721,12 +721,12 @@ public class VpeVisualKeyHandler {
 				if(focusNode.getNodeType() == Node.TEXT_NODE){
 					IndexedRegion region = (IndexedRegion)focusNode;
 					try {
-						String sourceText = getStructuredTextViewer().getDocument().get(region.getStartOffset(), region.getEndOffset()-region.getStartOffset());
+						String sourceText = sourceEditor.getTextViewer().getDocument().get(region.getStartOffset(), region.getEndOffset()-region.getStartOffset());
 						String escString = TextUtil.isEcsToLeft(sourceText,offset);
 
 						if(escString != null){
-							Point range = getStructuredTextViewer().getSelectedRange();
-							getStructuredTextViewer().getTextWidget().replaceTextRange(range.x-escString.length(), escString.length(), "");
+							Point range = sourceEditor.getTextViewer().getSelectedRange();
+							sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x-escString.length(), escString.length(), "");
 
 							atLeastOneCharIsDeleted = true;
 							return selection;
@@ -744,8 +744,8 @@ public class VpeVisualKeyHandler {
 					}
 					endPos--;
 					if(endPos!=0){
-					Point range = getStructuredTextViewer().getSelectedRange();
-					getStructuredTextViewer().getTextWidget().replaceTextRange(range.x-endPos, endPos, "");
+					Point range = sourceEditor.getTextViewer().getSelectedRange();
+					sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x-endPos, endPos, "");
 					selection = sourceSelectionBuilder.getSelection();
 					atLeastOneCharIsDeleted = true;
 					}
@@ -921,7 +921,7 @@ public class VpeVisualKeyHandler {
 	private boolean isVisualNodeEmpty(Node node) {
 		try {
 			nsIDOMNode visualNode = domMapping.getVisualNode(node);
-			return getController().getVisualBuilder().isEmptyElement(visualNode);
+			return pageContext.getVisualBuilder().isEmptyElement(visualNode);
 		} catch (Exception e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
@@ -989,18 +989,14 @@ public class VpeVisualKeyHandler {
 		}
 	}
 	
-	private StructuredTextViewer getStructuredTextViewer() {
-		return sourceEditor.getTextViewer();
-	}
-	
 	private void setSourceFocus(int offset) {
-		getStructuredTextViewer().setSelectedRange(offset, 0);
-		getStructuredTextViewer().revealRange(offset, 0);
+		pageContext.getSourceBuilder().getStructuredTextViewer().setSelectedRange(offset, 0);
+		pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(offset, 0);
 	}
 
 	private void setSelectionRange(int startOffset, int endOffset) {
-		getStructuredTextViewer().setSelectedRange(endOffset, startOffset - endOffset);
-		getStructuredTextViewer().revealRange(endOffset, startOffset - endOffset);
+		pageContext.getSourceBuilder().getStructuredTextViewer().setSelectedRange(endOffset, startOffset - endOffset);
+		pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(endOffset, startOffset - endOffset);
 	}
 	
 	private void removeNode(Node focusNode) {
@@ -1020,7 +1016,7 @@ public class VpeVisualKeyHandler {
 		if (selection != null) {
 			Node sourceNode = selection.getFocusNode();
 			if (sourceNode != null) {
-				VpeDomMapping mapping = getController().getDomMapping();
+				VpeDomMapping mapping = pageContext.getDomMapping();
 				if (mapping != null) {
 					nsIDOMNode visualNode = mapping.getVisualNode(sourceNode);
 					if (visualNode != null) {
@@ -1041,11 +1037,11 @@ public class VpeVisualKeyHandler {
 						isEditable = true;
 					}
 					if (isEditable) {
-						start = getStructuredTextViewer().getSelectedRange().x;
+						start = sourceEditor.getTextViewer().getSelectedRange().x;
 					}
 				}
 			}
-		} else if (getController().getSourceBuilder().isEmptyDocument()) {
+		} else if (pageContext.getSourceBuilder().isEmptyDocument()) {
 			isEditable = true;
 			start = 0;
 		}
@@ -1057,9 +1053,9 @@ public class VpeVisualKeyHandler {
 			if(TextUtil.containsKey(s[0])){
 				str = TextUtil.getValue(s[0]);
 			}
-			getStructuredTextViewer().getTextWidget().replaceTextRange(start, 0, str);
-			getStructuredTextViewer().setSelectedRange(start + str.length(), 0);
-			getStructuredTextViewer().revealRange(start + str.length(), 0);
+			sourceEditor.getTextViewer().getTextWidget().replaceTextRange(start, 0, str);
+			pageContext.getSourceBuilder().getStructuredTextViewer().setSelectedRange(start + str.length(), 0);
+			pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(start + str.length(), 0);
 			return true;
 		}
 		return false;
@@ -1098,7 +1094,7 @@ public class VpeVisualKeyHandler {
 						}
 						if (!handled && focusNode.getParentNode().getNodeType() == Node.DOCUMENT_NODE) {
 							if (focusNode.getNodeType() == Node.TEXT_NODE) {
-								Point range = getStructuredTextViewer().getSelectedRange();
+								Point range = sourceEditor.getTextViewer().getSelectedRange();
 								Node p1 = focusNode.getOwnerDocument().createElement(HTML.TAG_P);
 								Node p2 = focusNode.getOwnerDocument().createElement(HTML.TAG_P);
 								Text newNode = ((Text)focusNode).splitText(getSourceNodeOffset(focusNode, range.x));
@@ -1108,7 +1104,7 @@ public class VpeVisualKeyHandler {
 								newNode = (Text)newNode.getParentNode().removeChild(newNode);
 								p1.appendChild(focusNode);
 								p2.appendChild(newNode);
-								setCursor(newNode);
+								setCursor(pageContext, newNode);
 							}
 						}
 					} else if (focusNode instanceof Comment) {
@@ -1169,7 +1165,7 @@ public class VpeVisualKeyHandler {
 				if (!handled) {
 					if (focusNode.getNodeType() == Node.TEXT_NODE) {
 						if (focusNode.getParentNode().getNodeType() == Node.DOCUMENT_NODE) {
-							Point range = getStructuredTextViewer().getSelectedRange();
+							Point range = sourceEditor.getTextViewer().getSelectedRange();
 							Node p1 = focusNode.getOwnerDocument().createElement("p");
 							Node p2 = focusNode.getOwnerDocument().createElement("p");
 							Text newNode = ((Text)focusNode).splitText(getSourceNodeOffset(focusNode, range.x));
@@ -1179,7 +1175,7 @@ public class VpeVisualKeyHandler {
 							newNode = (Text)newNode.getParentNode().removeChild(newNode);
 							p1.appendChild(focusNode);
 							p2.appendChild(newNode);
-							setCursor(newNode);
+							setCursor(pageContext, newNode);
 							
 							int p1Start = ((IndexedRegion)p1).getStartOffset();
 							int p2End = ((IndexedRegion)p2).getEndOffset();
@@ -1201,7 +1197,7 @@ public class VpeVisualKeyHandler {
 							Text newNode1 = (Text)focusNode.getParentNode().insertBefore(focusNode.getOwnerDocument().createTextNode("\r\n" + getLinePrefix(n1Start + focusOffset) + newNode.getData()), newNode);
 							focusNode.getParentNode().removeChild(newNode);
 							newNode = newNode1;
-							setCursor(newNode);
+							setCursor(pageContext, newNode);
 							int n2End = ((IndexedRegion)newNode).getEndOffset();
 							region = new Region(n1Start, n2End - n1Start);
 						}
@@ -1219,10 +1215,10 @@ public class VpeVisualKeyHandler {
 			}
 			
 			try {
-				StructuredTextViewer viewer = getStructuredTextViewer();
+				StructuredTextViewer viewer = sourceEditor.getTextViewer();
 				if (region != null){
 					if (sourceEditor instanceof ITextFormatter) {
-						((ITextFormatter)sourceEditor).formatTextRegion(viewer.getDocument(), region);
+						((ITextFormatter)sourceEditor).formatTextRegion(sourceEditor.getTextViewer().getDocument(), region);
 					}						
 				}
 			} catch (Exception x) {
@@ -1235,7 +1231,7 @@ public class VpeVisualKeyHandler {
 
 	private String getLinePrefix(int offset) {
 		try {
-			final IDocument document = getStructuredTextViewer().getDocument();
+			final IDocument document = sourceEditor.getTextViewer().getDocument();
 			final int linePrefixBeginning = document.getLineInformationOfOffset(offset).getOffset();
 			String linePrefix = document.get(linePrefixBeginning, offset - linePrefixBeginning);
 			int linePrefixLength = 0;
@@ -1323,14 +1319,14 @@ public class VpeVisualKeyHandler {
 		return 0;
 	 }
 
-	private void setCursor(Node node) {
+	private void setCursor(VpePageContext pageContext, Node node) {
 		int nodeOffset = ((IndexedRegion)node).getStartOffset();
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
 			ElementImpl element = (ElementImpl)node;
 			nodeOffset = element.getStartEndOffset();
 		}
-		getStructuredTextViewer().setSelectedRange(nodeOffset, 0);
-		getStructuredTextViewer().revealRange(nodeOffset, 0);
+		pageContext.getSourceBuilder().getStructuredTextViewer().setSelectedRange(nodeOffset, 0);
+		pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(nodeOffset, 0);
 	}
 	
 	private boolean moveForward() {
@@ -1340,8 +1336,8 @@ public class VpeVisualKeyHandler {
 			Node node = getNextNode(selection.getStartNode());
 			if (node != null) {
 				int nodeOffset = ((IndexedRegion)node).getStartOffset();
-				getStructuredTextViewer().setSelectedRange(nodeOffset, 0);
-				getStructuredTextViewer().revealRange(nodeOffset, 0);
+				pageContext.getSourceBuilder().getStructuredTextViewer().setSelectedRange(nodeOffset, 0);
+				pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(nodeOffset, 0);
 				return true;
 			}
 		}
@@ -1480,8 +1476,8 @@ public class VpeVisualKeyHandler {
 			Node node = getPrevNode(selection.getStartNode());
 			if (node != null) {
 				int nodeOffset = ((IndexedRegion)node).getStartOffset();
-				getStructuredTextViewer().setSelectedRange(nodeOffset, 0);
-				getStructuredTextViewer().revealRange(nodeOffset, 0);
+				pageContext.getSourceBuilder().getStructuredTextViewer().setSelectedRange(nodeOffset, 0);
+				pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(nodeOffset, 0);
 				return true;
 			}
 		}
@@ -1804,18 +1800,18 @@ public class VpeVisualKeyHandler {
 			}
 			
 		}	
-		return nearestElement;
+	return nearestElement;
 	}
 
-	private VpeController getController() {
-		return pageContext.getEditPart().getController();
-	}
+
 	
 	private VpeSelectionBuilder getSelectionBuilder() {
-		return getController().getSelectionBuilder();
+
+		return	pageContext.getEditPart().getController().getSelectionBuilder();
 	}
 	
-	private nsIDOMElement getSelectedNode() {
-		return getController().getXulRunnerEditor().getLastSelectedElement();
+	private  nsIDOMElement getSelectedNode() {
+		
+		return	pageContext.getEditPart().getController().getXulRunnerEditor().getLastSelectedElement();
 	}
 }

@@ -20,15 +20,22 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 
 public class VpeDomBuilder {
 	protected VpeDomMapping domMapping;
+	
+	protected VpeTemplateManager templateManager;
 	private INodeAdapter sorceAdapter;
 
-	public VpeDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter) {
+	public VpeDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, VpeTemplateManager templateManager) {
 		this.domMapping = domMapping;
 		this.sorceAdapter = sorceAdapter;
+		this.templateManager = templateManager;
 	}
 	
 	public VpeDomMapping getDomMapping ()  {
 		return domMapping;
+	}
+	
+	public VpeTemplateManager getTemplateManager ()  {
+		return templateManager;
 	}
 
 	public void registerNodes(VpeNodeMapping nodeMapping) {		

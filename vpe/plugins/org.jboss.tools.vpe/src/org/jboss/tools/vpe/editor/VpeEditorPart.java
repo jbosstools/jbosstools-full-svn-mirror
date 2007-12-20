@@ -66,11 +66,15 @@ import org.jboss.tools.vpe.selbar.SelectionBar;
 public class VpeEditorPart extends EditorPart implements ITextEditor,
 		ITextEditorExtension, IReusableEditor, IVisualEditor {
 	private SashForm container;
+	private StructuredTextEditor sourceEditor = null;
+	private MozillaEditor visualEditor;
 	private IEditorPart activeEditor;
 	private XModelTreeListener listener;
 	XModelObject optionsObject;
 	private SelectionBar selectionBar = new SelectionBar();
 	private ActivationListener activationListener = new ActivationListener();
+	private int visualMode = 0;
+	private EditorPart multiPageEditor;
 	private static final QualifiedName SPLITTER_POSITION_KEY1 = new QualifiedName(
 			"", "splitter_position1");
 	private static final QualifiedName SPLITTER_POSITION_KEY2 = new QualifiedName(
@@ -80,26 +84,15 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 	private int controlCount = 0;
 
-	// parent editor
-	private EditorPart multiPageEditor;
-
-	// 4 tabs - VISUALSOURCE_MODE, VISUAL_MODE, SOURCE_MODE, PREVIEW_MODE
-	private int visualMode = 0;
 	/** default web-browser */
-	// visible in Preview tab
 	private MozillaPreview previewWebBrowser = null;
-	// visible in Visual/Source and in Visual tabs
-	private MozillaEditor visualEditor = null;
-	// visible in Visual/Source and in Source tabs - created in anycase active tab
-	private StructuredTextEditor sourceEditor = null;
 
 	/** preview content */
-	// preview
 	private Composite previewContent = null;
-	// visual
-	private Composite visualContent = null;
-	// source
-	private Composite sourceContent = null;
+
+	public StructuredTextEditor getSourceEditor() {
+		return sourceEditor;
+	}
 
 	// returns JSPMultipageEditor for closing by ctrl+F4 and ctrl+shift+F4 keys
 	public EditorPart getParentEditor() {
@@ -230,7 +223,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	}
 
 	public IAction getAction(String actionID) {
-		return getSourceEditor().getAction(actionID);
+		return sourceEditor.getAction(actionID);
 	}
 
 	public VpeEditorPart() {
@@ -257,7 +250,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 	public void setInput(IEditorInput input) {
 		super.setInput(input);
-		if (null != visualEditor && visualEditor.getEditorInput() != null
+		if (visualEditor != null && visualEditor.getEditorInput() != null
 				&& visualEditor.getEditorInput() != getEditorInput()) {
 			visualEditor.setInput(input);
 		}
@@ -329,65 +322,80 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		}
 	}
 
-	protected void setVisualMode(String showSelBar, 
-		boolean flagSC, boolean flagVC, boolean flagPC) {
-
-		if (null != selectionBar) {
-			if (flagPC) {
-				getSourceEditor();
-			}
-			selectionBar.showBar(showSelBar);
-		}
-		if (null != sourceContent) {
-			sourceContent.setVisible(flagSC);
-			//Added by Max Areshkau
-			//was fixed bug(border which drawed by iflasher doesn't hide on MACOS when we swith
-			// to souce view)
-			//if(Platform.getOS().equals(Platform.OS_MACOSX)&&controller!=null) {
-			//	getVE().getController().visualRefresh();
-			//}
-		}
-		if (null != visualContent) {
-			if (flagVC) {
-				getVE();
-			}
-			visualContent.setVisible(flagVC);
-		}
-		if (null != previewContent) {
-			if (flagPC) {
-				getWB();
-				getWB().rebuildDom();
-			}
-			previewContent.setVisible(flagPC);
-		}
-	}
+	Composite sourceContent = null;
+	Composite visualContent = null;
 
 	public void setVisualMode(int type) {
-		String showSelectionBar = VpePreference.SHOW_SELECTION_TAG_BAR.getValue();
+		String showSelectionBar = VpePreference.SHOW_SELECTION_TAG_BAR
+				.getValue();
 		switch (type) {
 		case VISUALSOURCE_MODE:
-			setVisualMode(showSelectionBar, true, true, false);
+			selectionBar.showBar(showSelectionBar);
+			if (sourceContent != null)
+				sourceContent.setVisible(true);
+			if (visualContent != null)
+				visualContent.setVisible(true);
+			if (previewContent != null) {
+				previewContent.setVisible(false);
+			}
 			break;
 
 		case VISUAL_MODE:
-			setVisualMode(showSelectionBar, false, true, false);
+			selectionBar.showBar(showSelectionBar);
+			if (sourceContent != null)
+				sourceContent.setVisible(false);
+			if (visualContent != null)
+				visualContent.setVisible(true);
+			if (previewContent != null) {
+				previewContent.setVisible(false);
+			}
 			break;
 
 		case SOURCE_MODE:
-			setVisualMode(showSelectionBar, true, false, false);
+			selectionBar.showBar(showSelectionBar);
+			if (sourceContent != null) {
+				sourceContent.setVisible(true);
+				
+				//Added by Max Areshkau
+				//was fixed bug(border which drawed by iflasher doesn't hide on MACOS when we swith
+				// to souce view)
+//				if(Platform.getOS().equals(Platform.OS_MACOSX)&&controller!=null) {
+//					
+//				visualEditor.getController().visualRefresh();
+//				}
+			}
+			if (visualContent != null)
+				visualContent.setVisible(false);
+			if (previewContent != null) {
+				previewContent.setVisible(false);
+			}
 			break;
 
 		case PREVIEW_MODE:
-			setVisualMode("no", false, false, true);
+			if (selectionBar != null) {
+				selectionBar.showBar("no");
+			}
+			if (sourceContent != null) {
+				sourceContent.setVisible(false);
+			}
+
+			if (visualContent != null) {
+				visualContent.setVisible(false);
+			}
+
+			if (previewContent != null) {
+				previewWebBrowser.rebuildDom();
+				previewContent.setVisible(true);
+			}
 			break;
 		}
 		container.layout();
 		if (visualMode == SOURCE_MODE && type != SOURCE_MODE) {
 			visualMode = type;
-			if (getVE().getController() != null) {
-				getVE().getController().visualRefresh();
-				if (type != PREVIEW_MODE) {
-					getVE().getController().sourceSelectionChanged();
+			if (visualEditor.getController() != null) {
+				visualEditor.getController().visualRefresh();
+				if(type!=PREVIEW_MODE) {
+				visualEditor.getController().sourceSelectionChanged();
 				}
 			}
 		}
@@ -400,10 +408,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 	public void createPartControl(Composite parent) {
 		controlCount++;
-		if (controlCount > 1) {
+		if (controlCount > 1)
 			return;
-		}
 		// //////////////////////////////////////////////////////////////
+
 		Composite cmpEdTl = new Composite(parent, SWT.NONE);
 		GridLayout layoutEdTl = new GridLayout(1, false);
 		layoutEdTl.verticalSpacing = 0;
@@ -425,21 +433,30 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		cmpEd.setLayout(layoutEd);
 		cmpEd.setLayoutData(new GridData(GridData.FILL_BOTH));
 		// /////////////////////////////////////////////////////////////////
-		
 		container = new SashForm(cmpEd, SWT.VERTICAL);
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
+		sourceContent = new Composite(container, SWT.NONE);
+		sourceContent.setLayout(new FillLayout());
+		visualContent = new Composite(container, SWT.NONE);
+		visualContent.setLayout(new FillLayout());
+
+		// Create a preview content
+		previewContent = new Composite(container, SWT.NONE);
+		previewContent.setLayout(new FillLayout());
+
 		// ////////////////////////////////////////////////////
+
 		selectionBar.createToolBarComposite(cmpEdTl, true);
 		// ///////////////////////////////////////////////////
-		
-		getSC();
-		getVC();
-		getPC();
+		if (sourceEditor == null)
+			sourceEditor = new StructuredTextEditor() {
+				public void safelySanityCheckState(IEditorInput input) {
+					super.safelySanityCheckState(input);
+				}
+			};
 		int[] weights = loadSplitterPosition();
-		if (weights != null) {
+		if (weights != null)
 			container.setWeights(weights);
-		}
 		container.addWeightsChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent event) {
 				saveSplitterPosition(container.getWeights());
@@ -454,11 +471,106 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				container.layout();
 			}
 		});
-		activeEditor = setupSourceEditor();
+		visualEditor = new MozillaEditor();
 		try {
+			visualEditor.init(getEditorSite(), getEditorInput());
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		}
+
+		previewWebBrowser = new MozillaPreview(this, sourceEditor);
+		try {
+			previewWebBrowser.init(getEditorSite(), getEditorInput());
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		}
+
+		try {
+			sourceEditor.addPropertyListener(new IPropertyListener() {
+				public void propertyChanged(Object source, int propId) {
+					if (propId == IWorkbenchPartConstants.PROP_TITLE) {
+						VpeEditorPart.this.setPartName(sourceEditor.getTitle());
+					}
+					VpeEditorPart.this.firePropertyChange(propId);
+				}
+			});
+			sourceEditor.init(getEditorSite(), getEditorInput());
+
+			if (sourceContent != null) {
+				sourceEditor.createPartControl(sourceContent);
+			}
+			if (visualEditor != null) {
+				visualEditor
+						.setEditorLoadWindowListener(new EditorLoadWindowListener() {
+							public void load() {
+								visualEditor.setEditorLoadWindowListener(null);
+								visualEditor.setController(new VpeController(
+										VpeEditorPart.this));
+								selectionBar.setVpeController(visualEditor.getController());
+								visualEditor.getController().setSelectionBarController(selectionBar);
+								try {
+									visualEditor.getController().init(sourceEditor, visualEditor);
+								} catch (Exception e) {
+									VpePlugin.reportProblem(e);
+								}
+							}
+						});
+				visualEditor.createPartControl(visualContent);
+			}
+
+			if (previewWebBrowser != null) {
+				previewWebBrowser
+						.setEditorLoadWindowListener(new EditorLoadWindowListener() {
+							public void load() {
+								previewWebBrowser
+										.setEditorLoadWindowListener(null);
+								previewWebBrowser.buildDom();
+							}
+						});
+				previewWebBrowser.createPartControl(previewContent);
+			}
+
+			activeEditor = sourceEditor;
+
+			sourceContent.addListener(SWT.Activate, new Listener() {
+				public void handleEvent(Event event) {
+					if (event.type == SWT.Activate) {
+						if (activeEditor != sourceEditor) {
+							activeEditor = sourceEditor;
+							setFocus();
+						}
+					}
+				}
+			});
+
+			visualContent.addListener(SWT.Activate, new Listener() {
+				public void handleEvent(Event event) {
+					if (event.type == SWT.Activate) {
+						if (visualEditor != null
+								&& activeEditor != visualEditor) {
+							activeEditor = visualEditor;
+							setFocus();
+						}
+					}
+				}
+			});
+
+			previewContent.addListener(SWT.Activate, new Listener() {
+				public void handleEvent(Event event) {
+					if (event.type == SWT.Activate) {
+						if (previewWebBrowser != null
+								&& activeEditor != previewWebBrowser) {
+							activeEditor = previewWebBrowser;
+							setFocus();
+						}
+					}
+				}
+			});
+
 			IWorkbenchWindow window = getSite().getWorkbenchWindow();
 			window.getPartService().addPartListener(activationListener);
 			window.getShell().addShellListener(activationListener);
+
 		} catch (Exception e) {
 			VpePlugin.reportProblem(e);
 		}
@@ -572,6 +684,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				fIsHandlingActivation = true;
 				try {
 					if (sourceEditor != null) {
+						if (visualEditor.getController() != null) {
+							visualEditor.getController().refreshTemplates();
+						}
 						sourceEditor.safelySanityCheckState(getEditorInput());
 					}
 				} finally {
@@ -582,146 +697,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	}
 
 	public VpeController getController() {
-		return getVE().getController();
-	}
-
-	public StructuredTextEditor getSourceEditor() {
-		return sourceEditor;
-	}
-	
-	public Composite getSC() {
-		if (null != sourceContent) {
-			return sourceContent;
-		}
-		sourceContent = new Composite(container, SWT.NONE);
-		sourceContent.setLayout(new FillLayout());
-		return sourceContent;
-	}
-	
-	public StructuredTextEditor setupSourceEditor() {
-		if (null == sourceEditor) {
-			sourceEditor = new StructuredTextEditor() {
-				public void safelySanityCheckState(IEditorInput input) {
-					super.safelySanityCheckState(input);
-				}
-			};
-		}
-		sourceEditor.addPropertyListener(new IPropertyListener() {
-			public void propertyChanged(Object source, int propId) {
-				if (propId == IWorkbenchPartConstants.PROP_TITLE) {
-					VpeEditorPart.this.setPartName(sourceEditor.getTitle());
-				}
-				VpeEditorPart.this.firePropertyChange(propId);
-			}
-		});
-		try {
-			sourceEditor.init(getEditorSite(), getEditorInput());
-		} catch (PartInitException e) {
-			VpePlugin.reportProblem(e);
-		}
-		sourceEditor.createPartControl(getSC());
-		getSC().addListener(SWT.Activate, new Listener() {
-			public void handleEvent(Event event) {
-				if (event.type == SWT.Activate) {
-					if (activeEditor != sourceEditor) {
-						activeEditor = sourceEditor;
-						setFocus();
-					}
-				}
-			}
-		});
-		return sourceEditor;
-	}
-
-	public Composite getVC() {
-		if (null != visualContent) {
-			return visualContent;
-		}
-		visualContent = new Composite(container, SWT.NONE);
-		visualContent.setLayout(new FillLayout());
-		return visualContent;
-	}
-	
-	public MozillaEditor getVE() {
-		if (null != visualEditor) {
-			return visualEditor;
-		}
-		visualEditor = new MozillaEditor();
-		try {
-			visualEditor.init(getEditorSite(), getEditorInput());
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
-		}
-		if (null == visualEditor) {
-			return visualEditor;
-		}
-		visualEditor.setEditorLoadWindowListener(new EditorLoadWindowListener() {
-			public void load() {
-				visualEditor.setEditorLoadWindowListener(null);
-				visualEditor.setController(new VpeController(VpeEditorPart.this));
-				selectionBar.setVpeController(visualEditor.getController());
-				visualEditor.getController().setSelectionBarController(selectionBar);
-				try {
-					visualEditor.getController().init(sourceEditor, visualEditor);
-				} catch (Exception e) {
-					VpePlugin.reportProblem(e);
-				}
-			}
-		});
-		visualEditor.createPartControl(getVC());
-		getVC().addListener(SWT.Activate, new Listener() {
-			public void handleEvent(Event event) {
-				if (event.type == SWT.Activate) {
-					if (null != visualEditor && activeEditor != visualEditor) {
-						activeEditor = visualEditor;
-						setFocus();
-					}
-				}
-			}
-		});
-		return visualEditor;
-	}
-
-	public Composite getPC() {
-		if (null != previewContent) {
-			return previewContent;
-		}
-		previewContent = new Composite(container, SWT.NONE);
-		previewContent.setLayout(new FillLayout());
-		return previewContent;
-	}
-
-	public MozillaPreview getWB() {
-		if (null != previewWebBrowser) {
-			return previewWebBrowser;
-		}
-		previewWebBrowser = new MozillaPreview(this, sourceEditor);
-		try {
-			previewWebBrowser.init(getEditorSite(), getEditorInput());
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
-		}
-		if (null == previewWebBrowser) {
-			return previewWebBrowser;
-		}
-		previewWebBrowser.setEditorLoadWindowListener(new EditorLoadWindowListener() {
-			public void load() {
-				previewWebBrowser.setEditorLoadWindowListener(null);
-				previewWebBrowser.buildDom();
-			}
-		});
-		previewWebBrowser.createPartControl(getPC());
-		getPC().addListener(SWT.Activate, new Listener() {
-			public void handleEvent(Event event) {
-				if (event.type == SWT.Activate) {
-					if (null != previewWebBrowser && activeEditor != previewWebBrowser) {
-						activeEditor = previewWebBrowser;
-						setFocus();
-					}
-				}
-			}
-		});
-		return previewWebBrowser;
+		return visualEditor.getController();
 	}
 
 }

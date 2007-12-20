@@ -32,7 +32,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import org.jboss.tools.common.xml.XMLUtilities;
-import org.jboss.tools.jst.jsp.editor.IVisualContext;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 
@@ -793,9 +792,5 @@ public class VpeTemplateManager {
 		VpeTemplate defTemplate = new VpeHtmlTemplate();
 		defTemplate.init(createDefTemplateElement(), true);
 		return defTemplate;
-	}
-	
-	public void initVisualContext(IVisualContext visualContext) {
-		visualContext.setTemplateTaglibs(templateTaglibs);
 	}
 }

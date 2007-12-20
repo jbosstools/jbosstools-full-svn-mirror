@@ -50,8 +50,8 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 	 * @param visualEditor
 	 * @param pageContext
 	 */
-	public VpePreviewDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, MozillaEditor visualEditor, VpePageContext pageContext) {
-		super(domMapping, sorceAdapter, visualEditor, pageContext);
+	public VpePreviewDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, VpeTemplateManager templateManager, MozillaEditor visualEditor, VpePageContext pageContext) {
+		super(domMapping, sorceAdapter, templateManager, visualEditor, pageContext);
 
 	}
 	
@@ -66,14 +66,9 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 		boolean registerFlag = isCurrentMainDocument();
 		switch (sourceNode.getNodeType()) {
 		case Node.ELEMENT_NODE:
-		    /**/
-			// vitali TODO: this is wrong temporary way - get rid of it 
-			//-
 			Map xmlnsMap = createXmlns((Element)sourceNode);
-			/**/
 			Set ifDependencySet = new HashSet();
 			getPageContext().setCurrentVisualNode(visualOldContainer);
-			VpeTemplateManager templateManager = VpeTemplateManager.getInstance();
 			VpeTemplate template = templateManager.getTemplate(getPageContext(), (Element)sourceNode, ifDependencySet);
 			VpeCreationData creationData;
 			

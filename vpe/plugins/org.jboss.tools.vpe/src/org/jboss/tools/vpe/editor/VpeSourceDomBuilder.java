@@ -28,7 +28,6 @@ import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
-import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
@@ -37,7 +36,6 @@ import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.TextUtil;
-import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
@@ -56,8 +54,8 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 	private VpePageContext pageContext;
 	private StructuredTextEditor sourceEditor;
 	
-	public VpeSourceDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, StructuredTextEditor sourceEditor, VpePageContext pageContext) {
-		super(domMapping, sorceAdapter);
+	public VpeSourceDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, VpeTemplateManager templateManager, StructuredTextEditor sourceEditor, VpePageContext pageContext) {
+		super(domMapping, sorceAdapter, templateManager);
 		this.sourceEditor = sourceEditor;
 		structuredTextViewer = sourceEditor.getTextViewer();
 		outline = (IContentOutlinePage)sourceEditor.getAdapter(IContentOutlinePage.class);
@@ -164,10 +162,6 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 	}
 	
 	void setSelection(Node sourceNode, int offset, int length, boolean innerFlag) {
-		if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-			System.out.println("VpeSourceDomBuilder.setSelection: offset " + offset + 
-					" length " + length + " innerFlag " + innerFlag);
-		}
 		if (sourceNode != null) {
 			int start = ((IndexedRegion)sourceNode).getStartOffset() + offset;
 			if (innerFlag && offset == 0 && sourceNode instanceof ElementImpl) {
@@ -225,7 +219,6 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 				Set ifDependencySet = new HashSet();
 				//VpeVisualDomBuilder visualBuildet = 
 					pageContext.getVisualBuilder();
-				VpeTemplateManager templateManager = VpeTemplateManager.getInstance();
 				VpeTemplate template = templateManager.getTemplate(pageContext, sourceNewElement, ifDependencySet);
 				registerNodes(new VpeElementMapping(sourceNewElement, (nsIDOMElement)visualNewNode, null, template, ifDependencySet, null));
 				addChildren(visualNewNode, sourceNewElement);
@@ -386,7 +379,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		return structuredTextViewer;
 	}
 	
-	public Document getSourceDocument() {
+	Document getSourceDocument() {
 		return sourceDocument;
 	}
 }
