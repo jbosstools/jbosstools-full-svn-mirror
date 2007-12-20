@@ -28,7 +28,7 @@ import org.w3c.dom.Node;
 public class HtmlBodyTemplate extends VpeAbstractTemplate {
 
 	private nsIDOMElement bodyOld;
-	private static String STYLE_FOR_DIV = "width: 100%; height: 100%";
+	private static String STYLE_FOR_DIV = "";
 	private static String ID = "id";
 
 	/**
