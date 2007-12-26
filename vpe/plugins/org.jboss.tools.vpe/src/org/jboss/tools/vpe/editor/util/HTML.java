@@ -54,4 +54,8 @@ public final class HTML {
 	public static final String ATTR_TYPE	="TYPE";
 	public static final String ATTR_TEXT	="TEXT";
 	public static final String ATTR_CLASS	="CLASS";
+	public static final String ATTR_TITLE	="TITLE";
+	public static final String ATTR_NAME	="NAME";
+	public static final String ATTR_VALUE	="VALUE";
+	public static final String ATTR_STYLE	="STYLE";
 }
