@@ -671,43 +671,7 @@
     </vpe:tag>
 
     <vpe:tag name="h:selectOneListbox" case-sensitive="yes">
-		<vpe:template children="yes" modify="yes">
-			<select size="{@size}" style="{@style}" class="{@styleClass}" title="{tagstring()}"/>
-			<vpe:dnd>
-				<vpe:drag start-enable="yes"/>
-				<vpe:drop container="yes">
-						<vpe:container-child tag-name="selectItem"/>
-						<vpe:container-child tag-name="selectItems"/>
-				</vpe:drop>
-			</vpe:dnd>
-			<vpe:textFormating>
-				<vpe:format type="UnderlineFormat">
-					<vpe:formatAttribute type="style"/>
-				</vpe:format>
-				<vpe:format type="BoldFormat">
-					<vpe:formatAttribute type="style"/>
-					</vpe:format>
-				<vpe:format type="ItalicFormat">
-					<vpe:formatAttribute type="style"/>
-				</vpe:format>
-				<vpe:format type="FontNameFormat">
-					<vpe:formatAttribute type="style"/>
-				</vpe:format>
-				<vpe:format type="FontSizeFormat">
-					<vpe:formatAttribute type="style"/>
-				</vpe:format>
-				<vpe:format type="BackgroundColorFormat">
-					<vpe:formatAttribute type="style"/>
-				</vpe:format>
-				<vpe:format type="ForegroundColorFormat">
-					<vpe:formatAttribute type="style"/>
-				</vpe:format>
-			</vpe:textFormating>
-		</vpe:template>
-    </vpe:tag>
-
-    <vpe:tag name="h:selectManyListbox" case-sensitive="yes">
-    	<vpe:if test="attrpresent('size')">
+		<vpe:if test="attrpresent('size')">
     		<vpe:template children="yes" modify="yes">
     			<select size="{@size}" style="{@style}"
     				class="{@styleClass}" title="{tagstring()}" />
@@ -746,6 +710,79 @@
     	<vpe:template children="yes" modify="yes">
     		<select size="3" style="{@style}" class="{@styleClass}"
     			title="{tagstring()}" />
+    		<vpe:dnd>
+    			<vpe:drag start-enable="yes" />
+    			<vpe:drop container="yes">
+    				<vpe:container-child tag-name="selectItem" />
+    				<vpe:container-child tag-name="selectItems" />
+    			</vpe:drop>
+    		</vpe:dnd>
+    		<vpe:textFormating>
+    			<vpe:format type="UnderlineFormat">
+    				<vpe:formatAttribute type="style" />
+    			</vpe:format>
+    			<vpe:format type="BoldFormat">
+    				<vpe:formatAttribute type="style" />
+    			</vpe:format>
+    			<vpe:format type="ItalicFormat">
+    				<vpe:formatAttribute type="style" />
+    			</vpe:format>
+    			<vpe:format type="FontNameFormat">
+    				<vpe:formatAttribute type="style" />
+    			</vpe:format>
+    			<vpe:format type="FontSizeFormat">
+    				<vpe:formatAttribute type="style" />
+    			</vpe:format>
+    			<vpe:format type="BackgroundColorFormat">
+    				<vpe:formatAttribute type="style" />
+    			</vpe:format>
+    			<vpe:format type="ForegroundColorFormat">
+    				<vpe:formatAttribute type="style" />
+    			</vpe:format>
+    		</vpe:textFormating>
+    	</vpe:template>
+    </vpe:tag>
+
+    <vpe:tag name="h:selectManyListbox" case-sensitive="yes">
+    	<vpe:if test="attrpresent('size')">
+    		<vpe:template children="yes" modify="yes">
+    			<select size="{@size}" style="{@style}"
+    				class="{@styleClass}" title="{tagstring()}" multiple="multiple" />
+    			<vpe:dnd>
+    				<vpe:drag start-enable="yes" />
+    				<vpe:drop container="yes">
+    					<vpe:container-child tag-name="selectItem" />
+    					<vpe:container-child tag-name="selectItems" />
+    				</vpe:drop>
+    			</vpe:dnd>
+    			<vpe:textFormating>
+    				<vpe:format type="UnderlineFormat">
+    					<vpe:formatAttribute type="style" />
+    				</vpe:format>
+    				<vpe:format type="BoldFormat">
+    					<vpe:formatAttribute type="style" />
+    				</vpe:format>
+    				<vpe:format type="ItalicFormat">
+    					<vpe:formatAttribute type="style" />
+    				</vpe:format>
+    				<vpe:format type="FontNameFormat">
+    					<vpe:formatAttribute type="style" />
+    				</vpe:format>
+    				<vpe:format type="FontSizeFormat">
+    					<vpe:formatAttribute type="style" />
+    				</vpe:format>
+    				<vpe:format type="BackgroundColorFormat">
+    					<vpe:formatAttribute type="style" />
+    				</vpe:format>
+    				<vpe:format type="ForegroundColorFormat">
+    					<vpe:formatAttribute type="style" />
+    				</vpe:format>
+    			</vpe:textFormating>
+    		</vpe:template>
+    	</vpe:if>
+    	<vpe:template children="yes" modify="yes">
+    		<select size="3" style="{@style}" class="{@styleClass}"
+    			title="{tagstring()}" multiple="multiple"/>
     		<vpe:dnd>
     			<vpe:drag start-enable="yes" />
     			<vpe:drop container="yes">
@@ -821,7 +858,7 @@
 
     <vpe:tag name="h:selectManyMenu" case-sensitive="yes">
 		<vpe:template children="yes" modify="yes">
-			<select style="{@style}" class="{@styleClass}" title="{tagstring()}"/>
+			<select style="{@style}" multiple="multiple"  class="{@styleClass}" title="{tagstring()}" size="1"/>
 			<vpe:dnd>
 				<vpe:drag start-enable="yes"/>
 				<vpe:drop container="yes">
@@ -859,7 +896,7 @@
 		<vpe:if test="hasinparents('h:selectManyCheckbox')|hasinparents('x:selectManyCheckbox')|hasinparents('t:selectManyCheckbox')">
 			<vpe:template children="no" modify="yes">
 				<span title="{tagstring()}">
-					<input type="checkbox"/>
+					<input type="checkbox" />
 					<vpe:value expr="{jsfvalue(@itemLabel)}"/>
 				</span>
 				<vpe:dnd>
@@ -869,12 +906,8 @@
 			</vpe:template>
 		</vpe:if>
 		<vpe:if test="hasinparents('h:selectOneRadio')|hasinparents('x:selectOneRadio')">
-			<vpe:template children="no" modify="yes">
-				<span title="{tagstring()}">
-					<input type="radio"/>
-					<vpe:value expr="{jsfvalue(@itemLabel)}"/>
-				</span>
-				<vpe:breaker type="selectItem"/>
+			<vpe:template children="no" modify="yes" class="org.jboss.tools.vpe.editor.template.JsfRadioSelectItemTemplate">
+					
 			</vpe:template>
 		</vpe:if>
 		<vpe:if test="hasinparents('h:selectOneListbox')|
@@ -930,7 +963,7 @@
 
     <vpe:tag name="h:selectOneMenu" case-sensitive="yes">
 	    <vpe:template children="yes" modify="no">
-			<select>
+			<select  >
 			</select>
 			<vpe:dnd>
 				<vpe:drag start-enable="yes"/>
