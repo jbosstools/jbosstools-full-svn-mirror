@@ -315,7 +315,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 					//Added by Max Areshkau in scope of bug JBIDE-1209
 				} else if (sourceParent.getNodeType()==Node.TEXT_NODE) {
 					
-					setSelection(sourceParent, 1, 0);
+					setSelection(sourceParent, offset, length);
 				}
 			}
 		}
