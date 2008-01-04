@@ -671,45 +671,9 @@
     </vpe:tag>
 
     <vpe:tag name="h:selectOneListbox" case-sensitive="yes">
-		<vpe:if test="attrpresent('size')">
-    		<vpe:template children="yes" modify="yes">
-    			<select size="{@size}" style="{@style}"
-    				class="{@styleClass}" title="{tagstring()}" />
-    			<vpe:dnd>
-    				<vpe:drag start-enable="yes" />
-    				<vpe:drop container="yes">
-    					<vpe:container-child tag-name="selectItem" />
-    					<vpe:container-child tag-name="selectItems" />
-    				</vpe:drop>
-    			</vpe:dnd>
-    			<vpe:textFormating>
-    				<vpe:format type="UnderlineFormat">
-    					<vpe:formatAttribute type="style" />
-    				</vpe:format>
-    				<vpe:format type="BoldFormat">
-    					<vpe:formatAttribute type="style" />
-    				</vpe:format>
-    				<vpe:format type="ItalicFormat">
-    					<vpe:formatAttribute type="style" />
-    				</vpe:format>
-    				<vpe:format type="FontNameFormat">
-    					<vpe:formatAttribute type="style" />
-    				</vpe:format>
-    				<vpe:format type="FontSizeFormat">
-    					<vpe:formatAttribute type="style" />
-    				</vpe:format>
-    				<vpe:format type="BackgroundColorFormat">
-    					<vpe:formatAttribute type="style" />
-    				</vpe:format>
-    				<vpe:format type="ForegroundColorFormat">
-    					<vpe:formatAttribute type="style" />
-    				</vpe:format>
-    			</vpe:textFormating>
-    		</vpe:template>
-    	</vpe:if>
-    	<vpe:template children="yes" modify="yes">
-    		<select size="3" style="{@style}" class="{@styleClass}"
-    			title="{tagstring()}" />
+    	<vpe:template
+    		class="org.jboss.tools.vpe.editor.template.JsfSelectOneListbox"
+    		children="yes" modify="yes">
     		<vpe:dnd>
     			<vpe:drag start-enable="yes" />
     			<vpe:drop container="yes">
@@ -744,45 +708,8 @@
     </vpe:tag>
 
     <vpe:tag name="h:selectManyListbox" case-sensitive="yes">
-    	<vpe:if test="attrpresent('size')">
-    		<vpe:template children="yes" modify="yes">
-    			<select size="{@size}" style="{@style}"
-    				class="{@styleClass}" title="{tagstring()}" multiple="multiple" />
-    			<vpe:dnd>
-    				<vpe:drag start-enable="yes" />
-    				<vpe:drop container="yes">
-    					<vpe:container-child tag-name="selectItem" />
-    					<vpe:container-child tag-name="selectItems" />
-    				</vpe:drop>
-    			</vpe:dnd>
-    			<vpe:textFormating>
-    				<vpe:format type="UnderlineFormat">
-    					<vpe:formatAttribute type="style" />
-    				</vpe:format>
-    				<vpe:format type="BoldFormat">
-    					<vpe:formatAttribute type="style" />
-    				</vpe:format>
-    				<vpe:format type="ItalicFormat">
-    					<vpe:formatAttribute type="style" />
-    				</vpe:format>
-    				<vpe:format type="FontNameFormat">
-    					<vpe:formatAttribute type="style" />
-    				</vpe:format>
-    				<vpe:format type="FontSizeFormat">
-    					<vpe:formatAttribute type="style" />
-    				</vpe:format>
-    				<vpe:format type="BackgroundColorFormat">
-    					<vpe:formatAttribute type="style" />
-    				</vpe:format>
-    				<vpe:format type="ForegroundColorFormat">
-    					<vpe:formatAttribute type="style" />
-    				</vpe:format>
-    			</vpe:textFormating>
-    		</vpe:template>
-    	</vpe:if>
-    	<vpe:template children="yes" modify="yes">
-    		<select size="3" style="{@style}" class="{@styleClass}"
-    			title="{tagstring()}" multiple="multiple"/>
+    	<vpe:template children="yes" modify="yes"
+    		class="org.jboss.tools.vpe.editor.template.JsfSelectManyListbox">
     		<vpe:dnd>
     			<vpe:drag start-enable="yes" />
     			<vpe:drop container="yes">
