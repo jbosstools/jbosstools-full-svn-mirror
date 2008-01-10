@@ -25,7 +25,13 @@
     
 </target>
 		
-<target name="build" depends="compile"/>
+<target name="build" depends="compile">
+  <zip destfile="packaging-convert.zip" basedir=".." whenempty="fail">  	 
+	 <include name="packaging-convert/lib/*.jar"/>
+  	<include name="packaging-convert/*.jar"/>
+  	<include name="packaging-convert/README.TXT"/>
+	</zip>
+</target>
 	
 	<target name="convert" depends="build">
 		<property name="packaging-path" value="/home/marshall/Workspaces/jbosside/pojp/.packaging"/>
