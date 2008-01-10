@@ -161,4 +161,8 @@ public class HtmlComponentUtil {
 	 
 	 /** HTML_ATTR_VALIGN_MIDDLE_VALUE */
 	 public static final String HTML_ATTR_VALIGN_MIDDLE_VALUE = "middle";
+	 
+	 /** HTML_TYPE_ATTR_BUTTON_VALUE */
+	 public static final String HTML_TYPE_ATTR_BUTTON_VALUE = "button";
+	 
 }
