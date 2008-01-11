@@ -143,10 +143,6 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 				.createElement(HtmlComponentUtil.HTML_TAG_DIV);
 		buttonsDiv.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, "rich-ordering-list-button-layout");
 		
-		nsIDOMElement btnTopDiv = createButtonDiv(visualDocument,
-				(null == upControlLabel ? TOP_CONTROL_LABEL_DEFAULT
-						: upControlLabel), TOP_CONTROL_IMG, new Boolean(
-						showButtonLabels).booleanValue());
 		nsIDOMElement btnUpDiv = createButtonDiv(visualDocument,
 				(null == upControlLabel ? UP_CONTROL_LABEL_DEFAULT
 						: upControlLabel), UP_CONTROL_IMG, new Boolean(
@@ -155,15 +151,23 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 				(null == upControlLabel ? DOWN_CONTROL_LABEL_DEFAULT
 						: upControlLabel), DOWN_CONTROL_IMG, new Boolean(
 						showButtonLabels).booleanValue());
-		nsIDOMElement btnBottomDiv = createButtonDiv(visualDocument,
-				(null == upControlLabel ? BOTTOM_CONTROL_LABEL_DEFAULT
-						: upControlLabel), BOTTOM_CONTROL_IMG, new Boolean(
-						showButtonLabels).booleanValue());
 
-		buttonsDiv.appendChild(btnTopDiv);
+		if (fastOrderControlsVisible) {
+			nsIDOMElement btnTopDiv = createButtonDiv(visualDocument,
+					(null == upControlLabel ? TOP_CONTROL_LABEL_DEFAULT
+							: upControlLabel), TOP_CONTROL_IMG, new Boolean(
+									showButtonLabels).booleanValue());
+			nsIDOMElement btnBottomDiv = createButtonDiv(visualDocument,
+					(null == upControlLabel ? BOTTOM_CONTROL_LABEL_DEFAULT
+							: upControlLabel), BOTTOM_CONTROL_IMG, new Boolean(
+									showButtonLabels).booleanValue());
+			
+			buttonsDiv.appendChild(btnTopDiv);
+			buttonsDiv.appendChild(btnBottomDiv);
+		}
+
 		buttonsDiv.appendChild(btnUpDiv);
 		buttonsDiv.appendChild(btnDownDiv);
-		buttonsDiv.appendChild(btnBottomDiv);
 		
 		row2_TD2.setAttribute(HtmlComponentUtil.HTML_ALIGN_ATTR, "center");
 		row2_TD2.setAttribute(HtmlComponentUtil.HTML_ATTR_VALIGN, ("center"
@@ -354,54 +358,13 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 	 *            visual document
 	 * @param btnName
 	 *            the button label
-	 * @param imgPath
+	 * @param imgName
 	 *            path to the image
 	 * @param showButtonLabels
 	 *            show button label flag
 	 * 
 	 * @return the button
 	 */
-	private nsIDOMElement createButton(nsIDOMDocument visualDocument,
-			String btnName, String imgPath, boolean showButtonLabels) {
-		nsIDOMElement btn = visualDocument
-				.createElement(HtmlComponentUtil.HTML_TAG_BUTTON);
-		btn.setAttribute(HtmlComponentUtil.HTML_TYPE_ATTR,
-				HtmlComponentUtil.HTML_TYPE_ATTR_BUTTON_VALUE);
-
-		nsIDOMElement btnImg = visualDocument
-				.createElement(HtmlComponentUtil.HTML_TAG_IMG);
-
-		String path = RichFacesTemplatesActivator.getPluginResourcePath()
-				+ imgPath;
-		btnImg.setAttribute("src", "file://" + path);
-		if (showButtonLabels) {
-			nsIDOMElement table = visualDocument
-					.createElement(HtmlComponentUtil.HTML_TAG_TABLE);
-
-			nsIDOMElement row1 = visualDocument
-					.createElement(HtmlComponentUtil.HTML_TAG_TR);
-			nsIDOMElement row1_TD1 = visualDocument
-					.createElement(HtmlComponentUtil.HTML_TAG_TD);
-			nsIDOMElement row1_TD2 = visualDocument
-					.createElement(HtmlComponentUtil.HTML_TAG_TD);
-
-			row1_TD1.appendChild(btnImg);
-			row1_TD2.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR,
-					"dr-control-buttons");
-			row1_TD2.appendChild(visualDocument.createTextNode(btnName));
-
-			row1.appendChild(row1_TD1);
-			row1.appendChild(row1_TD2);
-			table.appendChild(row1);
-			btn.appendChild(table);
-
-		} else {
-			btn.appendChild(btnImg);
-		}
-
-		return btn;
-	}
-	
 	private nsIDOMElement createButtonDiv(nsIDOMDocument visualDocument,
 			String btnName, String imgName, boolean showButtonLabels) {
 		
@@ -432,8 +395,12 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 		div1.appendChild(div2);
 		div2.appendChild(a);
 		a.appendChild(div3);
+		
 		div3.appendChild(img);
-		div3.appendChild(visualDocument.createTextNode(btnName));
+		if (showButtonLabels) {
+			div3.appendChild(visualDocument.createTextNode(btnName));
+		}
+		
 		
 		return div1;
 	}
