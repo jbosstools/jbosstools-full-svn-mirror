@@ -46,6 +46,9 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 	private static final String DOWN_CONTROL_IMG = "orderingList/down.gif";
 	private static final String BOTTOM_CONTROL_IMG = "orderingList/bottom.gif";
 
+	private static final String BUTTON_BG = "orderingList/button_bg.gif";
+	private static final String HEADER_CELL_BG = "orderingList/header_cell_bg.gif";
+
 	private static final String LIST_WIDTH = "listWidth";
 	private static final String LIST_HEIGHT = "listHeight";
 
@@ -120,10 +123,10 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 		nsIDOMElement row1_TD1_DIV = visualDocument
 				.createElement(HtmlComponentUtil.HTML_TAG_DIV);
 		row1_TD1_DIV.setAttribute(HtmlComponentUtil.HTML_STYLE_ATTR,
-				STYLE_FOR_CAPTOION_LABEL 
-				+ "width: " + (listWidth == null ? DEFAULT_WIDTH : listWidth) + "px");
-		row1_TD1_DIV.appendChild(visualDocument
-				.createTextNode(captionLabel));
+				STYLE_FOR_CAPTOION_LABEL + "width: "
+						+ (listWidth == null ? DEFAULT_WIDTH : listWidth)
+						+ "px");
+		row1_TD1_DIV.appendChild(visualDocument.createTextNode(captionLabel));
 		row1_TD1.appendChild(row1_TD1_DIV);
 
 		// ---------------------row2------------------------
@@ -136,65 +139,37 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 		row2.appendChild(row2_TD2);
 
 		// ---------------------buttonsTable------------------------
-		nsIDOMElement buttonsTable = visualDocument
-				.createElement(HtmlComponentUtil.HTML_TAG_TABLE);
-
-		nsIDOMElement btnRow1 = visualDocument
-				.createElement(HtmlComponentUtil.HTML_TAG_TR);
-		nsIDOMElement btnRow1_TD = visualDocument
-				.createElement(HtmlComponentUtil.HTML_TAG_TD);
-		btnRow1.appendChild(btnRow1_TD);
-
-		nsIDOMElement btnRow2 = visualDocument
-				.createElement(HtmlComponentUtil.HTML_TAG_TR);
-		nsIDOMElement btnRow2_TD = visualDocument
-				.createElement(HtmlComponentUtil.HTML_TAG_TD);
-		btnRow2.appendChild(btnRow2_TD);
-
-		nsIDOMElement btnRow3 = visualDocument
-				.createElement(HtmlComponentUtil.HTML_TAG_TR);
-		nsIDOMElement btnRow3_TD = visualDocument
-				.createElement(HtmlComponentUtil.HTML_TAG_TD);
-		btnRow3.appendChild(btnRow3_TD);
-
-		nsIDOMElement btnRow4 = visualDocument
-				.createElement(HtmlComponentUtil.HTML_TAG_TR);
-		nsIDOMElement btnRow4_TD = visualDocument
-				.createElement(HtmlComponentUtil.HTML_TAG_TD);
-		btnRow4.appendChild(btnRow4_TD);
-
-		nsIDOMElement btnUp = createButton(visualDocument,
+		nsIDOMElement buttonsDiv = visualDocument
+				.createElement(HtmlComponentUtil.HTML_TAG_DIV);
+		buttonsDiv.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, "rich-ordering-list-button-layout");
+		
+		nsIDOMElement btnTopDiv = createButtonDiv(visualDocument,
+				(null == upControlLabel ? TOP_CONTROL_LABEL_DEFAULT
+						: upControlLabel), TOP_CONTROL_IMG, new Boolean(
+						showButtonLabels).booleanValue());
+		nsIDOMElement btnUpDiv = createButtonDiv(visualDocument,
 				(null == upControlLabel ? UP_CONTROL_LABEL_DEFAULT
 						: upControlLabel), UP_CONTROL_IMG, new Boolean(
 						showButtonLabels).booleanValue());
-		nsIDOMElement btnDown = createButton(visualDocument,
-				(null == downControlLabel ? DOWN_CONTROL_LABEL_DEFAULT
-						: downControlLabel), DOWN_CONTROL_IMG, new Boolean(
+		nsIDOMElement btnDownDiv = createButtonDiv(visualDocument,
+				(null == upControlLabel ? DOWN_CONTROL_LABEL_DEFAULT
+						: upControlLabel), DOWN_CONTROL_IMG, new Boolean(
 						showButtonLabels).booleanValue());
-		btnRow2_TD.appendChild(btnUp);
-		btnRow3_TD.appendChild(btnDown);
+		nsIDOMElement btnBottomDiv = createButtonDiv(visualDocument,
+				(null == upControlLabel ? BOTTOM_CONTROL_LABEL_DEFAULT
+						: upControlLabel), BOTTOM_CONTROL_IMG, new Boolean(
+						showButtonLabels).booleanValue());
 
-		if (fastOrderControlsVisible) {
-			nsIDOMElement btnTop = createButton(visualDocument,
-					(null == topControlLabel ? TOP_CONTROL_LABEL_DEFAULT
-							: topControlLabel), TOP_CONTROL_IMG, new Boolean(
-							showButtonLabels).booleanValue());
-			nsIDOMElement btnBottom = createButton(visualDocument,
-					(null == bottomControlLabel ? BOTTOM_CONTROL_LABEL_DEFAULT
-							: bottomControlLabel), BOTTOM_CONTROL_IMG,
-					new Boolean(showButtonLabels).booleanValue());
-			btnRow1_TD.appendChild(btnTop);
-			btnRow4_TD.appendChild(btnBottom);
-		}
-
-		buttonsTable.appendChild(btnRow1);
-		buttonsTable.appendChild(btnRow2);
-		buttonsTable.appendChild(btnRow3);
-		buttonsTable.appendChild(btnRow4);
-
+		buttonsDiv.appendChild(btnTopDiv);
+		buttonsDiv.appendChild(btnUpDiv);
+		buttonsDiv.appendChild(btnDownDiv);
+		buttonsDiv.appendChild(btnBottomDiv);
+		
 		row2_TD2.setAttribute(HtmlComponentUtil.HTML_ALIGN_ATTR, "center");
-		row2_TD2.setAttribute(HtmlComponentUtil.HTML_ATTR_VALIGN, ("center".equalsIgnoreCase(controlsVerticalAlign) ? "middle" : controlsVerticalAlign));
-		row2_TD2.appendChild(buttonsTable);
+		row2_TD2.setAttribute(HtmlComponentUtil.HTML_ATTR_VALIGN, ("center"
+				.equalsIgnoreCase(controlsVerticalAlign) ? "middle"
+				: controlsVerticalAlign));
+		row2_TD2.appendChild(buttonsDiv);
 
 		// --------------------------------------------
 
@@ -268,7 +243,7 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 				.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR,
 						"dr-table rich-table "
 								+ (tableClass == null ? "" : tableClass));
-		
+
 		// Encode colgroup definition.
 		ArrayList<Element> columns = getColumns(sourceElement);
 		int columnsLength = getColumnsCount(sourceElement, columns);
@@ -395,8 +370,7 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 
 		nsIDOMElement btnImg = visualDocument
 				.createElement(HtmlComponentUtil.HTML_TAG_IMG);
-		
-		
+
 		String path = RichFacesTemplatesActivator.getPluginResourcePath()
 				+ imgPath;
 		btnImg.setAttribute("src", "file://" + path);
@@ -412,7 +386,8 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 					.createElement(HtmlComponentUtil.HTML_TAG_TD);
 
 			row1_TD1.appendChild(btnImg);
-			row1_TD2.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, "dr-control-buttons");
+			row1_TD2.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR,
+					"dr-control-buttons");
 			row1_TD2.appendChild(visualDocument.createTextNode(btnName));
 
 			row1.appendChild(row1_TD1);
@@ -425,6 +400,42 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 		}
 
 		return btn;
+	}
+	
+	private nsIDOMElement createButtonDiv(nsIDOMDocument visualDocument,
+			String btnName, String imgName, boolean showButtonLabels) {
+		
+		nsIDOMElement div1 = visualDocument
+			.createElement(HtmlComponentUtil.HTML_TAG_DIV);
+		nsIDOMElement div2 = visualDocument
+		.createElement(HtmlComponentUtil.HTML_TAG_DIV);
+		nsIDOMElement a = visualDocument
+		.createElement(HtmlComponentUtil.HTML_TAG_A);
+		nsIDOMElement div3 = visualDocument
+		.createElement(HtmlComponentUtil.HTML_TAG_DIV);
+		nsIDOMElement img = visualDocument
+		.createElement(HtmlComponentUtil.HTML_TAG_IMG);
+		
+		div1.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, "rich-ordering-control");
+		div2.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, "rich-ordering-list-button");
+		div2.setAttribute("onmouseover", "this.className='rich-ordering-list-button-light'");
+		
+		a.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, "rich-ordering-list-button-selection");
+		div3.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, "rich-ordering-list-button-content");
+		
+		String  resourceFolder = RichFacesTemplatesActivator.getPluginResourcePath();
+		img.setAttribute("src", "file://" + resourceFolder + imgName);
+		
+		String divStyle = "background-image: url(file://" + resourceFolder + BUTTON_BG + ");";
+		div2.setAttribute(HtmlComponentUtil.HTML_STYLE_ATTR, divStyle);
+
+		div1.appendChild(div2);
+		div2.appendChild(a);
+		a.appendChild(div3);
+		div3.appendChild(img);
+		div3.appendChild(visualDocument.createTextNode(btnName));
+		
+		return div1;
 	}
 
 	/**
