@@ -505,13 +505,15 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <para>
     <emphasis role="bold">I have an existing Seam 1.2.1 project. Can I migrate/import the project to a JBDS Seam project?</emphasis>
    </para>
-   <para> There is no automagical way.   
-    Need to be done manually; most should be straightforward: 
-   </para>
+   <para>We highly recommend you to create Seam 1.2.1 project using the JBDS. In other case try to do manually:</para>
    <itemizedlist>
-    <listitem><para> copy <property>src</property> to <property>src</property></para></listitem>
-    <listitem><para> copy <property>view</property> to <property>Web content</property></para></listitem>
-    <listitem><para> copy resources individual files to where they are in the seam web project  etc.</para></listitem>
+    <listitem><para>Create a Seam Web project to get the JBoss tools structure</para></listitem>
+   </itemizedlist>
+    <para>Then from your Seam 1.2.1 seam-gen project start doing the following:</para>
+   <itemizedlist>
+    <listitem><para>Copy <property>src</property> to <property>src</property></para></listitem>
+    <listitem><para>Copy <property>view</property> to <property>Web content</property></para></listitem>
+    <listitem><para>Copy resources individual files to where they are in the seam web project  etc.</para></listitem>
    </itemizedlist>
    <para>
     <emphasis role="bold">I have an existing Struts or JSF project. Can I open the project in
