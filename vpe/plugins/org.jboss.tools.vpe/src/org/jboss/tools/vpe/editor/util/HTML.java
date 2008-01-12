@@ -34,6 +34,8 @@ public final class HTML {
 	public static final String TAG_TH		 = "TH"; 
 	public static final String TAG_TR        = "TR";
 	public static final String TAG_TD        = "TD";
+	public static final String TAG_DL	 = "DL";
+	public static final String TAG_DT	 = "DT";
 	public static final String TAG_COL       = "COL";
 	public static final String TAG_COLS      = "COLS";
 	public static final String TAG_COLGROUP  = "COLGROUP";
