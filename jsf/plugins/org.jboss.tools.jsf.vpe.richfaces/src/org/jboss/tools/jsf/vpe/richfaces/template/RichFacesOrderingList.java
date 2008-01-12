@@ -47,7 +47,7 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 	private static final String BOTTOM_CONTROL_IMG = "orderingList/bottom.gif";
 
 	private static final String BUTTON_BG = "orderingList/button_bg.gif";
-	private static final String HEADER_CELL_BG = "orderingList/header_cell_bg.gif";
+	private static final String HEADER_CELL_BG = "orderingList/table_header_cell_bg.gif";
 
 	private static final String LIST_WIDTH = "listWidth";
 	private static final String LIST_HEIGHT = "listHeight";
@@ -281,6 +281,7 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 				nsIDOMElement tr = visualDocument
 						.createElement(HtmlComponentUtil.HTML_TAG_TR);
 				thead.appendChild(tr);
+				
 				String styleClass = encodeStyleClass(null,
 						"dr-table-subheader rich-table-subheader", null,
 						headerClass);
@@ -290,7 +291,7 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 				}
 				encodeHeaderFacets(creationData, tr, visualDocument,
 						columnsHeaders,
-						"dr-table-subheadercell rich-table-subheadercell",
+						"rich-ordering-list-table-header-cell",
 						headerClass, HEADER, HtmlComponentUtil.HTML_TAG_TD);
 			}
 		}
@@ -381,7 +382,6 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 		
 		div1.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, "rich-ordering-control");
 		div2.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, "rich-ordering-list-button");
-		div2.setAttribute("onmouseover", "this.className='rich-ordering-list-button-light'");
 		
 		a.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, "rich-ordering-list-button-selection");
 		div3.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, "rich-ordering-list-button-content");
@@ -468,6 +468,18 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 			String styleClass = encodeStyleClass(null, skinCellClass,
 					headerClass, columnHeaderClass);
 			td.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR, styleClass);
+			
+			nsIDOMElement div1 = visualDocument
+					.createElement(HtmlComponentUtil.HTML_TAG_DIV);
+			String resourceFolder = RichFacesTemplatesActivator
+					.getPluginResourcePath();
+			String div1Style = "background-image: url(file://" + resourceFolder
+					+ HEADER_CELL_BG + ");";
+			div1.setAttribute(HtmlComponentUtil.HTML_CLASS_ATTR,
+					"rich-ordering-list-table-header-cell");
+			div1.setAttribute(HtmlComponentUtil.HTML_STYLE_ATTR, div1Style);
+			td.appendChild(div1);
+
 			td.setAttribute("scop", "col");
 			String colspan = column
 					.getAttribute(HtmlComponentUtil.HTML_TABLE_COLSPAN);
@@ -476,7 +488,7 @@ public class RichFacesOrderingList extends VpeAbstractTemplate {
 			}
 			Element facetBody = ComponentUtil.getFacet(column, facetName);
 
-			VpeChildrenInfo child = new VpeChildrenInfo(td);
+			VpeChildrenInfo child = new VpeChildrenInfo(div1);
 			child.addSourceChild(facetBody);
 			creationData.addChildrenInfo(child);
 		}
