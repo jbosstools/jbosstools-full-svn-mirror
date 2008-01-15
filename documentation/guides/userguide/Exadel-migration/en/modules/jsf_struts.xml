@@ -11,6 +11,7 @@
     </chapterinfo>
  
  <title>Migration of JSF and Struts Projects</title>
+ <para>In this chapter you can find concise description of migration of JSF and Struts Projects.</para>
  <section>  
   <title>JSF</title>
   <para>JBoss Developer Studio includes an Import <property>JSF Project</property> Wizard that radically simplifies the process of bringing your existing JSF applications

@@ -13,7 +13,7 @@
 	<note>
 		<title>Note:</title>
 		<para>We highly recommend developing in <property>Seam</property>. This chapter is for users
-			who for some reason cannot use Seam.</para>
+			who for some reason cannot use <property>Seam</property>.</para>
 	</note>
 
 	<para>In this chapter you'll find out how to create a simple JSP application using the JBoss

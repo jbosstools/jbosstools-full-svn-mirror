@@ -14,7 +14,7 @@
     <note>
         <title>Note:</title>
         <para>We highly recommend developing in <property>Seam</property>. This chapter is for users
-            who for some reason cannot use Seam.</para>
+            who for some reason cannot use <property>Seam</property>.</para>
     </note>
 
     <para>In this chapter you will see how to create a simple JSF application being based on
@@ -528,10 +528,10 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
 ]]></programlisting>
         <para>The first navigation rule states that from any page (<property>*</property> stands for
             any page) an outcome of playagain will take you to
-            <emphasis>/pages/inputnumber.jsp</emphasis>. Outcome values are returned from backing
+            <emphasis><property>/pages/inputnumber.jsp</property></emphasis>. Outcome values are returned from backing
             bean methods in this example. The second navigation rule states that if you are at the
-            page <emphasis>/pages/inputnumber.jsp</emphasis>, and the outcome is success, then
-            navigate to the <emphasis>/pages/success.jsp</emphasis> page. </para>
+            page <emphasis></property>/pages/inputnumber.jsp</property></emphasis>, and the outcome is success, then
+            navigate to the <emphasis><property>/pages/success.jsp</property></emphasis> page. </para>
     </section>
     <section id="EditingTheJSPViewFiles2">
         <?dbhtml filename="EditingTheJSPViewFiles2.html"?>
@@ -1023,7 +1023,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
                     Console tabbed view stop scrolling, JBoss is available)</para>
             </listitem>
             <listitem>
-                <para>Right-click on project <emphasis>Run AS &gt; Run on
+                <para>Right-click on project <emphasis><property>Run AS &gt; Run on
                     Server<property/></emphasis></para>
             </listitem>
             <listitem>
