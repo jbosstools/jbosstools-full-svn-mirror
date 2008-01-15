@@ -52,14 +52,19 @@ public final class HTML {
 	
 	
 	
-	public static final String ATTR_ID 		 = "ID";
-	public static final String ATTR_TYPE	 ="TYPE";
-	public static final String ATTR_TEXT	 ="TEXT";
-	public static final String ATTR_CLASS	 ="CLASS";
-	public static final String ATTR_TITLE	 ="TITLE";
-	public static final String ATTR_NAME	 ="NAME";
-	public static final String ATTR_VALUE	 ="VALUE";
-	public static final String ATTR_STYLE	 ="STYLE";
-	public static final String ATTR_SIZE	 ="SIZE";
-	public static final String ATTR_MULTIPLE = "MULTIPLE";
+	public static final String ATTR_ID 		    = "ID";
+	public static final String ATTR_TYPE	    ="TYPE";
+	public static final String ATTR_TEXT	    ="TEXT";
+	public static final String ATTR_CLASS	    ="CLASS";
+	public static final String ATTR_TITLE	    ="TITLE";
+	public static final String ATTR_NAME	    ="NAME";
+	public static final String ATTR_VALUE	    ="VALUE";
+	public static final String ATTR_STYLE	    ="STYLE";
+	public static final String ATTR_SIZE	    ="SIZE";
+	public static final String ATTR_MULTIPLE    = "MULTIPLE";
+	public static final String ATTR_COLSPAN     = "colspan";	
+	public static final String ATTR_CELLSPACING = "cellspacing";
+	public static final String ATTR_CELLPADDING = "cellpadding";
+	public static final String ATTR_WIDTH       = "WIDTH";
+	public static final String ATTR_HEIGHT      = "HEIGHT";
 }
