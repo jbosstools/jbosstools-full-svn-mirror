@@ -20,11 +20,11 @@
   <para>A core element that makes the JBoss Developer Studio &quot;scalable&quot; is the
       <property>JBoss Seam</property> framework.</para>
 
-  <para>In this chapter, we will cover how to build a simple Seam web application in minutes with
-    the JBoss Developer Studio.</para>
+  <para>The main purpose of this chapter is to tell you about  build a simple Seam web application in minutes with the JBoss Developer Studio.</para>
 
   <section>
     <title>Create a Seam Project</title>
+    <para>This section helps you to create a simple Seam project.</para>
     <para>To create a new web application in <property>Seam</property>, you should create a Seam web
       project. This section provides all the necessary steps to organize a new project with appropriate
       tooling and adjust the settings that match your needs.</para>
@@ -432,6 +432,7 @@ public String getValue()
   <section>
     <title>Add a new UI Component</title>
 
+    <para>This section tells you about how you can add a new UI Component.</para>
     <para>Now, let&apos;s add a little more logic to the application. We will add a new boolean
       property to the action component. If it is set to true, the action would capitalize the input
       string and display it on the web page. The following code in the SimpleAction class implements

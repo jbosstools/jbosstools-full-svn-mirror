@@ -31,6 +31,7 @@
     <section id="SettingUpTheProject12">
         <?dbhtml filename="SettingUpTheProject12.html"?>
         <title>Setting up the project</title>
+        <para>Now you know how to create a new  JSF 1.2 project. </para>
         <para>First, we will create a JSF 1.2 project using an integrated JBDS&apos;s new
             project wizard and predefined templates. Follow the next steps:</para>
         <itemizedlist>
@@ -77,6 +78,7 @@
     <section id="CreatingJSPPages">
         <?dbhtml filename="CreatingJSPPages.html"?>
         <title>Creating JSP Pages</title>
+        <para>After you created a new JSF project you can create new JSP pages.</para>
         <para>And now, let&apos;s add two pages to our application.</para>
         <para>The first page is inputnumber.jsp. It prompts you to
             enter a number. If the guess is incorrect, the same page will be redisplayed with a
@@ -149,7 +151,7 @@
     <section id="CreatingTransition">
         <?dbhtml filename="CreatingTransition.html"?>
         <title>Creating Transition between two views</title>
-        <para>Then, we should create connection between jsp pages.</para>
+      <para>Then, we should create connection between jsp pages.</para>
         <itemizedlist>
             <listitem>
                 <para>In the diagram, select the <emphasis>
@@ -483,6 +485,7 @@ public Integer getUserNumber ()
     <section id="EditingFacesConfig">
         <?dbhtml filename="EditingFacesConfig.html"?>
         <title>Editing faces-config.xml File</title>
+        <para>In this section you know about faces-config.xml file.</para>
         <para>This file holds two navigation rules and defines the backing bean used.</para>
         <itemizedlist>
             <listitem>
@@ -970,6 +973,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
     <section id="CreatingIndexjsp">
         <?dbhtml filename="CreatingIndexjsp.html"?>
         <title>Creating index.jsp page</title>
+        <para>Now you know how to create index.jsp page.</para>
         <para>The index.jsp page is the entry point of our application. It&apos;s just
             forwarding to inputnumber.jsp page.</para>
         <itemizedlist>

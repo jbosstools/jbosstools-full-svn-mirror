@@ -30,7 +30,7 @@
 	<section id="SettingUpTheProject">
 		<?dbhtml filename="SettingUpTheProject.html"?>
 		<title>Setting Up the Project</title>
-		<para>We&apos;ll start with creation a new project for the application.</para>
+		<para>The main purpose of this section is to tell you about creation a Dynamic Web Project.</para>
 		<itemizedlist>
 			<listitem>
 				<para>Go to the menu bar and select <emphasis>

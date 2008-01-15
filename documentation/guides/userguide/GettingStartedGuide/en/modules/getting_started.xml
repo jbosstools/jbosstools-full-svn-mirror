@@ -546,7 +546,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <para>
     <emphasis role="bold">How can I add my own tag library to the JBoss Tools Palette?</emphasis>
    </para>
-   <para>See <ulink url="../../../jsf/en/html/palette.html">Adding Tag Libraries</ulink> in Visual Web Tools Guide.</para>
+   <para>See <ulink url="http://www.redhat.com/developer_studio/guides/jsf/html_single/#AddingJSFCapabilityToAnyExistingEclipseProject">Adding Tag Libraries</ulink> in Visual Web Tools Guide.</para>
    <para>
     <emphasis role="bold">I see the Oracle ADF Faces component library tags in the JBoss Tools
      Palette, but I can&apos;t seem to find the libraries for ADF. How do I use this component
