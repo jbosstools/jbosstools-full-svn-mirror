@@ -103,7 +103,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     private static final int DRAG_AREA_WIDTH = 10;
     private static final int DRAG_AREA_HEIGHT = 10;
     private static final String ATTR_XMLNS = "xmlns";
-    private static final String ATTR_DRAG_AVAILABLE_CLASS="__drag__available_style";
+    private static final String ATTR_DRAG_AVAILABLE_CLASS = "__drag__available_style";
 
     private MozillaEditor visualEditor;
     private XulRunnerEditor xulRunnerEditor;
@@ -498,7 +498,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		    }
 		}
 	    }
-	    if (childrenCount == 0) {
+	    if (childrenCount == 0 && childrenInfoList.size() == 0) {
 		setPseudoContent(containerTemplate, sourceContainer,
 			visualParent);
 	    }
@@ -1720,23 +1720,26 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	nsIDOMElement selectedElement = xulRunnerEditor
 		.getLastSelectedElement();
 	if (selectedElement != null && canInnerDrag(selectedElement)) {
-		 String styleClasses = selectedElement.getAttribute(HTML.ATTR_CLASS);
-		if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil
+	    String styleClasses = selectedElement.getAttribute(HTML.ATTR_CLASS);
+	    if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil
 		    .getMousePoint(mouseEvent))) {
 		// change cursor
-			    if(styleClasses==null || !(styleClasses.contains(ATTR_DRAG_AVAILABLE_CLASS))){
-			    //change cursor style to move
-			    	styleClasses=ATTR_DRAG_AVAILABLE_CLASS+" "+styleClasses;
-			    } 
-	    } else {
-	    //change cursor style to normal
-	    	if(styleClasses!=null) {
-	    		
-	    		styleClasses=styleClasses.replaceAll(ATTR_DRAG_AVAILABLE_CLASS, "");
-	    	}
-	    }
-		selectedElement.setAttribute(HTML.ATTR_CLASS, styleClasses);
+		if (styleClasses == null
+			|| !(styleClasses.contains(ATTR_DRAG_AVAILABLE_CLASS))) {
+		    // change cursor style to move
+		    styleClasses = ATTR_DRAG_AVAILABLE_CLASS + " "
+			    + styleClasses;
 		}
+	    } else {
+		// change cursor style to normal
+		if (styleClasses != null) {
+
+		    styleClasses = styleClasses.replaceAll(
+			    ATTR_DRAG_AVAILABLE_CLASS, "");
+		}
+	    }
+	    selectedElement.setAttribute(HTML.ATTR_CLASS, styleClasses);
+	}
     }
 
     private boolean inDragArea(Rectangle dragArea, Point mousePoint) {
