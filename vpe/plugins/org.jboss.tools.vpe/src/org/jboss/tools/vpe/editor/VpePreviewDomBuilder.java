@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
@@ -27,6 +28,7 @@ import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -72,11 +74,18 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			VpeTemplate template = templateManager.getTemplate(getPageContext(), (Element)sourceNode, ifDependencySet);
 			VpeCreationData creationData;
 			
+			//FIX FOR JBIDE-1568, added by Max Areshkau
+			try {
 			if ( template.isHaveVisualPreview() ) {
 				creationData = template.create(getPageContext(), sourceNode, getVisualDocument());
 			} else {
 				nsIDOMElement tempHTMLElement = getVisualDocument().createElement(HTML.TAG_DIV);
 				creationData = new VpeCreationData(tempHTMLElement);				
+			}
+			}catch (XPCOMException ex) {
+				VpePlugin.getPluginLog().logError(ex);
+				VpeTemplate defTemplate = templateManager.getDefTemplate();
+				creationData = defTemplate.create(getPageContext(), sourceNode, getVisualDocument());
 			}
 			
 			getPageContext().setCurrentVisualNode(null);

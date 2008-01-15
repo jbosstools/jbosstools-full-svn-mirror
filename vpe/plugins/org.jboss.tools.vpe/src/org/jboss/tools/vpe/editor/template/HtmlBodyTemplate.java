@@ -17,6 +17,7 @@ import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -63,9 +64,13 @@ public class HtmlBodyTemplate extends VpeAbstractTemplate {
 			if (VpeStyleUtil.PARAMETR_BACKGROND.equalsIgnoreCase(name))
 				value = VpeStyleUtil.addFullPathIntoBackgroundValue(value,
 						pageContext.getEditPart().getEditorInput());
-
-			bodyOld.setAttribute(name, value);
-
+			//FIX FOR JBIDE-1568, added by Max Areshkau
+			try{
+				bodyOld.setAttribute(name, value);
+			}catch(XPCOMException ex ) {
+				//jsut ignore it
+			}
+			
 		}
 
 		nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);

@@ -11,7 +11,6 @@
 package org.jboss.tools.vpe.editor.template;
 
 import java.io.File;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,21 +18,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
+import org.jboss.tools.common.xml.XMLUtilities;
+import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.osgi.framework.Bundle;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import org.jboss.tools.common.xml.XMLUtilities;
-import org.jboss.tools.vpe.VpePlugin;
-import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeTemplateManager {
 	
@@ -206,7 +202,7 @@ public class VpeTemplateManager {
 			return defTemplate;
 		}
 	}
-	
+
 	private VpeTemplate getTemplateImpl(VpePageContext pageContext, Node sourceNode, Set dependencySet) {
 		String name = getTemplateName(pageContext, sourceNode);
 		if (name == null) {
@@ -791,6 +787,16 @@ public class VpeTemplateManager {
 	private VpeTemplate createDefTemplate() {
 		VpeTemplate defTemplate = new VpeHtmlTemplate();
 		defTemplate.init(createDefTemplateElement(), true);
+		return defTemplate;
+	}
+
+	/**
+	 * @return the defTemplate
+	 */
+	public VpeTemplate getDefTemplate() {
+		if(defTemplate==null) {
+			defTemplate=createDefTemplate();
+		}
 		return defTemplate;
 	}
 }

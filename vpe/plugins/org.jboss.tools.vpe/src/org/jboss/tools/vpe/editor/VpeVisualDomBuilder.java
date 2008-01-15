@@ -368,8 +368,20 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    VpeTemplate template = templateManager.getTemplate(pageContext,
 		    (Element) sourceNode, ifDependencySet);
 
-	    VpeCreationData creationData = template.create(pageContext,
-		    sourceNode, visualDocument);
+	    VpeCreationData creationData = null;
+	  //FIX FOR JBIDE-1568, added by Max Areshkau
+		try {
+			if ( template.isHaveVisualPreview() ) {
+				creationData = template.create(getPageContext(), sourceNode, getVisualDocument());
+			} else {
+				nsIDOMElement tempHTMLElement = getVisualDocument().createElement(HTML.TAG_DIV);
+				creationData = new VpeCreationData(tempHTMLElement);				
+			}
+			}catch (XPCOMException ex) {
+				VpePlugin.getPluginLog().logError(ex);
+				VpeTemplate defTemplate = templateManager.getDefTemplate();
+				creationData = defTemplate.create(getPageContext(), sourceNode, getVisualDocument());
+			}
 	    pageContext.setCurrentVisualNode(null);
 	    nsIDOMElement visualNewElement = (nsIDOMElement) creationData
 		    .getNode();
