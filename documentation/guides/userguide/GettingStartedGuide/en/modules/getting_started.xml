@@ -233,7 +233,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
    <itemizedlist>
     <listitem>
-     <para>Installation process includes JBoss Enterprise Application Platform. Select <emphasis>
+     <para>Installation process includes <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application Platform</ulink>. Select <emphasis>
        <property>Yes</property>
       </emphasis> to use it in JBoss Developer Studio.</para>
     </listitem>
@@ -257,9 +257,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
    <itemizedlist>
     <listitem>
-     <para>Check your installation paths and see the components will be installed. Click <emphasis>
-       <property>Next</property>
-      </emphasis> to start installation.</para>
+     <para>Check your installation paths and see the components to install. If you'd like to change something, press <emphasis><property>Previous</property></emphasis> button. Click <emphasis>
+      <property>Next</property></emphasis>  to start installation. </para>
     </listitem>
    </itemizedlist>
 
@@ -356,7 +355,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
   <itemizedlist>
    <listitem>
-    <para>to create new Seam, jBPM Process, JSF or Struts projects using JBDS wizards</para>
+    <para>to create new Seam projects, jBPM Process, JSF or Struts projects using JBDS wizards</para>
    </listitem>
   </itemizedlist>
 
@@ -437,7 +436,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <?dbhtml filename="FAQ.html"?>
   <title>FAQ</title>
   <para>For easy reference to JBoss Developer Studio related questions, our FAQ provides answers to
-   our most &quot;popular&quot; questions. The sections of questions are organized by type. </para>
+   the most &quot;popular&quot; questions. The sections of questions are organized by type. </para>
   <!-- <section id="Before_Installing">
   <title>Before Installing, Tutorials, Examples, Readme Files</title>
   <para><emphasis role="bold">I'm looking for examples, do you have any?</emphasis></para>
@@ -534,7 +533,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <title>Troubleshooting, Problems, Configuration, Error Messages</title>
    <para>
     <emphasis role="bold">Is it possible to increase the performance of Eclipse after installing
-     your product? My Eclipse now crawls.</emphasis>
+     your product?</emphasis>
    </para>
    <para>JBoss Developer Studio preconfigures eclipse via the eclipse.ini file to allocate extra
     memory, but if you for some reason need more memory then by default, you can manually make
