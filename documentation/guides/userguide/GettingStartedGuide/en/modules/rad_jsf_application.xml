@@ -530,7 +530,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
             any page) an outcome of playagain will take you to
             <emphasis><property>/pages/inputnumber.jsp</property></emphasis>. Outcome values are returned from backing
             bean methods in this example. The second navigation rule states that if you are at the
-            page <emphasis></property>/pages/inputnumber.jsp</property></emphasis>, and the outcome is success, then
+            page <emphasis><property>/pages/inputnumber.jsp</property></emphasis>, and the outcome is success, then
             navigate to the <emphasis><property>/pages/success.jsp</property></emphasis> page. </para>
     </section>
     <section id="EditingTheJSPViewFiles2">
@@ -1024,7 +1024,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
             </listitem>
             <listitem>
                 <para>Right-click on project <emphasis><property>Run AS &gt; Run on
-                    Server<property/></emphasis></para>
+                    Server</property></emphasis></para>
             </listitem>
             <listitem>
                 <para>Play with the application by entering correct as well as incorrect
