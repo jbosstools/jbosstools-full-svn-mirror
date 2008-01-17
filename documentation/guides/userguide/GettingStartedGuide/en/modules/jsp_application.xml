@@ -188,7 +188,7 @@
 ]]></programlisting>
 			<para>If you come back to design mode you will see that the changes made are
 				automatically reflected in that mode.</para>
-			<para>Actually you don&apos;t really need any config right now. You can clear the
+			<para>Actually you don&apos;t really need to do any configurations right now. You can clear the
 				web.xml file, save it and you&apos;ll still be able to launch your
 			application.</para>
 		</section>
