@@ -27,8 +27,6 @@ import java.util.regex.Pattern;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.ui.IEditorInput;
@@ -65,12 +63,10 @@ import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
-import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMAttr;
-import org.mozilla.interfaces.nsIDOMChromeWindow;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMHTMLInputElement;
@@ -371,12 +367,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    VpeCreationData creationData = null;
 	  //FIX FOR JBIDE-1568, added by Max Areshkau
 		try {
-			if ( template.isHaveVisualPreview() ) {
 				creationData = template.create(getPageContext(), sourceNode, getVisualDocument());
-			} else {
-				nsIDOMElement tempHTMLElement = getVisualDocument().createElement(HTML.TAG_DIV);
-				creationData = new VpeCreationData(tempHTMLElement);				
-			}
 			}catch (XPCOMException ex) {
 				VpePlugin.getPluginLog().logError(ex);
 				VpeTemplate defTemplate = templateManager.getDefTemplate();
@@ -863,7 +854,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	if (visualText != null) {
 	    String visualValue = TextUtil.visualText(sourceText.getNodeValue());
 	    visualText.setNodeValue(visualValue);
-	} else {
+	}else {
 	    VpeNodeMapping nodeMapping = domMapping
 		    .getNodeMapping(sourceParent);
 	    if (nodeMapping != null
