@@ -16,6 +16,9 @@ import java.util.Properties;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
@@ -52,6 +55,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.eclipse.wst.sse.core.internal.model.ModelLifecycleEvent;
 import org.eclipse.wst.sse.core.internal.provisional.IModelLifecycleListener;
@@ -184,6 +188,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	private VpeVisualInnerDragInfo innerDragInfo = null;
 	private FormatControllerManager toolbarFormatControllerManager = null;
 	private SelectionBar selectionBar = null; 
+	//Added by Max Areshkau Fix for JBIDE-1479
+	private UIJob job = null;
 	Shell tip;
 	
 	public final static String MODEL_FLAVOR = ModelTransfer.MODEL; //$NON-NLS-1$
@@ -322,8 +328,29 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	public boolean isAdapterForType(Object type) {
 		return type == this;
 	}
+	//FIX Fox JBIDE-1479 added by Max Areshkau
+	public void notifyChanged(final INodeNotifier  notifier, final int eventType,final Object feature,final Object oldValue,final Object newValue, final int pos) {
 
-	public void notifyChanged(INodeNotifier notifier, int eventType, Object feature, Object oldValue, Object newValue, int pos) {
+		if(job!=null) {
+			job.cancel();
+		}
+
+		job =  new UIJob("NotifyChangedJob"){
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+					//we checks is job was canceled and if is it true we cancel job
+				if(monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				} else {
+					notifyChangedInUiThread(notifier, eventType, feature, oldValue, newValue, pos);
+				}
+				return Status.OK_STATUS;
+			}};
+			job.setPriority(Job.LONG);
+			job.schedule(1000L);		
+	}	
+	
+	public void notifyChangedInUiThread(INodeNotifier notifier, int eventType, Object feature, Object oldValue, Object newValue, int pos) {
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
@@ -381,7 +408,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			visualBuilder.setSelectionRectangle(null);
 			visualBuilder.updateNode((Node)notifier);
 			break;
-
 		case INodeNotifier.CONTENT_CHANGED:
 			if (!sourceChangeFlag) {
 				if (feature != null && ((Node)feature).getNodeType() == Node.TEXT_NODE) {
@@ -2262,7 +2288,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	 */
 	public void onRefresh() {
 		//when we using separate thread to display selection rectangle 
-		//it's working more better than without
+		//it's working better than without
 		/*
 		 * HACK 
 		 * We need wait some time while standart event will be handled
@@ -2270,12 +2296,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		 * and flasher are not repainted, so we should paint flasher
 		 */
 
-		Display.getDefault().asyncExec(new Thread(){
-			public void run(){
-				
-				getXulRunnerEditor().showSelectionRectangle();
-			}
-		});
+		
+			Display.getDefault().asyncExec(new Thread(){
+				public void run(){
+					
+					getXulRunnerEditor().showSelectionRectangle();
+				}
+			});
 		
 	}
 
