@@ -442,10 +442,71 @@
 				</vpe:dnd>
 			</vpe:template>
 		</vpe:if>
+		<vpe:if test="@popupCalendar='true'">
+			<vpe:template children="yes" modify="no">
+			<div class="{@styleClass}" style="{@style}" size="{@size}"
+				title="{tagstring()}">
+				<input type="text" size="2" value="{jsfvalue(@value)}" />
+				<select title="{tagstring()}" disabled="true">
+					<option value ="{jsfvalue(@value)}">
+						<vpe:value expr="{jsfvalue(@value)}" />
+					</option>
+				</select>
+				<input type="text" size="4" value="{jsfvalue(@value)}" />
+				<input type="button" size="3" value="..." />
+				<table>
+				<tr class="{@monthYearRowClass}">
+					<td><a href="#">&lt;</a></td><td colspan="5">December 2005</td><td><a href="#">&gt;</a></td></tr>
+				<tr class="{@weekRowClass}">
+					<td>Sun</td><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td></tr>
+				<tr>
+					<td></td><td></td><td></td><td></td><td><a href="#">1</a></td><td><a href="#">2</a></td><td><a href="#">3</a></td></tr>
+				<tr>
+					<td><a href="#">4</a></td><td><a href="#">5</a></td><td><a href="#">6</a></td><td><a href="#">7</a></td><td><a href="#">8</a></td><td><a href="#">9</a></td><td><a href="#">10</a></td></tr>
+				<tr>
+					<td><a href="#">11</a></td><td><a href="#">12</a></td><td><a href="#">13</a></td><td><a href="#">14</a></td><td><a href="#">15</a></td><td><a href="#">16</a></td><td><a href="#">17</a></td></tr>
+				<tr>
+					<td><a href="#">18</a></td><td><a href="#">19</a></td><td><a href="#">20</a></td><td><a href="#">21</a></td><td><a href="#">22</a></td><td><a href="#">23</a></td><td><a href="#">24</a></td></tr>
+				<tr>
+					<td><a href="#">25</a></td><td><a href="#">26</a></td><td><a href="#">27</a></td><td><a href="#">28</a></td><td><a href="#">29</a></td><td><a href="#">30</a></td><td class="{@currentDayCellClass}"><a href="#">31</a></td></tr>
+				</table>
+			</div>
+			<vpe:textFormating>
+				<vpe:format type="UnderlineFormat">
+					<vpe:formatAttribute type="style" />
+				</vpe:format>
+				<vpe:format type="BoldFormat">
+					<vpe:formatAttribute type="style" />
+				</vpe:format>
+				<vpe:format type="ItalicFormat">
+					<vpe:formatAttribute type="style" />
+				</vpe:format>
+				<vpe:format type="FontNameFormat">
+					<vpe:formatAttribute type="style" />
+				</vpe:format>
+				<vpe:format type="FontSizeFormat">
+					<vpe:formatAttribute type="style" />
+				</vpe:format>
+				<vpe:format type="BackgroundColorFormat">
+					<vpe:formatAttribute type="style" />
+				</vpe:format>
+				<vpe:format type="ForegroundColorFormat">
+					<vpe:formatAttribute type="style" />
+				</vpe:format>
+			</vpe:textFormating>
+		</vpe:template>
+		</vpe:if>
 		<vpe:template children="no" modify="no">
 			<div class="{@styleClass}" style="{@style}" size="{@size}"
 				title="{tagstring()}">
-				<vpe:value expr="{jsfvalue(@value)}" />
+
+				<input type="text" size="2" value="{jsfvalue(@value)}" />
+				<select title="{tagstring()}" disabled="true">
+					<option value ="{jsfvalue(@value)}">
+						<vpe:value expr="{jsfvalue(@value)}" />
+					</option>
+				</select>
+				<input type="text" size="4" value="{jsfvalue(@value)}" />
 			</div>
 			<vpe:textFormating>
 				<vpe:format type="UnderlineFormat">
