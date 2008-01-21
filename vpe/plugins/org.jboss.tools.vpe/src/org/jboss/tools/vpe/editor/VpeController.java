@@ -54,6 +54,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
@@ -331,6 +332,17 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	//FIX Fox JBIDE-1479 added by Max Areshkau
 	public void notifyChanged(final INodeNotifier  notifier, final int eventType,final Object feature,final Object oldValue,final Object newValue, final int pos) {
 
+		//start job when we modify file in ui thread, without this code
+		//changes will be applied with 1 second delay
+        Display display = null;
+        if (PlatformUI.isWorkbenchRunning())
+        display= PlatformUI.getWorkbench().getDisplay();
+
+        if (display != null && (Thread.currentThread() == display.getThread())) {
+        notifyChangedInUiThread(notifier, eventType, feature, oldValue, newValue, pos);
+        return;
+        } 
+		//start job when we modify file in non ui thread
 		if(job!=null) {
 			job.cancel();
 		}
