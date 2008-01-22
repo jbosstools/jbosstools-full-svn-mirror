@@ -16,7 +16,7 @@
 			who for some reason cannot use Seam.</para>
 	</note>
 
-	<para>In this chapter you'll find out how to create a simple JSP application using the JBoss
+	<para>In this chapter you'll find out how to create a simple <ulink url="http://java.sun.com/products/jsp/">JSP</ulink> application using the JBoss
 		Developer Studio. The application will show a classic &quot;Hello World!&quot; on
 		the page.</para>
 	<para>We&apos;ll assume that you have already launched JBoss Developer Studio and also that
