@@ -51,6 +51,7 @@ public final class HTML {
     public static final String TAG_OL = "OL";
     public static final String TAG_UL = "UL";
     public static final String TAG_CODE = "CODE";
+    public static final String TAG_PRE = "PRE";
 
     public static final String ATTR_ID = "ID";
     public static final String ATTR_TYPE = "TYPE";
@@ -67,4 +68,5 @@ public final class HTML {
     public static final String ATTR_CELLPADDING = "cellpadding";
     public static final String ATTR_WIDTH = "WIDTH";
     public static final String ATTR_HEIGHT = "HEIGHT";
+    public static final String ATTR_BORDER = "BORDER";
 }
