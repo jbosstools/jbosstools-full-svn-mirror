@@ -907,7 +907,7 @@
 
     <vpe:tag name="h:panelGrid" case-sensitive="yes">
 		<vpe:template children="yes" modify="yes">
-			<vpe:panelgrid border="{@border}" style="{@style}" class="{@styleClass}" width="{@width}" frame="{@frame}" rules="{@rules}"
+			<vpe:panelgrid border="{iif(@border='','0','@border')}" style="{@style}" class="{@styleClass}" width="{@width}" frame="{@frame}" rules="{@rules}"
 						columnClasses="{@columnClasses}" footerClass="{@footerClass}" headerClass="{@headerClass}" rowClasses="{@rowClasses}"
 						cellspacing="{@cellspacing}" cellpadding="{@cellpadding}" bgcolor="{@bgcolor}" title="{tagstring()}"
 						table-size="{@columns}"/>
