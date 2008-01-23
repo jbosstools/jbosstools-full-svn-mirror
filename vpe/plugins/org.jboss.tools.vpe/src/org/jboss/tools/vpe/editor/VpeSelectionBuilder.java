@@ -364,7 +364,12 @@ public class VpeSelectionBuilder {
 		if(sourceNode.getNodeType()!=Node.TEXT_NODE) {
 				sourceBuilder.setSelection(sourceNode, 0, 0);
 		} else if(sourceNode.getNodeType()==Node.TEXT_NODE) {
-			sourceBuilder.setSelection(sourceNode, 1, 0);
+			try{
+				IndexedRegion region = (IndexedRegion)sourceNode;
+				sourceBuilder.setSelection(sourceNode, 0, region.getLength());
+			}catch(Exception ex){
+				VpePlugin.reportProblem(ex);
+			}
 		}
 		return sourceNode;
 	}

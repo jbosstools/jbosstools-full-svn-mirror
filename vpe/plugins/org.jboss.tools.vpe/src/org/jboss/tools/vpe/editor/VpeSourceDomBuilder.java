@@ -17,6 +17,7 @@ import java.util.Set;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jst.jsp.core.internal.domdocument.TextImplForJSP;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
@@ -28,6 +29,7 @@ import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
+import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
@@ -313,9 +315,18 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 //						info.setSourceCommentValue(pageContext, (Comment)sourceParent);
 //					}
 					//Added by Max Areshkau in scope of bug JBIDE-1209
-				} else if (sourceParent.getNodeType()==Node.TEXT_NODE) {
-					
-					setSelection(sourceParent, offset, length);
+				} else if (sourceParent instanceof TextImplForJSP) {
+							try{
+								IndexedRegion region = (IndexedRegion)sourceParent;
+								String text = sourceParent.getNodeValue();
+								int start= TextUtil.sourcePosition(text, visualText.getNodeValue(), offset);
+								int end =TextUtil.sourcePosition(text, visualText.getNodeValue(), offset+length);
+								offset=start;
+								length=end-start;
+							}catch(Exception ex){
+								VpePlugin.reportProblem(ex);
+							}
+							setSelection(sourceParent, offset, length);
 				}
 			}
 		}
