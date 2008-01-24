@@ -410,7 +410,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		
 	try {
 		
-		 parentElement = (nsIDOMElement) element.getParentNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+		 parentElement = (nsIDOMElement) element.getParentNode()
+					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 	} catch (XPCOMException ex) {
 		// if parent node isn't nsIDOMElement just return null;
 		return null;
@@ -420,8 +421,10 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 			
 				return parentElement;
 			}else {
-			
-				parentElement=(nsIDOMElement) parentElement.getParentNode() ;
+				
+				 parentElement = (nsIDOMElement) parentElement.getParentNode()
+						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				
 			}
 		}
 		return parentElement;
