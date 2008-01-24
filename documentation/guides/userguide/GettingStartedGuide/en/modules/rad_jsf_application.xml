@@ -21,7 +21,7 @@
             <property>&quot;RAD&quot;</property> philosophy. We will create the familiar
         Guess Number application. The scenario is the following. You are asked to guess a number
         between 0 and 100. If the guess is correct, a success page is displayed with a link to play
-        again. If the guess is incorrect, a message is printed notifying the user that a smaller or
+        again. If the guess is incorrect, a message is printed notifying that a smaller or
         a larger number should be entered and the game continues.</para>
     <para>We&apos;ll show you how to create such an application from scratch, along the way
         demonstrating powerful features of JBoss Developer Studio such as project templating, Visual
@@ -193,14 +193,13 @@
             </listitem>
         </itemizedlist>
     </section>
+    
     <section id="CreatingResourceFile">
         <?dbhtml filename="CreatingResourceFile.html"?>
         <title>Creating Resource File</title>
-        <para>JBoss Developer Studio allows to create quickly a resource file. Using this feature
-            you can collect text messages in one central place. A resource file is just a file with
-            a <emphasis>.properties</emphasis> extension. The messages stored in resource file can
-            be displayed to you on a Web page during application execution. </para>
-        <para>With resource file first, you don&apos;t hard code anything into the JSP pages.
+        <para>A resource file is just a file with a <emphasis>.properties</emphasis> extension for collecting text messages in one central place. 
+            JBoss Developer Studio allows you to create quickly a resource file. The messages stored in resource file can be displayed to you on a Web page during application execution. </para>
+           <para>With resource file first, you don&apos;t hard code anything into the JSP pages.
             And second, it makes it easier to translate your application to other languages. All you
             have to do is to translate all your messages to the other language and save them in a
             new properties file with a name that ends with the appropriate ISO-639 language code.</para>
@@ -225,7 +224,7 @@
                     </emphasis></para>
             </listitem>
         </itemizedlist>
-        <para>We will store in this folder our resource file and java bean.</para>
+        <para>Your resource file and java bean will be stored in this folder.</para>
         <itemizedlist>
             <listitem>
                 <para>Right click on <emphasis>
