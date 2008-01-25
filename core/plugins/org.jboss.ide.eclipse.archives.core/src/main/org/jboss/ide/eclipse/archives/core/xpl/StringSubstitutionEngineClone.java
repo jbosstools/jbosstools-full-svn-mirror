@@ -115,7 +115,6 @@ public class StringSubstitutionEngineClone {
 	 * Performs recursive string validation to ensure that all of the variables
 	 * contained in the expression exist
 	 * @param expression expression to validate
-	 * @param manager registry of variables
 	 * @exception CoreException if a referenced variable does not exist or if a cycle exists
 	 *  in referenced variables
 	 */
@@ -129,7 +128,6 @@ public class StringSubstitutionEngineClone {
 	 *  
 	 * @param expression source expression
 	 * @param reportUndefinedVariables whether to report undefined variables as an error
-	 * @param resolveVariables whether to resolve the value of any variables
 	 * @exception CoreException if unable to resolve a variable
 	 */
 	private HashSet substitute(String expression, boolean reportUndefinedVariables) throws CoreException {
