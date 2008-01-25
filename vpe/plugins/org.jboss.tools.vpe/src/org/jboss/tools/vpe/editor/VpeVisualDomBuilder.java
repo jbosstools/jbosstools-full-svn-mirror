@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -110,6 +111,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     private nsIDOMNode headNode;
     private List includeStack;
     boolean rebuildFlag = false;
+    
+    // Fix for JBIDE-1119
+    private Collection<nsIDOMHTMLInputElement> inputElements = new ArrayList<nsIDOMHTMLInputElement>();
 
     /** faceletFile */
     private boolean faceletFile = false;
@@ -194,6 +198,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
     public void rebuildDom(Document sourceDocument) {
 	cleanHead();
+	inputElements.clear();
 	domMapping.clear(visualContentArea);
 	pageContext.clearAll();
 	refreshExternalLinks();
@@ -223,7 +228,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    if (visualNewNode != null) {
 		nsIDOMHTMLInputElement iDOMInputElement = (nsIDOMHTMLInputElement) visualNewNode
 			.queryInterface(nsIDOMHTMLInputElement.NS_IDOMHTMLINPUTELEMENT_IID);
-		iDOMInputElement.setReadOnly(true);
+		// Fix for JBIDE-1119
+		inputElements.add(iDOMInputElement);
+		//iDOMInputElement.setReadOnly(true);
 	    }
 	} catch (XPCOMException ex) {
 	    // just ignore this exception
@@ -796,6 +803,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	nsIDOMNode visualOldNode = domMapping.remove(sourceNode);
 	if (visualOldNode != null) {
+		
+		if (inputElements.contains(visualOldNode)) {
+			inputElements.remove(visualOldNode);
+		}
+		
 	    if (elementMapping != null) {
 		nsIDOMElement border = elementMapping.getBorder();
 		if (border != null) {
@@ -816,7 +828,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     public void removeNode(Node sourceNode) {
-	domMapping.remove(sourceNode);
+	nsIDOMNode visualOldNode = domMapping.remove(sourceNode);
+	if (visualOldNode != null) {
+		if (inputElements.contains(visualOldNode)) {
+			inputElements.remove(visualOldNode);
+		}
+	}
     }
 
     private Node getParentTable(Node sourceNode, int depth) {
@@ -1231,6 +1248,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
     public void resize(nsIDOMElement element, int resizerConstrains, int top,
 	    int left, int width, int height) {
+    	
+    	for (nsIDOMHTMLInputElement inputElement : inputElements) {
+    		inputElement.setReadOnly(true);
+		}
+    	
 	VpeElementMapping elementMapping = (VpeElementMapping) domMapping
 		.getNodeMapping(element);
 	if (elementMapping != null) {
@@ -1239,6 +1261,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		    element, elementMapping.getData(), resizerConstrains, top,
 		    left, width, height);
 	}
+	
+	for (nsIDOMHTMLInputElement inputElement : inputElements) {
+		inputElement.setReadOnly(false);
+	}
+	
     }
 
     static boolean isAnonElement(nsIDOMNode visualNode) {
