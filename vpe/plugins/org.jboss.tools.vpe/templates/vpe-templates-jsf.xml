@@ -22,7 +22,7 @@
 
     <vpe:tag name="h:inputText" case-sensitive="yes">
 	    <vpe:template children="no" modify="no">
-			<input type="text" value="{jsfvalue(@value)}" class="{@styleClass}" style="{@style}" title="{tagstring()}" size="{@size}"/>
+			<input type="text" value="{jsfvalue(@value)}" class="{@styleClass}" style="{@style}" title="{tagstring()}" size="{@size}" />
 			<vpe:resize>
 				<vpe:width width-attr="style.width" />
 				<vpe:height height-attr="style.height" />
@@ -66,7 +66,6 @@
     </vpe:tag>
 
     <vpe:tag name="h:inputTextarea" case-sensitive="yes">
-		<vpe:if test="attrpresent('__vpe__fake__')"/>
 	    <vpe:template children="yes" modify="no">
 			<textarea class="{@styleClass}" style="{@style}" rows="{@rows}" cols="{@cols}" title="{tagstring()}">
 				<vpe:value expr="{jsfvalue(@value)}"/>
@@ -106,7 +105,7 @@
 
     <vpe:tag name="h:inputSecret" case-sensitive="yes">
 	    <vpe:template children="no" modify="no">
-			<input type="password" value="{jsfvalue(@value)}" class="{@styleClass}" style="{@style}" title="{tagstring()}"/>
+			<input type="password" value="{jsfvalue(@value)}" class="{@styleClass}" style="{@style}" title="{tagstring()}" size="{@size}" />
 			<vpe:resize>
 				<vpe:width width-attr="style.width" />
 				<vpe:height height-attr="style.height" />
@@ -151,7 +150,7 @@
 
     <vpe:tag name="h:inputHidden" case-sensitive="yes">
 	    <vpe:template children="no" modify="no">
-			<input type="text" value="{jsfvalue(@value)}" class="{@styleClass}" style="{@style}border-style:dotted;display:none;" title="{tagstring()}"/>
+			<input type="text" value="{jsfvalue(@value)}" title="{tagstring()}"/>
 			<vpe:dnd>
 				<vpe:drag start-enable="yes"/>
 				<vpe:drop container="yes">
@@ -187,8 +186,6 @@
 					</vpe:drop>
 				</vpe:dnd>
 				<vpe:textFormating>
-					<vpe:format type="BlockFormat"
-							handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 					<vpe:format type="UnderlineFormat">
 						<vpe:formatAttribute type="style"/>
 					</vpe:format>
@@ -300,15 +297,13 @@
 <!-- Проблема с подстановкой значений вложенных параметров (26 of 4) -->
     <vpe:tag name="h:outputFormat" case-sensitive="yes">
 		<vpe:template children="no" modify="yes">
-			<span title="{tagstring()}" style="{@style}">
+			<span title="{tagstring()}" style="{@style}" class="{@styleClass}" >
 				<vpe:value expr="{jsfvalue(@value)}"/>
 			</span>
 			<vpe:dnd>
 				<vpe:drag start-enable="yes"/>
 			</vpe:dnd>
 			<vpe:textFormating>
-				<vpe:format type="BlockFormat" addChildren="deny"
-							handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
@@ -477,11 +472,6 @@
 				</vpe:drop>
 			</vpe:dnd>
 			<vpe:textFormating>
-				<vpe:format type="BlockFormat"
-							handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
-				<vpe:format type="UnderlineFormat" setDefault="true">
-					<vpe:formatAttribute type="style"/>
-				</vpe:format>
 				<vpe:format type="BoldFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
@@ -509,8 +499,6 @@
 	    <vpe:template children="yes" modify="yes">
 			<a href="javascript:return false;" class="{@styleClass}" style="{@style}"/>
 			<vpe:textFormating>
-				<vpe:format type="BlockFormat"
-							handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="UnderlineFormat" setDefault="true">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
@@ -548,7 +536,6 @@
 				</vpe:drop>
 			</vpe:dnd>
 		    <vpe:textFormating>
-				<vpe:format type="BlockFormat" addChildren="deny" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
@@ -1061,12 +1048,32 @@
 
     <vpe:tag name="h:form" case-sensitive="yes">
     	<vpe:template children="yes" modify="yes" haveVisualPreview="no">
-			<div style="border:1px dotted #FF6600;padding: 5px;" title="{tagstring()}"/>
+			<div style="border:1px dotted #FF6600;padding: 5px;{@style}" class="{@styleClass}" title="{tagstring()}"/>
 			<vpe:dnd>
 				<vpe:drag start-enable="yes"/>
 				<vpe:drop container="yes"/>
 			</vpe:dnd>
-	    </vpe:template>
+		<vpe:textFormating>
+				<vpe:format type="BoldFormat">
+					<vpe:formatAttribute type="style"/>
+				</vpe:format>
+				<vpe:format type="ItalicFormat">
+					<vpe:formatAttribute type="style"/>
+				</vpe:format>
+				<vpe:format type="FontNameFormat">
+					<vpe:formatAttribute type="style"/>
+				</vpe:format>
+				<vpe:format type="FontSizeFormat">
+					<vpe:formatAttribute type="style"/>
+				</vpe:format>
+				<vpe:format type="BackgroundColorFormat">
+					<vpe:formatAttribute type="style"/>
+				</vpe:format>
+				<vpe:format type="ForegroundColorFormat">
+					<vpe:formatAttribute type="style"/>
+				</vpe:format>
+			</vpe:textFormating>
+	    </vpe:template>	
     </vpe:tag>
 
     <vpe:tag name="f:attribute" case-sensitive="yes">
@@ -1127,7 +1134,6 @@
 				<vpe:drop container="no"/>
 			</vpe:dnd>
 		    <vpe:textFormating>
-				<vpe:format type="BlockFormat" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler"/>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
@@ -1163,7 +1169,6 @@
 				<vpe:drop container="no"/>
 			</vpe:dnd>
 			<vpe:textFormating>
-				<vpe:format type="BlockFormat" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler"/>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
