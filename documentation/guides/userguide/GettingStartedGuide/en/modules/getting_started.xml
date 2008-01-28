@@ -23,7 +23,7 @@
  <section id="ConfigJavaEnvironment">
   <?dbhtml filename="ConfigJavaEnvironment.html"?>
   <title>Configuring Your Java Environment</title>
-  <para>You must have a working installation of JDK 1.5 before you install JBoss Developer Studio.
+  <para>You must have a working installation of JDK 5 before you install JBoss Developer Studio.
    Currently it will only fully work with a 32-bit JVM, not a 64-bit JVM. On a 64-bit JVM the visual
    editor fails to launch. Thus in this guide we will show you how to install a 32-bit Sun JDK 5.0
    on a Linux Platform and Microsoft Windows Platform.</para>
@@ -330,27 +330,28 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </itemizedlist>
 
    <para>To install the JBoss Tools plugins for Eclipse, you need the following:</para>
-   <itemizedlist>
+   
+    <itemizedlist>
     <listitem>
      <para>Get Eclipse 3.3.1 and Web Tools 2.0.1</para>
     </listitem>
    </itemizedlist>
    <para>The quickest way to get a WTP version is to download "Eclipse IDE for Java EE Developers"
     via <ulink url="http://www.eclipse.org">www.eclipse.org</ulink>.</para>
-   <note>
-    <title>Note:</title>
-    <para>Remember to choose the download that matches your OS and use Java 5 when you run
-    it.</para>
-   </note>
+   <note><title>Note:</title><para>Remember to choose the download that matches your OS and use Java 5 when you run it.</para></note>
    <itemizedlist>
-    <listitem>
-     <para>Get the JBoss Tools build</para>
-    </listitem>
-    <listitem>
+     <listitem>
+     <para>Get the <ulink url="http://labs.jboss.com/tools/download/index.html">JBoss Tools build</ulink></para>
+     </listitem>
+   </itemizedlist>
+   <para>You can also find the latest development release of JBossTools from <ulink url="http://download.jboss.org/jbosstools/updates/stable/">JBossTools Stable Update Site</ulink></para>
+   <itemizedlist>
+     <listitem>
      <para>Finally, install the build</para>
     </listitem>
    </itemizedlist>
-   <para>Unzip the file(s) directly into your Eclipse <emphasis>
+   
+    <para>Unzip the file(s) directly into your Eclipse <emphasis>
      <property>plugins/features</property>
     </emphasis> directory and it will be readily available. It might be necessary to start Eclipse
     with eclipse -clean to make sure it starts clean and rereads the new list of plugins.</para>
