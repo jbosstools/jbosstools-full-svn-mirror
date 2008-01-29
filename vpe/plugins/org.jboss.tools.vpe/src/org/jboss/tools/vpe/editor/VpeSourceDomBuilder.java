@@ -315,7 +315,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 //						info.setSourceCommentValue(pageContext, (Comment)sourceParent);
 //					}
 					//Added by Max Areshkau in scope of bug JBIDE-1209
-				} else if (sourceParent instanceof TextImplForJSP) {
+				} else  {
 							try{
 								IndexedRegion region = (IndexedRegion)sourceParent;
 								String text = sourceParent.getNodeValue();
