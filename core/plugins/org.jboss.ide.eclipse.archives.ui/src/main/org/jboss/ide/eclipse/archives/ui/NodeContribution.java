@@ -31,13 +31,13 @@ public class NodeContribution implements Comparable {
 		String iconPath = element.getAttribute("icon");
 		String pluginId = element.getDeclaringExtension().getNamespaceIdentifier();
 		Bundle bundle = Platform.getBundle(pluginId);
-		URL iconURL = FileLocator.find(bundle, new Path(iconPath), null);
-		if (iconURL == null) {
+		URL iconURL = iconPath == null ? null : FileLocator.find(bundle, new Path(iconPath), null);
+		if (iconURL != null) {
 			iconURL = bundle.getEntry(iconPath);
+			icon = ImageDescriptor.createFromURL(iconURL);
 		}
-		icon = ImageDescriptor.createFromURL(iconURL);
-		
-		weight = Integer.parseInt(element.getAttribute("weight"));
+		String weightString = element.getAttribute("weight");
+		weight = Integer.parseInt(weightString == null ? "100" : weightString);
 	}
 	
 	public int compareTo(Object o) {
