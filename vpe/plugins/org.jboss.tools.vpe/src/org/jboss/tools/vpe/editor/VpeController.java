@@ -10,6 +10,7 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -25,6 +26,9 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.bindings.Binding;
+import org.eclipse.jface.bindings.keys.KeySequence;
+import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -54,8 +58,12 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.fieldassist.ContentAssistCommandAdapter;
+import org.eclipse.ui.internal.keys.WorkbenchKeyboard;
+import org.eclipse.ui.keys.IBindingService;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.eclipse.wst.sse.core.internal.model.ModelLifecycleEvent;
@@ -825,12 +833,35 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 				keyboardEvent.type=SWT.KeyDown;
 				
 				if(keyEvent.getKeyCode()==0) {
-					
 					keyboardEvent.keyCode=(int)keyEvent.getCharCode();
 				} else{
-					
 					keyboardEvent.keyCode=(int)keyEvent.getKeyCode();			
 				}
+				
+				// JBIDE-1627 
+				List<KeyStroke> possibleKeyStrokes = WorkbenchKeyboard.generatePossibleKeyStrokes(keyboardEvent);
+				IWorkbench iWorkbench = VpePlugin.getDefault().getWorkbench();
+				if(iWorkbench.hasService(IBindingService.class)){
+				IBindingService iBindingService = (IBindingService) iWorkbench.getService(IBindingService.class);
+
+				KeySequence sequenceBeforeKeyStroke = KeySequence.getInstance();
+					for (Iterator<KeyStroke> iterator = possibleKeyStrokes.iterator(); iterator
+					.hasNext();){
+						KeySequence sequenceAfterKeyStroke = KeySequence.getInstance(
+								sequenceBeforeKeyStroke, iterator.next());
+						if(iBindingService.isPerfectMatch(sequenceAfterKeyStroke)){
+							final Binding binding = iBindingService.getPerfectMatch(sequenceAfterKeyStroke);
+							
+							if((binding!=null)
+								&& (binding.getParameterizedCommand()!=null)
+								&& (binding.getParameterizedCommand().getCommand()!=null)
+								&& ContentAssistCommandAdapter.CONTENT_PROPOSAL_COMMAND.equals(binding.getParameterizedCommand().getCommand().getId())){
+								keyboardEvent.type = SWT.NONE;
+							}
+						}
+					}
+				}
+
 				//sends xulrunner event to eclipse environment
 				getXulRunnerEditor().getBrowser().notifyListeners(keyboardEvent.type, keyboardEvent);
 				
