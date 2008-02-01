@@ -87,24 +87,34 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	}
 	
 	public XulRunnerBrowser(Composite parent) throws XulRunnerException {
-		initXulRunner();
-		
-		browser = new Browser(parent, SWT.MOZILLA);
+	    initXulRunner();
+	    
+	    browser = new Browser(parent, SWT.MOZILLA);
+	    
+	    webBrowser = (nsIWebBrowser) browser.getWebBrowser();
+            if (webBrowser == null) {
+                throw new XulRunnerException("nsIWebBrowser is not available"); // $NON-NLS-1$
+            }
 
-		webBrowser = (nsIWebBrowser) browser.getWebBrowser();
-		if (webBrowser == null) {
-			throw new XulRunnerException("nsIWebBrowser is not available"); // $NON-NLS-1$
-		}
-		
-		setBoolRootPref(PREFERENCE_DISABLEOPENDURINGLOAD, true);
-		setBoolRootPref(PREFERENCE_DISABLEWINDOWSTATUSCHANGE, true);
-		
-		nsIWebBrowserSetup setup = (nsIWebBrowserSetup) webBrowser.queryInterface(nsIWebBrowserSetup.NS_IWEBBROWSERSETUP_IID);
-		setup.setProperty(nsIWebBrowserSetup.SETUP_IS_CHROME_WRAPPER, 1);
-		
-		webBrowser.addWebBrowserListener(this, nsIWebProgressListener.NS_IWEBPROGRESSLISTENER_IID);
-		webBrowser.addWebBrowserListener(this, nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
-	}
+            setBoolRootPref(PREFERENCE_DISABLEOPENDURINGLOAD, true);
+            setBoolRootPref(PREFERENCE_DISABLEWINDOWSTATUSCHANGE, true);
+            
+            nsIWebBrowserSetup setup = (nsIWebBrowserSetup) webBrowser
+            	.queryInterface(nsIWebBrowserSetup.NS_IWEBBROWSERSETUP_IID);
+            setup.setProperty(nsIWebBrowserSetup.SETUP_IS_CHROME_WRAPPER, 1);
+    
+            // JBIDE-1329 Solution was contributed by Snjezana Peco
+            // webBrowser.addWebBrowserListener(this,
+            //	nsIWebProgressListener.NS_IWEBPROGRESSLISTENER_IID);
+            nsIServiceManager serviceManager = mozilla.getServiceManager();
+            nsIWebProgress webProgress = (nsIWebProgress) serviceManager
+    		.getServiceByContractID("@mozilla.org/docloaderservice;1", // $NON-NLS-1$
+    			nsIWebProgress.NS_IWEBPROGRESS_IID);
+            webProgress.addProgressListener(this, nsIWebProgress.NOTIFY_ALL);
+            
+            webBrowser.addWebBrowserListener(this,
+    		nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
+        }
 
 	public synchronized void initXulRunner() throws XulRunnerException {
 		String xulRunnerPath = getXulRunnerPath(); 
