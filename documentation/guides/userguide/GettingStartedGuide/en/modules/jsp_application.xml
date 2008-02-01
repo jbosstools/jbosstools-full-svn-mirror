@@ -155,7 +155,7 @@
 			<title>web.xml file</title>
 			<para>When you are creating web project the wizard creates the web.xml for you
 				automatically. The web.xml file editor provided by JBoss Developer Studio is
-				available in two modes: design and source.</para>
+				available in two modes: <property>tree</property> and <property>source</property>.</para>
 			<figure>
 				<title>Web.xml in Design Mode</title>
 				<mediaobject>
