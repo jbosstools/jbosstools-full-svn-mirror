@@ -51,11 +51,11 @@ import org.osgi.framework.Bundle;
 
 public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		nsIWebProgressListener, nsITooltipListener {
-	private static final String XULRUNNER_LOWER_VERSION = "1.8.1.2";
-	private static final String XULRUNNER_HIGHER_VERSION = "*";
+	private static final String XULRUNNER_LOWER_VERSION = "1.8.1.2"; //$NON-NLS-1$
+	private static final String XULRUNNER_HIGHER_VERSION = "1.8.1.9"; //$NON-NLS-1$
 	// TODO Sergey Vasilyev Think. May be XULRUNNER_BUNDLE shouldn't be final?
 	private static final String XULRUNNER_BUNDLE;
-	private static final String XULRUNNER_ENTRY = "/xulrunner";
+	private static final String XULRUNNER_ENTRY = "/xulrunner"; //$NON-NLS-1$
 	
 	// TEMPORARY CODE (@see org.eclipse.swt.browser.Mozilla)
 	static final String XULRUNNER_INITIALIZED = "org.eclipse.swt.browser.XULRunnerInitialized"; //$NON-NLS-1$
@@ -77,10 +77,10 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	private static  boolean XULRUNNER_LOADING_INDICATOR=false;
 
 	static {
-		XULRUNNER_BUNDLE = (new StringBuffer("org.mozilla.xulrunner")) // $NON-NLS-1$
-			.append(".").append(Platform.getWS()) // $NON-NLS-1$
-			.append(".").append(Platform.getOS()) // $NON-NLS-1$
-			.append(Platform.OS_MACOSX.equals(Platform.getOS()) ? "" : (new StringBuffer(".")).append(Platform.getOSArch()).toString()) // $NON-NLS-1$ // $NON-NLS-1$
+		XULRUNNER_BUNDLE = (new StringBuffer("org.mozilla.xulrunner")) //$NON-NLS-1$
+			.append(".").append(Platform.getWS()) //$NON-NLS-1$
+			.append(".").append(Platform.getOS()) //$NON-NLS-1$
+			.append(Platform.OS_MACOSX.equals(Platform.getOS()) ? "" : (new StringBuffer(".")).append(Platform.getOSArch()).toString()) //$NON-NLS-1$ //$NON-NLS-2$
 			.toString();
 		
 		mozilla = Mozilla.getInstance();
@@ -93,7 +93,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	    
 	    webBrowser = (nsIWebBrowser) browser.getWebBrowser();
             if (webBrowser == null) {
-                throw new XulRunnerException("nsIWebBrowser is not available"); // $NON-NLS-1$
+                throw new XulRunnerException("nsIWebBrowser is not available"); //$NON-NLS-1$
             }
 
             setBoolRootPref(PREFERENCE_DISABLEOPENDURINGLOAD, true);
@@ -108,7 +108,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
             //	nsIWebProgressListener.NS_IWEBPROGRESSLISTENER_IID);
             nsIServiceManager serviceManager = mozilla.getServiceManager();
             nsIWebProgress webProgress = (nsIWebProgress) serviceManager
-    		.getServiceByContractID("@mozilla.org/docloaderservice;1", // $NON-NLS-1$
+    		.getServiceByContractID("@mozilla.org/docloaderservice;1", //$NON-NLS-1$
     			nsIWebProgress.NS_IWEBPROGRESS_IID);
             webProgress.addProgressListener(this, nsIWebProgress.NOTIFY_ALL);
             
@@ -119,12 +119,11 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	public synchronized void initXulRunner() throws XulRunnerException {
 		String xulRunnerPath = getXulRunnerPath(); 
 		
-		Boolean isXulRunnerInitialized = "true".equals(System.getProperty(XULRUNNER_INITIALIZED)); // $NON-NLS-1$
-		if (!isXulRunnerInitialized) {
+		if (!"true".equals(System.getProperty(XULRUNNER_INITIALIZED))) { //$NON-NLS-1$
 			File file = new File(xulRunnerPath);
 			mozilla.initialize(file);
 			mozilla.initEmbedding(file, file, new AppFileLocProvider(file));
-			System.setProperty(XULRUNNER_INITIALIZED, "true"); // $NON-NLS-1$
+			System.setProperty(XULRUNNER_INITIALIZED, "true"); //$NON-NLS-1$
 		}
 	}
 
@@ -201,25 +200,26 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 					|| !xulRunnerFile.exists()) {
 				Bundle xulRunnerBundle = Platform.getBundle(getXulRunnerBundle());
 				if (xulRunnerBundle == null) {
-					throw new XulRunnerException("Bundle " + getXulRunnerBundle() + " is not found.");
+					throw new XulRunnerException("Bundle " + getXulRunnerBundle() + " is not found."); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 
-				String xulRunnerVersion = (String) xulRunnerBundle.getHeaders().get("Bundle-Version");
+				String xulRunnerVersion = (String) xulRunnerBundle.getHeaders().get("Bundle-Version"); //$NON-NLS-1$
 				if (!greRanges[0].check(xulRunnerVersion)) {
-					throw new XulRunnerException("the version of the bundled XULRunner must be >= 1.8.1.2 ");
+					throw new XulRunnerException("the version of the bundled XULRunner must be >= " + XulRunnerBrowser.XULRUNNER_LOWER_VERSION //$NON-NLS-1$
+						+ " and <= " + XulRunnerBrowser.XULRUNNER_HIGHER_VERSION); //$NON-NLS-1$
 				}
 				
 				
 				URL url = xulRunnerBundle.getEntry(XULRUNNER_ENTRY);
 				if (url == null) {
-					throw new XulRunnerException("Bundle " + getXulRunnerBundle() + " doesn't contain /xulrunner");
+					throw new XulRunnerException("Bundle " + getXulRunnerBundle() + " doesn't contain " + XULRUNNER_ENTRY); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 
 				try {
 					URL url1 = FileLocator.resolve(url);
 					xulRunnerFile = new File(FileLocator.toFileURL(url1).getFile());
 				} catch (IOException ioe) {
-					throw new XulRunnerException("Cannot get path to XULRunner from bundle " + getXulRunnerBundle(), ioe); // $NON-NLS-1$
+					throw new XulRunnerException("Cannot get path to XULRunner from bundle " + getXulRunnerBundle(), ioe); //$NON-NLS-1$
 				}
 			}
 			
@@ -327,11 +327,11 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	 */ 
 	public void destroyBrowserWindow() {
 		// TODO Sergey Vasilyev implement
-		throw new RuntimeException("Not implemented");
+		throw new RuntimeException("Not implemented"); //$NON-NLS-1$
 	}
 
 	public void exitModalEventLoop(long arg0) {
-		throw new RuntimeException("Not implemented");
+		throw new RuntimeException("Not implemented"); //$NON-NLS-1$
 	}
 
 	public long getChromeFlags() {
@@ -353,7 +353,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 
 	public void setStatus(long arg0, String arg1) {
 		// TODO Sergey Vasilyev implement
-		throw new RuntimeException("Not implemented");
+		throw new RuntimeException("Not implemented"); //$NON-NLS-1$
 	}
 
 	public void setWebBrowser(nsIWebBrowser arg0) {
@@ -362,12 +362,12 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 
 	public void showAsModal() {
 		// TODO Sergey Vasilyev implement
-		throw new RuntimeException("Not implemented");
+		throw new RuntimeException("Not implemented"); //$NON-NLS-1$
 	}
 
 	public void sizeBrowserTo(int arg0, int arg1) {
 		// TODO Sergey Vasilyev implement
-		throw new RuntimeException("Not implemented");
+		throw new RuntimeException("Not implemented"); //$NON-NLS-1$
 	}
 	
 	/* (non-Javadoc)
