@@ -337,7 +337,7 @@ public class VpeSelectionBuilder {
 	
 	Node setContextMenuSelection(nsIDOMNode visualNode) {
 		if (VpeDebug.PRINT_VISUAL_CONTEXTMENU_EVENT) {
-			System.out.println(">>>>>>>>>>>>>> onShowContextMenu  visualNode: " + visualNode.getNodeName() + "(" + visualNode + ")");
+			System.out.println(">>>>>>>>>>>>>> onShowContextMenu  visualNode: " + visualNode.getNodeName() + "(" + visualNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 		visualSelectionController.setCaretEnabled(false);
 		
@@ -659,8 +659,8 @@ public class VpeSelectionBuilder {
 				if (!anchorStartFlag) visualAnchorOffset++;
 			}
 			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-				System.out.println("setVisualSelection");
-				System.out.println("                     visualAnchorNode: " + visualAnchorNode.getNodeName() + "(" + visualAnchorNode + ")  visualAnchorContainer: " + visualAnchorContainer.getNodeName() + "(" + visualAnchorContainer + ")  visualAnchorOffset: " + visualAnchorOffset +  "  anchorStartFlag: " + anchorStartFlag);
+				System.out.println("setVisualSelection"); //$NON-NLS-1$
+				System.out.println("                     visualAnchorNode: " + visualAnchorNode.getNodeName() + "(" + visualAnchorNode + ")  visualAnchorContainer: " + visualAnchorContainer.getNodeName() + "(" + visualAnchorContainer + ")  visualAnchorOffset: " + visualAnchorOffset +  "  anchorStartFlag: " + anchorStartFlag); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 			}
 			
 			nsIDOMNode visualFocusContainer = null;
@@ -1159,7 +1159,7 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
 		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 		if (visualNode != null && visualNode.getNodeType() == Node.ELEMENT_NODE &&
-				(HTML.TAG_INPUT.equalsIgnoreCase(visualNode.getNodeName()) || HTML.TAG_BUTTON.equalsIgnoreCase(visualNode.getNodeName()) || "SELECT".equalsIgnoreCase(visualNode.getNodeName())) &&
+				(HTML.TAG_INPUT.equalsIgnoreCase(visualNode.getNodeName()) || HTML.TAG_BUTTON.equalsIgnoreCase(visualNode.getNodeName()) || HTML.TAG_SELECT.equalsIgnoreCase(visualNode.getNodeName())) &&
 				!selection.containsNode(visualNode, false) && visualBuilder.canInnerDrag((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))) { 
 			return (nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 		}
@@ -1263,21 +1263,21 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 	void printVisualSelection() {
 		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
 		boolean collapsed = selection.getIsCollapsed();
-		System.out.println("  ## VisualSelection");
-		System.out.println("  ## collapsed: " + collapsed);
+		System.out.println("  ## VisualSelection"); //$NON-NLS-1$
+		System.out.println("  ## collapsed: " + collapsed); //$NON-NLS-1$
 		if (!collapsed) {
 			nsIDOMNode anchorNode = selection.getAnchorNode();
 			if (anchorNode != null) {
-				System.out.println("  ## anchorNode: " + anchorNode.getNodeName() + " (" + anchorNode + ")  offset: " + selection.getAnchorOffset());
+				System.out.println("  ## anchorNode: " + anchorNode.getNodeName() + " (" + anchorNode + ")  offset: " + selection.getAnchorOffset()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			} else {
-				System.out.println("  ## anchorNode: " + anchorNode);
+				System.out.println("  ## anchorNode: " + anchorNode); //$NON-NLS-1$
 			}
 		}
 		nsIDOMNode focusNode = selection.getFocusNode();
 		if (focusNode != null) {
-			System.out.println("  ## focusNode: " + focusNode.getNodeName() + " (" + focusNode + ")  offset: " + selection.getFocusOffset());
+			System.out.println("  ## focusNode: " + focusNode.getNodeName() + " (" + focusNode + ")  offset: " + selection.getFocusOffset()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		} else {
-			System.out.println("  ## focusNode: " + focusNode);
+			System.out.println("  ## focusNode: " + focusNode); //$NON-NLS-1$
 		}
 	}
 	
