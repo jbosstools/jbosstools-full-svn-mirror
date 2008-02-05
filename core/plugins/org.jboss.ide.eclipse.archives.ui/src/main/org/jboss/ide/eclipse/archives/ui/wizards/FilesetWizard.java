@@ -24,6 +24,7 @@ public class FilesetWizard extends Wizard {
 	{
 		this.fileset = fileset;
 		this.parentNode = parentNode;
+		setWindowTitle("Fileset Wizard");
 	}
 	
 	public boolean performFinish() {
