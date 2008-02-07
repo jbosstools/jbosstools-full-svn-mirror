@@ -18,6 +18,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 
 import org.jboss.tools.vpe.editor.template.textformating.FormatAttributeData;
+import org.jboss.tools.vpe.editor.util.HTML;
 
 /**
  * @author Igels
@@ -103,8 +104,7 @@ public class BlockFormatController extends ComboFormatController {
 	if (enabled) {
 
 	    Node selectedNode = manager.getCurrentSelectedNode();
-	    String nodeName = selectedNode.getParentNode().getNodeName()
-		    .toLowerCase();
+	    String nodeName = getNodeName(selectedNode).toLowerCase(); //
 	    String text = (String) TAGS.get(nodeName);
 	    if (text == null) {
 		this.getComboBlockFormat().select(0);
@@ -122,5 +122,21 @@ public class BlockFormatController extends ComboFormatController {
 	    }
 	}
 	getComboBlockFormat().deselectAll();
+    }
+
+    /**
+     * 
+     * @return node name (skip tags <u>, <b> and <i>)
+     */
+    private String getNodeName(Node node) {
+
+	String nodeName = "";
+	do {
+	    nodeName = node.getNodeName();
+	    node = node.getParentNode();
+	} while (nodeName.equalsIgnoreCase(HTML.TAG_U)
+		|| nodeName.equalsIgnoreCase(HTML.TAG_B)
+		|| nodeName.equalsIgnoreCase(HTML.TAG_I));
+	return nodeName;
     }
 }
