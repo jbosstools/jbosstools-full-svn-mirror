@@ -311,14 +311,14 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	private String getPageLocale(VpePageContext pageContext, IDOMElement sourceElement) {
 		IStructuredModel model = null;
 		try {
-			//TODO JBIDE-788 Max Areshkau Fix That
-//			List<TaglibData> taglibs = pageContext.getTagLibs();
+
+			List<TaglibData> taglibs = pageContext.getTagLibs(sourceElement);
 			// Find F tracker
 			TaglibData fTD = null;
-//			for (int i = 0; i < taglibs.size(); i++) {
-//				TaglibData td = (TaglibData)taglibs.get(i);
-//				if ("http://java.sun.com/jsf/core".equals(td.getUri())) fTD = td;
-//			}
+			for (int i = 0; i < taglibs.size(); i++) {
+				TaglibData td = (TaglibData)taglibs.get(i);
+				if ("http://java.sun.com/jsf/core".equals(td.getUri())) fTD = td;
+			}
 	
 			if (fTD == null || fTD.getPrefix() == null || fTD.getPrefix().length() == 0) return null;
 

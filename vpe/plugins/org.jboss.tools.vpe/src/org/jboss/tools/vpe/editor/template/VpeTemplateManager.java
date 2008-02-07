@@ -236,26 +236,7 @@ public class VpeTemplateManager {
 			return sourceNode.getNodeName();
 		}
 		
-		TLDCMDocumentManager tldcmDocumentManager= TaglibController.getTLDCMDocumentManager(pageContext.getSourceBuilder().getStructuredTextViewer().getDocument());
-			
-		//we are editing jsp page added by Max Areshkau JBIDE-788
-		if(tldcmDocumentManager!=null) {
-				List<TaglibTracker> taglibs_JSP =  tldcmDocumentManager.getTaglibTrackers();
-				for (TaglibTracker taglibTracker : taglibs_JSP) {
-					if(sourcePrefix.equals(taglibTracker.getPrefix())) {
-						String sourceNodeUri = taglibTracker.getURI();
-						String templatePrefix = getTemplateTaglibPrefix(sourceNodeUri);
-						if(templatePrefix != null) {
-							return templatePrefix+":"+sourceNode.getLocalName();
-						} else {
-							return null;
-						}
-					}
-				}
-			} 
-
-	
-		List<TaglibData> taglibs = XmlUtil.processNode(sourceNode);
+		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,pageContext.getSourceBuilder().getStructuredTextViewer().getDocument());
 		
 		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix, taglibs);		
 

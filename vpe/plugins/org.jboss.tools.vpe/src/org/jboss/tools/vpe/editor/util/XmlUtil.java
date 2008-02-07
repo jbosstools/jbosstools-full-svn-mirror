@@ -13,10 +13,13 @@ package org.jboss.tools.vpe.editor.util;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jst.jsp.core.internal.contentmodel.TaglibController;
+import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TLDCMDocumentManager;
+import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TaglibTracker;
+import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpePlugin;
 import org.w3c.dom.Attr;
@@ -66,11 +69,11 @@ public class XmlUtil {
 	
 	/**
 	 * Returns List of taglibs which are available for current node.
-	 *  
+	 * should be used only for xml documents
 	 * @param node
 	 * @return
 	 */
-	public static List<TaglibData> processNode(Node node) {
+	private static List<TaglibData> getTaglibsForNode(Node node) {
 		
 		List<TaglibData> taglibs = new ArrayList<TaglibData>();
 		
@@ -85,7 +88,7 @@ public class XmlUtil {
 			if (null != attribList) {
 				for (int i = 0; i < attribList.getLength(); i++) {
 					Node tmp = attribList.item(i);
-					processAttribute(taglibs,(Attr)tmp, false);
+					processAttribute(taglibs,(Attr)tmp);
 				}
 			}	
 			currentNode = currentNode.getParentNode();			
@@ -94,13 +97,41 @@ public class XmlUtil {
 
 		return taglibs;
 	}
+	
+	/**
+	* Calculates list of taglibs for current node adn document
+	* 	we use document only if we works with jsp pages
+	*  otherwise  we works with node 
+	* @param source
+	* @param document
+	* @return collection of taglibs
+	*/	
+	public static List<TaglibData> getTaglibsForNode(Node source,IDocument document) {
+		
+		List<TaglibData> taglibData = new ArrayList<TaglibData>();
+			
+		TLDCMDocumentManager tldcmDocumentManager= TaglibController.getTLDCMDocumentManager(document);
+		if(tldcmDocumentManager!=null) {
+				List<TaglibTracker> taglibs_JSP =  tldcmDocumentManager.getTaglibTrackers();
+				for (TaglibTracker taglibTracker : taglibs_JSP) {
+					addTaglib(taglibData, taglibTracker.getURI(), taglibTracker.getPrefix(), true);
+				}
+		}
+		
+		if(taglibData.size()==0) {
+			
+			taglibData = getTaglibsForNode(source);
+		}
+		
+		return taglibData;
+	} 
 	/**
 	 * Processes taglib attribute
 	 * @param taglibs
 	 * @param attr
 	 * @param bScopePrefix
 	 */	
-	private static void processAttribute(List<TaglibData> taglibs, Attr attr, boolean bScopePrefix) {
+	private static void processAttribute(List<TaglibData> taglibs, Attr attr) {
 
 		String startStr = "xmlns:";
 		String name = attr.getName();
@@ -108,7 +139,7 @@ public class XmlUtil {
 			return;
 		}
 		name = name.substring(startStr.length());
-		addTaglib(taglibs , attr.getValue(), name, true, bScopePrefix);
+		addTaglib(taglibs , attr.getValue(), name, true);
 		return;
 	}
 	
@@ -120,11 +151,11 @@ public class XmlUtil {
 	 * @param ns
 	 * @param bScopePrefix
 	 */
-	private static void addTaglib(List<TaglibData> taglibs, String newUri, String newPrefix, boolean ns, boolean bScopePrefix) {	
+	private static void addTaglib(List<TaglibData> taglibs, String newUri, String newPrefix, boolean ns) {	
 		boolean bHasSame = false;
 		for (int i = 0; i < taglibs.size(); i++) {
 			TaglibData taglib = (TaglibData)taglibs.get(i);
-			if (bScopePrefix && newPrefix.equals(taglib.getPrefix())) {
+			if (newPrefix.equals(taglib.getPrefix())) {
 				return;
 			}
 			if (newUri.equals(taglib.getUri()) && newPrefix.equals(taglib.getPrefix()) && ns == taglib.isNs()) {
@@ -150,8 +181,7 @@ public class XmlUtil {
 				if(data.getPrefix()!=null && data.getPrefix().equalsIgnoreCase(prefix)) {
 					 return data;
 				}
-			}
-			
+			}	
 			return null;
-	}
+	}	
 }

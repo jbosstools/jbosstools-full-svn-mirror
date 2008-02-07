@@ -113,6 +113,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     private VpeDnD dnd;
     private nsIDOMNode headNode;
     private List includeStack;
+    //TODO Max Areshkau JBIDE-1457
     boolean rebuildFlag = false;
 
     /** faceletFile */

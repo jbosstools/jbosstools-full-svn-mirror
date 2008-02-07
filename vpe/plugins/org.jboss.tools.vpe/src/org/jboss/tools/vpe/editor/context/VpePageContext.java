@@ -16,10 +16,14 @@ import java.util.List;
 import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jst.jsp.core.internal.contentmodel.TaglibController;
+import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TLDCMDocumentManager;
+import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TaglibTracker;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.jboss.tools.common.kb.KbConnectorFactory;
 import org.jboss.tools.common.kb.KbConnectorType;
 import org.jboss.tools.common.kb.wtp.WtpKbConnector;
@@ -41,6 +45,7 @@ import org.jboss.tools.vpe.editor.css.TaglibReferenceList;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.FileUtil;
+import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -139,33 +144,56 @@ public class VpePageContext implements IVisualContext {
 		}
 	}
 	
-//	public boolean isCorrectNS(Node sourceNode) {
-//		String sourcePrefix = sourceNode.getPrefix();
-//		if (sourcePrefix == null || ((ElementImpl)sourceNode).isJSPTag()) {
-//			return true;
-//		}
-//		for (int i = 0; i < taglibs.size(); i++) {
-//			TaglibData taglib = (TaglibData)taglibs.get(i);
-//			if (sourcePrefix.equals(taglib.getPrefix())) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
+	/**
+	 * Checks for URI for source node was registred on page 
+	 * @param sourceNode
+	 * @return true - if uri was registred
+	 * 			false- if uri doesn't was registered
+	 */
+	public boolean isCorrectNS(Node sourceNode) {
+		String sourcePrefix = sourceNode.getPrefix();
+		
+		if (sourcePrefix == null || ((ElementImpl)sourceNode).isJSPTag()) {
+			return true;
+		}
+		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,this.getSourceBuilder().getStructuredTextViewer().getDocument());
+		
+		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix, taglibs);
+		
+		if(sourceNodeTaglib!=null) {
+			
+			return true;
+			}
+		return false;
+	}
+	/**
+	 * Returns 
+	 * @param sourceNode
+	 * @return
+	 */
 	
-//	public String getSourceTaglibUri(Node sourceNode) {
-//		String sourcePrefix = sourceNode.getPrefix();
-//		if (sourcePrefix == null || ((ElementImpl)sourceNode).isJSPTag()) {
-//			return null;
-//		}
-//		for (int i = 0; i < taglibs.size(); i++) {
-//			TaglibData taglib = (TaglibData)taglibs.get(i);
-//			if (sourcePrefix.equals(taglib.getPrefix())) {
-//				return taglib.getUri();
-//			}
-//		}
-//		return null;
-//	}
+	public String getSourceTaglibUri(Node sourceNode) {
+		
+		String sourcePrefix = sourceNode.getPrefix();
+		if (sourcePrefix == null || ((ElementImpl) sourceNode).isJSPTag()) {
+			return null;
+		}
+
+		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,
+				this.getSourceBuilder()
+				.getStructuredTextViewer().getDocument());
+
+		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix,
+				taglibs);
+
+		if (sourceNodeTaglib == null) {
+
+			return null;
+		}
+		String sourceNodeUri = sourceNodeTaglib.getUri();
+
+		return sourceNodeUri;
+	}
 
 	public VpeEditorPart getEditPart() {
 		return editPart;
@@ -315,9 +343,9 @@ public class VpePageContext implements IVisualContext {
 		
 	}
 
-	public List<TaglibData> getTagLibs() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<TaglibData> getTagLibs(Node sourceNode) {
+		
+		return XmlUtil.getTaglibsForNode(sourceNode, this.getSourceBuilder().getStructuredTextViewer().getDocument());
 	}
 
 	public void removeTaglibListener(VpeTaglibListener listener) {

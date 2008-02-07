@@ -472,14 +472,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			}
 			break;
 		}
+		//TODO Max Areshkau JBIDE-1457
 		if (visualBuilder.rebuildFlag) {
 //			pageContext.fireTaglibsChanged();
 		} 
-		//TODO Max Areshkau JBIDE-788
-//		else if (pageContext.isTaglibChanged()) {
-//			visualRefreshImpl();
-////			pageContext.fireTaglibsChanged();
-//		}
+
 		switcher.stopActiveEditor();
 	}
 
@@ -995,20 +992,19 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			VpeElementMapping elementMapping = (VpeElementMapping)domMapping.getNodeMapping(node);
 			if (elementMapping != null && elementMapping.getTemplate() != null && elementMapping.getTemplate().getType() == VpeHtmlTemplate.TYPE_ANY) {
 				final VpeTemplate selectedTemplate = elementMapping.getTemplate();
-				//TODO Max Areshkau JBIDE-788 Fix That
-//				manager.add(new VpeAction("Template", node) {  //$NON-NLS-1$
-//					public void  run() {
-//						boolean isCorrectNS = pageContext.isCorrectNS(actionNode);
-//						VpeAnyData data = null;
-//						if (isCorrectNS) {
-//							data = selectedTemplate.getAnyData();
-//							data.setUri(pageContext.getSourceTaglibUri(actionNode));
-//							data.setName(actionNode.getNodeName());
-//						}
-//						data = editAnyData(sourceEditor, isCorrectNS, data);
-//						if (data != null && data.isChanged()) templateManager.setAnyTemplate(data);
-//					}
-//				});
+				manager.add(new VpeAction("Template", node) {  //$NON-NLS-1$
+					public void  run() {
+						boolean isCorrectNS = pageContext.isCorrectNS(actionNode);
+						VpeAnyData data = null;
+						if (isCorrectNS) {
+							data = selectedTemplate.getAnyData();
+							data.setUri(pageContext.getSourceTaglibUri(actionNode));
+							data.setName(actionNode.getNodeName());
+						}
+						data = editAnyData(sourceEditor, isCorrectNS, data);
+						if (data != null && data.isChanged()) templateManager.setAnyTemplate(data);
+					}
+				});
 
 				manager.add(new Separator());
 			}
