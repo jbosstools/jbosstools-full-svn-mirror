@@ -156,18 +156,10 @@
 				automatically. The web.xml file editor provided by JBoss Developer Studio is
 				available in two modes: <property>tree</property> and <property>source</property>.</para>
 			<figure>
-				<title>Web.xml in Design Mode</title>
+				<title>Web.xml in Design and Source Mode</title>
 				<mediaobject>
 					<imageobject>
-						<imagedata fileref="images/jsp_application/jsp_application_6.png"/>
-					</imageobject>
-				</mediaobject>
-			</figure>
-			<figure>
-				<title>Web.xml in Source Mode</title>
-				<mediaobject>
-					<imageobject>
-						<imagedata fileref="images/jsp_application/jsp_application_7.png"/>
+						<imagedata fileref="images/jsp_application/jsp_application_6.png" scale="80"/>
 					</imageobject>
 				</mediaobject>
 			</figure>
