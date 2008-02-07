@@ -214,7 +214,7 @@
 					<title>Project Archives</title>
 					<mediaobject>
 						<imageobject>
-							<imagedata fileref="images/jsp_application/jsp_application_8.png"/>
+							<imagedata fileref="images/jsp_application/jsp_application_8.png" scale="80"/>
 						</imageobject>
 					</mediaobject>
 				</figure>
