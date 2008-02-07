@@ -528,9 +528,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     so that you don&apos;t need to download any additional software and can test your
     application in a Web browser right away.</para>
    <para>If you want to use a different JBoss server installation, after JBoss Developer Studio is
-    installed open Servers View (select <emphasis>
-     <property>Window &gt; Show View &gt; Others &gt; Server &gt; Servers</property>
-    </emphasis>), then right click on this <emphasis>
+    installed open Servers View (select <emphasis><property>Window &gt; Show View &gt; Others &gt; Server &gt; Servers</property>),</emphasis> then right click on this <emphasis>
      <property>view &gt; New &gt; Server</property>
     </emphasis> and follow the wizards steps to point to another Jboss server installation.</para>
    <para>JBoss Developer Studio works with any servlet container, not just JBoss. For more
@@ -562,9 +560,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <para>
     <emphasis role="bold">Can I import a .war file?</emphasis>
    </para>
-   <para>Yes. Select <emphasis>
-     <property>File &gt; Import &gt; Web &gt; WAR file</property>
-    </emphasis>, then follow importing steps.</para>
+   <para>Yes. Select <emphasis><property>File &gt; Import &gt; Web &gt; WAR file</property>,
+    </emphasis> then follow importing steps.</para>
   </section>
   <section id="Troubleshooting">
    <title>Troubleshooting, Problems, Configuration, Error Messages</title>

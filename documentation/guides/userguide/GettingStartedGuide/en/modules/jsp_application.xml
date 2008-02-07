@@ -84,9 +84,8 @@
 			&quot;Hello World!&quot; message.</para>
 		<itemizedlist continuation="continues">
 			<listitem>
-				<para>Right click <emphasis>
-						<property>WebContent &gt; New &gt; JSP</property>
-					</emphasis>.</para>
+				<para>Right click <emphasis><property>WebContent &gt; New &gt; JSP</property>.
+					</emphasis></para>
 			</listitem>
 			<listitem>
 				<para>Type &quot;hello.jsp&quot; for a file name and click the <emphasis>
@@ -261,8 +260,8 @@
 					</listitem>
 					<listitem>
 						<para>Click <emphasis>
-								<property>Finish</property>
-							</emphasis>. The <emphasis>.war</emphasis> file will appear in Package
+								<property>Finish</property>.
+							</emphasis> The <emphasis>.war</emphasis> file will appear in Package
 							Explorer and in Project archives view as structure tree: <figure>
 								<title>Archive is Created</title>
 								<mediaobject>
@@ -366,12 +365,12 @@
 			<itemizedlist continuation="continues">
 				<listitem>
 					<para>Click the Run icon or right click your project folder and select <emphasis>
-							<property>Run As &gt; Run on Server</property>
-						</emphasis>. If you haven&apos;t made any changes in web.xml file or
+							<property>Run As &gt; Run on Server</property>.
+						</emphasis> If you haven&apos;t made any changes in web.xml file or
 						cleared it out you can launch the application by right clicking the
 						hello.jsp page and selecting <emphasis>
-							<property>Run on the Server</property>
-						</emphasis>.</para>
+							<property>Run on the Server</property>.
+						</emphasis></para>
 				</listitem>
 			</itemizedlist>
 			<figure>

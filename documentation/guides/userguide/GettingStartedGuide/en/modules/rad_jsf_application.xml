@@ -38,8 +38,8 @@
             <listitem>
                 <para>In Web Projects View (if it is not open select <emphasis>
                         <property>Window &gt; Show View &gt; Others &gt; JBoss Tools Web
-                            &gt; Web Projects View</property>
-                    </emphasis>) click <emphasis>
+                            &gt; Web Projects View</property>)
+                    </emphasis> click <emphasis>
                         <property>Create New JSF Project</property>
                     </emphasis> button. <figure>
                         <title>Create New JSF Project</title>
@@ -643,8 +643,8 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
                 </listitem>
                 <listitem>
                     <para>Click on <emphasis>
-                            <property>outputText</property>
-                        </emphasis>, drag the cursor over to the editor, and drop it inside the blue
+                            <property>outputText</property>,
+                        </emphasis> drag the cursor over to the editor, and drop it inside the blue
                         box in the editor</para>
                 </listitem>
 
@@ -677,8 +677,8 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
                     <para>Select <emphasis>
                             <property>how_to_play</property>
                         </emphasis> value and click <emphasis>
-                            <property>Ok</property>
-                        </emphasis>. Then click <emphasis>
+                            <property>Ok</property>.
+                        </emphasis> Then click <emphasis>
                             <property>Finish</property>
                         </emphasis>
                         <figure>
@@ -718,8 +718,8 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
                 </listitem>
                 <listitem>
                     <para>On the Palette click on <emphasis>
-                            <property>inputText</property>
-                        </emphasis>, drag the cursor over to the editor, and drop it inside the
+                            <property>inputText</property>,
+                        </emphasis> drag the cursor over to the editor, and drop it inside the
                         editor after the text.</para>
                 </listitem>
                 <listitem>
@@ -736,8 +736,8 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
                 </listitem>
                 <listitem>
                     <para>On the Palette click on <emphasis>
-                            <property>inputText</property>
-                        </emphasis>, drag the cursor over to the editor, and drop it inside the
+                            <property>inputText</property>,
+                        </emphasis> drag the cursor over to the editor, and drop it inside the
                         editor after the text</para>
                 </listitem>
                 <listitem>
@@ -805,8 +805,8 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
             <itemizedlist>
                 <listitem>
                     <para>Click <emphasis>
-                            <property>Ok</property>
-                        </emphasis>, then click <emphasis>
+                            <property>Ok</property>,
+                        </emphasis> then click <emphasis>
                             <property>Finish</property>
                         </emphasis></para>
                 </listitem>
@@ -836,8 +836,8 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
                 </listitem>
                 <listitem>
                     <para>On the Palette, click on <emphasis>
-                            <property>commandButton</property>
-                        </emphasis>, drag the cursor over to the editor, and drop it inside the
+                            <property>commandButton</property>,
+                        </emphasis> drag the cursor over to the editor, and drop it inside the
                         editor after the inputText component.</para>
                 </listitem>
                 <listitem>
@@ -878,15 +878,10 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
                         </emphasis></para>
                 </listitem>
                 <listitem>
-                    <para>In Source mode add <emphasis role="bold">
-                            <property>&lt;br/&gt;</property>
-                        </emphasis> tags between <emphasis role="bold">
-                            <property>&lt;outputText&gt;</property>
-                        </emphasis>, <emphasis role="bold">
-                            <property>&lt;inputText&gt;</property>
-                        </emphasis> and <emphasis role="bold">
-                            <property>&lt;commandButton&gt;</property>
-                        </emphasis> components to place them on different lines</para>
+                    <para>In Source mode add <emphasis role="bold"><property>&lt;br/&gt;</property></emphasis> 
+                        tags between <emphasis role="bold"><property>&lt;outputText&gt;</property></emphasis>, 
+                        <emphasis role="bold"><property>&lt;inputText&gt;</property></emphasis> 
+                        and <emphasis role="bold"><property>&lt;commandButton&gt;</property></emphasis> components to place them on different lines</para>
                 </listitem>
             </itemizedlist>
             <para>inputnumber.jsp page should look like this:</para>
