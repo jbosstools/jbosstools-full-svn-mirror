@@ -4,6 +4,7 @@ import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.build.ModelChangeListener;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
+import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.IPreferenceManager;
 import org.jboss.ide.eclipse.archives.core.model.IRuntimeVariables;
@@ -34,5 +35,9 @@ public class AntArchivesCore extends ArchivesCore {
 
 	public void preRegister(IPath project) {
 		
+	}
+
+	protected IArchivesLogger createLogger() {
+		return null;
 	}
 }

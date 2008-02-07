@@ -1,6 +1,7 @@
 package org.jboss.ide.eclipse.archives.core;
 
 import org.eclipse.core.runtime.IPath;
+import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.IPreferenceManager;
 import org.jboss.ide.eclipse.archives.core.model.IRuntimeVariables;
@@ -22,12 +23,14 @@ public abstract class ArchivesCore {
 	private IRuntimeVariables variables;
 	private IExtensionManager extensionManager;
 	private IPreferenceManager preferenceManager;
+	private IArchivesLogger logger;
 	
 	public ArchivesCore(int runType) {
 		this.runType = runType;
 		variables = createVariables();
 		extensionManager = createExtensionManager();
 		preferenceManager = createPreferenceManager();
+		logger = createLogger();
 		
 		instance = this;
 	}
@@ -35,6 +38,7 @@ public abstract class ArchivesCore {
 	protected abstract IRuntimeVariables createVariables();
 	protected abstract IExtensionManager createExtensionManager();
 	protected abstract IPreferenceManager createPreferenceManager();
+	protected abstract IArchivesLogger createLogger();
 	
 	public boolean isWorkspaceRuntype() {
 		return runType == WORKSPACE;
@@ -48,6 +52,9 @@ public abstract class ArchivesCore {
 	}
 	public IPreferenceManager getPreferenceManager() {
 		return preferenceManager;
+	}
+	public IArchivesLogger getLogger() {
+		return logger;
 	}
 	
 	public abstract void preRegister(IPath project);

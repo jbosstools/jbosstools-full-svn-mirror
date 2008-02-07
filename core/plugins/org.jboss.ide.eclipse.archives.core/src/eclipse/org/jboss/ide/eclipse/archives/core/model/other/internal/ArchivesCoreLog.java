@@ -8,12 +8,13 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.ide.eclipse.archives.core;
+package org.jboss.ide.eclipse.archives.core.model.other.internal;
 
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 
 /**
  * @author eskimo
@@ -22,7 +23,7 @@ import org.eclipse.core.runtime.Status;
  *       This specific implementation should belong in an eclipse-specific
  *       class. 
  */
-public class ArchivesCoreLog {
+public class ArchivesCoreLog implements IArchivesLogger {
 	/**
 	 * Copy of ArchiveCorePlugin.PLUGIN_ID to break dependency cycle between 
 	 * jars in this plug-in
@@ -33,7 +34,7 @@ public class ArchivesCoreLog {
 	
 	static ILog log = Platform.getLog(Platform.getBundle(PLUGIN_ID));
 	
-	public static void log(int severety, String message,Throwable ise) {
+	public void log(int severety, String message,Throwable ise) {
 		IStatus status = new Status(severety, PLUGIN_ID, message, ise);
 		log.log(status);
 	}

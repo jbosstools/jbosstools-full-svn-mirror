@@ -27,7 +27,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -37,9 +36,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
-import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
 import org.jboss.xb.binding.JBossXBException;
@@ -74,7 +73,7 @@ public class XMLBinding {
 			stream.close();
 			initialized = true;
 		} catch (IOException e) {
-			Trace.trace(XMLBinding.class, e);
+			ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, e.getMessage(), e);
 		}
 	}
 	
@@ -111,7 +110,7 @@ public class XMLBinding {
 					monitor.worked(1);
 					
 				} catch (JBossXBException e) {
-					Trace.trace(XMLBinding.class, e);
+					ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, e.getMessage(), e);
 				}
 			}
 		});

@@ -31,9 +31,9 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
-import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.model.events.EventManager;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFileSetImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFolderImpl;
@@ -237,7 +237,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 				
 				if (packages == null) {
 					// Empty / non-working XML file loaded
-					Trace.trace(getClass(), "WARNING: .packages file for project " + project.lastSegment() + " is empty or contains the wrong content");
+					ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, "Could not unmarshall packages file", null);
 					return;
 				}
 				root = new ArchiveModelNode(project, packages, this);
@@ -249,7 +249,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 				fireRegisterProjectEvent(oldRoot, root);
 				monitor.worked(1);
 			} catch (FileNotFoundException e) {
-				Trace.trace(getClass(), e);
+				ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, e.getMessage(), e);
 			}
 		} else {
 			// file not found, just create some default xbpackages and insert them

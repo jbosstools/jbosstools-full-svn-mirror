@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.jboss.ide.eclipse.archives.core.ArchivesCoreLog;
+import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension;
@@ -156,7 +156,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 				}
 				matchingPaths = paths;
 			} catch( IllegalStateException ise ) {
-				ArchivesCoreLog.log(IStatus.WARNING, "Could not create directory scanner", ise);
+				ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, "Could not create directory scanner", ise);
 			}
 		}
 		return scanner;

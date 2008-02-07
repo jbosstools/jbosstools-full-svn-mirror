@@ -27,8 +27,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.jboss.ide.eclipse.archives.core.ArchivesCoreLog;
+import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
+import org.jboss.ide.eclipse.archives.core.model.other.internal.ArchivesCoreLog;
 
 /**
  * Utility methods and entry points for model-related APIs
@@ -102,7 +103,7 @@ public class ArchivesModelCore {
 			}
 			return paths;
 		} catch( IllegalStateException ise ) {
-			ArchivesCoreLog.log(IStatus.WARNING, "Error creating directory scanner", ise);
+			ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, "Error creating directory scanner", ise);
 			return new IPath[]{};
 		}
 	}

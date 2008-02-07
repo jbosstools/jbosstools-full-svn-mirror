@@ -6,11 +6,12 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
-import org.jboss.ide.eclipse.archives.core.Trace;
+import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFileSetImpl;
@@ -41,7 +42,7 @@ public class WorkspaceJARArchiveType extends AbstractArchiveType {
 		try {
 			outputPath = javaProject.getOutputLocation();
 		} catch (JavaModelException e) {
-			Trace.trace(WorkspaceJARArchiveType.class, e);
+			ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, e.getMessage(), e);
 			return null;
 		}
 		

@@ -6,6 +6,7 @@ import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.build.ModelChangeListenerWithRefresh;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
+import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.IPreferenceManager;
 import org.jboss.ide.eclipse.archives.core.model.IRuntimeVariables;
@@ -36,6 +37,15 @@ public class WorkspaceArchivesCore extends ArchivesCore {
 
 	public void preRegister(IPath project) {
 		ProjectUtils.addProjectNature(project);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.ArchivesCore#createLogger()
+	 */
+	@Override
+	protected IArchivesLogger createLogger() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

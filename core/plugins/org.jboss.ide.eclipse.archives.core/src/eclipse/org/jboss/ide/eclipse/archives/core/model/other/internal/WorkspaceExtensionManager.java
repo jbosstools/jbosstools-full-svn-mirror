@@ -29,9 +29,10 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
-import org.jboss.ide.eclipse.archives.core.Trace;
+import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
 import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
 
@@ -63,9 +64,9 @@ public class WorkspaceExtensionManager implements IExtensionManager {
 					IArchiveType type = (IArchiveType)executable;
 					archiveTypes.put(type.getId(), type);
 				} catch (InvalidRegistryObjectException e) {
-					Trace.trace(WorkspaceExtensionManager.class, e);
+					ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, e.getMessage(), e);
 				} catch( CoreException e ) {
-					Trace.trace(WorkspaceExtensionManager.class, e);
+					ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, e.getMessage(), e);
 				}
 			}
 		}
