@@ -108,10 +108,12 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 				} else if (VpeTemplateManager.TAG_ANY.equals(name)) {
 					type = TYPE_ANY;
 					creator = new VpeAnyCreator(templateSection, dependencyMap, caseSensitive);
-				} else if (VpeTemplateManager.TAG_TAGLIB.equals(name)) {
-					type = TYPE_TAGLIB;
-					creator = new VpeTaglibCreator(templateSection, dependencyMap);
-				} else if (VpeTemplateManager.TAG_LINK.equals(name)) {
+				} 
+//				else if (VpeTemplateManager.TAG_TAGLIB.equals(name)) {
+//					type = TYPE_TAGLIB;
+//					creator = new VpeTaglibCreator(templateSection, dependencyMap);
+//				}
+				else if (VpeTemplateManager.TAG_LINK.equals(name)) {
 					type = TYPE_LINK;
 					creator = new VpeLinkCreator(templateSection, dependencyMap, caseSensitive);
 				} else if (VpeTemplateManager.TAG_LOAD_BUNDLE.equals(name)) {
@@ -308,14 +310,15 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 
 	private String getPageLocale(VpePageContext pageContext, IDOMElement sourceElement) {
 		IStructuredModel model = null;
-		try {	
-			List<TaglibData> taglibs = pageContext.getTagLibs();
+		try {
+			//TODO JBIDE-788 Max Areshkau Fix That
+//			List<TaglibData> taglibs = pageContext.getTagLibs();
 			// Find F tracker
 			TaglibData fTD = null;
-			for (int i = 0; i < taglibs.size(); i++) {
-				TaglibData td = (TaglibData)taglibs.get(i);
-				if ("http://java.sun.com/jsf/core".equals(td.getUri())) fTD = td;
-			}
+//			for (int i = 0; i < taglibs.size(); i++) {
+//				TaglibData td = (TaglibData)taglibs.get(i);
+//				if ("http://java.sun.com/jsf/core".equals(td.getUri())) fTD = td;
+//			}
 	
 			if (fTD == null || fTD.getPrefix() == null || fTD.getPrefix().length() == 0) return null;
 

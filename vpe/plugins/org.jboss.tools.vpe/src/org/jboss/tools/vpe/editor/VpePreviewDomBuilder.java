@@ -68,9 +68,8 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 		boolean registerFlag = isCurrentMainDocument();
 		switch (sourceNode.getNodeType()) {
 		case Node.ELEMENT_NODE:
-			Map xmlnsMap = createXmlns((Element)sourceNode);
+//			Map xmlnsMap = createXmlns((Element)sourceNode);
 			Set ifDependencySet = new HashSet();
-			getPageContext().setCurrentVisualNode(visualOldContainer);
 			VpeTemplate template = templateManager.getTemplate(getPageContext(), (Element)sourceNode, ifDependencySet);
 			VpeCreationData creationData;
 			
@@ -88,7 +87,6 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 				creationData = defTemplate.create(getPageContext(), sourceNode, getVisualDocument());
 			}
 			
-			getPageContext().setCurrentVisualNode(null);
 			nsIDOMElement visualNewElement;
 			visualNewElement = (nsIDOMElement)creationData.getNode();
 			setTooltip((Element)sourceNode, visualNewElement);
@@ -105,9 +103,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 					addChildren(template, sourceNode, visualOldContainer, childrenInfoList);
 				}
 			}
-			getPageContext().setCurrentVisualNode(visualOldContainer);
 			template.validate(getPageContext(), (Element)sourceNode, getVisualDocument(), creationData);
-			getPageContext().setCurrentVisualNode(null);
 			return visualNewElement;
 		case Node.TEXT_NODE:
 			return createTextNode(sourceNode, registerFlag);

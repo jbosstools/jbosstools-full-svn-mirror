@@ -19,7 +19,7 @@ import org.w3c.dom.Node;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeTemplateSet {
-	private List templates = new ArrayList();
+	private List<VpeTemplateSet> templates = new ArrayList<VpeTemplateSet>();
 	private VpeTemplate defTemplate;
 	
 	VpeTemplateSet(){

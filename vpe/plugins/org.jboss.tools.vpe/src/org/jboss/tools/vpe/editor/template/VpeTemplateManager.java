@@ -21,10 +21,17 @@ import java.util.Set;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jst.jsp.core.internal.contentmodel.TaglibController;
+import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TLDCMDocumentManager;
+import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TaglibTracker;
+import org.eclipse.jst.jsp.core.internal.contentmodel.tld.provisional.TLDDocument;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.jboss.tools.common.xml.XMLUtilities;
+import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.osgi.framework.Bundle;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -155,7 +162,11 @@ public class VpeTemplateManager {
 	private static VpeTemplateManager instance = null;
 	private static Object monitor = new Object();
 
+	/**
+	 * Contains Mapping from URI and namespace
+	 */
 	private Map<String,String> templateTaglibs = new HashMap<String,String>();
+	
 	private Map<String,VpeTemplateSet> caseSensitiveTags = new HashMap<String,VpeTemplateSet>();
 	private Map<String,VpeTemplateSet> ignoreSensitiveTags = new HashMap<String,VpeTemplateSet>();
 	private VpeTemplate defTemplate;
@@ -172,9 +183,6 @@ public class VpeTemplateManager {
 	 */
 	private static final String NAMESPACE_IDENTIFIER_ATTRIBUTE="namespaceIdentifier";
 	
-	static {
-//		withoutWhitespaceContainer.
-	}
 
 	private VpeTemplateManager() {
 	}
@@ -218,38 +226,56 @@ public class VpeTemplateManager {
 		}
 		return null;
 	}
-	
+
 	private String getTemplateName(VpePageContext pageContext, Node sourceNode) {
+		
 		String sourcePrefix = sourceNode.getPrefix();
+		
 		if (sourcePrefix == null || ((ElementImpl)sourceNode).isJSPTag() || "jsp".equals(sourcePrefix)) {
+			
 			return sourceNode.getNodeName();
 		}
-		String templatePrefix = pageContext.getTemplateTaglibPrefix(sourcePrefix);
-		if (templatePrefix != null) {
-			return templatePrefix + ":" + sourceNode.getLocalName();
+		
+		TLDCMDocumentManager tldcmDocumentManager= TaglibController.getTLDCMDocumentManager(pageContext.getSourceBuilder().getStructuredTextViewer().getDocument());
+			
+		//we are editing jsp page added by Max Areshkau JBIDE-788
+		if(tldcmDocumentManager!=null) {
+				List<TaglibTracker> taglibs_JSP =  tldcmDocumentManager.getTaglibTrackers();
+				for (TaglibTracker taglibTracker : taglibs_JSP) {
+					if(sourcePrefix.equals(taglibTracker.getPrefix())) {
+						String sourceNodeUri = taglibTracker.getURI();
+						String templatePrefix = getTemplateTaglibPrefix(sourceNodeUri);
+						if(templatePrefix != null) {
+							return templatePrefix+":"+sourceNode.getLocalName();
+						} else {
+							return null;
+						}
+					}
+				}
+			} 
+
+	
+		List<TaglibData> taglibs = XmlUtil.processNode(sourceNode);
+		
+		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix, taglibs);		
+
+		if(sourceNodeTaglib == null) {
+			
+			return null;
 		}
+		
+		String sourceNodeUri = sourceNodeTaglib.getUri();
+
+		
+		String templateTaglibPrefix = getTemplateTaglibPrefix(sourceNodeUri);
+
+		if(templateTaglibPrefix != null) {
+			
+			return templateTaglibPrefix+":"+sourceNode.getLocalName();
+		}
+
 		return null;
 	}
-
-	
-	
-	
-///////////////////////////////////////////////////////////////////////////	
-///////////////////////////////////////////////////////////////////////////	
-///////////////////////////////////////////////////////////////////////////	
-
-//	public VpeTemplateInfo createVisualCommentInfo(VpePageContext pageContext, Comment sourceComment, nsIDOMDocument visualDocument, nsIDOMElement visualParent) {
-//		VpeVisualElementInfo info = new VpeVisualElementInfo();
-//		VpeTemplate template = _getTemplate(pageContext, sourceComment, info);
-//		if (template == null || template.getType() != VpeHtmlTemplate.TYPE_COMMENT) {
-//			return null;
-//		}
-//		Map visualNodeMap = new HashMap();
-//		VpeCreatorInfo creatorInfo = template.createVisualComment(pageContext, sourceComment, visualDocument, visualParent, visualNodeMap);
-//		info.setTemplate(template);
-//		info.setVisualNodeMap(visualNodeMap);
-//		return new VpeTemplateInfo(info, creatorInfo);
-//	}
 	
 	public String getTemplateTaglibPrefix(String sourceUri) {
 		return (String)templateTaglibs.get(sourceUri);
@@ -299,7 +325,8 @@ public class VpeTemplateManager {
 						setTagElement((Element)node, confElement);
 					} else if (TAG_TEMPLATE.equals(node.getNodeName())) {
 						setDefTemplate(createTemplate((Element)node,confElement, true));
-					} else if (TAG_TEMPLATE_TAGLIB.equals(node.getNodeName())) {
+					}  
+					else if (TAG_TEMPLATE_TAGLIB.equals(node.getNodeName())) {
 						setTemplateTaglib((Element)node);
 					}
 				}
@@ -357,6 +384,10 @@ public class VpeTemplateManager {
 		}
 	}
 	
+	/**
+	 * Register templates taglibs from templates files
+	 * @param templateTaglibElement
+	 */
 	private void setTemplateTaglib(Element templateTaglibElement) {
 		String uri = templateTaglibElement.getAttribute(ATTR_DIRECTIVE_TAGLIB_URI);
 		String pefix = templateTaglibElement.getAttribute(ATTR_DIRECTIVE_TAGLIB_PREFIX);
@@ -366,42 +397,6 @@ public class VpeTemplateManager {
 			}
 		}
 	}
-	
-//	private VpeTemplate _getTemplate(VpePageContext pageContext, Node sourceNode, VpeVisualElementInfo info) {
-//		VpeTemplate template = _getTemplateImpl(pageContext, sourceNode, info);
-//		if (template != null) {
-//			return template;
-//		} else {
-//			return defTemplate;
-//		}
-//	}
-	
-//	private VpeTemplate _getTemplateImpl(VpePageContext pageContext, Node sourceNode, VpeVisualElementInfo info) {
-//		String name = getTemplateName(pageContext, sourceNode);
-//		if (name == null) {
-//			return null;
-//		}
-//		VpeTemplateSet set = (VpeTemplateSet)caseSensitiveTags.get(name);
-//		if (set != null) {
-//			return set._getTemplate(pageContext, sourceNode, info, true);
-//		}
-//		set = (VpeTemplateSet)ignoreSensitiveTags.get(name.toLowerCase());
-//		if (set != null) {
-//			return set._getTemplate(pageContext, sourceNode, info, false);
-//		}
-//		return null;
-//	}
-//	
-//	public VpeVisualElementInfo pseudoVisualElementInfo(VpePageContext pageContext, Element sourceElement, nsIDOMElement visualElement) {
-//		VpeVisualElementInfo info = new VpeVisualElementInfo();
-//		VpeTemplate template = _getTemplate(pageContext, sourceElement, info);
-//		Map visualNodeMap = new HashMap();
-//		template.pseudoVisualElement(pageContext, sourceElement, visualElement, visualNodeMap);
-//		info.setTemplate(template);
-//		info.setNode(visualElement);
-//		info.setVisualNodeMap(visualNodeMap);
-//		return info;
-//	}
 	
 	public void setAnyTemplate(VpeAnyData data) {
 		String elementName = data.getName();
@@ -460,7 +455,7 @@ public class VpeTemplateManager {
 		reload();
 	}
 	
-	private Element appendTaglib(Set prefixSet, Document document, Element root, VpeAnyData data) {
+	private Element appendTaglib(Set<?> prefixSet, Document document, Element root, VpeAnyData data) {
 		if (data.getPrefix() != null && data.getUri() != null &&
 				data.getPrefix().length() > 0 && data.getUri().length() > 0 &&
 				!prefixSet.contains(data.getPrefix())) {

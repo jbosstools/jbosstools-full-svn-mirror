@@ -11,13 +11,18 @@
 package org.jboss.tools.vpe.editor.util;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpePlugin;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -57,5 +62,96 @@ public class XmlUtil {
 				node.removeChild(children.item(i));
 			}
 		}
+	}
+	
+	/**
+	 * Returns List of taglibs which are available for current node.
+	 *  
+	 * @param node
+	 * @return
+	 */
+	public static List<TaglibData> processNode(Node node) {
+		
+		List<TaglibData> taglibs = new ArrayList<TaglibData>();
+		
+		if (node == null) {
+			
+			return taglibs;
+		}
+		
+		Node currentNode = node;
+		do {
+			NamedNodeMap attribList = currentNode.getAttributes();
+			if (null != attribList) {
+				for (int i = 0; i < attribList.getLength(); i++) {
+					Node tmp = attribList.item(i);
+					processAttribute(taglibs,(Attr)tmp, false);
+				}
+			}	
+			currentNode = currentNode.getParentNode();			
+
+		} while(currentNode!=null);
+
+		return taglibs;
+	}
+	/**
+	 * Processes taglib attribute
+	 * @param taglibs
+	 * @param attr
+	 * @param bScopePrefix
+	 */	
+	private static void processAttribute(List<TaglibData> taglibs, Attr attr, boolean bScopePrefix) {
+
+		String startStr = "xmlns:";
+		String name = attr.getName();
+		if (!name.startsWith(startStr)) {
+			return;
+		}
+		name = name.substring(startStr.length());
+		addTaglib(taglibs , attr.getValue(), name, true, bScopePrefix);
+		return;
+	}
+	
+	/**
+	 * Adds taglib to current taglibs
+	 * @param taglibs
+	 * @param newUri
+	 * @param newPrefix
+	 * @param ns
+	 * @param bScopePrefix
+	 */
+	private static void addTaglib(List<TaglibData> taglibs, String newUri, String newPrefix, boolean ns, boolean bScopePrefix) {	
+		boolean bHasSame = false;
+		for (int i = 0; i < taglibs.size(); i++) {
+			TaglibData taglib = (TaglibData)taglibs.get(i);
+			if (bScopePrefix && newPrefix.equals(taglib.getPrefix())) {
+				return;
+			}
+			if (newUri.equals(taglib.getUri()) && newPrefix.equals(taglib.getPrefix()) && ns == taglib.isNs()) {
+				bHasSame = true;
+				break;
+			}
+		}
+		if (!bHasSame) {
+			taglibs.add(new TaglibData(taglibs.size(), newUri, newPrefix, ns));
+		}
+	}
+	/**
+	 * Returns Taglib data by prefix
+	 * 
+	 * @param prefix
+	 * @param taglibData
+	 * @return
+	 */
+	public static TaglibData getTaglibForPrefix(String prefix, List<TaglibData> taglibData){
+				
+			for (TaglibData data : taglibData) {
+				
+				if(data.getPrefix()!=null && data.getPrefix().equalsIgnoreCase(prefix)) {
+					 return data;
+				}
+			}
+			
+			return null;
 	}
 }

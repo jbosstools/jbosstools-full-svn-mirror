@@ -23,45 +23,46 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 
-public class VpeXmlnsCreator extends VpeAbstractCreator {
-	private static final String ATTR_XMLNS = "xmlns";
-	
-	VpeXmlnsCreator(VpeDependencyMap dependencyMap) {
-		build(dependencyMap);
-	}
-		
-	private void build(VpeDependencyMap dependencyMap) {
-		if (dependencyMap != null) {
-			dependencyMap.setCreator(this, VpeExpressionBuilder.SIGNATURE_ANY_ATTR);
-		}
-	}
+public class VpeXmlnsCreator //extends VpeAbstractCreator
+{
+//	private static final String ATTR_XMLNS = "xmlns";
+//	
+//	VpeXmlnsCreator(VpeDependencyMap dependencyMap) {
+//		build(dependencyMap);
+//	}
+//		
+//	private void build(VpeDependencyMap dependencyMap) {
+//		if (dependencyMap != null) {
+//			dependencyMap.setCreator(this, VpeExpressionBuilder.SIGNATURE_ANY_ATTR);
+//		}
+//	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
-		NamedNodeMap attrs = ((Element)sourceNode).getAttributes();
-		if (attrs != null) {
-			for (int i = 0; i < attrs.getLength(); i++) {
-				addTaglib(pageContext, (Element)sourceNode, visualNodeMap, attrs.item(i).getNodeName());
-			}
-		}
-		return null;
-	}
+//	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
+//		NamedNodeMap attrs = ((Element)sourceNode).getAttributes();
+//		if (attrs != null) {
+//			for (int i = 0; i < attrs.getLength(); i++) {
+//				addTaglib(pageContext, (Element)sourceNode, visualNodeMap, attrs.item(i).getNodeName());
+//			}
+//		}
+//		return null;
+//	}
 
-	public void setAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name, String value) {
-		addTaglib(pageContext, sourceElement, visualNodeMap, name);
-	}
+//	public void setAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name, String value) {
+//		addTaglib(pageContext, sourceElement, visualNodeMap, name);
+//	}
 
-	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name) {
-		Object id = visualNodeMap.get(name);
-		if (id != null) {
-			pageContext.setTaglib(((Integer)id).intValue(), null, null, true);
-		}
-	}
+//	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name) {
+//		Object id = visualNodeMap.get(name);
+//		if (id != null) {
+////			pageContext.setTaglib(((Integer)id).intValue(), null, null, true);
+//		}
+//	}
 
-	private void addTaglib(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String attrName) {
-		Attr attr = sourceElement.getAttributeNode(attrName);
-		if (ATTR_XMLNS.equals(attr.getPrefix())) {
-			visualNodeMap.put(attr.getNodeName(), Integer.valueOf(attr.hashCode()));
-			pageContext.setTaglib(attr.hashCode(), attr.getNodeValue(), attr.getLocalName(), true);
-		}
-	}
+//	private void addTaglib(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String attrName) {
+//		Attr attr = sourceElement.getAttributeNode(attrName);
+//		if (ATTR_XMLNS.equals(attr.getPrefix())) {
+//			visualNodeMap.put(attr.getNodeName(), Integer.valueOf(attr.hashCode()));
+////			pageContext.setTaglib(attr.hashCode(), attr.getNodeValue(), attr.getLocalName(), true);
+//		}
+//	}
 }

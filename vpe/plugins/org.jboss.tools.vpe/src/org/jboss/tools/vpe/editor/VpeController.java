@@ -102,6 +102,7 @@ import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.model.util.ModelFeatureFactory;
 import org.jboss.tools.common.model.util.XModelTreeListenerSWTSync;
 import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
+import org.jboss.tools.jst.jsp.editor.IVisualContext;
 import org.jboss.tools.jst.jsp.editor.IVisualController;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.jst.web.tld.TLDToPaletteHelper;
@@ -160,7 +161,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-public class VpeController implements  INodeAdapter, IModelLifecycleListener, INodeSelectionListener, ITextSelectionListener, SelectionListener, EditorDomEventListener, VpeTemplateListener, XModelTreeListener, ResourceReferenceListListener, ISelectionChangedListener, IVisualController {
+public class VpeController implements INodeAdapter, IModelLifecycleListener, INodeSelectionListener, ITextSelectionListener, SelectionListener, EditorDomEventListener, VpeTemplateListener, XModelTreeListener, ResourceReferenceListListener, ISelectionChangedListener, IVisualController {
 	
 	StructuredTextEditor sourceEditor;
 	private MozillaEditor visualEditor;
@@ -196,7 +197,7 @@ public class VpeController implements  INodeAdapter, IModelLifecycleListener, IN
 	private VpeIncludeList includeList = new VpeIncludeList();
 	private VpeVisualInnerDragInfo innerDragInfo = null;
 	private FormatControllerManager toolbarFormatControllerManager = null;
-	private SelectionBar selectionBar = null;
+	private SelectionBar selectionBar = null; 
 	private XModelTreeListenerSWTSync optionsListener;
 	//Added by Max Areshkau Fix for JBIDE-1479
 	private UIJob job = null;
@@ -257,7 +258,7 @@ public class VpeController implements  INodeAdapter, IModelLifecycleListener, IN
 //		if (provider instanceof IPostSelectionProvider) 
 //			((IPostSelectionProvider) provider).addPostSelectionChangedListener(this);	
 //		else 
-			provider.addSelectionChangedListener(this);
+		provider.addSelectionChangedListener(this);
 
 //		ViewerSelectionManager selectionManager = sourceEditor.getViewerSelectionManager();
 //		selectionManager.addNodeSelectionListener(this);
@@ -271,9 +272,9 @@ public class VpeController implements  INodeAdapter, IModelLifecycleListener, IN
 		switcher.initActiveEditor();
 		
 		if (optionsListener == null) {
-			XModelObject optionsObject = ModelUtilities.getPreferenceModel().getByPath(VpePreference.EDITOR_PATH);
+	   	XModelObject optionsObject = ModelUtilities.getPreferenceModel().getByPath(VpePreference.EDITOR_PATH);
 			optionsListener = new XModelTreeListenerSWTSync(this);
-			optionsObject.getModel().addModelTreeListener(optionsListener);
+		optionsObject.getModel().addModelTreeListener(optionsListener);
 		}
 		
 
@@ -289,7 +290,7 @@ public class VpeController implements  INodeAdapter, IModelLifecycleListener, IN
 		relativeFolderReferenceListListener = RelativeFolderReferenceList.getInstance();
 		relativeFolderReferenceListListener.addChangeListener(this);
 		
-		pageContext.fireTaglibsChanged();
+//		pageContext.fireTaglibsChanged();
 	}
 
 	public void dispose() {
@@ -472,11 +473,13 @@ public class VpeController implements  INodeAdapter, IModelLifecycleListener, IN
 			break;
 		}
 		if (visualBuilder.rebuildFlag) {
-			pageContext.fireTaglibsChanged();
-		} else if (pageContext.isTaglibChanged()) {
-			visualRefreshImpl();
-			pageContext.fireTaglibsChanged();
-		}
+//			pageContext.fireTaglibsChanged();
+		} 
+		//TODO Max Areshkau JBIDE-788
+//		else if (pageContext.isTaglibChanged()) {
+//			visualRefreshImpl();
+////			pageContext.fireTaglibsChanged();
+//		}
 		switcher.stopActiveEditor();
 	}
 
@@ -625,7 +628,7 @@ public class VpeController implements  INodeAdapter, IModelLifecycleListener, IN
 			visualBuilder.setSelectionRectangle(null);
 			IDOMDocument sourceDocument = sourceModel.getDocument();
 			visualBuilder.rebuildDom(sourceDocument);
-			pageContext.fireTaglibsChanged();
+//			pageContext.fireTaglibsChanged();
 		}
 		switcher.stopActiveEditor();
 	}
@@ -861,11 +864,12 @@ public class VpeController implements  INodeAdapter, IModelLifecycleListener, IN
 				keyboardEvent.type=SWT.KeyDown;
 				
 				if(keyEvent.getKeyCode()==0) {
+					
 					keyboardEvent.keyCode=(int)keyEvent.getCharCode();
 				} else{
 					keyboardEvent.keyCode=(int)keyEvent.getKeyCode();			
 				}
-				
+					
 				// JBIDE-1627 
 				List<KeyStroke> possibleKeyStrokes = WorkbenchKeyboard.generatePossibleKeyStrokes(keyboardEvent);
 				IWorkbench iWorkbench = VpePlugin.getDefault().getWorkbench();
@@ -889,7 +893,6 @@ public class VpeController implements  INodeAdapter, IModelLifecycleListener, IN
 						}
 					}
 				}
-
 				//sends xulrunner event to eclipse environment
 				getXulRunnerEditor().getBrowser().notifyListeners(keyboardEvent.type, keyboardEvent);
 				
@@ -992,20 +995,20 @@ public class VpeController implements  INodeAdapter, IModelLifecycleListener, IN
 			VpeElementMapping elementMapping = (VpeElementMapping)domMapping.getNodeMapping(node);
 			if (elementMapping != null && elementMapping.getTemplate() != null && elementMapping.getTemplate().getType() == VpeHtmlTemplate.TYPE_ANY) {
 				final VpeTemplate selectedTemplate = elementMapping.getTemplate();
-				
-				manager.add(new VpeAction("Template", node) {  //$NON-NLS-1$
-					public void  run() {
-						boolean isCorrectNS = pageContext.isCorrectNS(actionNode);
-						VpeAnyData data = null;
-						if (isCorrectNS) {
-							data = selectedTemplate.getAnyData();
-							data.setUri(pageContext.getSourceTaglibUri(actionNode));
-							data.setName(actionNode.getNodeName());
-						}
-						data = editAnyData(sourceEditor, isCorrectNS, data);
-						if (data != null && data.isChanged()) templateManager.setAnyTemplate(data);
-					}
-				});
+				//TODO Max Areshkau JBIDE-788 Fix That
+//				manager.add(new VpeAction("Template", node) {  //$NON-NLS-1$
+//					public void  run() {
+//						boolean isCorrectNS = pageContext.isCorrectNS(actionNode);
+//						VpeAnyData data = null;
+//						if (isCorrectNS) {
+//							data = selectedTemplate.getAnyData();
+//							data.setUri(pageContext.getSourceTaglibUri(actionNode));
+//							data.setName(actionNode.getNodeName());
+//						}
+//						data = editAnyData(sourceEditor, isCorrectNS, data);
+//						if (data != null && data.isChanged()) templateManager.setAnyTemplate(data);
+//					}
+//				});
 
 				manager.add(new Separator());
 			}
@@ -1196,7 +1199,7 @@ public class VpeController implements  INodeAdapter, IModelLifecycleListener, IN
 			return;
 		}
 		visualRefreshImpl();
-		pageContext.fireTaglibsChanged();
+//		pageContext.fireTaglibsChanged();
 
 		switcher.stopActiveEditor();
 	}
@@ -2067,7 +2070,6 @@ public class VpeController implements  INodeAdapter, IModelLifecycleListener, IN
 			new DropData(
 				flavor,
 				data,
-				getPageContext(),
 				sourceEditor.getEditorInput(),
 				(ISourceViewer)sourceEditor.getAdapter(ISourceViewer.class), 
 				new VpeSelectionProvider(range.x,range.y),
@@ -2257,6 +2259,7 @@ public class VpeController implements  INodeAdapter, IModelLifecycleListener, IN
 	}
 	
 	public VpePageContext getPageContext() {
+		
 		return pageContext;
 	}
 

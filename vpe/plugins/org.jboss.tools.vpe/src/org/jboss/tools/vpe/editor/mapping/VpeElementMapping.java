@@ -10,9 +10,7 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.mapping;
 
-import java.util.Map;
 import java.util.Set;
-
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -22,7 +20,7 @@ import org.w3c.dom.Element;
 public class VpeElementMapping extends VpeNodeMapping {
 	private VpeTemplate template;
 	private Set ifDependencySet;
-	private Map xmlnsMap;
+//	private Map xmlnsMap;
 	private Object data;
 	private nsIDOMElement border;
 	
@@ -44,13 +42,13 @@ public class VpeElementMapping extends VpeNodeMapping {
 		return template;
 	}
 	
-	public Map getXmlnsMap() {
-		return xmlnsMap;
-	}
-	
-	public void setXmlnsMap(Map xmlnsMap) {
-		this.xmlnsMap = xmlnsMap;
-	}
+//	public Map getXmlnsMap() {
+//		return xmlnsMap;
+//	}
+//	
+//	public void setXmlnsMap(Map xmlnsMap) {
+//		this.xmlnsMap = xmlnsMap;
+//	}
 	
 	public Object getData() {
 		return data;

@@ -281,13 +281,13 @@ public class VpeDomMapping {
 			}
 			if (nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
 				VpeElementMapping elementMapping = (VpeElementMapping)nodeMapping;
-				Map xmlnsMap = elementMapping.getXmlnsMap();
-				if (xmlnsMap != null) {
-					for (Iterator iter = xmlnsMap.values().iterator(); iter.hasNext();) {
-						pageContext.setTaglib(((Integer)iter.next()).intValue(), null, null, true);
-					}
-					elementMapping.setXmlnsMap(null);
-				}
+//				Map xmlnsMap = elementMapping.getXmlnsMap();
+//				if (xmlnsMap != null) {
+//					for (Iterator iter = xmlnsMap.values().iterator(); iter.hasNext();) {
+//						pageContext.setTaglib(((Integer)iter.next()).intValue(), null, null, true);
+//					}
+//					elementMapping.setXmlnsMap(null);
+//				}
 				if (elementMapping.getBorder() != null) {
 					visualMap.remove(elementMapping.getBorder());
 				}

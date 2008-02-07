@@ -49,26 +49,26 @@ public class VpeJspRootCreator extends VpeAbstractCreator {
 
 	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name) {
 	    int address = getAddress(name);
-	    if (address > 0) {
-		    pageContext.setTaglib(address, null, null, true);
-	    }
+//	    if (address > 0) {
+//		    pageContext.setTaglib(address, null, null, true);
+//	    }
 //		setTaglib(pageContext, sourceElement);
 	}
 	
-	private void setTaglib(VpePageContext pageContext, Element sourceElement) {
-	    attrs = new ArrayList();
-	    NamedNodeMap attributes = sourceElement.getAttributes();
-	    for (int i = 0; i < attributes.getLength(); i++) {
-	        Attr attr = (Attr)attributes.item(i);
-			String name = attr.getNodeName();
-			if (name.indexOf(ATTR_PREFIX) == 0) {
-			    String prefix = name.substring(6);
-			    String uri = attr.getNodeValue();
-				pageContext.setTaglib(attr.hashCode(), uri, prefix, true);
-				attrs.add(new AttrElement(attr.hashCode(), name));
-			}
-	    }
-	}
+//	private void setTaglib(VpePageContext pageContext, Element sourceElement) {
+//	    attrs = new ArrayList();
+//	    NamedNodeMap attributes = sourceElement.getAttributes();
+//	    for (int i = 0; i < attributes.getLength(); i++) {
+//	        Attr attr = (Attr)attributes.item(i);
+//			String name = attr.getNodeName();
+//			if (name.indexOf(ATTR_PREFIX) == 0) {
+//			    String prefix = name.substring(6);
+//			    String uri = attr.getNodeValue();
+////				pageContext.setTaglib(attr.hashCode(), uri, prefix, true);
+//				attrs.add(new AttrElement(attr.hashCode(), name));
+//			}
+//	    }
+//	}
 
 	private int getAddress(String name) {
 	    for (int i = 0; i < attrs.size(); i++) {
