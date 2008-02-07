@@ -8,7 +8,6 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.ui.actions.INodeActionDelegate;
 import org.osgi.framework.Bundle;
 
@@ -25,7 +24,7 @@ public class NodeContribution implements Comparable {
 		try {
 			actionDelegate = (INodeActionDelegate) element.createExecutableExtension("class");
 		} catch (CoreException e) {
-			Trace.trace(getClass(), e);
+//TODO			Trace.trace(getClass(), e);
 		}
 		
 		String iconPath = element.getAttribute("icon");

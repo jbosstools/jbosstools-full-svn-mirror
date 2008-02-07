@@ -23,7 +23,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
  *       This specific implementation should belong in an eclipse-specific
  *       class. 
  */
-public class ArchivesCoreLog implements IArchivesLogger {
+public class ArchivesWorkspaceLogger implements IArchivesLogger {
 	/**
 	 * Copy of ArchiveCorePlugin.PLUGIN_ID to break dependency cycle between 
 	 * jars in this plug-in

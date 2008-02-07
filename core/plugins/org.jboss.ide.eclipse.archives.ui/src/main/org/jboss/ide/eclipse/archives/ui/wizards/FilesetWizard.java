@@ -2,12 +2,10 @@ package org.jboss.ide.eclipse.archives.ui.wizards;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
-import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.model.ArchiveNodeFactory;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
@@ -46,9 +44,9 @@ public class FilesetWizard extends Wizard {
 				}
 			});
 		} catch (InvocationTargetException e) {
-			Trace.trace(getClass(), e);
+//TODO			Trace.trace(getClass(), e);
 		} catch (InterruptedException e) {
-			Trace.trace(getClass(), e);
+//TODO			Trace.trace(getClass(), e);
 		}
 		
 		} catch(Exception e) {e.printStackTrace();}

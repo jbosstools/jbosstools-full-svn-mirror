@@ -10,7 +10,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IActionDelegate;
-import org.jboss.ide.eclipse.archives.core.Trace;
 import org.osgi.framework.Bundle;
 
 /**
@@ -30,7 +29,7 @@ public class NewArchiveAction {
 		try {
 			action = (IActionDelegate) element.createExecutableExtension("class");
 		} catch (CoreException e) {
-			Trace.trace(getClass(), e);
+//TODO			Trace.trace(getClass(), e);
 		}
 		
 		String iconPath = element.getAttribute("icon");

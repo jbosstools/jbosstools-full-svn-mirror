@@ -14,7 +14,6 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
-import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
@@ -102,9 +101,9 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 					}
 				});
 			} catch (InvocationTargetException e) {
-				Trace.trace(getClass(), e);
+//TODO				Trace.trace(getClass(), e);
 			} catch (InterruptedException e) {
-				Trace.trace(getClass(), e);
+//TODO				Trace.trace(getClass(), e);
 			}
 		}
 		return performed;
