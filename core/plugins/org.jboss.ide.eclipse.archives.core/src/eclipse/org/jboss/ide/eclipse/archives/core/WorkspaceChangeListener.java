@@ -48,7 +48,7 @@ import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 public class WorkspaceChangeListener implements IResourceChangeListener {
 
 	public void resourceChanged(IResourceChangeEvent event) {
-		final Set projects = new TreeSet();
+		final Set<IProject> projects = new TreeSet<IProject>();
 		
 		IResourceDelta delta = event.getDelta();
 		try {
@@ -65,9 +65,9 @@ public class WorkspaceChangeListener implements IResourceChangeListener {
 			}
 		} catch( CoreException ce ) {
 		}
-		Iterator i = projects.iterator();
+		Iterator<IProject> i = projects.iterator();
 		while(i.hasNext()) {
-			final IProject p = (IProject)i.next();
+			final IProject p = i.next();
 			try {
 				if( p.getSessionProperty(new QualifiedName(ArchivesCorePlugin.PLUGIN_ID, "localname")) == null ) {
 					ArchivesModel.instance().registerProject(p.getLocation(), new NullProgressMonitor());

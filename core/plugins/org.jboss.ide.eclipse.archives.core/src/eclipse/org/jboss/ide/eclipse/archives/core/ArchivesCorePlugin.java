@@ -54,7 +54,7 @@ public class ArchivesCorePlugin extends Plugin {
 		super.start(context);
 		
 		// Load the workspace version of ArchivesCore
-		ArchivesCore core = new WorkspaceArchivesCore();
+		new WorkspaceArchivesCore();
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(new WorkspaceChangeListener());
 	}
 
