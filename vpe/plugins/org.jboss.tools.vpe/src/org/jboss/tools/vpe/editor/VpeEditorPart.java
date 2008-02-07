@@ -15,7 +15,6 @@ import java.beans.PropertyChangeListener;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
@@ -24,6 +23,8 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -392,7 +393,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		container.layout();
 		if (visualMode == SOURCE_MODE && type != SOURCE_MODE) {
 			visualMode = type;
-			if (visualEditor.getController() != null) {
+			if (visualEditor != null && visualEditor.getController() != null) {
 				visualEditor.getController().visualRefresh();
 				if(type!=PREVIEW_MODE) {
 				visualEditor.getController().sourceSelectionChanged();
@@ -406,7 +407,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		return visualMode;
 	}
 
-	public void createPartControl(Composite parent) {
+	public void createPartControl(final Composite parent) {
 		controlCount++;
 		if (controlCount > 1)
 			return;
@@ -457,12 +458,20 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		int[] weights = loadSplitterPosition();
 		if (weights != null)
 			container.setWeights(weights);
-		container.addWeightsChangeListener(new PropertyChangeListener() {
+		final PropertyChangeListener weightsChangeListener = new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent event) {
 				saveSplitterPosition(container.getWeights());
 			}
+		};
+		container.addWeightsChangeListener(weightsChangeListener);
+		container.addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				container.removeWeightsChangeListener(weightsChangeListener);
+			}
+			
 		});
-		parent.addControlListener(new ControlListener() {
+		final ControlListener controlListener = new ControlListener() {
 			public void controlMoved(ControlEvent event) {
 
 			}
@@ -470,20 +479,18 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			public void controlResized(ControlEvent event) {
 				container.layout();
 			}
-		});
-		visualEditor = new MozillaEditor();
-		try {
-			visualEditor.init(getEditorSite(), getEditorInput());
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
-		}
+		};
+		parent.addControlListener(controlListener);
+		parent.addDisposeListener(new DisposeListener() {
 
-		previewWebBrowser = new MozillaPreview(this, sourceEditor);
-		try {
-			previewWebBrowser.init(getEditorSite(), getEditorInput());
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
-		}
+			public void widgetDisposed(DisposeEvent e) {
+				parent.removeControlListener(controlListener);
+			}
+			
+		});
+		//createVisualEditor();
+
+		//createPreviewBrowser();
 
 		try {
 			sourceEditor.addPropertyListener(new IPropertyListener() {
@@ -499,26 +506,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			if (sourceContent != null) {
 				sourceEditor.createPartControl(sourceContent);
 			}
-			if (visualEditor != null) {
-				visualEditor
-						.setEditorLoadWindowListener(new EditorLoadWindowListener() {
-							public void load() {
-								visualEditor.setEditorLoadWindowListener(null);
-								visualEditor.setController(new VpeController(
-										VpeEditorPart.this));
-								selectionBar.setVpeController(visualEditor.getController());
-								visualEditor.getController().setSelectionBarController(selectionBar);
-								try {
-									visualEditor.getController().init(sourceEditor, visualEditor);
-								} catch (Exception e) {
-									VpePlugin.reportProblem(e);
-								}
-							}
-						});
-				visualEditor.createPartControl(visualContent);
-			}
+			
 
-			if (previewWebBrowser != null) {
+			/*if (previewWebBrowser != null) {
 				previewWebBrowser
 						.setEditorLoadWindowListener(new EditorLoadWindowListener() {
 							public void load() {
@@ -529,7 +519,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 						});
 				previewWebBrowser.createPartControl(previewContent);
 			}
-
+*/
 			activeEditor = sourceEditor;
 
 			sourceContent.addListener(SWT.Activate, new Listener() {
@@ -596,6 +586,50 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		cmpEd.layout();
 	}
 
+	public void createVisualEditor() {
+		visualEditor = new MozillaEditor();
+		try {
+			visualEditor.init(getEditorSite(), getEditorInput());
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		}
+		if (visualEditor != null) {
+			visualEditor
+					.setEditorLoadWindowListener(new EditorLoadWindowListener() {
+						public void load() {
+							visualEditor.setEditorLoadWindowListener(null);
+							visualEditor.setController(new VpeController(
+									VpeEditorPart.this));
+							selectionBar.setVpeController(visualEditor.getController());
+							visualEditor.getController().setSelectionBarController(selectionBar);
+							try {
+								visualEditor.getController().init(sourceEditor, visualEditor);
+							} catch (Exception e) {
+								VpePlugin.reportProblem(e);
+							}
+						}
+					});
+			visualEditor.createPartControl(visualContent);
+		}
+	}
+
+	public void createPreviewBrowser() {
+		previewWebBrowser = new MozillaPreview(this, sourceEditor);
+		try {
+			previewWebBrowser.init(getEditorSite(), getEditorInput());
+			previewWebBrowser
+					.setEditorLoadWindowListener(new EditorLoadWindowListener() {
+						public void load() {
+							previewWebBrowser.setEditorLoadWindowListener(null);
+							previewWebBrowser.buildDom();
+						}
+					});
+			previewWebBrowser.createPartControl(previewContent);
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		}
+	}
+
 	public void setFocus() {
 		if (activeEditor != null) {
 			activeEditor.setFocus();
@@ -603,9 +637,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	}
 
 	public void dispose() {
-		super.dispose();
 		if (optionsObject != null) {
 			optionsObject.getModel().removeModelTreeListener(listener);
+			listener=null;
 		}
 		if (activationListener != null) {
 			IWorkbenchWindow window = getSite().getWorkbenchWindow();
@@ -626,6 +660,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			visualEditor = null;
 		}
 
+		if (previewWebBrowser != null) {
+			previewWebBrowser.dispose();
+			previewWebBrowser=null;
+		}
 		if (previewContent != null) {
 			previewContent.dispose();
 			previewContent = null;
@@ -635,6 +673,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			selectionBar.dispose();
 			selectionBar = null;
 		}
+		activeEditor = null;
+		super.dispose();
 	}
 
 	public Object getAdapter(Class adapter) {
@@ -684,6 +724,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				fIsHandlingActivation = true;
 				try {
 					if (sourceEditor != null) {
+						if (visualEditor != null)
 						if (visualEditor.getController() != null) {
 							visualEditor.getController().refreshTemplates();
 						}
@@ -697,7 +738,17 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	}
 
 	public VpeController getController() {
+		if (visualEditor == null)
+			return null;
 		return visualEditor.getController();
+	}
+
+	public MozillaPreview getPreviewWebBrowser() {
+		return previewWebBrowser;
+	}
+
+	public MozillaEditor getVisualEditor() {
+		return visualEditor;
 	}
 
 }

@@ -83,6 +83,10 @@ public class MozillaPreview extends MozillaEditor {
 						editorDomEventListener.onHideTooltip();
 					}
 				}
+				public void onDispose() {
+					removeDomEventListeners();
+					super.onDispose();
+				}
 			});
 			getXulRunnerEditor().setURL(INIT_URL);
 			getXulRunnerEditor().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -262,6 +266,23 @@ public class MozillaPreview extends MozillaEditor {
 	 */
 	private void setSourceEditor(StructuredTextEditor sourceEditor) {
 		this.sourceEditor = sourceEditor;
+	}
+
+	public void dispose() {
+		setEditorDomEventListener(null);
+		setEditorLoadWindowListener(null);
+		if (pageContext != null) {
+			pageContext.dispose();
+			pageContext=null;
+		}
+		if (getXulRunnerEditor() != null) {
+			getXulRunnerEditor().dispose();
+			setXulRunnerEditor(null);
+		}
+		sourceDocument=null;
+		sourceEditor=null;
+		editPart=null;
+		//super.dispose();
 	}
 
 }

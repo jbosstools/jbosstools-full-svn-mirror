@@ -220,4 +220,19 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 			this.menuItem = menuItem;
 		}
 	}
+
+	public void dispose() {
+		if (splitter != null) {
+			splitter.dispose();
+			splitter=null;
+		}
+		hideMenuItem.dispose();
+		
+		for(int i=0; i<toolbarContainers.size(); i++) {
+			ToolbarContainer container = (ToolbarContainer)toolbarContainers.get(i);
+			container.getMenuItem().dispose();
+		}
+		toolbarContainers.clear();
+		toolbarContainers=null;
+	}
 }

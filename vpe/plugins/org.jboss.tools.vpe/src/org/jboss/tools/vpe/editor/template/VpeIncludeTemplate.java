@@ -60,7 +60,12 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 					
 					if (file != null) {
 						if (!pageContext.getVisualBuilder().isFileInIncludeStack(file)) {
-							Document document = VpeCreatorUtil.getDocumentForRead(file, pageContext);
+							Document document = pageContext.getVisualBuilder().getIncludeDocuments().get(file);
+							if (document == null) {
+								document = VpeCreatorUtil.getDocumentForRead(file, pageContext);
+								if (document != null)
+									pageContext.getVisualBuilder().getIncludeDocuments().put(file, document);
+							}
 							if (document != null) {
 								VpeCreationData creationData = createInclude(document, visualDocument);
 								creationData.setData(file);
@@ -82,7 +87,7 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 		if (data.getData() != null) {
 			VpeIncludeInfo includeInfo = pageContext.getVisualBuilder().popIncludeStack();
 			if (includeInfo != null) {
-				VpeCreatorUtil.releaseDocumentFromRead(includeInfo.getDocument());
+				//VpeCreatorUtil.releaseDocumentFromRead(includeInfo.getDocument());
 			}
 		}
 	}

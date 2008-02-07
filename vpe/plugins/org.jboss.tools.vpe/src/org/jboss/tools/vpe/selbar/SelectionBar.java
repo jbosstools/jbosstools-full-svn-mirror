@@ -61,7 +61,7 @@ public class SelectionBar extends Layout implements SelectionListener {
     private Composite cmpBar = null;
     private Composite closeBar = null;
 
-    Listener selbarListener = null;
+    //Listener selbarListener = null;
 
     final static String PREFERENCE_STATUS_BAR_ENABLE = "yes";
     final static String PREFERENCE_STATUS_BAR_DISABLE = "no";
@@ -266,6 +266,8 @@ public class SelectionBar extends Layout implements SelectionListener {
 					selBar.getItem(i).removeSelectionListener(this);
 				}
 			}
+			selBar.dispose();
+			selBar = null;
 		}
 		if (!closeSelectionBar.isDisposed()) {
 			for (int i = 0; i < closeSelectionBar.getItemCount(); i++) {
@@ -273,6 +275,12 @@ public class SelectionBar extends Layout implements SelectionListener {
 					closeSelectionBar.getItem(i).removeSelectionListener(this);
 				}
 			}
+			closeSelectionBar.dispose();
+			closeSelectionBar = null;
+		}
+		if (splitter != null) {
+			splitter.dispose();
+			splitter = null;
 		}
 	}
 

@@ -160,7 +160,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-public class VpeController implements INodeAdapter, IModelLifecycleListener, INodeSelectionListener, ITextSelectionListener, SelectionListener, EditorDomEventListener, VpeTemplateListener, XModelTreeListener, ResourceReferenceListListener, ISelectionChangedListener, IVisualController {
+public class VpeController implements  INodeAdapter, IModelLifecycleListener, INodeSelectionListener, ITextSelectionListener, SelectionListener, EditorDomEventListener, VpeTemplateListener, XModelTreeListener, ResourceReferenceListListener, ISelectionChangedListener, IVisualController {
 	
 	StructuredTextEditor sourceEditor;
 	private MozillaEditor visualEditor;
@@ -196,7 +196,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	private VpeIncludeList includeList = new VpeIncludeList();
 	private VpeVisualInnerDragInfo innerDragInfo = null;
 	private FormatControllerManager toolbarFormatControllerManager = null;
-	private SelectionBar selectionBar = null; 
+	private SelectionBar selectionBar = null;
+	private XModelTreeListenerSWTSync optionsListener;
 	//Added by Max Areshkau Fix for JBIDE-1479
 	private UIJob job = null;
 	Shell tip;
@@ -250,7 +251,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 
 //		glory
 		ISelectionProvider provider = sourceEditor.getSelectionProvider();
-		provider.addSelectionChangedListener(this);
+		//Max Areshkau  JBIDE-1105 If selection event received after selection in 
+		//visual part we lost focus of selection, so we should process selection event
+		//in time of selection
+//		if (provider instanceof IPostSelectionProvider) 
+//			((IPostSelectionProvider) provider).addPostSelectionChangedListener(this);	
+//		else 
+			provider.addSelectionChangedListener(this);
 
 //		ViewerSelectionManager selectionManager = sourceEditor.getViewerSelectionManager();
 //		selectionManager.addNodeSelectionListener(this);
@@ -263,9 +270,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		visualEditor.setEditorDomEventListener(this);
 		switcher.initActiveEditor();
 		
-	   	XModelObject optionsObject = ModelUtilities.getPreferenceModel().getByPath(VpePreference.EDITOR_PATH);
-		XModelTreeListenerSWTSync optionsListener = new XModelTreeListenerSWTSync(this);
-		optionsObject.getModel().addModelTreeListener(optionsListener);
+		if (optionsListener == null) {
+			XModelObject optionsObject = ModelUtilities.getPreferenceModel().getByPath(VpePreference.EDITOR_PATH);
+			optionsListener = new XModelTreeListenerSWTSync(this);
+			optionsObject.getModel().addModelTreeListener(optionsListener);
+		}
 		
 
 		cssReferenceListListener = CSSReferenceList.getInstance();
@@ -284,15 +293,28 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	}
 
 	public void dispose() {
+		if (optionsListener != null) {
+			XModelObject optionsObject = ModelUtilities.getPreferenceModel().getByPath(VpePreference.EDITOR_PATH);
+			optionsObject.getModel().removeModelTreeListener(optionsListener);
+			optionsListener.dispose();
+			optionsListener = null;
+		}
+		IDOMModel sourceModel = (IDOMModel)getModel();
+		if (sourceModel != null) {
+			sourceModel.removeModelLifecycleListener(this);
+		}
 		switcher.destroyActiveEditor();
+		switcher=null;
 		
 		if (templateManager != null) {
 			templateManager.removeTemplateListener(this);
+			templateManager=null;
 		}
 		if (visualBuilder != null) {
 			visualBuilder.dispose();
 			visualBuilder = null;
 		}
+		sourceBuilder=null;
 		if (sourceEditor != null) {
 //glory
 			ISelectionProvider provider = sourceEditor.getSelectionProvider();
@@ -304,8 +326,12 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			if (textWidget != null) {
 				textWidget.removeSelectionListener(this);
 			}
+			((IJSPTextEditor)sourceEditor).setVPEController(null);
+			
 		}
-		
+		if (dropWindow != null) {
+			dropWindow.setEditor(null);
+		}
 		if (visualEditor != null) {
 			visualEditor.setEditorDomEventListener(null);
 			if (visualSelectionController != null) {
@@ -317,6 +343,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 //				presShell.Release();
 //				presShell = null;
 //			}
+			visualEditor = null;
 		}
 
 		if (cssReferenceListListener != null) {
@@ -331,6 +358,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (relativeFolderReferenceListListener != null) {
 			relativeFolderReferenceListListener.removeChangeListener(this);
 		}
+		toolbarFormatControllerManager = null;
 	}
 
 	// INodeAdapter implementation

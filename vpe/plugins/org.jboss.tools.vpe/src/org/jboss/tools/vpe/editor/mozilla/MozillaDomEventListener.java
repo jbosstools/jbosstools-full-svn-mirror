@@ -123,7 +123,7 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 	 */
 	public void handleEvent(nsIDOMEvent domEvent) {
 		try{
-			
+
 			if(getEditorDomEventListener()==null){
 				
 				return;

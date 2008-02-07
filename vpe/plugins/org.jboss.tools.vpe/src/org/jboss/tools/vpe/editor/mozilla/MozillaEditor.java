@@ -157,7 +157,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		}
 
 		// The Left standalone Vertical Tool Bar  
-		final ToolBar verBar = new ToolBar(cmpVerticalToolbar, SWT.VERTICAL|SWT.FLAT);
+		ToolBar verBar = new ToolBar(cmpVerticalToolbar, SWT.VERTICAL|SWT.FLAT);
 		verBar.setLayoutData(new GridData(GridData.FILL_VERTICAL));
 		
 		ToolItem item = null;
@@ -231,6 +231,10 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 						editorDomEventListener.onHideTooltip();
 					}
 				}
+				public void onDispose() {
+					removeDomEventListeners();
+					super.onDispose();
+				}
 			};
 
 			xulRunnerEditor.setURL(INIT_URL);
@@ -300,7 +304,12 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 
 	public void dispose() {
-		removeDomEventListeners();
+		if (vpeToolBarManager != null) {
+			vpeToolBarManager.dispose();
+			vpeToolBarManager = null;
+		}
+		
+		//removeDomEventListeners();
 		if(getController()!=null) {
 			controller.dispose();
 			controller=null;
@@ -310,6 +319,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			xulRunnerEditor = null;
 		}
 
+		this.controller = null;
+		formatControllerManager.setVpeController(null);
+		formatControllerManager=null;
 		super.dispose();
 		
 	}
@@ -488,7 +500,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		}
 	}
 
-	private void removeDomEventListeners() {
+	protected void removeDomEventListeners() {
 		if (contentAreaEventTarget != null && contentAreaEventListener != null) {
 			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.CLICKEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
 			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.MOUSEDOWNEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
@@ -502,30 +514,32 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DRAGOVEREVENT, contentAreaEventListener, false);//$NON-NLS-1$
 			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DBLCLICK, contentAreaEventListener, false);//$NON-NLS-1$
 		
-		}
-		if (domDocument != null && documentEventTarget != null) {
-			documentEventTarget.removeEventListener(MozillaDomEventListener.KEYPRESS, contentAreaEventListener, false); //$NON-NLS-1$
+			if (domDocument != null && documentEventTarget != null) {
+				documentEventTarget.removeEventListener(MozillaDomEventListener.KEYPRESS, contentAreaEventListener, false); //$NON-NLS-1$
+			}
+			contentAreaEventListener.setVisualEditor(null);
+			contentAreaEventTarget = null;
+			contentAreaEventListener = null;
+			documentEventTarget = null;
 		}
 	}
 
 	private void addSelectionListener() {
 		if (contentAreaEventListener != null&&xulRunnerEditor!=null) {
 			
-			nsISelection selection = xulRunnerEditor.getSelection();
-			nsISelectionPrivate selectionPrivate = (nsISelectionPrivate) selection.queryInterface(nsISelectionPrivate.NS_ISELECTIONPRIVATE_IID);
-			selectionPrivate.addSelectionListener(contentAreaEventListener);
+			xulRunnerEditor.addSelectionListener(contentAreaEventListener);
 			
 		}
 	}
 
-	private void removeSelectionListener() {
+	/*private void removeSelectionListener() {
 		if (contentAreaEventListener != null&&xulRunnerEditor!=null) {
 
 			nsISelection selection = xulRunnerEditor.getSelection();
 			nsISelectionPrivate selectionPrivate = (nsISelectionPrivate) selection.queryInterface(nsISelectionPrivate.NS_ISELECTIONPRIVATE_IID);
 			selectionPrivate.removeSelectionListener(contentAreaEventListener);
 		}
-	}
+	}*/
 
 	public void setSelectionRectangle(nsIDOMElement element, int resizerConstrains, boolean scroll) {
 		if (contentAreaEventListener != null) {

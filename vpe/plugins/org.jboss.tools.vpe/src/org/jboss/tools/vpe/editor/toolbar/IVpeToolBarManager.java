@@ -41,4 +41,6 @@ public interface IVpeToolBarManager {
 	 * @return
 	 */
 	public Composite createMenuComposite(Composite parent);
+
+	public void dispose();
 }

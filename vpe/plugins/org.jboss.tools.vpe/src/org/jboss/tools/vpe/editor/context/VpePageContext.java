@@ -68,7 +68,8 @@ import org.w3c.dom.Node;
 
 public class VpePageContext implements VpeTaglibManager, IVisualContext {
 	private VpeTemplateManager templateManager;
-	private ArrayList taglibs = new ArrayList();
+	private List taglibs = new ArrayList();
+	private Set connectorDocuments = new HashSet();
 	private Map taglibMap = new HashMap();
 	private VpeTaglibListener[] taglibListeners = new VpeTaglibListener[0];
 	private BundleMap bundle;
@@ -104,7 +105,10 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 	public void refreshConnector() {
 		try {
 			IDocument document = sourceBuilder.getStructuredTextViewer().getDocument();
-			connector = (WtpKbConnector)KbConnectorFactory.getIntstance().createConnector(KbConnectorType.JSP_WTP_KB_CONNECTOR, document);
+			if (document!= null) {
+				connectorDocuments.add(document);
+				connector = (WtpKbConnector)KbConnectorFactory.getIntstance().createConnector(KbConnectorType.JSP_WTP_KB_CONNECTOR, document);
+			}
 		} catch (Exception e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
@@ -130,12 +134,30 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 	}
 	
 	public void dispose() {
+		for (Iterator iterator = connectorDocuments.iterator(); iterator.hasNext();) {
+			IDocument document = (IDocument) iterator.next();
+			KbConnectorFactory.getIntstance().removeConnector(KbConnectorType.JSP_WTP_KB_CONNECTOR, document);
+		}
+		connectorDocuments.clear();
+		connectorDocuments = null;
 		bundle.dispose();
 		clearAll();
+		taglibListeners=null;
+		editPart=null;
+		connector=null;
+		sourceBuilder=null;
+		visualBuilder=null;
 	}
 	
 	public void setTaglib(int id, String newUri, String newPrefix, boolean ns) {
-		for (int i = 0; i < taglibs.size(); i++) {
+		if (newUri != null && newPrefix != null) {
+			TaglibData data = new TaglibData(id, newUri, newPrefix, ns);
+			if (!taglibs.contains(data)) {
+				taglibs.add(data);
+				rebuildTaglibMap();
+			}
+		}
+		/*for (int i = 0; i < taglibs.size(); i++) {
 			TaglibData taglib = (TaglibData)taglibs.get(i);
 			if (taglib.getId() == id) {
 				if (newUri != null && newPrefix != null) {
@@ -153,7 +175,7 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		if (newUri != null && newPrefix != null) {
 			taglibs.add(new TaglibData(id, newUri, newPrefix, ns));
 			rebuildTaglibMap();
-		}
+		}*/
 	}
 	
 	public String getTemplateTaglibPrefix(String sourceTaglibPrefix) {
@@ -337,7 +359,8 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 		Iterator iter = taglibs.iterator();
 		while (iter.hasNext()) {
 			TaglibData taglib = (TaglibData)iter.next();
-			if (!taglib.inList(clone)) {
+			//if (!taglib.inList(clone)) {
+			if (!clone.contains(taglib)) {
 				clone.add(taglib);
 			}
 		}
@@ -350,7 +373,8 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 			TaglibData oldTaglib = (TaglibData)lastIter.next();
 			Iterator newIter = newTaglibs.iterator();
 			while (newIter.hasNext()) {
-				if (oldTaglib.isEquals((TaglibData)newIter.next())) {
+				//if (oldTaglib.isEquals((TaglibData)newIter.next())) {
+				if (oldTaglib.equals((TaglibData)newIter.next())) {
 					newIter.remove();
 					oldTaglib = null;
 					break;
@@ -393,10 +417,12 @@ public class VpePageContext implements VpeTaglibManager, IVisualContext {
 	}
 	
 	public boolean isTaglibChanged() {
-		if (!taglibChanged) return false;
-		List newTaglibs = getTagLibs();
-		List delTaglibs = new ArrayList();
-		return buildTaglibsDifferences(newTaglibs, delTaglibs);
+		//TODO Max Areshkau coused slow work vpe when we editing on source page text node 
+//		if (!taglibChanged) return false;
+//		List newTaglibs = getTagLibs();
+//		List delTaglibs = new ArrayList();
+//		return buildTaglibsDifferences(newTaglibs, delTaglibs);
+		return false;
 	}
 	
 	public WtpKbConnector getConnector() {

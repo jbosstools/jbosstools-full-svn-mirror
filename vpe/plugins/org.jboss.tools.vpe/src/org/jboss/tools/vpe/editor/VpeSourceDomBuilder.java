@@ -22,6 +22,7 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
+import org.eclipse.wst.sse.core.internal.provisional.INodeNotifier;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
@@ -87,6 +88,11 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 			Node sourceContainer = sourceNode.getParentNode();
 			if (sourceContainer != null) {
 				sourceContainer.removeChild(sourceNode);
+				getSourceNodes().remove(sourceNode);
+				if (sourceNode instanceof INodeNotifier) {
+					((INodeNotifier) sourceNode).removeAdapter(getSorceAdapter());
+				}
+				domMapping.remove(sourceNode);
 			}
 		} else {
 			sourceNode = domMapping.getNearSourceNode(visualNode);
