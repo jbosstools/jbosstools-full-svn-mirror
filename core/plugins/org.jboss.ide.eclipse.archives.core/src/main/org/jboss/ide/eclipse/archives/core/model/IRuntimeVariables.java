@@ -5,13 +5,13 @@ import java.net.URL;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 
+/**
+ * 
+ * @author rob.stryker <rob.stryker@redhat.com>
+ *
+ */
 public interface IRuntimeVariables {
-	/**
-	 * Is the debugging option provided enabled?
-	 * If the option is null, is debugging enabled at all?
-	 * @param option
-	 * @return
-	 */
+
 	public boolean isDebugging(String option);
 	public IPath getProjectPath(String projectName);
 	public String getProjectName(IPath path);
