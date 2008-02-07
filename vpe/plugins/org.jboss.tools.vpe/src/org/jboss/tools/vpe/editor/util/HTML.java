@@ -52,7 +52,10 @@ public final class HTML {
     public static final String TAG_UL = "UL"; //$NON-NLS-1$
     public static final String TAG_CODE = "CODE"; //$NON-NLS-1$
     public static final String TAG_PRE = "PRE"; //$NON-NLS-1$
-
+    public static final String TAG_B = "B"; //$NON-NLS-1$
+    public static final String TAG_I = "I"; //$NON-NLS-1$
+    public static final String TAG_U = "U"; //$NON-NLS-1$
+    
     public static final String ATTR_ID = "ID"; //$NON-NLS-1$
     public static final String ATTR_TYPE = "TYPE"; //$NON-NLS-1$
     public static final String ATTR_TEXT = "TEXT"; //$NON-NLS-1$
@@ -69,4 +72,5 @@ public final class HTML {
     public static final String ATTR_WIDTH = "WIDTH"; //$NON-NLS-1$
     public static final String ATTR_HEIGHT = "HEIGHT"; //$NON-NLS-1$
     public static final String ATTR_BORDER = "BORDER"; //$NON-NLS-1$
+   
 }
