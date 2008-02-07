@@ -297,7 +297,8 @@ public class GetNameForm extends org.apache.struts.action.ActionForm
 		this.greetName = "";
 	}
 	
-	public ActionErrors validate(ActionMapping actionMapping, HttpServletRequest request) 
+	public ActionErrors validate(ActionMapping actionMapping, 
+	        HttpServletRequest request) 
 	{
 		ActionErrors errors = new ActionErrors();
 		return errors;
