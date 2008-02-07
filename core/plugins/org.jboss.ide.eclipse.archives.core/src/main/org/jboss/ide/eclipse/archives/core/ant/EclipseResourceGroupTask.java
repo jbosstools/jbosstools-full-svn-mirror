@@ -30,7 +30,7 @@ public class EclipseResourceGroupTask extends Task {
 		}
 	}
 
-	ArrayList resources = new ArrayList();
+	ArrayList<EclipseResource> resources = new ArrayList<EclipseResource>();
 	public EclipseResource createEclipseResource() {
 		EclipseResource res = new EclipseResource();
 		resources.add(res);

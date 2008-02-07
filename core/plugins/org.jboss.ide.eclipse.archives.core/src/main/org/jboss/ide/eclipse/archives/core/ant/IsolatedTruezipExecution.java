@@ -61,7 +61,7 @@ public class IsolatedTruezipExecution {
 		}
 		
 		IArchiveModelNode node = ArchivesModel.instance().getRoot(path);
-		final ArrayList requiredProjects = new ArrayList();
+		final ArrayList<String> requiredProjects = new ArrayList<String>();
 		node.accept(new IArchiveNodeVisitor() {
 			public boolean visit(IArchiveNode node) {
 				if( node.getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
@@ -92,7 +92,7 @@ public class IsolatedTruezipExecution {
 		boolean retVal = true;
 		AntVariables vars = ((AntVariables)ArchivesCore.getInstance().getVariables());
 		for( int i = 0; i < requiredProjects.size(); i++ ) {
-			IPath p = vars.getProjectPath((String)requiredProjects.get(i));
+			IPath p = vars.getProjectPath(requiredProjects.get(i));
 			if( p == null ) {
 				retVal = false;
 				task.log("Required project \"" + requiredProjects.get(i) + 

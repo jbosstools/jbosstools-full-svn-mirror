@@ -26,7 +26,7 @@ public class AntVariables implements IRuntimeVariables {
 	}
 
 	public IPath getProjectPath(String projectName) {
-		HashMap map = ResourceModel.getDefault().getTaskEnvironment(currentTask);
+		HashMap<Object, Object> map = ResourceModel.getDefault().getTaskEnvironment(currentTask);
 		if( map.containsKey(projectName)) return new Path((String)map.get(projectName));
 		if( map.containsKey(IPath.SEPARATOR + projectName)) return new Path((String)map.get(IPath.SEPARATOR + projectName));
 		

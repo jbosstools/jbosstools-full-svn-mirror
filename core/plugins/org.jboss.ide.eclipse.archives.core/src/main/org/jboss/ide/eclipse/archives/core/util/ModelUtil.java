@@ -59,7 +59,7 @@ public class ModelUtil {
 	 * @return
 	 */
 	public static IArchiveFileSet[] getMatchingFilesets(IArchiveNode node, final IPath path) {
-		final ArrayList rets = new ArrayList();
+		final ArrayList<IArchiveFileSet> rets = new ArrayList<IArchiveFileSet>();
 		IArchiveNodeVisitor visitor = new IArchiveNodeVisitor() {
 			public boolean visit(IArchiveNode node) {
 				if( node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FILESET && 
@@ -75,7 +75,7 @@ public class ModelUtil {
 		else
 			node.accept(visitor);
 		
-		return (IArchiveFileSet[]) rets.toArray(new IArchiveFileSet[rets.size()]);
+		return rets.toArray(new IArchiveFileSet[rets.size()]);
 	}
 
 	/**
@@ -84,8 +84,8 @@ public class ModelUtil {
 	 * @return
 	 */
 	public static IArchiveFileSet[] findAllDescendentFilesets(IArchiveNode node) {
-		ArrayList matches = findAllDescendents(node, IArchiveNode.TYPE_ARCHIVE_FILESET, true);
-		return (IArchiveFileSet[]) matches.toArray(new IArchiveFileSet[matches.size()]);
+		ArrayList<IArchiveNode> matches = findAllDescendents(node, IArchiveNode.TYPE_ARCHIVE_FILESET, true);
+		return matches.toArray(new IArchiveFileSet[matches.size()]);
 	}
 
 	/**
@@ -94,8 +94,8 @@ public class ModelUtil {
 	 * @return
 	 */
 	public static IArchiveFolder[] findAllDescendentFolders(IArchiveNode node) {
-		ArrayList matches = findAllDescendents(node, IArchiveNode.TYPE_ARCHIVE_FOLDER, false);
-		return (IArchiveFolder[]) matches.toArray(new IArchiveFolder[matches.size()]);
+		ArrayList<IArchiveNode> matches = findAllDescendents(node, IArchiveNode.TYPE_ARCHIVE_FOLDER, false);
+		return matches.toArray(new IArchiveFolder[matches.size()]);
 	}
 	
 	/**
@@ -103,8 +103,8 @@ public class ModelUtil {
 	 * @param node
 	 * @return
 	 */
-	public static ArrayList findAllDescendents(IArchiveNode node, final int type, final boolean includeSelf) {
-		final ArrayList matches = new ArrayList();
+	public static ArrayList<IArchiveNode> findAllDescendents(IArchiveNode node, final int type, final boolean includeSelf) {
+		final ArrayList<IArchiveNode> matches = new ArrayList<IArchiveNode>();
 		final IArchiveNode original = node;
 		node.accept(new IArchiveNodeVisitor() {
 			public boolean visit(IArchiveNode node) {
@@ -168,13 +168,13 @@ public class ModelUtil {
 	 */
 	public static IPath getBaseDestinationFile(IArchiveNode node, IPath absolutePath) {
 		IArchiveNode parameterNode = node;
-		ArrayList list = new ArrayList();
+		ArrayList<IArchiveNode> list = new ArrayList<IArchiveNode>();
 		while( node != null && !(node instanceof ArchiveModelNode)) {
 			list.add(node);
 			node = node.getParent();
 		}
 		Collections.reverse(list);
-		IArchiveNode[] nodes = (IArchiveNode[]) list.toArray(new IArchiveNode[list.size()]);
+		IArchiveNode[] nodes = list.toArray(new IArchiveNode[list.size()]);
 		
 		IPath lastConcrete = null;
 		for( int i = 0; i < nodes.length; i++ ) {

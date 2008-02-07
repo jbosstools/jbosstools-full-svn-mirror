@@ -87,7 +87,7 @@ public class ModelTruezipBridge {
 	// Let them know which files were removed, for events
 	public static IPath[] fullFilesetRemove(final IArchiveFileSet fileset, boolean sync) {
 		IPath[] paths = fileset.findMatchingPaths();
-		final ArrayList list = new ArrayList();
+		final ArrayList<IPath> list = new ArrayList<IPath>();
 		list.addAll(Arrays.asList(paths));
 		for( int i = 0; i < paths.length; i++ ) {
 			if( !ModelUtil.otherFilesetMatchesPathAndOutputLocation(fileset, paths[i])) {
@@ -116,7 +116,7 @@ public class ModelTruezipBridge {
 		if( sync ) 
 			TrueZipUtil.sync();
 		
-		return (IPath[]) list.toArray(new IPath[list.size()]);
+		return list.toArray(new IPath[list.size()]);
 	}
 
 	

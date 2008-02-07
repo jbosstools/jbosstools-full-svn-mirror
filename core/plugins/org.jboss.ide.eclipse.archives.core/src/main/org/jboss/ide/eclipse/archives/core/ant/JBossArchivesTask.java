@@ -1,8 +1,6 @@
 package org.jboss.ide.eclipse.archives.core.ant;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -40,7 +38,7 @@ public class JBossArchivesTask extends Task {
 	}
 	
 
-	ArrayList resources = new ArrayList();
+	ArrayList<EclipseResource> resources = new ArrayList<EclipseResource>();
 	public EclipseResource createEclipseResource() {
 		EclipseResource res = new EclipseResource();
 		resources.add(res);
