@@ -374,7 +374,8 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
   public String playagain () 
   {
     FacesContext context = FacesContext.getCurrentInstance();
-    HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+    HttpSession session = 
+        (HttpSession) context.getExternalContext().getSession(false);
     session.invalidate();
     return "playagain"; 
   }
@@ -389,7 +390,8 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 else 
    {
       FacesContext context = FacesContext.getCurrentInstance();
-      ResourceBundle bundle = ResourceBundle.getBundle("game.messages", context.getViewRoot().getLocale());
+      ResourceBundle bundle = ResourceBundle.getBundle("game.messages", 
+      context.getViewRoot().getLocale());
       String msg = "";
       // if number bigger, get appropriate message
       if ( userNumber.intValue() > randomNumber ) 
@@ -445,7 +447,8 @@ public Integer getUserNumber ()
   public String playagain () 
   {
     FacesContext context = FacesContext.getCurrentInstance();
-    HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+    HttpSession session = 
+        (HttpSession) context.getExternalContext().getSession(false);
     session.invalidate();
     return "playagain"; 
   }
@@ -463,7 +466,9 @@ public Integer getUserNumber ()
    {
       // get a reference to properties file to retrieve messages
       FacesContext context = FacesContext.getCurrentInstance();
-      ResourceBundle bundle = ResourceBundle.getBundle("game.messages", context.getViewRoot().getLocale());
+      ResourceBundle bundle = 
+          ResourceBundle.getBundle("game.messages", 
+          context.getViewRoot().getLocale());
       String msg = "";
       // if number is bigger, get appropriate message
       if ( userNumber.intValue() > randomNumber ) 
@@ -499,7 +504,8 @@ public Integer getUserNumber ()
 <faces-config version="1.2" xmlns="http://java.sun.com/xml/ns/javaee
 xmlns:xi="http://www.w3.org/2001/XInclude"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2_.xsd">
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+        http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2_.xsd">
   
   <navigation-rule>
     <from-view-id>*</from-view-id>
@@ -900,7 +906,8 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
            <f:validateLongRange minimum="0" maximum="100"/>
       </h:inputText>
      <br/><br/>
-     <h:commandButton value="#{msg.makeguess_button}" action="#{NumberBean.checkGuess}"/>  
+     <h:commandButton value=
+             "#{msg.makeguess_button}" action="#{NumberBean.checkGuess}"/>  
    </h:form>
  </f:view>
 </html>
@@ -922,7 +929,8 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
        <f:param value="#{NumberBean.userNumber}"/>
      </h:outputFormat>
      <br/><br/>
-     <h:commandButton value="#{msg.trayagain_button}" action="#{NumberBean.playagain}"/>
+     <h:commandButton value=
+             "#{msg.trayagain_button}" action="#{NumberBean.playagain}"/>
    </h:form>
  </f:view>
 </html>

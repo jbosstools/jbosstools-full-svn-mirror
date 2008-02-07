@@ -350,7 +350,8 @@ public class SimpleAction {
     public void simpleAction()
     {
         //implement your business logic here
-        log.info("simpleAction.simpleAction() action called with: #{simpleAction.value}");
+        log.info("simpleAction.simpleAction() 
+              action called with: #{simpleAction.value}");
         facesMessages.add("simpleAction #{simpleAction.value}");
     }
 
