@@ -18,7 +18,7 @@ public class XulRunnerAllTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Test for " + XulRunnerAllTests.class.getName());
 		//add test cases for dom elements
-		suite.addTestSuite(DOMCreatingTest.class);		
+		suite.addTestSuite(XulRunnerBrowserTest.class);		
 		return suite;
 	}
 

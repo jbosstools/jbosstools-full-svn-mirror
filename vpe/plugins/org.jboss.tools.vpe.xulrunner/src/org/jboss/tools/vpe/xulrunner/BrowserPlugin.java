@@ -3,6 +3,7 @@ package org.jboss.tools.vpe.xulrunner;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jboss.tools.common.log.BaseUIPlugin;
+import org.jboss.tools.common.log.IPluginLog;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -63,5 +64,9 @@ public class BrowserPlugin extends BaseUIPlugin {
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+	}
+	
+	public static IPluginLog getPluginLog() {
+		return getDefault();
 	}
 }
