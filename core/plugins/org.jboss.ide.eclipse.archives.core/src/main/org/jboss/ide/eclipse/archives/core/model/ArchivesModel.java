@@ -46,8 +46,6 @@ import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFolder;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackageNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
-import org.jboss.ide.eclipse.archives.core.model.other.IArchiveBuildListener;
-import org.jboss.ide.eclipse.archives.core.model.other.IArchiveModelListener;
 
 /**
  * The root model which keeps track of registered projects

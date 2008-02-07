@@ -33,7 +33,7 @@ import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.jboss.ide.eclipse.archives.core.ArchivesCorePlugin;
-import org.jboss.ide.eclipse.archives.core.model.other.IPreferenceManager;
+import org.jboss.ide.eclipse.archives.core.model.IPreferenceManager;
 import org.osgi.service.prefs.BackingStoreException;
 
 

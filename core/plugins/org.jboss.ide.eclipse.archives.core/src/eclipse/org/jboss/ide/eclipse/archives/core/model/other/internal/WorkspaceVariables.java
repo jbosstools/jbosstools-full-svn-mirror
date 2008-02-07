@@ -9,7 +9,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.variables.VariablesPlugin;
 import org.jboss.ide.eclipse.archives.core.ArchivesCorePlugin;
-import org.jboss.ide.eclipse.archives.core.model.other.IRuntimeVariables;
+import org.jboss.ide.eclipse.archives.core.model.IRuntimeVariables;
 
 public class WorkspaceVariables implements IRuntimeVariables {
 

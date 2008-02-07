@@ -1,6 +1,5 @@
-package org.jboss.ide.eclipse.archives.core.model.other;
+package org.jboss.ide.eclipse.archives.core.model;
 
-import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
 
 
 public interface IExtensionManager {

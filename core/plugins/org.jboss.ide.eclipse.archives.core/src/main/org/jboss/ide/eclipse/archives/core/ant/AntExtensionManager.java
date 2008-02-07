@@ -1,11 +1,17 @@
-package org.jboss.ide.eclipse.archives.core.model.other.internal;
+package org.jboss.ide.eclipse.archives.core.ant;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
-import org.jboss.ide.eclipse.archives.core.model.other.IExtensionManager;
+import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
 
-public class StandaloneExtensionManager implements IExtensionManager {
+/**
+ * The ant API to extensions, specifically archive types.
+ * This is a stub and returns functional but bland implementations.
+ * @author rob stryker (rob.stryker@redhat.com)
+ *
+ */
+public class AntExtensionManager implements IExtensionManager {
 
 	public IArchiveType getArchiveType(String id) {
 		final String typeId = id;

@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.archives.core.model.other;
+package org.jboss.ide.eclipse.archives.core.model;
 
 import org.eclipse.core.runtime.IPath;
 

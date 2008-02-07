@@ -33,7 +33,7 @@ import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
 import org.jboss.ide.eclipse.archives.core.Trace;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
-import org.jboss.ide.eclipse.archives.core.model.other.IExtensionManager;
+import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
 
 /**
  * This class will be responsible for loading extension points in the core.

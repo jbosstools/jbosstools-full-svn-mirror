@@ -1,9 +1,9 @@
 package org.jboss.ide.eclipse.archives.core;
 
 import org.eclipse.core.runtime.IPath;
-import org.jboss.ide.eclipse.archives.core.model.other.IExtensionManager;
-import org.jboss.ide.eclipse.archives.core.model.other.IPreferenceManager;
-import org.jboss.ide.eclipse.archives.core.model.other.IRuntimeVariables;
+import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
+import org.jboss.ide.eclipse.archives.core.model.IPreferenceManager;
+import org.jboss.ide.eclipse.archives.core.model.IRuntimeVariables;
 
 public abstract class ArchivesCore {
 

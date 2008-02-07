@@ -1,9 +1,16 @@
-package org.jboss.ide.eclipse.archives.core.model.other.internal;
+package org.jboss.ide.eclipse.archives.core.ant;
 
 import org.eclipse.core.runtime.IPath;
-import org.jboss.ide.eclipse.archives.core.model.other.IPreferenceManager;
+import org.jboss.ide.eclipse.archives.core.model.IPreferenceManager;
 
-public class StandalonePreferenceManager implements IPreferenceManager {
+/**
+ * This is to manage preferences relating to projects.
+ * This is a candidate to be moved to eclipse-only API, or to be
+ * fixed or changed to be more versatile. 
+ * @author rob stryker
+ *
+ */
+public class AntPreferenceManager implements IPreferenceManager {
 
 	public boolean areProjectSpecificPrefsEnabled(IPath path) {
 		// TODO Auto-generated method stub

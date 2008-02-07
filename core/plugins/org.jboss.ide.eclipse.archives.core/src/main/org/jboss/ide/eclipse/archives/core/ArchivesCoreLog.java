@@ -14,11 +14,13 @@ import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.osgi.framework.Bundle;
 
 /**
  * @author eskimo
- *
+ *  Comment:  
+ *       This could probably be worked into ArchivesCore API
+ *       This specific implementation should belong in an eclipse-specific
+ *       class. 
  */
 public class ArchivesCoreLog {
 	/**

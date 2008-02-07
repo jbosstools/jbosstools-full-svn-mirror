@@ -275,7 +275,7 @@ public class StringSubstitutionEngineClone {
 //		} 
 //		// error - an argument specified for a value variable
 //		throw new CoreException(new Status(IStatus.ERROR, VariablesPlugin.getUniqueIdentifier(), VariablesPlugin.INTERNAL_ERROR, NLS.bind(VariablesMessages.StringSubstitutionEngine_4, new String[]{valueVariable.getName()}), null)); 
-		return "";
+		return "tobecompleted";
 	}
 
 	private String getOriginalVarText(VariableReference var) {

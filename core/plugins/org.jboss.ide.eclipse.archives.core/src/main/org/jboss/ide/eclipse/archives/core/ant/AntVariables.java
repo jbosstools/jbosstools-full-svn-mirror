@@ -1,17 +1,22 @@
-package org.jboss.ide.eclipse.archives.core.model.other.internal;
+package org.jboss.ide.eclipse.archives.core.ant;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
 
+import org.apache.tools.ant.Task;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.jboss.ide.eclipse.archives.core.model.other.IRuntimeVariables;
+import org.jboss.ide.eclipse.archives.core.model.IRuntimeVariables;
 import org.jboss.ide.eclipse.archives.core.xpl.StringSubstitutionEngineClone;
 
-public class StandaloneVariables implements IRuntimeVariables {
-
+public class AntVariables implements IRuntimeVariables {
+	private Task currentTask;
+	public void setCurrentTask(Task task) { currentTask = task; }
+	public Task getCurrentTask() { return currentTask; }
+	
 	public URL getBindingLog4j() {
 		return getClass().getClassLoader().getResource("log4j.xml");
 	}
@@ -21,11 +26,9 @@ public class StandaloneVariables implements IRuntimeVariables {
 	}
 
 	public IPath getProjectPath(String projectName) {
-		projectName = projectName.replace(' ', '_');
-		
-		String projectPath = System.getProperty(projectName + ".dir");
-		if (projectPath != null)
-			return new Path(projectPath);
+		HashMap map = ResourceModel.getDefault().getTaskEnvironment(currentTask);
+		if( map.containsKey(projectName)) return new Path((String)map.get(projectName));
+		if( map.containsKey(IPath.SEPARATOR + projectName)) return new Path((String)map.get(IPath.SEPARATOR + projectName));
 		
 		return null;
 	}
