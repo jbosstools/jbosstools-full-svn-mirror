@@ -15,6 +15,8 @@ import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -38,9 +40,13 @@ import org.mozilla.interfaces.nsIDragService;
 import org.mozilla.interfaces.nsIDragSession;
 import org.mozilla.interfaces.nsIInterfaceRequestor;
 import org.mozilla.interfaces.nsISelection;
+import org.mozilla.interfaces.nsISelectionListener;
+import org.mozilla.interfaces.nsISelectionPrivate;
 import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
+import org.mozilla.interfaces.nsITooltipListener;
 import org.mozilla.interfaces.nsITransferable;
+import org.mozilla.interfaces.nsIWebProgressListener;
 import org.mozilla.xpcom.Mozilla;
 import org.mozilla.xpcom.XPCOMException;
 
@@ -101,22 +107,53 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 */
 	private boolean scrollRegtangleFlag = false;
 
+	private nsISelectionListener selectionListener;
+
+	private Listener eventListenet = new Listener() {
+
+		public void handleEvent(Event event) {
+			Display.getCurrent().asyncExec(new Thread(){
+				public void run(){
+					showSelectionRectangle();
+				}
+			});
+		}};
 	/**
 	 * @param parent
 	 * @throws XulRunnerException
 	 */
 	public XulRunnerEditor(Composite parent) throws XulRunnerException {
 		super(parent);
-		
-		Listener eventListenet = new Listener() {
+		getBrowser().addDisposeListener(new DisposeListener() {
 
-			public void handleEvent(Event event) {
-				Display.getCurrent().asyncExec(new Thread(){
-					public void run(){
-						showSelectionRectangle();
-					}
-				});
-			}};
+			public void widgetDisposed(DisposeEvent e) {
+				//TODO Max Areshkau this caused en error when we close editor under Mac OS
+//				getWebBrowser().removeWebBrowserListener(XulRunnerEditor.this, nsIWebProgressListener.NS_IWEBPROGRESSLISTENER_IID);
+				getWebBrowser().removeWebBrowserListener(XulRunnerEditor.this, nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
+				if (selectionListener != null) {
+					nsISelection selection = getSelection();
+					nsISelectionPrivate selectionPrivate = (nsISelectionPrivate) selection.queryInterface(nsISelectionPrivate.NS_ISELECTIONPRIVATE_IID);
+					selectionPrivate.removeSelectionListener(selectionListener);
+				}
+				if (resizeListener != null)
+					getIXulRunnerVpeResizer().removeResizeListener(resizeListener);
+				xulRunnerVpeResizer.dispose();
+				xulRunnerVpeResizer = null;
+				resizeListener = null;
+				if (eventListenet != null) {
+					removeListener(SWT.Paint, eventListenet);
+					removeListener(SWT.Show, eventListenet);
+					removeListener(SWT.FocusIn, eventListenet);
+					removeListener(SWT.Selection, eventListenet);
+					removeListener(SWT.Paint, eventListenet);
+					eventListenet = null;
+				}
+				getBrowser().removeDisposeListener(this);
+				onDispose();
+			}
+			
+		});
+		
 //			addListener(SWT.Activate, eventListenet);
 			addListener(SWT.Paint, eventListenet);
 			//Commented by Max Areshkau (bug on Mac OS X10.4 
@@ -511,6 +548,15 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		
 		getIFlasher().scrollElementIntoView(element);
 	}
+
+	public void addSelectionListener (
+			nsISelectionListener selectionListener) {
+		nsISelection selection = getSelection();
+		nsISelectionPrivate selectionPrivate = (nsISelectionPrivate) selection.queryInterface(nsISelectionPrivate.NS_ISELECTIONPRIVATE_IID);
+		selectionPrivate.addSelectionListener(selectionListener);
+		this.selectionListener = selectionListener;
+	}
+	
 }
 
 

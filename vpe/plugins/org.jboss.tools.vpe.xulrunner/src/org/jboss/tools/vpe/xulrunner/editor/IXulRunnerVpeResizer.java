@@ -92,4 +92,6 @@ public interface IXulRunnerVpeResizer {
 	 * @param aListener a IVpeResizeListener object
 	 */
 	public void removeResizeListener(IVpeResizeListener aListener);
+	
+	public void dispose();
 }

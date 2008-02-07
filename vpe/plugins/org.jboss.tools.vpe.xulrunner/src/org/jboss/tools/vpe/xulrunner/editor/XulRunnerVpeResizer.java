@@ -791,4 +791,15 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		}		
 	}
 
+	public void dispose() {
+		if (mouseMotionListener != null) {
+			nsIDOMEventTarget erP = getDOMEventTarget();
+			 
+ 			if (erP != null) { 
+ 				erP.removeEventListener(XulRunnerConstants.EVENT_NAME_MOUSEMOVE, mouseMotionListener, true); 
+ 				erP.removeEventListener(XulRunnerConstants.EVENT_NAME_MOUSEUP, mouseListener, true); 
+ 				mouseMotionListener = null;
+ 			}
+		}
+	}
 }
