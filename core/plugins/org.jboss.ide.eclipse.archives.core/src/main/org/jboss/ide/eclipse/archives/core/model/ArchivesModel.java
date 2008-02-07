@@ -34,7 +34,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
-import org.jboss.ide.eclipse.archives.core.model.events.EventManager;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFileSetImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFolderImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
@@ -70,14 +69,15 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		return instance;
 	}
 	
-	private HashMap xbPackages; // maps an IPath (of a project) to XbPackages
-	private HashMap archivesRoot; // maps an IPath (of a project) to PackageModelNode, aka root
-	private ArrayList buildListeners, modelListeners;
+	private HashMap<IPath, XbPackages> xbPackages; // maps an IPath (of a project) to XbPackages
+	private HashMap<IPath, ArchiveModelNode> archivesRoot; // maps an IPath (of a project) to PackageModelNode, aka root
+	private ArrayList<IArchiveBuildListener> buildListeners;
+	private ArrayList<IArchiveModelListener> modelListeners;
 	public ArchivesModel() {
-		xbPackages = new HashMap();
-		archivesRoot = new HashMap();
-		buildListeners = new ArrayList();
-		modelListeners = new ArrayList();
+		xbPackages = new HashMap<IPath, XbPackages>();
+		archivesRoot = new HashMap<IPath, ArchiveModelNode>();
+		buildListeners = new ArrayList<IArchiveBuildListener>();
+		modelListeners = new ArrayList<IArchiveModelListener>();
 	}
 	
 	
@@ -104,7 +104,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		buildListeners.remove(listener);
 	}
 	public IArchiveBuildListener[] getBuildListeners() {
-		return (IArchiveBuildListener[]) buildListeners.toArray(new IArchiveBuildListener[buildListeners.size()]);
+		return buildListeners.toArray(new IArchiveBuildListener[buildListeners.size()]);
 	}
 	
 	public void addModelListener(IArchiveModelListener listener) {
@@ -125,7 +125,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 			modelListeners.remove(listener);
 	}
 	public IArchiveModelListener[] getModelListeners() {
-		return (IArchiveModelListener[]) modelListeners.toArray(new IArchiveModelListener[modelListeners.size()]);
+		return modelListeners.toArray(new IArchiveModelListener[modelListeners.size()]);
 	}
 
 	
@@ -134,7 +134,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 	
 	
 	public XbPackages getXbPackages(IPath project) {
-		return (XbPackages)(xbPackages.get(project));
+		return (xbPackages.get(project));
 	}
 	
 	/**
@@ -146,7 +146,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 	public XbPackages getXbPackages(IPath project, IProgressMonitor monitor) {
 		if( !xbPackages.containsKey(project)) 
 			registerProject(project, monitor);
-		return (XbPackages)(xbPackages.get(project));
+		return (xbPackages.get(project));
 	}
 	
 	/**
@@ -173,10 +173,10 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 	 */
 	protected ArchiveModelNode[] getAllArchives() {
 		ArchiveModelNode[] ret = new ArchiveModelNode[archivesRoot.keySet().size()];
-		Iterator i = archivesRoot.keySet().iterator();
+		Iterator<IPath> i = archivesRoot.keySet().iterator();
 		int x = 0;
 		while(i.hasNext()) {
-			ret[x++] = (ArchiveModelNode)archivesRoot.get(i.next());
+			ret[x++] = archivesRoot.get(i.next());
 		}
 		return ret;
 	}
@@ -194,7 +194,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		if( archivesRoot.get(project) == null && register ) {
 			registerProject(project, monitor);
 		}
-		return (IArchiveModelNode)(archivesRoot.get(project));
+		return (archivesRoot.get(project));
 	}
 	
 	public IArchive[] getProjectArchives(IPath project) {
@@ -203,12 +203,12 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 	public IArchive[] getProjectArchives(IPath project, boolean register, IProgressMonitor monitor) {
 		IArchiveModelNode root = getRoot(project, register, monitor);
 		if( root != null ) {
-			List list = Arrays.asList( getRoot(project, register, monitor).getAllChildren());
-			return (IArchive[]) list.toArray(new IArchive[list.size()]);
+			List<IArchiveNode> list = Arrays.asList( getRoot(project, register, monitor).getAllChildren());
+			return list.toArray(new IArchive[list.size()]);
 		} else if( register) {
 			registerProject(project, monitor);
-			List list = Arrays.asList( getRoot(project, register, monitor).getAllChildren());
-			return (IArchive[]) list.toArray(new IArchive[list.size()]);
+			List<IArchiveNode> list = Arrays.asList( getRoot(project, register, monitor).getAllChildren());
+			return list.toArray(new IArchive[list.size()]);
 		} else {
 			return new IArchive[] {};
 		}
@@ -241,7 +241,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 					return;
 				}
 				root = new ArchiveModelNode(project, packages, this);
-				ArchiveModelNode oldRoot = (ArchiveModelNode)archivesRoot.get(project);
+				ArchiveModelNode oldRoot = archivesRoot.get(project);
 				xbPackages.put(project, packages);
 				archivesRoot.put(project, root);
 				createPackageNodeImpl(project, packages, null);

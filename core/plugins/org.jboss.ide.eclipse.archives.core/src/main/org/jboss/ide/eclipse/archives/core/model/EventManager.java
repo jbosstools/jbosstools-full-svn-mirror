@@ -19,18 +19,10 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.ide.eclipse.archives.core.model.events;
+package org.jboss.ide.eclipse.archives.core.model;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
-import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
-import org.jboss.ide.eclipse.archives.core.model.IArchive;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveBuildListener;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 
 /**
  * The event manager to fire events
