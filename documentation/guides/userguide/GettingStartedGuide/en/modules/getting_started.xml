@@ -177,7 +177,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <title>Installing from the downloaded version</title>
    <para>Let's start with the JBDS installation.</para>
    <para>JBDS comes with a simple installer, bundled with tested/pre-configured versions of Eclipse,
-    Webtools, JBossEAP, Seam, and SpringIDE. Thus, to start perform the next steps:</para>
+    WTP, JBossEAP, Seam, and SpringIDE. Thus, to start perform the next steps:</para>
 
    <itemizedlist>
     <listitem>
