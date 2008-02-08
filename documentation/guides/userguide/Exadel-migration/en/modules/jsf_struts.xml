@@ -24,7 +24,7 @@
    <title>Selecting the Import Menu Item</title>
    <mediaobject> 
     <imageobject>
-     <imagedata fileref="images/jsf_struts/migration1.png"/>
+     <imagedata fileref="images/jsf_struts/migration_1.png"/>
     </imageobject>
    </mediaobject>
   </figure>
@@ -33,7 +33,7 @@
    <title>Selecting the Import JSF Project Wizard</title>
    <mediaobject> 
     <imageobject>
-     <imagedata fileref="images/jsf_struts/migration2.png"/>
+     <imagedata fileref="images/jsf_struts/migration_2.png"/>
     </imageobject>
    </mediaobject>
   </figure>
@@ -48,7 +48,7 @@
    <title>Selecting the Web.xml File in the Project Location Screen</title>
    <mediaobject> 
     <imageobject>
-     <imagedata fileref="images/jsf_struts/migration3.png"/>
+     <imagedata fileref="images/jsf_struts/migration_3.png"/>
     </imageobject>
    </mediaobject>
   </figure>
@@ -71,7 +71,7 @@
    <title>The Project Folders Screen</title>
    <mediaobject> 
     <imageobject>
-     <imagedata fileref="images/jsf_struts/migration4.png"/>
+     <imagedata fileref="images/jsf_struts/migration_4.png"/>
     </imageobject>
    </mediaobject>
   </figure>
@@ -84,7 +84,7 @@
    <title>Imported Project in the Package Explorer View</title>
    <mediaobject> 
     <imageobject>
-     <imagedata fileref="images/jsf_struts/migration5.png"/>
+     <imagedata fileref="images/jsf_struts/migration_5.png"/>
     </imageobject>
    </mediaobject>
   </figure>
@@ -100,7 +100,7 @@
    <title>Selecting the Import Menu Item</title>
       <mediaobject> 
     <imageobject>
-     <imagedata fileref="images/jsf_struts/migration1.png"/>
+     <imagedata fileref="images/jsf_struts/migration_1.png"/>
     </imageobject>
    </mediaobject>
   </figure>
@@ -109,7 +109,7 @@
    <title>Selecting the Import Struts Project Wizard</title>
       <mediaobject> 
     <imageobject>
-     <imagedata fileref="images/jsf_struts/migration2_2.png"/>
+     <imagedata fileref="images/jsf_struts/migration_6.png"/>
     </imageobject>
    </mediaobject>
   </figure>
@@ -124,7 +124,7 @@
    <title>The Project Location Screen</title>
    <mediaobject> 
     <imageobject>
-     <imagedata fileref="images/jsf_struts/migration2_21.png"/>
+     <imagedata fileref="images/jsf_struts/migration_10.png"/>
     </imageobject>
    </mediaobject>
   </figure>
@@ -139,7 +139,7 @@
    <title>The Project Modules Screen</title>
    <mediaobject> 
     <imageobject>
-     <imagedata fileref="images/jsf_struts/migration2_3.png"/>
+     <imagedata fileref="images/jsf_struts/migration_7.png"/>
     </imageobject>
    </mediaobject>
   </figure>
@@ -161,7 +161,7 @@
    <title>The Project Folders Screen</title>
    <mediaobject> 
     <imageobject>
-     <imagedata fileref="images/jsf_struts/migration2_4.png"/>
+     <imagedata fileref="images/jsf_struts/migration_8.png"/>
     </imageobject>
    </mediaobject>
   </figure>
@@ -174,7 +174,7 @@
    <title>Imported Project in the Package Explorer View</title>
    <mediaobject> 
     <imageobject>
-     <imagedata fileref="images/jsf_struts/migration2_5.png"/>
+     <imagedata fileref="images/jsf_struts/migration_9.png"/>
     </imageobject>
    </mediaobject>
   </figure>

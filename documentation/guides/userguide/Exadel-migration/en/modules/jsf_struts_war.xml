@@ -30,7 +30,7 @@
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/jsf_struts_war/migration1.png" />
+          <imagedata fileref="images/jsf_struts_war/migration_war_1.png" />
         </imageobject>
       </mediaobject>
     </figure>
@@ -40,7 +40,7 @@
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/jsf_struts_war/migration_war1.png" />
+          <imagedata fileref="images/jsf_struts_war/migration_war_2.png" />
         </imageobject>
       </mediaobject>
     </figure>
@@ -79,7 +79,7 @@
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/jsf_struts_war/migration_war2.png" />
+          <imagedata fileref="images/jsf_struts_war/migration_war_3.png" />
         </imageobject>
       </mediaobject>
     </figure>
@@ -107,7 +107,7 @@
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/jsf_struts_war/migration1.png" />
+          <imagedata fileref="images/jsf_struts_war/migration_war_1.png" />
         </imageobject>
       </mediaobject>
     </figure>
@@ -116,7 +116,7 @@
       <title>Selecting the Struts Project From *.war Import Wizard</title>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/jsf_struts_war/migration_war2_1.png" />
+          <imagedata fileref="images/jsf_struts_war/migration_war_4.png" />
         </imageobject>
       </mediaobject>
     </figure>
@@ -133,7 +133,7 @@
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="images/jsf_struts_war/migration_war2_2.png" />
+          <imagedata fileref="images/jsf_struts_war/migration_war_5.png" />
         </imageobject>
       </mediaobject>
     </figure>
