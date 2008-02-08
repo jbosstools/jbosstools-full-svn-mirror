@@ -151,7 +151,7 @@ Class is not filled in, String is the assumed type)</para></listitem>
 <title>Tree View in Config Editor</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/jsf_application/jsf_application_5.png" scale="75"/>
+            <imagedata fileref="images/jsf_application/jsf_application_5.png" scale="85"/>
         </imageobject>
 </mediaobject>
 </figure>
