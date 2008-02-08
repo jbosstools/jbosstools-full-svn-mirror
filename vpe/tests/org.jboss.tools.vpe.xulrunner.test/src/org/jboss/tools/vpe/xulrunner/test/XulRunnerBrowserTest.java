@@ -66,7 +66,8 @@ public class XulRunnerBrowserTest extends TestCase {
 	// Delay for 3 seconds so that
 	// the Favorites view can be seen.
 	waitForJobs();
-	delay(3000);
+	// commented by dgolovin to get rid of jvm error [libexpat.so.0+0xeff4]
+	//delay(3000);
 
 	PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 		.hideView(mozillaView);
