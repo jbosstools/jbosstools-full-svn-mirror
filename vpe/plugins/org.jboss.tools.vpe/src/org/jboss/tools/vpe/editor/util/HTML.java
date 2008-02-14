@@ -32,6 +32,7 @@ public final class HTML {
     public static final String TAG_TBODY = "TBODY"; //$NON-NLS-1$
     public static final String TAG_THEAD = "THEAD"; //$NON-NLS-1$
     public static final String TAG_TFOOT = "TFOOT"; //$NON-NLS-1$
+    public static final String TAG_CAPTION = "CAPTION"; //$NON-NLS-1$
     public static final String TAG_TH = "TH"; //$NON-NLS-1$
     public static final String TAG_TR = "TR"; //$NON-NLS-1$
     public static final String TAG_TD = "TD"; //$NON-NLS-1$

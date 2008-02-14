@@ -30,6 +30,7 @@ public class VpeDataTableElements {
 //	}
 
 	public static class SourceDataTableElements {
+		private Node tableCaption;
 		private Node tableHeader;
 		private List<SourceColumnElements> columns;
 		private Node tableFooter;
@@ -52,6 +53,8 @@ public class VpeDataTableElements {
 							tableHeader = node;
 						} else if (!isColumn && isFacet && attrName != null && "footer".equals(attrName.getNodeValue())) {
 							tableFooter = node;
+						} else if (!isColumn && isFacet && attrName != null && "caption".equals(attrName.getNodeValue())) {
+							tableCaption = node;
 						} else if (isColumn) {
 							if (columns == null) columns = new ArrayList<SourceColumnElements>();
 							columns.add(new SourceColumnElements(node));
@@ -98,6 +101,10 @@ public class VpeDataTableElements {
 		public boolean hasTableFooter() {
 			return tableFooter != null;
 		}
+		
+		public boolean hasTableCaption() {
+			return tableCaption != null;
+		}
 
 		public boolean hasColumnsHeader() {
 			for (int i = 0; i < getColumnCount(); i++) {
@@ -129,6 +136,14 @@ public class VpeDataTableElements {
 
 		public void setTableHeader(Node tableHeader) {
 			this.tableHeader = tableHeader;
+		}
+		
+		public Node getTableCaption() {
+			return tableCaption;
+		}
+		
+		public void setTableCaption(Node tableCaption) {
+			this.tableCaption = tableCaption;
 		}
 	}
 
@@ -229,6 +244,9 @@ public class VpeDataTableElements {
 	}
 
 	public static class VisualDataTableElements {
+		private nsIDOMElement caption;
+		private nsIDOMElement tableCaptionTag;
+
 		private nsIDOMElement header;
 		private nsIDOMElement tableHeaderRow;
 		private nsIDOMElement columnsHeaderRow;
@@ -280,6 +298,14 @@ public class VpeDataTableElements {
 		public void setColumnsHeaderRow(nsIDOMElement columnsHeaderRow) {
 			this.columnsHeaderRow = columnsHeaderRow;
 		}
+		
+		public nsIDOMElement getTableCaptionTag() {
+			return tableCaptionTag;
+		}
+		
+		public void setTableCaptionTag(nsIDOMElement tableCaptionTag) {
+			this.tableCaptionTag = tableCaptionTag;
+		}
 
 		public nsIDOMElement getFooter() {
 			return footer;
@@ -295,6 +321,14 @@ public class VpeDataTableElements {
 
 		public void setHeader(nsIDOMElement header) {
 			this.header = header;
+		}
+		
+		public nsIDOMElement getCaption() {
+			return caption;
+		}
+
+		public void setCaption(nsIDOMElement caption) {
+			this.caption = caption;
 		}
 
 		public nsIDOMElement getTableFooterRow() {
@@ -377,6 +411,7 @@ public class VpeDataTableElements {
 					VpeDataTableElements.getNamedChild(visualParent, HTML.TAG_TFOOT)
 			);
 
+		visualDataTableElements.setTableCaptionTag(VpeDataTableElements.getNamedChild(visualDataTableElements.getCaption(), "caption"));
 		visualDataTableElements.setTableHeaderRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getHeader(), "tr"));
 		visualDataTableElements.setColumnsHeaderRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getHeader(), "tr", 1));
 		visualDataTableElements.setBodyRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getBody(), "tr"));

@@ -935,7 +935,7 @@
 
     <vpe:tag name="h:dataTable" case-sensitive="yes">
 		<vpe:template children="yes" modify="no">
-			<vpe:datatable bgcolor="{@bgcolor}" border="{@border}"
+			<vpe:datatable width="{@width}" bgcolor="{@bgcolor}" border="{@border}"
 							cellpadding="{@cellpadding}" cellspacing="{@cellspacing}"
 							columnClasses="{@columnClasses}" footerClass="{@footerClass}" headerClass="{@headerClass}"
 							rowClasses="{@rowClasses}"

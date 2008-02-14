@@ -104,6 +104,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				}
 			}
 		}
+		
 	}
 
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
@@ -115,6 +116,20 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(visualTable);
 
 		nsIDOMElement section = null, row = null, cell = null;
+		
+		nsIDOMElement caption;
+		if (true || sourceElements.hasTableCaption()) {
+			caption = visualDocument.createElement(HTML.TAG_CAPTION);
+			visualElements.setTableCaptionTag(caption);
+			if (sourceElements.getTableCaption() != null) {
+				VpeChildrenInfo info = new VpeChildrenInfo(caption);
+				info.addSourceChild(sourceElements.getTableCaption());
+				creatorInfo.addChildrenInfo(info);
+			}
+		}
+		visualTable.appendChild(caption);
+		visualElements.setCaption(caption);
+		
 		if (true || sourceElements.hasHeaderSection()) {
 			section = visualDocument.createElement(HTML.TAG_THEAD);
 			if (true || sourceElements.hasTableHeader()) {

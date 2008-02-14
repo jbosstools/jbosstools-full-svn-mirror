@@ -34,15 +34,19 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		VpeCreatorInfo creatorInfo = null;
 
-		boolean isHeader = false, isFooter = false;
+		boolean isHeader = false;
+		boolean isFooter = false;
+		boolean isCaption = false;
+		
 		Node nameAttr = sourceNode.getAttributes().getNamedItem("name");
 		if (nameAttr != null) {
 			String name = nameAttr.getNodeValue();
 			isHeader = name.equals("header");
 			isFooter = name.equals("footer");
+			isCaption = name.equals("caption");
 		}
 
-		if (isHeader || isFooter) {
+		if (isHeader || isFooter || isCaption) {
 			Node sourceParent = sourceNode.getParentNode();
 			if (sourceParent != null) {
 				nsIDOMNode visualParent = null;
@@ -51,9 +55,11 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 					visualParent = pageContext.getDomMapping().getVisualNode(sourceParent);
 				}
 
-				nsIDOMNode header = null, footer = null;
+				nsIDOMNode header = null;
+				nsIDOMNode footer = null;
+				nsIDOMNode caption = null;
+				
 				if (visualParent != null && visualParent.getNodeName().equalsIgnoreCase("table")) {
-
 					nsIDOMNodeList children = visualParent.getChildNodes();
 					long count = children != null ? children.getLength() : 0;
 					if (count > 0) {
@@ -78,12 +84,17 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 					cell = makeCell(columnsCount, HTML.TAG_TH, visualDocument);
 				} else if (isFooter) {
 					cell = makeCell(columnsCount, HTML.TAG_TD, visualDocument);
+				} else if (isCaption) {
+					cell = visualDocument.createElement(HTML.TAG_CAPTION);
 				}
 				if (cell != null) {
 					if (isHeader) {
 						setCellClass(cell, getTableAttrValue(sourceParent, "headerClass"));
 					} else if (isFooter) {
 						setCellClass(cell, getTableAttrValue(sourceParent, "footerClass"));
+					} else if (isCaption) {
+						setCellClass(cell, getTableAttrValue(sourceParent, "captionClass"));
+						setCaptionStyle(cell, getTableAttrValue(sourceParent, "captionStyle"));
 					}
 					creatorInfo = new VpeCreatorInfo(cell);
 				}
@@ -104,6 +115,14 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		if (cell != null) {
 			if (className != null && className.trim().length() > 0) {
 				((nsIDOMElement)cell).setAttribute("class", className);
+			}
+		}
+	}
+	
+	private void setCaptionStyle(nsIDOMNode cell, String styleName) {
+		if (cell != null) {
+			if (styleName != null && styleName.trim().length() > 0) {
+				((nsIDOMElement)cell).setAttribute("style", styleName);
 			}
 		}
 	}

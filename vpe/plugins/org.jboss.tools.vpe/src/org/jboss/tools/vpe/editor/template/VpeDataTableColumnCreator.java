@@ -60,6 +60,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 					info.addSourceChild(columnElements.getHeader());
 				}
 				creatorInfo.addChildrenInfo(info);
+				setCellClass(cell, getColumnAttrValue(sourceNode, "headerClass"));
 				visualColumnElements.setHeaderCell(cell);
 
 				cell = VpeDataTableElements.makeCell(visualDataTableElements.getColumnsFooterRow(), index, HTML.TAG_TD, visualDocument);
@@ -68,6 +69,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 					info.addSourceChild(columnElements.getFooter());
 				}
 				creatorInfo.addChildrenInfo(info);
+				setCellClass(cell, getColumnAttrValue(sourceNode, "footerClass"));
 				visualColumnElements.setFooterCell(cell);
 				
 				cell = VpeDataTableElements.makeCell(visualDataTableElements.getBodyRow(), index, HTML.TAG_TD, visualDocument);
@@ -143,5 +145,23 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 	private static boolean namesIsEquals(String name1, String name2) {
 		int ind = name2.indexOf(":");
 		return ind < name2.length() && name1.equals(name2.substring(ind >= 0 ? ind + 1 : 0));
+	}
+	
+	private void setCellClass(nsIDOMNode cell, String className) {
+		if (cell != null) {
+			if (className != null && className.trim().length() > 0) {
+				((nsIDOMElement)cell).setAttribute("class", className);
+			}
+		}
+	}
+	
+	private String getColumnAttrValue(Node columnNode, String attrName) {
+		if (columnNode != null) {
+			Node attr = columnNode.getAttributes().getNamedItem(attrName);
+			if (attr != null) {
+				return attr.getNodeValue();
+			}
+		}
+		return null;
 	}
 }
