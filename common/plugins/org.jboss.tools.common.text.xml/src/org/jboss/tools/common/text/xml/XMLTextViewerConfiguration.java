@@ -8,40 +8,40 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.jst.jsp;
+package org.jboss.tools.common.text.xml;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
-import org.eclipse.jface.text.formatter.IContentFormatter;
-import org.eclipse.jface.text.formatter.MultiPassContentFormatter;
 import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.jst.jsp.core.text.IJSPPartitions;
-import org.eclipse.swt.custom.BusyIndicator;
+import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
-import org.eclipse.wst.html.core.text.IHTMLPartitions;
-import org.eclipse.wst.html.ui.StructuredTextViewerConfigurationHTML;
-import org.eclipse.wst.sse.ui.internal.format.StructuredFormattingStrategy;
+import org.eclipse.wst.xml.ui.StructuredTextViewerConfigurationXML;
 import org.jboss.tools.common.text.xml.contentassist.ContentAssistProcessorBuilder;
 import org.jboss.tools.common.text.xml.contentassist.ContentAssistProcessorDefinition;
-import org.jboss.tools.jst.jsp.contentassist.RedHatHtmlContentAssistProcessor;
-import org.jboss.tools.jst.jsp.format.HTMLFormatProcessor;
-import org.osgi.framework.Bundle;
 
-public class ExtendedStructuredTextViewerConfigurationHTML extends StructuredTextViewerConfigurationHTML {
+/**
+ * @author Igels
+ */
+public class XMLTextViewerConfiguration extends StructuredTextViewerConfigurationXML {
+	
+	SourceViewerConfiguration initial = null;
 
-	public ExtendedStructuredTextViewerConfigurationHTML() {
+	public XMLTextViewerConfiguration() {
 		super();
+	}
+	
+	public void setInitialConfiguration(SourceViewerConfiguration initial) {
+		this.initial = initial;
 	}
 
 	protected IContentAssistProcessor[] getContentAssistProcessors(ISourceViewer sourceViewer, String partitionType) {
-//		IContentAssistProcessor[] processors = null;
 
 		// if we have our own processors we need 
 		// to define them in plugin.xml file of their
@@ -52,7 +52,7 @@ public class ExtendedStructuredTextViewerConfigurationHTML extends StructuredTex
 
 		if(defs==null) return null;
 
-		List<IContentAssistProcessor> processors = new ArrayList<IContentAssistProcessor>();
+		List processors = new ArrayList();
 		for(int i=0; i<defs.length; i++) {
 		    IContentAssistProcessor processor = defs[i].createContentAssistProcessor();
 		    if(!processors.contains(processor)) {
@@ -60,14 +60,25 @@ public class ExtendedStructuredTextViewerConfigurationHTML extends StructuredTex
 		    }
 		}
 
-		if (partitionType == IHTMLPartitions.HTML_DEFAULT ||
-				partitionType == IJSPPartitions.JSP_DEFAULT_EL) {
-			processors.add(new RedHatHtmlContentAssistProcessor());
-		}
+		IContentAssistProcessor[] in = getInitialProcessors(sourceViewer, partitionType);
+		if(in != null && in.length > 0) {
 
+			//we do not need super processors - make initial processors responcible for that 
+			for(int i=0; i<in.length; i++) {
+			    if(!processors.contains(in[i])) {
+				    processors.add(in[i]);			        
+			    }
+			}
+		} else {
+			IContentAssistProcessor[] ps = super.getContentAssistProcessors(sourceViewer, partitionType);
+			for(int i=0; ps != null && i<ps.length; i++) {
+			    if(!processors.contains(ps[i])) {
+				    processors.add(ps[i]);			        
+			    }
+			}
+		}
 		return (IContentAssistProcessor[])processors.toArray(new IContentAssistProcessor[0]);
 	}
-
 
 	/*
 	 * @see org.eclipse.jface.text.source.SourceViewerConfiguration#getHyperlinkDetectors(org.eclipse.jface.text.source.ISourceViewer)
@@ -94,7 +105,14 @@ public class ExtendedStructuredTextViewerConfigurationHTML extends StructuredTex
 			}
 		}
 */
-		return (IHyperlinkDetector[]) allDetectors.toArray(new IHyperlinkDetector[0]);
+		IHyperlinkDetector[] ts = (IHyperlinkDetector[]) allDetectors.toArray(new IHyperlinkDetector[0]);
+		IHyperlinkDetector[] in = (initial != null) ? initial.getHyperlinkDetectors(sourceViewer) : null;
+		if(in == null || in.length == 0) return ts;
+		if(ts == null || ts.length == 0) return in;
+		ArrayList<IHyperlinkDetector> total = new ArrayList<IHyperlinkDetector>();
+		for (int i = 0; i < ts.length; i++) total.add(ts[i]);
+		for (int i = 0; i < in.length; i++) if(!total.contains(in[i])) total.add(in[i]);
+		return total.toArray(new IHyperlinkDetector[0]);
 	}
 
 	private IHyperlinkDetector getTextEditorsExtensionsHyperlinkDetector() {
@@ -102,44 +120,17 @@ public class ExtendedStructuredTextViewerConfigurationHTML extends StructuredTex
 		return (plugin != null && plugin instanceof IAdaptable ? (IHyperlinkDetector)((IAdaptable)plugin).getAdapter(IHyperlinkDetector.class):null);
 	}
 
-	private IHyperlinkDetector getTextEditorsExtensionsHyperlinkDetector1() {
-		IHyperlinkDetector result = null;
-		final Object[] bundleActivationResult = new Object[] { Boolean.FALSE };
-		final Bundle bundle = Platform.getBundle("org.jboss.tools.common.text.ext");
-		if (bundle != null && bundle.getState() == org.osgi.framework.Bundle.ACTIVE) {
-			bundleActivationResult[0] = Boolean.TRUE;
-		} else {
-			BusyIndicator.showWhile(null, new Runnable() {
-				public void run() {
-					bundleActivationResult[0] = Boolean.TRUE;
-				}
-			});
+	IContentAssistProcessor[] getInitialProcessors(ISourceViewer sourceViewer, String partitionType) {
+		if(initial == null) return null;
+		try {
+			Method m = initial.getClass().getDeclaredMethod("getContentAssistProcessors", new Class[]{ISourceViewer.class, String.class});
+			m.setAccessible(true);
+			return (IContentAssistProcessor[])m.invoke(initial, new Object[]{sourceViewer, partitionType});
+		} catch (Exception e) {
+			XmlEditorPlugin.getPluginLog().logError(e);
 		}
-
-		if (Boolean.TRUE.equals(bundleActivationResult[0])) {
-			try {
-				Dictionary headers = bundle.getHeaders();
-				String pluginClass = (String)headers.get("Plugin-Class");
-				Class plugin = bundle.loadClass(pluginClass);
-				
-				Object obj = plugin.newInstance();
-				if (obj instanceof IAdaptable) {
-					result = (IHyperlinkDetector)((IAdaptable)obj).getAdapter(IHyperlinkDetector.class);
-				}
-			} catch (Exception x) {
-				JspEditorPlugin.getPluginLog().logError("Error in loading hyperlink detector", x);
-			}
-		}
-		return result;
+		
+		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.wst.html.ui.StructuredTextViewerConfigurationHTML#getContentFormatter(org.eclipse.jface.text.source.ISourceViewer)
-	 */
-	public IContentFormatter getContentFormatter(ISourceViewer sourceViewer) {
-		MultiPassContentFormatter formatter = new MultiPassContentFormatter(getConfiguredDocumentPartitioning(sourceViewer), IHTMLPartitions.HTML_DEFAULT);
-		formatter.setMasterStrategy(new StructuredFormattingStrategy(new HTMLFormatProcessor()));
-		return formatter;
-	}
 }
