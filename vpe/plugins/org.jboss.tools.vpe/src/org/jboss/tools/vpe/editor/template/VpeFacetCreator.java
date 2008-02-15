@@ -94,7 +94,7 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 						setCellClass(cell, getTableAttrValue(sourceParent, "footerClass"));
 					} else if (isCaption) {
 						setCellClass(cell, getTableAttrValue(sourceParent, "captionClass"));
-						setCaptionStyle(cell, getTableAttrValue(sourceParent, "captionStyle"));
+						setCaptionStyle(sourceParent, cell, getTableAttrValue(sourceParent, "captionStyle"));
 					}
 					creatorInfo = new VpeCreatorInfo(cell);
 				}
@@ -119,11 +119,23 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		}
 	}
 	
-	private void setCaptionStyle(nsIDOMNode cell, String styleName) {
+	/**
+	 * Sets the caption style and stretches caption to fit the full table width. 
+	 * 
+	 * @param sourceParent the source parent
+	 * @param cell the cell
+	 * @param captionStyle the caption style
+	 */
+	private void setCaptionStyle(Node sourceParent, nsIDOMNode cell, String captionStyle) {
 		if (cell != null) {
-			if (styleName != null && styleName.trim().length() > 0) {
-				((nsIDOMElement)cell).setAttribute("style", styleName);
+			String resultStyle = ""; 
+			if (captionStyle != null && captionStyle.trim().length() > 0) {
+				resultStyle += captionStyle;
 			}
+			if (!(captionStyle.lastIndexOf("width") > -1)) {
+				resultStyle += "width: 100%; ";
+			}
+			((nsIDOMElement)cell).setAttribute(HTML.ATTR_STYLE, resultStyle);
 		}
 	}
 

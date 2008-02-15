@@ -247,24 +247,31 @@ public class VpeDataTableElements {
 		private nsIDOMElement caption;
 		private nsIDOMElement tableCaptionTag;
 
-		private nsIDOMElement header;
+		private nsIDOMElement tableHeader;
 		private nsIDOMElement tableHeaderRow;
+		
+		private nsIDOMElement columnsHeader;
 		private nsIDOMElement columnsHeaderRow;
 
 		private nsIDOMElement body;
 		private nsIDOMElement bodyRow;
 
-		private nsIDOMElement footer;
-		private nsIDOMElement columnsFooterRow;
+		private nsIDOMElement tableFooter;
 		private nsIDOMElement tableFooterRow;
+
+		private nsIDOMElement columnsFooter;
+		private nsIDOMElement columnsFooterRow;
 
 		public VisualDataTableElements() {
 		}
 		
-		public VisualDataTableElements(nsIDOMElement header, nsIDOMElement body, nsIDOMElement footer) {
-			this.header = header;
+		public VisualDataTableElements(nsIDOMElement caption, nsIDOMElement columnsHeader, nsIDOMElement columnsFooter, nsIDOMElement header, nsIDOMElement body, nsIDOMElement footer) {
+			this.caption = caption;
+			this.columnsHeader = columnsHeader;
+			this.columnsFooter = columnsFooter;
+			this.tableHeader = header;
 			this.body = body;
-			this.footer = footer;
+			this.tableFooter = footer;
 		}
 		
 		public nsIDOMElement getBody() {
@@ -307,20 +314,36 @@ public class VpeDataTableElements {
 			this.tableCaptionTag = tableCaptionTag;
 		}
 
-		public nsIDOMElement getFooter() {
-			return footer;
+		public nsIDOMElement getTableFooter() {
+			return tableFooter;
+		}
+		
+		public void setTableFooter(nsIDOMElement footer) {
+			this.tableFooter = footer;
+		}
+		
+		public nsIDOMElement getTableHeader() {
+			return tableHeader;
+		}
+		
+		public void setTableHeader(nsIDOMElement header) {
+			this.tableHeader = header;
+		}
+		
+		public nsIDOMElement getColumnsFooter() {
+			return columnsFooter;
 		}
 
-		public void setFooter(nsIDOMElement footer) {
-			this.footer = footer;
+		public void setColumnsFooter(nsIDOMElement footer) {
+			this.columnsFooter = footer;
 		}
 
-		public nsIDOMElement getHeader() {
-			return header;
+		public nsIDOMElement getColumnsHeader() {
+			return columnsHeader;
 		}
 
-		public void setHeader(nsIDOMElement header) {
-			this.header = header;
+		public void setColumnsHeader(nsIDOMElement header) {
+			this.columnsHeader = header;
 		}
 		
 		public nsIDOMElement getCaption() {
@@ -406,17 +429,20 @@ public class VpeDataTableElements {
 
 	public static VisualDataTableElements getVisualDataTableElements(nsIDOMNode visualParent) {
 		VisualDataTableElements visualDataTableElements = new VisualDataTableElements(
+					VpeDataTableElements.getNamedChild(visualParent, HTML.TAG_CAPTION),
+					VpeDataTableElements.getNamedChild(visualParent, HTML.TAG_THEAD),
+					VpeDataTableElements.getNamedChild(visualParent, HTML.TAG_TFOOT),
 					VpeDataTableElements.getNamedChild(visualParent, HTML.TAG_THEAD),
 					VpeDataTableElements.getNamedChild(visualParent, HTML.TAG_TBODY),
 					VpeDataTableElements.getNamedChild(visualParent, HTML.TAG_TFOOT)
 			);
 
 		visualDataTableElements.setTableCaptionTag(VpeDataTableElements.getNamedChild(visualDataTableElements.getCaption(), "caption"));
-		visualDataTableElements.setTableHeaderRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getHeader(), "tr"));
-		visualDataTableElements.setColumnsHeaderRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getHeader(), "tr", 1));
+		visualDataTableElements.setTableHeaderRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getTableHeader(), "tr"));
+		visualDataTableElements.setColumnsHeaderRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getColumnsHeader(), "tr"));
 		visualDataTableElements.setBodyRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getBody(), "tr"));
-		visualDataTableElements.setColumnsFooterRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getFooter(), "tr"));
-		visualDataTableElements.setTableFooterRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getFooter(), "tr", 1));
+		visualDataTableElements.setColumnsFooterRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getColumnsFooter(), "tr"));
+		visualDataTableElements.setTableFooterRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getTableFooter(), "tr"));
 
 		return visualDataTableElements;
 	}

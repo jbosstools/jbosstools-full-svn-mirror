@@ -47,10 +47,10 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 		SourceColumnElements columnElements = new SourceColumnElements(sourceNode);
 		if (visualParent != null && HTML.TAG_TABLE.equalsIgnoreCase(visualParent.getNodeName()) && columnElements != null) {
 			VisualDataTableElements visualDataTableElements = VpeDataTableElements.getVisualDataTableElements(visualParent);
+			VisualColumnElements visualColumnElements = new VisualColumnElements();
 			nsIDOMElement col = visualDocument.createElement(HTML.TAG_COL);
 			nsIDOMElement colgroup = VpeDataTableElements.getNamedChild(visualParent, HTML.TAG_COLGROUP, 0);
 			creatorInfo = new VpeCreatorInfo(col);
-			VisualColumnElements visualColumnElements = new VisualColumnElements();
 			if (colgroup != null) {
 				colgroup.appendChild(col);
 				VpeChildrenInfo info = null;

@@ -27,6 +27,7 @@ import org.jboss.tools.vpe.editor.util.HTML;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.w3c.dom.Attr;
@@ -112,12 +113,12 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		SourceDataTableElements sourceElements = new SourceDataTableElements(sourceNode);
 		VisualDataTableElements visualElements = new VisualDataTableElements();
 
+		nsIDOMElement outterTable = visualDocument.createElement(HTML.TAG_TABLE);
 		nsIDOMElement visualTable = visualDocument.createElement(HTML.TAG_TABLE);
-		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(visualTable);
-
+		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(outterTable);
 		nsIDOMElement section = null, row = null, cell = null;
-		
 		nsIDOMElement caption;
+
 		if (true || sourceElements.hasTableCaption()) {
 			caption = visualDocument.createElement(HTML.TAG_CAPTION);
 			visualElements.setTableCaptionTag(caption);
@@ -126,50 +127,54 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				info.addSourceChild(sourceElements.getTableCaption());
 				creatorInfo.addChildrenInfo(info);
 			}
-		}
-		visualTable.appendChild(caption);
-		visualElements.setCaption(caption);
-		
-		if (true || sourceElements.hasHeaderSection()) {
-			section = visualDocument.createElement(HTML.TAG_THEAD);
-			if (true || sourceElements.hasTableHeader()) {
-				row = visualDocument.createElement(HTML.TAG_TR);
-				section.appendChild(row);
-				visualElements.setTableHeaderRow(row);
-				if (sourceElements.getTableHeader() != null) {
-					VpeChildrenInfo info = new VpeChildrenInfo(row);
-					info.addSourceChild(sourceElements.getTableHeader());
-					creatorInfo.addChildrenInfo(info);
-				}
-			}
-			if (true || sourceElements.hasColumnsHeader()) {
-				row = visualDocument.createElement("tr");
-				section.appendChild(row);
-				visualElements.setColumnsHeaderRow(row);
-			}
-			visualTable.appendChild(section);
-			visualElements.setHeader(section);
+			outterTable.appendChild(caption);
+			visualElements.setCaption(caption);
 		}
 
-		if (true || sourceElements.hasFooterSection()) {
-			section = visualDocument.createElement("tfoot");
-			if (true || sourceElements.hasColumnsFooter()) {
-				row = visualDocument.createElement("tr");
-				section.appendChild(row);
-				visualElements.setColumnsFooterRow(row);
+		if (true || sourceElements.hasTableHeader()) {
+			section = visualDocument.createElement(HTML.TAG_THEAD);
+			row = visualDocument.createElement(HTML.TAG_TR);
+			section.appendChild(row);
+			visualElements.setTableHeaderRow(row);
+			if (sourceElements.getTableHeader() != null) {
+				VpeChildrenInfo info = new VpeChildrenInfo(row);
+				info.addSourceChild(sourceElements.getTableHeader());
+				creatorInfo.addChildrenInfo(info);
 			}
-			if (true || sourceElements.hasTableFooter()) {
-				row = visualDocument.createElement("tr");
-				section.appendChild(row);
-				visualElements.setTableFooterRow(row);
-				if (sourceElements.getTableFooter() != null) {
-					VpeChildrenInfo info = new VpeChildrenInfo(row);
-					info.addSourceChild(sourceElements.getTableFooter());
-					creatorInfo.addChildrenInfo(info);
-				}
+			outterTable.appendChild(section);
+			visualElements.setTableHeader(section);
+		}
+
+		if (true || sourceElements.hasTableFooter()) {
+			section = visualDocument.createElement(HTML.TAG_TFOOT);
+			row = visualDocument.createElement(HTML.TAG_TR);
+			section.appendChild(row);
+			visualElements.setTableFooterRow(row);
+			if (sourceElements.getTableFooter() != null) {
+				VpeChildrenInfo info = new VpeChildrenInfo(row);
+				info.addSourceChild(sourceElements.getTableFooter());
+				creatorInfo.addChildrenInfo(info);
 			}
+			outterTable.appendChild(section);
+			visualElements.setTableFooter(section);
+		}
+
+		if (true || sourceElements.hasColumnsHeader()) {
+			section = visualDocument.createElement(HTML.TAG_THEAD);
+			row = visualDocument.createElement(HTML.TAG_TR);
+			section.appendChild(row);
+			visualElements.setColumnsHeaderRow(row);
 			visualTable.appendChild(section);
-			visualElements.setFooter(section);
+			visualElements.setColumnsHeader(section);
+		}
+
+		if (true || sourceElements.hasColumnsFooter()) {
+			section = visualDocument.createElement(HTML.TAG_TFOOT);
+			row = visualDocument.createElement(HTML.TAG_TR);
+			section.appendChild(row);
+			visualElements.setColumnsFooterRow(row);
+			visualTable.appendChild(section);
+			visualElements.setColumnsFooter(section);
 		}
 
 		if (true || sourceElements.hasBodySection()) {
@@ -194,6 +199,15 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			info.addSourceChild(column.getColumn());
 		}
 
+		nsIDOMElement outterTBODY = visualDocument.createElement(HTML.TAG_TBODY);
+		nsIDOMElement outterTR = visualDocument.createElement(HTML.TAG_TR);
+		nsIDOMElement outterTD = visualDocument.createElement(HTML.TAG_TR);
+
+		outterTD.appendChild(visualTable);
+		outterTR.appendChild(outterTD);
+		outterTBODY.appendChild(outterTR);
+		outterTable.appendChild(outterTBODY);
+
 		Object[] elements = new Object[2];
 		elements[0] = visualElements;
 		elements[1] = sourceElements;
@@ -205,6 +219,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				VpeCreatorInfo info1 = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
 				if (info1 != null && info1.getVisualNode() != null) {
 					nsIDOMAttr attr = (nsIDOMAttr) info1.getVisualNode();
+					// TODO creates border=1 here
 					visualTable.setAttributeNode(attr);
 				}
 			}
