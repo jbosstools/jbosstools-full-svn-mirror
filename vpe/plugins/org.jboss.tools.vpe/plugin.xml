@@ -29,9 +29,6 @@
       <templates
             name="Apache MyFaces"
             path="templates/vpe-templates-myfaces.xml"/>
-      <templates
-            name="Struts"
-            path="templates/vpe-templates-struts.xml"/>
    </extension>
    <extension
          point="org.jboss.tools.common.model.resourceMapping">
