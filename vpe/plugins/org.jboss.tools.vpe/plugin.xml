@@ -26,9 +26,6 @@
       <templates
             name="JSP Tags"
             path="templates/vpe-templates-jsp.xml"/>
-      <templates
-            name="Apache MyFaces"
-            path="templates/vpe-templates-myfaces.xml"/>
    </extension>
    <extension
          point="org.jboss.tools.common.model.resourceMapping">
