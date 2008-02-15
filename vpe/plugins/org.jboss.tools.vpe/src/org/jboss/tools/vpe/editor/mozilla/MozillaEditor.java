@@ -27,6 +27,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
@@ -238,6 +239,15 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			};
 
 			xulRunnerEditor.setURL(INIT_URL);
+			// Wait while visual part is loaded
+			BusyIndicator.showWhile(Display.getCurrent(), new Runnable() {
+				public void run() {
+						while(Display.getCurrent().readAndDispatch()
+								&& getController()==null) {
+							// do nothing
+						}
+				}
+			});
 			xulRunnerEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		}
 		catch (Exception e) {
