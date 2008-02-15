@@ -15,13 +15,10 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IStartup;
-import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.common.log.BaseUIPlugin;
 import org.jboss.tools.common.log.IPluginLog;
 import org.jboss.tools.common.reporting.ProblemReportingHelper;
-import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -30,7 +27,10 @@ import org.osgi.framework.BundleContext;
  * The main plugin class to be used in the desktop.
  */
 public class VpePlugin extends BaseUIPlugin implements IStartup {
-	public final static String PLUGIN_ID = "org.jboss.tools.vpe"; // $NON-NLS-1$
+	public static final String PLUGIN_ID = "org.jboss.tools.vpe"; //$NON-NLS-1$
+	
+	public static final String EXTESION_POINT_VPE_TEMPLATES = "org.jboss.tools.vpe.templates"; //$NON-NLS-1$
+	
 	//The shared instance.
 	private static VpePlugin plugin;
 	//Resource bundle.
@@ -99,8 +99,8 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 		/* init xulrunner path for */ 
 		try {
 			String xulRunnerPath = XulRunnerBrowser.getXulRunnerPath();
-			if ("true".equals(Platform.getDebugOption(PLUGIN_ID + "/debug/earlyStartup"))) { // $NON-NLS-1$ // $NON-NLS-1$
-				logInfo("earlyStartup: XULRunner path is: " + xulRunnerPath);
+			if ("true".equals(Platform.getDebugOption(PLUGIN_ID + "/debug/earlyStartup"))) { //$NON-NLS-1$ //$NON-NLS-2$
+				logInfo("earlyStartup: XULRunner path is: " + xulRunnerPath); //$NON-NLS-1$
 			}
 		} catch (Throwable t) {
 			// Ignore this. Will catch it when use Visual Editor 
