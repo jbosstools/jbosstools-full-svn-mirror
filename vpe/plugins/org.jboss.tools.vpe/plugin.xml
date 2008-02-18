@@ -12,21 +12,12 @@
    <extension point="org.jboss.tools.common.model.keys">
       <keys path="help/keys-vpe.properties"/>
    </extension>
-   <extension
+   <!-- extension
          point="org.jboss.tools.vpe.templates">
-      <templates
-            name="Oracle ADF"
-            path="templates/vpe-templates-adf.xml"/>
-      <templates
-            name="HTML"
-            path="templates/vpe-templates-html.xml"/>
       <templates
             name="JSF Reference Implementation"
             path="templates/vpe-templates-jsf.xml"/>
-      <templates
-            name="JSP Tags"
-            path="templates/vpe-templates-jsp.xml"/>
-   </extension>
+   </extension -->
    <extension
          point="org.jboss.tools.common.model.resourceMapping">
       <mapping
