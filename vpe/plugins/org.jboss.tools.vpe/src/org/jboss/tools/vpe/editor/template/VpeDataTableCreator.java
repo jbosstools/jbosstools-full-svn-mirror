@@ -182,8 +182,8 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			row = visualDocument.createElement(HTML.TAG_TR);
 			section.appendChild(row);
 			visualTable.appendChild(section);
-			visualElements.setBodyRow(row);
-			visualElements.setBody(section);
+			//visualElements.setBodyRow(row);
+			//visualElements.setBody(section);
 		}
 
 		VpeChildrenInfo info = null;
@@ -207,6 +207,9 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		outterTR.appendChild(outterTD);
 		outterTBODY.appendChild(outterTR);
 		outterTable.appendChild(outterTBODY);
+		
+		visualElements.setBodyRow(outterTR);
+		visualElements.setBody(outterTBODY);
 
 		Object[] elements = new Object[2];
 		elements[0] = visualElements;
@@ -219,8 +222,13 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				VpeCreatorInfo info1 = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
 				if (info1 != null && info1.getVisualNode() != null) {
 					nsIDOMAttr attr = (nsIDOMAttr) info1.getVisualNode();
-					// TODO creates border=1 here
-					visualTable.setAttributeNode(attr);
+					// Fixes creation 'border="1"' 
+					// when setting border attribute to the table
+					if (VpeTemplateManager.ATTR_ANY_BORDER.equalsIgnoreCase(attr.getNodeName()) 
+							&& (null == attr.getNodeValue() || "".equalsIgnoreCase(attr.getNodeValue()))) {
+						attr.setNodeValue("0");
+					}
+					outterTable.setAttributeNode(attr);
 				}
 			}
 		}

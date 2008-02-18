@@ -132,9 +132,9 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 			if (captionStyle != null && captionStyle.trim().length() > 0) {
 				resultStyle += captionStyle;
 			}
-			if (!(captionStyle.lastIndexOf("width") > -1)) {
-				resultStyle += "width: 100%; ";
-			}
+//			if (!(captionStyle.lastIndexOf("width") > -1)) {
+//				resultStyle += "width: 100%; ";
+//			}
 			((nsIDOMElement)cell).setAttribute(HTML.ATTR_STYLE, resultStyle);
 		}
 	}

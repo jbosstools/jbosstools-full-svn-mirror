@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeDataTableElements.SourceColumnElements;
+import org.jboss.tools.vpe.editor.template.VpeDataTableElements.SourceDataTableElements;
 import org.jboss.tools.vpe.editor.template.VpeDataTableElements.VisualColumnElements;
 import org.jboss.tools.vpe.editor.template.VpeDataTableElements.VisualDataTableElements;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -45,6 +46,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 		}
 
 		SourceColumnElements columnElements = new SourceColumnElements(sourceNode);
+		
 		if (visualParent != null && HTML.TAG_TABLE.equalsIgnoreCase(visualParent.getNodeName()) && columnElements != null) {
 			VisualDataTableElements visualDataTableElements = VpeDataTableElements.getVisualDataTableElements(visualParent);
 			VisualColumnElements visualColumnElements = new VisualColumnElements();
@@ -60,7 +62,16 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 					info.addSourceChild(columnElements.getHeader());
 				}
 				creatorInfo.addChildrenInfo(info);
-				setCellClass(cell, getColumnAttrValue(sourceNode, "headerClass"));
+				
+				String styleClass = "";
+				String tableHeaderClass = getNodeAttrValue(sourceNode.getParentNode(), "headerClass");
+				String columnHeaderClass = getNodeAttrValue(sourceNode, "headerClass");
+				if (null != columnHeaderClass && !"".equalsIgnoreCase(columnHeaderClass)) {
+					styleClass = columnHeaderClass;
+				} else if (null != tableHeaderClass && !"".equalsIgnoreCase(tableHeaderClass)) {
+					styleClass = tableHeaderClass;
+				}
+				setCellClass(cell, styleClass);
 				visualColumnElements.setHeaderCell(cell);
 
 				cell = VpeDataTableElements.makeCell(visualDataTableElements.getColumnsFooterRow(), index, HTML.TAG_TD, visualDocument);
@@ -69,7 +80,16 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 					info.addSourceChild(columnElements.getFooter());
 				}
 				creatorInfo.addChildrenInfo(info);
-				setCellClass(cell, getColumnAttrValue(sourceNode, "footerClass"));
+				
+				styleClass = "";
+				String tableFooterClass = getNodeAttrValue(sourceNode.getParentNode(), "footerClass");
+				String columnFooterClass = getNodeAttrValue(sourceNode, "footerClass");
+				if (null != columnFooterClass && !"".equalsIgnoreCase(columnFooterClass)) {
+					styleClass = columnFooterClass;
+				} else if (null != tableFooterClass && !"".equalsIgnoreCase(tableFooterClass)) {
+					styleClass = tableFooterClass;
+				}
+				setCellClass(cell, styleClass);
 				visualColumnElements.setFooterCell(cell);
 				
 				cell = VpeDataTableElements.makeCell(visualDataTableElements.getBodyRow(), index, HTML.TAG_TD, visualDocument);
@@ -155,13 +175,14 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 		}
 	}
 	
-	private String getColumnAttrValue(Node columnNode, String attrName) {
-		if (columnNode != null) {
-			Node attr = columnNode.getAttributes().getNamedItem(attrName);
+	private String getNodeAttrValue(Node node, String attrName) {
+		if (node != null) {
+			Node attr = node.getAttributes().getNamedItem(attrName);
 			if (attr != null) {
 				return attr.getNodeValue();
 			}
 		}
 		return null;
 	}
+	
 }
