@@ -957,7 +957,15 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			} else if (HTML.TAG_INPUT
 				.equalsIgnoreCase(visualElementName)) {
 			    updateElement(sourceElement);
+			// Fixes JBIDE-1744 author dmaliarevich
+			// unified h:dataTable border lookup 
+			// after attribute change and
+			// after visual editor refresh
+			} else if (HTML.TAG_TABLE
+					.equalsIgnoreCase(visualElementName)) {
+				updateElement(sourceElement);
 			}
+			// End of fix
 		    }
 //		    setXmlnsAttribute(elementMapping, name, value);
 		    template.setAttribute(pageContext, sourceElement,

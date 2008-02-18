@@ -201,7 +201,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 
 		nsIDOMElement outterTBODY = visualDocument.createElement(HTML.TAG_TBODY);
 		nsIDOMElement outterTR = visualDocument.createElement(HTML.TAG_TR);
-		nsIDOMElement outterTD = visualDocument.createElement(HTML.TAG_TR);
+		nsIDOMElement outterTD = visualDocument.createElement(HTML.TAG_TD);
 
 		outterTD.appendChild(visualTable);
 		outterTR.appendChild(outterTD);
@@ -223,10 +223,10 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				if (info1 != null && info1.getVisualNode() != null) {
 					nsIDOMAttr attr = (nsIDOMAttr) info1.getVisualNode();
 					// Fixes creation 'border="1"' 
-					// when setting border attribute to the table
-					if (VpeTemplateManager.ATTR_ANY_BORDER.equalsIgnoreCase(attr.getNodeName()) 
-							&& (null == attr.getNodeValue() || "".equalsIgnoreCase(attr.getNodeValue()))) {
-						attr.setNodeValue("0");
+					// when setting border attribute to the table.
+					// Also skips empty attributes to fix layout problems.
+					if (null == attr.getNodeValue() || "".equalsIgnoreCase(attr.getNodeValue())) {
+						continue;
 					}
 					outterTable.setAttributeNode(attr);
 				}
