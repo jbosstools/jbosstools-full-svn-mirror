@@ -409,7 +409,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if(visualBuilder==null) {
 			return;
 		}
-		visualBuilder.rebuildFlag = false;
+//		visualBuilder.rebuildFlag = false;
 		
 		switch (eventType) {
 		case INodeNotifier.CHANGE:
@@ -473,9 +473,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			break;
 		}
 		//TODO Max Areshkau JBIDE-1457
-		if (visualBuilder.rebuildFlag) {
-//			pageContext.fireTaglibsChanged();
-		} 
+//		if (visualBuilder.rebuildFlag) {
+////			pageContext.fireTaglibsChanged();
+//		} 
 
 		switcher.stopActiveEditor();
 	}
@@ -602,7 +602,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		sourceSelectionChanged(showCaret);
 		switcher.stopActiveEditor();
 	}
-		
 	// IModelLifecycleListener implementation
 	public void processPreModelEvent(ModelLifecycleEvent event) {
 	}
@@ -611,6 +610,16 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
+		/* Added by Max Areshkau JBIDE-1457
+		 * ModelLifecycleEvent.MODEL_RELEASED generated when model in
+		 * model calls methods releaseFromRead() or releaseFromEdit().
+		 * When editor is open he has only when href on model, so nothing can generated
+		 * this event.When editor closes generation of this event depends from cantains 
+		 * any service href on model or not. It's can be a reason of problems 
+		 * on reopen file.
+		 * 
+		 * We shouldn't call here rebuild dom.
+		 */
 		if (event.getType() == ModelLifecycleEvent.MODEL_RELEASED) {
 			if (VpeDebug.PRINT_SOURCE_MODEL_LIFECYCLE_EVENT) {
 				System.out.println(">>> processPostModelEvent: " + event.toString()); //$NON-NLS-1$
@@ -624,7 +633,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			bundle.refresh();
 			visualBuilder.setSelectionRectangle(null);
 			IDOMDocument sourceDocument = sourceModel.getDocument();
-			visualBuilder.rebuildDom(sourceDocument);
+			//			JBIDE-1457
+//			visualBuilder.rebuildDom(sourceDocument);
 //			pageContext.fireTaglibsChanged();
 		}
 		switcher.stopActiveEditor();

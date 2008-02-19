@@ -114,7 +114,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     private nsIDOMNode headNode;
     private List includeStack;
     //TODO Max Areshkau JBIDE-1457
-    boolean rebuildFlag = false;
+//    boolean rebuildFlag = false;
 
     /** faceletFile */
     private boolean faceletFile = false;
@@ -208,7 +208,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     	//clearIncludeDocuments();
 	cleanHead();
 	domMapping.clear(visualContentArea);
-		super.dispose();
+	super.dispose();
 
 	pageContext.clearAll();
 	refreshExternalLinks();
@@ -224,7 +224,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    buildDom(sourceDocument);
 	}
 
-	rebuildFlag = true;
     }
 
     // temporary, will be change to prefference's variable
