@@ -1,4 +1,4 @@
-package org.jboss.tools.jst.vpe.jsp;
+package org.jboss.tools.vpe.jsp;
 
 import org.jboss.tools.common.log.BaseUIPlugin;
 import org.osgi.framework.BundleContext;

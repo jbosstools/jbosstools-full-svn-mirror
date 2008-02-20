@@ -354,7 +354,7 @@
 
 	<vpe:tag name="body" case-sensitive="yes">
 		<vpe:template children="yes" modify="yes"
-			class="org.jboss.tools.jst.vpe.html.template.HtmlBodyTemplate">
+			class="org.jboss.tools.vpe.html.template.HtmlBodyTemplate">
 			<vpe:resize>
 				<vpe:width width-attr="style.width" />
 				<vpe:height height-attr="style.height" />
