@@ -203,6 +203,13 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		nsIDOMElement outterTR = visualDocument.createElement(HTML.TAG_TR);
 		nsIDOMElement outterTD = visualDocument.createElement(HTML.TAG_TD);
 
+		// To create appropriate visual appearance
+		// borders of the body cell and content table
+		// were set via styles.
+		outterTD.setAttribute("style", "border: 0px hidden;");
+		visualTable.setAttribute("width", "100%");
+		visualTable.setAttribute("style", "border: 0px hidden;");
+		
 		outterTD.appendChild(visualTable);
 		outterTR.appendChild(outterTD);
 		outterTBODY.appendChild(outterTR);
@@ -228,13 +235,16 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 					if (null == attr.getNodeValue() || "".equalsIgnoreCase(attr.getNodeValue())) {
 						continue;
 					}
+					if ("border".equalsIgnoreCase(attr.getNodeName())) {
+						visualTable.setAttribute("border", attr.getNodeValue());
+					}
 					outterTable.setAttributeNode(attr);
 				}
 			}
 		}
 		return creatorInfo;
 	}
-
+	
 	public void setAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name, String value) {
 		VisualDataTableElements visualElements = getVisualDataTableElements(visualNodeMap);
 		if (visualElements != null) {
