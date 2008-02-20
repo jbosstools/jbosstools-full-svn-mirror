@@ -42,6 +42,11 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 	private VpeExpression footerClassExpr;
 	private VpeExpression rowClassesExpr;
 	private VpeExpression columnClassesExpr;
+	
+	private static final String ATTR_STYLE = "style";
+	private static final String ATTR_WIDTH = "width";
+	private static final String ATTR_BORDER = "border";
+	private static final String HIDDEN_BORDER_STYLE = "border: 0px hidden;" ;
 
 	private List propertyCreators;
 
@@ -206,9 +211,9 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		// To create appropriate visual appearance
 		// borders of the body cell and content table
 		// were set via styles.
-		outterTD.setAttribute("style", "border: 0px hidden;");
-		visualTable.setAttribute("width", "100%");
-		visualTable.setAttribute("style", "border: 0px hidden;");
+		outterTD.setAttribute(ATTR_STYLE, HIDDEN_BORDER_STYLE);
+		visualTable.setAttribute(ATTR_WIDTH, "100%");
+		visualTable.setAttribute(ATTR_STYLE, HIDDEN_BORDER_STYLE);
 		
 		outterTD.appendChild(visualTable);
 		outterTR.appendChild(outterTD);
@@ -235,8 +240,8 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 					if (null == attr.getNodeValue() || "".equalsIgnoreCase(attr.getNodeValue())) {
 						continue;
 					}
-					if ("border".equalsIgnoreCase(attr.getNodeName())) {
-						visualTable.setAttribute("border", attr.getNodeValue());
+					if (ATTR_BORDER.equalsIgnoreCase(attr.getNodeName())) {
+						visualTable.setAttribute(ATTR_BORDER, attr.getNodeValue());
 					}
 					outterTable.setAttributeNode(attr);
 				}
