@@ -1101,7 +1101,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (VpeDebug.VISUAL_CONTEXTMENU_DUMP_SOURCE) {
 			manager.add(new Action("Dump Source") { //$NON-NLS-1$
 				public void  run() {	
-					DOMTreeDumper dumper = new DOMTreeDumper();
+					DOMTreeDumper dumper = new DOMTreeDumper(VpeDebug.VISUAL_DUMP_PRINT_HASH);
 					dumper.dumpToStream(System.out, visualEditor.getDomDocument());
 				}
 			});

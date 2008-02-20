@@ -18,31 +18,47 @@ import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 public class DOMTreeDumper {
     private PrintStream ps;
     private boolean inA;
-    private final String[] endTagForbiddenNames = {"AREA",    
-			   "BASE",    
-			   "BASEFONT",
-			   "BR",      
-			   "COL",     
-			   "FRAME",   
-			   "HR",      
-			   "IMG",     
-			   "INPUT",   
-			   "ISINDEX", 
-			   "LINK",    
-			   "META",    
-			   "PARAM"};
+    /**
+     * Flag to print hash code of object while dump node
+     * default true 
+     */
+    private boolean printHashCode;
+    
+    private final String[] endTagForbiddenNames = {"AREA", //$NON-NLS-1$
+			   "BASE", //$NON-NLS-1$
+			   "BASEFONT", //$NON-NLS-1$
+			   "BR", //$NON-NLS-1$
+			   "COL", //$NON-NLS-1$
+			   "FRAME", //$NON-NLS-1$
+			   "HR", //$NON-NLS-1$
+			   "IMG", //$NON-NLS-1$
+			   "INPUT", //$NON-NLS-1$
+			   "ISINDEX", //$NON-NLS-1$
+			   "LINK", //$NON-NLS-1$
+			   "META", //$NON-NLS-1$
+			   "PARAM"}; //$NON-NLS-1$
 
-    public void dumpToStream(PrintStream ps, nsIDOMDocument doc) {
+    public DOMTreeDumper() {
+    	this.printHashCode = true;
+	}
+    
+	public DOMTreeDumper(boolean isPrintHashCode) {
+		this.printHashCode = isPrintHashCode;
+	}
+
+	public boolean isPrintHashCode() {
+		return printHashCode;
+	}
+
+	public void setPrintHashCode(boolean printHashCode) {
+		this.printHashCode = printHashCode;
+	}
+
+	public void dumpToStream(PrintStream ps, nsIDOMDocument doc) {
     	this.ps = ps;
     	dumpDocument(doc);
     }
@@ -76,59 +92,62 @@ public class DOMTreeDumper {
     	String value = node.getNodeValue();
 
     	switch (type) {
-		case Node.ELEMENT_NODE:
-		    if (name.equals("A")) {
+		case nsIDOMNode.ELEMENT_NODE:
+		    if (name.equals("A")) { //$NON-NLS-1$
 		    	inA = true;
 		    }
-    	    if (!(inA || name.equals("BR"))) {
+    	    if (!(inA || name.equals("BR"))) { //$NON-NLS-1$
     	    	ps.println();
     	    }
-    	    ps.print("<" + name);
+    	    ps.print("<" + name); //$NON-NLS-1$
     	    dumpAttributes(node);
-    	    ps.print(">(" + node.hashCode() + ")");	
+    	    ps.print(">"); //$NON-NLS-1$
+    	    
+    	    printHashCode(node);
+    	    
     	    dumpChildren(node);
-    	    if (name.equals("A")) {
+    	    if (name.equals("A")) { //$NON-NLS-1$
     	    	inA = false;
     	    }
     	    if (!endTagForbidden(name)) {
-    	    	ps.print("</" + name + ">");	
+    	    	ps.print("</" + name + ">"); //$NON-NLS-1$ //$NON-NLS-2$
     	    }
     	    break;
 
-		case Node.ATTRIBUTE_NODE:
+		case nsIDOMNode.ATTRIBUTE_NODE:
 			nsIDOMAttr attr = (nsIDOMAttr) node.queryInterface(nsIDOMAttr.NS_IDOMATTR_IID);
 			if (attr.getSpecified()) {
-				ps.print(" " + attr.getName().toUpperCase() + "=\"" + attr.getValue() + "\"");
+				ps.print(" " + attr.getName().toUpperCase() + "=\"" + attr.getValue() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			} else {
-				ps.print(" " + attr.getName().toUpperCase());
+				ps.print(" " + attr.getName().toUpperCase()); //$NON-NLS-1$
 			}
 			break;
 
-		case Node.TEXT_NODE: 
-		    if (!node.getParentNode().getNodeName().equals("PRE")) {
+		case nsIDOMNode.TEXT_NODE: 
+		    if (!node.getParentNode().getNodeName().equals("PRE")) { //$NON-NLS-1$
 		    	value = value.trim();
 		    }
-		    if (!value.equals("")) {
+		    if (!value.equals("")) { //$NON-NLS-1$
 		    	if (!inA) {
 		    		ps.println();
 		    	}
 		    	ps.print(canonicalize(value));
 		    }
-	    	ps.print("(" + node.hashCode() + ")");
+		    printHashCode(node);
 		    break;	
-		case Node.COMMENT_NODE:
-		    ps.print("\n<!--" + value + "-->");
+		case nsIDOMNode.COMMENT_NODE:
+		    ps.print("\n<!--" + value + "-->"); //$NON-NLS-1$ //$NON-NLS-2$
 		    break;
-		case Node.CDATA_SECTION_NODE:
-		case Node.ENTITY_REFERENCE_NODE:
-		case Node.ENTITY_NODE:
-		case Node.PROCESSING_INSTRUCTION_NODE:
-		case Node.DOCUMENT_NODE:
-		case Node.DOCUMENT_TYPE_NODE:
-		case Node.DOCUMENT_FRAGMENT_NODE:
-		case Node.NOTATION_NODE:
-		    ps.println("\n<!-- NOT HANDLED: " + name + 
-			       "  value=" + value + " -->");
+		case nsIDOMNode.CDATA_SECTION_NODE:
+		case nsIDOMNode.ENTITY_REFERENCE_NODE:
+		case nsIDOMNode.ENTITY_NODE:
+		case nsIDOMNode.PROCESSING_INSTRUCTION_NODE:
+		case nsIDOMNode.DOCUMENT_NODE:
+		case nsIDOMNode.DOCUMENT_TYPE_NODE:
+		case nsIDOMNode.DOCUMENT_FRAGMENT_NODE:
+		case nsIDOMNode.NOTATION_NODE:
+		    ps.println("\n<!-- NOT HANDLED: " + name +  //$NON-NLS-1$
+			       "  value=" + value + " -->"); //$NON-NLS-1$ //$NON-NLS-2$
 		    break;
     	}
 	}
@@ -166,16 +185,16 @@ public class DOMTreeDumper {
 		for (int i = 0; i < length; i++) {
 			switch (c = in.charAt(i)) {  			
 			case '&' :
-				out.append("&amp;");
+				out.append("&amp;"); //$NON-NLS-1$
 				break;
 			case '<':
-				out.append("&lt;");
+				out.append("&lt;"); //$NON-NLS-1$
 				break;
 			case '>':
-				out.append("&gt;");
+				out.append("&gt;"); //$NON-NLS-1$
 				break;
 			case '\u00A0':
-				out.append("&nbsp;");
+				out.append("&nbsp;"); //$NON-NLS-1$
 				break;
 			default:
 				out.append(c);
@@ -191,5 +210,11 @@ public class DOMTreeDumper {
 		    }
 		}
 		return false;
+    }
+    
+    private void printHashCode(Object o) {
+    	if (isPrintHashCode()) {
+    		ps.print("(" + o.hashCode() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+    	}
     }
 }
