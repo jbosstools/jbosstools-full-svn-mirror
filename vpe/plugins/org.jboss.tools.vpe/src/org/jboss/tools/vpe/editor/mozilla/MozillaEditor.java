@@ -240,12 +240,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 			xulRunnerEditor.setURL(INIT_URL);
 			// Wait while visual part is loaded
-			BusyIndicator.showWhile(Display.getCurrent(), new Runnable() {
+			Display.getCurrent().syncExec( new Runnable() {
 				public void run() {
-						while(Display.getCurrent().readAndDispatch()
-								&& getController()==null) {
-							// do nothing
+						while( Display.getCurrent().readAndDispatch() && getController()==null) {
 						}
+						
 				}
 			});
 			xulRunnerEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
