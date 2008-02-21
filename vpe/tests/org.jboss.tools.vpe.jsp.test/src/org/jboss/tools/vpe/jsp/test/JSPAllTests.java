@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.jsf.vpe.jsp.test;
+package org.jboss.tools.vpe.jsp.test;
 
 import java.util.ArrayList;
 import java.util.List;

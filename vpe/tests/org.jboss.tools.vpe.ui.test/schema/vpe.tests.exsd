@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.jboss.tools.jsf.vpe.ui.test">
+<schema targetNamespace="org.jboss.tools.vpe.ui.test">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.jboss.tools.jsf.vpe.ui.test" id="vpe.tests" name="Visual Editor Tests"/>
+         <meta.schema plugin="org.jboss.tools.vpe.ui.test" id="vpe.tests" name="Visual Editor Tests"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]

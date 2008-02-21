@@ -37,9 +37,9 @@ import org.mozilla.interfaces.nsIDOMNodeList;
  */
 public class TestUtil {
 
-    private static final String COMPONENTS_PATH = "WebContent/pages"; // $NON-NLS-1$
+    private static final String COMPONENTS_PATH = "WebContent/pages"; //$NON-NLS-1$
 
-    private static final String WEBCONTENT_PATH = "WebContent"; // $NON-NLS-1$
+    private static final String WEBCONTENT_PATH = "WebContent"; //$NON-NLS-1$
 
     @SuppressWarnings("restriction")
     static void importProjectIntoWorkspace(String path, String projectName) {
@@ -59,7 +59,7 @@ public class TestUtil {
 
 	    // need to remove from imported project "svn" files
 	    List<String> unimportedFiles = new ArrayList<String>();
-	    unimportedFiles.add(".svn");
+	    unimportedFiles.add(".svn"); //$NON-NLS-1$
 
 	    importProvider.setUnimportedFiles(unimportedFiles);
 

@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.jsf.vpe.html.test;
+package org.jboss.tools.vpe.html.test;
 
 import org.eclipse.core.resources.IFile;
 import org.jboss.tools.vpe.ui.test.TestUtil;

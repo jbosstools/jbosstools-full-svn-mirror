@@ -8,7 +8,7 @@
 * Contributors:
 *     Red Hat, Inc. - initial API and implementation
 ******************************************************************************/
-package org.jboss.tools.jsf.vpe.html.test;
+package org.jboss.tools.vpe.html.test;
 
 import java.net.URL;
 
@@ -24,7 +24,7 @@ import org.osgi.framework.BundleContext;
 public class HtmlTestPlugin extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jboss.tools.jsf.vpe.html.test";
+	public static final String PLUGIN_ID = "org.jboss.tools.vpe.html.test"; //$NON-NLS-1$
 
 	// The shared instance
 	private static HtmlTestPlugin plugin;

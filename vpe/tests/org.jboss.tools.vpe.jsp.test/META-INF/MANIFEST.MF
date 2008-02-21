@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Test Plug-in
 Bundle-SymbolicName: org.jboss.tools.vpe.jsp.test;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: org.jboss.tools.jsf.vpe.jsp.test.JSPTestPlugin
+Bundle-Activator: org.jboss.tools.vpe.jsp.test.JSPTestPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.jboss.tools.vpe,
@@ -16,5 +16,5 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.vpe.xulrunner,
  org.mozilla.xpcom
 Eclipse-LazyStart: true
-Export-Package: org.jboss.tools.jsf.vpe.jsp.test
+Export-Package: org.jboss.tools.vpe.jsp.test
 Bundle-ClassPath: jsp-tests.jar

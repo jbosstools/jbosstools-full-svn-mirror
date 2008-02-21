@@ -2,11 +2,11 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.jboss.tools.jsf.vpe.ui.tests">
+         point="org.jboss.tools.vpe.ui.tests">
       <tests
             description="Tests for Html templates"
             name="Tests for Html templates"
-            testSuite="org.jboss.tools.jsf.vpe.html.test.HtmlAllTests">
+            testSuite="org.jboss.tools.vpe.html.test.HtmlAllTests">
       </tests>
    </extension>
 

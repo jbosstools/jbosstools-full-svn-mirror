@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.jsf.vpe.jsp.test;
+package org.jboss.tools.vpe.jsp.test;
 
 import java.net.URL;
 
@@ -24,7 +24,7 @@ import org.osgi.framework.BundleContext;
 public class JSPTestPlugin extends BaseUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "org.jboss.tools.jsf.vpe.jsp.test"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "org.jboss.tools.vpe.jsp.test"; //$NON-NLS-1$
 
     // The shared instance
     private static JSPTestPlugin plugin;
