@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Jsf Test Plug-in
-Bundle-SymbolicName: org.jboss.tools.jsf.vpe.jsf.test;singleton:=true
+Bundle-Name: Test Html Plug-in
+Bundle-SymbolicName: org.jboss.tools.vpe.html.test;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: org.jboss.tools.jsf.vpe.jsf.test.JsfTestPlugin
+Bundle-Activator: org.jboss.tools.jsf.vpe.html.test.HtmlTestPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.jboss.tools.vpe,
@@ -16,7 +16,6 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.common.model,
  org.jboss.tools.vpe.xulrunner,
  org.mozilla.xpcom,
- org.jboss.tools.vpe.ui.test;visibility:=reexport,
- org.eclipse.jface.text
+ org.jboss.tools.vpe.ui.test
 Eclipse-LazyStart: true
-Bundle-ClassPath: jsf-test.jar
+Bundle-ClassPath: html-test.jar
