@@ -23,6 +23,7 @@ package org.jboss.ide.eclipse.archives.core.model;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 
 /**
  * The event manager to fire events
@@ -35,7 +36,7 @@ public class EventManager {
 			for( int i = 0; i < listeners.length; i++ ) {
 				try { 
 					listeners[i].cleanProject(project);
-				} catch(Exception e ) {}
+				} catch(Exception e ) {logError(e);}
 			}
 	}
 	
@@ -44,8 +45,7 @@ public class EventManager {
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].cleanArchive(archive);
-			} catch( Exception e) {
-			}
+			} catch(Exception e ) {logError(e);}
 		}
 	}
 	
@@ -54,7 +54,7 @@ public class EventManager {
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].startedBuild(project);
-			} catch(Exception e ) {}
+			} catch(Exception e ) {logError(e);}
 		}
 	}
 
@@ -63,7 +63,7 @@ public class EventManager {
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].finishedBuild(project);
-			} catch(Exception e ) {}
+			} catch(Exception e ) {logError(e);}
 		}
 	}
 
@@ -72,7 +72,7 @@ public class EventManager {
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].startedBuildingArchive(archive);
-			} catch(Exception e ) {}
+			} catch(Exception e ) {logError(e);}
 		}
 	}
 
@@ -81,7 +81,7 @@ public class EventManager {
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].finishedBuildingArchive(archive);
-			} catch(Exception e ) {}
+			} catch(Exception e ) {logError(e);}
 		}
 	}
 
@@ -92,7 +92,7 @@ public class EventManager {
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].startedCollectingFileSet(fileset);
-			} catch(Exception e ) {}
+			} catch(Exception e ) {logError(e);}
 		}
 	}
 	public static void finishedCollectingFileSet(IArchiveFileSet fileset) {
@@ -100,7 +100,7 @@ public class EventManager {
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].finishedCollectingFileSet(fileset);
-			} catch(Exception e ) {}
+			} catch(Exception e ) {logError(e);}
 		}
 	}
 
@@ -123,7 +123,7 @@ public class EventManager {
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].fileUpdated(topLevelArchive, fileset, filePath);
-			} catch(Exception e ) {}
+			} catch(Exception e ) {logError(e);}
 		}
 	}
 
@@ -132,7 +132,7 @@ public class EventManager {
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].fileRemoved(topLevelArchive, fileset, filePath);
-			} catch(Exception e ) {}
+			} catch(Exception e ) {logError(e);}
 		}
 	}
 
@@ -154,7 +154,7 @@ public class EventManager {
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].buildFailed(pkg, status);
-			} catch(Exception e ) {}
+			} catch(Exception e ) {logError(e);}
 		}
 	}
 
@@ -171,10 +171,7 @@ public class EventManager {
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].modelChanged(delta);
-			} catch(Exception e ) {
-				e.printStackTrace();
-			}
-		}
+			} catch(Exception e ) {logError(e);}		}
 	}
 
 	
@@ -198,4 +195,12 @@ public class EventManager {
 		return new IArchiveBuildListener[]{};
 	}
 
+	protected static void logError(Exception e) {
+		try {
+			StackTraceElement[] trace = Thread.currentThread().getStackTrace();
+			ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_WARN, "Archives Listener error in " + trace[1].getMethodName(), e);
+		} catch( Exception f ) {
+			ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_WARN, "Archives Listener error", e);
+		}
+	}
 }
