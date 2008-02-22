@@ -33,7 +33,7 @@ import org.eclipse.core.runtime.IPath;
  * @author <a href="rob.stryker@redhat.com">Rob Stryker</a>
  * @version $Revision: 1929 $
  */
-public interface IArchiveNode extends IAdaptable {
+public interface IArchiveNode {
 	/**
 	 * The node type that represents the model
 	 */

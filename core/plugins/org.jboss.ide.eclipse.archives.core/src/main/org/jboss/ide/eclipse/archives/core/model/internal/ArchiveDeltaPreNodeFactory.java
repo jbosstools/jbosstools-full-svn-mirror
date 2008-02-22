@@ -71,7 +71,6 @@ public class ArchiveDeltaPreNodeFactory {
 	
 	protected static XbFileSet createFileset(ArchiveFileSetImpl postChange,HashMap attributeChanges, HashMap propertyChanges ) {
 		XbFileSet fs = new XbFileSet((XbFileSet)postChange.nodeDelegate);
-//		fs.setDir("FILESET TEST CHANGE");
 		if( attributeChanges.containsKey(IArchiveFileSet.INCLUDES_ATTRIBUTE))
 			fs.setIncludes(getBeforeString(attributeChanges, IArchiveFileSet.INCLUDES_ATTRIBUTE));
 		if( attributeChanges.containsKey(IArchiveFileSet.EXCLUDES_ATTRIBUTE))
@@ -80,6 +79,8 @@ public class ArchiveDeltaPreNodeFactory {
 			fs.setDir(getBeforeString(attributeChanges, IArchiveFileSet.SOURCE_PATH_ATTRIBUTE));
 		if( attributeChanges.containsKey(IArchiveFileSet.IN_WORKSPACE_ATTRIBUTE))
 			fs.setInWorkspace(getBeforeBoolean(attributeChanges, IArchiveFileSet.IN_WORKSPACE_ATTRIBUTE));
+		if( attributeChanges.containsKey(IArchiveFileSet.FLATTENED_ATTRIBUTE))
+			fs.setFlattened(getBeforeBoolean(attributeChanges, IArchiveFileSet.FLATTENED_ATTRIBUTE));
 
 		undoPropertyChanges(fs, propertyChanges);
 		return fs;

@@ -94,9 +94,9 @@ public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelNo
 		return ArchivesModel.instance().containsRoot(this);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeImpl#getParent()
+	/**
+	 * No parent allowed for a model node
+	 * @see IArchiveNode#setParent(IArchiveNode)
 	 */
 	public IArchiveNode getParent() {
 		return null;

@@ -39,26 +39,31 @@ import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackageNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackageNodeWithProperties;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 
+/**
+ * Abstract superclass implementation for archive node types
+ * @author rob.stryker <rob.stryker@redhat.com>
+ *
+ */
 public abstract class ArchiveNodeImpl implements IArchiveNode {
 
 	protected XbPackageNodeWithProperties nodeDelegate;
 	protected IArchiveNode parent;
-	protected ArrayList children;
+	protected ArrayList<ArchiveNodeImpl> children;
 	
-	// cached data
-	protected HashMap attributeChanges;
-	protected HashMap propertyChanges;
-	protected HashMap childChanges;
+	// cached data for deltas
+	protected HashMap<String, NodeDelta> attributeChanges;
+	protected HashMap<String, NodeDelta> propertyChanges;
+	protected HashMap<IArchiveNode, Integer> childChanges;
 	
 	
 	public ArchiveNodeImpl (XbPackageNodeWithProperties delegate) {
 		nodeDelegate = delegate;
-		children = new ArrayList();
+		children = new ArrayList<ArchiveNodeImpl>();
 
 		// for deltas
-		attributeChanges = new HashMap();
-		propertyChanges = new HashMap();
-		childChanges = new HashMap();
+		attributeChanges = new HashMap<String, NodeDelta>();
+		propertyChanges = new HashMap<String, NodeDelta>();
+		childChanges = new HashMap<IArchiveNode, Integer>();
 	}
 		
 	public XbPackageNode getNodeDelegate() {
@@ -104,7 +109,7 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getAllChildren()
 	 */
 	public IArchiveNode[] getAllChildren () {
-		return (IArchiveNode[]) children.toArray(new IArchiveNode[children.size()]);
+		return children.toArray(new IArchiveNode[children.size()]);
 	}
 	
 	/*
@@ -112,15 +117,15 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getChildren(int)
 	 */
 	public IArchiveNode[] getChildren(int type) {
-		ArrayList typedChildren = new ArrayList();
-		for (Iterator iter = children.iterator(); iter.hasNext(); ) {
-			IArchiveNode child = (IArchiveNode) iter.next();
+		ArrayList<IArchiveNode> typedChildren = new ArrayList<IArchiveNode>();
+		for (Iterator<ArchiveNodeImpl> iter = children.iterator(); iter.hasNext(); ) {
+			IArchiveNode child = iter.next();
 			if (child.getNodeType() == type) {
 				typedChildren.add(child);
 			}
 		}
 		
-		return (IArchiveNode[]) typedChildren.toArray(new IArchiveNode[typedChildren.size()]);
+		return typedChildren.toArray(new IArchiveNode[typedChildren.size()]);
 	}
 	
 	/*
@@ -157,14 +162,9 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 			getParent().removeChild(this);
 		}
 		
-		if (parent != null && !(parent instanceof ArchiveModelNode)) {
-			this.parent = parent;
-			nodeDelegate.setParent(((ArchiveNodeImpl)parent).getNodeDelegate());
-		} else if (getNodeType() == TYPE_ARCHIVE) {
-			this.parent = parent;
-			XbPackages packages = ArchivesModel.instance().getXbPackages(getProjectPath());
-			nodeDelegate.setParent(packages);
-		}
+		this.parent = parent;
+		nodeDelegate.setParent(parent == null ? null : 
+			((ArchiveNodeImpl)parent).getNodeDelegate());
 	}
 	
 	/*
@@ -283,22 +283,6 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		if( removed )
 			childChanges(node, IArchiveNodeDelta.CHILD_REMOVED);
 	}
-	
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
-	 */
-	public Object getAdapter(Class adapter) {
-
-//		if (adapter.equals(IProject.class)) {
-//			return getProjectPath();
-//		} else if (adapter.equals(IArchiveNode.class)) {
-//			return this;
-//		}
-//		else return null;
-		return null;
-	}
-	
 
 	/*
 	 * (non-Javadoc)
@@ -306,7 +290,7 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 */
 	public boolean connectedToModel() {
 		IArchiveNode root = getRoot();
-		return root instanceof ArchiveModelNode && ArchivesModel.instance().containsRoot((ArchiveModelNode)root);
+		return root != null && root.getNodeType() == TYPE_MODEL && ArchivesModel.instance().containsRoot((ArchiveModelNode)root);
 	}
 	
 	
@@ -315,13 +299,13 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 */
 	protected void attributeChanged(String key, Object beforeValue, Object afterValue) {
 		int kind = IArchiveNodeDelta.ATTRIBUTE_CHANGED;
-		HashMap map = attributeChanges;
+		HashMap<String, NodeDelta> map = attributeChanges;
 		
 		// short circuit if no change has REALLY occurred
 		if( beforeValue != null && beforeValue.equals(afterValue)) return;
 		
 		if( map.containsKey(key)) {
-			Object original = ((NodeDelta)map.get(key)).getBefore();
+			Object original = map.get(key).getBefore();
 			if( original == null && afterValue == null ) 
 				map.remove(key);
 			else if( original == null ) 
@@ -343,14 +327,14 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 * A property has changed. Save the change so it can be represented in a delta
 	 */
 	protected void propertyChanged(String key, Object beforeValue, Object afterValue) {
-		HashMap changeMap = propertyChanges;
+		HashMap<String, NodeDelta> changeMap = propertyChanges;
 		// short circuit if no change has REALLY occurred
 		if( beforeValue != null && beforeValue.equals(afterValue)) return;
 		
 		
 		if( changeMap.containsKey(key)) {
 			// element has already been added, removed, or changed since last save
-			Object original = ((NodeDelta)changeMap.get(key)).getBefore();
+			Object original = changeMap.get(key).getBefore();
 			if( original == null && afterValue == null ) 
 				changeMap.remove(key);
 			else if( original == null ) 
@@ -381,7 +365,7 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 */
 	protected void childChanges(IArchiveNode node, int changeType) {
 		if( childChanges.containsKey(node)) {
-			int lastChange = ((Integer)childChanges.get(node)).intValue();
+			int lastChange = childChanges.get(node).intValue();
 			if( lastChange == IArchiveNodeDelta.CHILD_ADDED && changeType == IArchiveNodeDelta.CHILD_REMOVED) {
 				childChanges.remove(node);
 			} else if( lastChange == IArchiveNodeDelta.CHILD_REMOVED && changeType == IArchiveNodeDelta.CHILD_ADDED) {
@@ -397,8 +381,8 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getDelta()
 	 */
 	public IArchiveNodeDelta getDelta() {
-		return new ArchiveNodeDeltaImpl(null, this, (HashMap)attributeChanges.clone(), 
-				(HashMap)propertyChanges.clone(), (HashMap)childChanges.clone());
+		return new ArchiveNodeDeltaImpl(null, this, (HashMap<String, NodeDelta>)attributeChanges.clone(), 
+				(HashMap<String, NodeDelta>)propertyChanges.clone(), (HashMap<IArchiveNode, Integer>)childChanges.clone());
 	}
 	
 	/**
@@ -409,7 +393,7 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		propertyChanges.clear();
 		childChanges.clear();
 		
-		// clear children
+		// clear children recursively
 		IArchiveNode[] children = getAllChildren();
 		for( int i = 0; i < children.length; i++ ) 
 			((ArchiveNodeImpl)children[i]).clearDeltas();
