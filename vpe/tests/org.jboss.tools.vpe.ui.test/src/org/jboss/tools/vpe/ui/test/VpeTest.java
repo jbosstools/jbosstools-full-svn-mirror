@@ -157,6 +157,18 @@ public class VpeTest extends TestCase implements ILogListener {
 
 		return document;
 	}
+	
+	/**
+	 * Gets visual page editor controller
+	 * @param part
+	 * @return {@link VpeController}
+	 */
+	protected VpeController getVpeController(JSPMultiPageEditor part) {
+		
+		VpeEditorPart visualEditor = (VpeEditorPart) part.getVisualEditor();
+		
+		return visualEditor.getController();
+	}
 
 	/**
 	 * Perfoms test for some page
