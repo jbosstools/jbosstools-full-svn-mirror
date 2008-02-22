@@ -26,5 +26,22 @@ package org.jboss.ide.eclipse.archives.core.model;
  *
  */
 public interface IArchivesLogger {
-	public void log(int severety, String message,Throwable ise);
+    /** Message priority of &quot;error&quot;. */
+    public static final int MSG_ERR = 0;
+    /** Message priority of &quot;warning&quot;. */
+    public static final int MSG_WARN = 1;
+    /** Message priority of &quot;information&quot;. */
+    public static final int MSG_INFO = 2;
+    /** Message priority of &quot;verbose&quot;. */
+    public static final int MSG_VERBOSE = 3;
+    /** Message priority of &quot;debug&quot;. */
+    public static final int MSG_DEBUG = 4;
+
+    /**
+     * Log a message
+     * @param severety
+     * @param message
+     * @param error
+     */
+	public void log(int severety, String message,Throwable throwable);
 }
