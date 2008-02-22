@@ -48,6 +48,12 @@ import org.jboss.xb.binding.sunday.unmarshalling.SchemaBinding;
 import org.jboss.xb.binding.sunday.unmarshalling.XsdBinder;
 import org.xml.sax.SAXException;
 
+/**
+ * This class is responsible for binding some xml file to it's proper
+ * objects. In short, it marshalls and unmarshalls the data.
+ * @author Marshall
+ *
+ */
 public class XMLBinding {
 	
 	public static final int NUM_UNMARSHAL_MONITOR_STEPS = 3;

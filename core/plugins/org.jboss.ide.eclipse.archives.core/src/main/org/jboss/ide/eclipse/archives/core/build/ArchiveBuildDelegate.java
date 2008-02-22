@@ -127,7 +127,7 @@ public class ArchiveBuildDelegate {
 	 * @param addedChanged  Set of changed / added resources
 	 * @param setRemoved	Set of removed resources
 	 */
-	public void projectIncrementalBuild(Set addedChanged, Set removed) {
+	public void projectIncrementalBuild(Set<IArchive> addedChanged, Set<IArchive> removed) {
 		incrementalBuild(null, addedChanged, removed);
 	}
 	
@@ -139,13 +139,13 @@ public class ArchiveBuildDelegate {
 	 * @param addedChanged  A list of added or changed resource paths
 	 * @param removed       A list of removed resource paths
 	 */
-	public void incrementalBuild(IArchive archive, Set addedChanged, Set removed) {
+	public void incrementalBuild(IArchive archive, Set<IArchive> addedChanged, Set<IArchive> removed) {
 		
 		// find any and all filesets that match each file
-		Iterator i = addedChanged.iterator();
+		Iterator<IArchive> i = addedChanged.iterator();
 		IPath path;
 		IArchiveFileSet[] matchingFilesets;
-		ArrayList topPackagesChanged = new ArrayList();
+		ArrayList<IArchive> topPackagesChanged = new ArrayList<IArchive>();
 		while(i.hasNext()) {
 			path = ((IPath)i.next());
 			matchingFilesets = ModelUtil.getMatchingFilesets(archive, path);
@@ -167,11 +167,11 @@ public class ArchiveBuildDelegate {
 
 		i = topPackagesChanged.iterator();
 		while(i.hasNext()) {
-			EventManager.finishedBuildingArchive((IArchive)i.next());
+			EventManager.finishedBuildingArchive(i.next());
 		}		
 	}
 	
-	private void localFireAffectedTopLevelPackages(ArrayList affected, IArchiveFileSet[] filesets) {
+	private void localFireAffectedTopLevelPackages(ArrayList<IArchive> affected, IArchiveFileSet[] filesets) {
 		for( int i = 0; i < filesets.length; i++ ) {
 			if( !affected.contains(filesets[i].getRootArchive())) {
 				affected.add(filesets[i].getRootArchive());

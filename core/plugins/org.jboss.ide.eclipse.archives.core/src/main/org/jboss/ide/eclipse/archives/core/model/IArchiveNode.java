@@ -21,7 +21,6 @@
  */
 package org.jboss.ide.eclipse.archives.core.model;
 
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 
 /**
