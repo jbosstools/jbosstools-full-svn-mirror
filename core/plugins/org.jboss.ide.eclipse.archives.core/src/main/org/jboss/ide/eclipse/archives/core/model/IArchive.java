@@ -33,12 +33,11 @@ import org.eclipse.core.runtime.IPath;
  * @author <a href="rob.stryker@redhat.com">Rob Stryker</a>
  * @version $Revision: 1939 $
  */
-public interface IArchive extends IArchiveNode {
+public interface IArchive extends INamedContainerArchiveNode {
 	public static final String ATTRIBUTE_PREFIX = "org.jboss.ide.eclipse.archives.core.model.IPackage.";
 	public static final String PACKAGE_TYPE_ATTRIBUTE = ATTRIBUTE_PREFIX + "packageType";
 	public static final String EXPLODED_ATTRIBUTE = ATTRIBUTE_PREFIX + "exploded";
 	public static final String DESTINATION_ATTRIBUTE = ATTRIBUTE_PREFIX + "destination";
-	public static final String NAME_ATTRIBUTE = ATTRIBUTE_PREFIX + "name";
 	public static final String IN_WORKSPACE_ATTRIBUTE = ATTRIBUTE_PREFIX + "inWorkspace";
 	
 
@@ -52,11 +51,6 @@ public interface IArchive extends IArchiveNode {
 	 * @return
 	 */
 	public String getArchiveTypeId();
-
-	/**
-	 * @return The name (with extension) of this package.
-	 */
-	public String getName();
 	
 	/**
 	 * @return Whether or not this package will be build exploded, or as a directory instead of a ZIP/JAR
@@ -74,21 +68,6 @@ public interface IArchive extends IArchiveNode {
 	 * @return Whether or not the destination of this package is in the workspace
 	 */
 	public boolean isDestinationInWorkspace();
-	
-	/**
-	 * @return A list of sub-archives contained in this package
-	 */
-	public IArchive[] getArchives();
-	
-	/**
-	 * @return A list of folders contained in this package
-	 */
-	public IArchiveFolder[] getFolders();
-	
-	/**
-	 * @return A list of filesets contained in this package
-	 */
-	public IArchiveFileSet[] getFileSets();
 
 	/**
 	 * Get The path to this package's output file.
@@ -122,12 +101,7 @@ public interface IArchive extends IArchiveNode {
 	 * @param type
 	 */
 	public void setArchiveType(String type);
-	/**
-	 * Set the name of this package
-	 * @param name This package's name
-	 */
-	public void setName(String name);
-	
+
 	/**
 	 * Set whether or not this package is generated as a folder
 	 * @param exploded
