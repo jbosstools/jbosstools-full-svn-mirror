@@ -224,7 +224,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		if( monitor == null ) monitor = new NullProgressMonitor();
 		monitor.beginTask("Loading configuration...", XMLBinding.NUM_UNMARSHAL_MONITOR_STEPS + 2);
 		
-		ArchivesCore.getInstance().preRegister(project);
+		ArchivesCore.getInstance().preRegisterProject(project);
 		
 		ArchiveModelNode root;
 		IPath packagesFile = project.append(PROJECT_PACKAGES_FILE);

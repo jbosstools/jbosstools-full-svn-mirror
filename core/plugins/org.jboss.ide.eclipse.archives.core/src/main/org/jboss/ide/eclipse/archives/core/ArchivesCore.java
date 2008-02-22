@@ -66,10 +66,9 @@ public abstract class ArchivesCore {
 	protected abstract IPreferenceManager createPreferenceManager();
 	protected abstract IArchivesLogger createLogger();
 	
-	public boolean isWorkspaceRuntype() {
-		return runType == WORKSPACE;
+	public int getRunType() {
+		return runType;
 	}
-	
 	public IRuntimeVariables getVariables() {
 		return variables;
 	}
@@ -83,5 +82,5 @@ public abstract class ArchivesCore {
 		return logger;
 	}
 	
-	public abstract void preRegister(IPath project);
+	public abstract void preRegisterProject(IPath project);
 }

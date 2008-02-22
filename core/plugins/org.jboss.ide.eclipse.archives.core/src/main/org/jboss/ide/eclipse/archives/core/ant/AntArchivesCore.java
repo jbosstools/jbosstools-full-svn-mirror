@@ -33,7 +33,7 @@ public class AntArchivesCore extends ArchivesCore {
 		return new AntVariables();
 	}
 
-	public void preRegister(IPath project) {
+	public void preRegisterProject(IPath project) {
 		
 	}
 

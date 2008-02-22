@@ -35,7 +35,7 @@ public class WorkspaceArchivesCore extends ArchivesCore {
 		return new WorkspaceVariables();
 	}
 
-	public void preRegister(IPath project) {
+	public void preRegisterProject(IPath project) {
 		ProjectUtils.addProjectNature(project);
 	}
 
