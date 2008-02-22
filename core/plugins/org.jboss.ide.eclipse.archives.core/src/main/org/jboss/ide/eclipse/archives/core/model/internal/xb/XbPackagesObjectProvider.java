@@ -80,6 +80,8 @@ public class XbPackagesObjectProvider implements GenericObjectModelProvider {
 				return fileset.getExcludes();
 			else if ("inWorkspace".equals(localName))
 				return "" + fileset.isInWorkspace();
+			else if("flatten".equals(localName))
+				return "" + fileset.isFlattened();
 		}
 		else if (object instanceof XbProperty)
 		{

@@ -24,7 +24,7 @@ package org.jboss.ide.eclipse.archives.core.model.internal.xb;
 public class XbFileSet extends XbPackageNodeWithProperties {
 
 	private String dir, includes, excludes;
-	private boolean inWorkspace;
+	private boolean inWorkspace, flattened;
 	
 	public XbFileSet ()
 	{
@@ -44,6 +44,7 @@ public class XbFileSet extends XbPackageNodeWithProperties {
 		this.includes = fileset.includes == null ? null : new String(fileset.includes);
 		this.excludes = fileset.excludes == null ? null : new String(fileset.excludes);
 		this.inWorkspace = fileset.inWorkspace;
+		this.flattened = fileset.flattened;
 	}
 	
 	protected Object clone() throws CloneNotSupportedException {
@@ -80,5 +81,13 @@ public class XbFileSet extends XbPackageNodeWithProperties {
 
 	public void setInWorkspace(boolean inWorkspace) {
 		this.inWorkspace = inWorkspace;
+	}
+
+	public boolean isFlattened() {
+		return flattened;
+	}
+
+	public void setFlattened(boolean flatten) {
+		this.flattened = flatten;
 	}
 }
