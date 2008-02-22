@@ -15,8 +15,6 @@ public interface IRuntimeVariables {
 	public boolean isDebugging(String option);
 	public IPath getProjectPath(String projectName);
 	public String getProjectName(IPath path);
-	public URL getBindingSchema();
-	public URL getBindingLog4j();
 	
 	// allow for variable replacement
 	public String performStringSubstitution(String expression,	boolean reportUndefinedVariables) throws CoreException;

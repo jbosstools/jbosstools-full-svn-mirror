@@ -52,9 +52,9 @@ public class XMLBinding {
 	
 	public static final int NUM_UNMARSHAL_MONITOR_STEPS = 3;
 	public static final int NUM_MARSHALL_MONITOR_STEPS = 2;
-	
-	private static URL schema = ArchivesCore.getInstance().getVariables().getBindingSchema(); 
-	private static URL log4jxml = ArchivesCore.getInstance().getVariables().getBindingLog4j();
+
+	private static URL schema = XMLBinding.class.getClassLoader().getResource("packages.xsd"); 
+	private static URL log4jxml = XMLBinding.class.getClassLoader().getResource("log4j.xml");
 	private static SchemaBinding binding;
 	
 	private static boolean initialized = false;

@@ -1,6 +1,5 @@
 package org.jboss.ide.eclipse.archives.core.ant;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
@@ -17,14 +16,6 @@ public class AntVariables implements IRuntimeVariables {
 	public void setCurrentTask(Task task) { currentTask = task; }
 	public Task getCurrentTask() { return currentTask; }
 	
-	public URL getBindingLog4j() {
-		return getClass().getClassLoader().getResource("log4j.xml");
-	}
-
-	public URL getBindingSchema() {
-		return getClass().getClassLoader().getResource("packages.xsd");
-	}
-
 	public IPath getProjectPath(String projectName) {
 		HashMap<Object, Object> map = ResourceModel.getDefault().getTaskEnvironment(currentTask);
 		if( map.containsKey(projectName)) return new Path((String)map.get(projectName));
