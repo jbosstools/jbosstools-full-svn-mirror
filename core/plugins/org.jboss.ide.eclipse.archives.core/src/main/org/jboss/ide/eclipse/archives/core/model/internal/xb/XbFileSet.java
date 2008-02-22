@@ -24,7 +24,8 @@ package org.jboss.ide.eclipse.archives.core.model.internal.xb;
 public class XbFileSet extends XbPackageNodeWithProperties {
 
 	private String dir, includes, excludes;
-	private boolean inWorkspace, flattened;
+	private boolean inWorkspace;
+	private boolean flattened = false;
 	
 	public XbFileSet ()
 	{

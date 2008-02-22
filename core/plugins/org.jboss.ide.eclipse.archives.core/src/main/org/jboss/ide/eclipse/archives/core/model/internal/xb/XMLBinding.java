@@ -37,7 +37,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
@@ -132,7 +131,7 @@ public class XMLBinding {
 		OutputStreamWriter writer = null;
 		try {
 			writer = new OutputStreamWriter(new FileOutputStream(filePath.toFile()));
-			XMLBinding.marshall(element, writer, new NullProgressMonitor());
+			XMLBinding.marshall(element, writer, monitor);
 		} catch( Exception e ) {
 		}
 		finally {

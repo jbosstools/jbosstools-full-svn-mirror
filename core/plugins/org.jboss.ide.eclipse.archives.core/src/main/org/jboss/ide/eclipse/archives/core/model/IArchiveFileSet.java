@@ -37,6 +37,7 @@ public interface IArchiveFileSet extends IArchiveNode {
 	public static final String INCLUDES_ATTRIBUTE = ATTRIBUTE_PREFIX + "includes";
 	public static final String EXCLUDES_ATTRIBUTE = ATTRIBUTE_PREFIX + "excludes";
 	public static final String IN_WORKSPACE_ATTRIBUTE = ATTRIBUTE_PREFIX + "inWorkspace";
+	public static final String FLATTENED_ATTRIBUTE = ATTRIBUTE_PREFIX + "flattened";
 	public static final String SOURCE_PATH_ATTRIBUTE = ATTRIBUTE_PREFIX + "sourcePath";
 
 
@@ -45,6 +46,11 @@ public interface IArchiveFileSet extends IArchiveNode {
 	 * @return Whether or not this fileset's basedir is inside the workspace
 	 */
 	public boolean isInWorkspace();
+	
+	/**
+	 * @return Whether or not the fileset is flattened
+	 */
+	public boolean isFlattened();
 	
 	/**
 	 * Returns the absolute file-system relative source path
@@ -109,6 +115,11 @@ public interface IArchiveFileSet extends IArchiveNode {
 	public void setInWorkspace(boolean isInWorkspace);
 	
 	/**
+	 * Sets whether or not this fileset is flattened.
+	 */
+	public void setFlattened(boolean flattened);
+	
+	/**
 	 * Get the relative path of the input file to the root archive
 	 * @param inputFile
 	 * @return
@@ -122,7 +133,16 @@ public interface IArchiveFileSet extends IArchiveNode {
 	 */
 	public IPath getPathRelativeToParent(IPath inputFile);
 	
+	/**
+	 * To be used if and when a specific new file is known to match
+	 * @param file
+	 */
 	public void addMatchingFile(IPath file);
+	
+	/**
+	 * To be used if and when a specific new file is known to match
+	 * @param file
+	 */
 	public void removeMatchingFile(IPath file);
 	
 }
