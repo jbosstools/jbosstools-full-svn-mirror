@@ -49,7 +49,7 @@ public class MainPreferencePage extends PropertyPage implements
 		return main;
 	}
 	
-	public IPath getElementTwo() {
+	public IPath getResourceLocationIfExists() {
 		IAdaptable el = getElement();
 		return el == null ? null :  
 				((IResource)el.getAdapter(IResource.class)).getLocation();
@@ -59,10 +59,10 @@ public class MainPreferencePage extends PropertyPage implements
 		return ArchivesCore.getInstance().getPreferenceManager();
 	}
 	protected void fillValues() {
-		if( getElementTwo() != null ) {
-			overrideButton.setSelection(getPrefManager().areProjectSpecificPrefsEnabled(getElementTwo()));
+		if( getResourceLocationIfExists() != null ) {
+			overrideButton.setSelection(getPrefManager().areProjectSpecificPrefsEnabled(getResourceLocationIfExists()));
 		}
-		automaticBuilder.setSelection(getPrefManager().isBuilderEnabled(getElementTwo()));		
+		automaticBuilder.setSelection(getPrefManager().isBuilderEnabled(getResourceLocationIfExists()));		
 		showAllProjects.setSelection(
 				PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS, getElement(), false));
 		showPackageOutputPath.setSelection(
@@ -82,7 +82,7 @@ public class MainPreferencePage extends PropertyPage implements
 	}
 	
 	protected void createOverridePrefs(Composite main) {
-		if( getElementTwo() != null ) {
+		if( getResourceLocationIfExists() != null ) {
 			overrideComp = new Composite(main, SWT.NONE);
 			overrideComp.setLayout(new FillLayout());
 			overrideButton = new Button(overrideComp, SWT.CHECK);
@@ -165,7 +165,7 @@ public class MainPreferencePage extends PropertyPage implements
 		showFullFilesetRootDir.setSelection(true);
 		showProjectRoot.setSelection(true);
 		showAllProjects.setSelection(false);
-		if( getElementTwo() != null ) {
+		if( getResourceLocationIfExists() != null ) {
 			overrideButton.setSelection(false);
 			setWidgetsEnabled(overrideButton.getSelection());
 		} else {
@@ -174,10 +174,10 @@ public class MainPreferencePage extends PropertyPage implements
 	}
 
 	public boolean performOk() {
-		if( getElementTwo() != null ) {
-			getPrefManager().setProjectSpecificPrefsEnabled(getElementTwo(), overrideButton.getSelection());
+		if( getResourceLocationIfExists() != null ) {
+			getPrefManager().setProjectSpecificPrefsEnabled(getResourceLocationIfExists(), overrideButton.getSelection());
 		}
-		getPrefManager().setBuilderEnabled(getElementTwo(), automaticBuilder.getSelection());
+		getPrefManager().setBuilderEnabled(getResourceLocationIfExists(), automaticBuilder.getSelection());
 		PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_PACKAGE_OUTPUT_PATH, showPackageOutputPath.getSelection(), getElement());
 		PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_FULL_FILESET_ROOT_DIR, showFullFilesetRootDir.getSelection(), getElement());
 		PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_PROJECT_ROOT, showProjectRoot.getSelection(), getElement());
