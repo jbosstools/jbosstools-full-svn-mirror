@@ -159,6 +159,20 @@ public class MainPreferencePage extends PropertyPage implements
 	public void init(IWorkbench workbench) {
 	}
 
+	public void performDefaults() {
+		automaticBuilder.setSelection(true);
+		showPackageOutputPath.setSelection(true);
+		showFullFilesetRootDir.setSelection(true);
+		showProjectRoot.setSelection(true);
+		showAllProjects.setSelection(false);
+		if( getElementTwo() != null ) {
+			overrideButton.setSelection(false);
+			setWidgetsEnabled(overrideButton.getSelection());
+		} else {
+			setWidgetsEnabled(true);
+		}
+	}
+
 	public boolean performOk() {
 		if( getElementTwo() != null ) {
 			getPrefManager().setProjectSpecificPrefsEnabled(getElementTwo(), overrideButton.getSelection());
