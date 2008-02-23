@@ -30,7 +30,6 @@ public class XbFileSet extends XbPackageNodeWithProperties {
 	public XbFileSet ()
 	{
 		super();
-		inWorkspace = true;
 	}
 	
 	public XbFileSet (XbFileSet fileset)
@@ -41,6 +40,7 @@ public class XbFileSet extends XbPackageNodeWithProperties {
 	
 	public void copyFrom (XbFileSet fileset)
 	{
+		super.copyFrom(fileset);
 		this.dir = fileset.dir == null ? null : new String(fileset.dir);
 		this.includes = fileset.includes == null ? null : new String(fileset.includes);
 		this.excludes = fileset.excludes == null ? null : new String(fileset.excludes);

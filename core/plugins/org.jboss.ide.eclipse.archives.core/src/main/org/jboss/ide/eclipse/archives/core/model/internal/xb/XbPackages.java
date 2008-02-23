@@ -32,6 +32,7 @@ public class XbPackages extends XbPackageNodeWithProperties {
 	public XbPackages (XbPackages packages)
 	{
 		super(packages);
+		copyFrom(packages);
 	}
 	
 	protected Object clone() throws CloneNotSupportedException {

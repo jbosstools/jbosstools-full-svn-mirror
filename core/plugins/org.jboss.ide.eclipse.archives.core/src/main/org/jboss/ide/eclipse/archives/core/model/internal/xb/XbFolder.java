@@ -40,6 +40,7 @@ public class XbFolder extends XbPackageNodeWithProperties {
 	
 	public void copyFrom (XbFolder folder)
 	{
+		super.copyFrom(folder);
 		this.name = folder.name == null ? null : new String(folder.name);
 	}
 	

@@ -38,25 +38,23 @@ public class XbPackagesObjectProvider implements GenericObjectModelProvider {
 	
 	protected Object getNodeChildren(XbPackageNode node, String name)
 	{
-		if ("package".equals(name))
-		{
+		if ("package".equals(name)) {
 			return node.getChildren(XbPackage.class);
-		}
-		else if ("folder".equals(name))
-		{
+		} 
+		else if ("folder".equals(name)) {
 			return node.getChildren(XbFolder.class);
 		}
-		else if ("fileset".equals(name))
-		{
+		else if ("fileset".equals(name)) {
 			return node.getChildren(XbFileSet.class);
 		}
-		else if ("properties".equals(name) && node instanceof XbPackageNodeWithProperties)
-		{
+		else if ("properties".equals(name) && node instanceof XbPackageNodeWithProperties) {
 			return ((XbPackageNodeWithProperties)node).getProperties();
 		}
-		else if ("property".equals(name) && node instanceof XbProperties)
-		{
+		else if ("property".equals(name) && node instanceof XbProperties) {
 			return ((XbProperties)node).getProperties().getPropertyElements();
+		}
+		else if( "buildAction".equals(name) && node instanceof XbPackage) {
+			return ((XbPackage)node).getActions();
 		}
 		
 		return null;
@@ -77,9 +75,9 @@ public class XbPackagesObjectProvider implements GenericObjectModelProvider {
 		if (object instanceof XbPackage)
 		{
 			XbPackage pkg = (XbPackage)object;
-			if("id".equals(localName)) {
+			if("id".equals(localName))
 				return pkg.getId();
-			} else if ("type".equals(localName))
+			else if ("type".equals(localName))
 				return pkg.getPackageType();
 			else if ("name".equals(localName))
 				return pkg.getName();

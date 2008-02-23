@@ -42,6 +42,7 @@ public class XbPackage extends XbPackageNodeWithProperties {
 	
 	public void copyFrom (XbPackage pkg)
 	{
+		super.copyFrom(pkg);
 		this.name = pkg.name == null ? null: new String(pkg.name);
 		this.packageType = pkg.packageType == null ? null : new String(pkg.packageType);
 		this.toDir = pkg.toDir == null ? null : new String(pkg.toDir);
@@ -53,6 +54,10 @@ public class XbPackage extends XbPackageNodeWithProperties {
 		return new XbPackage(this);
 	}
 	
+	public List getActions() {
+		return getChildren(XbAction.class);
+	}
+
 	public List getPackages ()
 	{
 		return getChildren(XbPackage.class);

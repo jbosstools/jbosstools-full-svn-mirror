@@ -48,6 +48,8 @@
 
     	<xsd:sequence>
     		<xsd:element maxOccurs="unbounded" minOccurs="0"
+    			name="buildAction" type="build-action-type" />
+    		<xsd:element maxOccurs="unbounded" minOccurs="0"
     			name="package" type="package-type" />
     		<xsd:element maxOccurs="unbounded" minOccurs="0"
     			name="fileset" type="fileset-type" />
@@ -103,6 +105,24 @@
         <xsd:attribute name="value" type="xsd:string" use="required"/>
     </xsd:complexType>
     
+    
+    <xsd:complexType name="build-action-type">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <jbxb:class impl="org.jboss.ide.eclipse.archives.core.model.internal.xb.XbAction"/>
+                <jbxb:addMethod name="addChild"/>
+            </xsd:appinfo>
+        </xsd:annotation>
+	
+		<xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="0" name="properties" type="properties-type"/>
+		</xsd:sequence>
+		        
+        <xsd:attribute name="time" type="xsd:string" use="required"/>
+        <xsd:attribute name="type" type="xsd:string" use="required"/>
+    </xsd:complexType>
+    
+    
     <xsd:complexType name="folder-type">
         <xsd:annotation>
             <xsd:appinfo>
@@ -137,6 +157,7 @@
         <xsd:attribute name="includes" type="xsd:string" use="required"/>
         <xsd:attribute name="excludes" type="xsd:string" use="optional"/>
         <xsd:attribute name="inWorkspace" type="xsd:boolean" use="optional" default="true"/>
+        <xsd:attribute name="flatten" type="xsd:boolean" use="optional" default="false"/>
     </xsd:complexType>
     
 </xsd:schema>
