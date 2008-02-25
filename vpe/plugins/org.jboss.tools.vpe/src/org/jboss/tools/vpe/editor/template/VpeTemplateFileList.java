@@ -74,21 +74,21 @@ public class VpeTemplateFileList {
 	}
 	
 	private VpeTemplateFile[] createTemplateFileList() {
-		List templateList = createTemplateFileListImpl();
-		return (VpeTemplateFile[]) templateList.toArray(new VpeTemplateFile[templateList.size()]);
+		List<VpeTemplateFile> templateList = createTemplateFileListImpl();
+		return templateList.toArray(new VpeTemplateFile[templateList.size()]);
 	}
 		
-	private List createTemplateFileListImpl() {
-		List templateList = new ArrayList();
+	private List<VpeTemplateFile> createTemplateFileListImpl() {
+		List<VpeTemplateFile> templateList = new ArrayList<VpeTemplateFile>();
 
 			IExtensionRegistry registry = Platform.getExtensionRegistry();
-			IExtensionPoint extensionPoint = registry.getExtensionPoint("org.jboss.tools.vpe.templates");
+			IExtensionPoint extensionPoint = registry.getExtensionPoint(VpePlugin.EXTESION_POINT_VPE_TEMPLATES);
 			IExtension[] extensions = extensionPoint.getExtensions();
 			for (int i=0;i<extensions.length;i++) {
 				IExtension extension = extensions[i];
 				IConfigurationElement[] elements = extension.getConfigurationElements();
 				for(int j=0;j<elements.length;j++) {
-					String pathAttrValue = elements[j].getAttribute("path");
+					String pathAttrValue = elements[j].getAttribute("path"); //$NON-NLS-1$
 					try {
 					VpeTemplateFile templateFile = new VpeTemplateFile(pathAttrValue, elements[j]);
 						templateList.add(templateFile);
@@ -104,7 +104,7 @@ public class VpeTemplateFileList {
 		VpePlugin plugin = VpePlugin.getDefault();
 		Bundle bundle = 
 			confElement==null?plugin.getBundle():Platform.getBundle(confElement.getContributor().getName());
-		URL url = bundle.getEntry("/");
+		URL url = bundle.getEntry("/"); //$NON-NLS-1$
 		IPath path = new Path(FileLocator.toFileURL(url).getFile());
 		path = path.append(name);
 		return path;
