@@ -10,6 +10,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.IPreferenceManager;
 import org.jboss.ide.eclipse.archives.core.model.IRuntimeVariables;
+import org.jboss.ide.eclipse.archives.core.model.other.internal.ArchivesWorkspaceLogger;
 import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspaceExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspacePreferenceManager;
 import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspaceVariables;
@@ -39,13 +40,8 @@ public class WorkspaceArchivesCore extends ArchivesCore {
 		ProjectUtils.addProjectNature(project);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.ide.eclipse.archives.core.ArchivesCore#createLogger()
-	 */
-	@Override
 	protected IArchivesLogger createLogger() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArchivesWorkspaceLogger();
 	}
 	
 }
