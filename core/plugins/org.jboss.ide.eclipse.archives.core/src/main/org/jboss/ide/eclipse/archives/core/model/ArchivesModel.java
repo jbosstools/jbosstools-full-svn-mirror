@@ -45,6 +45,7 @@ import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFolder;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackageNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding.XbException;
 
 /**
  * The root model which keeps track of registered projects
@@ -228,29 +229,29 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		
 		ArchiveModelNode root;
 		IPath packagesFile = project.append(PROJECT_PACKAGES_FILE);
-		if (packagesFile.toFile().exists())
-		{
+		if (packagesFile.toFile().exists()) {
+			XbPackages packages = null;
 			try {
 				FileInputStream is = new FileInputStream(packagesFile.toFile());
-				XbPackages packages = XMLBinding.unmarshal(is, monitor);
-				monitor.worked(1);
-				
-				if (packages == null) {
-					// Empty / non-working XML file loaded
-					ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, "Could not unmarshall packages file", null);
-					return;
-				}
-				root = new ArchiveModelNode(project, packages, this);
-				ArchiveModelNode oldRoot = archivesRoot.get(project);
-				xbPackages.put(project, packages);
-				archivesRoot.put(project, root);
-				createPackageNodeImpl(project, packages, null);
-				root.clearDeltas();
-				fireRegisterProjectEvent(oldRoot, root);
+				packages = XMLBinding.unmarshal(is, monitor);
 				monitor.worked(1);
 			} catch (FileNotFoundException e) {
-				ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, e.getMessage(), e);
+			} catch( XbException xbe) {
 			}
+				
+			if (packages == null) {
+				// Empty / non-working XML file loaded
+				ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_ERR, "Could not unmarshall packages file", null);
+				return;
+			}
+			root = new ArchiveModelNode(project, packages, this);
+			ArchiveModelNode oldRoot = archivesRoot.get(project);
+			xbPackages.put(project, packages);
+			archivesRoot.put(project, root);
+			createPackageNodeImpl(project, packages, null);
+			root.clearDeltas();
+			fireRegisterProjectEvent(oldRoot, root);
+			monitor.worked(1);
 		} else {
 			// file not found, just create some default xbpackages and insert them
 			XbPackages packages = new XbPackages();
