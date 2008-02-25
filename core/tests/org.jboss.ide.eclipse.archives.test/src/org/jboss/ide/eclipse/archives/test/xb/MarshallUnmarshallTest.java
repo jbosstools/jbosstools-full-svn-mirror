@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.archives.test;
+package org.jboss.ide.eclipse.archives.test.xb;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,6 +18,7 @@ import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFileSet;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFolder;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
+import org.jboss.ide.eclipse.archives.test.ArchivesTest;
 import org.jboss.ide.eclipse.archives.test.util.FileIOUtil;
 import org.osgi.framework.Bundle;
 

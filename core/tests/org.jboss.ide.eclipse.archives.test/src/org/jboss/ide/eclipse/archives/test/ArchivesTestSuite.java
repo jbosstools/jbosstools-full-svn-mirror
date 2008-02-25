@@ -1,5 +1,8 @@
 package org.jboss.ide.eclipse.archives.test;
 
+import org.jboss.ide.eclipse.archives.test.xb.FileIOTest;
+import org.jboss.ide.eclipse.archives.test.xb.MarshallUnmarshallTest;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

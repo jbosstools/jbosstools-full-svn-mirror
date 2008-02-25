@@ -1,6 +1,5 @@
-package org.jboss.ide.eclipse.archives.test;
+package org.jboss.ide.eclipse.archives.test.xb;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -10,6 +9,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.util.internal.TrueZipUtil;
+import org.jboss.ide.eclipse.archives.test.ArchivesTest;
 import org.jboss.ide.eclipse.archives.test.util.FileIOUtil;
 import org.osgi.framework.Bundle;
 
