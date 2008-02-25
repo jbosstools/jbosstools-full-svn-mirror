@@ -35,8 +35,20 @@ public class ArchivesWorkspaceLogger implements IArchivesLogger {
 	
 	static ILog log = Platform.getLog(Platform.getBundle(PLUGIN_ID));
 	
-	public void log(int severety, String message,Throwable ise) {
-		IStatus status = new Status(severety, PLUGIN_ID, message, ise);
+	public void log(int severity, String message,Throwable t) {
+		IStatus status = new Status(convert(severity), PLUGIN_ID, message, t);
 		log.log(status);
+	}
+	
+	private int convert(int severity) {
+		switch( severity ) {
+		case IArchivesLogger.MSG_ERR: return IStatus.ERROR;
+		case IArchivesLogger.MSG_INFO: return IStatus.INFO;
+		case IArchivesLogger.MSG_WARN: return IStatus.WARNING;
+		case IArchivesLogger.MSG_DEBUG:
+		case IArchivesLogger.MSG_VERBOSE:
+		default:
+			return IStatus.OK;
+		}
 	}
 }
