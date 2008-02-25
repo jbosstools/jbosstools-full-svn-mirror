@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.archives.test.xb;
+package org.jboss.ide.eclipse.archives.test.util;
 
 import java.io.IOException;
 import java.net.URL;
@@ -10,10 +10,9 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.util.internal.TrueZipUtil;
 import org.jboss.ide.eclipse.archives.test.ArchivesTest;
-import org.jboss.ide.eclipse.archives.test.util.FileIOUtil;
 import org.osgi.framework.Bundle;
 
-public class FileIOTest extends TestCase {
+public class TruezipUtilTest extends TestCase {
 	private Bundle bundle;
 	private IPath bundlePath;
 	protected void setUp() {

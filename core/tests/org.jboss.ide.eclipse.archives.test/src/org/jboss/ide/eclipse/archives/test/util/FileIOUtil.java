@@ -12,5 +12,4 @@ public class FileIOUtil {
 			children[i].delete();
 		}
 	}
-	
 }
