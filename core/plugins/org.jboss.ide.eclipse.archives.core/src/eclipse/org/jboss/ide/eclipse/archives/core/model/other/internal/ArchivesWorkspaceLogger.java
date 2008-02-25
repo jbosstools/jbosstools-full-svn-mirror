@@ -14,6 +14,7 @@ import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 
 /**
@@ -30,7 +31,7 @@ public class ArchivesWorkspaceLogger implements IArchivesLogger {
 	 *   
 	 * @see ArchiveCorePlugin.PLUGIN_ID
 	 */
-	public static final String PLUGIN_ID = "org.jboss.ide.eclipse.archives.core";
+	public static final String PLUGIN_ID = ArchivesCore.PLUGIN_ID;
 	
 	static ILog log = Platform.getLog(Platform.getBundle(PLUGIN_ID));
 	
