@@ -147,9 +147,6 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		// get visual node which is focused
 		nsIDOMNode visualNode = selection.getFocusNode();
 
-		System.out.print("\n name:" + visualNode.getLocalName() + "\t value:"
-				+ visualNode.getNodeValue());
-
 		VpeElementMapping elementMapping = getElmentMapping(pageContext,
 				visualNode);
 
