@@ -40,19 +40,19 @@ public class VpeHtmlCreator extends VpeAbstractCreator {
 		if (templAttrs != null) {
 			int len = templAttrs.getLength();
 			if (len > 0) {
-				List creatorAttrs = new ArrayList(len); 
+				List<VpeCreator> creatorAttrs = new ArrayList<VpeCreator>(len); 
 				for (int i = 0; i < len; i++) {
 					Attr templAttr = (Attr)templAttrs.item(i);
 					creatorAttrs.add(new VpeAttributeCreator(templAttr.getName(), templAttr.getValue(), dependencyMap, caseSensitive));
 				}
-				attrs = (VpeCreator[]) creatorAttrs.toArray(new VpeCreator[len]);
+				attrs = creatorAttrs.toArray(new VpeCreator[len]);
 			}
 		}
 		NodeList htmlChildren = htmlElement.getChildNodes();
 		if (htmlChildren != null) {
 			int len = htmlChildren.getLength();
 			if (len > 0) {
-				List creatorNodes = new ArrayList(len); 
+				List<VpeCreator> creatorNodes = new ArrayList<VpeCreator>(len); 
 				for (int i = 0; i < len; i++) {
 					Node innerNode = htmlChildren.item(i);
 					switch (innerNode.getNodeType()) {
@@ -73,7 +73,7 @@ public class VpeHtmlCreator extends VpeAbstractCreator {
 						}
 					}
 				}
-				nodes = (VpeCreator[]) creatorNodes.toArray(new VpeCreator[creatorNodes.size()]);
+				nodes = creatorNodes.toArray(new VpeCreator[creatorNodes.size()]);
 			}
 		}
 	}
