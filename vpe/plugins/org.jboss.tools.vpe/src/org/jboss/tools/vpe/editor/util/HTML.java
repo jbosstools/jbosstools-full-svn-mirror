@@ -74,5 +74,7 @@ public final class HTML {
     public static final String ATTR_WIDTH = "WIDTH"; //$NON-NLS-1$
     public static final String ATTR_HEIGHT = "HEIGHT"; //$NON-NLS-1$
     public static final String ATTR_BORDER = "BORDER"; //$NON-NLS-1$
+    public static final String ATTR_FOR = "FOR";
+    public static final String ATTR_DIR = "DIR";
    
 }
