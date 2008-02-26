@@ -208,7 +208,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	}
 
 	/**
-	 * Default implementation of a handling of a pressing the "page up" event -
+	 * Default  handling of a pressing the "page up" event -
 	 * always return false.
 	 * 
 	 * Override this method for a handling of a pressing the "page up" event
@@ -310,9 +310,9 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	}
 
 	/**
-	 * Default implementation of a handling of a pressing the "backspace" event
+	 * Default  handling of a pressing the "backspace" event
 	 * 
-	 * Override this method for a handling of a pressing the "backspace" event
+	 * Override this method to handle the "backspace" event
 	 * 
 	 * @param pageContext -
 	 *            context of vpe
