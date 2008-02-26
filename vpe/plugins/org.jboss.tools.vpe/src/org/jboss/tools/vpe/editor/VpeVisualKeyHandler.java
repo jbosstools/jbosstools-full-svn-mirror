@@ -44,15 +44,14 @@ import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelectionBuilder;
 import org.jboss.tools.vpe.editor.template.VpeHtmlTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
+import org.jboss.tools.vpe.editor.template.VpeTemplateKeyEventHandler;
 import org.jboss.tools.vpe.editor.util.FlatIterator;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
-import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMNode;
-import org.mozilla.interfaces.nsISelection;
 import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Comment;
@@ -168,10 +167,21 @@ public class VpeVisualKeyHandler {
 		long keyCode = keyEvent.getKeyCode();
 		boolean shiftKey = keyEvent.getShiftKey();
 		
+		// get template of selected element
+		VpeTemplate  template = getCurrentSelectionTemplate();
+		
+		// if template сan handle keyEvent than pass control to him. And if
+		// template handled event return true
+		if ((template instanceof VpeTemplateKeyEventHandler)
+				&& ((VpeTemplateKeyEventHandler) template).handleKeyPress(
+						pageContext, keyEvent)) {
+			return true;
+		}
+		
 		if (keyCode == VK_ENTER) {
 			return split();
 		} else if (keyCode == VK_LEFT && !shiftKey) {
-			return  moveLeft();
+			return moveLeft();
 		} else if (keyCode == VK_UP && !shiftKey) {
 			return moveUp();
 		} else if (keyCode == VK_RIGHT && !shiftKey) {
@@ -1813,5 +1823,21 @@ public class VpeVisualKeyHandler {
 	private  nsIDOMElement getSelectedNode() {
 		
 		return	pageContext.getEditPart().getController().getXulRunnerEditor().getLastSelectedElement();
+	}
+	
+	
+	/**
+	 * get {@link VpeTemplate} from selection
+	 * 
+	 * @return
+	 */
+	private VpeTemplate getCurrentSelectionTemplate() {
+		VpeElementMapping elementMapping = domMapping
+				.getNearElementMapping(getSelectedNode());
+
+		if (elementMapping != null)
+			return elementMapping.getTemplate();
+
+		return null;
 	}
 }

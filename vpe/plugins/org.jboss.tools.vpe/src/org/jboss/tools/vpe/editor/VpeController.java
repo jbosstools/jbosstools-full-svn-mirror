@@ -83,6 +83,7 @@ import org.eclipse.wst.xml.core.internal.document.NodeImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
+import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
@@ -102,7 +103,6 @@ import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.model.util.ModelFeatureFactory;
 import org.jboss.tools.common.model.util.XModelTreeListenerSWTSync;
 import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
-import org.jboss.tools.jst.jsp.editor.IVisualContext;
 import org.jboss.tools.jst.jsp.editor.IVisualController;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.jst.web.tld.TLDToPaletteHelper;
@@ -133,6 +133,7 @@ import org.jboss.tools.vpe.editor.template.VpeIncludeList;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateListener;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.editor.template.VpeTemplateNodesManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
@@ -174,7 +175,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	VpeDomMapping domMapping;
 	private VpeTemplateManager templateManager;
 	private VpeSourceDomBuilder sourceBuilder;
-	public VpeVisualDomBuilder visualBuilder;
+	private VpeVisualDomBuilder visualBuilder;
 	private VpeSelectionBuilder selectionBuilder;
 	private VpeVisualKeyHandler visualKeyHandler;
 	private ActiveEditorSwitcher switcher = new ActiveEditorSwitcher();
@@ -1379,20 +1380,45 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 	 private Node getSourceNodeAt(int offset) {
 		if (sourceEditor != null && getModel() != null) {
 			IndexedRegion node = getModel().getIndexedRegion(offset);
-			if (node instanceof IDOMElement) {
-				IDOMElement element = (IDOMElement)node;
-				if (offset < element.getEndStartOffset()) {
-					NamedNodeMap attrs = element.getAttributes();
-					if (attrs != null) {
-						for (int i = 0; i < attrs.getLength(); i++) {
-							if (attrs.item(i) instanceof AttrImpl) {
-								AttrImpl attr = (AttrImpl)attrs.item(i);
-								if (getSourceAttributeOffset(attr, offset) != -1) {
-									VpeElementMapping elementMapping = domMapping.getNearElementMapping(attr.getOwnerElement());
-									if (elementMapping != null) {
-										String[] atributeNames = elementMapping.getTemplate().getOutputAtributeNames();
-										if (atributeNames != null && atributeNames.length > 0 && attr.getName().equalsIgnoreCase(atributeNames[0])) {
-											return attr;
+			if (node instanceof IDOMNode) {
+
+				VpeElementMapping elementMapping = domMapping
+						.getNearElementMapping((IDOMNode) node);
+
+				if (elementMapping != null) {
+				
+					// if template implements VpeTemplateNodesManager interface 
+					if (elementMapping.getTemplate() instanceof VpeTemplateNodesManager) {
+						Node focusedAttr = ((VpeTemplateNodesManager) elementMapping
+								.getTemplate()).getFocusedNode((IDOMNode) node,
+								offset, elementMapping.getData());
+						if (node != null)
+							return focusedAttr;
+					}
+					if (node instanceof IDOMElement) {
+						IDOMElement element = (IDOMElement) node;
+
+						if (offset < element.getEndStartOffset()) {
+							NamedNodeMap attrs = element.getAttributes();
+							if (attrs != null) {
+								for (int i = 0; i < attrs.getLength(); i++) {
+									if (attrs.item(i) instanceof AttrImpl) {
+										AttrImpl attr = (AttrImpl) attrs
+												.item(i);
+										if (getSourceAttributeOffset(attr,
+												offset) != -1) {
+
+											String[] atributeNames = elementMapping
+													.getTemplate()
+													.getOutputAtributeNames();
+											if (atributeNames != null
+													&& atributeNames.length > 0
+													&& attr
+															.getName()
+															.equalsIgnoreCase(
+																	atributeNames[0])) {
+												return attr;
+											}
 										}
 									}
 								}
@@ -1400,7 +1426,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 						}
 					}
 				}
-			} 
+			}
 			if (node == null) {
 				node = getModel().getIndexedRegion(offset - 1);
 			}
@@ -1409,7 +1435,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			}
 		}
 		return null;
-	 }
+	}
 	 
 	 private int getSourceNodeOffset(Node node, int pos, boolean endFlag) {
 	 	if (node == null) return 0;

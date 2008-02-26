@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.ui.IEditorInput;
@@ -38,6 +39,7 @@ import org.eclipse.wst.sse.core.internal.provisional.INodeNotifier;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.document.NodeImpl;
+import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.project.IModelNature;
@@ -62,6 +64,7 @@ import org.jboss.tools.vpe.editor.template.VpeDefaultPseudoContentCreator;
 import org.jboss.tools.vpe.editor.template.VpeTagDescription;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.editor.template.VpeTemplateNodesManager;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -86,7 +89,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.eclipse.jface.text.IDocument;
 
 public class VpeVisualDomBuilder extends VpeDomBuilder {
     /** REGEX_EL */
@@ -1540,35 +1542,54 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     public boolean isTextEditable(nsIDOMNode visualNode) {
-	if (visualNode != null) {
-	    nsIDOMNode parent = visualNode.getParentNode();
-	    if (parent != null
-		    && parent.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-		nsIDOMElement element = (nsIDOMElement) parent
-			.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-		nsIDOMAttr style = element.getAttributeNode("style");
-		if (style != null) {
-		    String styleValue = style.getNodeValue();
-		    String[] items = styleValue.split(";");
-		    for (int i = 0; i < items.length; i++) {
-			String[] item = items[i].split(":");
-			if ("-moz-user-modify".equals(item[0].trim())
-				&& "read-only".equals(item[1].trim())) {
-			    return false;
+
+    	
+    	// get VpeNodeMapping
+		VpeNodeMapping nodeMapping = domMapping
+		.getNearNodeMapping(visualNode);
+
+		// if it is element mapping
+		if (nodeMapping instanceof VpeElementMapping) {
+			// get template
+			VpeTemplate template = ((VpeElementMapping) nodeMapping)
+					.getTemplate();
+			// if template implements VpeTemplateAttributesManager
+			if (template instanceof VpeTemplateNodesManager)
+				return ((VpeTemplateNodesManager) template).isNodeEditable(
+						pageContext, visualNode,
+						((VpeElementMapping) nodeMapping).getData());
+
+		}
+		
+		if (visualNode != null) {
+			nsIDOMNode parent = visualNode.getParentNode();
+			if (parent != null
+					&& parent.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+				nsIDOMElement element = (nsIDOMElement) parent
+						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				nsIDOMAttr style = element.getAttributeNode("style");
+				if (style != null) {
+					String styleValue = style.getNodeValue();
+					String[] items = styleValue.split(";");
+					for (int i = 0; i < items.length; i++) {
+						String[] item = items[i].split(":");
+						if ("-moz-user-modify".equals(item[0].trim())
+								&& "read-only".equals(item[1].trim())) {
+							return false;
+						}
+					}
+				}
+				nsIDOMAttr classAttr = element.getAttributeNode("class");
+				if (classAttr != null) {
+					String classValue = classAttr.getNodeValue().trim();
+					if ("__any__tag__caption".equals(classValue)) {
+						return false;
+					}
+				}
 			}
-		    }
 		}
-		nsIDOMAttr classAttr = element.getAttributeNode("class");
-		if (classAttr != null) {
-		    String classValue = classAttr.getNodeValue().trim();
-		    if ("__any__tag__caption".equals(classValue)) {
-			return false;
-		    }
-		}
-	    }
+		return true;
 	}
-	return true;
-    }
 
     VpeVisualInnerDropInfo getInnerDropInfo(Node sourceDropContainer,
 	    int sourceDropOffset) {
@@ -1628,7 +1649,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
     protected void setTooltip(Element sourceElement, nsIDOMElement visualElement) {
 	if (visualElement != null && sourceElement != null
-		&& !((ElementImpl) sourceElement).isJSPTag()) {
+		&& !((IDOMElement) sourceElement).isJSPTag()) {
 	    if (HTML.TAG_HTML.equalsIgnoreCase(sourceElement.getNodeName()))
 		return;
 	    String titleValue = getTooltip(sourceElement);
@@ -1897,6 +1918,13 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	VpeElementMapping elementMapping = domMapping
 		.getNearElementMapping(sourceElement);
 	if (elementMapping != null) {
+			
+		if (elementMapping.getTemplate() instanceof VpeTemplateNodesManager) {
+				return (nsIDOMText) ((VpeTemplateNodesManager) elementMapping
+						.getTemplate()).getVisualNode(pageContext, attr,
+						elementMapping.getData());
+			}
+		
 	    return elementMapping.getTemplate().getOutputTextNode(pageContext,
 		    sourceElement, elementMapping.getData());
 	}
