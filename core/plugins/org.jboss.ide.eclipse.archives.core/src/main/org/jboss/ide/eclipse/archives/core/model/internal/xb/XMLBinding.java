@@ -52,7 +52,7 @@ import org.xml.sax.SAXException;
  * This class is responsible for binding some xml file to it's proper
  * objects. In short, it marshalls and unmarshalls the data.
  * @author Marshall
- *
+ * @author Rob Stryker
  */
 public class XMLBinding {
 	
@@ -74,7 +74,6 @@ public class XMLBinding {
 		try {
 			InputStream stream = schema.openStream();
 			binding = XsdBinder.bind(stream, "UTF-8", null);
-
 			stream.close();
 			initialized = true;
 		} catch (IOException e) {
@@ -111,7 +110,7 @@ public class XMLBinding {
 				try {	
 					Unmarshaller unmarshaller = UnmarshallerFactory.newInstance().newUnmarshaller();
 					monitor.worked(1);
-					
+					binding.setStrictSchema(true);
 					Object xmlObject = unmarshaller.unmarshal(in, binding);
 					monitor.worked(1);
 					
@@ -138,17 +137,20 @@ public class XMLBinding {
 		return null;
 	}
 	
-	public static void marshallToFile(XbPackages element, IPath filePath, IProgressMonitor monitor) {
+	public static void marshallToFile(XbPackages element, IPath filePath, IProgressMonitor monitor) throws XbException, IOException {
 		OutputStreamWriter writer = null;
 		try {
 			writer = new OutputStreamWriter(new FileOutputStream(filePath.toFile()));
 			XMLBinding.marshall(element, writer, monitor);
-		} catch( Exception e ) {
+		} catch( XbException xbe ) {
+			throw xbe;
+		} catch( IOException ioe ) {
+			throw ioe;
 		}
 		finally {
 			try {
-			if( writer != null ) writer.close();
-			} catch( IOException ioe) {}
+				if( writer != null ) writer.close();
+			} catch( IOException ioe) {throw ioe;}
 		}
 	}
 	
@@ -217,6 +219,9 @@ public class XMLBinding {
 		}
 		public Exception getException() {
 			return parent;
+		}
+		public String getMessage() {
+			return parent.getCause() == null ? null : parent.getCause().getMessage();
 		}
 	}
 }

@@ -23,6 +23,7 @@ package org.jboss.ide.eclipse.archives.core.model;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -228,6 +229,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		ArchivesCore.getInstance().preRegisterProject(project);
 		
 		ArchiveModelNode root;
+		Exception e = null;
 		IPath packagesFile = project.append(PROJECT_PACKAGES_FILE);
 		if (packagesFile.toFile().exists()) {
 			XbPackages packages = null;
@@ -235,15 +237,18 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 				FileInputStream is = new FileInputStream(packagesFile.toFile());
 				packages = XMLBinding.unmarshal(is, monitor);
 				monitor.worked(1);
-			} catch (FileNotFoundException e) {
+			} catch (FileNotFoundException f) {
+				e = f;
 			} catch( XbException xbe) {
+				e = xbe;
 			}
 				
 			if (packages == null) {
 				// Empty / non-working XML file loaded
-				ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_ERR, "Could not unmarshall packages file", null);
+				ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_ERR, "Could not unmarshall packages file", e);
 				return;
 			}
+			
 			root = new ArchiveModelNode(project, packages, this);
 			ArchiveModelNode oldRoot = archivesRoot.get(project);
 			xbPackages.put(project, packages);
@@ -321,22 +326,25 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		
 		IPath packagesFile = project.append(ArchivesModel.PROJECT_PACKAGES_FILE);
 		XbPackages packs = getXbPackages(project);
-
-		XMLBinding.marshallToFile(packs, packagesFile, monitor);
+		try {
+			XMLBinding.marshallToFile(packs, packagesFile, monitor);
+		} catch( IOException ioe ) {
+			ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_ERR, "Could not marshall packages file", ioe);
+			return;
+		} catch( XbException xbe ) {
+			ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_ERR, "Could not marshall packages file", xbe);
+			return;
+		}
 		
 		// get deltas
-		try {
-			ArchiveModelNode root = (ArchiveModelNode)getRoot(project);
-			IArchiveNodeDelta delta = root.getDelta();
-			
-			// clear deltas
-			root.clearDeltas();
-			
-			// fire delta events
-			EventManager.fireDelta(delta);
-		} catch( Exception e ) {
-			e.printStackTrace();
-		}
+		ArchiveModelNode root = (ArchiveModelNode)getRoot(project);
+		IArchiveNodeDelta delta = root.getDelta();
+		
+		// clear deltas
+		root.clearDeltas();
+		
+		// fire delta events
+		EventManager.fireDelta(delta);
 	}
 	
 	public void attach(IArchiveNode parent, IArchiveNode child, IProgressMonitor monitor) {

@@ -43,25 +43,21 @@ public class MarshallUnmarshallTest extends TestCase {
 	}
 	
 	public void testUnmarshall() {
-		// unmarshall from file
 		FileInputStream fis = null;
 		try {
+			// unmarshall from file
 			fis = new FileInputStream(archiveDescriptors.append("descriptor1.xml").toFile());
-		} catch( Exception e ) {
-			fail(e.getMessage());
-		}
-		XbPackages packs = XMLBinding.unmarshal(fis, new NullProgressMonitor());
-		assertDescriptor1Accurate(packs);
-		
-		// unmarshall from string
-		try {
+			XbPackages packs = XMLBinding.unmarshal(fis, new NullProgressMonitor());
+			assertDescriptor1Accurate(packs);
+
+			// unmarshall from string
 			String content = fileAsString(archiveDescriptors.append("descriptor1.xml").toFile());
 			packs = XMLBinding.unmarshal(content, new NullProgressMonitor());
 			assertDescriptor1Accurate(packs);
+
 		} catch( Exception e ) {
 			fail(e.getMessage());
 		}
-
 	}
 	
 	public String fileAsString(File f) throws Exception {
@@ -75,58 +71,57 @@ public class MarshallUnmarshallTest extends TestCase {
 	public void testMarshall() {
 		IPath tmpFolder = bundlePath.append("tmp");
 		
-			XbPackages packs = new XbPackages();
-			XbPackage pack1 = new XbPackage();
-			pack1.setName("TestProject.jar");
-			pack1.setPackageType("jar");
-			pack1.setToDir("/some/external/path");
-			pack1.setExploded(false);
-			pack1.setInWorkspace(false);
-			packs.addChild(pack1);
+		XbPackages packs = new XbPackages();
+		XbPackage pack1 = new XbPackage();
+		pack1.setName("TestProject.jar");
+		pack1.setPackageType("jar");
+		pack1.setToDir("/some/external/path");
+		pack1.setExploded(false);
+		pack1.setInWorkspace(false);
+		packs.addChild(pack1);
 
-			XbPackage pack2 = new XbPackage();
-			pack2.setName("TestProject2.jar");
-			pack2.setPackageType("jar");
-			pack2.setToDir("/SomeProject");
-			pack2.setExploded(true);
-			pack2.setInWorkspace(true);
-			packs.addChild(pack2);
+		XbPackage pack2 = new XbPackage();
+		pack2.setName("TestProject2.jar");
+		pack2.setPackageType("jar");
+		pack2.setToDir("/SomeProject");
+		pack2.setExploded(true);
+		pack2.setInWorkspace(true);
+		packs.addChild(pack2);
 
-			XbFolder folder1 = new XbFolder();
-			folder1.setName("folder");
-			pack1.addChild(folder1);
-			
-			XbFolder folder2 = new XbFolder();
-			folder2.setName("folder2");
-			pack1.addChild(folder2);
-			
-			XbFolder inner1 = new XbFolder();
-			inner1.setName("inner1");
-			folder2.addChild(inner1);
-			
-			XbFileSet fs = new XbFileSet();
-			fs.setDir("/some/global/path");
-			fs.setIncludes("**/*.xml");
-			fs.setInWorkspace(false);
-			inner1.addChild(fs);
-			
-			assertDescriptor1Accurate(packs);
+		XbFolder folder1 = new XbFolder();
+		folder1.setName("folder");
+		pack1.addChild(folder1);
+		
+		XbFolder folder2 = new XbFolder();
+		folder2.setName("folder2");
+		pack1.addChild(folder2);
+		
+		XbFolder inner1 = new XbFolder();
+		inner1.setName("inner1");
+		folder2.addChild(inner1);
+		
+		XbFileSet fs = new XbFileSet();
+		fs.setDir("/some/global/path");
+		fs.setIncludes("**/*.xml");
+		fs.setInWorkspace(false);
+		inner1.addChild(fs);
+		
+		assertDescriptor1Accurate(packs);
 
+		try {
 			String packsAsString = XMLBinding.serializePackages(packs, new NullProgressMonitor());
 			XbPackages packsFromString = XMLBinding.unmarshal(packsAsString, new NullProgressMonitor());
 			assertDescriptor1Accurate(packsFromString);
 
-			try {
-				OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(tmpFolder.append("marshallTest.xml").toFile()));
-				XMLBinding.marshall(packs, writer, new NullProgressMonitor());
-				writer.close();
-				
-				XbPackages packsFromFile = XMLBinding.unmarshal(new FileInputStream(tmpFolder.append("marshallTest.xml").toFile()), new NullProgressMonitor());
-				assertDescriptor1Accurate(packsFromFile);
-			} catch(Exception e) {
-				fail(e.getMessage());
-			}
-
+			OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(tmpFolder.append("marshallTest.xml").toFile()));
+			XMLBinding.marshall(packs, writer, new NullProgressMonitor());
+			writer.close();
+			
+			XbPackages packsFromFile = XMLBinding.unmarshal(new FileInputStream(tmpFolder.append("marshallTest.xml").toFile()), new NullProgressMonitor());
+			assertDescriptor1Accurate(packsFromFile);
+		} catch(Exception e) {
+			fail(e.getMessage());
+		}
 	}
 	
 	void assertDescriptor1Accurate(XbPackages packs) {
