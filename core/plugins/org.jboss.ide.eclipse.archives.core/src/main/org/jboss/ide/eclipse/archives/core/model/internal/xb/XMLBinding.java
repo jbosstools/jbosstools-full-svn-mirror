@@ -191,19 +191,12 @@ public class XMLBinding {
 	}
 	
 	public static String serializePackages(XbPackages packages, IProgressMonitor monitor) throws XbException {
-		OutputStreamWriter writer = null;
 		try {
-			ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-			writer = new OutputStreamWriter(bytesOut);
-			XMLBinding.marshall(packages, writer, monitor);
-			return new String(bytesOut.toByteArray());
+			StringWriter sw = new StringWriter();
+			XMLBinding.marshall(packages, sw, monitor);
+			return new String(sw.toString());
 		} catch( Exception e ) {
 			throw new XbException(e);
-		} finally {
-			if( writer != null )
-				try {
-					writer.close();
-				} catch( IOException ioe) {}
 		}
 	}
 	
