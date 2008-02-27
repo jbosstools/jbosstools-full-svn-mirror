@@ -93,23 +93,23 @@ public class ValidationTest extends TestCase {
 		parse("MissingPackageDir.xml", false, failedMissingRequiredAtt("todir"));
 	}
 	
-	public void testPackageMissingType() {
+	public void testPackageMissingOptionalType() {
 		parse("MissingPackageType.xml", true, failedFalsePositiveRequiredAtt("type"));
 	}
 	
-	public void testPackageMissingExploded() {
+	public void testPackageMissingOptionalExploded() {
 		XbPackages packs = parse("MissingPackageExploded.xml", true, failedFalsePositiveRequiredAtt("exploded"));
 		XbPackage pack = (XbPackage)packs.getAllChildren().get(0);
 		assertFalse(pack.isExploded());
 	}
 	
-	public void testPackageMissingInWorkspace() {
+	public void testPackageMissingOptionalInWorkspace() {
 		XbPackages packs = parse("MissingPackageInWorkspace.xml", true, failedFalsePositiveRequiredAtt("inWorkspace"));
 		XbPackage pack = (XbPackage)packs.getAllChildren().get(0);
 		assertTrue(pack.isInWorkspace());
 	}
 	
-	public void testPackageMissingId() {
+	public void testPackageMissingOptionalId() {
 		XbPackages packs = parse("MissingPackageID.xml", true, failedMissingRequiredAtt("id"));
 		XbPackage pack = (XbPackage)packs.getAllChildren().get(0);
 		assertNull(pack.getId());
@@ -148,12 +148,12 @@ public class ValidationTest extends TestCase {
 		parse("MissingFilesetIncludes.xml", false, failedMissingRequiredAtt("includes"));
 	}
 	
-	public void testFilesetMissingExcludes() {
-		XbPackages packs = parse("MissingFilesetExcludes.xml", true, failedFalsePositiveRequiredAtt("excludes"));
+	public void testFilesetMissingOptionalExcludes() {
+		parse("MissingFilesetExcludes.xml", true, failedFalsePositiveRequiredAtt("excludes"));
 		// no default
 	}
 	
-	public void testFilesetMissingInWorkspace() {
+	public void testFilesetMissingOptionalInWorkspace() {
 		XbPackages packs = parse("MissingFilesetInWorkspace.xml", true, failedFalsePositiveRequiredAtt("inWorkspace"));
 		// no default
 		XbPackage pack = (XbPackage)packs.getAllChildren().get(0);
@@ -164,7 +164,7 @@ public class ValidationTest extends TestCase {
 		assertTrue(fs.isInWorkspace());
 	}
 
-	public void testFilesetMissingFlattened() {
+	public void testFilesetMissingOptionalFlattened() {
 		XbPackages packs = parse("MissingFilesetFlattened.xml", true, failedFalsePositiveRequiredAtt("flattened"));
 		// no default
 		XbPackage pack = (XbPackage)packs.getAllChildren().get(0);
