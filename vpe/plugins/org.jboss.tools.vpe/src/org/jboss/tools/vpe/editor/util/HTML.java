@@ -61,12 +61,12 @@ public final class HTML {
     public static final String ATTR_ID = "ID"; //$NON-NLS-1$
     public static final String ATTR_TYPE = "TYPE"; //$NON-NLS-1$
     public static final String ATTR_TEXT = "TEXT"; //$NON-NLS-1$
-    public static final String ATTR_CLASS = "CLASS"; //$NON-NLS-1$
+    public static final String ATTR_CLASS = "class"; //$NON-NLS-1$
     public static final String ATTR_TITLE = "TITLE"; //$NON-NLS-1$
     public static final String ATTR_NAME = "NAME"; //$NON-NLS-1$
     public static final String ATTR_VALUE = "VALUE"; //$NON-NLS-1$
-    public static final String ATTR_STYLE = "STYLE"; //$NON-NLS-1$
-    public static final String ATTR_SIZE = "SIZE"; //$NON-NLS-1$
+    public static final String ATTR_STYLE = "style"; //$NON-NLS-1$
+    public static final String ATTR_SIZE = "size"; //$NON-NLS-1$
     public static final String ATTR_MULTIPLE = "MULTIPLE"; //$NON-NLS-1$
     public static final String ATTR_COLSPAN = "colspan"; //$NON-NLS-1$
     public static final String ATTR_CELLSPACING = "cellspacing"; //$NON-NLS-1$
@@ -75,6 +75,7 @@ public final class HTML {
     public static final String ATTR_HEIGHT = "HEIGHT"; //$NON-NLS-1$
     public static final String ATTR_BORDER = "BORDER"; //$NON-NLS-1$
     public static final String ATTR_FOR = "FOR";
-    public static final String ATTR_DIR = "DIR";
+    public static final String ATTR_DIR = "dir";
+    public static final String ATTR_DISABLED = "disabled";
    
 }
