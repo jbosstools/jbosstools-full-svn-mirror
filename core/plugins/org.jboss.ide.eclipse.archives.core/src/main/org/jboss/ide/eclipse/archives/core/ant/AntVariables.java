@@ -9,9 +9,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.model.IRuntimeVariables;
+import org.jboss.ide.eclipse.archives.core.model.IVariableManager;
 import org.jboss.ide.eclipse.archives.core.xpl.StringSubstitutionEngineClone;
 
-public class AntVariables implements IRuntimeVariables {
+public class AntVariables implements IRuntimeVariables, IVariableManager {
 	private Task currentTask;
 	public void setCurrentTask(Task task) { currentTask = task; }
 	public Task getCurrentTask() { return currentTask; }
@@ -45,7 +46,15 @@ public class AntVariables implements IRuntimeVariables {
 
 	public String performStringSubstitution(String expression,
 			boolean reportUndefinedVariables) throws CoreException {
-		return new StringSubstitutionEngineClone().performStringSubstitution(expression, reportUndefinedVariables);
+		return new StringSubstitutionEngineClone().performStringSubstitution(expression, reportUndefinedVariables, this);
+	}
+
+	public boolean containsVariable(String variable) {
+		return false;
+	}
+
+	public String getVariableValue(String variable, String arg) {
+		return null;
 	}
 
 }

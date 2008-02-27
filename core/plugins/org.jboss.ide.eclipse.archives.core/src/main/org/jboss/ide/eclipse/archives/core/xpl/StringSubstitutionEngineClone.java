@@ -15,10 +15,13 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
+import org.jboss.ide.eclipse.archives.core.ArchivesCorePlugin;
+import org.jboss.ide.eclipse.archives.core.model.IVariableManager;
 
 /**
  * Performs string substitution for context and value variables.
@@ -77,11 +80,11 @@ public class StringSubstitutionEngineClone {
 	 * @exception CoreException if unable to resolve a referenced variable or if a cycle exists
 	 *  in referenced variables
 	 */
-	public String performStringSubstitution(String expression, boolean reportUndefinedVariables ) throws CoreException {
-		substitute(expression, reportUndefinedVariables );
+	public String performStringSubstitution(String expression, boolean reportUndefinedVariables, IVariableManager manager ) throws CoreException {
+		substitute(expression, reportUndefinedVariables,manager );
 		List resolvedVariableSets = new ArrayList();
 		while (fSubs) {
-			HashSet resolved = substitute(fResult.toString(), reportUndefinedVariables );			
+			HashSet resolved = substitute(fResult.toString(), reportUndefinedVariables,manager);			
 			
 			for(int i=resolvedVariableSets.size()-1; i>=0; i--) {
 				
@@ -118,8 +121,8 @@ public class StringSubstitutionEngineClone {
 	 * @exception CoreException if a referenced variable does not exist or if a cycle exists
 	 *  in referenced variables
 	 */
-	public void validateStringVariables(String expression ) throws CoreException {
-		performStringSubstitution(expression, true );
+	public void validateStringVariables(String expression, IVariableManager manager ) throws CoreException {
+		performStringSubstitution(expression, true, manager );
 	}
 	
 	/**
@@ -130,7 +133,7 @@ public class StringSubstitutionEngineClone {
 	 * @param reportUndefinedVariables whether to report undefined variables as an error
 	 * @exception CoreException if unable to resolve a variable
 	 */
-	private HashSet substitute(String expression, boolean reportUndefinedVariables) throws CoreException {
+	private HashSet substitute(String expression, boolean reportUndefinedVariables, IVariableManager manager) throws CoreException {
 		fResult = new StringBuffer(expression.length());
 		fStack = new Stack();
 		fSubs = false;
@@ -186,7 +189,7 @@ public class StringSubstitutionEngineClone {
 							resolvedVariables.add(substring);
 							
 							pos = end + 1;
-							String value= resolve(tos, reportUndefinedVariables);
+							String value= resolve(tos, reportUndefinedVariables, manager);
 							if (value == null) {
 								value = ""; //$NON-NLS-1$
 							}
@@ -228,54 +231,34 @@ public class StringSubstitutionEngineClone {
 	 * @param var
 	 * @param reportUndefinedVariables whether to report undefined variables as
 	 *  an error
+	 *  @param manager Someone to call back to for the variable's values
 	 * @return variable value, possibly <code>null</code>
 	 * @exception CoreException if unable to resolve a value
 	 */
-	private String resolve(VariableReference var, boolean reportUndefinedVariables) throws CoreException {
-//		String text = var.getText();
-//		int pos = text.indexOf(VARIABLE_ARG);
-//		String name = null;
-//		String arg = null;
-//		if (pos > 0) {
-//			name = text.substring(0, pos);
-//			pos++;
-//			if (pos < text.length()) {
-//				arg = text.substring(pos);
-//			} 
-//		} else {
-//			name = text;
-//		}
-//		IValueVariable valueVariable = manager.getValueVariable(name);
-//		if (valueVariable == null) {
-//			IDynamicVariable dynamicVariable = manager.getDynamicVariable(name);
-//			if (dynamicVariable == null) {
-//				// no variables with the given name
-//				if (reportUndefinedVariables) {
-//					throw new CoreException(new Status(IStatus.ERROR, VariablesPlugin.getUniqueIdentifier(), VariablesPlugin.INTERNAL_ERROR, NLS.bind(VariablesMessages.StringSubstitutionEngine_3, new String[]{name}), null)); 
-//				} 
-//				// leave as is
-//				return getOriginalVarText(var);
-//			} 
-//			
-//			if (resolveVariables) {
-//				fSubs = true;
-//				return dynamicVariable.getValue(arg);
-//			} 
-//			//leave as is
-//			return getOriginalVarText(var);
-//		} 
-//		
-//		if (arg == null) {
-//			if (resolveVariables) {
-//				fSubs = true;
-//				return valueVariable.getValue();
-//			} 
-//			//leave as is
-//			return getOriginalVarText(var);
-//		} 
-//		// error - an argument specified for a value variable
-//		throw new CoreException(new Status(IStatus.ERROR, VariablesPlugin.getUniqueIdentifier(), VariablesPlugin.INTERNAL_ERROR, NLS.bind(VariablesMessages.StringSubstitutionEngine_4, new String[]{valueVariable.getName()}), null)); 
-		return "tobecompleted";
+	private String resolve(VariableReference var, boolean reportUndefinedVariables, IVariableManager manager) throws CoreException {
+		String text = var.getText();
+		int pos = text.indexOf(VARIABLE_ARG);
+		String name = null;
+		String arg = null;
+		if (pos > 0) {
+			name = text.substring(0, pos);
+			pos++;
+			if (pos < text.length()) {
+				arg = text.substring(pos);
+			} 
+		} else {
+			name = text;
+		}
+		if( !manager.containsVariable(name)) {
+			if( reportUndefinedVariables )
+				throw new CoreException(new Status(IStatus.ERROR, ArchivesCorePlugin.PLUGIN_ID, "Variable " + name + " undefined")); 
+			return getOriginalVarText(var);
+		}
+		
+		String ret = manager.getVariableValue(name, arg);
+		if(ret == null)
+			return getOriginalVarText(var);
+		return ret;
 	}
 
 	private String getOriginalVarText(VariableReference var) {
