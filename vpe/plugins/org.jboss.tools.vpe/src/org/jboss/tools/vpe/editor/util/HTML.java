@@ -73,7 +73,7 @@ public final class HTML {
     public static final String ATTR_CELLPADDING = "cellpadding"; //$NON-NLS-1$
     public static final String ATTR_WIDTH = "WIDTH"; //$NON-NLS-1$
     public static final String ATTR_HEIGHT = "HEIGHT"; //$NON-NLS-1$
-    public static final String ATTR_BORDER = "BORDER"; //$NON-NLS-1$
+    public static final String ATTR_BORDER = "border"; //$NON-NLS-1$
     public static final String ATTR_FOR = "FOR";
     public static final String ATTR_DIR = "dir";
     public static final String ATTR_DISABLED = "disabled";
