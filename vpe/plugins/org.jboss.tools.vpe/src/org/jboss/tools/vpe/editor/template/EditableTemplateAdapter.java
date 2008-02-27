@@ -208,8 +208,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	}
 
 	/**
-	 * Default  handling of a pressing the "page up" event -
-	 * always return false.
+	 * Default handling of a pressing the "page up" event - always return false.
 	 * 
 	 * Override this method for a handling of a pressing the "page up" event
 	 * 
@@ -310,7 +309,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	}
 
 	/**
-	 * Default  handling of a pressing the "backspace" event
+	 * Default handling of a pressing the "backspace" event
 	 * 
 	 * Override this method to handle the "backspace" event
 	 * 
@@ -657,8 +656,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 
 			for (VpeNodeMapping mapping : attributesMapping) {
 
-				if ((offset > getStartOffsetNode(mapping.getSourceNode()))
-						&& (offset < getEndOffsetNode(mapping.getSourceNode())))
+				if ((offset > (getStartOffsetNode(mapping.getSourceNode()) + 1))
+						&& (offset < (getEndOffsetNode(mapping.getSourceNode()) - 1)))
 					return mapping.getSourceNode();
 			}
 		}
