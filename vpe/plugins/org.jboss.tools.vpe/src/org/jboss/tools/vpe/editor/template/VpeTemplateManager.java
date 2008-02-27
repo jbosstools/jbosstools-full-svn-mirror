@@ -18,15 +18,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jst.jsp.core.internal.contentmodel.TaglibController;
-import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TLDCMDocumentManager;
-import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TaglibTracker;
-import org.eclipse.jst.jsp.core.internal.contentmodel.tld.provisional.TLDDocument;
-import org.eclipse.wst.xml.core.internal.document.ElementImpl;
+import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.jboss.tools.common.xml.XMLUtilities;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpePlugin;
@@ -231,7 +227,7 @@ public class VpeTemplateManager {
 		
 		String sourcePrefix = sourceNode.getPrefix();
 		
-		if (sourcePrefix == null || ((ElementImpl)sourceNode).isJSPTag() || "jsp".equals(sourcePrefix)) {
+		if (sourcePrefix == null || ((IDOMElement)sourceNode).isJSPTag() || "jsp".equals(sourcePrefix)) {
 			
 			return sourceNode.getNodeName();
 		}
