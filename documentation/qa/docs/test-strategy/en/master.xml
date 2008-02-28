@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+"../../resources/support/docbook-dtd/docbookx.dtd"
+
+[
+ <!ENTITY introduction      		SYSTEM "modules/introduction.xml">
+ <!ENTITY scope             		SYSTEM "modules/scope.xml"> 
+ <!ENTITY testing			 		SYSTEM "modules/testing.xml">
+ <!ENTITY testing-areas         	SYSTEM "modules/testing-areas.xml">
+ <!ENTITY testing-techniques    	SYSTEM "modules/testing-techniques.xml">
+ <!ENTITY testing-methodology    	SYSTEM "modules/testing-methodology.xml">
+ <!ENTITY setup						SYSTEM "modules/setup.xml">
+ <!ENTITY setup-prerequisites		SYSTEM "modules/setup-prerequisites.xml">
+ <!ENTITY setup-hardware			SYSTEM "modules/setup-hardware.xml">
+ <!ENTITY setup-software			SYSTEM "modules/setup-software.xml">
+ <!ENTITY setup-team				SYSTEM "modules/setup-team.xml">
+ <!ENTITY release					SYSTEM "modules/release.xml">
+ <!ENTITY schedule					SYSTEM "modules/schedule.xml">
+]>
+
+<book>
+
+	<bookinfo>
+		<title>JBoss Tools Test Strategy</title>
+		<copyright>
+			<year>2007</year>
+			<holder>Red Hat</holder>
+		</copyright>
+		<releaseinfo></releaseinfo>
+	</bookinfo>
+
+
+	<toc />
+	&introduction;
+	&scope;
+	&testing;
+	&setup;
+	&release;
+	&schedule;
+
+
+</book>
