@@ -14,13 +14,15 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jdt.core,
  org.eclipse.core.variables
 Eclipse-LazyStart: true
-Bundle-ClassPath: lib/concurrent.jar,
+Bundle-ClassPath: archivescore.jar,
+ archivescore-eclipse.jar,
  lib/truezip-6.jar,
- lib/xercesImpl.jar,
- lib/jboss-common-4.0.4.jar,
- lib/jbossxb-1.0.1.TEST.jar,
- archivescore.jar,
- archivescore-eclipse.jar
+ lib/concurrent-1.3.4.jar,
+ lib/jboss-xml-binding.jar,
+ lib/xercesImpl-2.9.1.jar,
+ lib/jboss-common-logging-log4j-2.0.4.GA.jar,
+ lib/jboss-common-logging-spi-2.0.4.GA.jar,
+ lib/jboss-common-core-2.2.1.GA.jar
 Export-Package: de.schlichtherle.io;x-friends:="org.jboss.ide.eclipse.archives.test",
  org.jboss.ide.eclipse.archives.core,
  org.jboss.ide.eclipse.archives.core.ant,

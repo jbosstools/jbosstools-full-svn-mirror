@@ -22,7 +22,7 @@
 package org.jboss.ide.eclipse.archives.core.model.internal.xb;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,8 +41,6 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
 import org.jboss.xb.binding.JBossXBException;
-import org.jboss.xb.binding.Unmarshaller;
-import org.jboss.xb.binding.UnmarshallerFactory;
 import org.jboss.xb.binding.XercesXsMarshaller;
 import org.jboss.xb.binding.sunday.unmarshalling.SchemaBinding;
 import org.jboss.xb.binding.sunday.unmarshalling.XsdBinder;
@@ -73,7 +71,7 @@ public class XMLBinding {
 	{
 		try {
 			InputStream stream = schema.openStream();
-			binding = XsdBinder.bind(stream, "UTF-8", null);
+			binding = XsdBinder.bind(stream, "UTF-8", (String)null);
 			stream.close();
 			initialized = true;
 		} catch (IOException e) {
@@ -108,9 +106,12 @@ public class XMLBinding {
 		XbRunnable runnable = new XbRunnable() {
 			public void run () throws XbException {
 				try {	
-					Unmarshaller unmarshaller = UnmarshallerFactory.newInstance().newUnmarshaller();
+					ArchivesUnmarshallerImpl unmarshaller = new ArchivesUnmarshallerImpl();
 					monitor.worked(1);
 					binding.setStrictSchema(true);
+					unmarshaller.setValidation(true);
+					unmarshaller.getParser().setFeature("http://apache.org/xml/features/validation/schema", true);
+					unmarshaller.getParser().setProperty("http://apache.org/xml/properties/schema/external-noNamespaceSchemaLocation", schema.toExternalForm());
 					Object xmlObject = unmarshaller.unmarshal(in, binding);
 					monitor.worked(1);
 					
