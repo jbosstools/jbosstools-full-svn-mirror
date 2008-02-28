@@ -42,6 +42,11 @@ public abstract class ArchivesCore {
 		return instance;
 	}
 	
+	public static void setInstance(ArchivesCore instance) {
+		ArchivesCore.instance = instance;
+	}
+	
+	
 	public static final int STANDALONE = 0;
 	public static final int WORKSPACE = 1;
 	
@@ -57,8 +62,6 @@ public abstract class ArchivesCore {
 		extensionManager = createExtensionManager();
 		preferenceManager = createPreferenceManager();
 		logger = createLogger();
-		
-		instance = this;
 	}
 	
 	protected abstract IRuntimeVariables createVariables();

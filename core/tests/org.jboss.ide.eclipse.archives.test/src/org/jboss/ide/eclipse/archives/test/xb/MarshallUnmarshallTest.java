@@ -18,6 +18,7 @@ import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFileSet;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFolder;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding.XbException;
 import org.jboss.ide.eclipse.archives.test.ArchivesTest;
 import org.jboss.ide.eclipse.archives.test.util.FileIOUtil;
 import org.osgi.framework.Bundle;
@@ -119,8 +120,10 @@ public class MarshallUnmarshallTest extends TestCase {
 			
 			XbPackages packsFromFile = XMLBinding.unmarshal(new FileInputStream(tmpFolder.append("marshallTest.xml").toFile()), new NullProgressMonitor());
 			assertDescriptor1Accurate(packsFromFile);
-		} catch(Exception e) {
+		} catch(XbException e) {
 			fail(e.getMessage());
+		} catch( IOException ioe ) {
+			fail(ioe.getMessage());
 		}
 	}
 	

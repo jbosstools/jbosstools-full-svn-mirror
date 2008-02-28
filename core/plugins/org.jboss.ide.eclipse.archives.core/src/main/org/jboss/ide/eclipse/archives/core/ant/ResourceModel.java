@@ -17,6 +17,7 @@ public class ResourceModel {
 			model = new ResourceModel();
 			try {
 				archivesCore = new AntArchivesCore();
+				ArchivesCore.setInstance(archivesCore);
 			} catch( LinkageError le ) { 
 				// ignore. the archives task will figure it out later
 			}

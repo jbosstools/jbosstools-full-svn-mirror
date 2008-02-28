@@ -23,6 +23,7 @@ Bundle-ClassPath: lib/concurrent.jar,
  archivescore-eclipse.jar
 Export-Package: de.schlichtherle.io;x-friends:="org.jboss.ide.eclipse.archives.test",
  org.jboss.ide.eclipse.archives.core,
+ org.jboss.ide.eclipse.archives.core.ant,
  org.jboss.ide.eclipse.archives.core.build,
  org.jboss.ide.eclipse.archives.core.model,
  org.jboss.ide.eclipse.archives.core.model.internal;x-friends:="org.jboss.ide.eclipse.archives.test",
