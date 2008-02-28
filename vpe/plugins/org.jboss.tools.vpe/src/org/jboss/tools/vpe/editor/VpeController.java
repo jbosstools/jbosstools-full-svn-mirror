@@ -446,6 +446,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			break;
 
 		case INodeNotifier.ADD:
+			//we should remove all parent nodes from vpe cash
+			visualBuilder.removeNode((Node)newValue);
 			break;
 		
 		case INodeNotifier.REMOVE:
@@ -473,11 +475,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			}
 			break;
 		}
-		//TODO Max Areshkau JBIDE-1457
-//		if (visualBuilder.rebuildFlag) {
-////			pageContext.fireTaglibsChanged();
-//		} 
-
 		switcher.stopActiveEditor();
 	}
 
@@ -1186,27 +1183,12 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		visualRefresh();
 	}
 	
-	// VpeTaglibListener implementation
-//	public void taglibPrefixChanged(String[] prefixs) {
-//		if (VpeDebug.printSourceMutationEvent) {
-//			String s = ""; //$NON-NLS-1$
-//			for (int i = 0; i < prefixs.length; i++) {
-//				if (i > 0) {
-//					s += ", "; //$NON-NLS-1$
-//				}
-//				s += prefixs[i];
-//			}
-//		}
-//		queryVisualRefresh = true;
-////		visualRefreshImpl();
-//	}
-	
+
 	public void visualRefresh() {
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
 		visualRefreshImpl();
-//		pageContext.fireTaglibsChanged();
 
 		switcher.stopActiveEditor();
 	}

@@ -10,9 +10,11 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.context;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.IDocument;
@@ -43,6 +45,8 @@ import org.jboss.tools.vpe.editor.css.RelativeFolderReferenceList;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
 import org.jboss.tools.vpe.editor.css.TaglibReferenceList;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
+import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
+import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
@@ -62,7 +66,10 @@ public class VpePageContext implements IVisualContext {
 	private VpeVisualDomBuilder visualBuilder;
 	private VpeEditorPart editPart;
 	WtpKbConnector connector;
-	private nsIDOMNode currentVisualNode;	
+	private nsIDOMNode currentVisualNode;
+	
+	//Added by Max Areshkau to increase perfomance of VPE JBIDE-675
+	private Map<Node,VpeCreationData> vpeCash;
 	
 	public VpePageContext(VpeTemplateManager templateManager, BundleMap bundle, VpeEditorPart editPart) {
 		this.bundle = bundle;
@@ -107,6 +114,8 @@ public class VpePageContext implements IVisualContext {
 	public void clearAll() {
 		bundleDependencySet.clear();
 		bundle.clearAll();
+		//clean a cash nodes
+		clearVpeCash();
 	}
 	
 	public void dispose() {
@@ -267,52 +276,6 @@ public class VpePageContext implements IVisualContext {
 		return null;
 	}
 
-//	public List<TaglibData> getTagLibs() {
-//		List<TaglibData> clone = new ArrayList<TaglibData>();
-//		Iterator iter = taglibs.iterator();
-//		while (iter.hasNext()) {
-//			TaglibData taglib = (TaglibData)iter.next();
-//			if (!taglib.inList(clone)) {
-//				clone.add(taglib);
-//			}
-//		}
-//		return clone;
-//	}
-	
-//	private boolean  buildTaglibsDifferences(List newTaglibs, List delTaglibs) {
-//		Iterator lastIter = lastTaglibs.iterator();
-//		while (lastIter.hasNext()) {
-//			TaglibData oldTaglib = (TaglibData)lastIter.next();
-//			Iterator newIter = newTaglibs.iterator();
-//			while (newIter.hasNext()) {
-//				if (oldTaglib.isEquals((TaglibData)newIter.next())) {
-//					newIter.remove();
-//					oldTaglib = null;
-//					break;
-//				}
-//			}
-//			if (oldTaglib != null) {
-//				delTaglibs.add(oldTaglib);
-//			}
-//		}
-//		return newTaglibs.size() > 0 || delTaglibs.size() > 0;
-//	}
-	
-//	public void fireTaglibsChanged() {
-//		List newTaglibs = getTagLibs();
-//		List delTaglibs = new ArrayList();
-//		if (buildTaglibsDifferences(newTaglibs, delTaglibs)) {
-//			if (VpeDebug.PRINT_SOURCE_MUTATION_EVENT) {
-//				System.out.println(">>> TaglibsChanged");
-//			}
-//			for (int i = 0; i < taglibListeners.length; i++) {
-//				taglibListeners[i].taglibPrefixChanged(null);
-//				fireTaglibChanged(taglibListeners[i], newTaglibs, delTaglibs);
-//			}
-//			lastTaglibs = getTagLibs();
-//		}
-//		taglibChanged = false;
-//	}
 	
 	private void fireTaglibChanged(VpeTaglibListener taglibListener, List newTaglibs, List delTaglibs) {
 		Iterator iter = delTaglibs.iterator();
@@ -326,13 +289,6 @@ public class VpePageContext implements IVisualContext {
 			taglibListener.addTaglib(taglib.getUri(), taglib.getPrefix());
 		}
 	}
-	
-//	public boolean isTaglibChanged() {
-//		if (!taglibChanged) return false;
-//		List newTaglibs = getTagLibs();
-//		List delTaglibs = new ArrayList();
-//		return buildTaglibsDifferences(newTaglibs, delTaglibs);
-//	}
 	
 	public WtpKbConnector getConnector() {
 		return connector;
@@ -372,41 +328,77 @@ public class VpePageContext implements IVisualContext {
 		this.currentVisualNode = currentVisualNode;
 	}
 
-//	boolean registerTaglibs(WtpKbConnector wtpKbConnector, VpeTaglibManager taglibManager, IDocument document) {
-//		if(wtpKbConnector == null) return false;
-//		TLDCMDocumentManager manager = TaglibController.getTLDCMDocumentManager(document);
-//		if(taglibManager != null) {
-//			List list = taglibManager.getTagLibs();
-//			if(list != null) {
-//				Iterator it = list.iterator();
-//				while(it.hasNext()) {
-//					TaglibData data = (TaglibData)it.next();
-//					IEditorInput ei = editPart.getEditorInput();
-//					TLDRegisterHelper.registerTld(data, (JspWtpKbConnector)wtpKbConnector, document, ei);
-//				}
-//				return true;
-//			}
-//		}
-//		if(manager != null) {
-//			List list = manager.getTaglibTrackers();
-//			for (int i = 0; i < list.size(); i++) {
-//				TaglibTracker tracker = (TaglibTracker)list.get(i);
-//				if(tracker == null) continue;
-//				String version = TLDVersionHelper.getTldVersion(tracker);
-//				KbTldResource resource = new KbTldResource(tracker.getURI(), "", tracker.getPrefix(), version);
-//				wtpKbConnector.registerResource(resource);
-//			}
-//			return true;
-//		}
-//		return false;
-//	}
-	
-//	public nsIDOMNode getCurrentVisualNode() {
-//		return currentVisualNode;
-//	}
-//	
-//	public void setCurrentVisualNode(nsIDOMNode currentVisualNode) {
-//		this.currentVisualNode = currentVisualNode;
-//	}
+	/**
+	 * Removes  information about source node from vpe cash
+	 * @param sourceNode
+	 */
+	public void removeNodeFromVpeCash(Node sourceNode) {
+		
+		getVpeCash().remove(sourceNode);
+		Node parentNode = sourceNode.getParentNode();
+		//we should on change remove also parent nodes because information for
+		//this nodes doen't actual when we change child
+		while(parentNode!=null) {
+			getVpeCash().remove(parentNode);
+			parentNode=parentNode.getParentNode();
+		}
+	}
+	/**
+	 * Clears all information in cash
+	 */
+	public void clearVpeCash() {
+		
+		getVpeCash().clear();
+	}
+	/**
+	 * Checs is creation data exist in cash
+	 * @param sourceNode
+	 * @return true - if date exist 
+	 * 		   false -otherwise
+	 */
+	public boolean isCreationDataExistInCash(Node sourceNode){
+		
+//		Iterator<Node> keys =	getVpeCash().keySet().iterator();
+//
+//		//Map.get() doesn't work correctly for this situation	
+////			while(keys.hasNext()){
+////				Node key= keys.next();
+////				if(sourceNode.isEqu alNode(key)) {
+////					return true;
+////				}
+////			}
+////			return false;
+		return getVpeCash().containsKey(sourceNode);
+	}
+	/**
+	 * Inserts creation data into cash
+	 * @param sourceNode
+	 * @param creationData
+	 */
+	public void addCreationDataToCash(Node sourceNode,VpeCreationData creationData) {
+		//TODO Max Areshkau JBIDE-675 Adds data to cash, think about cloning creationData
+		getVpeCash().put(sourceNode, creationData);
+	}
+	/**
+	 * Looks creates data in cash
+	 * @param sourceNode
+	 * @return returns creation data
+	 */
+	public VpeCreationData getVpeCreationDataFromCash(Node sourceNode) {
+		
+		return getVpeCash().get(sourceNode);
+	}
+	/**
+	 * Return vpe Cash
+	 * @return the vpeCash
+	 */
+	private Map<Node, VpeCreationData> getVpeCash() {
+		
+		if(vpeCash ==null) {
+			
+			vpeCash = new HashMap<Node, VpeCreationData>();	
+		}
+		return vpeCash;
+	}
 
 }

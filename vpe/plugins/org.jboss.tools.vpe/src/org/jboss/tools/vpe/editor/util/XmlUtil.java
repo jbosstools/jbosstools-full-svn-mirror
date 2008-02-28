@@ -21,7 +21,10 @@ import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TLDCMDocumentManager;
 import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TaglibTracker;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.jboss.tools.jst.web.tld.TaglibData;
+import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.xulrunner.browser.util.DOMTreeDumper;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -109,7 +112,8 @@ public class XmlUtil {
 	public static List<TaglibData> getTaglibsForNode(Node source,IDocument document) {
 		
 		List<TaglibData> taglibData = new ArrayList<TaglibData>();
-			
+		//TODO Max Areshkau Looks like exist possability to check is it jsp document
+		//node.getOwnerDocument return null for jsp apply it for CA
 		TLDCMDocumentManager tldcmDocumentManager= TaglibController.getTLDCMDocumentManager(document);
 		if(tldcmDocumentManager!=null) {
 				List<TaglibTracker> taglibs_JSP =  tldcmDocumentManager.getTaglibTrackers();
@@ -183,5 +187,16 @@ public class XmlUtil {
 				}
 			}	
 			return null;
-	}	
+	}
+	/**
+	 * Creates clone node
+	 * @param cloneNode
+	 * @return
+	 */
+	public static final nsIDOMNode createClone(nsIDOMNode nodeToClone){
+		nsIDOMNode result = nodeToClone.cloneNode(true);
+		return result;
+	}
+	
+
 }

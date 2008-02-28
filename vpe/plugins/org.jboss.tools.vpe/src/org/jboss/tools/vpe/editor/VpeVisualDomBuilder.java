@@ -234,6 +234,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
     private boolean addNode(Node sourceNode, nsIDOMNode visualNextNode,
 	    nsIDOMNode visualContainer) {
+      
 	nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer);
 	// Fix for JBIDE-1097
 	try {
@@ -384,18 +385,35 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    VpeCreationData creationData = null;
 	    // FIX FOR JBIDE-1568, added by Max Areshkau
 	    try {
-		creationData = template.create(getPageContext(), sourceNode,
-			getVisualDocument());
+	    	if(getPageContext().isCreationDataExistInCash(sourceNode)) {
+	    		
+	    		creationData = getPageContext().getVpeCreationDataFromCash(sourceNode).createHashCopy();
+	    	} else {
+	    		creationData = template.create(getPageContext(), sourceNode,
+	    									getVisualDocument());
+	    		if(creationData.getNode()!=null) {
+	    			
+	    		getPageContext().addCreationDataToCash(sourceNode, creationData.createHashCopy());
+	    		
+	    		}
+	    	}
 	    } catch (XPCOMException ex) {
 		VpePlugin.getPluginLog().logError(ex);
 		VpeTemplate defTemplate = templateManager.getDefTemplate();
 		creationData = defTemplate.create(getPageContext(), sourceNode,
 			getVisualDocument());
 	    }
+	    
 	    pageContext.setCurrentVisualNode(null);
-	    nsIDOMElement visualNewElement = (nsIDOMElement) creationData
-		    .getNode();
+	    nsIDOMElement visualNewElement = null;
 
+	    	if(creationData.getNode()!=null) {
+	    	
+	     visualNewElement = (nsIDOMElement) creationData
+		    			.getNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+	    	}
+
+	    
 	    if (visualNewElement != null)
 		correctVisualAttribute(visualNewElement);
 
@@ -842,6 +860,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     public void removeNode(Node sourceNode) {
+    //remove from cash should be called first
+    getPageContext().removeNodeFromVpeCash(sourceNode);
 	domMapping.remove(sourceNode);
 	getSourceNodes().remove(sourceNode);
 	if (sourceNode instanceof INodeNotifier) {

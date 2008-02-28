@@ -160,7 +160,8 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	}
 	@Override
 	public void validate(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, VpeCreationData creationdata) {
-		validateVisualElement(pageContext, (Element)sourceNode, visualDocument, null, (nsIDOMElement)creationdata.getNode(), (Map<VpeTemplate,ModifyInfo>)creationdata.getData());
+		validateVisualElement(pageContext, (Element)sourceNode, visualDocument, null, creationdata.getNode()==null?null:
+			(nsIDOMElement)(creationdata.getNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)), (Map<VpeTemplate,ModifyInfo>)creationdata.getData());
 	}
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name, String value) {

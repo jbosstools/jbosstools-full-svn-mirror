@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.editor.template;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.w3c.dom.Node;
 
@@ -58,5 +59,17 @@ public class VpeChildrenInfo {
 			sourceChildren = new ArrayList<Node> ();
 		}
 		return sourceChildren;
+	}
+	/**
+	 * Creates a copy of element for vpe cash.
+	 * We should clone nsI* elements and copy all others
+	 * added by Max Aresahkau
+	 */
+	public VpeChildrenInfo createCashCopy(){
+		
+		VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualParent!=null?(nsIDOMElement)(XmlUtil.createClone(this.visualParent)).
+															queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID):null);
+		childrenInfo.sourceChildren=this.sourceChildren;
+		return childrenInfo;
 	}
 }
