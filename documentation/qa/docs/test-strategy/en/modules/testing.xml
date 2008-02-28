@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="testing">
+	<title>Testing</title>
+	<para>TBD</para>
+	&testing-areas;
+	&testing-techniques;
+	&testing-methodology;
+</chapter>

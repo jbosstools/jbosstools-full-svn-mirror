@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="setup">
+	<title>Setup Testing</title>
+	<para>TBD</para>
+	&setup-prerequisites;
+	&setup-hardware;
+	&setup-software;
+ 	&setup-team;
+</chapter>
