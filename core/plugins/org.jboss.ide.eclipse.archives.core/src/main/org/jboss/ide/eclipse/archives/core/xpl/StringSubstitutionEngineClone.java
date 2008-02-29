@@ -20,7 +20,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
-import org.jboss.ide.eclipse.archives.core.ArchivesCorePlugin;
 import org.jboss.ide.eclipse.archives.core.model.IVariableManager;
 
 /**
@@ -251,7 +250,7 @@ public class StringSubstitutionEngineClone {
 		}
 		if( !manager.containsVariable(name)) {
 			if( reportUndefinedVariables )
-				throw new CoreException(new Status(IStatus.ERROR, ArchivesCorePlugin.PLUGIN_ID, "Variable " + name + " undefined")); 
+				throw new CoreException(new Status(IStatus.ERROR, ArchivesCore.PLUGIN_ID, "Variable " + name + " undefined")); 
 			return getOriginalVarText(var);
 		}
 		
