@@ -385,18 +385,18 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    VpeCreationData creationData = null;
 	    // FIX FOR JBIDE-1568, added by Max Areshkau
 	    try {
-	    	if(getPageContext().isCreationDataExistInCash(sourceNode)) {
+//	    	if(getPageContext().isCreationDataExistInCash(sourceNode)) {
 	    		
-	    		creationData = getPageContext().getVpeCreationDataFromCash(sourceNode).createHashCopy();
-	    	} else {
+//	    		creationData = getPageContext().getVpeCreationDataFromCash(sourceNode).createHashCopy();
+//	    	} else {
 	    		creationData = template.create(getPageContext(), sourceNode,
 	    									getVisualDocument());
-	    		if(creationData.getNode()!=null) {
-	    			
-	    		getPageContext().addCreationDataToCash(sourceNode, creationData.createHashCopy());
-	    		
-	    		}
-	    	}
+//	    		if(creationData.getNode()!=null) {
+//	    			
+//	    		getPageContext().addCreationDataToCash(sourceNode, creationData.createHashCopy());
+//	    		
+//	    		}
+//	    	}
 	    } catch (XPCOMException ex) {
 		VpePlugin.getPluginLog().logError(ex);
 		VpeTemplate defTemplate = templateManager.getDefTemplate();
