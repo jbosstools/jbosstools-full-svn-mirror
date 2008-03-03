@@ -22,7 +22,6 @@
 package org.jboss.ide.eclipse.archives.core.model.internal.xb;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,7 +40,9 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
 import org.jboss.xb.binding.JBossXBException;
+import org.jboss.xb.binding.JBossXBRuntimeException;
 import org.jboss.xb.binding.XercesXsMarshaller;
+import org.jboss.xb.binding.sunday.unmarshalling.DefaultSchemaResolver;
 import org.jboss.xb.binding.sunday.unmarshalling.SchemaBinding;
 import org.jboss.xb.binding.sunday.unmarshalling.XsdBinder;
 import org.xml.sax.SAXException;
@@ -166,7 +167,7 @@ public class XMLBinding {
 					stream = schema.openStream();
 					monitor.worked(1);
 					
-					XercesXsMarshaller marshaller = new XercesXsMarshaller();
+					StrictXercesXSMarshaller marshaller = new StrictXercesXSMarshaller();
 					marshaller.marshal(new InputStreamReader(stream), new XbPackagesObjectProvider(), element, writer);
 					monitor.worked(1);
 				} catch (IOException e) {
@@ -175,7 +176,7 @@ public class XMLBinding {
 					f = e;
 				} catch (ParserConfigurationException e) {
 					f = e;
-				} catch (Exception e ) {
+				} catch (JBossXBRuntimeException e ) {
 					f = e;
 				} finally {
 					if( stream != null ) {

@@ -37,7 +37,6 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeDeltaImpl.NodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackageNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackageNodeWithProperties;
-import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 
 /**
  * Abstract superclass implementation for archive node types
