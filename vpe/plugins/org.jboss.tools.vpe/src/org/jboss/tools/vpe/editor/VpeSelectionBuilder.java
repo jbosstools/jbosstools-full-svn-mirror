@@ -1158,10 +1158,20 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 
 		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
 		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
-		if (visualNode != null && visualNode.getNodeType() == Node.ELEMENT_NODE &&
-				(HTML.TAG_INPUT.equalsIgnoreCase(visualNode.getNodeName()) || HTML.TAG_BUTTON.equalsIgnoreCase(visualNode.getNodeName()) || HTML.TAG_SELECT.equalsIgnoreCase(visualNode.getNodeName())) &&
-				!selection.containsNode(visualNode, false) && visualBuilder.canInnerDrag((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))) { 
-			return (nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+		//FIX FOR JBIDE-1468 added by Sergey Dzmitrovich
+		if (visualNode != null
+				&& visualNode.getNodeType() == Node.ELEMENT_NODE
+				&& (HTML.TAG_INPUT.equalsIgnoreCase(visualNode.getNodeName())
+						|| HTML.TAG_OPTION.equalsIgnoreCase(visualNode
+								.getNodeName())
+						|| HTML.TAG_BUTTON.equalsIgnoreCase(visualNode
+								.getNodeName()) || HTML.TAG_SELECT
+						.equalsIgnoreCase(visualNode.getNodeName()))
+				/*&& !selection.containsNode(visualNode, false)*/
+				&& visualBuilder.canInnerDrag((nsIDOMElement) visualNode
+						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))) {
+			return (nsIDOMElement) visualNode
+					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 		}
 		return null;
 	}
