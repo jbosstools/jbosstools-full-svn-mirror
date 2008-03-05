@@ -41,8 +41,6 @@ import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
 import org.jboss.xb.binding.JBossXBException;
 import org.jboss.xb.binding.JBossXBRuntimeException;
-import org.jboss.xb.binding.XercesXsMarshaller;
-import org.jboss.xb.binding.sunday.unmarshalling.DefaultSchemaResolver;
 import org.jboss.xb.binding.sunday.unmarshalling.SchemaBinding;
 import org.jboss.xb.binding.sunday.unmarshalling.XsdBinder;
 import org.xml.sax.SAXException;
