@@ -1252,9 +1252,26 @@
 	</vpe:tag>
 
 	<vpe:tag name="img" case-sensitive="no">
+		<!-- in this case the tag is a facelets's tag -->
+		<vpe:if test="attrpresent('jsfc')" >
+			<vpe:template children="no" modify="no">
+				<vpe:copy
+						attrs="style,class,width,height,border,hspace,vspace">
+					<vpe:attribute name="src" value="{src(@value)}" />
+				</vpe:copy>
+				<vpe:resize>
+					<vpe:width width-attr="style.width" />
+					<vpe:height height-attr="style.height" />
+				</vpe:resize>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+			</vpe:template>
+		</vpe:if>
+		<!-- default template -->
 		<vpe:template children="no" modify="no">
 			<vpe:copy
-				attrs="style,class,width,height,border,hspace,vspace">
+					attrs="style,class,width,height,border,hspace,vspace">
 				<vpe:attribute name="src" value="{src(@src)}" />
 			</vpe:copy>
 			<vpe:resize>

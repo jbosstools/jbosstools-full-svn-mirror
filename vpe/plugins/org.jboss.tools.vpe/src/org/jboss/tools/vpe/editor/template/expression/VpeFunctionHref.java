@@ -22,7 +22,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeFunctionHref extends VpeFunctionSrc {
     protected String getUnresolved() {
-	    return "";
+	    return ""; //$NON-NLS-1$
     }
 
     String[] getSignatures() {
@@ -30,34 +30,48 @@ public class VpeFunctionHref extends VpeFunctionSrc {
 	}
 
     public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
-		String tagValue = getParameter(0).exec(pageContext, sourceNode).stringValue();
+	String tagValue = getParameter(0).exec(pageContext, sourceNode).stringValue();
 
-		IPath tagPath = new Path(tagValue);
-		if (tagPath.isEmpty()) return new VpeValue(getUnresolved());
-
-		String device = (tagPath.getDevice()==null?tagPath.segment(0):tagPath.getDevice());
-		if (device != null && 
-		        ("http:".equalsIgnoreCase(device) || "file:".equalsIgnoreCase(device))) return new VpeValue(tagValue);
-
-		File locFile = tagPath.toFile();
-		if (locFile.exists()) return new VpeValue(getPrefix() + locFile.getAbsolutePath()); 
-
-		IEditorInput input = pageContext.getEditPart().getEditorInput();
-	    IPath inputPath = getInputParentPath(input);
-		IPath imgPath = null;
-		if (input instanceof ILocationProvider) {
-		    imgPath = inputPath.append(tagValue); 
-		} else {
-			IPath basePath = tagPath.isAbsolute() ? getRootPath(input) : inputPath;
-		    if (basePath != null) {
-		        imgPath = basePath.append(tagPath);
-		    }
-		}
-
-		if (imgPath != null && imgPath.toFile().exists()) { 
-		    return new VpeValue(getPrefix() + imgPath.toOSString());
-		}
-
-		return new VpeValue(getUnresolved());
+	tagValue = resolveEL(tagValue);
+	
+	IPath tagPath = new Path(tagValue);
+	if (tagPath.isEmpty()) {
+	    return new VpeValue(getUnresolved());
 	}
+
+	String device = tagPath.getDevice() == null
+			? tagPath.segment(0)
+			: tagPath.getDevice();
+
+	if (device != null
+		&& ("http:".equalsIgnoreCase(device) //$NON-NLS-1$
+			|| "file:".equalsIgnoreCase(device))) { //$NON-NLS-1$
+	    return new VpeValue(tagValue);
+	}
+
+	File locFile = tagPath.toFile();
+	if (locFile.exists()) {
+	    return new VpeValue(getPrefix() + locFile.getAbsolutePath());
+	}
+
+	IEditorInput input = pageContext.getEditPart().getEditorInput();
+	IPath inputPath = getInputParentPath(input);
+	IPath imgPath = null;
+	if (input instanceof ILocationProvider) {
+	    imgPath = inputPath.append(tagValue);
+	} else {
+	    IPath basePath = tagPath.isAbsolute()
+	    		? getRootPath(input)
+	    		: inputPath;
+	    if (basePath != null) {
+		imgPath = basePath.append(tagPath);
+	    }
+	}
+
+	if (imgPath != null && imgPath.toFile().exists()) {
+	    return new VpeValue(getPrefix() + imgPath.toOSString());
+	}
+
+	return new VpeValue(getUnresolved());
+    }
 }

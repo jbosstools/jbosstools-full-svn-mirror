@@ -38,12 +38,15 @@ import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
 import org.w3c.dom.Node;
 
 public class VpeFunctionSrc extends VpeFunction {
-    static final String IMG_UNRESOLVED = "unresolved.gif";
-    static final String IMG_PREFIX = "file:///";
+    static final String IMG_UNRESOLVED = "unresolved.gif"; //$NON-NLS-1$
+    static final String IMG_PREFIX = "file:///"; //$NON-NLS-1$
 
     public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
 	String tagValue = getParameter(0).exec(pageContext, sourceNode)
 		.stringValue();
+	
+	tagValue = resolveEL(tagValue);
+	
 	IFile iFile = VpeCreatorUtil.getFile(tagValue, pageContext);
 	if (iFile != null) {
 	    return new VpeValue(getPrefix()+iFile.getLocation().toString());
@@ -52,7 +55,7 @@ public class VpeFunctionSrc extends VpeFunction {
 
 	// decode string from utf
 	try {
-	    tagValue = URLDecoder.decode(tagValue, "UTF-8");
+	    tagValue = URLDecoder.decode(tagValue, "UTF-8"); //$NON-NLS-1$
 	} catch (UnsupportedEncodingException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -65,8 +68,8 @@ public class VpeFunctionSrc extends VpeFunction {
 	String device = (tagPath.getDevice() == null ? tagPath.segment(0)
 		: tagPath.getDevice());
 	if (device != null
-		&& ("http:".equalsIgnoreCase(device) || "file:"
-			.equalsIgnoreCase(device)))
+		&& ("http:".equalsIgnoreCase(device) //$NON-NLS-1$
+			|| "file:".equalsIgnoreCase(device))) //$NON-NLS-1$
 	    return new VpeValue(tagValue);
 
 	File locFile = tagPath.toFile();
@@ -96,7 +99,7 @@ public class VpeFunctionSrc extends VpeFunction {
 
 	    if (null != file) {
 		ResourceReference resourceReference = null;
-		if ("/".equals(tagValue.substring(0, 1))) {
+		if ("/".equals(tagValue.substring(0, 1))) { //$NON-NLS-1$
 		    resourceReference = pageContext
 			    .getRuntimeAbsoluteFolder(file);
 		    tagValue = tagValue.substring(1);
@@ -179,38 +182,54 @@ public class VpeFunctionSrc extends VpeFunction {
 	    String tagValue) {
 	String attrName = null;
 	if (getParameter(0) instanceof VpeAttributeOperand) {
-	    attrName = ((VpeAttributeOperand) getParameter(0))
-		    .getAttributeName();
+	    attrName = ((VpeAttributeOperand) getParameter(0)).getAttributeName();
 	}
-	String query = (attrName == null) ? null : "/"
-		+ sourceNode.getNodeName() + "@" + attrName;
+	
+	String query = attrName == null
+			? null
+			: "/" + sourceNode.getNodeName() + "@" + attrName; //$NON-NLS-1$  //$NON-NLS-2$
 
-	IDocument document = pageContext.getSourceBuilder()
-		.getStructuredTextViewer().getDocument();
-	if (document == null || query == null)
+	IDocument document = pageContext.getSourceBuilder().getStructuredTextViewer().getDocument();
+	if (document == null || query == null) {
 	    return tagValue;
+	}
+	
 	WtpKbConnector connector = pageContext.getConnector();
 	try {
-	    AttributeDescriptor descriptor = connector
-		    .getAttributeInformation(query);
-	    if (descriptor == null)
+	    AttributeDescriptor descriptor = connector.getAttributeInformation(query);
+	    if (descriptor == null) {
 		return tagValue;
+	    }
+	    
 	    AttributeValueDescriptor[] ds = descriptor.getValueDesriptors();
 	    for (int i = 0; i < ds.length; i++) {
-		if (!"file".equals(ds[i].getType()))
+		if (!"file".equals(ds[i].getType())) {//$NON-NLS-1$
 		    continue;
+		}
+		
 		ParamList params = ds[i].getParams();
-		String[] vs = params
-			.getParamsValues(IFilePathEncoder.PATH_ADDITION);
-		if (vs == null || vs.length == 0)
+		String[] vs = params.getParamsValues(IFilePathEncoder.PATH_ADDITION);
+		if (vs == null || vs.length == 0) {
 		    continue;
-		if (tagValue.startsWith(vs[0]))
+		}
+		
+		if (tagValue.startsWith(vs[0])) {
 		    tagValue = tagValue.substring(vs[0].length());
+		}
 	    }
 	} catch (Exception e) {
 	    VpePlugin.getPluginLog().logError(e);
 	}
+	
 	return tagValue;
     }
 
+    /*
+     * temporary solution to solve #{facesContext.externalContext.requestContextPath}
+     */
+    protected String resolveEL(String value) {
+	String resolvedValue = value.replaceFirst("^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", ""); //$NON-NLS-1$ //$NON-NLS-2$
+	
+	return resolvedValue;
+    }
 }
