@@ -31,18 +31,15 @@ public class XbProperties extends XbPackageNode {
 
 	private PropertiesExt properties;
 	
-	public XbProperties ()
-	{
+	public XbProperties () {
 		super();
 		this.properties = new PropertiesExt();
 	}
 	
-	public XbProperties (XbProperties props)
-	{
+	public XbProperties (XbProperties props) {
 		super(props);
 		this.properties = new PropertiesExt();
-		for (Iterator iter = getChildren(XbProperty.class).iterator(); iter.hasNext(); )
-		{
+		for (Iterator iter = getChildren(XbProperty.class).iterator(); iter.hasNext(); ) {
 			XbProperty element = (XbProperty) iter.next();
 			addProperty(element);
 		}
@@ -56,21 +53,29 @@ public class XbProperties extends XbPackageNode {
 		private static final long serialVersionUID = 1L;
 		private Hashtable propertyElements;
 		
-		public PropertiesExt ()
-		{
+		public PropertiesExt () {
 			propertyElements = new Hashtable();
 		}
 		
+		/**
+		 * Will map String key -> XbProperty element(key,value) in the local structure
+		 * and map String key -> String value in the superclass
+		 * 
+		 * @return The String value held previously
+		 */
 		public synchronized Object put(Object key, Object value) {
-			if (!propertyElements.containsKey(key))
-			{
+			if( key == null )
+				throw new NullPointerException("Key is null in " + getClass().getName());
+			
+			if( value == null )
+				throw new NullPointerException("Value is null in " + getClass().getName());
+				
+			if (!propertyElements.containsKey(key)) {
 				XbProperty element = new XbProperty();
 				element.setName((String)key);
 				element.setValue((String)value);
 				propertyElements.put(key, element);
-
-			}
-			else {
+			} else {
 				XbProperty element = (XbProperty)propertyElements.get(key);
 				element.setValue((String)value);
 			}
@@ -80,28 +85,23 @@ public class XbProperties extends XbPackageNode {
 		
 		public synchronized Object remove(Object key) {
 			propertyElements.remove(key);
-			
 			return super.remove(key);
 		}
 		
-		public Collection getPropertyElements ()
-		{
+		public Collection getPropertyElements () {
 			return propertyElements.values();
 		}
 	}
 		
-	public PropertiesExt getProperties ()
-	{
+	public PropertiesExt getProperties () {
 		return properties;
 	}
 	
-	public void addProperty (Object property)
-	{
+	public void addProperty (Object property) {
 		addProperty((XbProperty)property);
 	}
 	
-	public void addProperty (XbProperty property)
-	{
+	public void addProperty (XbProperty property) {
 		properties.setProperty(property.getName(), property.getValue());
 		addChild(property);
 	}
