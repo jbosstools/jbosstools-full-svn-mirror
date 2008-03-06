@@ -7,9 +7,9 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.tools</groupId>
-  <artifactId>jboss-tools-test-plan-${translation}</artifactId>
+  <artifactId>jboss-tools-test-strategy-${translation}</artifactId>
   <packaging>jdocbook</packaging>
-  <name>JBossTools-Test-Plan-(${translation})</name>
+  <name>JBossTools-Test-Strategy-${translation})</name>
   <version>1.0-SNAPSHOT</version>
   <dependencies>
     <dependency>
