@@ -4,7 +4,7 @@
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
-* This is free software; you can redistribute it and/or modify it
+ * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation; either version 2.1 of
  * the License, or (at your option) any later version.
@@ -32,8 +32,12 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbAction;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFileSet;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFolder;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbProperty;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding.XbException;
 import org.jboss.ide.eclipse.archives.test.ArchivesTest;
 import org.jboss.ide.eclipse.archives.test.util.FileIOUtil;
@@ -41,7 +45,7 @@ import org.osgi.framework.Bundle;
 
 /**
  * @author rob.stryker <rob.stryker@redhat.com>
- *
+ * 
  */
 public class MarshallTest extends TestCase {
 	private Bundle bundle;
@@ -97,11 +101,8 @@ public class MarshallTest extends TestCase {
 		}
 	}
 	
-	public void testWriteFailingPackage() {
+	protected void write(XbPackages packs, boolean shouldPass) {
 		XbException e = null;
-		XbPackages packs = new XbPackages();
-		XbPackage pack = new XbPackage();
-		packs.addChild(pack);
 		try {
 			IPath out = outputs.append("test.xml");
 			XMLBinding.marshallToFile(packs, out, new NullProgressMonitor());
@@ -110,9 +111,137 @@ public class MarshallTest extends TestCase {
 		}catch( XbException xbe ) {
 			e = xbe;
 		} finally {
-			if( e == null ) {
+			if( e == null && !shouldPass) {
 				fail("Incomplete Model saved when it should not have been.");
 			}
+			if( e != null && shouldPass) {
+				fail("Model failed to save when it should have saved. " + e.getMessage());
+			}
 		}
+	}
+	
+	protected void writePackage(String name, String toDir, boolean shouldPass) {
+		XbException e = null;
+		XbPackages packs = new XbPackages();
+		XbPackage pack = new XbPackage();
+		pack.setName(name);
+		pack.setToDir(toDir);
+		packs.addChild(pack);
+		write(packs, shouldPass);
+	}
+	
+	public void testWritePackageSuccess() {
+		writePackage("someName", "someFile.jar", true);
+	}
+	public void testWritePackageMissingName() {
+		writePackage(null, "someFile.jar", false);
+	}
+
+	public void testWritePackageMissingDir() {
+		writePackage("someName", null, false);
+	}
+
+	protected void writeProperties(String name, String value, boolean shouldPass) {
+		XbPackages packs = new XbPackages();
+		XbPackage pack = new XbPackage();
+		pack.setName("test");
+		pack.setToDir("test2");
+		XbProperty property = new XbProperty();
+
+		try {
+			property.setName(name);
+			property.setValue(value);
+			pack.getProperties().addProperty(property);
+		} catch( NullPointerException npe ) {
+			if( shouldPass ) 
+				fail("Model failed to save when it should have saved. - " + npe.getMessage());
+			return; // success
+		}
+		
+		packs.addChild(pack);
+		write(packs, shouldPass);
+	}
+
+	public void testWritePropertiesSuccess() {
+		writeProperties("name", "val", true); 
+	}
+	
+	public void testWritePropertiesMissingName() {
+		writeProperties(null, "val", false);
+	}
+	
+	public void testWritePropertiesMissingValue() {
+		writeProperties("name", null, false);
+	}
+	
+	public void writeFolder(String name, boolean shouldPass) {
+		XbPackages packs = new XbPackages();
+		XbPackage pack = new XbPackage();
+		pack.setName("name");
+		pack.setToDir("todir");
+		packs.addChild(pack);
+		XbFolder folder = new XbFolder();
+		folder.setName(name);
+		pack.addChild(folder);
+		write(packs, shouldPass);
+	}
+	
+	public void testWriteFolderSuccess() {
+		writeFolder("someFolder", true);
+	}
+		
+	public void testWriteFolderMissingName() {
+		writeFolder(null, false);
+	}
+		
+	public void writeFileset(String dir, String includes, boolean shouldSucceed) {
+		XbPackages packs = new XbPackages();
+		XbPackage pack = new XbPackage();
+		pack.setName("name");
+		pack.setToDir("todir");
+		packs.addChild(pack);
+		XbFileSet fs = new XbFileSet();
+		fs.setDir(dir);
+		fs.setIncludes(includes);
+		pack.addChild(fs);
+		write(packs, shouldSucceed);
+	}
+	
+	public void testWriteFilesetSuccess() {
+		writeFileset("folder", "includes", true);
+	}
+	
+	public void testWriteFilesetMissingFolder() {
+		writeFileset(null, "includes", false);
+	}
+	
+	public void testWriteFilesetMissingIncludes() {
+		writeFileset("path", null, false);
+	}
+	
+	
+	protected void writeAction(String time, String type, boolean shouldSucceed) {
+		XbPackages packs = new XbPackages();
+		XbPackage pack = new XbPackage();
+		pack.setName("name");
+		pack.setToDir("todir");
+		packs.addChild(pack);
+		XbAction act = new XbAction();
+		act.setTime(time);
+		act.setType(type);
+		pack.addChild(act);
+		write(packs, shouldSucceed);
+	}
+	
+	public void testWriteActionSuccess() {
+		writeAction("preBuild", "ant", true);
+	}
+	
+	public void testWriteActionMissingTime() {
+		writeAction(null, "ant", false);
+	}
+	
+	public void testWriteActionMissingType() {
+		writeAction("preBuild", null, false);
 	}
 }
