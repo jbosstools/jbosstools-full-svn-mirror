@@ -34,8 +34,8 @@ public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelNo
 	private IPath project;
 	private IArchiveModelListenerManager manager;
 	
-	public ArchiveModelNode(IPath project, 
-			XbPackageNodeWithProperties node, IArchiveModelListenerManager manager) {
+	public ArchiveModelNode(IPath project, XbPackages node, 
+			IArchiveModelListenerManager manager) {
 		super(node);
 		this.project = project;
 		this.manager = manager;
@@ -48,6 +48,7 @@ public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelNo
 	public IArchiveModelListenerManager getManager() {
 		return manager;
 	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeImpl#getProject()
