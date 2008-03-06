@@ -153,7 +153,7 @@ public interface IArchiveNode {
 	public IArchiveModelNode getModel();
 	
 	/**
-	 * Is the root of this node a PackageModelNode and registered in PackagesModel?
+	 * Is the root of this node a PackageModelNode and registered in ArchivesModel?
 	 * @return
 	 */
 	public boolean connectedToModel();
