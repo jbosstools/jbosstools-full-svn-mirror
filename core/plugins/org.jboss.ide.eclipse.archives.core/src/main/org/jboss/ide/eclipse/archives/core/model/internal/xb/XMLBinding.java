@@ -214,7 +214,7 @@ public class XMLBinding {
 			return parent;
 		}
 		public String getMessage() {
-			return parent.getCause() == null ? null : parent.getCause().getMessage();
+			return parent.getCause() == null ? parent.getMessage() : parent.getCause().getMessage();
 		}
 	}
 }
