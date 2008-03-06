@@ -68,7 +68,7 @@ public class EventManager {
 	}
 
 	public static void startedBuildingArchive(IArchive archive) {
-		IArchiveBuildListener[] listeners = getBuildListeners();
+		IArchiveBuildListener[] listeners = getBuildListeners(archive);
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].startedBuildingArchive(archive);
@@ -77,7 +77,7 @@ public class EventManager {
 	}
 
 	public static void finishedBuildingArchive(IArchive archive) {
-		IArchiveBuildListener[] listeners = getBuildListeners();
+		IArchiveBuildListener[] listeners = getBuildListeners(archive);
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].finishedBuildingArchive(archive);
@@ -88,7 +88,7 @@ public class EventManager {
 	
 	
 	public static void startedCollectingFileSet(IArchiveFileSet fileset) {
-		IArchiveBuildListener[] listeners = getBuildListeners();
+		IArchiveBuildListener[] listeners = getBuildListeners(fileset);
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].startedCollectingFileSet(fileset);
@@ -96,7 +96,7 @@ public class EventManager {
 		}
 	}
 	public static void finishedCollectingFileSet(IArchiveFileSet fileset) {
-		IArchiveBuildListener[] listeners = getBuildListeners();
+		IArchiveBuildListener[] listeners = getBuildListeners(fileset);
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].finishedCollectingFileSet(fileset);
@@ -119,7 +119,7 @@ public class EventManager {
 	}
 	
 	public static void fileUpdated(IArchive topLevelArchive, IArchiveFileSet fileset, IPath filePath) {
-		IArchiveBuildListener[] listeners = getBuildListeners();
+		IArchiveBuildListener[] listeners = getBuildListeners(topLevelArchive);
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].fileUpdated(topLevelArchive, fileset, filePath);
@@ -128,7 +128,7 @@ public class EventManager {
 	}
 
 	public static void fileRemoved(IArchive topLevelArchive, IArchiveFileSet fileset, IPath filePath) {
-		IArchiveBuildListener[] listeners = getBuildListeners();
+		IArchiveBuildListener[] listeners = getBuildListeners(topLevelArchive);
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].fileRemoved(topLevelArchive, fileset, filePath);
@@ -150,7 +150,7 @@ public class EventManager {
 	}
 
 	public static void buildFailed(IArchive pkg, IStatus status) {
-		IArchiveBuildListener[] listeners = getBuildListeners();
+		IArchiveBuildListener[] listeners = getBuildListeners(pkg);
 		for( int i = 0; i < listeners.length; i++ ) {
 			try {
 				listeners[i].buildFailed(pkg, status);
