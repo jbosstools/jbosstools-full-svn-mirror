@@ -70,10 +70,9 @@ public class XbPackagesObjectProvider implements GenericObjectModelProvider {
 	}
 	
 	
-	public Object getAttributeValue(Object object, MarshallingContext context, String namespaceURI, String localName)
-	{
-		if (object instanceof XbPackage)
-		{
+	public Object getAttributeValue(Object object, MarshallingContext context,
+			String namespaceURI, String localName) {
+		if (object instanceof XbPackage) {
 			XbPackage pkg = (XbPackage)object;
 			if("id".equals(localName))
 				return pkg.getId();
@@ -88,14 +87,12 @@ public class XbPackagesObjectProvider implements GenericObjectModelProvider {
 			else if ("inWorkspace".equals(localName))
 				return ""+pkg.isInWorkspace();
 		}
-		else if (object instanceof XbFolder)
-		{
+		else if (object instanceof XbFolder) {
 			XbFolder folder = (XbFolder) object;
 			if ("name".equals(localName))
 				return folder.getName();
 		}
-		else if (object instanceof XbFileSet)
-		{
+		else if (object instanceof XbFileSet) {
 			XbFileSet fileset = (XbFileSet)object;
 			if ("dir".equals(localName))
 				return fileset.getDir();
@@ -106,19 +103,25 @@ public class XbPackagesObjectProvider implements GenericObjectModelProvider {
 			else if ("inWorkspace".equals(localName))
 				return "" + fileset.isInWorkspace();
 			else if("flatten".equals(localName))
-				return "" + fileset.isFlattened();
+				return new Boolean(fileset.isFlattened()).toString();
 		}
-		else if (object instanceof XbProperty)
-		{
+		else if (object instanceof XbProperty) {
 			XbProperty prop = (XbProperty) object;
 			if ("name".equals(localName))
 				return prop.getName();
 			else if ("value".equals(localName))
 				return prop.getValue();
+		} else if( object instanceof XbAction ) {
+			XbAction action = (XbAction)object;
+			if("time".equals(localName))
+				return action.getTime();
+			if("type".equals(localName))
+				return action.getType();
 		}
 		return null;
 	}
 	
+	// do not care ;) 
 	public Object getElementValue(Object object, MarshallingContext context, String namespaceURI, String localName) {
 		return null;
 	}
