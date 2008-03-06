@@ -32,21 +32,13 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
-import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFileSetImpl;
-import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFolderImpl;
-import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
-import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding;
-import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFileSet;
-import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFolder;
-import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
-import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackageNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding.XbException;
+import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 
 /**
  * The root model which keeps track of registered projects
@@ -253,7 +245,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 			ArchiveModelNode oldRoot = archivesRoot.get(project);
 			xbPackages.put(project, packages);
 			archivesRoot.put(project, root);
-			createPackageNodeImpl(project, packages, null);
+			ModelUtil.createPackagesNodeImpl(project, packages, (ArchiveModelNode)getRoot(project));
 			root.clearDeltas();
 			fireRegisterProjectEvent(oldRoot, root);
 			monitor.worked(1);
@@ -284,40 +276,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		EventManager.fireDelta(delta);
 	}
 	
-	public ArchiveNodeImpl createPackageNodeImpl (IPath project, XbPackageNode node, IArchiveNode parent) {
-		
-		if( node instanceof XbPackages ) {
-			ArchiveModelNode impl = (ArchiveModelNode)getRoot(project);
-			for (Iterator iter = node.getAllChildren().iterator(); iter.hasNext(); ) {
-				XbPackageNode child = (XbPackageNode) iter.next();
-				ArchiveNodeImpl childImpl = createPackageNodeImpl(project, child, impl);
-				if (impl != null && childImpl != null) {
-					impl.addChild(childImpl, false);
-				}
-			}
-			return null;
-		}
-		
-		ArchiveNodeImpl nodeImpl = null;
-		if (node instanceof XbPackage) {
-			nodeImpl = new ArchiveImpl((XbPackage)node);
-		} else if (node instanceof XbFolder) {
-			nodeImpl = new ArchiveFolderImpl((XbFolder)node);
-		} else if (node instanceof XbFileSet) {
-			nodeImpl = new ArchiveFileSetImpl((XbFileSet)node);
-		}
-		
-		for (Iterator iter = node.getAllChildren().iterator(); iter.hasNext(); ) {
-			XbPackageNode child = (XbPackageNode) iter.next();
-			ArchiveNodeImpl childImpl = createPackageNodeImpl(project, child, nodeImpl);
-			if (nodeImpl != null && childImpl != null) {
-				nodeImpl.addChild(childImpl, false);
-			}
-		}
-		
-		return nodeImpl;
-	}
-	
+
 	public void saveModel (IPath project, IProgressMonitor monitor) {
 		// get a list of dirty nodes
 		
@@ -346,7 +305,8 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		// fire delta events
 		EventManager.fireDelta(delta);
 	}
-	
+
+	// TODO: This requires massive help and new API's as well. 
 	public void attach(IArchiveNode parent, IArchiveNode child, IProgressMonitor monitor) {
 		parent.addChild(child);
 		if( parent.connectedToModel() && parent.getProjectPath() != null) {

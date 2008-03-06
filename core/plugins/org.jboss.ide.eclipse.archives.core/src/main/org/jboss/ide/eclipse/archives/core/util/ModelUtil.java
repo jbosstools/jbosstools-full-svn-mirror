@@ -24,6 +24,7 @@ package org.jboss.ide.eclipse.archives.core.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 
 import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
@@ -31,9 +32,20 @@ import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
+import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFileSetImpl;
+import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFolderImpl;
+import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
+import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeImpl;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbAction;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFileSet;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFolder;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackageNode;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 
 /**
  * Utility class for matching model elements and stuff
@@ -209,4 +221,41 @@ public class ModelUtil {
 		if( projectPath == null ) return null;
 		return projectPath.append(workspacePath.removeFirstSegments(1));
 	}
+	
+	public static ArchiveNodeImpl createPackagesNodeImpl (IPath project, XbPackages node, IArchiveModelNode modelNode) { 
+		for (Iterator iter = node.getAllChildren().iterator(); iter.hasNext(); ) {
+			XbPackageNode child = (XbPackageNode) iter.next();
+			ArchiveNodeImpl childImpl = (ArchiveNodeImpl)createPackageNodeImpl(child, modelNode);
+			if (modelNode != null && childImpl != null) {
+				if( modelNode instanceof ArchiveNodeImpl )
+					((ArchiveNodeImpl)modelNode).addChild(childImpl, false);
+				else
+					modelNode.addChild(childImpl);
+			}
+		}
+		return null;
+	}
+
+	protected static IArchiveNode createPackageNodeImpl (XbPackageNode node, IArchiveNode parent) {
+		ArchiveNodeImpl nodeImpl = null;
+		if (node instanceof XbPackage) {
+			nodeImpl = new ArchiveImpl((XbPackage)node);
+		} else if (node instanceof XbFolder) {
+			nodeImpl = new ArchiveFolderImpl((XbFolder)node);
+		} else if (node instanceof XbFileSet) {
+			nodeImpl = new ArchiveFileSetImpl((XbFileSet)node);
+		} else if( node instanceof XbAction ) {
+			nodeImpl = null; // TODO
+		}
+		
+		for (Iterator iter = node.getAllChildren().iterator(); iter.hasNext(); ) {
+			XbPackageNode child = (XbPackageNode) iter.next();
+			ArchiveNodeImpl childImpl = (ArchiveNodeImpl)createPackageNodeImpl(child, nodeImpl);
+			if (nodeImpl != null && childImpl != null) {
+				nodeImpl.addChild(childImpl, false);
+			}
+		}
+		return nodeImpl;
+	}
+	
 }
