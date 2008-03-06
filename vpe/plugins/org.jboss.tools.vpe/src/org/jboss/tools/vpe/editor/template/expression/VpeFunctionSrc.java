@@ -229,7 +229,7 @@ public class VpeFunctionSrc extends VpeFunction {
      * JBIDE-1410
      */
     protected String resolveEL(String value) {
-	String resolvedValue = value.replace("^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", ""); //$NON-NLS-1$ //$NON-NLS-2$
+	String resolvedValue = value.replaceFirst("^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", ""); //$NON-NLS-1$ //$NON-NLS-2$
 	
 	return resolvedValue;
     }
