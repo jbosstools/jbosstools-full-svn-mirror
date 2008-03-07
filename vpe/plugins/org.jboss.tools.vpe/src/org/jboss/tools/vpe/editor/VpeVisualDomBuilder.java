@@ -57,6 +57,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
+import org.jboss.tools.vpe.editor.template.ITemplateNodesManager;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
@@ -64,7 +65,6 @@ import org.jboss.tools.vpe.editor.template.VpeDefaultPseudoContentCreator;
 import org.jboss.tools.vpe.editor.template.VpeTagDescription;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
-import org.jboss.tools.vpe.editor.template.VpeTemplateNodesManager;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -205,6 +205,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	pageContext.installIncludeElements();
 	addChildren(null, sourceDocument, visualContentArea);
 	registerNodes(new VpeNodeMapping(sourceDocument, visualContentArea));
+	
     }
 
     public void rebuildDom(Document sourceDocument) {
@@ -433,12 +434,13 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		setReadOnlyElement(visualNewElement);
 	    }
 	    if (registerFlag) {
-		VpeElementMapping elementMapping = new VpeElementMapping(
-			(Element) sourceNode, visualNewElement, border,
-			template, ifDependencySet, creationData.getData());
-		// elementMapping.setXmlnsMap(xmlnsMap);
-		registerNodes(elementMapping);
-	    }
+				VpeElementMapping elementMapping = new VpeElementMapping(
+						(Element) sourceNode, visualNewElement, border,
+						template, ifDependencySet, creationData.getData(),
+						creationData.getElementData());
+				// elementMapping.setXmlnsMap(xmlnsMap);
+				registerNodes(elementMapping);
+			}
 	    if (template.isChildren()) {
 		List<?> childrenInfoList = creationData.getChildrenInfoList();
 		if (childrenInfoList == null) {
@@ -1140,7 +1142,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	return visualContentArea;
     }
 
-    void setSelectionRectangle(nsIDOMElement visualElement) {
+    public void setSelectionRectangle(nsIDOMElement visualElement) {
 	setSelectionRectangle(visualElement, true);
     }
 
@@ -1574,10 +1576,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			VpeTemplate template = ((VpeElementMapping) nodeMapping)
 					.getTemplate();
 			// if template implements VpeTemplateAttributesManager
-			if (template instanceof VpeTemplateNodesManager)
-				return ((VpeTemplateNodesManager) template).isNodeEditable(
+			if (template instanceof ITemplateNodesManager)
+				return ((ITemplateNodesManager) template).isNodeEditable(
 						pageContext, visualNode,
-						((VpeElementMapping) nodeMapping).getData());
+						((VpeElementMapping) nodeMapping).getElementData());
 
 		}
 		
@@ -1938,16 +1940,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	VpeElementMapping elementMapping = domMapping
 		.getNearElementMapping(sourceElement);
 	if (elementMapping != null) {
-			
-		if (elementMapping.getTemplate() instanceof VpeTemplateNodesManager) {
-				return (nsIDOMText) ((VpeTemplateNodesManager) elementMapping
-						.getTemplate()).getVisualNode(pageContext, attr,
-						elementMapping.getData());
-			}
-		
-	    return elementMapping.getTemplate().getOutputTextNode(pageContext,
-		    sourceElement, elementMapping.getData());
-	}
+
+			return elementMapping.getTemplate().getOutputTextNode(pageContext,
+					sourceElement, elementMapping.getData());
+		}
 	return null;
     }
 

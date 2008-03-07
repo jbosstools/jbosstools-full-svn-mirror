@@ -21,8 +21,11 @@ import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
+import org.jboss.tools.vpe.editor.template.ITemplateSelectionManager;
 import org.jboss.tools.vpe.editor.template.VpePseudoContentCreator;
+import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.util.TemplateManagingUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
@@ -69,6 +72,15 @@ public class VpeSelectionBuilder {
 	}
 	
 	public void setSelection(nsISelection selection) {
+		
+		VpeTemplate vpeTemplate = TemplateManagingUtil
+				.getTemplateByVisualSelection(visualBuilder.getPageContext());
+		if (vpeTemplate instanceof ITemplateSelectionManager) {
+			((ITemplateSelectionManager) vpeTemplate).setSelection(
+					visualBuilder.getPageContext(), selection);
+			return;
+		}
+		
 		if (selection.getIsCollapsed()) {
 			VisualSelectionInfo info = getVisualFocusSelectedInfo(selection);
 			if (info != null) {

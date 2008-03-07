@@ -15,32 +15,37 @@ import java.util.List;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.mapping.VpeAttributeData;
+import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
-import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
+import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
+import org.jboss.tools.vpe.editor.util.TemplateManagingUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMNode;
-import org.mozilla.interfaces.nsIDOMText;
 import org.mozilla.interfaces.nsISelection;
+import org.mozilla.interfaces.nsISelectionController;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
  * Abstract class to handle keyEvent.
  * 
- * Default implementation of {@link VpeTemplateKeyEventHandler}. In result of
- * work handleKeyPress() call one from handle* methods.
+ * Default implementation of ITemplateKeyEventHandler. In result of work
+ * handleKeyPress() call one from handle* methods.
  * 
  * You must override some handle* methods if you want change work of your
  * handler *
  * 
- * Default implementation of {@link VpeTemplateNodesManager}.
+ * Default implementation of ITemplateNodesManager.
  * 
  * @author Sergey Dzmitrovich
  * 
  */
 public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
-		implements VpeTemplateKeyEventHandler, VpeTemplateNodesManager {
+		implements ITemplateKeyEventHandler, ITemplateNodesManager,
+		ITemplateSelectionManager {
 
 	/**
 	 * name of "view" tag
@@ -141,8 +146,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 			nsIDOMKeyEvent keyEvent) {
 
 		// get selection
-		nsISelection selection = pageContext.getEditPart().getController()
-				.getXulRunnerEditor().getSelection();
+		nsISelection selection = getCurrentSelection(pageContext);
 
 		// get visual node which is focused
 		nsIDOMNode visualNode = selection.getFocusNode();
@@ -150,17 +154,17 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		VpeElementMapping elementMapping = getElmentMapping(pageContext,
 				visualNode);
 
-		if (elementMapping == null || elementMapping.getData() == null) {
+		if (elementMapping == null || elementMapping.getElementData() == null) {
 			return false;
 		}
 
-		Object data = elementMapping.getData();
+		VpeElementData elementData = elementMapping.getElementData();
 
 		// if node editable
-		if (isNodeEditable(pageContext, visualNode, data)) {
+		if (isNodeEditable(pageContext, visualNode, elementData)) {
 
 			// get source node
-			Node node = getSourceNode(pageContext, visualNode, data);
+			Node node = getSourceNode(pageContext, visualNode, elementData);
 
 			if (node == null)
 				return false;
@@ -201,7 +205,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 			node.setNodeValue(newValue);
 
 			// set selection
-			setSourceNodeSelection(pageContext, node, startOffset + 1, 0);
+			setSourceSelection(pageContext, node, startOffset + 1, 0);
 
 		}
 		return true;
@@ -237,8 +241,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	protected boolean handleRightDelete(VpePageContext pageContext,
 			nsIDOMKeyEvent keyEvent) {
 		// get selection
-		nsISelection selection = pageContext.getEditPart().getController()
-				.getXulRunnerEditor().getSelection();
+		nsISelection selection = getCurrentSelection(pageContext);
 
 		// get visual node which is focused
 		nsIDOMNode visualNode = selection.getFocusNode();
@@ -246,17 +249,17 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		VpeElementMapping elementMapping = getElmentMapping(pageContext,
 				visualNode);
 
-		if (elementMapping == null || elementMapping.getData() == null) {
+		if (elementMapping == null || elementMapping.getElementData() == null) {
 			return false;
 		}
 
-		Object data = elementMapping.getData();
+		VpeElementData elementData = elementMapping.getElementData();
 
 		// if node editable
-		if (isNodeEditable(pageContext, visualNode, data)) {
+		if (isNodeEditable(pageContext, visualNode, elementData)) {
 
 			// get source node
-			Node node = getSourceNode(pageContext, visualNode, data);
+			Node node = getSourceNode(pageContext, visualNode, elementData);
 
 			if (node == null)
 				return false;
@@ -301,7 +304,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 			node.setNodeValue(newValue);
 
 			// set new selection
-			setSourceNodeSelection(pageContext, node, startOffset, 0);
+			setSourceSelection(pageContext, node, startOffset, 0);
 
 		}
 
@@ -323,8 +326,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 			nsIDOMKeyEvent keyEvent) {
 
 		// get selection
-		nsISelection selection = pageContext.getEditPart().getController()
-				.getXulRunnerEditor().getSelection();
+		nsISelection selection = getCurrentSelection(pageContext);
 
 		// get visual node which is focused
 		nsIDOMNode visualNode = selection.getFocusNode();
@@ -333,17 +335,17 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		VpeElementMapping elementMapping = getElmentMapping(pageContext,
 				visualNode);
 
-		if (elementMapping == null || elementMapping.getData() == null) {
+		if (elementMapping == null || elementMapping.getElementData() == null) {
 			return false;
 		}
 
-		Object data = elementMapping.getData();
+		VpeElementData elementData = elementMapping.getElementData();
 
 		// if node editable
-		if (isNodeEditable(pageContext, visualNode, data)) {
+		if (isNodeEditable(pageContext, visualNode, elementData)) {
 
 			// get source node
-			Node node = getSourceNode(pageContext, visualNode, data);
+			Node node = getSourceNode(pageContext, visualNode, elementData);
 
 			if (node == null)
 				return false;
@@ -386,7 +388,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 			node.setNodeValue(newValue);
 
 			// set new selection
-			setSourceNodeSelection(pageContext, node, startOffset, 0);
+			setSourceSelection(pageContext, node, startOffset, 0);
 
 		}
 
@@ -456,8 +458,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 			nsIDOMKeyEvent keyEvent) {
 
 		// get selection
-		nsISelection selection = pageContext.getEditPart().getController()
-				.getXulRunnerEditor().getSelection();
+		nsISelection selection = getCurrentSelection(pageContext);
 
 		// get visual node which is focused
 		nsIDOMNode visualNode = selection.getFocusNode();
@@ -465,27 +466,28 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		VpeElementMapping elementMapping = getElmentMapping(pageContext,
 				visualNode);
 
-		if (elementMapping == null || elementMapping.getData() == null) {
+		if (elementMapping == null || elementMapping.getElementData() == null) {
 			return false;
 		}
 
-		Object data = elementMapping.getData();
+		VpeElementData elementData = elementMapping.getElementData();
+
+		// get source node
+		Node node = getSourceNode(pageContext, visualNode, elementData);
+
+		if (node == null)
+			return false;
+
+		// get focus and anchor offsets
+		int focusOffset = selection.getFocusOffset();
 
 		// if node editable
-		if (isNodeEditable(pageContext, visualNode, data)) {
-
-			// get source node
-			Node node = getSourceNode(pageContext, visualNode, data);
-
-			if (node == null)
-				return false;
-
-			// get focus and anchor offsets
-			int focusOffset = selection.getFocusOffset();
+		if (isNodeEditable(pageContext, visualNode, elementData)) {
 
 			if (focusOffset != node.getNodeValue().length()) {
-				setSourceNodeSelection(pageContext, node, focusOffset + 1, 0);
-			}
+				setSourceSelection(pageContext, node, focusOffset + 1, 0);
+			} else
+				setSourceSelection(pageContext, node, focusOffset, 0);
 		}
 		return true;
 
@@ -522,8 +524,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 			nsIDOMKeyEvent keyEvent) {
 
 		// get selection
-		nsISelection selection = pageContext.getEditPart().getController()
-				.getXulRunnerEditor().getSelection();
+		nsISelection selection = getCurrentSelection(pageContext);
 
 		// get visual node which is focused
 		nsIDOMNode visualNode = selection.getFocusNode();
@@ -531,17 +532,17 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		VpeElementMapping elementMapping = getElmentMapping(pageContext,
 				visualNode);
 
-		if (elementMapping == null || elementMapping.getData() == null) {
+		if (elementMapping == null || elementMapping.getElementData() == null) {
 			return false;
 		}
 
-		Object data = elementMapping.getData();
+		VpeElementData elementData = elementMapping.getElementData();
 
 		// if node editable
-		if (isNodeEditable(pageContext, visualNode, data)) {
+		if (isNodeEditable(pageContext, visualNode, elementData)) {
 
 			// get source node
-			Node node = getSourceNode(pageContext, visualNode, data);
+			Node node = getSourceNode(pageContext, visualNode, elementData);
 
 			if (node == null)
 				return false;
@@ -550,7 +551,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 			int focusOffset = selection.getFocusOffset();
 
 			if (focusOffset != 0) {
-				setSourceNodeSelection(pageContext, node, focusOffset - 1, 0);
+				setSourceSelection(pageContext, node, focusOffset - 1, 0);
 			}
 		}
 		return true;
@@ -569,7 +570,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	 */
 	protected boolean handleEnter(VpePageContext pageContext,
 			nsIDOMKeyEvent keyEvent) {
-		return false;
+		return true;
 	}
 
 	/*
@@ -577,63 +578,98 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	 * 
 	 * @see org.jboss.tools.vpe.editor.template.VpeTemplateNodesManager#getSourceNode(org.jboss.tools.vpe.editor.context.VpePageContext,
 	 *      org.mozilla.interfaces.nsIDOMNode)
-	 */public Node getSourceNode(VpePageContext pageContext,
-			nsIDOMNode visualNode, Object data) {
+	 */
+	public Node getSourceNode(VpePageContext pageContext,
+			nsIDOMNode visualNode, VpeElementData elementData) {
 
-		if ((data != null) && (data instanceof List)) {
+		if ((elementData != null) && (elementData.getAttributesData() != null)) {
 
-			List<VpeNodeMapping> attributesMapping = (List<VpeNodeMapping>) data;
+			List<VpeAttributeData> attributesMapping = elementData
+					.getAttributesData();
 
-			for (VpeNodeMapping mapping : attributesMapping) {
+			for (VpeAttributeData attributeData : attributesMapping) {
 
-				if (mapping.getVisualNode().equals(visualNode))
-					return mapping.getSourceNode();
-
+				if (attributeData.getVisualAttr().equals(visualNode))
+					return attributeData.getSourceAttr();
 			}
-
 		}
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param pageContext
+	 * @param node
+	 * @param elementData
+	 * @return
+	 */
 	public nsIDOMNode getVisualNode(VpePageContext pageContext, Node node,
-			Object data) {
-		if ((data != null) && (data instanceof List)) {
+			VpeElementData elementData) {
 
-			List<VpeNodeMapping> attributesMapping = (List<VpeNodeMapping>) data;
-			for (VpeNodeMapping mapping : attributesMapping) {
-				if (mapping.getSourceNode().equals(node))
-					return (nsIDOMText) mapping.getVisualNode();
+		if ((elementData != null) && (elementData.getAttributesData() != null)) {
+
+			List<VpeAttributeData> attributesMapping = elementData
+					.getAttributesData();
+
+			for (VpeAttributeData attributeData : attributesMapping) {
+				if (attributeData.getSourceAttr().equals(node))
+					return attributeData.getVisualAttr();
 			}
 		}
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param pageContext
+	 * @param visualNode
+	 * @param elementData
+	 * @return
+	 */
 	public boolean isNodeEditable(VpePageContext pageContext,
-			nsIDOMNode visualNode, Object data) {
+			nsIDOMNode visualNode, VpeElementData elementData) {
 
-		if ((data != null) && (data instanceof List)) {
+		if ((elementData != null) && (elementData.getAttributesData() != null)) {
 
-			List<VpeNodeMapping> attributesMapping = (List<VpeNodeMapping>) data;
+			List<VpeAttributeData> attributesMapping = elementData
+					.getAttributesData();
 
-			for (VpeNodeMapping mapping : attributesMapping) {
+			for (VpeAttributeData attributeData : attributesMapping) {
 
-				if (mapping.getVisualNode().equals(visualNode))
-					return true;
+				if (attributeData.getVisualAttr().equals(visualNode))
+					return attributeData.isEditable();
 			}
 		}
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
+	public boolean isNodeEditable(VpePageContext pageContext, Node node,
+			VpeElementData elementData) {
+		if ((elementData != null) && (elementData.getAttributesData() != null)) {
+
+			List<VpeAttributeData> attributesMapping = elementData
+					.getAttributesData();
+
+			for (VpeAttributeData attributeData : attributesMapping) {
+
+				if (attributeData.getSourceAttr().equals(node))
+					return attributeData.isEditable();
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * 
-	 * @see org.jboss.tools.vpe.editor.template.VpeTemplateNodesManager#setSourceNodeSelection(org.jboss.tools.vpe.editor.context.VpePageContext,
-	 *      org.w3c.dom.Node, int, int)
+	 * @param pageContext
+	 * @param node
+	 * @param offset
+	 * @param length
 	 */
-	public void setSourceNodeSelection(VpePageContext pageContext, Node node,
+	protected void setSourceSelection(VpePageContext pageContext, Node node,
 			int offset, int length) {
 
-		int start = getStartOffsetNode(node) + 1;
+		int start = getStartOffsetNode(node) ;
 
 		pageContext.getSourceBuilder().getStructuredTextViewer()
 				.setSelectedRange(start + offset, length);
@@ -645,20 +681,122 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see org.jboss.tools.vpe.editor.template.ITemplateSelectionManager#setSelection(org.jboss.tools.vpe.editor.context.VpePageContext,
+	 *      org.mozilla.interfaces.nsISelection)
+	 */
+	public void setSelection(VpePageContext pageContext, nsISelection selection) {
+
+		nsIDOMNode focusedVisualNode = selection.getFocusNode();
+
+		VpeElementMapping elementMapping = pageContext.getDomMapping()
+				.getNearElementMapping(focusedVisualNode);
+
+		int focusOffset = selection.getFocusOffset();
+		int anchorOffset = selection.getAnchorOffset();
+
+		boolean isEditable = isNodeEditable(pageContext, focusedVisualNode,
+				elementMapping.getElementData());
+
+		Node focusedSourceNode = getSourceNode(pageContext, focusedVisualNode,
+				elementMapping.getElementData());
+
+		if (focusedSourceNode == null)
+			focusedSourceNode = elementMapping.getSourceNode();
+		if (isEditable)
+			setSourceSelection(pageContext, focusedSourceNode, focusOffset,
+					anchorOffset - focusOffset);
+		else
+			setSourceSelection(pageContext, focusedSourceNode, 0,
+					getLengthNode(focusedSourceNode));
+
+		if (focusedVisualNode.getNodeType() != nsIDOMNode.ELEMENT_NODE)
+			focusedVisualNode = focusedVisualNode.getParentNode();
+
+		pageContext.getVisualBuilder().setSelectionRectangle(
+				(nsIDOMElement) focusedVisualNode
+						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.tools.vpe.editor.template.ITemplateSelectionManager#setVisualSelectionBySource(org.jboss.tools.vpe.editor.context.VpePageContext,
+	 *      int, int)
+	 */
+	public void setVisualSelectionBySource(VpePageContext pageContext,
+			VpeSelectionController selectionController, int focus, int anchor) {
+
+		// get source node
+		Node sourceNode = TemplateManagingUtil.getSourceNodeByPosition(
+				pageContext, focus);
+
+		// get element mapping
+		VpeElementMapping elementMapping = pageContext.getDomMapping()
+				.getNearElementMapping(sourceNode);
+
+		// get focused attribute
+		Node focusNode = getFocusedNode(sourceNode, elementMapping
+				.getElementData(), focus);
+
+		Node anchorNode = getFocusedNode(sourceNode, elementMapping
+				.getElementData(), anchor);
+
+		int visualFocus = 0;
+		int visualAnchor = 0;
+		nsIDOMNode visualNode = null;
+		nsIDOMNode visualParent = null;
+		if (focusNode == anchorNode) {
+
+			visualNode = getVisualNode(pageContext, focusNode, elementMapping
+					.getElementData());
+			if (visualNode != null) {
+				visualParent = (nsIDOMNode) visualNode.getParentNode()
+						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				String text = focusNode.getNodeValue();
+				int start = getStartOffsetNode(focusNode);
+				focus = focus - start;
+				anchor = anchor - start;
+				visualFocus = TextUtil.visualInnerPosition(text, focus);
+				visualAnchor = TextUtil.visualInnerPosition(text, anchor);
+			}
+
+		}
+
+		if (visualNode == null) {
+			visualParent = visualNode = elementMapping.getVisualNode();
+
+		}
+		nsISelection selection = selectionController
+				.getSelection(nsISelectionController.SELECTION_NORMAL);
+
+		selection.collapse(visualNode, visualFocus);
+
+		// selection.extend(visualNode, visualAnchor - visualFocus);
+		pageContext.getVisualBuilder().setSelectionRectangle(
+				(nsIDOMElement) visualParent);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jboss.tools.vpe.editor.template.VpeTemplateNodesManager#getFocusedNode(org.w3c.dom.Node,
 	 *      int)
 	 */
-	public Node getFocusedNode(Node sourceNode, int offset, Object data) {
+	public Node getFocusedNode(Node sourceNode, VpeElementData elementData,
+			int offset) {
 
-		if ((data != null) && (data instanceof List)) {
+		if ((elementData != null) && (elementData.getAttributesData() != null)) {
 
-			List<VpeNodeMapping> attributesMapping = (List<VpeNodeMapping>) data;
+			List<VpeAttributeData> attributesMapping = elementData
+					.getAttributesData();
 
-			for (VpeNodeMapping mapping : attributesMapping) {
+			for (VpeAttributeData attributeData : attributesMapping) {
 
-				if ((offset > (getStartOffsetNode(mapping.getSourceNode()) + 1))
-						&& (offset < (getEndOffsetNode(mapping.getSourceNode()) - 1)))
-					return mapping.getSourceNode();
+				if ((offset > (getStartOffsetNode(attributeData.getSourceAttr())))
+						&& (offset < (getEndOffsetNode(attributeData
+								.getSourceAttr()))))
+					return attributeData.getSourceAttr();
 			}
 		}
 
@@ -671,12 +809,28 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	 * @param node
 	 * @return
 	 */
-	private int getStartOffsetNode(Node node) {
+	protected int getStartOffsetNode(Node node) {
 
 		if (node instanceof IDOMAttr) {
-			return ((IDOMAttr) node).getValueRegionStartOffset();
+			return ((IDOMAttr) node).getValueRegionStartOffset()+1;
 		} else if (node instanceof IndexedRegion) {
 			return ((IndexedRegion) node).getStartOffset();
+		}
+		return 0;
+	}
+
+	/**
+	 * 
+	 * @param node
+	 * @return
+	 */
+	protected int getLengthNode(Node node) {
+
+		if (node instanceof IDOMAttr) {
+			return ((IDOMAttr) node).getValueSource().length();
+		} else if (node instanceof IndexedRegion) {
+			return ((IndexedRegion) node).getStartOffset()
+					- ((IndexedRegion) node).getEndOffset();
 		}
 		return 0;
 	}
@@ -687,7 +841,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	 * @param node
 	 * @return
 	 */
-	private int getEndOffsetNode(Node node) {
+	protected int getEndOffsetNode(Node node) {
 
 		if (node instanceof IndexedRegion) {
 			return ((IndexedRegion) node).getEndOffset();
@@ -695,10 +849,13 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		return 0;
 	}
 
+	/**
+	 * 
+	 */
 	public boolean openBundle(VpePageContext pageContext,
-			nsIDOMNode visualNode, Object data) {
+			nsIDOMNode visualNode, VpeElementData elementData) {
 
-		Node node = getSourceNode(pageContext, visualNode, data);
+		Node node = getSourceNode(pageContext, visualNode, elementData);
 
 		// so as nsIDOMMouseEvent doesn't give simple selected nsIDOMText as
 		// target, but nsiSelection can give simple "text"
@@ -712,7 +869,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 			// get visual node which is focused
 			nsIDOMNode tempNode = selection.getFocusNode();
 
-			node = getSourceNode(pageContext, tempNode, data);
+			node = getSourceNode(pageContext, tempNode, elementData);
 
 		}
 
@@ -750,10 +907,21 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 
 	}
 
-	private VpeElementMapping getElmentMapping(VpePageContext pageContext,
+	/**
+	 * 
+	 * @param pageContext
+	 * @param node
+	 * @return
+	 */
+	protected VpeElementMapping getElmentMapping(VpePageContext pageContext,
 			nsIDOMNode node) {
 
 		return pageContext.getDomMapping().getNearElementMapping(node);
 
+	}
+
+	protected nsISelection getCurrentSelection(VpePageContext pageContext) {
+		return pageContext.getEditPart().getController().getXulRunnerEditor()
+				.getSelection();
 	}
 }

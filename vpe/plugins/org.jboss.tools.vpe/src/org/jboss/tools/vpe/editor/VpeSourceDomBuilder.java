@@ -35,9 +35,9 @@ import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
+import org.jboss.tools.vpe.editor.template.ITemplateNodesManager;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
-import org.jboss.tools.vpe.editor.template.VpeTemplateNodesManager;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -260,9 +260,9 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 				VpeTemplate template = elementMapping.getTemplate();
 
 				// if template implements VpeTemplateNodesManager interface
-				if (template instanceof VpeTemplateNodesManager) {
-					return ((VpeTemplateNodesManager) template).openBundle(
-							pageContext, visualNode, elementMapping.getData());
+				if (template instanceof ITemplateNodesManager) {
+					return ((ITemplateNodesManager) template).openBundle(
+							pageContext, visualNode, elementMapping.getElementData());
 				} else {
 					template.openBundleEditors(pageContext,
 							(Element) sourceNode, elementMapping.getData());
@@ -325,29 +325,12 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 							.getNodeMapping(sourceParent);
 					
 					if (elementMapping != null) {
-					
+
 						VpeTemplate template = elementMapping.getTemplate();
 
-						// if template implements VpeTemplateAttributesManager
-						// functions
-						if (template instanceof VpeTemplateNodesManager) {
-							// get attribute
-							Node node = ((VpeTemplateNodesManager) template)
-									.getSourceNode(pageContext,
-											visualText, elementMapping.getData());
-							// set selection
-							if (node != null)
-								((VpeTemplateNodesManager) template)
-										.setSourceNodeSelection(pageContext,
-												node, offset, length);
-							else
-								setSelection(sourceParent, offset, length);
-						} else {
-
-							template.setSourceAttributeSelection(pageContext,
-									(Element) sourceParent, offset, length,
-									elementMapping.getData());
-						}
+						template.setSourceAttributeSelection(pageContext,
+								(Element) sourceParent, offset, length,
+								elementMapping.getData());
 					}
 				} else if (sourceParent.getNodeType() == Node.COMMENT_NODE) {
 //					VpeVisualElementInfo info = domMapping.getVisualElementInfo(sourceParent);
@@ -430,7 +413,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		return structuredTextViewer;
 	}
 	
-	Document getSourceDocument() {
+	public Document getSourceDocument() {
 		return sourceDocument;
 	}
 }

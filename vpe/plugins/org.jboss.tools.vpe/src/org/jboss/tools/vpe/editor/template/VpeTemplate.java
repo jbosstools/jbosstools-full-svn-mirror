@@ -464,4 +464,9 @@ public interface VpeTemplate {
 			nsIDOMNode visualContainer, nsIDOMDocument visualDocument);
 
 	boolean containsText();
+	
+	public boolean isModify();
+	
+	public void setModify(boolean modify);
+	
 }

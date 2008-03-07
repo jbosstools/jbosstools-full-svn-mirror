@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.tools.common.model.util.XMLUtil;
+import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -23,7 +24,13 @@ public class VpeCreationData {
 	private nsIDOMNode node;
 	private List<VpeChildrenInfo> childrenInfoList;
 	private List<Node> illegalChildren;
+	
+	/**
+	 * @deprecated - You must use elementData. If VpeElementData has not
+	 *             necessary functionality you must extend its
+	 */
 	private Object data;
+	private VpeElementData elementData;
 
 	public VpeCreationData(nsIDOMNode node) {
 		this.node = node;
@@ -55,12 +62,38 @@ public class VpeCreationData {
 		return illegalChildren;
 	}
 	
+	/**
+	 * @deprecated - You must use elementData. If VpeElementData has not
+	 *             necessary functionality you must extend its
+	 * @param data
+	 */
 	public void setData(Object data) {
 		this.data = data;
 	}
-	
+
+	/**
+	 * @deprecated - You must use elementData. If VpeElementData has not
+	 *              necessary functionality you must extend its
+	 * @return
+	 */
 	public Object getData() {
 		return data;
+	}
+	
+	/**
+	 * get element data
+	 * @return
+	 */
+	public VpeElementData getElementData() {
+		return elementData;
+	}
+
+	/**
+	 * set element data
+	 * @param elementData
+	 */
+	public void setElementData(VpeElementData elementData) {
+		this.elementData = elementData;
 	}
 	
 	/**
@@ -90,6 +123,8 @@ public class VpeCreationData {
 		}
 		data.illegalChildren =this.illegalChildren;
 		data.data = this.data;
+		data.elementData = this.elementData;
 		return data;
 	}
+
 }

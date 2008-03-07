@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor.template;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Node;
 
@@ -20,7 +21,7 @@ import org.w3c.dom.Node;
  * @author Sergey Dzmitrovich
  * 
  */
-public interface VpeTemplateNodesManager {
+public interface ITemplateNodesManager {
 
 	/**
 	 * @param pageContext -
@@ -31,23 +32,17 @@ public interface VpeTemplateNodesManager {
 	 * @return true if selected attribute is editable
 	 */
 	public boolean isNodeEditable(VpePageContext pageContext,
-			nsIDOMNode visualNode, Object data);
+			nsIDOMNode visualNode, VpeElementData elementData);
 
 	/**
-	 * set attribute in sourceEditor
 	 * 
-	 * @param pageContext -
-	 *            context of vpe
-	 * @param attr -
-	 *            attribute
-	 * @param focusOffset -
-	 *            focus offset
-	 * @param length -
-	 *            length of selection
-	 * 
+	 * @param pageContext
+	 * @param node
+	 * @param elementData
+	 * @return
 	 */
-	public void setSourceNodeSelection(VpePageContext pageContext, Node node,
-			int focusOffset, int length);
+	public boolean isNodeEditable(VpePageContext pageContext, Node node,
+			VpeElementData elementData);
 
 	/**
 	 * get visual element of attribute from source element
@@ -58,7 +53,7 @@ public interface VpeTemplateNodesManager {
 	 * @return
 	 */
 	public nsIDOMNode getVisualNode(VpePageContext pageContext, Node node,
-			Object data);
+			VpeElementData elementData);
 
 	/**
 	 * get source element of attribute from visual element
@@ -69,7 +64,7 @@ public interface VpeTemplateNodesManager {
 	 * @return
 	 */
 	public Node getSourceNode(VpePageContext pageContext,
-			nsIDOMNode visualNode, Object data);
+			nsIDOMNode visualNode, VpeElementData elementData);
 
 	/**
 	 * get sourceNode by offset
@@ -78,7 +73,8 @@ public interface VpeTemplateNodesManager {
 	 * @param offset
 	 * @return
 	 */
-	public Node getFocusedNode(Node sourceNode, int offset, Object data);
+	public Node getFocusedNode(Node sourceNode, VpeElementData elementData,
+			int offset);
 
 	/**
 	 * open bundle
@@ -87,5 +83,6 @@ public interface VpeTemplateNodesManager {
 	 * @param visualNod
 	 * @return
 	 */
-	boolean openBundle(VpePageContext pageContext, nsIDOMNode visualNode, Object data);
+	boolean openBundle(VpePageContext pageContext, nsIDOMNode visualNode,
+			VpeElementData elementData);
 }

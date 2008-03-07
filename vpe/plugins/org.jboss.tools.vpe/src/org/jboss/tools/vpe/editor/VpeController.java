@@ -126,6 +126,7 @@ import org.jboss.tools.vpe.editor.mozilla.MozillaDropInfo;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
+import org.jboss.tools.vpe.editor.template.ITemplateSelectionManager;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.editor.template.VpeEditAnyDialog;
 import org.jboss.tools.vpe.editor.template.VpeHtmlTemplate;
@@ -133,9 +134,9 @@ import org.jboss.tools.vpe.editor.template.VpeIncludeList;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateListener;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
-import org.jboss.tools.vpe.editor.template.VpeTemplateNodesManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.util.TemplateManagingUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeDndUtil;
@@ -539,12 +540,25 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		Point range = sourceEditor.getTextViewer().getSelectedRange();
 		int anchorPosition = range.x;
 		int focusPosition = range.x + range.y;
+	
 		boolean extendFlag = range.y != 0;
 		boolean reversionFlag = extendFlag && anchorPosition == VpeSelectionHelper.getCaretOffset(sourceEditor);
 		if (reversionFlag) {
 			anchorPosition = focusPosition;
 			focusPosition = range.x;
 		}
+		
+		VpeTemplate template = TemplateManagingUtil
+				.getTemplateBySourceSelection(pageContext, focusPosition,
+						anchorPosition);
+		
+		if (template instanceof ITemplateSelectionManager) {
+			((ITemplateSelectionManager) template).setVisualSelectionBySource(
+					pageContext, visualSelectionController, focusPosition,
+					anchorPosition);
+			return;
+		}
+
 		Node focusNode = getSourceNodeAt(focusPosition);
 		if (focusNode == null) {
 			return;
@@ -1369,14 +1383,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 
 				if (elementMapping != null) {
 				
-					// if template implements VpeTemplateNodesManager interface 
-					if (elementMapping.getTemplate() instanceof VpeTemplateNodesManager) {
-						Node focusedAttr = ((VpeTemplateNodesManager) elementMapping
-								.getTemplate()).getFocusedNode((IDOMNode) node,
-								offset, elementMapping.getData());
-						if (node != null)
-							return focusedAttr;
-					}
 					if (node instanceof IDOMElement) {
 						IDOMElement element = (IDOMElement) node;
 

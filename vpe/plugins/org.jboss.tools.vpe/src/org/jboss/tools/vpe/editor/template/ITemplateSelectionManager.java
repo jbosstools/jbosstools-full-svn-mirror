@@ -11,25 +11,32 @@
 package org.jboss.tools.vpe.editor.template;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.mozilla.interfaces.nsIDOMKeyEvent;
+import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
+import org.mozilla.interfaces.nsISelection;
 
 /**
- * interface for handling of keyEvent by himself template
+ * 
+ * interface for template selection
  * 
  * @author Sergey Dzmitrovich
- * 
  */
-public interface VpeTemplateKeyEventHandler {
+public interface ITemplateSelectionManager {
 
 	/**
-	 * handle keyEvent
+	 * selection
 	 * 
 	 * @param pageContext
-	 * @param keyEvent -
-	 *            happens when element of current template is selected and
-	 *            is pressed key
-	 * @return
+	 * @param selection
 	 */
-	boolean handleKeyPress(VpePageContext pageContext, nsIDOMKeyEvent keyEvent);
+	public void setSelection(VpePageContext pageContext, nsISelection selection);
+
+	/**
+	 * select visual element by source selection
+	 * 
+	 * @param pageContext
+	 * @return true if visual element was selected
+	 */
+	public void setVisualSelectionBySource(VpePageContext pageContext,
+			VpeSelectionController selectionController, int focus, int anchor);
 
 }

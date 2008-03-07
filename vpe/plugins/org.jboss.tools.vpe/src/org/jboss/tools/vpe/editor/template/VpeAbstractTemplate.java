@@ -738,8 +738,12 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		return children;
 	}
 	
-	boolean isModify() {
+	public boolean isModify() {
 		return modify;
+	}
+	
+	public void setModify(boolean modify) {
+		this.modify = modify;
 	}
 	
 	/**
