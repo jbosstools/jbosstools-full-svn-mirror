@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="getting_started" xreflabel="getting_started">
+ <?dbhtml filename="getting_started.html"?>
+ <chapterinfo>
+  <keywordset>
+   <keyword>JBoss Developer Studio</keyword>
+   <keyword>Eclipse</keyword>
+   <keyword>Java</keyword>
+   <keyword>JBoss</keyword>
+  </keywordset>
+ </chapterinfo>
+ <title>Getting Started with JBoss Developer Studio</title>
+
+ <section id="intro1">
+  <title>What is JBDS?</title>
+  <para>JBoss Developer Studio is a set of eclipse-based development tools that are pre-configured
+   for JBoss Enterprise Middleware Platforms and Red Hat Enterprise Linux. Developers are not
+   required to use JBoss Developer Studio to develop on JBoss Enterprise Middleware and/or Red Hat
+   Linux. But, many find these pre-configured tools offer significant time-savings and value, making
+   them more productive and speeding time to deployment.</para>
+ </section>
+ 
+ <section id="ConfigJavaEnvironment">
+  <?dbhtml filename="ConfigJavaEnvironment.html"?>
+  <title>Configuring Your Java Environment</title>
+  <para>You must have a working installation of JDK 5 before you install JBoss Developer Studio.
+   Currently it will only fully work with a 32-bit JVM, not a 64-bit JVM. On a 64-bit JVM the visual
+   editor fails to launch. Thus in this guide we will show you how to install a 32-bit Sun JDK 5.0
+   on a Linux Platform and Microsoft Windows Platform.</para>
+
+  <section id="InstallJDK50onLinux">
+   <title>Installing and Configuring 32-bit Sun JDK 5.0 on Linux</title>
+   <para>To install 32-bit Sun JDK 5.0 on Linux and configure it, you should follow the next steps:</para>
+   <itemizedlist>
+    <listitem>
+     <para>Download the <ulink url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0
+       (Java 2 Development Kit)</ulink> from Sun&apos;s website. Choose &quot;JDK 5.0 Update
+      &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) for
+      download and then select &quot;RPM in self-extracting&quot; file for Linux. Read the
+      instructions on Sun&apos;s website for installing the JDK.</para>
+    </listitem>
+    <listitem>
+     <para>If you don&apos;t want to use SysV service scripts you can install the
+      &quot;self-extracting file&quot; for Linux instead of choosing the &quot;RPM in
+      self-extracting&quot; file. In that case you can skip the next step mentioned here. But it
+      is recommended to use the SysV service scripts for production servers.</para>
+    </listitem>
+    <listitem>
+     <para>Download and install the appropriate -compat RPM from JPackage <ulink
+       url="ftp://jpackage.hmdc.harvard.edu/JPackage/1.7/generic/RPMS.non-free/">here</ulink>.
+      Please ensure you choose a matching version of the -compat package to the JDK you've
+      installed.</para>
+    </listitem>
+    <listitem>
+     <para>Create an environment variable that points to the JDK installation directory and call it
+      JAVA_HOME. Add <emphasis>
+       <property>$JAVA_HOME/bin</property>
+      </emphasis> to the system path to be able to run java from the command line. You can do this
+      by adding the following lines to the .bashrc file in your home directory.</para>
+     <programlisting><![CDATA[#In this example /usr/java/jdk1.5.0_11 is the JDK installation directory.
+export JAVA_HOME=/usr/java/jdk1.5.0_11
+export PATH=$PATH:$JAVA_HOME/bin]]></programlisting>
+    </listitem>
+   </itemizedlist>
+   <note>
+    <title>Note:</title>
+    <para>When you add $JAVA_HOME/bin to $PATH, you should add it <emphasis role="bold"
+     >before</emphasis> the old $PATH not after it. This way, the machine will pick up the new JVM
+     first. You only need to run &quot;alternative&quot; as a safe guard for the right
+    JVM.</para>
+   </note>
+
+   <para>Set this variable for your account doing the installation and also for the user account
+    that will run the server.</para>
+   <itemizedlist>
+    <listitem>
+     <para>If you have more than one version of JVM installed on your machine, make sure you are
+      using the JDK 1.5 installation as the default java and javac. You can do this using the
+      alternatives system. The alternatives system allows different versions of Java from different
+      sources to co-exist on your system.</para>
+    </listitem>
+   </itemizedlist>
+   <section id="SelectAlternativesforJava">
+    <title>Select alternatives for java, javac and java_sdk_1.5.0</title>
+    <itemizedlist>
+     <listitem>
+      <para>As a root user, type the following command at the shell prompt and you should see
+       something like this:</para>
+     </listitem>
+    </itemizedlist>
+    <programlisting><![CDATA[[root@vsr ~]$ /usr/sbin/alternatives --config java
+There are 2 programs that provide 'java'.
+Selection    Command
+-----------------------------------------------
+   1           /usr/lib/jvm/jre-1.4.2-gcj/bin/java
+*+ 2           /usr/lib/jvm/jre-1.5.0-sun/bin/java
+Enter to keep the current selection[+], or type selection number:]]></programlisting>
+    <para>Make sure the Sun version [jre-1.5.0-sun in this case] is selected (marked with a
+     &apos;+&apos; in the output), or select it by entering its number as prompted.</para>
+    <itemizedlist>
+     <listitem>
+      <para>Repeat the same for javac and java_sdk_1.5.0.</para>
+     </listitem>
+    </itemizedlist>
+    <programlisting><![CDATA[[root@vsr ~]$ /usr/sbin/alternatives --config javac
+There is 1 program that provides 'javac'.
+	Selection   Command
+-----------------------------------------------
+*+ 1           /usr/lib/jvm/java-1.5.0-sun/bin/javac
+Enter to keep the current selection[+], or type selection number:
+
+[root@vsr ~]$ /usr/sbin/alternatives --config java_sdk_1.5.0
+There is 1 program that provide 'java_sdk_1.5.0'.
+	Selection   Command
+-----------------------------------------------
+*+ 1           /usr/lib/jvm/java-1.5.0-sun
+Enter to keep the current selection[+], or type selection number:]]></programlisting>
+    <para>You should verify that java, javac and java_sdk_1.5.0 all point to the same manufacturer
+     and version.</para>
+    <note>
+     <title>Note:</title>
+     <para>You can always override this step by setting the JAVA_HOME environment variable as
+      explained in the previous step.</para>
+    </note>
+    <itemizedlist>
+     <listitem>
+      <para>Make sure that the java executable is in your path and that you are using an appropriate
+       version. To verify your Java environment, type &quot;java -version&quot; at the shell
+       prompt and you should see something like this:</para>
+     </listitem>
+    </itemizedlist>
+    <programlisting><![CDATA[[root@vsr ~]$ java -version
+java version "1.5.0_11"
+Java(TM) 2 Runtime Environment, Standard Edition (build 1.5.0_11-b03)
+Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></programlisting>
+   </section>
+
+  </section>
+  <section id="InstallJDK50onWindows">
+   <title>Installing and Configuring 32-bit Sun JDK 5.0 on Microsoft Windows</title>
+
+   <para>To install and configure 32-bit Sun JDK 5.0 on Microsoft Windows, follow these steps:</para>
+   <itemizedlist>
+    <listitem>
+     <para>Download the <ulink url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0
+       (Java 2 Development Kit)</ulink> from Sun&apos;s website. Choose &quot;JDK 5.0 Update
+      &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) for
+      download and then select your Windows Platform options to perform the installation.</para>
+    </listitem>
+    <listitem>
+     <para>Create an environment variable called JAVA_HOME that points to the JDK installation
+      directory, for example: <para>
+       <emphasis>C:\Program Files\Java\jdk1.5.0_11\</emphasis>
+      </para></para>
+    </listitem>
+   </itemizedlist>
+
+   <para>In order to run java from the command line, add the <emphasis>jre\bin</emphasis> directory
+    to your path, for example:</para>
+   <para>
+    <emphasis>C:\Program Files\Java\jdk1.5.0_11\jre\bin</emphasis>
+   </para>
+   <para>To do this, open the Control Panel from the Start Menu, switch to Classic View if
+    necessary, open the System Control Panel applet (System), select the Advanced Tab, and click on
+    the Environment Variables button.</para>
+   <para>Now, when 32-bit Sun JDK 5.0 has been successfully installed, we can pass on to the next step.</para>
+  </section>
+  
+ </section>
+ 
+ <section id="InstallingJBDS">
+  <?dbhtml filename="InstallingRHDS.html"?>
+  <title>JBoss Developer Studio Installation</title>
+  <para>This chapter will provide you with detailed information on how to install JBoss Developer Studio and all the JBoss Tools modules.</para>
+  
+   <section id="Instfromdownver">
+   <title>Installing from the downloaded version</title>
+   <para>Let's start with the JBDS installation.</para>
+   <para>JBDS comes with a simple installer, bundled with tested/pre-configured versions of Eclipse,
+    WTP, JBossEAP, Seam, and SpringIDE. Thus, to start perform the next steps:</para>
+
+   <itemizedlist>
+    <listitem>
+     <para>Download the appropriate installation file for your platform from <ulink
+      url="http://www.jboss.com/products/devstudio">Red Hat website</ulink>.</para>
+    </listitem>
+    <listitem>
+     <para>Run in console:</para>
+     <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-linux-gtk-1.0.0.GA.jar
+]]></programlisting>
+    </listitem>
+    <listitem>
+     <para>Follow the instructions presented by the installation wizard</para>
+    </listitem>
+   </itemizedlist>
+
+   <figure>
+    <title>JBoss Developer Studio Installation Wizard</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="images/getting_started/getting_started_1.png"/>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
+   <itemizedlist>
+    <listitem>
+     <para>Provide the installation path</para>
+    </listitem>
+    <listitem>
+     <para>Select Java VM</para>
+    </listitem>
+   </itemizedlist>
+
+   <figure>
+    <title>Select Java VM</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="images/getting_started/getting_started_2.png"/>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
+   <para>Selecting <emphasis>
+     <property>Default Java VM</property>
+    </emphasis> you set default Java VM of your system (to verify your Java environment, type
+    &quot;java -version&quot; in console).</para>
+   <para>Selecting <emphasis>
+     <property>Specific Java VM</property>
+    </emphasis> you can provide the path to non-default Java VM.</para>
+
+   <note>
+    <title>Note:</title>
+    <para>JBoss Developer Studio needs Java 5 and doesn't work with gij Java.</para>
+   </note>
+
+   <itemizedlist>
+    <listitem>
+     <para>Installation process includes <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application Platform</ulink>. Select <emphasis>
+       <property>Yes</property>
+      </emphasis> to use it in JBoss Developer Studio.</para>
+    </listitem>
+   </itemizedlist>
+
+   <para/>
+
+   <figure>
+    <title>JBoss Enterprise Application Platform Installing</title>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_3.png"/>
+    </imageobject>
+   </figure>
+   <para/>
+   <note>
+    <title>Note:</title>
+    <para>The installer installs JBoss Enterprise Application Platform for running your applications
+     if you select this option during the installation process. If you want to use a different
+     server than ours, you can change the setting in JBoss Developer Studio.</para>
+   </note>
+
+   <itemizedlist>
+    <listitem>
+     <para>Check your installation paths and see the components to install. If you'd like to change something, press <emphasis><property>Previous</property></emphasis> button. Click <emphasis>
+      <property>Next</property></emphasis>  to start installation. </para>
+    </listitem>
+   </itemizedlist>
+
+   <para/>
+
+   <figure>
+    <title>Summary Information</title>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_4.png"/>
+    </imageobject>
+   </figure>
+
+  </section>
+  
+  <section id="WhatDifferenceBetweenJBDSAndJBossTools">
+   <title>What is the difference between JBoss Developer Studio and JBoss Tools</title>
+   <para>This release of JBoss Tools is what went into our JBoss Developer Studio which provides an easy-to-install Eclipse
+    based IDE fully configured and ready to run with the bundled JBoss Enterprise Application Platform.</para>
+   <para>In short JBoss Tools are just a set of Eclipse plugins and JBoss Developer Studio adds:</para>
+   <itemizedlist>
+    <listitem>
+     <para>An installer</para>
+    </listitem>
+    <listitem>
+     <para>Eclipse and Web Tools preconfigured</para>
+    </listitem>
+    <listitem>
+     <para>JBoss EAP with JBoss AS and Seam preconfigured</para>
+    </listitem>
+    <listitem>
+     <para>3rd party plugins bundled and configured</para>
+    </listitem>
+    <listitem>
+     <para>Access to RHEL and Red Hat Network</para>
+    </listitem>
+    <listitem>
+     <para>Access to the JBoss/Red Hat supported software</para>
+    </listitem>
+   </itemizedlist>
+   <para> For additional information see <ulink url="http://www.jboss.com/products/devstudio">JBoss.com</ulink></para>
+   
+   <section id="JBossToolsInstall">
+   <title>JBoss Tools Installation</title>
+   <para>Here, let&apos;s consider the installation of the JBoss Tools modules.</para>
+   <para>JBoss Tools is an umbrella project for the JBoss developed plugins that will make it into
+    JBoss Developer Studio. The JBoss Tools modules are:</para>
+   <itemizedlist>
+    <listitem>
+     <para>JBoss AS Tools</para>
+    </listitem>
+    <listitem>
+     <para>Seam Tools</para>
+    </listitem>
+    <listitem>
+     <para>Hibernate Tools</para>
+    </listitem>
+    <listitem>
+     <para>Visual Page Editor</para>
+    </listitem>
+    <listitem>
+     <para>JST Tools</para>
+    </listitem>
+    <listitem>
+     <para>JBPM Tools</para>
+    </listitem>
+   </itemizedlist>
+
+   <para>To install the JBoss Tools plugins for Eclipse, you need the following:</para>
+   
+    <itemizedlist>
+    <listitem>
+     <para>Get Eclipse 3.3.1 and Web Tools 2.0.1</para>
+    </listitem>
+   </itemizedlist>
+   <para>The quickest way to get a WTP version is to download "Eclipse IDE for Java EE Developers"
+    via <ulink url="http://www.eclipse.org">www.eclipse.org</ulink>.</para>
+   <note><title>Note:</title><para>Remember to choose the download that matches your OS and use Java 5 when you run it.</para></note>
+   <itemizedlist>
+     <listitem>
+     <para>Get the <ulink url="http://labs.jboss.com/tools/download/index.html">JBoss Tools build</ulink></para>
+     </listitem>
+   </itemizedlist>
+   <para>You can also find the latest development release of JBossTools from <ulink url="http://download.jboss.org/jbosstools/updates/stable/">JBossTools Stable Update Site</ulink></para>
+   <itemizedlist>
+     <listitem>
+     <para>Finally, install the build</para>
+    </listitem>
+   </itemizedlist>
+   
+    <para>Unzip the file(s) directly into your Eclipse <emphasis>
+     <property>plugins/features</property>
+    </emphasis> directory and it will be readily available. It might be necessary to start Eclipse
+    with eclipse -clean to make sure it starts clean and rereads the new list of plugins.</para>
+  </section>
+ 
+   </section>
+ </section>
+
+ <section id="Welcome">
+  <title>Welcome to JBoss Developer Studio</title>
+  <para>In this section we'll show you how to work with the welcome page of the JBoss Developer Studio.</para>
+  <para>The welcome page is the first page you see when you first launch JBoss Developer Studio. </para>
+
+  <figure>
+   <title>Welcome to JBoss Developer Studio</title>
+   <imageobject>
+    <imagedata fileref="images/getting_started/getting_started_5.png"/>
+   </imageobject>
+  </figure>
+
+  <para>With the help of its page you will be able:</para>
+  <itemizedlist>
+   <listitem>
+    <para>to get quick access to Getting Started Documentation (guides, tutorials and
+    viewlets)</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure>
+   <title>Getting Started Documentation</title>
+   <imageobject>
+    <imagedata fileref="images/getting_started/getting_started_6.png"/>
+   </imageobject>
+  </figure>
+
+  <itemizedlist>
+   <listitem>
+    <para>to create new Seam projects, jBPM Process, JSF or Struts projects using JBDS wizards</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure>
+   <title>Create New...</title>
+   <imageobject>
+    <imagedata fileref="images/getting_started/getting_started_7.png"/>
+   </imageobject>
+  </figure>
+
+  <itemizedlist>
+   <listitem>
+    <para>to get short description of perspectives that JBDS offers for more productive
+    development</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure>
+   <title>Perspectives</title>
+   <imageobject>
+    <imagedata fileref="images/getting_started/getting_started_8.png"/>
+   </imageobject>
+  </figure>
+
+  <itemizedlist>
+   <listitem>
+    <para>to visit JBoss Developer Studio web resources.</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure>
+   <title>Web Resources</title>
+   <imageobject>
+    <imagedata fileref="images/getting_started/getting_started_9.png" scale="75"/>
+   </imageobject>
+  </figure>
+
+  <para>Start work with JBoss Developer Studio by clicking on <emphasis>
+    <property>Workbench</property>
+   </emphasis> button or simply close the welcome page.</para>
+
+ </section>
+
+ <section id="Upgrading">
+  <?dbhtml filename="Upgrading.html"?>
+  <title>Upgrading</title>
+  <para>To upgrade, just uninstall your current version and install the new one.</para>
+ </section>
+ 
+ <section id="Uninstalling">
+  <?dbhtml filename="Uninstalling.html"?>
+  <title>Uninstalling</title>
+  <itemizedlist>
+   <listitem>Make sure JBoss Developer Studio is not running</listitem>
+   <listitem>Uninstall your current version of JBoss Developer Studio by running
+   uninstaller</listitem>
+  </itemizedlist>
+ </section>
+ 
+ <section id="Support">
+  <?dbhtml filename="Support.html"?>
+  <title>Support</title>
+  <para>If you have comments or questions, you can discuss them at our <ulink
+    url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
+    Developer Studio Forum</ulink>.</para>
+  <para>When writing to the forum for questions, please include the following information:</para>
+  <orderedlist>
+   <listitem>
+    <para>JBoss Developer Studio version</para>
+   </listitem>
+   <listitem>
+    <para>Exact error message</para>
+   </listitem>
+   <listitem>
+    <para>Steps to reproduce the issue</para>
+   </listitem>
+  </orderedlist>
+ </section>
+ 
+ <section id="FAQ">
+  <?dbhtml filename="FAQ.html"?>
+  <title>FAQ</title>
+  <para>For easy reference to JBoss Developer Studio related questions, our FAQ provides answers to
+   the most &quot;popular&quot; questions. The sections of questions are organized by type. </para>
+  <!-- <section id="Before_Installing">
+  <title>Before Installing, Tutorials, Examples, Readme Files</title>
+  <para><emphasis role="bold">I'm looking for examples, do you have any?</emphasis></para>
+  <para>Yes, simply go to our <ulink url="http://exadel.com/web/portal/products/Tutorials">tutorials page</ulink></para>
+  <para><emphasis role="bold">Where can I find the JBoss Developer Studio readme file?</emphasis></para>
+  <para>It's located at this page: <ulink url="http://www.exadel.com/web/portal/products/ReleaseNotes">Release Notes</ulink></para>
+  <para><emphasis role="bold">Where can I find some documentation for JBoss Developer Studio?</emphasis></para>
+  <para>Try these resources: <ulink url="http://www.exadel.com/exadelstudio/help/">User Guide</ulink></para>
+  <para><emphasis role="bold">What version of Eclipse does JBoss Developer Studio support?</emphasis></para>
+  <para>JBoss Developer Studio works with Eclipse 3.3</para>
+  </section> -->
+  <!--<section id="Downloading">
+  <title>Downloading</title>
+  <para><emphasis role="bold">Where can I download a copy of JBoss Developer Studio?</emphasis></para>
+  <para>Go to <ulink url="http://www.redhat.com/developers/jbds/index.html">Download Page</ulink></para>
+ </section>-->
+  <section id="Installation_Issues">
+   <title>Installation Issues</title>
+   <para>
+    <emphasis role="bold">Visual Editor does not start under Linux</emphasis>
+   </para>
+   <para>Linux users may need to do the following to get the visual editor to work correctly on
+    their machines.</para>
+
+   <orderedlist>
+    <listitem>On Red Hat based Linux distributions install the xpLib.i386 package</listitem>
+    <listitem>Type <programlisting role="JAVA"><![CDATA[ln -s libstdc++.so.5.0.7 libstdc++.so.5
+]]></programlisting>
+    </listitem>
+    <listitem>and/or use <programlisting role="JAVA"><![CDATA[yum install libXp
+]]></programlisting>
+    </listitem>
+    <listitem>Open the JBDS perspective. If you see the Help view open, close it and restart JBDS</listitem>
+    <listitem>If none of these work, do the following: <itemizedlist>
+      <listitem>Clear the Eclipse log file,
+       <emphasis>&lt;workspace&gt;\.metadata\.log</emphasis></listitem>
+      <listitem>Start Eclipse with the -debug option: <programlisting role="JAVA"><![CDATA[eclipse -debug
+]]></programlisting>
+      </listitem>
+      <listitem>Post the Eclipse log file
+       (<emphasis>&lt;workspace&gt;\.metadata\.log</emphasis>) on the forums.</listitem>
+     </itemizedlist>
+    </listitem>
+   </orderedlist>
+
+
+   <para>
+    <emphasis role="bold">Do I need to have JBoss server installed to run JBoss Developer
+    Studio?</emphasis>
+   </para>
+   <para>No. JBoss Developer Studio already comes bundled with JBoss server. We bundle it together
+    so that you don&apos;t need to download any additional software and can test your
+    application in a Web browser right away.</para>
+   <para>If you want to use a different JBoss server installation, after JBoss Developer Studio is
+    installed open Servers View (select <emphasis><property>Window &gt; Show View &gt; Others &gt; Server &gt; Servers</property>),</emphasis> then right click on this <emphasis>
+     <property>view &gt; New &gt; Server</property>
+    </emphasis> and follow the wizards steps to point to another Jboss server installation.</para>
+   <para>JBoss Developer Studio works with any servlet container, not just JBoss. For more
+    information on deployment, please see the Deploying Your Application section.</para>
+  </section>
+  <section id="Importing_Projects">
+   <title>Importing Projects</title>
+   <para>
+    <emphasis role="bold">I have an existing Seam 1.2.1 project. Can I migrate/import the project to a JBDS Seam project?</emphasis>
+   </para>
+   <para>We highly recommend you to create Seam 1.2.1 project using the JBDS. In other case try to do manually:</para>
+   <itemizedlist>
+    <listitem><para>Create a Seam Web project to get the JBoss tools structure</para></listitem>
+   </itemizedlist>
+    <para>Then from your Seam 1.2.1 seam-gen project start doing the following:</para>
+   <itemizedlist>
+    <listitem><para>Copy <property>src</property> to <property>src</property></para></listitem>
+    <listitem><para>Copy <property>view</property> to <property>Web content</property></para></listitem>
+    <listitem><para>Copy resources individual files to where they are in the seam web project  etc.</para></listitem>
+   </itemizedlist>
+   <para>
+    <emphasis role="bold">I have an existing Struts or JSF project. Can I open the project in
+    JBDS?</emphasis>
+   </para>
+   <para>Yes. From main menu select <emphasis>
+     <property>File &gt; Import &gt; Other &gt; JSF Project (or Struts
+     Project)</property>
+    </emphasis> and follow wizards steps.</para>
+   <para>
+    <emphasis role="bold">Can I import a .war file?</emphasis>
+   </para>
+   <para>Yes. Select <emphasis><property>File &gt; Import &gt; Web &gt; WAR file</property>,
+    </emphasis> then follow importing steps.</para>
+  </section>
+  <section id="Troubleshooting">
+   <title>Troubleshooting, Problems, Configuration, Error Messages</title>
+   <para>
+    <emphasis role="bold">Is it possible to increase the performance of Eclipse after installing
+     your product?</emphasis>
+   </para>
+   <para>JBoss Developer Studio preconfigures eclipse via the eclipse.ini file to allocate extra
+    memory, but if you for some reason need more memory then by default, you can manually make
+    adjustments in this file. For example:</para>
+   <programlisting role="JAVA"><![CDATA[-vmargs -Xms128m -Xmx512m -XX:MaxPermSize=128m
+]]></programlisting>
+
+
+   <para>
+    <emphasis role="bold">How can I add my own tag library to the JBoss Tools Palette?</emphasis>
+   </para>
+   <para>See <ulink url="http://www.redhat.com/developer_studio/guides/jsf/html_single/#AddingJSFCapabilityToAnyExistingEclipseProject">Adding Tag Libraries</ulink> in Visual Web Tools Guide.</para>
+   <para>
+    <emphasis role="bold">I see the Oracle ADF Faces component library tags in the JBoss Tools
+     Palette, but I can&apos;t seem to find the libraries for ADF. How do I use this component
+     library with JBDS?</emphasis>
+   </para>
+   <para>See <ulink
+     url="http://www.redhat.com/developers/jbds/JSFTools/JavaServerFacesSupport.html#AddingSupportForTheOracleADFComponentsLibraryOrAnyOtherSupport64"
+     >Adding Support for the Oracle ADF Components Library</ulink> in the JBDS User Guide.</para>
+  </section>
+ </section>
+
+ <section id="OtherRelevantResourcesOnTheTopic33">
+  <?dbhtml filename="OtherRelevantResourcesOnTheTopic33.html"?>
+  <title>Other relevant resources on the topic</title>
+  <para>JBDS on JBoss: <ulink url="http://labs.jboss.com/rhdevstudio/">JBoss Developer
+   Studio</ulink></para>
+  <para>Forum: <ulink
+    url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
+   Forum</ulink></para>
+  <para>Download: <ulink url="http://www.jboss.com/products/devstudio">JBDS Download</ulink></para>
+ </section>
+
+</chapter>
