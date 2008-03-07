@@ -44,6 +44,13 @@ import org.jboss.ide.eclipse.archives.test.util.FileIOUtil;
 import org.osgi.framework.Bundle;
 
 /**
+ * 
+ * This class tests marshalling each type of xb object, 
+ * expecting the XMLBinding class (and XB itself) to throw 
+ * errors if required fields are missing. 
+ * 
+ * It also verifies correct models are properly marshalled.
+ * 
  * @author rob.stryker <rob.stryker@redhat.com>
  * 
  */

@@ -42,7 +42,9 @@ import org.jboss.ide.eclipse.archives.test.util.FileIOUtil;
 import org.osgi.framework.Bundle;
 
 /**
- * Tests whether the xml files can be validated
+ * Tests unmarshalling and validating packaging files. 
+ * The tests expect XB to throw exceptions when improper 
+ * nonconformant files are parsed. 
  * 
  * @author rob.stryker <rob.stryker@redhat.com>
  *
