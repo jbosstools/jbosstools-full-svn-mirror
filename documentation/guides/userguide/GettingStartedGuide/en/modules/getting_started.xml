@@ -18,8 +18,11 @@
    required to use JBoss Developer Studio to develop on JBoss Enterprise Middleware and/or Red Hat
    Linux. But, many find these pre-configured tools offer significant time-savings and value, making
    them more productive and speeding time to deployment.</para>
+  <para>This guide covers the first steps to get started with JBoss Developer Studio. You will learn how to install
+   and configure necessary software for your operating system. Thus Getting Started guide will
+   provide you with detailed information on how to start JDK, JBDS and JBoss Tools.</para>
  </section>
- 
+
  <section id="ConfigJavaEnvironment">
   <?dbhtml filename="ConfigJavaEnvironment.html"?>
   <title>Configuring Your Java Environment</title>
@@ -163,32 +166,48 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <para>To do this, open the Control Panel from the Start Menu, switch to Classic View if
     necessary, open the System Control Panel applet (System), select the Advanced Tab, and click on
     the Environment Variables button.</para>
-   <para>Now, when 32-bit Sun JDK 5.0 has been successfully installed, we can pass on to the next step.</para>
+   <para>Now, when 32-bit Sun JDK 5.0 has been successfully installed, we can pass on to the next
+    step.</para>
   </section>
-  
+
  </section>
- 
+
  <section id="InstallingJBDS">
   <?dbhtml filename="InstallingRHDS.html"?>
   <title>JBoss Developer Studio Installation</title>
-  <para>This chapter will provide you with detailed information on how to install JBoss Developer Studio and all the JBoss Tools modules.</para>
-  
-   <section id="Instfromdownver">
+  <para>This chapter will provide you with detailed information on how to install JBoss Developer
+   Studio and all the JBoss Tools modules.</para>
+
+  <section id="Instfromdownver">
    <title>Installing from the downloaded version</title>
    <para>Let's start with the JBDS installation.</para>
    <para>JBDS comes with a simple installer, bundled with tested/pre-configured versions of Eclipse,
     WTP, JBossEAP, Seam, and SpringIDE. Thus, to start perform the next steps:</para>
 
    <itemizedlist>
+
     <listitem>
      <para>Download the appropriate installation file for your platform from <ulink
-      url="http://www.jboss.com/products/devstudio">Red Hat website</ulink>.</para>
+       url="http://www.jboss.com/products/devstudio">Red Hat website</ulink>.</para>
     </listitem>
+
     <listitem>
      <para>Run in console:</para>
      <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-linux-gtk-1.0.0.GA.jar
 ]]></programlisting>
+     <!--<tip>
+      <title>Tip:</title>
+      <para>Also you are allowed to run installation file by right click on it and choose <emphasis>
+        <property>Open with Other Application...</property>
+       </emphasis> option from the pop-up menu. Select <emphasis>
+        <property>Use a custom command</property>
+       </emphasis> at the bottom of the <property>Open With</property> window and type <emphasis>
+        java -jar jbdevstudio-linux-gtk-1.0.0.GA.jar</emphasis>. Click <emphasis>
+        <property>Ok</property>
+       </emphasis> button.</para>
+     </tip> -->
     </listitem>
+
     <listitem>
      <para>Follow the instructions presented by the installation wizard</para>
     </listitem>
@@ -236,7 +255,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
    <itemizedlist>
     <listitem>
-     <para>Installation process includes <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application Platform</ulink>. Select <emphasis>
+     <para>Installation process includes <ulink
+       url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application
+       Platform</ulink>. Select <emphasis>
        <property>Yes</property>
       </emphasis> to use it in JBoss Developer Studio.</para>
     </listitem>
@@ -260,8 +281,12 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
    <itemizedlist>
     <listitem>
-     <para>Check your installation paths and see the components to install. If you'd like to change something, press <emphasis><property>Previous</property></emphasis> button. Click <emphasis>
-      <property>Next</property></emphasis>  to start installation. </para>
+     <para>Check your installation paths and see the components to install. If you'd like to change
+      something, press <emphasis>
+       <property>Previous</property>
+      </emphasis> button. Click <emphasis>
+       <property>Next</property>
+      </emphasis> to start installation. </para>
     </listitem>
    </itemizedlist>
 
@@ -275,11 +300,12 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </figure>
 
   </section>
-  
+
   <section id="WhatDifferenceBetweenJBDSAndJBossTools">
    <title>What is the difference between JBoss Developer Studio and JBoss Tools</title>
-   <para>This release of JBoss Tools is what went into our JBoss Developer Studio which provides an easy-to-install Eclipse
-    based IDE fully configured and ready to run with the bundled JBoss Enterprise Application Platform.</para>
+   <para>This release of JBoss Tools is what went into our JBoss Developer Studio which provides an
+    easy-to-install Eclipse based IDE fully configured and ready to run with the bundled JBoss
+    Enterprise Application Platform.</para>
    <para>In short JBoss Tools are just a set of Eclipse plugins and JBoss Developer Studio adds:</para>
    <itemizedlist>
     <listitem>
@@ -301,68 +327,77 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      <para>Access to the JBoss/Red Hat supported software</para>
     </listitem>
    </itemizedlist>
-   <para> For additional information see <ulink url="http://www.jboss.com/products/devstudio">JBoss.com</ulink></para>
-   
-   <section id="JBossToolsInstall">
-   <title>JBoss Tools Installation</title>
-   <para>Here, let&apos;s consider the installation of the JBoss Tools modules.</para>
-   <para>JBoss Tools is an umbrella project for the JBoss developed plugins that will make it into
-    JBoss Developer Studio. The JBoss Tools modules are:</para>
-   <itemizedlist>
-    <listitem>
-     <para>JBoss AS Tools</para>
-    </listitem>
-    <listitem>
-     <para>Seam Tools</para>
-    </listitem>
-    <listitem>
-     <para>Hibernate Tools</para>
-    </listitem>
-    <listitem>
-     <para>Visual Page Editor</para>
-    </listitem>
-    <listitem>
-     <para>JST Tools</para>
-    </listitem>
-    <listitem>
-     <para>JBPM Tools</para>
-    </listitem>
-   </itemizedlist>
+   <para> For additional information see <ulink url="http://www.jboss.com/products/devstudio"
+     >JBoss.com</ulink></para>
 
-   <para>To install the JBoss Tools plugins for Eclipse, you need the following:</para>
-   
+   <section id="JBossToolsInstall">
+    <title>JBoss Tools Installation</title>
+    <para>Here, let&apos;s consider the installation of the JBoss Tools modules.</para>
+    <para>JBoss Tools is an umbrella project for the JBoss developed plugins that will make it into
+     JBoss Developer Studio. The JBoss Tools modules are:</para>
     <itemizedlist>
-    <listitem>
-     <para>Get Eclipse 3.3.1 and Web Tools 2.0.1</para>
-    </listitem>
-   </itemizedlist>
-   <para>The quickest way to get a WTP version is to download "Eclipse IDE for Java EE Developers"
-    via <ulink url="http://www.eclipse.org">www.eclipse.org</ulink>.</para>
-   <note><title>Note:</title><para>Remember to choose the download that matches your OS and use Java 5 when you run it.</para></note>
-   <itemizedlist>
      <listitem>
-     <para>Get the <ulink url="http://labs.jboss.com/tools/download/index.html">JBoss Tools build</ulink></para>
+      <para>JBoss AS Tools</para>
      </listitem>
-   </itemizedlist>
-   <para>You can also find the latest development release of JBossTools from <ulink url="http://download.jboss.org/jbosstools/updates/stable/">JBossTools Stable Update Site</ulink></para>
-   <itemizedlist>
      <listitem>
-     <para>Finally, install the build</para>
-    </listitem>
-   </itemizedlist>
-   
+      <para>Seam Tools</para>
+     </listitem>
+     <listitem>
+      <para>Hibernate Tools</para>
+     </listitem>
+     <listitem>
+      <para>Visual Page Editor</para>
+     </listitem>
+     <listitem>
+      <para>JST Tools</para>
+     </listitem>
+     <listitem>
+      <para>JBPM Tools</para>
+     </listitem>
+    </itemizedlist>
+
+    <para>To install the JBoss Tools plugins for Eclipse, you need the following:</para>
+
+    <itemizedlist>
+     <listitem>
+      <para>Get Eclipse 3.3.1 and Web Tools 2.0.1</para>
+     </listitem>
+    </itemizedlist>
+    <para>The quickest way to get a WTP version is to download "Eclipse IDE for Java EE Developers"
+     via <ulink url="http://www.eclipse.org">www.eclipse.org</ulink>.</para>
+    <note>
+     <title>Note:</title>
+     <para>Remember to choose the download that matches your OS and use Java 5 when you run
+     it.</para>
+    </note>
+    <itemizedlist>
+     <listitem>
+      <para>Get the <ulink url="http://labs.jboss.com/tools/download/index.html">JBoss Tools
+       build</ulink></para>
+     </listitem>
+    </itemizedlist>
+    <para>You can also find the latest development release of JBossTools from <ulink
+      url="http://download.jboss.org/jbosstools/updates/stable/">JBossTools Stable Update
+     Site</ulink></para>
+    <itemizedlist>
+     <listitem>
+      <para>Finally, install the build</para>
+     </listitem>
+    </itemizedlist>
+
     <para>Unzip the file(s) directly into your Eclipse <emphasis>
-     <property>plugins/features</property>
-    </emphasis> directory and it will be readily available. It might be necessary to start Eclipse
-    with eclipse -clean to make sure it starts clean and rereads the new list of plugins.</para>
-  </section>
- 
+      <property>plugins/features</property>
+     </emphasis> directory and it will be readily available. It might be necessary to start Eclipse
+     with eclipse -clean to make sure it starts clean and rereads the new list of plugins.</para>
    </section>
+
+  </section>
  </section>
 
  <section id="Welcome">
   <title>Welcome to JBoss Developer Studio</title>
-  <para>In this section we'll show you how to work with the welcome page of the JBoss Developer Studio.</para>
+  <para>In this section we'll show you how to work with the welcome page of the JBoss Developer
+   Studio.</para>
   <para>The welcome page is the first page you see when you first launch JBoss Developer Studio. </para>
 
   <figure>
@@ -389,7 +424,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
   <itemizedlist>
    <listitem>
-    <para>to create new Seam projects, jBPM Process, JSF or Struts projects using JBDS wizards</para>
+    <para>to create new Seam projects, jBPM Process, JSF or Struts projects using JBDS
+    wizards</para>
    </listitem>
   </itemizedlist>
 
@@ -438,7 +474,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <title>Upgrading</title>
   <para>To upgrade, just uninstall your current version and install the new one.</para>
  </section>
- 
+
  <section id="Uninstalling">
   <?dbhtml filename="Uninstalling.html"?>
   <title>Uninstalling</title>
@@ -448,7 +484,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    uninstaller</listitem>
   </itemizedlist>
  </section>
- 
+
  <section id="Support">
   <?dbhtml filename="Support.html"?>
   <title>Support</title>
@@ -468,7 +504,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </listitem>
   </orderedlist>
  </section>
- 
+
  <section id="FAQ">
   <?dbhtml filename="FAQ.html"?>
   <title>FAQ</title>
@@ -528,7 +564,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     so that you don&apos;t need to download any additional software and can test your
     application in a Web browser right away.</para>
    <para>If you want to use a different JBoss server installation, after JBoss Developer Studio is
-    installed open Servers View (select <emphasis><property>Window &gt; Show View &gt; Others &gt; Server &gt; Servers</property>),</emphasis> then right click on this <emphasis>
+    installed open Servers View (select <emphasis><property>Window &gt; Show View &gt;
+      Others &gt; Server &gt; Servers</property>),</emphasis> then right click on this <emphasis>
      <property>view &gt; New &gt; Server</property>
     </emphasis> and follow the wizards steps to point to another Jboss server installation.</para>
    <para>JBoss Developer Studio works with any servlet container, not just JBoss. For more
@@ -537,17 +574,27 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <section id="Importing_Projects">
    <title>Importing Projects</title>
    <para>
-    <emphasis role="bold">I have an existing Seam 1.2.1 project. Can I migrate/import the project to a JBDS Seam project?</emphasis>
+    <emphasis role="bold">I have an existing Seam 1.2.1 project. Can I migrate/import the project to
+     a JBDS Seam project?</emphasis>
    </para>
-   <para>We highly recommend you to create Seam 1.2.1 project using the JBDS. In other case try to do manually:</para>
+   <para>We highly recommend you to create Seam 1.2.1 project using the JBDS. In other case try to
+    do manually:</para>
    <itemizedlist>
-    <listitem><para>Create a Seam Web project to get the JBoss tools structure</para></listitem>
+    <listitem>
+     <para>Create a Seam Web project to get the JBoss tools structure</para>
+    </listitem>
    </itemizedlist>
-    <para>Then from your Seam 1.2.1 seam-gen project start doing the following:</para>
+   <para>Then from your Seam 1.2.1 seam-gen project start doing the following:</para>
    <itemizedlist>
-    <listitem><para>Copy <property>src</property> to <property>src</property></para></listitem>
-    <listitem><para>Copy <property>view</property> to <property>Web content</property></para></listitem>
-    <listitem><para>Copy resources individual files to where they are in the seam web project  etc.</para></listitem>
+    <listitem>
+     <para>Copy <property>src</property> to <property>src</property></para>
+    </listitem>
+    <listitem>
+     <para>Copy <property>view</property> to <property>Web content</property></para>
+    </listitem>
+    <listitem>
+     <para>Copy resources individual files to where they are in the seam web project etc.</para>
+    </listitem>
    </itemizedlist>
    <para>
     <emphasis role="bold">I have an existing Struts or JSF project. Can I open the project in
@@ -560,8 +607,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <para>
     <emphasis role="bold">Can I import a .war file?</emphasis>
    </para>
-   <para>Yes. Select <emphasis><property>File &gt; Import &gt; Web &gt; WAR file</property>,
-    </emphasis> then follow importing steps.</para>
+   <para>Yes. Select <emphasis><property>File &gt; Import &gt; Web &gt; WAR
+     file</property>, </emphasis> then follow importing steps.</para>
   </section>
   <section id="Troubleshooting">
    <title>Troubleshooting, Problems, Configuration, Error Messages</title>
@@ -579,7 +626,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <para>
     <emphasis role="bold">How can I add my own tag library to the JBoss Tools Palette?</emphasis>
    </para>
-   <para>See <ulink url="http://www.redhat.com/developer_studio/guides/jsf/html_single/#AddingJSFCapabilityToAnyExistingEclipseProject">Adding Tag Libraries</ulink> in Visual Web Tools Guide.</para>
+   <para>See <ulink
+     url="http://www.redhat.com/developer_studio/guides/jsf/html_single/#AddingJSFCapabilityToAnyExistingEclipseProject"
+     >Adding Tag Libraries</ulink> in Visual Web Tools Guide.</para>
    <para>
     <emphasis role="bold">I see the Oracle ADF Faces component library tags in the JBoss Tools
      Palette, but I can&apos;t seem to find the libraries for ADF. How do I use this component
