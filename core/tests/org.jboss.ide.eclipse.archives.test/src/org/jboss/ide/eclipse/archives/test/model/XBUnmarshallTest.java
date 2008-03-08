@@ -49,7 +49,7 @@ import org.osgi.framework.Bundle;
  * @author rob.stryker <rob.stryker@redhat.com>
  *
  */
-public class UnmarshallTest extends TestCase {
+public class XBUnmarshallTest extends TestCase {
 	private Bundle bundle;
 	private IPath bundlePath;
 	private IPath archiveDescriptors;

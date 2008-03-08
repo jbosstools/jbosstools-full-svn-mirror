@@ -54,7 +54,7 @@ import org.osgi.framework.Bundle;
  * @author rob.stryker <rob.stryker@redhat.com>
  * 
  */
-public class MarshallTest extends TestCase {
+public class XBMarshallTest extends TestCase {
 	private Bundle bundle;
 	private IPath bundlePath;
 	private IPath expectedOutputs;
