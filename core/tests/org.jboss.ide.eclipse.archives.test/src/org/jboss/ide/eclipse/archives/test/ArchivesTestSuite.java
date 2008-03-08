@@ -4,6 +4,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.jboss.ide.eclipse.archives.test.core.ArchivesCoreTest;
+import org.jboss.ide.eclipse.archives.test.model.ModelCreationTest;
 import org.jboss.ide.eclipse.archives.test.model.XBMarshallTest;
 import org.jboss.ide.eclipse.archives.test.model.XBUnmarshallTest;
 import org.jboss.ide.eclipse.archives.test.util.TruezipUtilTest;
@@ -16,7 +17,7 @@ public class ArchivesTestSuite extends TestSuite {
         suite.addTestSuite(XBUnmarshallTest.class);
         suite.addTestSuite(TruezipUtilTest.class);
         suite.addTestSuite(ModelUtilTest.class);
-
+        suite.addTestSuite(ModelCreationTest.class);
         return suite; 
    }
 
