@@ -245,7 +245,7 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 			ArchiveModelNode oldRoot = archivesRoot.get(project);
 			xbPackages.put(project, packages);
 			archivesRoot.put(project, root);
-			ModelUtil.createPackagesNodeImpl(packages, (ArchiveModelNode)getRoot(project));
+			ModelUtil.fillArchiveModel(packages, (ArchiveModelNode)getRoot(project));
 			root.clearDeltas();
 			fireRegisterProjectEvent(oldRoot, root);
 			monitor.worked(1);

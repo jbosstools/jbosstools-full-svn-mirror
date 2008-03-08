@@ -222,7 +222,7 @@ public class ModelUtil {
 		return projectPath.append(workspacePath.removeFirstSegments(1));
 	}
 	
-	public static ArchiveNodeImpl createPackagesNodeImpl( XbPackages node, IArchiveModelNode modelNode) { 
+	public static void fillArchiveModel( XbPackages node, IArchiveModelNode modelNode) { 
 		for (Iterator iter = node.getAllChildren().iterator(); iter.hasNext(); ) {
 			XbPackageNode child = (XbPackageNode) iter.next();
 			ArchiveNodeImpl childImpl = (ArchiveNodeImpl)createPackageNodeImpl(child, modelNode);
@@ -233,7 +233,6 @@ public class ModelUtil {
 					modelNode.addChild(childImpl);
 			}
 		}
-		return null;
 	}
 
 	protected static IArchiveNode createPackageNodeImpl (XbPackageNode node, IArchiveNode parent) {
