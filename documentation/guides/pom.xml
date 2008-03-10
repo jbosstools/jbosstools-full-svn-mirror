@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <name>JBoss Tools - Documentation Aggregator</name>
-    <description>Grouping of JBoss Tools Project documentation modules</description>
+    <description>Grouping of JBoss Tools Project Documentation Modules</description>
 
     <modules>
         <module>Exadel-migration</module>
