@@ -80,6 +80,19 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 				creationData = template.create(getPageContext(), sourceNode, getVisualDocument());
 			} else {
 				nsIDOMElement tempHTMLElement = getVisualDocument().createElement(HTML.TAG_DIV);
+				
+				if (sourceNode.getNodeType() == Node.ELEMENT_NODE) {
+						if (((Element) sourceNode).hasAttribute("style"))
+							tempHTMLElement.setAttribute(HTML.ATTR_STYLE,
+									((Element) sourceNode)
+											.getAttribute("style"));
+						if (((Element) sourceNode).hasAttribute("styleClass"))
+							tempHTMLElement.setAttribute(HTML.ATTR_CLASS,
+									((Element) sourceNode)
+											.getAttribute("styleClass"));
+
+					}
+				
 				creationData = new VpeCreationData(tempHTMLElement);				
 			}
 			}catch (XPCOMException ex) {
