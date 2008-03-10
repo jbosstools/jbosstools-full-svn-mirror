@@ -51,7 +51,7 @@ server side validation. You need to enable validation as a part of the project, 
     <title>Create Formset</title>
 <mediaobject> 
         <imageobject>
-            <imagedata fileref="images/struts_validation/struts_validation.png"/>
+            <imagedata fileref="images/struts_validation/struts_validation_3.png"/>
         </imageobject>
 </mediaobject>
 </figure>
