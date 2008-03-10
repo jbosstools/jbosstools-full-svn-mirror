@@ -81,7 +81,8 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			} else {
 				nsIDOMElement tempHTMLElement = getVisualDocument().createElement(HTML.TAG_DIV);
 				
-				if (sourceNode.getNodeType() == Node.ELEMENT_NODE) {
+				if ((sourceNode.getNodeType() == Node.ELEMENT_NODE)
+							&& ("form".equals(sourceNode.getLocalName()))) {
 						if (((Element) sourceNode).hasAttribute("style"))
 							tempHTMLElement.setAttribute(HTML.ATTR_STYLE,
 									((Element) sourceNode)
