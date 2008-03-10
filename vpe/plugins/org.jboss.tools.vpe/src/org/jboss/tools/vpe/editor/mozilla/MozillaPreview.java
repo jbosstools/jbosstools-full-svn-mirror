@@ -36,8 +36,12 @@ import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMNodeList;
 
 /**
  * a class implementation of mozilla preview 
@@ -263,5 +267,44 @@ public class MozillaPreview extends MozillaEditor {
 	private void setSourceEditor(StructuredTextEditor sourceEditor) {
 		this.sourceEditor = sourceEditor;
 	}
+	
+	@Override
+	protected nsIDOMElement findContentArea() {
+		nsIDOMElement root = getXulRunnerEditor().getDOMDocument()
+				.getDocumentElement();
+		nsIDOMNodeList nodeList = getXulRunnerEditor().getDOMDocument()
+				.getElementsByTagName(HTML.TAG_BODY);
+		long length = nodeList.getLength();
+		nsIDOMElement area = null;
+		for (long i = 0; i < length; i++) {
+			nsIDOMNode node = nodeList.item(i);
+			if (isContentArea(node)) {
+				if (node.getNodeType() != nsIDOMNode.ELEMENT_NODE) {
+					throw new RuntimeException(
+							"The content area node should by element node.");
+				}
 
+				area = (nsIDOMElement) node
+						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				break;
+			}
+		}
+		// area = findContentArea(root);
+		if (area == null) {
+			area = getXulRunnerEditor().getDOMDocument().createElement(
+					HTML.TAG_BODY);
+			area.setAttribute(HTML.ATTR_ID, CONTENT_AREA_ID);
+			root.appendChild(area);
+		}
+
+		nsIDOMNode head = findHeadNode(root);
+
+		if (head == null) {
+			head = getXulRunnerEditor().getDOMDocument().createElement(
+					HTML.TAG_HEAD);
+		}
+
+		setHeadNode(head);
+		return area;
+	}
 }

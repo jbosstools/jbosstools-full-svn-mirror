@@ -67,7 +67,7 @@ import org.mozilla.interfaces.nsISelectionPrivate;
 public class MozillaEditor extends EditorPart implements IReusableEditor {
 	protected static final String INIT_URL = "file://" + (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath();
 //	private static final String INIT_URL = "chrome://vpe/content/init.html"; //$NON-NLS-1$
-	private static final String CONTENT_AREA_ID = "__content__area__"; //$NON-NLS-1$
+	protected static final String CONTENT_AREA_ID = "__content__area__"; //$NON-NLS-1$
 
 	static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
 	private XulRunnerEditor xulRunnerEditor;
@@ -391,7 +391,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		return area;
 	}
 
-	private nsIDOMNode findHeadNode(nsIDOMNode root){
+	protected nsIDOMNode findHeadNode(nsIDOMNode root){
 		nsIDOMNode headNode = findChildNode(root, HTML.TAG_HEAD); //$NON-NLS-1$
 		return headNode;
 	}
@@ -433,7 +433,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
     	return area;
 	}
 
-	private boolean isContentArea(nsIDOMNode node) {
+	protected boolean isContentArea(nsIDOMNode node) {
 		boolean ret = false;
     	if (HTML.TAG_BODY.equalsIgnoreCase(node.getNodeName())) {
    	    	nsIDOMNamedNodeMap map = node.getAttributes();
@@ -584,6 +584,10 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 */
 	protected void setLink(Link link) {
 		this.link = link;
+	}
+
+	public void setHeadNode(nsIDOMNode headNode) {
+		this.headNode = headNode;
 	}
 
 	
