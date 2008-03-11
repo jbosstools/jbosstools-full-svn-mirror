@@ -78,10 +78,11 @@ public class TemplateManagingUtil {
 	public static VpeTemplate getTemplateBySourceSelection(
 			VpePageContext pageContext, int focus, int anchor) {
 
-		// get source node by ofsset
+		// get source node by offset
 		Node focusNode = getSourceNodeByPosition(pageContext, focus);
 		// if focus node also contain anchor point (selected only 1 element)
-		if ((anchor <= ((IDOMNode) focusNode).getEndOffset())
+		if ((focusNode != null)
+				&& (anchor <= ((IDOMNode) focusNode).getEndOffset())
 				&& (anchor >= ((IDOMNode) focusNode).getStartOffset())) {
 
 			VpeElementMapping elementMapping = pageContext.getDomMapping()
