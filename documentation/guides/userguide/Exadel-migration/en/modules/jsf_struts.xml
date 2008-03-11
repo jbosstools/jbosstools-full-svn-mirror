@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="jsf_struts" xreflabel="jsf_struts">
+ <?dbhtml filename="jsf_struts.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Developer Studio</keyword>
+            <keyword>JBDS</keyword>
+            <keyword>Exadel Studio Pro</keyword>
+             <keyword>Migration</keyword>
+            </keywordset>
+    </chapterinfo>
+ 
+ <title>Migration of JSF and Struts Projects</title>
+ <para>In this chapter you can find concise description of migration of JSF and Struts Projects.</para>
+ <section>  
+  <title>JSF</title>
+  <para>JBoss Developer Studio includes an Import <property>JSF Project</property> Wizard that radically simplifies the process of bringing your existing JSF applications
+   into your JBoss Developer Studio workspace as JSF projects. You just need to follow these four steps:</para>
+  <orderedlist>
+   <listitem><para><emphasis><property>Select File > Import...</property></emphasis> from the menu bar, and then select <emphasis><property>Other > JSF Project </property></emphasis>from the Import dialog box that appears.</para></listitem>
+  </orderedlist>
+  
+  <figure>
+   <title>Selecting the Import Menu Item</title>
+   <mediaobject> 
+    <imageobject>
+     <imagedata fileref="images/jsf_struts/migration1.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+    
+  <figure>
+   <title>Selecting the Import JSF Project Wizard</title>
+   <mediaobject> 
+    <imageobject>
+     <imagedata fileref="images/jsf_struts/migration2.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+  
+  <orderedlist continuation="continues">
+   <listitem><para>In the first screen of the wizard, select the <emphasis><property>Change...</property></emphasis> button next to the <emphasis><property>web.xml Location*</property></emphasis> field. Browse to the location of the web.xml file for the application you 
+    want to import as a <property>JSF project</property>. Once you select it, you&apos;ll be returned to the dialog box to see a project name derived from the web.xml file you selected. 
+    You can edit this project name, if you wish.</para></listitem>
+   </orderedlist>
+ 
+  <figure>
+   <title>Selecting the Web.xml File in the Project Location Screen</title>
+   <mediaobject> 
+    <imageobject>
+     <imagedata fileref="images/jsf_struts/migration3.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+ 
+  <orderedlist continuation="continues">
+   <listitem><para>In the <emphasis><property>Project Folders</property></emphasis> screen, you can configure the rest of your project. Afterwards click on the <emphasis><property>Finish</property></emphasis> button.</para></listitem>
+   </orderedlist>
+		<para>On this step JBoss Developer Studio will try to determine your project
+		 structure and set the values for: <emphasis><property>Web Root</property></emphasis>, <emphasis><property>Source Folder</property></emphasis>, <emphasis><property>Classes Folder</property></emphasis>, <emphasis><property>Lib Folder</property></emphasis>. If your project has a custom structure, some values might not be 
+    set. If this is the case, you can manually set those values by clicking the <emphasis><property>Change...</property></emphasis> button.</para>
+    <para>After dealing with these settings, you have to work through a few more configuration settings. These settings deal primarily with how the project will be deployed within JBoss Developer Studio.</para>
+  <para>First, if the project you are importing is not already a JSF project, select the <emphasis><property>Add Libraries</property></emphasis> check box to add all the JSF-related libraries to your project. </para>
+  <para>Then, you may select the JavaServer Faces implementation (<emphasis><property>Environment</property></emphasis>) and <emphasis><property>Servlet Version</property></emphasis>.</para>
+  <para>The <emphasis><property>Context Path</property></emphasis> is the name under which the application will be deployed. </para>
+  <para>The <emphasis><property>Runtime</property></emphasis> value tells Eclipse where to find Web libraries in order to build the project. It is not possible to finish the importing of a project without selecting a Runtime. If you don&apos;t have any choices displayed for this, select <emphasis><property>New...</property></emphasis> to add a new Runtime.</para>
+  <para>Finally, <emphasis><property>Target Server</property></emphasis> sets the server to deploy the application under. The Target Server corresponds to the Runtime value selected above. If you don&apos;t want to deploy the application, uncheck this value.</para>
+   
+ 
+   <figure>
+   <title>The Project Folders Screen</title>
+   <mediaobject> 
+    <imageobject>
+     <imagedata fileref="images/jsf_struts/migration4.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+ 
+  <orderedlist continuation="continues">
+   <listitem><para>Once the project is imported, it will appear in the Package Explorer view.</para></listitem>
+   </orderedlist>
+  
+  <figure>
+   <title>Imported Project in the Package Explorer View</title>
+   <mediaobject> 
+    <imageobject>
+     <imagedata fileref="images/jsf_struts/migration5.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+ 
+ </section>
+ <section>
+  <title>Struts</title>
+  <orderedlist>
+   <listitem><para><emphasis><property>Select File > Import...</property></emphasis> from the menu bar, and then select <emphasis><property>Other > Struts Project</property></emphasis> from the Import dialog box that appears.</para></listitem>
+  </orderedlist>
+  
+  <figure>
+   <title>Selecting the Import Menu Item</title>
+      <mediaobject> 
+    <imageobject>
+     <imagedata fileref="images/jsf_struts/migration1.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+  
+  <figure>
+   <title>Selecting the Import Struts Project Wizard</title>
+      <mediaobject> 
+    <imageobject>
+     <imagedata fileref="images/jsf_struts/migration2_2.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+  
+  <orderedlist continuation="continues">
+   <listitem><para>In the Project Location screen of the wizard, select the <emphasis><property>Change... </property></emphasis>button next to the <emphasis><property>web.xml Location*</property></emphasis> field. Browse the location of the web.xml file for the application you 
+    want to import as a <property>Struts project</property>. Once you select it, you&apos;ll be returned to the dialog box to see a project name derived from the web.xml file you selected. 
+    You can edit this project name, if you wish.</para></listitem>
+  </orderedlist>
+  
+  <figure>
+   <title>The Project Location Screen</title>
+   <mediaobject> 
+    <imageobject>
+     <imagedata fileref="images/jsf_struts/migration2_21.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+  
+  <orderedlist continuation="continues">
+   <listitem><para>In the next screen, JBoss Developer Studio will try to determine your project structure. The upper pane shows the modules in this project. 
+    The lower pane allows you to edit the details of the select module. If the project structure is non-standard, some values might be left blank.
+    You can edit any values by hand or by using the <emphasis><property>Change...</property></emphasis> button.</para></listitem>
+  </orderedlist>
+  
+    <figure>
+   <title>The Project Modules Screen</title>
+   <mediaobject> 
+    <imageobject>
+     <imagedata fileref="images/jsf_struts/migration2_3.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+  
+  <orderedlist continuation="continues">
+   <listitem><para>In the <emphasis><property>Project Folders</property></emphasis> screen, you can configure the rest of your project. Afterwards click on the <emphasis><property>Finish</property></emphasis> button.</para>
+   </listitem>
+   </orderedlist>
+  <para>On this step JBoss Developer Studio will try to determine your project structure and set the values for: <emphasis><property>Classes Folder</property></emphasis>, <emphasis><property>Lib Folder</property></emphasis>, and <emphasis><property>Ant Build File</property></emphasis>. If your project has a custom structure, some values might not be set. If this is the case, you can manually set those values by clicking <emphasis><property>Change</property></emphasis>.</para>
+    <para>After dealing with these settings, you have to work through a few more configuration settings. These settings deal primarily with how the project will be deployed within JBoss Developer Studio.</para>
+  <para>First, if the project you are importing is not already a Struts project, select the <emphasis><property>Add Libraries</property></emphasis> check box to add all the Struts-related libraries to your project. </para>
+  <para>Then, you may select the Struts <emphasis><property>Environment</property></emphasis> and <emphasis><property>Servlet Version</property></emphasis>.</para>
+  <para>The <emphasis><property>Context Path</property></emphasis> is the name under which the application will be deployed. </para>
+  <para>The <emphasis><property>Runtime</property></emphasis> value tells Eclipse where to find Web libraries in order to build the project. It is not possible to finish the importing of a project without selecting a Runtime. If you don&apos;t have any choices displayed for this, select<emphasis><property> New...</property></emphasis> to add a new Runtime.</para>
+  <para>Finally, <emphasis><property>Target Server</property></emphasis> sets the server to deploy the application under. The Target Server corresponds to the Runtime value selected above. If you don&apos;t want to deploy the application, uncheck this value.</para>
+
+  
+  <figure>
+   <title>The Project Folders Screen</title>
+   <mediaobject> 
+    <imageobject>
+     <imagedata fileref="images/jsf_struts/migration2_4.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+  
+  <orderedlist continuation="continues">
+   <listitem><para>Once the project is imported, it will appear in the Package Explorer view.</para></listitem>
+  </orderedlist>
+  
+  <figure>
+   <title>Imported Project in the Package Explorer View</title>
+   <mediaobject> 
+    <imageobject>
+     <imagedata fileref="images/jsf_struts/migration2_5.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+ </section>
+</chapter>

@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="first_seam" xreflabel="first_seam">
+  <?dbhtml filename="first_seam.html"?>
+  <chapterinfo>
+    <keywordset>
+      <keyword>JBoss Developer Studio</keyword>
+      <keyword>Seam</keyword>
+      <keyword>JBoss</keyword>
+    </keywordset>
+  </chapterinfo>
+
+  <title>Write Your First Seam Web Application</title>
+
+  <para>The JBoss Developer Studio provides sophisticated tools for enterprise applications. With
+    the JBoss Developer Studio, you can get started very quickly with a web prototype, and then
+    scale up your application to include enterprise features (e.g., business processes, web
+    services, etc.) using the same developer tools. It is a &quot;scalable&quot; RAD (Rapid
+    Application Development) tool.</para>
+
+  <para>A core element that makes the JBoss Developer Studio &quot;scalable&quot; is the
+      <property>JBoss Seam</property> framework.</para>
+
+  <para>The main purpose of this chapter is to tell you about  build a simple Seam web application in minutes with the JBoss Developer Studio.</para>
+
+  <section>
+    <title>Create a Seam Project</title>
+    <para>This section helps you to create a simple Seam project.</para>
+    <para>To create a new web application in <property>Seam</property>, you should create a Seam web
+      project. This section provides all the necessary steps to organize a new project with appropriate
+      tooling and adjust the settings that match your needs. In order to find out more information, see <ulink url="../../../seam/en/html_single/index.html">Seam Dev Tools Reference guide</ulink></para>
+    <para>First, select <emphasis>
+        <property>New &gt; Project ... &gt; Seam &gt; Seam Web Project</property>
+      </emphasis>. You will be prompted to enter a name and a location directory for your new
+      project. The wizard has an option for selecting the actual Server (and not just WTP runtime)
+      that will be used for the project. This allow the wizard to correctly identify where the
+      needed datasource and driver libraries need to go.</para>
+
+    <figure>
+      <title>Create a Seam Project</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_1.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>Next, you will be asked to select the &quot;features&quot; you want to use in your
+      project. This allows JBoss Developer Studio to setup the appropriate tooling for your project.
+      Since JBoss Seam integrates all popular Java EE frameworks, you can select any combination of
+      technologies from the list. Here, for this project, we will select Dynamic Web Module, Java,
+      JavaServer Faces (JSF), and Seam Facet for a typical database-driven web application. </para>
+
+    <figure>
+      <title>Select Toolings for the Project</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_2.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <para>In this screen you can also bring up server runtimes panel by clicking <emphasis>
+        <property>Show Runtimes</property>
+      </emphasis> in the bottom right corner. This panel shows available server runtimes. Then this
+      button will be changed into <emphasis>
+        <property>Hide Runtimes</property>
+      </emphasis> one.</para>
+    <para>Click <emphasis>
+        <property>Next</property>
+      </emphasis> to proceed further.</para>
+    <figure>
+      <title>Available Server Runtimes</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_2_a.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <para>A dynamic web application contains both web pages and Java code. The wizard will ask you
+      where you want to put those files. You can just leave the default values or choose another folder.</para>
+
+    <figure>
+      <title>Select Directory Names for Web Pages and Java Files</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_3.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+
+    <para>On the next form, you will be able to select where those library JARs come from. The
+      easiest is just to select the JARs provided by the JBoss AS runtime associated with this
+      project. That is why it is important to chose the right JBoss AS 4.2 runtime in the project
+      setup window.</para>
+    <orderedlist continuation="continues">
+      <listitem>
+        <para>Check <emphasis>
+            <property>Server Supplied JSF Implementation</property>
+        </emphasis>. We will use <ulink url="../../../seam/en/html_single/index.html#addJSFCapab">JSF implementation</ulink> that comes with JBoss server</para>
+      </listitem>
+      <listitem>
+        <para>Click <emphasis>
+            <property>Next</property>
+          </emphasis></para>
+      </listitem>
+    </orderedlist>
+    <figure>
+      <title>Define JSF Implementation</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_5.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>We will also use a default Hibernate Dialect -
+      <emphasis>org.hibernate.dialect.HSQLDialect</emphasis> and deploy as a
+      <emphasis>war</emphasis> archive.</para>
+
+    <para>The project setup wizard also asks you to configure how Seam generates code for the
+      project. The Seam Home Folder should point to a valid Seam distribution. By default, it is set
+      to the Seam distribution bundled in your JBoss Developer Studio tool. If you need another one
+      choose setting up the appropriate check box:</para>
+
+    <figure>
+      <title>Enter Java Packages for Generated Code</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_6.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <para>If in this list there is no Seam runtime you want to use add it through <emphasis>
+        <property>Window &gt; Preferences &gt; JBoss Tools &gt; Web &gt;
+        Seam</property>
+      </emphasis> or just click <emphasis>
+        <property>Add</property>
+      </emphasis> button near the Seam Runtime list:</para>
+    <figure>
+      <title>Add New Seam Runtime</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_7.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>For the deployment format, choose WAR deployment if you want to use POJOs for UI event
+      handling and business logic; choose EAR deployment if you want to EJB3 beans for added
+      features. In most web applications, the WAR deployment option would suffice. You should also
+      enter Java packages for the entity beans (for database mapping) and session beans (for action
+      handlers). All generated code will be placed in those packages. </para>
+
+    <para>Click on <emphasis>
+        <property>Finish</property>
+      </emphasis> to generate a project. The generated project contains all the necessary library
+      JARs, XML configuration files, the ANT build script, as well as simple XHTML web pages and
+      Java classes for the skeleton web application. The project will be shown in Project Explorer
+      as well as in <emphasis>
+        <property>Seam Components</property>
+      </emphasis> view. If Seam Components view is not open select <emphasis>
+        <property>Window &gt; Show View &gt; Seam Components</property>
+      </emphasis>.</para>
+    <figure>
+      <title>Seam Components View</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_8.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <para>You can hide unused Seam components from this view.</para>
+    <itemizedlist>
+      <listitem>
+        <para>Click the button <emphasis>
+            <property>Menu</property>
+          </emphasis> on the top of the view (down-pointing arrow)</para>
+      </listitem>
+      <listitem>
+        <para>Choose <emphasis>
+            <property>Customize View..</property>
+          </emphasis></para>
+      </listitem>
+      <listitem>
+        <para>In the dialog <emphasis>
+            <property>Available Customization</property>
+          </emphasis> check the filter you want to apply under the <emphasis>
+            <property>Filters</property>
+          </emphasis> tab</para>
+      </listitem>
+    </itemizedlist>
+    <figure>
+      <title>Seam Components Filtering</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_9.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+  </section>
+
+  <section>
+    <title>Build and Deploy the Seam Application</title>
+    
+    <para>Here, we will show you how to deploy our web project to the server and then view the application as a web site from a URL.</para>
+    <para>Once the application is generated, you can use the &quot;Run on server&quot; menu
+      to build and deploy it into the JBoss AS runtime associated with the project. All you need is
+      to start JBoss AS in the server manager, and load the browser at URL
+      http://localhost:8080/MySeamProj/. You should see the following web page.</para>
+
+    <figure>
+      <title>The Generated Application in Action</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_10.png" scale="75"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>To make simple changes to the page, you just need to double click on the <emphasis>
+        <property>WebContent/home.xhtml file</property>
+      </emphasis> and edit it in the visual editor. Notice that the visual editor lets you both the
+      XHTML code and the rendered page. The rendered view is designed to make it easy to find stuff
+      in a complex XHTML page. If you'd like to learn more about the VPE, read the Editors section in the <ulink url="../../../jsf/en/html_single/index.html">Visual Web Tools Reference guide</ulink>.</para>
+
+    <figure>
+      <title>Making Changes in the Visual Editor</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_11.png" scale="75"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>Once you finished editing, save the file (<emphasis>
+        <property>File &gt; Save</property>
+      </emphasis>), and reload the browser to see the changes.</para>
+
+    <figure>
+      <title>The Front Page is Changed</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_12.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>Notice that we do not need to re-build and re-deploy the application. Just save the edited
+      page and reload the browser.</para>
+
+  </section>
+
+  <section>
+    <title>Add a Web Page and an Action</title>
+
+    <para>Here, we are going to add a new page and related UI action to the project.</para>
+    <para>To do this use the <emphasis>
+        <property>New &gt; Other ... &gt; Seam &gt; Seam Form</property>
+      </emphasis> wizard. You are prompted to enter the name of the project and seam component name,
+      all the others fields will be filled by the wizard.</para>
+
+    <figure>
+      <title>New Form for the Application</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_13.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>The wizard generate a web page with a single text input field and an action button. Notice
+      that the generated page uses <emphasis>
+        <property>layout/template.xhtml</property>
+      </emphasis> as a template. The template page provides the page header, footer, side menu, and
+      CSS styles (see the template.xhtml for more details). The simpleAction.xhtml is assembled into
+      the template when the simpleAction.seam URL is loaded.</para>
+
+    <programlisting role="XML"><![CDATA[
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+  <ui:composition>  xmlns:s="http://jboss.com/products/seam/taglib"
+                              xmlns:ui="http://java.sun.com/jsf/facelets"
+                              xmlns:f="http://java.sun.com/jsf/core"
+                              xmlns:h="http://java.sun.com/jsf/html"
+                              template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:messages globalOnly="true" styleClass="message"/>
+
+    <h:form id="simpleActionForm">
+		<rich:panel>
+			<f:facet name="header">simpleAction</f:facet>
+                    <s:decorate id="valueDecoration" template="layout/edit.xhtml">
+						<ui:define name="label">Value</ui:define>
+                        <h:inputText id="value" required="true"
+                            value="#{simpleAction.value}"/>
+                    </s:decorate>
+                    <div style="clear:both"/>
+         </rich:panel>
+         
+         <div class="actionButtons">
+			 <h:commandButton id="simpleAction" value="simpleAction"
+							 action="#{simpleAction.simpleAction}"/>
+		</div>
+	</h:form>
+</ui:define>
+
+</ui:composition>
+]]></programlisting>
+    <figure>
+      <title>Generated Form</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_14.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    <para>The <emphasis>
+        <property>#{simpleAction.value}</property>
+      </emphasis> notation on the web page maps to the &quot;value&quot; property in the
+      backend component named &quot;simpleAction&quot;, and the <emphasis>
+        <property>#{simpleAction.simpleAction}</property>
+      </emphasis> notation indicates that the <emphasis>
+        <property>simpleAction()</property>
+      </emphasis> method is called when the button is clicked on. Here is the
+      &quot;simpleAction&quot; named backend Seam component generated by the wizard.</para>
+
+    <programlisting role="JAVA"><![CDATA[package org.domain.MySeamProj.session;
+    
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Logger;
+import org.jboss.seam.log.Log;
+import org.jboss.seam.core.FacesMessages;
+import org.hibernate.validator.Length;
+    
+@Name("simpleAction")
+public class SimpleAction {
+
+    @Logger private Log log;
+
+    @In
+    FacesMessages facesMessages;
+
+    private String value;
+
+    //seam-gen method
+    public void simpleAction()
+    {
+        //implement your business logic here
+        log.info("simpleAction.simpleAction() action called with: #{simpleAction.value}");
+        facesMessages.add("simpleAction #{simpleAction.value}");
+    }
+
+    //add additional action methods
+
+    @Length(max=10)
+    public String getValue()
+    {
+        return value;
+    }
+
+    public void setValue(String value)
+    {
+        this.value = value;
+    }
+
+}
+]]></programlisting>
+
+    <para>Load the Simplepage.seam in the web browser. Type something in the text field and click on
+      the &quot;simpleAction&quot; button. A JSF message containing the input string is
+      created by the <emphasis>
+        <property>simpleAction.simpleAction()</property>
+      </emphasis> method. The message is displayed on the page via the <emphasis role="bold">
+        <property>&lt;h:message&gt;</property>
+      </emphasis> tag.</para>
+
+  </section>
+
+  <section>
+    <title>Input Validation</title>
+    <para>In this section we&apos;ll focus on the support of input validations.</para>
+    <para>Notice that in the generated SimpleAction class, there is a <emphasis>
+        <property>@Length</property>
+      </emphasis> annotation to validate the input when the input string is bound to <emphasis>
+        <property>#{simpleAction.value}</property>
+      </emphasis>. To see how this works, enter a text string longer than 10 chars and click on the
+      button. This is what you should see.</para>
+
+    <figure>
+      <title>The Input Validation in Action</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_15.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>Seam supports many different input validation annotations. To see an example, you can
+      replace the <emphasis>
+        <property>@Length(max=10)</property>
+      </emphasis> annotation with the following. It would require the input string to have a first
+      name and last name separated by a space. If the validation fails, the web page would print the
+      customized error message.</para>
+
+    <programlisting role="JAVA"><![CDATA[@NotNull
+@Pattern(regex="^[a-zA-Z.-]+ [a-zA-Z.-]+",
+      message="Need a firstname and a lastname")
+public String getValue()
+{
+        return value;
+}      
+]]></programlisting>
+
+    <para>Save the Java file, deploy the application, and reload the browser to see the new
+      validation scheme in action.</para>
+
+    <figure>
+      <title>More Input Validation</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_16.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+  </section>
+
+  <section>
+    <title>Add a new UI Component</title>
+
+    <para>This section tells you about how you can add a new UI Component.</para>
+    <para>Now, let&apos;s add a little more logic to the application. We will add a new boolean
+      property to the action component. If it is set to true, the action would capitalize the input
+      string and display it on the web page. The following code in the SimpleAction class implements
+      the logic.</para>
+
+    <programlisting role="JAVA"><![CDATA[@Name("simpleAction")
+public class SimpleAction {
+
+    private boolean convertToCap;
+    
+    public boolean getConvertToCap () { return convertToCap; }
+    public void setConvertToCap (boolean b) { convertToCap = b; }
+    
+    public String hello()
+    {
+        if (convertToCap) {
+          value = value.toUpperCase ();
+        }
+        return null;
+    }   
+    ... ...
+}    
+]]></programlisting>
+
+    <para>Next, on the web page, add the following line to display the value property on the
+      simpleAction component. Notice that code completion is supported for the JSF EL expression.</para>
+
+    <programlisting role="XML"><![CDATA[<p><b>Hello, #{simpleAction.value}</b></p> 
+]]></programlisting>
+
+    <para>Finally, on the web page, we add a boolean selection box component. It is bound to the <emphasis>
+        <property>convertToCap</property>
+      </emphasis> property on the backend component.</para>
+
+    <programlisting role="XML"><![CDATA[<h:selectBooleanCheckbox title="convertToCap"
+  value="#{simpleAction.convertToCap}" /> 
+Capitalize the input?
+]]></programlisting>
+
+    <para>Deploy the application and see it in action now.</para>
+
+    <figure>
+      <title>Add UI Components and Business Logic</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_17.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+  </section>
+
+  <section id="AddSecurity">
+    <title>Add Security to the Application</title>
+
+    <para>As the last point, we can add an access control to the application.</para>
+    <para>You have probably noticed that the web page template has a login link at the top of the
+      page. You can use the Seam security framework to secure access to any web page or web action.
+      We just use hardcoded username and password but you can easily change it to use database, LDAP
+      or any other means. The simplest use case for Seam security is to add a declarative security
+      in <property>pages.xml</property> (<emphasis>
+        <property>WebContent > WEB-INF > pages.xml</property>
+      </emphasis>) like this:</para>
+
+    <programlisting role="XML"><![CDATA[<!DOCTYPE pages PUBLIC
+                     "-//JBoss/Seam Pages Configuration DTD 1.2//EN"
+                     "http://jboss.com/products/seam/pages-1.2.dtd">
+
+<pages no-conversation-view-id="/home.xhtml"
+                 login-view-id="/login.xhtml">
+...
+
+ <page view-id="/simpleAction.xhtml" login-required="true"/>
+    
+</pages>]]></programlisting>
+
+
+    <para>Re-deploy the application and try the action button. The application redirects to the <emphasis>
+        <property>login</property>
+      </emphasis> page asking for login credentials. The method is invoked after you successfully
+      logged in.</para>
+
+    <figure>
+      <title>Access Control for Action Methods</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/first_seam/first_seam_18.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+  </section>
+
+
+  <section id="OtherRelevantResourcesOnTheTopic2">
+    <?dbhtml filename="OtherRelevantResourcesOnTheTopic2.html"?>
+    <title>Other relevant resources on the topic</title>
+    <para>Seam on JBoss: <ulink url="http://www.jboss.com/products/seam">Seam Framework</ulink></para>
+
+    <para>Ten Good Reasons to use Seam: <ulink url="http://www.jboss.com/products/seam/whyseam">Why
+        Seam</ulink></para>
+    <para>Getting Started: <ulink url="http://labs.jboss.com/jbossseam/gettingstarted">Getting
+        Started with JBoss Seam</ulink></para>
+    <para>Wiki: <ulink url="http://www.jboss.com/wiki/Wiki.jsp?page=JBossSeam">JBoss Wiki</ulink></para>
+    <para>FAQ: <ulink url="http://labs.jboss.com/jbossseam/faq/index.html">JBoss Seam FAQ</ulink></para>
+    <para>Downloads: <ulink url="http://labs.jboss.com/jbossseam/download">JBoss Seam
+      Downloads</ulink></para>
+    <para>Jira: <ulink url="http://jira.jboss.org/jira/browse/JBSEAM">Jira issue tracker</ulink></para>
+    <para>Rules Framework: <ulink url="http://www.jboss.com/products/rules">JBoss Rules</ulink></para>
+    <para>Seam Tools - New and Noteworthy: <ulink
+        url="http://fisheye.jboss.org/browse/~raw,r=3993/JBossTools/trunk/documentation/whatsnew/seam/seam-news-1.0.0.beta2.html"
+        >What&apos;s new and noteworthy</ulink></para>
+    <para>Max Andersen's blogs: <ulink url="http://blog.xam.dk/">Max's blog</ulink>, <ulink url="http://in.relation.to/Bloggers/Max">In Relation To...</ulink></para>
+
+  </section>
+</chapter>
