@@ -40,7 +40,7 @@ public class ArchivesModelException extends Exception {
 		return parent;
 	}
 	public String getMessage() {
-		return getMessage() != null ? getMessage() :   
+		return super.getMessage() != null ? super.getMessage() :   
 				parent.getCause() == null ? parent.getMessage() : 
 					parent.getCause().getMessage();
 	}
