@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Sep 13, 2007 11:27:06 AM                                                        
+
+     project    
+     description
+                   
+     eskimo                                                                
+     ====================================================================== -->
+	
+<project name="project" default="default">
+		<path id="emma.lib">
+			<fileset dir=".">
+		        <include name="*emma*.jar"/>
+		     </fileset>
+		</path>
+		<path id="jbds.lib">
+			<fileset dir="./jbds/eclipse/plugins">
+		        	<include name="org.jboss.tools.*/*.jar"/>
+				<include name="org.jboss.tools.*.jar"/>
+		     	</fileset>
+		</path>
+		
+	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
+		
+    <!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="default" description="" >
+    	<emma enabled="true">
+			<instr mode="overwrite" instrpathref="jbds.lib"/>
+		</emma>
+    </target>
+</project>

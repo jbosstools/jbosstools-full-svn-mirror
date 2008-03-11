@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+"../../../resources/support/docbook-dtd/docbookx.dtd"
+
+[<!ENTITY introduction SYSTEM "modules/introduction.xml">
+<!--<!ENTITY jsf_hibernate  SYSTEM "modules/jsf_hibernate.xml"> -->
+<!--<!ENTITY business_application  SYSTEM "modules/business_application.xml">-->
+<!ENTITY gsg_jsf SYSTEM "modules/gsg_jsf.xml">
+<!ENTITY jsf_application SYSTEM "modules/jsf_application.xml">
+<!ENTITY struts_application  SYSTEM "modules/struts_application.xml">
+<!ENTITY struts_validation  SYSTEM "modules/struts_validation.xml">
+]>
+
+<book>
+    
+    <bookinfo>
+        <title>JSF and Struts Classic Reference Manual</title>
+        
+        <copyright>
+            <year>2007</year>
+            <holder>Red Hat</holder>
+        </copyright>
+
+                  <releaseinfo>
+<para>Version: 1.0.0.GA</para>
+</releaseinfo>
+    </bookinfo>    
+    
+    <toc/>  
+    
+    
+    &introduction;
+    <!--&jsf_hibernate; -->
+    <!--&business_application;-->
+    &jsf_application;
+    &struts_application;
+    &struts_validation;
+    <!--&gsg_jsf; -->
+    
+    
+</book>    
