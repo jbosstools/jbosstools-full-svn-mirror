@@ -35,7 +35,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModel;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
@@ -226,7 +226,7 @@ public class ModelUtil {
 		return projectPath.append(workspacePath.removeFirstSegments(1));
 	}
 	
-	public static void fillArchiveModel( XbPackages node, IArchiveModelNode modelNode) throws ArchivesModelException { 
+	public static void fillArchiveModel( XbPackages node, IArchiveModelRootNode modelNode) throws ArchivesModelException { 
 		for (Iterator iter = node.getAllChildren().iterator(); iter.hasNext(); ) {
 			XbPackageNode child = (XbPackageNode) iter.next();
 			ArchiveNodeImpl childImpl = (ArchiveNodeImpl)createPackageNodeImpl(child, modelNode);

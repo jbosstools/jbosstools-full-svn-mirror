@@ -120,4 +120,14 @@ public interface IArchive extends INamedContainerArchiveNode {
 	 * Set's whether the destination is workspace relative or not
 	 */
 	public void setInWorkspace(boolean inWorkspace);	
+	
+	/**
+	 * Top level archives should return a list of actions which
+	 * must be done before or after building this archive
+	 * @return
+	 */
+	public IArchiveAction[] getActions();
+	public IArchiveAction[] getPreActions();
+	public IArchiveAction[] getPostActions();
+	
 }

@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeDeltaImpl.NodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFileSet;
@@ -166,8 +166,8 @@ public class ArchiveDeltaPreNodeFactory {
 		public IPath getProjectPath() {
 			return impl.getProjectPath();
 		}
-		public IArchiveModelNode getModelNode() {
-			return impl.getModelNode();
+		public IArchiveModelRootNode getModelRootNode() {
+			return impl.getModelRootNode();
 		}
 	}
 	
@@ -188,8 +188,8 @@ public class ArchiveDeltaPreNodeFactory {
 		public IPath getProjectPath() {
 			return impl.getProjectPath();
 		}
-		public IArchiveModelNode getModelNode() {
-			return impl.getModelNode();
+		public IArchiveModelRootNode getModelRootNode() {
+			return impl.getModelRootNode();
 		}
 	}
 	
@@ -210,8 +210,8 @@ public class ArchiveDeltaPreNodeFactory {
 		public IPath getProjectPath() {
 			return impl.getProjectPath();
 		}
-		public IArchiveModelNode getModelNode() {
-			return impl.getModelNode();
+		public IArchiveModelRootNode getModelRootNode() {
+			return impl.getModelRootNode();
 		}
 	}
 }

@@ -118,9 +118,9 @@ public class ArchivesModel implements IArchiveModel {
 	 * (non-Javadoc)
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveModel#getModelNodes()
 	 */
-	public IArchiveModelNode[] getModelNodes() {
+	public IArchiveModelRootNode[] getModelNodes() {
 		Collection<ArchiveModelNode> c = archivesRoot.values();
-		return (IArchiveModelNode[]) c.toArray(new IArchiveModelNode[c.size()]);
+		return (IArchiveModelRootNode[]) c.toArray(new IArchiveModelRootNode[c.size()]);
 	}
 	
 	/*
@@ -128,7 +128,7 @@ public class ArchivesModel implements IArchiveModel {
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveModel#accept(org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor)
 	 */
 	public boolean accept(IArchiveNodeVisitor visitor) {
-		IArchiveModelNode[] children = getModelNodes();
+		IArchiveModelRootNode[] children = getModelNodes();
 		boolean keepGoing = true;
 		if (keepGoing)
 			for (int i = 0; i < children.length; i++)
@@ -138,7 +138,7 @@ public class ArchivesModel implements IArchiveModel {
 	}	
 
 
-	public IArchiveModelNode getRoot(IPath project) {
+	public IArchiveModelRootNode getRoot(IPath project) {
 		return (archivesRoot.get(project));
 	}
 	
@@ -148,7 +148,7 @@ public class ArchivesModel implements IArchiveModel {
 	}
 	
 	@Deprecated
-	public void save(IArchiveModelNode modelNode, IProgressMonitor monitor) throws ArchivesModelException {
+	public void save(IArchiveModelRootNode modelNode, IProgressMonitor monitor) throws ArchivesModelException {
 		modelNode.save(monitor);
 	}
 	
@@ -156,11 +156,11 @@ public class ArchivesModel implements IArchiveModel {
 		return archivesRoot.containsKey(projectPath);
 	}
 	
-	public IArchiveModelNode registerProject(IPath projectPath, IProgressMonitor monitor) throws ArchivesModelException {
+	public IArchiveModelRootNode registerProject(IPath projectPath, IProgressMonitor monitor) throws ArchivesModelException {
 		return registerProject(projectPath, DEFAULT_PACKAGES_FILE, monitor);
 	}
 	
-	public IArchiveModelNode registerProject(IPath projectPath, String file, IProgressMonitor monitor) throws ArchivesModelException {
+	public IArchiveModelRootNode registerProject(IPath projectPath, String file, IProgressMonitor monitor) throws ArchivesModelException {
 		XbPackages packages;
 		ArchiveModelNode modelNode;
 
@@ -186,35 +186,36 @@ public class ArchivesModel implements IArchiveModel {
 		return modelNode;
 	}
 	
-	public void registerProject(IArchiveModelNode model, IProgressMonitor monitor) {
+	public void registerProject(IArchiveModelRootNode model, IProgressMonitor monitor) {
 		ArchivesCore.getInstance().preRegisterProject(model.getProjectPath());
 		xbPackages.put(model.getProjectPath(), ((ArchiveModelNode)model).getXbPackages());
 		archivesRoot.put(model.getProjectPath(), (ArchiveModelNode)model);
+		model.setModel(this);
 		fireRegisterProjectEvent((ArchiveModelNode)model);
 	}
 	
 	public void unregisterProject(IPath projectPath, IProgressMonitor monitor) {
-		IArchiveModelNode root = getRoot(projectPath);
+		IArchiveModelRootNode root = getRoot(projectPath);
 		xbPackages.remove(projectPath);
 		archivesRoot.remove(projectPath);
 		fireUnregisterProjectEvent(root);
 	}
 
-	public void unregisterProject(IArchiveModelNode model, IProgressMonitor monitor) {
+	public void unregisterProject(IArchiveModelRootNode model, IProgressMonitor monitor) {
 		xbPackages.remove(model.getProjectPath());
 		archivesRoot.remove(model.getProjectPath());
 		fireUnregisterProjectEvent((ArchiveModelNode)model);
 	}
 	
-	protected void fireRegisterProjectEvent(final IArchiveModelNode newRoot) {
+	protected void fireRegisterProjectEvent(final IArchiveModelRootNode newRoot) {
 		fireRegistrationEvent(null, newRoot, IArchiveNodeDelta.NODE_REGISTERED);
 	}
 	
-	protected void fireUnregisterProjectEvent(final IArchiveModelNode oldRoot) {
+	protected void fireUnregisterProjectEvent(final IArchiveModelRootNode oldRoot) {
 		fireRegistrationEvent(oldRoot, null, IArchiveNodeDelta.NODE_UNREGISTERED);
 	}
 	
-	protected void fireRegistrationEvent(final IArchiveModelNode oldRoot, final IArchiveModelNode newRoot, final int type) {
+	protected void fireRegistrationEvent(final IArchiveModelRootNode oldRoot, final IArchiveModelRootNode newRoot, final int type) {
 		IArchiveNodeDelta delta = new IArchiveNodeDelta() {
 			public IArchiveNodeDelta[] getAddedChildrenDeltas() {return null;}
 			public IArchiveNodeDelta[] getAllAffectedChildren() {return null;}

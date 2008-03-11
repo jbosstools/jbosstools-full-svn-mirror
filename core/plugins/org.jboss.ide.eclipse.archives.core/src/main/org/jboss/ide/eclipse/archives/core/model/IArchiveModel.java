@@ -37,14 +37,14 @@ public interface IArchiveModel {
 
 	public boolean isProjectRegistered(IPath projectPath);
 	public void save(IPath projectPath, IProgressMonitor monitor) throws ArchivesModelException;
-	public void save(IArchiveModelNode modelNode, IProgressMonitor monitor) throws ArchivesModelException;
-	public IArchiveModelNode registerProject(IPath projectPath, IProgressMonitor monitor) throws ArchivesModelException;
-	public IArchiveModelNode registerProject(IPath projectPath, String file, IProgressMonitor monitor) throws ArchivesModelException;
-	public void registerProject(IArchiveModelNode modelNode, IProgressMonitor monitor);
+	public void save(IArchiveModelRootNode modelNode, IProgressMonitor monitor) throws ArchivesModelException;
+	public IArchiveModelRootNode registerProject(IPath projectPath, IProgressMonitor monitor) throws ArchivesModelException;
+	public IArchiveModelRootNode registerProject(IPath projectPath, String file, IProgressMonitor monitor) throws ArchivesModelException;
+	public void registerProject(IArchiveModelRootNode modelNode, IProgressMonitor monitor);
 	public void unregisterProject(IPath projectPath, IProgressMonitor monitor);
-	public void unregisterProject(IArchiveModelNode modelNode, IProgressMonitor monitor);
-	public IArchiveModelNode getRoot(IPath project);
-	public IArchiveModelNode[] getModelNodes();
+	public void unregisterProject(IArchiveModelRootNode modelNode, IProgressMonitor monitor);
+	public IArchiveModelRootNode getRoot(IPath project);
+	public IArchiveModelRootNode[] getModelNodes();
 	public boolean accept(IArchiveNodeVisitor visitor);
 	
 	public void addBuildListener(IArchiveBuildListener listener);

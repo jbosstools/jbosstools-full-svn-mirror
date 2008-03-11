@@ -41,7 +41,7 @@ import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModel;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
 import org.jboss.ide.eclipse.archives.core.util.internal.TrueZipUtil;
@@ -92,7 +92,7 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 	 */
 	protected void clean(IProgressMonitor monitor) throws CoreException {
 		IPath p = getProject().getLocation();
-		IArchiveModelNode root = ArchivesModel.instance().getRoot(p);
+		IArchiveModelRootNode root = ArchivesModel.instance().getRoot(p);
 		if(root!=null) {
 			IArchiveNode[] nodes = root.getChildren(IArchiveNode.TYPE_ARCHIVE);
 			for( int i = 0; i < nodes.length; i++ ) {
@@ -150,7 +150,7 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 		final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 		final int count = workspaceRoot.getLocation().segmentCount();
 
-		IArchiveModelNode root = ArchivesModel.instance().getRoot(getProject().getLocation());
+		IArchiveModelRootNode root = ArchivesModel.instance().getRoot(getProject().getLocation());
 		if(root!=null) {
 			root.accept(new IArchiveNodeVisitor () {
 				public boolean visit (IArchiveNode node) {

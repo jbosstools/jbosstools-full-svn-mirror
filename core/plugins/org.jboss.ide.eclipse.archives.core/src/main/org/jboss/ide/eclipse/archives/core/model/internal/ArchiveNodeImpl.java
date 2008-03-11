@@ -30,7 +30,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
@@ -81,9 +81,9 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 * (non-Javadoc)
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getModel()
 	 */
-	public IArchiveModelNode getModelNode() {
+	public IArchiveModelRootNode getModelRootNode() {
 		Object root = getRoot();
-		return root instanceof IArchiveModelNode ? (IArchiveModelNode)root : null;
+		return root instanceof IArchiveModelRootNode ? (IArchiveModelRootNode)root : null;
 	}
 	
 	/*
@@ -171,10 +171,8 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getProject()
 	 */
 	public IPath getProjectPath() {
-		IArchiveNode root = getRoot();
-		if( root.getNodeType() != IArchiveNode.TYPE_MODEL)
-			return null;
-		return root.getProjectPath();
+		IArchiveModelRootNode root = getModelRootNode();
+		return root == null ? null : root.getProjectPath();
 	}
 	
 	/*

@@ -25,29 +25,42 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.EventManager;
-import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModel;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding.XbException;
 
-public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelNode {
+/**
+ * 
+ * @author rob.stryker <rob.stryker@redhat.com>
+ *
+ */
+public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelRootNode {
 	private IPath project;
 	private IPath descriptor;
 	private IArchiveModel model;
 	
+	public ArchiveModelNode(IPath project, XbPackages node) {
+		this(project, null, node);
+	}
+	
+	public ArchiveModelNode(IPath project, IPath descriptor, XbPackages node) {
+		this(project, descriptor, node, null);
+	}
+	
 	public ArchiveModelNode(IPath project, XbPackages node, IArchiveModel model) {
-		this(project, project.append(IArchiveModel.DEFAULT_PACKAGES_FILE), node, model);
+		this(project, null, node, model);
 	}
 	
 	public ArchiveModelNode(IPath project, IPath descriptor,
 			XbPackages node, IArchiveModel model) {
 		super(node);
 		this.project = project;
-		this.descriptor = descriptor;
+		this.descriptor = descriptor != null ? descriptor : 
+				project.append(IArchiveModel.DEFAULT_PACKAGES_FILE);
 		this.model = model;
 	}
 	
@@ -89,7 +102,7 @@ public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelNo
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getNodeType()
 	 */
 	public int getNodeType() {
-		return IArchiveNode.TYPE_MODEL;
+		return IArchiveNode.TYPE_MODEL_ROOT;
 	}
 
 	/*
@@ -123,6 +136,10 @@ public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelNo
 	public void setParent(IArchiveNode parent) {
 	}
 
+	public void setModel(IArchiveModel model) {
+		this.model = model;
+	}
+	
 	/**
 	 * I have no relative path. I'm above the root archive
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getRootArchiveRelativePath()

@@ -29,10 +29,11 @@ import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.model.ArchiveNodeFactory;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveBuildListener;
+import org.jboss.ide.eclipse.archives.core.model.IArchive;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModel;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
@@ -52,19 +53,19 @@ public class ModelCreationTest extends TestCase {
 	}
 
 	public void testSimpleCreation() {
-		createModel();
+		createModelNode();
 	}
 	
 	public void testAddToModel() {
-		ArchiveModelNode model = createModel();
-		ArchivesModel.instance().registerProject(model, new NullProgressMonitor());
-		assertEquals(model, ArchivesModel.instance().getRoot(project));
+		ArchiveModelNode modelNode = createModelNode();
+		modelNode.getModel().registerProject(modelNode, new NullProgressMonitor());
+		assertEquals(modelNode,modelNode.getModel().getRoot(project));
 		assertNotSame(null, modelListener.getDelta());
 		assertEquals(IArchiveNodeDelta.NODE_REGISTERED, modelListener.getDelta().getKind());
-		ArchivesModel.instance().unregisterProject(model, new NullProgressMonitor());
+		modelNode.getModel().registerProject(modelNode, new NullProgressMonitor());
 	}
 	
-	protected ArchiveModelNode createModel() {
+	protected ArchiveModelNode createModelNode() {
 		try {
 			XbPackages packs = new XbPackages();
 			XbPackage pack = new XbPackage();
@@ -72,7 +73,7 @@ public class ModelCreationTest extends TestCase {
 			ArchiveModelNode model = getModel(packs);
 			ModelUtil.fillArchiveModel(packs, model);
 			assertEquals(project, model.getProjectPath());
-			assertEquals(IArchiveNode.TYPE_MODEL, model.getNodeType());
+			assertEquals(IArchiveNode.TYPE_MODEL_ROOT, model.getNodeType());
 			assertEquals(null, model.getParent());
 			assertEquals(packs, model.getNodeDelegate());
 			assertTrue(model.hasChildren());
@@ -86,19 +87,63 @@ public class ModelCreationTest extends TestCase {
 		return null;
 	}
 	
-	public void testDeltas() {
+	public void testAddFolderToModel() {
 		try {
-			ArchiveModelNode model = createModel();
-			model.clearDelta();
+			ArchiveModelNode modelNode = createModelNode();
 			IArchiveFolder folder = ArchiveNodeFactory.createFolder();
 			folder.setName("testFolder");
-			model.addChild(folder);
-			IArchiveNodeDelta delta = model.getDelta();
-			assertEquals(IArchiveNodeDelta.CHILD_ADDED, delta.getKind());
+			modelNode.addChild(folder);
 		} catch( ArchivesModelException ame ) {
-			fail(ame.getMessage());
+			return;
+		}
+		fail();
+	}
+	
+	public void testAddFilesetToModel() {
+		try {
+			ArchiveModelNode modelNode = createModelNode();
+			IArchiveFileSet fs = ArchiveNodeFactory.createFileset();
+			fs.setIncludesPattern("*");
+			fs.setSourcePath(new Path("blah"));
+			modelNode.addChild(fs);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+	
+
+	public void testAddActionToModel() {
+		fail();
+	}
+	
+	public void testAddArchiveToModel() {
+		try {
+			ArchiveModelNode modelNode = createModelNode();
+			IArchive archive = ArchiveNodeFactory.createArchive();
+			archive.setName("someName.war");
+			archive.setDestinationPath(new Path("test"));
+			modelNode.addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			fail();
 		}
 	}
+	
+	
+	
+//	public void testDeltas() {
+//		try {
+//			ArchiveModelNode model = createModelNode();
+//			model.clearDelta();
+//			IArchiveFolder folder = ArchiveNodeFactory.createFolder();
+//			folder.setName("testFolder");
+//			model.addChild(folder);
+//			IArchiveNodeDelta delta = model.getDelta();
+//			assertEquals(IArchiveNodeDelta.CHILD_ADDED, delta.getKind());
+//		} catch( ArchivesModelException ame ) {
+//			fail(ame.getMessage());
+//		}
+//	}
 	
 	protected ArchiveModelNode getModel(XbPackages packs) {
 		IArchiveModel model = new ArchivesModel();

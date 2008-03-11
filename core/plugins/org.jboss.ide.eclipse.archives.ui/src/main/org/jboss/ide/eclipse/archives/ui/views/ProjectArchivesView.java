@@ -40,7 +40,7 @@ import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelCore;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
@@ -222,7 +222,7 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 			return;
 		}
 		
-		IArchiveModelNode node = (IArchiveModelNode) packageViewer.getInput();
+		IArchiveModelRootNode node = (IArchiveModelRootNode) packageViewer.getInput();
 		if (node != null)
 		{
 			IPath projectPath = node.getProjectPath();
@@ -319,10 +319,10 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 		getSite().getShell().getDisplay().asyncExec(new Runnable () {
 			public void run () {
 				for( int i = 0; i < topChanges.length; i++ ) {
-					if( topChanges.length == 1 && topChanges[0] instanceof IArchiveModelNode) {
+					if( topChanges.length == 1 && topChanges[0] instanceof IArchiveModelRootNode) {
 						// we have a changed IArchiveModelNode. Something's different
-						IArchiveModelNode inputModel = (IArchiveModelNode) packageViewer.getInput();
-						IArchiveModelNode newModel = (IArchiveModelNode)topChanges[0];
+						IArchiveModelRootNode inputModel = (IArchiveModelRootNode) packageViewer.getInput();
+						IArchiveModelRootNode newModel = (IArchiveModelRootNode)topChanges[0];
 						if( inputModel == null || (inputModel.getProjectPath().equals(newModel.getProjectPath()) && inputModel != newModel)) {
 							// they have the same path but are different objects. 
 							// Model was probably reloaded from disk and could be completely different

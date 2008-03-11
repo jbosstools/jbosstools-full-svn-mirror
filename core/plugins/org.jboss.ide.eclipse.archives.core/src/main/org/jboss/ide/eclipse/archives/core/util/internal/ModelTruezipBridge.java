@@ -225,7 +225,7 @@ public class ModelTruezipBridge {
 	private static File getFile(IArchiveNode node) {
 		if( node == null ) return null;
 		
-		if( node.getNodeType() == IArchiveNode.TYPE_MODEL ) return null;
+		if( node.getNodeType() == IArchiveNode.TYPE_MODEL_ROOT ) return null;
 		
 		if( node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FILESET)
 			return getFile(node.getParent());

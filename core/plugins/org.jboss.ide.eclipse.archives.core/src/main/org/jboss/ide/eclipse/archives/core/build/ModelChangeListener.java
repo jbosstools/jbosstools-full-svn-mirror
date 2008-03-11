@@ -28,7 +28,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
@@ -162,8 +162,8 @@ public class ModelChangeListener implements IArchiveModelListener {
 	private void nodeAdded(IArchiveNode added) {
 		if( added == null ) return;
 		
-		if( added.getNodeType() == IArchiveNode.TYPE_MODEL) {
-			IArchiveNode[] archives = ((IArchiveModelNode)added).getChildren(IArchiveNode.TYPE_ARCHIVE);
+		if( added.getNodeType() == IArchiveNode.TYPE_MODEL_ROOT) {
+			IArchiveNode[] archives = ((IArchiveModelRootNode)added).getChildren(IArchiveNode.TYPE_ARCHIVE);
 			for( int i = 0; i < archives.length; i++ ) {
 				nodeAdded(archives[i]);
 			}
@@ -186,7 +186,7 @@ public class ModelChangeListener implements IArchiveModelListener {
 	
 	private void nodeRemoved(IArchiveNode removed) {
 		if( removed == null ) return;
-		if( removed.getNodeType() == IArchiveNode.TYPE_MODEL ) {
+		if( removed.getNodeType() == IArchiveNode.TYPE_MODEL_ROOT ) {
 			// remove all top level items
 			IArchiveNode[] kids = removed.getChildren(IArchiveNode.TYPE_ARCHIVE);
 			for( int i = 0; i < kids.length; i++ ) {

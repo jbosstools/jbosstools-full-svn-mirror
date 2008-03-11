@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveAction;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
@@ -116,6 +117,33 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 		IArchive pkgs[] = new IArchive[nodes.length];
 		System.arraycopy(nodes, 0, pkgs, 0, nodes.length);
 		return pkgs;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchive#getActions()
+	 */
+	public IArchiveAction[] getActions() {
+		IArchiveNode nodes[] = getChildren(TYPE_ARCHIVE_ACTION);
+		IArchiveAction actions[] = new IArchiveAction[nodes.length];
+		System.arraycopy(nodes, 0, actions, 0, nodes.length);
+		return actions;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchive#getPreActions()
+	 */
+	public IArchiveAction[] getPreActions() {
+		return new IArchiveAction[0]; // TODO
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchive#getPostActions()
+	 */
+	public IArchiveAction[] getPostActions() {
+		return new IArchiveAction[0]; // TODO
 	}
 
 	/*

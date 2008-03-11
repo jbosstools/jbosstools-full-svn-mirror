@@ -115,7 +115,7 @@ public interface IArchiveNodeDelta {
 	public IArchiveNode getPostNode();
 	
 	/**
-	 * Return the affected node before changes, or null if the node is an {@link IArchiveModelNode}
+	 * Return the affected node before changes, or null if the node is an {@link IArchiveModelRootNode}
 	 * @return
 	 */
 	public IArchiveNode getPreNode();

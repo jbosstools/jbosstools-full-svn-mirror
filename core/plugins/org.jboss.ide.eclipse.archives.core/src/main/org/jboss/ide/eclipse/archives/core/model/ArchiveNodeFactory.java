@@ -21,6 +21,7 @@
  */
 package org.jboss.ide.eclipse.archives.core.model;
 
+import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveActionImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFileSetImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFolderImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
@@ -41,5 +42,9 @@ public class ArchiveNodeFactory {
 	
 	public static IArchiveFolder createFolder() {
 		return new ArchiveFolderImpl();
+	}
+	
+	public static IArchiveAction createAction() {
+		return new ArchiveActionImpl();
 	}
 }

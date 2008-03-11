@@ -13,7 +13,7 @@ import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveBuildListener;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
 
@@ -65,7 +65,7 @@ public class IsolatedTruezipExecution {
 			}
 		}
 		
-		IArchiveModelNode node = ArchivesModel.instance().getRoot(path);
+		IArchiveModelRootNode node = ArchivesModel.instance().getRoot(path);
 		final ArrayList<String> requiredProjects = new ArrayList<String>();
 		node.accept(new IArchiveNodeVisitor() {
 			public boolean visit(IArchiveNode node) {

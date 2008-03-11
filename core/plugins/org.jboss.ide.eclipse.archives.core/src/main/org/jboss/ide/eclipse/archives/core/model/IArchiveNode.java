@@ -36,27 +36,33 @@ public interface IArchiveNode {
 	/**
 	 * The node type that represents the model
 	 */
-	public static final int TYPE_MODEL = -1;
+	public static final int TYPE_MODEL_ROOT = -1;
 
 	/**
-	 * The node type that represents an IPackage
+	 * The node type that represents an IArchive
 	 */
 	public static final int TYPE_ARCHIVE = 0;
 	
 	/**
-	 * The node type that represents an IPackageReference
+	 * The node type that represents an IArchiveReference
 	 */
 	public static final int TYPE_ARCHIVE_REFERENCE = 1;
 	
 	/**
-	 * The node type that represents an IPackageFileSet
+	 * The node type that represents an IArchiveFileSet
 	 */
 	public static final int TYPE_ARCHIVE_FILESET = 2;
 	
 	/**
-	 * The node type that represents an IPackageFolder
+	 * The node type that represents an IActionFolder
 	 */
 	public static final int TYPE_ARCHIVE_FOLDER = 3;
+	
+	/**
+	 * The node type that represents an IArchiveAction
+	 */
+	public static final int TYPE_ARCHIVE_ACTION = 4;
+
 	
 	/**
 	 * @return The parent of this package node, or null if this node is top level
@@ -150,10 +156,11 @@ public interface IArchiveNode {
 	 * Get the model this node is attached to, or null if none
 	 * @return
 	 */
-	public IArchiveModelNode getModelNode();
+	public IArchiveModelRootNode getModelRootNode();
 
 	/**
-	 * Get the path relative to the root archive
+	 * Get the path relative to the root archive,
+	 * or null if not applicable. 
 	 * @return
 	 */
 	public IPath getRootArchiveRelativePath();

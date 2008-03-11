@@ -31,7 +31,8 @@ import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding.XbExcept
  * @author <a href="rob.stryker@redhat.com">Rob Stryker</a>
  *
  */
-public interface IArchiveModelNode extends IArchiveNode {
+public interface IArchiveModelRootNode extends IArchiveNode {
+	public void setModel(IArchiveModel model);
 	public IArchiveModel getModel();
 	public void save(IProgressMonitor monitor) throws ArchivesModelException;
 }
