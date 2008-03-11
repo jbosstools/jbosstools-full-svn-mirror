@@ -1,0 +1,183 @@
+<project name="Build Wrapper for all JBossIDE builders">
+  <!--
+     - The purpose of this ant build file is to put a portable
+     - convenience wrapper around the pde build of hibernate
+     - plugins.  The pde build process consumes a build.xml file
+     - that contains the properities of the build.  Edit that
+     - file if there are build settings you would like to encode for
+     - repeating builds.  Sometimes, editing the build.xml file can
+     - be awkward.  For example, it may be necessary to run two builds
+     - a day, each with a different buildId and buildType.  Manual edits
+     - could be tiresome in that case. Alternatively,
+     - those properties could be overridden in the ant command line
+     - that runs this wrapper (e.g., -Dbuild=/usr/tmp/foo), and then
+     - driven by a schedule script that generates values for properties.
+
+     - Here is a list/meaning of properties that you most likely want
+     - to override on command line (default values and better description
+     - for these are in the build.xml file)
+     -   hibernate - absolute path to directory where hibernate source and
+     -       builds reside
+     -   fetchTag - cvs tag of the revision to build
+     -   buildDirectory - destination directory of output
+     -   buildType, buildId, buildLabel - different ways to name
+     -       the build output
+     -   baseLocation - the location containing all the plugins needed
+     -       to build these plugins
+     -
+     - See the java target below to enable any/all of these.  Feel
+     - free to add new ones.
+     -->
+
+   <!--
+     -  These properties are needed to launch the build, can be overridden
+     -  on command line, but are not defaulted in the build.xml file.
+     -->
+	<taskdef classpath="../lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml"/>
+	
+	<loadproperties srcFile="global.properties"/>
+
+	<loadproperties srcFile="${builder}/build.properties"/>
+	<loadproperties srcfile="${builder}/build.requires"/>
+
+   <import file="common/buildRequirements.xml"/>
+	
+   <target name="nightly">
+		<tstamp/>
+		<property name="versionTag" value="${DSTAMP}${TSTAMP}-nightly"/>
+		<property name="buildType" value="N"/>
+		<property name="uploadBuildDirectory"
+			value="${buildTypeDescription.N}"/>
+		<antcall target="main" inheritAll="true"/>
+   </target>
+
+   <target name="integration">
+		<tstamp/>
+		<property name="versionTag" value="${DSTAMP}${TSTAMP}-integration"/>
+   		<property name="buildType" value="I"/>
+		<property name="uploadBuildDirectory"
+			value="${buildTypeDescription.I}"/>
+		<antcall target="main" inheritAll="true"/>
+   </target>
+
+   <target name="release">
+		<property name="versionTag" value="${releaseNumber}"/>
+   	<property name="buildType" value="R"/>
+		<property name="uploadBuildDirectory"
+			value="${buildTypeDescription.R}"/>
+		<antcall target="main" inheritAll="true"/>
+   </target>
+
+   <target name="main">
+
+	<delete includeemptydirs="true" failonerror="false">
+		<fileset dir="${workspace}" defaultexcludes="false"/>
+	</delete>
+   	
+   	<buildRequirements requirements="${builder.requires}"/>
+   	
+   	<!-- get the cvs tag if it wasn't set (when being called standalone)-->
+   	<if>
+   		<not><isset property="cvsTag"/></not>
+   		<then>
+			<if>
+				<isset property="@{builder}.cvs"/>
+				<then>
+	  				<propertycopy override="true" name="cvsTag" from="@{builder}.cvs"/>
+				</then>
+				<else>
+					<propertycopy override="true" name="cvsTag" from="default.cvs.tag"/>
+				</else>
+			</if>
+   		</then>
+   	</if>
+   	
+   	<!-- for some reason the "eclipse-hacked" ant will fail unless the jdt.core jars are in the classpath -->
+	<mkdir dir="${build.root}/temp-jdt-core"/>
+	<unjar dest="${build.root}/temp-jdt-core">
+		<fileset dir="${clean.eclipse.home}/plugins">
+			<include name="org.eclipse.jdt.core_*.jar"/>
+		</fileset>
+   	</unjar>
+	<property name="jdt.core.path" value="${build.root}/temp-jdt-core"/>
+	<!--property name="jdt.core.path" value="${clean.eclipse.home}/plugins/org.eclipse.jdt.core_3.1.0"/-->
+
+   	<property environment="env"/>
+   	
+   	<echo>versionTag for this builder=${versionTag}</echo>
+     <java classname="org.eclipse.core.launcher.Main" fork="true">
+     	<syspropertyset>
+		  <propertyref prefix="jwsdp"/>
+		  <propertyref prefix="hibernate."/>
+  		  <propertyref prefix="hibernateext."/>
+     	  <propertyref prefix="xerces"/>
+     	  <propertyref prefix="junit"/>
+		  <propertyref prefix="eclipse"/>
+       	  <propertyref prefix="docbook"/>
+       	  <propertyref prefix="jbpm"/>
+     	  <propertyref regex=".cvs$"/>
+     	  <propertyref prefix="versionTags."/>
+		</syspropertyset>
+     
+    <classpath path="${env.JAVA_HOME}/lib/tools.jar"/>
+     <classpath path="${env.JAVA_HOME}/lib/jsse.jar"/>
+	<classpath path="${clean.eclipse.home}/startup.jar" />
+	<classpath>
+		<fileset dir="${build.root}/lib">
+			<include name="**/*.jar"/>
+		</fileset>
+		<fileset dir="${ant.home}/lib">
+     		<include name="**/*.jar"/>
+     	</fileset>
+		<!-- ugly hack to make running this builder standalone work.. -->
+		<!-- without these you get classpath issues (can't find JDTCompilerAdapter) -->
+		<fileset dir="${jdt.core.path}">
+			<include name="*.jar"/>
+		</fileset>
+		 <path path="${build.root}/bin"/>
+		<path path="${jdt.core.path}"/>
+	</classpath>
+        <!-- jvmarg value="-Djava.endorsed.dir=${xerces.home}"/ -->
+        <arg line="-application org.eclipse.ant.core.antRunner" />
+
+        <!-- directory containing customTargets.xml and hibernate.map -->
+	<arg value="-Dbuilder=${builder}"/>
+     	<arg value="-Dclean.eclipse.home=${clean.eclipse.home}"/>
+
+        <!-- when failure, look in ${workspace}/.metadata/.log for trace -->
+        <arg line="-data ${workspace}"/>
+
+        <!-- use scripts from pde build plugin -->
+        <arg line="-f ${pdescriptdir}/build.xml"/>
+        <arg value="-DgenericTargets=${genericTargets}" />
+        <arg value="-Dbasedir=${basedir}"/>
+
+        <!-- arg value="${verbose}" / -->
+
+        <!--
+          -  remove xml comments to enable a command line parameter.
+          -  And then the command line parameter is required but not checked-for.
+          -->
+
+        <!-- arg value="-Dhibernate=${hibernate}" / -->
+        <!-- arg value="-DfetchTag=${fetchTag}" / -->
+        <!-- arg value="-DbuildDirectory=${buildDirectory}" / -->
+	<arg value="-DbuildType=${buildType}" />
+	<arg value="-DversionTag=${versionTag}" />
+	<arg value="-DuploadBuildDirectory=${uploadBuildDirectory}" />
+    <arg value="-Dbuild.root=${build.root}"/>
+    <arg value="-Dproduct.versionTag=${product.versionTag}"/>
+        <!-- arg value="-DbuildId=${buildId}" / -->
+        <!-- arg value="-DbuildLabel=${buildLabel}" / -->
+		  <arg value="-DbaseLocation=${baseLocation}" />
+     	<arg value="-DbuildScriptExt=${buildScriptExt}" />
+		<arg value="-DcvsTag=${cvsTag}"/>
+     	<arg value="-DsvnURL=${svnURL}"/>
+	<!--arg value="-debug"/-->
+     </java>
+
+	<delete includeemptydirs="true">
+		<fileset dir="${jdt.core.path}" defaultexcludes="false"/>
+	</delete>
+   </target>
+</project>
