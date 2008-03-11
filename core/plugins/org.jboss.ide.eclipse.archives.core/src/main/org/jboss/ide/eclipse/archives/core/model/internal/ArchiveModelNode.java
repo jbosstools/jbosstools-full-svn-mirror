@@ -22,31 +22,44 @@
 package org.jboss.ide.eclipse.archives.core.model.internal;
 
 import org.eclipse.core.runtime.IPath;
-import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
+import org.jboss.ide.eclipse.archives.core.model.EventManager;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListenerManager;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackageNodeWithProperties;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding.XbException;
 
 public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelNode {
 	private IPath project;
-	private IArchiveModelListenerManager manager;
+	private IPath descriptor;
+	private IArchiveModel model;
 	
-	public ArchiveModelNode(IPath project, XbPackages node, 
-			IArchiveModelListenerManager manager) {
-		super(node);
-		this.project = project;
-		this.manager = manager;
+	public ArchiveModelNode(IPath project, XbPackages node, IArchiveModel model) {
+		this(project, project.append(IArchiveModel.DEFAULT_PACKAGES_FILE), node, model);
 	}
 	
+	public ArchiveModelNode(IPath project, IPath descriptor,
+			XbPackages node, IArchiveModel model) {
+		super(node);
+		this.project = project;
+		this.descriptor = descriptor;
+		this.model = model;
+	}
+	
+	public IPath getDescriptor() {
+		return descriptor;
+	}
 	/*
 	 * (non-Javadoc)
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode#getManager()
 	 */
-	public IArchiveModelListenerManager getManager() {
-		return manager;
+	public IArchiveModel getModel() {
+		return model;
 	}
 	
 	/*
@@ -65,10 +78,10 @@ public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelNo
 	 * The model root can only accept IArchive's as children
 	 * @see IArchiveNode#addChild(IArchiveNode)
 	 */
-	public void addChild(IArchiveNode child) {
-		if( child instanceof IArchive ) {
-			super.addChild(child);
-		}
+	protected boolean validateChild(IArchiveNode child) {
+		if( child.getNodeType() != IArchiveNode.TYPE_ARCHIVE)
+			return false;
+		return true;
 	}
 
 	/*
@@ -92,7 +105,7 @@ public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelNo
 	 * @see org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeImpl#connectedToModel()
 	 */
 	public boolean connectedToModel() {
-		return ArchivesModel.instance().containsRoot(this);
+		return getModel() != null;
 	}
 
 	/**
@@ -116,5 +129,20 @@ public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelNo
 	 */
 	public IPath getRootArchiveRelativePath() {
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode#save(org.eclipse.core.runtime.IProgressMonitor)
+	 */
+	public void save(IProgressMonitor monitor) throws ArchivesModelException {
+		XbPackages packs = (XbPackages)getNodeDelegate();
+		try {
+			XMLBinding.marshallToFile(packs, getDescriptor(), monitor);
+		} catch( XbException xbe ) {
+			throw new ArchivesModelException(xbe);
+		}
+		IArchiveNodeDelta delta = getDelta();
+		clearDelta();
+		EventManager.fireDelta(delta);
 	}
 }

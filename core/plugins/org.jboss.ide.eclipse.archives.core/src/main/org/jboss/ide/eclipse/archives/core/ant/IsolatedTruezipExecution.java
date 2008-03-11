@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelCore;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveBuildListener;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
@@ -57,7 +58,11 @@ public class IsolatedTruezipExecution {
 		
 		if( ArchivesModel.instance().getRoot(path) == null) {
 			task.log("Registering project: " + path + ". ", Project.MSG_VERBOSE);
-			ArchivesModel.instance().registerProject(path, null);			
+			try {
+				ArchivesModel.instance().registerProject(path, null);
+			} catch( ArchivesModelException ame ) {
+				// log it
+			}
 		}
 		
 		IArchiveModelNode node = ArchivesModel.instance().getRoot(path);

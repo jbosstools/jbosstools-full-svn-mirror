@@ -40,6 +40,7 @@ import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
@@ -122,7 +123,7 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 								
 								// ignore the packages project. that will it's own build call, 
 								// or will handle the change in some other way
-								if( !delta.getResource().equals(proj.findMember(ArchivesModel.PROJECT_PACKAGES_FILE))) 
+								if( !delta.getResource().equals(proj.findMember(IArchiveModel.DEFAULT_PACKAGES_FILE))) 
 									addedChanged.add(delta.getResource().getLocation());
 							} else if( (delta.getKind() & IResourceDelta.REMOVED ) > 0 ) {
 								removed.add(delta.getResource().getLocation());

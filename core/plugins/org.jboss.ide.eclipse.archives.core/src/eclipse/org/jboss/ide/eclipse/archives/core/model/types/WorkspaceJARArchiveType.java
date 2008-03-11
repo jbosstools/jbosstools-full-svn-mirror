@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFileSetImpl;
@@ -62,7 +63,10 @@ public class WorkspaceJARArchiveType extends AbstractArchiveType {
 		classes.setSourcePath(outputContainer.getFullPath());
 		classes.setInWorkspace(true);
 		
-		jar.addChild(classes);
+		try {
+			jar.addChild(classes);
+		} catch( ArchivesModelException ame ) {
+		}
 		
 		monitor.worked(1);
 		monitor.done();

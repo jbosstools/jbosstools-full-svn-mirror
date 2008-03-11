@@ -21,18 +21,12 @@
  */
 package org.jboss.ide.eclipse.archives.core.model;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding;
@@ -46,18 +40,13 @@ import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
  * 
  * @author <a href="rob.stryker@redhat.com">Rob Stryker</a>
  */
-public class ArchivesModel implements IArchiveModelListenerManager {
-	
-	/**
-	 * The packages file name
-	 */
-	public static final String PROJECT_PACKAGES_FILE = ".packages";
+public class ArchivesModel implements IArchiveModel {
 	
 	/**
 	 * Singleton instance
 	 */
-	protected static ArchivesModel instance;
-	public static ArchivesModel instance() {
+	protected static IArchiveModel instance;
+	public static IArchiveModel instance() {
 		if( instance == null ) 
 			instance = new ArchivesModel();
 		return instance;
@@ -74,199 +63,165 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 		modelListeners = new ArrayList<IArchiveModelListener>();
 	}
 	
-	
-	public static final int LIST_FRONT = 0;
-	public static final int LIST_BACK = -1;
-	
 	/*
-	 * Listeners
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveModel#addBuildListener(org.jboss.ide.eclipse.archives.core.model.IArchiveBuildListener)
 	 */
 	public void addBuildListener(IArchiveBuildListener listener) {
 		if( !buildListeners.contains(listener)) 
 			buildListeners.add(listener);
 	}
-	public void addBuildListener(IArchiveBuildListener listener, int loc) {
-		if( !buildListeners.contains(listener)) {
-			if( loc == LIST_FRONT )
-				buildListeners.add(0, listener);
-			else
-				buildListeners.add(listener);				
-		}
-	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveModel#removeBuildListener(org.jboss.ide.eclipse.archives.core.model.IArchiveBuildListener)
+	 */
 	public void removeBuildListener(IArchiveBuildListener listener) {
 		buildListeners.remove(listener);
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveModel#getBuildListeners()
+	 */
 	public IArchiveBuildListener[] getBuildListeners() {
 		return buildListeners.toArray(new IArchiveBuildListener[buildListeners.size()]);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveModel#addModelListener(org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener)
+	 */
 	public void addModelListener(IArchiveModelListener listener) {
 		if( !modelListeners.contains(listener)) 
 			modelListeners.add(listener);
 	}
-	public void addModelListener(IArchiveModelListener listener, int loc) {
-		if( !modelListeners.contains(listener)) {
-			if( loc == LIST_FRONT )
-				modelListeners.add(0, listener);
-			else
-				modelListeners.add(listener);				
-		}
-	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveModel#removeModelListener(org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener)
+	 */
 	public void removeModelListener(IArchiveModelListener listener) {
 		if( modelListeners.contains(listener)) 
 			modelListeners.remove(listener);
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveModel#getModelListeners()
+	 */
 	public IArchiveModelListener[] getModelListeners() {
 		return modelListeners.toArray(new IArchiveModelListener[modelListeners.size()]);
 	}
-
 	
-	
-	
-	
-	
-	public XbPackages getXbPackages(IPath project) {
-		return (xbPackages.get(project));
-	}
-	
-	/**
-	 * If the project hasn't been registered, register it
-	 * @param project
-	 * @param monitor
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveModel#getModelNodes()
 	 */
-	public XbPackages getXbPackages(IPath project, IProgressMonitor monitor) {
-		if( !xbPackages.containsKey(project)) 
-			registerProject(project, monitor);
-		return (xbPackages.get(project));
+	public IArchiveModelNode[] getModelNodes() {
+		Collection<ArchiveModelNode> c = archivesRoot.values();
+		return (IArchiveModelNode[]) c.toArray(new IArchiveModelNode[c.size()]);
 	}
 	
-	/**
-	 * Accept a visitor
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveModel#accept(org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor)
 	 */
 	public boolean accept(IArchiveNodeVisitor visitor) {
-		IArchiveNode children[] = getAllArchives();
+		IArchiveModelNode[] children = getModelNodes();
 		boolean keepGoing = true;
-
-		if (keepGoing) {
-			for (int i = 0; i < children.length; i++) {
-				if (keepGoing) {
+		if (keepGoing)
+			for (int i = 0; i < children.length; i++)
+				if (keepGoing)
 					keepGoing = children[i].accept(visitor);
-				}
-			}
-		}
-		
 		return keepGoing;
 	}	
-	
-	/**
-	 * Gets every single *registered* model
-	 * @return
-	 */
-	protected ArchiveModelNode[] getAllArchives() {
-		ArchiveModelNode[] ret = new ArchiveModelNode[archivesRoot.keySet().size()];
-		Iterator<IPath> i = archivesRoot.keySet().iterator();
-		int x = 0;
-		while(i.hasNext()) {
-			ret[x++] = archivesRoot.get(i.next());
-		}
-		return ret;
-	}
-	
-	/**
-	 * Get the root node for this object
-	 * @param project
-	 * @return
-	 */
+
+
 	public IArchiveModelNode getRoot(IPath project) {
-		return getRoot(project, false, new NullProgressMonitor());
-	}
-	
-	public IArchiveModelNode getRoot(IPath project, boolean register, IProgressMonitor monitor) {
-		if( archivesRoot.get(project) == null && register ) {
-			registerProject(project, monitor);
-		}
 		return (archivesRoot.get(project));
 	}
 	
-	public IArchive[] getProjectArchives(IPath project) {
-		return getProjectArchives(project, false, new NullProgressMonitor());
-	}
-	public IArchive[] getProjectArchives(IPath project, boolean register, IProgressMonitor monitor) {
-		IArchiveModelNode root = getRoot(project, register, monitor);
-		if( root != null ) {
-			List<IArchiveNode> list = Arrays.asList( getRoot(project, register, monitor).getAllChildren());
-			return list.toArray(new IArchive[list.size()]);
-		} else if( register) {
-			registerProject(project, monitor);
-			List<IArchiveNode> list = Arrays.asList( getRoot(project, register, monitor).getAllChildren());
-			return list.toArray(new IArchive[list.size()]);
-		} else {
-			return new IArchive[] {};
-		}
+	@Deprecated
+	public void save(IPath projectPath, IProgressMonitor monitor) throws ArchivesModelException {
+		save(getRoot(projectPath), monitor);
 	}
 	
-	// to make sure the node root is actually in the model
-	public boolean containsRoot(ArchiveModelNode node) {
-		return archivesRoot.containsValue(node);
+	@Deprecated
+	public void save(IArchiveModelNode modelNode, IProgressMonitor monitor) throws ArchivesModelException {
+		modelNode.save(monitor);
 	}
 	
-	public void registerProject(IPath project, IProgressMonitor monitor) {
-		// if the file exists, read it in
-		if( monitor == null ) monitor = new NullProgressMonitor();
-		monitor.beginTask("Loading configuration...", XMLBinding.NUM_UNMARSHAL_MONITOR_STEPS + 2);
-		
-		ArchivesCore.getInstance().preRegisterProject(project);
-		
-		ArchiveModelNode root;
-		Exception e = null;
-		IPath packagesFile = project.append(PROJECT_PACKAGES_FILE);
+	public boolean isProjectRegistered(IPath projectPath) {
+		return archivesRoot.containsKey(projectPath);
+	}
+	
+	public IArchiveModelNode registerProject(IPath projectPath, IProgressMonitor monitor) throws ArchivesModelException {
+		return registerProject(projectPath, DEFAULT_PACKAGES_FILE, monitor);
+	}
+	
+	public IArchiveModelNode registerProject(IPath projectPath, String file, IProgressMonitor monitor) throws ArchivesModelException {
+		XbPackages packages;
+		ArchiveModelNode modelNode;
+
+		IPath packagesFile = projectPath.append(file);
 		if (packagesFile.toFile().exists()) {
-			XbPackages packages = null;
 			try {
-				FileInputStream is = new FileInputStream(packagesFile.toFile());
-				packages = XMLBinding.unmarshal(is, monitor);
-				monitor.worked(1);
-			} catch (FileNotFoundException f) {
-				e = f;
-			} catch( XbException xbe) {
-				e = xbe;
-			}
-				
-			if (packages == null) {
+				packages = XMLBinding.unmarshal(packagesFile.toFile(), monitor);
+			} catch( XbException xbe ) {
 				// Empty / non-working XML file loaded
-				ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_ERR, "Could not unmarshall packages file", e);
-				return;
+				ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_ERR, "Error unmarshalling packages file " + packagesFile, xbe);
+				return null;
 			}
-			
-			root = new ArchiveModelNode(project, packages, this);
-			ArchiveModelNode oldRoot = archivesRoot.get(project);
-			xbPackages.put(project, packages);
-			archivesRoot.put(project, root);
-			ModelUtil.fillArchiveModel(packages, (ArchiveModelNode)getRoot(project));
-			root.clearDeltas();
-			fireRegisterProjectEvent(oldRoot, root);
-			monitor.worked(1);
 		} else {
-			// file not found, just create some default xbpackages and insert them
-			XbPackages packages = new XbPackages();
-			ArchiveModelNode root2 = new ArchiveModelNode(project, packages, this);
-			xbPackages.put(project, packages);
-			archivesRoot.put(project, root2);
-			fireRegisterProjectEvent(null, root2);
+			packages = new XbPackages();
 		}
+		
+		// Fill the model
+		modelNode = new ArchiveModelNode(projectPath, projectPath.append(file), packages, this);
+		ModelUtil.fillArchiveModel(packages, modelNode);
+		modelNode.clearDelta();
+		
+		registerProject(modelNode, monitor);
+		return modelNode;
 	}
 	
-	protected void fireRegisterProjectEvent(final ArchiveModelNode oldRoot, final ArchiveModelNode newRoot) {
+	public void registerProject(IArchiveModelNode model, IProgressMonitor monitor) {
+		ArchivesCore.getInstance().preRegisterProject(model.getProjectPath());
+		xbPackages.put(model.getProjectPath(), ((ArchiveModelNode)model).getXbPackages());
+		archivesRoot.put(model.getProjectPath(), (ArchiveModelNode)model);
+		fireRegisterProjectEvent((ArchiveModelNode)model);
+	}
+	
+	public void unregisterProject(IPath projectPath, IProgressMonitor monitor) {
+		IArchiveModelNode root = getRoot(projectPath);
+		xbPackages.remove(projectPath);
+		archivesRoot.remove(projectPath);
+		fireUnregisterProjectEvent(root);
+	}
+
+	public void unregisterProject(IArchiveModelNode model, IProgressMonitor monitor) {
+		xbPackages.remove(model.getProjectPath());
+		archivesRoot.remove(model.getProjectPath());
+		fireUnregisterProjectEvent((ArchiveModelNode)model);
+	}
+	
+	protected void fireRegisterProjectEvent(final IArchiveModelNode newRoot) {
+		fireRegistrationEvent(null, newRoot, IArchiveNodeDelta.NODE_REGISTERED);
+	}
+	
+	protected void fireUnregisterProjectEvent(final IArchiveModelNode oldRoot) {
+		fireRegistrationEvent(oldRoot, null, IArchiveNodeDelta.NODE_UNREGISTERED);
+	}
+	
+	protected void fireRegistrationEvent(final IArchiveModelNode oldRoot, final IArchiveModelNode newRoot, final int type) {
 		IArchiveNodeDelta delta = new IArchiveNodeDelta() {
 			public IArchiveNodeDelta[] getAddedChildrenDeltas() {return null;}
 			public IArchiveNodeDelta[] getAllAffectedChildren() {return null;}
 			public INodeDelta getAttributeDelta(String key) {return null;}
 			public String[] getAttributesWithDeltas() {return null;}
 			public IArchiveNodeDelta[] getChangedDescendentDeltas() {return null;}
-			public int getKind() {return IArchiveNodeDelta.UNKNOWN_CHANGE;}
+			public int getKind() {return type;}
 			public IArchiveNode getPostNode() {return newRoot;}
 			public IArchiveNode getPreNode() { return oldRoot; }
 			public String[] getPropertiesWithDeltas() {return null;}
@@ -274,44 +229,5 @@ public class ArchivesModel implements IArchiveModelListenerManager {
 			public IArchiveNodeDelta[] getRemovedChildrenDeltas() {return null;}
 		};
 		EventManager.fireDelta(delta);
-	}
-	
-
-	public void saveModel (IPath project, IProgressMonitor monitor) {
-		// get a list of dirty nodes
-		
-		if (monitor == null)
-			monitor = new NullProgressMonitor();
-		
-		IPath packagesFile = project.append(ArchivesModel.PROJECT_PACKAGES_FILE);
-		XbPackages packs = getXbPackages(project);
-		try {
-			XMLBinding.marshallToFile(packs, packagesFile, monitor);
-		} catch( IOException ioe ) {
-			ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_ERR, "Could not marshall packages file", ioe);
-			return;
-		} catch( XbException xbe ) {
-			ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_ERR, "Could not marshall packages file", xbe);
-			return;
-		}
-		
-		// get deltas
-		ArchiveModelNode root = (ArchiveModelNode)getRoot(project);
-		IArchiveNodeDelta delta = root.getDelta();
-		
-		// clear deltas
-		root.clearDeltas();
-		
-		// fire delta events
-		EventManager.fireDelta(delta);
-	}
-
-	// TODO: This requires massive help and new API's as well. 
-	public void attach(IArchiveNode parent, IArchiveNode child, IProgressMonitor monitor) {
-		parent.addChild(child);
-		if( parent.connectedToModel() && parent.getProjectPath() != null) {
-			// save
-			saveModel(parent.getProjectPath(), monitor);
-		}
 	}
 }

@@ -9,6 +9,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -36,12 +38,14 @@ import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelCore;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.ExtensionManager;
+import org.jboss.ide.eclipse.archives.ui.PackagesUIPlugin;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
 import org.jboss.ide.eclipse.archives.ui.actions.NewArchiveAction;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProvider;
@@ -263,7 +267,12 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 		getSite().getShell().getDisplay().asyncExec(new Runnable () {
 			public void run () {
 				for( int i = 0; i < projects.length; i++ ) {
-					ArchivesModel.instance().registerProject(projects[i].getLocation(), loadingProgress);
+					try {
+						ArchivesModel.instance().registerProject(projects[i].getLocation(), loadingProgress);
+					} catch( ArchivesModelException ame ) {
+						IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, ame.getMessage(), ame);
+						PackagesUIPlugin.getDefault().getLog().log(status);
+					}
 				}
 				book.showPage(viewerComposite);
 				packageViewer.setInput(ArchivesModel.instance().getRoot(projectToShow.getLocation()));

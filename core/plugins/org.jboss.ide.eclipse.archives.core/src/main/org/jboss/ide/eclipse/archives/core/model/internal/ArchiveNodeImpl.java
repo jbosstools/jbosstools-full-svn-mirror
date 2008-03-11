@@ -28,7 +28,7 @@ import java.util.Properties;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
-import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
@@ -81,7 +81,7 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 * (non-Javadoc)
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getModel()
 	 */
-	public IArchiveModelNode getModel() {
+	public IArchiveModelNode getModelNode() {
 		Object root = getRoot();
 		return root instanceof IArchiveModelNode ? (IArchiveModelNode)root : null;
 	}
@@ -243,7 +243,7 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 * (non-Javadoc)
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#addChild(org.jboss.ide.eclipse.archives.core.model.IArchiveNode)
 	 */
-	public void addChild(IArchiveNode node) {
+	public void addChild(IArchiveNode node) throws ArchivesModelException {
 		addChild(node, true);
 	}
 
@@ -252,7 +252,9 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 * @param child
 	 * @param addInDelegate
 	 */
-	public void addChild(IArchiveNode child, boolean addInDelegate) {
+	public void addChild(IArchiveNode child, boolean addInDelegate) throws ArchivesModelException {
+		if( !validateChild(child) ) 
+			throw new ArchivesModelException("Unable to add child node");
 		Assert.isNotNull(child);
 		ArchiveNodeImpl childImpl = (ArchiveNodeImpl) child;
 		children.add(childImpl);
@@ -262,6 +264,10 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		childChanges(child, IArchiveNodeDelta.CHILD_ADDED);
 	}
 
+	protected boolean validateChild(IArchiveNode child) {
+		return true;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#removeChild(org.jboss.ide.eclipse.archives.core.model.IArchiveNode)
@@ -283,16 +289,6 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 			childChanges(node, IArchiveNodeDelta.CHILD_REMOVED);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#connectedToModel()
-	 */
-	public boolean connectedToModel() {
-		IArchiveNode root = getRoot();
-		return root != null && root.getNodeType() == TYPE_MODEL && ArchivesModel.instance().containsRoot((ArchiveModelNode)root);
-	}
-	
-	
 	/**
 	 * An attribute has changed. Save the change so it can be represented in a delta
 	 */
@@ -387,7 +383,7 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	/**
 	 *  Forget all past state
 	 */
-	public void clearDeltas() {
+	public void clearDelta() {
 		attributeChanges.clear();
 		propertyChanges.clear();
 		childChanges.clear();
@@ -395,6 +391,6 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		// clear children recursively
 		IArchiveNode[] children = getAllChildren();
 		for( int i = 0; i < children.length; i++ ) 
-			((ArchiveNodeImpl)children[i]).clearDeltas();
+			((ArchiveNodeImpl)children[i]).clearDelta();
 	}
 }

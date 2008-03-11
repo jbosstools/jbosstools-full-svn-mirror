@@ -15,7 +15,7 @@ import org.apache.tools.ant.taskdefs.Jar;
 import org.apache.tools.ant.taskdefs.War;
 import org.apache.tools.ant.taskdefs.Zip;
 import org.apache.tools.ant.types.ZipFileSet;
-import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModel;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -33,7 +33,7 @@ public class IsolatedAntExecution {
     /**
      * Packages file defaults to ".packages"
      */
-    private String jbossPackages = ArchivesModel.PROJECT_PACKAGES_FILE;
+    private String jbossPackages = IArchiveModel.DEFAULT_PACKAGES_FILE;
     private JBossArchivesTask parentTask;
 
     public IsolatedAntExecution(JBossArchivesTask parent) {

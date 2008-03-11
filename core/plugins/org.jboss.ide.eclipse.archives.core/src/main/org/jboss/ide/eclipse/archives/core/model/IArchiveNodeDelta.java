@@ -86,10 +86,22 @@ public interface IArchiveNodeDelta {
 	public static final int DESCENDENT_CHANGED 	= 0x400;
 	
 	/**
-	 * An unknown change has occurred. Best to reshow the entire module
+	 * The node was registered with a model
 	 */
-	public static final int UNKNOWN_CHANGE = 0x800;
+	public static final int NODE_REGISTERED = 0x800;
+
+	/**
+	 * The node was unregistered with a model
+	 */
+	public static final int NODE_UNREGISTERED = 0x1000;
 	
+	/**
+	 * An unknown change has occurred. This may include
+	 * any (or multiple) events and may require an observer
+	 * to re-scan the entire node / tree for changes. 
+	 */
+	public static final int UNKNOWN_CHANGE = 0x1000;
+
 	/**
 	 * Return the delta kind
 	 * @return

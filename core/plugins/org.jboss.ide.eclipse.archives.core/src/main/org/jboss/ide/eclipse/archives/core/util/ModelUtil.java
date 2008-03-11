@@ -25,16 +25,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
+import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFileSetImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFolderImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
@@ -222,20 +226,24 @@ public class ModelUtil {
 		return projectPath.append(workspacePath.removeFirstSegments(1));
 	}
 	
-	public static void fillArchiveModel( XbPackages node, IArchiveModelNode modelNode) { 
+	public static void fillArchiveModel( XbPackages node, IArchiveModelNode modelNode) throws ArchivesModelException { 
 		for (Iterator iter = node.getAllChildren().iterator(); iter.hasNext(); ) {
 			XbPackageNode child = (XbPackageNode) iter.next();
 			ArchiveNodeImpl childImpl = (ArchiveNodeImpl)createPackageNodeImpl(child, modelNode);
 			if (modelNode != null && childImpl != null) {
-				if( modelNode instanceof ArchiveNodeImpl )
-					((ArchiveNodeImpl)modelNode).addChild(childImpl, false);
-				else
-					modelNode.addChild(childImpl);
+				try {
+					if( modelNode instanceof ArchiveNodeImpl )
+						((ArchiveNodeImpl)modelNode).addChild(childImpl, false);
+					else 
+						modelNode.addChild(childImpl);
+				} catch( ArchivesModelException ame ) {
+					ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_WARN, "Error Adding Child", ame);
+				}
 			}
 		}
 	}
 
-	protected static IArchiveNode createPackageNodeImpl (XbPackageNode node, IArchiveNode parent) {
+	protected static IArchiveNode createPackageNodeImpl (XbPackageNode node, IArchiveNode parent) throws ArchivesModelException {
 		ArchiveNodeImpl nodeImpl = null;
 		if (node instanceof XbPackage) {
 			nodeImpl = new ArchiveImpl((XbPackage)node);
@@ -257,4 +265,16 @@ public class ModelUtil {
 		return nodeImpl;
 	}
 	
+	public static IArchive[] getProjectArchives(IPath project) {
+		return getProjectArchives(project, ArchivesModel.instance());
+	}
+	
+	public static IArchive[] getProjectArchives(IPath project, IArchiveModel model) {
+		if( model != null ) {
+			IArchiveNode[] archives = model.getRoot(project).getAllChildren();
+			List<IArchiveNode> list = Arrays.asList(archives);
+			return (IArchive[]) list.toArray(new IArchive[list.size()]);
+		}
+		return null;
+	}
 }

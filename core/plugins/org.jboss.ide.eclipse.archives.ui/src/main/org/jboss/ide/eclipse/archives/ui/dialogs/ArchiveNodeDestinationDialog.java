@@ -2,7 +2,6 @@ package org.jboss.ide.eclipse.archives.ui.dialogs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +11,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -25,7 +25,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.ide.IDE;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
+import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesLabelProvider;
 
@@ -76,10 +78,9 @@ public class ArchiveNodeDestinationDialog extends ElementTreeSelectionDialog {
 					}
 				}
 				if (showNodes && parentElement instanceof IProject) {
-					result.addAll(Arrays.asList(ArchivesModel.instance()
-							.getProjectArchives(
-									((IProject) parentElement).getLocation(),
-									true, new NullProgressMonitor())));
+					IPath path = ((IProject)parentElement).getLocation();
+					IArchive[] archives = ModelUtil.getProjectArchives(path);
+					result.addAll(Arrays.asList(archives));
 				}
 				return result.toArray();
 			}
@@ -115,8 +116,8 @@ public class ArchiveNodeDestinationDialog extends ElementTreeSelectionDialog {
 				 IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 				 for( int i = 0; i < projects.length; i++ ) {
 					 if( projects[i].isAccessible()) {
-						 List tmp = Arrays.asList(
-								 ArchivesModel.instance().getProjectArchives(projects[i].getLocation(), true, monitor));
+						 IArchive[] archives = ModelUtil.getProjectArchives(projects[i].getLocation());
+						 List tmp = Arrays.asList(archives);
 						 if( tmp.size() > 0 && !destinations.contains(projects[i]))
 							 destinations.add(projects[i]);
 					 }

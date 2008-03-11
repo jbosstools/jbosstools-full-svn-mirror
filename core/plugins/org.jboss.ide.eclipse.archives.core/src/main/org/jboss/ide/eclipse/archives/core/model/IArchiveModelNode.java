@@ -21,6 +21,10 @@
  */
 package org.jboss.ide.eclipse.archives.core.model;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding.XbException;
+
+
 /**
  * An interface for methods relevent to a model's root node.
  * Only a label interface thus far
@@ -28,5 +32,6 @@ package org.jboss.ide.eclipse.archives.core.model;
  *
  */
 public interface IArchiveModelNode extends IArchiveNode {
-	public IArchiveModelListenerManager getManager();
+	public IArchiveModel getModel();
+	public void save(IProgressMonitor monitor) throws ArchivesModelException;
 }

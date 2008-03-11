@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 
@@ -183,10 +184,14 @@ public class ArchiveNodeDeltaImpl implements IArchiveNodeDelta {
 		if( preNode != null ) {
 			// now we've got our list of current children... set them. 
 			for( Iterator i = priorChildren.iterator(); i.hasNext(); ) {
-				preNode.addChild((IArchiveNode)i.next());
+				try {
+					preNode.addChild((IArchiveNode)i.next());
+				} catch( ArchivesModelException ame) {
+					// DO nothing
+				}
 			}
 			// now clear pre-node's deltas so it looks shiny
-			preNode.clearDeltas();
+			preNode.clearDelta();
 		}
 		
 		childrenDeltas = (IArchiveNodeDelta[]) deltas.toArray(new IArchiveNodeDelta[deltas.size()]);

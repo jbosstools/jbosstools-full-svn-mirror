@@ -196,13 +196,9 @@ public class XBUnmarshallTest extends TestCase {
 	 */
 	
 	protected XbPackages parse(String file, boolean shouldSucceed, String failMsg) {
-		FileInputStream fis = null;
 		XbPackages packs = null;
 		try {
-			fis = new FileInputStream(archiveDescriptors.append(file).toFile());
-			packs = XMLBinding.unmarshal(fis, new NullProgressMonitor());
-		} catch( IOException ioe ) {
-			fail(ioe.getMessage());
+			packs = XMLBinding.unmarshal(archiveDescriptors.append(file).toFile(), new NullProgressMonitor());
 		} catch( XbException e ) {
 			if( shouldSucceed )
 				fail(failMsg + " - " + e.getMessage());

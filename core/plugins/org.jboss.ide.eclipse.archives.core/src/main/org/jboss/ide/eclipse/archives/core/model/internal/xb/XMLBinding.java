@@ -22,6 +22,9 @@
 package org.jboss.ide.eclipse.archives.core.model.internal.xb;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -97,7 +100,18 @@ public class XMLBinding {
 		return unmarshal(new ByteArrayInputStream(input.getBytes()), monitor);
 	}
 	
-	public static XbPackages unmarshal (final InputStream in, 
+	public static XbPackages unmarshal(File file, IProgressMonitor monitor) throws XbException {
+		try {
+			FileInputStream fis = new FileInputStream(file);
+			return unmarshal(fis, monitor);
+		} catch( FileNotFoundException fnfe ) {
+			throw new XbException(fnfe);
+		} catch( XbException xbe) {
+			throw xbe;
+		}
+	}
+	
+	protected static XbPackages unmarshal (final InputStream in, 
 				final IProgressMonitor monitor) throws XbException {
 		if( !initialized) init();
 		final XbPackages[] element = new XbPackages[1];
@@ -137,7 +151,7 @@ public class XMLBinding {
 		return null;
 	}
 	
-	public static void marshallToFile(XbPackages element, IPath filePath, IProgressMonitor monitor) throws XbException, IOException {
+	public static void marshallToFile(XbPackages element, IPath filePath, IProgressMonitor monitor) throws XbException {
 		OutputStreamWriter writer = null;
 		try {
 			writer = new OutputStreamWriter(new FileOutputStream(filePath.toFile()));
@@ -145,12 +159,12 @@ public class XMLBinding {
 		} catch( XbException xbe ) {
 			throw xbe;
 		} catch( IOException ioe ) {
-			throw ioe;
+			throw new XbException(ioe);
 		}
 		finally {
 			try {
 				if( writer != null ) writer.close();
-			} catch( IOException ioe) {throw ioe;}
+			} catch( IOException ioe) {}
 		}
 	}
 	
@@ -208,6 +222,7 @@ public class XMLBinding {
 	public static class XbException extends Exception {
 		private Exception parent;
 		public XbException(Exception e) {
+			super();
 			parent = e;
 		}
 		public Exception getException() {
@@ -215,6 +230,9 @@ public class XMLBinding {
 		}
 		public String getMessage() {
 			return parent.getCause() == null ? parent.getMessage() : parent.getCause().getMessage();
+		}
+		public Throwable getCause() {
+			return parent;
 		}
 	}
 }

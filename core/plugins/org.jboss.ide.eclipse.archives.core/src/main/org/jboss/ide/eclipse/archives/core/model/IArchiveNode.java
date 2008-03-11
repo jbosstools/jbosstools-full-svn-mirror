@@ -132,7 +132,7 @@ public interface IArchiveNode {
 	 * Add a child node to this node
 	 * @param child The child to add
 	 */
-	public void addChild(IArchiveNode child);
+	public void addChild(IArchiveNode child) throws ArchivesModelException;
 	
 	/**
 	 * Remove a child node from this node
@@ -150,14 +150,8 @@ public interface IArchiveNode {
 	 * Get the model this node is attached to, or null if none
 	 * @return
 	 */
-	public IArchiveModelNode getModel();
-	
-	/**
-	 * Is the root of this node a PackageModelNode and registered in ArchivesModel?
-	 * @return
-	 */
-	public boolean connectedToModel();
-	
+	public IArchiveModelNode getModelNode();
+
 	/**
 	 * Get the path relative to the root archive
 	 * @return
@@ -169,9 +163,16 @@ public interface IArchiveNode {
 	 * @return
 	 */
 	public IArchive getRootArchive();
+
 	/**
 	 * Get the current delta
 	 * @return
 	 */
 	public IArchiveNodeDelta getDelta();
+
+	/**
+	 * Clear the current delta
+	 * @return
+	 */
+	public void clearDelta();
 }

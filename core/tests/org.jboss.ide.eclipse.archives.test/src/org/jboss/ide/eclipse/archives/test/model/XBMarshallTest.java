@@ -103,8 +103,6 @@ public class XBMarshallTest extends TestCase {
 		} catch( XbException xbe ) {
 			xbe.printStackTrace();
 			fail(xbe.getMessage());
-		} catch( IOException ioe ) {
-			fail(ioe.getMessage());
 		}
 	}
 	
@@ -113,9 +111,7 @@ public class XBMarshallTest extends TestCase {
 		try {
 			IPath out = outputs.append("test.xml");
 			XMLBinding.marshallToFile(packs, out, new NullProgressMonitor());
-		} catch( IOException ioe ) {
-			fail("IOException during testWritePackage operation");
-		}catch( XbException xbe ) {
+		} catch( XbException xbe ) {
 			e = xbe;
 		} finally {
 			if( e == null && !shouldPass) {
@@ -128,7 +124,6 @@ public class XBMarshallTest extends TestCase {
 	}
 	
 	protected void writePackage(String name, String toDir, boolean shouldPass) {
-		XbException e = null;
 		XbPackages packs = new XbPackages();
 		XbPackage pack = new XbPackage();
 		pack.setName(name);

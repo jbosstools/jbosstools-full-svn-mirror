@@ -166,8 +166,8 @@ public class ArchiveDeltaPreNodeFactory {
 		public IPath getProjectPath() {
 			return impl.getProjectPath();
 		}
-		public IArchiveModelNode getModel() {
-			return impl.getModel();
+		public IArchiveModelNode getModelNode() {
+			return impl.getModelNode();
 		}
 	}
 	
@@ -188,8 +188,8 @@ public class ArchiveDeltaPreNodeFactory {
 		public IPath getProjectPath() {
 			return impl.getProjectPath();
 		}
-		public IArchiveModelNode getModel() {
-			return impl.getModel();
+		public IArchiveModelNode getModelNode() {
+			return impl.getModelNode();
 		}
 	}
 	
@@ -210,8 +210,8 @@ public class ArchiveDeltaPreNodeFactory {
 		public IPath getProjectPath() {
 			return impl.getProjectPath();
 		}
-		public IArchiveModelNode getModel() {
-			return impl.getModel();
+		public IArchiveModelNode getModelNode() {
+			return impl.getModelNode();
 		}
 	}
 }

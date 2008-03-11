@@ -20,6 +20,7 @@ import org.jboss.ide.eclipse.archives.core.model.ArchiveNodeFactory;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.util.DestinationChangeListener;
@@ -193,7 +194,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 			}
 		} else if (destination instanceof IContainer) {
 			IContainer container = (IContainer) destination;
-			IArchive[] packages = ArchivesModel.instance().getProjectArchives(wizard.getProject().getLocation());
+			IArchive[] packages = ModelUtil.getProjectArchives(wizard.getProject().getLocation());
 			if (packages != null) {
 				for( int i = 0; i < packages.length; i++ ) {
 					IArchive pkg = (IArchive) packages[i];
@@ -211,7 +212,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 			}
 		} else if (destination instanceof IPath) {
 			IPath path = (IPath) destination;
-			IArchive[] packages = ArchivesModel.instance().getProjectArchives(wizard.getProject().getLocation());
+			IArchive[] packages = ModelUtil.getProjectArchives(wizard.getProject().getLocation());
 			if (packages != null) {
 				for( int i = 0; i < packages.length; i++ ) {
 					IArchive pkg = (IArchive) packages[i];

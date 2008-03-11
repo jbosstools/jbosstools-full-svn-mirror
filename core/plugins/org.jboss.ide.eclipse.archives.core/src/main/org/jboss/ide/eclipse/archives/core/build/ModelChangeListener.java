@@ -81,7 +81,7 @@ public class ModelChangeListener implements IArchiveModelListener {
 		if( isTopLevelArchive(delta.getPostNode())) 
 			EventManager.startedBuildingArchive((IArchive)delta.getPostNode());
 
-		if( (delta.getKind() & IArchiveNodeDelta.UNKNOWN_CHANGE) != 0 ) {
+		if( (delta.getKind() & (IArchiveNodeDelta.NODE_REGISTERED | IArchiveNodeDelta.UNKNOWN_CHANGE)) != 0 ) {
 			nodeRemoved(delta.getPreNode());
 			nodeAdded(delta.getPostNode());
 		} if( (delta.getKind() & IArchiveNodeDelta.REMOVED) != 0 ) {

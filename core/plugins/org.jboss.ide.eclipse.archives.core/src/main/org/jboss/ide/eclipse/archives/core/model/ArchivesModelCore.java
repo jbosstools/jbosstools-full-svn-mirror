@@ -37,7 +37,6 @@ import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
  */
 public class ArchivesModelCore {
 	
-	
 	/**
 	 * Builds all of a project's packages. Note that this does not call any builders before or after the package builder (i.e. the JDT builder).
 	 * If you are looking to run all the builders on a project use project.build()
@@ -59,36 +58,14 @@ public class ArchivesModelCore {
 		new ArchiveBuildDelegate().fullArchiveBuild(pkg);
 	}
 	
-	public static IArchive[] getProjectPackages (IPath project, IProgressMonitor monitor, boolean forceInit) {
-		return ArchivesModel.instance().getProjectArchives(project, forceInit, monitor);
-	}
-
 	public static boolean packageFileExists (IPath project) {
-		return project.append(ArchivesModel.PROJECT_PACKAGES_FILE).toFile().exists();
+		return project.append(IArchiveModel.DEFAULT_PACKAGES_FILE).toFile().exists();
 	}
 	
 	public static boolean projectRegistered(IPath project) {
 		return ArchivesModel.instance().getRoot(project) == null ? false : true;
 	}
 
-	
-	/**
-	 * Visit all of the top-level packages in the passed in project with the passed in node visitor
-	 * @param project The project whose packages to visit
-	 * @param visitor The visitor
-	 */
-	public static void visitProjectArchives (IPath project, IArchiveNodeVisitor visitor) {
-		if (packageFileExists(project)) {
-			IArchive packages[] = getProjectPackages(project, null, false);
-			if( packages == null ) return;
-			for (int i = 0; i < packages.length; i++) {
-				boolean keepGoing = packages[i].accept(visitor);
-				if (!keepGoing) break;
-			}
-		}
-	}
-
-	
 	public static IPath[] findMatchingPaths(IPath root, String includes, String excludes) {
 		try {
 			if(root==null) return new IPath[0];

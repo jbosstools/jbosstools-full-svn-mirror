@@ -176,9 +176,9 @@ public class EventManager {
 
 	
 	private static IArchiveModelListener[] getModelListeners(IArchiveNode node) {
-		IArchiveModelNode model = node.getModel();
-		if( model != null && model.getManager() != null ) {
-			return model.getManager().getModelListeners();
+		IArchiveModelNode model = node.getModelNode();
+		if( model != null && model.getModel() != null ) {
+			return model.getModel().getModelListeners();
 		}
 		return new IArchiveModelListener[]{};
 	}
@@ -188,9 +188,9 @@ public class EventManager {
 		return ArchivesModel.instance().getBuildListeners();
 	}
 	private static IArchiveBuildListener[] getBuildListeners(IArchiveNode node) {
-		IArchiveModelNode model = node.getModel();
-		if( model != null && model.getManager() != null ) {
-			return model.getManager().getBuildListeners();
+		IArchiveModelNode model = node.getModelNode();
+		if( model != null && model.getModel() != null ) {
+			return model.getModel().getBuildListeners();
 		}
 		return new IArchiveBuildListener[]{};
 	}

@@ -10,8 +10,8 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
 import org.jboss.ide.eclipse.archives.core.ArchivesCorePlugin;
-import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 
 /**
@@ -48,7 +48,7 @@ public class ModelChangeListenerWithRefresh extends ModelChangeListener {
 				}
 				
 				try {
-					proj.getFile(new Path(ArchivesModel.PROJECT_PACKAGES_FILE)).refreshLocal(IResource.DEPTH_ONE, new NullProgressMonitor());
+					proj.getFile(new Path(IArchiveModel.DEFAULT_PACKAGES_FILE)).refreshLocal(IResource.DEPTH_ONE, new NullProgressMonitor());
 				} catch( CoreException ce ) {
 				}
 			} catch( CoreException ce ) {

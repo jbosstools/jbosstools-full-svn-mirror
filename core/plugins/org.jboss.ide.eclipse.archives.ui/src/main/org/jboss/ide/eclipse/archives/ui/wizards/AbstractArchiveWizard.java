@@ -7,6 +7,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -15,8 +17,10 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.ui.PackagesUIPlugin;
 import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesView;
 import org.jboss.ide.eclipse.archives.ui.wizards.pages.ArchiveInfoWizardPage;
 
@@ -82,28 +86,33 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 						IArchiveNode parent = null;
 						
-						if (destination instanceof IArchiveNode) {
-							// if we're modifying an existing package, remove old parentage
-							if (!create && !destination.equals(pkg.getParent())) {
-								if (pkg.getParent() != null) {
-									pkg.getParent().removeChild(pkg);
+						try {
+							if (destination instanceof IArchiveNode) {
+								// if we're modifying an existing package, remove old parentage
+								if (!create && !destination.equals(pkg.getParent())) {
+									if (pkg.getParent() != null) {
+										pkg.getParent().removeChild(pkg);
+									}
 								}
+								parent = (IArchiveNode)destination;
+							} else {
+								parent = ArchivesModel.instance().getRoot(project.getLocation());
+								if( parent == null ) 
+									parent = ArchivesModel.instance().registerProject(project.getLocation(), null);
 							}
-							parent = (IArchiveNode)destination;
-						} else {
-							parent = ArchivesModel.instance().getRoot(project.getLocation(), true, monitor);
-						}
 						
-						if( create ) 
-							ArchivesModel.instance().attach(parent, pkg, monitor);
-						else
-							ArchivesModel.instance().saveModel(project.getLocation(), monitor);
+							if( create ) 
+								parent.addChild(pkg);
+							ArchivesModel.instance().save(project.getLocation(), monitor);
+						} catch( ArchivesModelException ame ) {
+							IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, "Error Completing Wizard", ame);
+							PackagesUIPlugin.getDefault().getLog().log(status);
+						}
+
 					}
 				});
 			} catch (InvocationTargetException e) {
-//TODO				Trace.trace(getClass(), e);
 			} catch (InterruptedException e) {
-//TODO				Trace.trace(getClass(), e);
 			}
 		}
 		return performed;

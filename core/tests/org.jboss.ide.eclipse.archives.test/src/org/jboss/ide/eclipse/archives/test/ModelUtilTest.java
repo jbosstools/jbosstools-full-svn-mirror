@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.model.ArchiveNodeFactory;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
@@ -33,7 +34,11 @@ public class ModelUtilTest extends TestCase {
 				inputs = bundlePath.append("inputs");
 			} catch( IOException ioe) {}
 		}
-		rootArchive = createArchive();
+		try {
+			rootArchive = createArchive();
+		} catch( ArchivesModelException ame ) {
+			fail(ame.getMessage());
+		}
 	}
 
 	public void tearDown() {
@@ -42,7 +47,7 @@ public class ModelUtilTest extends TestCase {
 	
 	
 	
-	protected IArchive createArchive() {
+	protected IArchive createArchive() throws ArchivesModelException {
 		IPath fileTrees = inputs.append("fileTrees");
 
 		IArchive root = ArchiveNodeFactory.createArchive();
@@ -77,7 +82,7 @@ public class ModelUtilTest extends TestCase {
 		imageFileset.setIncludesPattern("**/*.gif,**/*.png,**/*.xml");
 		images.addChild(imageFileset);
 		
-		((ArchiveNodeImpl)root).clearDeltas();
+		((ArchiveNodeImpl)root).clearDelta();
 		return root;
 	}
 	
@@ -117,7 +122,7 @@ public class ModelUtilTest extends TestCase {
 		
 	}
 	
-	public void testOtherFilesetMatchesPath() {
+	public void testOtherFilesetMatchesPath() throws ArchivesModelException {
 		IPath xml = inputs.append("fileTrees").append("misc").append("rug.xml");
 		IArchiveFileSet[] xmlFS = ModelUtil.getMatchingFilesets(rootArchive, xml);
 		assertTrue(xmlFS.length == 2);

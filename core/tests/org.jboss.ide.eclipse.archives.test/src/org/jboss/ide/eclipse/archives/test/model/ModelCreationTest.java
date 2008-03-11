@@ -24,10 +24,17 @@ package org.jboss.ide.eclipse.archives.test.model;
 import junit.framework.TestCase;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.jboss.ide.eclipse.archives.core.model.ArchiveNodeFactory;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveBuildListener;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListenerManager;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModel;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
@@ -38,34 +45,78 @@ import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
  *
  */
 public class ModelCreationTest extends TestCase {
-	public void testModelCreation1() {
-		XbPackages packs = new XbPackages();
-		XbPackage pack = new XbPackage();
-		packs.addChild(pack);
-		ArchiveModelNode model = getModel(packs);
-		ModelUtil.fillArchiveModel(packs, model);
-		// passes for now. 
+	protected IPath project = new Path("test").append("project");
+	TempArchiveModelListener modelListener = createListener();
+	protected void setUp() throws Exception {
+		modelListener.clearDelta();
+	}
+
+	public void testSimpleCreation() {
+		createModel();
+	}
+	
+	public void testAddToModel() {
+		ArchiveModelNode model = createModel();
+		ArchivesModel.instance().registerProject(model, new NullProgressMonitor());
+		assertEquals(model, ArchivesModel.instance().getRoot(project));
+		assertNotSame(null, modelListener.getDelta());
+		assertEquals(IArchiveNodeDelta.NODE_REGISTERED, modelListener.getDelta().getKind());
+		ArchivesModel.instance().unregisterProject(model, new NullProgressMonitor());
+	}
+	
+	protected ArchiveModelNode createModel() {
+		try {
+			XbPackages packs = new XbPackages();
+			XbPackage pack = new XbPackage();
+			packs.addChild(pack);
+			ArchiveModelNode model = getModel(packs);
+			ModelUtil.fillArchiveModel(packs, model);
+			assertEquals(project, model.getProjectPath());
+			assertEquals(IArchiveNode.TYPE_MODEL, model.getNodeType());
+			assertEquals(null, model.getParent());
+			assertEquals(packs, model.getNodeDelegate());
+			assertTrue(model.hasChildren());
+			assertEquals(1, model.getAllChildren().length);
+			assertEquals(null, ArchivesModel.instance().getRoot(project));
+			assertEquals(null, modelListener.getDelta());
+			return model;
+		} catch( ArchivesModelException ame ) {
+			fail(ame.getMessage());
+		}
+		return null;
+	}
+	
+	public void testDeltas() {
+		try {
+			ArchiveModelNode model = createModel();
+			model.clearDelta();
+			IArchiveFolder folder = ArchiveNodeFactory.createFolder();
+			folder.setName("testFolder");
+			model.addChild(folder);
+			IArchiveNodeDelta delta = model.getDelta();
+			assertEquals(IArchiveNodeDelta.CHILD_ADDED, delta.getKind());
+		} catch( ArchivesModelException ame ) {
+			fail(ame.getMessage());
+		}
 	}
 	
 	protected ArchiveModelNode getModel(XbPackages packs) {
-		IArchiveModelListenerManager manager = new IArchiveModelListenerManager() {
-			public void addBuildListener(IArchiveBuildListener listener) {
-			}
-			public void addModelListener(IArchiveModelListener listener) {
-			}
-			public IArchiveBuildListener[] getBuildListeners() {
-				return new IArchiveBuildListener[] {};
-			}
-			public IArchiveModelListener[] getModelListeners() {
-				return new IArchiveModelListener[] {};
-			}
-			public void removeBuildListener(IArchiveBuildListener listener) {
-			}
-			public void removeModelListener(IArchiveModelListener listener) {
-			}
-		};
-		IPath project = new Path("test").append("two");
-		ArchiveModelNode node = new ArchiveModelNode(project, packs, manager);
+		IArchiveModel model = new ArchivesModel();
+		model.addModelListener(modelListener);
+		ArchiveModelNode node = new ArchiveModelNode(project, packs, model);
 		return node;
+	}
+	
+	protected TempArchiveModelListener createListener() {
+		return new TempArchiveModelListener();
+	}
+	
+	protected class TempArchiveModelListener implements IArchiveModelListener {
+		private IArchiveNodeDelta delta;
+		public void modelChanged(IArchiveNodeDelta delta) {
+			this.delta = delta;
+		} 
+		public IArchiveNodeDelta getDelta() { return delta; }
+		public void clearDelta() { delta = null; }
 	}
 }

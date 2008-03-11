@@ -7,6 +7,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
 import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesView;
 
@@ -54,7 +55,7 @@ public class ArchivesContentProvider implements ITreeContentProvider {
 			// return all that's there
 		}
 		if( parentElement instanceof WrappedProject ) {
-			return ArchivesModel.instance().getProjectArchives(((WrappedProject)parentElement).getProject().getLocation());
+			return ModelUtil.getProjectArchives(((WrappedProject)parentElement).getProject().getLocation());
 		}
 		if( parentElement instanceof IArchiveNode ) {
 			return ((IArchiveNode)parentElement).getAllChildren();
