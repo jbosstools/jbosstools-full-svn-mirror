@@ -50,12 +50,12 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	/**
 	 * name of "view" tag
 	 */
-	private static final String VIEW_TAGNAME = "view";
+	private static final String VIEW_TAGNAME = "view"; //$NON-NLS-1$
 
 	/**
 	 * name of "locale" attribute
 	 */
-	private static final String LOCALE_ATTRNAME = "locale";
+	private static final String LOCALE_ATTRNAME = "locale"; //$NON-NLS-1$
 
 	/*
 	 * (non-Javadoc)
@@ -746,7 +746,9 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		int visualAnchor = 0;
 		nsIDOMNode visualNode = null;
 		nsIDOMNode visualParent = null;
-		if (focusNode == anchorNode) {
+		if ((focusNode == anchorNode)
+				&& isNodeEditable(pageContext, focusNode, elementMapping
+						.getElementData())) {
 
 			visualNode = getVisualNode(pageContext, focusNode, elementMapping
 					.getElementData());
@@ -772,7 +774,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 
 		selection.collapse(visualNode, visualFocus);
 
-		// selection.extend(visualNode, visualAnchor - visualFocus);
+//		if(visualFocus!=visualAnchor)
+//		selection.extend(visualNode, visualAnchor );
 		pageContext.getVisualBuilder().setSelectionRectangle(
 				(nsIDOMElement) visualParent);
 	}
