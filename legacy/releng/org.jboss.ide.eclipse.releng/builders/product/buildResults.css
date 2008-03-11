@@ -1,0 +1,179 @@
+body {
+	font-family: Verdana, Sans-Serif, Helvetica, Arial;
+}
+
+#header {
+	width: 70%;
+	position: absolute;
+	top: 10px;
+	left: 15%;
+	background: url(images/gradient.png) 0px 0px repeat-x;
+	padding: 5px;
+	padding-bottom: 0px;
+	color: #4d4d4d;
+	
+	border-width: 1px;
+	border-style: solid;
+	border-color: #0000f0;
+}
+
+#header table tr td {
+	font-weight: bold;
+	font-size: 14pt;
+}
+
+#buildName {
+	font-size: 10pt;
+	color: #0000d0;
+}
+
+#buildDate {
+	font-size: 8pt;
+	color: #303060;
+}
+
+#buildExecTime {
+	font-size: 8pt;
+	color: #303060;
+}
+
+#buildLog {
+	font-size: 8pt;
+	color: #0000d0;
+}
+
+#downloads {
+	border-width: 1px;
+	border-style: solid;
+	border-color: #0000f0;
+	border-top-width: 0px;
+	padding: 5px;
+	
+	width: 70%;
+	position: absolute;
+	top: 61px;
+	left: 15%;
+	
+}
+
+#links {
+	border-width: 0px 0px 1px 0px;
+	border-style: solid;
+	border-color: #0000f0;
+	padding-bottom: 4px;
+}
+
+#links tr td {
+	font-size: 8pt;
+}
+
+a {
+	color: #6060c0;
+}
+
+a:hover {
+	color: #0000f0;
+}
+
+h1 {
+	font-size: 11pt;
+	color: #000030;
+}
+
+h2 {
+	font-size: 10pt;
+	color: #0000d0;
+}
+
+p { 
+	font-size: 8pt;
+	color: #202020;
+}
+
+div.line {
+	background-color: #0000f0;
+	height: 1px;
+}
+
+#rightFrame {
+	float: right;
+	padding: 5px;
+}
+
+#buildDrivers, #unitTestResults {
+	font-size: 10pt;
+	color: #000030;
+	
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #0000f0;
+	
+	padding-bottom: 3px;
+	margin-bottom: 3px;
+}
+
+#buildDrivers table tr td {
+	font-size: 8pt;
+}
+
+#unitTestResults table tr td {
+	font-size: 9pt;
+}
+
+img {
+	vertical-align: middle;
+}
+
+#downloadLinks {
+	padding: 5px;
+	float: left;
+}
+
+#downloadLinks h1 {
+	font-size: 14pt;
+}
+
+.downloadInfo {
+	font-size: 8pt;
+	color: #909090;
+}
+
+#allLink {
+	padding-left: 5px;
+	font-size: 14pt;
+	font-weight: bold;
+	text-decoration: none;
+	color: #3030c0;
+}
+
+a.pluginLink {
+	padding-left: 5px;
+	font-size: 8pt;
+	font-weight: bold;
+	text-decoration: none;
+	color: #3030c0;
+}
+
+a.md5 {
+	font-size: 8pt;
+	font-weight: bold;
+	color: #606060;
+	text-decoration: none;
+}
+
+span.description {
+	font-size: 10pt;
+	color: black;
+	font-weight: bold;
+}
+	
+	
+#buildInfo {
+	width: 300px;
+}
+
+
+#buildInfo p, #buildInfo b {
+	font-size: 8pt;
+	color: #606060;
+}
