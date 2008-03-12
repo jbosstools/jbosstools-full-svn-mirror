@@ -27,9 +27,11 @@ import org.jboss.tools.vpe.editor.util.HTML;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMHTMLTableCellElement;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
+import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -44,6 +46,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 	private VpeExpression columnClassesExpr;
 	
 	private static final String ATTR_STYLE = "style";
+	private static final String ATTR_CLASS = "class";
 	private static final String ATTR_WIDTH = "width";
 	private static final String ATTR_BORDER = "border";
 	private static final String HIDDEN_BORDER_STYLE = "border: 0px hidden;" ;
@@ -332,8 +335,14 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			for (long i = 0; i < count; i++) {
 				nsIDOMNode child = children.item(i);
 				if (child != null && child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-					((Element)child).setAttribute("class", classes[ind]);
-					ind = ind < (classes.length - 1) ? ind + 1 : 0;
+					try {
+						nsIDOMHTMLTableCellElement cell = (nsIDOMHTMLTableCellElement) child
+							.queryInterface(nsIDOMHTMLTableCellElement.NS_IDOMHTMLTABLECELLELEMENT_IID);
+						cell.setAttribute(ATTR_CLASS, classes[ind]);
+						ind = ind < (classes.length - 1) ? ind + 1 : 0;
+					} catch (XPCOMException ex) {
+					    // just ignore this exception
+					}
 				}
 			}
 		}
@@ -346,7 +355,13 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			for (long i = 0; i < count; i++) {
 				nsIDOMNode child = children.item(i);
 				if (child != null && child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-					((nsIDOMElement)child).removeAttribute("class");
+					try {
+						nsIDOMHTMLTableCellElement cell = (nsIDOMHTMLTableCellElement) child
+							.queryInterface(nsIDOMHTMLTableCellElement.NS_IDOMHTMLTABLECELLELEMENT_IID);
+						cell.removeAttribute(ATTR_CLASS);
+					} catch (XPCOMException ex) {
+					    // just ignore this exception
+					}
 				}
 			}
 		}
@@ -357,22 +372,22 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			String[] rowClasses = getClasses(value);
 			String rowClass = (rowClasses != null && rowClasses.length > 0) ? rowClasses[0] : null;
 			if (rowClass.trim().length() > 0) {
-				row.setAttribute("class", rowClass);
+				row.setAttribute(ATTR_CLASS, rowClass);
 			} else {
-				row.removeAttribute("class");
+				row.removeAttribute(ATTR_CLASS);
 			}
 		}
 	}
 
 	private void setRowDisplayStyle(nsIDOMElement row, boolean visible) {
 		if (row != null) {
-			row.setAttribute("style", "display:" + (visible ? "" : "none"));
+			row.setAttribute(ATTR_STYLE, "display:" + (visible ? "" : "none"));
 		}
 	}
 
 	private void removeRowClass(nsIDOMElement row) {
 		if (row != null) {
-			row.removeAttribute("class");
+			row.removeAttribute(ATTR_CLASS);
 		}
 	}
 

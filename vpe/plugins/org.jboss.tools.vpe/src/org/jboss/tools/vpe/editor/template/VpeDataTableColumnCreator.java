@@ -64,8 +64,8 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 				creatorInfo.addChildrenInfo(info);
 				
 				String styleClass = "";
-				String tableHeaderClass = getNodeAttrValue(sourceNode.getParentNode(), "headerClass");
-				String columnHeaderClass = getNodeAttrValue(sourceNode, "headerClass");
+				String tableHeaderClass = getNodeAttrValue(sourceNode.getParentNode(), VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS);
+				String columnHeaderClass = getNodeAttrValue(sourceNode, VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS);
 				if (null != columnHeaderClass && !"".equalsIgnoreCase(columnHeaderClass)) {
 					styleClass = columnHeaderClass;
 				} else if (null != tableHeaderClass && !"".equalsIgnoreCase(tableHeaderClass)) {
@@ -82,8 +82,8 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 				creatorInfo.addChildrenInfo(info);
 				
 				styleClass = "";
-				String tableFooterClass = getNodeAttrValue(sourceNode.getParentNode(), "footerClass");
-				String columnFooterClass = getNodeAttrValue(sourceNode, "footerClass");
+				String tableFooterClass = getNodeAttrValue(sourceNode.getParentNode(), VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS);
+				String columnFooterClass = getNodeAttrValue(sourceNode, VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS);
 				if (null != columnFooterClass && !"".equalsIgnoreCase(columnFooterClass)) {
 					styleClass = columnFooterClass;
 				} else if (null != tableFooterClass && !"".equalsIgnoreCase(tableFooterClass)) {
