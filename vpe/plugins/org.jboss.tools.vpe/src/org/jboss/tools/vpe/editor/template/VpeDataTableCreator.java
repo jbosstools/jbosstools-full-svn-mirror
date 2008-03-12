@@ -201,7 +201,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			info = new VpeChildrenInfo(group);
 			creatorInfo.addChildrenInfo(info);
 		}
-
+		
 		for (int i = 0; i < sourceElements.getColumnCount(); i++) {
 			SourceColumnElements column = sourceElements.getColumn(i);
 			info.addSourceChild(column.getColumn());
@@ -416,4 +416,5 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		}
 		return null;
 	}
+
 }

@@ -78,7 +78,7 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 					}
 				}
 
-				nsIDOMNode cell = null;
+				nsIDOMElement cell = null;
 				int columnsCount = getColumnsCount(sourceParent); 
 				if (isHeader) {
 					cell = makeCell(columnsCount, HTML.TAG_TH, visualDocument);
@@ -111,10 +111,10 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		return sourceNode.getParentNode();
 	}
 
-	private void setCellClass(nsIDOMNode cell, String className) {
+	private void setCellClass(nsIDOMElement cell, String className) {
 		if (cell != null) {
 			if (className != null && className.trim().length() > 0) {
-				((nsIDOMElement)cell).setAttribute("class", className);
+				cell.setAttribute("class", className);
 			}
 		}
 	}
@@ -126,16 +126,16 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 	 * @param cell the cell
 	 * @param captionStyle the caption style
 	 */
-	private void setCaptionStyle(Node sourceParent, nsIDOMNode cell, String captionStyle) {
+	private void setCaptionStyle(Node sourceParent, nsIDOMElement cell, String captionStyle) {
 		if (cell != null) {
 			String resultStyle = ""; 
-			if (captionStyle != null && captionStyle.trim().length() > 0) {
+			if (captionStyle != null) {
+				if (!(captionStyle.lastIndexOf("width") > -1)) {
+					resultStyle += "width: 100%; ";
+				}
 				resultStyle += captionStyle;
 			}
-//			if (!(captionStyle.lastIndexOf("width") > -1)) {
-//				resultStyle += "width: 100%; ";
-//			}
-			((nsIDOMElement)cell).setAttribute(HTML.ATTR_STYLE, resultStyle);
+			cell.setAttribute(HTML.ATTR_STYLE, resultStyle);
 		}
 	}
 
@@ -162,7 +162,7 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		return count;
 	}
 
-	private nsIDOMNode makeCell(int columnCount, String cellTag, nsIDOMDocument visualDocument) {
+	private nsIDOMElement makeCell(int columnCount, String cellTag, nsIDOMDocument visualDocument) {
 		nsIDOMElement visualCell = visualDocument.createElement(cellTag);
 		if (columnCount > 1) {
 			visualCell.setAttribute("colspan", "" + columnCount);

@@ -149,7 +149,7 @@ public class VpeTemplateManager {
 	static final String ATTR_DATATABLE_FOOTER_CLASS = "footerClass";
 	static final String ATTR_DATATABLE_ROW_CLASSES = "rowClasses";
 	static final String ATTR_DATATABLE_COLUMN_CLASSES = "columnClasses";
-	static final String[] ATTR_DATATABLE_PROPERTIES = {"width", "bgcolor","border","cellpadding","cellspacing","frame","rules","class","style","title"};
+	static final String[] ATTR_DATATABLE_PROPERTIES = {"width", "bgcolor","border","cellpadding","cellspacing","frame","rules","class","style","title", "dir"};
 
 	public static final String ATTR_LINK_HREF = "href";
 	public static final String ATTR_LINK_REL = "rel";
