@@ -45,6 +45,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.IStatusField;
@@ -57,6 +58,7 @@ import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.jst.jsp.editor.IVisualEditor;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.vpe.IVpeHelpContextIds;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.mozilla.EditorLoadWindowListener;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
@@ -411,6 +413,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		controlCount++;
 		if (controlCount > 1)
 			return;
+		
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, IVpeHelpContextIds.VISUAL_PAGE_EDITOR);
 		// //////////////////////////////////////////////////////////////
 
 		Composite cmpEdTl = new Composite(parent, SWT.NONE);
