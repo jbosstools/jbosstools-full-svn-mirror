@@ -190,7 +190,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			row = visualDocument.createElement(HTML.TAG_TR);
 			section.appendChild(row);
 			visualTable.appendChild(section);
-			//visualElements.setBodyRow(row);
+			visualElements.setContentTableBodyRow(row);
 			//visualElements.setBody(section);
 		}
 
@@ -246,6 +246,9 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 					if (ATTR_BORDER.equalsIgnoreCase(attr.getNodeName())) {
 						visualTable.setAttribute(ATTR_BORDER, attr.getNodeValue());
 					}
+					if (VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES.equalsIgnoreCase(attr.getNodeName())) {
+						setRowClass(visualElements.getContentTableBodyRow(), attr.getNodeValue());
+					}
 					outterTable.setAttributeNode(attr);
 				}
 			}
@@ -263,9 +266,9 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				setCellsClass(visualElements.getColumnsFooterRow(), value);
 				setCellsClass(visualElements.getTableFooterRow(), value);
 			} else if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES.equals(name) : VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES.equalsIgnoreCase(name)) {
-				setRowClass(visualElements.getBodyRow(), value);
+				setRowClass(visualElements.getContentTableBodyRow(), value);
 			} else if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES.equals(name) : VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES.equalsIgnoreCase(name)) {
-				setCellsClass(visualElements.getBodyRow(), value);
+				setCellsClass(visualElements.getContentTableBodyRow(), value);
 			}
 		}
 	}
@@ -337,7 +340,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				if (child != null && child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 					try {
 						nsIDOMHTMLTableCellElement cell = (nsIDOMHTMLTableCellElement) child
-							.queryInterface(nsIDOMHTMLTableCellElement.NS_IDOMHTMLTABLECELLELEMENT_IID);
+							.queryInterface(nsIDOMHTMLTableCellElement.NS_IDOMHTMLTABLECELLELEMENT_IID);						
 						cell.setAttribute(ATTR_CLASS, classes[ind]);
 						ind = ind < (classes.length - 1) ? ind + 1 : 0;
 					} catch (XPCOMException ex) {

@@ -66,9 +66,9 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 				String styleClass = "";
 				String tableHeaderClass = getNodeAttrValue(sourceNode.getParentNode(), VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS);
 				String columnHeaderClass = getNodeAttrValue(sourceNode, VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS);
-				if (null != columnHeaderClass && !"".equalsIgnoreCase(columnHeaderClass)) {
+				if (null != columnHeaderClass) {
 					styleClass = columnHeaderClass;
-				} else if (null != tableHeaderClass && !"".equalsIgnoreCase(tableHeaderClass)) {
+				} else if (null != tableHeaderClass) {
 					styleClass = tableHeaderClass;
 				}
 				setCellClass(cell, styleClass);
@@ -84,14 +84,14 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 				styleClass = "";
 				String tableFooterClass = getNodeAttrValue(sourceNode.getParentNode(), VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS);
 				String columnFooterClass = getNodeAttrValue(sourceNode, VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS);
-				if (null != columnFooterClass && !"".equalsIgnoreCase(columnFooterClass)) {
+				if (null != columnFooterClass) {
 					styleClass = columnFooterClass;
-				} else if (null != tableFooterClass && !"".equalsIgnoreCase(tableFooterClass)) {
+				} else if (null != tableFooterClass) {
 					styleClass = tableFooterClass;
 				}
 				setCellClass(cell, styleClass);
 				visualColumnElements.setFooterCell(cell);
-				
+		
 				cell = VpeDataTableElements.makeCell(visualDataTableElements.getBodyRow(), index, HTML.TAG_TD, visualDocument);
 				NodeList list = sourceNode.getChildNodes();
 				int cnt = list != null ? list.getLength() : 0;
@@ -116,6 +116,11 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 						}
 					}
 					creatorInfo.addChildrenInfo(info);
+					
+					String columnClasses = getNodeAttrValue(sourceNode.getParentNode(), VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES);
+					if (null != columnClasses) {
+						setColumnClassesToCell(cell, columnClasses, index);
+					}
 					visualColumnElements.setBodyCell(cell);
 				}
 				visualNodeMap.put(this, visualColumnElements);
@@ -167,10 +172,61 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 		return ind < name2.length() && name1.equals(name2.substring(ind >= 0 ? ind + 1 : 0));
 	}
 	
-	private void setCellClass(nsIDOMNode cell, String className) {
+	/**
+	 * Sets the column classes to cell.
+	 * 
+	 * @param cell the cell
+	 * @param columnClasses the column classes
+	 * @param index the index of the column in the table
+	 */
+	private void setColumnClassesToCell(nsIDOMElement cell,
+			String columnClasses, int index) {
+		if (cell != null) {
+			String[] classes = splitClasses(columnClasses);
+
+			if ((null != classes) && (classes.length > 0)) {
+				int len = classes.length;
+				int indx = index + 1;
+				String className = "";
+
+				if (indx <= len) {
+					className = classes[indx - 1];
+				} else {
+					int idx = indx % len;
+					className = classes[idx];
+				}
+				if (className.trim().length() > 0) {
+					cell.setAttribute("class", className);
+				}
+			}
+
+		}
+	}
+	
+	/**
+	 * Splits a sequence of classes to an array of separate classes.
+	 * 
+	 * @param value the sequence of classes
+	 * 
+	 * @return the array of separate classes
+	 */
+	private String[] splitClasses(String value) {
+		if (value != null) {
+			return value.split(",");
+		}
+		return null;
+	}
+	
+	/**
+	 * Sets the css class to the cell.
+	 * 
+	 * @param cell the cell
+	 * @param className the class name
+	 */
+	private void setCellClass(nsIDOMElement cell, String className) {
 		if (cell != null) {
 			if (className != null && className.trim().length() > 0) {
-				((nsIDOMElement)cell).setAttribute("class", className);
+				cell.setAttribute("class", className);
 			}
 		}
 	}

@@ -255,6 +255,8 @@ public class VpeDataTableElements {
 
 		private nsIDOMElement body;
 		private nsIDOMElement bodyRow;
+		
+		private nsIDOMElement contentTableBodyRow;
 
 		private nsIDOMElement tableFooter;
 		private nsIDOMElement tableFooterRow;
@@ -288,6 +290,14 @@ public class VpeDataTableElements {
 
 		public void setBodyRow(nsIDOMElement bodyRow) {
 			this.bodyRow = bodyRow;
+		}
+		
+		public nsIDOMElement getContentTableBodyRow() {
+			return contentTableBodyRow;
+		}
+		
+		public void setContentTableBodyRow(nsIDOMElement contentTableBodyRow) {
+			this.contentTableBodyRow = contentTableBodyRow;
 		}
 
 		public nsIDOMElement getColumnsFooterRow() {
