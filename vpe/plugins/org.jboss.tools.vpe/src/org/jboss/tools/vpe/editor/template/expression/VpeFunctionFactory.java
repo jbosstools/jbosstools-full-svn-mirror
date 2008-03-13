@@ -12,29 +12,28 @@ package org.jboss.tools.vpe.editor.template.expression;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.jboss.tools.vpe.VpePlugin;
 
 public class VpeFunctionFactory {
-	private static final String FUNC_JSF_VALUE = "jsfvalue";
-	private static final String FUNC_NAME = "name";
-	private static final String FUNC_NOT = "not";
-	private static final String FUNC_IIF = "iif";
-	private static final String FUNC_SRC = "src";
-	private static final String FUNC_HREF = "href";
-	private static final String FUNC_PARENT_NAME = "parentname";
-	private static final String FUNC_HAS_IN_PARENTS = "hasinparents";
-	private static final String FUNC_TAG_STRING = "tagstring";
-	private static final String FUNC_TAG_TEXT = "tagtext";
-	private static final String FUNC_ATTR_PRESENT = "attrpresent";
-	private static final String FUNC_PARENT_ATTR_VALUE = "parentattrvalue";
-	private static final String FUNC_HAS_CHILDREN = "haschildren";
-	private static final String FUNC_HAS_CONTENT = "hascontent";
+	private static final String FUNC_JSF_VALUE = "jsfvalue";//$NON-NLS-1$
+	private static final String FUNC_NAME = "name";//$NON-NLS-1$
+	private static final String FUNC_NOT = "not";//$NON-NLS-1$
+	private static final String FUNC_IIF = "iif";//$NON-NLS-1$
+	private static final String FUNC_SRC = "src";//$NON-NLS-1$
+	private static final String FUNC_HREF = "href";//$NON-NLS-1$
+	private static final String FUNC_PARENT_NAME = "parentname";//$NON-NLS-1$
+	private static final String FUNC_HAS_IN_PARENTS = "hasinparents";//$NON-NLS-1$
+	private static final String FUNC_TAG_STRING = "tagstring";//$NON-NLS-1$
+	private static final String FUNC_TAG_TEXT = "tagtext";//$NON-NLS-1$
+	private static final String FUNC_ATTR_PRESENT = "attrpresent";//$NON-NLS-1$
+	private static final String FUNC_PARENT_ATTR_VALUE = "parentattrvalue";//$NON-NLS-1$
+	private static final String FUNC_HAS_CHILDREN = "haschildren";//$NON-NLS-1$
+	private static final String FUNC_HAS_CONTENT = "hascontent";//$NON-NLS-1$
 
-	private static Map clsMap = new HashMap();
+	private static Map<String,Class<?>> clsMap = new HashMap<String,Class<?>>();
 
 	static VpeFunction getFunction(String name) {
-		Class cls = (Class) clsMap.get(name);
+		Class<?> cls = clsMap.get(name);
 		if (cls == null) {
 			cls = createCls(name);
 			if (cls != null) {
@@ -51,7 +50,7 @@ public class VpeFunctionFactory {
 		}
 	}
 	
-	private static Class createCls(String name) {
+	private static Class<?> createCls(String name) {
 		if (FUNC_JSF_VALUE.equals(name)) {
 			return VpeFunctionJsfValue.class;
 		} else if (FUNC_NAME.equals(name)) {
@@ -80,6 +79,8 @@ public class VpeFunctionFactory {
 			return VpeFunctionHasChildren.class;
 		} else if (FUNC_HAS_CONTENT.equals(name)) {
 			return VpeFunctionHasContent.class;
+		} else if(VpeFunctionTldVersionCheck.FUNCTION_NAME.equals(name)) {
+			return VpeFunctionTldVersionCheck.class;
 		}
 		return null;
 	}
