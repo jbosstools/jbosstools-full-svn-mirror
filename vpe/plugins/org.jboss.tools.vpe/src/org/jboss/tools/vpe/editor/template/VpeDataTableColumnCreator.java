@@ -183,17 +183,19 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 			String columnClasses, int index) {
 		if (cell != null) {
 			String[] classes = splitClasses(columnClasses);
-
 			if ((null != classes) && (classes.length > 0)) {
-				int len = classes.length;
-				int indx = index + 1;
+				int classesCount = classes.length;
+				int columnCount = index + 1;
 				String className = "";
 
-				if (indx <= len) {
-					className = classes[indx - 1];
+				// Finds correct css style class index
+				// for the column
+				if (columnCount <= classesCount) {
+					className = classes[columnCount - 1];
 				} else {
-					int idx = indx % len;
-					className = classes[idx];
+					int remainder = columnCount % classesCount;
+					int classesIndex = ((0 == remainder) ? (classesCount-1) : (remainder-1));
+					className = classes[classesIndex];
 				}
 				if (className.trim().length() > 0) {
 					cell.setAttribute("class", className);

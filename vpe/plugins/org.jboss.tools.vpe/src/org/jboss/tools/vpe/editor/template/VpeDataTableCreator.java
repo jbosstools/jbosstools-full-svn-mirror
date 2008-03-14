@@ -49,7 +49,10 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 	private static final String ATTR_CLASS = "class";
 	private static final String ATTR_WIDTH = "width";
 	private static final String ATTR_BORDER = "border";
-	private static final String HIDDEN_BORDER_STYLE = "border: 0px hidden;" ;
+	private static final String ATTR_RULES = "rules";
+	private static final String ATTR_RULES_VALUE_ROWS = "rows";
+    private static final String TD_HIDDEN_BORDER_STYLE = "padding: 0px; border: 0px hidden;";
+    private static final String TD_RULES_ROWS_BORDER_STYLE = "padding: 0px;";
 
 	private List propertyCreators;
 
@@ -121,7 +124,10 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		SourceDataTableElements sourceElements = new SourceDataTableElements(sourceNode);
 		VisualDataTableElements visualElements = new VisualDataTableElements();
 
+		// Table with caption, header, footer, 
+		// that wraps table with content
 		nsIDOMElement outterTable = visualDocument.createElement(HTML.TAG_TABLE);
+		// Table with main content
 		nsIDOMElement visualTable = visualDocument.createElement(HTML.TAG_TABLE);
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(outterTable);
 		nsIDOMElement section = null, row = null, cell = null;
@@ -214,9 +220,9 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		// To create appropriate visual appearance
 		// borders of the body cell and content table
 		// were set via styles.
-		outterTD.setAttribute(ATTR_STYLE, HIDDEN_BORDER_STYLE);
+		outterTD.setAttribute(ATTR_STYLE, TD_HIDDEN_BORDER_STYLE);
 		visualTable.setAttribute(ATTR_WIDTH, "100%");
-		visualTable.setAttribute(ATTR_STYLE, HIDDEN_BORDER_STYLE);
+		visualTable.setAttribute(ATTR_BORDER, "0");
 		
 		outterTD.appendChild(visualTable);
 		outterTR.appendChild(outterTD);
@@ -234,7 +240,8 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		for (int i = 0; i < propertyCreators.size(); i++) {
 			VpeCreator creator = (VpeCreator)propertyCreators.get(i);
 			if (creator != null) {
-				VpeCreatorInfo info1 = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
+				// Sets attributes for the wrapper table
+				VpeCreatorInfo info1 = creator.create(pageContext, (Element) sourceNode, visualDocument, outterTable, visualNodeMap);
 				if (info1 != null && info1.getVisualNode() != null) {
 					nsIDOMAttr attr = (nsIDOMAttr) info1.getVisualNode();
 					// Fixes creation 'border="1"' 
@@ -243,13 +250,35 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 					if (null == attr.getNodeValue() || "".equalsIgnoreCase(attr.getNodeValue())) {
 						continue;
 					}
-					if (ATTR_BORDER.equalsIgnoreCase(attr.getNodeName())) {
-						visualTable.setAttribute(ATTR_BORDER, attr.getNodeValue());
+					outterTable.setAttributeNode(attr);
+				}
+				// Sets attributes for the content table
+				VpeCreatorInfo info2 = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
+				if (info2 != null && info2.getVisualNode() != null) {
+					nsIDOMAttr attr = (nsIDOMAttr) info2.getVisualNode();
+					// Fixes creation 'border="1"' 
+					// when setting border attribute to the table.
+					// Also skips empty attributes to fix layout problems.
+					if (null == attr.getNodeValue() || "".equalsIgnoreCase(attr.getNodeValue())) {
+						continue;
 					}
+					// Setting row classes to the table row 
 					if (VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES.equalsIgnoreCase(attr.getNodeName())) {
 						setRowClass(visualElements.getContentTableBodyRow(), attr.getNodeValue());
+						continue;
 					}
-					outterTable.setAttributeNode(attr);
+					// Skip setting content table border
+					if (ATTR_BORDER.equalsIgnoreCase(attr.getNodeName())) {
+						continue;
+					}
+					// Fixes creation of a border around content table
+					// when attribute rules="rows" is set
+					if (ATTR_RULES.equalsIgnoreCase(attr.getNodeName())) {
+						if (ATTR_RULES_VALUE_ROWS.equalsIgnoreCase(attr.getNodeValue())) {
+							outterTD.setAttribute(ATTR_STYLE, TD_RULES_ROWS_BORDER_STYLE);
+						}
+					}
+					visualTable.setAttributeNode(attr);
 				}
 			}
 		}
