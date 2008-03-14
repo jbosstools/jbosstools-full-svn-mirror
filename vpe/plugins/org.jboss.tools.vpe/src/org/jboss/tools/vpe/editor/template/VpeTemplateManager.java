@@ -129,11 +129,14 @@ public class VpeTemplateManager {
 	static final String ATTR_PANELGRID_FOOTER_CLASS = "footerClass";
 	static final String ATTR_PANELGRID_ROW_CLASSES = "rowClasses";
 	static final String ATTR_PANELGRID_COLUMN_CLASSES = "columnClasses";
-	static final String[] ATTR_PANELGRID_PROPERTIES = {"style","class","width","border","frame","rules","cellspacing","cellpadding","bgcolor","title"};
+	static final String ATTR_PANELGRID_CAPTION_CLASS = "captionClass";
+	static final String ATTR_PANELGRID_CAPTION_STYLE = "captionStyle";
+	static final String ATTR_PANELGRID_RULES = "rules";
+	static final String[] ATTR_PANELGRID_PROPERTIES = {"style","class","width","border","frame","cellspacing","cellpadding","bgcolor","title"};
 
 	static final String ATTR_GRID_LAYOUT = "layout";
 	static final String ATTR_GRID_TABLE_SIZE = "table-size";
-	static final String[] ATTR_GRID_PROPERTIES = {"style","class","width","border","frame","rules","cellspacing","cellpadding","bgcolor","title"};
+	static final String[] ATTR_GRID_PROPERTIES = {"style","class","width","border","frame","cellspacing","cellpadding","bgcolor","title","dir"};
 
 	static final String ATTR_ANY_DISPLAY = "display";
 	static final String ATTR_ANY_ICON = "icon";

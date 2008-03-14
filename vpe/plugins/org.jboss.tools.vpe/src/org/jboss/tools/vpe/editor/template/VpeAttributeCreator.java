@@ -53,17 +53,11 @@ public class VpeAttributeCreator extends VpeAbstractCreator {
 				visualNodeMap.put(this, visualElement);
 			}
 			VpeValue vpeValue = expression.exec(pageContext, sourceNode);
-			//FIX FOR JBIDE-1484 added by Max Areshkau
-			//commented to fix JBIDE-1484
-//			if (vpeValue != null && vpeValue.stringValue().length() > 0) {
-//				nsIDOMAttr newVisualAttribute = visualDocument.createAttribute(name);
-//				newVisualAttribute.setValue(vpeValue.stringValue());
-//				return new VpeCreatorInfo(newVisualAttribute);
-//			}			
-				nsIDOMAttr newVisualDOMAttribute =  visualDocument.createAttribute(name);
-				newVisualDOMAttribute.setValue(vpeValue==null?null:vpeValue.stringValue());
-				return new VpeCreatorInfo(newVisualDOMAttribute);
-			//END of FIX JBIDE-1484 code
+			if (vpeValue != null && vpeValue.stringValue().length() > 0) {
+				nsIDOMAttr newVisualAttribute = visualDocument.createAttribute(name);
+				newVisualAttribute.setValue(vpeValue.stringValue());
+				return new VpeCreatorInfo(newVisualAttribute);
+			}			
 		}
 		return null;
 	}

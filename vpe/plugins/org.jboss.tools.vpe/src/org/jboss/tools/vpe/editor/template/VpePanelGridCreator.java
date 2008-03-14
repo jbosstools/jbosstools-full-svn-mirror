@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
 import java.util.ArrayList;
@@ -28,6 +28,7 @@ import org.mozilla.interfaces.nsIDOMElement;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -35,70 +36,136 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 
 	private boolean caseSensitive;
 	private VpeExpression tableSizeExpr;
+	private VpeExpression captionClassExpr;
+	private VpeExpression captionStyleExpr;
 	private VpeExpression headerClassExpr;
 	private VpeExpression footerClassExpr;
 	private VpeExpression rowClassesExpr;
 	private VpeExpression columnClassesExpr;
+	private VpeExpression rulesExpr;
+
 	private List propertyCreators;
-//	private Set dependencySet;
-	
-	VpePanelGridCreator(Element gridElement, VpeDependencyMap dependencyMap, boolean caseSensitive) {
+
+	// private Set dependencySet;
+
+	VpePanelGridCreator(Element gridElement, VpeDependencyMap dependencyMap,
+			boolean caseSensitive) {
 		this.caseSensitive = caseSensitive;
 		build(gridElement, dependencyMap);
 	}
 
 	private void build(Element gridElement, VpeDependencyMap dependencyMap) {
-		Attr tableSizeAttr = gridElement.getAttributeNode(VpeTemplateManager.ATTR_PANELGRID_TABLE_SIZE);
+
+		NamedNodeMap map = gridElement.getAttributes();
+
+		Attr tableSizeAttr = gridElement
+				.getAttributeNode(VpeTemplateManager.ATTR_PANELGRID_TABLE_SIZE);
 		if (tableSizeAttr != null) {
 			try {
-				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(tableSizeAttr.getValue(), caseSensitive);
+				VpeExpressionInfo info = VpeExpressionBuilder
+						.buildCompletedExpression(tableSizeAttr.getValue(),
+								caseSensitive);
 				tableSizeExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
-			} catch(VpeExpressionBuilderException e) {
+			} catch (VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
 			}
 		}
 
-		Attr headerClassAttr = gridElement.getAttributeNode(VpeTemplateManager.ATTR_PANELGRID_HEADER_CLASS);
+		Attr headerClassAttr = gridElement
+				.getAttributeNode(VpeTemplateManager.ATTR_PANELGRID_HEADER_CLASS);
 		if (headerClassAttr != null) {
 			try {
-				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(headerClassAttr.getValue(), caseSensitive);
+				VpeExpressionInfo info = VpeExpressionBuilder
+						.buildCompletedExpression(headerClassAttr.getValue(),
+								caseSensitive);
 				headerClassExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
-			} catch(VpeExpressionBuilderException e) {
+			} catch (VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
 			}
 		}
 
-		Attr footerClassAttr = gridElement.getAttributeNode(VpeTemplateManager.ATTR_PANELGRID_FOOTER_CLASS);
+		Attr footerClassAttr = gridElement
+				.getAttributeNode(VpeTemplateManager.ATTR_PANELGRID_FOOTER_CLASS);
 		if (footerClassAttr != null) {
 			try {
-				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(footerClassAttr.getValue(), caseSensitive);
+				VpeExpressionInfo info = VpeExpressionBuilder
+						.buildCompletedExpression(footerClassAttr.getValue(),
+								caseSensitive);
 				footerClassExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
-			} catch(VpeExpressionBuilderException e) {
+			} catch (VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
 			}
 		}
 
-		Attr rowClassesAttr = gridElement.getAttributeNode(VpeTemplateManager.ATTR_PANELGRID_ROW_CLASSES);
+		Attr rowClassesAttr = gridElement
+				.getAttributeNode(VpeTemplateManager.ATTR_PANELGRID_ROW_CLASSES);
 		if (rowClassesAttr != null) {
 			try {
-				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(rowClassesAttr.getValue(), caseSensitive);
+				VpeExpressionInfo info = VpeExpressionBuilder
+						.buildCompletedExpression(rowClassesAttr.getValue(),
+								caseSensitive);
 				rowClassesExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
-			} catch(VpeExpressionBuilderException e) {
+			} catch (VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
 			}
 		}
 
-		Attr columnClassesAttr = gridElement.getAttributeNode(VpeTemplateManager.ATTR_PANELGRID_COLUMN_CLASSES);
+		Attr columnClassesAttr = gridElement
+				.getAttributeNode(VpeTemplateManager.ATTR_PANELGRID_COLUMN_CLASSES);
 		if (columnClassesAttr != null) {
 			try {
-				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(columnClassesAttr.getValue(), caseSensitive);
+				VpeExpressionInfo info = VpeExpressionBuilder
+						.buildCompletedExpression(columnClassesAttr.getValue(),
+								caseSensitive);
 				columnClassesExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
-			} catch(VpeExpressionBuilderException e) {
+			} catch (VpeExpressionBuilderException e) {
+				VpePlugin.reportProblem(e);
+			}
+		}
+
+		Attr captionClassesAttr = gridElement
+				.getAttributeNode(VpeTemplateManager.ATTR_PANELGRID_CAPTION_CLASS);
+		if (captionClassesAttr != null) {
+			try {
+				VpeExpressionInfo info = VpeExpressionBuilder
+						.buildCompletedExpression(
+								captionClassesAttr.getValue(), caseSensitive);
+				captionClassExpr = info.getExpression();
+				dependencyMap.setCreator(this, info.getDependencySet());
+			} catch (VpeExpressionBuilderException e) {
+				VpePlugin.reportProblem(e);
+			}
+		}
+
+		Attr captionStyleAttr = gridElement
+				.getAttributeNode(VpeTemplateManager.ATTR_PANELGRID_CAPTION_STYLE);
+		if (captionStyleAttr != null) {
+			try {
+				VpeExpressionInfo info = VpeExpressionBuilder
+						.buildCompletedExpression(captionStyleAttr.getValue(),
+								caseSensitive);
+				captionStyleExpr = info.getExpression();
+				dependencyMap.setCreator(this, info.getDependencySet());
+			} catch (VpeExpressionBuilderException e) {
+				VpePlugin.reportProblem(e);
+			}
+		}
+
+		Attr rulesAttr = gridElement
+				.getAttributeNode(VpeTemplateManager.ATTR_PANELGRID_RULES);
+		if (rulesAttr != null) {
+			try {
+				VpeExpressionInfo info = VpeExpressionBuilder
+						.buildCompletedExpression(rulesAttr.getValue(),
+								caseSensitive);
+				rulesExpr = info.getExpression();
+				dependencyMap.setCreator(this, info.getDependencySet());
+			} catch (VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
 			}
 		}
@@ -108,14 +175,18 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 				String attrName = VpeTemplateManager.ATTR_GRID_PROPERTIES[i];
 				Attr attr = gridElement.getAttributeNode(attrName);
 				if (attr != null) {
-					if (propertyCreators == null) propertyCreators  = new ArrayList();
-					propertyCreators.add(new VpeAttributeCreator(attrName, attr.getValue(), dependencyMap, caseSensitive));
+					if (propertyCreators == null)
+						propertyCreators = new ArrayList();
+					propertyCreators.add(new VpeAttributeCreator(attrName, attr
+							.getValue(), dependencyMap, caseSensitive));
 				}
 			}
 		}
 	}
 
-	public VpeCreatorInfo _create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument, nsIDOMElement visualElement,
+			Map visualNodeMap) {
 		int tableSize = 1;
 		if (tableSizeExpr != null) {
 			VpeValue vpeValue = tableSizeExpr.exec(pageContext, sourceNode);
@@ -127,175 +198,58 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 						tableSize = val;
 					}
 				} catch (Exception e) {
-					VpePlugin.getPluginLog().logError(e);
 				}
 			}
 		}
-		
-		nsIDOMElement visualTable = visualDocument.createElement(HTML.TAG_TABLE);
+
+		nsIDOMElement visualTable = visualDocument
+				.createElement(HTML.TAG_TABLE);
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(visualTable);
 
 		if (propertyCreators != null) {
 			for (int i = 0; i < propertyCreators.size(); i++) {
-				VpeCreator creator = (VpeCreator)propertyCreators.get(i);
+				VpeCreator creator = (VpeCreator) propertyCreators.get(i);
 				if (creator != null) {
-					VpeCreatorInfo info = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
+					VpeCreatorInfo info = creator.create(pageContext,
+							(Element) sourceNode, visualDocument, visualTable,
+							visualNodeMap);
 					if (info != null && info.getVisualNode() != null) {
-						nsIDOMAttr attr = (nsIDOMAttr)info.getVisualNode();
+						nsIDOMAttr attr = (nsIDOMAttr) info.getVisualNode();
 						visualTable.setAttributeNode(attr);
 					}
 				}
 			}
 		}
-		
+
+		if (rulesExpr != null) {
+			String rules = rulesExpr.exec(pageContext, sourceNode)
+					.stringValue();
+			if (rules.length() > 0)
+				visualTable.setAttribute(
+						VpeTemplateManager.ATTR_PANELGRID_RULES, rules);
+		}
 		NodeList children = sourceNode.getChildNodes();
 		int count = children != null ? children.getLength() : 0;
 		if (count > 0) {
 			Node header = null;
 			Node footer = null;
+			Node caption = null;
 			Node[] sourceChildren = new Node[count];
 			int childrenCount = 0;
 			for (int i = 0; i < count; i++) {
 				Node node = children.item(i);
 				int type = node.getNodeType();
-				if (type == Node.ELEMENT_NODE || type == Node.TEXT_NODE && node.getNodeValue().trim().length() > 0) {
-					if (type == Node.ELEMENT_NODE && (node.getPrefix() + ":facet").equals(node.getNodeName())) {
-						Node nameAttr = node.getAttributes().getNamedItem("name");
-						if (nameAttr != null) {
-							String value = nameAttr.getNodeValue();
-							if ("header".equals(value)) {
-								header = node;
-							} else if ("footer".equals(value)) {
-								footer = node;
-							}
-						}
-					} else {
-						sourceChildren[childrenCount] = node;
-						childrenCount++;
-					}
-				}
-			}
-			if (childrenCount > 0) {
-				if (tableSize == 0) {
-					tableSize = childrenCount;
-				}
-				int rowCount = (childrenCount + tableSize - 1) / tableSize;
-
-				nsIDOMElement visualHead = null;
-				nsIDOMElement visualFoot = null;
-				nsIDOMElement visualBody = visualDocument.createElement(HTML.TAG_TBODY);
-				visualTable.appendChild(visualBody);
-				if (header != null || footer != null) {
-					if (header != null) {
-						visualHead = visualDocument.createElement(HTML.TAG_THEAD);
-						visualTable.appendChild(visualHead);
-					}
-					if (footer != null) {
-						visualFoot = visualDocument.createElement(HTML.TAG_TFOOT);
-						visualTable.appendChild(visualFoot);
-					}
-				}
-				List rowClasses = getClasses(rowClassesExpr, sourceNode, pageContext);
-				List columnClasses = getClasses(columnClassesExpr, sourceNode, pageContext);
-				int rci = 0, cci = 0;
-				for (int i = 0; i < rowCount; i++) {
-					nsIDOMElement visualRow = visualDocument.createElement(HTML.TAG_TD);
-					if (rowClasses.size() > 0) {
-						visualRow.setAttribute("class", rowClasses.get(rci).toString());
-						rci++;
-						if (rci >= rowClasses.size()) rci = 0;
-					}
-					for (int j = 0; j < tableSize; j++) {
-						nsIDOMElement visualCell = visualDocument.createElement("td");
-						if (columnClasses.size() > 0) {
-							visualCell.setAttribute("class", columnClasses.get(rci).toString());
-							cci++;
-							if (cci >= rowClasses.size()) cci = 0;
-						}
-						visualRow.appendChild(visualCell);
-						int sourceIndex = tableSize * i + j;
-						if (sourceIndex < childrenCount) {
-							Node child = sourceChildren[sourceIndex];
-							if (child != header && child != footer) {
-								VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualCell);
-								childrenInfo.addSourceChild(child);
-								creatorInfo.addChildrenInfo(childrenInfo);
-							}
-						}
-					}
-					if (visualBody != null) {
-						visualBody.appendChild(visualRow);
-					} else {
-						visualTable.appendChild(visualRow);
-					}
-				}
-				makeSpecial(header, visualHead, visualDocument, tableSize, creatorInfo, HTML.TAG_TH, headerClassExpr, pageContext);
-				makeSpecial(footer, visualFoot, visualDocument, tableSize, creatorInfo, HTML.TAG_TD, footerClassExpr, pageContext);
-
-				for (int i = 0; i < propertyCreators.size(); i++) {
-					VpeCreator creator = (VpeCreator)propertyCreators.get(i);
-					if (creator != null) {
-						VpeCreatorInfo info = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
-						if (info != null && info.getVisualNode() != null) {
-							nsIDOMAttr attr = (nsIDOMAttr)info.getVisualNode();
-							visualTable.setAttributeNode(attr);
-						}
-					}
-				}
-			}
-		}
-
-		return creatorInfo;
-	}
-
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
-		int tableSize = 1;
-		if (tableSizeExpr != null) {
-			VpeValue vpeValue = tableSizeExpr.exec(pageContext, sourceNode);
-			if (vpeValue != null) {
-				String strValue = vpeValue.stringValue();
-				try {
-					int val = Integer.valueOf(strValue).intValue();
-					if (val > 0) {
-						tableSize = val;
-					}
-				} catch (Exception e) {}
-			}
-		}
-		
-		nsIDOMElement visualTable = visualDocument.createElement(HTML.TAG_TABLE);
-		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(visualTable);
-
-		if (propertyCreators != null) {
-			for (int i = 0; i < propertyCreators.size(); i++) {
-				VpeCreator creator = (VpeCreator)propertyCreators.get(i);
-				if (creator != null) {
-					VpeCreatorInfo info = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
-					if (info != null && info.getVisualNode() != null) {
-						nsIDOMAttr attr = (nsIDOMAttr)info.getVisualNode();
-						visualTable.setAttributeNode(attr);
-					}
-				}
-			}
-		}
-		
-		NodeList children = sourceNode.getChildNodes();
-		int count = children != null ? children.getLength() : 0;
-		if (count > 0) {
-			Node header = null;
-			Node footer = null;
-			Node[] sourceChildren = new Node[count];
-			int childrenCount = 0;
-			for (int i = 0; i < count; i++) {
-				Node node = children.item(i);
-				int type = node.getNodeType();
-				if (type == Node.ELEMENT_NODE || type == Node.TEXT_NODE && node.getNodeValue().trim().length() > 0) {
+				if (type == Node.ELEMENT_NODE || type == Node.TEXT_NODE
+						&& node.getNodeValue().trim().length() > 0) {
 					switch (VpeCreatorUtil.getFacetType(node, pageContext)) {
-					case VpeCreatorUtil.FASET_TYPE_HEADER:
+					case VpeCreatorUtil.FACET_TYPE_HEADER:
 						header = node;
 						break;
-					case VpeCreatorUtil.FASET_TYPE_FOOTER:
+					case VpeCreatorUtil.FACET_TYPE_FOOTER:
 						footer = node;
+						break;
+					case VpeCreatorUtil.FACET_TYPE_CAPTION:
+						caption = node;
 						break;
 					default:
 						sourceChildren[childrenCount] = node;
@@ -312,41 +266,75 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 
 				nsIDOMElement visualHead = null;
 				nsIDOMElement visualFoot = null;
-				nsIDOMElement visualBody = visualDocument.createElement(HTML.TAG_TBODY);
+				nsIDOMElement visualCaption = null;
+				nsIDOMElement visualBody = visualDocument
+						.createElement(HTML.TAG_TBODY);
 				visualTable.appendChild(visualBody);
-				if (header != null || footer != null) {
-					if (header != null) {
-						visualHead = visualDocument.createElement(HTML.TAG_THEAD);
-						visualTable.appendChild(visualHead);
+				if (caption != null) {
+					visualCaption = visualDocument
+							.createElement(HTML.TAG_CAPTION);
+					visualTable.appendChild(visualCaption);
+					VpeChildrenInfo childrenInfo = new VpeChildrenInfo(
+							visualCaption);
+					childrenInfo.addSourceChild(caption);
+					creatorInfo.addChildrenInfo(childrenInfo);
+					if (captionClassExpr != null
+							&& caption.getParentNode() != null) {
+						String captionClass = captionClassExpr.exec(
+								pageContext, caption.getParentNode())
+								.stringValue();
+						visualCaption.setAttribute("class", captionClass);
 					}
-					if (footer != null) {
-						visualFoot = visualDocument.createElement(HTML.TAG_TFOOT);
-						visualTable.appendChild(visualFoot);
+
+					if (captionStyleExpr != null
+							&& caption.getParentNode() != null) {
+						String captionStyle = captionStyleExpr.exec(
+								pageContext, caption.getParentNode())
+								.stringValue();
+						visualCaption.setAttribute("style", captionStyle);
 					}
 				}
-				List rowClasses = getClasses(rowClassesExpr, sourceNode, pageContext);
-				List columnClasses = getClasses(columnClassesExpr, sourceNode, pageContext);
+				if (header != null) {
+					visualHead = visualDocument.createElement(HTML.TAG_THEAD);
+					visualTable.appendChild(visualHead);
+				}
+				if (footer != null) {
+					visualFoot = visualDocument.createElement(HTML.TAG_TFOOT);
+					visualTable.appendChild(visualFoot);
+				}
+
+				List rowClasses = getClasses(rowClassesExpr, sourceNode,
+						pageContext);
+				List columnClasses = getClasses(columnClassesExpr, sourceNode,
+						pageContext);
 				int rci = 0, cci = 0;
 				for (int i = 0; i < rowCount; i++) {
-					nsIDOMElement visualRow = visualDocument.createElement(HTML.TAG_TR);
+					nsIDOMElement visualRow = visualDocument
+							.createElement(HTML.TAG_TR);
 					if (rowClasses.size() > 0) {
-						visualRow.setAttribute("class", rowClasses.get(rci).toString());
+						visualRow.setAttribute("class", rowClasses.get(rci)
+								.toString());
 						rci++;
-						if (rci >= rowClasses.size()) rci = 0;
+						if (rci >= rowClasses.size())
+							rci = 0;
 					}
 					for (int j = 0; j < tableSize; j++) {
-						nsIDOMElement visualCell = visualDocument.createElement(HTML.TAG_TD);
+						nsIDOMElement visualCell = visualDocument
+								.createElement(HTML.TAG_TD);
 						if (columnClasses.size() > 0) {
-							visualCell.setAttribute("class", columnClasses.get(cci).toString());
+							visualCell.setAttribute("class", columnClasses.get(
+									cci).toString());
 							cci++;
-							if (cci >= columnClasses.size()) cci = 0;
+							if (cci >= columnClasses.size())
+								cci = 0;
 						}
 						visualRow.appendChild(visualCell);
 						int sourceIndex = tableSize * i + j;
 						if (sourceIndex < childrenCount) {
 							Node child = sourceChildren[sourceIndex];
 							if (child != header && child != footer) {
-								VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualCell);
+								VpeChildrenInfo childrenInfo = new VpeChildrenInfo(
+										visualCell);
 								childrenInfo.addSourceChild(child);
 								creatorInfo.addChildrenInfo(childrenInfo);
 							}
@@ -358,16 +346,22 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 						visualTable.appendChild(visualRow);
 					}
 				}
-				makeSpecial(header, visualHead, visualDocument, tableSize, creatorInfo, "th", headerClassExpr, pageContext);
-				makeSpecial(footer, visualFoot, visualDocument, tableSize, creatorInfo, "td", footerClassExpr, pageContext);
+				makeSpecial(header, visualHead, visualDocument, tableSize,
+						creatorInfo, "th", headerClassExpr, pageContext);
+				makeSpecial(footer, visualFoot, visualDocument, tableSize,
+						creatorInfo, "td", footerClassExpr, pageContext);
 
 				for (int i = 0; i < propertyCreators.size(); i++) {
-					VpeCreator creator = (VpeCreator)propertyCreators.get(i);
+					VpeCreator creator = (VpeCreator) propertyCreators.get(i);
 					if (creator != null) {
-						VpeCreatorInfo info = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
+						VpeCreatorInfo info = creator.create(pageContext,
+								(Element) sourceNode, visualDocument,
+								visualTable, visualNodeMap);
 						if (info != null && info.getVisualNode() != null) {
-							nsIDOMAttr attr = (nsIDOMAttr)info.getVisualNode();
-							visualTable.setAttributeNode(attr);
+							nsIDOMAttr attr = (nsIDOMAttr) info.getVisualNode();
+							if (attr.getValue().length() > 0) {
+								visualTable.setAttributeNode(attr);
+							}
 						}
 					}
 				}
@@ -377,10 +371,12 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 		return creatorInfo;
 	}
 
-	private List getClasses(VpeExpression expression, Node sourceNode, VpePageContext pageContext) {
+	private List getClasses(VpeExpression expression, Node sourceNode,
+			VpePageContext pageContext) {
 		List b = new ArrayList();
 		if (expression != null && sourceNode != null) {
-			String classes = expression.exec(pageContext, sourceNode).stringValue();
+			String classes = expression.exec(pageContext, sourceNode)
+					.stringValue();
 			String[] a = classes.split(",");
 			for (int i = 0; i < a.length; i++) {
 				if (a[i].trim().length() > 0) {
@@ -391,14 +387,18 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 		return b;
 	}
 
-	private void makeSpecial(Node header, nsIDOMElement visualHead, nsIDOMDocument visualDocument, int tableSize, VpeCreatorInfo creatorInfo, String cellTag, VpeExpression headerClassExpr, VpePageContext pageContext) {
+	private void makeSpecial(Node header, nsIDOMElement visualHead,
+			nsIDOMDocument visualDocument, int tableSize,
+			VpeCreatorInfo creatorInfo, String cellTag,
+			VpeExpression headerClassExpr, VpePageContext pageContext) {
 		if (header != null && visualHead != null) {
 			nsIDOMElement visualRow = visualDocument.createElement(HTML.TAG_TR);
 			visualHead.appendChild(visualRow);
 			nsIDOMElement visualCell = visualDocument.createElement(cellTag);
 			visualCell.setAttribute("colspan", "" + tableSize);
 			if (headerClassExpr != null && header.getParentNode() != null) {
-				String headerClass = headerClassExpr.exec(pageContext, header.getParentNode()).stringValue();
+				String headerClass = headerClassExpr.exec(pageContext,
+						header.getParentNode()).stringValue();
 				visualCell.setAttribute("class", headerClass);
 			}
 			visualRow.appendChild(visualCell);
@@ -422,7 +422,9 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 		return null;
 	}
 
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNde, Object data, String name, String value) {
+	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
+			Element sourceElement, Document visualDocument, Node visualNde,
+			Object data, String name, String value) {
 		return true;
 	}
 }

@@ -24,11 +24,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class VpeCreatorUtil {
-	public static final int FASET_TYPE_NONE = 0;
-	public static final int FASET_TYPE_HEADER = 1;
-	public static final int FASET_TYPE_FOOTER = 2;
-	public static final int FASET_TYPE_BODY = 3;
-	public static final int FASET_TYPE_NAVIGATION = 4;
+	public static final int FACET_TYPE_NONE = 0;
+	public static final int FACET_TYPE_HEADER = 1;
+	public static final int FACET_TYPE_FOOTER = 2;
+	public static final int FACET_TYPE_BODY = 3;
+	public static final int FACET_TYPE_NAVIGATION = 4;
+	public static final int FACET_TYPE_CAPTION = 5;
 
 	public static boolean isFacet(Node node) {
 		if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
@@ -48,16 +49,18 @@ public class VpeCreatorUtil {
 		String value = getFacetName(node);
 		if (value != null) {
 			if ("header".equals(value)) {
-				return FASET_TYPE_HEADER;
+				return FACET_TYPE_HEADER;
 			} else if ("footer".equals(value)) {
-				return FASET_TYPE_FOOTER;
+				return FACET_TYPE_FOOTER;
 			} else if ("body".equals(value)) {
-				return FASET_TYPE_BODY;
+				return FACET_TYPE_BODY;
 			} else if ("navigation".equals(value)) {
-				return FASET_TYPE_NAVIGATION;
+				return FACET_TYPE_NAVIGATION;
+			} else if ("caption".equals(value)) {
+				return FACET_TYPE_CAPTION;
 			}
 		}
-		return FASET_TYPE_NONE;
+		return FACET_TYPE_NONE;
 	}
 
 	public static boolean isInclude(Node node) {
@@ -153,7 +156,7 @@ public class VpeCreatorUtil {
 					for (int i = 0; i < cnt; i++) {
 						Node child = list.item(i);
 						int type = getFacetType(child, pageContext);
-						if (type != FASET_TYPE_NONE) {
+						if (type != FACET_TYPE_NONE) {
 							return type;
 						}
 					}
@@ -162,7 +165,7 @@ public class VpeCreatorUtil {
 				}
 			}
 		}
-		return FASET_TYPE_NONE;
+		return FACET_TYPE_NONE;
 	}
 	
 	public static void setAttributes(Element visualElement, Element sourceElement, VpeAttributeInfo[] attrsInfo) {
