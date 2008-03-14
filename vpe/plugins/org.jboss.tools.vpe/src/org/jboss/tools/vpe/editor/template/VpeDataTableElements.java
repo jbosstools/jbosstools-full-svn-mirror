@@ -315,14 +315,6 @@ public class VpeDataTableElements {
 		public void setColumnsHeaderRow(nsIDOMElement columnsHeaderRow) {
 			this.columnsHeaderRow = columnsHeaderRow;
 		}
-		
-		public nsIDOMElement getTableCaptionTag() {
-			return tableCaptionTag;
-		}
-		
-		public void setTableCaptionTag(nsIDOMElement tableCaptionTag) {
-			this.tableCaptionTag = tableCaptionTag;
-		}
 
 		public nsIDOMElement getTableFooter() {
 			return tableFooter;
@@ -447,7 +439,7 @@ public class VpeDataTableElements {
 					VpeDataTableElements.getNamedChild(visualParent, HTML.TAG_TFOOT)
 			);
 
-		visualDataTableElements.setTableCaptionTag(VpeDataTableElements.getNamedChild(visualDataTableElements.getCaption(), "caption"));
+		visualDataTableElements.setCaption(VpeDataTableElements.getNamedChild(visualDataTableElements.getCaption(), "caption"));
 		visualDataTableElements.setTableHeaderRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getTableHeader(), "tr"));
 		visualDataTableElements.setColumnsHeaderRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getColumnsHeader(), "tr"));
 		visualDataTableElements.setBodyRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getBody(), "tr"));

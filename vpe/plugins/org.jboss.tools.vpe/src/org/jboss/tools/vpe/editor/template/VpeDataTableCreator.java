@@ -45,6 +45,8 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 	private VpeExpression rowClassesExpr;
 	private VpeExpression columnClassesExpr;
 	
+	private static final String ATTR_CAPTION_STYLE = "captionStyle";
+	private static final String ATTR_CAPTION_CLASS = "captionClass";
 	private static final String ATTR_STYLE = "style";
 	private static final String ATTR_CLASS = "class";
 	private static final String ATTR_WIDTH = "width";
@@ -135,11 +137,21 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 
 		if (true || sourceElements.hasTableCaption()) {
 			caption = visualDocument.createElement(HTML.TAG_CAPTION);
-			visualElements.setTableCaptionTag(caption);
 			if (sourceElements.getTableCaption() != null) {
 				VpeChildrenInfo info = new VpeChildrenInfo(caption);
 				info.addSourceChild(sourceElements.getTableCaption());
 				creatorInfo.addChildrenInfo(info);
+			}
+			
+			// Everything concerning table caption
+			// lies here (was removed from VpeFacetCreator)
+			Node attr = sourceNode.getAttributes().getNamedItem(ATTR_CAPTION_STYLE);
+			if (attr != null) {
+				caption.setAttribute(ATTR_STYLE, attr.getNodeValue());
+			}
+			attr = sourceNode.getAttributes().getNamedItem(ATTR_CAPTION_CLASS);
+			if (attr != null) {
+				caption.setAttribute(ATTR_CLASS, attr.getNodeValue());
 			}
 			outterTable.appendChild(caption);
 			visualElements.setCaption(caption);

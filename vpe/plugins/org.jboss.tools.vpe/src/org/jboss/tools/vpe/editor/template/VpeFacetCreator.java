@@ -43,10 +43,9 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 			String name = nameAttr.getNodeValue();
 			isHeader = name.equals("header");
 			isFooter = name.equals("footer");
-			isCaption = name.equals("caption");
 		}
 
-		if (isHeader || isFooter || isCaption) {
+		if (isHeader || isFooter) {
 			Node sourceParent = sourceNode.getParentNode();
 			if (sourceParent != null) {
 				nsIDOMNode visualParent = null;
@@ -57,7 +56,6 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 
 				nsIDOMNode header = null;
 				nsIDOMNode footer = null;
-				nsIDOMNode caption = null;
 				
 				if (visualParent != null && visualParent.getNodeName().equalsIgnoreCase("table")) {
 					nsIDOMNodeList children = visualParent.getChildNodes();
@@ -84,17 +82,12 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 					cell = makeCell(columnsCount, HTML.TAG_TH, visualDocument);
 				} else if (isFooter) {
 					cell = makeCell(columnsCount, HTML.TAG_TD, visualDocument);
-				} else if (isCaption) {
-					cell = visualDocument.createElement(HTML.TAG_CAPTION);
 				}
 				if (cell != null) {
 					if (isHeader) {
 						setCellClass(cell, getTableAttrValue(sourceParent, "headerClass"));
 					} else if (isFooter) {
 						setCellClass(cell, getTableAttrValue(sourceParent, "footerClass"));
-					} else if (isCaption) {
-						setCellClass(cell, getTableAttrValue(sourceParent, "captionClass"));
-						setCaptionStyle(sourceParent, cell, getTableAttrValue(sourceParent, "captionStyle"));
 					}
 					creatorInfo = new VpeCreatorInfo(cell);
 				}
@@ -119,26 +112,6 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		}
 	}
 	
-	/**
-	 * Sets the caption style and stretches caption to fit the full table width. 
-	 * 
-	 * @param sourceParent the source parent
-	 * @param cell the cell
-	 * @param captionStyle the caption style
-	 */
-	private void setCaptionStyle(Node sourceParent, nsIDOMElement cell, String captionStyle) {
-		if (cell != null) {
-			String resultStyle = ""; 
-			if (captionStyle != null) {
-				if (!(captionStyle.lastIndexOf("width") > -1)) {
-					resultStyle += "width: 100%; ";
-				}
-				resultStyle += captionStyle;
-			}
-			cell.setAttribute(HTML.ATTR_STYLE, resultStyle);
-		}
-	}
-
 	private String getTableAttrValue(Node dataTableNode, String attrName) {
 		if (dataTableNode != null) {
 			Node attr = dataTableNode.getAttributes().getNamedItem(attrName);
