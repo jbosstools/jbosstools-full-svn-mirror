@@ -36,7 +36,6 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 
 		boolean isHeader = false;
 		boolean isFooter = false;
-		boolean isCaption = false;
 		
 		Node nameAttr = sourceNode.getAttributes().getNamedItem("name");
 		if (nameAttr != null) {
