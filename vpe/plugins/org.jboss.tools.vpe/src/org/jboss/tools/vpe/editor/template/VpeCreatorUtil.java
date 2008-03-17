@@ -109,16 +109,24 @@ public class VpeCreatorUtil {
 	}
 
 	public static IFile getFile(String fileName, VpePageContext pageContext) {
+		if (null == fileName) {
+			return null;
+		}
 		IEditorInput input = pageContext.getEditPart().getEditorInput();
 		IFile file = null;
-		if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null) {
-			file = FileUtil.getFile(input, fileName);
-		} else {
-			IFile includedFile = 
-				pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
-			file = FileUtil.getFile(fileName, includedFile);
+		try {
+			if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null) {
+				file = FileUtil.getFile(input, fileName);
+			} else {
+				IFile includedFile = 
+					pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
+				file = FileUtil.getFile(fileName, includedFile);
+			}
+		} catch (Exception e) {
+			// nothing
 		}
-		if (file != null) { 
+		
+		if (file != null) {
 			if (!file.isSynchronized(0)){
 				try {
 					file.refreshLocal(0, null);
