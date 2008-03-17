@@ -281,6 +281,24 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 					}
 					// Skip setting content table border
 					if (ATTR_BORDER.equalsIgnoreCase(attr.getNodeName())) {
+						// if attribute border is set then table cells have borders.
+						// Because two table are used border should appear
+						// around content table cells but not the table itself. 
+						// By default content table has no border.
+						String value = attr.getNodeValue();
+						int val = -1;
+						if ((null != value) && (!"".equalsIgnoreCase(value))) {
+							try {
+								val = Integer.parseInt(value);
+							} catch (NumberFormatException e) {
+								// ignore
+							}
+						}
+						if (val > 0) {
+							visualTable.setAttribute(ATTR_BORDER, "1");
+							visualTable.setAttribute(ATTR_STYLE, "border: 0px hidden;");
+						}
+						
 						continue;
 					}
 					// Fixes creation of a border around content table
