@@ -669,7 +669,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	protected void setSourceSelection(VpePageContext pageContext, Node node,
 			int offset, int length) {
 
-		int start = getStartOffsetNode(node) ;
+		int start = getStartOffsetNode(node);
 
 		pageContext.getSourceBuilder().getStructuredTextViewer()
 				.setSelectedRange(start + offset, length);
@@ -774,8 +774,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 
 		selection.collapse(visualNode, visualFocus);
 
-//		if(visualFocus!=visualAnchor)
-//		selection.extend(visualNode, visualAnchor );
+		// if(visualFocus!=visualAnchor)
+		// selection.extend(visualNode, visualAnchor );
 		pageContext.getVisualBuilder().setSelectionRectangle(
 				(nsIDOMElement) visualParent);
 	}
@@ -815,7 +815,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	protected int getStartOffsetNode(Node node) {
 
 		if (node instanceof IDOMAttr) {
-			return ((IDOMAttr) node).getValueRegionStartOffset()+1;
+			return ((IDOMAttr) node).getValueRegionStartOffset() + 1;
 		} else if (node instanceof IndexedRegion) {
 			return ((IndexedRegion) node).getStartOffset();
 		}
@@ -832,8 +832,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		if (node instanceof IDOMAttr) {
 			return ((IDOMAttr) node).getValueSource().length();
 		} else if (node instanceof IndexedRegion) {
-			return ((IndexedRegion) node).getStartOffset()
-					- ((IndexedRegion) node).getEndOffset();
+			return ((IndexedRegion) node).getEndOffset()
+					- ((IndexedRegion) node).getStartOffset();
 		}
 		return 0;
 	}
