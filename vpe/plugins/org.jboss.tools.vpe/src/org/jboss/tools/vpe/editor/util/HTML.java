@@ -56,9 +56,9 @@ public final class HTML {
     public static final String TAG_B = "B"; //$NON-NLS-1$
     public static final String TAG_I = "I"; //$NON-NLS-1$
     public static final String TAG_U = "U"; //$NON-NLS-1$
-    public static final String TAG_LABEL = "LABEL";
-    public static final String TAG_A = "A";
-    public static final String TAG_H1 = "H1";
+    public static final String TAG_LABEL = "LABEL"; //$NON-NLS-1$
+    public static final String TAG_A = "A"; //$NON-NLS-1$
+    public static final String TAG_H1 = "H1"; //$NON-NLS-1$
     
     public static final String ATTR_ID = "ID"; //$NON-NLS-1$
     public static final String ATTR_TYPE = "TYPE"; //$NON-NLS-1$
@@ -76,8 +76,8 @@ public final class HTML {
     public static final String ATTR_WIDTH = "WIDTH"; //$NON-NLS-1$
     public static final String ATTR_HEIGHT = "HEIGHT"; //$NON-NLS-1$
     public static final String ATTR_BORDER = "border"; //$NON-NLS-1$
-    public static final String ATTR_FOR = "FOR";
-    public static final String ATTR_DIR = "dir";
-    public static final String ATTR_DISABLED = "disabled";
-   
+    public static final String ATTR_FOR = "FOR"; //$NON-NLS-1$
+    public static final String ATTR_DIR = "dir"; //$NON-NLS-1$
+    public static final String ATTR_DISABLED = "disabled"; //$NON-NLS-1$
+    public static final String ATTR_FRAME = "frame"; //$NON-NLS-1$
 }
