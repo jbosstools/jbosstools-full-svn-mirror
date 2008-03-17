@@ -415,7 +415,8 @@ END OF TERMS AND CONDITIONS
    </license>
 
    <url>
-      <update label="JBossIDE for Eclipse Update Site" url="http://download.jboss.org/jbosside/updates/stable"/>
+      <update label="JBossTools Update Site" url="http://download.jboss.org/jbosstools/updates/stable"/>
+      <discovery label="JBossTools Development Update Site" url="http://download.jboss.org/updates/development"/>
    </url>
 
    <requires>
