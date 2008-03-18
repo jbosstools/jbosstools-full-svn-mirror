@@ -74,7 +74,8 @@ public class VpeSelectionBuilder {
 	public void setSelection(nsISelection selection) {
 		
 		VpeTemplate vpeTemplate = TemplateManagingUtil
-				.getTemplateByVisualSelection(visualBuilder.getPageContext());
+				.getTemplateByVisualSelection(visualBuilder.getPageContext(),
+						selection.getFocusNode());
 		if (vpeTemplate instanceof ITemplateSelectionManager) {
 			((ITemplateSelectionManager) vpeTemplate).setSelection(
 					visualBuilder.getPageContext(), selection);
@@ -1341,7 +1342,7 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 			}
 			selection.collapse(visualNode, offset);
 		} else {
-			selection.removeAllRanges();
+			//selection.removeAllRanges();
 		}
 		visualSelectionController.setCaretEnabled(true);
 		setSelection(selection);

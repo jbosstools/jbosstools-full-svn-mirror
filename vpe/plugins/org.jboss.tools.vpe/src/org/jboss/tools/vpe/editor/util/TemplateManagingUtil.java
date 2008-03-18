@@ -17,6 +17,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Node;
 
 public class TemplateManagingUtil {
@@ -28,10 +29,12 @@ public class TemplateManagingUtil {
 	 * @return
 	 */
 	public static VpeTemplate getTemplateByVisualSelection(
-			VpePageContext pageContext) {
+			VpePageContext pageContext, nsIDOMNode selectedNode) {
 		// get element mapping
+//		VpeElementMapping elementMapping = pageContext.getDomMapping()
+//				.getNearElementMapping(getVisualSelectedNode(pageContext));
 		VpeElementMapping elementMapping = pageContext.getDomMapping()
-				.getNearElementMapping(getVisualSelectedNode(pageContext));
+		.getNearElementMapping(selectedNode);
 
 		if (elementMapping != null)
 			return elementMapping.getTemplate();

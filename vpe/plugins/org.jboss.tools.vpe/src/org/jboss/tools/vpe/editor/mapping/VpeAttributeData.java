@@ -39,6 +39,12 @@ public class VpeAttributeData {
 	 */
 	private boolean isEditable;
 
+	/**
+	 * name of attribute. add for cases when attribute has default value and
+	 * attribute has not source presentation but has visual presentation
+	 */
+	private String attributeName;
+
 	public VpeAttributeData(Attr sourceAttr, nsIDOMNode visualAttr,
 			boolean isEditable) {
 		this.sourceAttr = sourceAttr;
@@ -49,6 +55,21 @@ public class VpeAttributeData {
 
 	public VpeAttributeData(Attr sourceAttr, nsIDOMNode visualAttr) {
 		this.sourceAttr = sourceAttr;
+		this.visualAttr = visualAttr;
+		this.isEditable = true;
+
+	}
+
+	public VpeAttributeData(String attributeName, nsIDOMNode visualAttr,
+			boolean isEditable) {
+		this.attributeName = attributeName;
+		this.visualAttr = visualAttr;
+		this.isEditable = isEditable;
+
+	}
+
+	public VpeAttributeData(String attributeName, nsIDOMNode visualAttr) {
+		this.attributeName = attributeName;
 		this.visualAttr = visualAttr;
 		this.isEditable = true;
 
@@ -106,6 +127,14 @@ public class VpeAttributeData {
 	 */
 	public void setEditable(boolean isEditable) {
 		this.isEditable = isEditable;
+	}
+
+	public String getAttributeName() {
+		return attributeName;
+	}
+
+	public void setAttributeName(String attributeName) {
+		this.attributeName = attributeName;
 	}
 
 }

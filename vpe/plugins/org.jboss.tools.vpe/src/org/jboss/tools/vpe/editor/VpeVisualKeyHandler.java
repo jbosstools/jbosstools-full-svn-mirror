@@ -170,7 +170,7 @@ public class VpeVisualKeyHandler {
 		
 		// get template of selected element
 		VpeTemplate template = TemplateManagingUtil
-				.getTemplateByVisualSelection(pageContext);
+				.getTemplateByVisualSelection(pageContext,getSelectedNode());
 		
 		// if template сan handle keyEvent than pass control to him. And if
 		// template handled event return true
