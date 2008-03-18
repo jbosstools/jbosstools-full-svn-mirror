@@ -420,10 +420,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			visualEditor.hideResizer();
 			visualBuilder.setSelectionRectangle(null);
 			if (type == Node.TEXT_NODE) {
-				visualBuilder.setText((Node)notifier);
+				boolean update = visualBuilder.setText((Node)notifier);
 				visualEditor.showResizer();
 				//Added by Max Areshkau JBIDE-1554
-				visualBuilder.updateNode((Node)notifier);
+				if (!update) visualBuilder.updateNode((Node)notifier);
 			} else if (type == Node.COMMENT_NODE) {
 				if("yes".equals(VpePreference.SHOW_COMMENTS.getValue())) { //$NON-NLS-1$
 					visualBuilder.setSelectionRectangle(null);

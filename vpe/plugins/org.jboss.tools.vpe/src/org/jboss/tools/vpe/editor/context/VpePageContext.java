@@ -138,7 +138,7 @@ public class VpePageContext implements IVisualContext {
 	}
 
 	public void addBundleDependency(Element sourceNode) {
-		bundleDependencySet.add(sourceNode);
+		//bundleDependencySet.add(sourceNode);
 	}
 	
 	public void removeBundleDependency(Element sourceNode) {
@@ -146,10 +146,16 @@ public class VpePageContext implements IVisualContext {
 	}
 	
 	public void refreshBundleValues() {
-		Iterator iterator = bundleDependencySet.iterator();
+		if (getVisualBuilder() == null) return;
+		List nodes = getVisualBuilder().getSourceNodes();
+		//Iterator iterator = bundleDependencySet.iterator();
+		Iterator iterator = nodes.iterator();
 		while (iterator.hasNext()) {
-			Element sourceElement = (Element) iterator.next();
-			visualBuilder.refreshBundleValues(sourceElement);
+			Object object = iterator.next();
+			if (object instanceof Element) {
+				Element sourceElement = (Element) object;
+				visualBuilder.refreshBundleValues(sourceElement);
+			}
 		}
 	}
 	
