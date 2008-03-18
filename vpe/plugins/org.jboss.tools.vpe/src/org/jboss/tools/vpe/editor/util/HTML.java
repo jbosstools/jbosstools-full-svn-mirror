@@ -80,4 +80,6 @@ public final class HTML {
     public static final String ATTR_DIR = "dir"; //$NON-NLS-1$
     public static final String ATTR_DISABLED = "disabled"; //$NON-NLS-1$
     public static final String ATTR_FRAME = "frame"; //$NON-NLS-1$
+    public static final String ATTR_ROWSPAN = "rowspan";  //$NON-NLS-1$
+   
 }
