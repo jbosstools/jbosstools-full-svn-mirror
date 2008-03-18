@@ -30,6 +30,7 @@ import org.jboss.ide.eclipse.archives.core.model.ArchiveNodeFactory;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveAction;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModel;
@@ -53,17 +54,503 @@ public class ModelCreationTest extends TestCase {
 	}
 
 	public void testSimpleCreation() {
-		createModelNode();
+		createEmptyModelNode();
 	}
 	
-	public void testAddToModel() {
-		ArchiveModelNode modelNode = createModelNode();
+	
+	/*
+	 * Testing the validity of adding certain types
+	 * of nodes to others. 
+	 */
+	public void testRegisterInModel() {
+		ArchiveModelNode modelNode = createEmptyModelNode();
 		modelNode.getModel().registerProject(modelNode, new NullProgressMonitor());
 		assertEquals(modelNode,modelNode.getModel().getRoot(project));
 		assertNotSame(null, modelListener.getDelta());
 		assertEquals(IArchiveNodeDelta.NODE_REGISTERED, modelListener.getDelta().getKind());
 		modelNode.getModel().registerProject(modelNode, new NullProgressMonitor());
 	}
+	
+	
+	// Add everything to the root model
+	
+	public void testAddFolderToModel() {
+		try {
+			createEmptyModelNode().addChild(createFolder("testFolder"));
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+	
+	public void testAddFilesetToModel() {
+		try {
+			createEmptyModelNode().addChild(createFileSet("*", "blah"));
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+	
+	public void testAddActionToModel() {
+		try {
+			createEmptyModelNode().addChild(createAction());;
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+	
+	public void testAddArchiveToModel() {
+		try {
+			createEmptyModelNode().addChild(createArchive("someName.war", "test"));
+		} catch( ArchivesModelException ame ) {
+			fail();
+		}
+	}
+
+	/*
+	 * Let's make sure all 4 types can be added to an archive.
+	 */
+	public void testAddArchiveToArchive() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchive archive2 = createArchive("someName.war2", "test2");
+			archive.addChild(archive2);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			fail();
+		}
+	}
+	
+	public void testAddFolderToArchive() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchiveFolder folder = createFolder("test3");
+			archive.addChild(folder);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			fail();
+		}
+	}
+
+	public void testAddFilesetToArchive() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchiveFileSet fs = createFileSet("*", "blah");
+			archive.addChild(fs);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			fail();
+		}
+	}
+
+	public void testAddActionToArchive() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchiveAction action = createAction();
+			archive.addChild(action);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			fail();
+		}
+	}
+	
+	
+
+	/*
+	 * Let's make sure all 4 types can be added to an INNER archive.
+	 */
+	public void testAddArchiveToInnerArchive() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchive archive2 = createArchive("someName.war2", "test2");
+			IArchive archive3 = createArchive("someName.war3", "test3");
+			archive.addChild(archive2);
+			archive2.addChild(archive3);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			fail();
+		}
+	}
+	
+	public void testAddFolderToInnerArchive() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchive archive2 = createArchive("someName.war2", "test2");
+			IArchiveFolder folder = createFolder("test3");
+			archive.addChild(archive2);
+			archive2.addChild(folder);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			fail();
+		}
+	}
+
+	public void testAddFilesetToInnerArchive() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchive archive2 = createArchive("someName.war2", "test2");
+			IArchiveFileSet fs = createFileSet("*", "blah");
+			archive.addChild(archive2);
+			archive2.addChild(fs);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			fail();
+		}
+	}
+
+	public void testAddActionToInnerArchive() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchive archive2 = createArchive("someName.war2", "test2");
+			IArchiveAction action = createAction();
+
+			archive.addChild(archive2);
+			archive2.addChild(action);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+
+	
+	// Add all to INNER-folder
+	
+	public void testAddArchiveToInnerFolder() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchive archive2 = createArchive("someName.war2", "test2");
+			IArchiveFolder folder = createFolder("test3");
+
+			archive.addChild(folder);
+			folder.addChild(archive2);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			fail();
+		}
+		return;
+	}
+	
+	public void testAddFolderToInnerFolder() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchiveFolder folder = createFolder("folder");
+			IArchiveFolder folder2 = createFolder("folder2");
+
+			archive.addChild(folder);
+			folder.addChild(folder2);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			fail();
+		}
+		return;
+	}
+
+	public void testAddFilesetToInnerFolder() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchive archive2 = createArchive("someName2.war", "test2");
+			IArchiveFolder folder = createFolder("test3");
+
+			archive.addChild(folder);
+			folder.addChild(archive2);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			fail();
+		}
+		return;
+	}
+	
+
+	public void testAddActionToInnerFolder() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchiveFolder folder = createFolder("folder");
+			IArchiveAction action = createAction();
+
+			archive.addChild(folder);
+			folder.addChild(action);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+	
+	// add all to action
+	public void testAddArchiveToAction() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchiveAction action = createAction();
+			IArchiveNode child = createArchive("someName2.war", "test2");
+			archive.addChild(action);
+			action.addChild(child);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+	
+	public void testAddFolderToAction() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchiveAction action = createAction();
+			IArchiveNode child = createFolder("test");
+			archive.addChild(action);
+			action.addChild(child);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+	
+	public void testAddFilesetToAction() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchiveAction action = createAction();
+			IArchiveNode child = createFileSet("*", "path");
+			archive.addChild(action);
+			action.addChild(child);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+	
+
+	public void testAddActionToAction() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchiveAction action = createAction();
+			IArchiveNode child = createAction();
+			archive.addChild(action);
+			action.addChild(child);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+	
+	// add all to fileset
+	public void testAddArchiveToFileset() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchiveFileSet fs = createFileSet("*", "path");
+			IArchiveNode child = createArchive("someName.war", "test");
+			archive.addChild(fs);
+			fs.addChild(child);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+	
+	public void testAddFolderToFileset() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchiveFileSet fs = createFileSet("*", "path");
+			IArchiveNode child = createFolder("test");
+			archive.addChild(fs);
+			fs.addChild(child);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+	
+	public void testAddFilesetToFileset() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchiveFileSet fs = createFileSet("*", "path");
+			IArchiveNode child = createFileSet("*", "path");
+			archive.addChild(fs);
+			fs.addChild(child);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+	
+	public void testAddActionToFileset() {
+		try {
+			IArchive archive = createArchive("someName.war", "test");
+			IArchiveFileSet fs = createFileSet("*", "path");
+			IArchiveNode child = createAction();
+			archive.addChild(fs);
+			fs.addChild(child);
+			createEmptyModelNode().addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}	
+	
+	
+	
+	// Test purposely matching archive / folder names
+	public void testAddFolderClashingFolder() {
+		IArchive root = createArchive("root.war", "blah");
+		IArchiveFolder folder1 = createFolder("folder");
+		IArchiveFolder folder2 = createFolder("folder");
+		ArchiveModelNode model = createEmptyModelNode();
+		try {
+			model.addChild(root);
+			root.addChild(folder1);
+		} catch( ArchivesModelException ame ) {
+			fail(ame.getMessage());
+		}
+		
+		try {
+			root.addChild(folder2);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+
+	public void testAddFolderClashingArchive() {
+		IArchive root = createArchive("root.war", "blah");
+		IArchive archive = createArchive("test.war", "dest");
+		IArchiveFolder folder = createFolder("test.war");
+		ArchiveModelNode model = createEmptyModelNode();
+		try {
+			model.addChild(root);
+			root.addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			fail(ame.getMessage());
+		}
+		
+		try {
+			root.addChild(folder);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+
+	public void testAddArchiveClashingFolder() {
+		IArchive root = createArchive("root.war", "blah");
+		IArchive archive = createArchive("test.war", "dest");
+		IArchiveFolder folder = createFolder("test.war");
+		ArchiveModelNode model = createEmptyModelNode();
+		try {
+			model.addChild(root);
+			root.addChild(folder);
+		} catch( ArchivesModelException ame ) {
+			fail(ame.getMessage());
+		}
+		
+		try {
+			root.addChild(archive);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+
+	public void testAddArchiveClashingArchive() {
+		IArchive root = createArchive("root.war", "blah");
+		IArchiveFolder folder = createFolder("folder");
+		IArchiveFolder folder2 = createFolder("folder");
+		ArchiveModelNode model = createEmptyModelNode();
+		try {
+			model.addChild(root);
+			root.addChild(folder);
+		} catch( ArchivesModelException ame ) {
+			fail(ame.getMessage());
+		}
+		
+		try {
+			root.addChild(folder2);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+	
+	// should clash, same destinations
+	public void testArchiveClashingArchiveInModel() {
+		ArchiveModelNode model = createEmptyModelNode();
+		IArchive root = createArchive("root.war", "blah");
+		IArchive root2 = createArchive("root.war", "blah");
+		try {
+			model.addChild(root);
+			model.addChild(root2);
+		} catch( ArchivesModelException ame ) {
+			return;
+		}
+		fail();
+	}
+	
+	// Should not clash, different destinations
+	public void testArchiveNotClashingArchiveInModel() {
+		ArchiveModelNode model = createEmptyModelNode();
+		IArchive root = createArchive("root.war", "blah");
+		IArchive root2 = createArchive("root.war", "blah2");
+		try {
+			model.addChild(root);
+			model.addChild(root2);
+		} catch( ArchivesModelException ame ) {
+			fail();
+		}
+		return;
+	}
+//	public void testDeltas() {
+//		try {
+//			ArchiveModelNode model = createModelNode();
+//			model.clearDelta();
+//			IArchiveFolder folder = ArchiveNodeFactory.createFolder();
+//			folder.setName("testFolder");
+//			model.addChild(folder);
+//			IArchiveNodeDelta delta = model.getDelta();
+//			assertEquals(IArchiveNodeDelta.CHILD_ADDED, delta.getKind());
+//		} catch( ArchivesModelException ame ) {
+//			fail(ame.getMessage());
+//		}
+//	}
+	
+	
+	
+	
+	/*
+	 * Utility methods
+	 */
+	protected IArchiveFolder createFolder(String name) {
+		IArchiveFolder folder = ArchiveNodeFactory.createFolder();
+		folder.setName(name);
+		return folder;
+	}
+	
+	protected IArchiveFileSet createFileSet(String includes, String path) {
+		IArchiveFileSet fs = ArchiveNodeFactory.createFileset();
+		fs.setIncludesPattern(includes);
+		fs.setSourcePath(new Path(path));
+		return fs;
+	}
+	
+	protected IArchiveAction createAction() {
+		IArchiveAction action = ArchiveNodeFactory.createAction();
+		action.setTime(IArchiveAction.POST_BUILD);
+		action.setType("ant");
+		return action;
+	}
+	
+	protected IArchive createArchive(String name, String dest) {
+		IArchive archive = ArchiveNodeFactory.createArchive();
+		archive.setName(name);
+		archive.setDestinationPath(new Path(dest));
+		return archive;
+	}
+	
 	
 	protected ArchiveModelNode createModelNode() {
 		try {
@@ -87,63 +574,25 @@ public class ModelCreationTest extends TestCase {
 		return null;
 	}
 	
-	public void testAddFolderToModel() {
+	protected ArchiveModelNode createEmptyModelNode() {
 		try {
-			ArchiveModelNode modelNode = createModelNode();
-			IArchiveFolder folder = ArchiveNodeFactory.createFolder();
-			folder.setName("testFolder");
-			modelNode.addChild(folder);
+			XbPackages packs = new XbPackages();
+			ArchiveModelNode model = getModel(packs);
+			ModelUtil.fillArchiveModel(packs, model);
+			assertEquals(project, model.getProjectPath());
+			assertEquals(IArchiveNode.TYPE_MODEL_ROOT, model.getNodeType());
+			assertEquals(null, model.getParent());
+			assertEquals(packs, model.getNodeDelegate());
+			assertFalse(model.hasChildren());
+			assertEquals(0, model.getAllChildren().length);
+			assertEquals(null, ArchivesModel.instance().getRoot(project));
+			assertEquals(null, modelListener.getDelta());
+			return model;
 		} catch( ArchivesModelException ame ) {
-			return;
+			fail(ame.getMessage());
 		}
-		fail();
+		return null;
 	}
-	
-	public void testAddFilesetToModel() {
-		try {
-			ArchiveModelNode modelNode = createModelNode();
-			IArchiveFileSet fs = ArchiveNodeFactory.createFileset();
-			fs.setIncludesPattern("*");
-			fs.setSourcePath(new Path("blah"));
-			modelNode.addChild(fs);
-		} catch( ArchivesModelException ame ) {
-			return;
-		}
-		fail();
-	}
-	
-
-	public void testAddActionToModel() {
-		fail();
-	}
-	
-	public void testAddArchiveToModel() {
-		try {
-			ArchiveModelNode modelNode = createModelNode();
-			IArchive archive = ArchiveNodeFactory.createArchive();
-			archive.setName("someName.war");
-			archive.setDestinationPath(new Path("test"));
-			modelNode.addChild(archive);
-		} catch( ArchivesModelException ame ) {
-			fail();
-		}
-	}
-	
-	
-	
-//	public void testDeltas() {
-//		try {
-//			ArchiveModelNode model = createModelNode();
-//			model.clearDelta();
-//			IArchiveFolder folder = ArchiveNodeFactory.createFolder();
-//			folder.setName("testFolder");
-//			model.addChild(folder);
-//			IArchiveNodeDelta delta = model.getDelta();
-//			assertEquals(IArchiveNodeDelta.CHILD_ADDED, delta.getKind());
-//		} catch( ArchivesModelException ame ) {
-//			fail(ame.getMessage());
-//		}
-//	}
 	
 	protected ArchiveModelNode getModel(XbPackages packs) {
 		IArchiveModel model = new ArchivesModel();

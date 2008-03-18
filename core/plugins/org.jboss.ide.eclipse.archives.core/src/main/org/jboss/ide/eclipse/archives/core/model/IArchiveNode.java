@@ -182,4 +182,10 @@ public interface IArchiveNode {
 	 * @return
 	 */
 	public void clearDelta();
+	
+	/**
+	 * Validating the model
+	 * @return true if it's ok, false if it should fail
+	 */
+	public boolean validateModel();
 }

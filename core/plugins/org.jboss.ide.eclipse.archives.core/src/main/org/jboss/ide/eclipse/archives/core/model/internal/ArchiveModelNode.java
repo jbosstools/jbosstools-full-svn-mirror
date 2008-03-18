@@ -21,14 +21,18 @@
  */
 package org.jboss.ide.eclipse.archives.core.model.internal;
 
+import java.util.ArrayList;
+
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.EventManager;
+import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
+import org.jboss.ide.eclipse.archives.core.model.INamedContainerArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding.XbException;
@@ -161,5 +165,25 @@ public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelRo
 		IArchiveNodeDelta delta = getDelta();
 		clearDelta();
 		EventManager.fireDelta(delta);
+	}
+	
+	public boolean validateModel() {
+		if( getChildren(IArchiveNode.TYPE_ARCHIVE).length < getAllChildren().length)
+			return false;
+		ArrayList<IPath> list = new ArrayList<IPath>();
+		IArchiveNode[] children = getChildren(IArchiveNode.TYPE_ARCHIVE);
+		IArchive child;
+		for( int i = 0; i < children.length; i++ ) {
+			child = (IArchive)children[i];
+			if( child.getGlobalDestinationPath() != null ) {
+				IPath p = child.getGlobalDestinationPath().append(child.getName());
+				if( list.contains(p))
+						return false;
+				else
+					list.add(p);
+			}
+		}
+
+		return super.validateModel();
 	}
 }

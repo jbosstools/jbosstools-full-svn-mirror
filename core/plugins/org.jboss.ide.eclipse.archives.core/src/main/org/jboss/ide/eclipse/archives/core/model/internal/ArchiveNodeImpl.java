@@ -241,7 +241,7 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 * (non-Javadoc)
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#addChild(org.jboss.ide.eclipse.archives.core.model.IArchiveNode)
 	 */
-	public void addChild(IArchiveNode node) throws ArchivesModelException {
+	public final void addChild(IArchiveNode node) throws ArchivesModelException {
 		addChild(node, true);
 	}
 
@@ -250,9 +250,7 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 * @param child
 	 * @param addInDelegate
 	 */
-	public void addChild(IArchiveNode child, boolean addInDelegate) throws ArchivesModelException {
-		if( !validateChild(child) ) 
-			throw new ArchivesModelException("Unable to add child node");
+	public final void addChild(IArchiveNode child, boolean addInDelegate) throws ArchivesModelException {
 		Assert.isNotNull(child);
 		ArchiveNodeImpl childImpl = (ArchiveNodeImpl) child;
 		children.add(childImpl);
@@ -260,9 +258,17 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		if( addInDelegate )
 			nodeDelegate.addChild(childImpl.nodeDelegate);
 		childChanges(child, IArchiveNodeDelta.CHILD_ADDED);
+		if( !validateModel()) {
+			removeChild(child);
+			throw new ArchivesModelException("Unable to add child node");
+		}
 	}
 
-	protected boolean validateChild(IArchiveNode child) {
+	public boolean validateModel() {
+		IArchiveNode[] kids = getAllChildren();
+		for( int i = 0; i < kids.length; i++ ) 
+			if( !kids[i].validateModel() ) 
+				return false;
 		return true;
 	}
 	

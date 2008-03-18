@@ -250,7 +250,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	public IPath getPathRelativeToParent(IPath inputFile) {
 		String s = inputFile.toOSString().substring(getGlobalSourcePath().toOSString().length()+1);
 		return new Path(s);
-}
+	}
 
 
 	/*
@@ -259,4 +259,13 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	public void resetScanner() {
 		rescanRequired = true;
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeImpl#validateChild(org.jboss.ide.eclipse.archives.core.model.IArchiveNode)
+	 */
+	public boolean validateModel() {
+		return getAllChildren().length == 0 ? true : false; 
+	}
+
 }

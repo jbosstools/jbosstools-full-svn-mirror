@@ -21,6 +21,8 @@
  */
 package org.jboss.ide.eclipse.archives.core.model.internal;
 
+import java.util.ArrayList;
+
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
@@ -29,7 +31,9 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveAction;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
+import org.jboss.ide.eclipse.archives.core.model.INamedContainerArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
@@ -214,10 +218,6 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 		attributeChanged(PACKAGE_TYPE_ATTRIBUTE, getArchiveTypeId(), type == null ? null : type.getId());
 		packageDelegate.setPackageType(type.getId());
 	}
-	
-	protected XbPackage getPackageDelegate () {
-		return packageDelegate;
-	}
 
 	/*
 	 * @see IArchive#setArchiveType(String)
@@ -245,6 +245,24 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 		if( getParent() == null || getParent().getRootArchiveRelativePath() == null )
 			return new Path(getName());
 		return getParent().getRootArchiveRelativePath().append(getName());
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeImpl#validateChild(org.jboss.ide.eclipse.archives.core.model.IArchiveNode)
+	 */
+	public boolean validateModel() {
+		ArrayList<String> list = new ArrayList<String>();
+		IArchiveNode[] children = getAllChildren();
+		for( int i = 0; i < children.length; i++ ) {
+			if( children[i] instanceof INamedContainerArchiveNode) {
+				if( list.contains(((INamedContainerArchiveNode)children[i]).getName()))
+						return false;
+				else
+					list.add(((INamedContainerArchiveNode)children[i]).getName());
+			}
+		}
+		return super.validateModel();
 	}
 
 }

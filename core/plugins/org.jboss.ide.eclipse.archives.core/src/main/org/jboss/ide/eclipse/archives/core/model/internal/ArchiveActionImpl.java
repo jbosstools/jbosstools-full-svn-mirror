@@ -22,6 +22,7 @@
 package org.jboss.ide.eclipse.archives.core.model.internal;
 
 import org.eclipse.core.runtime.IPath;
+import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveAction;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbAction;
@@ -84,6 +85,19 @@ public class ArchiveActionImpl extends ArchiveNodeImpl implements IArchiveAction
 	public void setType(String type) {
 		attributeChanged(ACTION_TYPE_ATTRIBUTE, getType(), type);
 		actionDelegate.setType(type);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeImpl#validateChild(org.jboss.ide.eclipse.archives.core.model.IArchiveNode)
+	 */
+	public boolean validateModel() {
+		if( getAllChildren().length != 0 ) return false;
+		if( getParent() != null && getModelRootNode() != null && 
+			(getParent().getNodeType() != IArchiveNode.TYPE_ARCHIVE || 
+				!((IArchive)getParent()).isTopLevel()))
+			return false;
+		return true;
 	}
 
 }

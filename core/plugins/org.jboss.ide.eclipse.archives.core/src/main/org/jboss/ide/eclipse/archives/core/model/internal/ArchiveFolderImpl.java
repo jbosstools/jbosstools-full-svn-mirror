@@ -21,11 +21,14 @@
  */
 package org.jboss.ide.eclipse.archives.core.model.internal;
 
+import java.util.ArrayList;
+
 import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.model.INamedContainerArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFolder;
 
 /**
@@ -114,4 +117,23 @@ public class ArchiveFolderImpl extends ArchiveNodeImpl implements
 	public IPath getRootArchiveRelativePath() {
 		return getParent().getRootArchiveRelativePath().append(getName());
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeImpl#validateChild(org.jboss.ide.eclipse.archives.core.model.IArchiveNode)
+	 */
+	public boolean validateModel() {
+		ArrayList<String> list = new ArrayList<String>();
+		IArchiveNode[] children = getAllChildren();
+		for( int i = 0; i < children.length; i++ ) {
+			if( children[i] instanceof INamedContainerArchiveNode) {
+				if( list.contains(((INamedContainerArchiveNode)children[i]).getName()))
+						return false;
+				else
+					list.add(((INamedContainerArchiveNode)children[i]).getName());
+			}
+		}
+		return super.validateModel();
+	}
+
 }
