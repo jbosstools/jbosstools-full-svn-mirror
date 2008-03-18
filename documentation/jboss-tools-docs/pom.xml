@@ -1,34 +1,77 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-  	<groupId>GobalGroup</groupId>
-  	<artifactId>GlobalArtifact</artifactId>
-  	<packaging>pom</packaging>
-  	<version>1.0-SNAPSHOT</version>
-  	<name>Maven Tmp</name>
-  	<url>http://maven.apache.org</url>
-  	
-  	<modules>
- 		<module>..\..\as\docs\reference</module>
-		<module>..\guides</module>
-		<module>..\..\hibernatetools\docs\reference</module>
-		<module>..\..\jbpm\docs\reference</module>
-		<module>..\..\seam\docs\reference</module>
-		<module>..\..\jsf\docs\userguide</module>
-	</modules>
-   
-   	<build>
-    	<plugins>
-      		<plugin>
-        		<artifactId>maven-compiler-plugin</artifactId>   
-        		<configuration>
-          			<source>1.5</source>
-          			<target>1.5</target>
-        		</configuration>
-      		</plugin>
-    	</plugins>
-  	</build>
-  	
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.jboss.tools</groupId>
+    <artifactId>all-guides</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>All_Userguides_(${translation})</name>
+
+<dependencies>
 	
+
+	<!--dependency>
+		<groupId>org.jboss.tools</groupId>
+		<artifactId>exadel-migration-${translation}</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</dependency-->
+
+</dependencies>
+
+<modules>
+		<module>../guides/Exadel-migration</module>
+		<module>../guides/GettingStartedGuide</module>
+		<module>../guides/Legacy-jsf-struts</module>
+		<module>../../as/docs/reference</module>
+		<module>../../hibernatetools/docs/reference</module>
+		<module>../../jbpm/docs/reference</module>
+		<module>../../jsf/docs/userguide</module>
+		<module>../../seam/docs/reference</module>
+</modules>
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptors>
+            <descriptor>all-guides.xml</descriptor>
+          </descriptors>
+		  <finalName>en</finalName>
+		  <outputDirectory>target</outputDirectory>
+		  <appendAssemblyId>false</appendAssemblyId>
+		  <ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
+        </configuration>
+      </plugin>
+	<!--plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <configuration>
+              <tasks>
+			    <echo message="################### Deleting archive-tmp #####################"/>
+			     <delete includeEmptyDirs="true" dir="target/archive-tmp"/>
+             </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+    </plugin-->
+
+
+    </plugins>
+  </build>
+
+
+<properties>
+	<translation>en-US</translation>
+</properties> 
+
 </project>
