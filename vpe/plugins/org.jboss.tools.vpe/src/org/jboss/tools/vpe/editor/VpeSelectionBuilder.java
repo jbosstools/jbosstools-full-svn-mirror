@@ -1342,7 +1342,7 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 			}
 			selection.collapse(visualNode, offset);
 		} else {
-			//selection.removeAllRanges();
+			selection.removeAllRanges();
 		}
 		visualSelectionController.setCaretEnabled(true);
 		setSelection(selection);
