@@ -23,6 +23,9 @@ package org.jboss.ide.eclipse.archives.test.model;
 
 import junit.framework.TestCase;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -41,6 +44,7 @@ import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
+import org.jboss.tools.common.test.util.TestProjectProvider;
 
 /**
  * @author rob.stryker <rob.stryker@redhat.com>
@@ -479,16 +483,29 @@ public class ModelCreationTest extends TestCase {
 	
 	// should clash, same destinations
 	public void testArchiveClashingArchiveInModel() {
+		// copy a project
+		TestProjectProvider provider = null;
+		try {
+			provider = new TestProjectProvider("org.jboss.ide.eclipse.archives.test", "/inputs/projects/basicwebproject", "basicwebproject", true); 
+			IProject proj = provider.getProject();
+			proj.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+		} catch( CoreException ce ) { fail(); }
+
 		ArchiveModelNode model = createEmptyModelNode();
-		IArchive root = createArchive("root.war", "blah");
-		IArchive root2 = createArchive("root.war", "blah");
+		IArchive root = createArchive("root.war", "basicwebproject");
+		IArchive root2 = createArchive("root.war", "basicwebproject");
+		
 		try {
 			model.addChild(root);
 			model.addChild(root2);
+			fail();
 		} catch( ArchivesModelException ame ) {
 			return;
+		} finally {
+			try {
+				provider.dispose();
+			} catch( CoreException ce ) {fail();}
 		}
-		fail();
 	}
 	
 	// Should not clash, different destinations
