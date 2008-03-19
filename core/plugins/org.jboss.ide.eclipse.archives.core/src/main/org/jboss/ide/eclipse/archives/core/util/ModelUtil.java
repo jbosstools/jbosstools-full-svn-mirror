@@ -271,6 +271,8 @@ public class ModelUtil {
 	
 	public static IArchive[] getProjectArchives(IPath project, IArchiveModel model) {
 		if( model != null ) {
+			IArchiveModelRootNode root = model.getRoot(project);
+			if( root == null ) return new IArchive[0];
 			IArchiveNode[] archives = model.getRoot(project).getAllChildren();
 			List<IArchiveNode> list = Arrays.asList(archives);
 			return (IArchive[]) list.toArray(new IArchive[list.size()]);
