@@ -1022,80 +1022,101 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     public boolean doToggle(nsIDOMNode visualNode) {
-	if (visualNode == null)
-	    return false;
-	nsIDOMElement visualElement = null;
-	try {
+		if (visualNode == null) {
+			return false;
+		}
+		nsIDOMElement visualElement = null;
+		try {
+			visualElement = (nsIDOMElement) visualNode
+					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+		} catch (XPCOMException exception) {
+			visualElement = (nsIDOMElement) visualNode.getParentNode()
+					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+		}
+		if (visualElement == null) {
+			return false;
+		}
 
-	    visualElement = (nsIDOMElement) visualNode
-		    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-	} catch (XPCOMException exception) {
-	    visualElement = (nsIDOMElement) visualNode.getParentNode()
-		    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+		nsIDOMAttr toggleIdAttr = visualElement
+				.getAttributeNode("vpe-user-toggle-id");
+		if (toggleIdAttr == null) {
+			return false;
+		}
+		String toggleId = toggleIdAttr.getNodeValue();
+
+		if (toggleId == null) {
+			return false;
+		}
+
+		boolean toggleLookup = false;
+		nsIDOMAttr toggleLookupAttr = visualElement
+				.getAttributeNode("vpe-user-toggle-lookup-parent");
+		if (toggleLookupAttr != null) {
+			toggleLookup = "true".equals(toggleLookupAttr.getNodeValue());
+		}
+
+		nsIDOMElement selectedElem = getLastSelectedElement();
+		// Fixes JBIDE-1823 author dmaliarevich
+		if (null == selectedElem) {
+			return false;
+		}
+		VpeElementMapping elementMapping = null;
+		VpeNodeMapping nodeMapping = domMapping.getNodeMapping(selectedElem);
+		if (nodeMapping instanceof VpeElementMapping) {
+			elementMapping = (VpeElementMapping) nodeMapping;
+		}
+		// end of fix
+		if (elementMapping == null) {
+			// may be toggle with facet
+			while (!selectedElem.getNodeName().equals(HTML.TAG_TABLE)) {
+				selectedElem = (nsIDOMElement) selectedElem.getParentNode()
+				.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			}
+			// Fixes JBIDE-1823 author dmaliarevich
+			nodeMapping = domMapping.getNodeMapping(selectedElem);
+			if (nodeMapping instanceof VpeElementMapping) {
+				elementMapping = (VpeElementMapping) nodeMapping;
+			}
+			// end of fix
+		}
+		Node sourceNode = (Node) domMapping.getSourceNode(selectedElem);
+		if (sourceNode == null) {
+			return false;
+		}
+
+		Element sourceElement = (Element) (sourceNode instanceof Element ? sourceNode
+				: sourceNode.getParentNode());
+
+		if (elementMapping != null) {
+			VpeTemplate template = elementMapping.getTemplate();
+
+			while (toggleLookup && sourceElement != null
+					&& !(template instanceof VpeToggableTemplate)) {
+				sourceElement = (Element) sourceElement.getParentNode();
+				if (sourceElement == null) {
+					break;
+				}
+				// Fixes JBIDE-1823 author dmaliarevich
+				nodeMapping = domMapping.getNodeMapping(sourceElement);
+				if (nodeMapping instanceof VpeElementMapping) {
+					elementMapping = (VpeElementMapping) nodeMapping;
+				}
+				// end of fix
+				if (elementMapping == null) {
+					continue;
+				}
+				template = elementMapping.getTemplate();
+			}
+
+			if (template instanceof VpeToggableTemplate) {
+				((VpeToggableTemplate) template).toggle(this, sourceElement,
+						toggleId);
+				updateElement(sourceElement);
+				return true;
+			}
+		}
+		return false;
 	}
-	if (visualElement == null)
-	    return false;
-
-	nsIDOMAttr toggleIdAttr = visualElement
-		.getAttributeNode("vpe-user-toggle-id");
-	if (toggleIdAttr == null)
-	    return false;
-	String toggleId = toggleIdAttr.getNodeValue();
-
-	if (toggleId == null)
-	    return false;
-
-	boolean toggleLookup = false;
-	nsIDOMAttr toggleLookupAttr = visualElement
-		.getAttributeNode("vpe-user-toggle-lookup-parent");
-	if (toggleLookupAttr != null) {
-	    toggleLookup = "true".equals(toggleLookupAttr.getNodeValue());
-	}
-
-	nsIDOMElement selectedElem = getLastSelectedElement();
-
-	VpeElementMapping elementMapping = (VpeElementMapping) domMapping
-		.getNodeMapping(selectedElem);
-	if (elementMapping == null) {
-	    // may be toggle with facet
-	    while (!selectedElem.getNodeName().equals(HTML.TAG_TABLE)) {
-		selectedElem = (nsIDOMElement) selectedElem.getParentNode()
-			.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-	    }
-	    elementMapping = (VpeElementMapping) domMapping
-		    .getNodeMapping(selectedElem);
-	}
-	Node sourceNode = (Node) domMapping.getSourceNode(selectedElem);
-	if (sourceNode == null)
-	    return false;
-
-	Element sourceElement = (Element) (sourceNode instanceof Element ? sourceNode
-		: sourceNode.getParentNode());
-
-	if (elementMapping != null) {
-	    VpeTemplate template = elementMapping.getTemplate();
-
-	    while (toggleLookup && sourceElement != null
-		    && !(template instanceof VpeToggableTemplate)) {
-		sourceElement = (Element) sourceElement.getParentNode();
-		if (sourceElement == null)
-		    break;
-		elementMapping = (VpeElementMapping) domMapping
-			.getNodeMapping(sourceElement);
-		if (elementMapping == null)
-		    continue;
-		template = elementMapping.getTemplate();
-	    }
-
-	    if (template instanceof VpeToggableTemplate) {
-		((VpeToggableTemplate) template).toggle(this, sourceElement,
-			toggleId);
-		updateElement(sourceElement);
-		return true;
-	    }
-	}
-	return false;
-    }
 
     public void removeAttribute(Element sourceElement, String name) {
 	VpeElementMapping elementMapping = (VpeElementMapping) domMapping
