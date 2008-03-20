@@ -44,7 +44,7 @@ import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveModelNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
-import org.jboss.tools.common.test.util.TestProjectProvider;
+import org.jboss.tools.test.util.ResourcesUtils;
 
 /**
  * @author rob.stryker <rob.stryker@redhat.com>
@@ -482,14 +482,12 @@ public class ModelCreationTest extends TestCase {
 	}
 	
 	// should clash, same destinations
-	public void testArchiveClashingArchiveInModel() {
+	public void testArchiveClashingArchiveInModel() throws Exception {
 		// copy a project
-		TestProjectProvider provider = null;
-		try {
-			provider = new TestProjectProvider("org.jboss.ide.eclipse.archives.test", "/inputs/projects/basicwebproject", "basicwebproject", true); 
-			IProject proj = provider.getProject();
-			proj.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
-		} catch( CoreException ce ) { fail(); }
+		IProject proj = null;
+		proj = ResourcesUtils.importProject("org.jboss.ide.eclipse.archives.test", "/inputs/projects/basicwebproject");
+		proj.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+
 
 		ArchiveModelNode model = createEmptyModelNode();
 		IArchive root = createArchive("root.war", "basicwebproject");
@@ -503,7 +501,7 @@ public class ModelCreationTest extends TestCase {
 			return;
 		} finally {
 			try {
-				provider.dispose();
+				proj.delete(false, true, null);
 			} catch( CoreException ce ) {fail();}
 		}
 	}
