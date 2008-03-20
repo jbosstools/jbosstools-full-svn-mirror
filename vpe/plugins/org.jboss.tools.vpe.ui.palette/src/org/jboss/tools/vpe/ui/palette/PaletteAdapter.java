@@ -78,7 +78,9 @@ public class PaletteAdapter implements IPaletteAdapter {
 	}
 	
 	public void setEnabled(boolean enabled) {
-		viewer.setEnabled(enabled);
+		if(viewer != null) {
+			viewer.setEnabled(enabled);
+		}
 	}
 	
 	public void dispose() {
@@ -86,6 +88,8 @@ public class PaletteAdapter implements IPaletteAdapter {
 		dropManager.dispose();
 		descriptionManager.dispose();
 		viewPart.getViewSite().getActionBars().getToolBarManager().removeAll();
+		viewer = null;
+		viewPart = null;
 	}
 
 	public void setPaletteContents(PaletteContents contents) {
@@ -96,6 +100,9 @@ public class PaletteAdapter implements IPaletteAdapter {
 	}
 
 	private void reload(XModelObject lastAddedXCat) {
+		if(viewer != null) {
+			viewer.deselectAll();
+		}
 		model.load(lastAddedXCat);
 		setEnabled(true);
 ///		setEnabled(viewPart.idEnabled());
@@ -185,7 +192,7 @@ public class PaletteAdapter implements IPaletteAdapter {
 					isDirty = true;
 				} else {
 					reload(lastAddedCat);
-					lastAddedCat = null; 
+					lastAddedCat = null;
 				}
 			}
 		}
