@@ -767,13 +767,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 			
 			//we shouldn't change selection when we click on <input type="text" /> element,
 			//because if we change after resizing the input element lost selection
-			if(!(HTML.TAG_INPUT.equalsIgnoreCase(visualDragElement.getNodeName())&&
-			HTML.ATTR_TEXT.equalsIgnoreCase(visualDragElement.getAttribute(HTML.ATTR_TYPE))
-			&&visualDragElement.getAttribute(HTML.ATTR_TYPE)!=null)) {				
+//			if(!(HTML.TAG_INPUT.equalsIgnoreCase(visualDragElement.getNodeName())&&
+//			HTML.ATTR_TEXT.equalsIgnoreCase(visualDragElement.getAttribute(HTML.ATTR_TYPE))
+//			&&visualDragElement.getAttribute(HTML.ATTR_TYPE)!=null)) {				
 			
 			selectionBuilder.setVisualElementSelection(visualDragElement);
 			mouseDownSelectionFlag = true;		
-			} 
+//			} 
 		} else {
 			selectionBuilder.setCaretAtMouse(mouseEvent);
 		}
