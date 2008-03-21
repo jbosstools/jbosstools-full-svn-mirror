@@ -91,10 +91,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class VpeVisualDomBuilder extends VpeDomBuilder {
-    /** REGEX_EL */
+
+	public static final String VPE_USER_TOGGLE_ID = "vpe-user-toggle-id"; //$NON-NLS-1$
+	public static final String VPE_USER_TOGGLE_LOOKUP_PARENT = "vpe-user-toggle-lookup-parent"; //$NON-NLS-1$
+
+	/** REGEX_EL */
     private static final Pattern REGEX_EL = Pattern.compile(
 	    "[\\$|\\#]\\{.*\\}", Pattern.MULTILINE + Pattern.DOTALL);
-
+    
     private static final String PSEUDO_ELEMENT = "br";
     private static final String PSEUDO_ELEMENT_ATTR = "vpe:pseudo-element";
     private static final String INIT_ELEMENT_ATTR = "vpe:init-element";
@@ -232,7 +236,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
     // temporary, will be change to prefference's variable
     // private boolean borderVisible = true;
-
+    
     private boolean addNode(Node sourceNode, nsIDOMNode visualNextNode,
 	    nsIDOMNode visualContainer) {
       
@@ -1038,7 +1042,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 
 		nsIDOMAttr toggleIdAttr = visualElement
-				.getAttributeNode("vpe-user-toggle-id");
+				.getAttributeNode(VPE_USER_TOGGLE_ID);
 		if (toggleIdAttr == null) {
 			return false;
 		}
@@ -1050,7 +1054,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 		boolean toggleLookup = false;
 		nsIDOMAttr toggleLookupAttr = visualElement
-				.getAttributeNode("vpe-user-toggle-lookup-parent");
+				.getAttributeNode(VPE_USER_TOGGLE_LOOKUP_PARENT);
 		if (toggleLookupAttr != null) {
 			toggleLookup = "true".equals(toggleLookupAttr.getNodeValue());
 		}
