@@ -1301,7 +1301,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		String name = node.getNodeName();
 		if (HTML.TAG_LINK.equalsIgnoreCase(name)
 			|| isLinkReplacer(node)) {
-		    if (NO_STRING.equalsIgnoreCase(((nsIDOMElement) node
+		    /*Added by Max Areshkau(Fix for JBIDE-1941)
+		     * Ext. attribute used for adding external styles 
+		     * to editor. If was added external attribute, this 
+		     * property is true.
+		     */
+		    if (!YES_STRING.equalsIgnoreCase(((nsIDOMElement) node
 			    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
 			    .getAttribute("ext"))) {
 			// int linkAddress =
