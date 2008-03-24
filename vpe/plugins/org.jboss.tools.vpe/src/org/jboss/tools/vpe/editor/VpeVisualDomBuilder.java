@@ -97,20 +97,19 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	/** REGEX_EL */
     private static final Pattern REGEX_EL = Pattern.compile(
-	    "[\\$|\\#]\\{.*\\}", Pattern.MULTILINE + Pattern.DOTALL);
+	    "[\\$|\\#]\\{.*\\}", Pattern.MULTILINE + Pattern.DOTALL); //$NON-NLS-1$
     
-    private static final String PSEUDO_ELEMENT = "br";
-    private static final String PSEUDO_ELEMENT_ATTR = "vpe:pseudo-element";
-    private static final String INIT_ELEMENT_ATTR = "vpe:init-element";
-    private static final String MOZ_ANONCLASS_ATTR = "_MOZ_ANONCLASS";
-    private static final String COMMENT_STYLE = "font-style:italic; color:green";
-    private static final String COMMENT_PREFIX = "";
-    private static final String COMMENT_SUFFIX = "";
-    private static final String INCLUDE_ELEMENT_ATTR = "vpe:include-element";
+    private static final String PSEUDO_ELEMENT = "br"; //$NON-NLS-1$
+    private static final String PSEUDO_ELEMENT_ATTR = "vpe:pseudo-element"; //$NON-NLS-1$
+    private static final String INIT_ELEMENT_ATTR = "vpe:init-element"; //$NON-NLS-1$
+    private static final String MOZ_ANONCLASS_ATTR = "_MOZ_ANONCLASS"; //$NON-NLS-1$
+    private static final String COMMENT_STYLE = "font-style:italic; color:green"; //$NON-NLS-1$
+    private static final String COMMENT_PREFIX = ""; //$NON-NLS-1$
+    private static final String COMMENT_SUFFIX = ""; //$NON-NLS-1$
+    private static final String INCLUDE_ELEMENT_ATTR = "vpe:include-element"; //$NON-NLS-1$
     private static final int DRAG_AREA_WIDTH = 10;
     private static final int DRAG_AREA_HEIGHT = 10;
-    private static final String ATTR_XMLNS = "xmlns";
-    private static final String ATTR_DRAG_AVAILABLE_CLASS = "__drag__available_style";
+    private static final String ATTR_DRAG_AVAILABLE_CLASS = "__drag__available_style"; //$NON-NLS-1$
 
     private MozillaEditor visualEditor;
     private XulRunnerEditor xulRunnerEditor;
@@ -126,24 +125,23 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     /** faceletFile */
     private boolean faceletFile = false;
 
-    private static final String ATTR_VPE = "vpe";
-    private static final String ATTR_VPE_INLINE_LINK_VALUE = "inlinelink";
+    private static final String ATTR_VPE = "vpe"; //$NON-NLS-1$
+    private static final String ATTR_VPE_INLINE_LINK_VALUE = "inlinelink"; //$NON-NLS-1$
 
-    private static final String ATTR_REL_STYLESHEET_VALUE = "stylesheet";
+    private static final String ATTR_REL_STYLESHEET_VALUE = "stylesheet"; //$NON-NLS-1$
 
-    private static final String YES_STRING = "yes";
-    private static final String NO_STRING = "no";
-    private static final String ZERO_STRING = "0";
-    private static final String EMPTY_STRING = "";
+    private static final String YES_STRING = "yes"; //$NON-NLS-1$
+    private static final String ZERO_STRING = "0"; //$NON-NLS-1$
+    private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
-    private static final String ATRIBUTE_BORDER = "border";
-    private static final String ATRIBUTE_CELLSPACING = "cellspacing";
-    private static final String ATRIBUTE_CELLPADDING = "cellpadding";
+    private static final String ATRIBUTE_BORDER = "border"; //$NON-NLS-1$
+    private static final String ATRIBUTE_CELLSPACING = "cellspacing"; //$NON-NLS-1$
+    private static final String ATRIBUTE_CELLPADDING = "cellpadding"; //$NON-NLS-1$
 
-    private static final String DOTTED_BORDER_STYLE = "border : 1px dotted #808080";
-    private static final String DOTTED_BORDER_STYLE_FOR_IMG = "1px dotted #808080";
-    private static final String DOTTED_BORDER_STYLE_FOR_TD = "border-left : 1px dotted #808080; border-right : 1px dotted #808080; border-top : 1px dotted #808080; border-bottom : 0px; color:#0051DD; background-color:#ECF3FF; padding-left: 3px;  padding-right: 3px;  line-height : 10px; font-family : arial; font-size : 10px; text-align:top; margin : 1px; -moz-user-modify : read-only";
-    private static final String DOTTED_BORDER_STYLE_FOR_SPAN = "border : 1px solid #0051DD; color:#0051DD; background-color:#ECF3FF; padding-left: 3px;  padding-right: 3px;  line-height : 10px; font-family : arial; font-size : 10px; text-align:top; margin : 1px; -moz-user-modify : read-only";
+    private static final String DOTTED_BORDER_STYLE = "border : 1px dotted #808080"; //$NON-NLS-1$
+    private static final String DOTTED_BORDER_STYLE_FOR_IMG = "1px dotted #808080"; //$NON-NLS-1$
+    private static final String DOTTED_BORDER_STYLE_FOR_TD = "border-left : 1px dotted #808080; border-right : 1px dotted #808080; border-top : 1px dotted #808080; border-bottom : 0px; color:#0051DD; background-color:#ECF3FF; padding-left: 3px;  padding-right: 3px;  line-height : 10px; font-family : arial; font-size : 10px; text-align:top; margin : 1px; -moz-user-modify : read-only"; //$NON-NLS-1$
+    private static final String DOTTED_BORDER_STYLE_FOR_SPAN = "border : 1px solid #0051DD; color:#0051DD; background-color:#ECF3FF; padding-left: 3px;  padding-right: 3px;  line-height : 10px; font-family : arial; font-size : 10px; text-align:top; margin : 1px; -moz-user-modify : read-only"; //$NON-NLS-1$
 
     static private HashSet<String> unborderedSourceNodes = new HashSet<String>();
     static {
@@ -595,7 +593,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	if (l != null) {
 	    for (int i = 0; i < l.length; i++) {
 		ResourceReference item = l[i];
-		addLinkNodeToHead("file:///" + item.getLocation(), YES_STRING);
+		addLinkNodeToHead("file:///" + item.getLocation(), YES_STRING); //$NON-NLS-1$
 	    }
 	}
     }
@@ -617,7 +615,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		    if ((isLink || (isStyle && ATTR_VPE_INLINE_LINK_VALUE
 			    .equalsIgnoreCase(element.getAttribute(ATTR_VPE))))
 			    && YES_STRING.equalsIgnoreCase(element
-				    .getAttribute("ext"))) {
+				    .getAttribute(VpeTemplateManager.ATTR_LINK_EXT))) {
 			headNode.removeChild(node);
 		    }
 		}
@@ -725,12 +723,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	if (!templateManager.isWithoutPseudoElementContainer(visualParent
 		.getNodeName())) {
 	    if (VpeDebug.VISUAL_ADD_PSEUDO_ELEMENT) {
-		System.out.println("-------------------- addPseudoElement: "
+		System.out.println("-------------------- addPseudoElement: " //$NON-NLS-1$
 			+ visualParent.getNodeName());
 	    }
 	    nsIDOMElement visualPseudoElement = visualDocument
 		    .createElement(PSEUDO_ELEMENT);
-	    visualPseudoElement.setAttribute(PSEUDO_ELEMENT_ATTR, "yes");
+	    visualPseudoElement.setAttribute(PSEUDO_ELEMENT_ATTR, YES_STRING);
 	    visualParent.appendChild(visualPseudoElement);
 	}
     }
@@ -1306,7 +1304,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		     */
 		    if (!YES_STRING.equalsIgnoreCase(((nsIDOMElement) node
 			    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
-			    .getAttribute("ext"))) {
+			    .getAttribute(VpeTemplateManager.ATTR_LINK_EXT))) {
 			// int linkAddress =
 			// MozillaSupports.queryInterface(node,
 			// nsIStyleSheetLinkingElement.NS_ISTYLESHEETLINKINGELEMENT_IID);
@@ -1718,7 +1716,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     protected void setTooltip(nsIDOMElement visualElement, String titleValue) {
-	visualElement.setAttribute("title", titleValue);
+	visualElement.setAttribute(HTML.ATTR_TITLE, titleValue);
 	nsIDOMNodeList children = visualElement.getChildNodes();
 	long len = children.getLength();
 	for (long i = 0; i < len; i++) {
@@ -1739,9 +1737,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    String titleValue = getTooltip(sourceElement);
 
 	    if (titleValue != null) {
-		titleValue = titleValue.replaceAll("&", "&amp;");
-		titleValue = titleValue.replaceAll("<", "&lt;");
-		titleValue = titleValue.replaceAll(">", "&gt;");
+		titleValue = titleValue.replaceAll("&", "&amp;"); //$NON-NLS-1$//$NON-NLS-2$
+		titleValue = titleValue.replaceAll("<", "&lt;");  //$NON-NLS-1$//$NON-NLS-2$
+		titleValue = titleValue.replaceAll(">", "&gt;");  //$NON-NLS-1$//$NON-NLS-2$
 	    }
 
 	    if (titleValue != null) {
@@ -1751,7 +1749,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     private void resetTooltip(nsIDOMElement visualElement, String titleValue) {
-	visualElement.setAttribute("title", titleValue);
+	visualElement.setAttribute(HTML.ATTR_TITLE, titleValue);
 	nsIDOMNodeList children = visualElement.getChildNodes();
 	long len = children.getLength();
 	for (long i = 0; i < len; i++) {
@@ -1773,18 +1771,18 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	int len = attrs.getLength();
 	for (int i = 0; i < len; i++) {
 	    if (i == 7) {
-		return buffer.append("\n\t... ").toString();
+		return buffer.append("\n\t... ").toString(); //$NON-NLS-1$
 	    }
 	    int valueLength = attrs.item(i).getNodeValue().length();
 	    if (valueLength > 30) {
 		StringBuffer temp = new StringBuffer();
 		temp.append(attrs.item(i).getNodeValue().substring(0, 15)
-			+ " ... "
+			+ " ... " //$NON-NLS-1$
 			+ attrs.item(i).getNodeValue().substring(
 				valueLength - 15, valueLength));
-		buffer.append("\n" + attrs.item(i).getNodeName() + ": " + temp);
+		buffer.append("\n" + attrs.item(i).getNodeName() + ": " + temp); //$NON-NLS-1$ //$NON-NLS-2$
 	    } else
-		buffer.append("\n" + attrs.item(i).getNodeName() + ": "
+		buffer.append("\n" + attrs.item(i).getNodeName() + ": " //$NON-NLS-1$ //$NON-NLS-2$
 			+ attrs.item(i).getNodeValue());
 
 	}
@@ -1867,8 +1865,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
     protected void setReadOnlyElement(nsIDOMElement node) {
 	String style = node.getAttribute(VpeStyleUtil.ATTRIBUTE_STYLE);
-	style = VpeStyleUtil.setParameterInStyle(style, "-moz-user-modify",
-		"read-only");
+	style = VpeStyleUtil.setParameterInStyle(style, "-moz-user-modify", //$NON-NLS-1$
+		"read-only"); //$NON-NLS-1$
 	node.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
     }
 
@@ -1884,7 +1882,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		if (styleClasses == null
 			|| !(styleClasses.contains(ATTR_DRAG_AVAILABLE_CLASS))) {
 		    // change cursor style to move
-		    styleClasses = ATTR_DRAG_AVAILABLE_CLASS + " "
+		    styleClasses = ATTR_DRAG_AVAILABLE_CLASS + " " //$NON-NLS-1$
 			    + styleClasses;
 		}
 	    } else {
@@ -1892,7 +1890,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		if (styleClasses != null) {
 
 		    styleClasses = styleClasses.replaceAll(
-			    ATTR_DRAG_AVAILABLE_CLASS, "");
+			    ATTR_DRAG_AVAILABLE_CLASS, ""); //$NON-NLS-1$
 		}
 	    }
 	    selectedElement.setAttribute(HTML.ATTR_CLASS, styleClasses);
@@ -2166,9 +2164,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		XModel model = nature.getModel();
 		XModelObject webXML = WebAppHelper.getWebApp(model);
 		XModelObject param = WebAppHelper.findWebAppContextParam(
-			webXML, "javax.faces.DEFAULT_SUFFIX");
+			webXML, "javax.faces.DEFAULT_SUFFIX"); //$NON-NLS-1$
 		if (param != null) {
-		    String value = param.getAttributeValue("param-value");
+		    String value = param.getAttributeValue("param-value"); //$NON-NLS-1$
 
 		    if (value.length() != 0 && iFile.getName().endsWith(value)) {
 			isFacelet = true;
