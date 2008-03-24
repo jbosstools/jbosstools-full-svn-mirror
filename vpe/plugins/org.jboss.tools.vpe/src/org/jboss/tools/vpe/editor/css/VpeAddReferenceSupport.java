@@ -98,7 +98,7 @@ public class VpeAddReferenceSupport extends SpecialWizardSupport {
 		}
 	}
 
-	public void action(String name) throws Exception {
+	public void action(String name) throws XModelException {
 		if(OK.equals(name) || FINISH.equals(name)) {
 			execute();
 			setFinished(true);
@@ -108,7 +108,7 @@ public class VpeAddReferenceSupport extends SpecialWizardSupport {
 		}
 	}
 	
-	protected void execute() throws Exception {
+	protected void execute() throws XModelException {
 		Properties p0 = extractStepData(0);
 		getTarget().setAttributeValue("location", p0.getProperty("location"));
 		if(p0.containsKey("prefix")) {
