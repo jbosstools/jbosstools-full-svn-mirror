@@ -1298,9 +1298,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	for (long i = len - 1; i >= 0; i--) {
 	    nsIDOMNode node = children.item(i);
 	    if (node.getNodeType() == Node.ELEMENT_NODE) {
-		String name = node.getNodeName();
-		if (HTML.TAG_LINK.equalsIgnoreCase(name)
-			|| isLinkReplacer(node)) {
+		if (isLinkReplacer(node)) {
 		    /*Added by Max Areshkau(Fix for JBIDE-1941)
 		     * Ext. attribute used for adding external styles 
 		     * to editor. If was added external attribute, this 
