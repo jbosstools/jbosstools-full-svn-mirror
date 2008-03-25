@@ -24,12 +24,16 @@
 <modules>
 		<module>../guides/Exadel-migration</module>
 		<module>../guides/GettingStartedGuide</module>
-		<module>../guides/Legacy-jsf-struts</module>
 		<module>../../as/docs/reference</module>
 		<module>../../hibernatetools/docs/reference</module>
 		<module>../../jbpm/docs/reference</module>
 		<module>../../jsf/docs/userguide</module>
 		<module>../../seam/docs/reference</module>
+		<module>../../jsf/docs/jsf_tools_ref_guide</module>
+		<module>../../jsf/docs/jsf_tools_tutorial</module>
+		<module>../../struts/docs/struts_tools_ref_guide</module>
+		<module>../../struts/docs/struts_tools_tutorial</module>
+
 </modules>
 
   <build>

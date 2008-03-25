@@ -15,7 +15,7 @@
     <modules>
         <module>Exadel-migration</module>
         <module>GettingStartedGuide</module>
-        <module>Legacy-jsf-struts</module>
+        <!--module>Legacy-jsf-struts</module-->
     </modules>
 
 </project>
