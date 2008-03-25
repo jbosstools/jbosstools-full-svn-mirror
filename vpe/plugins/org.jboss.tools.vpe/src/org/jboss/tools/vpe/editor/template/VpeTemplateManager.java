@@ -27,6 +27,7 @@ import org.jboss.tools.common.xml.XMLUtilities;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.osgi.framework.Bundle;
 import org.w3c.dom.Document;
@@ -36,127 +37,178 @@ import org.w3c.dom.NodeList;
 
 public class VpeTemplateManager {
 	
-	static final String TEMPLATES_FILE_LIST_NAME = "vpe-templates-list.xml";
-	static final String AUTO_TEMPLATES_FILE_NAME = "templates/vpe-templates-auto.xml";
-	static final String TEMPLATES_FOLDER = File.separator + "templates" + File.separator;
-	public static final String VPE_PREFIX = "vpe:";
-	//gavs
-	static final String TAG_List = VPE_PREFIX + "list";
-	static final String ATTR_LIST_ORDERED = "ordered";
-	static final String[] ATTR_LIST_PROPERTIES = {"ordered", "style","class","title","lang","dir"};
-	//gavs
+	static final String TEMPLATES_FILE_LIST_NAME = "vpe-templates-list.xml"; //$NON-NLS-1$
+	static final String AUTO_TEMPLATES_FILE_NAME = "templates/vpe-templates-auto.xml"; //$NON-NLS-1$
+	static final String TEMPLATES_FOLDER = File.separator + "templates" + File.separator; //$NON-NLS-1$
+	public static final String VPE_PREFIX = "vpe:"; //$NON-NLS-1$
 
-	//bela_n
-	static final String TAG_LABELED_FORM = VPE_PREFIX + "labeledForm";
-	static final String ATTR_LABELED_FORM_LABEL = "labelName";
-	static final String ATTR_LABELED_FORM_DEFAULT_LABEL = "label";
-	static final String[] ATTR_LABELED_FORM_PROPERTIES = {"style","class","width","border","frame","rules","cellspacing","cellpadding","bgcolor","title"};
-	//bela_n
+	static final String TAG_LIST = VPE_PREFIX + "list"; //$NON-NLS-1$
+	static final String ATTR_LIST_ORDERED = "ordered"; //$NON-NLS-1$
+	static final String[] ATTR_LIST_PROPERTIES = {
+		"ordered", //$NON-NLS-1$
+		"style", //$NON-NLS-1$
+		"class", //$NON-NLS-1$
+		"title", //$NON-NLS-1$
+		"lang", //$NON-NLS-1$
+		"dir" //$NON-NLS-1$
+	};
+
+	static final String TAG_LABELED_FORM = VPE_PREFIX + "labeledForm"; //$NON-NLS-1$
+	static final String ATTR_LABELED_FORM_LABEL = "labelName"; //$NON-NLS-1$
+	static final String ATTR_LABELED_FORM_DEFAULT_LABEL = "label"; //$NON-NLS-1$
+	static final String[] ATTR_LABELED_FORM_PROPERTIES = {
+		"style", //$NON-NLS-1$
+		"class", //$NON-NLS-1$
+		"width", //$NON-NLS-1$
+		"border", //$NON-NLS-1$
+		"frame", //$NON-NLS-1$
+		"rules", //$NON-NLS-1$
+		"cellspacing", //$NON-NLS-1$
+		"cellpadding", //$NON-NLS-1$
+		"bgcolor", //$NON-NLS-1$
+		"title" //$NON-NLS-1$
+	};
 	
-	static final String TAG_TEMPLATES_LIST = VPE_PREFIX + "templates-list";
-	static final String TAG_TEMPLATES = VPE_PREFIX + "templates";
-	static final String TAG_TEMPLATE_TAGLIB = VPE_PREFIX + "template-taglib";
-	static final String TAG_TAG = VPE_PREFIX + "tag";
-	static final String TAG_IF = VPE_PREFIX + "if";
-	static final String TAG_TEMPLATE = VPE_PREFIX + "template";
-	static final String TAG_COPY = VPE_PREFIX + "copy";
-	static final String TAG_GRID = VPE_PREFIX + "grid";
-	static final String TAG_PANELGRID = VPE_PREFIX + "panelgrid";
-	static final String TAG_ELEMENT = VPE_PREFIX + "element";
-	static final String TAG_ATTRIBUTE = VPE_PREFIX + "attribute";
-	static final String TAG_VALUE = VPE_PREFIX + "value";
-	static final String TAG_XMLNS = VPE_PREFIX + "xmlns";
-	static final String TAG_ANY = VPE_PREFIX + "any";
-	static final String TAG_TAGLIB = VPE_PREFIX + "taglib";
-	static final String TAG_LINK = VPE_PREFIX + "link";
-	static final String TAG_LOAD_BUNDLE = VPE_PREFIX + "load-bundle";
-	static final String TAG_DATATABLE = VPE_PREFIX + "datatable";
-	static final String TAG_DATATABLE_COLUMN = VPE_PREFIX + "column";
-	static final String TAG_COMMENT = VPE_PREFIX + "comment";
-	static final String TAG_STYLE = VPE_PREFIX + "style";
-	static final String TAG_JSPROOT = VPE_PREFIX + "jsproot";
-	static final String TAG_RESIZE = VPE_PREFIX + "resize";
-	static final String TAG_DND = VPE_PREFIX + "dnd";
-	static final String TAG_FACET = VPE_PREFIX + "facet";
-	static final String TAG_MY_FACES_PAGE_LAYOUT = VPE_PREFIX + "panellayout";	
+	static final String TAG_TEMPLATES_LIST = VPE_PREFIX + "templates-list"; //$NON-NLS-1$
+	static final String TAG_TEMPLATES = VPE_PREFIX + "templates"; //$NON-NLS-1$
+	static final String TAG_TEMPLATE_TAGLIB = VPE_PREFIX + "template-taglib"; //$NON-NLS-1$
+	static final String TAG_TAG = VPE_PREFIX + "tag"; //$NON-NLS-1$
+	static final String TAG_IF = VPE_PREFIX + "if"; //$NON-NLS-1$
+	static final String TAG_TEMPLATE = VPE_PREFIX + "template"; //$NON-NLS-1$
+	static final String TAG_COPY = VPE_PREFIX + "copy"; //$NON-NLS-1$
+	static final String TAG_GRID = VPE_PREFIX + "grid"; //$NON-NLS-1$
+	static final String TAG_PANELGRID = VPE_PREFIX + "panelgrid"; //$NON-NLS-1$
+	static final String TAG_ELEMENT = VPE_PREFIX + "element"; //$NON-NLS-1$
+	static final String TAG_ATTRIBUTE = VPE_PREFIX + "attribute"; //$NON-NLS-1$
+	static final String TAG_VALUE = VPE_PREFIX + "value"; //$NON-NLS-1$
+	static final String TAG_XMLNS = VPE_PREFIX + "xmlns"; //$NON-NLS-1$
+	static final String TAG_ANY = VPE_PREFIX + "any"; //$NON-NLS-1$
+	static final String TAG_TAGLIB = VPE_PREFIX + "taglib"; //$NON-NLS-1$
+	static final String TAG_LINK = VPE_PREFIX + "link"; //$NON-NLS-1$
+	static final String TAG_LOAD_BUNDLE = VPE_PREFIX + "load-bundle"; //$NON-NLS-1$
+	static final String TAG_DATATABLE = VPE_PREFIX + "datatable"; //$NON-NLS-1$
+	static final String TAG_DATATABLE_COLUMN = VPE_PREFIX + "column"; //$NON-NLS-1$
+	static final String TAG_COMMENT = VPE_PREFIX + "comment"; //$NON-NLS-1$
+	static final String TAG_STYLE = VPE_PREFIX + "style"; //$NON-NLS-1$
+	static final String TAG_JSPROOT = VPE_PREFIX + "jsproot"; //$NON-NLS-1$
+	static final String TAG_RESIZE = VPE_PREFIX + "resize"; //$NON-NLS-1$
+	static final String TAG_DND = VPE_PREFIX + "dnd"; //$NON-NLS-1$
+	static final String TAG_FACET = VPE_PREFIX + "facet"; //$NON-NLS-1$
+	static final String TAG_MY_FACES_PAGE_LAYOUT = VPE_PREFIX + "panellayout"; //$NON-NLS-1$	
 	
-	public static final String TAG_TEXT_FORMATING = VPE_PREFIX + "textFormating";
-	public static final String TAG_FORMAT = VPE_PREFIX + "format";
-	public static final String TAG_FORMAT_ATTRIBUTE = VPE_PREFIX + "formatAttribute";
+	public static final String TAG_TEXT_FORMATING = VPE_PREFIX + "textFormating"; //$NON-NLS-1$
+	public static final String TAG_FORMAT = VPE_PREFIX + "format"; //$NON-NLS-1$
+	public static final String TAG_FORMAT_ATTRIBUTE = VPE_PREFIX + "formatAttribute"; //$NON-NLS-1$
 
-	public static final String ATTR_FORMAT_TYPE = "type";
-	public static final String ATTR_FORMAT_ADD_CHILDREN = "addChildren";
-	public static final String ATTR_FORMAT_ADD_PARENT = "addParent";
-	public static final String ATTR_FORMAT_ADD_CHILDREN_HANDLER = "addChildrenHandler";
-	public static final String ATTR_FORMAT_HANDLER = "handler";
-	public static final String ATTR_FORMAT_SET_DEFAULT = "setDefault";
-	public static final String ATTR_FORMAT_ATTRIBUTE_TYPE = "type";
-	public static final String ATTR_FORMAT_ATTRIBUTE_NAME = "name";
-	public static final String ATTR_FORMAT_ATTRIBUTE_VALUE = "value";
-	public static final String ATTR_FORMAT_ATTRIBUTE_CASE_SENSITIVE = "caseSensitive";
-	public static final String ATTR_FORMAT_ATTRIBUTE_TRUE_VALUE = "true";
-	public static final String ATTR_FORMAT_ADD_CHILDREN_ALLOW_VALUE = "allow";
-	public static final String ATTR_FORMAT_ADD_CHILDREN_DENY_VALUE = "deny";
-	public static final String ATTR_FORMAT_ADD_CHILDREN_ITSELF_VALUE = "itself";
-	public static final String ATTR_FORMAT_ATTRIBUTE_TYPE_STYLE_VALUE = "style";
+	public static final String ATTR_FORMAT_TYPE = "type"; //$NON-NLS-1$
+	public static final String ATTR_FORMAT_ADD_CHILDREN = "addChildren"; //$NON-NLS-1$
+	public static final String ATTR_FORMAT_ADD_PARENT = "addParent"; //$NON-NLS-1$
+	public static final String ATTR_FORMAT_ADD_CHILDREN_HANDLER = "addChildrenHandler"; //$NON-NLS-1$
+	public static final String ATTR_FORMAT_HANDLER = "handler"; //$NON-NLS-1$
+	public static final String ATTR_FORMAT_SET_DEFAULT = "setDefault"; //$NON-NLS-1$
+	public static final String ATTR_FORMAT_ATTRIBUTE_TYPE = "type"; //$NON-NLS-1$
+	public static final String ATTR_FORMAT_ATTRIBUTE_NAME = "name"; //$NON-NLS-1$
+	public static final String ATTR_FORMAT_ATTRIBUTE_VALUE = "value"; //$NON-NLS-1$
+	public static final String ATTR_FORMAT_ATTRIBUTE_CASE_SENSITIVE = "caseSensitive"; //$NON-NLS-1$
+	public static final String ATTR_FORMAT_ATTRIBUTE_TRUE_VALUE = "true"; //$NON-NLS-1$
+	public static final String ATTR_FORMAT_ADD_CHILDREN_ALLOW_VALUE = "allow"; //$NON-NLS-1$
+	public static final String ATTR_FORMAT_ADD_CHILDREN_DENY_VALUE = "deny"; //$NON-NLS-1$
+	public static final String ATTR_FORMAT_ADD_CHILDREN_ITSELF_VALUE = "itself"; //$NON-NLS-1$
+	public static final String ATTR_FORMAT_ATTRIBUTE_TYPE_STYLE_VALUE = "style"; //$NON-NLS-1$
 
-	static final String ATTR_DIRECTIVE_TAGLIB_URI = "uri";
-	static final String ATTR_DIRECTIVE_TAGLIB_PREFIX = "prefix";
+	static final String ATTR_DIRECTIVE_TAGLIB_URI = "uri"; //$NON-NLS-1$
+	static final String ATTR_DIRECTIVE_TAGLIB_PREFIX = "prefix"; //$NON-NLS-1$
 
-	static final String ATTR_TAG_NAME = "name";
-	static final String ATTR_TAG_CASE_SENSITIVE = "case-sensitive";
+	static final String ATTR_TAG_NAME = "name"; //$NON-NLS-1$
+	static final String ATTR_TAG_CASE_SENSITIVE = "case-sensitive"; //$NON-NLS-1$
+	static final String ATTR_VALUE_YES = "yes"; //$NON-NLS-1$
+	static final String ATTR_VALUE_NO = "no"; //$NON-NLS-1$
 
-	static final String ATTR_IF_TEST = "test";
+	static final String ATTR_IF_TEST = "test"; //$NON-NLS-1$
 
-	static final String ATTR_TEMPLATE_CLASS = "class";
-	static final String ATTR_TEMPLATE_CHILDREN = "children";
-	static final String ATTR_TEMPLATE_MODIFY = "modify";
+	static final String ATTR_TEMPLATE_CLASS = "class"; //$NON-NLS-1$
+	static final String ATTR_TEMPLATE_CHILDREN = "children"; //$NON-NLS-1$
+	static final String ATTR_TEMPLATE_MODIFY = "modify"; //$NON-NLS-1$
 	
 	/** ATTR_TEMPLATE_HAVE_VISUAL_PREVIEW */
-	static final String ATTR_TEMPLATE_HAVE_VISUAL_PREVIEW = "haveVisualPreview";
+	static final String ATTR_TEMPLATE_HAVE_VISUAL_PREVIEW = "haveVisualPreview"; //$NON-NLS-1$
 
-	static final String ATTR_COPY_ATTRS = "attrs";
+	static final String ATTR_COPY_ATTRS = "attrs"; //$NON-NLS-1$
 
-	static final String ATTR_ELEMENT_NAME = "name";
+	static final String ATTR_ELEMENT_NAME = "name"; //$NON-NLS-1$
 
-	static final String ATTR_ATTRIBUTE_NAME = "name";
-	static final String ATTR_ATTRIBUTE_VALUE = "value";
+	static final String ATTR_ATTRIBUTE_NAME = "name"; //$NON-NLS-1$
+	static final String ATTR_ATTRIBUTE_VALUE = "value"; //$NON-NLS-1$
 
-	static final String ATTR_VALUE_EXPR = "expr";
+	static final String ATTR_VALUE_EXPR = "expr"; //$NON-NLS-1$
 
-	static final String ATTR_PANELGRID_TABLE_SIZE = "table-size";
-	static final String ATTR_PANELGRID_HEADER_CLASS = "headerClass";
-	static final String ATTR_PANELGRID_FOOTER_CLASS = "footerClass";
-	static final String ATTR_PANELGRID_ROW_CLASSES = "rowClasses";
-	static final String ATTR_PANELGRID_COLUMN_CLASSES = "columnClasses";
-	static final String ATTR_PANELGRID_CAPTION_CLASS = "captionClass";
-	static final String ATTR_PANELGRID_CAPTION_STYLE = "captionStyle";
-	static final String ATTR_PANELGRID_RULES = "rules";
-	static final String[] ATTR_PANELGRID_PROPERTIES = {"style","class","width","border","frame","cellspacing","cellpadding","bgcolor","title"};
+	static final String ATTR_PANELGRID_TABLE_SIZE = "table-size"; //$NON-NLS-1$
+	static final String ATTR_PANELGRID_HEADER_CLASS = "headerClass"; //$NON-NLS-1$
+	static final String ATTR_PANELGRID_FOOTER_CLASS = "footerClass"; //$NON-NLS-1$
+	static final String ATTR_PANELGRID_ROW_CLASSES = "rowClasses"; //$NON-NLS-1$
+	static final String ATTR_PANELGRID_COLUMN_CLASSES = "columnClasses"; //$NON-NLS-1$
+	static final String ATTR_PANELGRID_CAPTION_CLASS = "captionClass"; //$NON-NLS-1$
+	static final String ATTR_PANELGRID_CAPTION_STYLE = "captionStyle"; //$NON-NLS-1$
+	static final String ATTR_PANELGRID_RULES = "rules"; //$NON-NLS-1$
+	static final String[] ATTR_PANELGRID_PROPERTIES = {
+		"style", //$NON-NLS-1$
+		"class", //$NON-NLS-1$
+		"width", //$NON-NLS-1$
+		"border", //$NON-NLS-1$
+		"frame", //$NON-NLS-1$
+		"cellspacing", //$NON-NLS-1$
+		"cellpadding", //$NON-NLS-1$
+		"bgcolor", //$NON-NLS-1$
+		"title" //$NON-NLS-1$
+	};
 
-	static final String ATTR_GRID_LAYOUT = "layout";
-	static final String ATTR_GRID_TABLE_SIZE = "table-size";
-	static final String[] ATTR_GRID_PROPERTIES = {"style","class","width","border","frame","cellspacing","cellpadding","bgcolor","title","dir"};
+	static final String ATTR_GRID_LAYOUT = "layout"; //$NON-NLS-1$
+	static final String ATTR_GRID_TABLE_SIZE = "table-size"; //$NON-NLS-1$
+	static final String[] ATTR_GRID_PROPERTIES = {
+		"style", //$NON-NLS-1$
+		"class", //$NON-NLS-1$
+		"width", //$NON-NLS-1$
+		"border", //$NON-NLS-1$
+		"frame", //$NON-NLS-1$
+		"cellspacing", //$NON-NLS-1$
+		"cellpadding", //$NON-NLS-1$
+		"bgcolor", //$NON-NLS-1$
+		"title", //$NON-NLS-1$
+		"dir" //$NON-NLS-1$
+	};
 
-	static final String ATTR_ANY_DISPLAY = "display";
-	static final String ATTR_ANY_ICON = "icon";
-	static final String ATTR_ANY_VALUE = "value";
-	static final String ATTR_ANY_BORDER = "border";
-	static final String ATTR_ANY_VALUE_COLOR = "value-color";
-	static final String ATTR_ANY_VALUE_BACKGROUND_COLOR = "value-background-color";
-	static final String ATTR_ANY_BACKGROUND_COLOR = "background-color";
-	static final String ATTR_ANY_BORDER_COLOR = "border-color";
-	static final String[] ATTR_ANY_PROPERTIES = {"title"};
+	static final String ATTR_ANY_DISPLAY = "display"; //$NON-NLS-1$
+	static final String ATTR_ANY_ICON = "icon"; //$NON-NLS-1$
+	static final String ATTR_ANY_VALUE = "value"; //$NON-NLS-1$
+	static final String ATTR_ANY_BORDER = "border"; //$NON-NLS-1$
+	static final String ATTR_ANY_VALUE_COLOR = "value-color"; //$NON-NLS-1$
+	static final String ATTR_ANY_VALUE_BACKGROUND_COLOR = "value-background-color"; //$NON-NLS-1$
+	static final String ATTR_ANY_BACKGROUND_COLOR = "background-color"; //$NON-NLS-1$
+	static final String ATTR_ANY_BORDER_COLOR = "border-color"; //$NON-NLS-1$
+	static final String[] ATTR_ANY_PROPERTIES = {"title"}; //$NON-NLS-1$
 
-	static final String ATTR_DATATABLE_HEADER_CLASS = "headerClass";
-	static final String ATTR_DATATABLE_FOOTER_CLASS = "footerClass";
-	static final String ATTR_DATATABLE_ROW_CLASSES = "rowClasses";
-	static final String ATTR_DATATABLE_COLUMN_CLASSES = "columnClasses";
-	static final String[] ATTR_DATATABLE_PROPERTIES = {"width", "bgcolor","border","cellpadding","cellspacing","frame","rules","class","style","title", "dir", "rowClasses"};
+	static final String ATTR_DATATABLE_HEADER_CLASS = "headerClass"; //$NON-NLS-1$
+	static final String ATTR_DATATABLE_FOOTER_CLASS = "footerClass"; //$NON-NLS-1$
+	static final String ATTR_DATATABLE_ROW_CLASSES = "rowClasses"; //$NON-NLS-1$
+	static final String ATTR_DATATABLE_COLUMN_CLASSES = "columnClasses"; //$NON-NLS-1$
+	static final String[] ATTR_DATATABLE_PROPERTIES = {
+		"width", //$NON-NLS-1$
+		"bgcolor", //$NON-NLS-1$
+		"border", //$NON-NLS-1$
+		"cellpadding", //$NON-NLS-1$
+		"cellspacing", //$NON-NLS-1$
+		"frame", //$NON-NLS-1$
+		"rules", //$NON-NLS-1$
+		"class", //$NON-NLS-1$
+		"style", //$NON-NLS-1$
+		"title", //$NON-NLS-1$
+		"dir", //$NON-NLS-1$
+		"rowClasses" //$NON-NLS-1$
+	};
 
-	public static final String ATTR_LINK_HREF = "href";
-	public static final String ATTR_LINK_REL = "rel";
-	public static final String ATTR_LINK_EXT = "ext";
+	public static final String ATTR_LINK_HREF = "href"; //$NON-NLS-1$
+	public static final String ATTR_LINK_REL = "rel"; //$NON-NLS-1$
+	public static final String ATTR_LINK_EXT = "ext"; //$NON-NLS-1$
 
 	private static VpeTemplateManager instance = null;
 	private static Object monitor = new Object();
@@ -174,13 +226,14 @@ public class VpeTemplateManager {
 	private Set<String> withoutWhitespaceContainerSet = new HashSet<String>();
 	private Set<String> withoutPseudoElementContainerSet = new HashSet<String>();
 	
-	/**
+	/*
 	 * Added by Max Areshkau(mareshkau@exadel.com)
-	 *  This property identify namespace which should be used to load some specific class.
+	 */ 
+	/**  This property identify namespace which should be used to load some specific class.
 	 *  For example in rich:dataTable can be h:column, but rich:dataTable is separate plugin,
 	 *  so to render h:column we should load the specific class for h:column from richfaces template
 	 */
-	private static final String NAMESPACE_IDENTIFIER_ATTRIBUTE="namespaceIdentifier";
+	private static final String NAMESPACE_IDENTIFIER_ATTRIBUTE = "namespaceIdentifier"; //$NON-NLS-1$
 	
 
 	private VpeTemplateManager() {
@@ -201,7 +254,7 @@ public class VpeTemplateManager {
 		}
 	}
 	
-	public VpeTemplate getTemplate(VpePageContext pageContext, Node sourceNode, Set dependencySet) {
+	public VpeTemplate getTemplate(VpePageContext pageContext, Node sourceNode, Set<?> dependencySet) {
 		VpeTemplate template = getTemplateImpl(pageContext, sourceNode, dependencySet);
 		if (template != null) {
 			return template;
@@ -210,7 +263,7 @@ public class VpeTemplateManager {
 		}
 	}
 
-	private VpeTemplate getTemplateImpl(VpePageContext pageContext, Node sourceNode, Set dependencySet) {
+	private VpeTemplate getTemplateImpl(VpePageContext pageContext, Node sourceNode, Set<?> dependencySet) {
 		String name = getTemplateName(pageContext, sourceNode);
 		if (name == null) {
 			return null;
@@ -227,31 +280,26 @@ public class VpeTemplateManager {
 	}
 
 	private String getTemplateName(VpePageContext pageContext, Node sourceNode) {
-		
 		String sourcePrefix = sourceNode.getPrefix();
-		
-		if (sourcePrefix == null || ((IDOMElement)sourceNode).isJSPTag() || "jsp".equals(sourcePrefix)) {
-			
+
+		if (sourcePrefix == null
+				|| ((IDOMElement)sourceNode).isJSPTag()
+					|| "jsp".equals(sourcePrefix)) { //$NON-NLS-1$
 			return sourceNode.getNodeName();
 		}
 		
 		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,pageContext.getSourceBuilder().getStructuredTextViewer().getDocument());
-		
 		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix, taglibs);		
 
 		if(sourceNodeTaglib == null) {
-			
 			return null;
 		}
 		
 		String sourceNodeUri = sourceNodeTaglib.getUri();
-
-		
 		String templateTaglibPrefix = getTemplateTaglibPrefix(sourceNodeUri);
 
 		if(templateTaglibPrefix != null) {
-			
-			return templateTaglibPrefix+":"+sourceNode.getLocalName();
+			return templateTaglibPrefix + ":" + sourceNode.getLocalName(); //$NON-NLS-1$
 		}
 
 		return null;
@@ -273,10 +321,12 @@ public class VpeTemplateManager {
 		if (autoTemplateFile != null) {
 			loadTemplates(autoTemplateFile.getPath(),autoTemplateFile.getConfigurableElement());
 		}
+		
 		VpeTemplateFile[] templateFiles = templateFileList.getTemplateFiles();
 		for (int i = 0; i < templateFiles.length; i++) {
 			loadTemplates(templateFiles[i].getPath(),templateFiles[i].getConfigurableElement());
 		}
+		
 		if (defTemplate == null) {
 			defTemplate = createDefTemplate();
 		}
@@ -295,6 +345,7 @@ public class VpeTemplateManager {
 		if (root == null || !TAG_TEMPLATES.equals(root.getNodeName())) {
 			return;
 		}
+		
 		NodeList children = root.getChildNodes();
 		if (children != null) {
 			int len = children.getLength();
@@ -305,8 +356,7 @@ public class VpeTemplateManager {
 						setTagElement((Element)node, confElement);
 					} else if (TAG_TEMPLATE.equals(node.getNodeName())) {
 						setDefTemplate(createTemplate((Element)node,confElement, true));
-					}  
-					else if (TAG_TEMPLATE_TAGLIB.equals(node.getNodeName())) {
+					} else if (TAG_TEMPLATE_TAGLIB.equals(node.getNodeName())) {
 						setTemplateTaglib((Element)node);
 					}
 				}
@@ -317,7 +367,7 @@ public class VpeTemplateManager {
 	private void setTagElement(Element tagElement,IConfigurationElement confElement) {
 		String name = tagElement.getAttribute(ATTR_TAG_NAME);
 		if (name.length() > 0) {
-			boolean caseSensitive = !"no".equals(tagElement.getAttribute(ATTR_TAG_CASE_SENSITIVE));
+			boolean caseSensitive = !ATTR_VALUE_NO.equals(tagElement.getAttribute(ATTR_TAG_CASE_SENSITIVE));
 			Map<String,VpeTemplateSet> tags;
 			if (caseSensitive) {
 				tags = caseSensitiveTags;
@@ -325,11 +375,13 @@ public class VpeTemplateManager {
 				name = name.toLowerCase();
 				tags = ignoreSensitiveTags;
 			}
+			
 			VpeTemplateSet set = (VpeTemplateSet) tags.get(name);
 			if (set == null) {
 				set = new VpeTemplateSet();
 				tags.put(name, set);
 			}
+			
 			addChildren(tagElement, set, confElement, caseSensitive);
 		}
 	}
@@ -381,10 +433,12 @@ public class VpeTemplateManager {
 	public void setAnyTemplate(VpeAnyData data) {
 		String elementName = data.getName();
 		boolean caseSensitive = data.isCaseSensitive();
+		
 		Element root = loadAutoTemplate();
 		if (root == null) {
 			root = XMLUtilities.createDocumentElement(TAG_TEMPLATES);
 		}
+		
 		Set<String> prefixSet = new HashSet<String>();
 		Node tagElement = null;
 		NodeList children = root.getChildNodes();
@@ -394,7 +448,7 @@ public class VpeTemplateManager {
 				Node node = children.item(i);
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					if (TAG_TAG.equals(node.getNodeName())) {
-						if (caseSensitive == !"no".equals(((Element)node).getAttribute(ATTR_TAG_CASE_SENSITIVE))) {
+						if (caseSensitive == !ATTR_VALUE_NO.equals(((Element)node).getAttribute(ATTR_TAG_CASE_SENSITIVE))) {
 							String name = ((Element)node).getAttribute(ATTR_TAG_NAME);
 							if (caseSensitive && name.equals(elementName) || !caseSensitive && name.equalsIgnoreCase(elementName)) {
 								tagElement = node;
@@ -402,10 +456,9 @@ public class VpeTemplateManager {
 						}
 					} else if (TAG_TEMPLATE_TAGLIB.equals(node.getNodeName())) {
 						Node prefixAttr = node.getAttributes().getNamedItem(ATTR_DIRECTIVE_TAGLIB_PREFIX);
-						String prefix = prefixAttr != null ? prefixAttr.getNodeValue() : "";
+						String prefix = prefixAttr != null ? prefixAttr.getNodeValue() : ""; //$NON-NLS-1$
 						if (prefix.length() > 0) {
 							prefixSet.add(prefix);
-;
 						}
 					} else {
 						root.removeChild(node);
@@ -461,7 +514,7 @@ public class VpeTemplateManager {
 		return root;
 	}
 
-	public List getAnyTemplates() {
+	public List<VpeAnyData> getAnyTemplates() {
 		List<VpeAnyData> anyTemplateList = new ArrayList<VpeAnyData>();
 		Map<String,Node> taglibs = new HashMap<String,Node>();
 
@@ -478,66 +531,89 @@ public class VpeTemplateManager {
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					if (TAG_TAG.equals(node.getNodeName())) {
 						Node attr = ((Element)node).getAttributeNode(ATTR_TAG_NAME);
-						VpeAnyData anyData = new VpeAnyData(attr != null ? attr.getNodeValue() : "");
+						VpeAnyData anyData = new VpeAnyData(attr != null ? attr.getNodeValue() : ""); //$NON-NLS-1$
 						attr = ((Element)node).getAttributeNode(ATTR_TAG_CASE_SENSITIVE);
-						anyData.setCaseSensitive("yes".equalsIgnoreCase(attr.getNodeValue()));
+						anyData.setCaseSensitive(ATTR_VALUE_YES.equalsIgnoreCase(attr.getNodeValue()));
 						Element templateNode = getChildNode(node, TAG_TEMPLATE);
 						if (templateNode != null) {
-							attr = ((Element)templateNode).getAttributeNode(ATTR_TEMPLATE_CHILDREN);
-							if (attr != null) anyData.setChildren("yes".equalsIgnoreCase(attr.getNodeValue()));
-							attr = ((Element)templateNode).getAttributeNode(ATTR_TEMPLATE_MODIFY);
-							if (attr != null) anyData.setModify("yes".equalsIgnoreCase(attr.getNodeValue()));
+							attr = templateNode.getAttributeNode(ATTR_TEMPLATE_CHILDREN);
+							if (attr != null) {
+								anyData.setChildren(ATTR_VALUE_YES.equalsIgnoreCase(attr.getNodeValue()));
+							}
+							
+							attr = templateNode.getAttributeNode(ATTR_TEMPLATE_MODIFY);
+							if (attr != null) {
+								anyData.setModify(ATTR_VALUE_YES.equalsIgnoreCase(attr.getNodeValue()));
+							}
 
 							Element anyNode = getChildNode(templateNode, TAG_ANY);
 							if (anyNode != null) {
-								attr = ((Element)anyNode).getAttributeNode(ATTR_TEMPLATE_CHILDREN);
-								if (attr != null) anyData.setChildren("yes".equalsIgnoreCase(attr.getNodeValue()));
+								attr = anyNode.getAttributeNode(ATTR_TEMPLATE_CHILDREN);
+								if (attr != null) {
+									anyData.setChildren(ATTR_VALUE_YES.equalsIgnoreCase(attr.getNodeValue()));
+								}
 								
-								attr = ((Element)anyNode).getAttributeNode(ATTR_ANY_DISPLAY);
-								if (attr != null) anyData.setDisplay(attr.getNodeValue());
+								attr = anyNode.getAttributeNode(ATTR_ANY_DISPLAY);
+								if (attr != null) {
+									anyData.setDisplay(attr.getNodeValue());
+								}
 
-								attr = ((Element)anyNode).getAttributeNode(ATTR_ANY_ICON);
-								if (attr != null) anyData.setShowIcon("yes".equalsIgnoreCase(attr.getNodeValue()));
+								attr = anyNode.getAttributeNode(ATTR_ANY_ICON);
+								if (attr != null){
+									anyData.setShowIcon(ATTR_VALUE_YES.equalsIgnoreCase(attr.getNodeValue()));
+								}
 
-								attr = ((Element)anyNode).getAttributeNode(ATTR_ANY_VALUE);
-								if (attr != null) anyData.setValue(attr.getNodeValue());
+								attr = anyNode.getAttributeNode(ATTR_ANY_VALUE);
+								if (attr != null) {
+									anyData.setValue(attr.getNodeValue());
+								}
 
-								attr = ((Element)anyNode).getAttributeNode(ATTR_ANY_BORDER);
-								if (attr != null) anyData.setBorder(attr.getNodeValue());
+								attr = anyNode.getAttributeNode(ATTR_ANY_BORDER);
+								if (attr != null) {
+									anyData.setBorder(attr.getNodeValue());
+								}
 
-								attr = ((Element)anyNode).getAttributeNode(ATTR_ANY_VALUE_COLOR);
-								if (attr != null) anyData.setValueColor(attr.getNodeValue());
+								attr = anyNode.getAttributeNode(ATTR_ANY_VALUE_COLOR);
+								if (attr != null) {
+									anyData.setValueColor(attr.getNodeValue());
+								}
 
-								attr = ((Element)anyNode).getAttributeNode(ATTR_ANY_VALUE_BACKGROUND_COLOR);
-								if (attr != null) anyData.setValueBackgroundColor(attr.getNodeValue());
+								attr = anyNode.getAttributeNode(ATTR_ANY_VALUE_BACKGROUND_COLOR);
+								if (attr != null) {
+									anyData.setValueBackgroundColor(attr.getNodeValue());
+								}
 
-								attr = ((Element)anyNode).getAttributeNode(ATTR_ANY_BACKGROUND_COLOR);
-								if (attr != null) anyData.setBackgroundColor(attr.getNodeValue());
+								attr = anyNode.getAttributeNode(ATTR_ANY_BACKGROUND_COLOR);
+								if (attr != null) {
+									anyData.setBackgroundColor(attr.getNodeValue());
+								}
 
-								attr = ((Element)anyNode).getAttributeNode(ATTR_ANY_BORDER_COLOR);
-								if (attr != null) anyData.setBorderColor(attr.getNodeValue());
+								attr = anyNode.getAttributeNode(ATTR_ANY_BORDER_COLOR);
+								if (attr != null) {
+									anyData.setBorderColor(attr.getNodeValue());
+								}
 							}
 						}
+						
 						anyTemplateList.add(anyData);
 					} else if (TAG_TEMPLATE_TAGLIB.equals(node.getNodeName())) {
 						Node prefixAttr = node.getAttributes().getNamedItem(ATTR_DIRECTIVE_TAGLIB_PREFIX);
-						String prefix = prefixAttr != null ? prefixAttr.getNodeValue() : "";
+						String prefix = prefixAttr != null ? prefixAttr.getNodeValue() : ""; //$NON-NLS-1$
 						if (prefix.length() > 0) {
 							taglibs.put(prefix, node);
-;
 						}
 					}
 				}
 			}
 		}
 
-		for (Iterator iter = anyTemplateList.iterator(); iter.hasNext();) {
-			VpeAnyData element = (VpeAnyData) iter.next();
+		for (Iterator<VpeAnyData> iter = anyTemplateList.iterator(); iter.hasNext();) {
+			VpeAnyData element = iter.next();
 			String prefix = element.getPrefix();
 			if (taglibs.containsKey(prefix)) {
 				Node node = (Node)taglibs.get(prefix);
 				Node uriAttr = node.getAttributes().getNamedItem(ATTR_DIRECTIVE_TAGLIB_URI);
-				String uri = uriAttr != null ? uriAttr.getNodeValue() : "";
+				String uri = uriAttr != null ? uriAttr.getNodeValue() : ""; //$NON-NLS-1$
 				element.setUri(uri);
 			}
 		}
@@ -562,14 +638,14 @@ public class VpeTemplateManager {
 	}
 	
 
-	public void setAnyTemplates(List templates) {
+	public void setAnyTemplates(List<VpeAnyData> templates) {
 		if (templates != null) {
 			Set<String> prefixSet = new HashSet<String>();
 			Element root = XMLUtilities.createDocumentElement(TAG_TEMPLATES);
 			Document document = root.getOwnerDocument();
 
-			for (Iterator iter = templates.iterator(); iter.hasNext();) {
-				VpeAnyData data = (VpeAnyData) iter.next();
+			for (Iterator<VpeAnyData> iter = templates.iterator(); iter.hasNext();) {
+				VpeAnyData data = iter.next();
 				root.appendChild(createNewTagElement(document, data));
 				String prefix = data.getPrefix();
 				if (prefix != null && prefix.length() > 0 && !prefixSet.contains(prefix)) {
@@ -591,11 +667,11 @@ public class VpeTemplateManager {
 	private Element createNewTagElement(Document document, VpeAnyData data) {
 		Element newTagElement = document.createElement(TAG_TAG);
 		newTagElement.setAttribute(ATTR_TAG_NAME, data.getName());
-		newTagElement.setAttribute(ATTR_TAG_CASE_SENSITIVE, data.isCaseSensitive() ? "yes" : "no");
+		newTagElement.setAttribute(ATTR_TAG_CASE_SENSITIVE, data.isCaseSensitive() ? ATTR_VALUE_YES : ATTR_VALUE_NO);
 
 		Element newTemplateElement = document.createElement(TAG_TEMPLATE);
-		newTemplateElement.setAttribute(ATTR_TEMPLATE_CHILDREN, data.isChildren() ? "yes" : "no");
-		newTemplateElement.setAttribute(ATTR_TEMPLATE_MODIFY, data.isModify() ? "yes" : "no");
+		newTemplateElement.setAttribute(ATTR_TEMPLATE_CHILDREN, data.isChildren() ? ATTR_VALUE_YES : ATTR_VALUE_NO);
+		newTemplateElement.setAttribute(ATTR_TEMPLATE_MODIFY, data.isModify() ? ATTR_VALUE_YES : ATTR_VALUE_NO);
 		newTagElement.appendChild(newTemplateElement);
 
 		Element newAnyElement = document.createElement(TAG_ANY);
@@ -614,7 +690,7 @@ public class VpeTemplateManager {
 		if (data.getBorderColor() != null && data.getBorderColor().length() > 0)
 			newAnyElement.setAttribute(ATTR_ANY_BORDER_COLOR, data.getBorderColor());
 		
-		newAnyElement.setAttribute(ATTR_ANY_ICON, data.isShowIcon() ? "yes" : "no");
+		newAnyElement.setAttribute(ATTR_ANY_ICON, data.isShowIcon() ? ATTR_VALUE_YES : ATTR_VALUE_NO);
 
 		newTemplateElement.appendChild(newAnyElement);
 
@@ -691,19 +767,29 @@ public class VpeTemplateManager {
 	
 	private Element createDefTemplateElement() {
 		Element newTemplateElement = XMLUtilities.createDocumentElement(TAG_TEMPLATE);
-		newTemplateElement.setAttribute(ATTR_TEMPLATE_CHILDREN, "yes");
-		newTemplateElement.setAttribute(ATTR_TEMPLATE_MODIFY, "no");
+		newTemplateElement.setAttribute(ATTR_TEMPLATE_CHILDREN, ATTR_VALUE_YES);
+		newTemplateElement.setAttribute(ATTR_TEMPLATE_MODIFY, ATTR_VALUE_NO);
 		Document document = newTemplateElement.getOwnerDocument();
 		Element newAnyElement = document.createElement(TAG_ANY);
-		newAnyElement.setAttribute(ATTR_ANY_VALUE, "{name()}");
-		newAnyElement.setAttribute("title", "{tagstring()}");
+		newAnyElement.setAttribute(ATTR_ANY_VALUE, "{name()}"); //$NON-NLS-1$
+		newAnyElement.setAttribute("title", "{tagstring()}"); //$NON-NLS-1$ //$NON-NLS-2$
 		newTemplateElement.appendChild(newAnyElement);
 		return newTemplateElement;
 	}
 	
 	static String[] WITHOUT_WHITESPACE_ELEMENT_NAMES = {
-		"table", "caption", "col", "colgroup", "thead", "tbody", "tfoot", "th", "tr", "td"
+		HTML.TAG_TABLE,
+		HTML.TAG_CAPTION,
+		HTML.TAG_COL,
+		HTML.TAG_COLGROUP,
+		HTML.TAG_THEAD,
+		HTML.TAG_TBODY,
+		HTML.TAG_TFOOT,
+		HTML.TAG_TH,
+		HTML.TAG_TR,
+		HTML.TAG_TD
 	};
+	
 	private void initWithoutWhitespaceContainerSet() {
 		for (int i = 0; i < WITHOUT_WHITESPACE_ELEMENT_NAMES.length; i++) {
 			withoutWhitespaceContainerSet.add(WITHOUT_WHITESPACE_ELEMENT_NAMES[i]);
@@ -711,8 +797,8 @@ public class VpeTemplateManager {
 	}
 	
 	private void initPseudoElementContainerSet() {
-		withoutPseudoElementContainerSet.add("br");
-		withoutPseudoElementContainerSet.add("input");
+		withoutPseudoElementContainerSet.add(HTML.TAG_BR);
+		withoutPseudoElementContainerSet.add(HTML.TAG_INPUT);
 	}
 	
 	public boolean isWithoutWhitespaceContainer(String name) {
@@ -723,6 +809,7 @@ public class VpeTemplateManager {
 		return withoutPseudoElementContainerSet.contains(name.toLowerCase());
 	}
 	
+	@SuppressWarnings("unchecked")
 	private VpeTemplate createTemplate(Element templateElement,IConfigurationElement confElement, boolean caseSensitive) {
 		VpeTemplate template = null;
 		String templateClassName = templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_CLASS);
@@ -746,7 +833,7 @@ public class VpeTemplateManager {
 				} catch (Exception e2) { 
 					String message = e.getMessage();
 					if(message==null) {
-						message = "Can't get VPE template class: " + templateClassName;
+						message = "Can't get VPE template class: " + templateClassName; //$NON-NLS-1$
 					}
 					VpePlugin.getPluginLog().logWarning(message, e);
 					return null;
@@ -760,9 +847,9 @@ public class VpeTemplateManager {
 	}
 	
 	private VpeTemplate createDefTemplate() {
-		VpeTemplate defTemplate = new VpeHtmlTemplate();
-		defTemplate.init(createDefTemplateElement(), true);
-		return defTemplate;
+		VpeTemplate localDefTemplate = new VpeHtmlTemplate();
+		localDefTemplate.init(createDefTemplateElement(), true);
+		return localDefTemplate;
 	}
 
 	/**

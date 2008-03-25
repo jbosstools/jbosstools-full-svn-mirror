@@ -91,7 +91,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 				} else if (VpeTemplateManager.TAG_FACET.equals(name)) {
 					type = TYPE_FACET;
 					creator = new VpeFacetCreator(templateSection, dependencyMap, caseSensitive);
-				} else if (VpeTemplateManager.TAG_List.equals(name)) {
+				} else if (VpeTemplateManager.TAG_LIST.equals(name)) {
 					type = TYPE_LIST;
 					creator = new VpeListCreator(templateSection, dependencyMap, caseSensitive);
 				// gavs	
