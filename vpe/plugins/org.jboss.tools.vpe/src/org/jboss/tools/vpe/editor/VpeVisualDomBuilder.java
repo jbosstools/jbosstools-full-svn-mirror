@@ -1089,6 +1089,17 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		Element sourceElement = (Element) (sourceNode instanceof Element ? sourceNode
 				: sourceNode.getParentNode());
 
+		// Fixes JBIDE-1823 author dmaliarevich
+		// Template is looked according to <code>selectedElem</code>
+		// so <code>toggleLookupAttr</code> should be retrieved 
+		// from this element
+		toggleLookupAttr = selectedElem
+			.getAttributeNode(VPE_USER_TOGGLE_LOOKUP_PARENT);
+		if (toggleLookupAttr != null) {
+			toggleLookup = "true".equals(toggleLookupAttr.getNodeValue());
+		}
+		// end of fix
+		
 		if (elementMapping != null) {
 			VpeTemplate template = elementMapping.getTemplate();
 
