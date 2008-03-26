@@ -34,6 +34,8 @@ import org.w3c.dom.NodeList;
 
 public class VpePanelGridCreator extends VpeAbstractCreator {
 
+	private final String REDUNDANT_TEXT_SEPARATOR = "\n\n";
+	
 	private boolean caseSensitive;
 	private VpeExpression tableSizeExpr;
 	private VpeExpression captionClassExpr;
@@ -204,7 +206,9 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 
 		nsIDOMElement visualTable = visualDocument
 				.createElement(HTML.TAG_TABLE);
-		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(visualTable);
+		nsIDOMElement div = visualDocument
+				.createElement(HTML.TAG_DIV);
+		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(div);
 
 		if (propertyCreators != null) {
 			for (int i = 0; i < propertyCreators.size(); i++) {
@@ -235,29 +239,59 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 			Node footer = null;
 			Node caption = null;
 			Node[] sourceChildren = new Node[count];
+			List<Node> sourceTextChildren = new ArrayList<Node>();
 			int childrenCount = 0;
+			int textChildrenCount = 0;
 			for (int i = 0; i < count; i++) {
 				Node node = children.item(i);
 				int type = node.getNodeType();
 				if (type == Node.ELEMENT_NODE || type == Node.TEXT_NODE
 						&& node.getNodeValue().trim().length() > 0) {
-					switch (VpeCreatorUtil.getFacetType(node, pageContext)) {
-					case VpeCreatorUtil.FACET_TYPE_HEADER:
-						header = node;
+					
+					/*
+					 * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944
+					 * author: Denis Maliarevich 
+					 * Finds all unattended text nodes
+					 */
+					if (type == Node.TEXT_NODE) {
+						sourceTextChildren.add(node);
+						textChildrenCount++;
+					} else {
+						switch (VpeCreatorUtil.getFacetType(node, pageContext)) {
+						case VpeCreatorUtil.FACET_TYPE_HEADER:
+							header = node;
+							break;
+						case VpeCreatorUtil.FACET_TYPE_FOOTER:
+							footer = node;
+							break;
+						case VpeCreatorUtil.FACET_TYPE_CAPTION:
+							caption = node;
+							break;
+						default:
+							sourceChildren[childrenCount] = node;
+							childrenCount++;
 						break;
-					case VpeCreatorUtil.FACET_TYPE_FOOTER:
-						footer = node;
-						break;
-					case VpeCreatorUtil.FACET_TYPE_CAPTION:
-						caption = node;
-						break;
-					default:
-						sourceChildren[childrenCount] = node;
-						childrenCount++;
-						break;
+						}
 					}
 				}
 			}
+			
+			/*
+			 * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944
+			 * author: Denis Maliarevich
+			 * Any text which is placed outside of the tags
+			 * will be displayed above the table.
+			 */
+			if (textChildrenCount > 0) {
+				String redundantText = REDUNDANT_TEXT_SEPARATOR;
+				for (Node node : sourceTextChildren) {
+					redundantText += node.getNodeValue();
+					redundantText += REDUNDANT_TEXT_SEPARATOR;
+				}
+				div.appendChild(visualDocument.createTextNode(redundantText));
+			}
+			div.appendChild(visualTable);
+			
 			if (childrenCount > 0) {
 				if (tableSize == 0) {
 					tableSize = childrenCount;

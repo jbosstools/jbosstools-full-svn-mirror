@@ -28,7 +28,6 @@ import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMHTMLTableCellElement;
-import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.xpcom.XPCOMException;
@@ -44,17 +43,25 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 	private VpeExpression footerClassExpr;
 	private VpeExpression rowClassesExpr;
 	private VpeExpression columnClassesExpr;
+	private final String REDUNDANT_TEXT_SEPARATOR = "\n\n"; //$NON-NLS-1$
+	private final String EMPTY = ""; //$NON-NLS-1$
+	private final String NONE = "none"; //$NON-NLS-1$
+	private final String DISPLAY_STYLE_NAME = "display:"; //$NON-NLS-1$
+	private final String ZERO = "0"; //$NON-NLS-1$
+	private final String ONE = "1"; //$NON-NLS-1$
+	private final String HUNDRED_PERCENTS = "100%"; //$NON-NLS-1$
 	
-	private static final String ATTR_CAPTION_STYLE = "captionStyle";
-	private static final String ATTR_CAPTION_CLASS = "captionClass";
-	private static final String ATTR_STYLE = "style";
-	private static final String ATTR_CLASS = "class";
-	private static final String ATTR_WIDTH = "width";
-	private static final String ATTR_BORDER = "border";
-	private static final String ATTR_RULES = "rules";
-	private static final String ATTR_RULES_VALUE_ROWS = "rows";
-    private static final String TD_HIDDEN_BORDER_STYLE = "padding: 0px; border: 0px hidden;";
-    private static final String TD_RULES_ROWS_BORDER_STYLE = "padding: 0px;";
+	private final String ATTR_CAPTION_STYLE = "captionStyle"; //$NON-NLS-1$
+	private final String ATTR_CAPTION_CLASS = "captionClass"; //$NON-NLS-1$
+	private final String ATTR_STYLE = "style"; //$NON-NLS-1$
+	private final String ATTR_CLASS = "class"; //$NON-NLS-1$
+	private final String ATTR_WIDTH = "width"; //$NON-NLS-1$
+	private final String ATTR_BORDER = "border"; //$NON-NLS-1$
+	private final String ATTR_RULES = "rules"; //$NON-NLS-1$
+	private final String ATTR_RULES_VALUE_ROWS = "rows"; //$NON-NLS-1$
+    private final String TD_HIDDEN_BORDER_STYLE = "padding: 0px; border: 0px hidden;"; //$NON-NLS-1$
+    private final String TD_RULES_ROWS_BORDER_STYLE = "padding: 0px;"; //$NON-NLS-1$
+    private final String RULES_HIDDEN_BORDER_STYLE = "border: 0px hidden;"; //$NON-NLS-1$
 
 	private List propertyCreators;
 
@@ -126,14 +133,37 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		SourceDataTableElements sourceElements = new SourceDataTableElements(sourceNode);
 		VisualDataTableElements visualElements = new VisualDataTableElements();
 
-		// Table with caption, header, footer, 
-		// that wraps table with content
+		nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
+		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(div);
+
+		/*
+		 * Table with caption, header, footer,
+		 * that wraps table with content  
+		 */
 		nsIDOMElement outterTable = visualDocument.createElement(HTML.TAG_TABLE);
-		// Table with main content
+		
+		/*
+		 * Table with main content
+		 */
 		nsIDOMElement visualTable = visualDocument.createElement(HTML.TAG_TABLE);
-		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(outterTable);
-		nsIDOMElement section = null, row = null, cell = null;
-		nsIDOMElement caption;
+		nsIDOMElement section = null; 
+		nsIDOMElement row = null;
+		nsIDOMElement caption = null;
+		
+		/*
+		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944
+		 * author: Denis Maliarevich
+		 * Any text which is placed outside of the tags
+		 * will be displayed above the table.
+		 */
+		String redundantText = REDUNDANT_TEXT_SEPARATOR;
+		for (int i = 0; i < sourceElements.getRedundantTextNodesCount(); i++) {
+			Node node = sourceElements.getRedundantTextNode(i);
+			redundantText += node.getNodeValue();
+			redundantText += REDUNDANT_TEXT_SEPARATOR;
+		}
+		div.appendChild(visualDocument.createTextNode(redundantText));
+		div.appendChild(outterTable);
 
 		if (true || sourceElements.hasTableCaption()) {
 			caption = visualDocument.createElement(HTML.TAG_CAPTION);
@@ -143,8 +173,10 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				creatorInfo.addChildrenInfo(info);
 			}
 			
-			// Everything concerning table caption
-			// lies here (was removed from VpeFacetCreator)
+			/*
+			 * Everything concerning table caption
+			 * lies here (was removed from VpeFacetCreator)
+			 */
 			Node attr = sourceNode.getAttributes().getNamedItem(ATTR_CAPTION_STYLE);
 			if (attr != null) {
 				caption.setAttribute(ATTR_STYLE, attr.getNodeValue());
@@ -229,12 +261,14 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		nsIDOMElement outterTR = visualDocument.createElement(HTML.TAG_TR);
 		nsIDOMElement outterTD = visualDocument.createElement(HTML.TAG_TD);
 
-		// To create appropriate visual appearance
-		// borders of the body cell and content table
-		// were set via styles.
+		/*
+		 * To create appropriate visual appearance
+		 * borders of the body cell and content table
+		 * were set via styles.
+		 */
 		outterTD.setAttribute(ATTR_STYLE, TD_HIDDEN_BORDER_STYLE);
-		visualTable.setAttribute(ATTR_WIDTH, "100%");
-		visualTable.setAttribute(ATTR_BORDER, "0");
+		visualTable.setAttribute(ATTR_WIDTH, HUNDRED_PERCENTS);
+		visualTable.setAttribute(ATTR_BORDER, ZERO);
 		
 		outterTD.appendChild(visualTable);
 		outterTR.appendChild(outterTD);
@@ -252,42 +286,63 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		for (int i = 0; i < propertyCreators.size(); i++) {
 			VpeCreator creator = (VpeCreator)propertyCreators.get(i);
 			if (creator != null) {
-				// Sets attributes for the wrapper table
+				
+				/*
+				 * Sets attributes for the wrapper table 
+				 */
 				VpeCreatorInfo info1 = creator.create(pageContext, (Element) sourceNode, visualDocument, outterTable, visualNodeMap);
 				if (info1 != null && info1.getVisualNode() != null) {
 					nsIDOMAttr attr = (nsIDOMAttr) info1.getVisualNode();
-					// Fixes creation 'border="1"' 
-					// when setting border attribute to the table.
-					// Also skips empty attributes to fix layout problems.
-					if (null == attr.getNodeValue() || "".equalsIgnoreCase(attr.getNodeValue())) {
+					
+					/*
+					 * Fixes creation 'border="1"'
+					 * when setting border attribute to the table.
+					 * Also skips empty attributes to fix layout problems.
+					 */
+					if (null == attr.getNodeValue() || EMPTY.equalsIgnoreCase(attr.getNodeValue())) {
 						continue;
 					}
 					outterTable.setAttributeNode(attr);
 				}
-				// Sets attributes for the content table
+				
+				/*
+				 * Sets attributes for the content table 
+				 */
 				VpeCreatorInfo info2 = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
 				if (info2 != null && info2.getVisualNode() != null) {
 					nsIDOMAttr attr = (nsIDOMAttr) info2.getVisualNode();
-					// Fixes creation 'border="1"' 
-					// when setting border attribute to the table.
-					// Also skips empty attributes to fix layout problems.
-					if (null == attr.getNodeValue() || "".equalsIgnoreCase(attr.getNodeValue())) {
+					
+					/*
+					 * Fixes creation 'border="1"'
+					 * when setting border attribute to the table.
+					 * Also skips empty attributes to fix layout problems.
+					 */
+					if (null == attr.getNodeValue() || EMPTY.equalsIgnoreCase(attr.getNodeValue())) {
 						continue;
 					}
-					// Setting row classes to the table row 
+
+					/*
+					 * Sets attributes for the content table 
+					 */ 
 					if (VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES.equalsIgnoreCase(attr.getNodeName())) {
 						setRowClass(visualElements.getContentTableBodyRow(), attr.getNodeValue());
 						continue;
 					}
-					// Skip setting content table border
+					
+					/*
+					 * Skip setting content table border 
+					 */
 					if (ATTR_BORDER.equalsIgnoreCase(attr.getNodeName())) {
-						// if attribute border is set then table cells have borders.
-						// Because two table are used border should appear
-						// around content table cells but not the table itself. 
-						// By default content table has no border.
+						
+						/*
+						* If attribute border is set then table cells have borders.
+						* Because two table are used border should appear
+						* around content table cells but not the table itself. 
+						* By default content table has no border.
+						 */
 						String value = attr.getNodeValue();
 						int val = -1;
-						if ((null != value) && (!"".equalsIgnoreCase(value))) {
+						if ((null != value) && (!EMPTY.equalsIgnoreCase(value))) {
 							try {
 								val = Integer.parseInt(value);
 							} catch (NumberFormatException e) {
@@ -295,14 +350,17 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 							}
 						}
 						if (val > 0) {
-							visualTable.setAttribute(ATTR_BORDER, "1");
-							visualTable.setAttribute(ATTR_STYLE, "border: 0px hidden;");
+							visualTable.setAttribute(ATTR_BORDER, ONE);
+							visualTable.setAttribute(ATTR_STYLE, RULES_HIDDEN_BORDER_STYLE);
 						}
 						
 						continue;
 					}
-					// Fixes creation of a border around content table
-					// when attribute rules="rows" is set
+					
+					/*
+					 * Fixes creation of a border around content table
+					 * when attribute rules="rows" is set
+					 */
 					if (ATTR_RULES.equalsIgnoreCase(attr.getNodeName())) {
 						if (ATTR_RULES_VALUE_ROWS.equalsIgnoreCase(attr.getNodeValue())) {
 							outterTD.setAttribute(ATTR_STYLE, TD_RULES_ROWS_BORDER_STYLE);
@@ -382,7 +440,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 
 	private String[] getClasses(String value) {
 		if (value != null) {
-			return value.split(",");
+			return value.split(","); //$NON-NLS-1$
 		}
 		return null;
 	}
@@ -443,7 +501,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 
 	private void setRowDisplayStyle(nsIDOMElement row, boolean visible) {
 		if (row != null) {
-			row.setAttribute(ATTR_STYLE, "display:" + (visible ? "" : "none"));
+			row.setAttribute(ATTR_STYLE, DISPLAY_STYLE_NAME + (visible ? EMPTY : NONE));
 		}
 	}
 

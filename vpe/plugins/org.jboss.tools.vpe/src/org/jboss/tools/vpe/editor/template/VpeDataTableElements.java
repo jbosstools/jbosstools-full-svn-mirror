@@ -33,6 +33,7 @@ public class VpeDataTableElements {
 		private Node tableCaption;
 		private Node tableHeader;
 		private List<SourceColumnElements> columns;
+		private List<Node> redundantTextNodes;
 		private Node tableFooter;
 
 		public SourceDataTableElements(Node dataTableNode) {
@@ -45,6 +46,14 @@ public class VpeDataTableElements {
 			if (cnt > 0) {
 				for (int i = 0; i < cnt; i++) {
 					Node node = list.item(i);
+					
+					if (node.getNodeType() == Node.TEXT_NODE) {
+						if (null == redundantTextNodes) {
+							redundantTextNodes = new ArrayList<Node>();
+						}
+						redundantTextNodes.add(node);
+					}
+					
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
 						boolean isColumn = node.getNodeName().indexOf(":column") > 0 || node.getNodeName().indexOf(":treeColumn") > 0;
 						boolean isFacet = !isColumn && node.getNodeName().indexOf(":facet") > 0;
@@ -64,6 +73,20 @@ public class VpeDataTableElements {
 			}
 		}
 
+		public Node getRedundantTextNode(int index) {
+			if (redundantTextNodes != null && index < getRedundantTextNodesCount()) {
+				return redundantTextNodes.get(index);
+			}
+			return null;
+		}
+		
+		public int getRedundantTextNodesCount() {
+			if (redundantTextNodes != null) {
+				return redundantTextNodes.size();
+			}
+			return 0;
+		}
+		
 		public SourceColumnElements getColumn(int index) {
 			if (columns != null && index < getColumnCount()) return (SourceColumnElements)columns.get(index);
 			return null;

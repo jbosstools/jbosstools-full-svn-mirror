@@ -62,6 +62,7 @@ import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
 import org.jboss.tools.vpe.editor.template.VpeDefaultPseudoContentCreator;
+import org.jboss.tools.vpe.editor.template.VpeHtmlTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTagDescription;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
@@ -508,21 +509,41 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     protected void addChildren(VpeTemplate containerTemplate,
-	    Node sourceContainer, nsIDOMNode visualContainer) {
-	NodeList sourceNodes = sourceContainer.getChildNodes();
-	int len = sourceNodes.getLength();
-	int childrenCount = 0;
-	for (int i = 0; i < len; i++) {
-	    Node sourceNode = sourceNodes.item(i);
-	    if (addNode(sourceNode, null, visualContainer)) {
-		childrenCount++;
-	    }
+			Node sourceContainer, nsIDOMNode visualContainer) {
+    	
+    	/*
+		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944
+		 * author: Denis Maliarevich
+		 * This method is called when template has no childrenInfoList.
+		 * In this case h:dataTable and h:panelGrid should display pseudo text
+		 */
+    	if (containerTemplate instanceof VpeHtmlTemplate) {
+			int type = ((VpeHtmlTemplate) containerTemplate).getType();
+			if ((VpeHtmlTemplate.TYPE_DATATABLE == type)
+					|| (VpeHtmlTemplate.TYPE_PANELGRID == type)) {
+				setPseudoContent(containerTemplate, sourceContainer,
+						visualContainer);
+				return;
+			}
+		}
+    	
+		NodeList sourceNodes = sourceContainer.getChildNodes();
+		int len = sourceNodes.getLength();
+		int childrenCount = 0;
+		for (int i = 0; i < len; i++) {
+			Node sourceNode = sourceNodes.item(i);
+			if (addNode(sourceNode, null, visualContainer)) {
+				if (Node.ELEMENT_NODE == sourceNode.getNodeType()) {
+				}
+				childrenCount++;
+			}
+		}
+
+		if (childrenCount == 0) {
+			setPseudoContent(containerTemplate, sourceContainer,
+					visualContainer);
+		}
 	}
-	if (childrenCount == 0) {
-	    setPseudoContent(containerTemplate, sourceContainer,
-		    visualContainer);
-	}
-    }
 
     protected void addChildren(VpeTemplate containerTemplate,
 	    Node sourceContainer, nsIDOMNode visualOldContainer,
