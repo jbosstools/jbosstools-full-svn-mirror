@@ -5,6 +5,7 @@ import junit.framework.TestSuite;
 
 import org.jboss.ide.eclipse.archives.test.core.ArchivesCoreTest;
 import org.jboss.ide.eclipse.archives.test.model.ModelCreationTest;
+import org.jboss.ide.eclipse.archives.test.model.ModelUtilTest;
 import org.jboss.ide.eclipse.archives.test.model.XBMarshallTest;
 import org.jboss.ide.eclipse.archives.test.model.XBUnmarshallTest;
 import org.jboss.ide.eclipse.archives.test.util.TruezipUtilTest;

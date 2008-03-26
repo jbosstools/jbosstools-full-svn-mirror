@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.archives.test;
+package org.jboss.ide.eclipse.archives.test.model;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,6 +16,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeImpl;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
+import org.jboss.ide.eclipse.archives.test.ArchivesTest;
 import org.osgi.framework.Bundle;
 
 public class ModelUtilTest extends TestCase {
