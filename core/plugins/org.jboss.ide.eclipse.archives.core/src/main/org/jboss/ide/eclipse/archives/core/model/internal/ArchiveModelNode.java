@@ -173,15 +173,19 @@ public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelRo
 		ArrayList<IPath> list = new ArrayList<IPath>();
 		IArchiveNode[] children = getChildren(IArchiveNode.TYPE_ARCHIVE);
 		IArchive child;
+		IPath p;
 		for( int i = 0; i < children.length; i++ ) {
 			child = (IArchive)children[i];
-			if( child.getGlobalDestinationPath() != null ) {
-				IPath p = child.getGlobalDestinationPath().append(child.getName());
-				if( list.contains(p))
-						return false;
-				else
-					list.add(p);
-			}
+			
+			if( child.getGlobalDestinationPath() != null ) 
+				p = child.getGlobalDestinationPath().append(child.getName());
+			else 
+				p = child.getDestinationPath().append(child.getName());
+			
+			if( list.contains(p))
+				return false;
+			else
+				list.add(p);
 		}
 
 		return super.validateModel();
