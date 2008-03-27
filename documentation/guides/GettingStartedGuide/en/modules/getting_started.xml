@@ -355,6 +355,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      <property>plugins/features</property>
     </emphasis> directory and it will be readily available. It might be necessary to start Eclipse
     with eclipse -clean to make sure it starts clean and rereads the new list of plugins.</para>
+    
+    <para>If you need to install any standalone plug-in from JBoss Tools visit a
+     <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read about dependencies between standalone plug-ins.</para>
   </section>
  
    </section>
