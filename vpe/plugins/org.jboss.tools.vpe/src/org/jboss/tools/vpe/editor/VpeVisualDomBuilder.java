@@ -2247,6 +2247,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	nsIDOMNode visualNewTextNode = visualDocument
 		.createTextNode(visualText);
 	nsIDOMElement element = visualDocument.createElement(HTML.TAG_SPAN);
+	element.setAttribute(HTML.ATTR_STYLE, ""); //$NON-NLS-1$
 	element.appendChild(visualNewTextNode);
 	if (registerFlag) {
 	    registerNodes(new VpeNodeMapping(sourceNode, element));
