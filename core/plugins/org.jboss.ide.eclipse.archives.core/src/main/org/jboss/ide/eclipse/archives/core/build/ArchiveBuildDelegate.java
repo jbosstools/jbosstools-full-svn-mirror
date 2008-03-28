@@ -127,7 +127,7 @@ public class ArchiveBuildDelegate {
 	 * @param addedChanged  Set of changed / added resources
 	 * @param setRemoved	Set of removed resources
 	 */
-	public void projectIncrementalBuild(Set<IArchive> addedChanged, Set<IArchive> removed) {
+	public void projectIncrementalBuild(Set<IPath> addedChanged, Set<IPath> removed) {
 		incrementalBuild(null, addedChanged, removed);
 	}
 	
@@ -139,15 +139,15 @@ public class ArchiveBuildDelegate {
 	 * @param addedChanged  A list of added or changed resource paths
 	 * @param removed       A list of removed resource paths
 	 */
-	public void incrementalBuild(IArchive archive, Set<IArchive> addedChanged, Set<IArchive> removed) {
+	public void incrementalBuild(IArchive archive, Set<IPath> addedChanged, Set<IPath> removed) {
 		
 		// find any and all filesets that match each file
-		Iterator<IArchive> i = addedChanged.iterator();
+		Iterator<IPath> i = addedChanged.iterator();
 		IPath path;
 		IArchiveFileSet[] matchingFilesets;
 		ArrayList<IArchive> topPackagesChanged = new ArrayList<IArchive>();
 		while(i.hasNext()) {
-			path = ((IPath)i.next());
+			path = i.next();
 			matchingFilesets = ModelUtil.getMatchingFilesets(archive, path);
 			localFireAffectedTopLevelPackages(topPackagesChanged, matchingFilesets);
 			ModelTruezipBridge.copyFiles(matchingFilesets, new IPath[] { path }, false);
@@ -165,9 +165,9 @@ public class ArchiveBuildDelegate {
 		
 		TrueZipUtil.sync();
 
-		i = topPackagesChanged.iterator();
-		while(i.hasNext()) {
-			EventManager.finishedBuildingArchive(i.next());
+		Iterator<IArchive> i2 = topPackagesChanged.iterator();
+		while(i2.hasNext()) {
+			EventManager.finishedBuildingArchive(i2.next());
 		}		
 	}
 	
