@@ -54,18 +54,6 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		super(delegate);
 	}
 	
-	
-	public void addMatchingFile(IPath file) {
-		if( !matchingPaths.contains(file) && matchesPath(file)) 
-			matchingPaths.add(file);
-	}
-
-	public void removeMatchingFile(IPath file ) {
-		if( matchingPaths.contains(file) && matchesPath(file))
-			matchingPaths.remove(file);
-	}
-
-	
 	/*
 	 * @see IArchiveFileSet#findMatchingPaths()
 	 */
@@ -117,6 +105,9 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 				null : new Path(getFileSetDelegate().getDir());
 	}
 	
+	/*
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet#isFlattened()
+	 */
 	public boolean isFlattened() {
 		return getFileSetDelegate().isFlattened();
 	}

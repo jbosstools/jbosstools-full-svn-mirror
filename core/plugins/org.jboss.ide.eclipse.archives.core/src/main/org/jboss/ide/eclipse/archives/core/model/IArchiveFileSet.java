@@ -133,16 +133,4 @@ public interface IArchiveFileSet extends IArchiveNode {
 	 */
 	public IPath getPathRelativeToParent(IPath inputFile);
 	
-	/**
-	 * To be used if and when a specific new file is known to match
-	 * @param file
-	 */
-	public void addMatchingFile(IPath file);
-	
-	/**
-	 * To be used if and when a specific new file is known to match
-	 * @param file
-	 */
-	public void removeMatchingFile(IPath file);
-	
 }
