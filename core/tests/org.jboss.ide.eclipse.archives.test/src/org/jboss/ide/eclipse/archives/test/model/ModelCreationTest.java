@@ -21,15 +21,12 @@
  */
 package org.jboss.ide.eclipse.archives.test.model;
 
-import junit.framework.TestCase;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.jboss.ide.eclipse.archives.core.model.ArchiveNodeFactory;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
@@ -50,7 +47,7 @@ import org.jboss.tools.test.util.ResourcesUtils;
  * @author rob.stryker <rob.stryker@redhat.com>
  *
  */
-public class ModelCreationTest extends TestCase {
+public class ModelCreationTest extends ModelTest {
 	protected IPath project = new Path("test").append("project");
 	TempArchiveModelListener modelListener = createListener();
 	protected void setUp() throws Exception {
@@ -501,7 +498,7 @@ public class ModelCreationTest extends TestCase {
 			return;
 		} finally {
 			try {
-				proj.delete(false, true, null);
+				proj.delete(true, true, null);
 			} catch( CoreException ce ) {fail();}
 		}
 	}
@@ -519,53 +516,21 @@ public class ModelCreationTest extends TestCase {
 		}
 		return;
 	}
-//	public void testDeltas() {
-//		try {
-//			ArchiveModelNode model = createModelNode();
-//			model.clearDelta();
-//			IArchiveFolder folder = ArchiveNodeFactory.createFolder();
-//			folder.setName("testFolder");
-//			model.addChild(folder);
-//			IArchiveNodeDelta delta = model.getDelta();
-//			assertEquals(IArchiveNodeDelta.CHILD_ADDED, delta.getKind());
-//		} catch( ArchivesModelException ame ) {
-//			fail(ame.getMessage());
-//		}
-//	}
-	
-	
-	
-	
-	/*
-	 * Utility methods
-	 */
-	protected IArchiveFolder createFolder(String name) {
-		IArchiveFolder folder = ArchiveNodeFactory.createFolder();
-		folder.setName(name);
-		return folder;
+
+
+
+	protected TempArchiveModelListener createListener() {
+		return new TempArchiveModelListener();
 	}
 	
-	protected IArchiveFileSet createFileSet(String includes, String path) {
-		IArchiveFileSet fs = ArchiveNodeFactory.createFileset();
-		fs.setIncludesPattern(includes);
-		fs.setSourcePath(new Path(path));
-		return fs;
+	protected class TempArchiveModelListener implements IArchiveModelListener {
+		private IArchiveNodeDelta delta;
+		public void modelChanged(IArchiveNodeDelta delta) {
+			this.delta = delta;
+		} 
+		public IArchiveNodeDelta getDelta() { return delta; }
+		public void clearDelta() { delta = null; }
 	}
-	
-	protected IArchiveAction createAction() {
-		IArchiveAction action = ArchiveNodeFactory.createAction();
-		action.setTime(IArchiveAction.POST_BUILD);
-		action.setType("ant");
-		return action;
-	}
-	
-	protected IArchive createArchive(String name, String dest) {
-		IArchive archive = ArchiveNodeFactory.createArchive();
-		archive.setName(name);
-		archive.setDestinationPath(new Path(dest));
-		return archive;
-	}
-	
 	
 	protected ArchiveModelNode createModelNode() {
 		try {
@@ -609,6 +574,7 @@ public class ModelCreationTest extends TestCase {
 		return null;
 	}
 	
+	
 	protected ArchiveModelNode getModel(XbPackages packs) {
 		IArchiveModel model = new ArchivesModel();
 		model.addModelListener(modelListener);
@@ -616,16 +582,4 @@ public class ModelCreationTest extends TestCase {
 		return node;
 	}
 	
-	protected TempArchiveModelListener createListener() {
-		return new TempArchiveModelListener();
-	}
-	
-	protected class TempArchiveModelListener implements IArchiveModelListener {
-		private IArchiveNodeDelta delta;
-		public void modelChanged(IArchiveNodeDelta delta) {
-			this.delta = delta;
-		} 
-		public IArchiveNodeDelta getDelta() { return delta; }
-		public void clearDelta() { delta = null; }
-	}
 }

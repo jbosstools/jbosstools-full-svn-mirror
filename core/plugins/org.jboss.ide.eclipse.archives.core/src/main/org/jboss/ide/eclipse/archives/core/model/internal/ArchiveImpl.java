@@ -31,7 +31,6 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveAction;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
 import org.jboss.ide.eclipse.archives.core.model.INamedContainerArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
@@ -73,8 +72,10 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 	 * @see IArchive#getDestinationPath()
 	 */
 	public IPath getGlobalDestinationPath () {
-		if (packageDelegate.getToDir() == null || packageDelegate.getToDir().equals("."))
-			return getProjectPath() == null ? null : getProjectPath();
+		if (!isTopLevel() || packageDelegate.getToDir() == null || packageDelegate.getToDir().equals(""))
+			return Path.EMPTY;
+		if( packageDelegate.getToDir().equals("."))
+			return getProjectPath() == null ? Path.EMPTY : getProjectPath();
 		
 		if (isDestinationInWorkspace()) {	
 			return ModelUtil.workspacePathToAbsolutePath(new Path(packageDelegate.getToDir()));
@@ -83,7 +84,9 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 	}
 
 	public IPath getDestinationPath() {
-		return packageDelegate.getToDir() == null ? null : new Path(packageDelegate.getToDir());
+		if( !isTopLevel() )
+			return Path.EMPTY;
+		return packageDelegate.getToDir() == null ? Path.EMPTY : new Path(packageDelegate.getToDir());
 	}
 	
 	/*
@@ -175,7 +178,8 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 	 * @see IArchive#isTopLevel()
 	 */
 	public boolean isTopLevel() {
-		return (packageDelegate.getParent() instanceof XbPackages);
+		return (packageDelegate.getParent() == null || 
+				packageDelegate.getParent() instanceof XbPackages);
 	}
 	
 	/*

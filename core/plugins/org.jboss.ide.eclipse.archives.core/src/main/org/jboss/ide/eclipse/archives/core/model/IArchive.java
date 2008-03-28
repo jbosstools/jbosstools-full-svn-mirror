@@ -58,7 +58,9 @@ public interface IArchive extends INamedContainerArchiveNode {
 	public boolean isExploded();
 	
 	/**
-	 * @return Whether or not this package is a "top-level" package aka, not a child of another folder or package
+	 * @return Whether or not this package is a "top-level" package 
+	 * aka, not a child of another folder or package
+	 * IOW: The parent must be null or a model node
 	 */
 	public boolean isTopLevel();
 		
@@ -77,15 +79,21 @@ public interface IArchive extends INamedContainerArchiveNode {
 	public IPath getArchiveFilePath();
 	
 	/**
-	 * The absolute raw file system path to the 
-	 * destination (containing folder) of this archive
+	 * If top level:
+	 *   The absolute raw file system path to the 
+	 *   destination (containing folder) of this archive
+	 * Else
+	 *   The empty path
 	 * @return An IPath to this package's destination folder
 	 */
 	public IPath getGlobalDestinationPath();
 
 	/**
-	 * A path representing the string from the delegate
-	 * May be work-space relative or global
+	 * If top level:
+	 *   A path representing the string from the delegate
+	 *   May be work-space relative or global
+	 * Else
+	 *   The empty path
 	 * @return
 	 */
 	public IPath getDestinationPath();

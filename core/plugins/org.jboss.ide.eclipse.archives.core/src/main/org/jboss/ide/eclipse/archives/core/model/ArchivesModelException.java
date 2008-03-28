@@ -25,7 +25,7 @@ package org.jboss.ide.eclipse.archives.core.model;
  * @author rob.stryker <rob.stryker@redhat.com>
  *
  */
-public class ArchivesModelException extends Exception {
+public class ArchivesModelException extends RuntimeException {
 	private Exception parent;
 
 	public ArchivesModelException(String message) {
