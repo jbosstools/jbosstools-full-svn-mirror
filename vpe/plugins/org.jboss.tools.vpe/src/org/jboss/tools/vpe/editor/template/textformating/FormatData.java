@@ -19,7 +19,7 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
  * FormatData describe vpe template text formating part for tag.
  * @author Igels
  */
-public class FormatData {
+public class FormatData implements Cloneable{
 
 	private FormatAttributeData[] formatAttributes;
 	private String type;
@@ -51,11 +51,47 @@ public class FormatData {
 		addChildren = formatElement.getAttribute(VpeTemplateManager.ATTR_FORMAT_ADD_CHILDREN);
 		addChildrenHandler = formatElement.getAttribute(VpeTemplateManager.ATTR_FORMAT_ADD_CHILDREN_HANDLER);
 		handler = formatElement.getAttribute(VpeTemplateManager.ATTR_FORMAT_HANDLER);
-		setDefault = "true".equals(formatElement.getAttribute(VpeTemplateManager.ATTR_FORMAT_SET_DEFAULT));
+		setDefault = "true".equals(formatElement.getAttribute(VpeTemplateManager.ATTR_FORMAT_SET_DEFAULT)); //$NON-NLS-1$
 		setAddChildrenFlags();
 		addParent = formatElement.getAttribute(VpeTemplateManager.ATTR_FORMAT_ADD_PARENT);
 		setAddParentFlags();
 	}
+
+	private FormatData() {
+		
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public FormatData clone() throws CloneNotSupportedException {
+		
+		FormatData result = new FormatData();
+		
+		result.formatAttributes  = new FormatAttributeData[formatAttributes.length];
+		//clone format attributes
+		for(int i=0;i<formatAttributes.length;i++) {
+			result.formatAttributes[i]=this.formatAttributes[i].clone();
+			result.formatAttributes[i].setParentFormatData(result);
+		}
+		result.addChildren =  new String(this.addChildren);
+		result.addChildrenByItself = this.addChildrenByItself;
+		result.addChildrenHandler = new String(this.addChildrenHandler);
+		result.addChildrenIsAllow = this.addChildrenIsAllow;
+		result.addChildrenIsAllowIfParentDoesntDeny = this.addChildrenIsAllowIfParentDoesntDeny;
+		result.addChildrenIsDeny=this.addChildrenIsDeny;
+		result.addParent = new String(this.addParent);
+		result.addParentByItself = this.addParentByItself;
+		result.addParentIsAllow = this.addParentIsAllow;
+		result.addParentIsAllowIfParentDoesntDeny = this.addParentIsAllowIfParentDoesntDeny;
+		result.addParentIsDeny = this.addParentIsDeny;
+		result.handler = new String(this.handler);
+		result.setDefault=this.setDefault;
+		result.type= new String(this.type);
+		return result;
+	}
+
 
 	private void setAddChildrenFlags() {
 		if(VpeTemplateManager.ATTR_FORMAT_ADD_CHILDREN_ALLOW_VALUE.equals(addChildren)) {

@@ -38,6 +38,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
+/**
+ *  Class which response for configuration template element from 
+ *  configuration file.
+ *
+ */
 public abstract class VpeAbstractTemplate implements VpeTemplate {
 	protected boolean caseSensitive;
 	protected boolean children;
@@ -53,97 +58,97 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	private TextFormatingData textFormatingData;
 	private VpePseudoContentCreator pseudoContentCreator;
 
-	private static final String TAG_BREAKER = VpeTemplateManager.VPE_PREFIX + "breaker";
-	private static final String ATTR_BREAKER_TYPE = "type";
-	private static final String ATTR_BREAKER_TYPE_IGNORE = "ignore";
-	private static final String ATTR_BREAKER_TYPE_SELECTITEM = "selectItem";
+	private static final String TAG_BREAKER = VpeTemplateManager.VPE_PREFIX + "breaker"; //$NON-NLS-1$
+	private static final String ATTR_BREAKER_TYPE = "type"; //$NON-NLS-1$
+	private static final String ATTR_BREAKER_TYPE_IGNORE = "ignore"; //$NON-NLS-1$
+	private static final String ATTR_BREAKER_TYPE_SELECTITEM = "selectItem"; //$NON-NLS-1$
 	private static final int BREAKER_TYPE_NONE = 0;
 	private static final int BREAKER_TYPE_IGNORE = 1;
 	private static final int BREAKER_TYPE_SELECTITEM = 2;
 
-	private static final String TAG_PSEUDOCONTENT = VpeTemplateManager.VPE_PREFIX + "pseudoContent";
-	private static final String ATTR_PSEUDOCONTENT_DEFAULTTEXT = "defaultText";
-	private static final String ATTR_PSEUDOCONTENT_ATTRNAME = "attrName";
+	private static final String TAG_PSEUDOCONTENT = VpeTemplateManager.VPE_PREFIX + "pseudoContent"; //$NON-NLS-1$
+	private static final String ATTR_PSEUDOCONTENT_DEFAULTTEXT = "defaultText"; //$NON-NLS-1$
+	private static final String ATTR_PSEUDOCONTENT_ATTRNAME = "attrName"; //$NON-NLS-1$
 
 	private int breakerType = BREAKER_TYPE_NONE;
 
 	static private HashSet<String> inlineTags = new HashSet<String>();
 	static{
-		inlineTags.add("b");
-		inlineTags.add("i");
-		inlineTags.add("u");
-		inlineTags.add("img");
-		inlineTags.add("sub");
-		inlineTags.add("sup");
-		inlineTags.add("strike");
-		inlineTags.add("font");
-		inlineTags.add("a");
-		inlineTags.add("input");
-		inlineTags.add("textarea");
-		inlineTags.add("span");
-		inlineTags.add("button");
-		inlineTags.add("label");
+		inlineTags.add("b"); //$NON-NLS-1$
+		inlineTags.add("i"); //$NON-NLS-1$
+		inlineTags.add("u"); //$NON-NLS-1$
+		inlineTags.add("img"); //$NON-NLS-1$ 
+		inlineTags.add("sub"); //$NON-NLS-1$
+		inlineTags.add("sup"); //$NON-NLS-1$
+		inlineTags.add("strike"); //$NON-NLS-1$
+		inlineTags.add("font"); //$NON-NLS-1$
+		inlineTags.add("a"); //$NON-NLS-1$
+		inlineTags.add("input"); //$NON-NLS-1$
+		inlineTags.add("textarea"); //$NON-NLS-1$
+		inlineTags.add("span"); //$NON-NLS-1$
+		inlineTags.add("button"); //$NON-NLS-1$
+		inlineTags.add("label"); //$NON-NLS-1$
 	}
 	static private HashMap<String, Integer> tagResizeConstrans = new HashMap<String, Integer>();
 	static{
-		tagResizeConstrans.put("table", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_ALL));
-		tagResizeConstrans.put("tr", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_ALL));
-		tagResizeConstrans.put("br", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("b", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("i", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("u", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("sub", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("sup", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("strike", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("font", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
-		tagResizeConstrans.put("a", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE));
+		tagResizeConstrans.put("table", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_ALL)); //$NON-NLS-1$
+		tagResizeConstrans.put("tr", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_ALL)); //$NON-NLS-1$
+		tagResizeConstrans.put("br", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE)); //$NON-NLS-1$
+		tagResizeConstrans.put("b", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE)); //$NON-NLS-1$
+		tagResizeConstrans.put("i", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE)); //$NON-NLS-1$
+		tagResizeConstrans.put("u", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE)); //$NON-NLS-1$
+		tagResizeConstrans.put("sub", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE)); //$NON-NLS-1$
+		tagResizeConstrans.put("sup", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE)); //$NON-NLS-1$
+		tagResizeConstrans.put("strike", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE)); //$NON-NLS-1$
+		tagResizeConstrans.put("font", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE)); //$NON-NLS-1$
+		tagResizeConstrans.put("a", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE)); //$NON-NLS-1$
 	}
 	
 	static private HashSet<String> breakWithParagraphTags = new HashSet<String>();
 	static{
-		breakWithParagraphTags.add("b");
-		breakWithParagraphTags.add("a");
-		breakWithParagraphTags.add("abbr");
-		breakWithParagraphTags.add("acronym");
-		breakWithParagraphTags.add("b");
-		breakWithParagraphTags.add("bdo");
-		breakWithParagraphTags.add("big");
-		breakWithParagraphTags.add("blink");
-		breakWithParagraphTags.add("cite");
-		breakWithParagraphTags.add("code");
-		breakWithParagraphTags.add("del");
-		breakWithParagraphTags.add("dfn");
-		breakWithParagraphTags.add("em");
-		breakWithParagraphTags.add("font");
-		breakWithParagraphTags.add("ins");
-		breakWithParagraphTags.add("kbd");
-		breakWithParagraphTags.add("nobr");
-		breakWithParagraphTags.add("q");
-		breakWithParagraphTags.add("s");
-		breakWithParagraphTags.add("samp");
-		breakWithParagraphTags.add("small");
-		breakWithParagraphTags.add("span");
-		breakWithParagraphTags.add("strike");
-		breakWithParagraphTags.add("strong");
-		breakWithParagraphTags.add("tt");
-		breakWithParagraphTags.add("u");
-		breakWithParagraphTags.add("var");
+		breakWithParagraphTags.add("b"); //$NON-NLS-1$
+		breakWithParagraphTags.add("a"); //$NON-NLS-1$
+		breakWithParagraphTags.add("abbr"); //$NON-NLS-1$
+		breakWithParagraphTags.add("acronym"); //$NON-NLS-1$
+		breakWithParagraphTags.add("b"); //$NON-NLS-1$
+		breakWithParagraphTags.add("bdo"); //$NON-NLS-1$
+		breakWithParagraphTags.add("big"); //$NON-NLS-1$
+		breakWithParagraphTags.add("blink"); //$NON-NLS-1$
+		breakWithParagraphTags.add("cite"); //$NON-NLS-1$
+		breakWithParagraphTags.add("code"); //$NON-NLS-1$
+		breakWithParagraphTags.add("del"); //$NON-NLS-1$
+		breakWithParagraphTags.add("dfn"); //$NON-NLS-1$
+		breakWithParagraphTags.add("em"); //$NON-NLS-1$
+		breakWithParagraphTags.add("font"); //$NON-NLS-1$
+		breakWithParagraphTags.add("ins"); //$NON-NLS-1$
+		breakWithParagraphTags.add("kbd"); //$NON-NLS-1$
+		breakWithParagraphTags.add("nobr"); //$NON-NLS-1$
+		breakWithParagraphTags.add("q"); //$NON-NLS-1$
+		breakWithParagraphTags.add("s"); //$NON-NLS-1$
+		breakWithParagraphTags.add("samp"); //$NON-NLS-1$
+		breakWithParagraphTags.add("small"); //$NON-NLS-1$
+		breakWithParagraphTags.add("span"); //$NON-NLS-1$
+		breakWithParagraphTags.add("strike"); //$NON-NLS-1$
+		breakWithParagraphTags.add("strong"); //$NON-NLS-1$
+		breakWithParagraphTags.add("tt"); //$NON-NLS-1$
+		breakWithParagraphTags.add("u"); //$NON-NLS-1$
+		breakWithParagraphTags.add("var"); //$NON-NLS-1$
 	}
 	static private HashSet<String> breakWithoutParagraphTags = new HashSet<String>();
 	static{
-		breakWithoutParagraphTags.add("p");
-		breakWithoutParagraphTags.add("address");
-		breakWithoutParagraphTags.add("blockquote");
-		breakWithoutParagraphTags.add("center");
-		breakWithoutParagraphTags.add("div");
-		breakWithoutParagraphTags.add("h1");
-		breakWithoutParagraphTags.add("h2");
-		breakWithoutParagraphTags.add("h3");
-		breakWithoutParagraphTags.add("h4");
-		breakWithoutParagraphTags.add("h5");
-		breakWithoutParagraphTags.add("h6");
-		breakWithoutParagraphTags.add("p");
-		breakWithoutParagraphTags.add("pre");
+		breakWithoutParagraphTags.add("p"); //$NON-NLS-1$
+		breakWithoutParagraphTags.add("address"); //$NON-NLS-1$
+		breakWithoutParagraphTags.add("blockquote"); //$NON-NLS-1$
+		breakWithoutParagraphTags.add("center"); //$NON-NLS-1$
+		breakWithoutParagraphTags.add("div"); //$NON-NLS-1$
+		breakWithoutParagraphTags.add("h1"); //$NON-NLS-1$
+		breakWithoutParagraphTags.add("h2"); //$NON-NLS-1$
+		breakWithoutParagraphTags.add("h3"); //$NON-NLS-1$
+		breakWithoutParagraphTags.add("h4"); //$NON-NLS-1$
+		breakWithoutParagraphTags.add("h5"); //$NON-NLS-1$
+		breakWithoutParagraphTags.add("h6"); //$NON-NLS-1$
+		breakWithoutParagraphTags.add("p"); //$NON-NLS-1$
+		breakWithoutParagraphTags.add("pre"); //$NON-NLS-1$
 	}
 	
 	/**
@@ -153,13 +158,13 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 */
 	public void init(Element templateElement, boolean caseSensitive) {
 		this.caseSensitive = caseSensitive;
-		children = "yes".equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_CHILDREN));
-		modify = "yes".equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_MODIFY));
+		children = "yes".equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_CHILDREN)); //$NON-NLS-1$
+		modify = "yes".equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_MODIFY)); //$NON-NLS-1$
 		
 		String strHaveVisualPreview = templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_HAVE_VISUAL_PREVIEW);
 		
 		if (strHaveVisualPreview != null && strHaveVisualPreview.length() != 0 ) {
-			haveVisualPreview = "yes".equals(strHaveVisualPreview);			
+			haveVisualPreview = "yes".equals(strHaveVisualPreview); //$NON-NLS-1$			
 		} else {
 			haveVisualPreview = true;
 		}
@@ -239,7 +244,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	
 	private void initPseudoContentHandler(Element templateSection) {
 		if (pseudoContentCreator == null) {
-			if ("yes".equalsIgnoreCase(templateSection.getAttribute(ATTR_PSEUDOCONTENT_DEFAULTTEXT))) {
+			if ("yes".equalsIgnoreCase(templateSection.getAttribute(ATTR_PSEUDOCONTENT_DEFAULTTEXT))) { //$NON-NLS-1$
 				pseudoContentCreator = new VpeTextPseudoContentCreator(null, templateSection.getAttribute(ATTR_PSEUDOCONTENT_ATTRNAME));
 			} else {
 				NodeList children = templateSection.getChildNodes();
@@ -350,7 +355,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		clearRegionToFormat();
 		Node focusNode = selection.getFocusNode();
 		int focusNodeType = focusNode.getNodeType();
-		if (sourceNode.getNodeName().equalsIgnoreCase("li")) {
+		if (sourceNode.getNodeName().equalsIgnoreCase("li")) { //$NON-NLS-1$
 			Node where = null;
 			if (selection.getFocusOffset() == 0) {
 				where = sourceNode;
@@ -405,13 +410,13 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 			updateRegionToFormat(newLi);
 			reformatCallback(pageContext);
 			return true;
-		} else if (focusNodeType == Node.ELEMENT_NODE && focusNode.getNodeName().equalsIgnoreCase("br")) {
-			Node newNode = focusNode.getParentNode().insertBefore(focusNode.getOwnerDocument().createElement("br"), focusNode);
+		} else if (focusNodeType == Node.ELEMENT_NODE && focusNode.getNodeName().equalsIgnoreCase("br")) { //$NON-NLS-1$
+			Node newNode = focusNode.getParentNode().insertBefore(focusNode.getOwnerDocument().createElement("br"), focusNode); //$NON-NLS-1$
 			updateRegionToFormat(focusNode);
 			updateRegionToFormat(newNode);
 			reformatCallback(pageContext);
 			return true;
-		} else if (focusNodeType == Node.ELEMENT_NODE && focusNode.getNodeName().equalsIgnoreCase("p")) {
+		} else if (focusNodeType == Node.ELEMENT_NODE && focusNode.getNodeName().equalsIgnoreCase("p")) { //$NON-NLS-1$
 			Node nextElement = focusNode.getNextSibling();
 			Node parent = focusNode.getParentNode();
 			if (parent != null) {
@@ -427,16 +432,16 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 			updateRegionToFormat(focusNode);
 			reformatCallback(pageContext);
 			return true;
-		} else if (focusNodeType == Node.TEXT_NODE && focusNode.getParentNode().getNodeName().equalsIgnoreCase("td")) {
+		} else if (focusNodeType == Node.TEXT_NODE && focusNode.getParentNode().getNodeName().equalsIgnoreCase("td")) { //$NON-NLS-1$
 			Text newNode = ((Text)focusNode).splitText(selection.getFocusOffset());
 			setCursor(pageContext, newNode);
 			updateRegionToFormat(focusNode);
 			updateRegionToFormat(newNode);
 			reformatCallback(pageContext);
 			return true;
-		} else if (sourceNode.getNodeType() == Node.ELEMENT_NODE && sourceNode.getNodeName().equalsIgnoreCase("tr")) {
+		} else if (sourceNode.getNodeType() == Node.ELEMENT_NODE && sourceNode.getNodeName().equalsIgnoreCase("tr")) { //$NON-NLS-1$
 			return true;
-		} else if (focusNodeType == Node.TEXT_NODE && !focusNode.getParentNode().getNodeName().equalsIgnoreCase("body")) {
+		} else if (focusNodeType == Node.TEXT_NODE && !focusNode.getParentNode().getNodeName().equalsIgnoreCase("body")) { //$NON-NLS-1$
 			Node parent = focusNode.getParentNode();
 			if (parent != null) {
 				String parentName = parent.getNodeName();
@@ -444,14 +449,14 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 					Node p1 = null, p2 = null;
 					Node parentParent = parent.getParentNode();
 					if (parentParent != null) {
-						if (!parentParent.getNodeName().equalsIgnoreCase("p")) {
+						if (!parentParent.getNodeName().equalsIgnoreCase("p")) { //$NON-NLS-1$
 							if (parentParent.getNodeType() != Node.DOCUMENT_NODE) {
-								p1 = parentParent.getOwnerDocument().createElement("p");
+								p1 = parentParent.getOwnerDocument().createElement("p"); //$NON-NLS-1$
 								parentParent.insertBefore(p1, parent);
 								parent = parentParent.removeChild(parent);
 								p1.appendChild(parent);
 							} else {
-								p1 = ((Document)parentParent).createElement("p");
+								p1 = ((Document)parentParent).createElement("p"); //$NON-NLS-1$
 								parentParent.insertBefore(p1, parent);
 								parent = parentParent.removeChild(parent);
 								p1.appendChild(parent);
@@ -548,9 +553,9 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 					}
 				}
 			}
-		} else if (focusNodeType == Node.TEXT_NODE && focusNode.getParentNode().getNodeName().equalsIgnoreCase("body")) {
-			Node p1 = focusNode.getOwnerDocument().createElement("p");
-			Node p2 = focusNode.getOwnerDocument().createElement("p");
+		} else if (focusNodeType == Node.TEXT_NODE && focusNode.getParentNode().getNodeName().equalsIgnoreCase("body")) { //$NON-NLS-1$
+			Node p1 = focusNode.getOwnerDocument().createElement("p"); //$NON-NLS-1$
+			Node p2 = focusNode.getOwnerDocument().createElement("p"); //$NON-NLS-1$
 			Text newNode = ((Text)focusNode).splitText(selection.getFocusOffset());
 			focusNode.getParentNode().insertBefore(p1, focusNode);
 			focusNode.getParentNode().insertBefore(p2, newNode);
@@ -567,7 +572,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 
 			return true;
 		} else if (focusNodeType == Node.ELEMENT_NODE && selection.getFocusOffset() == 0) {
-			Node newNode = focusNode.getParentNode().insertBefore(focusNode.getOwnerDocument().createElement("br"), focusNode);
+			Node newNode = focusNode.getParentNode().insertBefore(focusNode.getOwnerDocument().createElement("br"), focusNode); //$NON-NLS-1$
 			updateRegionToFormat(focusNode);
 			updateRegionToFormat(newNode);
 			reformatCallback(pageContext);
@@ -581,12 +586,12 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		if (parent != null) {
 			boolean isH = false;
 			for (int i = 1; i < 7 && !isH; i++) {
-				isH = parent.getNodeName().equalsIgnoreCase("h" + i);
+				isH = parent.getNodeName().equalsIgnoreCase("h" + i); //$NON-NLS-1$
 			}
 			if (!isH || clone) {
 				newParent = parent.cloneNode(false);
 			} else {
-				newParent = parent.getOwnerDocument().createElement("p");
+				newParent = parent.getOwnerDocument().createElement("p"); //$NON-NLS-1$
 			}
 		}
 		return newParent;

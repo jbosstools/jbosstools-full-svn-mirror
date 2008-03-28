@@ -27,7 +27,9 @@ import org.jboss.tools.common.xml.XMLUtilities;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.osgi.framework.Bundle;
 import org.w3c.dom.Document;
@@ -37,7 +39,6 @@ import org.w3c.dom.NodeList;
 
 public class VpeTemplateManager {
 	
-	static final String TEMPLATES_FILE_LIST_NAME = "vpe-templates-list.xml"; //$NON-NLS-1$
 	static final String AUTO_TEMPLATES_FILE_NAME = "templates/vpe-templates-auto.xml"; //$NON-NLS-1$
 	static final String TEMPLATES_FOLDER = File.separator + "templates" + File.separator; //$NON-NLS-1$
 	public static final String VPE_PREFIX = "vpe:"; //$NON-NLS-1$
@@ -96,7 +97,7 @@ public class VpeTemplateManager {
 	static final String TAG_FACET = VPE_PREFIX + "facet"; //$NON-NLS-1$
 	static final String TAG_MY_FACES_PAGE_LAYOUT = VPE_PREFIX + "panellayout"; //$NON-NLS-1$	
 	
-	public static final String TAG_TEXT_FORMATING = VPE_PREFIX + "textFormating"; //$NON-NLS-1$
+	public static final String TAG_TEXT_FORMATING = VPE_PREFIX + "textFormatting"; //$NON-NLS-1$
 	public static final String TAG_FORMAT = VPE_PREFIX + "format"; //$NON-NLS-1$
 	public static final String TAG_FORMAT_ATTRIBUTE = VPE_PREFIX + "formatAttribute"; //$NON-NLS-1$
 
@@ -121,7 +122,7 @@ public class VpeTemplateManager {
 
 	static final String ATTR_TAG_NAME = "name"; //$NON-NLS-1$
 	static final String ATTR_TAG_CASE_SENSITIVE = "case-sensitive"; //$NON-NLS-1$
-	static final String ATTR_VALUE_YES = "yes"; //$NON-NLS-1$
+	public static final String ATTR_VALUE_YES = "yes"; //$NON-NLS-1$
 	static final String ATTR_VALUE_NO = "no"; //$NON-NLS-1$
 
 	static final String ATTR_IF_TEST = "test"; //$NON-NLS-1$
@@ -226,6 +227,19 @@ public class VpeTemplateManager {
 	private Set<String> withoutWhitespaceContainerSet = new HashSet<String>();
 	private Set<String> withoutPseudoElementContainerSet = new HashSet<String>();
 	
+	/**
+	 * added by Max Areshkau, JBIDE-1494
+	 * Contains default text formating data
+	 */
+	private static TextFormatingData defaultTextFormattingData;
+	/**
+	 * contains default text formating file name
+	 */
+	private static final String DEFAUL_TEXT_FORMATTING_CONF_FILE_NAME= File.separator+"resources"+File.separator+"textFormatting.xml"; //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Property which indicates that with this tag will be added default formats
+	 */
+	public static final String ATTR_USE_DEFAULT_FORMATS="use-default-formats"; //$NON-NLS-1$
 	/*
 	 * Added by Max Areshkau(mareshkau@exadel.com)
 	 */ 
@@ -235,7 +249,6 @@ public class VpeTemplateManager {
 	 */
 	private static final String NAMESPACE_IDENTIFIER_ATTRIBUTE = "namespaceIdentifier"; //$NON-NLS-1$
 	
-
 	private VpeTemplateManager() {
 	}
 
@@ -312,7 +325,13 @@ public class VpeTemplateManager {
 	private void load() {
 		initWithoutWhitespaceContainerSet();
 		initPseudoElementContainerSet();
+		/*
+		 * loads templates configurations files
+		 */
 		templateFileList.load();
+		/*
+		 * load templates
+		 */
 		loadImpl();
 	}
 
@@ -860,5 +879,25 @@ public class VpeTemplateManager {
 			defTemplate=createDefTemplate();
 		}
 		return defTemplate;
+	}
+
+	/**
+	 * Initialize and returns default text formatting data
+	 * @return the defaultTextFormatingData
+	 */
+	public static TextFormatingData getDefaultTextFormattingData() {
+		
+		if(defaultTextFormattingData==null) {
+			
+			try {
+				IPath path = VpeTemplateFileList.getFilePath(DEFAUL_TEXT_FORMATTING_CONF_FILE_NAME, null);
+				Element root = XMLUtilities.getElement(path.toFile(), null);
+				defaultTextFormattingData = new TextFormatingData(root);
+			} catch (Exception e) {
+				
+				VpePlugin.getPluginLog().logError(e);
+			}
+		}
+		return defaultTextFormattingData;
 	}
 }

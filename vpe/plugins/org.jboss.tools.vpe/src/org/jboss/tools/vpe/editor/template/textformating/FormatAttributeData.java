@@ -17,15 +17,33 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 /**
  * @author Igels
  */
-public class FormatAttributeData {
+public class FormatAttributeData implements Cloneable{
 
-	public static final String STYLE_TYPE = "style";
+	public static final String STYLE_TYPE = "style"; //$NON-NLS-1$
 
 	private String type;
 	private String name;
 	private String value;
 	private boolean caseSensitive = false;
 	private FormatData parentFormatData;
+
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public FormatAttributeData clone() throws CloneNotSupportedException {
+		
+		FormatAttributeData result = new FormatAttributeData(parentFormatData, null);
+		
+		result.type = new String(this.type);
+		result.name = new String(this.name);
+		result.value = new String(this.value);
+		result.caseSensitive = caseSensitive;
+		result.parentFormatData =  this.parentFormatData;
+		
+		return result;
+	}
 
 	/**
 	 * @param formatAttribute - Element <vpe:formatAttribute>
@@ -74,5 +92,12 @@ public class FormatAttributeData {
 	 */
 	public FormatData getParentFormatData() {
 		return parentFormatData;
+	}
+
+	/**
+	 * @param parentFormatData the parentFormatData to set
+	 */
+	public void setParentFormatData(FormatData parentFormatData) {
+		this.parentFormatData = parentFormatData;
 	}
 }
