@@ -270,7 +270,7 @@
 									<imageobject>
 										<imagedata
 											fileref="images/jsp_application/jsp_application_12.png"
-											scale="75"/>
+											/>
 									</imageobject>
 								</mediaobject>
 							</figure>
@@ -284,7 +284,7 @@
 					<mediaobject>
 						<imageobject>
 							<imagedata fileref="images/jsp_application/jsp_application_13.png"
-								scale="75"/>
+								/>
 						</imageobject>
 					</mediaobject>
 				</figure>
