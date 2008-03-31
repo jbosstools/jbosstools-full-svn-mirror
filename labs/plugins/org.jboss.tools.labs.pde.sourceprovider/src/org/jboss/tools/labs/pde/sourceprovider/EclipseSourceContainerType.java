@@ -51,7 +51,7 @@ public class EclipseSourceContainerType extends AbstractSourceContainerTypeDeleg
 	}
 	
 	public static class EclipseSourceContainer extends AbstractSourceContainer {
-		public static final String TYPE_ID = "org.jboss.ide.eclipse.labs.pde.sourceprovider.eclipseSourceContainerType";
+		public static final String TYPE_ID = "org.jboss.tools.labs.pde.sourceprovider.eclipseSourceContainerType";
 		protected File root;
 		protected HashMap<String,ExternalArchiveSourceContainer> pathToContainer;
 		public EclipseSourceContainer(File f) {
