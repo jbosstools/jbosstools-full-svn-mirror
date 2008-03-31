@@ -34,29 +34,29 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 	private EditorDomEventListener editorDomEventListener;
 	
 	//possible events
-	public static final String MOUSEMOVEEVENTTYPE="mousemove";
+	public static final String MOUSEMOVEEVENTTYPE="mousemove"; //$NON-NLS-1$
 	
-	public static final String MOUSEDOWNEVENTTYPE="mousedown";
+	public static final String MOUSEDOWNEVENTTYPE="mousedown"; //$NON-NLS-1$
 	
-	public static final String MOUSEUPEVENTTYPE="mouseup";
+	public static final String MOUSEUPEVENTTYPE="mouseup"; //$NON-NLS-1$
 	
-	public static final String CLICKEVENTTYPE="click";
+	public static final String CLICKEVENTTYPE="click"; //$NON-NLS-1$
 	
-	public static final String KEYPRESS="keypress";
+	public static final String KEYPRESS="keypress"; //$NON-NLS-1$
 	
-	public static final String DBLCLICK="dblclick";
+	public static final String DBLCLICK="dblclick"; //$NON-NLS-1$
 	
-	public static final String CONTEXTMENUEVENTTYPE="contextmenu";
+	public static final String CONTEXTMENUEVENTTYPE="contextmenu"; //$NON-NLS-1$
 	
-	public static final String DRAGGESTUREEVENT = "draggesture";
+	public static final String DRAGGESTUREEVENT = "draggesture"; //$NON-NLS-1$
 	
-	public static final String DRAGOVEREVENT = "dragover";
+	public static final String DRAGOVEREVENT = "dragover"; //$NON-NLS-1$
 	
-	public static final String DRAGDROPEVENT = "dragdrop";
+	public static final String DRAGDROPEVENT = "dragdrop"; //$NON-NLS-1$
 	
-	public static final String DRAGENTEREVENT = "dragenter";
+	public static final String DRAGENTEREVENT = "dragenter"; //$NON-NLS-1$
 	
-	public static final String DRAGEXITEVENT = "dragexit";
+	public static final String DRAGEXITEVENT = "dragexit"; //$NON-NLS-1$
 	
 	void setEditorDomEventListener(EditorDomEventListener listener) {
 		editorDomEventListener = listener;
@@ -102,7 +102,7 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 		if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
 			nsIDragSession dragSession = visualEditor.getCurrentDragSession();
 			if (dragSession.isDataFlavorSupported(VpeController.MODEL_FLAVOR)) {
-				editorDomEventListener.onPasteOrDrop(mouseEvent, VpeController.MODEL_FLAVOR, "");
+				editorDomEventListener.onPasteOrDrop(mouseEvent, VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
 			}
 		}
 		mouseEvent.preventDefault();
@@ -123,7 +123,6 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 	 */
 	public void handleEvent(nsIDOMEvent domEvent) {
 		try{
-
 			if(getEditorDomEventListener()==null){
 				
 				return;
@@ -187,7 +186,7 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 
 		}catch(Throwable th) {
 
-			VpePlugin.getPluginLog().logError("Event Handling Error", th);
+			VpePlugin.getPluginLog().logError("Event Handling Error", th); //$NON-NLS-1$
 			throw new RuntimeException(th);
 		}
 	}
@@ -200,4 +199,5 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 			editorDomEventListener.notifySelectionChanged(domDocument, selection, reason);
 		}
 	}
+	
 }

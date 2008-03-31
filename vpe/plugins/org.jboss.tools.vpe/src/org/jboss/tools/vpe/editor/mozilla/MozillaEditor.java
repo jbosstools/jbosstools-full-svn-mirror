@@ -55,18 +55,15 @@ import org.jboss.tools.vpe.editor.toolbar.format.TextFormattingToolBar;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
-import org.mozilla.interfaces.nsIClipboardDragDropHookList;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMEventTarget;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
-import org.mozilla.interfaces.nsISelection;
-import org.mozilla.interfaces.nsISelectionPrivate;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
-	protected static final String INIT_URL = "file://" + (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath();
+	protected static final String INIT_URL = "file://" + (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 //	private static final String INIT_URL = "chrome://vpe/content/init.html"; //$NON-NLS-1$
 	private static final String CONTENT_AREA_ID = "__content__area__"; //$NON-NLS-1$
 
@@ -77,11 +74,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private nsIDOMElement contentArea;
 	private nsIDOMNode headNode;
 	private nsIDOMEventTarget contentAreaEventTarget;
-	private MozillaDomEventListener contentAreaEventListener = new MozillaDomEventListener();
-	//TODO Max Areshkau may be we need delete this
-	//private MozillaBaseEventListener baseEventListener = null;
+	private MozillaDomEventListener contentAreaEventListener;
+
 	private EditorLoadWindowListener editorLoadWindowListener;
-	//
 	private EditorDomEventListener editorDomEventListener;
 	private IVpeToolBarManager vpeToolBarManager;
 	private FormatControllerManager formatControllerManager = new FormatControllerManager();
@@ -318,7 +313,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			vpeToolBarManager = null;
 		}
 		
-		//removeDomEventListeners();
+//		removeDomEventListeners();
 		if(getController()!=null) {
 			controller.dispose();
 			controller=null;
@@ -341,8 +336,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 	public void setEditorDomEventListener(EditorDomEventListener listener) {
 		editorDomEventListener = listener;
-		if (contentAreaEventListener != null) {
-			contentAreaEventListener.setEditorDomEventListener(listener);
+		if (getContentAreaEventListener() != null) {
+			
+			getContentAreaEventListener().setEditorDomEventListener(listener);
 		}
 	}
 
@@ -393,14 +389,13 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			nsIDOMNode node = nodeList.item(i);
 			if (isContentArea(node)) {
 				if (node.getNodeType() != nsIDOMNode.ELEMENT_NODE) {
-					throw new RuntimeException("The content area node should by element node.");
+					throw new RuntimeException("The content area node should by element node."); //$NON-NLS-1$
 				}
 
 				area = (nsIDOMElement) node.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 				break;
 			}
 		}
-//		 area = findContentArea(root);
 		if (area == null) {
 			return null;
 		}
@@ -413,7 +408,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 
 	private nsIDOMNode findHeadNode(nsIDOMNode root){
-		nsIDOMNode headNode = findChildNode(root, HTML.TAG_HEAD); //$NON-NLS-1$
+		nsIDOMNode headNode = findChildNode(root, HTML.TAG_HEAD); 
 		return headNode;
 	}
 
@@ -427,31 +422,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			}
 		}
 		return null;
-	}
-
-	private nsIDOMElement findContentArea(nsIDOMNode node) {
-		nsIDOMElement area = null;
-		if (node != null && node.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-        	nsIDOMNodeList children = node.getChildNodes();
-        	if (children != null) {
-	        	long length = children.getLength();
-	        	for (long i = 0; i < length; i++) {
-	        		nsIDOMNode child = children.item(i);
-	        		if (isContentArea(child)) {
-	        			if (child.getNodeType() != nsIDOMNode.ELEMENT_NODE) {
-	        				throw new RuntimeException("The content area node should by element node.");
-	        			}
-	        			area = (nsIDOMElement)child;
-	        			break;
-	        		}
-	        		area = findContentArea(child);
-	        		if (area != null) {
-	        			break;
-	        		}
-	        	}
-        	}
-    	}
-    	return area;
 	}
 
 	private boolean isContentArea(nsIDOMNode node) {
@@ -483,26 +453,26 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		}
 	}
 
-	private void addDomEventListeners() {
+	protected void addDomEventListeners() {
 		if (contentArea != null) {
-			if (contentAreaEventListener != null) {
-				contentAreaEventListener.setVisualEditor(xulRunnerEditor);
-				contentAreaEventTarget = (nsIDOMEventTarget) contentArea.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
+			if (getContentAreaEventListener() != null) {
+				getContentAreaEventListener().setVisualEditor(xulRunnerEditor);
+				setContentAreaEventTarget((nsIDOMEventTarget) contentArea.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID));
 				
 				//add mozilla event handlers
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.CLICKEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.MOUSEDOWNEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.MOUSEUPEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.MOUSEMOVEEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.CONTEXTMENUEVENTTYPE, contentAreaEventListener, false);//$NON-NLS-1$
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGDROPEVENT, contentAreaEventListener, false);//$NON-NLS-1$
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGENTEREVENT, contentAreaEventListener, false);//$NON-NLS-1$
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGEXITEVENT, contentAreaEventListener, false);//$NON-NLS-1$
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGGESTUREEVENT, contentAreaEventListener, false);//$NON-NLS-1$
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DRAGOVEREVENT, contentAreaEventListener, false);//$NON-NLS-1$
-				contentAreaEventTarget.addEventListener(MozillaDomEventListener.DBLCLICK, contentAreaEventListener, false);//$NON-NLS-1$
+				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.CLICKEVENTTYPE, getContentAreaEventListener(), false); 
+				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.MOUSEDOWNEVENTTYPE, getContentAreaEventListener(), false); 
+				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.MOUSEUPEVENTTYPE, getContentAreaEventListener(), false); 
+				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.MOUSEMOVEEVENTTYPE, getContentAreaEventListener(), false); 
+				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.CONTEXTMENUEVENTTYPE, getContentAreaEventListener(), false);
+				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.DRAGDROPEVENT, getContentAreaEventListener(), false);
+				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.DRAGENTEREVENT, getContentAreaEventListener(), false);
+				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.DRAGEXITEVENT,getContentAreaEventListener(), false);
+				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.DRAGGESTUREEVENT, getContentAreaEventListener(), false);
+				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.DRAGOVEREVENT, getContentAreaEventListener(), false);
+				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.DBLCLICK, getContentAreaEventListener(), false);
 				documentEventTarget = (nsIDOMEventTarget) getDomDocument().queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
-				documentEventTarget.addEventListener(MozillaDomEventListener.KEYPRESS, contentAreaEventListener, false); //$NON-NLS-1$
+				documentEventTarget.addEventListener(MozillaDomEventListener.KEYPRESS, getContentAreaEventListener(), false); 
 			} else {
 				//baseEventListener = new MozillaBaseEventListener();
 			}
@@ -510,48 +480,39 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 
 	protected void removeDomEventListeners() {
-		if (contentAreaEventTarget != null && contentAreaEventListener != null) {
-			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.CLICKEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.MOUSEDOWNEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.MOUSEUPEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.MOUSEMOVEEVENTTYPE, contentAreaEventListener, false); //$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.CONTEXTMENUEVENTTYPE, contentAreaEventListener, false);//$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DRAGDROPEVENT, contentAreaEventListener, false);//$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DRAGENTEREVENT, contentAreaEventListener, false);//$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DRAGEXITEVENT, contentAreaEventListener, false);//$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DRAGGESTUREEVENT, contentAreaEventListener, false);//$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DRAGOVEREVENT, contentAreaEventListener, false);//$NON-NLS-1$
-			contentAreaEventTarget.removeEventListener(MozillaDomEventListener.DBLCLICK, contentAreaEventListener, false);//$NON-NLS-1$
+		if (getContentAreaEventTarget() != null && getContentAreaEventListener() != null) {
+			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.CLICKEVENTTYPE, getContentAreaEventListener(), false); 
+			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.MOUSEDOWNEVENTTYPE, getContentAreaEventListener(), false); 
+			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.MOUSEUPEVENTTYPE, getContentAreaEventListener(), false); 
+			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.MOUSEMOVEEVENTTYPE, getContentAreaEventListener(), false); 
+			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.CONTEXTMENUEVENTTYPE, getContentAreaEventListener(), false);
+			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.DRAGDROPEVENT, getContentAreaEventListener(), false);
+			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.DRAGENTEREVENT, getContentAreaEventListener(), false);
+			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.DRAGEXITEVENT, getContentAreaEventListener(), false);
+			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.DRAGGESTUREEVENT, getContentAreaEventListener(), false);
+			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.DRAGOVEREVENT, getContentAreaEventListener(), false);
+			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.DBLCLICK, getContentAreaEventListener(), false);
 		
 			if (domDocument != null && documentEventTarget != null) {
-				documentEventTarget.removeEventListener(MozillaDomEventListener.KEYPRESS, contentAreaEventListener, false); //$NON-NLS-1$
+				documentEventTarget.removeEventListener(MozillaDomEventListener.KEYPRESS, getContentAreaEventListener(), false); 
 			}
-			contentAreaEventListener.setVisualEditor(null);
-			contentAreaEventTarget = null;
-			contentAreaEventListener = null;
+			getContentAreaEventListener().setVisualEditor(null);
+			setContentAreaEventTarget(null);
+			setContentAreaEventListener(null);
 			documentEventTarget = null;
 		}
 	}
 
 	private void addSelectionListener() {
-		if (contentAreaEventListener != null&&xulRunnerEditor!=null) {
+		if (getContentAreaEventListener() != null&&xulRunnerEditor!=null) {
 			
-			xulRunnerEditor.addSelectionListener(contentAreaEventListener);
+			xulRunnerEditor.addSelectionListener(getContentAreaEventListener());
 			
 		}
 	}
 
-	/*private void removeSelectionListener() {
-		if (contentAreaEventListener != null&&xulRunnerEditor!=null) {
-
-			nsISelection selection = xulRunnerEditor.getSelection();
-			nsISelectionPrivate selectionPrivate = (nsISelectionPrivate) selection.queryInterface(nsISelectionPrivate.NS_ISELECTIONPRIVATE_IID);
-			selectionPrivate.removeSelectionListener(contentAreaEventListener);
-		}
-	}*/
-
 	public void setSelectionRectangle(nsIDOMElement element, int resizerConstrains, boolean scroll) {
-		if (contentAreaEventListener != null) {
+		if (getContentAreaEventListener() != null) {
 			xulRunnerEditor.setSelectionRectangle((nsIDOMElement)element, resizerConstrains, scroll);
 		}
 	}
@@ -560,7 +521,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 * Show resizer markers
 	 */
 	public void showResizer() {
-		if (contentAreaEventListener != null) {
+		if (getContentAreaEventListener() != null) {
 			xulRunnerEditor.showResizer();
 		}
 	}
@@ -569,7 +530,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 * Hide resizer markers
 	 */
 	public void hideResizer() {
-		if (contentAreaEventListener != null) {
+		if (getContentAreaEventListener() != null) {
 			xulRunnerEditor.hideResizer();
 		}
 	}
@@ -607,6 +568,40 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 */
 	protected void setLink(Link link) {
 		this.link = link;
+	}
+
+	/**
+	 * @return the contentAreaEventTarget
+	 */
+	public nsIDOMEventTarget getContentAreaEventTarget() {
+		return contentAreaEventTarget;
+	}
+
+	/**
+	 * @param contentAreaEventTarget the contentAreaEventTarget to set
+	 */
+	public void setContentAreaEventTarget(nsIDOMEventTarget contentAreaEventTarget) {
+		this.contentAreaEventTarget = contentAreaEventTarget;
+	}
+
+	/**
+	 * @return the contentAreaEventListener
+	 */
+	public MozillaDomEventListener getContentAreaEventListener() {
+		if(contentAreaEventListener==null) {
+			
+			contentAreaEventListener = new MozillaDomEventListener();
+		}
+		return contentAreaEventListener;
+	}
+
+	/**
+	 * @param contentAreaEventListener the contentAreaEventListener to set
+	 */
+	public void setContentAreaEventListener(
+			MozillaDomEventListener contentAreaEventListener) {
+		
+		this.contentAreaEventListener = contentAreaEventListener;
 	}
 
 	
