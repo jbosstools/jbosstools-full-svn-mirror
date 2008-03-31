@@ -12,7 +12,7 @@
 					<vpe:container-child tag-name="#text" />
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -35,14 +35,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="abbr" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -71,14 +71,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="acronym" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -107,14 +107,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="address" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addChildren="allow" addParent="deny" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -143,7 +143,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -171,7 +171,7 @@
 					<vpe:container-child tag-name="#text" />
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -195,7 +195,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -212,7 +212,7 @@
 	<vpe:tag name="bdo" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class,dir,lang" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -241,7 +241,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -254,7 +254,7 @@
 	<vpe:tag name="big" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -281,14 +281,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="blockquote" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addParent="deny" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -315,14 +315,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="blink" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -348,7 +348,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -360,13 +360,13 @@
 				<vpe:dnd>
 					<vpe:drop container="yes" />
 				</vpe:dnd>
-				<vpe:textFormating>
+				<vpe:textFormatting>
 					<vpe:format type="BlockFormat" addParent="deny" addChildren="allow"
 						handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 					<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
 					<vpe:format type="ItalicFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.ItalicFormatHandler" />
 					<vpe:format type="UnderlineFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.UnderlineFormatHandler" />
-				</vpe:textFormating>
+				</vpe:textFormatting>
 			</vpe:template>
 		</vpe:if>
 		<vpe:template children="yes" modify="yes">
@@ -374,13 +374,13 @@
 			<vpe:dnd>
 				<vpe:drop container="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addParent="deny" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
 				<vpe:format type="ItalicFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.ItalicFormatHandler" />
 				<vpe:format type="UnderlineFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.UnderlineFormatHandler" />
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -466,7 +466,7 @@
 					<vpe:container-child tag-name="wbr" />
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addParent="deny" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -493,7 +493,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -506,7 +506,7 @@
 	<vpe:tag name="center" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addParent="deny" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -533,14 +533,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="cite" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -567,14 +567,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="code" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -601,7 +601,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -632,7 +632,7 @@
 	<vpe:tag name="dd" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow" addParent="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -659,14 +659,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="del" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -693,14 +693,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="dfn" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -727,7 +727,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -748,7 +748,7 @@
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow" addParent="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -775,14 +775,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="dl" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny" addParent="deny"/>
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="deny">
 					<vpe:formatAttribute type="style" />
@@ -805,14 +805,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="dt" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny" addParent="deny"/>
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
 				<vpe:format type="BoldFormat">
@@ -838,14 +838,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="em" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -872,7 +872,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -887,7 +887,7 @@
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow" addParent="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -914,14 +914,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="font" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class,size,color,face" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -948,7 +948,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -977,7 +977,7 @@
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -1004,7 +1004,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1015,7 +1015,7 @@
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -1042,7 +1042,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1053,7 +1053,7 @@
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -1080,7 +1080,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1091,7 +1091,7 @@
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -1118,7 +1118,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1129,7 +1129,7 @@
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -1156,7 +1156,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1167,7 +1167,7 @@
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -1194,7 +1194,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1219,13 +1219,13 @@
 			<vpe:dnd>
 				<vpe:drop container="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addParent="deny" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
 				<vpe:format type="ItalicFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.ItalicFormatHandler" />
 				<vpe:format type="UnderlineFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.UnderlineFormatHandler" />
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1236,7 +1236,7 @@
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -1257,7 +1257,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1299,7 +1299,7 @@
 				<vpe:dnd>
 					<vpe:drag start-enable="yes" />
 				</vpe:dnd>
-				<vpe:textFormating>
+				<vpe:textFormatting>
 					<vpe:format type="BoldFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
@@ -1321,7 +1321,7 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 			</vpe:template>
 		</vpe:if>
 		<vpe:if test="@type='password'">
@@ -1337,7 +1337,7 @@
 				<vpe:dnd>
 					<vpe:drag start-enable="yes" />
 				</vpe:dnd>
-				<vpe:textFormating>
+				<vpe:textFormatting>
 					<vpe:format type="BoldFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
@@ -1359,7 +1359,7 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 			</vpe:template>
 		</vpe:if>
 		<vpe:if test="(@type='checkbox')|(@type='radio')">
@@ -1385,7 +1385,7 @@
 				<vpe:dnd>
 					<vpe:drag start-enable="yes" />
 				</vpe:dnd>
-				<vpe:textFormating>
+				<vpe:textFormatting>
 					<vpe:format type="BoldFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
@@ -1407,7 +1407,7 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 			</vpe:template>
 		</vpe:if>
 		<vpe:if test="@type='reset'">
@@ -1422,7 +1422,7 @@
 					<vpe:dnd>
 						<vpe:drag start-enable="yes" />
 					</vpe:dnd>
-					<vpe:textFormating>
+					<vpe:textFormatting>
 						<vpe:format type="BoldFormat">
 							<vpe:formatAttribute type="style" />
 						</vpe:format>
@@ -1444,7 +1444,7 @@
 						<vpe:format type="ForegroundColorFormat">
 							<vpe:formatAttribute type="style" />
 						</vpe:format>
-					</vpe:textFormating>
+					</vpe:textFormatting>
 				</vpe:template>
 			</vpe:if>
 			<vpe:if test="not(@value='')">
@@ -1453,7 +1453,7 @@
 					<!--span class="__button__tag" style="{@style}">
 						<nobr><vpe:value expr="{@value}"/></nobr>
 						</span-->
-					<vpe:textFormating>
+					<vpe:textFormatting>
 						<vpe:format type="BoldFormat">
 							<vpe:formatAttribute type="style" />
 						</vpe:format>
@@ -1475,7 +1475,7 @@
 						<vpe:format type="ForegroundColorFormat">
 							<vpe:formatAttribute type="style" />
 						</vpe:format>
-					</vpe:textFormating>
+					</vpe:textFormatting>
 				</vpe:template>
 			</vpe:if>
 		</vpe:if>
@@ -1518,7 +1518,7 @@
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BoldFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
@@ -1540,14 +1540,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="ins" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -1574,7 +1574,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1587,7 +1587,7 @@
 	<vpe:tag name="kbd" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
@@ -1614,7 +1614,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1672,7 +1672,7 @@
 					<vpe:container-child tag-name="wbr" />
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
@@ -1699,7 +1699,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1712,7 +1712,7 @@
 	<vpe:tag name="li" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class,type,value" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow" addParent="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
@@ -1739,7 +1739,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1758,7 +1758,7 @@
 	<vpe:tag name="menu" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BoldFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
@@ -1780,7 +1780,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1814,7 +1814,7 @@
 					<vpe:container-child tag-name="li" />
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BoldFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
@@ -1836,7 +1836,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1866,7 +1866,7 @@
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow" addParent="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<!-- vpe:format type="BoldFormat">
@@ -1895,7 +1895,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -1906,7 +1906,7 @@
 	<vpe:tag name="pre" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class,width" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny" addParent = "deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
@@ -1933,14 +1933,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="q" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
@@ -1967,14 +1967,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="s" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
@@ -2001,14 +2001,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="samp" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow" 
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
@@ -2035,7 +2035,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -2059,7 +2059,7 @@
 					<vpe:container-child tag-name="option" />
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
 					<vpe:formatAttribute type="style" />
@@ -2084,14 +2084,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="small" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
 					<vpe:formatAttribute type="style" />
@@ -2116,7 +2116,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -2127,7 +2127,7 @@
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
 					<vpe:formatAttribute type="style" />
@@ -2152,14 +2152,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="strike" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-		<vpe:textFormating>
+		<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
 					<vpe:formatAttribute type="style" />
@@ -2184,14 +2184,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="strong" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" setDefault="true">
 					<vpe:formatAttribute type="style" />
@@ -2216,7 +2216,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -2229,7 +2229,7 @@
 	<vpe:tag name="sub" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
 					<vpe:formatAttribute type="style" />
@@ -2254,14 +2254,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="sup" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
 					<vpe:formatAttribute type="style" />
@@ -2286,7 +2286,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -2311,7 +2311,7 @@
 					<vpe:container-child tag-name="thead" />
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BoldFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
@@ -2333,7 +2333,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -2347,7 +2347,7 @@
 					<vpe:container-child tag-name="tr" />
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 					<vpe:format type="UnderlineFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
@@ -2369,7 +2369,7 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -2394,7 +2394,7 @@
 					<vpe:drag start-enable="no" />
 					<vpe:drop container="yes" />
 				</vpe:dnd>
-				<vpe:textFormating>
+				<vpe:textFormatting>
 					<vpe:format type="BlockFormat" addChildren="allow" addParent="deny" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 					<vpe:format type="UnderlineFormat" addChildren="allow" addParent="deny" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.UnderlineFormatHandler" />
 					<vpe:format type="UnderlineFormat">
@@ -2419,7 +2419,7 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 			</vpe:template>
 		</vpe:if>
 		<vpe:template children="yes" modify="yes">
@@ -2437,7 +2437,7 @@
 				<vpe:drag start-enable="no" />
 				<vpe:drop container="yes" />
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 					<vpe:format type="BlockFormat" addChildren="allow" addParent="deny" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 					<vpe:format type="UnderlineFormat" addChildren="allow" addParent="deny" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.UnderlineFormatHandler" />
 					<vpe:format type="UnderlineFormat">
@@ -2463,7 +2463,7 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -2480,7 +2480,7 @@
 					<vpe:container-child tag-name="#text" />
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
@@ -2502,14 +2502,14 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="tfoot" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
 			<vpe:copy attrs="id,style,class,align,char,charoff,valign" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 					<vpe:format type="UnderlineFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
@@ -2531,7 +2531,7 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -2539,7 +2539,7 @@
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy
 				attrs="style,class,rowspan,colspan,headers,abbr,scope,axis,align,char,charoff,valign,width,height,bgcolor" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 					<vpe:format type="BlockFormat" addChildren="allow" addParent="deny" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 					<vpe:format type="UnderlineFormat" addChildren="allow" addParent="deny" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.UnderlineFormatHandler" />
 					<vpe:format type="UnderlineFormat">
@@ -2564,7 +2564,7 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -2578,7 +2578,7 @@
 					<vpe:container-child tag-name="tr" />
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 					<vpe:format type="UnderlineFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
@@ -2600,7 +2600,7 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -2627,7 +2627,7 @@
 				</vpe:drop>
 			</vpe:dnd>
 			<vpe:breaker type="ignore" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 					<vpe:format type="UnderlineFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
@@ -2649,14 +2649,14 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="tt" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 					<vpe:format type="BlockFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 					<vpe:format type="UnderlineFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.UnderlineFormatHandler" />
 					<vpe:format type="UnderlineFormat">
@@ -2682,14 +2682,14 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="u" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 					<vpe:format type="BlockFormat" addChildren="allow"
 						handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 					<vpe:format type="UnderlineFormat" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.UnderlineFormatHandler" />
@@ -2716,7 +2716,7 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
@@ -2730,7 +2730,7 @@
 					<vpe:container-child tag-name="li" />
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 					<vpe:format type="UnderlineFormat" >
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
@@ -2752,14 +2752,14 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="var" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
 			<vpe:copy attrs="id,style,class" />
-			<vpe:textFormating>
+			<vpe:textFormatting>
 					<vpe:format type="BlockFormat" addChildren="allow"
 						handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 					<vpe:format type="UnderlineFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.UnderlineFormatHandler" />
@@ -2786,7 +2786,7 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 

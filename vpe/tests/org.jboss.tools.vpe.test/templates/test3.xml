@@ -39,7 +39,7 @@
 					<vpe:container-child tag-name="validateLength" />
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
@@ -61,7 +61,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 	    </vpe:template>
     </vpe:tag>
 
@@ -78,7 +78,7 @@
 			<vpe:dnd>
 				<vpe:drag start-enable="yes"/>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
@@ -100,7 +100,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 	    </vpe:template>
     </vpe:tag>
 
@@ -123,7 +123,7 @@
 					<vpe:container-child tag-name="validateLength" />
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
@@ -145,7 +145,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 	    </vpe:template>
     </vpe:tag>
 
@@ -186,7 +186,7 @@
 						<vpe:container-child tag-name="validateLength" />
 					</vpe:drop>
 				</vpe:dnd>
-				<vpe:textFormating>
+				<vpe:textFormatting>
 					<vpe:format type="BlockFormat"
 							handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 					<vpe:format type="UnderlineFormat">
@@ -210,7 +210,7 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style"/>
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 			</vpe:template>
 		</vpe:if>
 		<vpe:if test="attrpresent('binding')">
@@ -230,7 +230,7 @@
 						<vpe:container-child tag-name="validateLength" />
 					</vpe:drop>
 				</vpe:dnd>
-				<vpe:textFormating>
+				<vpe:textFormatting>
 					<vpe:format type="BlockFormat"
 							handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 					<vpe:format type="UnderlineFormat">
@@ -254,7 +254,7 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style"/>
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 			</vpe:template>
 		</vpe:if>
 		<vpe:template children="yes" modify="yes">
@@ -271,7 +271,7 @@
 					<vpe:container-child tag-name="validateLength" />
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat"
 						handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="UnderlineFormat">
@@ -293,7 +293,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
     </vpe:tag>
 
@@ -306,7 +306,7 @@
 			<vpe:dnd>
 				<vpe:drag start-enable="yes"/>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 							handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="UnderlineFormat">
@@ -330,7 +330,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
     </vpe:tag>
 
@@ -369,7 +369,7 @@
 					<vpe:dnd>
 						<vpe:drag start-enable="yes"/>
 					</vpe:dnd>
-					<vpe:textFormating>
+					<vpe:textFormatting>
 						<vpe:format type="UnderlineFormat">
 							<vpe:formatAttribute type="style"/>
 						</vpe:format>
@@ -391,7 +391,7 @@
 						<vpe:format type="ForegroundColorFormat">
 							<vpe:formatAttribute type="style"/>
 						</vpe:format>
-					</vpe:textFormating>
+					</vpe:textFormatting>
 				</vpe:template>
 			</vpe:if>
 			<vpe:if test="(@type='button')|(@type='reset')|(@type='submit')">
@@ -404,7 +404,7 @@
 					<vpe:dnd>
 						<vpe:drag start-enable="yes"/>
 					</vpe:dnd>
-					<vpe:textFormating>
+					<vpe:textFormatting>
 						<vpe:format type="UnderlineFormat">
 							<vpe:formatAttribute type="style"/>
 						</vpe:format>
@@ -426,7 +426,7 @@
 						<vpe:format type="ForegroundColorFormat">
 							<vpe:formatAttribute type="style"/>
 						</vpe:format>
-					</vpe:textFormating>
+					</vpe:textFormatting>
 				</vpe:template>
 			</vpe:if>
 		</vpe:if>
@@ -437,7 +437,7 @@
 					<vpe:width width-attr="style.width" />
 					<vpe:height height-attr="style.height" />
 				</vpe:resize>
-				<vpe:textFormating>
+				<vpe:textFormatting>
 					<vpe:format type="UnderlineFormat">
 						<vpe:formatAttribute type="style"/>
 					</vpe:format>
@@ -459,7 +459,7 @@
 					<vpe:format type="ForegroundColorFormat">
 						<vpe:formatAttribute type="style"/>
 					</vpe:format>
-				</vpe:textFormating>
+				</vpe:textFormatting>
 			</vpe:template>
 		</vpe:if>
     </vpe:tag>
@@ -476,7 +476,7 @@
 					<vpe:container-child tag-name="outputText"/>
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat"
 							handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="UnderlineFormat" setDefault="true">
@@ -500,7 +500,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 			<vpe:pseudoContent/>
 		</vpe:template>
     </vpe:tag>
@@ -508,7 +508,7 @@
     <vpe:tag name="h:outputLink" case-sensitive="yes">
 	    <vpe:template children="yes" modify="yes">
 			<a href="javascript:return false;" class="{@styleClass}" style="{@style}"/>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat"
 							handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="UnderlineFormat" setDefault="true">
@@ -532,7 +532,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
     </vpe:tag>
 
@@ -547,7 +547,7 @@
 					<vpe:container-child tag-name="outputText"/>
 				</vpe:drop>
 			</vpe:dnd>
-		    <vpe:textFormating>
+		    <vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
@@ -570,7 +570,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 	    </vpe:template>
     </vpe:tag>
 
@@ -607,7 +607,7 @@
 						<vpe:container-child tag-name="selectItems"/>
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
@@ -629,7 +629,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
     </vpe:tag>
 
@@ -644,7 +644,7 @@
 						<vpe:container-child tag-name="selectItems"/>
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
@@ -666,7 +666,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
     </vpe:tag>
 
@@ -680,7 +680,7 @@
 						<vpe:container-child tag-name="selectItems"/>
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
@@ -702,7 +702,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
     </vpe:tag>
 
@@ -718,7 +718,7 @@
     					<vpe:container-child tag-name="selectItems" />
     				</vpe:drop>
     			</vpe:dnd>
-    			<vpe:textFormating>
+    			<vpe:textFormatting>
     				<vpe:format type="UnderlineFormat">
     					<vpe:formatAttribute type="style" />
     				</vpe:format>
@@ -740,7 +740,7 @@
     				<vpe:format type="ForegroundColorFormat">
     					<vpe:formatAttribute type="style" />
     				</vpe:format>
-    			</vpe:textFormating>
+    			</vpe:textFormatting>
     		</vpe:template>
     	</vpe:if>
     	<vpe:template children="yes" modify="yes">
@@ -753,7 +753,7 @@
     				<vpe:container-child tag-name="selectItems" />
     			</vpe:drop>
     		</vpe:dnd>
-    		<vpe:textFormating>
+    		<vpe:textFormatting>
     			<vpe:format type="UnderlineFormat">
     				<vpe:formatAttribute type="style" />
     			</vpe:format>
@@ -775,7 +775,7 @@
     			<vpe:format type="ForegroundColorFormat">
     				<vpe:formatAttribute type="style" />
     			</vpe:format>
-    		</vpe:textFormating>
+    		</vpe:textFormatting>
     	</vpe:template>
     </vpe:tag>
 
@@ -793,7 +793,7 @@
 						<vpe:container-child tag-name="selectItems"/>
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
@@ -815,7 +815,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
     </vpe:tag>
 
@@ -829,7 +829,7 @@
 						<vpe:container-child tag-name="selectItems"/>
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
@@ -851,7 +851,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 		</vpe:template>
     </vpe:tag>
 
@@ -959,7 +959,7 @@
 				<vpe:drop container="yes"/>
 			</vpe:dnd>
 			<vpe:breaker type="ignore"/>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
@@ -981,7 +981,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 			<vpe:pseudoContent defaultText="yes"/>
 		</vpe:template>
     </vpe:tag>
@@ -1003,7 +1003,7 @@
 					<vpe:container-child tag-name="column"/>
 				</vpe:drop>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"/>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
@@ -1026,7 +1026,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 			<vpe:pseudoContent defaultText="yes"/>
 		</vpe:template>
     </vpe:tag>
@@ -1067,13 +1067,13 @@
 				<vpe:drop container="yes"/>
 			</vpe:dnd>
 			<vpe:pseudoContent defaultText="yes"/>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addParent="deny" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
 				<vpe:format type="ItalicFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.ItalicFormatHandler" />
 				<vpe:format type="UnderlineFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.UnderlineFormatHandler" />
-			</vpe:textFormating>
+			</vpe:textFormatting>
 	    </vpe:template>
     </vpe:tag>
 
@@ -1085,13 +1085,13 @@
 				<vpe:drop container="yes"/>
 			</vpe:dnd>
 			<vpe:pseudoContent defaultText="yes"/>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addParent="deny" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
 				<vpe:format type="ItalicFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.ItalicFormatHandler" />
 				<vpe:format type="UnderlineFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.UnderlineFormatHandler" />
-			</vpe:textFormating>
+			</vpe:textFormatting>
 	    </vpe:template>
     </vpe:tag>
 
@@ -1162,7 +1162,7 @@
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="no"/>
 			</vpe:dnd>
-		    <vpe:textFormating>
+		    <vpe:textFormatting>
 				<vpe:format type="BlockFormat" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler"/>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
@@ -1185,7 +1185,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 	    </vpe:template>
     </vpe:tag>
 
@@ -1198,7 +1198,7 @@
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="no"/>
 			</vpe:dnd>
-			<vpe:textFormating>
+			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler"/>
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style"/>
@@ -1221,7 +1221,7 @@
 				<vpe:format type="ForegroundColorFormat">
 					<vpe:formatAttribute type="style"/>
 				</vpe:format>
-			</vpe:textFormating>
+			</vpe:textFormatting>
 	    </vpe:template>
     </vpe:tag>
 
