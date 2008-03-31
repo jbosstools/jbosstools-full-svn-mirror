@@ -497,6 +497,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				documentEventTarget.removeEventListener(MozillaDomEventListener.KEYPRESS, getContentAreaEventListener(), false); 
 			}
 			getContentAreaEventListener().setVisualEditor(null);
+			getContentAreaEventListener().setEditorDomEventListener(null);
 			setContentAreaEventTarget(null);
 			setContentAreaEventListener(null);
 			documentEventTarget = null;

@@ -73,7 +73,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	private MozillaEditor visualEditor;
 	private IEditorPart activeEditor;
 	private XModelTreeListener listener;
-	XModelObject optionsObject;
+	private XModelObject optionsObject;
 	private SelectionBar selectionBar = new SelectionBar();
 	private ActivationListener activationListener = new ActivationListener();
 	private int visualMode = 0;
@@ -472,6 +472,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 			public void widgetDisposed(DisposeEvent e) {
 				container.removeWeightsChangeListener(weightsChangeListener);
+				container.removeDisposeListener(this);
 			}
 			
 		});
@@ -489,6 +490,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 			public void widgetDisposed(DisposeEvent e) {
 				parent.removeControlListener(controlListener);
+				container.removeDisposeListener(this);
 			}
 			
 		});
@@ -644,6 +646,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		if (optionsObject != null) {
 			optionsObject.getModel().removeModelTreeListener(listener);
 			listener=null;
+			optionsObject = null;
 		}
 		if (activationListener != null) {
 			IWorkbenchWindow window = getSite().getWorkbenchWindow();
@@ -678,6 +681,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			selectionBar = null;
 		}
 		activeEditor = null;
+		multiPageEditor = null;
 		super.dispose();
 	}
 
