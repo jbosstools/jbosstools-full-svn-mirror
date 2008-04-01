@@ -11,6 +11,8 @@
 package org.jboss.tools.vpe.editor.template;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,7 +31,6 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
 import org.jboss.tools.vpe.editor.util.HTML;
-import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.osgi.framework.Bundle;
 import org.w3c.dom.Document;
@@ -235,11 +236,13 @@ public class VpeTemplateManager {
 	/**
 	 * contains default text formating file name
 	 */
-	private static final String DEFAUL_TEXT_FORMATTING_CONF_FILE_NAME= File.separator+"resources"+File.separator+"textFormatting.xml"; //$NON-NLS-1$ //$NON-NLS-2$
+	private static final String DEFAUL_TEXT_FORMATTING_CONF_FILE_NAME = 
+		//File.separator + "resources" + File.separator + 
+		"textFormatting.xml"; //$NON-NLS-1$
 	/**
 	 * Property which indicates that with this tag will be added default formats
 	 */
-	public static final String ATTR_USE_DEFAULT_FORMATS="use-default-formats"; //$NON-NLS-1$
+	public static final String ATTR_USE_DEFAULT_FORMATS = "use-default-formats"; //$NON-NLS-1$
 	/*
 	 * Added by Max Areshkau(mareshkau@exadel.com)
 	 */ 
@@ -249,7 +252,9 @@ public class VpeTemplateManager {
 	 */
 	private static final String NAMESPACE_IDENTIFIER_ATTRIBUTE = "namespaceIdentifier"; //$NON-NLS-1$
 	
+
 	private VpeTemplateManager() {
+		// singleton
 	}
 
 	public static final VpeTemplateManager getInstance() {
@@ -886,18 +891,16 @@ public class VpeTemplateManager {
 	 * @return the defaultTextFormatingData
 	 */
 	public static TextFormatingData getDefaultTextFormattingData() {
-		
 		if(defaultTextFormattingData==null) {
-			
 			try {
-				IPath path = VpeTemplateFileList.getFilePath(DEFAUL_TEXT_FORMATTING_CONF_FILE_NAME, null);
-				Element root = XMLUtilities.getElement(path.toFile(), null);
+				InputStream is = VpePlugin.getDefault().getBundle().getResource(DEFAUL_TEXT_FORMATTING_CONF_FILE_NAME).openStream();
+				Element root = XMLUtilities.getElement(new InputStreamReader(is), null);
 				defaultTextFormattingData = new TextFormatingData(root);
 			} catch (Exception e) {
-				
 				VpePlugin.getPluginLog().logError(e);
 			}
 		}
+
 		return defaultTextFormattingData;
 	}
 }

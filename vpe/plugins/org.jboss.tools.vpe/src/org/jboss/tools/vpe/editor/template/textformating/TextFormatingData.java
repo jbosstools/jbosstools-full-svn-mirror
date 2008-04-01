@@ -97,13 +97,13 @@ public class TextFormatingData {
 	 * @return
 	 */
 	public FormatData[] getFormatDatas(String type) {
-		ArrayList result = new ArrayList();
+		ArrayList<FormatData> result = new ArrayList<FormatData>();
 		for(int i=0; i<formats.length; i++) {
 			if(type.equals(formats[i].getType())) {
 				result.add(formats[i]);
 			}
 		}
-		return (FormatData[])result.toArray(new FormatData[result.size()]);
+		return result.toArray(new FormatData[]{});
 	}
 
 	/**
