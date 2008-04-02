@@ -15,6 +15,8 @@ import java.util.List;
 import org.eclipse.compare.Splitter;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
@@ -151,6 +153,7 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 			button.setImage(ImageDescriptor.createFromFile(MozillaEditor.class, "icons/arrow.gif").createImage());		 //$NON-NLS-1$
 			button.setToolTipText(VpeUIMessages.MENU);
 			button.addListener(SWT.Selection, new Listener() {
+
 			public void handleEvent(Event event) {
 				Rectangle bounds = button.getBounds();
 				Point point = btnBar.toDisplay( bounds.x + 15, bounds.y + 12);
@@ -158,6 +161,16 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 				menu.setVisible(true);
 			}
 		});
+			
+			// add dispose listener 
+			button.addDisposeListener(new DisposeListener() {
+
+				public void widgetDisposed(DisposeEvent e) {
+					// dispose tollitem's image
+					((ToolItem) e.widget).getImage().dispose();
+
+				}
+			});
 
 		return btnBar;
 	}

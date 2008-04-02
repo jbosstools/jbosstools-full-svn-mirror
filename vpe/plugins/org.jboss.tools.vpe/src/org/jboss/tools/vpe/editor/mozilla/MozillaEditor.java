@@ -20,6 +20,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
@@ -292,10 +294,22 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		}		
 	}
 
-	private ToolItem createToolItem(ToolBar parent, int type, String image, String toolTipText) {
+	private ToolItem createToolItem(ToolBar parent, int type, String image,
+			String toolTipText) {
 		ToolItem item = new ToolItem(parent, type);
-		item.setImage(ImageDescriptor.createFromFile(MozillaEditor.class, image).createImage());		
+		item.setImage(ImageDescriptor
+				.createFromFile(MozillaEditor.class, image).createImage());
 		item.setToolTipText(toolTipText);
+
+		// add dispose listener
+		item.addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				// dispose tollitem's image
+				((ToolItem) e.widget).getImage().dispose();
+
+			}
+		});
 		return item;
 	}
 

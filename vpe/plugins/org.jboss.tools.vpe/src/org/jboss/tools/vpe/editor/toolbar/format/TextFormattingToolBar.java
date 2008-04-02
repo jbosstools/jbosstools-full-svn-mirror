@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -52,6 +54,16 @@ public class TextFormattingToolBar extends SplitToolBar {
 		ToolItem item = new ToolItem(parent, type);
 		item.setImage(ImageDescriptor.createFromFile(MozillaEditor.class, image).createImage());		
 		item.setToolTipText(toolTipText);
+		
+		// add dispose listener 
+		item.addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				// dispose tollitem's image
+				((ToolItem) e.widget).getImage().dispose();
+
+			}
+		});
 
 		return item;
 	}
