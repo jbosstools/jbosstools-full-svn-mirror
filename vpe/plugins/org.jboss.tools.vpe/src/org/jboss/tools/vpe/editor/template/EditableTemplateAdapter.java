@@ -12,18 +12,20 @@ package org.jboss.tools.vpe.editor.template;
 
 import java.util.List;
 
-import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
-import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
+import org.eclipse.swt.graphics.Point;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeAttributeData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
+import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TemplateManagingUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
+import org.mozilla.interfaces.nsIDOMMouseEvent;
+import org.mozilla.interfaces.nsIDOMNSUIEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionController;
@@ -48,15 +50,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		implements ITemplateKeyEventHandler, ITemplateNodesManager,
 		ITemplateSelectionManager {
 
-	/**
-	 * name of "view" tag
-	 */
-	private static final String VIEW_TAGNAME = "view"; //$NON-NLS-1$
-
-	/**
-	 * name of "locale" attribute
-	 */
-	private static final String LOCALE_ATTRNAME = "locale"; //$NON-NLS-1$
+	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
 	/*
 	 * (non-Javadoc)
@@ -64,7 +58,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	 * @see org.jboss.tools.vpe.editor.template.VpeTemplateKeyEventHandler#handleKeyPress(org.jboss.tools.vpe.editor.context.VpePageContext,
 	 *      org.mozilla.interfaces.nsIDOMKeyEvent)
 	 */
-	public boolean handleKeyPress(VpePageContext pageContext,
+	final public boolean handleKeyPress(VpePageContext pageContext,
 			nsIDOMKeyEvent keyEvent) {
 
 		long keyCode = keyEvent.getKeyCode();
@@ -146,11 +140,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	protected boolean handleCharacter(VpePageContext pageContext,
 			nsIDOMKeyEvent keyEvent) {
 
-		// get selection
-		nsISelection selection = getCurrentSelection(pageContext);
-
 		// get visual node which is focused
-		nsIDOMNode visualNode = selection.getFocusNode();
+		nsIDOMNode visualNode = getCurrentSelectedVisualNode(pageContext);
 
 		VpeElementMapping elementMapping = getElmentMapping(pageContext,
 				visualNode);
@@ -162,17 +153,35 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		VpeElementData elementData = elementMapping.getElementData();
 
 		// if node editable
-		if (isNodeEditable(pageContext, visualNode, elementData)) {
+		if (isNodeEditable(visualNode, elementData)) {
 
+			VpeAttributeData attributeData = getAttributeData(visualNode,
+					elementMapping.getElementData());
+
+			Node node;
+			Point selectedRange;
 			// get source node
-			Node node = getSourceNode(pageContext, visualNode, elementData);
+			if ((attributeData.getSourceAttr() == null)
+					&& (attributeData.getAttributeName() != null)) {
+
+				node = createAttribute(
+						(Element) elementMapping.getSourceNode(), attributeData
+								.getAttributeName(), EMPTY_STRING);
+				selectedRange = new Point(0, 0);
+			} else {
+
+				node = getTargetSourceNodeByVisualNode(pageContext, visualNode,
+						elementMapping);
+				selectedRange = getSelectionRange(TemplateManagingUtil
+						.getCurrentSelection(pageContext));
+			}
 
 			if (node == null)
 				return false;
 
 			// get focus and anchor offsets
-			int focusOffset = selection.getFocusOffset();
-			int anchorOffset = selection.getAnchorOffset();
+			int focusOffset = selectedRange.x;
+			int anchorOffset = selectedRange.x + selectedRange.y;
 
 			// initialization offset and length selected string
 			int startOffset = 0;
@@ -206,7 +215,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 			node.setNodeValue(newValue);
 
 			// set selection
-			setSourceSelection(pageContext, node, startOffset + 1, 0);
+			TemplateManagingUtil.setSourceSelection(pageContext, node,
+					startOffset + 1, 0);
 
 		}
 		return true;
@@ -241,11 +251,9 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	 */
 	protected boolean handleRightDelete(VpePageContext pageContext,
 			nsIDOMKeyEvent keyEvent) {
-		// get selection
-		nsISelection selection = getCurrentSelection(pageContext);
 
 		// get visual node which is focused
-		nsIDOMNode visualNode = selection.getFocusNode();
+		nsIDOMNode visualNode = getCurrentSelectedVisualNode(pageContext);
 
 		VpeElementMapping elementMapping = getElmentMapping(pageContext,
 				visualNode);
@@ -257,17 +265,36 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		VpeElementData elementData = elementMapping.getElementData();
 
 		// if node editable
-		if (isNodeEditable(pageContext, visualNode, elementData)) {
+		if (isNodeEditable(visualNode, elementData)) {
 
+			VpeAttributeData attributeData = getAttributeData(visualNode,
+					elementMapping.getElementData());
+
+			Node node;
+			Point selectedRange;
 			// get source node
-			Node node = getSourceNode(pageContext, visualNode, elementData);
+			if ((attributeData.getSourceAttr() == null)
+					&& (attributeData.getAttributeName() != null)) {
+
+				node = createAttribute(
+						(Element) elementMapping.getSourceNode(), attributeData
+								.getAttributeName(), EMPTY_STRING);
+				selectedRange = new Point(0, 0);
+			} else {
+
+				node = getTargetSourceNodeByVisualNode(pageContext, visualNode,
+						elementMapping);
+				selectedRange = getSelectionRange(TemplateManagingUtil
+						.getCurrentSelection(pageContext));
+			}
 
 			if (node == null)
 				return false;
 
 			// get focus and anchor offsets
-			int focusOffset = selection.getFocusOffset();
-			int anchorOffset = selection.getAnchorOffset();
+
+			int focusOffset = selectedRange.x;
+			int anchorOffset = selectedRange.x + selectedRange.y;
 
 			// initialization offset and length selected string
 			int startOffset = 0;
@@ -279,7 +306,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 
 				// if offset is end of text will do nothing
 				if (focusOffset == node.getNodeValue().length()) {
-					setSourceSelection(pageContext, node, focusOffset, 0);
+					TemplateManagingUtil.setSourceSelection(pageContext, node,
+							focusOffset, 0);
 					return true;
 				}
 
@@ -306,7 +334,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 			node.setNodeValue(newValue);
 
 			// set new selection
-			setSourceSelection(pageContext, node, startOffset, 0);
+			TemplateManagingUtil.setSourceSelection(pageContext, node,
+					startOffset, 0);
 
 		}
 
@@ -327,13 +356,9 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	protected boolean handleLeftDelete(VpePageContext pageContext,
 			nsIDOMKeyEvent keyEvent) {
 
-		// get selection
-		nsISelection selection = getCurrentSelection(pageContext);
-
 		// get visual node which is focused
-		nsIDOMNode visualNode = selection.getFocusNode();
+		nsIDOMNode visualNode = getCurrentSelectedVisualNode(pageContext);
 
-		// if node editable
 		VpeElementMapping elementMapping = getElmentMapping(pageContext,
 				visualNode);
 
@@ -344,17 +369,35 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		VpeElementData elementData = elementMapping.getElementData();
 
 		// if node editable
-		if (isNodeEditable(pageContext, visualNode, elementData)) {
+		if (isNodeEditable(visualNode, elementData)) {
 
+			VpeAttributeData attributeData = getAttributeData(visualNode,
+					elementMapping.getElementData());
+
+			Node node;
+			Point selectedRange;
 			// get source node
-			Node node = getSourceNode(pageContext, visualNode, elementData);
+			if ((attributeData.getSourceAttr() == null)
+					&& (attributeData.getAttributeName() != null)) {
 
+				node = createAttribute(
+						(Element) elementMapping.getSourceNode(), attributeData
+								.getAttributeName(), EMPTY_STRING);
+				selectedRange = new Point(0, 0);
+			} else {
+
+				node = getTargetSourceNodeByVisualNode(pageContext, visualNode,
+						elementMapping);
+				selectedRange = getSelectionRange(TemplateManagingUtil
+						.getCurrentSelection(pageContext));
+			}
 			if (node == null)
 				return false;
 
 			// get focus and anchor offsets
-			int focusOffset = selection.getFocusOffset();
-			int anchorOffset = selection.getAnchorOffset();
+
+			int focusOffset = selectedRange.x;
+			int anchorOffset = selectedRange.x + selectedRange.y;
 
 			// initialization offset and length selected string
 			int startOffset = 0;
@@ -366,7 +409,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 				// if offset is start of text then will do nothing
 				if (focusOffset == 0) {
 
-					setSourceSelection(pageContext, node, 0, 0);
+					TemplateManagingUtil.setSourceSelection(pageContext, node,
+							0, 0);
 					return true;
 				}
 				// set start offset to previous character
@@ -393,7 +437,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 			node.setNodeValue(newValue);
 
 			// set new selection
-			setSourceSelection(pageContext, node, startOffset, 0);
+			TemplateManagingUtil.setSourceSelection(pageContext, node,
+					startOffset, 0);
 
 		}
 
@@ -462,11 +507,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	protected boolean handleRight(VpePageContext pageContext,
 			nsIDOMKeyEvent keyEvent) {
 
-		// get selection
-		nsISelection selection = getCurrentSelection(pageContext);
-
 		// get visual node which is focused
-		nsIDOMNode visualNode = selection.getFocusNode();
+		nsIDOMNode visualNode = getCurrentSelectedVisualNode(pageContext);
 
 		VpeElementMapping elementMapping = getElmentMapping(pageContext,
 				visualNode);
@@ -478,21 +520,27 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		VpeElementData elementData = elementMapping.getElementData();
 
 		// get source node
-		Node node = getSourceNode(pageContext, visualNode, elementData);
+		Node node = getTargetSourceNodeByVisualNode(pageContext, visualNode,
+				elementMapping);
 
 		if (node == null)
 			return false;
 
 		// get focus and anchor offsets
-		int focusOffset = selection.getFocusOffset();
+		Point selectedRange = getSelectionRange(TemplateManagingUtil
+				.getCurrentSelection(pageContext));
+
+		int focusOffset = selectedRange.x;
 
 		// if node editable
-		if (isNodeEditable(pageContext, visualNode, elementData)) {
+		if (isNodeEditable(visualNode, elementData)) {
 
 			if (focusOffset != node.getNodeValue().length()) {
-				setSourceSelection(pageContext, node, focusOffset + 1, 0);
+				TemplateManagingUtil.setSourceSelection(pageContext, node,
+						focusOffset + 1, 0);
 			} else
-				setSourceSelection(pageContext, node, focusOffset, 0);
+				TemplateManagingUtil.setSourceSelection(pageContext, node,
+						focusOffset, 0);
 		}
 		return true;
 
@@ -528,11 +576,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	protected boolean handleLeft(VpePageContext pageContext,
 			nsIDOMKeyEvent keyEvent) {
 
-		// get selection
-		nsISelection selection = getCurrentSelection(pageContext);
-
 		// get visual node which is focused
-		nsIDOMNode visualNode = selection.getFocusNode();
+		nsIDOMNode visualNode = getCurrentSelectedVisualNode(pageContext);
 
 		VpeElementMapping elementMapping = getElmentMapping(pageContext,
 				visualNode);
@@ -544,21 +589,27 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		VpeElementData elementData = elementMapping.getElementData();
 
 		// if node editable
-		if (isNodeEditable(pageContext, visualNode, elementData)) {
+		if (isNodeEditable(visualNode, elementData)) {
 
 			// get source node
-			Node node = getSourceNode(pageContext, visualNode, elementData);
+			Node node = getTargetSourceNodeByVisualNode(pageContext,
+					visualNode, elementMapping);
 
 			if (node == null)
 				return false;
 
 			// get focus and anchor offsets
-			int focusOffset = selection.getFocusOffset();
+			Point selectedRange = getSelectionRange(TemplateManagingUtil
+					.getCurrentSelection(pageContext));
+
+			int focusOffset = selectedRange.x;
 
 			if (focusOffset != 0) {
-				setSourceSelection(pageContext, node, focusOffset - 1, 0);
+				TemplateManagingUtil.setSourceSelection(pageContext, node,
+						focusOffset - 1, 0);
 			} else {
-				setSourceSelection(pageContext, node, 0, 0);
+				TemplateManagingUtil
+						.setSourceSelection(pageContext, node, 0, 0);
 			}
 		}
 		return true;
@@ -587,8 +638,390 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	 * @param elementData
 	 * @return
 	 */
-	protected VpeAttributeData getAttributeData(VpePageContext pageContext,
-			nsIDOMNode visualNode, VpeElementData elementData) {
+	public boolean isNodeEditable(nsIDOMNode visualNode,
+			VpeElementData elementData) {
+
+		VpeAttributeData attributeData = getAttributeData(visualNode,
+				elementData);
+
+		if (attributeData != null)
+			return attributeData.isEditable();
+
+		return false;
+	}
+
+	/**
+	 * 
+	 */
+	public boolean isNodeEditable(Node node, VpeElementData elementData) {
+
+		VpeAttributeData attributeData = getAttributeData(node, elementData);
+
+		if (attributeData != null) {
+			return attributeData.isEditable();
+		}
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.tools.vpe.editor.template.ITemplateSelectionManager#setSelection(org.jboss.tools.vpe.editor.context.VpePageContext,
+	 *      org.mozilla.interfaces.nsISelection)
+	 */
+	final public void setSelection(VpePageContext pageContext,
+			nsISelection selection) {
+
+		nsIDOMNode selectedVisualNode = TemplateManagingUtil
+				.getSelectedNode(selection);
+
+		if (selectedVisualNode == null)
+			return;
+
+		VpeElementMapping elementMapping = getElmentMapping(pageContext,
+				selectedVisualNode);
+
+		// get target visual node
+		nsIDOMNode targetVisualNode = getTargetVisualNodeByVisualNode(
+				pageContext, selectedVisualNode, elementMapping);
+
+		// get target souce node
+		Node targetSourceNode = getTargetSourceNodeByVisualNode(pageContext,
+				selectedVisualNode, elementMapping);
+
+		int focusOffset;
+		int length;
+
+		if (isNodeEditable(targetVisualNode, elementMapping.getElementData())) {
+
+			Point range = getSelectionRange(selection);
+
+			focusOffset = range.x;
+			length = range.y;
+
+		} else {
+
+			focusOffset = 0;
+			length = TemplateManagingUtil.getLengthNode(targetSourceNode);
+
+		}
+
+		// set source selection
+//		TemplateManagingUtil.setSourceSelection(pageContext, targetSourceNode,
+//				focusOffset, length);
+
+		 setSelectionRange(selection,
+		 targetVisualNode, new Point(focusOffset, length));
+
+		// check for text node
+		if (targetVisualNode.getNodeType() != nsIDOMNode.ELEMENT_NODE)
+			targetVisualNode = targetVisualNode.getParentNode();
+
+		// paint visual selection
+		pageContext.getVisualBuilder().setSelectionRectangle(
+				(nsIDOMElement) targetVisualNode
+						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.tools.vpe.editor.template.ITemplateSelectionManager#setSelectionBySource(org.jboss.tools.vpe.editor.context.VpePageContext,
+	 *      org.jboss.tools.vpe.editor.selection.VpeSelectionController, int,
+	 *      int)
+	 */
+	final public void setSelectionBySource(VpePageContext pageContext,
+			VpeSelectionController selectionController, int focus, int anchor) {
+
+		// get element mapping
+		VpeElementMapping elementMapping = TemplateManagingUtil
+				.getElementMappingBySourceSelection(pageContext, focus, anchor);
+
+		// get focused attribute
+		Node focusNode = getTargetSourceNodeBySourcePosition(pageContext,
+				focus, anchor);
+
+		int visualFocus = 0;
+		int visualAnchor = 0;
+
+		if (isNodeEditable(focusNode, elementMapping.getElementData())) {
+
+			String text = focusNode.getNodeValue();
+			int start = TemplateManagingUtil.getStartOffsetNode(focusNode);
+			focus = focus - start;
+			anchor = anchor - start;
+			visualFocus = TextUtil.visualInnerPosition(text, focus);
+			visualAnchor = TextUtil.visualInnerPosition(text, anchor);
+
+		}
+
+		nsIDOMNode visualNode = getTargetVisualNodeBySourceNode(focusNode,
+				elementMapping);
+
+		setSelectionRange(selectionController
+				.getSelection(nsISelectionController.SELECTION_NORMAL),
+				visualNode, new Point(visualFocus, visualAnchor - visualFocus));
+
+		// check for text node
+		if (visualNode.getNodeType() != nsIDOMNode.ELEMENT_NODE) {
+			visualNode = visualNode.getParentNode();
+		}
+
+		pageContext.getVisualBuilder().setSelectionRectangle(
+				(nsIDOMElement) visualNode
+						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.tools.vpe.editor.template.ITemplateSelectionManager#setSelectionByMouse(org.mozilla.interfaces.nsIDOMMouseEvent)
+	 */
+	final public void setSelectionByMouse(VpePageContext pageContext,
+			VpeSelectionController selectionController,
+			nsIDOMMouseEvent mouseEvent) {
+
+		// get visual node by event
+		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
+
+		// get element mapping
+		VpeElementMapping elementMapping = getElmentMapping(pageContext,
+				visualNode);
+
+		if (elementMapping == null)
+			return;
+
+		Node targetSourceNode = getTargetSourceNodeByVisualNode(pageContext,
+				visualNode, elementMapping);
+
+		nsIDOMNode targetVisualNode = getTargetVisualNodeByVisualNode(
+				pageContext, visualNode, elementMapping);
+
+		// get nsIDOMNSUIEvent event
+		nsIDOMNSUIEvent nsuiEvent = (nsIDOMNSUIEvent) mouseEvent
+				.queryInterface(nsIDOMNSUIEvent.NS_IDOMNSUIEVENT_IID);
+
+		int selectionOffset;
+		int selectionLength;
+
+		if (isNodeEditable(targetVisualNode, elementMapping.getElementData())) {
+			selectionOffset = nsuiEvent.getRangeOffset();
+			selectionLength = 0;
+		} else {
+
+			selectionOffset = 0;
+			selectionLength = TemplateManagingUtil
+					.getLengthNode(targetSourceNode);
+
+		}
+
+		TemplateManagingUtil.setSourceSelection(pageContext, targetSourceNode, selectionOffset, selectionLength);
+		
+		setSelectionRange(selectionController
+				.getSelection(nsISelectionController.SELECTION_NORMAL),
+				targetVisualNode, new Point(selectionOffset, selectionLength));
+
+		// check for text node
+		if (targetVisualNode.getNodeType() != nsIDOMNode.ELEMENT_NODE) {
+			targetVisualNode = targetVisualNode.getParentNode();
+		}
+
+		// paint selection rectangle
+		pageContext.getVisualBuilder().setSelectionRectangle(
+				(nsIDOMElement) targetVisualNode
+						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
+
+	}
+
+	/**
+	 * 
+	 */
+	public boolean openBundle(VpePageContext pageContext,
+			nsIDOMNode visualNode, VpeElementMapping elementMapping) {
+
+		VpeAttributeData attributeData = getAttributeData(
+				getTargetVisualNodeByVisualNode(pageContext, visualNode,
+						elementMapping), elementMapping.getElementData());
+
+		// so as nsIDOMMouseEvent doesn't give simple selected nsIDOMText as
+		// target, but nsiSelection can give simple "text"
+		// TODO may be, there is a better way to get selected simple nsIDOMText
+		if (attributeData == null) {
+
+			// get visual node which is focused
+			nsIDOMNode tempNode = getCurrentSelectedVisualNode(pageContext);
+			attributeData = getAttributeData(getTargetVisualNodeByVisualNode(
+					pageContext, tempNode, elementMapping), elementMapping
+					.getElementData());
+
+		}
+
+		if ((attributeData == null) || (attributeData.getSourceAttr() == null))
+			return false;
+
+		return pageContext.getBundle().openBundle(
+				attributeData.getSourceAttr().getNodeValue(),
+				TemplateManagingUtil.getPageLocale(pageContext, attributeData
+						.getSourceAttr()));
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.tools.vpe.editor.template.ITemplateNodesManager#getTargetSourceNodeBySourcePosition(org.jboss.tools.vpe.editor.context.VpePageContext,
+	 *      int, int)
+	 */
+	public Node getTargetSourceNodeBySourcePosition(VpePageContext pageContext,
+			int focusPosition, int anchorPosition) {
+
+		// get element mapping by position
+		VpeElementMapping elementMapping = TemplateManagingUtil
+				.getElementMappingBySourceSelection(pageContext, focusPosition,
+						anchorPosition);
+
+		// find focus attribute by position
+		Node focusAttribute = findElementAttributeByPosition(elementMapping
+				.getElementData(), focusPosition);
+
+		// fond anchor attribute by position
+		Node anchorAttribute = findElementAttributeByPosition(elementMapping
+				.getElementData(), anchorPosition);
+
+		// if anchor and focus attributes are equal return focused attribute
+		if (focusAttribute == anchorAttribute)
+			return focusAttribute;
+
+		// else return all element
+		return elementMapping.getSourceNode();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.tools.vpe.editor.template.ITemplateNodesManager#getTargetVisualNodeBySourceNode(org.w3c.dom.Node,
+	 *      org.jboss.tools.vpe.editor.mapping.VpeElementMapping)
+	 */
+	public nsIDOMNode getTargetVisualNodeBySourceNode(Node sourceNode,
+			VpeElementMapping elementMapping) {
+
+		// if element is not null
+		if (elementMapping != null) {
+
+			// get attributeData
+			VpeAttributeData attributeData = getAttributeData(sourceNode,
+					elementMapping.getElementData());
+
+			// attributeData is found
+			if (attributeData != null)
+				return attributeData.getVisualAttr();
+			else
+				return elementMapping.getVisualNode();
+
+		}
+
+		return null;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.tools.vpe.editor.template.ITemplateNodesManager#getTargetVisualNodeByVisualNode(org.mozilla.interfaces.nsIDOMNode,
+	 *      org.jboss.tools.vpe.editor.mapping.VpeElementMapping)
+	 */
+	public nsIDOMNode getTargetVisualNodeByVisualNode(
+			VpePageContext pageContext, nsIDOMNode visualNode,
+			VpeElementMapping elementMapping) {
+
+		// if element is not null
+		if (elementMapping != null) {
+
+			// get attributeData
+			VpeAttributeData attributeData = getAttributeData(visualNode,
+					elementMapping.getElementData());
+
+			// attributeData is found
+			if (attributeData != null)
+				return attributeData.getVisualAttr();
+			else
+				return elementMapping.getVisualNode();
+
+		}
+
+		return null;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.tools.vpe.editor.template.ITemplateNodesManager#getTargetSourceNodeByVisualNode(org.mozilla.interfaces.nsIDOMNode,
+	 *      org.jboss.tools.vpe.editor.mapping.VpeElementMapping)
+	 */
+	public Node getTargetSourceNodeByVisualNode(VpePageContext pageContext,
+			nsIDOMNode visualNode, VpeElementMapping elementMapping) {
+
+		// if element is not null
+		if (elementMapping != null) {
+
+			// get attributeData
+			VpeAttributeData attributeData = getAttributeData(visualNode,
+					elementMapping.getElementData());
+
+			// attributeData is found
+			if ((attributeData != null)
+					&& (attributeData.getSourceAttr() != null))
+				return attributeData.getSourceAttr();
+			else
+				return elementMapping.getSourceNode();
+
+		}
+
+		return null;
+
+	}
+
+	/**
+	 * 
+	 * @param elementData
+	 * @param offset
+	 * @return
+	 */
+	private Node findElementAttributeByPosition(VpeElementData elementData,
+			int position) {
+
+		// if data are correct
+		if ((elementData != null) && (elementData.getAttributesData() != null)) {
+
+			List<VpeAttributeData> attributesMapping = elementData
+					.getAttributesData();
+
+			// for each defined attribute
+			for (VpeAttributeData attributeData : attributesMapping) {
+
+				// if position is in attribute's bound
+				if ((position >= (TemplateManagingUtil
+						.getStartOffsetNode(attributeData.getSourceAttr())))
+						&& (position <= (TemplateManagingUtil
+								.getEndOffsetNode(attributeData.getSourceAttr()))))
+					return attributeData.getSourceAttr();
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param pageContext
+	 * @param visualNode
+	 * @param elementData
+	 * @return
+	 */
+	protected VpeAttributeData getAttributeData(nsIDOMNode visualNode,
+			VpeElementData elementData) {
 
 		// if input data is correct
 		if ((visualNode != null) && (elementData != null)
@@ -616,8 +1049,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	 * @param elementData
 	 * @return
 	 */
-	protected VpeAttributeData getAttributeData(VpePageContext pageContext,
-			Node node, VpeElementData elementData) {
+	protected VpeAttributeData getAttributeData(Node node,
+			VpeElementData elementData) {
 
 		// if input data is correct
 		if ((node != null) && (elementData != null)
@@ -637,363 +1070,6 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jboss.tools.vpe.editor.template.VpeTemplateNodesManager#getSourceNode(org.jboss.tools.vpe.editor.context.VpePageContext,
-	 *      org.mozilla.interfaces.nsIDOMNode)
-	 */
-	public Node getSourceNode(VpePageContext pageContext,
-			nsIDOMNode visualNode, VpeElementData elementData) {
-
-		// get attribute data
-		VpeAttributeData attributeData = getAttributeData(pageContext,
-				visualNode, elementData);
-
-		if (attributeData != null)
-			return attributeData.getSourceAttr();
-
-		return null;
-	}
-
-	/**
-	 * 
-	 * @param pageContext
-	 * @param node
-	 * @param elementData
-	 * @return
-	 */
-	public nsIDOMNode getVisualNode(VpePageContext pageContext, Node node,
-			VpeElementData elementData) {
-
-		VpeAttributeData attributeData = getAttributeData(pageContext, node,
-				elementData);
-		if (attributeData != null)
-			return attributeData.getVisualAttr();
-
-		return null;
-	}
-
-	/**
-	 * 
-	 * @param pageContext
-	 * @param visualNode
-	 * @param elementData
-	 * @return
-	 */
-	public boolean isNodeEditable(VpePageContext pageContext,
-			nsIDOMNode visualNode, VpeElementData elementData) {
-
-		VpeAttributeData attributeData = getAttributeData(pageContext,
-				visualNode, elementData);
-
-		if (attributeData != null)
-			return attributeData.isEditable();
-
-		return false;
-	}
-
-	/**
-	 * 
-	 */
-	public boolean isNodeEditable(VpePageContext pageContext, Node node,
-			VpeElementData elementData) {
-
-		VpeAttributeData attributeData = getAttributeData(pageContext, node,
-				elementData);
-
-		if (attributeData != null) {
-			return attributeData.isEditable();
-		}
-		return false;
-	}
-
-	/**
-	 * 
-	 * @param pageContext
-	 * @param node
-	 * @param offset
-	 * @param length
-	 */
-	protected void setSourceSelection(VpePageContext pageContext, Node node,
-			int offset, int length) {
-
-		int start = getStartOffsetNode(node);
-
-		pageContext.getSourceBuilder().getStructuredTextViewer()
-				.setSelectedRange(start + offset, length);
-		pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(
-				start + offset, length);
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jboss.tools.vpe.editor.template.ITemplateSelectionManager#setSelection(org.jboss.tools.vpe.editor.context.VpePageContext,
-	 *      org.mozilla.interfaces.nsISelection)
-	 */
-	public void setSelection(VpePageContext pageContext, nsISelection selection) {
-
-		nsIDOMNode focusedVisualNode = selection.getFocusNode();
-
-		if (focusedVisualNode == null)
-			return;
-
-		VpeElementMapping elementMapping = pageContext.getDomMapping()
-				.getNearElementMapping(focusedVisualNode);
-		if (elementMapping == null)
-			return;
-
-		int focusOffset;
-		int length;
-
-		VpeAttributeData attributeData = getAttributeData(pageContext,
-				focusedVisualNode, elementMapping.getElementData());
-
-		boolean isEditable = isNodeEditable(pageContext, focusedVisualNode,
-				elementMapping.getElementData());
-
-		Node focusedSourceNode;
-		if (attributeData == null) {
-
-			focusedSourceNode = elementMapping.getSourceNode();
-			focusedVisualNode = elementMapping.getVisualNode();
-
-			focusOffset = 0;
-			length = 0;
-
-		} else {
-
-			focusedSourceNode = getSourceNode(pageContext, focusedVisualNode,
-					elementMapping.getElementData());
-
-			if (focusedSourceNode == null)
-				focusedSourceNode = elementMapping.getSourceNode();
-
-			if (isEditable) {
-
-				focusOffset = selection.getFocusOffset();
-				length = selection.getAnchorOffset() - focusOffset;
-
-			} else {
-
-				focusOffset = 0;
-				length = getLengthNode(focusedSourceNode);
-			}
-
-		}
-
-		setSourceSelection(pageContext, focusedSourceNode, focusOffset, length);
-
-		if (focusedVisualNode.getNodeType() != nsIDOMNode.ELEMENT_NODE)
-			focusedVisualNode = focusedVisualNode.getParentNode();
-
-		pageContext.getVisualBuilder().setSelectionRectangle(
-				(nsIDOMElement) focusedVisualNode
-						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jboss.tools.vpe.editor.template.ITemplateSelectionManager#setVisualSelectionBySource(org.jboss.tools.vpe.editor.context.VpePageContext,
-	 *      int, int)
-	 */
-	public void setVisualSelectionBySource(VpePageContext pageContext,
-			VpeSelectionController selectionController, int focus, int anchor) {
-
-		// get source node
-		Node sourceNode = TemplateManagingUtil.getSourceNodeByPosition(
-				pageContext, focus);
-
-		// get element mapping
-		VpeElementMapping elementMapping = pageContext.getDomMapping()
-				.getNearElementMapping(sourceNode);
-
-		// get focused attribute
-		Node focusNode = getFocusedNode(sourceNode, elementMapping
-				.getElementData(), focus);
-
-		Node anchorNode = getFocusedNode(sourceNode, elementMapping
-				.getElementData(), anchor);
-
-		int visualFocus = 0;
-		int visualAnchor = 0;
-		nsIDOMNode visualNode = null;
-		if ((focusNode == anchorNode)
-				&& isNodeEditable(pageContext, focusNode, elementMapping
-						.getElementData())) {
-
-			visualNode = getVisualNode(pageContext, focusNode, elementMapping
-					.getElementData());
-			if (visualNode != null) {
-				String text = focusNode.getNodeValue();
-				int start = getStartOffsetNode(focusNode);
-				focus = focus - start;
-				anchor = anchor - start;
-				visualFocus = TextUtil.visualInnerPosition(text, focus);
-				visualAnchor = TextUtil.visualInnerPosition(text, anchor);
-			}
-
-		}
-
-		if (visualNode == null) {
-			visualNode = elementMapping.getVisualNode();
-
-		}
-		nsISelection selection = selectionController
-				.getSelection(nsISelectionController.SELECTION_NORMAL);
-
-		if (visualNode.getNodeType() == nsIDOMNode.TEXT_NODE) {
-			selection.collapse(visualNode, visualFocus);
-
-			// if(visualFocus!=visualAnchor)
-			// selection.extend(visualNode, visualAnchor );
-		}
-		else {
-			selection.collapse(visualNode, 0);
-		}
-		if (visualNode.getNodeType() != nsIDOMNode.ELEMENT_NODE) {
-			visualNode = visualNode.getParentNode();
-		}
-		pageContext.getVisualBuilder().setSelectionRectangle(
-				(nsIDOMElement) visualNode
-						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jboss.tools.vpe.editor.template.VpeTemplateNodesManager#getFocusedNode(org.w3c.dom.Node,
-	 *      int)
-	 */
-	public Node getFocusedNode(Node sourceNode, VpeElementData elementData,
-			int offset) {
-
-		if ((elementData != null) && (elementData.getAttributesData() != null)) {
-
-			List<VpeAttributeData> attributesMapping = elementData
-					.getAttributesData();
-
-			for (VpeAttributeData attributeData : attributesMapping) {
-
-				if ((offset >= (getStartOffsetNode(attributeData
-						.getSourceAttr())))
-						&& (offset <= (getEndOffsetNode(attributeData
-								.getSourceAttr()))))
-					return attributeData.getSourceAttr();
-			}
-		}
-
-		return sourceNode;
-	}
-
-	/**
-	 * get start offset of node
-	 * 
-	 * @param node
-	 * @return
-	 */
-	protected int getStartOffsetNode(Node node) {
-
-		if (node instanceof IDOMAttr) {
-			return ((IDOMAttr) node).getValueRegionStartOffset() + 1;
-		} else if (node instanceof IndexedRegion) {
-			return ((IndexedRegion) node).getStartOffset();
-		}
-		return 0;
-	}
-
-	/**
-	 * 
-	 * @param node
-	 * @return
-	 */
-	protected int getLengthNode(Node node) {
-
-		if (node instanceof IDOMAttr) {
-			return ((IDOMAttr) node).getValueSource().length();
-		} else if (node instanceof IndexedRegion) {
-			return ((IndexedRegion) node).getEndOffset()
-					- ((IndexedRegion) node).getStartOffset();
-		}
-		return 0;
-	}
-
-	/**
-	 * get end offset of node
-	 * 
-	 * @param node
-	 * @return
-	 */
-	protected int getEndOffsetNode(Node node) {
-
-		if (node instanceof IndexedRegion) {
-			return ((IndexedRegion) node).getEndOffset();
-		}
-		return 0;
-	}
-
-	/**
-	 * 
-	 */
-	public boolean openBundle(VpePageContext pageContext,
-			nsIDOMNode visualNode, VpeElementData elementData) {
-
-		Node node = getSourceNode(pageContext, visualNode, elementData);
-
-		// so as nsIDOMMouseEvent doesn't give simple selected nsIDOMText as
-		// target, but nsiSelection can give simple "text"
-		// TODO may be, there is a better way to get selected simple nsIDOMText
-		if (node == null) {
-
-			// get selection
-			nsISelection selection = pageContext.getEditPart().getController()
-					.getXulRunnerEditor().getSelection();
-
-			// get visual node which is focused
-			nsIDOMNode tempNode = selection.getFocusNode();
-
-			node = getSourceNode(pageContext, tempNode, elementData);
-
-		}
-
-		if (node == null)
-			return false;
-
-		return pageContext.getBundle().openBundle(node.getNodeValue(),
-				getPageLocale(pageContext, node));
-
-	}
-
-	/**
-	 * 
-	 * @param pageContext
-	 * @param sourceElement
-	 * @return
-	 */
-	private String getPageLocale(VpePageContext pageContext, Node sourceNode) {
-
-		while (sourceNode != null) {
-
-			if (VIEW_TAGNAME.equals(sourceNode.getLocalName())) {
-				break;
-			}
-			sourceNode = sourceNode.getParentNode();
-		}
-
-		if ((sourceNode == null) || !(sourceNode instanceof Element)
-				|| !(((Element) sourceNode).hasAttribute(LOCALE_ATTRNAME)))
-			return null;
-
-		String locale = ((Element) sourceNode).getAttribute(LOCALE_ATTRNAME);
-
-		return locale;
-
-	}
-
 	/**
 	 * 
 	 * @param pageContext
@@ -1007,8 +1083,97 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 
 	}
 
-	protected nsISelection getCurrentSelection(VpePageContext pageContext) {
-		return pageContext.getEditPart().getController().getXulRunnerEditor()
-				.getSelection();
+	/**
+	 * 
+	 * @param pageContext
+	 * @return
+	 */
+	protected nsIDOMNode getCurrentSelectedVisualNode(VpePageContext pageContext) {
+
+		nsISelection selection = TemplateManagingUtil
+				.getCurrentSelection(pageContext);
+
+		if (selection.getFocusNode() != null)
+			return TemplateManagingUtil.getSelectedNode(selection);
+		else
+			return TemplateManagingUtil.getLastSelectedVisualNode(pageContext);
+
+	}
+
+	/**
+	 * 
+	 * @param pageContext
+	 * @return
+	 */
+	protected Point getSelectionRange(nsISelection selection) {
+
+		nsIDOMNode focusedNode = TemplateManagingUtil
+				.getSelectedNode(selection);
+
+		Point range = new Point(0, 0);
+
+		if (focusedNode != null) {
+			if ((HTML.TAG_INPUT.equalsIgnoreCase(focusedNode.getLocalName()))
+					|| (HTML.TAG_TEXTAREA.equalsIgnoreCase(focusedNode
+							.getLocalName()))) {
+
+				range = TemplateManagingUtil
+						.getSelectionRangeFromInputElement(focusedNode);
+
+			} else {
+				range.x = selection.getFocusOffset();
+				range.y = selection.getAnchorOffset()
+						- selection.getFocusOffset();
+
+			}
+		}
+		return range;
+	}
+
+	/**
+	 * 
+	 * @param selection
+	 * @param node
+	 * @param range
+	 */
+	protected void setSelectionRange(nsISelection selection, nsIDOMNode node,
+			Point range) {
+
+		 selection.removeAllRanges();
+		if (node.getNodeType() == nsIDOMNode.TEXT_NODE) {
+			selection.collapse(node, range.x);
+
+			// if(visualFocus!=visualAnchor)
+			// selection.extend(visualNode, visualAnchor );
+		} else {
+			
+			if ((HTML.TAG_INPUT.equalsIgnoreCase(node.getLocalName()))
+					|| (HTML.TAG_TEXTAREA.equalsIgnoreCase(node.getLocalName()))) {
+				TemplateManagingUtil.setSelectionRangeInInputElement(node,
+						range);
+
+			}
+			selection.collapse(node, 0);
+		}
+
+	}
+
+	/**
+	 * 
+	 * @param sourceElement
+	 * @param attributeName
+	 * @param value
+	 */
+	protected Node createAttribute(Element sourceElement, String attributeName,
+			String value) {
+
+		if ((sourceElement != null) && (attributeName != null)) {
+			sourceElement.setAttribute(attributeName, value != null ? value
+					: ""); //$NON-NLS-1$
+
+			return sourceElement.getAttributeNode(attributeName);
+		}
+		return null;
+
 	}
 }

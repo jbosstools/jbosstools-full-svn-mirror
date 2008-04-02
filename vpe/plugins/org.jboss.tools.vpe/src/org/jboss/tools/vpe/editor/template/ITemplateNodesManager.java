@@ -12,6 +12,7 @@ package org.jboss.tools.vpe.editor.template;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
+import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Node;
 
@@ -31,8 +32,8 @@ public interface ITemplateNodesManager {
 	 * 
 	 * @return true if selected attribute is editable
 	 */
-	public boolean isNodeEditable(VpePageContext pageContext,
-			nsIDOMNode visualNode, VpeElementData elementData);
+	public boolean isNodeEditable(nsIDOMNode visualNode,
+			VpeElementData elementData);
 
 	/**
 	 * 
@@ -41,40 +42,20 @@ public interface ITemplateNodesManager {
 	 * @param elementData
 	 * @return
 	 */
-	public boolean isNodeEditable(VpePageContext pageContext, Node node,
-			VpeElementData elementData);
+	public boolean isNodeEditable(Node node, VpeElementData elementData);
 
-	/**
-	 * get visual element of attribute from source element
-	 * 
-	 * @param pageContext
-	 * @param attr
-	 * @param data
-	 * @return
-	 */
-	public nsIDOMNode getVisualNode(VpePageContext pageContext, Node node,
-			VpeElementData elementData);
+	public nsIDOMNode getTargetVisualNodeBySourceNode(Node sourceNode,
+			VpeElementMapping elementMapping);
 
-	/**
-	 * get source element of attribute from visual element
-	 * 
-	 * @param pageContext
-	 * @param visualNode
-	 * @param data
-	 * @return
-	 */
-	public Node getSourceNode(VpePageContext pageContext,
-			nsIDOMNode visualNode, VpeElementData elementData);
+	public nsIDOMNode getTargetVisualNodeByVisualNode(
+			VpePageContext pageContext, nsIDOMNode visualNode,
+			VpeElementMapping elementMapping);
 
-	/**
-	 * get sourceNode by offset
-	 * 
-	 * @param sourceNode
-	 * @param offset
-	 * @return
-	 */
-	public Node getFocusedNode(Node sourceNode, VpeElementData elementData,
-			int offset);
+	public Node getTargetSourceNodeByVisualNode(VpePageContext pageContext,
+			nsIDOMNode visualNode, VpeElementMapping elementMapping);
+
+	public Node getTargetSourceNodeBySourcePosition(VpePageContext pageContext,
+			int focusOffset, int anchorOffset);
 
 	/**
 	 * open bundle
@@ -84,5 +65,5 @@ public interface ITemplateNodesManager {
 	 * @return
 	 */
 	boolean openBundle(VpePageContext pageContext, nsIDOMNode visualNode,
-			VpeElementData elementData);
+			VpeElementMapping elementMapping);
 }

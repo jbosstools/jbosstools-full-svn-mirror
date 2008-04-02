@@ -12,6 +12,7 @@ package org.jboss.tools.vpe.editor.template;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
+import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsISelection;
 
 /**
@@ -36,7 +37,18 @@ public interface ITemplateSelectionManager {
 	 * @param pageContext
 	 * @return true if visual element was selected
 	 */
-	public void setVisualSelectionBySource(VpePageContext pageContext,
+	public void setSelectionBySource(VpePageContext pageContext,
 			VpeSelectionController selectionController, int focus, int anchor);
+
+	/**
+	 * set selection by mouse
+	 * 
+	 * @param visualSelectionController
+	 * 
+	 * @param mouseEvent
+	 */
+	public void setSelectionByMouse(VpePageContext pageContext,
+			VpeSelectionController selectionController,
+			nsIDOMMouseEvent mouseEvent);
 
 }

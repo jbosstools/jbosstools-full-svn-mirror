@@ -1623,24 +1623,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
     public boolean isTextEditable(nsIDOMNode visualNode) {
 
-    	
-    	// get VpeNodeMapping
-		VpeNodeMapping nodeMapping = domMapping
-		.getNearNodeMapping(visualNode);
-
-		// if it is element mapping
-		if (nodeMapping instanceof VpeElementMapping) {
-			// get template
-			VpeTemplate template = ((VpeElementMapping) nodeMapping)
-					.getTemplate();
-			// if template implements VpeTemplateAttributesManager
-			if (template instanceof ITemplateNodesManager)
-				return ((ITemplateNodesManager) template).isNodeEditable(
-						pageContext, visualNode,
-						((VpeElementMapping) nodeMapping).getElementData());
-
-		}
-		
 		if (visualNode != null) {
 			nsIDOMNode parent = visualNode.getParentNode();
 			if (parent != null

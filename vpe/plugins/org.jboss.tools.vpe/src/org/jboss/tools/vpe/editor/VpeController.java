@@ -135,7 +135,6 @@ import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateListener;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
-import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TemplateManagingUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
@@ -151,6 +150,7 @@ import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMMutationEvent;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionListener;
 import org.mozilla.interfaces.nsISupports;
@@ -553,7 +553,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 						anchorPosition);
 		
 		if (template instanceof ITemplateSelectionManager) {
-			((ITemplateSelectionManager) template).setVisualSelectionBySource(
+			((ITemplateSelectionManager) template).setSelectionBySource(
 					pageContext, visualSelectionController, focusPosition,
 					anchorPosition);
 			return;
@@ -756,26 +756,43 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener, INo
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
-		nsIDOMElement visualDragElement = selectionBuilder.getDragElement(mouseEvent);
-		if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-			nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
-			System.out.println("<<< mouseDown  targetNode: " + visualNode.getNodeName() + " (" + visualNode + ")  selectedElement: " + (visualDragElement != null ? visualDragElement.getNodeName() + " (" + visualDragElement + ")" : null)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-		}
+	
 		mouseDownSelectionFlag = false;
 		
-		if (visualDragElement != null) {
+		VpeTemplate template = TemplateManagingUtil
+				.getTemplateByVisualSelection(pageContext, VisualDomUtil
+						.getTargetNode(mouseEvent));
+		
+		if (template instanceof ITemplateSelectionManager) {
+
+			((ITemplateSelectionManager) template).setSelectionByMouse(
+					pageContext, visualSelectionController, mouseEvent);
 			
-			//we shouldn't change selection when we click on <input type="text" /> element,
-			//because if we change after resizing the input element lost selection
-//			if(!(HTML.TAG_INPUT.equalsIgnoreCase(visualDragElement.getNodeName())&&
-//			HTML.ATTR_TEXT.equalsIgnoreCase(visualDragElement.getAttribute(HTML.ATTR_TYPE))
-//			&&visualDragElement.getAttribute(HTML.ATTR_TYPE)!=null)) {				
+			mouseDownSelectionFlag = true;	
+
+		}
+		else {
+			nsIDOMElement visualDragElement = selectionBuilder.getDragElement(mouseEvent);
+			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+				nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
+				System.out.println("<<< mouseDown  targetNode: " + visualNode.getNodeName() + " (" + visualNode + ")  selectedElement: " + (visualDragElement != null ? visualDragElement.getNodeName() + " (" + visualDragElement + ")" : null)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+			}
+		
 			
-			selectionBuilder.setVisualElementSelection(visualDragElement);
-			mouseDownSelectionFlag = true;		
-//			} 
-		} else {
-			selectionBuilder.setCaretAtMouse(mouseEvent);
+			if (visualDragElement != null) {
+				
+				//we shouldn't change selection when we click on <input type="text" /> element,
+				//because if we change after resizing the input element lost selection
+	//			if(!(HTML.TAG_INPUT.equalsIgnoreCase(visualDragElement.getNodeName())&&
+	//			HTML.ATTR_TEXT.equalsIgnoreCase(visualDragElement.getAttribute(HTML.ATTR_TYPE))
+	//			&&visualDragElement.getAttribute(HTML.ATTR_TYPE)!=null)) {				
+				
+				selectionBuilder.setVisualElementSelection(visualDragElement);
+				mouseDownSelectionFlag = true;		
+	//			} 
+			} else {
+				selectionBuilder.setCaretAtMouse(mouseEvent);
+			}
 		}
 		switcher.stopActiveEditor();
 	}

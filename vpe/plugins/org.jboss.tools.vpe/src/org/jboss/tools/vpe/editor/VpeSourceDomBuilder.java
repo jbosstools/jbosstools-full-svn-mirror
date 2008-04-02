@@ -38,6 +38,7 @@ import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
 import org.jboss.tools.vpe.editor.template.ITemplateNodesManager;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.editor.util.TemplateManagingUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -251,22 +252,20 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 	}
 	
 	boolean openBundleEditors(nsIDOMNode visualNode) {
-		Node sourceNode = domMapping.getNearSourceNode(visualNode);
-		if (sourceNode != null && sourceNode.getNodeType() == Node.ELEMENT_NODE) {
-			VpeElementMapping elementMapping = (VpeElementMapping) domMapping
-					.getNodeMapping(sourceNode);
-			if (elementMapping != null) {
+		VpeElementMapping elementMapping = TemplateManagingUtil
+				.getElementMappingByVisualSelection(pageContext, visualNode);
+		if (elementMapping != null) {
 
-				VpeTemplate template = elementMapping.getTemplate();
+			VpeTemplate template = elementMapping.getTemplate();
 
-				// if template implements VpeTemplateNodesManager interface
-				if (template instanceof ITemplateNodesManager) {
-					return ((ITemplateNodesManager) template).openBundle(
-							pageContext, visualNode, elementMapping.getElementData());
-				} else {
-					template.openBundleEditors(pageContext,
-							(Element) sourceNode, elementMapping.getData());
-				}
+			// if template implements VpeTemplateNodesManager interface
+			if (template instanceof ITemplateNodesManager) {
+				return ((ITemplateNodesManager) template).openBundle(
+						pageContext, visualNode, elementMapping);
+			} else {
+				template.openBundleEditors(pageContext,
+						(Element) elementMapping.getSourceNode(),
+						elementMapping.getData());
 			}
 		}
 		return false;

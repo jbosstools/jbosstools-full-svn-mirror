@@ -75,7 +75,7 @@ public class VpeSelectionBuilder {
 		
 		VpeTemplate vpeTemplate = TemplateManagingUtil
 				.getTemplateByVisualSelection(visualBuilder.getPageContext(),
-						selection.getFocusNode());
+						TemplateManagingUtil.getSelectedNode(selection));
 		if (vpeTemplate instanceof ITemplateSelectionManager) {
 			((ITemplateSelectionManager) vpeTemplate).setSelection(
 					visualBuilder.getPageContext(), selection);
