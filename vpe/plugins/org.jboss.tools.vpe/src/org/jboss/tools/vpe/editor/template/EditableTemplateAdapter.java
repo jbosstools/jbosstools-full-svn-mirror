@@ -707,8 +707,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		}
 
 		// set source selection
-//		TemplateManagingUtil.setSourceSelection(pageContext, targetSourceNode,
-//				focusOffset, length);
+		TemplateManagingUtil.setSourceSelection(pageContext, targetSourceNode,
+				focusOffset, length);
 
 		 setSelectionRange(selection,
 		 targetVisualNode, new Point(focusOffset, length));
