@@ -39,14 +39,34 @@ import org.jboss.ide.eclipse.archives.core.ant.AntArchivesCore;
  *
  */
 public class ArchivesCoreTest extends TestCase {
+	private static WorkspaceArchivesCore workspaceCore;
+	private static AntArchivesCore antCore;
+	
 	public void testArchivesCore() {
 		ArchivesCore core = ArchivesCore.getInstance();
 		assertEquals(ArchivesCore.WORKSPACE, core.getRunType());
 		assertEquals(WorkspaceArchivesCore.class, core.getClass());
+		workspaceCore = (WorkspaceArchivesCore)core;
 		
 		AntArchivesCore core2 = new AntArchivesCore();
 		ArchivesCore.setInstance(core2);
-		
 		assertEquals(ArchivesCore.STANDALONE, ArchivesCore.getInstance().getRunType());
+		antCore = core2;
+		
+		ArchivesCore.setInstance(core);
+	}
+
+	/**
+	 * @return the workspaceCore
+	 */
+	public static WorkspaceArchivesCore getWorkspaceCore() {
+		return workspaceCore;
+	}
+
+	/**
+	 * @return the antCore
+	 */
+	public static AntArchivesCore getAntCore() {
+		return antCore;
 	}
 }
