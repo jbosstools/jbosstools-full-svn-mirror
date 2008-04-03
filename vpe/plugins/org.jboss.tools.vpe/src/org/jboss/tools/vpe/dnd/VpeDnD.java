@@ -32,6 +32,11 @@ import org.mozilla.xpcom.Mozilla;
  *Class which response for drag and drop functionality
  */
 public class VpeDnD {
+        /*
+         * Default transfer data
+         */
+	private static final String VPE_ELEMENT = ""; //$NON-NLS-1$
+
 	/**
 	 *  service manager */
 	private nsIServiceManager serviceManager;
@@ -79,7 +84,7 @@ public class VpeDnD {
 		nsISupportsString transferData = (nsISupportsString) getComponentManager()
 		.createInstanceByContractID(XPCOM.NS_SUPPORTSSTRING_CONTRACTID, null,
 				nsISupportsString.NS_ISUPPORTSSTRING_IID);
-		String data="vpe-element"; //$NON-NLS-1$
+		String data=VPE_ELEMENT; 
 		transferData.setData(data);
 		iTransferable.setTransferData(VpeController.MODEL_FLAVOR, transferData, data.length());
 		iTransferable.setTransferData("text/plain", transferData, data.length()); //$NON-NLS-1$
