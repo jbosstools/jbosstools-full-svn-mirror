@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Display;
 
 import org.jboss.tools.common.meta.action.XActionInvoker;
 import org.jboss.tools.common.model.XModelObject;
+import org.jboss.tools.common.model.XModelTransferBuffer;
 import org.jboss.tools.common.model.plugin.ModelPlugin;
 import org.jboss.tools.common.model.ui.views.palette.PaletteInsertHelper;
 import org.jboss.tools.vpe.ui.palette.model.PaletteItem;
@@ -37,6 +38,7 @@ public class PaletteDragSourceListener extends DragSourceAdapter {
 
 	public void dragStart(DragSourceEvent event) {
 		try {
+			XModelTransferBuffer.getInstance().enable();
 			List list = ((PaletteViewer)viewer).getSelectedEditParts();
 			XModelObject object = (list.size() == 0) ? null : getObject(list.get(0));
 			if(object == null) {
@@ -103,5 +105,9 @@ public class PaletteDragSourceListener extends DragSourceAdapter {
 			}
 		}
 		return null;
+	}
+
+	public void dragFinish(DragSourceEvent event) {
+		XModelTransferBuffer.getInstance().disable();
 	}
 }
