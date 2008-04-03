@@ -37,6 +37,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.util.internal.ModelTruezipBridge;
 import org.jboss.ide.eclipse.archives.core.util.internal.TrueZipUtil;
 import org.jboss.ide.eclipse.archives.test.ArchivesTest;
@@ -125,6 +126,7 @@ public class ModelTruezipBridgeTest extends ModelTest {
 		} catch( AssertionFailedError re ) {
 			System.out.println("gah");
 		}
+		
 		// zip inside zip
 		IArchive zipInZip = createArchive("zipInZip.jar", "");
 		zipInZip.setExploded(false);
@@ -132,6 +134,125 @@ public class ModelTruezipBridgeTest extends ModelTest {
 		ModelTruezipBridge.createFile(zipInZip);
 		assertEquals(2, countEntries(zipF));
 	}
+	
+	public void testCreateFileInWorkspace() {
+		IArchive zipped = createArchive("zipped.war", new Path(proj.getName()).append("outputs").toString());
+		zipped.setInWorkspace(true);
+		zipped.setExploded(false);
+		ModelTruezipBridge.createFile(zipped);
+		File zippedF = proj.getLocation().append("outputs").append("zipped.war").toFile();
+		assertTrue(zippedF.exists());
+		assertTrue(!zippedF.isDirectory());
+		
+		// inner child; zip inside zip
+		IArchive zipInZip = createArchive("zipInZip.jar", "");
+		zipInZip.setExploded(false);
+		zipped.addChild(zipInZip);
+		ModelTruezipBridge.createFile(zipInZip);
+		assertEquals(1, countEntries(zippedF));
+	}	
+	
+	public void testNoSync() {
+		// zipped
+		IArchive zipped = createArchive("zipped.war", outputs.toString());
+		zipped.setInWorkspace(false);
+		zipped.setExploded(false);
+		ModelTruezipBridge.createFile(zipped);
+		File zipF = outputs.append("zipped.war").toFile();
+		assertTrue(zipF.exists());
+		assertFalse(zipF.isDirectory());
+		
+		// zip inside zip
+		IArchive zipInZip = createArchive("zipInZip.jar", "");
+		zipInZip.setExploded(false);
+		zipped.addChild(zipInZip);
+		ModelTruezipBridge.createFile(zipInZip);
+		assertEquals(1, countEntries(zipF));
+		
+		// zip inside zip2
+		IArchive zipInZip2 = createArchive("zipInZip2.jar", "");
+		zipInZip.setExploded(false);
+		zipped.addChild(zipInZip2);
+		ModelTruezipBridge.createFile(zipInZip2, false);
+		assertEquals(1, countEntries(zipF));
+		TrueZipUtil.umount();
+		assertEquals(2, countEntries(zipF));
+	}
+	
+	
+	public void testDeleteArchive() {
+		IArchive zipped = createArchive("zipped.war", new Path(proj.getName()).append("outputs").toString());
+		zipped.setInWorkspace(true);
+		zipped.setExploded(false);
+		ModelTruezipBridge.createFile(zipped);
+		File zippedF = proj.getLocation().append("outputs").append("zipped.war").toFile();
+		assertTrue(zippedF.exists());
+		assertTrue(!zippedF.isDirectory());
+		
+		// inner child; zip inside zip
+		IArchive zipInZip = createArchive("zipInZip.jar", "");
+		zipInZip.setExploded(false);
+		zipped.addChild(zipInZip);
+		ModelTruezipBridge.createFile(zipInZip);
+		assertEquals(1, countEntries(zippedF));
+
+		// inner child; zip inside zip
+		IArchive zipInZip2 = createArchive("zipInZip2.jar", "");
+		zipInZip2.setExploded(false);
+		zipped.addChild(zipInZip2);
+		ModelTruezipBridge.createFile(zipInZip2);
+		assertEquals(2, countEntries(zippedF));
+
+		ModelTruezipBridge.deleteArchive(zipInZip2);
+		assertEquals(1, countEntries(zippedF));
+		
+		ModelTruezipBridge.deleteArchive(zipped);
+		assertFalse(zippedF.exists());
+	}
+	
+	
+	/*
+	 * Fileset-related
+	 */
+	public void testFileset() {
+		IArchive zipped = createArchive("zipped.war", new Path(proj.getName()).append("outputs").toString());
+		zipped.setInWorkspace(true);
+		zipped.setExploded(false);
+		ModelTruezipBridge.createFile(zipped);
+		File zippedF = proj.getLocation().append("outputs").append("zipped.war").toFile();
+		assertTrue(zippedF.exists());
+		assertTrue(!zippedF.isDirectory());
+
+		IArchiveFileSet fs = createFileSet("**/*.gif", proj.getName());
+		fs.setInWorkspace(true);
+		zipped.addChild(fs);
+		ModelTruezipBridge.fullFilesetBuild(fs);
+		assertEquals(19, countEntries(zippedF));
+	}
+	
+	public void testFlattenedFileset() {
+		IArchive zipped = createArchive("zipped.war", new Path(proj.getName()).append("outputs").toString());
+		zipped.setInWorkspace(true);
+		zipped.setExploded(false);
+		ModelTruezipBridge.createFile(zipped);
+		File zippedF = proj.getLocation().append("outputs").append("zipped.war").toFile();
+		assertTrue(zippedF.exists());
+		assertTrue(!zippedF.isDirectory());
+
+		IArchiveFileSet fs = createFileSet("**/*.gif", proj.getName());
+		fs.setInWorkspace(true);
+		fs.setFlattened(true);
+		zipped.addChild(fs);
+		ModelTruezipBridge.fullFilesetBuild(fs);
+		
+		// should be two less files and 3 less folders created
+		assertEquals(14, countEntries(zippedF));
+	}
+	
+	
+	/*
+	 * Utility
+	 */
 	
 	protected int countEntries(File zipF) {
 

@@ -136,10 +136,10 @@ public class ModelTruezipBridge {
 	public static void copyFiles(IArchiveFileSet fileset, final IPath[] paths) {
 		copyFiles(fileset, paths, true);
 	}
-	public static void copyFiles(IArchiveFileSet fileset, final IPath[] paths, boolean sync) {
-		final File[] destFiles = getFiles(paths, fileset);
-		for( int i = 0; i < paths.length; i++ ) {
-			TrueZipUtil.copyFile(paths[i].toOSString(), destFiles[i]);
+	public static void copyFiles(IArchiveFileSet fileset, final IPath[] sourcePaths, boolean sync) {
+		final File[] destFiles = getFiles(sourcePaths, fileset);
+		for( int i = 0; i < sourcePaths.length; i++ ) {
+			TrueZipUtil.copyFile(sourcePaths[i].toOSString(), destFiles[i]);
 		}
 		if( sync ) 
 			TrueZipUtil.sync();
@@ -194,7 +194,7 @@ public class ModelTruezipBridge {
 
 	
 	/**
-	 * Gets all properly-created de.sch files for a fileset
+	 * Gets all properly-created de.sch destination files for a fileset
 	 * @param inputFiles
 	 * @param fs
 	 * @return
@@ -205,7 +205,10 @@ public class ModelTruezipBridge {
 		File[] returnFiles = new File[inputFiles.length];
 		int fsLength = fs.getGlobalSourcePath().toOSString().length()+1;
 		for( int i = 0; i < inputFiles.length; i++ ) {
-			filesetRelative = inputFiles[i].toOSString().substring(fsLength);
+			if( fs.isFlattened() )
+				filesetRelative = inputFiles[i].lastSegment();
+			else
+				filesetRelative = inputFiles[i].toOSString().substring(fsLength);
 			returnFiles[i] = new File(fsFile, filesetRelative, ArchiveDetector.DEFAULT);
 		}
 		return returnFiles;
