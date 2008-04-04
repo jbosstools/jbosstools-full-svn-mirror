@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="introduction">
+    <?dbhtml filename="introduction.html"?>
+
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Developer Studio</keyword>
+            <keyword>Eclipse</keyword>
+            <keyword>Java</keyword>
+            <keyword>JBoss</keyword>
+            <keyword>JSF Tools</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>Introduction</title>
+
+    <para>JBoss Developer Studio is especially designed for supporting JSF and JSF-related
+        technologies. JBDS provides extensible and exemplary tools for building JSF-based
+        applications as well as adding JSF capabilities to existing web projects, importing
+        JSF projects (created outside JBDS) and choosing any JSF implementation while
+        developing JSF application.</para>
+    
+    <para>In this guide we provide you with the information on JSF tooling in JBoss Developer Studio
+        which allows you to develop JSF applications much faster and with far fewer
+        errors so sparing your time.</para>
+</chapter>
