@@ -271,7 +271,7 @@ public class TemplateManagingUtil {
 
 		if (selection.getFocusNode() != null) {
 			if ((selection.getFocusNode().getNodeType() != nsIDOMNode.TEXT_NODE)
-					&& (selection.getFocusOffset() != 0) && (selection.getIsCollapsed())) {
+					&& (selection.getFocusOffset() != 0)) {
 
 				return selection.getFocusNode().getChildNodes().item(
 						selection.getFocusOffset() - 1);
