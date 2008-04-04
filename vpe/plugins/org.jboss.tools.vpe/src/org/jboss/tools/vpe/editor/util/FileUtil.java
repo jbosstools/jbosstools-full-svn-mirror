@@ -20,7 +20,9 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jst.j2ee.web.componentcore.util.WebArtifactEdit;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.editors.text.ILocationProvider;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.wst.common.componentcore.ComponentCore;
 import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 import org.eclipse.wst.common.componentcore.resources.IVirtualFolder;
@@ -28,6 +30,7 @@ import org.eclipse.wst.common.componentcore.resources.IVirtualFolder;
 import org.jboss.tools.common.model.*;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
+import org.jboss.tools.vpe.VpePlugin;
 
 
 public class FileUtil {
@@ -92,6 +95,24 @@ public class FileUtil {
 			file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 		}
 		return file;
+	}
+	
+	/**
+	 * open editor
+	 * @param file
+	 */
+	public static void openEditor(IFile file) {
+
+		IWorkbenchPage workbenchPage = VpePlugin.getDefault().getWorkbench()
+				.getActiveWorkbenchWindow().getActivePage();
+		try {
+			if (file != null) {
+				IDE.openEditor(workbenchPage, file, true);
+			}
+		} catch (Exception ex) {
+			VpePlugin.reportProblem(ex);
+		}
+
 	}
 
 }
