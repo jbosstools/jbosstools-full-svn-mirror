@@ -710,8 +710,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		TemplateManagingUtil.setSourceSelection(pageContext, targetSourceNode,
 				focusOffset, length);
 
-		 setSelectionRange(selection,
-		 targetVisualNode, new Point(focusOffset, length));
+		// setSelectionRange(selection,
+		// targetVisualNode, new Point(focusOffset, length));
 
 		// check for text node
 		if (targetVisualNode.getNodeType() != nsIDOMNode.ELEMENT_NODE)
@@ -816,11 +816,12 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 
 		}
 
-		TemplateManagingUtil.setSourceSelection(pageContext, targetSourceNode, selectionOffset, selectionLength);
-		
-		setSelectionRange(selectionController
-				.getSelection(nsISelectionController.SELECTION_NORMAL),
-				targetVisualNode, new Point(selectionOffset, selectionLength));
+		TemplateManagingUtil.setSourceSelection(pageContext, targetSourceNode,
+				selectionOffset, selectionLength);
+
+		// setSelectionRange(selectionController
+		// .getSelection(nsISelectionController.SELECTION_NORMAL),
+		// targetVisualNode, new Point(selectionOffset, selectionLength));
 
 		// check for text node
 		if (targetVisualNode.getNodeType() != nsIDOMNode.ELEMENT_NODE) {
@@ -1121,6 +1122,8 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 						.getSelectionRangeFromInputElement(focusedNode);
 
 			} else {
+
+				;
 				range.x = selection.getFocusOffset();
 				range.y = selection.getAnchorOffset()
 						- selection.getFocusOffset();
@@ -1139,14 +1142,13 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 	protected void setSelectionRange(nsISelection selection, nsIDOMNode node,
 			Point range) {
 
-		 selection.removeAllRanges();
 		if (node.getNodeType() == nsIDOMNode.TEXT_NODE) {
 			selection.collapse(node, range.x);
 
 			// if(visualFocus!=visualAnchor)
 			// selection.extend(visualNode, visualAnchor );
 		} else {
-			
+
 			if ((HTML.TAG_INPUT.equalsIgnoreCase(node.getLocalName()))
 					|| (HTML.TAG_TEXTAREA.equalsIgnoreCase(node.getLocalName()))) {
 				TemplateManagingUtil.setSelectionRangeInInputElement(node,
