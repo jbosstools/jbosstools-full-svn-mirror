@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<!-- This plugin contains test for which test must be successful -->
+<plugin>
+   <extension id="org.jboss.tools.vpe.tests.okExtensions"
+         point="org.jboss.tools.vpe.templates">
+      <templates
+            name="Test3"
+            path="templates/test3.xml"/>
+      <templates
+            name="Test4"
+            path="templates/test4.xml"/>
+   </extension>
+</plugin>
