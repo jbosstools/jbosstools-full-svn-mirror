@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>Seam tools 1.1.0.Beta1 What's New</title>
+</head>
+<body>
+<h1>Seam tools 1.1.0.Beta1 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../hibernate/hibernate-news-3.2.1.beta1.html">Hibernate Tools News &gt;</a></p>
+
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>General</h3>
+	<hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>30 times faster startup</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>By caching the indexes of the Seam Model we now have 30-40 times better startup when opening projects/workspaces with existing Seam projects.</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Seam 2.1</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>The Seam 2 runtime dialog now allows you to point to a Seam 2.1 even though we only officially supports Seam 2.0.</p>
+    <p>Allows you to try and use the bleeding edge with the tooling.</p>
+   <p><img src="../images/seam21alphaok.png"/></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>.settings/org.jboss.tools.jst.web.xml not required anymore</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>Some settings for JSF projects were being stored in .settings/org.jboss.tools.jst.web.xml which could end up having machine specific values
+if you used external libraries, making sharing project setttings cumbersome for teams.</p>
+    <p>In this version we removed the need for this file and everything is now read through Eclipse and WTP default settings. If you still have the file
+you should delete it to avoid any sharing issues as described above.</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Wizards</h3>
+	<hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Flexible project layout</b>
+    </td>
+    <td width="70%" valign="top">Until now the wizards (Generate Action, Entity, Form, etc.) assumed the projects were following a very specific project structure, preventing you from using these wizards on Maven, command line seam-gen or your own project structure.</p>
+
+    <p>This release removes that restriction and provides a Seam Settings preference page under a project's properties to configure it for any custom project layout.</p>
+    <p><img src="../images/seamflexibleprojectlayout.png"/></p>
+    <p>Note: This also means you do not have to use the Seam project wizard to benefit from Seam artifact wizards, you can just go and enable Seam on your existing project and configure the folders as you please.</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Refactoring support for Seam settings</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>Previously if you renamed one of the folders that were included into Seam settings you could get exceptions when the wizards were generating code.</p>
+
+<p>To avoid that we now listen to rename refactorings of folders and keep the Seam settings in sync.</p>
+<p>The image below shows how rename of the model folder to entity.</p>
+<p><img src="../images/seamrefactorsettings.png"/></p>
+
+<p>Of course if you rename the folder outside of Eclipse we will have the same situation, but then you can use the Seam preferences to adjust it accordingly.</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Code Navigiation</h3>
+	<hr/>
+    </td>
+  </tr>  
+  <tr>
+    <td valign="top" align="right">
+      <a name="itemname3" id="itemname3"></a><b>Find references/declarations to Seam components/EL</b>
+    </td>
+    <td valign="top">
+    <p>Find references and declarations is now available for EL expressions in both Java and .xhtml files
+
+    <p>In Java files you use Ctrl+1 to do Find references or find declarations on EL</p>
+    <p><img src="../images/seamfindrefpopup.png"/></p>
+
+    <p>We also hook into the normal Find References/Declarations shortcut via Ctrl+G/Ctrl+Shift+G in Java and .xhtml editors. This means that if you are looking for a reference to a specific class or method and it is referenced in EL or any other Seam configuration the search list will include it.</p>
+    <p><img src="../images/seamjavafindrefsearchresult.png"/></p>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+  </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+      <a name="itemname3" id="itemname3"></a><b>Open Seam Component</b>
+    </td>
+    <td valign="top">
+    <p>There is now an Open Seam Component dialog available defaults to Ctrl+Shift+Z shortcut (Eclipse is running out of shortcuts) and via the toolbar.</p>
+
+<p>It works similarly to the Open Type and Open Resource dialog, except that here you can search for Seam components via their short, imported or full name.</p>
+
+    <p><img src="../images/seamopencomponent.png"/></p>
+
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+  </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+      <a name="itemname3" id="itemname3"></a><b>OpenOn now works on s:button/s:link and in pages.xml</b>
+    </td>
+    <td valign="top">
+    <p>The OpenOn functionallity have been extended to also work for the <code>s:button</code> and <code>s:link</code> view attribte and from inside pages.xml</p>
+
+    <p><embed src="../images/seampagesxmlopenon.swf" height=385 width=769/></p>
+    <p><embed src="../images/seambuttonopenon.swf" height=285 width=754/></p>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+  </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+      <a name="itemname3" id="itemname3"></a><b>Components inside inner classes supported</b>
+    </td>
+    <td valign="top">
+    <p>Seam model now also understand Seam component that are inner classes.</p>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+  </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+      <a name="itemname3" id="itemname3"></a><b>'Messages' resource bundle code completion</b>
+    </td>
+    <td valign="top">
+    <p>We already supported JSF resource bundles and allowed you to code complete on the resource keys. The same has now been added for the Seam component "messages".</p>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+  </td>
+  <tr>
+    <td valign="top" align="right">
+      <a name="itemname3" id="itemname3"></a><b>Validation and code completion for 'var' in h:dataTable and others</b>
+    </td>
+    <td valign="top">
+    <p>If you enable the Seam validation for EL expressions you previously could get alot of false warnings because of the validator not understanding the local variable for dataTable's and other "loop" structures in JSF/Facelets.</p>
+    <p>Now the validator and code completion picks up the 'var' variable removing the many false warnings.</p>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+  </td>
+</table>
+
+</body>
+
+</html>
+
+
