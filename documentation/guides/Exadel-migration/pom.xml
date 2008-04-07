@@ -8,7 +8,7 @@
     <artifactId>exadel-studio-migration-guide${translation}</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jdocbook</packaging>
-    <name>Exadel_Studio_Migration_Guide_(${translation})</name>
+    <name>Exadel_Studio_Migration_Guide</name>
 
     <build>
         <plugins>
