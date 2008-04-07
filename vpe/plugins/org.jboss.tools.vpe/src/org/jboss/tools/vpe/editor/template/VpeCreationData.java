@@ -7,13 +7,12 @@
  *
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jboss.tools.common.model.util.XMLUtil;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
@@ -24,7 +23,7 @@ public class VpeCreationData {
 	private nsIDOMNode node;
 	private List<VpeChildrenInfo> childrenInfoList;
 	private List<Node> illegalChildren;
-	
+
 	/**
 	 * @deprecated - You must use elementData. If VpeElementData has not
 	 *             necessary functionality you must extend its
@@ -39,29 +38,33 @@ public class VpeCreationData {
 	public nsIDOMNode getNode() {
 		return node;
 	}
-	
-	 public void addChildrenInfo(VpeChildrenInfo info) {
+
+	public void addChildrenInfo(VpeChildrenInfo info) {
 		if (childrenInfoList == null) {
 			childrenInfoList = new ArrayList<VpeChildrenInfo>();
 		}
 		childrenInfoList.add(info);
 	}
-	
+
+	public void setChildrenInfoList(List<VpeChildrenInfo> childrenInfoList) {
+		this.childrenInfoList = childrenInfoList;
+	}
+
 	public List<VpeChildrenInfo> getChildrenInfoList() {
 		return childrenInfoList;
 	}
-	
+
 	public void addIllegalChild(Node child) {
 		if (illegalChildren == null) {
 			illegalChildren = new ArrayList<Node>();
 		}
 		illegalChildren.add(child);
 	}
-	
+
 	public List<Node> getIllegalChildren() {
 		return illegalChildren;
 	}
-	
+
 	/**
 	 * @deprecated - You must use elementData. If VpeElementData has not
 	 *             necessary functionality you must extend its
@@ -73,15 +76,16 @@ public class VpeCreationData {
 
 	/**
 	 * @deprecated - You must use elementData. If VpeElementData has not
-	 *              necessary functionality you must extend its
+	 *             necessary functionality you must extend its
 	 * @return
 	 */
 	public Object getData() {
 		return data;
 	}
-	
+
 	/**
 	 * get element data
+	 * 
 	 * @return
 	 */
 	public VpeElementData getElementData() {
@@ -90,38 +94,39 @@ public class VpeCreationData {
 
 	/**
 	 * set element data
+	 * 
 	 * @param elementData
 	 */
 	public void setElementData(VpeElementData elementData) {
 		this.elementData = elementData;
 	}
-	
+
 	/**
-	 * Added method for creation copy which will
-	 * placed in cash to improve perfomance of VPE
-	 * Added by Max Areshkau JBIDE-675. 
-	 * Here copyed only nsI****
+	 * Added method for creation copy which will placed in cash to improve
+	 * perfomance of VPE Added by Max Areshkau JBIDE-675. Here copyed only
+	 * nsI****
+	 * 
 	 * @return
 	 */
 	public VpeCreationData createHashCopy() {
-		nsIDOMNode node=null;
-		if(this.node!=null) {
-		node = XmlUtil.createClone(this.node);
-	    } else {
-	    	VpeDebugUtil.debugInfo("Node is Null");
-	    }
-		if(node.getNodeType()!=nsIDOMNode.ELEMENT_NODE) {
+		nsIDOMNode node = null;
+		if (this.node != null) {
+			node = XmlUtil.createClone(this.node);
+		} else {
+			VpeDebugUtil.debugInfo("Node is Null");
+		}
+		if (node.getNodeType() != nsIDOMNode.ELEMENT_NODE) {
 			VpeDebugUtil.debugInfo("It's Not Element");
 		}
-		
+
 		VpeCreationData data = new VpeCreationData(node);
-		if(this.childrenInfoList!=null) {
-		data.childrenInfoList= new ArrayList<VpeChildrenInfo>();
-		for (VpeChildrenInfo childrenInfo : this.childrenInfoList) {
-			data.childrenInfoList.add(childrenInfo.createCashCopy());
+		if (this.childrenInfoList != null) {
+			data.childrenInfoList = new ArrayList<VpeChildrenInfo>();
+			for (VpeChildrenInfo childrenInfo : this.childrenInfoList) {
+				data.childrenInfoList.add(childrenInfo.createCashCopy());
+			}
 		}
-		}
-		data.illegalChildren =this.illegalChildren;
+		data.illegalChildren = this.illegalChildren;
 		data.data = this.data;
 		data.elementData = this.elementData;
 		return data;
