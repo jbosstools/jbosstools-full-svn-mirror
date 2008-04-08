@@ -49,7 +49,7 @@
     </td>
   </tr>
   <tr>
-    <td valign="top" align="right"><p><a name="previewtab" id="previewtab"></a><b>Templates</b></p></td>
+    <td valign="top" align="right"><p><a name="previewtab" id="previewtab"></a><b>TLD Version support</b></p></td>
     <td valign="top"><p>Previously we only supported one version for a tag thus if a JSF library changed it behavior/looks for an component between versions/releases we could not support it easily. Now the template system beneath the Visual Page Editor can handle different versions of the same tags by looking at the TLD-version used in the jsp/xhtml page. </p>
 
     	Example:<div style="COLOR: #0a5045;">  <br />    
@@ -68,6 +68,16 @@
       </pre>
       </div>
 
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><p><a name="previewtab" id="previewtab"></a><b>Default Text formatting </b></p></td>
+    <td valign="top"><p>Default text formatting can now be enabled for tags by just using <code>use-default-formats='yes'</code>, removing the need to have duplicate <code>vpe:format</code> tags in your templates (see <a href="http://jira.jboss.org/jira/browse/JBIDE-1494">JBIDE-1491</a>)  </p>
     </td>
   </tr>
   <tr>
