@@ -10,29 +10,18 @@
     <packaging>pom</packaging>
     <name>All_Userguides</name>
 
-<dependencies>
-	
-	<!--dependency>
-		<groupId>org.jboss.tools</groupId>
-		<artifactId>exadel-migration-${translation}</artifactId>
-		<version>1.0-SNAPSHOT</version>
-	</dependency-->
-
-</dependencies>
-
 <modules>
-		<module>../guides/Exadel-migration</module>
-		<module>../guides/GettingStartedGuide</module>
-		<module>../../as/docs/reference</module>
-		<module>../../hibernatetools/docs/reference</module>
-		<module>../../jbpm/docs/reference</module>
-		<module>../../jsf/docs/userguide</module>
-		<module>../../seam/docs/reference</module>
-		<module>../../jsf/docs/jsf_tools_ref_guide</module>
-		<module>../../jsf/docs/jsf_tools_tutorial</module>
-		<module>../../struts/docs/struts_tools_ref_guide</module>
-		<module>../../struts/docs/struts_tools_tutorial</module>
-
+  <module>../../as/docs/reference</module>
+  <module>../../hibernatetools/docs/reference</module>
+  <module>../../jbpm/docs/reference</module>
+  <module>../../jsf/docs/userguide</module>
+  <module>../../jsf/docs/jsf_tools_ref_guide</module>
+  <module>../../jsf/docs/jsf_tools_tutorial</module>
+  <module>../../seam/docs/reference</module>
+  <module>../../struts/docs/struts_tools_ref_guide</module>
+  <module>../../struts/docs/struts_tools_tutorial</module>
+  <module>../guides/Exadel-migration</module>
+  <module>../guides/GettingStartedGuide</module>
 </modules>
 
   <build>
