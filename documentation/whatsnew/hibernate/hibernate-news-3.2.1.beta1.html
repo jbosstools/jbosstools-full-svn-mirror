@@ -41,6 +41,10 @@
 	<p><img src="images/hibernatediagramlayout.png"/></p>
     </td>
   </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
   </tr>
     <td valign="top" align="right">
        <a name="itemnam2e" id="itemname2"></a><b>Graphical and structural outline</b>
@@ -53,10 +57,6 @@
     <p><img src="../images/hibernatediagramstructureoutline.png"/></p>
     <p><embed src="../images/hibernatediagramoutline.swf" HEIGHT=591 WIDTH=1132/></p>
    </td>
-  </tr>
-  <tr>
-    <td colspan="2"><hr />
-    </td>
   </tr>
 
 
@@ -81,12 +81,13 @@
     </td>
   </tr>
     <td valign="top" align="right">
-       <a name="itemnam2e" id="itemname2"></a><b>Prefilled HQL and Criteria queries</b>
+       <a name="itemnam2e" id="itemname2"></a><b>Easier query editor</b>
     </td>
     <td width="70%" valign="top">If you have an entity or property selected in the configuration when you open HQL or Criteria editor we now prefill it with a query to get that specific part.
 
     <p><img src="../images/hqlcriteriaprefill.png"/></p>
-
+  
+   <p>We also ensured that the correct console configuration is selected in the query/criteria editor based on the current selection and in case no console configuration is present or the query string is empty the Run query button is disabled.</p>
    </td>
   </tr>
   <tr>
@@ -100,6 +101,10 @@
         <p>The properties view now includes information about the number results in the query and how long the query took to execute.</p>
 	<p><img src="../images/hibernatequeryexecutitonproperties.png"/></p>
    </td>
+
+
+
+
   <tr>
     <td colspan="2"><hr />
     </td>
@@ -112,7 +117,7 @@
 you had to manually copy the changes you made back to the java file you started from.</p>
         <p>Now we provide the option when you save a HQL or Criteria to update the original Java code.</p>
 
-<p><embed src="../images/hibernatehqljavaeditorlink.swf" HEIGHT=654 WIDTH=745/></p>
+     <p><embed src="../images/hibernatehqljavaeditorlink.swf" HEIGHT=654 WIDTH=745/></p>
    </td>
   </tr>
   <tr>
@@ -120,6 +125,49 @@ you had to manually copy the changes you made back to the java file you started 
     </td>
   </tr>
 
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Configuration</h3>
+	<hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>File Creation shortcuts</b></td>
+    <td valign="top">
+    <p>When creating/editing a Hibernate Console Configuration you can know create an .cfg.xml or properties file directly from the wizard instead of having an preexisting file.</p>
+	<p><img src="../images/hibernatecfgfilewizoption.png"/></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Delete confirmation</b>
+    </td>
+    <td width="70%" valign="top">Previously we immediatly deleted configurations when the user pressed Delete, now a confirmation dialog is shown
+    <p><img src="../images/hibernateaskbeforedelcfg.png"/></p>
+   </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Refactoring</b>
+    </td>
+    <td width="70%" valign="top">If you rename or move files or projects used in Hibernate Console Configuration we now provide the option to update these configurations.
+   </td>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
 
 </table>
 
