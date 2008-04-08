@@ -39,6 +39,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
+import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveActionImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFileSetImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFolderImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveImpl;
@@ -157,6 +158,7 @@ public class ModelUtil {
 				if( fileset.equals(filesets[i])) continue;
 				relativePathsMatch = fileset.getRootArchiveRelativePath(path).equals(filesets[i].getRootArchiveRelativePath(path));
 				destinationsMatch = fileset.getRootArchive().getArchiveFilePath().equals(filesets[i].getRootArchive().getArchiveFilePath());
+				
 				if( relativePathsMatch && destinationsMatch ) {
 					// the two put the file in the same spot, within the same archive! It's a match!
 					return true;
@@ -252,7 +254,7 @@ public class ModelUtil {
 		} else if (node instanceof XbFileSet) {
 			nodeImpl = new ArchiveFileSetImpl((XbFileSet)node);
 		} else if( node instanceof XbAction ) {
-			nodeImpl = null; // TODO
+			nodeImpl = new ArchiveActionImpl((XbAction)node);
 		}
 		
 		for (Iterator iter = node.getAllChildren().iterator(); iter.hasNext(); ) {

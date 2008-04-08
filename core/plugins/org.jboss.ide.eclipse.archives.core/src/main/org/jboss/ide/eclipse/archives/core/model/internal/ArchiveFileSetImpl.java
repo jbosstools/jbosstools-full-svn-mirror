@@ -239,7 +239,11 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet#getPathRelativeToParent(org.eclipse.core.runtime.IPath)
 	 */
 	public IPath getPathRelativeToParent(IPath inputFile) {
-		String s = inputFile.toOSString().substring(getGlobalSourcePath().toOSString().length()+1);
+		String s;
+		if( isFlattened() )
+			s = inputFile.toOSString().substring(getGlobalSourcePath().toOSString().length()+1);
+		else
+			s = inputFile.lastSegment();
 		return new Path(s);
 	}
 
