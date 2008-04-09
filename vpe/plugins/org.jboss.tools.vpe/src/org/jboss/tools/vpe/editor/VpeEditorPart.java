@@ -41,6 +41,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IReusableEditor;
+import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -55,8 +56,10 @@ import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
+import org.jboss.tools.common.model.ui.editor.IModelObjectEditorInput;
 import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.jst.jsp.editor.IVisualEditor;
+import org.jboss.tools.jst.jsp.jspeditor.StorageRevisionEditorInputAdapter;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.IVpeHelpContextIds;
 import org.jboss.tools.vpe.VpePlugin;
@@ -507,7 +510,11 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 					VpeEditorPart.this.firePropertyChange(propId);
 				}
 			});
-			sourceEditor.init(getEditorSite(), getEditorInput());
+			IEditorInput input = getEditorInput();
+			if (!( input instanceof IModelObjectEditorInput) && input instanceof IStorageEditorInput) {
+				input = new StorageRevisionEditorInputAdapter((IStorageEditorInput) input);
+			}
+			sourceEditor.init(getEditorSite(), input);
 
 			if (sourceContent != null) {
 				sourceEditor.createPartControl(sourceContent);
