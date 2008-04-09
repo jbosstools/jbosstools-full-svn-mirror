@@ -91,6 +91,10 @@
     <ulink url="../../../jbpm/en/html_single/index.html">(html single)</ulink>
     <ulink url="../../../jbpm/en/pdf/jBPM_Tools_Ref.pdf">(PDF)</ulink>
   </para>
+  <para>With jBPM Tools Reference Guide we&apos;ll help you to facilitate a cross-product
+    learning and know how you can speed your development using special editors and visual designers.
+    We&apos;ll also guide you through the steps on how to create a simple process and test it
+    within jBPM jPDL perspective.</para>
 
   <para>
     <emphasis role="bold">Hibernate Tools Reference Guide</emphasis>
@@ -98,6 +102,11 @@
     <ulink url="../../../hibernatetools/en/html_single/index.html">(html single)</ulink>
     <ulink url="../../../hibernatetools/en/pdf/hibernate_tools.pdf">(PDF)</ulink>
   </para>
+  <para>Throughout this guide you will learn how to install and use Hibernate Tools bath via Ant and
+    through Eclipse. We&apos;ll supply you with the information on how to create mapping files,
+    configuration file as well as a file for controlling reverse engineering by using specific
+    wizards that Hibernate tooling provides. Also you will know about Code Generation and
+    peculiarities of work within Hibernate Console Perspective.</para>
 
   <para>
     <emphasis role="bold">Exadel Studio Migration Guide</emphasis>
