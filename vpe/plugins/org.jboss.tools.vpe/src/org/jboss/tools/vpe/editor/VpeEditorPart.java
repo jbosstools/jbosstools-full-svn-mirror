@@ -27,6 +27,7 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -48,6 +49,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.IStatusField;
 import org.eclipse.ui.texteditor.ITextEditor;
@@ -66,12 +68,15 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.mozilla.EditorLoadWindowListener;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.mozilla.MozillaPreview;
-import org.jboss.tools.vpe.editor.xpl.SashForm;
+import org.jboss.tools.vpe.editor.xpl.CustomSashForm;
+import org.jboss.tools.vpe.editor.xpl.EditorSettings;
+import org.jboss.tools.vpe.editor.xpl.SashSetting;
 import org.jboss.tools.vpe.selbar.SelectionBar;
 
 public class VpeEditorPart extends EditorPart implements ITextEditor,
 		ITextEditorExtension, IReusableEditor, IVisualEditor {
-	private SashForm container;
+	private CustomSashForm container;
+	protected EditorSettings editorSettings;
 	private StructuredTextEditor sourceEditor = null;
 	private MozillaEditor visualEditor;
 	private IEditorPart activeEditor;
@@ -252,6 +257,12 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			throws PartInitException {
 		setSite(site);
 		setInput(input);
+		if (editorSettings == null)
+			editorSettings = EditorSettings.getEditorSetting(this);
+		else if (input instanceof FileEditorInput) {
+			editorSettings.setInput((FileEditorInput) input);
+		}
+
 	}
 
 	public void setInput(IEditorInput input) {
@@ -441,7 +452,11 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		cmpEd.setLayout(layoutEd);
 		cmpEd.setLayoutData(new GridData(GridData.FILL_BOTH));
 		// /////////////////////////////////////////////////////////////////
-		container = new SashForm(cmpEd, SWT.VERTICAL);
+		//container = new SashForm(cmpEd, SWT.VERTICAL);
+		container = new CustomSashForm(cmpEd, SWT.VERTICAL);
+		if (editorSettings != null)
+			editorSettings.addSetting(new SashSetting(container));
+
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		sourceContent = new Composite(container, SWT.NONE);
 		sourceContent.setLayout(new FillLayout());
@@ -450,7 +465,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 		// Create a preview content
 		previewContent = new Composite(container, SWT.NONE);
-		previewContent.setLayout(new FillLayout());
+		//previewContent.setLayout(new FillLayout());
+		previewContent.setLayout(new GridLayout());
 
 		// ////////////////////////////////////////////////////
 
@@ -465,6 +481,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		int[] weights = loadSplitterPosition();
 		if (weights != null)
 			container.setWeights(weights);
+		container.setSashBorders(new boolean[] { true, true, true });
+		
 		final PropertyChangeListener weightsChangeListener = new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent event) {
 				saveSplitterPosition(container.getWeights());
@@ -493,13 +511,47 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 			public void widgetDisposed(DisposeEvent e) {
 				parent.removeControlListener(controlListener);
-				container.removeDisposeListener(this);
+				parent.removeDisposeListener(this);
 			}
 			
 		});
-		//createVisualEditor();
+		
+		final ControlListener visualContentControlListener = new ControlListener() {
+			public void controlMoved(ControlEvent event) {
 
-		//createPreviewBrowser();
+			}
+
+			public void controlResized(ControlEvent event) {
+				Point point = visualContent.getSize();
+				if (point.x == 0 || point.y == 0) {
+					VpeController controller = getController();
+					if (controller != null)
+						controller.setVisualEditorVisible(false);
+				} else {
+					VpeController controller = getController();
+					if (controller != null
+							&& !controller.isVisualEditorVisible()) {
+						controller.setVisualEditorVisible(true);
+						if (!controller.isSynced())
+							controller.rebuildDom();
+					}
+				}
+			}
+		};
+		visualContent.addControlListener(visualContentControlListener);
+		visualContent.addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				visualContent
+						.removeControlListener(visualContentControlListener);
+				visualContent.removeDisposeListener(this);
+			}
+
+		});
+
+		// createVisualEditor();
+
+		// createPreviewBrowser();
 
 		try {
 			sourceEditor.addPropertyListener(new IPropertyListener() {
@@ -595,6 +647,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 		};
 		optionsObject.getModel().addModelTreeListener(listener);
+		if (editorSettings != null)
+			editorSettings.apply();
+
 		// ///////////////////////////////////////
 		cmpEd.layout();
 	}
@@ -654,6 +709,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			optionsObject.getModel().removeModelTreeListener(listener);
 			listener=null;
 			optionsObject = null;
+		}
+		if (editorSettings != null) {
+			editorSettings.dispose();
+			editorSettings = null;
 		}
 		if (activationListener != null) {
 			IWorkbenchWindow window = getSite().getWorkbenchWindow();

@@ -169,6 +169,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	ResourceReferenceListListener, ISelectionChangedListener,
 	IVisualController {
 
+	private boolean visualEditorVisible = true;
+	private boolean synced = true; 
     StructuredTextEditor sourceEditor;
     private MozillaEditor visualEditor;
     // MozillaBrowser browser;
@@ -393,6 +395,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     public void notifyChanged(final INodeNotifier notifier,
 	    final int eventType, final Object feature, final Object oldValue,
 	    final Object newValue, final int pos) {
+
+    	if (!visualEditorVisible) {
+			synced = false;
+			return;
+		}
 
 	// start job when we modify file in ui thread, without this code
 	// changes will be applied with 1 second delay
@@ -2769,5 +2776,34 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     public void setSelectionBuilder(VpeSelectionBuilder selectionBuilder) {
 	this.selectionBuilder = selectionBuilder;
     }
+
+	public boolean isVisualEditorVisible() {
+		return visualEditorVisible;
+	}
+
+	public void setVisualEditorVisible(boolean visualEditorVisible) {
+		this.visualEditorVisible = visualEditorVisible;
+	}
+
+	public boolean isSynced() {
+		return synced;
+	}
+
+	public void setSynced(boolean synced) {
+		this.synced = synced;
+	}
+
+	public void rebuildDom() {
+		if (visualBuilder == null)
+			return;
+		IDOMModel sourceModel = (IDOMModel) getModel();
+		if (sourceModel != null) {
+			IDOMDocument sourceDocument = sourceModel.getDocument();
+			visualBuilder.rebuildDom(sourceDocument);
+		} else {
+			visualBuilder.rebuildDom(null);
+		}
+		synced = true;
+	}
 
 }
