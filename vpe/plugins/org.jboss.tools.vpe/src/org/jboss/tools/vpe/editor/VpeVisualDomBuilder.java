@@ -57,7 +57,6 @@ import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
-import org.jboss.tools.vpe.editor.template.ITemplateNodesManager;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
@@ -167,6 +166,18 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
     private Map<IFile, Document> includeDocuments = new HashMap<IFile, Document>();
 
+    
+    /**
+	 * facelet elements, if there are these elements on a page then other
+	 * elements are deleted
+	 */
+	static private HashSet<String> faceletRootElements = new HashSet<String>();
+
+	static {
+		faceletRootElements.add("composition"); //$NON-NLS-1$
+		faceletRootElements.add("component"); //$NON-NLS-1$
+	}
+    
     public VpeVisualDomBuilder(VpeDomMapping domMapping,
 	    INodeAdapter sorceAdapter, VpeTemplateManager templateManager,
 	    MozillaEditor visualEditor, VpePageContext pageContext) {
@@ -190,27 +201,77 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     public void buildDom(Document sourceDocument) {
-	VpeSourceDomBuilder sourceBuilder = pageContext.getSourceBuilder();
-	IDocument document = sourceBuilder.getStructuredTextViewer()
-		.getDocument();
-	if (document == null)
-	    return;
-	includeStack = new ArrayList();
-	IEditorInput input = pageContext.getEditPart().getEditorInput();
-	if (input instanceof IFileEditorInput) {
-	    IFile file = ((IFileEditorInput) input).getFile();
-	    if (file != null) {
-		includeStack.add(new VpeIncludeInfo(null, file, pageContext
-			.getSourceBuilder().getSourceDocument()));
-	    }
-	}
-	pageContext.refreshConnector();
-	pageContext.installIncludeElements();
-	addChildren(null, sourceDocument, visualContentArea);
-	registerNodes(new VpeNodeMapping(sourceDocument, visualContentArea));
-	
-    }
+		VpeSourceDomBuilder sourceBuilder = pageContext.getSourceBuilder();
+		IDocument document = sourceBuilder.getStructuredTextViewer()
+				.getDocument();
+		if (document == null)
+			return;
+		includeStack = new ArrayList();
+		IEditorInput input = pageContext.getEditPart().getEditorInput();
+		if (input instanceof IFileEditorInput) {
+			IFile file = ((IFileEditorInput) input).getFile();
+			if (file != null) {
+				includeStack.add(new VpeIncludeInfo(null, file, pageContext
+						.getSourceBuilder().getSourceDocument()));
+			}
+		}
+		pageContext.refreshConnector();
+		pageContext.installIncludeElements();
+		if (isFacelet()) {
+			Element root = getRootElement(sourceDocument);
+			if(root != null)
+			{
+				addNode(root, null, visualContentArea);
+				
+			}
 
+		} else {
+			addChildren(null, sourceDocument, visualContentArea);
+			registerNodes(new VpeNodeMapping(sourceDocument, visualContentArea));
+		}
+	}
+
+    private Element getRootElement(Document sourceDocument) {
+
+		NodeList nodeList = sourceDocument.getChildNodes();
+		Element root = null;
+
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Node child = nodeList.item(i);
+			if (child.getNodeType() == Node.ELEMENT_NODE) {
+				root = (Element) child;
+				break;
+			}
+		}
+
+		if (root != null) {
+			Element trimmedElement = findFaceletRootElement(root);
+			if (trimmedElement != null)
+				root = trimmedElement;
+		}
+		return root;
+	}
+
+	private Element findFaceletRootElement(Element element) {
+
+		NodeList children = element.getChildNodes();
+
+		for (int i = 0; i < children.getLength(); i++) {
+			Node child = children.item(i);
+			if (child.getNodeType() == Node.ELEMENT_NODE) {
+
+				Element trimmedElement = findFaceletRootElement((Element) child);
+				if (trimmedElement != null)
+					return trimmedElement;
+
+			}
+		}
+
+		if (faceletRootElements.contains(element.getLocalName()))
+			return element;
+		return null;
+	}
+    
     public void rebuildDom(Document sourceDocument) {
 	// clearIncludeDocuments();
 	cleanHead();
