@@ -26,11 +26,16 @@ public class VpeDefaultPseudoContentCreator extends VpePseudoContentCreator {
 	private static Set withoutPseudoContentSet = new HashSet();
 	
 	static {
-		withoutPseudoContentSet.add("br");
-		withoutPseudoContentSet.add("nobr");
-		withoutPseudoContentSet.add("input");
-		withoutPseudoContentSet.add("textarea");
-		withoutPseudoContentSet.add("select");
+		/*
+		 * http://jira.jboss.com/jira/browse/JBIDE-2026
+		 * Fixes "td" size changing.
+		 */
+		withoutPseudoContentSet.add("td"); //$NON-NLS-1$
+		withoutPseudoContentSet.add("br"); //$NON-NLS-1$
+		withoutPseudoContentSet.add("nobr"); //$NON-NLS-1$
+		withoutPseudoContentSet.add("input"); //$NON-NLS-1$
+		withoutPseudoContentSet.add("textarea"); //$NON-NLS-1$
+		withoutPseudoContentSet.add("select"); //$NON-NLS-1$
 	}
 
 	public static final VpePseudoContentCreator getInstance() {
