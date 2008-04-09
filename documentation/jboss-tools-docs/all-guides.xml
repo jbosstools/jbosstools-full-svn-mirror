@@ -22,6 +22,19 @@
  -->
 		<fileSets>
 			<fileSet>
+			  <directory>.</directory>
+                          <outputDirectory>/</outputDirectory>
+			  <filtered>false</filtered>
+			  <lineEnding>keep</lineEnding>
+			  <includes>
+				<include>index.html</include>
+			  </includes>
+			  <useStrictFiltering>false</useStrictFiltering>
+			  <useDefaultExcludes>true</useDefaultExcludes>
+			  <fileMode>0444</fileMode>
+			  <directoryMode>0755</directoryMode>
+			</fileSet>
+			<fileSet>
 				<directory>../guides/Exadel-migration/target/docbook/</directory>
 				<outputDirectory>/Exadel-migration</outputDirectory>
 				<filtered>false</filtered>
