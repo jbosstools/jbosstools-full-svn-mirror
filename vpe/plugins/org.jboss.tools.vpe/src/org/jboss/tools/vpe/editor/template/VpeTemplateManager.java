@@ -195,6 +195,7 @@ public class VpeTemplateManager {
 	static final String ATTR_DATATABLE_COLUMN_CLASSES = "columnClasses"; //$NON-NLS-1$
 	static final String[] ATTR_DATATABLE_PROPERTIES = {
 		"width", //$NON-NLS-1$
+		"height", //$NON-NLS-1$
 		"bgcolor", //$NON-NLS-1$
 		"border", //$NON-NLS-1$
 		"cellpadding", //$NON-NLS-1$

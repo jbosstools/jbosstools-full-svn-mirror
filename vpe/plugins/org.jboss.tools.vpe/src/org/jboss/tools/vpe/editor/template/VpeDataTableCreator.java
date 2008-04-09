@@ -132,9 +132,21 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 
 		SourceDataTableElements sourceElements = new SourceDataTableElements(sourceNode);
 		VisualDataTableElements visualElements = new VisualDataTableElements();
-
+		
+		/*
+		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-2001
+		 * Selection borders are fixed.
+		 */
 		nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
-		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(div);
+		nsIDOMElement selectionTable = visualDocument.createElement(HTML.TAG_TABLE);
+		nsIDOMElement tr = visualDocument.createElement(HTML.TAG_TR);
+		nsIDOMElement td = visualDocument.createElement(HTML.TAG_TD);
+		
+		td.appendChild(div);
+		tr.appendChild(td);
+		selectionTable.appendChild(tr);
+		
+		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(selectionTable);
 
 		/*
 		 * Table with caption, header, footer,
