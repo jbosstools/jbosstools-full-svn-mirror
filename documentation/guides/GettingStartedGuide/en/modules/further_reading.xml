@@ -15,9 +15,9 @@
 
   <para>
     <emphasis role="bold">JSF Tools Reference Guide</emphasis>
-    <ulink url="../../../jsf_tools_ref_guide/en/html/index.html">(html)</ulink>
-    <ulink url="../../../jsf_tools_ref_guide/en/html_single/index.html">(html single)</ulink>
-    <ulink url="../../../jsf_tools_ref_guide/en/pdf/Seam_Dev_Tools_Reference_Guide.pdf"
+    <ulink url="../../jsf_tools_ref_guide/html/index.html">(html)</ulink>
+    <ulink url="../../jsf_tools_ref_guide/html_single/index.html">(html single)</ulink>
+    <ulink url="../../jsf_tools_ref_guide/pdf/Seam_Dev_Tools_Reference_Guide.pdf"
     >(PDF)</ulink>
   </para>
   <para> From this guide you'll discover all peculiarities of work at a JSF project. You&apos;ll
@@ -28,18 +28,18 @@
 
   <para>
     <emphasis role="bold">JSF Tools Tutorial</emphasis>
-    <ulink url="../../../jsf_tools_tutorial/en/html/index.html">(html)</ulink>
-    <ulink url="../../../jsf_tools_tutorial/en/html_single/index.html">(html single)</ulink>
-    <ulink url="../../../jsf_tools_tutorial/en/pdf/Seam_Dev_Tools_Reference_Guide.pdf">(PDF)</ulink>
+    <ulink url="../../jsf_tools_tutorial/html/index.html">(html)</ulink>
+    <ulink url="../../jsf_tools_tutorial/html_single/index.html">(html single)</ulink>
+    <ulink url="../../jsf_tools_tutorial/pdf/Seam_Dev_Tools_Reference_Guide.pdf">(PDF)</ulink>
   </para>
   <para> This tutorial will describe how to deal with classic/old style of JSF development and how
     to create a simple JSF application using the JBoss Developer Studio. </para>
 
   <para>
     <emphasis role="bold">Struts Tools Reference Guide</emphasis>
-    <ulink url="../../../struts_tools_ref_guide/en/html/index.html">(html)</ulink>
-    <ulink url="../../../struts_tools_ref_guide/en/html_single/index.html">(html single)</ulink>
-    <ulink url="../../../struts_tools_ref_guide/en/pdf/Seam_Dev_Tools_Reference_Guide.pdf"
+    <ulink url="../../struts_tools_ref_guide/html/index.html">(html)</ulink>
+    <ulink url="../../struts_tools_ref_guide/html_single/index.html">(html single)</ulink>
+    <ulink url="../../struts_tools_ref_guide/pdf/Seam_Dev_Tools_Reference_Guide.pdf"
     >(PDF)</ulink>
   </para>
   <para> In Struts Tools Reference Guide you will learn how to create and work with a new struts
@@ -48,9 +48,9 @@
 
   <para>
     <emphasis role="bold">Struts Tools Tutorial</emphasis>
-    <ulink url="../../../struts_tools_tutorial/en/html/index.html">(html)</ulink>
-    <ulink url="../../../struts_tools_tutorial/en/html_single/index.html">(html single)</ulink>
-    <ulink url="../../../struts_tools_tutorial/en/pdf/Seam_Dev_Tools_Reference_Guide.pdf"
+    <ulink url="../../struts_tools_tutorial/html/index.html">(html)</ulink>
+    <ulink url="../../struts_tools_tutorial/html_single/index.html">(html single)</ulink>
+    <ulink url="../../struts_tools_tutorial/pdf/Seam_Dev_Tools_Reference_Guide.pdf"
     >(PDF)</ulink>
   </para>
   <para> This tutorial will describe the classical style of Struts development, and will
@@ -58,9 +58,9 @@
 
   <para>
     <emphasis role="bold">Seam Dev Tools Reference Guide</emphasis>
-    <ulink url="../../../seam/en/html/index.html">(html)</ulink>
-    <ulink url="../../../seam/en/html_single/index.html">(html single)</ulink>
-    <ulink url="../../../seam/en/pdf/Seam_Dev_Tools_Reference_Guide.pdf">(PDF)</ulink>
+    <ulink url="../../seam/html/index.html">(html)</ulink>
+    <ulink url="../../seam/html_single/index.html">(html single)</ulink>
+    <ulink url="../../seam/pdf/Seam_Dev_Tools_Reference_Guide.pdf">(PDF)</ulink>
   </para>
   <para> This guide helps you to understand what Seam is and how to install Seam plug-in into
     Eclipse. It tells you the necessary steps to start working with Seam Framework and assists in a
@@ -69,16 +69,16 @@
 
   <para>
     <emphasis role="bold">Visual Web Tools Reference Guide</emphasis>
-    <ulink url="../../../jsf/en/html/index.html">(html)</ulink>
-    <ulink url="../../../jsf/en/html_single/index.html">(html single)</ulink>
-    <ulink url="../../../jsf/en/pdf/Visual_Web_Tools_Reference_Guide.pdf">(PDF)</ulink>
+    <ulink url="../../jsf/html/index.html">(html)</ulink>
+    <ulink url="../../jsf/html_single/index.html">(html single)</ulink>
+    <ulink url="../../jsf/pdf/Visual_Web_Tools_Reference_Guide.pdf">(PDF)</ulink>
   </para>
 
   <para>
     <emphasis role="bold">JBoss Server Manager Reference Guide</emphasis>
-    <ulink url="../../../as/en/html/index.html">(html)</ulink>
-    <ulink url="../../../as/en/html_single/index.html">(html single)</ulink>
-    <ulink url="../../../as/en/pdf/server_manager_guide.pdf">(PDF)</ulink>
+    <ulink url="../../as/html/index.html">(html)</ulink>
+    <ulink url="../../as/html_single/index.html">(html single)</ulink>
+    <ulink url="../../as/pdf/server_manager_guide.pdf">(PDF)</ulink>
   </para>
   <para> This guide covers the basics of working with the JBoss server manager. You will read how to
     install runtimes and servers and quickly learn how to configure, start, stop the server and know
@@ -87,9 +87,9 @@
 
   <para>
     <emphasis role="bold">jBPM Tools Reference Guide</emphasis>
-    <ulink url="../../../jbpm/en/html/index.html">(html)</ulink>
-    <ulink url="../../../jbpm/en/html_single/index.html">(html single)</ulink>
-    <ulink url="../../../jbpm/en/pdf/jBPM_Tools_Ref.pdf">(PDF)</ulink>
+    <ulink url="../../jbpm/html/index.html">(html)</ulink>
+    <ulink url="../../jbpm/html_single/index.html">(html single)</ulink>
+    <ulink url="../../jbpm/pdf/jBPM_Tools_Ref.pdf">(PDF)</ulink>
   </para>
   <para>With jBPM Tools Reference Guide we&apos;ll help you to facilitate a cross-product
     learning and know how you can speed your development using special editors and visual designers.
@@ -98,9 +98,9 @@
 
   <para>
     <emphasis role="bold">Hibernate Tools Reference Guide</emphasis>
-    <ulink url="../../../hibernatetools/en/html/index.html">(html)</ulink>
-    <ulink url="../../../hibernatetools/en/html_single/index.html">(html single)</ulink>
-    <ulink url="../../../hibernatetools/en/pdf/hibernate_tools.pdf">(PDF)</ulink>
+    <ulink url="../../hibernatetools/html/index.html">(html)</ulink>
+    <ulink url="../../hibernatetools/html_single/index.html">(html single)</ulink>
+    <ulink url="../../hibernatetools/pdf/hibernate_tools.pdf">(PDF)</ulink>
   </para>
   <para>Throughout this guide you will learn how to install and use Hibernate Tools bath via Ant and
     through Eclipse. We&apos;ll supply you with the information on how to create mapping files,
@@ -110,9 +110,9 @@
 
   <para>
     <emphasis role="bold">Exadel Studio Migration Guide</emphasis>
-    <ulink url="../../../Exadel-migration/en/html/index.html">(html)</ulink>
-    <ulink url="../../../Exadel-migration/en/html_single/index.html">(html single)</ulink>
-    <ulink url="../../../Exadel-migration/en/pdf/exadel-migration.pdf">(PDF)</ulink>
+    <ulink url="../../Exadel-migration/html/index.html">(html)</ulink>
+    <ulink url="../../Exadel-migration/html_single/index.html">(html single)</ulink>
+    <ulink url="../../Exadel-migration/pdf/exadel-migration.pdf">(PDF)</ulink>
   </para>
   <para>This document is intended to help you to migrate an existing Exadel JSF or Struts projects
     from Exadel Studio into JBoss Developer Studio. </para>
