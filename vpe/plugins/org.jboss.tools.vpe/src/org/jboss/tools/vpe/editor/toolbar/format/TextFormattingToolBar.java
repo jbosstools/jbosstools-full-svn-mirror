@@ -36,8 +36,10 @@ import org.jboss.tools.vpe.messages.VpeUIMessages;
  */
 public class TextFormattingToolBar extends SplitToolBar {
 
-	private static String[] FONT_ARRAY = { "Arial",  "Courier New", "Times New Roman",  
-										   "Comic Sans", "MS Serif", "Tahoma", "Verdana" };
+	private static final String NORMAL_FONT = "Normal"; //$NON-NLS-1$
+
+	private static String[] FONT_ARRAY = { "Arial",  "Courier New", "Times New Roman",    //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+										   "Comic Sans", "MS Serif", "Tahoma", "Verdana" };   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$ //$NON-NLS-4$
 
 	private Composite composite;
 	private FormatControllerManager formatControllerManager;
@@ -77,11 +79,11 @@ public class TextFormattingToolBar extends SplitToolBar {
 
 		ToolItem sep = new ToolItem(horBar, SWT.SEPARATOR);
 		Combo comboBlockFormat = new Combo(horBar, SWT.READ_ONLY);
-		comboBlockFormat.add("Normal");
+		comboBlockFormat.add("Normal"); //$NON-NLS-1$
 //		comboBlockFormat.add("Formatted");
-		comboBlockFormat.add("Address");
+		comboBlockFormat.add("Address"); //$NON-NLS-1$
 		for (int i = 1; i < 7; i++) {
-			comboBlockFormat.add("Heading " + i);
+			comboBlockFormat.add("Heading " + i); //$NON-NLS-1$
 		}
 //		comboBlockFormat.add("Numbered List");
 //		comboBlockFormat.add("Bulleted List");
@@ -107,10 +109,11 @@ public class TextFormattingToolBar extends SplitToolBar {
 			font = FONT_ARRAY;
 		}
 		comboFont.setItems(font);
-		comboFont.select(30);
+		comboFont.add(NORMAL_FONT, 0);
+		comboFont.select(0);
 		comboFont.pack();
 		comboFont.setToolTipText(VpeUIMessages.FONT_NAME);
-		comboFont.addListener(SWT.Selection, new FontNameFormatController(formatControllerManager, comboFont));
+		comboFont.addListener(SWT.Selection, new FontNameFormatController(formatControllerManager, comboFont, NORMAL_FONT));
 		sep.setWidth(comboFont.getSize().x);
 		sep.setControl(comboFont);
 
@@ -119,8 +122,9 @@ public class TextFormattingToolBar extends SplitToolBar {
 		sep = new ToolItem(horBar, SWT.SEPARATOR);
 		Combo comboFontSize = new Combo(horBar, SWT.DROP_DOWN|SWT.COLOR_LIST_BACKGROUND );
 		for (int i = 1; i < 8; i++) {
-			comboFontSize.add("" + i);
+			comboFontSize.add("" + i); //$NON-NLS-1$
 		}
+		comboFontSize.add(NORMAL_FONT, 0);
 		comboFontSize.setToolTipText(VpeUIMessages.FONT_SIZE);
 		comboFontSize.select(2);
 		comboFontSize.pack();
@@ -132,17 +136,17 @@ public class TextFormattingToolBar extends SplitToolBar {
 		sep = new ToolItem(horBar, SWT.SEPARATOR);
 		itemDescriptors.add(new ToolItemDescriptor(sep, false, null, false));
 
-		ToolItem item = createToolItem(horBar, SWT.CHECK, "icons/bold.gif", VpeUIMessages.BOLD);
+		ToolItem item = createToolItem(horBar, SWT.CHECK, "icons/bold.gif", VpeUIMessages.BOLD); //$NON-NLS-1$
 		Listener listener = new BoldFormatController(formatControllerManager, item);
 		item.addListener(SWT.Selection, listener);
 		itemDescriptors.add(new ToolItemDescriptor(item, true, listener, true));
 
-		item = createToolItem(horBar, SWT.CHECK, "icons/italic.gif", VpeUIMessages.ITALIC);
+		item = createToolItem(horBar, SWT.CHECK, "icons/italic.gif", VpeUIMessages.ITALIC); //$NON-NLS-1$
 		listener = new ItalicFormatController(formatControllerManager, item);
 		item.addListener(SWT.Selection, listener);
 		itemDescriptors.add(new ToolItemDescriptor(item, true, listener, true));
 
-		item = createToolItem(horBar, SWT.CHECK, "icons/uderline.gif", VpeUIMessages.UNDERLINE);
+		item = createToolItem(horBar, SWT.CHECK, "icons/uderline.gif", VpeUIMessages.UNDERLINE); //$NON-NLS-1$
 		listener = new UnderlineFormatController(formatControllerManager, item);
 		item.addListener(SWT.Selection, listener);
 		itemDescriptors.add(new ToolItemDescriptor(item, true, listener, true));
@@ -150,12 +154,12 @@ public class TextFormattingToolBar extends SplitToolBar {
 		sep = new ToolItem(horBar, SWT.SEPARATOR);
 		itemDescriptors.add(new ToolItemDescriptor(sep, false, null, true));
 
-		item = createToolItem(horBar, SWT.PUSH, "icons/background.gif", VpeUIMessages.BACKGROUND_COLOR);
+		item = createToolItem(horBar, SWT.PUSH, "icons/background.gif", VpeUIMessages.BACKGROUND_COLOR); //$NON-NLS-1$
 		listener = new BackgroundColorFormatController(formatControllerManager, item);
 		item.addListener(SWT.Selection, listener);
 		itemDescriptors.add(new ToolItemDescriptor(item, true, listener, true));
 
-		item = createToolItem(horBar, SWT.PUSH, "icons/foreground.gif", VpeUIMessages.FOREGROUND_COLOR);
+		item = createToolItem(horBar, SWT.PUSH, "icons/foreground.gif", VpeUIMessages.FOREGROUND_COLOR); //$NON-NLS-1$
 		listener = new ForegroundColorFormatController(formatControllerManager, item);
 		item.addListener(SWT.Selection, listener);
 		itemDescriptors.add(new ToolItemDescriptor(item, true, listener, true));

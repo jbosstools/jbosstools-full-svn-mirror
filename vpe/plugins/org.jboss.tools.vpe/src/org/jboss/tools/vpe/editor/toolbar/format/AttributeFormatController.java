@@ -57,6 +57,10 @@ abstract public class AttributeFormatController extends FormatController {
 			if(FormatAttributeData.STYLE_TYPE.equals(templateData.getType())) {
 				manager.setIgnoreSelectionChanges(false);
 				setStyle(attribute, templateData);
+				if (!(attribute.getValue().length() > 0)) {
+				    Element element = (Element) selectedNode;
+				    element.removeAttributeNode(attribute);
+				}
 				return;
 			}
 		}
