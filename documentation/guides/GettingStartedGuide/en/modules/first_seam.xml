@@ -27,7 +27,7 @@
     <para>This section helps you to create a simple Seam project.</para>
     <para>To create a new web application in <property>Seam</property>, you should create a Seam web
       project. This section provides all the necessary steps to organize a new project with appropriate
-      tooling and adjust the settings that match your needs. In order to find out more information, see <ulink url="../../../seam/en/html_single/index.html">Seam Dev Tools Reference guide</ulink></para>
+      tooling and adjust the settings that match your needs. In order to find out more information, see <ulink url="../../seam/html_single/index.html">Seam Dev Tools Reference guide</ulink></para>
     <para>First, select <emphasis>
         <property>New &gt; Project ... &gt; Seam &gt; Seam Web Project</property>
       </emphasis>. You will be prompted to enter a name and a location directory for your new
@@ -96,7 +96,7 @@
       <listitem>
         <para>Check <emphasis>
             <property>Server Supplied JSF Implementation</property>
-        </emphasis>. We will use <ulink url="../../../seam/en/html_single/index.html#addJSFCapab">JSF implementation</ulink> that comes with JBoss server</para>
+        </emphasis>. We will use <ulink url="../../seam/html_single/index.html#addJSFCapab">JSF implementation</ulink> that comes with JBoss server</para>
       </listitem>
       <listitem>
         <para>Click <emphasis>
@@ -221,7 +221,7 @@
         <property>WebContent/home.xhtml file</property>
       </emphasis> and edit it in the visual editor. Notice that the visual editor lets you both the
       XHTML code and the rendered page. The rendered view is designed to make it easy to find stuff
-      in a complex XHTML page. If you'd like to learn more about the VPE, read the Editors section in the <ulink url="../../../jsf/en/html_single/index.html">Visual Web Tools Reference guide</ulink>.</para>
+      in a complex XHTML page. If you'd like to learn more about the VPE, read the Editors section in the <ulink url="../../jsf/html_single/index.html">Visual Web Tools Reference guide</ulink>.</para>
 
     <figure>
       <title>Making Changes in the Visual Editor</title>
