@@ -13,6 +13,10 @@ package org.jboss.tools.vpe.editor;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.QualifiedName;
@@ -43,11 +47,16 @@ import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IReusableEditor;
 import org.eclipse.ui.IStorageEditorInput;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.contexts.IContextActivation;
+import org.eclipse.ui.contexts.IContextService;
+import org.eclipse.ui.handlers.IHandlerActivation;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
@@ -75,6 +84,9 @@ import org.jboss.tools.vpe.selbar.SelectionBar;
 
 public class VpeEditorPart extends EditorPart implements ITextEditor,
 		ITextEditorExtension, IReusableEditor, IVisualEditor {
+	private IContextActivation fContextActivation;
+	private IHandlerActivation sourceActivation,visualActivation;
+	private IHandler sourceMaxmin,visualMaxmin;
 	private CustomSashForm container;
 	protected EditorSettings editorSettings;
 	private StructuredTextEditor sourceEditor = null;
@@ -652,6 +664,30 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 		// ///////////////////////////////////////
 		cmpEd.layout();
+		sourceMaxmin = new AbstractHandler() {
+			public Object execute(ExecutionEvent event)
+					throws ExecutionException {
+				Point p = visualContent.getSize();
+				if (p.x == 0 || p.y == 0) {
+					container.upClicked();
+				} else {
+					container.maxDown();
+				}
+				return null;
+			}
+		};
+		visualMaxmin = new AbstractHandler() {
+			public Object execute(ExecutionEvent event)
+					throws ExecutionException {
+				Point p = sourceContent.getSize();
+				if (p.x == 0 || p.y == 0) {
+					container.downClicked();
+				} else {
+					container.maxUp();
+				}
+				return null;
+			}
+		};
 	}
 
 	public void createVisualEditor() {
@@ -761,6 +797,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 	private class ActivationListener extends ShellAdapter implements
 			IPartListener {
+		private static final String VPE_EDITOR_CONTEXT = "org.jboss.tools.vpe.editorContext";
+		private static final String VPE_VISUAL_MAXMIN = "org.jboss.tools.vpe.visual.maxmin";
+		private static final String VPE_SOURCE_MAXMIN = "org.jboss.tools.vpe.source.maxmin";
 		private IWorkbenchPart fActivePart;
 		private boolean fIsHandlingActivation = false;
 
@@ -777,6 +816,21 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 		public void partDeactivated(IWorkbenchPart part) {
 			fActivePart = null;
+			IWorkbench workbench = PlatformUI.getWorkbench();
+			if (fContextActivation != null) {
+				IContextService contextService = (IContextService) workbench
+						.getAdapter(IContextService.class);
+				contextService.deactivateContext(fContextActivation);
+			}
+
+			IHandlerService handlerService = (IHandlerService) workbench
+					.getService(IHandlerService.class);
+			if (handlerService != null) {
+				if (sourceActivation != null)
+					handlerService.deactivateHandler(sourceActivation);
+				if (visualActivation != null)
+					handlerService.deactivateHandler(visualActivation);
+			}
 		}
 
 		public void partOpened(IWorkbenchPart part) {
@@ -803,6 +857,21 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 							visualEditor.getController().refreshTemplates();
 						}
 						sourceEditor.safelySanityCheckState(getEditorInput());
+					}
+					IWorkbench workbench = PlatformUI.getWorkbench();
+					IContextService contextService = (IContextService) workbench
+							.getAdapter(IContextService.class);
+					fContextActivation = contextService
+							.activateContext(VPE_EDITOR_CONTEXT); //$NON-NLS-1$
+					IHandlerService handlerService = (IHandlerService) workbench
+							.getService(IHandlerService.class);
+					if (handlerService != null) {
+						sourceActivation = handlerService.activateHandler(
+								VPE_SOURCE_MAXMIN,
+								sourceMaxmin);
+						visualActivation = handlerService.activateHandler(
+								VPE_VISUAL_MAXMIN,
+								visualMaxmin);
 					}
 				} finally {
 					fIsHandlingActivation = false;

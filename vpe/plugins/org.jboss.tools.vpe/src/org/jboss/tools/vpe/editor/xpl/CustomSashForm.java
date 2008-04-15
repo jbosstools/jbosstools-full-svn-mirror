@@ -177,6 +177,14 @@ public class CustomSashForm extends SashForm {
 	}
 	
 
+	public void upClicked() {
+		upClicked(currentSashInfo);
+	}
+	
+	public void downClicked() {
+		downClicked(currentSashInfo);
+	}
+	
 	/**
 	 * Call to set to max down
 	 */

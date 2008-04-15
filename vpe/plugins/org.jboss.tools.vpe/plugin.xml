@@ -33,5 +33,33 @@
     </extension>
 	<extension point="org.eclipse.ui.preferencePages">
       <page category="org.jboss.tools.common.xstudio.editors" class="org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage" id="org.jboss.tools.vpe.editor" name="Visual Page Editor"></page>
-   	</extension>    
+   	</extension>
+   	<extension
+       	point="org.eclipse.ui.contexts">
+    	<context
+          description="%vpe.editor.binding.context.description"
+          id="org.jboss.tools.vpe.editorContext"
+          name="%editor.binding.context.name"
+          parentId="org.eclipse.ui.textEditorScope">
+    	</context>
+    </extension>
+    <extension id="org.jboss.tools.vpe.commands" point="org.eclipse.ui.commands">
+		<category id="org.jboss.tools.vpe.category" name="%vpe.category"/>
+		<command categoryId="org.jboss.tools.vpe.category"
+			id="org.jboss.tools.vpe.source.maxmin"
+			name="%source.maxmin"/>
+		<command categoryId="org.jboss.tools.vpe.category"
+			id="org.jboss.tools.vpe.visual.maxmin"
+			name="%visual.maxmin"/>
+	</extension>
+ 	<extension point="org.eclipse.ui.bindings">
+		<key commandId="org.jboss.tools.vpe.source.maxmin"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.jboss.tools.vpe.editorContext"
+			sequence="M1+F6"/>
+		<key commandId="org.jboss.tools.vpe.visual.maxmin"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.jboss.tools.vpe.editorContext"
+			sequence="M1+M2+F6"/>
+	</extension>
 </plugin>
