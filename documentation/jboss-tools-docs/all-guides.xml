@@ -23,7 +23,7 @@
 		<fileSets>
 			<fileSet>
 			  <directory>.</directory>
-                          <outputDirectory>/</outputDirectory>
+                          <outputDirectory>../</outputDirectory>
 			  <filtered>false</filtered>
 			  <lineEnding>keep</lineEnding>
 			  <includes>
