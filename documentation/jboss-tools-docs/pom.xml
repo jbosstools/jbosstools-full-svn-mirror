@@ -34,7 +34,7 @@
             <descriptor>all-guides.xml</descriptor>
           </descriptors>
 		  <finalName>en</finalName>
-		  <outputDirectory>target</outputDirectory>
+		  <outputDirectory>nightly-docs</outputDirectory>
 		  <appendAssemblyId>false</appendAssemblyId>
 		  <ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
         </configuration>
