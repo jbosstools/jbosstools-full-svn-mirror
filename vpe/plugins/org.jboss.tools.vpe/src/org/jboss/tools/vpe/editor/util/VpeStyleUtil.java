@@ -16,6 +16,7 @@ import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.ILocationProvider;
@@ -23,30 +24,31 @@ import org.w3c.dom.Element;
 
 public class VpeStyleUtil {
 
-    public static final String ATTRIBUTE_STYLE = "style";
+    public static final String ATTRIBUTE_STYLE = "style"; //$NON-NLS-1$
 
-    public static final String PARAMETER_POSITION = "position";
-    public static final String PARAMETER_TOP = "top";
-    public static final String PARAMETER_LEFT = "left";
-    public static final String PARAMETER_WIDTH = "width";
-    public static final String PARAMETER_HEIGHT = "height";
-    public static final String PARAMETR_BACKGROND = "background";
+    public static final String PARAMETER_POSITION = "position"; //$NON-NLS-1$
+    public static final String PARAMETER_TOP = "top"; //$NON-NLS-1$
+    public static final String PARAMETER_LEFT = "left"; //$NON-NLS-1$
+    public static final String PARAMETER_WIDTH = "width"; //$NON-NLS-1$
+    public static final String PARAMETER_HEIGHT = "height"; //$NON-NLS-1$
+    public static final String PARAMETR_BACKGROND = "background"; //$NON-NLS-1$
 
-    public static final String VALUE_ABSOLUTE = "absolute";
+    public static final String VALUE_ABSOLUTE = "absolute"; //$NON-NLS-1$
 
-    public static final String DOT_STRING = ".";
-    public static final String COLON_STRING = ":";
-    public static final String SEMICOLON_STRING = ";";
-    public static final String PX_STRING = "px";
-    public static final String SPACE_STRING = " ";
-    public static final String EMPTY_STRING = "";
+    public static final String DOT_STRING = "."; //$NON-NLS-1$
+    public static final String COLON_STRING = ":"; //$NON-NLS-1$
+    public static final String SEMICOLON_STRING = ";"; //$NON-NLS-1$
+    public static final String PX_STRING = "px"; //$NON-NLS-1$
+    public static final String SPACE_STRING = " "; //$NON-NLS-1$
+    public static final String EMPTY_STRING = ""; //$NON-NLS-1$
+    public static final String SINGLE_QUOTE_STRING = "\'"; //$NON-NLS-1$
 
-    public static String ATTR_URL = "url";
-    public static String OPEN_BRACKET = "(";
-    public static String CLOSE_BRACKET = ")";
-    public static String FILE_PRTOCOL = "file://";
-    public static String FILE_STR = "file:";
-    public static String FILE_SEPARAROT = "/";
+    public static String ATTR_URL = "url"; //$NON-NLS-1$
+    public static String OPEN_BRACKET = "("; //$NON-NLS-1$
+    public static String CLOSE_BRACKET = ")"; //$NON-NLS-1$
+    public static String FILE_PRTOCOL = "file://"; //$NON-NLS-1$
+    public static String FILE_STR = "file:"; //$NON-NLS-1$
+    public static String FILE_SEPARATOR = "/"; //$NON-NLS-1$
 
     // sets parameter position in atribute style to absolute value
     public static void setAbsolute(Element sourceElement) {
@@ -290,11 +292,13 @@ public class VpeStyleUtil {
     public static String addFullPathIntoBackgroundValue(String value,
 	    IEditorInput input) {
 
-	if (value.indexOf(FILE_STR) != -1)
-	    return value;
+	if (value.indexOf(FILE_STR) != -1) {
+		return value;
+	}
 
-	if (!new File(value).isAbsolute())
-	    value = getFilePath(input, value);
+	if (!new File(value).isAbsolute()) {
+		value = getFilePath(input, value);
+	}
 
 	value = FILE_PRTOCOL + value;
 	URL url = null;
@@ -316,67 +320,84 @@ public class VpeStyleUtil {
      * @return format style string
      */
     public static String addFullPathIntoURLValue(String value,
-	    IEditorInput input) {
+			IEditorInput input) {
 
-	String urls[] = value.split(ATTR_URL);
+		String urls[] = value.split(ATTR_URL);
 
-	if (urls.length == 1)
-	    return value;
+		if (urls.length == 1) {
+			return value;
+		}
 
-	String finalStr = EMPTY_STRING;
-	for (int i = 1; i < urls.length; i++) {
+		String finalStr = EMPTY_STRING;
+		for (int i = 1; i < urls.length; i++) {
 
-	    urls[i] = urls[i].replace("\'", EMPTY_STRING);
-	    urls[i] = ATTR_URL + urls[i];
+			urls[i] = urls[i].replace(SINGLE_QUOTE_STRING, EMPTY_STRING);
+			urls[i] = ATTR_URL + urls[i];
 
-	    int startAttr = urls[i].indexOf(ATTR_URL);
+			int startAttr = urls[i].indexOf(ATTR_URL);
 
-	    int startPathIndex = urls[i].indexOf(OPEN_BRACKET, startAttr);
-	    int endPathIndex = urls[i].indexOf(CLOSE_BRACKET,
-		    startPathIndex + 1);
+			int startPathIndex = urls[i].indexOf(OPEN_BRACKET, startAttr);
+			int endPathIndex = urls[i].indexOf(CLOSE_BRACKET,
+					startPathIndex + 1);
 
-	    if (startPathIndex == -1 || endPathIndex == -1)
-		continue;
+			if (startPathIndex == -1 || endPathIndex == -1) {
+				continue;
+			}
 
-	    String filePath = urls[i].substring(startPathIndex + 1,
-		    endPathIndex);
-	    if (filePath.indexOf(FILE_STR) != -1)
-		continue;
+			String filePath = urls[i].substring(startPathIndex + 1,
+					endPathIndex);
+			if (filePath.indexOf(FILE_STR) != -1) {
+				continue;
+			}
 
-	    if (!new File(filePath).isAbsolute())
-		filePath = getFilePath(input, filePath);
+			if (!new File(filePath).isAbsolute()) {
+				filePath = getFilePath(input, filePath);
+			}
 
-	    filePath = FILE_PRTOCOL + filePath;
-	    URL url = null;
-	    try {
-		url = new URL(filePath);
-	    } catch (MalformedURLException e) {
-		continue;
-	    }
-	    filePath = url.toString();
+			filePath = FILE_PRTOCOL + filePath;
+			URL url = null;
+			try {
+				url = new URL(filePath);
+			} catch (MalformedURLException e) {
+				continue;
+			}
+			filePath = url.toString();
 
-	    String firstPartValue = urls[i].substring(0, startPathIndex + 1);
-	    String secondPartValue = urls[i].substring(endPathIndex, urls[i]
-		    .length());
+			String firstPartValue = urls[i].substring(0, startPathIndex + 1);
+			String secondPartValue = urls[i].substring(endPathIndex, urls[i]
+					.length());
 
-	    urls[i] = firstPartValue + filePath + secondPartValue;
+			urls[i] = firstPartValue + filePath + secondPartValue;
+		}
+		for (int i = 0; i < urls.length; i++)
+			finalStr += urls[i];
+		return finalStr;
 	}
-	for (int i = 0; i < urls.length; i++)
-	    finalStr += urls[i];
-	return finalStr;
-    }
 
     /**
-     * 
-     * @param nput
-     *                The editor input
-     * @param fileName
-     *                Relative path file
-     * @return Absolute path file
-     */
+	 * 
+	 * @param nput
+	 *            The editor input
+	 * @param fileName
+	 *            Relative path file
+	 * @return Absolute path file
+	 */
     public static String getFilePath(IEditorInput input, String fileName) {
-	IPath inputPath = getInputParentPath(input);
-	return inputPath.toOSString() + File.separator + fileName;
+		IPath inputPath = getInputParentPath(input);
+		return inputPath.toOSString() + File.separator + fileName;
+	}
+
+    /**
+     * Gets the file path.
+     * 
+     * @param href_val the href_val
+     * @param fileName the file name
+     * 
+     * @return the file path
+     */
+    public static String getFilePath(String href_val, String fileName) {
+    	IPath inputPath = getInputParentPath(href_val);
+    	return inputPath.toOSString() + File.separator + fileName;
     }
 
     /**
@@ -386,109 +407,94 @@ public class VpeStyleUtil {
      * @return Path
      */
     public static IPath getInputParentPath(IEditorInput input) {
-	IPath inputPath = null;
-	if (input instanceof ILocationProvider) {
-	    inputPath = ((ILocationProvider) input).getPath(input);
-	} else if (input instanceof IFileEditorInput) {
-	    IFile inputFile = ((IFileEditorInput) input).getFile();
-	    if (inputFile != null) {
-		inputPath = inputFile.getLocation();
-	    }
+		IPath inputPath = null;
+		if (input instanceof ILocationProvider) {
+			inputPath = ((ILocationProvider) input).getPath(input);
+		} else if (input instanceof IFileEditorInput) {
+			IFile inputFile = ((IFileEditorInput) input).getFile();
+			if (inputFile != null) {
+				inputPath = inputFile.getLocation();
+			}
+		}
+		if (inputPath != null && !inputPath.isEmpty()) {
+			inputPath = inputPath.removeLastSegments(1);
+		}
+		return inputPath;
 	}
-	if (inputPath != null && !inputPath.isEmpty()) {
-	    inputPath = inputPath.removeLastSegments(1);
-	}
-	return inputPath;
-    }
 
     /**
+     * Gets the href file path.
      * 
-     * @param value
-     *                Css string
-     * @param href_val
-     *                Path of css file
-     * @return Format style string
+     * @param href_val the href_val
+     * 
+     * @return href file path
      */
+    public static IPath getInputParentPath(String href_val) {
+		IPath inputPath = null;
+		inputPath = new Path(href_val);
+		if (inputPath != null && !inputPath.isEmpty()) {
+			/*
+			 * Remove href trailing filename
+			 */
+			inputPath = inputPath.removeLastSegments(1);
+		}
+		return inputPath;
+	}
+    
+    /**
+	 * 
+	 * @param value
+	 *            Css string
+	 * @param href_val
+	 *            Path of css file
+	 * @return Format style string
+	 */
     public static String addFullPathIntoURLValue(String value, String href_val) {
 
-	String urls[] = value.split(ATTR_URL);
+		String urls[] = value.split(ATTR_URL);
+		if (urls.length == 1) {
+			return value;
+		}
 
-	if (urls.length == 1)
-	    return value;
+		String finalStr = EMPTY_STRING;
+		for (int i = 1; i < urls.length; i++) {
+			urls[i] = urls[i].replace(SINGLE_QUOTE_STRING, EMPTY_STRING);
+			urls[i] = ATTR_URL + urls[i];
+			int startAttr = urls[i].indexOf(ATTR_URL);
+			int startPathIndex = urls[i].indexOf(OPEN_BRACKET, startAttr);
+			int endPathIndex = urls[i].indexOf(CLOSE_BRACKET,
+					startPathIndex + 1);
+			String filePath = urls[i].substring(startPathIndex + 1,
+					endPathIndex);
 
-	String finalStr = EMPTY_STRING;
+			if (filePath.indexOf(FILE_STR) != -1) {
+				continue;
+			}
 
-	for (int i = 1; i < urls.length; i++) {
+			if (!new File(filePath).isAbsolute()) {
+				filePath = getFilePath(href_val, filePath);
+			} else {
+				filePath = FILE_PRTOCOL + filePath;
+			}
 
-	    urls[i] = urls[i].replace("\'", EMPTY_STRING);
-	    urls[i] = ATTR_URL + urls[i];
+			URL url = null;
+			try {
+				url = new URL(filePath);
+			} catch (MalformedURLException e) {
+				continue;
+			}
+			filePath = url.toString();
 
-	    int startAttr = urls[i].indexOf(ATTR_URL);
+			String firstPartValue = urls[i].substring(0, startPathIndex + 1);
+			String secondPartValue = urls[i].substring(endPathIndex, urls[i]
+					.length());
 
-	    int startPathIndex = urls[i].indexOf(OPEN_BRACKET, startAttr);
-	    int endPathIndex = urls[i].indexOf(CLOSE_BRACKET,
-		    startPathIndex + 1);
-
-	    String filePath = urls[i].substring(startPathIndex + 1,
-		    endPathIndex);
-	    if (filePath.indexOf(FILE_STR) != -1)
-		continue;
-
-	    if (!new File(filePath).isAbsolute())
-		filePath = getAbsolutePathImage(filePath, href_val);
-	    else
-		filePath = FILE_PRTOCOL + filePath;
-
-	    try {
-		new URL(filePath);
-	    } catch (MalformedURLException e) {
-		continue;
-	    }
-
-	    // Dzmitry Sakovich
-	    // Fix for Linux
-	    // filePath = url.toString();
-
-	    String firstPartValue = urls[i].substring(0, startPathIndex + 1);
-	    String secondPartValue = urls[i].substring(endPathIndex, urls[i]
-		    .length());
-
-	    urls[i] = firstPartValue + filePath + secondPartValue;
-	}
-	for (int i = 0; i < urls.length; i++)
-	    finalStr += urls[i];
-	return finalStr;
-    }
-
-    /**
-     * 
-     * @param pathImgRelative
-     *                Relative path img file
-     * @param pathCssAbsolute
-     *                Absolute path css file
-     * @return Absolute path img file
-     */
-    private static String getAbsolutePathImage(String pathImgRelative,
-	    String pathCssAbsolute) {
-
-	int k = 0;
-	int j = 0;
-	try {
-	    new URL(pathCssAbsolute);
-	} catch (MalformedURLException e) {
-	    return pathImgRelative;
+			urls[i] = firstPartValue + filePath + secondPartValue;
+		}
+		for (int i = 0; i < urls.length; i++) {
+			finalStr += urls[i];
+		}
+		return finalStr;
 	}
 
-	// TODO Dzmitry Sakovich
-	// Fix for Linux
-	// pathCssAbsolute = url.toString();
-
-	while (j != -1) {
-	    j = pathCssAbsolute.indexOf(FILE_SEPARAROT, j + 1);
-	    if (j == -1)
-		break;
-	    k = j;
-	}
-	return pathCssAbsolute.substring(0, k + 1) + pathImgRelative;
-    }
 }
