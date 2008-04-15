@@ -51,15 +51,22 @@
 		<command categoryId="org.jboss.tools.vpe.category"
 			id="org.jboss.tools.vpe.visual.maxmin"
 			name="%visual.maxmin"/>
+		<command categoryId="org.jboss.tools.vpe.category"
+			id="org.jboss.tools.vpe.jumping"
+			name="%visual.jumping"/>
 	</extension>
  	<extension point="org.eclipse.ui.bindings">
 		<key commandId="org.jboss.tools.vpe.source.maxmin"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			contextId="org.jboss.tools.vpe.editorContext"
-			sequence="M1+F6"/>
+			sequence="M2+F6"/>
 		<key commandId="org.jboss.tools.vpe.visual.maxmin"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			contextId="org.jboss.tools.vpe.editorContext"
-			sequence="M1+M2+F6"/>
+			sequence="M2+M3+F6"/>
+		<key commandId="org.jboss.tools.vpe.jumping"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.jboss.tools.vpe.editorContext"
+			sequence="M1+M2+Tab"/>
 	</extension>
 </plugin>

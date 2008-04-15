@@ -25,6 +25,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.DisposeEvent;
@@ -64,6 +65,7 @@ import org.eclipse.ui.texteditor.IStatusField;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorExtension;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
+import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
@@ -85,8 +87,8 @@ import org.jboss.tools.vpe.selbar.SelectionBar;
 public class VpeEditorPart extends EditorPart implements ITextEditor,
 		ITextEditorExtension, IReusableEditor, IVisualEditor {
 	private IContextActivation fContextActivation;
-	private IHandlerActivation sourceActivation,visualActivation;
-	private IHandler sourceMaxmin,visualMaxmin;
+	private IHandlerActivation sourceActivation,visualActivation, jumpingActivation;
+	private IHandler sourceMaxmin,visualMaxmin, jumping;
 	private CustomSashForm container;
 	protected EditorSettings editorSettings;
 	private StructuredTextEditor sourceEditor = null;
@@ -667,11 +669,13 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		sourceMaxmin = new AbstractHandler() {
 			public Object execute(ExecutionEvent event)
 					throws ExecutionException {
-				Point p = visualContent.getSize();
-				if (p.x == 0 || p.y == 0) {
-					container.upClicked();
-				} else {
-					container.maxDown();
+				if (getVisualMode() == IVisualEditor.VISUALSOURCE_MODE) {
+					Point p = visualContent.getSize();
+					if (p.x == 0 || p.y == 0) {
+						container.upClicked();
+					} else {
+						container.maxDown();
+					}
 				}
 				return null;
 			}
@@ -679,11 +683,44 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		visualMaxmin = new AbstractHandler() {
 			public Object execute(ExecutionEvent event)
 					throws ExecutionException {
-				Point p = sourceContent.getSize();
-				if (p.x == 0 || p.y == 0) {
-					container.downClicked();
-				} else {
-					container.maxUp();
+				if (getVisualMode() == IVisualEditor.VISUALSOURCE_MODE) {
+					Point p = sourceContent.getSize();
+					if (p.x == 0 || p.y == 0) {
+						container.downClicked();
+					} else {
+						container.maxUp();
+					}
+				}
+				return null;
+			}
+		};
+		jumping = new AbstractHandler() {
+			public Object execute(ExecutionEvent event)
+					throws ExecutionException {
+				if (getVisualMode() == IVisualEditor.VISUALSOURCE_MODE) {
+					StructuredTextEditor editor = getSourceEditor();
+					if (editor == null)
+						return null;
+					StructuredTextViewer viewer = editor.getTextViewer();
+					if (viewer == null)
+						return null;
+					StyledText widget = viewer.getTextWidget();
+					if (widget == null || widget.isDisposed())
+						return null;
+					if (widget.isFocusControl()) {
+						if (visualEditor != null
+								&& activeEditor != visualEditor) {
+							activeEditor = visualEditor;
+							setFocus();
+							//visualContent.setFocus();
+						}
+					} else {
+						if (activeEditor != sourceEditor) {
+							activeEditor = sourceEditor;
+							setFocus();
+						}
+					}
+
 				}
 				return null;
 			}
@@ -800,6 +837,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		private static final String VPE_EDITOR_CONTEXT = "org.jboss.tools.vpe.editorContext";
 		private static final String VPE_VISUAL_MAXMIN = "org.jboss.tools.vpe.visual.maxmin";
 		private static final String VPE_SOURCE_MAXMIN = "org.jboss.tools.vpe.source.maxmin";
+		private static final String VPE_JUMPING = "org.jboss.tools.vpe.jumping";
 		private IWorkbenchPart fActivePart;
 		private boolean fIsHandlingActivation = false;
 
@@ -830,6 +868,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 					handlerService.deactivateHandler(sourceActivation);
 				if (visualActivation != null)
 					handlerService.deactivateHandler(visualActivation);
+				if (jumpingActivation != null)
+					handlerService.deactivateHandler(jumpingActivation);
 			}
 		}
 
@@ -872,6 +912,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 						visualActivation = handlerService.activateHandler(
 								VPE_VISUAL_MAXMIN,
 								visualMaxmin);
+						jumpingActivation = handlerService.activateHandler(
+								VPE_JUMPING,
+								jumping);
 					}
 				} finally {
 					fIsHandlingActivation = false;

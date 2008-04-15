@@ -178,11 +178,13 @@ public class CustomSashForm extends SashForm {
 	
 
 	public void upClicked() {
-		upClicked(currentSashInfo);
+		if (currentSashInfo != null)
+			upClicked(currentSashInfo);
 	}
 	
 	public void downClicked() {
-		downClicked(currentSashInfo);
+		if (currentSashInfo != null)
+			downClicked(currentSashInfo);
 	}
 	
 	/**
