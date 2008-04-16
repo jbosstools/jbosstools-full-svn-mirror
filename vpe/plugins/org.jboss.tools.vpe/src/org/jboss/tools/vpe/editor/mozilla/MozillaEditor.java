@@ -19,6 +19,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.browser.ProgressEvent;
+import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -83,7 +85,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private IVpeToolBarManager vpeToolBarManager;
 	private FormatControllerManager formatControllerManager = new FormatControllerManager();
 	private VpeController controller;
-	private Link link = null;	
+	private Link link = null;
+	private boolean loaded;	
 
 	public void doSave(IProgressMonitor monitor) {
 	}
@@ -234,16 +237,24 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 					super.onDispose();
 				}
 			};
+			loaded = false;
+			xulRunnerEditor.getBrowser().addProgressListener(new ProgressListener() {
 
+				public void changed(ProgressEvent event) {
+				}
+
+				public void completed(ProgressEvent event) {
+					loaded = true;
+					xulRunnerEditor.getBrowser().removeProgressListener(this);
+				}
+				
+			});
 			xulRunnerEditor.setURL(INIT_URL);
 			// Wait while visual part is loaded
-			Display.getCurrent().syncExec( new Runnable() {
-				public void run() {
-						while( Display.getCurrent().readAndDispatch() && getController()==null) {
-						}
-						
-				}
-			});
+			while (!loaded) {
+				if (!Display.getCurrent().readAndDispatch())
+					Display.getCurrent().sleep();
+			}
 			xulRunnerEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		}
 		catch (Exception e) {
