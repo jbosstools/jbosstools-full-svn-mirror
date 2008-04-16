@@ -38,9 +38,7 @@ import org.w3c.dom.Node;
  */
 public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 
-
 	boolean rebuildFlag = false;
-
 	
 	private static final String YES_STRING   = "yes";
 	
@@ -54,7 +52,6 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 	 */
 	public VpePreviewDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, VpeTemplateManager templateManager, MozillaEditor visualEditor, VpePageContext pageContext) {
 		super(domMapping, sorceAdapter, templateManager, visualEditor, pageContext);
-
 	}
 	
 	/**
@@ -70,6 +67,13 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 		case Node.ELEMENT_NODE:
 //			Map xmlnsMap = createXmlns((Element)sourceNode);
 			Set ifDependencySet = new HashSet();
+			
+			/*
+			 * Setting current visual node was added
+			 * to fix h:dataTable content visibility on Preview tab.
+			 * http://jira.jboss.com/jira/browse/JBIDE-2059
+			 */
+			getPageContext().setCurrentVisualNode(visualOldContainer);
 			VpeTemplate template = templateManager.getTemplate(getPageContext(), (Element)sourceNode, ifDependencySet);
 			VpeCreationData creationData;
 			
@@ -86,15 +90,16 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 				VpeTemplate defTemplate = templateManager.getDefTemplate();
 				creationData = defTemplate.create(getPageContext(), sourceNode, getVisualDocument());
 			}
-			
+			getPageContext().setCurrentVisualNode(null);
 			nsIDOMElement visualNewElement;
 			visualNewElement = (nsIDOMElement)creationData.getNode();
+
 			setTooltip((Element)sourceNode, visualNewElement);
 
 			if (!isCurrentMainDocument() && visualNewElement != null) {
 				setReadOnlyElement(visualNewElement);
 			}
-
+			
 			if (template.isChildren()) {
 				List<?> childrenInfoList = creationData.getChildrenInfoList();
 				if (childrenInfoList == null) {
@@ -103,7 +108,16 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 					addChildren(template, sourceNode, visualOldContainer, childrenInfoList);
 				}
 			}
+			
+			/*
+			 * Setting current visual node was added
+			 * to fix h:dataTable content visibility on Preview tab.
+			 * http://jira.jboss.com/jira/browse/JBIDE-2059
+			 */
+			getPageContext().setCurrentVisualNode(visualOldContainer);
 			template.validate(getPageContext(), (Element)sourceNode, getVisualDocument(), creationData);
+			getPageContext().setCurrentVisualNode(null);
+			
 			return visualNewElement;
 		case Node.TEXT_NODE:
 			return createTextNode(sourceNode, registerFlag);
