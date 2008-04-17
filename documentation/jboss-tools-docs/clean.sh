@@ -1,6 +1,4 @@
 pwd
-rm ./struts_tools_ref_guide/eclipse/AddingStrutsCapabilityToAnExistingWebApplication532.html
-rm ./struts_tools_ref_guide/eclipse/CreateNewTilesFile1422.html
 rm ./struts_tools_ref_guide/eclipse/css/codehighlight.css
 rm ./struts_tools_ref_guide/eclipse/css/dirty.css
 rm ./struts_tools_ref_guide/eclipse/css/documentation.css
