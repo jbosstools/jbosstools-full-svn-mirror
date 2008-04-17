@@ -204,11 +204,20 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 			}
 		}
 
+		nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
+		nsIDOMElement selectionTable = visualDocument
+				.createElement(HTML.TAG_TABLE);
+		nsIDOMElement tr = visualDocument.createElement(HTML.TAG_TR);
+		nsIDOMElement td = visualDocument.createElement(HTML.TAG_TD);
+
+		td.appendChild(div);
+		tr.appendChild(td);
+		selectionTable.appendChild(tr);
+		
 		nsIDOMElement visualTable = visualDocument
 				.createElement(HTML.TAG_TABLE);
-		nsIDOMElement div = visualDocument
-				.createElement(HTML.TAG_DIV);
-		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(div);
+
+		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(selectionTable);
 
 		if (propertyCreators != null) {
 			for (int i = 0; i < propertyCreators.size(); i++) {
