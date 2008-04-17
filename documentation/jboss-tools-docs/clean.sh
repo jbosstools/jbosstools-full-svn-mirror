@@ -1,310 +1,310 @@
-./struts_tools_ref_guide/html/images/*
-./struts_tools_ref_guide/html/images/struts/*
-./struts_tools_ref_guide/html/images/verif_valid/*
-./struts_tools_ref_guide/html/images/community/*
-./struts_tools_ref_guide/html/images/community/docbook/*
-./struts_tools_ref_guide/html/images/community/docbook/callouts/*
-./struts_tools_ref_guide/eclipse/*
-./struts_tools_ref_guide/eclipse/images/*
-./struts_tools_ref_guide/eclipse/images/struts/*
-./struts_tools_ref_guide/eclipse/images/verif_valid/*
-./struts_tools_ref_guide/eclipse/images/community/*
-./struts_tools_ref_guide/eclipse/images/community/docbook/*
-./struts_tools_ref_guide/eclipse/images/community/docbook/callouts/*
-./hibernatetools/*
-./hibernatetools/pdf/*
-./hibernatetools/html_single/*
-./hibernatetools/html_single/css/*
-./hibernatetools/html_single/images/*
-./hibernatetools/html_single/images/plugins/*
-./hibernatetools/html_single/images/code_generation/*
-./hibernatetools/html_single/images/community/*
-./hibernatetools/html_single/images/community/docbook/*
-./hibernatetools/html_single/images/community/docbook/callouts/*
-./hibernatetools/html/*
-./hibernatetools/html/css/*
-./hibernatetools/html/images/*
-./hibernatetools/html/images/plugins/*
-./hibernatetools/html/images/code_generation/*
-./hibernatetools/html/images/community/*
-./hibernatetools/html/images/community/docbook/*
-./hibernatetools/html/images/community/docbook/callouts/*
-./hibernatetools/eclipse/*
-./hibernatetools/eclipse/css/*
-./hibernatetools/eclipse/images/*
-./hibernatetools/eclipse/images/plugins/*
-./hibernatetools/eclipse/images/code_generation/*
-./hibernatetools/eclipse/images/community/*
-./hibernatetools/eclipse/images/community/docbook/*
-./hibernatetools/eclipse/images/community/docbook/callouts/*
-./as/*
-./as/pdf/*
-./as/html_single/*
-./as/html_single/css/*
-./as/html_single/images/*
-./as/html_single/images/perspective/*
-./as/html_single/images/webtools/*
-./as/html_single/images/runtimes_servers/*
-./as/html_single/images/community/*
-./as/html_single/images/community/docbook/*
-./as/html_single/images/community/docbook/callouts/*
-./as/html_single/images/modules/*
-./as/html_single/images/quick_start/*
-./as/html/*
-./as/html/css/*
-./as/html/images/*
-./as/html/images/perspective/*
-./as/html/images/webtools/*
-./as/html/images/runtimes_servers/*
-./as/html/images/community/*
-./as/html/images/community/docbook/*
-./as/html/images/community/docbook/callouts/*
-./as/html/images/modules/*
-./as/html/images/quick_start/*
-./as/eclipse/*
-./as/eclipse/css/*
-./as/eclipse/images/*
-./as/eclipse/images/perspective/*
-./as/eclipse/images/webtools/*
-./as/eclipse/images/runtimes_servers/*
-./as/eclipse/images/community/*
-./as/eclipse/images/community/docbook/*
-./as/eclipse/images/community/docbook/callouts/*
-./as/eclipse/images/modules/*
-./as/eclipse/images/quick_start/*
-./seam/*
-./seam/pdf/*
-./seam/html_single/*
-./seam/html_single/css/*
-./seam/html_single/images/*
-./seam/html_single/images/seam_menus_and_actions/*
-./seam/html_single/images/create_new_seam/*
-./seam/html_single/images/seam_view/*
-./seam/html_single/images/testng/*
-./seam/html_single/images/directory_structure/*
-./seam/html_single/images/seam_preferences/*
-./seam/html_single/images/seam_wizards/*
-./seam/html_single/images/crud_database_application/*
-./seam/html_single/images/generate_entities/*
-./seam/html_single/images/community/*
-./seam/html_single/images/community/docbook/*
-./seam/html_single/images/community/docbook/callouts/*
-./seam/html_single/images/business_application/*
-./seam/html_single/images/seam_editors/*
-./seam/html_single/images/crud_application_walkthrough/*
-./seam/html/*
-./seam/html/css/*
-./seam/html/images/*
-./seam/html/images/seam_menus_and_actions/*
-./seam/html/images/create_new_seam/*
-./seam/html/images/seam_view/*
-./seam/html/images/testng/*
-./seam/html/images/directory_structure/*
-./seam/html/images/seam_preferences/*
-./seam/html/images/seam_wizards/*
-./seam/html/images/crud_database_application/*
-./seam/html/images/generate_entities/*
-./seam/html/images/community/*
-./seam/html/images/community/docbook/*
-./seam/html/images/community/docbook/callouts/*
-./seam/html/images/business_application/*
-./seam/html/images/seam_editors/*
-./seam/html/images/crud_application_walkthrough/*
-./seam/eclipse/*
-./seam/eclipse/css/*
-./seam/eclipse/images/*
-./seam/eclipse/images/seam_menus_and_actions/*
-./seam/eclipse/images/create_new_seam/*
-./seam/eclipse/images/seam_view/*
-./seam/eclipse/images/testng/*
-./seam/eclipse/images/directory_structure/*
-./seam/eclipse/images/seam_preferences/*
-./seam/eclipse/images/seam_wizards/*
-./seam/eclipse/images/crud_database_application/*
-./seam/eclipse/images/generate_entities/*
-./seam/eclipse/images/community/*
-./seam/eclipse/images/community/docbook/*
-./seam/eclipse/images/community/docbook/callouts/*
-./seam/eclipse/images/business_application/*
-./seam/eclipse/images/seam_editors/*
-./seam/eclipse/images/crud_application_walkthrough/*
-./GettingStartedGuide/*
-./GettingStartedGuide/pdf/*
-./GettingStartedGuide/html_single/*
-./GettingStartedGuide/html_single/css/*
-./GettingStartedGuide/html_single/images/*
-./GettingStartedGuide/html_single/images/manage/*
-./GettingStartedGuide/html_single/images/getting_started/*
-./GettingStartedGuide/html_single/images/first_seam/*
-./GettingStartedGuide/html_single/images/rad_jsf_application/*
-./GettingStartedGuide/html_single/images/jsp_application/*
-./GettingStartedGuide/html/*
-./GettingStartedGuide/html/css/*
-./GettingStartedGuide/html/images/*
-./GettingStartedGuide/html/images/manage/*
-./GettingStartedGuide/html/images/getting_started/*
-./GettingStartedGuide/html/images/first_seam/*
-./GettingStartedGuide/html/images/rad_jsf_application/*
-./GettingStartedGuide/html/images/jsp_application/*
-./GettingStartedGuide/eclipse/*
-./GettingStartedGuide/eclipse/css/*
-./GettingStartedGuide/eclipse/images/*
-./GettingStartedGuide/eclipse/images/manage/*
-./GettingStartedGuide/eclipse/images/getting_started/*
-./GettingStartedGuide/eclipse/images/first_seam/*
-./GettingStartedGuide/eclipse/images/rad_jsf_application/*
-./GettingStartedGuide/eclipse/images/jsp_application/*
-./jsf_tools_ref_guide/*
-./jsf_tools_ref_guide/pdf/*
-./jsf_tools_ref_guide/html_single/*
-./jsf_tools_ref_guide/html_single/css/*
-./jsf_tools_ref_guide/html_single/images/*
-./jsf_tools_ref_guide/html_single/images/jsf_support/*
-./jsf_tools_ref_guide/html_single/images/verif_valid/*
-./jsf_tools_ref_guide/html/*
-./jsf_tools_ref_guide/html/css/*
-./jsf_tools_ref_guide/html/images/*
-./jsf_tools_ref_guide/html/images/jsf_support/*
-./jsf_tools_ref_guide/html/images/verif_valid/*
-./jsf_tools_ref_guide/eclipse/*
-./jsf_tools_ref_guide/eclipse/css/*
-./jsf_tools_ref_guide/eclipse/images/*
-./jsf_tools_ref_guide/eclipse/images/jsf_support/*
-./jsf_tools_ref_guide/eclipse/images/verif_valid/*
-./struts_tools_tutorial/*
-./struts_tools_tutorial/pdf/*
-./struts_tools_tutorial/html_single/*
-./struts_tools_tutorial/html_single/css/*
-./struts_tools_tutorial/html_single/images/*
-./struts_tools_tutorial/html_single/images/struts_validation/*
-./struts_tools_tutorial/html_single/images/struts_application/*
-./struts_tools_tutorial/html_single/images/community/*
-./struts_tools_tutorial/html_single/images/community/docbook/*
-./struts_tools_tutorial/html_single/images/community/docbook/callouts/*
-./struts_tools_tutorial/html/*
-./struts_tools_tutorial/html/css/*
-./struts_tools_tutorial/html/images/*
-./struts_tools_tutorial/html/images/struts_validation/*
-./struts_tools_tutorial/html/images/struts_application/*
-./struts_tools_tutorial/html/images/community/*
-./struts_tools_tutorial/html/images/community/docbook/*
-./struts_tools_tutorial/html/images/community/docbook/callouts/*
-./struts_tools_tutorial/eclipse/*
-./struts_tools_tutorial/eclipse/css/*
-./struts_tools_tutorial/eclipse/images/*
-./struts_tools_tutorial/eclipse/images/struts_validation/*
-./struts_tools_tutorial/eclipse/images/struts_application/*
-./struts_tools_tutorial/eclipse/images/community/*
-./struts_tools_tutorial/eclipse/images/community/docbook/*
-./struts_tools_tutorial/eclipse/images/community/docbook/callouts/*
-./jsf/*
-./jsf/pdf/*
-./jsf/html_single/*
-./jsf/html_single/css/*
-./jsf/html_single/images/*
-./jsf/html_single/images/struts/*
-./jsf/html_single/images/preferences/*
-./jsf/html_single/images/jsf_support/*
-./jsf/html_single/images/more_editors/*
-./jsf/html_single/images/web_projects/*
-./jsf/html_single/images/editors_features/*
-./jsf/html_single/images/verif_valid/*
-./jsf/html_single/images/palette/*
-./jsf/html_single/images/visual_page/*
-./jsf/html/*
-./jsf/html/css/*
-./jsf/html/images/*
-./jsf/html/images/struts/*
-./jsf/html/images/preferences/*
-./jsf/html/images/jsf_support/*
-./jsf/html/images/more_editors/*
-./jsf/html/images/web_projects/*
-./jsf/html/images/editors_features/*
-./jsf/html/images/verif_valid/*
-./jsf/html/images/palette/*
-./jsf/html/images/visual_page/*
-./jsf/eclipse/*
-./jsf/eclipse/css/*
-./jsf/eclipse/Show/*
-./jsf/eclipse/images/*
-./jsf/eclipse/images/struts/*
-./jsf/eclipse/images/preferences/*
-./jsf/eclipse/images/jsf_support/*
-./jsf/eclipse/images/more_editors/*
-./jsf/eclipse/images/web_projects/*
-./jsf/eclipse/images/editors_features/*
-./jsf/eclipse/images/verif_valid/*
-./jsf/eclipse/images/palette/*
-./jsf/eclipse/images/visual_page/*
-./jbpm/*
-./jbpm/pdf/*
-./jbpm/html_single/*
-./jbpm/html_single/css/*
-./jbpm/html_single/images/*
-./jbpm/html_single/images/The_JBoss_jBPM_Int_Mech/*
-./jbpm/html_single/images/runtime_installation/*
-./jbpm/html_single/images/the_views/*
-./jbpm/html_single/images/guided_tour_jboss_jbpmgpd/*
-./jbpm/html_single/images/Quick_Howto_Guide/*
-./jbpm/html_single/images/community/*
-./jbpm/html_single/images/community/docbook/*
-./jbpm/html_single/images/community/docbook/callouts/*
-./jbpm/html_single/images/Test_Drive_Proc/*
-./jbpm/html/*
-./jbpm/html/css/*
-./jbpm/html/images/*
-./jbpm/html/images/The_JBoss_jBPM_Int_Mech/*
-./jbpm/html/images/runtime_installation/*
-./jbpm/html/images/the_views/*
-./jbpm/html/images/guided_tour_jboss_jbpmgpd/*
-./jbpm/html/images/Quick_Howto_Guide/*
-./jbpm/html/images/community/*
-./jbpm/html/images/community/docbook/*
-./jbpm/html/images/community/docbook/callouts/*
-./jbpm/html/images/Test_Drive_Proc/*
-./jbpm/eclipse/*
-./jbpm/eclipse/css/*
-./jbpm/eclipse/images/*
-./jbpm/eclipse/images/The_JBoss_jBPM_Int_Mech/*
-./jbpm/eclipse/images/runtime_installation/*
-./jbpm/eclipse/images/the_views/*
-./jbpm/eclipse/images/guided_tour_jboss_jbpmgpd/*
-./jbpm/eclipse/images/Quick_Howto_Guide/*
-./jbpm/eclipse/images/community/*
-./jbpm/eclipse/images/community/docbook/*
-./jbpm/eclipse/images/community/docbook/callouts/*
-./jbpm/eclipse/images/Test_Drive_Proc/*
-./Exadel-migration/*
-./Exadel-migration/pdf/*
-./Exadel-migration/html_single/*
-./Exadel-migration/html_single/css/*
-./Exadel-migration/html_single/images/*
-./Exadel-migration/html_single/images/jsf_struts_war/*
-./Exadel-migration/html_single/images/jsf_struts/*
-./Exadel-migration/html/*
-./Exadel-migration/html/css/*
-./Exadel-migration/html/images/*
-./Exadel-migration/html/images/jsf_struts_war/*
-./Exadel-migration/html/images/jsf_struts/*
-./Exadel-migration/eclipse/*
-./Exadel-migration/eclipse/css/*
-./Exadel-migration/eclipse/images/*
-./Exadel-migration/eclipse/images/jsf_struts_war/*
-./Exadel-migration/eclipse/images/jsf_struts/*
-./jsf_tools_tutorial/*
-./jsf_tools_tutorial/pdf/*
-./jsf_tools_tutorial/html_single/*
-./jsf_tools_tutorial/html_single/css/*
-./jsf_tools_tutorial/html_single/images/*
-./jsf_tools_tutorial/html_single/images/jsf_application/*
-./jsf_tools_tutorial/html_single/images/business_application/*
-./jsf_tools_tutorial/html/*
-./jsf_tools_tutorial/html/css/*
-./jsf_tools_tutorial/html/images/*
-./jsf_tools_tutorial/html/images/jsf_application/*
-./jsf_tools_tutorial/html/images/business_application/*
-./jsf_tools_tutorial/eclipse/*
-./jsf_tools_tutorial/eclipse/css/*
-./jsf_tools_tutorial/eclipse/images/*
-./jsf_tools_tutorial/eclipse/images/jsf_application/*
-./jsf_tools_tutorial/eclipse/images/business_application/*
+rm ./struts_tools_ref_guide/html/images/*
+rm ./struts_tools_ref_guide/html/images/struts/*
+rm ./struts_tools_ref_guide/html/images/verif_valid/*
+rm ./struts_tools_ref_guide/html/images/community/*
+rm ./struts_tools_ref_guide/html/images/community/docbook/*
+rm ./struts_tools_ref_guide/html/images/community/docbook/callouts/*
+rm ./struts_tools_ref_guide/eclipse/*
+rm ./struts_tools_ref_guide/eclipse/images/*
+rm ./struts_tools_ref_guide/eclipse/images/struts/*
+rm ./struts_tools_ref_guide/eclipse/images/verif_valid/*
+rm ./struts_tools_ref_guide/eclipse/images/community/*
+rm ./struts_tools_ref_guide/eclipse/images/community/docbook/*
+rm ./struts_tools_ref_guide/eclipse/images/community/docbook/callouts/*
+rm ./hibernatetools/*
+rm ./hibernatetools/pdf/*
+rm ./hibernatetools/html_single/*
+rm ./hibernatetools/html_single/css/*
+rm ./hibernatetools/html_single/images/*
+rm ./hibernatetools/html_single/images/plugins/*
+rm ./hibernatetools/html_single/images/code_generation/*
+rm ./hibernatetools/html_single/images/community/*
+rm ./hibernatetools/html_single/images/community/docbook/*
+rm ./hibernatetools/html_single/images/community/docbook/callouts/*
+rm ./hibernatetools/html/*
+rm ./hibernatetools/html/css/*
+rm ./hibernatetools/html/images/*
+rm ./hibernatetools/html/images/plugins/*
+rm ./hibernatetools/html/images/code_generation/*
+rm ./hibernatetools/html/images/community/*
+rm ./hibernatetools/html/images/community/docbook/*
+rm ./hibernatetools/html/images/community/docbook/callouts/*
+rm ./hibernatetools/eclipse/*
+rm ./hibernatetools/eclipse/css/*
+rm ./hibernatetools/eclipse/images/*
+rm ./hibernatetools/eclipse/images/plugins/*
+rm ./hibernatetools/eclipse/images/code_generation/*
+rm ./hibernatetools/eclipse/images/community/*
+rm ./hibernatetools/eclipse/images/community/docbook/*
+rm ./hibernatetools/eclipse/images/community/docbook/callouts/*
+rm ./as/*
+rm ./as/pdf/*
+rm ./as/html_single/*
+rm ./as/html_single/css/*
+rm ./as/html_single/images/*
+rm ./as/html_single/images/perspective/*
+rm ./as/html_single/images/webtools/*
+rm ./as/html_single/images/runtimes_servers/*
+rm ./as/html_single/images/community/*
+rm ./as/html_single/images/community/docbook/*
+rm ./as/html_single/images/community/docbook/callouts/*
+rm ./as/html_single/images/modules/*
+rm ./as/html_single/images/quick_start/*
+rm ./as/html/*
+rm ./as/html/css/*
+rm ./as/html/images/*
+rm ./as/html/images/perspective/*
+rm ./as/html/images/webtools/*
+rm ./as/html/images/runtimes_servers/*
+rm ./as/html/images/community/*
+rm ./as/html/images/community/docbook/*
+rm ./as/html/images/community/docbook/callouts/*
+rm ./as/html/images/modules/*
+rm ./as/html/images/quick_start/*
+rm ./as/eclipse/*
+rm ./as/eclipse/css/*
+rm ./as/eclipse/images/*
+rm ./as/eclipse/images/perspective/*
+rm ./as/eclipse/images/webtools/*
+rm ./as/eclipse/images/runtimes_servers/*
+rm ./as/eclipse/images/community/*
+rm ./as/eclipse/images/community/docbook/*
+rm ./as/eclipse/images/community/docbook/callouts/*
+rm ./as/eclipse/images/modules/*
+rm ./as/eclipse/images/quick_start/*
+rm ./seam/*
+rm ./seam/pdf/*
+rm ./seam/html_single/*
+rm ./seam/html_single/css/*
+rm ./seam/html_single/images/*
+rm ./seam/html_single/images/seam_menus_and_actions/*
+rm ./seam/html_single/images/create_new_seam/*
+rm ./seam/html_single/images/seam_view/*
+rm ./seam/html_single/images/testng/*
+rm ./seam/html_single/images/directory_structure/*
+rm ./seam/html_single/images/seam_preferences/*
+rm ./seam/html_single/images/seam_wizards/*
+rm ./seam/html_single/images/crud_database_application/*
+rm ./seam/html_single/images/generate_entities/*
+rm ./seam/html_single/images/community/*
+rm ./seam/html_single/images/community/docbook/*
+rm ./seam/html_single/images/community/docbook/callouts/*
+rm ./seam/html_single/images/business_application/*
+rm ./seam/html_single/images/seam_editors/*
+rm ./seam/html_single/images/crud_application_walkthrough/*
+rm ./seam/html/*
+rm ./seam/html/css/*
+rm ./seam/html/images/*
+rm ./seam/html/images/seam_menus_and_actions/*
+rm ./seam/html/images/create_new_seam/*
+rm ./seam/html/images/seam_view/*
+rm ./seam/html/images/testng/*
+rm ./seam/html/images/directory_structure/*
+rm ./seam/html/images/seam_preferences/*
+rm ./seam/html/images/seam_wizards/*
+rm ./seam/html/images/crud_database_application/*
+rm ./seam/html/images/generate_entities/*
+rm ./seam/html/images/community/*
+rm ./seam/html/images/community/docbook/*
+rm ./seam/html/images/community/docbook/callouts/*
+rm ./seam/html/images/business_application/*
+rm ./seam/html/images/seam_editors/*
+rm ./seam/html/images/crud_application_walkthrough/*
+rm ./seam/eclipse/*
+rm ./seam/eclipse/css/*
+rm ./seam/eclipse/images/*
+rm ./seam/eclipse/images/seam_menus_and_actions/*
+rm ./seam/eclipse/images/create_new_seam/*
+rm ./seam/eclipse/images/seam_view/*
+rm ./seam/eclipse/images/testng/*
+rm ./seam/eclipse/images/directory_structure/*
+rm ./seam/eclipse/images/seam_preferences/*
+rm ./seam/eclipse/images/seam_wizards/*
+rm ./seam/eclipse/images/crud_database_application/*
+rm ./seam/eclipse/images/generate_entities/*
+rm ./seam/eclipse/images/community/*
+rm ./seam/eclipse/images/community/docbook/*
+rm ./seam/eclipse/images/community/docbook/callouts/*
+rm ./seam/eclipse/images/business_application/*
+rm ./seam/eclipse/images/seam_editors/*
+rm ./seam/eclipse/images/crud_application_walkthrough/*
+rm ./GettingStartedGuide/*
+rm ./GettingStartedGuide/pdf/*
+rm ./GettingStartedGuide/html_single/*
+rm ./GettingStartedGuide/html_single/css/*
+rm ./GettingStartedGuide/html_single/images/*
+rm ./GettingStartedGuide/html_single/images/manage/*
+rm ./GettingStartedGuide/html_single/images/getting_started/*
+rm ./GettingStartedGuide/html_single/images/first_seam/*
+rm ./GettingStartedGuide/html_single/images/rad_jsf_application/*
+rm ./GettingStartedGuide/html_single/images/jsp_application/*
+rm ./GettingStartedGuide/html/*
+rm ./GettingStartedGuide/html/css/*
+rm ./GettingStartedGuide/html/images/*
+rm ./GettingStartedGuide/html/images/manage/*
+rm ./GettingStartedGuide/html/images/getting_started/*
+rm ./GettingStartedGuide/html/images/first_seam/*
+rm ./GettingStartedGuide/html/images/rad_jsf_application/*
+rm ./GettingStartedGuide/html/images/jsp_application/*
+rm ./GettingStartedGuide/eclipse/*
+rm ./GettingStartedGuide/eclipse/css/*
+rm ./GettingStartedGuide/eclipse/images/*
+rm ./GettingStartedGuide/eclipse/images/manage/*
+rm ./GettingStartedGuide/eclipse/images/getting_started/*
+rm ./GettingStartedGuide/eclipse/images/first_seam/*
+rm ./GettingStartedGuide/eclipse/images/rad_jsf_application/*
+rm ./GettingStartedGuide/eclipse/images/jsp_application/*
+rm ./jsf_tools_ref_guide/*
+rm ./jsf_tools_ref_guide/pdf/*
+rm ./jsf_tools_ref_guide/html_single/*
+rm ./jsf_tools_ref_guide/html_single/css/*
+rm ./jsf_tools_ref_guide/html_single/images/*
+rm ./jsf_tools_ref_guide/html_single/images/jsf_support/*
+rm ./jsf_tools_ref_guide/html_single/images/verif_valid/*
+rm ./jsf_tools_ref_guide/html/*
+rm ./jsf_tools_ref_guide/html/css/*
+rm ./jsf_tools_ref_guide/html/images/*
+rm ./jsf_tools_ref_guide/html/images/jsf_support/*
+rm ./jsf_tools_ref_guide/html/images/verif_valid/*
+rm ./jsf_tools_ref_guide/eclipse/*
+rm ./jsf_tools_ref_guide/eclipse/css/*
+rm ./jsf_tools_ref_guide/eclipse/images/*
+rm ./jsf_tools_ref_guide/eclipse/images/jsf_support/*
+rm ./jsf_tools_ref_guide/eclipse/images/verif_valid/*
+rm ./struts_tools_tutorial/*
+rm ./struts_tools_tutorial/pdf/*
+rm ./struts_tools_tutorial/html_single/*
+rm ./struts_tools_tutorial/html_single/css/*
+rm ./struts_tools_tutorial/html_single/images/*
+rm ./struts_tools_tutorial/html_single/images/struts_validation/*
+rm ./struts_tools_tutorial/html_single/images/struts_application/*
+rm ./struts_tools_tutorial/html_single/images/community/*
+rm ./struts_tools_tutorial/html_single/images/community/docbook/*
+rm ./struts_tools_tutorial/html_single/images/community/docbook/callouts/*
+rm ./struts_tools_tutorial/html/*
+rm ./struts_tools_tutorial/html/css/*
+rm ./struts_tools_tutorial/html/images/*
+rm ./struts_tools_tutorial/html/images/struts_validation/*
+rm ./struts_tools_tutorial/html/images/struts_application/*
+rm ./struts_tools_tutorial/html/images/community/*
+rm ./struts_tools_tutorial/html/images/community/docbook/*
+rm ./struts_tools_tutorial/html/images/community/docbook/callouts/*
+rm ./struts_tools_tutorial/eclipse/*
+rm ./struts_tools_tutorial/eclipse/css/*
+rm ./struts_tools_tutorial/eclipse/images/*
+rm ./struts_tools_tutorial/eclipse/images/struts_validation/*
+rm ./struts_tools_tutorial/eclipse/images/struts_application/*
+rm ./struts_tools_tutorial/eclipse/images/community/*
+rm ./struts_tools_tutorial/eclipse/images/community/docbook/*
+rm ./struts_tools_tutorial/eclipse/images/community/docbook/callouts/*
+rm ./jsf/*
+rm ./jsf/pdf/*
+rm ./jsf/html_single/*
+rm ./jsf/html_single/css/*
+rm ./jsf/html_single/images/*
+rm ./jsf/html_single/images/struts/*
+rm ./jsf/html_single/images/preferences/*
+rm ./jsf/html_single/images/jsf_support/*
+rm ./jsf/html_single/images/more_editors/*
+rm ./jsf/html_single/images/web_projects/*
+rm ./jsf/html_single/images/editors_features/*
+rm ./jsf/html_single/images/verif_valid/*
+rm ./jsf/html_single/images/palette/*
+rm ./jsf/html_single/images/visual_page/*
+rm ./jsf/html/*
+rm ./jsf/html/css/*
+rm ./jsf/html/images/*
+rm ./jsf/html/images/struts/*
+rm ./jsf/html/images/preferences/*
+rm ./jsf/html/images/jsf_support/*
+rm ./jsf/html/images/more_editors/*
+rm ./jsf/html/images/web_projects/*
+rm ./jsf/html/images/editors_features/*
+rm ./jsf/html/images/verif_valid/*
+rm ./jsf/html/images/palette/*
+rm ./jsf/html/images/visual_page/*
+rm ./jsf/eclipse/*
+rm ./jsf/eclipse/css/*
+rm ./jsf/eclipse/Show/*
+rm ./jsf/eclipse/images/*
+rm ./jsf/eclipse/images/struts/*
+rm ./jsf/eclipse/images/preferences/*
+rm ./jsf/eclipse/images/jsf_support/*
+rm ./jsf/eclipse/images/more_editors/*
+rm ./jsf/eclipse/images/web_projects/*
+rm ./jsf/eclipse/images/editors_features/*
+rm ./jsf/eclipse/images/verif_valid/*
+rm ./jsf/eclipse/images/palette/*
+rm ./jsf/eclipse/images/visual_page/*
+rm ./jbpm/*
+rm ./jbpm/pdf/*
+rm ./jbpm/html_single/*
+rm ./jbpm/html_single/css/*
+rm ./jbpm/html_single/images/*
+rm ./jbpm/html_single/images/The_JBoss_jBPM_Int_Mech/*
+rm ./jbpm/html_single/images/runtime_installation/*
+rm ./jbpm/html_single/images/the_views/*
+rm ./jbpm/html_single/images/guided_tour_jboss_jbpmgpd/*
+rm ./jbpm/html_single/images/Quick_Howto_Guide/*
+rm ./jbpm/html_single/images/community/*
+rm ./jbpm/html_single/images/community/docbook/*
+rm ./jbpm/html_single/images/community/docbook/callouts/*
+rm ./jbpm/html_single/images/Test_Drive_Proc/*
+rm ./jbpm/html/*
+rm ./jbpm/html/css/*
+rm ./jbpm/html/images/*
+rm ./jbpm/html/images/The_JBoss_jBPM_Int_Mech/*
+rm ./jbpm/html/images/runtime_installation/*
+rm ./jbpm/html/images/the_views/*
+rm ./jbpm/html/images/guided_tour_jboss_jbpmgpd/*
+rm ./jbpm/html/images/Quick_Howto_Guide/*
+rm ./jbpm/html/images/community/*
+rm ./jbpm/html/images/community/docbook/*
+rm ./jbpm/html/images/community/docbook/callouts/*
+rm ./jbpm/html/images/Test_Drive_Proc/*
+rm ./jbpm/eclipse/*
+rm ./jbpm/eclipse/css/*
+rm ./jbpm/eclipse/images/*
+rm ./jbpm/eclipse/images/The_JBoss_jBPM_Int_Mech/*
+rm ./jbpm/eclipse/images/runtime_installation/*
+rm ./jbpm/eclipse/images/the_views/*
+rm ./jbpm/eclipse/images/guided_tour_jboss_jbpmgpd/*
+rm ./jbpm/eclipse/images/Quick_Howto_Guide/*
+rm ./jbpm/eclipse/images/community/*
+rm ./jbpm/eclipse/images/community/docbook/*
+rm ./jbpm/eclipse/images/community/docbook/callouts/*
+rm ./jbpm/eclipse/images/Test_Drive_Proc/*
+rm ./Exadel-migration/*
+rm ./Exadel-migration/pdf/*
+rm ./Exadel-migration/html_single/*
+rm ./Exadel-migration/html_single/css/*
+rm ./Exadel-migration/html_single/images/*
+rm ./Exadel-migration/html_single/images/jsf_struts_war/*
+rm ./Exadel-migration/html_single/images/jsf_struts/*
+rm ./Exadel-migration/html/*
+rm ./Exadel-migration/html/css/*
+rm ./Exadel-migration/html/images/*
+rm ./Exadel-migration/html/images/jsf_struts_war/*
+rm ./Exadel-migration/html/images/jsf_struts/*
+rm ./Exadel-migration/eclipse/*
+rm ./Exadel-migration/eclipse/css/*
+rm ./Exadel-migration/eclipse/images/*
+rm ./Exadel-migration/eclipse/images/jsf_struts_war/*
+rm ./Exadel-migration/eclipse/images/jsf_struts/*
+rm ./jsf_tools_tutorial/*
+rm ./jsf_tools_tutorial/pdf/*
+rm ./jsf_tools_tutorial/html_single/*
+rm ./jsf_tools_tutorial/html_single/css/*
+rm ./jsf_tools_tutorial/html_single/images/*
+rm ./jsf_tools_tutorial/html_single/images/jsf_application/*
+rm ./jsf_tools_tutorial/html_single/images/business_application/*
+rm ./jsf_tools_tutorial/html/*
+rm ./jsf_tools_tutorial/html/css/*
+rm ./jsf_tools_tutorial/html/images/*
+rm ./jsf_tools_tutorial/html/images/jsf_application/*
+rm ./jsf_tools_tutorial/html/images/business_application/*
+rm ./jsf_tools_tutorial/eclipse/*
+rm ./jsf_tools_tutorial/eclipse/css/*
+rm ./jsf_tools_tutorial/eclipse/images/*
+rm ./jsf_tools_tutorial/eclipse/images/jsf_application/*
+rm ./jsf_tools_tutorial/eclipse/images/business_application/*
