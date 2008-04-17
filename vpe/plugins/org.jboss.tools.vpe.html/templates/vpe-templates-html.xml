@@ -289,7 +289,7 @@
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="body" case-sensitive="yes">
+	<vpe:tag name="body" case-sensitive="no">
 		<vpe:template children="yes" modify="yes"
 			class="org.jboss.tools.vpe.html.template.HtmlBodyTemplate">
 			<vpe:resize>
