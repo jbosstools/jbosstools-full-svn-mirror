@@ -13,17 +13,18 @@ package org.jboss.tools.vpe.editor.util;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jst.jsp.core.internal.contentmodel.TaglibController;
 import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TLDCMDocumentManager;
 import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TaglibTracker;
-import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.jboss.tools.jst.web.tld.TaglibData;
-import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
-import org.jboss.tools.vpe.xulrunner.browser.util.DOMTreeDumper;
+import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.css.ResourceReference;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -109,9 +110,11 @@ public class XmlUtil {
 	* @param document
 	* @return collection of taglibs
 	*/	
-	public static List<TaglibData> getTaglibsForNode(Node source,IDocument document) {
+	public static List<TaglibData> getTaglibsForNode(Node source,VpePageContext pageContext) {
 		
 		List<TaglibData> taglibData = new ArrayList<TaglibData>();
+		
+		IDocument document = pageContext.getSourceBuilder().getStructuredTextViewer().getDocument();
 		//TODO Max Areshkau Looks like exist possability to check is it jsp document
 		//node.getOwnerDocument return null for jsp apply it for CA
 		TLDCMDocumentManager tldcmDocumentManager= TaglibController.getTLDCMDocumentManager(document);
@@ -126,7 +129,11 @@ public class XmlUtil {
 			
 			taglibData = getTaglibsForNode(source);
 		}
-		
+		//add internal taglibs JBIDE-2065
+		List<TaglibData> includeTaglibs = pageContext.getIncludeTaglibs();
+		for (TaglibData includedTaglib :  includeTaglibs) {
+			addTaglib(taglibData, includedTaglib.getUri(), includedTaglib.getPrefix(), true);
+		}
 		return taglibData;
 	} 
 	/**
@@ -137,7 +144,7 @@ public class XmlUtil {
 	 */	
 	private static void processAttribute(List<TaglibData> taglibs, Attr attr) {
 
-		String startStr = "xmlns:";
+		String startStr = "xmlns:"; //$NON-NLS-1$
 		String name = attr.getName();
 		if (!name.startsWith(startStr)) {
 			return;

@@ -29,6 +29,7 @@ import org.jboss.tools.common.xml.XMLUtilities;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.css.ResourceReference;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
@@ -307,7 +308,8 @@ public class VpeTemplateManager {
 			return sourceNode.getNodeName();
 		}
 		
-		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,pageContext.getSourceBuilder().getStructuredTextViewer().getDocument());
+		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,pageContext);
+		
 		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix, taglibs);		
 
 		if(sourceNodeTaglib == null) {

@@ -10,17 +10,16 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.context;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jst.jsp.core.internal.contentmodel.TaglibController;
-import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TLDCMDocumentManager;
-import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TaglibTracker;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
@@ -33,7 +32,6 @@ import org.jboss.tools.jst.jsp.editor.IVisualContext;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.jst.web.tld.VpeTaglibListener;
-import org.jboss.tools.jst.web.tld.VpeTaglibManager;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.VpeSourceDomBuilder;
@@ -45,7 +43,6 @@ import org.jboss.tools.vpe.editor.css.RelativeFolderReferenceList;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
 import org.jboss.tools.vpe.editor.css.TaglibReferenceList;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
-import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.FileUtil;
@@ -171,7 +168,7 @@ public class VpePageContext implements IVisualContext {
 		if (sourcePrefix == null || ((ElementImpl)sourceNode).isJSPTag()) {
 			return true;
 		}
-		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,this.getSourceBuilder().getStructuredTextViewer().getDocument());
+		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,this);
 		
 		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix, taglibs);
 		
@@ -195,8 +192,7 @@ public class VpePageContext implements IVisualContext {
 		}
 
 		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,
-				this.getSourceBuilder()
-				.getStructuredTextViewer().getDocument());
+				this);
 
 		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix,
 				taglibs);
@@ -227,7 +223,7 @@ public class VpePageContext implements IVisualContext {
 		}
 	}
 
-	public ResourceReference[] getIncludeTaglibs() {
+	public List<TaglibData> getIncludeTaglibs() {
 		IEditorInput input = getEditPart().getEditorInput();
 		IFile file = null;
 		if (input instanceof IFileEditorInput) {
@@ -237,7 +233,12 @@ public class VpePageContext implements IVisualContext {
 		if (file != null) {
 		    resourceReferences = TaglibReferenceList.getInstance().getAllResources(file);
 		}
-	    return resourceReferences;
+		//added by Max Areshkau Fix for JBIDE-2065
+		List<TaglibData> taglibData = new ArrayList<TaglibData>();
+		for (ResourceReference resourceReference : resourceReferences) {
+			taglibData.add(new TaglibData(0,resourceReference.getLocation(), resourceReference.getProperties()));
+		}
+	    return taglibData;
 	}
 
 	public ResourceReference[] getIncludeCss() {
@@ -254,13 +255,13 @@ public class VpePageContext implements IVisualContext {
 	}
 
 	public void installIncludeElements() {
-		ResourceReference[] list = getIncludeTaglibs();
-		for (int i = 0; i < list.length; i++) {
-			ResourceReference reference = list[i];
-//			setTaglib(i, reference.getLocation(), reference.getProperties(), false);
-		}
+//		ResourceReference[] list = getIncludeTaglibs();
+//		for (int i = 0; i < list.length; i++) {
+//			ResourceReference reference = list[i];
+////			setTaglib(i, reference.getLocation(), reference.getProperties(), false);
+//		}
 
-		list = getIncludeCss();
+		ResourceReference[] list = getIncludeCss();
 		for (int i = 0; i < list.length; i++) {
 			visualBuilder.addLinkNodeToHead(list[i].getLocation(), "yes");
 		}
@@ -307,7 +308,7 @@ public class VpePageContext implements IVisualContext {
 
 	public List<TaglibData> getTagLibs(Node sourceNode) {
 		
-		return XmlUtil.getTaglibsForNode(sourceNode, this.getSourceBuilder().getStructuredTextViewer().getDocument());
+		return XmlUtil.getTaglibsForNode(sourceNode, this);
 	}
 
 	public void removeTaglibListener(VpeTaglibListener listener) {

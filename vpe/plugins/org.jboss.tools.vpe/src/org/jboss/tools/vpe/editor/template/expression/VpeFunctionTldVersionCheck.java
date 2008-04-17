@@ -84,7 +84,7 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 			return new VpeValue(false);
 		}
 		
-		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,pageContext.getSourceBuilder().getStructuredTextViewer().getDocument());
+		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,pageContext);
 		
 		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourceNode.getPrefix(), taglibs);
 		//this function works only for jsp files
