@@ -1,5 +1,4 @@
-rm ./struts_tools_ref_guide/eclipse/config_file_debugger.html
-rm ./struts_tools_ref_guide/eclipse/GraphicalEditorForTilesFiles132.html
+-rm ./struts_tools_ref_guide/eclipse/GraphicalEditorForTilesFiles132.html
 rm ./struts_tools_ref_guide/eclipse/StrutsDiagramMode453.html
 rm ./struts_tools_ref_guide/eclipse/GraphicalEditorForStrutsValidationFiles86.html
 rm ./struts_tools_ref_guide/eclipse/StrutsSource75.html
