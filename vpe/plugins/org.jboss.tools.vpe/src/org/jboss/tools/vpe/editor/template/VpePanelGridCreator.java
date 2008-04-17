@@ -34,7 +34,7 @@ import org.w3c.dom.NodeList;
 
 public class VpePanelGridCreator extends VpeAbstractCreator {
 
-	private final String REDUNDANT_TEXT_SEPARATOR = "\n\n";
+	private final String REDUNDANT_TEXT_SEPARATOR = "\n\n"; //$NON-NLS-1$
 	
 	private boolean caseSensitive;
 	private VpeExpression tableSizeExpr;
@@ -301,9 +301,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 				nsIDOMElement visualHead = null;
 				nsIDOMElement visualFoot = null;
 				nsIDOMElement visualCaption = null;
-				nsIDOMElement visualBody = visualDocument
-						.createElement(HTML.TAG_TBODY);
-				visualTable.appendChild(visualBody);
+	
 				if (caption != null) {
 					visualCaption = visualDocument
 							.createElement(HTML.TAG_CAPTION);
@@ -317,7 +315,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 						String captionClass = captionClassExpr.exec(
 								pageContext, caption.getParentNode())
 								.stringValue();
-						visualCaption.setAttribute("class", captionClass);
+						visualCaption.setAttribute(HTML.ATTR_CLASS, captionClass);
 					}
 
 					if (captionStyleExpr != null
@@ -325,7 +323,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 						String captionStyle = captionStyleExpr.exec(
 								pageContext, caption.getParentNode())
 								.stringValue();
-						visualCaption.setAttribute("style", captionStyle);
+						visualCaption.setAttribute(HTML.ATTR_STYLE, captionStyle);
 					}
 				}
 				if (header != null) {
@@ -337,6 +335,10 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 					visualTable.appendChild(visualFoot);
 				}
 
+				nsIDOMElement visualBody = visualDocument
+						.createElement(HTML.TAG_TBODY);
+				visualTable.appendChild(visualBody);
+		
 				List rowClasses = getClasses(rowClassesExpr, sourceNode,
 						pageContext);
 				List columnClasses = getClasses(columnClassesExpr, sourceNode,
@@ -346,7 +348,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 					nsIDOMElement visualRow = visualDocument
 							.createElement(HTML.TAG_TR);
 					if (rowClasses.size() > 0) {
-						visualRow.setAttribute("class", rowClasses.get(rci)
+						visualRow.setAttribute(HTML.ATTR_CLASS, rowClasses.get(rci)
 								.toString());
 						rci++;
 						if (rci >= rowClasses.size())
@@ -356,7 +358,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 						nsIDOMElement visualCell = visualDocument
 								.createElement(HTML.TAG_TD);
 						if (columnClasses.size() > 0) {
-							visualCell.setAttribute("class", columnClasses.get(
+							visualCell.setAttribute(HTML.ATTR_CLASS, columnClasses.get(
 									cci).toString());
 							cci++;
 							if (cci >= columnClasses.size())
@@ -381,9 +383,9 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 					}
 				}
 				makeSpecial(header, visualHead, visualDocument, tableSize,
-						creatorInfo, "th", headerClassExpr, pageContext);
+						creatorInfo,  HTML.TAG_TH, headerClassExpr, pageContext);
 				makeSpecial(footer, visualFoot, visualDocument, tableSize,
-						creatorInfo, "td", footerClassExpr, pageContext);
+						creatorInfo, HTML.TAG_TD, footerClassExpr, pageContext);
 
 				for (int i = 0; i < propertyCreators.size(); i++) {
 					VpeCreator creator = (VpeCreator) propertyCreators.get(i);
@@ -429,11 +431,11 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 			nsIDOMElement visualRow = visualDocument.createElement(HTML.TAG_TR);
 			visualHead.appendChild(visualRow);
 			nsIDOMElement visualCell = visualDocument.createElement(cellTag);
-			visualCell.setAttribute("colspan", "" + tableSize);
+			visualCell.setAttribute(HTML.ATTR_COLSPAN, "" + tableSize);
 			if (headerClassExpr != null && header.getParentNode() != null) {
 				String headerClass = headerClassExpr.exec(pageContext,
 						header.getParentNode()).stringValue();
-				visualCell.setAttribute("class", headerClass);
+				visualCell.setAttribute(HTML.ATTR_CLASS, headerClass);
 			}
 			visualRow.appendChild(visualCell);
 			VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualCell);

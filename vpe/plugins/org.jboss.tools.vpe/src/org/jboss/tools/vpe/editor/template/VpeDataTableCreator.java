@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
 import java.util.ArrayList;
@@ -50,67 +50,82 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 	private final String ZERO = "0"; //$NON-NLS-1$
 	private final String ONE = "1"; //$NON-NLS-1$
 	private final String HUNDRED_PERCENTS = "100%"; //$NON-NLS-1$
-	
+
 	private final String ATTR_CAPTION_STYLE = "captionStyle"; //$NON-NLS-1$
 	private final String ATTR_CAPTION_CLASS = "captionClass"; //$NON-NLS-1$
+	private final String ATTR_HEADER_CLASS = "headerClass"; //$NON-NLS-1$
+	private final String ATTR_FOOTER_CLASS = "footerClass"; //$NON-NLS-1$
 	private final String ATTR_STYLE = "style"; //$NON-NLS-1$
 	private final String ATTR_CLASS = "class"; //$NON-NLS-1$
 	private final String ATTR_WIDTH = "width"; //$NON-NLS-1$
 	private final String ATTR_BORDER = "border"; //$NON-NLS-1$
 	private final String ATTR_RULES = "rules"; //$NON-NLS-1$
 	private final String ATTR_RULES_VALUE_ROWS = "rows"; //$NON-NLS-1$
-    private final String TD_HIDDEN_BORDER_STYLE = "padding: 0px; border: 0px hidden;"; //$NON-NLS-1$
-    private final String TD_RULES_ROWS_BORDER_STYLE = "padding: 0px;"; //$NON-NLS-1$
-    private final String RULES_HIDDEN_BORDER_STYLE = "border: 0px hidden;"; //$NON-NLS-1$
+	private final String TD_HIDDEN_BORDER_STYLE = "padding: 0px; border: 0px hidden;"; //$NON-NLS-1$
+	private final String TD_RULES_ROWS_BORDER_STYLE = "padding: 0px;"; //$NON-NLS-1$
+	private final String RULES_HIDDEN_BORDER_STYLE = "border: 0px hidden;"; //$NON-NLS-1$
 
 	private List propertyCreators;
 
-	VpeDataTableCreator(Element gridElement, VpeDependencyMap dependencyMap, boolean caseSensitive) {
+	VpeDataTableCreator(Element gridElement, VpeDependencyMap dependencyMap,
+			boolean caseSensitive) {
 		this.caseSensitive = caseSensitive;
 		build(gridElement, dependencyMap);
 	}
 
 	private void build(Element element, VpeDependencyMap dependencyMap) {
-		Attr headerClassAttr = element.getAttributeNode(VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS);
+		Attr headerClassAttr = element
+				.getAttributeNode(VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS);
 		if (headerClassAttr != null) {
 			try {
-				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(headerClassAttr.getValue(), caseSensitive);
+				VpeExpressionInfo info = VpeExpressionBuilder
+						.buildCompletedExpression(headerClassAttr.getValue(),
+								caseSensitive);
 				headerClassExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
-			} catch(VpeExpressionBuilderException e) {
+			} catch (VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
 			}
 		}
 
-		Attr footerClassAttr = element.getAttributeNode(VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS);
+		Attr footerClassAttr = element
+				.getAttributeNode(VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS);
 		if (footerClassAttr != null) {
 			try {
-				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(footerClassAttr.getValue(), caseSensitive);
+				VpeExpressionInfo info = VpeExpressionBuilder
+						.buildCompletedExpression(footerClassAttr.getValue(),
+								caseSensitive);
 				footerClassExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
-			} catch(VpeExpressionBuilderException e) {
+			} catch (VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
 			}
 		}
 
-		Attr rowClassesAttr = element.getAttributeNode(VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES);
+		Attr rowClassesAttr = element
+				.getAttributeNode(VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES);
 		if (rowClassesAttr != null) {
 			try {
-				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(rowClassesAttr.getValue(), caseSensitive);
+				VpeExpressionInfo info = VpeExpressionBuilder
+						.buildCompletedExpression(rowClassesAttr.getValue(),
+								caseSensitive);
 				rowClassesExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
-			} catch(VpeExpressionBuilderException e) {
+			} catch (VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
 			}
 		}
 
-		Attr columnClassesAttr = element.getAttributeNode(VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES);
+		Attr columnClassesAttr = element
+				.getAttributeNode(VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES);
 		if (columnClassesAttr != null) {
 			try {
-				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(columnClassesAttr.getValue(), caseSensitive);
+				VpeExpressionInfo info = VpeExpressionBuilder
+						.buildCompletedExpression(columnClassesAttr.getValue(),
+								caseSensitive);
 				columnClassesExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
-			} catch(VpeExpressionBuilderException e) {
+			} catch (VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
 			}
 		}
@@ -120,53 +135,61 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				String attrName = VpeTemplateManager.ATTR_DATATABLE_PROPERTIES[i];
 				Attr attr = element.getAttributeNode(attrName);
 				if (attr != null) {
-					if (propertyCreators == null) propertyCreators  = new ArrayList();
-					propertyCreators.add(new VpeAttributeCreator(attrName, attr.getValue(), dependencyMap, caseSensitive));
+					if (propertyCreators == null)
+						propertyCreators = new ArrayList();
+					propertyCreators.add(new VpeAttributeCreator(attrName, attr
+							.getValue(), dependencyMap, caseSensitive));
 				}
 			}
 		}
-		
+
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument, nsIDOMElement visualElement,
+			Map visualNodeMap) {
 
-		SourceDataTableElements sourceElements = new SourceDataTableElements(sourceNode);
+		SourceDataTableElements sourceElements = new SourceDataTableElements(
+				sourceNode);
 		VisualDataTableElements visualElements = new VisualDataTableElements();
+
+		Element element = (Element) sourceNode;
 		
 		/*
-		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-2001
-		 * Selection borders are fixed.
+		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-2001 Selection borders
+		 * are fixed.
 		 */
 		nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
-		nsIDOMElement selectionTable = visualDocument.createElement(HTML.TAG_TABLE);
+		nsIDOMElement selectionTable = visualDocument
+				.createElement(HTML.TAG_TABLE);
 		nsIDOMElement tr = visualDocument.createElement(HTML.TAG_TR);
 		nsIDOMElement td = visualDocument.createElement(HTML.TAG_TD);
-		
+
 		td.appendChild(div);
 		tr.appendChild(td);
 		selectionTable.appendChild(tr);
-		
+
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(selectionTable);
 
 		/*
-		 * Table with caption, header, footer,
-		 * that wraps table with content  
+		 * Table with caption, header, footer, that wraps table with content
 		 */
-		nsIDOMElement outterTable = visualDocument.createElement(HTML.TAG_TABLE);
-		
+		nsIDOMElement outterTable = visualDocument
+				.createElement(HTML.TAG_TABLE);
+
 		/*
 		 * Table with main content
 		 */
-		nsIDOMElement visualTable = visualDocument.createElement(HTML.TAG_TABLE);
-		nsIDOMElement section = null; 
+		nsIDOMElement visualTable = visualDocument
+				.createElement(HTML.TAG_TABLE);
+		nsIDOMElement section = null;
 		nsIDOMElement row = null;
 		nsIDOMElement caption = null;
-		
+
 		/*
-		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944
-		 * author: Denis Maliarevich
-		 * Any text which is placed outside of the tags
-		 * will be displayed above the table.
+		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944 author: Denis
+		 * Maliarevich Any text which is placed outside of the tags will be
+		 * displayed above the table.
 		 */
 		String redundantText = REDUNDANT_TEXT_SEPARATOR;
 		for (int i = 0; i < sourceElements.getRedundantTextNodesCount(); i++) {
@@ -184,12 +207,13 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				info.addSourceChild(sourceElements.getTableCaption());
 				creatorInfo.addChildrenInfo(info);
 			}
-			
+
 			/*
-			 * Everything concerning table caption
-			 * lies here (was removed from VpeFacetCreator)
+			 * Everything concerning table caption lies here (was removed from
+			 * VpeFacetCreator)
 			 */
-			Node attr = sourceNode.getAttributes().getNamedItem(ATTR_CAPTION_STYLE);
+			Node attr = sourceNode.getAttributes().getNamedItem(
+					ATTR_CAPTION_STYLE);
 			if (attr != null) {
 				caption.setAttribute(ATTR_STYLE, attr.getNodeValue());
 			}
@@ -206,8 +230,14 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			row = visualDocument.createElement(HTML.TAG_TR);
 			section.appendChild(row);
 			visualElements.setTableHeaderRow(row);
+
+			nsIDOMElement thHeader = visualDocument.createElement(HTML.TAG_TH);
+			thHeader.setAttribute(HTML.ATTR_CLASS, element
+					.getAttribute(ATTR_HEADER_CLASS));
+			row.appendChild(thHeader);
 			if (sourceElements.getTableHeader() != null) {
-				VpeChildrenInfo info = new VpeChildrenInfo(row);
+
+				VpeChildrenInfo info = new VpeChildrenInfo(thHeader);
 				info.addSourceChild(sourceElements.getTableHeader());
 				creatorInfo.addChildrenInfo(info);
 			}
@@ -219,9 +249,13 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			section = visualDocument.createElement(HTML.TAG_TFOOT);
 			row = visualDocument.createElement(HTML.TAG_TR);
 			section.appendChild(row);
+			nsIDOMElement tdFooter = visualDocument.createElement(HTML.TAG_TD);
+			tdFooter.setAttribute(HTML.ATTR_CLASS, element
+					.getAttribute(ATTR_FOOTER_CLASS));
+			row.appendChild(tdFooter);
 			visualElements.setTableFooterRow(row);
 			if (sourceElements.getTableFooter() != null) {
-				VpeChildrenInfo info = new VpeChildrenInfo(row);
+				VpeChildrenInfo info = new VpeChildrenInfo(tdFooter);
 				info.addSourceChild(sourceElements.getTableFooter());
 				creatorInfo.addChildrenInfo(info);
 			}
@@ -253,40 +287,41 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			section.appendChild(row);
 			visualTable.appendChild(section);
 			visualElements.setContentTableBodyRow(row);
-			//visualElements.setBody(section);
+			// visualElements.setBody(section);
 		}
 
 		VpeChildrenInfo info = null;
 		if (sourceElements.getColumnCount() > 0) {
-			nsIDOMElement group = visualDocument.createElement(HTML.TAG_COLGROUP);
+			nsIDOMElement group = visualDocument
+					.createElement(HTML.TAG_COLGROUP);
 			visualTable.appendChild(group);
 			info = new VpeChildrenInfo(group);
 			creatorInfo.addChildrenInfo(info);
 		}
-		
+
 		for (int i = 0; i < sourceElements.getColumnCount(); i++) {
 			SourceColumnElements column = sourceElements.getColumn(i);
 			info.addSourceChild(column.getColumn());
 		}
 
-		nsIDOMElement outterTBODY = visualDocument.createElement(HTML.TAG_TBODY);
+		nsIDOMElement outterTBODY = visualDocument
+				.createElement(HTML.TAG_TBODY);
 		nsIDOMElement outterTR = visualDocument.createElement(HTML.TAG_TR);
 		nsIDOMElement outterTD = visualDocument.createElement(HTML.TAG_TD);
 
 		/*
-		 * To create appropriate visual appearance
-		 * borders of the body cell and content table
-		 * were set via styles.
+		 * To create appropriate visual appearance borders of the body cell and
+		 * content table were set via styles.
 		 */
 		outterTD.setAttribute(ATTR_STYLE, TD_HIDDEN_BORDER_STYLE);
 		visualTable.setAttribute(ATTR_WIDTH, HUNDRED_PERCENTS);
 		visualTable.setAttribute(ATTR_BORDER, ZERO);
-		
+
 		outterTD.appendChild(visualTable);
 		outterTR.appendChild(outterTD);
 		outterTBODY.appendChild(outterTR);
 		outterTable.appendChild(outterTBODY);
-		
+
 		visualElements.setBodyRow(outterTR);
 		visualElements.setBody(outterTBODY);
 
@@ -296,61 +331,69 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		visualNodeMap.put(this, elements);
 
 		for (int i = 0; i < propertyCreators.size(); i++) {
-			VpeCreator creator = (VpeCreator)propertyCreators.get(i);
+			VpeCreator creator = (VpeCreator) propertyCreators.get(i);
 			if (creator != null) {
-				
+
 				/*
-				 * Sets attributes for the wrapper table 
+				 * Sets attributes for the wrapper table
 				 */
-				VpeCreatorInfo info1 = creator.create(pageContext, (Element) sourceNode, visualDocument, outterTable, visualNodeMap);
+				VpeCreatorInfo info1 = creator.create(pageContext,
+						(Element) sourceNode, visualDocument, outterTable,
+						visualNodeMap);
 				if (info1 != null && info1.getVisualNode() != null) {
 					nsIDOMAttr attr = (nsIDOMAttr) info1.getVisualNode();
-					
+
 					/*
-					 * Fixes creation 'border="1"'
-					 * when setting border attribute to the table.
-					 * Also skips empty attributes to fix layout problems.
+					 * Fixes creation 'border="1"' when setting border attribute
+					 * to the table. Also skips empty attributes to fix layout
+					 * problems.
 					 */
-					if (null == attr.getNodeValue() || EMPTY.equalsIgnoreCase(attr.getNodeValue())) {
+					if (null == attr.getNodeValue()
+							|| EMPTY.equalsIgnoreCase(attr.getNodeValue())) {
 						continue;
 					}
 					outterTable.setAttributeNode(attr);
 				}
-				
+
 				/*
-				 * Sets attributes for the content table 
+				 * Sets attributes for the content table
 				 */
-				VpeCreatorInfo info2 = creator.create(pageContext, (Element) sourceNode, visualDocument, visualTable, visualNodeMap);
+				VpeCreatorInfo info2 = creator.create(pageContext,
+						(Element) sourceNode, visualDocument, visualTable,
+						visualNodeMap);
 				if (info2 != null && info2.getVisualNode() != null) {
 					nsIDOMAttr attr = (nsIDOMAttr) info2.getVisualNode();
-					
+
 					/*
-					 * Fixes creation 'border="1"'
-					 * when setting border attribute to the table.
-					 * Also skips empty attributes to fix layout problems.
+					 * Fixes creation 'border="1"' when setting border attribute
+					 * to the table. Also skips empty attributes to fix layout
+					 * problems.
 					 */
-					if (null == attr.getNodeValue() || EMPTY.equalsIgnoreCase(attr.getNodeValue())) {
+					if (null == attr.getNodeValue()
+							|| EMPTY.equalsIgnoreCase(attr.getNodeValue())) {
 						continue;
 					}
 
 					/*
-					 * Sets attributes for the content table 
-					 */ 
-					if (VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES.equalsIgnoreCase(attr.getNodeName())) {
-						setRowClass(visualElements.getContentTableBodyRow(), attr.getNodeValue());
+					 * Sets attributes for the content table
+					 */
+					if (VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES
+							.equalsIgnoreCase(attr.getNodeName())) {
+						setRowClass(visualElements.getContentTableBodyRow(),
+								attr.getNodeValue());
 						continue;
 					}
-					
+
 					/*
-					 * Skip setting content table border 
+					 * Skip setting content table border
 					 */
 					if (ATTR_BORDER.equalsIgnoreCase(attr.getNodeName())) {
-						
+
 						/*
-						* If attribute border is set then table cells have borders.
-						* Because two table are used border should appear
-						* around content table cells but not the table itself. 
-						* By default content table has no border.
+						 * If attribute border is set then table cells have
+						 * borders. Because two table are used border should
+						 * appear around content table cells but not the table
+						 * itself. By default content table has no border.
 						 */
 						String value = attr.getNodeValue();
 						int val = -1;
@@ -363,19 +406,22 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 						}
 						if (val > 0) {
 							visualTable.setAttribute(ATTR_BORDER, ONE);
-							visualTable.setAttribute(ATTR_STYLE, RULES_HIDDEN_BORDER_STYLE);
+							visualTable.setAttribute(ATTR_STYLE,
+									RULES_HIDDEN_BORDER_STYLE);
 						}
-						
+
 						continue;
 					}
-					
+
 					/*
-					 * Fixes creation of a border around content table
-					 * when attribute rules="rows" is set
+					 * Fixes creation of a border around content table when
+					 * attribute rules="rows" is set
 					 */
 					if (ATTR_RULES.equalsIgnoreCase(attr.getNodeName())) {
-						if (ATTR_RULES_VALUE_ROWS.equalsIgnoreCase(attr.getNodeValue())) {
-							outterTD.setAttribute(ATTR_STYLE, TD_RULES_ROWS_BORDER_STYLE);
+						if (ATTR_RULES_VALUE_ROWS.equalsIgnoreCase(attr
+								.getNodeValue())) {
+							outterTD.setAttribute(ATTR_STYLE,
+									TD_RULES_ROWS_BORDER_STYLE);
 						}
 					}
 					visualTable.setAttributeNode(attr);
@@ -384,25 +430,40 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		}
 		return creatorInfo;
 	}
-	
-	public void setAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name, String value) {
+
+	public void setAttribute(VpePageContext pageContext, Element sourceElement,
+			Map visualNodeMap, String name, String value) {
 		VisualDataTableElements visualElements = getVisualDataTableElements(visualNodeMap);
 		if (visualElements != null) {
-			if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS.equals(name) : VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS.equalsIgnoreCase(name)) {
+			if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS
+					.equals(name)
+					: VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS
+							.equalsIgnoreCase(name)) {
 				setCellsClass(visualElements.getTableHeaderRow(), value);
 				setCellsClass(visualElements.getColumnsHeaderRow(), value);
-			} else if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS.equals(name) : VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS.equalsIgnoreCase(name)) {
+			} else if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS
+					.equals(name)
+					: VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS
+							.equalsIgnoreCase(name)) {
 				setCellsClass(visualElements.getColumnsFooterRow(), value);
 				setCellsClass(visualElements.getTableFooterRow(), value);
-			} else if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES.equals(name) : VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES.equalsIgnoreCase(name)) {
+			} else if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES
+					.equals(name)
+					: VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES
+							.equalsIgnoreCase(name)) {
 				setRowClass(visualElements.getContentTableBodyRow(), value);
-			} else if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES.equals(name) : VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES.equalsIgnoreCase(name)) {
+			} else if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES
+					.equals(name)
+					: VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES
+							.equalsIgnoreCase(name)) {
 				setCellsClass(visualElements.getContentTableBodyRow(), value);
 			}
 		}
 	}
 
-	public void validate(VpePageContext pageContext, Element sourceElement, Document visualDocument, Element visualParent, Element visualElement, Map visualNodeMap) {
+	public void validate(VpePageContext pageContext, Element sourceElement,
+			Document visualDocument, Element visualParent,
+			Element visualElement, Map visualNodeMap) {
 		VisualDataTableElements visualElements = null;
 		SourceDataTableElements sourceElements = null;
 		if (visualNodeMap != null) {
@@ -412,39 +473,76 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			sourceElements = new SourceDataTableElements(sourceElement);
 			nsIDOMNode visualNode = pageContext.getCurrentVisualNode();
 			if (visualNode != null) {
-				visualElements = VpeDataTableElements.getVisualDataTableElements(visualNode);
+				visualElements = VpeDataTableElements
+						.getVisualDataTableElements(visualNode);
 			}
 		}
 		if (visualElements != null) {
-			setCellsClass(visualElements.getTableHeaderRow(), sourceElement.getAttribute(VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS));
-			setCellsClass(visualElements.getColumnsHeaderRow(), sourceElement.getAttribute(VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS));
-			setCellsClass(visualElements.getColumnsFooterRow(), sourceElement.getAttribute(VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS));
-			setCellsClass(visualElements.getTableFooterRow(), sourceElement.getAttribute(VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS));
+			setCellsClass(
+					visualElements.getTableHeaderRow(),
+					sourceElement
+							.getAttribute(VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS));
+			setCellsClass(
+					visualElements.getColumnsHeaderRow(),
+					sourceElement
+							.getAttribute(VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS));
+			setCellsClass(
+					visualElements.getColumnsFooterRow(),
+					sourceElement
+							.getAttribute(VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS));
+			setCellsClass(
+					visualElements.getTableFooterRow(),
+					sourceElement
+							.getAttribute(VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS));
 
-			setRowClass(visualElements.getBodyRow(), sourceElement.getAttribute(VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES));
-			setCellsClass(visualElements.getBodyRow(), sourceElement.getAttribute(VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES));
+			setRowClass(
+					visualElements.getBodyRow(),
+					sourceElement
+							.getAttribute(VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES));
+			setCellsClass(
+					visualElements.getBodyRow(),
+					sourceElement
+							.getAttribute(VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES));
 		}
 		if (sourceElements != null && visualElements != null) {
-			setRowDisplayStyle(visualElements.getTableHeaderRow(), sourceElements.hasTableHeader());
-			setRowDisplayStyle(visualElements.getColumnsHeaderRow(), sourceElements.hasColumnsHeader());
-			setRowDisplayStyle(visualElements.getBodyRow(), sourceElements.hasBodySection());
-			setRowDisplayStyle(visualElements.getColumnsFooterRow(), sourceElements.hasColumnsFooter());
-			setRowDisplayStyle(visualElements.getTableFooterRow(), sourceElements.hasTableFooter());
+			setRowDisplayStyle(visualElements.getTableHeaderRow(),
+					sourceElements.hasTableHeader());
+			setRowDisplayStyle(visualElements.getColumnsHeaderRow(),
+					sourceElements.hasColumnsHeader());
+			setRowDisplayStyle(visualElements.getBodyRow(), sourceElements
+					.hasBodySection());
+			setRowDisplayStyle(visualElements.getColumnsFooterRow(),
+					sourceElements.hasColumnsFooter());
+			setRowDisplayStyle(visualElements.getTableFooterRow(),
+					sourceElements.hasTableFooter());
 		}
 	}
 
-	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name) {
+	public void removeAttribute(VpePageContext pageContext,
+			Element sourceElement, Map visualNodeMap, String name) {
 		VisualDataTableElements visualElements = getVisualDataTableElements(visualNodeMap);
 		if (visualElements != null) {
-			if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS.equals(name) : VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS.equalsIgnoreCase(name)) {
+			if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS
+					.equals(name)
+					: VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS
+							.equalsIgnoreCase(name)) {
 				removeCellsClass(visualElements.getTableHeaderRow());
 				removeCellsClass(visualElements.getColumnsHeaderRow());
-			} else if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS.equals(name) : VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS.equalsIgnoreCase(name)) {
+			} else if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS
+					.equals(name)
+					: VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS
+							.equalsIgnoreCase(name)) {
 				removeCellsClass(visualElements.getColumnsFooterRow());
 				removeCellsClass(visualElements.getTableFooterRow());
-			} else if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES.equals(name) : VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES.equalsIgnoreCase(name)) {
+			} else if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES
+					.equals(name)
+					: VpeTemplateManager.ATTR_DATATABLE_ROW_CLASSES
+							.equalsIgnoreCase(name)) {
 				removeRowClass(visualElements.getBodyRow());
-			} else if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES.equals(name) : VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES.equalsIgnoreCase(name)) {
+			} else if (caseSensitive ? VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES
+					.equals(name)
+					: VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES
+							.equalsIgnoreCase(name)) {
 				removeCellsClass(visualElements.getBodyRow());
 			}
 		}
@@ -466,14 +564,15 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			long count = children != null ? children.getLength() : 0;
 			for (long i = 0; i < count; i++) {
 				nsIDOMNode child = children.item(i);
-				if (child != null && child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+				if (child != null
+						&& child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 					try {
 						nsIDOMHTMLTableCellElement cell = (nsIDOMHTMLTableCellElement) child
-							.queryInterface(nsIDOMHTMLTableCellElement.NS_IDOMHTMLTABLECELLELEMENT_IID);						
+								.queryInterface(nsIDOMHTMLTableCellElement.NS_IDOMHTMLTABLECELLELEMENT_IID);
 						cell.setAttribute(ATTR_CLASS, classes[ind]);
 						ind = ind < (classes.length - 1) ? ind + 1 : 0;
 					} catch (XPCOMException ex) {
-					    // just ignore this exception
+						// just ignore this exception
 					}
 				}
 			}
@@ -486,13 +585,14 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			long count = children != null ? children.getLength() : 0;
 			for (long i = 0; i < count; i++) {
 				nsIDOMNode child = children.item(i);
-				if (child != null && child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+				if (child != null
+						&& child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 					try {
 						nsIDOMHTMLTableCellElement cell = (nsIDOMHTMLTableCellElement) child
-							.queryInterface(nsIDOMHTMLTableCellElement.NS_IDOMHTMLTABLECELLELEMENT_IID);
+								.queryInterface(nsIDOMHTMLTableCellElement.NS_IDOMHTMLTABLECELLELEMENT_IID);
 						cell.removeAttribute(ATTR_CLASS);
 					} catch (XPCOMException ex) {
-					    // just ignore this exception
+						// just ignore this exception
 					}
 				}
 			}
@@ -502,7 +602,8 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 	private void setRowClass(nsIDOMElement row, String value) {
 		if (row != null && value != null) {
 			String[] rowClasses = getClasses(value);
-			String rowClass = (rowClasses != null && rowClasses.length > 0) ? rowClasses[0] : null;
+			String rowClass = (rowClasses != null && rowClasses.length > 0) ? rowClasses[0]
+					: null;
 			if (rowClass.trim().length() > 0) {
 				row.setAttribute(ATTR_CLASS, rowClass);
 			} else {
@@ -513,7 +614,8 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 
 	private void setRowDisplayStyle(nsIDOMElement row, boolean visible) {
 		if (row != null) {
-			row.setAttribute(ATTR_STYLE, DISPLAY_STYLE_NAME + (visible ? EMPTY : NONE));
+			row.setAttribute(ATTR_STYLE, DISPLAY_STYLE_NAME
+					+ (visible ? EMPTY : NONE));
 		}
 	}
 
@@ -527,8 +629,9 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		if (visualNodeMap != null) {
 			Object o = visualNodeMap.get(this);
 			try {
-				if (o != null && o instanceof Object[] && ((Object[])o)[0] instanceof VisualDataTableElements) {
-					return (VisualDataTableElements)((Object[])o)[0];
+				if (o != null && o instanceof Object[]
+						&& ((Object[]) o)[0] instanceof VisualDataTableElements) {
+					return (VisualDataTableElements) ((Object[]) o)[0];
 				}
 			} catch (Exception e) {
 			}
@@ -540,8 +643,9 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		if (visualNodeMap != null) {
 			Object o = visualNodeMap.get(this);
 			try {
-				if (o != null && o instanceof Object[] && ((Object[])o)[1] instanceof SourceDataTableElements) {
-					return (SourceDataTableElements)((Object[])o)[1];
+				if (o != null && o instanceof Object[]
+						&& ((Object[]) o)[1] instanceof SourceDataTableElements) {
+					return (SourceDataTableElements) ((Object[]) o)[1];
 				}
 			} catch (Exception e) {
 			}

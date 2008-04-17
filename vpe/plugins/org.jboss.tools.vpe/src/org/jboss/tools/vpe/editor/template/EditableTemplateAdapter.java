@@ -759,6 +759,9 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		nsIDOMNode visualNode = getTargetVisualNodeBySourceNode(focusNode,
 				elementMapping);
 
+		if (visualNode == null)
+			return;
+
 		setSelectionRange(selectionController
 				.getSelection(nsISelectionController.SELECTION_NORMAL),
 				visualNode, new Point(visualFocus, visualAnchor - visualFocus));

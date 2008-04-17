@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.util;
 
+import java.util.List;
+
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
@@ -23,6 +25,7 @@ import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNSHTMLInputElement;
 import org.mozilla.interfaces.nsIDOMNSHTMLTextAreaElement;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMRange;
 import org.mozilla.interfaces.nsISelection;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -269,15 +272,21 @@ public class TemplateManagingUtil {
 	 */
 	public static nsIDOMNode getSelectedNode(nsISelection selection) {
 
-		if (selection.getFocusNode() != null) {
-			if ((selection.getFocusNode().getNodeType() != nsIDOMNode.TEXT_NODE)
-					&& (selection.getFocusOffset() != 0)) {
+		if (selection.getIsCollapsed()) {
+			if (selection.getFocusNode() != null) {
+				if ((selection.getFocusNode().getNodeType() != nsIDOMNode.TEXT_NODE)
+						&& (selection.getFocusOffset() != 0)) {
 
-				return selection.getFocusNode().getChildNodes().item(
-						selection.getFocusOffset() - 1);
-			} else
-				return selection.getFocusNode();
+					return selection.getFocusNode().getChildNodes().item(
+							selection.getFocusOffset() - 1);
+				} else
+					return selection.getFocusNode();
 
+			}
+		} else {
+			nsIDOMRange range = selection.getRangeAt(0);
+			nsIDOMNode visualAncestor = range.getCommonAncestorContainer();
+			return visualAncestor;
 		}
 		return null;
 	}
