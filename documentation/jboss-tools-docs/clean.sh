@@ -1,2 +1,3 @@
 pwd
+rm -rf *
 exit
