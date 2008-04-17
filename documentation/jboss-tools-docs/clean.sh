@@ -1,17 +1,12 @@
 pwd
-rm ./struts_tools_ref_guide
-rm ./struts_tools_ref_guide/pdf
 rm ./struts_tools_ref_guide/pdf/Struts_Tools_Reference_Guide.pdf
-rm ./struts_tools_ref_guide/html_single
 rm ./struts_tools_ref_guide/html_single/index.html
-rm ./struts_tools_ref_guide/html_single/css
 rm ./struts_tools_ref_guide/html_single/css/codehighlight.css
 rm ./struts_tools_ref_guide/html_single/css/dirty.css
 rm ./struts_tools_ref_guide/html_single/css/documentation.css
 rm ./struts_tools_ref_guide/html_single/css/reports.css
 rm ./struts_tools_ref_guide/html_single/css/docnav.css
 rm ./struts_tools_ref_guide/html_single/css/jbossorg.css
-rm ./struts_tools_ref_guide/html_single/images
 rm ./struts_tools_ref_guide/html_single/images/stock-go-up.png
 rm ./struts_tools_ref_guide/html_single/images/jbossorglogo_jira.png
 rm ./struts_tools_ref_guide/html_single/images/watermark-beta2.png
@@ -20,7 +15,6 @@ rm ./struts_tools_ref_guide/html_single/images/warning.png
 rm ./struts_tools_ref_guide/html_single/images/documentation.png
 rm ./struts_tools_ref_guide/html_single/images/watermark-beta1.png
 rm ./struts_tools_ref_guide/html_single/images/title_hdr.png
-rm ./struts_tools_ref_guide/html_single/images/struts
 rm ./struts_tools_ref_guide/html_single/images/struts/struts_42.png
 rm ./struts_tools_ref_guide/html_single/images/struts/struts_30.png
 rm ./struts_tools_ref_guide/html_single/images/struts/struts_23.png
@@ -81,7 +75,6 @@ rm ./struts_tools_ref_guide/html_single/images/watermark-alpha2.png
 rm ./struts_tools_ref_guide/html_single/images/community_doc.png
 rm ./struts_tools_ref_guide/html_single/images/rhlogo.png
 rm ./struts_tools_ref_guide/html_single/images/note.svg
-rm ./struts_tools_ref_guide/html_single/images/verif_valid
 rm ./struts_tools_ref_guide/html_single/images/verif_valid/verif_valid_3.png
 rm ./struts_tools_ref_guide/html_single/images/verif_valid/verif_valid_9.png
 rm ./struts_tools_ref_guide/html_single/images/verif_valid/verif_valid_7.png
@@ -105,16 +98,13 @@ rm ./struts_tools_ref_guide/html_single/images/stock-go-forward.png
 rm ./struts_tools_ref_guide/html_single/images/shine.png
 rm ./struts_tools_ref_guide/html_single/images/red-bg.png
 rm ./struts_tools_ref_guide/html_single/images/redhat-logo.svg
-rm ./struts_tools_ref_guide/html_single/images/community
 rm ./struts_tools_ref_guide/html_single/images/community/watermark-beta2.png
 rm ./struts_tools_ref_guide/html_single/images/community/jbossorglogo.png
 rm ./struts_tools_ref_guide/html_single/images/community/watermark-beta1.png
 rm ./struts_tools_ref_guide/html_single/images/community/title_hdr.png
 rm ./struts_tools_ref_guide/html_single/images/community/bkg_gradient.gif
 rm ./struts_tools_ref_guide/html_single/images/community/watermark-alpha2.png
-rm ./struts_tools_ref_guide/html_single/images/community/docbook
 rm ./struts_tools_ref_guide/html_single/images/community/docbook/warning.png
-rm ./struts_tools_ref_guide/html_single/images/community/docbook/callouts
 rm ./struts_tools_ref_guide/html_single/images/community/docbook/callouts/15.gif
 rm ./struts_tools_ref_guide/html_single/images/community/docbook/callouts/6.png
 rm ./struts_tools_ref_guide/html_single/images/community/docbook/callouts/8.png
@@ -175,9 +165,7 @@ rm ./struts_tools_ref_guide/html_single/images/important.svg
 rm ./struts_tools_ref_guide/html_single/images/callout.svg
 rm ./struts_tools_ref_guide/html_single/images/important.png
 rm ./struts_tools_ref_guide/html_single/images/dot.png
-rm ./struts_tools_ref_guide/html
 rm ./struts_tools_ref_guide/html/index.html
-rm ./struts_tools_ref_guide/html/css
 rm ./struts_tools_ref_guide/html/css/codehighlight.css
 rm ./struts_tools_ref_guide/html/css/dirty.css
 rm ./struts_tools_ref_guide/html/css/documentation.css
@@ -193,7 +181,6 @@ rm ./struts_tools_ref_guide/html/modules.html
 rm ./struts_tools_ref_guide/html/code_generation.html
 rm ./struts_tools_ref_guide/html/editors.html
 rm ./struts_tools_ref_guide/html/projects.html
-rm ./struts_tools_ref_guide/html/images
 rm ./struts_tools_ref_guide/html/images/stock-go-up.png
 rm ./struts_tools_ref_guide/html/images/jbossorglogo_jira.png
 rm ./struts_tools_ref_guide/html/images/watermark-beta2.png
@@ -202,7 +189,6 @@ rm ./struts_tools_ref_guide/html/images/warning.png
 rm ./struts_tools_ref_guide/html/images/documentation.png
 rm ./struts_tools_ref_guide/html/images/watermark-beta1.png
 rm ./struts_tools_ref_guide/html/images/title_hdr.png
-rm ./struts_tools_ref_guide/html/images/struts
 rm ./struts_tools_ref_guide/html/images/struts/struts_42.png
 rm ./struts_tools_ref_guide/html/images/struts/struts_30.png
 rm ./struts_tools_ref_guide/html/images/struts/struts_23.png
@@ -263,7 +249,6 @@ rm ./struts_tools_ref_guide/html/images/watermark-alpha2.png
 rm ./struts_tools_ref_guide/html/images/community_doc.png
 rm ./struts_tools_ref_guide/html/images/rhlogo.png
 rm ./struts_tools_ref_guide/html/images/note.svg
-rm ./struts_tools_ref_guide/html/images/verif_valid
 rm ./struts_tools_ref_guide/html/images/verif_valid/verif_valid_3.png
 rm ./struts_tools_ref_guide/html/images/verif_valid/verif_valid_9.png
 rm ./struts_tools_ref_guide/html/images/verif_valid/verif_valid_7.png
@@ -287,16 +272,13 @@ rm ./struts_tools_ref_guide/html/images/stock-go-forward.png
 rm ./struts_tools_ref_guide/html/images/shine.png
 rm ./struts_tools_ref_guide/html/images/red-bg.png
 rm ./struts_tools_ref_guide/html/images/redhat-logo.svg
-rm ./struts_tools_ref_guide/html/images/community
 rm ./struts_tools_ref_guide/html/images/community/watermark-beta2.png
 rm ./struts_tools_ref_guide/html/images/community/jbossorglogo.png
 rm ./struts_tools_ref_guide/html/images/community/watermark-beta1.png
 rm ./struts_tools_ref_guide/html/images/community/title_hdr.png
 rm ./struts_tools_ref_guide/html/images/community/bkg_gradient.gif
 rm ./struts_tools_ref_guide/html/images/community/watermark-alpha2.png
-rm ./struts_tools_ref_guide/html/images/community/docbook
 rm ./struts_tools_ref_guide/html/images/community/docbook/warning.png
-rm ./struts_tools_ref_guide/html/images/community/docbook/callouts
 rm ./struts_tools_ref_guide/html/images/community/docbook/callouts/15.gif
 rm ./struts_tools_ref_guide/html/images/community/docbook/callouts/6.png
 rm ./struts_tools_ref_guide/html/images/community/docbook/callouts/8.png
@@ -358,12 +340,10 @@ rm ./struts_tools_ref_guide/html/images/callout.svg
 rm ./struts_tools_ref_guide/html/images/important.png
 rm ./struts_tools_ref_guide/html/images/dot.png
 rm ./struts_tools_ref_guide/struts-tools-reference-guide-en-US-1.0-SNAPSHOT.war
-rm ./struts_tools_ref_guide/eclipse
 rm ./struts_tools_ref_guide/eclipse/index.html
 rm ./struts_tools_ref_guide/eclipse/CreatingANewStrutsProjec745t.html
 rm ./struts_tools_ref_guide/eclipse/AddingStrutsCapabilityToAnExistingWebApplication532.html
 rm ./struts_tools_ref_guide/eclipse/CreateNewTilesFile1422.html
-rm ./struts_tools_ref_guide/eclipse/css
 rm ./struts_tools_ref_guide/eclipse/css/codehighlight.css
 rm ./struts_tools_ref_guide/eclipse/css/dirty.css
 rm ./struts_tools_ref_guide/eclipse/css/documentation.css
@@ -390,7 +370,6 @@ rm ./struts_tools_ref_guide/eclipse/ImportingAnExistingStrutsProjectWithAnyStruc
 rm ./struts_tools_ref_guide/eclipse/AddingNewModules1.html
 rm ./struts_tools_ref_guide/eclipse/projects.html
 rm ./struts_tools_ref_guide/eclipse/StrutsTreeMode42.html
-rm ./struts_tools_ref_guide/eclipse/images
 rm ./struts_tools_ref_guide/eclipse/images/stock-go-up.png
 rm ./struts_tools_ref_guide/eclipse/images/jbossorglogo_jira.png
 rm ./struts_tools_ref_guide/eclipse/images/watermark-beta2.png
@@ -399,7 +378,6 @@ rm ./struts_tools_ref_guide/eclipse/images/warning.png
 rm ./struts_tools_ref_guide/eclipse/images/documentation.png
 rm ./struts_tools_ref_guide/eclipse/images/watermark-beta1.png
 rm ./struts_tools_ref_guide/eclipse/images/title_hdr.png
-rm ./struts_tools_ref_guide/eclipse/images/struts
 rm ./struts_tools_ref_guide/eclipse/images/struts/struts_42.png
 rm ./struts_tools_ref_guide/eclipse/images/struts/struts_30.png
 rm ./struts_tools_ref_guide/eclipse/images/struts/struts_23.png
@@ -460,7 +438,6 @@ rm ./struts_tools_ref_guide/eclipse/images/watermark-alpha2.png
 rm ./struts_tools_ref_guide/eclipse/images/community_doc.png
 rm ./struts_tools_ref_guide/eclipse/images/rhlogo.png
 rm ./struts_tools_ref_guide/eclipse/images/note.svg
-rm ./struts_tools_ref_guide/eclipse/images/verif_valid
 rm ./struts_tools_ref_guide/eclipse/images/verif_valid/verif_valid_3.png
 rm ./struts_tools_ref_guide/eclipse/images/verif_valid/verif_valid_9.png
 rm ./struts_tools_ref_guide/eclipse/images/verif_valid/verif_valid_7.png
@@ -484,16 +461,13 @@ rm ./struts_tools_ref_guide/eclipse/images/stock-go-forward.png
 rm ./struts_tools_ref_guide/eclipse/images/shine.png
 rm ./struts_tools_ref_guide/eclipse/images/red-bg.png
 rm ./struts_tools_ref_guide/eclipse/images/redhat-logo.svg
-rm ./struts_tools_ref_guide/eclipse/images/community
 rm ./struts_tools_ref_guide/eclipse/images/community/watermark-beta2.png
 rm ./struts_tools_ref_guide/eclipse/images/community/jbossorglogo.png
 rm ./struts_tools_ref_guide/eclipse/images/community/watermark-beta1.png
 rm ./struts_tools_ref_guide/eclipse/images/community/title_hdr.png
 rm ./struts_tools_ref_guide/eclipse/images/community/bkg_gradient.gif
 rm ./struts_tools_ref_guide/eclipse/images/community/watermark-alpha2.png
-rm ./struts_tools_ref_guide/eclipse/images/community/docbook
 rm ./struts_tools_ref_guide/eclipse/images/community/docbook/warning.png
-rm ./struts_tools_ref_guide/eclipse/images/community/docbook/callouts
 rm ./struts_tools_ref_guide/eclipse/images/community/docbook/callouts/15.gif
 rm ./struts_tools_ref_guide/eclipse/images/community/docbook/callouts/6.png
 rm ./struts_tools_ref_guide/eclipse/images/community/docbook/callouts/8.png
@@ -556,20 +530,15 @@ rm ./struts_tools_ref_guide/eclipse/images/important.png
 rm ./struts_tools_ref_guide/eclipse/images/dot.png
 rm ./struts_tools_ref_guide/eclipse/EditingModulesInAnExistingProject1.html
 rm ./struts_tools_ref_guide/eclipse/WhenImportingAStrutsProject432.html
-rm ./hibernatetools
-rm ./hibernatetools/pdf
 rm ./hibernatetools/pdf/Hibernatetools_Reference_Guide.pdf
 rm ./hibernatetools/hibernatetools-ref-guide-en-US-1.0-SNAPSHOT.war
-rm ./hibernatetools/html_single
 rm ./hibernatetools/html_single/index.html
-rm ./hibernatetools/html_single/css
 rm ./hibernatetools/html_single/css/codehighlight.css
 rm ./hibernatetools/html_single/css/dirty.css
 rm ./hibernatetools/html_single/css/documentation.css
 rm ./hibernatetools/html_single/css/reports.css
 rm ./hibernatetools/html_single/css/docnav.css
 rm ./hibernatetools/html_single/css/jbossorg.css
-rm ./hibernatetools/html_single/images
 rm ./hibernatetools/html_single/images/stock-go-up.png
 rm ./hibernatetools/html_single/images/jbossorglogo_jira.png
 rm ./hibernatetools/html_single/images/watermark-beta2.png
@@ -578,7 +547,6 @@ rm ./hibernatetools/html_single/images/warning.png
 rm ./hibernatetools/html_single/images/documentation.png
 rm ./hibernatetools/html_single/images/watermark-beta1.png
 rm ./hibernatetools/html_single/images/title_hdr.png
-rm ./hibernatetools/html_single/images/plugins
 rm ./hibernatetools/html_single/images/plugins/plugins_5.png
 rm ./hibernatetools/html_single/images/plugins/plugins_10.png
 rm ./hibernatetools/html_single/images/plugins/plugins_4.png
@@ -632,18 +600,14 @@ rm ./hibernatetools/html_single/images/stock-go-forward.png
 rm ./hibernatetools/html_single/images/shine.png
 rm ./hibernatetools/html_single/images/red-bg.png
 rm ./hibernatetools/html_single/images/redhat-logo.svg
-rm ./hibernatetools/html_single/images/code_generation
 rm ./hibernatetools/html_single/images/code_generation/code_generation_1.png
-rm ./hibernatetools/html_single/images/community
 rm ./hibernatetools/html_single/images/community/watermark-beta2.png
 rm ./hibernatetools/html_single/images/community/jbossorglogo.png
 rm ./hibernatetools/html_single/images/community/watermark-beta1.png
 rm ./hibernatetools/html_single/images/community/title_hdr.png
 rm ./hibernatetools/html_single/images/community/bkg_gradient.gif
 rm ./hibernatetools/html_single/images/community/watermark-alpha2.png
-rm ./hibernatetools/html_single/images/community/docbook
 rm ./hibernatetools/html_single/images/community/docbook/warning.png
-rm ./hibernatetools/html_single/images/community/docbook/callouts
 rm ./hibernatetools/html_single/images/community/docbook/callouts/15.gif
 rm ./hibernatetools/html_single/images/community/docbook/callouts/6.png
 rm ./hibernatetools/html_single/images/community/docbook/callouts/8.png
@@ -704,10 +668,8 @@ rm ./hibernatetools/html_single/images/important.svg
 rm ./hibernatetools/html_single/images/callout.svg
 rm ./hibernatetools/html_single/images/important.png
 rm ./hibernatetools/html_single/images/dot.png
-rm ./hibernatetools/html
 rm ./hibernatetools/html/reverseengineering.html
 rm ./hibernatetools/html/index.html
-rm ./hibernatetools/html/css
 rm ./hibernatetools/html/css/codehighlight.css
 rm ./hibernatetools/html/css/dirty.css
 rm ./hibernatetools/html/css/documentation.css
@@ -720,7 +682,6 @@ rm ./hibernatetools/html/codegen.html
 rm ./hibernatetools/html/codegenarchitecture.html
 rm ./hibernatetools/html/ant.html
 rm ./hibernatetools/html/plugins.html
-rm ./hibernatetools/html/images
 rm ./hibernatetools/html/images/stock-go-up.png
 rm ./hibernatetools/html/images/jbossorglogo_jira.png
 rm ./hibernatetools/html/images/watermark-beta2.png
@@ -729,7 +690,6 @@ rm ./hibernatetools/html/images/warning.png
 rm ./hibernatetools/html/images/documentation.png
 rm ./hibernatetools/html/images/watermark-beta1.png
 rm ./hibernatetools/html/images/title_hdr.png
-rm ./hibernatetools/html/images/plugins
 rm ./hibernatetools/html/images/plugins/plugins_5.png
 rm ./hibernatetools/html/images/plugins/plugins_10.png
 rm ./hibernatetools/html/images/plugins/plugins_4.png
@@ -783,18 +743,14 @@ rm ./hibernatetools/html/images/stock-go-forward.png
 rm ./hibernatetools/html/images/shine.png
 rm ./hibernatetools/html/images/red-bg.png
 rm ./hibernatetools/html/images/redhat-logo.svg
-rm ./hibernatetools/html/images/code_generation
 rm ./hibernatetools/html/images/code_generation/code_generation_1.png
-rm ./hibernatetools/html/images/community
 rm ./hibernatetools/html/images/community/watermark-beta2.png
 rm ./hibernatetools/html/images/community/jbossorglogo.png
 rm ./hibernatetools/html/images/community/watermark-beta1.png
 rm ./hibernatetools/html/images/community/title_hdr.png
 rm ./hibernatetools/html/images/community/bkg_gradient.gif
 rm ./hibernatetools/html/images/community/watermark-alpha2.png
-rm ./hibernatetools/html/images/community/docbook
 rm ./hibernatetools/html/images/community/docbook/warning.png
-rm ./hibernatetools/html/images/community/docbook/callouts
 rm ./hibernatetools/html/images/community/docbook/callouts/15.gif
 rm ./hibernatetools/html/images/community/docbook/callouts/6.png
 rm ./hibernatetools/html/images/community/docbook/callouts/8.png
@@ -855,7 +811,6 @@ rm ./hibernatetools/html/images/important.svg
 rm ./hibernatetools/html/images/callout.svg
 rm ./hibernatetools/html/images/important.png
 rm ./hibernatetools/html/images/dot.png
-rm ./hibernatetools/eclipse
 rm ./hibernatetools/eclipse/ch03s09s01s01.html
 rm ./hibernatetools/eclipse/reverseengineering.html
 rm ./hibernatetools/eclipse/index.html
@@ -863,7 +818,6 @@ rm ./hibernatetools/eclipse/ch01s02.html
 rm ./hibernatetools/eclipse/ch04s04s03.html
 rm ./hibernatetools/eclipse/ch03s10.html
 rm ./hibernatetools/eclipse/ch04s04s02s01.html
-rm ./hibernatetools/eclipse/css
 rm ./hibernatetools/eclipse/css/codehighlight.css
 rm ./hibernatetools/eclipse/css/dirty.css
 rm ./hibernatetools/eclipse/css/documentation.css
@@ -944,7 +898,6 @@ rm ./hibernatetools/eclipse/ch06s01s02s01.html
 rm ./hibernatetools/eclipse/plugins.html
 rm ./hibernatetools/eclipse/ch06s01.html
 rm ./hibernatetools/eclipse/type_map.html
-rm ./hibernatetools/eclipse/images
 rm ./hibernatetools/eclipse/images/stock-go-up.png
 rm ./hibernatetools/eclipse/images/jbossorglogo_jira.png
 rm ./hibernatetools/eclipse/images/watermark-beta2.png
@@ -953,7 +906,6 @@ rm ./hibernatetools/eclipse/images/warning.png
 rm ./hibernatetools/eclipse/images/documentation.png
 rm ./hibernatetools/eclipse/images/watermark-beta1.png
 rm ./hibernatetools/eclipse/images/title_hdr.png
-rm ./hibernatetools/eclipse/images/plugins
 rm ./hibernatetools/eclipse/images/plugins/plugins_5.png
 rm ./hibernatetools/eclipse/images/plugins/plugins_10.png
 rm ./hibernatetools/eclipse/images/plugins/plugins_4.png
@@ -1007,18 +959,14 @@ rm ./hibernatetools/eclipse/images/stock-go-forward.png
 rm ./hibernatetools/eclipse/images/shine.png
 rm ./hibernatetools/eclipse/images/red-bg.png
 rm ./hibernatetools/eclipse/images/redhat-logo.svg
-rm ./hibernatetools/eclipse/images/code_generation
 rm ./hibernatetools/eclipse/images/code_generation/code_generation_1.png
-rm ./hibernatetools/eclipse/images/community
 rm ./hibernatetools/eclipse/images/community/watermark-beta2.png
 rm ./hibernatetools/eclipse/images/community/jbossorglogo.png
 rm ./hibernatetools/eclipse/images/community/watermark-beta1.png
 rm ./hibernatetools/eclipse/images/community/title_hdr.png
 rm ./hibernatetools/eclipse/images/community/bkg_gradient.gif
 rm ./hibernatetools/eclipse/images/community/watermark-alpha2.png
-rm ./hibernatetools/eclipse/images/community/docbook
 rm ./hibernatetools/eclipse/images/community/docbook/warning.png
-rm ./hibernatetools/eclipse/images/community/docbook/callouts
 rm ./hibernatetools/eclipse/images/community/docbook/callouts/15.gif
 rm ./hibernatetools/eclipse/images/community/docbook/callouts/6.png
 rm ./hibernatetools/eclipse/images/community/docbook/callouts/8.png
@@ -1080,19 +1028,14 @@ rm ./hibernatetools/eclipse/images/callout.svg
 rm ./hibernatetools/eclipse/images/important.png
 rm ./hibernatetools/eclipse/images/dot.png
 rm ./hibernatetools/eclipse/custom-reveng-strategy.html
-rm ./as
-rm ./as/pdf
 rm ./as/pdf/AS_Reference_Guide.pdf
-rm ./as/html_single
 rm ./as/html_single/index.html
-rm ./as/html_single/css
 rm ./as/html_single/css/codehighlight.css
 rm ./as/html_single/css/dirty.css
 rm ./as/html_single/css/documentation.css
 rm ./as/html_single/css/reports.css
 rm ./as/html_single/css/docnav.css
 rm ./as/html_single/css/jbossorg.css
-rm ./as/html_single/images
 rm ./as/html_single/images/stock-go-up.png
 rm ./as/html_single/images/jbossorglogo_jira.png
 rm ./as/html_single/images/watermark-beta2.png
@@ -1102,7 +1045,6 @@ rm ./as/html_single/images/documentation.png
 rm ./as/html_single/images/watermark-beta1.png
 rm ./as/html_single/images/title_hdr.png
 rm ./as/html_single/images/stock-go-back.png
-rm ./as/html_single/images/perspective
 rm ./as/html_single/images/perspective/perspective_6.png
 rm ./as/html_single/images/perspective/perspective_17.png
 rm ./as/html_single/images/perspective/perspective_21.png
@@ -1134,7 +1076,6 @@ rm ./as/html_single/images/bkg_gradient.gif
 rm ./as/html_single/images/watermark-alpha2.png
 rm ./as/html_single/images/community_doc.png
 rm ./as/html_single/images/rhlogo.png
-rm ./as/html_single/images/webtools
 rm ./as/html_single/images/webtools/webtools_3.png
 rm ./as/html_single/images/webtools/webtools_5.png
 rm ./as/html_single/images/webtools/webtools_2.png
@@ -1147,7 +1088,6 @@ rm ./as/html_single/images/caution.png
 rm ./as/html_single/images/stock-home.png
 rm ./as/html_single/images/filterball.svg
 rm ./as/html_single/images/warning.svg
-rm ./as/html_single/images/runtimes_servers
 rm ./as/html_single/images/runtimes_servers/runtimes_servers_5a.png
 rm ./as/html_single/images/runtimes_servers/runtimes_servers_2.png
 rm ./as/html_single/images/runtimes_servers/runtimes_servers_4.png
@@ -1160,16 +1100,13 @@ rm ./as/html_single/images/stock-go-forward.png
 rm ./as/html_single/images/shine.png
 rm ./as/html_single/images/red-bg.png
 rm ./as/html_single/images/redhat-logo.svg
-rm ./as/html_single/images/community
 rm ./as/html_single/images/community/watermark-beta2.png
 rm ./as/html_single/images/community/jbossorglogo.png
 rm ./as/html_single/images/community/watermark-beta1.png
 rm ./as/html_single/images/community/title_hdr.png
 rm ./as/html_single/images/community/bkg_gradient.gif
 rm ./as/html_single/images/community/watermark-alpha2.png
-rm ./as/html_single/images/community/docbook
 rm ./as/html_single/images/community/docbook/warning.png
-rm ./as/html_single/images/community/docbook/callouts
 rm ./as/html_single/images/community/docbook/callouts/15.gif
 rm ./as/html_single/images/community/docbook/callouts/6.png
 rm ./as/html_single/images/community/docbook/callouts/8.png
@@ -1224,7 +1161,6 @@ rm ./as/html_single/images/jboss-logo.svg
 rm ./as/html_single/images/dot2.png
 rm ./as/html_single/images/tip.png
 rm ./as/html_single/images/note.png
-rm ./as/html_single/images/modules
 rm ./as/html_single/images/modules/modules_4.png
 rm ./as/html_single/images/modules/modules_2.png
 rm ./as/html_single/images/modules/modules_3.png
@@ -1234,7 +1170,6 @@ rm ./as/html_single/images/modules/modules_1.png
 rm ./as/html_single/images/modules/modules_6.png
 rm ./as/html_single/images/watermark-pre-release-candidate.png
 rm ./as/html_single/images/watermark-release-candidate.png
-rm ./as/html_single/images/quick_start
 rm ./as/html_single/images/quick_start/quick_start_6.png
 rm ./as/html_single/images/quick_start/quick_start_4a.png
 rm ./as/html_single/images/quick_start/quick_start_2.png
@@ -1248,9 +1183,7 @@ rm ./as/html_single/images/important.svg
 rm ./as/html_single/images/callout.svg
 rm ./as/html_single/images/important.png
 rm ./as/html_single/images/dot.png
-rm ./as/html
 rm ./as/html/index.html
-rm ./as/html/css
 rm ./as/html/css/codehighlight.css
 rm ./as/html/css/dirty.css
 rm ./as/html/css/documentation.css
@@ -1262,7 +1195,6 @@ rm ./as/html/perspective.html
 rm ./as/html/modules.html
 rm ./as/html/quick_start.html
 rm ./as/html/runtimes_servers.html
-rm ./as/html/images
 rm ./as/html/images/stock-go-up.png
 rm ./as/html/images/jbossorglogo_jira.png
 rm ./as/html/images/watermark-beta2.png
@@ -1272,7 +1204,6 @@ rm ./as/html/images/documentation.png
 rm ./as/html/images/watermark-beta1.png
 rm ./as/html/images/title_hdr.png
 rm ./as/html/images/stock-go-back.png
-rm ./as/html/images/perspective
 rm ./as/html/images/perspective/perspective_6.png
 rm ./as/html/images/perspective/perspective_17.png
 rm ./as/html/images/perspective/perspective_21.png
@@ -1304,7 +1235,6 @@ rm ./as/html/images/bkg_gradient.gif
 rm ./as/html/images/watermark-alpha2.png
 rm ./as/html/images/community_doc.png
 rm ./as/html/images/rhlogo.png
-rm ./as/html/images/webtools
 rm ./as/html/images/webtools/webtools_3.png
 rm ./as/html/images/webtools/webtools_5.png
 rm ./as/html/images/webtools/webtools_2.png
@@ -1317,7 +1247,6 @@ rm ./as/html/images/caution.png
 rm ./as/html/images/stock-home.png
 rm ./as/html/images/filterball.svg
 rm ./as/html/images/warning.svg
-rm ./as/html/images/runtimes_servers
 rm ./as/html/images/runtimes_servers/runtimes_servers_5a.png
 rm ./as/html/images/runtimes_servers/runtimes_servers_2.png
 rm ./as/html/images/runtimes_servers/runtimes_servers_4.png
@@ -1330,16 +1259,13 @@ rm ./as/html/images/stock-go-forward.png
 rm ./as/html/images/shine.png
 rm ./as/html/images/red-bg.png
 rm ./as/html/images/redhat-logo.svg
-rm ./as/html/images/community
 rm ./as/html/images/community/watermark-beta2.png
 rm ./as/html/images/community/jbossorglogo.png
 rm ./as/html/images/community/watermark-beta1.png
 rm ./as/html/images/community/title_hdr.png
 rm ./as/html/images/community/bkg_gradient.gif
 rm ./as/html/images/community/watermark-alpha2.png
-rm ./as/html/images/community/docbook
 rm ./as/html/images/community/docbook/warning.png
-rm ./as/html/images/community/docbook/callouts
 rm ./as/html/images/community/docbook/callouts/15.gif
 rm ./as/html/images/community/docbook/callouts/6.png
 rm ./as/html/images/community/docbook/callouts/8.png
@@ -1394,7 +1320,6 @@ rm ./as/html/images/jboss-logo.svg
 rm ./as/html/images/dot2.png
 rm ./as/html/images/tip.png
 rm ./as/html/images/note.png
-rm ./as/html/images/modules
 rm ./as/html/images/modules/modules_4.png
 rm ./as/html/images/modules/modules_2.png
 rm ./as/html/images/modules/modules_3.png
@@ -1404,7 +1329,6 @@ rm ./as/html/images/modules/modules_1.png
 rm ./as/html/images/modules/modules_6.png
 rm ./as/html/images/watermark-pre-release-candidate.png
 rm ./as/html/images/watermark-release-candidate.png
-rm ./as/html/images/quick_start
 rm ./as/html/images/quick_start/quick_start_6.png
 rm ./as/html/images/quick_start/quick_start_4a.png
 rm ./as/html/images/quick_start/quick_start_2.png
@@ -1419,12 +1343,10 @@ rm ./as/html/images/callout.svg
 rm ./as/html/images/important.png
 rm ./as/html/images/dot.png
 rm ./as/as-ref-guide-en-US-1.0-SNAPSHOT.war
-rm ./as/eclipse
 rm ./as/eclipse/JBossServerView.html
 rm ./as/eclipse/index.html
 rm ./as/eclipse/stopping.html
 rm ./as/eclipse/CreatingaFileSet.html
-rm ./as/eclipse/css
 rm ./as/eclipse/css/codehighlight.css
 rm ./as/eclipse/css/dirty.css
 rm ./as/eclipse/css/documentation.css
@@ -1462,7 +1384,6 @@ rm ./as/eclipse/archives_overview.html
 rm ./as/eclipse/runtimes_servers.html
 rm ./as/eclipse/CreatingaFolder.html
 rm ./as/eclipse/ch02s01.html
-rm ./as/eclipse/images
 rm ./as/eclipse/images/stock-go-up.png
 rm ./as/eclipse/images/jbossorglogo_jira.png
 rm ./as/eclipse/images/watermark-beta2.png
@@ -1472,7 +1393,6 @@ rm ./as/eclipse/images/documentation.png
 rm ./as/eclipse/images/watermark-beta1.png
 rm ./as/eclipse/images/title_hdr.png
 rm ./as/eclipse/images/stock-go-back.png
-rm ./as/eclipse/images/perspective
 rm ./as/eclipse/images/perspective/perspective_6.png
 rm ./as/eclipse/images/perspective/perspective_17.png
 rm ./as/eclipse/images/perspective/perspective_21.png
@@ -1504,7 +1424,6 @@ rm ./as/eclipse/images/bkg_gradient.gif
 rm ./as/eclipse/images/watermark-alpha2.png
 rm ./as/eclipse/images/community_doc.png
 rm ./as/eclipse/images/rhlogo.png
-rm ./as/eclipse/images/webtools
 rm ./as/eclipse/images/webtools/webtools_3.png
 rm ./as/eclipse/images/webtools/webtools_5.png
 rm ./as/eclipse/images/webtools/webtools_2.png
@@ -1517,7 +1436,6 @@ rm ./as/eclipse/images/caution.png
 rm ./as/eclipse/images/stock-home.png
 rm ./as/eclipse/images/filterball.svg
 rm ./as/eclipse/images/warning.svg
-rm ./as/eclipse/images/runtimes_servers
 rm ./as/eclipse/images/runtimes_servers/runtimes_servers_5a.png
 rm ./as/eclipse/images/runtimes_servers/runtimes_servers_2.png
 rm ./as/eclipse/images/runtimes_servers/runtimes_servers_4.png
@@ -1530,16 +1448,13 @@ rm ./as/eclipse/images/stock-go-forward.png
 rm ./as/eclipse/images/shine.png
 rm ./as/eclipse/images/red-bg.png
 rm ./as/eclipse/images/redhat-logo.svg
-rm ./as/eclipse/images/community
 rm ./as/eclipse/images/community/watermark-beta2.png
 rm ./as/eclipse/images/community/jbossorglogo.png
 rm ./as/eclipse/images/community/watermark-beta1.png
 rm ./as/eclipse/images/community/title_hdr.png
 rm ./as/eclipse/images/community/bkg_gradient.gif
 rm ./as/eclipse/images/community/watermark-alpha2.png
-rm ./as/eclipse/images/community/docbook
 rm ./as/eclipse/images/community/docbook/warning.png
-rm ./as/eclipse/images/community/docbook/callouts
 rm ./as/eclipse/images/community/docbook/callouts/15.gif
 rm ./as/eclipse/images/community/docbook/callouts/6.png
 rm ./as/eclipse/images/community/docbook/callouts/8.png
@@ -1594,7 +1509,6 @@ rm ./as/eclipse/images/jboss-logo.svg
 rm ./as/eclipse/images/dot2.png
 rm ./as/eclipse/images/tip.png
 rm ./as/eclipse/images/note.png
-rm ./as/eclipse/images/modules
 rm ./as/eclipse/images/modules/modules_4.png
 rm ./as/eclipse/images/modules/modules_2.png
 rm ./as/eclipse/images/modules/modules_3.png
@@ -1604,7 +1518,6 @@ rm ./as/eclipse/images/modules/modules_1.png
 rm ./as/eclipse/images/modules/modules_6.png
 rm ./as/eclipse/images/watermark-pre-release-candidate.png
 rm ./as/eclipse/images/watermark-release-candidate.png
-rm ./as/eclipse/images/quick_start
 rm ./as/eclipse/images/quick_start/quick_start_6.png
 rm ./as/eclipse/images/quick_start/quick_start_4a.png
 rm ./as/eclipse/images/quick_start/quick_start_2.png
@@ -1618,20 +1531,15 @@ rm ./as/eclipse/images/important.svg
 rm ./as/eclipse/images/callout.svg
 rm ./as/eclipse/images/important.png
 rm ./as/eclipse/images/dot.png
-rm ./seam
-rm ./seam/pdf
 rm ./seam/pdf/Seam_Reference_Guide.pdf
 rm ./seam/seam-ref-guide-en-US-1.0-SNAPSHOT.war
-rm ./seam/html_single
 rm ./seam/html_single/index.html
-rm ./seam/html_single/css
 rm ./seam/html_single/css/codehighlight.css
 rm ./seam/html_single/css/dirty.css
 rm ./seam/html_single/css/documentation.css
 rm ./seam/html_single/css/reports.css
 rm ./seam/html_single/css/docnav.css
 rm ./seam/html_single/css/jbossorg.css
-rm ./seam/html_single/images
 rm ./seam/html_single/images/stock-go-up.png
 rm ./seam/html_single/images/jbossorglogo_jira.png
 rm ./seam/html_single/images/watermark-beta2.png
@@ -1640,7 +1548,6 @@ rm ./seam/html_single/images/warning.png
 rm ./seam/html_single/images/documentation.png
 rm ./seam/html_single/images/watermark-beta1.png
 rm ./seam/html_single/images/title_hdr.png
-rm ./seam/html_single/images/seam_menus_and_actions
 rm ./seam/html_single/images/seam_menus_and_actions/menus_and_actions3_0.png
 rm ./seam/html_single/images/seam_menus_and_actions/menus_and_actions1.png
 rm ./seam/html_single/images/seam_menus_and_actions/menus_and_actions2.png
@@ -1648,7 +1555,6 @@ rm ./seam/html_single/images/seam_menus_and_actions/menus_and_actions3.png
 rm ./seam/html_single/images/seam_menus_and_actions/menus_and_actions0_1.png
 rm ./seam/html_single/images/stock-go-back.png
 rm ./seam/html_single/images/caution.svg
-rm ./seam/html_single/images/create_new_seam
 rm ./seam/html_single/images/create_new_seam/create_seam_6.png
 rm ./seam/html_single/images/create_new_seam/create_seam_2.png
 rm ./seam/html_single/images/create_new_seam/create_seam_15.png
@@ -1673,7 +1579,6 @@ rm ./seam/html_single/images/create_new_seam/create_seam_7.png
 rm ./seam/html_single/images/create_new_seam/create_seam_1.png
 rm ./seam/html_single/images/create_new_seam/create_seam_8.png
 rm ./seam/html_single/images/tip.svg
-rm ./seam/html_single/images/seam_view
 rm ./seam/html_single/images/seam_view/seam_view_4.png
 rm ./seam/html_single/images/seam_view/seam_view_5.png
 rm ./seam/html_single/images/seam_view/seam_view_1.png
@@ -1683,7 +1588,6 @@ rm ./seam/html_single/images/seam_view/seam_view_3.png
 rm ./seam/html_single/images/seam_view/seam_view_2.png
 rm ./seam/html_single/images/seam_view/seam_view_7.png
 rm ./seam/html_single/images/bkg_gradient.gif
-rm ./seam/html_single/images/testng
 rm ./seam/html_single/images/testng/testng_7.png
 rm ./seam/html_single/images/testng/testng_13.png
 rm ./seam/html_single/images/testng/testng_10.png
@@ -1695,12 +1599,10 @@ rm ./seam/html_single/images/testng/testng_9.png
 rm ./seam/html_single/images/testng/testng_14.png
 rm ./seam/html_single/images/testng/testng_12.png
 rm ./seam/html_single/images/watermark-alpha2.png
-rm ./seam/html_single/images/directory_structure
 rm ./seam/html_single/images/directory_structure/directory_structure_1.png
 rm ./seam/html_single/images/directory_structure/directory_structure_2.png
 rm ./seam/html_single/images/community_doc.png
 rm ./seam/html_single/images/rhlogo.png
-rm ./seam/html_single/images/seam_preferences
 rm ./seam/html_single/images/seam_preferences/seam_preferences1_3.png
 rm ./seam/html_single/images/seam_preferences/seam_preferences1_2.png
 rm ./seam/html_single/images/seam_preferences/seam_preferences1.png
@@ -1708,7 +1610,6 @@ rm ./seam/html_single/images/seam_preferences/seam_preferences2_1.png
 rm ./seam/html_single/images/seam_preferences/seam_preferences1_5.png
 rm ./seam/html_single/images/seam_preferences/seam_preferences2.png
 rm ./seam/html_single/images/seam_preferences/seam_preferences1_4.png
-rm ./seam/html_single/images/seam_wizards
 rm ./seam/html_single/images/seam_wizards/seam_wizards_6.png
 rm ./seam/html_single/images/seam_wizards/seam_wizards_12.png
 rm ./seam/html_single/images/seam_wizards/seam_wizards_14.png
@@ -1726,7 +1627,6 @@ rm ./seam/html_single/images/seam_wizards/seam_wizards_16.png
 rm ./seam/html_single/images/seam_wizards/seam_wizards_8.png
 rm ./seam/html_single/images/seam_wizards/seam_wizards_1.png
 rm ./seam/html_single/images/note.svg
-rm ./seam/html_single/images/crud_database_application
 rm ./seam/html_single/images/crud_database_application/crud_database_application_11.png
 rm ./seam/html_single/images/crud_database_application/crud_database_application_13.png
 rm ./seam/html_single/images/crud_database_application/crud_database_application_08.png
@@ -1758,19 +1658,15 @@ rm ./seam/html_single/images/warning.svg
 rm ./seam/html_single/images/stock-go-forward.png
 rm ./seam/html_single/images/shine.png
 rm ./seam/html_single/images/red-bg.png
-rm ./seam/html_single/images/generate_entities
 rm ./seam/html_single/images/generate_entities/generate_entities1.png
 rm ./seam/html_single/images/redhat-logo.svg
-rm ./seam/html_single/images/community
 rm ./seam/html_single/images/community/watermark-beta2.png
 rm ./seam/html_single/images/community/jbossorglogo.png
 rm ./seam/html_single/images/community/watermark-beta1.png
 rm ./seam/html_single/images/community/title_hdr.png
 rm ./seam/html_single/images/community/bkg_gradient.gif
 rm ./seam/html_single/images/community/watermark-alpha2.png
-rm ./seam/html_single/images/community/docbook
 rm ./seam/html_single/images/community/docbook/warning.png
-rm ./seam/html_single/images/community/docbook/callouts
 rm ./seam/html_single/images/community/docbook/callouts/15.gif
 rm ./seam/html_single/images/community/docbook/callouts/6.png
 rm ./seam/html_single/images/community/docbook/callouts/8.png
@@ -1822,7 +1718,6 @@ rm ./seam/html_single/images/community/watermark-pre-release-candidate.png
 rm ./seam/html_single/images/community/watermark-release-candidate.png
 rm ./seam/html_single/images/community/dot.png
 rm ./seam/html_single/images/jboss-logo.svg
-rm ./seam/html_single/images/business_application
 rm ./seam/html_single/images/business_application/business_application_13.png
 rm ./seam/html_single/images/business_application/business_application_16.png
 rm ./seam/html_single/images/business_application/business_application_7.png
@@ -1845,7 +1740,6 @@ rm ./seam/html_single/images/tip.png
 rm ./seam/html_single/images/note.png
 rm ./seam/html_single/images/watermark-pre-release-candidate.png
 rm ./seam/html_single/images/watermark-release-candidate.png
-rm ./seam/html_single/images/seam_editors
 rm ./seam/html_single/images/seam_editors/seam_editors_6.png
 rm ./seam/html_single/images/seam_editors/seam_editors_1.png
 rm ./seam/html_single/images/seam_editors/seam_editors_5.png
@@ -1855,7 +1749,6 @@ rm ./seam/html_single/images/seam_editors/seam_editors_4.png
 rm ./seam/html_single/images/important.svg
 rm ./seam/html_single/images/callout.svg
 rm ./seam/html_single/images/important.png
-rm ./seam/html_single/images/crud_application_walkthrough
 rm ./seam/html_single/images/crud_application_walkthrough/crud_application_walkthrough_4.png
 rm ./seam/html_single/images/crud_application_walkthrough/crud_application_walkthrough_6.png
 rm ./seam/html_single/images/crud_application_walkthrough/crud_application_walkthrough_7.png
@@ -1865,10 +1758,8 @@ rm ./seam/html_single/images/crud_application_walkthrough/crud_application_walkt
 rm ./seam/html_single/images/crud_application_walkthrough/crud_application_walkthrough_3.png
 rm ./seam/html_single/images/crud_application_walkthrough/crud_application_walkthrough_2.png
 rm ./seam/html_single/images/dot.png
-rm ./seam/html
 rm ./seam/html/index.html
 rm ./seam/html/crud_database_application.html
-rm ./seam/html/css
 rm ./seam/html/css/codehighlight.css
 rm ./seam/html/css/dirty.css
 rm ./seam/html/css/documentation.css
@@ -1886,7 +1777,6 @@ rm ./seam/html/testNG.html
 rm ./seam/html/crud_application_walkthrough.html
 rm ./seam/html/seam_menus_and_actions.html
 rm ./seam/html/intro.html
-rm ./seam/html/images
 rm ./seam/html/images/stock-go-up.png
 rm ./seam/html/images/jbossorglogo_jira.png
 rm ./seam/html/images/watermark-beta2.png
@@ -1895,7 +1785,6 @@ rm ./seam/html/images/warning.png
 rm ./seam/html/images/documentation.png
 rm ./seam/html/images/watermark-beta1.png
 rm ./seam/html/images/title_hdr.png
-rm ./seam/html/images/seam_menus_and_actions
 rm ./seam/html/images/seam_menus_and_actions/menus_and_actions3_0.png
 rm ./seam/html/images/seam_menus_and_actions/menus_and_actions1.png
 rm ./seam/html/images/seam_menus_and_actions/menus_and_actions2.png
@@ -1903,7 +1792,6 @@ rm ./seam/html/images/seam_menus_and_actions/menus_and_actions3.png
 rm ./seam/html/images/seam_menus_and_actions/menus_and_actions0_1.png
 rm ./seam/html/images/stock-go-back.png
 rm ./seam/html/images/caution.svg
-rm ./seam/html/images/create_new_seam
 rm ./seam/html/images/create_new_seam/create_seam_6.png
 rm ./seam/html/images/create_new_seam/create_seam_2.png
 rm ./seam/html/images/create_new_seam/create_seam_15.png
@@ -1928,7 +1816,6 @@ rm ./seam/html/images/create_new_seam/create_seam_7.png
 rm ./seam/html/images/create_new_seam/create_seam_1.png
 rm ./seam/html/images/create_new_seam/create_seam_8.png
 rm ./seam/html/images/tip.svg
-rm ./seam/html/images/seam_view
 rm ./seam/html/images/seam_view/seam_view_4.png
 rm ./seam/html/images/seam_view/seam_view_5.png
 rm ./seam/html/images/seam_view/seam_view_1.png
@@ -1938,7 +1825,6 @@ rm ./seam/html/images/seam_view/seam_view_3.png
 rm ./seam/html/images/seam_view/seam_view_2.png
 rm ./seam/html/images/seam_view/seam_view_7.png
 rm ./seam/html/images/bkg_gradient.gif
-rm ./seam/html/images/testng
 rm ./seam/html/images/testng/testng_7.png
 rm ./seam/html/images/testng/testng_13.png
 rm ./seam/html/images/testng/testng_10.png
@@ -1950,12 +1836,10 @@ rm ./seam/html/images/testng/testng_9.png
 rm ./seam/html/images/testng/testng_14.png
 rm ./seam/html/images/testng/testng_12.png
 rm ./seam/html/images/watermark-alpha2.png
-rm ./seam/html/images/directory_structure
 rm ./seam/html/images/directory_structure/directory_structure_1.png
 rm ./seam/html/images/directory_structure/directory_structure_2.png
 rm ./seam/html/images/community_doc.png
 rm ./seam/html/images/rhlogo.png
-rm ./seam/html/images/seam_preferences
 rm ./seam/html/images/seam_preferences/seam_preferences1_3.png
 rm ./seam/html/images/seam_preferences/seam_preferences1_2.png
 rm ./seam/html/images/seam_preferences/seam_preferences1.png
@@ -1963,7 +1847,6 @@ rm ./seam/html/images/seam_preferences/seam_preferences2_1.png
 rm ./seam/html/images/seam_preferences/seam_preferences1_5.png
 rm ./seam/html/images/seam_preferences/seam_preferences2.png
 rm ./seam/html/images/seam_preferences/seam_preferences1_4.png
-rm ./seam/html/images/seam_wizards
 rm ./seam/html/images/seam_wizards/seam_wizards_6.png
 rm ./seam/html/images/seam_wizards/seam_wizards_12.png
 rm ./seam/html/images/seam_wizards/seam_wizards_14.png
@@ -1981,7 +1864,6 @@ rm ./seam/html/images/seam_wizards/seam_wizards_16.png
 rm ./seam/html/images/seam_wizards/seam_wizards_8.png
 rm ./seam/html/images/seam_wizards/seam_wizards_1.png
 rm ./seam/html/images/note.svg
-rm ./seam/html/images/crud_database_application
 rm ./seam/html/images/crud_database_application/crud_database_application_11.png
 rm ./seam/html/images/crud_database_application/crud_database_application_13.png
 rm ./seam/html/images/crud_database_application/crud_database_application_08.png
@@ -2013,19 +1895,15 @@ rm ./seam/html/images/warning.svg
 rm ./seam/html/images/stock-go-forward.png
 rm ./seam/html/images/shine.png
 rm ./seam/html/images/red-bg.png
-rm ./seam/html/images/generate_entities
 rm ./seam/html/images/generate_entities/generate_entities1.png
 rm ./seam/html/images/redhat-logo.svg
-rm ./seam/html/images/community
 rm ./seam/html/images/community/watermark-beta2.png
 rm ./seam/html/images/community/jbossorglogo.png
 rm ./seam/html/images/community/watermark-beta1.png
 rm ./seam/html/images/community/title_hdr.png
 rm ./seam/html/images/community/bkg_gradient.gif
 rm ./seam/html/images/community/watermark-alpha2.png
-rm ./seam/html/images/community/docbook
 rm ./seam/html/images/community/docbook/warning.png
-rm ./seam/html/images/community/docbook/callouts
 rm ./seam/html/images/community/docbook/callouts/15.gif
 rm ./seam/html/images/community/docbook/callouts/6.png
 rm ./seam/html/images/community/docbook/callouts/8.png
@@ -2077,7 +1955,6 @@ rm ./seam/html/images/community/watermark-pre-release-candidate.png
 rm ./seam/html/images/community/watermark-release-candidate.png
 rm ./seam/html/images/community/dot.png
 rm ./seam/html/images/jboss-logo.svg
-rm ./seam/html/images/business_application
 rm ./seam/html/images/business_application/business_application_13.png
 rm ./seam/html/images/business_application/business_application_16.png
 rm ./seam/html/images/business_application/business_application_7.png
@@ -2100,7 +1977,6 @@ rm ./seam/html/images/tip.png
 rm ./seam/html/images/note.png
 rm ./seam/html/images/watermark-pre-release-candidate.png
 rm ./seam/html/images/watermark-release-candidate.png
-rm ./seam/html/images/seam_editors
 rm ./seam/html/images/seam_editors/seam_editors_6.png
 rm ./seam/html/images/seam_editors/seam_editors_1.png
 rm ./seam/html/images/seam_editors/seam_editors_5.png
@@ -2110,7 +1986,6 @@ rm ./seam/html/images/seam_editors/seam_editors_4.png
 rm ./seam/html/images/important.svg
 rm ./seam/html/images/callout.svg
 rm ./seam/html/images/important.png
-rm ./seam/html/images/crud_application_walkthrough
 rm ./seam/html/images/crud_application_walkthrough/crud_application_walkthrough_4.png
 rm ./seam/html/images/crud_application_walkthrough/crud_application_walkthrough_6.png
 rm ./seam/html/images/crud_application_walkthrough/crud_application_walkthrough_7.png
@@ -2120,7 +1995,6 @@ rm ./seam/html/images/crud_application_walkthrough/crud_application_walkthrough_
 rm ./seam/html/images/crud_application_walkthrough/crud_application_walkthrough_3.png
 rm ./seam/html/images/crud_application_walkthrough/crud_application_walkthrough_2.png
 rm ./seam/html/images/dot.png
-rm ./seam/eclipse
 rm ./seam/eclipse/ComponentsEditor.html
 rm ./seam/eclipse/OpenOn.html
 rm ./seam/eclipse/index.html
@@ -2129,7 +2003,6 @@ rm ./seam/eclipse/ch11s01.html
 rm ./seam/eclipse/ch01s02.html
 rm ./seam/eclipse/crud_database_application.html
 rm ./seam/eclipse/ch10s02.html
-rm ./seam/eclipse/css
 rm ./seam/eclipse/css/codehighlight.css
 rm ./seam/eclipse/css/dirty.css
 rm ./seam/eclipse/css/documentation.css
@@ -2173,7 +2046,6 @@ rm ./seam/eclipse/intro.html
 rm ./seam/eclipse/EAR.html
 rm ./seam/eclipse/find_seam_ref_decl.html
 rm ./seam/eclipse/gen_pref.html
-rm ./seam/eclipse/images
 rm ./seam/eclipse/images/stock-go-up.png
 rm ./seam/eclipse/images/jbossorglogo_jira.png
 rm ./seam/eclipse/images/watermark-beta2.png
@@ -2182,7 +2054,6 @@ rm ./seam/eclipse/images/warning.png
 rm ./seam/eclipse/images/documentation.png
 rm ./seam/eclipse/images/watermark-beta1.png
 rm ./seam/eclipse/images/title_hdr.png
-rm ./seam/eclipse/images/seam_menus_and_actions
 rm ./seam/eclipse/images/seam_menus_and_actions/menus_and_actions3_0.png
 rm ./seam/eclipse/images/seam_menus_and_actions/menus_and_actions1.png
 rm ./seam/eclipse/images/seam_menus_and_actions/menus_and_actions2.png
@@ -2190,7 +2061,6 @@ rm ./seam/eclipse/images/seam_menus_and_actions/menus_and_actions3.png
 rm ./seam/eclipse/images/seam_menus_and_actions/menus_and_actions0_1.png
 rm ./seam/eclipse/images/stock-go-back.png
 rm ./seam/eclipse/images/caution.svg
-rm ./seam/eclipse/images/create_new_seam
 rm ./seam/eclipse/images/create_new_seam/create_seam_6.png
 rm ./seam/eclipse/images/create_new_seam/create_seam_2.png
 rm ./seam/eclipse/images/create_new_seam/create_seam_15.png
@@ -2215,7 +2085,6 @@ rm ./seam/eclipse/images/create_new_seam/create_seam_7.png
 rm ./seam/eclipse/images/create_new_seam/create_seam_1.png
 rm ./seam/eclipse/images/create_new_seam/create_seam_8.png
 rm ./seam/eclipse/images/tip.svg
-rm ./seam/eclipse/images/seam_view
 rm ./seam/eclipse/images/seam_view/seam_view_4.png
 rm ./seam/eclipse/images/seam_view/seam_view_5.png
 rm ./seam/eclipse/images/seam_view/seam_view_1.png
@@ -2225,7 +2094,6 @@ rm ./seam/eclipse/images/seam_view/seam_view_3.png
 rm ./seam/eclipse/images/seam_view/seam_view_2.png
 rm ./seam/eclipse/images/seam_view/seam_view_7.png
 rm ./seam/eclipse/images/bkg_gradient.gif
-rm ./seam/eclipse/images/testng
 rm ./seam/eclipse/images/testng/testng_7.png
 rm ./seam/eclipse/images/testng/testng_13.png
 rm ./seam/eclipse/images/testng/testng_10.png
@@ -2237,12 +2105,10 @@ rm ./seam/eclipse/images/testng/testng_9.png
 rm ./seam/eclipse/images/testng/testng_14.png
 rm ./seam/eclipse/images/testng/testng_12.png
 rm ./seam/eclipse/images/watermark-alpha2.png
-rm ./seam/eclipse/images/directory_structure
 rm ./seam/eclipse/images/directory_structure/directory_structure_1.png
 rm ./seam/eclipse/images/directory_structure/directory_structure_2.png
 rm ./seam/eclipse/images/community_doc.png
 rm ./seam/eclipse/images/rhlogo.png
-rm ./seam/eclipse/images/seam_preferences
 rm ./seam/eclipse/images/seam_preferences/seam_preferences1_3.png
 rm ./seam/eclipse/images/seam_preferences/seam_preferences1_2.png
 rm ./seam/eclipse/images/seam_preferences/seam_preferences1.png
@@ -2250,7 +2116,6 @@ rm ./seam/eclipse/images/seam_preferences/seam_preferences2_1.png
 rm ./seam/eclipse/images/seam_preferences/seam_preferences1_5.png
 rm ./seam/eclipse/images/seam_preferences/seam_preferences2.png
 rm ./seam/eclipse/images/seam_preferences/seam_preferences1_4.png
-rm ./seam/eclipse/images/seam_wizards
 rm ./seam/eclipse/images/seam_wizards/seam_wizards_6.png
 rm ./seam/eclipse/images/seam_wizards/seam_wizards_12.png
 rm ./seam/eclipse/images/seam_wizards/seam_wizards_14.png
@@ -2268,7 +2133,6 @@ rm ./seam/eclipse/images/seam_wizards/seam_wizards_16.png
 rm ./seam/eclipse/images/seam_wizards/seam_wizards_8.png
 rm ./seam/eclipse/images/seam_wizards/seam_wizards_1.png
 rm ./seam/eclipse/images/note.svg
-rm ./seam/eclipse/images/crud_database_application
 rm ./seam/eclipse/images/crud_database_application/crud_database_application_11.png
 rm ./seam/eclipse/images/crud_database_application/crud_database_application_13.png
 rm ./seam/eclipse/images/crud_database_application/crud_database_application_08.png
@@ -2300,19 +2164,15 @@ rm ./seam/eclipse/images/warning.svg
 rm ./seam/eclipse/images/stock-go-forward.png
 rm ./seam/eclipse/images/shine.png
 rm ./seam/eclipse/images/red-bg.png
-rm ./seam/eclipse/images/generate_entities
 rm ./seam/eclipse/images/generate_entities/generate_entities1.png
 rm ./seam/eclipse/images/redhat-logo.svg
-rm ./seam/eclipse/images/community
 rm ./seam/eclipse/images/community/watermark-beta2.png
 rm ./seam/eclipse/images/community/jbossorglogo.png
 rm ./seam/eclipse/images/community/watermark-beta1.png
 rm ./seam/eclipse/images/community/title_hdr.png
 rm ./seam/eclipse/images/community/bkg_gradient.gif
 rm ./seam/eclipse/images/community/watermark-alpha2.png
-rm ./seam/eclipse/images/community/docbook
 rm ./seam/eclipse/images/community/docbook/warning.png
-rm ./seam/eclipse/images/community/docbook/callouts
 rm ./seam/eclipse/images/community/docbook/callouts/15.gif
 rm ./seam/eclipse/images/community/docbook/callouts/6.png
 rm ./seam/eclipse/images/community/docbook/callouts/8.png
@@ -2364,7 +2224,6 @@ rm ./seam/eclipse/images/community/watermark-pre-release-candidate.png
 rm ./seam/eclipse/images/community/watermark-release-candidate.png
 rm ./seam/eclipse/images/community/dot.png
 rm ./seam/eclipse/images/jboss-logo.svg
-rm ./seam/eclipse/images/business_application
 rm ./seam/eclipse/images/business_application/business_application_13.png
 rm ./seam/eclipse/images/business_application/business_application_16.png
 rm ./seam/eclipse/images/business_application/business_application_7.png
@@ -2387,7 +2246,6 @@ rm ./seam/eclipse/images/tip.png
 rm ./seam/eclipse/images/note.png
 rm ./seam/eclipse/images/watermark-pre-release-candidate.png
 rm ./seam/eclipse/images/watermark-release-candidate.png
-rm ./seam/eclipse/images/seam_editors
 rm ./seam/eclipse/images/seam_editors/seam_editors_6.png
 rm ./seam/eclipse/images/seam_editors/seam_editors_1.png
 rm ./seam/eclipse/images/seam_editors/seam_editors_5.png
@@ -2397,7 +2255,6 @@ rm ./seam/eclipse/images/seam_editors/seam_editors_4.png
 rm ./seam/eclipse/images/important.svg
 rm ./seam/eclipse/images/callout.svg
 rm ./seam/eclipse/images/important.png
-rm ./seam/eclipse/images/crud_application_walkthrough
 rm ./seam/eclipse/images/crud_application_walkthrough/crud_application_walkthrough_4.png
 rm ./seam/eclipse/images/crud_application_walkthrough/crud_application_walkthrough_6.png
 rm ./seam/eclipse/images/crud_application_walkthrough/crud_application_walkthrough_7.png
@@ -2408,13 +2265,9 @@ rm ./seam/eclipse/images/crud_application_walkthrough/crud_application_walkthrou
 rm ./seam/eclipse/images/crud_application_walkthrough/crud_application_walkthrough_2.png
 rm ./seam/eclipse/images/dot.png
 rm ./seam/eclipse/addJSFCapab.html
-rm ./GettingStartedGuide
-rm ./GettingStartedGuide/pdf
 rm ./GettingStartedGuide/pdf/Getting_Started_Guide.pdf
 rm ./GettingStartedGuide/getting-started-guide-en-US-1.0-SNAPSHOT.war
-rm ./GettingStartedGuide/html_single
 rm ./GettingStartedGuide/html_single/index.html
-rm ./GettingStartedGuide/html_single/css
 rm ./GettingStartedGuide/html_single/css/codehighlight.css
 rm ./GettingStartedGuide/html_single/css/dirty.css
 rm ./GettingStartedGuide/html_single/css/documentation.css
@@ -2422,7 +2275,6 @@ rm ./GettingStartedGuide/html_single/css/reports.css
 rm ./GettingStartedGuide/html_single/css/docnav.css
 rm ./GettingStartedGuide/html_single/css/documentation.css.orig
 rm ./GettingStartedGuide/html_single/css/jbossorg.css
-rm ./GettingStartedGuide/html_single/images
 rm ./GettingStartedGuide/html_single/images/stock-go-up.png
 rm ./GettingStartedGuide/html_single/images/jbossorglogo_jira.png
 rm ./GettingStartedGuide/html_single/images/watermark-beta2.png
@@ -2434,7 +2286,6 @@ rm ./GettingStartedGuide/html_single/images/title_hdr.png
 rm ./GettingStartedGuide/html_single/images/stock-go-back.png
 rm ./GettingStartedGuide/html_single/images/caution.svg
 rm ./GettingStartedGuide/html_single/images/tip.svg
-rm ./GettingStartedGuide/html_single/images/manage
 rm ./GettingStartedGuide/html_single/images/manage/manage_3.png
 rm ./GettingStartedGuide/html_single/images/manage/manage_10.png
 rm ./GettingStartedGuide/html_single/images/manage/manage_1.png
@@ -2453,7 +2304,6 @@ rm ./GettingStartedGuide/html_single/images/manage/manage_2.png
 rm ./GettingStartedGuide/html_single/images/manage/manage_6.png
 rm ./GettingStartedGuide/html_single/images/manage/manage_5.png
 rm ./GettingStartedGuide/html_single/images/bkg_gradient.gif
-rm ./GettingStartedGuide/html_single/images/getting_started
 rm ./GettingStartedGuide/html_single/images/getting_started/getting_started_7.png
 rm ./GettingStartedGuide/html_single/images/getting_started/getting_started_3.png
 rm ./GettingStartedGuide/html_single/images/getting_started/getting_started_1.png
@@ -2463,7 +2313,6 @@ rm ./GettingStartedGuide/html_single/images/getting_started/getting_started_4.pn
 rm ./GettingStartedGuide/html_single/images/getting_started/getting_started_9.png
 rm ./GettingStartedGuide/html_single/images/getting_started/getting_started_2.png
 rm ./GettingStartedGuide/html_single/images/getting_started/getting_started_8.png
-rm ./GettingStartedGuide/html_single/images/first_seam
 rm ./GettingStartedGuide/html_single/images/first_seam/first_seam_3.png
 rm ./GettingStartedGuide/html_single/images/first_seam/first_seam_12.png
 rm ./GettingStartedGuide/html_single/images/first_seam/first_seam_13.png
@@ -2484,7 +2333,6 @@ rm ./GettingStartedGuide/html_single/images/first_seam/first_seam_6.png
 rm ./GettingStartedGuide/html_single/images/first_seam/first_seam_19.png
 rm ./GettingStartedGuide/html_single/images/first_seam/first_seam_2.png
 rm ./GettingStartedGuide/html_single/images/jboss-logo copy.png
-rm ./GettingStartedGuide/html_single/images/rad_jsf_application
 rm ./GettingStartedGuide/html_single/images/rad_jsf_application/rad_jsf_application_23.png
 rm ./GettingStartedGuide/html_single/images/rad_jsf_application/rad_jsf_application_3.png
 rm ./GettingStartedGuide/html_single/images/rad_jsf_application/rad_jsf_application_21.png
@@ -2509,7 +2357,6 @@ rm ./GettingStartedGuide/html_single/images/rad_jsf_application/rad_jsf_applicat
 rm ./GettingStartedGuide/html_single/images/rad_jsf_application/rad_jsf_application_12.png
 rm ./GettingStartedGuide/html_single/images/rad_jsf_application/rad_jsf_application_11.png
 rm ./GettingStartedGuide/html_single/images/watermark-alpha2.png
-rm ./GettingStartedGuide/html_single/images/jsp_application
 rm ./GettingStartedGuide/html_single/images/jsp_application/jsp_application_14.png
 rm ./GettingStartedGuide/html_single/images/jsp_application/jsp_application_3.png
 rm ./GettingStartedGuide/html_single/images/jsp_application/jsp_application_16.png
@@ -2554,9 +2401,7 @@ rm ./GettingStartedGuide/html_single/images/important.svg
 rm ./GettingStartedGuide/html_single/images/callout.svg
 rm ./GettingStartedGuide/html_single/images/important.png
 rm ./GettingStartedGuide/html_single/images/dot.png
-rm ./GettingStartedGuide/html
 rm ./GettingStartedGuide/html/index.html
-rm ./GettingStartedGuide/html/css
 rm ./GettingStartedGuide/html/css/codehighlight.css
 rm ./GettingStartedGuide/html/css/dirty.css
 rm ./GettingStartedGuide/html/css/documentation.css
@@ -2570,7 +2415,6 @@ rm ./GettingStartedGuide/html/manage.html
 rm ./GettingStartedGuide/html/first_seam.html
 rm ./GettingStartedGuide/html/rad_jsf_application.html
 rm ./GettingStartedGuide/html/jsp_application.html
-rm ./GettingStartedGuide/html/images
 rm ./GettingStartedGuide/html/images/stock-go-up.png
 rm ./GettingStartedGuide/html/images/jbossorglogo_jira.png
 rm ./GettingStartedGuide/html/images/watermark-beta2.png
@@ -2582,7 +2426,6 @@ rm ./GettingStartedGuide/html/images/title_hdr.png
 rm ./GettingStartedGuide/html/images/stock-go-back.png
 rm ./GettingStartedGuide/html/images/caution.svg
 rm ./GettingStartedGuide/html/images/tip.svg
-rm ./GettingStartedGuide/html/images/manage
 rm ./GettingStartedGuide/html/images/manage/manage_3.png
 rm ./GettingStartedGuide/html/images/manage/manage_10.png
 rm ./GettingStartedGuide/html/images/manage/manage_1.png
@@ -2601,7 +2444,6 @@ rm ./GettingStartedGuide/html/images/manage/manage_2.png
 rm ./GettingStartedGuide/html/images/manage/manage_6.png
 rm ./GettingStartedGuide/html/images/manage/manage_5.png
 rm ./GettingStartedGuide/html/images/bkg_gradient.gif
-rm ./GettingStartedGuide/html/images/getting_started
 rm ./GettingStartedGuide/html/images/getting_started/getting_started_7.png
 rm ./GettingStartedGuide/html/images/getting_started/getting_started_3.png
 rm ./GettingStartedGuide/html/images/getting_started/getting_started_1.png
@@ -2611,7 +2453,6 @@ rm ./GettingStartedGuide/html/images/getting_started/getting_started_4.png
 rm ./GettingStartedGuide/html/images/getting_started/getting_started_9.png
 rm ./GettingStartedGuide/html/images/getting_started/getting_started_2.png
 rm ./GettingStartedGuide/html/images/getting_started/getting_started_8.png
-rm ./GettingStartedGuide/html/images/first_seam
 rm ./GettingStartedGuide/html/images/first_seam/first_seam_3.png
 rm ./GettingStartedGuide/html/images/first_seam/first_seam_12.png
 rm ./GettingStartedGuide/html/images/first_seam/first_seam_13.png
@@ -2632,7 +2473,6 @@ rm ./GettingStartedGuide/html/images/first_seam/first_seam_6.png
 rm ./GettingStartedGuide/html/images/first_seam/first_seam_19.png
 rm ./GettingStartedGuide/html/images/first_seam/first_seam_2.png
 rm ./GettingStartedGuide/html/images/jboss-logo copy.png
-rm ./GettingStartedGuide/html/images/rad_jsf_application
 rm ./GettingStartedGuide/html/images/rad_jsf_application/rad_jsf_application_23.png
 rm ./GettingStartedGuide/html/images/rad_jsf_application/rad_jsf_application_3.png
 rm ./GettingStartedGuide/html/images/rad_jsf_application/rad_jsf_application_21.png
@@ -2657,7 +2497,6 @@ rm ./GettingStartedGuide/html/images/rad_jsf_application/rad_jsf_application_14.
 rm ./GettingStartedGuide/html/images/rad_jsf_application/rad_jsf_application_12.png
 rm ./GettingStartedGuide/html/images/rad_jsf_application/rad_jsf_application_11.png
 rm ./GettingStartedGuide/html/images/watermark-alpha2.png
-rm ./GettingStartedGuide/html/images/jsp_application
 rm ./GettingStartedGuide/html/images/jsp_application/jsp_application_14.png
 rm ./GettingStartedGuide/html/images/jsp_application/jsp_application_3.png
 rm ./GettingStartedGuide/html/images/jsp_application/jsp_application_16.png
@@ -2702,7 +2541,6 @@ rm ./GettingStartedGuide/html/images/important.svg
 rm ./GettingStartedGuide/html/images/callout.svg
 rm ./GettingStartedGuide/html/images/important.png
 rm ./GettingStartedGuide/html/images/dot.png
-rm ./GettingStartedGuide/eclipse
 rm ./GettingStartedGuide/eclipse/AddingJBossServer.html
 rm ./GettingStartedGuide/eclipse/LaunchingTheProject.html
 rm ./GettingStartedGuide/eclipse/index.html
@@ -2713,7 +2551,6 @@ rm ./GettingStartedGuide/eclipse/CreatingJSPPage.html
 rm ./GettingStartedGuide/eclipse/OtherRelevantResourcesOnTheTopic2.html
 rm ./GettingStartedGuide/eclipse/SettingUpTheProject12.html
 rm ./GettingStartedGuide/eclipse/DeployTheProject.html
-rm ./GettingStartedGuide/eclipse/css
 rm ./GettingStartedGuide/eclipse/css/codehighlight.css
 rm ./GettingStartedGuide/eclipse/css/dirty.css
 rm ./GettingStartedGuide/eclipse/css/documentation.css
@@ -2770,7 +2607,6 @@ rm ./GettingStartedGuide/eclipse/Installation_Issues.html
 rm ./GettingStartedGuide/eclipse/CreatingTransition.html
 rm ./GettingStartedGuide/eclipse/Upgrading.html
 rm ./GettingStartedGuide/eclipse/intro1.html
-rm ./GettingStartedGuide/eclipse/images
 rm ./GettingStartedGuide/eclipse/images/stock-go-up.png
 rm ./GettingStartedGuide/eclipse/images/jbossorglogo_jira.png
 rm ./GettingStartedGuide/eclipse/images/watermark-beta2.png
@@ -2782,7 +2618,6 @@ rm ./GettingStartedGuide/eclipse/images/title_hdr.png
 rm ./GettingStartedGuide/eclipse/images/stock-go-back.png
 rm ./GettingStartedGuide/eclipse/images/caution.svg
 rm ./GettingStartedGuide/eclipse/images/tip.svg
-rm ./GettingStartedGuide/eclipse/images/manage
 rm ./GettingStartedGuide/eclipse/images/manage/manage_3.png
 rm ./GettingStartedGuide/eclipse/images/manage/manage_10.png
 rm ./GettingStartedGuide/eclipse/images/manage/manage_1.png
@@ -2801,7 +2636,6 @@ rm ./GettingStartedGuide/eclipse/images/manage/manage_2.png
 rm ./GettingStartedGuide/eclipse/images/manage/manage_6.png
 rm ./GettingStartedGuide/eclipse/images/manage/manage_5.png
 rm ./GettingStartedGuide/eclipse/images/bkg_gradient.gif
-rm ./GettingStartedGuide/eclipse/images/getting_started
 rm ./GettingStartedGuide/eclipse/images/getting_started/getting_started_7.png
 rm ./GettingStartedGuide/eclipse/images/getting_started/getting_started_3.png
 rm ./GettingStartedGuide/eclipse/images/getting_started/getting_started_1.png
@@ -2811,7 +2645,6 @@ rm ./GettingStartedGuide/eclipse/images/getting_started/getting_started_4.png
 rm ./GettingStartedGuide/eclipse/images/getting_started/getting_started_9.png
 rm ./GettingStartedGuide/eclipse/images/getting_started/getting_started_2.png
 rm ./GettingStartedGuide/eclipse/images/getting_started/getting_started_8.png
-rm ./GettingStartedGuide/eclipse/images/first_seam
 rm ./GettingStartedGuide/eclipse/images/first_seam/first_seam_3.png
 rm ./GettingStartedGuide/eclipse/images/first_seam/first_seam_12.png
 rm ./GettingStartedGuide/eclipse/images/first_seam/first_seam_13.png
@@ -2832,7 +2665,6 @@ rm ./GettingStartedGuide/eclipse/images/first_seam/first_seam_6.png
 rm ./GettingStartedGuide/eclipse/images/first_seam/first_seam_19.png
 rm ./GettingStartedGuide/eclipse/images/first_seam/first_seam_2.png
 rm ./GettingStartedGuide/eclipse/images/jboss-logo copy.png
-rm ./GettingStartedGuide/eclipse/images/rad_jsf_application
 rm ./GettingStartedGuide/eclipse/images/rad_jsf_application/rad_jsf_application_23.png
 rm ./GettingStartedGuide/eclipse/images/rad_jsf_application/rad_jsf_application_3.png
 rm ./GettingStartedGuide/eclipse/images/rad_jsf_application/rad_jsf_application_21.png
@@ -2857,7 +2689,6 @@ rm ./GettingStartedGuide/eclipse/images/rad_jsf_application/rad_jsf_application_
 rm ./GettingStartedGuide/eclipse/images/rad_jsf_application/rad_jsf_application_12.png
 rm ./GettingStartedGuide/eclipse/images/rad_jsf_application/rad_jsf_application_11.png
 rm ./GettingStartedGuide/eclipse/images/watermark-alpha2.png
-rm ./GettingStartedGuide/eclipse/images/jsp_application
 rm ./GettingStartedGuide/eclipse/images/jsp_application/jsp_application_14.png
 rm ./GettingStartedGuide/eclipse/images/jsp_application/jsp_application_3.png
 rm ./GettingStartedGuide/eclipse/images/jsp_application/jsp_application_16.png
@@ -2902,19 +2733,14 @@ rm ./GettingStartedGuide/eclipse/images/important.svg
 rm ./GettingStartedGuide/eclipse/images/callout.svg
 rm ./GettingStartedGuide/eclipse/images/important.png
 rm ./GettingStartedGuide/eclipse/images/dot.png
-rm ./jsf_tools_ref_guide
 rm ./jsf_tools_ref_guide/jsf-tools-reference-guide-en-US-1.0-SNAPSHOT.war
-rm ./jsf_tools_ref_guide/pdf
 rm ./jsf_tools_ref_guide/pdf/JSF_Tools_Reference_Guide.pdf
-rm ./jsf_tools_ref_guide/html_single
 rm ./jsf_tools_ref_guide/html_single/index.html
-rm ./jsf_tools_ref_guide/html_single/css
 rm ./jsf_tools_ref_guide/html_single/css/dirty.css
 rm ./jsf_tools_ref_guide/html_single/css/documentation.css
 rm ./jsf_tools_ref_guide/html_single/css/reports.css
 rm ./jsf_tools_ref_guide/html_single/css/docnav.css
 rm ./jsf_tools_ref_guide/html_single/css/jbossorg.css
-rm ./jsf_tools_ref_guide/html_single/images
 rm ./jsf_tools_ref_guide/html_single/images/stock-go-up.png
 rm ./jsf_tools_ref_guide/html_single/images/jbossorglogo_jira.png
 rm ./jsf_tools_ref_guide/html_single/images/watermark-beta2.png
@@ -2927,7 +2753,6 @@ rm ./jsf_tools_ref_guide/html_single/images/stock-go-back.png
 rm ./jsf_tools_ref_guide/html_single/images/caution.svg
 rm ./jsf_tools_ref_guide/html_single/images/tip.svg
 rm ./jsf_tools_ref_guide/html_single/images/bkg_gradient.gif
-rm ./jsf_tools_ref_guide/html_single/images/jsf_support
 rm ./jsf_tools_ref_guide/html_single/images/jsf_support/jsf_support_42.png
 rm ./jsf_tools_ref_guide/html_single/images/jsf_support/jsf_support_53.png
 rm ./jsf_tools_ref_guide/html_single/images/jsf_support/jsf_support_58.png
@@ -2992,7 +2817,6 @@ rm ./jsf_tools_ref_guide/html_single/images/watermark-alpha2.png
 rm ./jsf_tools_ref_guide/html_single/images/community_doc.png
 rm ./jsf_tools_ref_guide/html_single/images/rhlogo.png
 rm ./jsf_tools_ref_guide/html_single/images/note.svg
-rm ./jsf_tools_ref_guide/html_single/images/verif_valid
 rm ./jsf_tools_ref_guide/html_single/images/verif_valid/verif_valid_3.png
 rm ./jsf_tools_ref_guide/html_single/images/verif_valid/verif_valid_9.png
 rm ./jsf_tools_ref_guide/html_single/images/verif_valid/verif_valid_7.png
@@ -3027,11 +2851,9 @@ rm ./jsf_tools_ref_guide/html_single/images/important.svg
 rm ./jsf_tools_ref_guide/html_single/images/callout.svg
 rm ./jsf_tools_ref_guide/html_single/images/important.png
 rm ./jsf_tools_ref_guide/html_single/images/dot.png
-rm ./jsf_tools_ref_guide/html
 rm ./jsf_tools_ref_guide/html/jsf_config_file.html
 rm ./jsf_tools_ref_guide/html/index.html
 rm ./jsf_tools_ref_guide/html/jsf_support.html
-rm ./jsf_tools_ref_guide/html/css
 rm ./jsf_tools_ref_guide/html/css/dirty.css
 rm ./jsf_tools_ref_guide/html/css/documentation.css
 rm ./jsf_tools_ref_guide/html/css/reports.css
@@ -3042,7 +2864,6 @@ rm ./jsf_tools_ref_guide/html/creation_and_registration.html
 rm ./jsf_tools_ref_guide/html/introduction.html
 rm ./jsf_tools_ref_guide/html/struts_project_verification.html
 rm ./jsf_tools_ref_guide/html/projects.html
-rm ./jsf_tools_ref_guide/html/images
 rm ./jsf_tools_ref_guide/html/images/stock-go-up.png
 rm ./jsf_tools_ref_guide/html/images/jbossorglogo_jira.png
 rm ./jsf_tools_ref_guide/html/images/watermark-beta2.png
@@ -3055,7 +2876,6 @@ rm ./jsf_tools_ref_guide/html/images/stock-go-back.png
 rm ./jsf_tools_ref_guide/html/images/caution.svg
 rm ./jsf_tools_ref_guide/html/images/tip.svg
 rm ./jsf_tools_ref_guide/html/images/bkg_gradient.gif
-rm ./jsf_tools_ref_guide/html/images/jsf_support
 rm ./jsf_tools_ref_guide/html/images/jsf_support/jsf_support_42.png
 rm ./jsf_tools_ref_guide/html/images/jsf_support/jsf_support_53.png
 rm ./jsf_tools_ref_guide/html/images/jsf_support/jsf_support_58.png
@@ -3120,7 +2940,6 @@ rm ./jsf_tools_ref_guide/html/images/watermark-alpha2.png
 rm ./jsf_tools_ref_guide/html/images/community_doc.png
 rm ./jsf_tools_ref_guide/html/images/rhlogo.png
 rm ./jsf_tools_ref_guide/html/images/note.svg
-rm ./jsf_tools_ref_guide/html/images/verif_valid
 rm ./jsf_tools_ref_guide/html/images/verif_valid/verif_valid_3.png
 rm ./jsf_tools_ref_guide/html/images/verif_valid/verif_valid_9.png
 rm ./jsf_tools_ref_guide/html/images/verif_valid/verif_valid_7.png
@@ -3155,13 +2974,11 @@ rm ./jsf_tools_ref_guide/html/images/important.svg
 rm ./jsf_tools_ref_guide/html/images/callout.svg
 rm ./jsf_tools_ref_guide/html/images/important.png
 rm ./jsf_tools_ref_guide/html/images/dot.png
-rm ./jsf_tools_ref_guide/eclipse
 rm ./jsf_tools_ref_guide/eclipse/jsf_config_file.html
 rm ./jsf_tools_ref_guide/eclipse/index.html
 rm ./jsf_tools_ref_guide/eclipse/ch06s03.html
 rm ./jsf_tools_ref_guide/eclipse/jsf_support.html
 rm ./jsf_tools_ref_guide/eclipse/CodeGenerationForManagedBeans421.html
-rm ./jsf_tools_ref_guide/eclipse/css
 rm ./jsf_tools_ref_guide/eclipse/css/dirty.css
 rm ./jsf_tools_ref_guide/eclipse/css/documentation.css
 rm ./jsf_tools_ref_guide/eclipse/css/reports.css
@@ -3189,7 +3006,6 @@ rm ./jsf_tools_ref_guide/eclipse/TreeView11123.html
 rm ./jsf_tools_ref_guide/eclipse/Diagram9553.html
 rm ./jsf_tools_ref_guide/eclipse/CreateAndRegisterACustomValidator5632.html
 rm ./jsf_tools_ref_guide/eclipse/projects.html
-rm ./jsf_tools_ref_guide/eclipse/images
 rm ./jsf_tools_ref_guide/eclipse/images/stock-go-up.png
 rm ./jsf_tools_ref_guide/eclipse/images/jbossorglogo_jira.png
 rm ./jsf_tools_ref_guide/eclipse/images/watermark-beta2.png
@@ -3202,7 +3018,6 @@ rm ./jsf_tools_ref_guide/eclipse/images/stock-go-back.png
 rm ./jsf_tools_ref_guide/eclipse/images/caution.svg
 rm ./jsf_tools_ref_guide/eclipse/images/tip.svg
 rm ./jsf_tools_ref_guide/eclipse/images/bkg_gradient.gif
-rm ./jsf_tools_ref_guide/eclipse/images/jsf_support
 rm ./jsf_tools_ref_guide/eclipse/images/jsf_support/jsf_support_42.png
 rm ./jsf_tools_ref_guide/eclipse/images/jsf_support/jsf_support_53.png
 rm ./jsf_tools_ref_guide/eclipse/images/jsf_support/jsf_support_58.png
@@ -3267,7 +3082,6 @@ rm ./jsf_tools_ref_guide/eclipse/images/watermark-alpha2.png
 rm ./jsf_tools_ref_guide/eclipse/images/community_doc.png
 rm ./jsf_tools_ref_guide/eclipse/images/rhlogo.png
 rm ./jsf_tools_ref_guide/eclipse/images/note.svg
-rm ./jsf_tools_ref_guide/eclipse/images/verif_valid
 rm ./jsf_tools_ref_guide/eclipse/images/verif_valid/verif_valid_3.png
 rm ./jsf_tools_ref_guide/eclipse/images/verif_valid/verif_valid_9.png
 rm ./jsf_tools_ref_guide/eclipse/images/verif_valid/verif_valid_7.png
@@ -3302,23 +3116,17 @@ rm ./jsf_tools_ref_guide/eclipse/images/important.svg
 rm ./jsf_tools_ref_guide/eclipse/images/callout.svg
 rm ./jsf_tools_ref_guide/eclipse/images/important.png
 rm ./jsf_tools_ref_guide/eclipse/images/dot.png
-rm ./struts_tools_tutorial
-rm ./struts_tools_tutorial/pdf
 rm ./struts_tools_tutorial/pdf/Struts_Tools_Tutorial.pdf
-rm ./struts_tools_tutorial/html_single
 rm ./struts_tools_tutorial/html_single/index.html
-rm ./struts_tools_tutorial/html_single/css
 rm ./struts_tools_tutorial/html_single/css/codehighlight.css
 rm ./struts_tools_tutorial/html_single/css/dirty.css
 rm ./struts_tools_tutorial/html_single/css/documentation.css
 rm ./struts_tools_tutorial/html_single/css/reports.css
 rm ./struts_tools_tutorial/html_single/css/docnav.css
 rm ./struts_tools_tutorial/html_single/css/jbossorg.css
-rm ./struts_tools_tutorial/html_single/images
 rm ./struts_tools_tutorial/html_single/images/stock-go-up.png
 rm ./struts_tools_tutorial/html_single/images/jbossorglogo_jira.png
 rm ./struts_tools_tutorial/html_single/images/watermark-beta2.png
-rm ./struts_tools_tutorial/html_single/images/struts_validation
 rm ./struts_tools_tutorial/html_single/images/struts_validation/struts_validation_2.png
 rm ./struts_tools_tutorial/html_single/images/struts_validation/struts_validation_1.png
 rm ./struts_tools_tutorial/html_single/images/struts_validation/struts_validation.png
@@ -3335,7 +3143,6 @@ rm ./struts_tools_tutorial/html_single/images/watermark-alpha2.png
 rm ./struts_tools_tutorial/html_single/images/community_doc.png
 rm ./struts_tools_tutorial/html_single/images/rhlogo.png
 rm ./struts_tools_tutorial/html_single/images/note.svg
-rm ./struts_tools_tutorial/html_single/images/struts_application
 rm ./struts_tools_tutorial/html_single/images/struts_application/struts_application_3.png
 rm ./struts_tools_tutorial/html_single/images/struts_application/struts_application_1.png
 rm ./struts_tools_tutorial/html_single/images/struts_application/struts_application_5.png
@@ -3351,16 +3158,13 @@ rm ./struts_tools_tutorial/html_single/images/stock-go-forward.png
 rm ./struts_tools_tutorial/html_single/images/shine.png
 rm ./struts_tools_tutorial/html_single/images/red-bg.png
 rm ./struts_tools_tutorial/html_single/images/redhat-logo.svg
-rm ./struts_tools_tutorial/html_single/images/community
 rm ./struts_tools_tutorial/html_single/images/community/watermark-beta2.png
 rm ./struts_tools_tutorial/html_single/images/community/jbossorglogo.png
 rm ./struts_tools_tutorial/html_single/images/community/watermark-beta1.png
 rm ./struts_tools_tutorial/html_single/images/community/title_hdr.png
 rm ./struts_tools_tutorial/html_single/images/community/bkg_gradient.gif
 rm ./struts_tools_tutorial/html_single/images/community/watermark-alpha2.png
-rm ./struts_tools_tutorial/html_single/images/community/docbook
 rm ./struts_tools_tutorial/html_single/images/community/docbook/warning.png
-rm ./struts_tools_tutorial/html_single/images/community/docbook/callouts
 rm ./struts_tools_tutorial/html_single/images/community/docbook/callouts/15.gif
 rm ./struts_tools_tutorial/html_single/images/community/docbook/callouts/6.png
 rm ./struts_tools_tutorial/html_single/images/community/docbook/callouts/8.png
@@ -3421,9 +3225,7 @@ rm ./struts_tools_tutorial/html_single/images/important.svg
 rm ./struts_tools_tutorial/html_single/images/callout.svg
 rm ./struts_tools_tutorial/html_single/images/important.png
 rm ./struts_tools_tutorial/html_single/images/dot.png
-rm ./struts_tools_tutorial/html
 rm ./struts_tools_tutorial/html/index.html
-rm ./struts_tools_tutorial/html/css
 rm ./struts_tools_tutorial/html/css/codehighlight.css
 rm ./struts_tools_tutorial/html/css/dirty.css
 rm ./struts_tools_tutorial/html/css/documentation.css
@@ -3433,11 +3235,9 @@ rm ./struts_tools_tutorial/html/css/jbossorg.css
 rm ./struts_tools_tutorial/html/struts_application.html
 rm ./struts_tools_tutorial/html/struts_validation.html
 rm ./struts_tools_tutorial/html/introduction.html
-rm ./struts_tools_tutorial/html/images
 rm ./struts_tools_tutorial/html/images/stock-go-up.png
 rm ./struts_tools_tutorial/html/images/jbossorglogo_jira.png
 rm ./struts_tools_tutorial/html/images/watermark-beta2.png
-rm ./struts_tools_tutorial/html/images/struts_validation
 rm ./struts_tools_tutorial/html/images/struts_validation/struts_validation_2.png
 rm ./struts_tools_tutorial/html/images/struts_validation/struts_validation_1.png
 rm ./struts_tools_tutorial/html/images/struts_validation/struts_validation.png
@@ -3454,7 +3254,6 @@ rm ./struts_tools_tutorial/html/images/watermark-alpha2.png
 rm ./struts_tools_tutorial/html/images/community_doc.png
 rm ./struts_tools_tutorial/html/images/rhlogo.png
 rm ./struts_tools_tutorial/html/images/note.svg
-rm ./struts_tools_tutorial/html/images/struts_application
 rm ./struts_tools_tutorial/html/images/struts_application/struts_application_3.png
 rm ./struts_tools_tutorial/html/images/struts_application/struts_application_1.png
 rm ./struts_tools_tutorial/html/images/struts_application/struts_application_5.png
@@ -3470,16 +3269,13 @@ rm ./struts_tools_tutorial/html/images/stock-go-forward.png
 rm ./struts_tools_tutorial/html/images/shine.png
 rm ./struts_tools_tutorial/html/images/red-bg.png
 rm ./struts_tools_tutorial/html/images/redhat-logo.svg
-rm ./struts_tools_tutorial/html/images/community
 rm ./struts_tools_tutorial/html/images/community/watermark-beta2.png
 rm ./struts_tools_tutorial/html/images/community/jbossorglogo.png
 rm ./struts_tools_tutorial/html/images/community/watermark-beta1.png
 rm ./struts_tools_tutorial/html/images/community/title_hdr.png
 rm ./struts_tools_tutorial/html/images/community/bkg_gradient.gif
 rm ./struts_tools_tutorial/html/images/community/watermark-alpha2.png
-rm ./struts_tools_tutorial/html/images/community/docbook
 rm ./struts_tools_tutorial/html/images/community/docbook/warning.png
-rm ./struts_tools_tutorial/html/images/community/docbook/callouts
 rm ./struts_tools_tutorial/html/images/community/docbook/callouts/15.gif
 rm ./struts_tools_tutorial/html/images/community/docbook/callouts/6.png
 rm ./struts_tools_tutorial/html/images/community/docbook/callouts/8.png
@@ -3541,13 +3337,11 @@ rm ./struts_tools_tutorial/html/images/callout.svg
 rm ./struts_tools_tutorial/html/images/important.png
 rm ./struts_tools_tutorial/html/images/dot.png
 rm ./struts_tools_tutorial/struts-tools-tutorial-en-US-1.0-SNAPSHOT.war
-rm ./struts_tools_tutorial/eclipse
 rm ./struts_tools_tutorial/eclipse/index.html
 rm ./struts_tools_tutorial/eclipse/CreatingJSPPagePlaceholders.html
 rm ./struts_tools_tutorial/eclipse/Client-SideValidation.html
 rm ./struts_tools_tutorial/eclipse/CreatingthePagePlaceholders.html
 rm ./struts_tools_tutorial/eclipse/greeting.jsp.html
-rm ./struts_tools_tutorial/eclipse/css
 rm ./struts_tools_tutorial/eclipse/css/codehighlight.css
 rm ./struts_tools_tutorial/eclipse/css/dirty.css
 rm ./struts_tools_tutorial/eclipse/css/documentation.css
@@ -3582,11 +3376,9 @@ rm ./struts_tools_tutorial/eclipse/CompilingtheClasses.html
 rm ./struts_tools_tutorial/eclipse/index.jsp.html
 rm ./struts_tools_tutorial/eclipse/inputname.jsp.html
 rm ./struts_tools_tutorial/eclipse/StartingPoint.html
-rm ./struts_tools_tutorial/eclipse/images
 rm ./struts_tools_tutorial/eclipse/images/stock-go-up.png
 rm ./struts_tools_tutorial/eclipse/images/jbossorglogo_jira.png
 rm ./struts_tools_tutorial/eclipse/images/watermark-beta2.png
-rm ./struts_tools_tutorial/eclipse/images/struts_validation
 rm ./struts_tools_tutorial/eclipse/images/struts_validation/struts_validation_2.png
 rm ./struts_tools_tutorial/eclipse/images/struts_validation/struts_validation_1.png
 rm ./struts_tools_tutorial/eclipse/images/struts_validation/struts_validation.png
@@ -3603,7 +3395,6 @@ rm ./struts_tools_tutorial/eclipse/images/watermark-alpha2.png
 rm ./struts_tools_tutorial/eclipse/images/community_doc.png
 rm ./struts_tools_tutorial/eclipse/images/rhlogo.png
 rm ./struts_tools_tutorial/eclipse/images/note.svg
-rm ./struts_tools_tutorial/eclipse/images/struts_application
 rm ./struts_tools_tutorial/eclipse/images/struts_application/struts_application_3.png
 rm ./struts_tools_tutorial/eclipse/images/struts_application/struts_application_1.png
 rm ./struts_tools_tutorial/eclipse/images/struts_application/struts_application_5.png
@@ -3619,16 +3410,13 @@ rm ./struts_tools_tutorial/eclipse/images/stock-go-forward.png
 rm ./struts_tools_tutorial/eclipse/images/shine.png
 rm ./struts_tools_tutorial/eclipse/images/red-bg.png
 rm ./struts_tools_tutorial/eclipse/images/redhat-logo.svg
-rm ./struts_tools_tutorial/eclipse/images/community
 rm ./struts_tools_tutorial/eclipse/images/community/watermark-beta2.png
 rm ./struts_tools_tutorial/eclipse/images/community/jbossorglogo.png
 rm ./struts_tools_tutorial/eclipse/images/community/watermark-beta1.png
 rm ./struts_tools_tutorial/eclipse/images/community/title_hdr.png
 rm ./struts_tools_tutorial/eclipse/images/community/bkg_gradient.gif
 rm ./struts_tools_tutorial/eclipse/images/community/watermark-alpha2.png
-rm ./struts_tools_tutorial/eclipse/images/community/docbook
 rm ./struts_tools_tutorial/eclipse/images/community/docbook/warning.png
-rm ./struts_tools_tutorial/eclipse/images/community/docbook/callouts
 rm ./struts_tools_tutorial/eclipse/images/community/docbook/callouts/15.gif
 rm ./struts_tools_tutorial/eclipse/images/community/docbook/callouts/6.png
 rm ./struts_tools_tutorial/eclipse/images/community/docbook/callouts/8.png
@@ -3690,13 +3478,9 @@ rm ./struts_tools_tutorial/eclipse/images/callout.svg
 rm ./struts_tools_tutorial/eclipse/images/important.png
 rm ./struts_tools_tutorial/eclipse/images/dot.png
 rm ./struts_tools_tutorial/eclipse/StartingUp.html
-rm ./jsf
-rm ./jsf/pdf
 rm ./jsf/pdf/Visual_Web_Tools_Reference_Guide.pdf
 rm ./jsf/visua-web-tools-guide-en-US-1.0-SNAPSHOT.war
-rm ./jsf/html_single
 rm ./jsf/html_single/index.html
-rm ./jsf/html_single/css
 rm ./jsf/html_single/css/codehighlight.css
 rm ./jsf/html_single/css/dirty.css
 rm ./jsf/html_single/css/documentation.css
@@ -3704,7 +3488,6 @@ rm ./jsf/html_single/css/reports.css
 rm ./jsf/html_single/css/docnav.css
 rm ./jsf/html_single/css/documentation.css.orig
 rm ./jsf/html_single/css/jbossorg.css
-rm ./jsf/html_single/images
 rm ./jsf/html_single/images/stock-go-up.png
 rm ./jsf/html_single/images/jbossorglogo_jira.png
 rm ./jsf/html_single/images/watermark-beta2.png
@@ -3713,7 +3496,6 @@ rm ./jsf/html_single/images/warning.png
 rm ./jsf/html_single/images/documentation.png
 rm ./jsf/html_single/images/watermark-beta1.png
 rm ./jsf/html_single/images/title_hdr.png
-rm ./jsf/html_single/images/struts
 rm ./jsf/html_single/images/struts/struts_42.png
 rm ./jsf/html_single/images/struts/struts_30.png
 rm ./jsf/html_single/images/struts/struts_23.png
@@ -3766,7 +3548,6 @@ rm ./jsf/html_single/images/struts/struts_41.png
 rm ./jsf/html_single/images/struts/struts_32.png
 rm ./jsf/html_single/images/struts/struts_22.png
 rm ./jsf/html_single/images/stock-go-back.png
-rm ./jsf/html_single/images/preferences
 rm ./jsf/html_single/images/preferences/preferences_27.png
 rm ./jsf/html_single/images/preferences/preferences_38.png
 rm ./jsf/html_single/images/preferences/preferences_25.png
@@ -3809,7 +3590,6 @@ rm ./jsf/html_single/images/preferences/preferences_23.png
 rm ./jsf/html_single/images/caution.svg
 rm ./jsf/html_single/images/tip.svg
 rm ./jsf/html_single/images/bkg_gradient.gif
-rm ./jsf/html_single/images/jsf_support
 rm ./jsf/html_single/images/jsf_support/jsf_support_42.png
 rm ./jsf/html_single/images/jsf_support/jsf_support_53.png
 rm ./jsf/html_single/images/jsf_support/jsf_support_58.png
@@ -3871,7 +3651,6 @@ rm ./jsf/html_single/images/jsf_support/jsf_support_23.png
 rm ./jsf/html_single/images/jsf_support/jsf_support_25.png
 rm ./jsf/html_single/images/jboss-logo copy.png
 rm ./jsf/html_single/images/watermark-alpha2.png
-rm ./jsf/html_single/images/more_editors
 rm ./jsf/html_single/images/more_editors/more_editors_1.png
 rm ./jsf/html_single/images/more_editors/more_editors_53.png
 rm ./jsf/html_single/images/more_editors/more_editors_7.png
@@ -3902,7 +3681,6 @@ rm ./jsf/html_single/images/community_doc.png
 rm ./jsf/html_single/images/rhlogo.png
 rm ./jsf/html_single/images/jboss-logo.png
 rm ./jsf/html_single/images/vpe6.psd
-rm ./jsf/html_single/images/web_projects
 rm ./jsf/html_single/images/web_projects/web_projects_7.png
 rm ./jsf/html_single/images/web_projects/web_projects_10.png
 rm ./jsf/html_single/images/web_projects/web_projects_6.png
@@ -3919,7 +3697,6 @@ rm ./jsf/html_single/images/web_projects/web_projects_11.png
 rm ./jsf/html_single/images/web_projects/web_projects_13.png
 rm ./jsf/html_single/images/web_projects/web_projects_8.png
 rm ./jsf/html_single/images/web_projects/web_projects_14.png
-rm ./jsf/html_single/images/editors_features
 rm ./jsf/html_single/images/editors_features/editors_features_24.png
 rm ./jsf/html_single/images/editors_features/editors_features_3.png
 rm ./jsf/html_single/images/editors_features/editors_features_9.png
@@ -3955,7 +3732,6 @@ rm ./jsf/html_single/images/editors_features/editors_features_32.png
 rm ./jsf/html_single/images/editors_features/editors_features_18.png
 rm ./jsf/html_single/images/vpe4.psd
 rm ./jsf/html_single/images/note.svg
-rm ./jsf/html_single/images/verif_valid
 rm ./jsf/html_single/images/verif_valid/verif_valid_3.png
 rm ./jsf/html_single/images/verif_valid/verif_valid_9.png
 rm ./jsf/html_single/images/verif_valid/verif_valid_7.png
@@ -3971,7 +3747,6 @@ rm ./jsf/html_single/images/verif_valid/verif_valid_10.png
 rm ./jsf/html_single/images/verif_valid/verif_valid_13.png
 rm ./jsf/html_single/images/verif_valid/verif_valid_2.png
 rm ./jsf/html_single/images/jboss-logo-mark.png
-rm ./jsf/html_single/images/palette
 rm ./jsf/html_single/images/palette/palette_21.png
 rm ./jsf/html_single/images/palette/palette_12.png
 rm ./jsf/html_single/images/palette/palette_3.png
@@ -4002,7 +3777,6 @@ rm ./jsf/html_single/images/jboss-logo.gif
 rm ./jsf/html_single/images/caution.png
 rm ./jsf/html_single/images/stock-home.png
 rm ./jsf/html_single/images/filterball.svg
-rm ./jsf/html_single/images/visual_page
 rm ./jsf/html_single/images/visual_page/visual_page_11.png
 rm ./jsf/html_single/images/visual_page/visual_page_5.png
 rm ./jsf/html_single/images/visual_page/visual_page_3.png
@@ -4034,9 +3808,7 @@ rm ./jsf/html_single/images/important.svg
 rm ./jsf/html_single/images/callout.svg
 rm ./jsf/html_single/images/important.png
 rm ./jsf/html_single/images/dot.png
-rm ./jsf/html
 rm ./jsf/html/index.html
-rm ./jsf/html/css
 rm ./jsf/html/css/codehighlight.css
 rm ./jsf/html/css/dirty.css
 rm ./jsf/html/css/documentation.css
@@ -4050,7 +3822,6 @@ rm ./jsf/html/springTools.html
 rm ./jsf/html/palette.html
 rm ./jsf/html/editors.html
 rm ./jsf/html/preferences.html
-rm ./jsf/html/images
 rm ./jsf/html/images/stock-go-up.png
 rm ./jsf/html/images/jbossorglogo_jira.png
 rm ./jsf/html/images/watermark-beta2.png
@@ -4059,7 +3830,6 @@ rm ./jsf/html/images/warning.png
 rm ./jsf/html/images/documentation.png
 rm ./jsf/html/images/watermark-beta1.png
 rm ./jsf/html/images/title_hdr.png
-rm ./jsf/html/images/struts
 rm ./jsf/html/images/struts/struts_42.png
 rm ./jsf/html/images/struts/struts_30.png
 rm ./jsf/html/images/struts/struts_23.png
@@ -4112,7 +3882,6 @@ rm ./jsf/html/images/struts/struts_41.png
 rm ./jsf/html/images/struts/struts_32.png
 rm ./jsf/html/images/struts/struts_22.png
 rm ./jsf/html/images/stock-go-back.png
-rm ./jsf/html/images/preferences
 rm ./jsf/html/images/preferences/preferences_27.png
 rm ./jsf/html/images/preferences/preferences_38.png
 rm ./jsf/html/images/preferences/preferences_25.png
@@ -4155,7 +3924,6 @@ rm ./jsf/html/images/preferences/preferences_23.png
 rm ./jsf/html/images/caution.svg
 rm ./jsf/html/images/tip.svg
 rm ./jsf/html/images/bkg_gradient.gif
-rm ./jsf/html/images/jsf_support
 rm ./jsf/html/images/jsf_support/jsf_support_42.png
 rm ./jsf/html/images/jsf_support/jsf_support_53.png
 rm ./jsf/html/images/jsf_support/jsf_support_58.png
@@ -4217,7 +3985,6 @@ rm ./jsf/html/images/jsf_support/jsf_support_23.png
 rm ./jsf/html/images/jsf_support/jsf_support_25.png
 rm ./jsf/html/images/jboss-logo copy.png
 rm ./jsf/html/images/watermark-alpha2.png
-rm ./jsf/html/images/more_editors
 rm ./jsf/html/images/more_editors/more_editors_1.png
 rm ./jsf/html/images/more_editors/more_editors_53.png
 rm ./jsf/html/images/more_editors/more_editors_7.png
@@ -4248,7 +4015,6 @@ rm ./jsf/html/images/community_doc.png
 rm ./jsf/html/images/rhlogo.png
 rm ./jsf/html/images/jboss-logo.png
 rm ./jsf/html/images/vpe6.psd
-rm ./jsf/html/images/web_projects
 rm ./jsf/html/images/web_projects/web_projects_7.png
 rm ./jsf/html/images/web_projects/web_projects_10.png
 rm ./jsf/html/images/web_projects/web_projects_6.png
@@ -4265,7 +4031,6 @@ rm ./jsf/html/images/web_projects/web_projects_11.png
 rm ./jsf/html/images/web_projects/web_projects_13.png
 rm ./jsf/html/images/web_projects/web_projects_8.png
 rm ./jsf/html/images/web_projects/web_projects_14.png
-rm ./jsf/html/images/editors_features
 rm ./jsf/html/images/editors_features/editors_features_24.png
 rm ./jsf/html/images/editors_features/editors_features_3.png
 rm ./jsf/html/images/editors_features/editors_features_9.png
@@ -4301,7 +4066,6 @@ rm ./jsf/html/images/editors_features/editors_features_32.png
 rm ./jsf/html/images/editors_features/editors_features_18.png
 rm ./jsf/html/images/vpe4.psd
 rm ./jsf/html/images/note.svg
-rm ./jsf/html/images/verif_valid
 rm ./jsf/html/images/verif_valid/verif_valid_3.png
 rm ./jsf/html/images/verif_valid/verif_valid_9.png
 rm ./jsf/html/images/verif_valid/verif_valid_7.png
@@ -4317,7 +4081,6 @@ rm ./jsf/html/images/verif_valid/verif_valid_10.png
 rm ./jsf/html/images/verif_valid/verif_valid_13.png
 rm ./jsf/html/images/verif_valid/verif_valid_2.png
 rm ./jsf/html/images/jboss-logo-mark.png
-rm ./jsf/html/images/palette
 rm ./jsf/html/images/palette/palette_21.png
 rm ./jsf/html/images/palette/palette_12.png
 rm ./jsf/html/images/palette/palette_3.png
@@ -4348,7 +4111,6 @@ rm ./jsf/html/images/jboss-logo.gif
 rm ./jsf/html/images/caution.png
 rm ./jsf/html/images/stock-home.png
 rm ./jsf/html/images/filterball.svg
-rm ./jsf/html/images/visual_page
 rm ./jsf/html/images/visual_page/visual_page_11.png
 rm ./jsf/html/images/visual_page/visual_page_5.png
 rm ./jsf/html/images/visual_page/visual_page_3.png
@@ -4380,7 +4142,6 @@ rm ./jsf/html/images/important.svg
 rm ./jsf/html/images/callout.svg
 rm ./jsf/html/images/important.png
 rm ./jsf/html/images/dot.png
-rm ./jsf/eclipse
 rm ./jsf/eclipse/GraphicalTLDEditor.html
 rm ./jsf/eclipse/DragAndDropTagLibrariesOnToRedHatPalette.html
 rm ./jsf/eclipse/ContentAssistBasedOnProjectData86.html
@@ -4391,7 +4152,6 @@ rm ./jsf/eclipse/StrutsPages.html
 rm ./jsf/eclipse/JSF Page.html
 rm ./jsf/eclipse/CreateAndImportJSFAndStrutsProjects.html
 rm ./jsf/eclipse/JSFProjectFiles3087.html
-rm ./jsf/eclipse/css
 rm ./jsf/eclipse/css/codehighlight.css
 rm ./jsf/eclipse/css/dirty.css
 rm ./jsf/eclipse/css/documentation.css
@@ -4479,7 +4239,6 @@ rm ./jsf/eclipse/ch02s01s03.html
 rm ./jsf/eclipse/View.html
 rm ./jsf/eclipse/ForJSPPages.html
 rm ./jsf/eclipse/ch02s01s06.html
-rm ./jsf/eclipse/Show
 rm ./jsf/eclipse/Show/Hide.html
 rm ./jsf/eclipse/NavigationRules.html
 rm ./jsf/eclipse/TreeView1.html
@@ -4493,7 +4252,6 @@ rm ./jsf/eclipse/AddingCustomJSFTagsToTheJBossToolsPalette.html
 rm ./jsf/eclipse/StrutsAutomatic.html
 rm ./jsf/eclipse/ErrorCheckingAndValidation.html
 rm ./jsf/eclipse/SourceView1.html
-rm ./jsf/eclipse/images
 rm ./jsf/eclipse/images/stock-go-up.png
 rm ./jsf/eclipse/images/jbossorglogo_jira.png
 rm ./jsf/eclipse/images/watermark-beta2.png
@@ -4502,7 +4260,6 @@ rm ./jsf/eclipse/images/warning.png
 rm ./jsf/eclipse/images/documentation.png
 rm ./jsf/eclipse/images/watermark-beta1.png
 rm ./jsf/eclipse/images/title_hdr.png
-rm ./jsf/eclipse/images/struts
 rm ./jsf/eclipse/images/struts/struts_42.png
 rm ./jsf/eclipse/images/struts/struts_30.png
 rm ./jsf/eclipse/images/struts/struts_23.png
@@ -4555,7 +4312,6 @@ rm ./jsf/eclipse/images/struts/struts_41.png
 rm ./jsf/eclipse/images/struts/struts_32.png
 rm ./jsf/eclipse/images/struts/struts_22.png
 rm ./jsf/eclipse/images/stock-go-back.png
-rm ./jsf/eclipse/images/preferences
 rm ./jsf/eclipse/images/preferences/preferences_27.png
 rm ./jsf/eclipse/images/preferences/preferences_38.png
 rm ./jsf/eclipse/images/preferences/preferences_25.png
@@ -4598,7 +4354,6 @@ rm ./jsf/eclipse/images/preferences/preferences_23.png
 rm ./jsf/eclipse/images/caution.svg
 rm ./jsf/eclipse/images/tip.svg
 rm ./jsf/eclipse/images/bkg_gradient.gif
-rm ./jsf/eclipse/images/jsf_support
 rm ./jsf/eclipse/images/jsf_support/jsf_support_42.png
 rm ./jsf/eclipse/images/jsf_support/jsf_support_53.png
 rm ./jsf/eclipse/images/jsf_support/jsf_support_58.png
@@ -4660,7 +4415,6 @@ rm ./jsf/eclipse/images/jsf_support/jsf_support_23.png
 rm ./jsf/eclipse/images/jsf_support/jsf_support_25.png
 rm ./jsf/eclipse/images/jboss-logo copy.png
 rm ./jsf/eclipse/images/watermark-alpha2.png
-rm ./jsf/eclipse/images/more_editors
 rm ./jsf/eclipse/images/more_editors/more_editors_1.png
 rm ./jsf/eclipse/images/more_editors/more_editors_53.png
 rm ./jsf/eclipse/images/more_editors/more_editors_7.png
@@ -4691,7 +4445,6 @@ rm ./jsf/eclipse/images/community_doc.png
 rm ./jsf/eclipse/images/rhlogo.png
 rm ./jsf/eclipse/images/jboss-logo.png
 rm ./jsf/eclipse/images/vpe6.psd
-rm ./jsf/eclipse/images/web_projects
 rm ./jsf/eclipse/images/web_projects/web_projects_7.png
 rm ./jsf/eclipse/images/web_projects/web_projects_10.png
 rm ./jsf/eclipse/images/web_projects/web_projects_6.png
@@ -4708,7 +4461,6 @@ rm ./jsf/eclipse/images/web_projects/web_projects_11.png
 rm ./jsf/eclipse/images/web_projects/web_projects_13.png
 rm ./jsf/eclipse/images/web_projects/web_projects_8.png
 rm ./jsf/eclipse/images/web_projects/web_projects_14.png
-rm ./jsf/eclipse/images/editors_features
 rm ./jsf/eclipse/images/editors_features/editors_features_24.png
 rm ./jsf/eclipse/images/editors_features/editors_features_3.png
 rm ./jsf/eclipse/images/editors_features/editors_features_9.png
@@ -4744,7 +4496,6 @@ rm ./jsf/eclipse/images/editors_features/editors_features_32.png
 rm ./jsf/eclipse/images/editors_features/editors_features_18.png
 rm ./jsf/eclipse/images/vpe4.psd
 rm ./jsf/eclipse/images/note.svg
-rm ./jsf/eclipse/images/verif_valid
 rm ./jsf/eclipse/images/verif_valid/verif_valid_3.png
 rm ./jsf/eclipse/images/verif_valid/verif_valid_9.png
 rm ./jsf/eclipse/images/verif_valid/verif_valid_7.png
@@ -4760,7 +4511,6 @@ rm ./jsf/eclipse/images/verif_valid/verif_valid_10.png
 rm ./jsf/eclipse/images/verif_valid/verif_valid_13.png
 rm ./jsf/eclipse/images/verif_valid/verif_valid_2.png
 rm ./jsf/eclipse/images/jboss-logo-mark.png
-rm ./jsf/eclipse/images/palette
 rm ./jsf/eclipse/images/palette/palette_21.png
 rm ./jsf/eclipse/images/palette/palette_12.png
 rm ./jsf/eclipse/images/palette/palette_3.png
@@ -4791,7 +4541,6 @@ rm ./jsf/eclipse/images/jboss-logo.gif
 rm ./jsf/eclipse/images/caution.png
 rm ./jsf/eclipse/images/stock-home.png
 rm ./jsf/eclipse/images/filterball.svg
-rm ./jsf/eclipse/images/visual_page
 rm ./jsf/eclipse/images/visual_page/visual_page_11.png
 rm ./jsf/eclipse/images/visual_page/visual_page_5.png
 rm ./jsf/eclipse/images/visual_page/visual_page_3.png
@@ -4824,23 +4573,17 @@ rm ./jsf/eclipse/images/callout.svg
 rm ./jsf/eclipse/images/important.png
 rm ./jsf/eclipse/images/dot.png
 rm ./jsf/eclipse/Struts.html
-rm ./jbpm
-rm ./jbpm/pdf
 rm ./jbpm/pdf/JBPM_Reference_Guide.pdf
 rm ./jbpm/jbpm-ref-guideen-US-1.0-SNAPSHOT.war
-rm ./jbpm/html_single
 rm ./jbpm/html_single/index.html
-rm ./jbpm/html_single/css
 rm ./jbpm/html_single/css/codehighlight.css
 rm ./jbpm/html_single/css/dirty.css
 rm ./jbpm/html_single/css/documentation.css
 rm ./jbpm/html_single/css/reports.css
 rm ./jbpm/html_single/css/docnav.css
 rm ./jbpm/html_single/css/jbossorg.css
-rm ./jbpm/html_single/images
 rm ./jbpm/html_single/images/stock-go-up.png
 rm ./jbpm/html_single/images/jbossorglogo_jira.png
-rm ./jbpm/html_single/images/The_JBoss_jBPM_Int_Mech
 rm ./jbpm/html_single/images/The_JBoss_jBPM_Int_Mech/jboss_jbpm_int_mech_1.png
 rm ./jbpm/html_single/images/The_JBoss_jBPM_Int_Mech/jboss_jbpm_int_mech_6.png
 rm ./jbpm/html_single/images/The_JBoss_jBPM_Int_Mech/jboss_jbpm_int_mech_9.png
@@ -4853,7 +4596,6 @@ rm ./jbpm/html_single/images/The_JBoss_jBPM_Int_Mech/jboss_jbpm_int_mech_3.png
 rm ./jbpm/html_single/images/watermark-beta2.png
 rm ./jbpm/html_single/images/jbossorglogo.png
 rm ./jbpm/html_single/images/warning.png
-rm ./jbpm/html_single/images/runtime_installation
 rm ./jbpm/html_single/images/runtime_installation/runtime_installation_1.png
 rm ./jbpm/html_single/images/documentation.png
 rm ./jbpm/html_single/images/watermark-beta1.png
@@ -4865,7 +4607,6 @@ rm ./jbpm/html_single/images/bkg_gradient.gif
 rm ./jbpm/html_single/images/watermark-alpha2.png
 rm ./jbpm/html_single/images/community_doc.png
 rm ./jbpm/html_single/images/rhlogo.png
-rm ./jbpm/html_single/images/the_views
 rm ./jbpm/html_single/images/the_views/the_views_7.png
 rm ./jbpm/html_single/images/the_views/the_views_1.png
 rm ./jbpm/html_single/images/the_views/the_views_4.png
@@ -4881,7 +4622,6 @@ rm ./jbpm/html_single/images/note.svg
 rm ./jbpm/html_single/images/watermark-alpha1.png
 rm ./jbpm/html_single/images/caution.png
 rm ./jbpm/html_single/images/stock-home.png
-rm ./jbpm/html_single/images/guided_tour_jboss_jbpmgpd
 rm ./jbpm/html_single/images/guided_tour_jboss_jbpmgpd/guided_tour_9.png
 rm ./jbpm/html_single/images/guided_tour_jboss_jbpmgpd/guided_tour_6.png
 rm ./jbpm/html_single/images/guided_tour_jboss_jbpmgpd/guided_tour_4.png
@@ -4893,7 +4633,6 @@ rm ./jbpm/html_single/images/guided_tour_jboss_jbpmgpd/guided_tour_1.png
 rm ./jbpm/html_single/images/guided_tour_jboss_jbpmgpd/guided_tour_3.png
 rm ./jbpm/html_single/images/filterball.svg
 rm ./jbpm/html_single/images/warning.svg
-rm ./jbpm/html_single/images/Quick_Howto_Guide
 rm ./jbpm/html_single/images/Quick_Howto_Guide/quick_howto_guide_7.png
 rm ./jbpm/html_single/images/Quick_Howto_Guide/quick_howto_guide_4.png
 rm ./jbpm/html_single/images/Quick_Howto_Guide/quick_howto_guide_5.png
@@ -4907,16 +4646,13 @@ rm ./jbpm/html_single/images/stock-go-forward.png
 rm ./jbpm/html_single/images/shine.png
 rm ./jbpm/html_single/images/red-bg.png
 rm ./jbpm/html_single/images/redhat-logo.svg
-rm ./jbpm/html_single/images/community
 rm ./jbpm/html_single/images/community/watermark-beta2.png
 rm ./jbpm/html_single/images/community/jbossorglogo.png
 rm ./jbpm/html_single/images/community/watermark-beta1.png
 rm ./jbpm/html_single/images/community/title_hdr.png
 rm ./jbpm/html_single/images/community/bkg_gradient.gif
 rm ./jbpm/html_single/images/community/watermark-alpha2.png
-rm ./jbpm/html_single/images/community/docbook
 rm ./jbpm/html_single/images/community/docbook/warning.png
-rm ./jbpm/html_single/images/community/docbook/callouts
 rm ./jbpm/html_single/images/community/docbook/callouts/15.gif
 rm ./jbpm/html_single/images/community/docbook/callouts/6.png
 rm ./jbpm/html_single/images/community/docbook/callouts/8.png
@@ -4974,7 +4710,6 @@ rm ./jbpm/html_single/images/note.png
 rm ./jbpm/html_single/images/watermark-pre-release-candidate.png
 rm ./jbpm/html_single/images/watermark-release-candidate.png
 rm ./jbpm/html_single/images/important.svg
-rm ./jbpm/html_single/images/Test_Drive_Proc
 rm ./jbpm/html_single/images/Test_Drive_Proc/test_driv_proc_8.png
 rm ./jbpm/html_single/images/Test_Drive_Proc/test_driv_proc_5.png
 rm ./jbpm/html_single/images/Test_Drive_Proc/test_driv_proc_4.png
@@ -4986,11 +4721,9 @@ rm ./jbpm/html_single/images/Test_Drive_Proc/test_driv_proc_7.png
 rm ./jbpm/html_single/images/callout.svg
 rm ./jbpm/html_single/images/important.png
 rm ./jbpm/html_single/images/dot.png
-rm ./jbpm/html
 rm ./jbpm/html/index.html
 rm ./jbpm/html/GuidedTourJBossjBPMGPD.html
 rm ./jbpm/html/The_JBoss_jBPM_Int_Mech.html
-rm ./jbpm/html/css
 rm ./jbpm/html/css/codehighlight.css
 rm ./jbpm/html/css/dirty.css
 rm ./jbpm/html/css/documentation.css
@@ -5002,10 +4735,8 @@ rm ./jbpm/html/jboss_jbpm_runtime_installation.html
 rm ./jbpm/html/the_views.html
 rm ./jbpm/html/Test_Drive_Proc_Development.html
 rm ./jbpm/html/Quick_Howto_Guide.html
-rm ./jbpm/html/images
 rm ./jbpm/html/images/stock-go-up.png
 rm ./jbpm/html/images/jbossorglogo_jira.png
-rm ./jbpm/html/images/The_JBoss_jBPM_Int_Mech
 rm ./jbpm/html/images/The_JBoss_jBPM_Int_Mech/jboss_jbpm_int_mech_1.png
 rm ./jbpm/html/images/The_JBoss_jBPM_Int_Mech/jboss_jbpm_int_mech_6.png
 rm ./jbpm/html/images/The_JBoss_jBPM_Int_Mech/jboss_jbpm_int_mech_9.png
@@ -5018,7 +4749,6 @@ rm ./jbpm/html/images/The_JBoss_jBPM_Int_Mech/jboss_jbpm_int_mech_3.png
 rm ./jbpm/html/images/watermark-beta2.png
 rm ./jbpm/html/images/jbossorglogo.png
 rm ./jbpm/html/images/warning.png
-rm ./jbpm/html/images/runtime_installation
 rm ./jbpm/html/images/runtime_installation/runtime_installation_1.png
 rm ./jbpm/html/images/documentation.png
 rm ./jbpm/html/images/watermark-beta1.png
@@ -5030,7 +4760,6 @@ rm ./jbpm/html/images/bkg_gradient.gif
 rm ./jbpm/html/images/watermark-alpha2.png
 rm ./jbpm/html/images/community_doc.png
 rm ./jbpm/html/images/rhlogo.png
-rm ./jbpm/html/images/the_views
 rm ./jbpm/html/images/the_views/the_views_7.png
 rm ./jbpm/html/images/the_views/the_views_1.png
 rm ./jbpm/html/images/the_views/the_views_4.png
@@ -5046,7 +4775,6 @@ rm ./jbpm/html/images/note.svg
 rm ./jbpm/html/images/watermark-alpha1.png
 rm ./jbpm/html/images/caution.png
 rm ./jbpm/html/images/stock-home.png
-rm ./jbpm/html/images/guided_tour_jboss_jbpmgpd
 rm ./jbpm/html/images/guided_tour_jboss_jbpmgpd/guided_tour_9.png
 rm ./jbpm/html/images/guided_tour_jboss_jbpmgpd/guided_tour_6.png
 rm ./jbpm/html/images/guided_tour_jboss_jbpmgpd/guided_tour_4.png
@@ -5058,7 +4786,6 @@ rm ./jbpm/html/images/guided_tour_jboss_jbpmgpd/guided_tour_1.png
 rm ./jbpm/html/images/guided_tour_jboss_jbpmgpd/guided_tour_3.png
 rm ./jbpm/html/images/filterball.svg
 rm ./jbpm/html/images/warning.svg
-rm ./jbpm/html/images/Quick_Howto_Guide
 rm ./jbpm/html/images/Quick_Howto_Guide/quick_howto_guide_7.png
 rm ./jbpm/html/images/Quick_Howto_Guide/quick_howto_guide_4.png
 rm ./jbpm/html/images/Quick_Howto_Guide/quick_howto_guide_5.png
@@ -5072,16 +4799,13 @@ rm ./jbpm/html/images/stock-go-forward.png
 rm ./jbpm/html/images/shine.png
 rm ./jbpm/html/images/red-bg.png
 rm ./jbpm/html/images/redhat-logo.svg
-rm ./jbpm/html/images/community
 rm ./jbpm/html/images/community/watermark-beta2.png
 rm ./jbpm/html/images/community/jbossorglogo.png
 rm ./jbpm/html/images/community/watermark-beta1.png
 rm ./jbpm/html/images/community/title_hdr.png
 rm ./jbpm/html/images/community/bkg_gradient.gif
 rm ./jbpm/html/images/community/watermark-alpha2.png
-rm ./jbpm/html/images/community/docbook
 rm ./jbpm/html/images/community/docbook/warning.png
-rm ./jbpm/html/images/community/docbook/callouts
 rm ./jbpm/html/images/community/docbook/callouts/15.gif
 rm ./jbpm/html/images/community/docbook/callouts/6.png
 rm ./jbpm/html/images/community/docbook/callouts/8.png
@@ -5139,7 +4863,6 @@ rm ./jbpm/html/images/note.png
 rm ./jbpm/html/images/watermark-pre-release-candidate.png
 rm ./jbpm/html/images/watermark-release-candidate.png
 rm ./jbpm/html/images/important.svg
-rm ./jbpm/html/images/Test_Drive_Proc
 rm ./jbpm/html/images/Test_Drive_Proc/test_driv_proc_8.png
 rm ./jbpm/html/images/Test_Drive_Proc/test_driv_proc_5.png
 rm ./jbpm/html/images/Test_Drive_Proc/test_driv_proc_4.png
@@ -5151,12 +4874,10 @@ rm ./jbpm/html/images/Test_Drive_Proc/test_driv_proc_7.png
 rm ./jbpm/html/images/callout.svg
 rm ./jbpm/html/images/important.png
 rm ./jbpm/html/images/dot.png
-rm ./jbpm/eclipse
 rm ./jbpm/eclipse/index.html
 rm ./jbpm/eclipse/GuidedTourJBossjBPMGPD.html
 rm ./jbpm/eclipse/ch06s03.html
 rm ./jbpm/eclipse/The_JBoss_jBPM_Int_Mech.html
-rm ./jbpm/eclipse/css
 rm ./jbpm/eclipse/css/codehighlight.css
 rm ./jbpm/eclipse/css/dirty.css
 rm ./jbpm/eclipse/css/documentation.css
@@ -5186,10 +4907,8 @@ rm ./jbpm/eclipse/the_design_view.html
 rm ./jbpm/eclipse/feature_list.html
 rm ./jbpm/eclipse/the_diagram_mode.html
 rm ./jbpm/eclipse/ch06s01.html
-rm ./jbpm/eclipse/images
 rm ./jbpm/eclipse/images/stock-go-up.png
 rm ./jbpm/eclipse/images/jbossorglogo_jira.png
-rm ./jbpm/eclipse/images/The_JBoss_jBPM_Int_Mech
 rm ./jbpm/eclipse/images/The_JBoss_jBPM_Int_Mech/jboss_jbpm_int_mech_1.png
 rm ./jbpm/eclipse/images/The_JBoss_jBPM_Int_Mech/jboss_jbpm_int_mech_6.png
 rm ./jbpm/eclipse/images/The_JBoss_jBPM_Int_Mech/jboss_jbpm_int_mech_9.png
@@ -5202,7 +4921,6 @@ rm ./jbpm/eclipse/images/The_JBoss_jBPM_Int_Mech/jboss_jbpm_int_mech_3.png
 rm ./jbpm/eclipse/images/watermark-beta2.png
 rm ./jbpm/eclipse/images/jbossorglogo.png
 rm ./jbpm/eclipse/images/warning.png
-rm ./jbpm/eclipse/images/runtime_installation
 rm ./jbpm/eclipse/images/runtime_installation/runtime_installation_1.png
 rm ./jbpm/eclipse/images/documentation.png
 rm ./jbpm/eclipse/images/watermark-beta1.png
@@ -5214,7 +4932,6 @@ rm ./jbpm/eclipse/images/bkg_gradient.gif
 rm ./jbpm/eclipse/images/watermark-alpha2.png
 rm ./jbpm/eclipse/images/community_doc.png
 rm ./jbpm/eclipse/images/rhlogo.png
-rm ./jbpm/eclipse/images/the_views
 rm ./jbpm/eclipse/images/the_views/the_views_7.png
 rm ./jbpm/eclipse/images/the_views/the_views_1.png
 rm ./jbpm/eclipse/images/the_views/the_views_4.png
@@ -5230,7 +4947,6 @@ rm ./jbpm/eclipse/images/note.svg
 rm ./jbpm/eclipse/images/watermark-alpha1.png
 rm ./jbpm/eclipse/images/caution.png
 rm ./jbpm/eclipse/images/stock-home.png
-rm ./jbpm/eclipse/images/guided_tour_jboss_jbpmgpd
 rm ./jbpm/eclipse/images/guided_tour_jboss_jbpmgpd/guided_tour_9.png
 rm ./jbpm/eclipse/images/guided_tour_jboss_jbpmgpd/guided_tour_6.png
 rm ./jbpm/eclipse/images/guided_tour_jboss_jbpmgpd/guided_tour_4.png
@@ -5242,7 +4958,6 @@ rm ./jbpm/eclipse/images/guided_tour_jboss_jbpmgpd/guided_tour_1.png
 rm ./jbpm/eclipse/images/guided_tour_jboss_jbpmgpd/guided_tour_3.png
 rm ./jbpm/eclipse/images/filterball.svg
 rm ./jbpm/eclipse/images/warning.svg
-rm ./jbpm/eclipse/images/Quick_Howto_Guide
 rm ./jbpm/eclipse/images/Quick_Howto_Guide/quick_howto_guide_7.png
 rm ./jbpm/eclipse/images/Quick_Howto_Guide/quick_howto_guide_4.png
 rm ./jbpm/eclipse/images/Quick_Howto_Guide/quick_howto_guide_5.png
@@ -5256,16 +4971,13 @@ rm ./jbpm/eclipse/images/stock-go-forward.png
 rm ./jbpm/eclipse/images/shine.png
 rm ./jbpm/eclipse/images/red-bg.png
 rm ./jbpm/eclipse/images/redhat-logo.svg
-rm ./jbpm/eclipse/images/community
 rm ./jbpm/eclipse/images/community/watermark-beta2.png
 rm ./jbpm/eclipse/images/community/jbossorglogo.png
 rm ./jbpm/eclipse/images/community/watermark-beta1.png
 rm ./jbpm/eclipse/images/community/title_hdr.png
 rm ./jbpm/eclipse/images/community/bkg_gradient.gif
 rm ./jbpm/eclipse/images/community/watermark-alpha2.png
-rm ./jbpm/eclipse/images/community/docbook
 rm ./jbpm/eclipse/images/community/docbook/warning.png
-rm ./jbpm/eclipse/images/community/docbook/callouts
 rm ./jbpm/eclipse/images/community/docbook/callouts/15.gif
 rm ./jbpm/eclipse/images/community/docbook/callouts/6.png
 rm ./jbpm/eclipse/images/community/docbook/callouts/8.png
@@ -5323,7 +5035,6 @@ rm ./jbpm/eclipse/images/note.png
 rm ./jbpm/eclipse/images/watermark-pre-release-candidate.png
 rm ./jbpm/eclipse/images/watermark-release-candidate.png
 rm ./jbpm/eclipse/images/important.svg
-rm ./jbpm/eclipse/images/Test_Drive_Proc
 rm ./jbpm/eclipse/images/Test_Drive_Proc/test_driv_proc_8.png
 rm ./jbpm/eclipse/images/Test_Drive_Proc/test_driv_proc_5.png
 rm ./jbpm/eclipse/images/Test_Drive_Proc/test_driv_proc_4.png
@@ -5335,12 +5046,8 @@ rm ./jbpm/eclipse/images/Test_Drive_Proc/test_driv_proc_7.png
 rm ./jbpm/eclipse/images/callout.svg
 rm ./jbpm/eclipse/images/important.png
 rm ./jbpm/eclipse/images/dot.png
-rm ./Exadel-migration
-rm ./Exadel-migration/pdf
 rm ./Exadel-migration/pdf/Exadel_Studio_Migration_Guide.pdf
-rm ./Exadel-migration/html_single
 rm ./Exadel-migration/html_single/index.html
-rm ./Exadel-migration/html_single/css
 rm ./Exadel-migration/html_single/css/codehighlight.css
 rm ./Exadel-migration/html_single/css/dirty.css
 rm ./Exadel-migration/html_single/css/documentation.css
@@ -5348,7 +5055,6 @@ rm ./Exadel-migration/html_single/css/reports.css
 rm ./Exadel-migration/html_single/css/docnav.css
 rm ./Exadel-migration/html_single/css/documentation.css.orig
 rm ./Exadel-migration/html_single/css/jbossorg.css
-rm ./Exadel-migration/html_single/images
 rm ./Exadel-migration/html_single/images/stock-go-up.png
 rm ./Exadel-migration/html_single/images/jbossorglogo_jira.png
 rm ./Exadel-migration/html_single/images/watermark-beta2.png
@@ -5368,7 +5074,6 @@ rm ./Exadel-migration/html_single/images/rhlogo.png
 rm ./Exadel-migration/html_single/images/jboss-logo.png
 rm ./Exadel-migration/html_single/images/note.svg
 rm ./Exadel-migration/html_single/images/jboss-logo-mark.png
-rm ./Exadel-migration/html_single/images/jsf_struts_war
 rm ./Exadel-migration/html_single/images/jsf_struts_war/migration_war_5.png
 rm ./Exadel-migration/html_single/images/jsf_struts_war/migration_war_1.png
 rm ./Exadel-migration/html_single/images/jsf_struts_war/migration_war_4.png
@@ -5384,7 +5089,6 @@ rm ./Exadel-migration/html_single/images/entdoc.tiff
 rm ./Exadel-migration/html_single/images/stock-go-forward.png
 rm ./Exadel-migration/html_single/images/shine.png
 rm ./Exadel-migration/html_single/images/red-bg.png
-rm ./Exadel-migration/html_single/images/jsf_struts
 rm ./Exadel-migration/html_single/images/jsf_struts/migration_5.png
 rm ./Exadel-migration/html_single/images/jsf_struts/migration_4.png
 rm ./Exadel-migration/html_single/images/jsf_struts/migration_1.png
@@ -5408,10 +5112,8 @@ rm ./Exadel-migration/html_single/images/important.svg
 rm ./Exadel-migration/html_single/images/callout.svg
 rm ./Exadel-migration/html_single/images/important.png
 rm ./Exadel-migration/html_single/images/dot.png
-rm ./Exadel-migration/html
 rm ./Exadel-migration/html/index.html
 rm ./Exadel-migration/html/jsf_struts.html
-rm ./Exadel-migration/html/css
 rm ./Exadel-migration/html/css/codehighlight.css
 rm ./Exadel-migration/html/css/dirty.css
 rm ./Exadel-migration/html/css/documentation.css
@@ -5422,7 +5124,6 @@ rm ./Exadel-migration/html/css/jbossorg.css
 rm ./Exadel-migration/html/workspace.html
 rm ./Exadel-migration/html/introduction.html
 rm ./Exadel-migration/html/jsf_struts_war.html
-rm ./Exadel-migration/html/images
 rm ./Exadel-migration/html/images/stock-go-up.png
 rm ./Exadel-migration/html/images/jbossorglogo_jira.png
 rm ./Exadel-migration/html/images/watermark-beta2.png
@@ -5442,7 +5143,6 @@ rm ./Exadel-migration/html/images/rhlogo.png
 rm ./Exadel-migration/html/images/jboss-logo.png
 rm ./Exadel-migration/html/images/note.svg
 rm ./Exadel-migration/html/images/jboss-logo-mark.png
-rm ./Exadel-migration/html/images/jsf_struts_war
 rm ./Exadel-migration/html/images/jsf_struts_war/migration_war_5.png
 rm ./Exadel-migration/html/images/jsf_struts_war/migration_war_1.png
 rm ./Exadel-migration/html/images/jsf_struts_war/migration_war_4.png
@@ -5458,7 +5158,6 @@ rm ./Exadel-migration/html/images/entdoc.tiff
 rm ./Exadel-migration/html/images/stock-go-forward.png
 rm ./Exadel-migration/html/images/shine.png
 rm ./Exadel-migration/html/images/red-bg.png
-rm ./Exadel-migration/html/images/jsf_struts
 rm ./Exadel-migration/html/images/jsf_struts/migration_5.png
 rm ./Exadel-migration/html/images/jsf_struts/migration_4.png
 rm ./Exadel-migration/html/images/jsf_struts/migration_1.png
@@ -5482,10 +5181,8 @@ rm ./Exadel-migration/html/images/important.svg
 rm ./Exadel-migration/html/images/callout.svg
 rm ./Exadel-migration/html/images/important.png
 rm ./Exadel-migration/html/images/dot.png
-rm ./Exadel-migration/eclipse
 rm ./Exadel-migration/eclipse/index.html
 rm ./Exadel-migration/eclipse/jsf_struts.html
-rm ./Exadel-migration/eclipse/css
 rm ./Exadel-migration/eclipse/css/codehighlight.css
 rm ./Exadel-migration/eclipse/css/dirty.css
 rm ./Exadel-migration/eclipse/css/documentation.css
@@ -5500,7 +5197,6 @@ rm ./Exadel-migration/eclipse/introduction.html
 rm ./Exadel-migration/eclipse/ch04s02.html
 rm ./Exadel-migration/eclipse/ch03s01.html
 rm ./Exadel-migration/eclipse/jsf_struts_war.html
-rm ./Exadel-migration/eclipse/images
 rm ./Exadel-migration/eclipse/images/stock-go-up.png
 rm ./Exadel-migration/eclipse/images/jbossorglogo_jira.png
 rm ./Exadel-migration/eclipse/images/watermark-beta2.png
@@ -5520,7 +5216,6 @@ rm ./Exadel-migration/eclipse/images/rhlogo.png
 rm ./Exadel-migration/eclipse/images/jboss-logo.png
 rm ./Exadel-migration/eclipse/images/note.svg
 rm ./Exadel-migration/eclipse/images/jboss-logo-mark.png
-rm ./Exadel-migration/eclipse/images/jsf_struts_war
 rm ./Exadel-migration/eclipse/images/jsf_struts_war/migration_war_5.png
 rm ./Exadel-migration/eclipse/images/jsf_struts_war/migration_war_1.png
 rm ./Exadel-migration/eclipse/images/jsf_struts_war/migration_war_4.png
@@ -5536,7 +5231,6 @@ rm ./Exadel-migration/eclipse/images/entdoc.tiff
 rm ./Exadel-migration/eclipse/images/stock-go-forward.png
 rm ./Exadel-migration/eclipse/images/shine.png
 rm ./Exadel-migration/eclipse/images/red-bg.png
-rm ./Exadel-migration/eclipse/images/jsf_struts
 rm ./Exadel-migration/eclipse/images/jsf_struts/migration_5.png
 rm ./Exadel-migration/eclipse/images/jsf_struts/migration_4.png
 rm ./Exadel-migration/eclipse/images/jsf_struts/migration_1.png
@@ -5561,18 +5255,13 @@ rm ./Exadel-migration/eclipse/images/callout.svg
 rm ./Exadel-migration/eclipse/images/important.png
 rm ./Exadel-migration/eclipse/images/dot.png
 rm ./Exadel-migration/exadel-studio-migration-guideen-US-1.0-SNAPSHOT.war
-rm ./jsf_tools_tutorial
-rm ./jsf_tools_tutorial/pdf
 rm ./jsf_tools_tutorial/pdf/JSF_Tools_Tutorial.pdf
-rm ./jsf_tools_tutorial/html_single
 rm ./jsf_tools_tutorial/html_single/index.html
-rm ./jsf_tools_tutorial/html_single/css
 rm ./jsf_tools_tutorial/html_single/css/dirty.css
 rm ./jsf_tools_tutorial/html_single/css/documentation.css
 rm ./jsf_tools_tutorial/html_single/css/reports.css
 rm ./jsf_tools_tutorial/html_single/css/docnav.css
 rm ./jsf_tools_tutorial/html_single/css/jbossorg.css
-rm ./jsf_tools_tutorial/html_single/images
 rm ./jsf_tools_tutorial/html_single/images/stock-go-up.png
 rm ./jsf_tools_tutorial/html_single/images/jbossorglogo_jira.png
 rm ./jsf_tools_tutorial/html_single/images/watermark-beta2.png
@@ -5597,7 +5286,6 @@ rm ./jsf_tools_tutorial/html_single/images/warning.svg
 rm ./jsf_tools_tutorial/html_single/images/stock-go-forward.png
 rm ./jsf_tools_tutorial/html_single/images/shine.png
 rm ./jsf_tools_tutorial/html_single/images/red-bg.png
-rm ./jsf_tools_tutorial/html_single/images/jsf_application
 rm ./jsf_tools_tutorial/html_single/images/jsf_application/jsf_application_2.png
 rm ./jsf_tools_tutorial/html_single/images/jsf_application/jsf_application_9.png
 rm ./jsf_tools_tutorial/html_single/images/jsf_application/jsf_application_5.png
@@ -5610,7 +5298,6 @@ rm ./jsf_tools_tutorial/html_single/images/jsf_application/jsf_application_4.png
 rm ./jsf_tools_tutorial/html_single/images/jsf_application/jsf_application_1.png
 rm ./jsf_tools_tutorial/html_single/images/redhat-logo.svg
 rm ./jsf_tools_tutorial/html_single/images/jboss-logo.svg
-rm ./jsf_tools_tutorial/html_single/images/business_application
 rm ./jsf_tools_tutorial/html_single/images/business_application/business_application_13.png
 rm ./jsf_tools_tutorial/html_single/images/business_application/business_application_16.png
 rm ./jsf_tools_tutorial/html_single/images/business_application/business_application_7.png
@@ -5637,9 +5324,7 @@ rm ./jsf_tools_tutorial/html_single/images/important.svg
 rm ./jsf_tools_tutorial/html_single/images/callout.svg
 rm ./jsf_tools_tutorial/html_single/images/important.png
 rm ./jsf_tools_tutorial/html_single/images/dot.png
-rm ./jsf_tools_tutorial/html
 rm ./jsf_tools_tutorial/html/index.html
-rm ./jsf_tools_tutorial/html/css
 rm ./jsf_tools_tutorial/html/css/dirty.css
 rm ./jsf_tools_tutorial/html/css/documentation.css
 rm ./jsf_tools_tutorial/html/css/reports.css
@@ -5647,7 +5332,6 @@ rm ./jsf_tools_tutorial/html/css/docnav.css
 rm ./jsf_tools_tutorial/html/css/jbossorg.css
 rm ./jsf_tools_tutorial/html/jsf_application.html
 rm ./jsf_tools_tutorial/html/introduction.html
-rm ./jsf_tools_tutorial/html/images
 rm ./jsf_tools_tutorial/html/images/stock-go-up.png
 rm ./jsf_tools_tutorial/html/images/jbossorglogo_jira.png
 rm ./jsf_tools_tutorial/html/images/watermark-beta2.png
@@ -5672,7 +5356,6 @@ rm ./jsf_tools_tutorial/html/images/warning.svg
 rm ./jsf_tools_tutorial/html/images/stock-go-forward.png
 rm ./jsf_tools_tutorial/html/images/shine.png
 rm ./jsf_tools_tutorial/html/images/red-bg.png
-rm ./jsf_tools_tutorial/html/images/jsf_application
 rm ./jsf_tools_tutorial/html/images/jsf_application/jsf_application_2.png
 rm ./jsf_tools_tutorial/html/images/jsf_application/jsf_application_9.png
 rm ./jsf_tools_tutorial/html/images/jsf_application/jsf_application_5.png
@@ -5685,7 +5368,6 @@ rm ./jsf_tools_tutorial/html/images/jsf_application/jsf_application_4.png
 rm ./jsf_tools_tutorial/html/images/jsf_application/jsf_application_1.png
 rm ./jsf_tools_tutorial/html/images/redhat-logo.svg
 rm ./jsf_tools_tutorial/html/images/jboss-logo.svg
-rm ./jsf_tools_tutorial/html/images/business_application
 rm ./jsf_tools_tutorial/html/images/business_application/business_application_13.png
 rm ./jsf_tools_tutorial/html/images/business_application/business_application_16.png
 rm ./jsf_tools_tutorial/html/images/business_application/business_application_7.png
@@ -5712,10 +5394,8 @@ rm ./jsf_tools_tutorial/html/images/important.svg
 rm ./jsf_tools_tutorial/html/images/callout.svg
 rm ./jsf_tools_tutorial/html/images/important.png
 rm ./jsf_tools_tutorial/html/images/dot.png
-rm ./jsf_tools_tutorial/eclipse
 rm ./jsf_tools_tutorial/eclipse/EditingTheJSPViewFiles.html
 rm ./jsf_tools_tutorial/eclipse/index.html
-rm ./jsf_tools_tutorial/eclipse/css
 rm ./jsf_tools_tutorial/eclipse/css/dirty.css
 rm ./jsf_tools_tutorial/eclipse/css/documentation.css
 rm ./jsf_tools_tutorial/eclipse/css/reports.css
@@ -5735,7 +5415,6 @@ rm ./jsf_tools_tutorial/eclipse/CreatingTheStartPage.html
 rm ./jsf_tools_tutorial/eclipse/AddingAManagedBeanToTheApplication.html
 rm ./jsf_tools_tutorial/eclipse/AddingTwoViewsJSPPages.html
 rm ./jsf_tools_tutorial/eclipse/SettingUpTheProject.html
-rm ./jsf_tools_tutorial/eclipse/images
 rm ./jsf_tools_tutorial/eclipse/images/stock-go-up.png
 rm ./jsf_tools_tutorial/eclipse/images/jbossorglogo_jira.png
 rm ./jsf_tools_tutorial/eclipse/images/watermark-beta2.png
@@ -5760,7 +5439,6 @@ rm ./jsf_tools_tutorial/eclipse/images/warning.svg
 rm ./jsf_tools_tutorial/eclipse/images/stock-go-forward.png
 rm ./jsf_tools_tutorial/eclipse/images/shine.png
 rm ./jsf_tools_tutorial/eclipse/images/red-bg.png
-rm ./jsf_tools_tutorial/eclipse/images/jsf_application
 rm ./jsf_tools_tutorial/eclipse/images/jsf_application/jsf_application_2.png
 rm ./jsf_tools_tutorial/eclipse/images/jsf_application/jsf_application_9.png
 rm ./jsf_tools_tutorial/eclipse/images/jsf_application/jsf_application_5.png
@@ -5773,7 +5451,6 @@ rm ./jsf_tools_tutorial/eclipse/images/jsf_application/jsf_application_4.png
 rm ./jsf_tools_tutorial/eclipse/images/jsf_application/jsf_application_1.png
 rm ./jsf_tools_tutorial/eclipse/images/redhat-logo.svg
 rm ./jsf_tools_tutorial/eclipse/images/jboss-logo.svg
-rm ./jsf_tools_tutorial/eclipse/images/business_application
 rm ./jsf_tools_tutorial/eclipse/images/business_application/business_application_13.png
 rm ./jsf_tools_tutorial/eclipse/images/business_application/business_application_16.png
 rm ./jsf_tools_tutorial/eclipse/images/business_application/business_application_7.png
