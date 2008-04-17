@@ -937,4 +937,13 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		return visualEditor;
 	}
 
+	public void maximizeSource() {
+		if (container != null)
+			container.maxDown();
+	}
+	
+	public void maximizeVisual() {
+		if (container != null)
+			container.maxUp();
+	}
 }
