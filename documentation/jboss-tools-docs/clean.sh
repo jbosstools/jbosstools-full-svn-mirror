@@ -1,4 +1,5 @@
 pwd
+rm ./struts_tools_ref_guide/eclipse/css/*
 rm ./struts_tools_ref_guide/eclipse/css/codehighlight.css
 rm ./struts_tools_ref_guide/eclipse/css/dirty.css
 rm ./struts_tools_ref_guide/eclipse/css/documentation.css
