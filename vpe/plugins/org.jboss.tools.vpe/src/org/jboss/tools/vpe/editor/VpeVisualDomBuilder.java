@@ -299,8 +299,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     
     private boolean addNode(Node sourceNode, nsIDOMNode visualNextNode,
 	    nsIDOMNode visualContainer) {
-      
+    	
 	nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer);
+	
 	// Fix for JBIDE-1097
 	try {
 	    if (visualNewNode != null) {
@@ -477,7 +478,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	     visualNewElement = (nsIDOMElement) creationData
 		    			.getNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 	    	}
-
 	    
 	    if (visualNewElement != null)
 		correctVisualAttribute(visualNewElement);
@@ -2264,14 +2264,21 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     protected nsIDOMNode createTextNode(Node sourceNode, boolean registerFlag) {
 	String sourceText = sourceNode.getNodeValue();
 
-	// Max Areshkau this code causes very slow work of visual editor
-	// when we editing in big files txt nodes.For example exmployee.xhtml
-	// from JBIDE1105
-	// if (sourceText.trim().length() <= 0) {
-	// if (registerFlag)
-	// registerNodes(new VpeNodeMapping(sourceNode, null));
-	// return null;
-	// }
+	/*
+	 * Max Areshkau this code causes very slow work of visual editor
+	 * when we editing in big files txt nodes.For example exmployee.xhtml
+	 * from JBIDE1105
+	 * 
+	 * Denis Maliarevich: 
+	 * To fix JBIDE-2003 and JBIDE-2042 
+	 * this code should be uncommented.
+	 */
+	if (sourceText.trim().length() <= 0) {
+		if (registerFlag) {
+			registerNodes(new VpeNodeMapping(sourceNode, null));
+		}
+		return null;
+	}
 
 	if (faceletFile) {
 	    Matcher matcher_EL = REGEX_EL.matcher(sourceText);
