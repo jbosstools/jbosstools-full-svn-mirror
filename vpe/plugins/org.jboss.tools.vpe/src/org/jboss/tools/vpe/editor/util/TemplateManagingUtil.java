@@ -84,7 +84,7 @@ public class TemplateManagingUtil {
 		 * you will must review next code
 		 */
 		VpeNodeMapping nodeMapping = pageContext.getDomMapping()
-				.getNearNodeMapping(getLastSelectedVisualNode(pageContext));
+				.getNearNodeMapping(getSelectedNode(getCurrentSelection(pageContext)));
 
 		if (nodeMapping != null) {
 
@@ -271,7 +271,7 @@ public class TemplateManagingUtil {
 	 * @return
 	 */
 	public static nsIDOMNode getSelectedNode(nsISelection selection) {
-
+	
 		if (selection.getIsCollapsed()) {
 			if (selection.getFocusNode() != null) {
 				if ((selection.getFocusNode().getNodeType() != nsIDOMNode.TEXT_NODE)
