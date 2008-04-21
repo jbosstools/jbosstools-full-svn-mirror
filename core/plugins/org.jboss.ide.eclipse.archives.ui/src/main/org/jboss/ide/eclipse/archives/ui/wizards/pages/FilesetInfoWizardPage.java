@@ -1,5 +1,7 @@
 package org.jboss.ide.eclipse.archives.ui.wizards.pages;
 
+import java.util.ArrayList;
+
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -56,9 +58,12 @@ public class FilesetInfoWizardPage extends WizardPage {
 
 	private Composite mainComposite;
 	private Text rootDirText;
-	private Label rootProjectLabel;
+	private Label rootProjectLabel, flattenedLabel;
 	private Button rootDirWorkspaceBrowseButton;
 	private Button rootDirFilesystemBrowseButton;
+	private Button flattenedYes;
+	private Button flattenedNo;
+	private boolean flattened;
 
 	public FilesetInfoWizardPage (Shell parent, IArchiveFileSet fileset, IArchiveNode parentNode) {
 		super(ArchivesUIMessages.FilesetInfoWizardPage_new_title, ArchivesUIMessages.FilesetInfoWizardPage_new_title, null);
@@ -122,8 +127,10 @@ public class FilesetInfoWizardPage extends WizardPage {
 	
 	private Group createPreviewGroup(Composite mainComposite, Group info) {
 		Group previewGroup = new Group(mainComposite, SWT.NONE);
-		previewGroup.setLayoutData(createFormData(info,5,info,300,0,5,100,-5));
+		previewGroup.setLayoutData(createFormData(info,5,100,-5,0,5,100,-5));
 		previewGroup.setLayout(new FormLayout());
+		Label invisibleLabel = new Label(previewGroup, SWT.NONE);
+		invisibleLabel.setLayoutData(createFormData(0,0,0,200,0,0,0,1));
 		previewComposite = new FilesetPreviewComposite(previewGroup, SWT.NONE);
 		previewComposite.setLayoutData(createFormData(0,0,100,0,0,0,100,0));
 		previewGroup.setText(ArchivesUIMessages.FilesetInfoWizardPage_previewGroup_label);
@@ -180,7 +187,13 @@ public class FilesetInfoWizardPage extends WizardPage {
 		rootDirectoryLabel.setLayoutData(createFormData(rootProjectVal,10,null,0,null,5,0,max));
 		rootDirValue.setLayoutData(createFormData(rootProjectVal,5,null,0,rootDirectoryLabel,5,100,-5));
 		
-
+		flattenedLabel = new Label(infoGroup, SWT.NONE);
+		flattenedYes = new Button(infoGroup, SWT.RADIO);
+		flattenedNo = new Button(infoGroup, SWT.RADIO);
+		flattenedLabel.setLayoutData(createFormData(rootDirValue,5,null,0,null,0,rootDirValue,-5));
+		flattenedYes.setLayoutData(createFormData(rootDirValue, 5, null,0,flattenedLabel,5,null,0));
+		flattenedNo.setLayoutData(createFormData(rootDirValue, 5, null,0,flattenedYes,5,null,0));
+		
 		// includes composite and it's internals
 		Composite includesKey = new Composite(infoGroup, SWT.NONE);
 		includesKey.setLayout(new FormLayout());
@@ -190,8 +203,8 @@ public class FilesetInfoWizardPage extends WizardPage {
 		includesImage.setLayoutData(createFormData(0,0,null,0,0,0,null,0));
 		includesTextLabel.setLayoutData(createFormData(0,0,null,0,includesImage,5,null,0));
 		
-		includesKey.setLayoutData(createFormData(rootDirValue,5,null,0,null,5,0,max));
-		includesText.setLayoutData(createFormData(rootDirValue,5,null,0,includesKey,10,100,-5));
+		includesKey.setLayoutData(createFormData(flattenedLabel,5,null,0,null,5,0,max));
+		includesText.setLayoutData(createFormData(flattenedLabel,5,null,0,includesKey,10,100,-5));
 
 		
 		// excludes composite and it's internals
@@ -204,7 +217,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 		excludesTextLabel.setLayoutData(createFormData(0,0,null,0,excludesImage,5,null,0));
 		
 		excludesKey.setLayoutData(createFormData(includesText,5,null,0,null,5,0,max));
-		excludesText.setLayoutData(createFormData(includesText,5,null,0,excludesKey,10,100,-5));
+		excludesText.setLayoutData(createFormData(includesText,5,100,-5,excludesKey,10,100,-5));
 
 		// customize widgets
 		destinationKey.setText(ArchivesUIMessages.FilesetInfoWizardPage_destination_label);
@@ -220,9 +233,12 @@ public class FilesetInfoWizardPage extends WizardPage {
 		excludesTextLabel.setText(ArchivesUIMessages.FilesetInfoWizardPage_excludes_label);
 		rootDirText.setEnabled(false);
 
+		flattenedLabel.setText("Flatten?");
+		flattenedYes.setText("Yes");
+		flattenedNo.setText("No");
+		
 		return infoGroup;
 	}
-	
 	
 	private void addListeners ()
 	{
@@ -252,7 +268,15 @@ public class FilesetInfoWizardPage extends WizardPage {
 				browseFilesystemForRootDir();
 			}
 		});
-			
+		
+		SelectionAdapter flattenAdapter = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				flattened = flattenedYes.getSelection();
+				changePreview();
+			}
+		};
+		flattenedYes.addSelectionListener(flattenAdapter);
+		flattenedNo.addSelectionListener(flattenAdapter);
 	}
 	
 	public IArchiveNode getRootNode () {
@@ -265,6 +289,10 @@ public class FilesetInfoWizardPage extends WizardPage {
 	
 	public String getExcludes () {
 		return excludes;
+	}
+	
+	public boolean getFlatten() {
+		return flattened;
 	}
 	
 	public String getAbsoluteRootDir () {
@@ -296,21 +324,36 @@ public class FilesetInfoWizardPage extends WizardPage {
 					rootDirIsWorkspaceRelative = fileset.isInWorkspace();
 					rootDirText.setText(rootDir.toString());
 				}
+
+				flattened = fileset.isFlattened();
+				flattenedYes.setSelection(flattened);
+				flattenedNo.setSelection(!flattened);
+				
 		} else {
-			IProject[] project = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-			for( int i = 0; i < project.length; i++ ) 
-				if( project[i].getLocation().equals(parentNode.getProjectPath()))
-					rootProjectLabel.setText(project[i].getName());
 			rootDirIsWorkspaceRelative = true;
 			rootDir = parentNode.getProjectPath();
 			workspaceRelativeRootDir = "";
 		}
+		IProject[] project = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+		for( int i = 0; i < project.length; i++ ) 
+			if( project[i].getLocation().equals(parentNode.getProjectPath()))
+				rootProjectLabel.setText(project[i].getName());
+
 	}
 	
 	private void changePreview() {
-		IPath root = rootDir; 
-		IPath paths[] = ArchivesModelCore.findMatchingPaths(root, includesText.getText(), excludesText.getText());
-		previewComposite.setInput(paths);
+		IPath inputFiles[] = ArchivesModelCore.findMatchingPaths(rootDir, includes, excludes);
+		IPath filesetRelative;
+		ArrayList<IPath> list = new ArrayList<IPath>();
+		for( int i = 0; i < inputFiles.length; i++ ) {
+			if( flattened )
+				filesetRelative = new Path(inputFiles[i].lastSegment());
+			else
+				filesetRelative = inputFiles[i];
+			if( !list.contains(filesetRelative))
+				list.add(filesetRelative);
+		}
+		previewComposite.setInput(list.toArray());
 	}
 	
 	
