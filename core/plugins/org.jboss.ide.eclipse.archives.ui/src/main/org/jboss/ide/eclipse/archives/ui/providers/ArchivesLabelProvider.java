@@ -6,6 +6,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveAction;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
@@ -76,6 +77,7 @@ public class ArchivesLabelProvider implements ILabelProvider {
 				case IArchiveNode.TYPE_ARCHIVE: return getPackageText((IArchive)element);
 				case IArchiveNode.TYPE_ARCHIVE_FOLDER: return getPackageFolderText((IArchiveFolder)element);
 				case IArchiveNode.TYPE_ARCHIVE_FILESET: return getPackageFileSetText((IArchiveFileSet)element);
+				case IArchiveNode.TYPE_ARCHIVE_ACTION: return getArchiveActionText((IArchiveAction)element);
 			}
 
 		}
@@ -92,6 +94,10 @@ public class ArchivesLabelProvider implements ILabelProvider {
 			text += " [" + pkg.getGlobalDestinationPath() + "]";
 		}
 		return text;
+	}
+
+	private String getArchiveActionText (IArchiveAction action) {
+		return action.toString();
 	}
 
 	private String getPackageFileSetText (IArchiveFileSet fileset) {

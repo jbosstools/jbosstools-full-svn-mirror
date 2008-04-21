@@ -45,6 +45,7 @@ public class ArchivesUIMessages extends NLS {
 	public static String ProjectPackagesView_createPackagesMessage;
 	public static String ProjectPackagesView_newFolderAction_label;
 	public static String ProjectPackagesView_newFilesetAction_label;
+	public static String ProjectPackagesView_newActionAction_label;
 	public static String ProjectPackagesView_collapseAllAction_label;
 	public static String ProjectPackagesView_deletePackageAction_label;
 	public static String ProjectPackagesView_editPackageAction_label;
@@ -53,6 +54,8 @@ public class ArchivesUIMessages extends NLS {
 	public static String ProjectPackagesView_deleteFolderAction_label;
 	public static String ProjectPackagesView_editFilesetAction_label;
 	public static String ProjectPackagesView_deleteFilesetAction_label;
+	public static String ProjectPackagesView_editActionAction_label;
+	public static String ProjectPackagesView_deleteActionAction_label;
 	public static String ProjectPackagesView_buildArchiveAction_label;
 	public static String ProjectPackagesView_buildProjectAction_label;
 
