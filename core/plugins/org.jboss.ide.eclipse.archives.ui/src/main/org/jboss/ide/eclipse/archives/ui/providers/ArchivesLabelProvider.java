@@ -106,9 +106,10 @@ public class ArchivesLabelProvider implements ILabelProvider {
 		boolean inWorkspace = fileset.isInWorkspace();
 		
 		String text = "";
-		if (fileset.getIncludesPattern() != null)
-			text += fileset.getIncludesPattern() + ": ";
-		
+		// +[includes] [excludes] : /path/to/root
+		text += "+[" + fileset.getIncludesPattern() + "] ";
+		text += "-[" + fileset.getExcludesPattern() + "] : ";
+
 		if (showFullPath) {
 			text += fileset.getGlobalSourcePath().toString();
 		} else if( inWorkspace ){
