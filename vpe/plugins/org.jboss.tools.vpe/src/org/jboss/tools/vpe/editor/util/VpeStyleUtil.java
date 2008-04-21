@@ -15,11 +15,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.ILocationProvider;
+import org.jboss.tools.common.model.XModel;
+import org.jboss.tools.common.model.project.IModelNature;
+import org.jboss.tools.common.model.util.EclipseResourceUtil;
+import org.jboss.tools.jst.web.project.WebProject;
+import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.css.ResourceReference;
+import org.jboss.tools.vpe.editor.template.expression.VpeFunctionSrc;
+import org.jboss.tools.vpe.editor.template.expression.VpeValue;
 import org.w3c.dom.Element;
 
 public class VpeStyleUtil {
@@ -42,15 +51,15 @@ public class VpeStyleUtil {
     public static final String SPACE_STRING = " "; //$NON-NLS-1$
     public static final String EMPTY_STRING = ""; //$NON-NLS-1$
     public static final String SINGLE_QUOTE_STRING = "\'"; //$NON-NLS-1$
-
+    
     public static String ATTR_URL = "url"; //$NON-NLS-1$
     public static String OPEN_BRACKET = "("; //$NON-NLS-1$
     public static String CLOSE_BRACKET = ")"; //$NON-NLS-1$
-    public static String FILE_PRTOCOL = "file://"; //$NON-NLS-1$
-    public static String FILE_STR = "file:"; //$NON-NLS-1$
-    public static String FILE_SEPARATOR = "/"; //$NON-NLS-1$
-
-    // sets parameter position in atribute style to absolute value
+    public static String FILE_PROTOCOL = "file:"; //$NON-NLS-1$
+    public static String HTTP_PROTOCOL = "http:"; //$NON-NLS-1$
+    public static String SLASH = "/"; //$NON-NLS-1$
+    	
+    // sets parameter position in attribute style to absolute value
     public static void setAbsolute(Element sourceElement) {
 	String style = sourceElement.getAttribute(ATTRIBUTE_STYLE);
 	if (style == null) {
@@ -292,7 +301,7 @@ public class VpeStyleUtil {
     public static String addFullPathIntoBackgroundValue(String value,
 	    IEditorInput input) {
 
-	if (value.indexOf(FILE_STR) != -1) {
+	if (value.indexOf(FILE_PROTOCOL) != -1) {
 		return value;
 	}
 
@@ -300,7 +309,7 @@ public class VpeStyleUtil {
 		value = getFilePath(input, value);
 	}
 
-	value = FILE_PRTOCOL + value;
+	value = FILE_PROTOCOL + SLASH + SLASH + value;
 	URL url = null;
 	try {
 	    url = new URL(value);
@@ -346,7 +355,7 @@ public class VpeStyleUtil {
 
 			String filePath = urls[i].substring(startPathIndex + 1,
 					endPathIndex);
-			if (filePath.indexOf(FILE_STR) != -1) {
+			if (filePath.indexOf(FILE_PROTOCOL) != -1) {
 				continue;
 			}
 
@@ -354,7 +363,7 @@ public class VpeStyleUtil {
 				filePath = getFilePath(input, filePath);
 			}
 
-			filePath = FILE_PRTOCOL + filePath;
+			filePath = FILE_PROTOCOL + SLASH + SLASH + filePath;
 			URL url = null;
 			try {
 				url = new URL(filePath);
@@ -467,14 +476,14 @@ public class VpeStyleUtil {
 			String filePath = urls[i].substring(startPathIndex + 1,
 					endPathIndex);
 
-			if (filePath.indexOf(FILE_STR) != -1) {
+			if (filePath.indexOf(FILE_PROTOCOL) != -1) {
 				continue;
 			}
 
 			if (!new File(filePath).isAbsolute()) {
 				filePath = getFilePath(href_val, filePath);
 			} else {
-				filePath = FILE_PRTOCOL + filePath;
+				filePath = FILE_PROTOCOL + SLASH + SLASH + filePath;
 			}
 
 			URL url = null;
@@ -495,6 +504,122 @@ public class VpeStyleUtil {
 			finalStr += urls[i];
 		}
 		return finalStr;
+	}
+    
+    /**
+	 * Adds the full path to image "src" attribute.
+	 * 
+	 * @param path image "src" attribute value
+	 * @param pageContext the pageContext
+	 * 
+	 * @return the full path to image "src" attribute
+	 */
+	public static String addFullPathToImgSrc(String path,
+			VpePageContext pageContext) {
+
+		IPath tagPath = new Path(path);
+		if (tagPath.isEmpty()) {
+			return path;
+		}
+
+		String device = (tagPath.getDevice() == null ? tagPath.segment(0)
+				: tagPath.getDevice());
+		if (device != null
+				&& (HTTP_PROTOCOL.equalsIgnoreCase(device) || FILE_PROTOCOL
+						.equalsIgnoreCase(device))) {
+			return path;
+		}
+
+		File locFile = tagPath.toFile();
+		if (locFile.exists()) {
+			return FILE_PROTOCOL + SLASH + SLASH + SLASH
+					+ locFile.getAbsolutePath();
+		}
+
+		IEditorInput input = pageContext.getEditPart().getEditorInput();
+		IPath inputPath = getInputParentPath(input);
+		IPath imgPath = null;
+		if (input instanceof ILocationProvider) {
+			imgPath = inputPath.append(path);
+		} else {
+			IPath basePath = tagPath.isAbsolute() ? getRootPath(input)
+					: inputPath;
+			if (basePath != null) {
+				imgPath = basePath.append(tagPath);
+			}
+		}
+
+		if (imgPath != null && imgPath.toFile().exists()) {
+			return FILE_PROTOCOL + SLASH + SLASH + SLASH + imgPath.toString();
+		} else {
+			IFile file = null;
+			if (input instanceof IFileEditorInput) {
+				file = ((IFileEditorInput) input).getFile();
+			}
+
+			if (null != file) {
+				ResourceReference resourceReference = null;
+				String pathCopy = path;
+				if (SLASH.equals(path.substring(0, 1))) {
+					resourceReference = pageContext
+							.getRuntimeAbsoluteFolder(file);
+					pathCopy = pathCopy.substring(1);
+				} else {
+					resourceReference = pageContext
+							.getRuntimeRelativeFolder(file);
+				}
+
+				String location = null;
+				if (resourceReference != null) {
+					location = resourceReference.getLocation();
+				}
+
+				if (null == location && null != file.getLocation()) {
+					location = file.getLocation().toFile().getParent();
+				}
+
+				if (null != location) {
+					File f = new File(location + File.separator + pathCopy);
+					if (f.exists()) {
+						return FILE_PROTOCOL + SLASH + SLASH + SLASH
+								+ f.getPath();
+					}
+				}
+			}
+		}
+		return path;
+	}
+
+	/**
+	 * Gets the root path of the web project.
+	 * 
+	 * @param input the input
+	 * 
+	 * @return the root path
+	 */
+	public static IPath getRootPath(IEditorInput input) {
+		IPath rootPath = null;
+		if (input instanceof IFileEditorInput) {
+			IProject project = ((IFileEditorInput) input).getFile()
+					.getProject();
+			if (project != null && project.isOpen()) {
+				IModelNature modelNature = EclipseResourceUtil
+						.getModelNature(project);
+				if (modelNature != null) {
+					XModel model = modelNature.getModel();
+					String rootPathStr = WebProject.getInstance(model)
+							.getWebRootLocation();
+					if (rootPathStr != null) {
+						rootPath = new Path(rootPathStr);
+					} else {
+						rootPath = project.getLocation();
+					}
+				} else {
+					rootPath = project.getLocation();
+				}
+			}
+		}
+		return rootPath;
 	}
 
 }
