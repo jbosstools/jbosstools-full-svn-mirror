@@ -904,21 +904,38 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	VpeElementMapping elementMapping = null;
 	VpeNodeMapping nodeMapping = domMapping.getNodeMapping(sourceNode);
 	if (nodeMapping instanceof VpeElementMapping) {
+	
 	    elementMapping = (VpeElementMapping) nodeMapping;
 	    if (elementMapping != null && elementMapping.getTemplate() != null) {
-		Node updateNode = elementMapping.getTemplate()
-			.getNodeForUptate(pageContext,
-				elementMapping.getSourceNode(),
-				elementMapping.getVisualNode(),
-				elementMapping.getData());
-		if (updateNode != null && updateNode != sourceNode) {
-		    updateNode(updateNode);
-		    return;
-		}
-	    }
+				Node updateNode = elementMapping.getTemplate()
+						.getNodeForUptate(pageContext,
+								elementMapping.getSourceNode(),
+								elementMapping.getVisualNode(),
+								elementMapping.getData());
+
+				/*
+				 * special processing of "style" element
+				 * 
+				 * for unification of updating nodes - or redevelop updating
+				 * mechanism (for example : transfer this function to template )
+				 * or redevelop template of "style" element
+				 */
+				if (HTML.TAG_STYLE.equalsIgnoreCase(sourceNode.getNodeName())) {
+					// refresh style node
+					VpeStyleUtil.refreshStyleElement(this, elementMapping);
+					return;
+				}
+				if (updateNode != null && updateNode != sourceNode) {
+					updateNode(updateNode);
+					return;
+				}
+			}
 	}
+	
+    
 	nsIDOMNode visualOldNode = domMapping.remove(sourceNode);
 	getSourceNodes().remove(sourceNode);
+	
 	if (sourceNode instanceof INodeNotifier) {
 	    ((INodeNotifier) sourceNode).removeAdapter(getSorceAdapter());
 	}
@@ -1006,7 +1023,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	if (sourceParent != null && sourceParent.getLocalName() != null) {
 	    String sourceParentName = sourceParent.getLocalName();
 	    if (HTML.TAG_TEXTAREA.equalsIgnoreCase(sourceParentName)
-		    || HTML.TAG_OPTION.equalsIgnoreCase(sourceParentName)) {
+		    || HTML.TAG_OPTION.equalsIgnoreCase(sourceParentName) || HTML.TAG_STYLE.equalsIgnoreCase(sourceParentName)) {
 		updateNode(sourceText.getParentNode());
 		return true;
 	    }

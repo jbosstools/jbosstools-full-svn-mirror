@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.editor.util;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -25,11 +26,15 @@ import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.jst.web.project.WebProject;
+import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
-import org.jboss.tools.vpe.editor.template.expression.VpeFunctionSrc;
-import org.jboss.tools.vpe.editor.template.expression.VpeValue;
+import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMNodeList;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 public class VpeStyleUtil {
 
@@ -620,6 +625,63 @@ public class VpeStyleUtil {
 			}
 		}
 		return rootPath;
+	}
+	
+	/**
+	 * refresh style element
+	 * @param visualDomBuilder
+	 * @param sourceElement
+	 * @param oldStyleNode
+	 * @return
+	 */
+	public static void refreshStyleElement(
+			VpeVisualDomBuilder visualDomBuilder,
+			VpeElementMapping elementMapping) {
+
+		nsIDOMNode value = null;
+
+		/*
+		 * data property( of "style's" elementMapping ) contains Map<Object,nsIDOMNode>.
+		 * There is only one "style" visual element in this map. So we get this
+		 * element from map
+		 * 
+		 * there is potential danger in this manner of keeping "style"
+		 * element ( use property "data" of Object type )
+		 */
+		 
+		Map<Object, nsIDOMNode> map = (Map<Object, nsIDOMNode>) elementMapping
+				.getData();
+
+		// get "style" element
+		if (map != null) {
+
+			if (map.size() > 0) {
+				value = map.values().iterator().next();
+			}
+		}
+
+		if (value == null)
+			return;
+
+		// get new value of style element
+		Node textNode = elementMapping.getSourceNode().getFirstChild();
+		String text = null;
+
+		if (textNode != null) {
+			text = textNode.getNodeValue();
+		}
+
+		
+		nsIDOMNodeList list = value.getChildNodes();
+
+		// remove all children of style element
+		for (int i = 0; i < list.getLength(); i++)
+			value.removeChild(list.item(i));
+
+		// add new value of style element
+		value.appendChild(visualDomBuilder.getXulRunnerEditor()
+				.getDOMDocument().createTextNode(text));
+
 	}
 
 }
