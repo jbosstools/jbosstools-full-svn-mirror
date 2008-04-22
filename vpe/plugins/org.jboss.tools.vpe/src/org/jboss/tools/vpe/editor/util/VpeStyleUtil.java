@@ -46,6 +46,7 @@ public class VpeStyleUtil {
     public static final String PARAMETER_WIDTH = "width"; //$NON-NLS-1$
     public static final String PARAMETER_HEIGHT = "height"; //$NON-NLS-1$
     public static final String PARAMETR_BACKGROND = "background"; //$NON-NLS-1$
+    public static final String PARAMETR_VERTICAL_ALIGN = "vertical-align"; //$NON-NLS-1$
 
     public static final String VALUE_ABSOLUTE = "absolute"; //$NON-NLS-1$
 
