@@ -3,9 +3,10 @@
 <vpe:templates>
 	<vpe:tag name="a" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class">
-				<vpe:attribute name="href" value="javascript:return false;"/>
-			</vpe:copy>
+			<span class="{@class}" id="{@id}"
+				style="color:blue;text-decoration:underline;{@style}"
+				title="{tagstring()}">
+			</span>
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes">
@@ -23,8 +24,9 @@
 				<vpe:format type="ItalicFormat">
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
-			</vpe:textFormatting>
-		</vpe:template>
+				</vpe:textFormatting>
+			<vpe:pseudoContent />
+			</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="abbr" case-sensitive="no">
