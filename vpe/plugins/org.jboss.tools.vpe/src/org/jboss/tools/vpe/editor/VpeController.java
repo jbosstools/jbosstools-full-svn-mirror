@@ -396,7 +396,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	    final int eventType, final Object feature, final Object oldValue,
 	    final Object newValue, final int pos) {
 
-    	if (!visualEditorVisible) {
+    	if (!isVisualEditorVisible()) {
 			synced = false;
 			return;
 		}
@@ -2635,24 +2635,31 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     }
 
     public void selectionChanged(SelectionChangedEvent event) {
-	if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
-	    if (toolbarFormatControllerManager != null)
-		toolbarFormatControllerManager.selectionChanged();
-	}
-
-	if (selectionBar != null)
-	    selectionBar.selectionChanged();
-
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-	    return;
-	}
-	if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-	    System.out
-		    .println(">>>>>>>>>>>>>> selectionChanged  " + event.getSource()); //$NON-NLS-1$
-	}
-	sourceSelectionChanged();
-	switcher.stopActiveEditor();
+		//FIX for JBIDE-2114
+    	if (!isVisualEditorVisible()) {
+			synced = false;
+			return;
+		}
+    	//TODO Max Areshkau Adjust this code, now we haven's source mode
+		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
+		    if (toolbarFormatControllerManager != null)
+			toolbarFormatControllerManager.selectionChanged();
+		}
+	
+		if (selectionBar != null)
+		    selectionBar.selectionChanged();
+	
+		if (!switcher
+			.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+		    return;
+		}
+		if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
+		    System.out
+			    .println(">>>>>>>>>>>>>> selectionChanged  " + event.getSource()); //$NON-NLS-1$
+		}
+		sourceSelectionChanged();
+		switcher.stopActiveEditor();
+		
     }
 
     // nsIClipboardDragDropHooks implementation
