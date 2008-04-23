@@ -2637,7 +2637,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     public void selectionChanged(SelectionChangedEvent event) {
 		//FIX for JBIDE-2114
     	if (!isVisualEditorVisible()) {
-			synced = false;
+    		//selection event doesn't changes a content
+//			synced = false;
 			return;
 		}
     	//TODO Max Areshkau Adjust this code, now we haven's source mode
