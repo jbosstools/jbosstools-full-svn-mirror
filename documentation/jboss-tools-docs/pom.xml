@@ -22,7 +22,7 @@
   <module>../../seam/docs/reference</module>
   <module>../../struts/docs/struts_tools_ref_guide</module>
   <module>../../struts/docs/struts_tools_tutorial</module>
-  <!--module>../../esb/docs/esb_ref_guide</module-->
+  <module>../../esb/docs/esb_ref_guide</module>
 </modules>
 
   <build>
