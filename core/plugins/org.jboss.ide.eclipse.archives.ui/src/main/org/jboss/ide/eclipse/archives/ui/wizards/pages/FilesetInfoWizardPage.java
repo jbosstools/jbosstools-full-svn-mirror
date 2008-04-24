@@ -333,6 +333,9 @@ public class FilesetInfoWizardPage extends WizardPage {
 			rootDirIsWorkspaceRelative = true;
 			rootDir = parentNode.getProjectPath();
 			workspaceRelativeRootDir = "";
+			flattened = false;
+			flattenedYes.setSelection(flattened);
+			flattenedNo.setSelection(!flattened);
 		}
 		IProject[] project = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 		for( int i = 0; i < project.length; i++ ) 
