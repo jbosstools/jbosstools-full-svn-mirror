@@ -332,7 +332,7 @@
         you so there is no need to change them. Click on <property>Finish</property>.</para>
      
       <figure>
-        <title></title>
+        <title>New Seam Action Wizard</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam19.png"/>
@@ -359,7 +359,7 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
       created a TestNG test case for you.</para>
       
       <figure>
-        <title></title>
+        <title>&quot;workshop-test&quot; Project</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam20.png" scale="85"/>
@@ -372,7 +372,7 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
         As...</property> toolbar shortcut as shown below.</para>
       
       <figure>
-        <title></title>
+        <title>TestNG Running</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam21.png"/>
@@ -383,7 +383,7 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
       <para>With any luck, the test case will pass. Look at the TestNG view.</para>
      
       <figure>
-        <title></title>
+        <title>TestNG Results</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam22.png"/>
@@ -395,7 +395,7 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
         show the appropriate url in the browser. Alternatively you can manually enter <emphasis><property>http://localhost/workshop/myAction.seam</property></emphasis> into a browser.</para>
       
       <figure>
-        <title></title>
+        <title>Seam Action in a Web Browser</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam23.png" scale="80"/>
@@ -414,7 +414,7 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
       <para>Open <emphasis><property>WebContent/myAction.xhtml</property></emphasis> in JBoss Developer Studio to use the nice facelets editor.</para>
       
       <figure>
-        <title></title>
+        <title>Open Seam Action with Editor </title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam24.png"/>
@@ -425,7 +425,7 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
       <para>Right click on the &quot;myAction!&quot; button in the visual part of editor and select <property>&lt;h:commandButton&gt; Attributes</property>.</para>
       
       <figure>
-        <title></title>
+        <title>Seam Action Editing</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam25.png"/>
@@ -437,7 +437,7 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
         page. Then, type <emphasis><property>CTRL + S</property></emphasis> to save the facelet.</para>
       
       <figure>
-        <title></title>
+        <title>Attributes Dialog</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam26.png"/>
@@ -450,7 +450,7 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
         <para>Notice that you did not have to publish the application. JBoss Developer Studio auto-published it for you.</para>
       
       <figure>
-        <title></title>
+        <title>Seam Action Is Modified</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam27.png"/>
@@ -466,12 +466,12 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
   <section id="declarative_security">
     <title>Declarative Security</title>
     
+    <para>In this section you will see how it’s easy to secure the facelets and facelet components in Seam. Let’s go ahead and secure the action button,
+      then we will secure the entire page.</para>
+    
     <section id="edit_login">
       <title>Edit Login Authentication Logic</title>
-      
-      <para>It’s easy to secure facelets and facelet components in Seam. Let’s go ahead and secure the action button,
-      then we will secure the entire page.</para>
-      
+            
       <para>There is a class called <property>Authenticator.java</property>. The login page will execute
         the <property>Authenticator.authenticate()</property> method by default, so we’ll start by adding some custom login logic.</para>
       <para>Open <property>Authenticator.java</property> in JBoss Developer Studio and replace the <property>authenticate()</property> method with this code:</para>
@@ -501,7 +501,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       
          
       <figure>
-        <title></title>
+        <title>One Button on a Page</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam28.png"/>
@@ -512,7 +512,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <para>The secured button is not visible because the user isn’t logged in as <property>&quot;admin&quot;</property>.</para>
       
       <figure>
-        <title></title>
+        <title>Secured Button is Visible</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam29.png"/>
@@ -531,7 +531,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       back to the login page.</para>
       
       <figure>
-        <title></title>
+        <title>Login Page</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam30.png"/>
@@ -553,18 +553,19 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
   <section id="browsing_workshop_db">
     <title>Browsing Workshop Database</title>
     
+    <para>In this section you get to know how to use the workshop database that was started at the beginning of the lab.</para>
+    
     <section id="database_connectivity">
       <title>Database Connectivity Setup</title>
       
-      <para>Now, it’s time to use the workshop database that was started at the beginning of the lab. The workshop
-      data can be browsed inside of JBoss Developer Studio.</para>
+      <para>The workshop data can be browsed inside of JBoss Developer Studio.</para>
 
       <para>To open the Data Source Explorer, click on <emphasis><property>Window > Open Perspective > Other > Database Development</property>.</emphasis></para>
       <para>In the Data Source Explorer, expand a <property>Databases</property> node and select a <property>Default</property> database. 
         Right click on it, select <property>Connect</property> from the context menu.</para>
       
       <figure>
-        <title></title>
+        <title>Data Source Explorer</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam31.png"/>
@@ -580,7 +581,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <para>Then in the current view, drill down to the <property>CUSTOMERS</property> table.</para>
       
       <figure>
-        <title></title>
+        <title>&quot;CUSTOMERS&quot; Table</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam32.png"/>
@@ -595,7 +596,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       
           
       <figure>
-        <title></title>
+        <title>SQL Results View</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam33.png" scale="85"/>
@@ -617,18 +618,18 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
   <section id="db_programming">
     <title>Database Programming</title>
     
+    <para>Now, it’s time to reverse engineer the workshop database into a fully functioning Seam CRUD(Create
+      Read Update Delete) application.</para>
+    
     <section id="reverse_engineer_crud">
       <title>Reverse Engineer CRUD from a Running Database</title>
-      
-      <para>Now, it’s time to reverse engineer the workshop database into a fully functioning Seam CRUD(Create
-      Read Update Delete) application.</para>
       
       <para>In JBoss Developer Studio, switch to Seam perspective and click on <emphasis><property>File > New > Seam Generate Entities</property>.</emphasis></para>
       
       <para>In the Seam Generate Entities wizard, select &quot;workshop&quot; project using the <property>Browse</property> button. There is no need to change something more, click on <property>Finish</property>.</para>
       
       <figure>
-        <title></title>
+        <title>Generate Seam Entities</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam34.png"/>
@@ -640,7 +641,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         These classes represent insert/update/delete/query logic.</para>
       
       <figure>
-        <title></title>
+        <title>org.domain.workshop.entity Classes</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam35.png" scale="85"/>
@@ -658,7 +659,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         and data table sorting in the list pages. </para>
            
       <figure>
-        <title></title>
+        <title>CustomersList.xhtml in the Editor</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam36.png"/>
@@ -678,7 +679,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <para>In the upper right corner of the workbench there is a small <property>>></property>, click on it and choose <property>Hibernate</property>.</para>
       
             <figure>
-        <title></title>
+        <title>Hibernate Perspective</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam37.png"/>
@@ -690,7 +691,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         <property>Session Factory</property> and notice that the JPA entities/attributes are listed in a nice tree view.</para>
       
       <figure>
-        <title></title>
+        <title>Hibernate Configurations View</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam38.png"/>
@@ -704,7 +705,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <para>Write your query and click on the &quot;Hibernate Dynamic SQL Preview&quot; tab. You should see the SQL that will be executed if this JPA query is run.</para>
       
       <figure>
-        <title></title>
+        <title>JPA Query Editor</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam39.png"/>
@@ -714,12 +715,12 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       
       <para>Run the query by clicking on the green run icon.</para>
       
-      <para>The results are listed in the &quot;Hiberanate Query Result&quot; tab. There is a &quot;Properties&quot; tab in the workbench
+      <para>The results are listed in the &quot;Hibernate Query Result&quot; tab. There is a &quot;Properties&quot; tab in the workbench
         that can be used to see a specific JPA result. These results represent the JPA objects because our
         query did not specify column names.</para>
       
       <figure>
-        <title></title>
+        <title>Hibernate Query Result View</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam40.png" scale="80"/>
@@ -730,7 +731,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <para>The query can be refined, and take note that there is nice code completion in the JPA query editor.</para>
       
       <figure>
-        <title></title>
+        <title>Code Completion</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam41.png"/>
@@ -741,7 +742,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <para>A refined query will return results that are more ResultSet oriented. Notice the join logic that JPA supports.</para>
       
       <figure>
-        <title></title>
+        <title>The Results</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam42.png"/>
@@ -757,16 +758,14 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         provided in this lab.</para>
       
       <figure>
-        <title></title>
+        <title>Criteria Editor</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam43.png"/>
           </imageobject>
         </mediaobject>
       </figure>
-      
-     
-           
+                
     </section>
     
     <section id="use_hibernate_to_vizualize">
@@ -778,7 +777,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         Select the <property>Customers</property> entity,  right click on it, choose <property>Open Mapping Diagram</property>.</para>
              
       <figure>
-        <title></title>
+        <title>Mapping Diagram Opening</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam44.png"/>
@@ -793,7 +792,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
            
            
       <figure>
-        <title></title>
+        <title>Diagram Tab</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam45.png" scale="80"/>
@@ -808,18 +807,18 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
   <section id="rich_components">
     <title>Rich Components</title>
     
+    <para>This lab will conclude with one last AJAX twist. In this section we add a RichFaces <property>inputNumberSlider</property> to the Order
+      Details edit screen.</para>
+    
     <section id="add_richfaces">
       <title>Add a Richfaces component to the CRUD Application</title>
-      
-      <para>This lab will conclude with one last AJAX twist. We will add a RichFaces <property>inputNumberSlider</property> to the Order
-      Details edit screen.</para>
-      
+         
       <para>Switch to Seam perspective, open <emphasis><property>WebContent/OrderdetailsEdit.xhtml</property></emphasis> in JBoss Developer Studio.</para>
       <para>Change the form field values using the visual editor. Seam has generated the form field names that match the
         database column names. This is not ideal for business users.</para>
       
       <figure>
-        <title></title>
+        <title>Form Fields Editing</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam46.png"/>
@@ -831,7 +830,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         Studio palette or right click on the form and insert the RichFaces component.</para>
       
       <figure>
-        <title></title>
+        <title>RichFaces Component Inserting</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam47.png" scale="85"/>
@@ -842,10 +841,10 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <para>One the last option is to use the source view and manually copy the inputNumberSlider markup listed below:</para>
          
       <programlisting><![CDATA[<rich:inputNumberSlider id="quantityOrdered" required="true"
-                                                                                                value="#{orderdetailsHome.instance.quantityordered}"/>]]></programlisting>
+                                                               value="#{orderdetailsHome.instance.quantityordered}"/>]]></programlisting>
       
       <figure>
-        <title></title>
+        <title>Adding the Source</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam48.png"/>
@@ -856,7 +855,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <para>The end result is an edit page that has better form labels and a new RichFaces control.</para>
       
       <figure>
-        <title></title>
+        <title>The Result Page</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam49.png" scale="85"/>
