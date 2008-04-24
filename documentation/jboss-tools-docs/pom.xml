@@ -10,22 +10,6 @@
 	<packaging>pom</packaging>
 	<name>All_Userguides</name>
 
-	<!--pluginRepositories>
-		<pluginRepository>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</snapshots>
-			<id>snapshots.jboss.org</id>
-			<name>Jboss Repository for Maven</name>
-			<url>http://snapshots.jboss.org/maven2/</url>
-			<layout>default</layout>
-		</pluginRepository>
-	</pluginRepositories-->
-	
 	<modules>
 		<module>../guides/Exadel-migration</module>
 		<module>../guides/GettingStartedGuide</module>
@@ -45,7 +29,6 @@
 		<plugins>
 
 			<plugin>
-			    <groupId></groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<descriptors>
@@ -81,5 +64,19 @@
 		<translation>en-US</translation>
 	</properties>
 
-
+	<!-- pluginRepositories>
+		<pluginRepository>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
+			<id>snapshots.jboss.org</id>
+			<name>Jboss Repository for Maven</name>
+			<url>http://snapshots.jboss.org/maven2/</url>
+			<layout>default</layout>
+		</pluginRepository>
+	</pluginRepositories-->
 </project>
