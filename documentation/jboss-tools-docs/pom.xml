@@ -40,23 +40,7 @@
 					<ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
 				</configuration>
 			</plugin>
-			<!--plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-				<execution>
-				<phase>package</phase>
-				<configuration>
-				<tasks>
-				<echo message="################### Deleting archive-tmp #####################"/>
-				<delete includeEmptyDirs="true" dir="target/archive-tmp"/>
-				</tasks>
-				</configuration>
-				<goals>
-				<goal>run</goal>
-				</goals>
-				</execution>
-				</executions>
-				</plugin-->
+
 		</plugins>
 	</build>
 
@@ -64,19 +48,4 @@
 		<translation>en-US</translation>
 	</properties>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</snapshots>
-			<id>repository.jboss.org</id>
-			<name>Jboss Repository for Maven</name>
-			<url>http://repository.jboss.org/maven2</url>
-			<layout>default</layout>
-		</pluginRepository>
-	</pluginRepositories>
 </project>
