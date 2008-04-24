@@ -63,4 +63,20 @@
 	<properties>
 		<translation>en-US</translation>
 	</properties>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
+			<id>snapshots.jboss.org</id>
+			<name>Jboss Repository for Maven</name>
+			<url>http://snapshots.jboss.org/maven2/</url>
+			<layout>default</layout>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
