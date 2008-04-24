@@ -57,41 +57,10 @@
 				</execution>
 				</executions>
 				</plugin-->
-
-
 		</plugins>
 	</build>
-
 
 	<properties>
 		<translation>en-US</translation>
 	</properties>
-	<repositories>
-	<repository>
-		<id>repository.jboss.com</id>
-			<name>Jboss Repository for Maven</name>
-			<url>http://repository.jboss.com/maven2/</url>
-			<layout>default</layout>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-	</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>repository.jboss.com</id>
-			<name>Jboss Repository for Maven</name>
-			<url>http://repository.jboss.com/maven2/</url>
-			<layout>default</layout>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 </project>
