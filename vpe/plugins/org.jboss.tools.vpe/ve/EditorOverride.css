@@ -48,14 +48,14 @@ a[name]:empty {
 
 a:visited, a:active {
   cursor: text;
-  color : inherit;
+ // color : inherit;
 }
 
 a:link img, a:visited img {
   -moz-user-input: none;
 }
 
-a:link {
+a/*:link*/ {
   text-decoration: underline -moz-anchor-decoration;
   color: -moz-hyperlinktext;
 }
