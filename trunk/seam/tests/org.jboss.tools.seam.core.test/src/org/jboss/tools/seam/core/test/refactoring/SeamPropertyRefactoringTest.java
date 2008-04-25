@@ -28,16 +28,15 @@ import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.internal.corext.refactoring.rename.JavaRenameRefactoring;
-import org.eclipse.jdt.internal.corext.refactoring.rename.RenameResourceProcessor;
+import org.eclipse.ltk.internal.core.refactoring.resource.RenameResourceProcessor;
 import org.eclipse.jdt.internal.corext.refactoring.reorg.IConfirmQuery;
 import org.eclipse.jdt.internal.corext.refactoring.reorg.ICreateTargetQueries;
 import org.eclipse.jdt.internal.corext.refactoring.reorg.ICreateTargetQuery;
 import org.eclipse.jdt.internal.corext.refactoring.reorg.IReorgQueries;
 import org.eclipse.jdt.internal.corext.refactoring.reorg.JavaMoveProcessor;
+import org.eclipse.jdt.internal.corext.refactoring.reorg.ReorgDestinationFactory;
 import org.eclipse.jdt.internal.corext.refactoring.reorg.ReorgPolicyFactory;
 import org.eclipse.jdt.internal.corext.refactoring.reorg.IReorgPolicy.IMovePolicy;
-import org.eclipse.jdt.internal.corext.refactoring.structure.JavaMoveRefactoring;
 import org.eclipse.jdt.internal.corext.refactoring.tagging.INameUpdating;
 import org.eclipse.jdt.internal.corext.refactoring.tagging.IReferenceUpdating;
 import org.eclipse.jdt.internal.corext.refactoring.tagging.ITextUpdating;
@@ -390,7 +389,8 @@ public class SeamPropertyRefactoringTest extends TestCase {
 		try {
 			policy = ReorgPolicyFactory.createMovePolicy(new IResource[]{resource}, new IJavaElement[0]);
 			processor = new JavaMoveProcessor(policy);
-			processor.setDestination(destination);
+			
+			processor.setDestination(ReorgDestinationFactory.createDestination(destination));
 		} catch (JavaModelException e) {
 			JUnitUtils.fail("Exception during perform folder moving: " + folderPath, e);
 		}
