@@ -47,6 +47,7 @@ import org.eclipse.jdt.internal.ui.refactoring.reorg.RenameSelectionState;
 import org.eclipse.jdt.ui.refactoring.RenameSupport;
 import org.eclipse.ltk.core.refactoring.RefactoringCore;
 import org.eclipse.ltk.core.refactoring.participants.MoveRefactoring;
+import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
@@ -274,7 +275,7 @@ public class SeamPropertyRefactoringTest extends TestCase {
 
 		// init refactoring
 		RenameResourceProcessor processor = new RenameResourceProcessor(resource);
-		JavaRenameRefactoring refactoring = new JavaRenameRefactoring(processor);
+		RenameRefactoring refactoring = new RenameRefactoring(processor);
 		((INameUpdating)refactoring.getAdapter(INameUpdating.class)).setNewElementName(newFolderName);
 		IReferenceUpdating reference = (IReferenceUpdating)refactoring.getAdapter(IReferenceUpdating.class);
 		if(reference != null) {
