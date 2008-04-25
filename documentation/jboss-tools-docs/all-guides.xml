@@ -61,6 +61,18 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
 			<fileSet>
+				<directory>../guides/GettingStartedGuide/en</directory>
+				<outputDirectory>/GettingStartedGuide</outputDirectory>
+				<filtered>false</filtered>
+				<includes>
+					<include>database.zip</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			<fileSet>
 				<directory>../guides/Legacy-jsf-struts/target/docbook/</directory>
 				<outputDirectory>/Legacy-jsf-struts</outputDirectory>
 				<filtered>false</filtered>

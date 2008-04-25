@@ -21,8 +21,7 @@
   <section id="start_dev_db">
     <title>Start Development Database</title>
     
-    <para>Before opening JBoss Developer studio, let’s start the workshop database. Open up a terminal window
-    and start up the HSQLDB database.</para>
+    <para>Before opening the JBoss Developer studio you need to <ulink url="../../../database.zip">download</ulink> and start a Workshop Database.</para>
     <para>To start the database just run <property>./runDBServer.sh</property> or <property>runDBServer.bat</property> from the database directory.</para>
     <para>The end result should be a console window that looks like:</para>
     
