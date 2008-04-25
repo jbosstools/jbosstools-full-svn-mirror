@@ -46,6 +46,7 @@ import org.eclipse.jdt.internal.ui.refactoring.RefactoringSaveHelper;
 import org.eclipse.jdt.internal.ui.refactoring.reorg.RenameSelectionState;
 import org.eclipse.jdt.ui.refactoring.RenameSupport;
 import org.eclipse.ltk.core.refactoring.RefactoringCore;
+import org.eclipse.ltk.core.refactoring.participants.MoveRefactoring;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
@@ -392,7 +393,7 @@ public class SeamPropertyRefactoringTest extends TestCase {
 		} catch (JavaModelException e) {
 			JUnitUtils.fail("Exception during perform folder moving: " + folderPath, e);
 		}
-		JavaMoveRefactoring refactoring = new JavaMoveRefactoring(processor);
+		MoveRefactoring refactoring = new MoveRefactoring(processor);
 		processor.setCreateTargetQueries(new ICreateTargetQueries(){
 			public ICreateTargetQuery createNewPackageQuery() {
 				return null;
