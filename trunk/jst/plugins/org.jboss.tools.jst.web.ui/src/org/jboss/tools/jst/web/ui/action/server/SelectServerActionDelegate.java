@@ -129,7 +129,7 @@ public class SelectServerActionDelegate extends AbstractServerActionDelegate imp
 	
 	private void newServer() {
 		NewServerWizard wizard = new NewServerWizard();
-		ClosableWizardDialog dialog = new ClosableWizardDialog(window.getShell(), wizard);
+		WizardDialog dialog = new WizardDialog(window.getShell(), wizard);
 		if (dialog.open() != Window.CANCEL) {
 			IServer server = (IServer)wizard.getRootFragment().getTaskModel().getObject(TaskModel.TASK_SERVER);
 			if(server != null) {
