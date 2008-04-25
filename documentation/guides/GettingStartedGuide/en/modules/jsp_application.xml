@@ -107,7 +107,7 @@
 			<title>Create JSP Page</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/jsp_application/jsp_application_3.png" scale="75"/>
+					<imagedata fileref="images/jsp_application/jsp_application_3.png"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
@@ -159,7 +159,7 @@
 				<title>Web.xml in Design and Source Mode</title>
 				<mediaobject>
 					<imageobject>
-						<imagedata fileref="images/jsp_application/jsp_application_6.png" scale="80"/>
+						<imagedata fileref="images/jsp_application/jsp_application_6.png" scale="90"/>
 					</imageobject>
 				</mediaobject>
 			</figure>
@@ -214,7 +214,7 @@
 					<title>Project Archives</title>
 					<mediaobject>
 						<imageobject>
-							<imagedata fileref="images/jsp_application/jsp_application_8.png" scale="80"/>
+							<imagedata fileref="images/jsp_application/jsp_application_8.png"/>
 						</imageobject>
 					</mediaobject>
 				</figure>

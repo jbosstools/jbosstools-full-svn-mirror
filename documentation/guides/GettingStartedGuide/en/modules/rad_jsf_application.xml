@@ -641,8 +641,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
                 <title>Code Assist</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_13.png"
-                            scale="75"/>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_13.png"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -945,7 +944,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
                 <mediaobject>
                     <imageobject>
                         <imagedata fileref="images/rad_jsf_application/rad_jsf_application_18.png"
-                            scale="75"/>
+                            scale="80"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -1042,8 +1041,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             <title>You are Asked to Enter a Number Between 0 and 100</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_20.png"
-                        scale="75"/>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_20.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -1053,7 +1051,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/rad_jsf_application/rad_jsf_application_21.png"
-                        scale="75"/>
+                        scale="90"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -1064,7 +1062,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/rad_jsf_application/rad_jsf_application_22.png"
-                        scale="75"/>
+                        scale="90"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -1074,7 +1072,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/rad_jsf_application/rad_jsf_application_23.png"
-                        scale="75"/>
+                        scale="90"/>
                 </imageobject>
             </mediaobject>
         </figure>

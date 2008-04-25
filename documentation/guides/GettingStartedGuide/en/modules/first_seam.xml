@@ -397,7 +397,7 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
         <title>Seam Action in a Web Browser</title>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="images/first_seam/first_seam23.png" scale="80"/>
+            <imagedata fileref="images/first_seam/first_seam23.png" scale="90"/>
           </imageobject>
         </mediaobject>
       </figure>
@@ -598,7 +598,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         <title>SQL Results View</title>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="images/first_seam/first_seam33.png" scale="85"/>
+            <imagedata fileref="images/first_seam/first_seam33.png" scale="92"/>
           </imageobject>
         </mediaobject>
       </figure>
@@ -643,7 +643,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         <title>org.domain.workshop.entity Classes</title>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="images/first_seam/first_seam35.png" scale="85"/>
+            <imagedata fileref="images/first_seam/first_seam35.png" scale="90"/>
           </imageobject>
         </mediaobject>
       </figure>
