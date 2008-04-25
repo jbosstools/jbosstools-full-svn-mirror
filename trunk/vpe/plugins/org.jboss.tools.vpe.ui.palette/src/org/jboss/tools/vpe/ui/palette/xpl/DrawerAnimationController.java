@@ -19,7 +19,7 @@ import org.eclipse.draw2d.IFigure;
 
 import org.eclipse.gef.internal.ui.palette.editparts.DrawerEditPart;
 import org.eclipse.gef.internal.ui.palette.editparts.DrawerFigure;
-import org.eclipse.gef.internal.ui.palette.editparts.PaletteEditPart;
+import org.eclipse.gef.ui.palette.editparts.PaletteEditPart;
 import org.eclipse.gef.ui.palette.PaletteViewerPreferences;
 
 /**
