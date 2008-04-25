@@ -79,12 +79,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			
 			//FIX FOR JBIDE-1568, added by Max Areshkau
 			try {
-			if ( template.isHaveVisualPreview() ) {
 				creationData = template.create(getPageContext(), sourceNode, getVisualDocument());
-			} else {
-				nsIDOMElement tempHTMLElement = getVisualDocument().createElement(HTML.TAG_DIV);
-				creationData = new VpeCreationData(tempHTMLElement);				
-			}
 			}catch (XPCOMException ex) {
 				VpePlugin.getPluginLog().logError(ex);
 				VpeTemplate defTemplate = templateManager.getDefTemplate();

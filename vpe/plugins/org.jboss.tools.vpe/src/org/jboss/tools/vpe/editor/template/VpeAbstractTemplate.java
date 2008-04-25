@@ -48,7 +48,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	protected boolean children;
 	protected boolean modify; 
 	
-	protected boolean haveVisualPreview;
+	protected boolean hasImaginaryBorder;
 	
 	/** a resizer instance */
 	private VpeResizer resizer;
@@ -160,16 +160,17 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		this.caseSensitive = caseSensitive;
 		children = "yes".equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_CHILDREN)); //$NON-NLS-1$
 		modify = "yes".equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_MODIFY)); //$NON-NLS-1$
-		
-		String strHaveVisualPreview = templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_HAVE_VISUAL_PREVIEW);
-		
-		if (strHaveVisualPreview != null && strHaveVisualPreview.length() != 0 ) {
-			haveVisualPreview = "yes".equals(strHaveVisualPreview); //$NON-NLS-1$			
+
+		String strHasImaginaryBorder = templateElement
+				.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_HAS_IMAGINARY_BORDER);
+
+		if (strHasImaginaryBorder != null
+				&& strHasImaginaryBorder.length() != 0) {
+			hasImaginaryBorder = "yes".equalsIgnoreCase(strHasImaginaryBorder); //$NON-NLS-1$			
 		} else {
-			haveVisualPreview = true;
+			hasImaginaryBorder = false;
 		}
-		
-		
+
 		init(templateElement);
 	}
 	
@@ -928,8 +929,8 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		return true;
 	}
 	
-	public boolean isHaveVisualPreview() {
-		return haveVisualPreview;
+	public boolean hasImaginaryBorder() {
+		return hasImaginaryBorder;
 	}
 
 	/**

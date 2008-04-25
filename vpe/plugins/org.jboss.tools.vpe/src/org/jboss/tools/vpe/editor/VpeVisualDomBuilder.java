@@ -110,6 +110,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     private static final int DRAG_AREA_WIDTH = 10;
     private static final int DRAG_AREA_HEIGHT = 10;
     private static final String ATTR_DRAG_AVAILABLE_CLASS = "__drag__available_style"; //$NON-NLS-1$
+	private static String DOTTED_BORDER = "border: 1px dotted #FF6600; padding: 5px;"; //$NON-NLS-1$
 
     private MozillaEditor visualEditor;
     private XulRunnerEditor xulRunnerEditor;
@@ -478,9 +479,19 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	     visualNewElement = (nsIDOMElement) creationData
 		    			.getNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 	    	}
+	    	
+ 		if ((visualNewElement != null) && template.hasImaginaryBorder()) {
+
+				visualNewElement.setAttribute(HTML.ATTR_STYLE, visualNewElement
+						.getAttribute(HTML.ATTR_STYLE)
+						+ VpeStyleUtil.SEMICOLON_STRING + DOTTED_BORDER);
+
+			}
 	    
 	    if (visualNewElement != null)
 		correctVisualAttribute(visualNewElement);
+	    
+
 
 	    nsIDOMElement border = null;
 	    setTooltip((Element) sourceNode, visualNewElement);

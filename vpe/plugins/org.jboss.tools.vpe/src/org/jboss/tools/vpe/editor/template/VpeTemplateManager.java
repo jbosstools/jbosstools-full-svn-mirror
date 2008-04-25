@@ -133,8 +133,7 @@ public class VpeTemplateManager {
 	static final String ATTR_TEMPLATE_CHILDREN = "children"; //$NON-NLS-1$
 	static final String ATTR_TEMPLATE_MODIFY = "modify"; //$NON-NLS-1$
 	
-	/** ATTR_TEMPLATE_HAVE_VISUAL_PREVIEW */
-	static final String ATTR_TEMPLATE_HAVE_VISUAL_PREVIEW = "haveVisualPreview"; //$NON-NLS-1$
+	static final String ATTR_TEMPLATE_HAS_IMAGINARY_BORDER = "hasImaginaryBorder"; //$NON-NLS-1$
 
 	static final String ATTR_COPY_ATTRS = "attrs"; //$NON-NLS-1$
 

@@ -307,32 +307,10 @@ public interface VpeTemplate {
 	boolean isCaseSensitive();
 
 	/**
-	 * Return <code>true</code> if the element has visual representation on tab
-	 * 'Preview', otherwise <code>false</code>.<br/> 
-	 * This value is initialized by attribute <b>haveVisualPreview</b> of tag
-	 * <b>&lt;vpe:template&gt</b>. If the attribute is not presented default
-	 * value is <code>true</code>.<br/>
-	 * <br/>
-	 * Example:<br/>
-	 * JSF tag <code>&lt;h:form&gt;</code>:<br/>
-	 * <code>
-	 * &lt;vpe:tag name="h:form" case-sensitive="yes"&gt;<br/>
-	 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;vpe:template children="yes" modify="yes" haveVisualPreview="no"&gt;<br/>
-	 * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div style="border:1px dotted #FF6600;padding: 5px;" title="{tagstring()}"/&gt;<br/>
-	 * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;vpe:dnd&gt;<br/>
-	 * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;vpe:drag start-enable="yes"/&gt;<br/>
-	 * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;vpe:drop container="yes"/&gt;<br/>
-	 * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/vpe:dnd&gt;<br/>
-	 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;/vpe:template&gt;<br/>
-	 * &lt;/vpe:tag&gt;<br/>
-	 * </code><br/>
-	 * In visual editor part (see tab 'Visual') the tag have a red border for
-	 * visualization reason, but it is not visual element and it shouldn't have
-	 * visual representation on tab 'Preview'.<br/>
-	 * <br/>
-	 * @return <code>true</code> if the element is have visual preview
+	 * 
+	 * @return
 	 */
-	boolean isHaveVisualPreview();
+	boolean hasImaginaryBorder();
 
 	/**
 	 * Returns the data for formatting an element of source tree
