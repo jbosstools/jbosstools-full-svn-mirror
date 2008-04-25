@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar version="2.1"
+	xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+	http://java.sun.com/xml/ns/j2ee/ejb-jar_2_1.xsd">
+	<enterprise-beans>
+		<session>
+			<ejb-name>Session</ejb-name>
+			<ejb-class></ejb-class>
+			<session-type>Stateless</session-type>
+			<transaction-type>Container</transaction-type>
+		</session>
+		<entity>
+			<ejb-name>Entity</ejb-name>
+			<ejb-class></ejb-class>
+			<persistence-type>Container</persistence-type>
+			<prim-key-class></prim-key-class>
+			<reentrant>false</reentrant>
+		</entity>
+		<message-driven>
+			<ejb-name>MDB</ejb-name>
+			<ejb-class></ejb-class>
+			<transaction-type>Container</transaction-type>
+		</message-driven>
+	</enterprise-beans>
+</ejb-jar>

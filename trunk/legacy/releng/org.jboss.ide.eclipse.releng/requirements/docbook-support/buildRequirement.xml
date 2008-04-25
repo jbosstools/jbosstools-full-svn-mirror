@@ -1,0 +1,12 @@
+<project default="build.requirement">
+
+	<target name="build.requirement">
+		<cvs cvsroot=":pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss"
+			package="docbook-support" dest="." tag="HEAD"/>
+			
+		<echo file="return.properties">
+docbook-support-dir=${requirement.root}/docbook-support/docbook-support
+		</echo>
+	</target>
+	
+</project>
