@@ -25,7 +25,6 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.wst.server.core.IServer;
 import org.eclipse.wst.server.core.TaskModel;
-import org.eclipse.wst.server.ui.internal.wizard.ClosableWizardDialog;
 import org.eclipse.wst.server.ui.internal.wizard.NewServerWizard;
 import org.jboss.tools.common.model.ui.ModelUIImages;
 import org.jboss.tools.jst.web.server.*;
