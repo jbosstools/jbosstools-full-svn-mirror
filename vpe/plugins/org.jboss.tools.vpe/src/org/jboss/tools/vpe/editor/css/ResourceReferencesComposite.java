@@ -16,6 +16,10 @@ import java.util.Properties;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
+import org.jboss.tools.common.meta.XAttribute;
+import org.jboss.tools.common.meta.XModelEntity;
+import org.jboss.tools.common.meta.constraint.impl.XAttributeConstraintFileFilter;
+import org.jboss.tools.common.meta.impl.XModelMetaDataImpl;
 import org.jboss.tools.common.model.ui.action.CommandBar;
 import org.jboss.tools.common.model.ui.action.CommandBarListener;
 import org.jboss.tools.common.model.ui.objecteditor.XTable;
@@ -113,6 +117,7 @@ public abstract class ResourceReferencesComposite {
 
 	protected void add(int index) {
 		ResourceReference css = new ResourceReference("", ResourceReference.FOLDER_SCOPE);
+		initFilterInFileChooser();
 		boolean ok = VpeAddReferenceSupport.add(file, css, getReferenceArray(), getEntity());
 		if(!ok) return;
 		dataList.add(css);
@@ -123,6 +128,7 @@ public abstract class ResourceReferencesComposite {
 	protected void edit(int index) {
 		if(index < 0) return;
 		ResourceReference css = getReferenceArray()[index];
+		initFilterInFileChooser();
 		boolean ok = VpeAddReferenceSupport.edit(file, css, getReferenceArray(), getEntity());
 		if(!ok) return;
 		update();
@@ -146,6 +152,20 @@ public abstract class ResourceReferencesComposite {
 
 	private boolean canModify() {
 		return table.getSelectionIndex() >= 0;
+	}
+	
+	private void initFilterInFileChooser() {
+		String entityName = getEntity();
+		XModelEntity entity = XModelMetaDataImpl.getInstance().getEntity(entityName);
+		if(entity != null && file != null && file.getProject() != null) {
+			XAttribute[] as = entity.getAttributes();
+			for (int i = 0; i < as.length; i++) {
+				 if(as[i].getConstraint() instanceof XAttributeConstraintFileFilter) {
+					 XAttributeConstraintFileFilter f = (XAttributeConstraintFileFilter)as[i].getConstraint();
+					 f.getProperties().setProperty("filterFolder", file.getProject().getLocation().toFile().getAbsolutePath());
+				 }
+			}
+		}
 	}
 
 
