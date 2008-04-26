@@ -30,8 +30,8 @@ import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.internal.ui.util.CoreUtility;
-import org.eclipse.jdt.internal.ui.wizards.JavaProjectWizardSecondPage;
 import org.eclipse.jdt.launching.JavaRuntime;
+import org.eclipse.jdt.ui.wizards.NewJavaProjectWizardPageTwo;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -160,7 +160,7 @@ public class NewCacheProjectWizard extends Wizard implements INewWizard
                IProject project = page.getProjectHandle();
                 
 
-               JavaProjectWizardSecondPage.createProject(project, page.getLocationPath(), monitor);
+               NewJavaProjectWizardPageTwo.createProject(project, page.getLocationPath(), monitor);
                monitor.worked(1);
 
                IJavaProject javaProject = JavaCore.create(project);
