@@ -67,8 +67,8 @@ public abstract class ProjectWizard extends BaseWizard implements IExecutableExt
    {
       super.addPages();
       this.fMainPage = new WizardNewProjectCreationPage("NewProjectCreationWizard");//$NON-NLS-1$
-      this.fMainPage.setTitle(NewWizardMessages.JavaProjectWizardFirstPage_page_title);//$NON-NLS-1$
-      this.fMainPage.setDescription(NewWizardMessages.JavaProjectWizardFirstPage_page_description);//$NON-NLS-1$
+      this.fMainPage.setTitle(NewWizardMessages.NewJavaProjectWizardPageOne_page_title);//$NON-NLS-1$
+      this.fMainPage.setDescription(NewWizardMessages.NewJavaProjectWizardPageOne_page_description);//$NON-NLS-1$
       this.addPage(fMainPage);
 
       this.fJavaPage = this.createProjectWizardPage(fMainPage);

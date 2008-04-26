@@ -92,7 +92,7 @@ public abstract class ProjectWizardPage extends JavaCapabilityConfigurationPage
    {
       try
       {
-         monitor.beginTask(NewWizardMessages.JavaProjectWizardSecondPage_operation_create, 3);//$NON-NLS-1$
+         monitor.beginTask(NewWizardMessages.NewJavaProjectWizardPageTwo_operation_create, 3);//$NON-NLS-1$
          if (fCurrProject == null)
          {
             this.updateProject(true, new SubProgressMonitor(monitor, 1));
@@ -201,7 +201,7 @@ public abstract class ProjectWizardPage extends JavaCapabilityConfigurationPage
             {
                monitor = new NullProgressMonitor();
             }
-            monitor.beginTask(NewWizardMessages.JavaProjectWizardSecondPage_operation_remove, 3);//$NON-NLS-1$
+            monitor.beginTask(NewWizardMessages.NewJavaProjectWizardPageTwo_operation_remove, 3);//$NON-NLS-1$
 
             try
             {
@@ -226,8 +226,8 @@ public abstract class ProjectWizardPage extends JavaCapabilityConfigurationPage
       }
       catch (InvocationTargetException e)
       {
-         String title = NewWizardMessages.JavaProjectWizardSecondPage_error_remove_title;//$NON-NLS-1$
-         String message = NewWizardMessages.JavaProjectWizardSecondPage_error_remove_message;//$NON-NLS-1$
+         String title = NewWizardMessages.NewJavaProjectWizardPageTwo_error_remove_title;//$NON-NLS-1$
+         String message = NewWizardMessages.NewJavaProjectWizardPageTwo_error_remove_message;//$NON-NLS-1$
          ExceptionHandler.handle(e, getShell(), title, message);
       }
       catch (InterruptedException e)
@@ -257,7 +257,7 @@ public abstract class ProjectWizardPage extends JavaCapabilityConfigurationPage
       }
       try
       {
-         monitor.beginTask(NewWizardMessages.JavaProjectWizardSecondPage_operation_initialize, 2);//$NON-NLS-1$
+         monitor.beginTask(NewWizardMessages.NewJavaProjectWizardPageTwo_operation_initialize, 2);//$NON-NLS-1$
 
          createProject(fCurrProject, fCurrProjectLocation, new SubProgressMonitor(monitor, 1));
 
