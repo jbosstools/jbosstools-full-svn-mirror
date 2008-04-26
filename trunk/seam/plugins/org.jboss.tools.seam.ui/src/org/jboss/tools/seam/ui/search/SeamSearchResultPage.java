@@ -11,11 +11,17 @@
 
 package org.jboss.tools.seam.ui.search;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jdt.core.IJavaElement;
@@ -23,9 +29,13 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.util.TransferDragSourceListener;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -38,7 +48,7 @@ import org.eclipse.search.internal.ui.text.FileLabelProvider;
 import org.eclipse.search.internal.ui.text.FileSearchQuery;
 import org.eclipse.search.internal.ui.text.IFileSearchContentProvider;
 import org.eclipse.search.internal.ui.text.NewTextSearchActionGroup;
-import org.eclipse.search.internal.ui.text.ResourceTransferDragAdapter;
+
 import org.eclipse.search.ui.IContextMenuConstants;
 import org.eclipse.search.ui.ISearchResultViewPart;
 import org.eclipse.search.ui.NewSearchUI;
@@ -47,6 +57,8 @@ import org.eclipse.search.ui.text.AbstractTextSearchViewPage;
 import org.eclipse.search.ui.text.Match;
 import org.eclipse.search2.internal.ui.OpenSearchPreferencesAction;
 import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSourceAdapter;
+import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
@@ -395,6 +407,57 @@ public class SeamSearchResultPage extends AbstractTextSearchViewPage implements 
 			}
 		}
 		return label;
+	}
+
+	/** copy from Eclipse 3.3 org.eclipse.search.internal.ui.text.ResourceTransferDragAdapter */
+	/** Maybe NavigatorDragAdopter would be a better alternative. */ 
+	static public class ResourceTransferDragAdapter extends DragSourceAdapter implements TransferDragSourceListener {
+
+		private ISelectionProvider fProvider;
+
+		/**
+		 * Creates a new ResourceTransferDragAdapter for the given selection
+		 * provider.
+		 * 
+		 * @param provider the selection provider to access the viewer's selection
+		 */
+		public ResourceTransferDragAdapter(ISelectionProvider provider) {
+			fProvider= provider;
+			Assert.isNotNull(fProvider);
+		}
+		
+		public Transfer getTransfer() {
+			return ResourceTransfer.getInstance();
+		}
+		
+		public void dragStart(DragSourceEvent event) {
+			event.doit= convertSelection().size() > 0;
+		}
+		
+		public void dragSetData(DragSourceEvent event) {
+			List resources= convertSelection();
+			event.data= resources.toArray(new IResource[resources.size()]);
+		}
+		
+		public void dragFinished(DragSourceEvent event) {
+			if (!event.doit)
+				return;
+		}
+		
+		private List convertSelection() {
+			ISelection s= fProvider.getSelection();
+			if (!(s instanceof IStructuredSelection))
+				return Collections.EMPTY_LIST;
+			IStructuredSelection selection= (IStructuredSelection) s;
+			List result= new ArrayList(selection.size());
+			for (Iterator iter= selection.iterator(); iter.hasNext();) {
+				Object element= iter.next();
+				if (element instanceof IResource) {
+					result.add(element);
+				}
+			}
+			return result;
+		}
 	}
 
 }
