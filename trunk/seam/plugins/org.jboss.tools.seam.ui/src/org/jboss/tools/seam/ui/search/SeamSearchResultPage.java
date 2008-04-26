@@ -214,7 +214,7 @@ public class SeamSearchResultPage extends AbstractTextSearchViewPage implements 
 			((IOpenableElement)match.getElement()).open();
 		} else if (match.getElement() instanceof IFile) {
 			IFile file= (IFile) match.getElement();
-			IEditorPart editor= fEditorOpener.open(file, activate);
+			IEditorPart editor= fEditorOpener.open(getSite().getPage(),file, activate);
 			offset = match.getOffset();
 			length = match.getLength();
 			if (offset != 0 && length != 0) {
@@ -400,8 +400,8 @@ public class SeamSearchResultPage extends AbstractTextSearchViewPage implements 
 			if (result != null) {
 				int itemCount= ((IStructuredContentProvider) tv.getContentProvider()).getElements(getInput()).length;
 				int fileCount= getInput().getElements().length;
-				if (itemCount < fileCount) {
-					String format= SearchMessages.FileSearchPage_limited_format; 
+				if (itemCount < fileCount) {					
+					String format= SearchMessages.FileSearchPage_limited_format_files; 
 					return Messages.format(format, new Object[]{label, new Integer(itemCount), new Integer(fileCount)});
 				}
 			}
