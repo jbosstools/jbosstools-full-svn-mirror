@@ -42,6 +42,8 @@ public class TestUtil {
 
 	private static final String WEBCONTENT_PATH = "WebContent"; //$NON-NLS-1$
 
+	private static final long MAX_IDLE = 30*60*1000L;
+
 	@SuppressWarnings("restriction")
 	static void importProjectIntoWorkspace(String path, String projectName) {
 
@@ -162,6 +164,15 @@ public class TestUtil {
 	public static void waitForJobs() {
 		while (Job.getJobManager().currentJob() != null)
 			delay(100);
+	}
+	
+	public static void waitForIdle() {
+		long start = System.currentTimeMillis();
+		while (!Job.getJobManager().isIdle()) {
+			delay(500);
+			if ( (System.currentTimeMillis()-start) > MAX_IDLE ) 
+				throw new RuntimeException("A long running task detected");
+		}
 	}
 
 	/**

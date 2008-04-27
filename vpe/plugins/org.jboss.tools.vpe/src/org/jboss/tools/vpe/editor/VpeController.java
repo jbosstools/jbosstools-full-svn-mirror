@@ -315,6 +315,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     }
 
     public void dispose() {
+    	if (job != null) {
+			job.cancel();
+			job = null;
+		}
 	if (optionsListener != null) {
 	    XModelObject optionsObject = ModelUtilities.getPreferenceModel()
 		    .getByPath(VpePreference.EDITOR_PATH);
@@ -436,7 +440,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
     public void notifyChangedInUiThread(INodeNotifier notifier, int eventType,
 	    Object feature, Object oldValue, Object newValue, int pos) {
-	if (!switcher
+	if (switcher == null || !switcher
 		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 	    return;
 	}
