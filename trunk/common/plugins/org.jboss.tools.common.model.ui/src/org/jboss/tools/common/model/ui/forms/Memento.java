@@ -36,14 +36,18 @@ public class Memento implements IMemento {
 	
 	private String id;
 	private HashMap map = new HashMap();
+	final private String type;
 	private static final String TEXT_DATA = "org.jboss.tools.common.model.ui.forms.Memento.textData.id";
 
 
-	private Memento() {}
+	private Memento() {
+		type = null;
+	}
 	
-	public Memento(String id) {
+	public Memento(String type, String id) {
 		ModelUIPlugin.getPluginLog().logInfo("new Memento("+id+")");
 		this.id = id;
+		this.type = type;
 	}
 
 	/* (non-Javadoc)
@@ -57,7 +61,7 @@ public class Memento implements IMemento {
 	 * @see org.eclipse.ui.IMemento#createChild(java.lang.String, java.lang.String)
 	 */
 	public IMemento createChild(String type, String id) {
-		Memento newMemento = new Memento(id);
+		Memento newMemento = new Memento(type, id);
 		ArrayList list = (ArrayList)map.get(type);
 		if (list==null) {
 			list = new ArrayList();
@@ -218,5 +222,25 @@ public class Memento implements IMemento {
 	public void load(IResource resource) {
 	}
 	public void store(IResource resource) {
+	}
+	
+	@Override
+	public String[] getAttributeKeys() {		
+		return (String[]) map.keySet().toArray(new String[0]);
+	}
+	
+	@Override
+	public Boolean getBoolean(String key) {
+		return (Boolean)map.get(key);
+	}
+	
+	@Override
+	public void putBoolean(String key, boolean value) {
+		map.put(key, value);		
+	}
+		
+	@Override
+	public String getType() {
+		return type; 
 	}
 }
