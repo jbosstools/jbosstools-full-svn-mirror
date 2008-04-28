@@ -89,6 +89,7 @@ public class VpeTemplateManager {
 	static final String TAG_TAGLIB = VPE_PREFIX + "taglib"; //$NON-NLS-1$
 	static final String TAG_LINK = VPE_PREFIX + "link"; //$NON-NLS-1$
 	static final String TAG_LOAD_BUNDLE = VPE_PREFIX + "load-bundle"; //$NON-NLS-1$
+	static final String TAG_A = VPE_PREFIX + "a"; //$NON-NLS-1$
 	static final String TAG_DATATABLE = VPE_PREFIX + "datatable"; //$NON-NLS-1$
 	static final String TAG_DATATABLE_COLUMN = VPE_PREFIX + "column"; //$NON-NLS-1$
 	static final String TAG_COMMENT = VPE_PREFIX + "comment"; //$NON-NLS-1$

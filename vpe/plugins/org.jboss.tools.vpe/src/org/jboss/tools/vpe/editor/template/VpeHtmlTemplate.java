@@ -52,7 +52,8 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	public static final int TYPE_PANELGRID = 14;
 	public static final int TYPE_FACET = 15;
 	public static final int TYPE_INCLUDE = 16;
-	public static final int PANEL_LAYOUT = 17;	
+	public static final int PANEL_LAYOUT = 17;
+	public static final int TYPE_A = 18;
 
 	static final String ATTR_STYLE = "style";
 	public static final String ATTR_STYLE_MODIFY_NAME = "-moz-user-modify";
@@ -85,6 +86,10 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 				} else if (VpeTemplateManager.TAG_DATATABLE.equals(name)) {
 					type = TYPE_DATATABLE;
 					creator = new VpeDataTableCreator(templateSection, dependencyMap, caseSensitive);
+				}
+				else if (VpeTemplateManager.TAG_A.equals(name)) {
+					type = TYPE_A;
+					creator = new VpeVisualLinkCreator(templateSection, dependencyMap, caseSensitive);
 				} else if (VpeTemplateManager.TAG_DATATABLE_COLUMN.equals(name)) {
 					type = TYPE_DATATABLE_COLUMN;
 					creator = new VpeDataTableColumnCreator(templateSection, dependencyMap, caseSensitive);

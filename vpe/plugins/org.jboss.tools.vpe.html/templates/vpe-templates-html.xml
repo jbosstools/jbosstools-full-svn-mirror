@@ -3,10 +3,7 @@
 <vpe:templates>
 	<vpe:tag name="a" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<span class="{@class}" id="{@id}"
-				style="color:blue;text-decoration:underline;{@style}"
-				title="{tagstring()}">
-			</span>
+			<vpe:a class="{@class}" style="{@style}"/>
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes">
