@@ -223,13 +223,16 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			if(root != null)
 			{
 				addNode(root, null, visualContentArea);
-				
 			}
-
 		} else {
 			addChildren(null, sourceDocument, visualContentArea);
-			registerNodes(new VpeNodeMapping(sourceDocument, visualContentArea));
 		}
+		/*
+		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-2126.
+		 * To provide appropriate context menu functionality
+		 * visual content area should be mapped in any case. 
+		 */
+		registerNodes(new VpeNodeMapping(sourceDocument, visualContentArea));
 	}
 
     private Element getRootElement(Document sourceDocument) {
