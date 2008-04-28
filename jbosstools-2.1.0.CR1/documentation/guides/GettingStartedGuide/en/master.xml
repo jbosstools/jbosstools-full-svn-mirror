@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3CR3/docbookx.dtd"
+
+[<!ENTITY getting_started SYSTEM "modules/getting_started.xml">
+<!ENTITY  manage SYSTEM "modules/manage.xml">
+<!ENTITY first_seam  SYSTEM "modules/first_seam.xml">
+<!ENTITY jsp_application  SYSTEM "modules/jsp_application.xml">
+<!ENTITY rad_jsf_application  SYSTEM "modules/rad_jsf_application.xml">
+<!ENTITY further_reading  SYSTEM "modules/further_reading.xml">
+
+]>
+
+<book>
+    
+     <bookinfo>
+        <title>Getting Started with JBoss Developer Studio</title>
+         <pubdate>April 2008</pubdate>
+	                       <copyright>
+			<year>2007</year>
+	                           <year>2008</year>
+	                           <holder>JBoss, a division of Red Hat Inc.</holder>
+	                       </copyright>
+          <releaseinfo>
+<para>Version: 1.1.0.CR1</para>
+</releaseinfo>
+    </bookinfo>
+      
+    <toc/>  
+    
+
+&getting_started;
+&manage;
+&first_seam;
+&jsp_application;
+&rad_jsf_application;
+&further_reading;
+
+
+</book>    
