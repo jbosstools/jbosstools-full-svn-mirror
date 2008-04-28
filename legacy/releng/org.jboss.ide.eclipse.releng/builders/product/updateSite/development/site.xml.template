@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="http://www.jboss.org/products/jbosside">
+      This is the development update site for JBoss Eclipse IDE. You will find the latest development release of JBoss Eclipse IDE here.
+   </description>
+   <feature url="features/%jbpm-feature-jar%" id="org.jbpm.feature" version="%jbpm-feature-version%">
+      <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
+   <feature url="features/%aop-feature-jar%" id="org.jboss.ide.eclipse.jdt.aop.feature" version="%aop-feature-version%">
+      <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
+   <feature url="features/%core-feature-jar%" id="org.jboss.ide.eclipse.feature" version="%core-feature-version%">
+      <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
+   <feature url="features/%hibernate-tools-feature-jar%" id="org.hibernate.eclipse.feature" version="%hibernate-tools-feature-version%">
+      <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
+   <feature url="features/%ejb3-feature-jar%" id="org.jboss.ide.eclipse.ejb3.feature" version="%ejb3-feature-version%">
+      <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
+   <feature url="features/%as-feature-jar%" id="org.jboss.ide.eclipse.as.feature" version="%as-feature-version%">
+   	  <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
+   <feature url="features/%freemarker-feature-jar%" id="org.jboss.ide.eclipse.freemarker.feature" version="%freemarker-feature-version%">
+   	  <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
+   <feature url="features/%cache-feature-jar%" id="org.jboss.ide.eclipse.jbosscache.feature" version="%cache-feature-version%">
+   	  <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
+   <feature url="features/%drools-ide-feature-jar%" id="org.drools.ide.feature" version="%drools-ide-feature-version%">
+   	  <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
+   <feature url="features/%jbossws-feature-jar%" id="com.eviware.soapui.jbosside_feature" version="%jbossws-feature-version%">
+   	  <category name="JBossIDE %jbosside-build-name%"/>
+   </feature>
+   
+   <category-def name="JBossIDE %jbosside-build-name%" label="JBoss Eclipse IDE Development Release: %jbosside-build-name%"/>
+</site>

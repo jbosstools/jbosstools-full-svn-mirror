@@ -1,0 +1,15 @@
+# component versions
+core=1.5.1.GA
+aop=1.1.1.GA
+ejb3=1.0.1.GA
+jbpm=3.0.8.1
+hibernate-tools=beta4a
+tests=1.0.0.GA
+
+# cvs tags
+core.cvs=IDE_CORE_1_5_1
+aop.cvs=IDE_AOP_DEVELOPER_1_1_1
+ejb3.cvs=IDE_EJB3_TOOLS_1_0_1
+jbpm.cvs=jbpm_gpd_3_0_8
+hibernate-tools.cvs=TOOLS_3_1_0_BETA4_branch
+tests.cvs=HEAD

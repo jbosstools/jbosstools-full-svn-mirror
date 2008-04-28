@@ -1,0 +1,11 @@
+<html>
+<body>
+<h3 style="background-color: #000050; color: white; padding: 3px; ">JBoss Eclipse IDE  ${build-type} build ${jbosside-build-name}</h3>
+
+<b><font color="#000050">Build Results</font></b>:<br/>
+     <a href="${jbosside-download-root}/buildResults.html">${jbosside-download-root}/buildResults.html</a><br/><br/>
+
+<b><font color="#000050">Unit Test Results</font></b>: (${junit-error-count} errors, ${junit-failure-count} failures, ${junit-test-count} total tests)<br/>
+     <a href="${jbosside-download-root}/tests/test-results/org.jboss.ide.eclipse.tests.html">${jbosside-download-root}/tests/test-results/org.jboss.ide.eclipse.tests.html</a>
+</body>
+</html>

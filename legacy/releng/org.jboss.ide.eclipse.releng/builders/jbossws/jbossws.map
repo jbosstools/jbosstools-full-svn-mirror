@@ -1,0 +1,6 @@
+plugin@com.eviware.soapui.core=HEAD,anonymous,,%svnURL%/core
+plugin@com.eviware.soapui.eclipse.core=HEAD,anonymous,,%svnURL%/eclipse/plugins/com.eviware.soapui.eclipse.core
+plugin@com.eviware.soapui.eclipse.ui=HEAD,anonymous,,%svnURL%/eclipse/plugins/com.eviware.soapui.eclipse.ui
+plugin@com.eviware.soapui.jbosside.wstools=HEAD,anonymous,,%svnURL%/jbosside/plugins/com.eviware.soapui.jbosside.wstools
+plugin@com.eviware.soapui.libs=HEAD,anonymous,,%svnURL%/libs
+feature@com.eviware.soapui.jbosside_feature=HEAD,anonymous,,%svnURL%/jbosside/features/com.eviware.soapui.jbosside-feature

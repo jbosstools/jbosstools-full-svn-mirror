@@ -1,0 +1,55 @@
+<build name="${product.versionTag}">
+			<eclipse-target>${eclipseBuildID}</eclipse-target>
+			<webtools-target>${webtoolsBuildID}</webtools-target>
+			<artifacts>
+				<artifact id="win32-bundle">
+					<url>${jbosside.download.root}/bundle/${jbosside-win32-bundle-filename}</url>
+					<size>${win32-bundle-file-size}</size>
+					<date>${build-date}</date>
+					<md5>${win32-bundle-file-md5}</md5>
+				</artifact>
+				<artifact id="linux-gtk2-bundle">
+					<url>${jbosside.download.root}/bundle/${jbosside-linux-gtk2-bundle-filename}</url>
+					<size>${linux-gtk2-bundle-file-size}</size>
+					<date>${build-date}</date>
+					<md5>${linux-gtk2-bundle-file-md5}</md5>
+				</artifact>
+				<artifact id="all">
+					<url>${jbosside.download.root}/all/${jbosside-all-filename}</url>
+					<size>${all-file-size}</size>
+					<date>${build-date}</date>
+					<md5>${all-file-md5}</md5>
+				</artifact>
+				<artifact id="core">
+					<url>${jbosside.download.root}/core/${jbosside-core-filename}</url>
+					<size>${core-file-size}</size>
+					<date>${build-date}</date>
+					<md5>${core-file-md5}</md5>
+				</artifact>
+				<artifact id="hibernate-tools">
+					<url>${jbosside.download.root}/hibernate-tools/${jbosside-hibernate-tools-filename}</url>
+					<size>${hibernate-tools-file-size}</size>
+					<date>${build-date}</date>
+					<md5>${hibernate-tools-file-md5}</md5>
+				</artifact>
+				<artifact id="jbpm">
+					<url>${jbosside.download.root}/jbpm/${jbosside-jbpm-filename}</url>
+					<size>${jbpm-file-size}</size>
+					<date>${build-date}</date>
+					<md5>${jbpm-file-md5}</md5>
+				</artifact>
+				<artifact id="aop">
+					<url>${jbosside.download.root}/aop/${jbosside-aop-filename}</url>
+					<size>${aop-file-size}</size>
+					<date>${build-date}</date>
+					<md5>${aop-file-md5}</md5>
+				</artifact>
+				<artifact id="ejb3">
+					<url>${jbosside.download.root}/ejb3/${jbosside-ejb3-filename}</url>
+					<size>${ejb3-file-size}</size>
+					<date>${build-date}</date>
+					<md5>${ejb3-file-md5}</md5>
+				</artifact>
+			</artifacts>
+		</build>
+		<!--latest-${product.expandedBuildDesc}-build-->
