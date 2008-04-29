@@ -177,7 +177,6 @@ public class MementoDOM implements IMemento {
 		return element;
 	}
 	
-	@Override
 	public String[] getAttributeKeys() {
 		NamedNodeMap map = element.getAttributes();
 		int size = map.getLength();
@@ -190,7 +189,6 @@ public class MementoDOM implements IMemento {
 
 	}
 
-	@Override
 	public Boolean getBoolean(String key) {
         String attr = getString(key);
         if (attr == null) {
@@ -199,12 +197,10 @@ public class MementoDOM implements IMemento {
         return Boolean.valueOf(attr);
 	}
    
-	@Override
 	public void putBoolean(String key, boolean value) {
 		putString(key, value ? "true" : "false"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 	
-	@Override
 	public String getType() {
 		return getString(TYPE);
 	}

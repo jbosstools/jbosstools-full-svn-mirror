@@ -224,22 +224,18 @@ public class Memento implements IMemento {
 	public void store(IResource resource) {
 	}
 	
-	@Override
 	public String[] getAttributeKeys() {		
 		return (String[]) map.keySet().toArray(new String[0]);
 	}
 	
-	@Override
 	public Boolean getBoolean(String key) {
 		return (Boolean)map.get(key);
 	}
 	
-	@Override
 	public void putBoolean(String key, boolean value) {
 		map.put(key, value);		
 	}
 		
-	@Override
 	public String getType() {
 		return type; 
 	}
