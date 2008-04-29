@@ -107,6 +107,14 @@
     configuration file as well as a file for controlling reverse engineering by using specific
     wizards that Hibernate tooling provides. Also you will know about Code Generation and
     peculiarities of work within Hibernate Console Perspective.</para>
+  
+  <para>
+    <emphasis role="bold">ESB Editor Reference Guide</emphasis>
+    <ulink url="../../../../esb_ref_guide/publish/en-US/html/index.html">(html)</ulink>
+    <ulink url="../../../../esb_ref_guide/publish/en-US/html_single/index.html">(html single)</ulink>
+    <ulink url="../../../../esb_ref_guide/publish/en-US/pdf/ESB_Reference_Guide.pdf">(PDF)</ulink>
+  </para>
+  <para>This guide provides you with the information on ESB Editor which allows you to develop ESB file.</para>
 
   <para>
     <emphasis role="bold">Exadel Studio Migration Guide</emphasis>
