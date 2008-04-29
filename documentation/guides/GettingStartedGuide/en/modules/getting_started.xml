@@ -616,7 +616,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <para>
     <emphasis role="bold">How can I add my own tag library to the JBoss Tools Palette?</emphasis>
    </para>
-   <para>See <ulink url="../../jsf/html_single/index.html#AddingCustomJSFTagsToTheRedHatPalette7433"
+   <para>See <ulink url="../../../../jsf/publish/en-US/html_single/index.html#AddingCustomJSFTagsToTheRedHatPalette7433"
      >Adding Tag Libraries</ulink> in Visual Web Tools Guide.</para>
 
   </section>

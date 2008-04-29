@@ -113,7 +113,7 @@
     <itemizedlist>
       <listitem>
         <para>Check <emphasis><property>Server Supplied JSF Implementation</property>.
-        </emphasis>We will use <ulink url="../../seam/html_single/index.html#addJSFCapab">JSF implementation</ulink> that comes with JBoss server</para>
+        </emphasis>We will use <ulink url="../../../../seam/publish/en-US/html_single/index.html#addJSFCapab">JSF implementation</ulink> that comes with JBoss server</para>
       </listitem>
       <listitem>
         <para>Click <emphasis><property>Next</property></emphasis></para>
