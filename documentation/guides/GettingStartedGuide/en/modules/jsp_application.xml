@@ -179,16 +179,14 @@
 ]]></programlisting>
 			<para>If you come back to design mode you will see that the changes made are
 				automatically reflected in that mode.</para>
-			<para>Actually you don&apos;t really need to do any configurations right now. You can clear the
-				web.xml file, save it and you&apos;ll still be able to launch your
-			application.</para>
+			<para>Actually you don&apos;t really need to do any configurations right now.</para>
 		</section>
 
 		<section id="DeployTheProject">
 			<?dbhtml filename="DeployTheProject.html"?>
 			<title>Deploying the project</title>
 			<para>While creating any web project you could experience a pain writing ant scripts and
-				managing the packaging even if a developer is writing the most trivial web
+				managing the packaging even when writing the most trivial web
 				applications. With JBoss Developer Studio you are saved from such a pain. All you
 				need is to start JBoss server and launch your application in your favorite browser.</para>
 			<para>You can also create a war archive with JBDS&apos;s Archive Tools and export it
