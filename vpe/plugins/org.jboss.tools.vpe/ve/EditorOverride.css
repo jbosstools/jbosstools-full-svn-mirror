@@ -94,6 +94,11 @@ label {
   -moz-user-select: text !important;
 }
 
+.def-link {
+	text-decoration: underline -moz-anchor-decoration;
+ 	color: -moz-hyperlinktext;
+}
+	
 option {
   -moz-user-select: text !important;
 }
