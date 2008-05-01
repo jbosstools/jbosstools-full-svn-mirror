@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="manage" xreflabel="manage">
+    <?dbhtml filename="manage.html"?>
+  <chapterinfo>
+    <keywordset>
+      <keyword>JBoss Developer Studio</keyword>
+      <keyword>Eclipse</keyword>
+      <keyword>Deploy</keyword>
+      <keyword>Deployment</keyword>
+      <keyword>JBoss</keyword>
+    </keywordset>
+  </chapterinfo>
+ <title>Manage JBoss AS from JBoss Developer Studio</title>
+    <para>In this chapter we'll focus more on how to operate the JBoss AS from JBoss Developer Studio.</para>
+    <para>JBoss Developer Studio ships with <property>JBoss EAP v.4.2</property> bundled. When you followed the default installation of JBoss Developer Studio, you should already have a JBoss 4.2 server installed and defined. To run JBoss AS 4.2 you need JDK 1.5, JDK 6 is not formally supported yet, although you may be able to start the server with it.</para>
+ <section id="JBossbundled">
+  <?dbhtml filename="JBossbundled.html"?>
+  <title>How to Manage the JBoss AS Bundled in JBDS</title>
+     <para>This section covers the basics of working with the JBoss server supported directly by JBDS via bundled AS plug-in. To read more about AS plug-in, read <ulink url="../../as/html_single/index.html">Server Manager guide</ulink>.</para>
+  <section id="StartingServer">
+  <?dbhtml filename="StartingServer.html"?>
+  <title>Starting JBoss server</title>
+  <para>Starting <property>JBoss server</property> is quite simple. JBoss Developer Studio allows you to control its behaviour with the help of a special toolbar: where you could start it in a regular or debug mode, stop it or restart it.</para>
+  <itemizedlist>
+      <listitem><para>To launch the server click the green-with-white-arrow icon on the <property>JBoss Server View </property>or right click server name in this view and select <emphasis><property>Start</property></emphasis>. If this view is not open, select <emphasis><property>Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View</property></emphasis></para></listitem>
+  </itemizedlist>
+  <figure>
+<title>Starting from Icon</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_1.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+<figure>
+<title>Starting from JBoss Server View</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_2.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+<para>While launching, server output is written to the Console view:</para>
+
+<figure>
+<title>Console Output</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_3.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+      <para>When the server is started you should see <emphasis><property>Started</property></emphasis> right to its name in <property>JBoss Server View</property> (column &quot;Status&quot;).</para>
+<figure>
+<title>Server is Started</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_4.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+      <para>To see event log after the server is started, expand <property>Event Log</property> branch beneath JBoss Server View:</para>
+<figure>
+<title>Event Log</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_5.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+  </section>
+  <section id="StoppingJBoss">
+  <?dbhtml filename="StoppingJBoss.html"?>
+  <title>Stopping JBoss Server</title>
+  <para>To stop the server, click the <emphasis><property>Stop</property></emphasis> icon in JBoss Server View  or right click the server name and press <emphasis><property>Stop</property></emphasis>.</para>
+  <figure>
+<title>Stopping Server</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_6.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+      <para>When the server is stopped you will see <emphasis><property>Stopped</property></emphasis> next to its name in the Status column.</para>
+  </section>
+  <section id="ServerPreferences">
+  <?dbhtml filename="ServerPreferences.html"?>
+  <title>Server Container Preferences</title>
+      <para>You can control how JBoss Developer Studio interacts with servlet containers in Preferences. Select <emphasis><property>Window &gt; Preferences &gt; JBoss Tools &gt; JBoss Servers</property></emphasis> and switch to the desired server:</para>
+  <figure>
+<title>Server Preferences</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_7.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+      <para>Also you can double click the server name in JBoss Server View and open an overview of the server. Here you can specify some common settings: host name, server name, runtime and so on.</para>
+<figure>
+<title>Server Overview</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_8.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+  </section>
+  </section>
+  <section id="JBossInstances">
+  <?dbhtml filename="JBossInstances.html"?>
+  <title>How to Use Your Own JBoss AS Instance with JBDS</title>
+  <para>Although JBoss Developer Studio works closely with <property>JBoss EAP 4.2</property> we do not ultimately tie you to any particular server for deployment. There are some servers that Studio supports directly (via the bundled Eclipse WTP plug-ins). 
+      
+     In this section we discuss how to manage self-installed JBoss AS. Suppose you want to deploy the application to <property>JBoss 4.2.1 server</property>. First of all you need to install it.</para>
+ <section id="JBossInstalling">
+  <?dbhtml filename="JBossInstalling.html"?>
+  <title>JBoss AS Installation</title>
+  <itemizedlist>
+<listitem><para>Download the binary package of <property>JBoss 4.2.1</property> and save it on your computer: <ulink url="http://labs.jboss.com/jbossas/downloads">http://labs.jboss.com/jbossas/downloads</ulink></para></listitem>
+</itemizedlist>
+     <para>It does not matter where on your system you install JBoss server.</para>
+     
+     <note>
+         <title>Note:</title>
+         <para>The installation of JBoss server into a directory that has a name containing spaces provokes problems in some situations with Sun-based VMs. Try to avoid using installation folders that have spaces in their names.</para>
+     </note>
+    
+ <para>There is no requirement for root access to run JBoss Server on UNIX/Linux systems because none of the default ports are within the 0-1023 privileged port range.</para>
+<itemizedlist continuation="continues">
+<listitem><para>After you have the binary archive you want to install, use the JDK jar tool (or any other ZIP extraction tool) to extract the jboss-4.2.1.zip archive contents into a location of your choice. The jboss-4.2.1.tgz  archive is a gzipped tar file that requires a gnutar compatible tar which can handle the long pathnames in the archive. The extraction process will create a jboss-4.2.1 directory. </para></listitem>
+</itemizedlist>
+</section>
+ 
+ <section id="AddingJBossServer">
+  <?dbhtml filename="AddingJBossServer.html"?>
+  <title>Adding and configuring JBoss server</title>
+  <para>Now we should add just installed server into server manager in JBoss Developer Studio.</para>
+  <itemizedlist>
+  <listitem><para>Open the JBoss Server View by selecting <emphasis><property>Window &gt; Show View &gt; Other &gt; Server &gt; JBoss Server View</property></emphasis>. You will see JBoss Server view.</para></listitem>
+      <listitem><para>Right click anywhere in this view and select <emphasis><property>New Server</property></emphasis>.</para></listitem>
+      <listitem><para>Select <emphasis><property>JBoss, a division of Red Hat &gt; JBoss v4.2</property></emphasis> and click the <emphasis><property>Installed Runtimes</property></emphasis> button to select a new installed runtime.</para></listitem>
+</itemizedlist>
+<figure>
+<title>Selecting Server Type</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_9.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+     
+     <itemizedlist continuation="continues">
+         <listitem><para>Click <emphasis><property>Add</property></emphasis> button to add a new jboss runtime.</para></listitem>
+         <listitem><para>Select <emphasis><property>JBoss, a division of Red Hat &gt; JBoss v4.2</property></emphasis> and press <emphasis><property>Next</property></emphasis>.</para></listitem>
+     </itemizedlist>
+
+     <figure>    
+<title>Installed Runtimes</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_10.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+
+
+<itemizedlist continuation="continues">
+<listitem><para>In the next step make JBoss Developer Studio to know where you have installed the server and define JRE.</para></listitem>
+</itemizedlist>
+<figure>
+<title>Defining JBoss Runtime</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_11.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<note>
+    <title>Note:</title>
+    <para>When adding a new server you will need to specify what JRE to use. It is important to set this value to a full JDK, not JRE. Again, you need a full JDK to run Web applications, JRE will not be enough.</para>
+</note>
+<itemizedlist continuation="continues">
+    <listitem><para>In the following window leave all settings default or give your name to a new jboss server and press <emphasis><property>Finish</property></emphasis>.</para></listitem>
+</itemizedlist>
+<figure>
+<title>Adding New Runtime</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_12.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+     <para>A new runtime will now appear in the <emphasis><property>Preferences &gt; Server &gt; Installed Runtimes</property></emphasis> dialog.</para>
+<figure>
+<title>Runtime is Added</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_13.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+<itemizedlist continuation="continues">
+    <listitem><para>Click <emphasis><property>OK</property></emphasis>. Then select a new added runtime in Server runtime drop down list and click <emphasis><property>Next</property></emphasis> button twice.</para></listitem>
+</itemizedlist>
+<figure>
+<title>Choosing Runtime</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_14.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+<itemizedlist>
+      <listitem><para>In the next dialog verify a <property>JBoss</property> runtime information and if something is unfair go back and correct it.</para></listitem>
+  </itemizedlist>
+  <figure>
+<title>Configuring Projects</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_15.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+  <itemizedlist>
+      <listitem><para>In the last wizard&apos;s dialog modify the projects that are configured on the server and click <emphasis><property>Finish</property></emphasis>.</para></listitem>
+  </itemizedlist>
+  <figure>
+<title>Configuring Projects</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_16.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+     <para>A new JBoss server should now appear in JBoss Server View.</para>  
+<figure>
+<title>New JBoss Server</title>
+<mediaobject> 
+        <imageobject>
+            <imagedata fileref="images/manage/manage_17.png"/>
+        </imageobject>
+</mediaobject>
+</figure>
+
+  </section>
+  </section>
+    <para>Now, we are ready to create the first web application.</para>
+</chapter>
