@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="testcases">
+<title>Test cases</title>
+ &testcases-core;
+ &testcases-freemaker;
+ &testcases-hibernatetools;
+ &testcases-jst;
+ &testcases-jsf;
+ &testcases-struts;
+ &testcases-shale;
+ &testcases-seam;
+ &testcases-vpe;
+ &testcases-documentation;
+</chapter>
