@@ -108,7 +108,10 @@ public class ArchivesLabelProvider implements ILabelProvider {
 		String text = "";
 		// +[includes] [excludes] : /path/to/root
 		text += "+[" + fileset.getIncludesPattern() + "] ";
-		text += "-[" + fileset.getExcludesPattern() + "] : ";
+		
+		if (fileset.getExcludesPattern() != null) {
+			text += "-[" + fileset.getExcludesPattern() + "] : ";
+		}
 
 		if (showFullPath) {
 			text += fileset.getGlobalSourcePath().toString();
