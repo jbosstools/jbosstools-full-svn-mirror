@@ -83,7 +83,7 @@
       </mediaobject>
     </figure>
     
-    <para>In the <ulink url="ProjectFacetsSpecifyingScreen">Project Facets Specifying</ulink> form you can also bring up server runtimes panel by clicking <property>Show Runtimes</property> in the bottom right corner. 
+    <para>In the <link linkend="ProjectFacetsSpecifyingScreen">Project Facets Specifying</link> form you can also bring up server runtimes panel by clicking <property>Show Runtimes</property> in the bottom right corner. 
       This panel shows available server runtimes. Then this button will be changed into <property>Hide Runtimes</property> one.</para>
     <para>Click <property>Next</property> to proceed further.</para>
     
