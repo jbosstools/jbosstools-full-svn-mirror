@@ -44,6 +44,9 @@
                         <includes>
                             <include>images/**/*</include>
                         </includes>
+			<includes>
+                            <include>database.zip</include>
+                        </includes>
                     </imageResource>
                     <!--<cssResource>
                         <directory>src/main/css</directory>
