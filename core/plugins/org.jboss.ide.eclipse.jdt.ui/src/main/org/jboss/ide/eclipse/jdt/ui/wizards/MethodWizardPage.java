@@ -169,7 +169,7 @@ public abstract class MethodWizardPage extends ClassFragmentWizardPage
          IType type = chooseType(this.getReturnType());
          if (type != null)
          {
-            this.typeDialogField.setText(JavaModelUtil.getFullyQualifiedName(type));
+            this.typeDialogField.setText(type.getFullyQualifiedName('.'));
          }
       }
    }

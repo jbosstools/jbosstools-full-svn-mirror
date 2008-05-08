@@ -130,7 +130,7 @@ public abstract class FieldWizardPage extends ClassFragmentWizardPage
          IType type = chooseType(getFragmentType());
          if (type != null)
          {
-            typeDialogField.setText(JavaModelUtil.getFullyQualifiedName(type));
+            typeDialogField.setText(type.getFullyQualifiedName('.'));
          }
       }
    }

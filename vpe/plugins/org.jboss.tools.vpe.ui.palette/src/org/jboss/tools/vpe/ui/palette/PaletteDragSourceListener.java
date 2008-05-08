@@ -14,6 +14,7 @@ import java.util.*;
 
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.internal.ui.palette.editparts.*;
+import org.eclipse.gef.ui.palette.editparts.PaletteEditPart;
 import org.eclipse.swt.dnd.*;
 import org.eclipse.swt.widgets.Display;
 
