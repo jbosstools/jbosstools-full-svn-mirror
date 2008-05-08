@@ -844,6 +844,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		public void partActivated(IWorkbenchPart part) {
 			fActivePart = part;
 			handleActivation();
+			if (part == multiPageEditor)
+				activateKeys();
 		}
 
 		public void partBroughtToTop(IWorkbenchPart part) {
@@ -854,22 +856,24 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 		public void partDeactivated(IWorkbenchPart part) {
 			fActivePart = null;
-			IWorkbench workbench = PlatformUI.getWorkbench();
-			if (fContextActivation != null) {
-				IContextService contextService = (IContextService) workbench
-						.getAdapter(IContextService.class);
-				contextService.deactivateContext(fContextActivation);
-			}
+			if (part == multiPageEditor) {
+				IWorkbench workbench = PlatformUI.getWorkbench();
+				if (fContextActivation != null) {
+					IContextService contextService = (IContextService) workbench
+							.getAdapter(IContextService.class);
+					contextService.deactivateContext(fContextActivation);
+				}
 
-			IHandlerService handlerService = (IHandlerService) workbench
-					.getService(IHandlerService.class);
-			if (handlerService != null) {
-				if (sourceActivation != null)
-					handlerService.deactivateHandler(sourceActivation);
-				if (visualActivation != null)
-					handlerService.deactivateHandler(visualActivation);
-				if (jumpingActivation != null)
-					handlerService.deactivateHandler(jumpingActivation);
+				IHandlerService handlerService = (IHandlerService) workbench
+						.getService(IHandlerService.class);
+				if (handlerService != null) {
+					if (sourceActivation != null)
+						handlerService.deactivateHandler(sourceActivation);
+					if (visualActivation != null)
+						handlerService.deactivateHandler(visualActivation);
+					if (jumpingActivation != null)
+						handlerService.deactivateHandler(jumpingActivation);
+				}
 			}
 		}
 
@@ -898,27 +902,30 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 						}
 						sourceEditor.safelySanityCheckState(getEditorInput());
 					}
-					IWorkbench workbench = PlatformUI.getWorkbench();
-					IContextService contextService = (IContextService) workbench
-							.getAdapter(IContextService.class);
-					fContextActivation = contextService
-							.activateContext(VPE_EDITOR_CONTEXT); //$NON-NLS-1$
-					IHandlerService handlerService = (IHandlerService) workbench
-							.getService(IHandlerService.class);
-					if (handlerService != null) {
-						sourceActivation = handlerService.activateHandler(
-								VPE_SOURCE_MAXMIN,
-								sourceMaxmin);
-						visualActivation = handlerService.activateHandler(
-								VPE_VISUAL_MAXMIN,
-								visualMaxmin);
-						jumpingActivation = handlerService.activateHandler(
-								VPE_JUMPING,
-								jumping);
-					}
 				} finally {
 					fIsHandlingActivation = false;
 				}
+			}
+		}
+
+		private void activateKeys() {
+			IWorkbench workbench = PlatformUI.getWorkbench();
+			IContextService contextService = (IContextService) workbench
+					.getAdapter(IContextService.class);
+			fContextActivation = contextService
+					.activateContext(VPE_EDITOR_CONTEXT); //$NON-NLS-1$
+			IHandlerService handlerService = (IHandlerService) workbench
+					.getService(IHandlerService.class);
+			if (handlerService != null) {
+				sourceActivation = handlerService.activateHandler(
+						VPE_SOURCE_MAXMIN,
+						sourceMaxmin);
+				visualActivation = handlerService.activateHandler(
+						VPE_VISUAL_MAXMIN,
+						visualMaxmin);
+				jumpingActivation = handlerService.activateHandler(
+						VPE_JUMPING,
+						jumping);
 			}
 		}
 	}
