@@ -74,7 +74,7 @@
       technologies from the list. Here, for this project, we will select Dynamic Web Module, Java, JavaServer Faces (JSF), and Seam Facet for
       a typical database-driven web application. The default project facets should suffice, click on <property>Next</property>.</para>
     
-    <figure>
+    <figure id="ProjectFacetsSpecifyingScreen">
       <title>Project Facets Specifying</title>
       <mediaobject>
         <imageobject>
@@ -83,7 +83,7 @@
       </mediaobject>
     </figure>
     
-    <para>In this screen you can also bring up server runtimes panel by clicking <property>Show Runtimes</property> in the bottom right corner. 
+    <para>In the <link linkend="ProjectFacetsSpecifyingScreen">Project Facets Specifying</link> form you can also bring up server runtimes panel by clicking <property>Show Runtimes</property> in the bottom right corner. 
       This panel shows available server runtimes. Then this button will be changed into <property>Hide Runtimes</property> one.</para>
     <para>Click <property>Next</property> to proceed further.</para>
     
@@ -113,7 +113,7 @@
     <itemizedlist>
       <listitem>
         <para>Check <emphasis><property>Server Supplied JSF Implementation</property>.
-        </emphasis>We will use <ulink url="../../seam/html_single/index.html#addJSFCapab">JSF implementation</ulink> that comes with JBoss server</para>
+        </emphasis>We will use <ulink url="&seamlink;#addJSFCapab">JSF implementation</ulink> that comes with JBoss server</para>
       </listitem>
       <listitem>
         <para>Click <emphasis><property>Next</property></emphasis></para>

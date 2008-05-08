@@ -18,6 +18,9 @@
    required to use JBoss Developer Studio to develop on JBoss Enterprise Middleware and/or Red Hat
    Linux. But, many find these pre-configured tools offer significant time-savings and value, making
    them more productive and speeding time to deployment.</para>
+  <para>This guide covers the first steps to get started working with JBoss Developer Studio. You will learn how to install and
+   configure necessary software for your OS (operating system).</para>
+  <para>Thus this guide will provide you with detailed info on how to start JDK, JBDS and JBoss Tools.</para>
  </section>
 
  <section id="ConfigJavaEnvironment">
@@ -25,7 +28,7 @@
   <title>Configuring Your Java Environment</title>
   <para>You must have a working installation of JDK 5 before you install JBoss Developer Studio.
    Currently it will only fully work with a 32-bit JVM, not a 64-bit JVM. On a 64-bit JVM the visual
-   editor fails to launch. Thus in this guide we will show you how to install a 32-bit Sun JDK 5.0
+   editor fails to launch because of feature of OS architecture. Thus in this guide we will show you how to install a 32-bit Sun JDK 5.0
    on a Linux Platform and Microsoft Windows Platform.</para>
 
   <section id="InstallJDK50onLinux">
@@ -36,7 +39,7 @@
      <para>Download the <ulink url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0
        (Java 2 Development Kit)</ulink> from Sun&apos;s website. Choose &quot;JDK 5.0 Update
       &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) for
-      download and then select &quot;RPM in self-extracting&quot; file for Linux. Read the
+      download and then select &quot;Red Hat Package Manager in self-extracting&quot; file for Linux. Read the
       instructions on Sun&apos;s website for installing the JDK.</para>
     </listitem>
     <listitem>
@@ -233,7 +236,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
    <note>
     <title>Note:</title>
-    <para>JBoss Developer Studio needs Java 5 and doesn't work with gij Java.</para>
+    <para>JBoss Developer Studio needs Java 5 and &quot;gij&quot; isn&apos;t available on every platform.</para>
    </note>
 
    <itemizedlist>
@@ -613,7 +616,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <para>
     <emphasis role="bold">How can I add my own tag library to the JBoss Tools Palette?</emphasis>
    </para>
-   <para>See <ulink url="../../jsf/html_single/index.html#AddingCustomJSFTagsToTheRedHatPalette7433"
+   <para>See <ulink url="&jsflink;#AddingCustomJSFTagsToTheRedHatPalette7433"
      >Adding Tag Libraries</ulink> in Visual Web Tools Guide.</para>
 
   </section>
@@ -628,6 +631,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
    Forum</ulink></para>
   <para>Download: <ulink url="http://www.jboss.com/products/devstudio">JBDS Download</ulink></para>
+  <para>All JBoss Developer Studio/JBoss Tools documentation you can find <ulink url="http://www.jboss.com/products/devstudio/docs">here</ulink>.</para>
+  <para>The latest documentation builds are available <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
  </section>
 
 </chapter>

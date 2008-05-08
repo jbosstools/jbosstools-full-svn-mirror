@@ -13,5 +13,11 @@
    <para>This document is intended to help you to migrate an existing Exadel JSF or Struts projects
     into <property>JBoss Developer Studio</property>. Preferences can be exported from Eclipse 3.2.0 (3.2.1 or 3.2.2) and imported in Eclipse 3.3 by the standard Eclipse means.
    </para>
+<section>
+ <title>Other relevant resources on the topic</title>
+ <para>All JBoss Developer Studio/JBoss Tools documentation you can find <ulink url="http://www.jboss.com/products/devstudio/docs">here</ulink>.</para>
+ <para>The latest documentation builds are available <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
+ 
+</section>
 
     </chapter>

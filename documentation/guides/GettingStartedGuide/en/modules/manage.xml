@@ -16,7 +16,7 @@
  <section id="JBossbundled">
   <?dbhtml filename="JBossbundled.html"?>
   <title>How to Manage the JBoss AS Bundled in JBDS</title>
-     <para>This section covers the basics of working with the JBoss server supported directly by JBDS via bundled AS plug-in. To read more about AS plug-in, read <ulink url="../../as/html_single/index.html">Server Manager guide</ulink>.</para>
+     <para>This section covers the basics of working with the JBoss server supported directly by JBDS via bundled AS plug-in. To read more about AS plug-in, read <ulink url="&aslink;">Server Manager guide</ulink>.</para>
   <section id="StartingServer">
   <?dbhtml filename="StartingServer.html"?>
   <title>Starting JBoss server</title>
