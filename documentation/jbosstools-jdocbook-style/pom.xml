@@ -7,15 +7,15 @@
     <groupId>org.jboss.tools</groupId>
     <artifactId>jbosstools-jdocbook-style</artifactId>
     <packaging>jdocbook-style</packaging>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <name>JBoss Tools Documentation Styles</name>
     <description>The JDocBook styles for the JBoss Tools Documentation.</description>
-    <url>http://labs.jboss.com/tools</url>
+    <url>http://www.jboss.org/tools</url>
 
     <organization>
         <name>JBoss.org</name>
-        <url>http://jboss.org</url>
+        <url>http://www.jboss.org</url>
     </organization>
 
     <contributors>
@@ -30,6 +30,11 @@
       </contributor>
     </contributors>
 
+   <scm>
+      <developerConnection>scm:svn:https://svn.jboss.org/repos/jbosstools/trunk/documentation/jbosstools-jdocbook-style/</developerConnection>
+      <connection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/trunk/documentation/jbosstools-jdocbook-style/</connection>
+   </scm>
+   
     <build>
         <plugins>
             <plugin>
