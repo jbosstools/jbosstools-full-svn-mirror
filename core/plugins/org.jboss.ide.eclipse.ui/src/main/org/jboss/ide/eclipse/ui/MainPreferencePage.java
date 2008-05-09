@@ -108,7 +108,7 @@ public class MainPreferencePage extends PreferencePage implements IWorkbenchPref
 //      {
 //         // Do nothing
 //      }
-
+      noDefaultAndApplyButton();
       return composite;
    }
 }
