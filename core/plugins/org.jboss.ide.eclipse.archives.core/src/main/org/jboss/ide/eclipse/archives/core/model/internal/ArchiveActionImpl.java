@@ -22,6 +22,8 @@
 package org.jboss.ide.eclipse.archives.core.model.internal;
 
 import org.eclipse.core.runtime.IPath;
+import org.jboss.ide.eclipse.archives.core.ArchivesCore;
+import org.jboss.ide.eclipse.archives.core.model.IActionType;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveAction;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
@@ -67,8 +69,16 @@ public class ArchiveActionImpl extends ArchiveNodeImpl implements IArchiveAction
 	/* (non-Javadoc)
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveAction#getType()
 	 */
-	public String getType() {
+	public String getTypeString() {
 		return actionDelegate.getType();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveAction#getType()
+	 */
+	public IActionType getType() {
+		return ArchivesCore.getInstance().getExtensionManager().getActionType(getTypeString());
 	}
 
 	/* (non-Javadoc)
@@ -99,5 +109,16 @@ public class ArchiveActionImpl extends ArchiveNodeImpl implements IArchiveAction
 			return false;
 		return true;
 	}
-
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveAction#execute()
+	 */
+	public void execute() {
+		getType().execute(this);
+	}
+	
+	public String toString() {
+		return getType().getStringRepresentation(this);
+	}
 }

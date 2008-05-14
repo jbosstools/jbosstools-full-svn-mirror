@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
+import org.jboss.ide.eclipse.archives.core.model.IActionType;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
 import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
 
@@ -44,6 +45,7 @@ import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
  */
 public class WorkspaceExtensionManager implements IExtensionManager {
 	public static final String ARCHIVE_TYPES_EXTENSION_ID = "org.jboss.ide.eclipse.archives.core.archiveTypes";
+	public static final String ACTION_TYPES_EXTENSION_ID = "org.jboss.ide.eclipse.archives.core.actionTypes";
 	
 	private IExtension[] findExtension (String extensionId) {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
@@ -85,5 +87,40 @@ public class WorkspaceExtensionManager implements IExtensionManager {
 		return (IArchiveType[]) c.toArray(new IArchiveType[c.size()]);
 	}
 
-	
+
+	private static Hashtable actionTypes;
+	public IActionType getActionType(String id) {
+		if (actionTypes == null)
+			loadActionTypes();
+		return (IActionType)actionTypes.get(id);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IExtensionManager#getActionTypes()
+	 */
+	public IActionType[] getActionTypes() {
+		if( actionTypes == null )
+			loadActionTypes();
+		Collection c = archiveTypes.values();
+		return (IActionType[]) c.toArray(new IActionType[c.size()]);
+	}
+
+	private void loadActionTypes() {
+		actionTypes = new Hashtable();
+		IExtension[] extensions = findExtension(ACTION_TYPES_EXTENSION_ID);
+		for (int i = 0; i < extensions.length; i++) {
+			IConfigurationElement elements[] = extensions[i].getConfigurationElements();
+			for (int j = 0; j < elements.length; j++) {
+				try {
+					Object executable = elements[j].createExecutableExtension("class");
+					IActionType type = (IActionType)executable;
+					actionTypes.put(type.getId(), type);
+				} catch (InvalidRegistryObjectException e) {
+					ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, e.getMessage(), e);
+				} catch( CoreException e ) {
+					ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, e.getMessage(), e);
+				}
+			}
+		}
+	}
 }

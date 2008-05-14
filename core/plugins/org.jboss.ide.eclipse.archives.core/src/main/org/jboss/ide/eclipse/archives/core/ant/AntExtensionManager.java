@@ -1,6 +1,7 @@
 package org.jboss.ide.eclipse.archives.core.ant;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.jboss.ide.eclipse.archives.core.model.IActionType;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
 import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
@@ -24,11 +25,11 @@ public class AntExtensionManager implements IExtensionManager {
 				return typeId;
 			}
 			public IArchive createDefaultConfiguration(String projectName, IProgressMonitor monitor) {
-				// TODO Auto-generated method stub
+				// do nothing, should not be called from ant
 				return null;
 			}
 			public IArchive fillDefaultConfiguration(String projectName, IArchive topLevel, IProgressMonitor monitor) {
-				// TODO Auto-generated method stub
+				// do nothing, should not be called from ant
 				return null;
 			}
 		};
@@ -36,6 +37,14 @@ public class AntExtensionManager implements IExtensionManager {
 
 	public IArchiveType[] getArchiveTypes() {
 		return new IArchiveType[0];
+	}
+
+	public IActionType getActionType(String id) {
+		return null;
+	}
+
+	public IActionType[] getActionTypes() {
+		return new IActionType[0];
 	}
 
 }

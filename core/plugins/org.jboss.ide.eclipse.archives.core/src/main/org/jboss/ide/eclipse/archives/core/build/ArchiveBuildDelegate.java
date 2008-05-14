@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.EventManager;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveAction;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
@@ -82,6 +83,15 @@ public class ArchiveBuildDelegate {
 		if( !pkg.getGlobalDestinationPath().toFile().exists() ) {
 			pkg.getGlobalDestinationPath().toFile().mkdirs();
 		}
+		
+		// Run the pre actions
+		IArchiveAction[] actions = pkg.getActions();
+		for( int i = 0; i < actions.length; i++ ) {
+			if( actions[i].getTime().equals(IArchiveAction.PRE_BUILD)) {
+				actions[i].execute();
+			}
+		}
+		
 		ModelTruezipBridge.createFile(pkg);
 		
 		// force create all folders
@@ -94,6 +104,13 @@ public class ArchiveBuildDelegate {
 		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(pkg);
 		for( int i = 0; i < filesets.length; i++ ) {
 			fullFilesetBuild(filesets[i], pkg);
+		}
+		
+		// Run the post actions
+		for( int i = 0; i < actions.length; i++ ) {
+			if( actions[i].getTime().equals(IArchiveAction.POST_BUILD)) {
+				actions[i].execute();
+			}
 		}
 		
 		EventManager.finishedBuildingArchive(pkg);

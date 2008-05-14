@@ -57,12 +57,22 @@ public interface IArchiveAction extends IArchiveNode {
 	public void setTime(String time);
 
 	/**
+	 * Get the id of this action's type.
+	 * These are to be provided via an extension point
+	 * or ant task to be discovered in ArchivesCore.
+	 * @return
+	 */
+	public String getTypeString();
+	
+	/**
 	 * Get the type of action this is. 
 	 * These are to be provided via an extension point
 	 * or ant task to be discovered in ArchivesCore.
 	 * @return
 	 */
-	public String getType();
+	public IActionType getType();
+	
+	
 
 	/**
 	 * Set the type of action this is. 
@@ -71,4 +81,14 @@ public interface IArchiveAction extends IArchiveNode {
 	 * @return
 	 */
 	public void setType(String type);
+	
+	/**
+	 * Execute me
+	 */
+	public void execute();
+	
+	/**
+	 * ToString must give something usable
+	 */
+	public String toString();
 }

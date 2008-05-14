@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-   <extension-point id="archiveTypes" name="JBossIDE Package Type" schema="schema/archiveTypes.exsd"/>
+   <extension-point id="archiveTypes" name="JBoss Tools Package Type" schema="schema/archiveTypes.exsd"/>
+   <extension-point id="actionTypes" name="JBoss Tools Build Action Type" schema="schema/actionTypes.exsd"/>
    <extension
          id="archivesNature"
          name="JBossIDE Packages Nature"
@@ -42,6 +43,14 @@
             file-names="packaging-build.xml"
             content-type="org.eclipse.ant.core.antBuildFile">
       </file-association>
+   </extension>
+   <extension
+         point="org.jboss.ide.eclipse.archives.core.actionTypes">
+      <actionType
+            class="org.jboss.ide.eclipse.archives.core.model.types.AntActionType"
+            id="org.jboss.ide.eclipse.archives.core.antActionType"
+            label="Ant Task">
+      </actionType>
    </extension>
 
 </plugin>

@@ -3,7 +3,7 @@
 <schema targetNamespace="org.jboss.ide.eclipse.archives.core">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.jboss.ide.eclipse.archives.core" id="packageTypes" name="JBoss Tools Package Type"/>
+         <meta.schema plugin="org.jboss.ide.eclipse.archives.core" id="actionTypes" name="JBoss Tools Build Action Type"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -13,7 +13,7 @@
    <element name="extension">
       <complexType>
          <sequence>
-            <element ref="packageType" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="actionType" minOccurs="1" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -42,7 +42,7 @@
       </complexType>
    </element>
 
-   <element name="packageType">
+   <element name="actionType">
       <complexType>
          <attribute name="id" type="string" use="required">
             <annotation>
@@ -64,7 +64,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":org.jboss.ide.eclipse.archives.core.model.IArchiveType"/>
+                  <meta.attribute kind="java" basedOn=":org.jboss.ide.eclipse.archives.core.model.IActionType"/>
                </appInfo>
             </annotation>
          </attribute>
