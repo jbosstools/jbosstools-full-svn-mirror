@@ -84,7 +84,7 @@ public class TemplateManagingUtil {
 		 * you will must review next code
 		 */
 		VpeNodeMapping nodeMapping = pageContext.getDomMapping()
-				.getNearNodeMapping(getSelectedNode(getCurrentSelection(pageContext)));
+				.getNearNodeMapping(selectedNode);
 
 		if (nodeMapping != null) {
 
