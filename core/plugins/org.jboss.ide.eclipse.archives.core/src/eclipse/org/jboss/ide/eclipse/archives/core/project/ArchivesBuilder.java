@@ -157,9 +157,11 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 					if (node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FILESET) {
 						IArchiveFileSet fileset = (IArchiveFileSet)node;
 						IPath p = fileset.getGlobalSourcePath();
-						if( workspaceRoot.getLocation().isPrefixOf(p)) {
-							IProject proj = workspaceRoot.getProject(p.segment(count));
-							set.add(proj);
+						if( p != null ) {
+							if( workspaceRoot.getLocation().isPrefixOf(p)) {
+								IProject proj = workspaceRoot.getProject(p.segment(count));
+								set.add(proj);
+							}
 						}
 					}
 					return true;
