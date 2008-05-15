@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
+import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFileSet;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
@@ -87,14 +88,22 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	 * @see IArchiveFileSet#getGlobalSourcePath()
 	 */
 	public IPath getGlobalSourcePath() {
+		IPath ret;
 		String path = getFileSetDelegate().getDir();
 		if (path == null || path.equals(".") || path.equals("")) {
-			return getProjectPath();
+			ret = getProjectPath();
 		} else if( isInWorkspace()){
-			return ModelUtil.workspacePathToAbsolutePath(new Path(path)); 
+			ret = ModelUtil.workspacePathToAbsolutePath(new Path(path)); 
 		} else {
-			return new Path(path);
+			ret = new Path(path);
 		}
+		
+		if( ret == null ) {
+			String message = "Error in fileset: " + toString() + ";  No global source path found.";
+			ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_WARN, message, new Exception(message));
+		}
+		
+		return ret;
 	}
 	
 	/*
@@ -120,10 +129,13 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	}
 
 	private boolean matchesPath(DirectoryScannerExtension scanner, IPath path) {
-		if( getGlobalSourcePath().isPrefixOf(path)) {
-			String s = path.toOSString().substring(getGlobalSourcePath().toOSString().length()+1);
-			return scanner.isUltimatelyIncluded(s);
-		}
+		IPath global = getGlobalSourcePath();
+		if( global != null ) {
+			if( global.isPrefixOf(path)) {
+				String s = path.toOSString().substring(getGlobalSourcePath().toOSString().length()+1);
+				return scanner.isUltimatelyIncluded(s);
+			}
+		} 
 		return false;
 	}
 	
@@ -261,6 +273,21 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	 */
 	public boolean validateModel() {
 		return getAllChildren().length == 0 ? true : false; 
+	}
+	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("{dir=");
+		sb.append(getFileSetDelegate().getDir());
+		sb.append(",includes=");
+		sb.append(getFileSetDelegate().getIncludes());
+		sb.append(",excludes=");
+		sb.append(getFileSetDelegate().getExcludes());
+		sb.append(",inWorkspace=");
+		sb.append(getFileSetDelegate().isInWorkspace());
+		sb.append(",flatten=");
+		sb.append(getFileSetDelegate().isFlattened());
+		return sb.toString();
 	}
 
 }
