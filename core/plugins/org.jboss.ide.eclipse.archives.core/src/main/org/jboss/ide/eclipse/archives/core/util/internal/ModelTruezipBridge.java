@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
@@ -209,7 +210,10 @@ public class ModelTruezipBridge {
 				filesetRelative = inputFiles[i].lastSegment();
 			else
 				filesetRelative = inputFiles[i].toOSString().substring(fsLength);
-			returnFiles[i] = new File(fsFile, filesetRelative, ArchiveDetector.DEFAULT);
+
+			String tmp = new Path(filesetRelative).removeLastSegments(1).toString();
+			File parentFile = new File(fsFile, tmp, ArchiveDetector.NULL);
+			returnFiles[i] = new File(parentFile, new Path(filesetRelative).lastSegment(), ArchiveDetector.DEFAULT); 
 		}
 		return returnFiles;
 	}

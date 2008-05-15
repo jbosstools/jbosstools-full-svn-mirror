@@ -114,31 +114,43 @@ public class ArchivesMenuHandler {
 					} else if( element instanceof IArchiveNode ){
 						IArchiveNode node = (IArchiveNode)element;
 						
-						if (node.getNodeType() == IArchiveNode.TYPE_ARCHIVE
-								|| node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FOLDER)
-						{	
+						switch(node.getNodeType()) {
+						case IArchiveNode.TYPE_ARCHIVE:
 							newJARAction.setEnabled(true);
 							manager.add(newPackageManager);
-							
 							manager.add(newFolderAction);
 							manager.add(newFilesetAction);
 							manager.add(new Separator());
-						}
-						
-						if (node.getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
 							editAction.setText(ArchivesUIMessages.ProjectPackagesView_editPackageAction_label); //$NON-NLS-1$
 							deleteAction.setText(ArchivesUIMessages.ProjectPackagesView_deletePackageAction_label); //$NON-NLS-1$
 							editAction.setImageDescriptor(ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_PACKAGE_EDIT));
 							buildAction.setText(ArchivesUIMessages.ProjectPackagesView_buildArchiveAction_label);
 							manager.add(buildAction);
-						} else if (node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FOLDER) {
+							break;
+						case IArchiveNode.TYPE_ARCHIVE_FOLDER:
+							newJARAction.setEnabled(true);
+							manager.add(newPackageManager);
+							manager.add(newFolderAction);
+							manager.add(newFilesetAction);
+							manager.add(new Separator());
 							editAction.setText(ArchivesUIMessages.ProjectPackagesView_editFolderAction_label); //$NON-NLS-1$
 							deleteAction.setText(ArchivesUIMessages.ProjectPackagesView_deleteFolderAction_label); //$NON-NLS-1$
 							editAction.setImageDescriptor(platformDescriptor(ISharedImages.IMG_OBJ_FOLDER));
-						} else if (node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FILESET) {
+							break;
+						case IArchiveNode.TYPE_ARCHIVE_FILESET:
 							editAction.setText(ArchivesUIMessages.ProjectPackagesView_editFilesetAction_label); //$NON-NLS-1$
 							deleteAction.setText(ArchivesUIMessages.ProjectPackagesView_deleteFilesetAction_label); //$NON-NLS-1$
 							editAction.setImageDescriptor(ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_MULTIPLE_FILES));
+							break;
+						case IArchiveNode.TYPE_ARCHIVE_ACTION:
+							editAction.setText(ArchivesUIMessages.ProjectPackagesView_editActionAction_label); //$NON-NLS-1$
+							deleteAction.setText(ArchivesUIMessages.ProjectPackagesView_deleteActionAction_label); //$NON-NLS-1$
+							//editAction.setImageDescriptor(ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_MULTIPLE_FILES));
+							editAction.setImageDescriptor(null);
+							break;
+						default:
+							// TODO unknown?
+							break;
 						}
 						manager.add(editAction);
 						manager.add(deleteAction);
@@ -320,7 +332,7 @@ public class ArchivesMenuHandler {
 				}
 				
 				selected.addChild(current);
-				//ArchivesModel.
+				ArchivesModel.instance().save(selected.getProjectPath(), new NullProgressMonitor());
 			} catch( ArchivesModelException ame ) {
 				IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, "Error Attaching Archives Node", ame);
 				PackagesUIPlugin.getDefault().getLog().log(status);
