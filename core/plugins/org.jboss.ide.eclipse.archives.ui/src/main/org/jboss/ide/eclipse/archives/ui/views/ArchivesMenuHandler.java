@@ -320,7 +320,7 @@ public class ArchivesMenuHandler {
 				}
 				
 				selected.addChild(current);
-				//ArchivesModel.
+				ArchivesModel.instance().save(selected.getProjectPath(), new NullProgressMonitor());
 			} catch( ArchivesModelException ame ) {
 				IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, "Error Attaching Archives Node", ame);
 				PackagesUIPlugin.getDefault().getLog().log(status);
