@@ -26,29 +26,23 @@
 ]>
 
 <book>
-    
-     <bookinfo>
-        <title>Getting Started with JBoss Developer Studio</title>
-         <pubdate>April 2008</pubdate>
-	                       <copyright>
-			<year>2007</year>
-	                           <year>2008</year>
-	                           <holder>JBoss, a division of Red Hat Inc.</holder>
-	                       </copyright>
-          <releaseinfo>
-<para>Version: 1.1.0.CR1</para>
-</releaseinfo>
-    </bookinfo>
-      
-    <toc/>  
-    
-
-&getting_started;
-&manage;
-&first_seam;
-&jsp_application;
-&rad_jsf_application;
-&further_reading;
-
-
-</book>    
+ <bookinfo>
+  <title>Getting Started with JBoss Developer Studio</title>
+  <pubdate>April 2008</pubdate>
+  <copyright>
+   <year>2007</year>
+   <year>2008</year>
+   <holder>JBoss, a division of Red Hat Inc.</holder>
+  </copyright>
+  <releaseinfo>Version: 1.1.0.CR1</releaseinfo>
+ </bookinfo>
+ <toc/> 
+ 
+ &getting_started;
+ &manage; 
+ &first_seam; 
+ &jsp_application;
+ &rad_jsf_application; 
+ &further_reading; 
+ 
+</book>

@@ -10,7 +10,9 @@
       <keyword>JBoss</keyword>
     </keywordset>
   </chapterinfo>
+    
  <title>Manage JBoss AS from JBoss Developer Studio</title>
+    
     <para>In this chapter we'll focus more on how to operate the JBoss AS from JBoss Developer Studio.</para>
     <para>JBoss Developer Studio ships with <property>JBoss EAP v.4.2</property> bundled. When you followed the default installation of JBoss Developer Studio, you should already have a JBoss 4.2 server installed and defined. To run JBoss AS 4.2 you need JDK 1.5, JDK 6 is not formally supported yet, although you may be able to start the server with it.</para>
  <section id="JBossbundled">
@@ -129,7 +131,7 @@
      </note>
     
  <para>There is no requirement for root access to run JBoss Server on UNIX/Linux systems because none of the default ports are within the 0-1023 privileged port range.</para>
-<itemizedlist continuation="continues">
+<itemizedlist>
 <listitem><para>After you have the binary archive you want to install, use the JDK jar tool (or any other ZIP extraction tool) to extract the jboss-4.2.1.zip archive contents into a location of your choice. The jboss-4.2.1.tgz  archive is a gzipped tar file that requires a gnutar compatible tar which can handle the long pathnames in the archive. The extraction process will create a jboss-4.2.1 directory. </para></listitem>
 </itemizedlist>
 </section>
@@ -152,7 +154,7 @@
 </mediaobject>
 </figure>
      
-     <itemizedlist continuation="continues">
+     <itemizedlist>
          <listitem><para>Click <emphasis><property>Add</property></emphasis> button to add a new jboss runtime.</para></listitem>
          <listitem><para>Select <emphasis><property>JBoss, a division of Red Hat &gt; JBoss v4.2</property></emphasis> and press <emphasis><property>Next</property></emphasis>.</para></listitem>
      </itemizedlist>
@@ -168,7 +170,7 @@
 
 
 
-<itemizedlist continuation="continues">
+<itemizedlist>
 <listitem><para>In the next step make JBoss Developer Studio to know where you have installed the server and define JRE.</para></listitem>
 </itemizedlist>
 <figure>
@@ -183,7 +185,7 @@
     <title>Note:</title>
     <para>When adding a new server you will need to specify what JRE to use. It is important to set this value to a full JDK, not JRE. Again, you need a full JDK to run Web applications, JRE will not be enough.</para>
 </note>
-<itemizedlist continuation="continues">
+<itemizedlist>
     <listitem><para>In the following window leave all settings default or give your name to a new jboss server and press <emphasis><property>Finish</property></emphasis>.</para></listitem>
 </itemizedlist>
 <figure>
@@ -204,7 +206,7 @@
 </mediaobject>
 </figure>
 
-<itemizedlist continuation="continues">
+<itemizedlist>
     <listitem><para>Click <emphasis><property>OK</property></emphasis>. Then select a new added runtime in Server runtime drop down list and click <emphasis><property>Next</property></emphasis> button twice.</para></listitem>
 </itemizedlist>
 <figure>
