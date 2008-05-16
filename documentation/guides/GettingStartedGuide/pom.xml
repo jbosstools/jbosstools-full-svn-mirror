@@ -43,8 +43,6 @@
                         <directory>${pom.basedir}/en</directory>
                         <includes>
                             <include>images/**/*</include>
-                        </includes>
-			<includes>
                             <include>database.zip</include>
                         </includes>
                     </imageResource>
