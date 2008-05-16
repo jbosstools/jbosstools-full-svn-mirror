@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %plugin.name
+Bundle-SymbolicName: org.jboss.tools.birt.oda.ui;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.jboss.tools.birt.oda.ui.Activator
+Bundle-Vendor: RedHat, Inc.
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.datatools.connectivity.oda.design.ui;bundle-version="[3.0.4,4.0.0)",
+ org.jboss.tools.birt.oda,
+ org.eclipse.jface.text,
+ org.eclipse.jdt.core,
+ org.eclipse.ui.workbench.texteditor
+Eclipse-LazyStart: true
