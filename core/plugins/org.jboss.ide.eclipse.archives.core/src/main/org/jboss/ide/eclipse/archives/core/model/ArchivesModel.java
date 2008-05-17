@@ -156,6 +156,14 @@ public class ArchivesModel implements IArchiveModel {
 		return archivesRoot.containsKey(projectPath);
 	}
 	
+	public boolean canReregister(IPath projectPath) {
+		return canReregister(projectPath, DEFAULT_PACKAGES_FILE);
+	}
+	
+	public boolean canReregister(IPath projectPath, String file) {
+		return projectPath.append(file).toFile().exists();
+	}
+	
 	public IArchiveModelRootNode registerProject(IPath projectPath, IProgressMonitor monitor) throws ArchivesModelException {
 		return registerProject(projectPath, DEFAULT_PACKAGES_FILE, monitor);
 	}
