@@ -43,6 +43,8 @@ public interface IArchiveModel {
 	public void registerProject(IArchiveModelRootNode modelNode, IProgressMonitor monitor);
 	public void unregisterProject(IPath projectPath, IProgressMonitor monitor);
 	public void unregisterProject(IArchiveModelRootNode modelNode, IProgressMonitor monitor);
+	public boolean canReregister(IPath projectPath);
+	public boolean canReregister(IPath projectPath, String file);
 	public IArchiveModelRootNode getRoot(IPath project);
 	public IArchiveModelRootNode[] getModelNodes();
 	public boolean accept(IArchiveNodeVisitor visitor);
