@@ -10,8 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.util;
 
-import java.util.List;
-
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
@@ -272,7 +270,7 @@ public class TemplateManagingUtil {
 	 */
 	public static nsIDOMNode getSelectedNode(nsISelection selection) {
 	
-		if (selection.getIsCollapsed()) {
+		if (selection.getFocusNode() == selection.getAnchorNode()) {
 			if (selection.getFocusNode() != null) {
 				if ((selection.getFocusNode().getNodeType() != nsIDOMNode.TEXT_NODE)
 						&& (selection.getFocusOffset() != 0)) {
