@@ -176,7 +176,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 						.getCurrentSelection(pageContext));
 			}
 
-			if (node == null)
+			if (node == null || selectedRange == null)
 				return false;
 
 			// get focus and anchor offsets
@@ -288,7 +288,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 						.getCurrentSelection(pageContext));
 			}
 
-			if (node == null)
+			if (node == null || selectedRange == null)
 				return false;
 
 			// get focus and anchor offsets
@@ -391,7 +391,7 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 				selectedRange = getSelectionRange(TemplateManagingUtil
 						.getCurrentSelection(pageContext));
 			}
-			if (node == null)
+			if (node == null || selectedRange == null)
 				return false;
 
 			// get focus and anchor offsets
@@ -523,13 +523,13 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		Node node = getTargetSourceNodeByVisualNode(pageContext, visualNode,
 				elementMapping);
 
-		if (node == null)
-			return false;
-
 		// get focus and anchor offsets
 		Point selectedRange = getSelectionRange(TemplateManagingUtil
 				.getCurrentSelection(pageContext));
 
+		if (node == null || selectedRange == null)
+			return false;
+		
 		int focusOffset = selectedRange.x;
 
 		// if node editable
@@ -595,13 +595,13 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 			Node node = getTargetSourceNodeByVisualNode(pageContext,
 					visualNode, elementMapping);
 
-			if (node == null)
-				return false;
-
 			// get focus and anchor offsets
 			Point selectedRange = getSelectionRange(TemplateManagingUtil
 					.getCurrentSelection(pageContext));
 
+			if (node == null || selectedRange == null)
+				return false;
+			
 			int focusOffset = selectedRange.x;
 
 			if (focusOffset != 0) {
@@ -709,6 +709,20 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		// set source selection
 		TemplateManagingUtil.setSourceSelection(pageContext, targetSourceNode,
 				focusOffset, length);
+
+		if ((HTML.TAG_INPUT.equalsIgnoreCase(targetVisualNode.getLocalName()))
+				|| (HTML.TAG_TEXTAREA.equalsIgnoreCase(targetVisualNode
+						.getLocalName()))) {
+
+			TemplateManagingUtil.setSelectionRangeInInputElement(
+					targetVisualNode, new Point(focusOffset, length));
+
+			selection.collapse(targetVisualNode.getParentNode(),
+					(int) VisualDomUtil.getOffset(targetVisualNode));
+
+			selection.extend(targetVisualNode.getParentNode(),
+					(int) VisualDomUtil.getOffset(targetVisualNode) + 1);
+		}
 
 		// setSelectionRange(selection,
 		// targetVisualNode, new Point(focusOffset, length));
@@ -825,6 +839,23 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		// setSelectionRange(selectionController
 		// .getSelection(nsISelectionController.SELECTION_NORMAL),
 		// targetVisualNode, new Point(selectionOffset, selectionLength));
+
+		if ((HTML.TAG_INPUT.equalsIgnoreCase(targetVisualNode.getLocalName()))
+				|| (HTML.TAG_TEXTAREA.equalsIgnoreCase(targetVisualNode
+						.getLocalName()))) {
+
+			TemplateManagingUtil.setSelectionRangeInInputElement(
+					targetVisualNode, new Point(selectionOffset,
+							selectionLength));
+
+			 (selectionController.getSelection(nsISelectionController.SELECTION_NORMAL)).collapse(targetVisualNode.getParentNode(),(int)
+			 VisualDomUtil.getOffset(targetVisualNode));
+
+			 (selectionController
+					.getSelection(nsISelectionController.SELECTION_NORMAL))
+					.extend(targetVisualNode.getParentNode(),
+							(int) VisualDomUtil.getOffset(targetVisualNode) + 1);
+		}
 
 		// check for text node
 		if (targetVisualNode.getNodeType() != nsIDOMNode.ELEMENT_NODE) {
@@ -1114,9 +1145,11 @@ public abstract class EditableTemplateAdapter extends VpeAbstractTemplate
 		nsIDOMNode focusedNode = TemplateManagingUtil
 				.getSelectedNode(selection);
 
-		Point range = new Point(0, 0);
+		Point range = null;
 
 		if (focusedNode != null) {
+			
+			range = new Point(0,0);
 			if ((HTML.TAG_INPUT.equalsIgnoreCase(focusedNode.getLocalName()))
 					|| (HTML.TAG_TEXTAREA.equalsIgnoreCase(focusedNode
 							.getLocalName()))) {
