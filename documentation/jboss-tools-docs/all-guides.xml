@@ -35,7 +35,7 @@
 			  <directoryMode>0755</directoryMode>
 			</fileSet>
 			<fileSet>
-				<directory>../guides/Exadel-migration/target/docbook/</directory>
+				<directory>../guides/Exadel-migration/target/docbook/publish/en-US</directory>
 				<outputDirectory>/Exadel-migration</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
@@ -48,7 +48,7 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
 			<fileSet>
-				<directory>../guides/GettingStartedGuide/target/docbook/</directory>
+				<directory>../guides/GettingStartedGuide/target/docbook/publish/en-US</directory>
 				<outputDirectory>/GettingStartedGuide</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
@@ -60,7 +60,7 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
-			<fileSet>
+			<!--fileSet>
 				<directory>../guides/GettingStartedGuide/en</directory>
 				<outputDirectory>/GettingStartedGuide</outputDirectory>
 				<filtered>false</filtered>
@@ -71,9 +71,9 @@
 				<useDefaultExcludes>true</useDefaultExcludes>
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
-			</fileSet>
+			</fileSet-->
 			<fileSet>
-				<directory>../guides/Legacy-jsf-struts/target/docbook/</directory>
+				<directory>../guides/Legacy-jsf-struts/target/docbook/publish/en-US</directory>
 				<outputDirectory>/Legacy-jsf-struts</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
@@ -86,7 +86,7 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
 			<fileSet>
-				<directory>../../as/docs/reference/target/docbook/</directory>
+				<directory>../../as/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/as</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
@@ -99,7 +99,7 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
 			<fileSet>
-				<directory>../../hibernatetools/docs/reference/target/docbook/</directory>
+				<directory>../../hibernatetools/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/hibernatetools</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
@@ -112,7 +112,7 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
 			<fileSet>
-				<directory>../../jbpm/docs/reference/target/docbook/</directory>
+				<directory>../../jbpm/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/jbpm</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
@@ -125,7 +125,7 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
 			<fileSet>
-				<directory>../../jsf/docs/userguide/target/docbook/</directory>
+				<directory>../../jsf/docs/userguide/target/docbook/publish/en-US</directory>
 				<outputDirectory>/jsf</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
@@ -138,7 +138,7 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
 			<fileSet>
-				<directory>../../seam/docs/reference/target/docbook/</directory>
+				<directory>../../seam/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/seam</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
@@ -151,7 +151,7 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
 			<fileSet>
-				<directory>../../jsf/docs/jsf_tools_ref_guide/target/docbook/</directory>
+				<directory>../../jsf/docs/jsf_tools_ref_guide/target/docbook/publish/en-US</directory>
 				<outputDirectory>/jsf_tools_ref_guide</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
@@ -165,7 +165,7 @@
 			</fileSet>
 
 			<fileSet>
-				<directory>../../jsf/docs/jsf_tools_tutorial/target/docbook/</directory>
+				<directory>../../jsf/docs/jsf_tools_tutorial/target/docbook/publish/en-US</directory>
 				<outputDirectory>/jsf_tools_tutorial</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
@@ -179,7 +179,7 @@
 			</fileSet>
 
 			<fileSet>
-				<directory>../../struts/docs/struts_tools_tutorial/target/docbook/</directory>
+				<directory>../../struts/docs/struts_tools_tutorial/target/docbook/publish/en-US</directory>
 				<outputDirectory>/struts_tools_tutorial</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
@@ -193,7 +193,7 @@
 			</fileSet>
 
 			<fileSet>
-				<directory>../../struts/docs/struts_tools_ref_guide/target/docbook/</directory>
+				<directory>../../struts/docs/struts_tools_ref_guide/target/docbook/publish/en-US</directory>
 				<outputDirectory>/struts_tools_ref_guide</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
@@ -206,7 +206,7 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
                         <fileSet>
-				<directory>../../esb/docs/esb_ref_guide/target/docbook/</directory>
+				<directory>../../esb/docs/esb_ref_guide/target/docbook/publish/en-US</directory>
 				<outputDirectory>/esb_ref_guide</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>

@@ -82,7 +82,7 @@
 		<para>This section covers all the points how to create, edit and then preview JSP page.</para>
 		<para>In our simple application we need to create only one JSP page which displays a
 			&quot;Hello World!&quot; message.</para>
-		<itemizedlist continuation="continues">
+		<itemizedlist>
 			<listitem>
 				<para>Right click <emphasis><property>WebContent &gt; New &gt; JSP</property>.
 					</emphasis></para>
@@ -94,7 +94,7 @@
 			</listitem>
 		</itemizedlist>
 		<para>In the next window you can choose a template for your jsp page and see its preview.</para>
-		<itemizedlist continuation="continues">
+		<itemizedlist>
 			<listitem>
 				<para>Select <emphasis>
 						<property>New JSP File (xhtml)</property>
@@ -117,7 +117,7 @@
 			<title>Editing a JSP Page</title>
 			<para>Let&apos;s now make a little change so that a jsp page displays
 				&quot;Hello World!&quot; message.</para>
-			<itemizedlist continuation="continues">
+			<itemizedlist>
 				<listitem>
 					<para>Insert this line inside the <emphasis role="bold">
 							<property>&lt;body&gt;</property>
@@ -338,7 +338,7 @@
 			<title>Launch JSP Project</title>
 			<para>Let&apos;s now launch our project on server. We&apos;ll use JBoss server
 				that is shipped with JBoss Developer Studio.</para>
-			<itemizedlist continuation="continues">
+			<itemizedlist>
 				<listitem>
 					<para>Start JBoss server from JBoss Server view by clicking the Start
 					icon.</para>
@@ -352,7 +352,7 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<itemizedlist continuation="continues">
+			<itemizedlist>
 				<listitem>
 					<para>Click the Run icon or right click your project folder and select <emphasis>
 							<property>Run As &gt; Run on Server</property>.

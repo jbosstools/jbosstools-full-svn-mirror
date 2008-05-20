@@ -7,11 +7,11 @@
     <groupId>org.jboss.tools</groupId>
     <artifactId>jbosstools-docbook-xslt</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <name>JBoss Tools DocBook XSLT</name>
     <description>The main project to transform DocBook XML into XHTML and other formats for JBoss Tools Documentation.</description>
-    <url>http://labs.jboss.com/tools/</url>
+    <url>http://www.jboss.org/tools/</url>
 
     <contributors>
       <contributor>
@@ -25,23 +25,47 @@
       </contributor>
     </contributors>
 
+   <scm>
+      <developerConnection>scm:svn:https://svn.jboss.org/repos/jbosstools/trunk/documentation/jbosstools-docbook-xslt/</developerConnection>
+      <connection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/trunk/documentation/jbosstools-docbook-xslt/</connection>
+   </scm>
+   
     <dependencies>
         <dependency>
-            <groupId>net.sf.docbook</groupId>
-            <artifactId>docbook</artifactId>
+            <groupId>org.jboss</groupId>
+            <artifactId>jbossorg-docbook-xslt</artifactId>
         </dependency>
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>net.sf.docbook</groupId>
-                <artifactId>docbook</artifactId>
-                <version>1.72.0</version>
+                <groupId>org.jboss</groupId>
+                <artifactId>jbossorg-docbook-xslt</artifactId>
+                <version>1.1.0.Beta1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
+   <build>
+      <extensions>
+         <extension>
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-webdav</artifactId>
+            <version>1.0-beta-2</version>
+         </extension>
+      </extensions>
+      <pluginManagement>
+         <plugins>
+            <plugin>
+               <groupId>org.jboss.maven.plugins</groupId>
+               <artifactId>maven-jdocbook-plugin</artifactId>
+               <version>2.1.0-200803311251UTC-MPJDOCBOOK-8</version>
+            </plugin>
+         </plugins>
+      </pluginManagement>
+   </build>
+   
     <distributionManagement>
         <repository>
             <!-- Copy the dist to the local checkout of the JBoss maven2 repo ${maven.repository.root} -->
