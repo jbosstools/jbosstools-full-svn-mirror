@@ -19,7 +19,7 @@
    Linux. But, many find these pre-configured tools offer significant time-savings and value, making
    them more productive and speeding time to deployment.</para>
   <para>This guide covers the first steps to get started working with JBoss Developer Studio. You will learn how to install and
-   configure necessary software for your OS (operating system).</para>
+   configure necessary software for your OS (currently Linux, Microsoft Windows or Mac OSX).</para>
   <para>Thus this guide will provide you with detailed info on how to start JDK, JBDS and JBoss Tools.</para>
  </section>
 
@@ -191,7 +191,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     </listitem>
     <listitem>
      <para>Run in console:</para>
-     <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-linux-gtk-1.1.0.CR1.jar
+     <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-linux-gtk-1.1.0.GA.jar
 ]]></programlisting>
     </listitem>
     <listitem>
