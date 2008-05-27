@@ -39,7 +39,7 @@
   </figure>
   
   <itemizedlist continuation="continues">
-   <listitem><para>In the first screen of the wizard, select the <emphasis><property>Change...</property></emphasis> button next to the <emphasis><property>web.xml Location*</property></emphasis> field. Browse to the location of the web.xml file for the application you 
+   <listitem><para>In the first screen of the wizard, select the <emphasis><property>Change...</property></emphasis> button next to the <emphasis><property>web.xml Location</property></emphasis> field. Browse to the location of the web.xml file for the application you 
     want to import as a <property>JSF project</property>. Once you select it, you&apos;ll be returned to the dialog box to see a project name derived from the web.xml file you selected. 
     You can edit this project name, if you wish.</para></listitem>
    </itemizedlist>
@@ -115,7 +115,7 @@
   </figure>
   
   <itemizedlist continuation="continues">
-   <listitem><para>In the Project Location screen of the wizard, select the <emphasis><property>Change... </property></emphasis>button next to the <emphasis><property>web.xml Location*</property></emphasis> field. Browse the location of the web.xml file for the application you 
+   <listitem><para>In the Project Location screen of the wizard, select the <emphasis><property>Change... </property></emphasis>button next to the <emphasis><property>web.xml Location</property></emphasis> field. Browse the location of the web.xml file for the application you 
     want to import as a <property>Struts project</property>. Once you select it, you&apos;ll be returned to the dialog box to see a project name derived from the web.xml file you selected. 
     You can edit this project name, if you wish.</para></listitem>
   </itemizedlist>
