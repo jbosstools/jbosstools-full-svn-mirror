@@ -29,12 +29,12 @@
 						<version>1.0.0</version>
 						<type>jdocbook-style</type>
 					</dependency>
-					                   <dependency>
-                        <groupId>org.jboss</groupId>
-                        <artifactId>jbossorg-jdocbook-style</artifactId>
-                        <version>1.1.0</version>
-                        <type>jdocbook-style</type>
-                    </dependency>
+					<dependency>
+						<groupId>org.jboss</groupId>
+						<artifactId>jbossorg-jdocbook-style</artifactId>
+						<version>1.1.0</version>
+						<type>jdocbook-style</type>
+					</dependency>
 				</dependencies>
 				<configuration>
 					<sourceDocumentName>master.xml</sourceDocumentName>
@@ -45,36 +45,29 @@
 							<include>images/**/*</include>
 						</includes>
 					</imageResource>
-					<!--<cssResource>
-						<directory>src/main/css</directory>
-						</cssResource>-->
+					<cssResource>
+						<directory>${pom.basedir}/${cssdir}</directory>
+					</cssResource>
+
 					<formats>
 						<format>
 							<formatName>pdf</formatName>
-							<stylesheetResource>
-								classpath:/xslt/com/jboss/pdf.xsl
-							</stylesheetResource>
+							<stylesheetResource>file:${pom.basedir}/${stylesdir}/xslt/com/jboss/tools/pdf.xsl</stylesheetResource>
 							<finalName>${pom.name}.pdf</finalName>
 						</format>
 						<format>
 							<formatName>html</formatName>
-							<stylesheetResource>
-								classpath:/xslt/com/jboss/xhtml.xsl
-							</stylesheetResource>
+							<stylesheetResource>file:${pom.basedir}/${stylesdir}/xslt/com/jboss/tools/xhtml.xsl</stylesheetResource>
 							<finalName>index.html</finalName>
 						</format>
 						<format>
 							<formatName>html_single</formatName>
-							<stylesheetResource>
-								classpath:/xslt/com/jboss/xhtml-single.xsl
-							</stylesheetResource>
+							<stylesheetResource>file:${pom.basedir}/${stylesdir}/xslt/com/jboss/tools/xhtml-single.xsl</stylesheetResource>
 							<finalName>index.html</finalName>
 						</format>
 						<format>
 							<formatName>eclipse</formatName>
-							<stylesheetResource>
-								classpath:/xslt/com/jboss/eclipse.xsl
-							</stylesheetResource>
+							<stylesheetResource>file:${pom.basedir}/${stylesdir}/xslt/com/jboss/tools/eclipse.xsl</stylesheetResource>
 							<finalName>index.html</finalName>
 						</format>
 					</formats>
@@ -106,7 +99,9 @@
 	</distributionManagement>
 
 	<properties>
+		<stylesdir>../../../documentation/jbosstools-docbook-xslt/src/main/resources/</stylesdir>
+		<cssdir>../../../documentation/jbosstools-jdocbook-style/src/main/com/css/</cssdir>
 		<translation>en-US</translation>
-	</properties>
+	</properties> 
 
 </project>
