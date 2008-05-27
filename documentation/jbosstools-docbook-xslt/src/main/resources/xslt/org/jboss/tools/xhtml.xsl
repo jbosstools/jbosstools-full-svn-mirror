@@ -10,5 +10,5 @@
 
    <xsl:import href="classpath:/xslt/org/jboss/xhtml.xsl"/>
    <xsl:import href="common.xsl"/>
-
+  
 </xsl:stylesheet>

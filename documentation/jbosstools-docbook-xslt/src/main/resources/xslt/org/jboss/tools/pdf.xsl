@@ -11,4 +11,7 @@
    <xsl:import href="classpath:/xslt/org/jboss/pdf.xsl"/>
    <xsl:import href="common.xsl"/>
 
+   <!-- Ignore image scaling in html version -->
+   <xsl:param name="ignore.image.scaling" select="1"/> 
+   
 </xsl:stylesheet>
