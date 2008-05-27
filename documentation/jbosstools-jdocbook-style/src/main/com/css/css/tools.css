@@ -1,0 +1,17 @@
+@import url("jbossenterprise.css");
+
+/* -----Override jbossenterprise-single.css----- */
+
+/* Body */
+body {
+    background-image:none;
+    background-color:white;
+    margin:0 auto;
+    font-family:"Lucida Grande", verdana, "Luxi Sans","Trebuchet MS", helvetica,verdana,arial,sans-serif;
+    font-size:12px;
+    max-width:55em;
+    padding:0em 2em;
+    color:#333;
+    line-height:150%;
+    text-align:justify;
+}
