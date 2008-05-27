@@ -17,13 +17,13 @@
   <section>
     <title>JSF</title>
 
-    <orderedlist>
+    <itemizedlist>
       <listitem>
         <para>Select <emphasis><property>File > Import...</property></emphasis> from the menu bar, and then select
         <emphasis><property>Other > JSF Project From *.war</property></emphasis> from the Import dialog box that
         appears.</para>
       </listitem>
-    </orderedlist>
+    </itemizedlist>
 
     <figure>
       <title>Selecting the Import Menu Item</title>
@@ -45,7 +45,7 @@
       </mediaobject>
     </figure>
 
-    <orderedlist continuation="continues">
+    <itemizedlist continuation="continues">
       <listitem>
         <para>In the wizard screen, select the <emphasis><property>Change...</property></emphasis> button next to
           the <emphasis><property>*.war Location</property></emphasis> field. Browse to the location of the *.war file for
@@ -72,7 +72,7 @@
         above. If you don&apos;t want to deploy the application, uncheck this
         value.</para>
       </listitem>
-    </orderedlist>
+    </itemizedlist>
 
     <figure>
       <title>The JSF Project From *.war Import Wizard</title>
@@ -84,23 +84,23 @@
       </mediaobject>
     </figure>
 
-    <orderedlist continuation="continues">
+    <itemizedlist continuation="continues">
       <listitem>
         <para>Click on the <emphasis><property>Finish</property></emphasis> button.</para>
       </listitem>
-    </orderedlist>
+    </itemizedlist>
   </section>
 
   <section>
     <title>Struts</title>
 
-    <orderedlist>
+    <itemizedlist>
       <listitem>
         <para>Select <emphasis><property>File > Import...</property></emphasis> from the menu bar, and then select
         <emphasis><property>Other > Struts Project From *.war</property></emphasis> from the Import dialog box that
         appears.</para>
       </listitem>
-    </orderedlist>
+    </itemizedlist>
 
     <figure>
       <title>Selecting the Import Menu Item</title>
@@ -121,12 +121,12 @@
       </mediaobject>
     </figure>
 
-    <orderedlist continuation="continues">
+    <itemizedlist continuation="continues">
       <listitem>
         <para>Follow the same steps as with the JSF Project From <property>*.war</property> import
         wizard.</para>
       </listitem>
-    </orderedlist>
+    </itemizedlist>
 
     <figure>
       <title>The Struts Project From *.war Import Wizard</title>
@@ -138,11 +138,11 @@
       </mediaobject>
     </figure>
 
-    <orderedlist continuation="continues">
+    <itemizedlist continuation="continues">
       <listitem>
         <para>Click on the <emphasis><property>Finish</property></emphasis> button.</para>
       </listitem>
-    </orderedlist>
+    </itemizedlist>
 	<para>The migration process is completed</para>
   </section>
 </chapter>
