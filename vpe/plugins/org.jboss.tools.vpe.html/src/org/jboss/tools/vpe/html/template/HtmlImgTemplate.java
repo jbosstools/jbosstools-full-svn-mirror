@@ -35,7 +35,6 @@ public class HtmlImgTemplate extends VpeAbstractTemplate {
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.vpe.editor.template.VpeTemplate#create(org.jboss.tools.vpe.editor.context.VpePageContext, org.w3c.dom.Node, org.mozilla.interfaces.nsIDOMDocument)
 	 */
-	@Override
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument) {
 
