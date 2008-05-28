@@ -84,6 +84,8 @@ public final class HTML {
 	public static final String ATTR_ROWS = "rows"; //$NON-NLS-1$
 	public static final String ATTR_COLS = "cols"; //$NON-NLS-1$
 	public static final String ATTR_VALIGN = "valign"; //$NON-NLS-1$
+	public static final String ATTR_SRC = "src"; //$NON-NLS-1$
+	public static final String ATTR_ALT = "alt"; //$NON-NLS-1$
 
 	public static final String VALUE_TOP_ALIGN = "top"; //$NON-NLS-1$
 	public static final String VALUE_MIDDLE_ALIGN = "middle"; //$NON-NLS-1$

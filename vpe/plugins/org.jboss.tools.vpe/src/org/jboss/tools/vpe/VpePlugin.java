@@ -107,5 +107,16 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 		}
 	}
 	
+	public static String getPluginResourcePath() {
+		Bundle bundle = Platform.getBundle(PLUGIN_ID);
+		URL url = null;
+		try {
+			url = bundle == null ? null : FileLocator.resolve(bundle.getEntry("/resources"));
+		} catch (Exception e) {
+			url = bundle.getEntry("/resources");
+		}
+		return (url == null) ? null : url.getPath();
+	}
+	
 	
 }

@@ -26,6 +26,7 @@ import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.jst.web.project.WebProject;
+import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
@@ -38,7 +39,9 @@ import org.w3c.dom.Node;
 
 public class VpeStyleUtil {
 
-    public static final String ATTRIBUTE_STYLE = "style"; //$NON-NLS-1$
+	public static final String UNRESOLVED_IMAGE_PATH = "org/jboss/tools/vpe/editor/mozilla/icons/unresolved_image.gif"; //$NON-NLS-1$
+
+	public static final String ATTRIBUTE_STYLE = "style"; //$NON-NLS-1$
 
     public static final String PARAMETER_POSITION = "position"; //$NON-NLS-1$
     public static final String PARAMETER_TOP = "top"; //$NON-NLS-1$
@@ -517,23 +520,36 @@ public class VpeStyleUtil {
 	 * 
 	 * @param path image "src" attribute value
 	 * @param pageContext the pageContext
+	 * @param showUnresolvedImage flag to display unresolved image
 	 * 
 	 * @return the full path to image "src" attribute
 	 */
 	public static String addFullPathToImgSrc(String path,
-			VpePageContext pageContext) {
+			VpePageContext pageContext, boolean showUnresolvedImage) {
 
 		IPath tagPath = new Path(path);
 		if (tagPath.isEmpty()) {
-			return path;
+			if (showUnresolvedImage) {
+				return FILE_PROTOCOL + SLASH + SLASH
+						+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH);
+			} else {
+				return path;
+			}
 		}
+		
+		
 
 		String device = (tagPath.getDevice() == null ? tagPath.segment(0)
 				: tagPath.getDevice());
 		if (device != null
 				&& (HTTP_PROTOCOL.equalsIgnoreCase(device) || FILE_PROTOCOL
 						.equalsIgnoreCase(device))) {
-			return path;
+			if (showUnresolvedImage) {
+				return FILE_PROTOCOL + SLASH + SLASH
+						+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH);
+			} else {
+				return path;
+			}
 		}
 
 		File locFile = tagPath.toFile();
@@ -593,7 +609,12 @@ public class VpeStyleUtil {
 				}
 			}
 		}
-		return path;
+		if (showUnresolvedImage) {
+			return FILE_PROTOCOL + SLASH + SLASH
+					+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH);
+		} else {
+			return path;
+		}
 	}
 
 	/**
@@ -683,6 +704,18 @@ public class VpeStyleUtil {
 		value.appendChild(visualDomBuilder.getXulRunnerEditor()
 				.getDOMDocument().createTextNode(text));
 
+	}
+	
+    public static String getAbsoluteResourcePath(String resourcePathInPlugin) {
+		String pluginPath = VpePlugin.getPluginResourcePath();
+		IPath pluginFile = new Path(pluginPath);
+		File file = pluginFile.append(resourcePathInPlugin).toFile();
+		if (file.exists()) {
+			return file.getAbsolutePath();
+		} else {
+			throw new RuntimeException("Can't get path for " //$NON-NLS-1$
+					+ resourcePathInPlugin);
+		}
 	}
 
 }
