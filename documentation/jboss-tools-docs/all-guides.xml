@@ -22,17 +22,17 @@
  -->
 		<fileSets>
 			<fileSet>
-			  <directory>.</directory>
-                          <outputDirectory>../</outputDirectory>
-			  <filtered>false</filtered>
-			  <lineEnding>keep</lineEnding>
-			  <includes>
-				<include>index.html</include>
-			  </includes>
-			  <useStrictFiltering>false</useStrictFiltering>
-			  <useDefaultExcludes>true</useDefaultExcludes>
-			  <fileMode>0644</fileMode>
-			  <directoryMode>0755</directoryMode>
+				<directory>index/target/docbook/publish/en-US</directory>
+				<outputDirectory>../index</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
 			</fileSet>
 			<fileSet>
 				<directory>../guides/Exadel-migration/target/docbook/publish/en-US</directory>
@@ -205,7 +205,7 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
-                        <fileSet>
+                        	<fileSet>
 				<directory>../../esb/docs/esb_ref_guide/target/docbook/publish/en-US</directory>
 				<outputDirectory>/esb_ref_guide</outputDirectory>
 				<filtered>false</filtered>
@@ -218,6 +218,6 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
-		</fileSets>
+	</fileSets>
 		
 </assembly>
