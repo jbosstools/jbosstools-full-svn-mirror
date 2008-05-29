@@ -444,6 +444,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     protected nsIDOMNode createNode(Node sourceNode,
 	    nsIDOMNode visualOldContainer) {
 	boolean registerFlag = isCurrentMainDocument();
+	
+	//reads and dispatch events
+	getPageContext().processDisplayEvents();
+	
 	switch (sourceNode.getNodeType()) {
 	case Node.ELEMENT_NODE:
 	    // Map<?, ?> xmlnsMap = createXmlns((Element) sourceNode);

@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -209,6 +210,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     private XModelTreeListenerSWTSync optionsListener;
     // Added by Max Areshkau Fix for JBIDE-1479
     private UIJob job = null;
+    private LinkedList<Job> jobQueue;
+	private IProgressMonitor progressMonitor;
+	private Object mutex = new Object();
+	
     Shell tip;
 
     public final static String MODEL_FLAVOR = ModelTransfer.MODEL; //$NON-NLS-1$
@@ -394,50 +399,94 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     public boolean isAdapterForType(Object type) {
 	return type == this;
     }
-
     // FIX Fox JBIDE-1479 added by Max Areshkau
     public void notifyChanged(final INodeNotifier notifier,
-	    final int eventType, final Object feature, final Object oldValue,
-	    final Object newValue, final int pos) {
+    	    final int eventType, final Object feature, final Object oldValue,
+    	    final Object newValue, final int pos) {
 
-    	if (!isVisualEditorVisible()) {
-			synced = false;
-			return;
-		}
+        	if (!visualEditorVisible) {
+    			synced = false;
+    			return;
+    		}
 
-	// start job when we modify file in ui thread, without this code
-	// changes will be applied with 1 second delay
-	Display display = null;
-	if (PlatformUI.isWorkbenchRunning())
-	    display = PlatformUI.getWorkbench().getDisplay();
+    	// start job when we modify file in ui thread, without this code
+    	// changes will be applied with 1 second delay
+    	Display display = null;
+    	if (PlatformUI.isWorkbenchRunning())
+    	    display = PlatformUI.getWorkbench().getDisplay();
 
-	if (display != null && (Thread.currentThread() == display.getThread())) {
-	    notifyChangedInUiThread(notifier, eventType, feature, oldValue,
-		    newValue, pos);
-	    return;
-	}
-	// start job when we modify file in non ui thread
-	if (job != null) {
-	    job.cancel();
-	}
+    	if (display != null && (Thread.currentThread() == display.getThread())) {
+//    	    notifyChangedInUiThread(notifier, eventType, feature, oldValue,
+//    		    newValue, pos);
+//    	    return;
+//    	    notifyChangedInUiThread(notifier, eventType, feature, oldValue,
+//    	    newValue, pos);
+//        return;
+    	UIJob nonUIJob = new UpdateJobGroup(VpeUIMessages.VPE_UPDATE_JOB_TITLE,UpdateJobGroup.UPDATE_JOB){
+    		@Override
+    		public IStatus runInUIThread(IProgressMonitor monitor) {
 
-	job = new UIJob("NotifyChangedJob") {
-	    @Override
-	    public IStatus runInUIThread(IProgressMonitor monitor) {
-		// we checks is job was canceled and if is it true we cancel job
-		if (monitor.isCanceled()) {
-		    return Status.CANCEL_STATUS;
-		} else {
-		    notifyChangedInUiThread(notifier, eventType, feature,
-			    oldValue, newValue, pos);
-		}
-		return Status.OK_STATUS;
-	    }
-	};
-	job.setPriority(Job.LONG);
-	job.schedule(1000L);
-    }
 
+    			synchronized (mutex) {
+    			
+    			if (monitor.isCanceled()) {
+    				getJobQueue().clear();
+    				return Status.CANCEL_STATUS;
+    			}
+    			monitor.beginTask(VpeUIMessages.VPE_UPDATE_JOB_TITLE, getJobQueue().size());
+    			monitor.worked(1);
+    			notifyChangedInUiThread(notifier, eventType, feature, oldValue, newValue, pos);
+    			if (monitor.isCanceled()) {
+    				getJobQueue().clear();
+    				return Status.CANCEL_STATUS;
+    			}
+    			
+    			getJobQueue().remove(this);
+    			
+    			if(getJobQueue().size()>0) {
+    				Job job =getJobQueue().getFirst();
+    				job.schedule();
+    			}
+    			}
+    			return Status.OK_STATUS;
+    		}};
+    		nonUIJob.setPriority(Job.LONG);
+    		getJobQueue().addLast(nonUIJob);
+    		if(getJobQueue().size()==1) {
+    			setProgressMonitor(null);
+    			nonUIJob.setProgressGroup(getProgressMonitor(), 100);
+    			Job job = getJobQueue().getFirst();
+    			job.schedule();
+    		} else {
+    			
+    			nonUIJob.setProgressGroup(getProgressMonitor(), 100);
+    		}
+    		
+    		return;
+    	}
+    	// start job when we modify file in non ui thread
+    	if (job != null) {
+    	    job.cancel();
+    	}
+
+    	job = new UIJob("NotifyChangedJob") {
+    	    @Override
+    	    public IStatus runInUIThread(IProgressMonitor monitor) {
+    		// we checks is job was canceled and if is it true we cancel job
+    		if (monitor.isCanceled()) {
+    		    return Status.CANCEL_STATUS;
+    		} else {
+    		    notifyChangedInUiThread(notifier, eventType, feature,
+    			    oldValue, newValue, pos);
+    		}
+    		return Status.OK_STATUS;
+    	    }
+    	};
+    	job.setPriority(Job.LONG);
+    	job.schedule(1000L);
+     }
+
+    
     public void notifyChangedInUiThread(INodeNotifier notifier, int eventType,
 	    Object feature, Object oldValue, Object newValue, int pos) {
 	if (switcher == null || !switcher
@@ -591,6 +640,14 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     }
 
     public void sourceSelectionChanged(boolean showCaret) {
+    	
+    //we should processed if we have correct view in visual editor,
+    //otherwise we shouldn't process this event  
+   	if(getJobQueue().size()>0) {
+   		
+   		return;
+   	}
+    		
 	Point range = sourceEditor.getTextViewer().getSelectedRange();
 	int anchorPosition = range.x;
 	int focusPosition = range.x + range.y;
@@ -2817,5 +2874,37 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		synced = true;
 	}
+ 	/**
+    * @return the jobQueue
+    */
+    private LinkedList<Job> getJobQueue() {
+		    
+    	if(jobQueue==null) {
+		    
+    		jobQueue = new LinkedList<Job>();
+	    }
+	    return jobQueue;
+    }
+
+    /**
+    * @return the progressMonitor
+    */
+    private IProgressMonitor getProgressMonitor() {
+		   
+	   	if(progressMonitor==null) {
+	   		
+	   		progressMonitor = Job.getJobManager().createProgressGroup();
+	    }
+		    	
+    return progressMonitor;
+    }
+
+	/**
+    * @param progressMonitor the progressMonitor to set
+    */
+    private void setProgressMonitor(IProgressMonitor progressMonitor) {
+	   	
+    	this.progressMonitor = progressMonitor;
+    }
 
 }

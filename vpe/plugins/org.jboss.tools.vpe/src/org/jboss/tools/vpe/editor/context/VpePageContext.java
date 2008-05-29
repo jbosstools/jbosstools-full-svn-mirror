@@ -20,6 +20,7 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
@@ -406,6 +407,21 @@ public class VpePageContext implements IVisualContext {
 			vpeCash = new HashMap<Node, VpeCreationData>();	
 		}
 		return vpeCash;
+	}
+	
+	/**
+	 * Processes display events to prevent eclipse froze
+	 */
+	public void processDisplayEvents() {
+		
+		Display display=null;
+		display = Display.getCurrent();
+		if(display==null) {
+			display=Display.getDefault();
+		}
+		if(display!=null) {
+			while(display.readAndDispatch()){}
+		}			
 	}
 
 }
