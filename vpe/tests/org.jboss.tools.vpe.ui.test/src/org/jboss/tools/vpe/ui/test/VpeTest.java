@@ -38,7 +38,7 @@ public class VpeTest extends TestCase implements ILogListener {
 	/**
 	 * Editor in which we open visual page
 	 */
-	private final static String EDITOR_ID = "org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor"; //$NON-NLS-1$
+	protected final static String EDITOR_ID = "org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor"; //$NON-NLS-1$
 
 	/**
 	 * Collects exceptions
