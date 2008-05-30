@@ -42,8 +42,8 @@
 
 					<formats>
 						<format>
-							<formatName>html</formatName>
-							<stylesheetResource>file:${pom.basedir}/${stylesdir}/xslt/org/jboss/tools/xhtml.xsl</stylesheetResource>
+							<formatName>html_single</formatName>
+							<stylesheetResource>file:${pom.basedir}/${stylesdir}/xslt/org/jboss/tools/xhtml-single.xsl</stylesheetResource>
 							<finalName>index.html</finalName>
 						</format>
 					</formats>

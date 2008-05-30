@@ -22,13 +22,26 @@
  -->
 		<fileSets>
 			<fileSet>
-				<directory>index/target/docbook/publish/en-US</directory>
-				<outputDirectory>../index</outputDirectory>
+				<directory>index/target/docbook/publish/en-US/html_single/</directory>
+				<outputDirectory>../</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
 				<includes>
-					<include>**/*.*</include>
+					<include>index.html</include>
 				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			<fileSet>
+				<directory>index/target/docbook/publish/en-US/html_single/</directory>
+				<outputDirectory>../</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<excludes>
+					<exclude>index.html</exclude>
+				</excludes>
 				<useStrictFiltering>false</useStrictFiltering>
 				<useDefaultExcludes>true</useDefaultExcludes>
 				<fileMode>0644</fileMode>
