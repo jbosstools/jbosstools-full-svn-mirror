@@ -9,7 +9,6 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
    <xsl:import href="classpath:/xslt/org/jboss/pdf.xsl"/>
-   <xsl:import href="common.xsl"/>
 
    <!-- Ignore image scaling in html version -->
    <xsl:param name="ignore.image.scaling" select="1"/> 
