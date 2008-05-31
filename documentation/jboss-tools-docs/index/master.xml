@@ -64,9 +64,9 @@
 
         <indexentry>
             <primaryie>ESB Editor Reference Guide <ulink
-                    url="en/esb_ref_Guide/html/index.html">(html)</ulink>
-                <ulink url="en/esb_ref_Guide/html_single/index.html">(html single)</ulink>
-                <ulink url="en/esb_ref_Guide/pdf/Hibernatetools_Reference_Guide.pdf"
+                    url="en/esb_ref_guide/html/index.html">(html)</ulink>
+                <ulink url="en/esb_ref_guide/html_single/index.html">(html single)</ulink>
+                <ulink url="en/esb_ref_guide/pdf/Hibernatetools_Reference_Guide.pdf"
                 >(pdf)</ulink>
             </primaryie>
         </indexentry>
@@ -74,8 +74,8 @@
         <indexentry>
             <primaryie>JSF Tools Reference Guide <ulink
                     url="en/jsf_tools_ref_Guide/html/index.html">(html)</ulink>
-                <ulink url="en/jsf_tools_ref_Guide/html_single/index.html">(html single)</ulink>
-                <ulink url="en/jsf_tools_ref_Guide/pdf/JSF_Tools_Reference_Guide.pdf"
+                <ulink url="en/jsf_tools_ref_guide/html_single/index.html">(html single)</ulink>
+                <ulink url="en/jsf_tools_ref_guide/pdf/JSF_Tools_Reference_Guide.pdf"
                 >(pdf)</ulink>
             </primaryie>
         </indexentry>
@@ -90,9 +90,9 @@
 
         <indexentry>
             <primaryie>Struts Tools Reference Guide <ulink
-                    url="en/struts_tools_ref_Guide/html/index.html">(html)</ulink>
-                <ulink url="en/struts_tools_ref_Guide/html_single/index.html">(html single)</ulink>
-                <ulink url="en/struts_tools_ref_Guide/pdf/Struts_Tools_Reference_Guide.pdf"
+                    url="en/struts_tools_ref_guide/html/index.html">(html)</ulink>
+                <ulink url="en/struts_tools_ref_guide/html_single/index.html">(html single)</ulink>
+                <ulink url="en/struts_tools_ref_guide/pdf/Struts_Tools_Reference_Guide.pdf"
                     >(pdf)</ulink>
             </primaryie>
         </indexentry>
