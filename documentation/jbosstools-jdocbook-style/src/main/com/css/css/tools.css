@@ -2,16 +2,27 @@
 
 /* -----Override jbossenterprise-single.css----- */
 
-/* Body */
 body {
-    background-image:none;
-    background-color:white;
-    margin:0 auto;
-    font-family:"Lucida Grande", verdana, "Luxi Sans","Trebuchet MS", helvetica,verdana,arial,sans-serif;
-    font-size:12px;
-    max-width:55em;
-    padding:0em 2em;
-    color:#333;
-    line-height:150%;
+    text-align:center;
+  }
+
+div.book, div.chapter, #title{
     text-align:justify;
+    width: 57em;
+}
+
+ul.docnav {
+    margin:0px;
+    width: 57em;
+    ! height:40px;
+    display:block;
+}
+
+a.new { 
+background:transparent url(../images/new.png) no-repeat scroll right top; 
+padding-right:70px; 
+} 
+a.updated { 
+background:transparent url(../images/updated.png) no-repeat scroll right top; 
+padding-right:70px; 
 }
