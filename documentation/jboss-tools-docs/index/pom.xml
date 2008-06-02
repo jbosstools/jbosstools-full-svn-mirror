@@ -35,7 +35,13 @@
 
 				<configuration>
 					<sourceDocumentName>master.xml</sourceDocumentName>
-					<sourceDirectory>${pom.basedir}</sourceDirectory>
+					<sourceDirectory>${pom.basedir}/en</sourceDirectory>
+					<imageResource>
+						<directory>${pom.basedir}/en</directory>
+						<includes>
+							<include>images/**/*</include>
+						</includes>
+					</imageResource>
 					<cssResource>
 						<directory>${pom.basedir}/${cssdir}</directory>
 					</cssResource>
