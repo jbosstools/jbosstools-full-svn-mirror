@@ -8,14 +8,38 @@ body {
 
 div.book, div.chapter, #title{
     text-align:justify;
-    width: 57em;
+    width: 70em;
 }
 
 ul.docnav {
     margin:0px;
-    width: 57em;
-    ! height:40px;
+    width: 70em;
+    ! height:40px; /* CSS hack for IE*/
     display:block;
+}
+
+#title a.site_href, #title a.doc_href{
+display:block;
+height:60px;
+} 
+
+#title a.site_href {
+background:transparent url(../images/enterprise/jbossdivisionlogo.png) no-repeat scroll left top;
+! background:none; /* CSS hack for IE*/
+! filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/enterprise/jbossdivisionlogo.png'); /* CSS hack for IE*/
+float:left;
+width:310px;
+}
+
+#title a.doc_href {
+background:transparent url(../images/enterprise/enterprise_doc.png) no-repeat scroll right top;
+! background:none; /* CSS hack for IE*/
+! filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/enterprise/enterprise_doc.png'); /* CSS hack for IE*/
+margin-top:5px;
+}
+
+#title{
+text-align:right;
 }
 
 a.new { 
