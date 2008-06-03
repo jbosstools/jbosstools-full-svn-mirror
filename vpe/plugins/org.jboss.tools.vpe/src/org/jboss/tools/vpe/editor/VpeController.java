@@ -433,8 +433,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     				getJobQueue().clear();
     				return Status.CANCEL_STATUS;
     			}
-    			monitor.beginTask(VpeUIMessages.VPE_UPDATE_JOB_TITLE, getJobQueue().size());
-    			monitor.worked(1);
+     			monitor.worked(1);
     			notifyChangedInUiThread(notifier, eventType, feature, oldValue, newValue, pos);
     			if (monitor.isCanceled()) {
     				getJobQueue().clear();
@@ -446,6 +445,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     			if(getJobQueue().size()>0) {
     				Job job =getJobQueue().getFirst();
     				job.schedule();
+    			}else {
+    				monitor.done();
     			}
     			}
     			return Status.OK_STATUS;
@@ -455,6 +456,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     		if(getJobQueue().size()==1) {
     			setProgressMonitor(null);
     			nonUIJob.setProgressGroup(getProgressMonitor(), 100);
+    			getProgressMonitor().beginTask(VpeUIMessages.VPE_UPDATE_JOB_TITLE, IProgressMonitor.UNKNOWN);
     			Job job = getJobQueue().getFirst();
     			job.schedule();
     		} else {
