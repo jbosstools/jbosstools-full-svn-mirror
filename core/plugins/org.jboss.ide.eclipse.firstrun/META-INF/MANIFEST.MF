@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JBossIDE First Run Plug-in
+Bundle-SymbolicName: org.jboss.ide.eclipse.firstrun; singleton:=true
+Bundle-Version: 2.0.0
+Bundle-Activator: org.jboss.ide.eclipse.firstrun.FirstRunPlugin
+Bundle-Vendor: JBoss, a division of Red Hat
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.intro,
+ org.eclipse.core.resources,
+ org.jboss.ide.eclipse.core,
+ org.eclipse.ui.ide,
+ org.eclipse.jdt,
+ org.eclipse.jdt.core
+Eclipse-AutoStart: true
+Bundle-ClassPath: org-jboss-ide-eclipse-firstrun.jar
+Export-Package: org.jboss.ide.eclipse.firstrun,
+ org.jboss.ide.eclipse.firstrun.wizard,
+ org.jboss.ide.eclipse.firstrun.wizard.pages
