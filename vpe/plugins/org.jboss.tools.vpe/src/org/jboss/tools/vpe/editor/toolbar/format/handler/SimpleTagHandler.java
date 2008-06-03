@@ -12,10 +12,11 @@ package org.jboss.tools.vpe.editor.toolbar.format.handler;
 
 import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
-import org.w3c.dom.Node;
-
 import org.jboss.tools.vpe.editor.toolbar.format.IFormatItemSelector;
 import org.jboss.tools.vpe.editor.toolbar.format.ToolItemFormatController;
+import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Node;
 
 /**
  * @author Igels
@@ -34,31 +35,66 @@ public abstract class SimpleTagHandler extends FormatHandler implements IFormatI
 	 */
 	protected void run() {
 		StructuredTextViewer viewer = manager.getVpeController().getPageContext().getSourceBuilder().getStructuredTextViewer();
+		Node parentNode = null;
 		Node selectedNode = manager.getCurrentSelectedNodeInfo().getNode();
 		if(selectedNode==null) {
 			return;
 		}
 		if(equalsWrappingTagName(selectedNode.getNodeName())) {
 			stripElement((ElementImpl)selectedNode, selectedNode, viewer);
-		} else if(isParentWrappingTag()) {
-			Node parentNode = selectedNode.getParentNode();
+		} else if((parentNode = getParentWrappingTagNode()) != null) {
+		    	if (getWrappingTagName().equalsIgnoreCase(parentNode.getNodeName()))
 			stripElement((ElementImpl)parentNode, selectedNode, viewer);
 		} else {
 			insertNewElementAroundNode(getWrappingTagName(), selectedNode, viewer, false);
 		}
 	}
 
+	/**
+	 * Get parent wrapping tag
+	 * @return node
+	 */
+	private Node getParentWrappingTagNode() {
+		Node parentNode = manager.getCurrentSelectedNodeInfo().getNode();
+		for (int i = 0; i < manager.getHandlerFactory().getCountHandlers(); i++) {
+		    parentNode = parentNode.getParentNode();
+		    if (parentNode == null)
+			return null;
+		    if (parentNode instanceof ElementImpl) {
+			ElementImpl element = (ElementImpl) parentNode;
+			String attr = element.getAttribute("style");
+			if (attr != null) {
+			    attr = attr.replaceAll(" ", "");
+			    if(equalsWrappingTagStyle(attr)) {
+				return parentNode;
+			    }
+			}
+		    }
+		    if(equalsWrappingTagName(parentNode.getNodeName())) {
+			return parentNode;
+		    }
+		}
+		return null;
+	}
+	
+	/**
+	 * Parent is format tag
+	 * 
+	 * @return 
+	 */
 	private boolean isParentWrappingTag() {
-		Node selectedNode = manager.getCurrentSelectedNodeInfo().getNode();
-		Node parentNode = selectedNode.getParentNode();
-//		if(selectedNode instanceof IDOMText) {
-//		} 
-		if(parentNode!=null) {
-			return equalsWrappingTagName(parentNode.getNodeName());
+		Node parentNode = manager.getCurrentSelectedNodeInfo().getNode();
+		for (int i = 0; i < manager.getHandlerFactory().getCountHandlers(); i++) {
+		    parentNode = parentNode.getParentNode();
+		    if (parentNode == null)
+			return false;
+		    if(equalsWrappingTagName(parentNode.getNodeName())) {
+			return true;
+		    }
 		}
 		return false;
 	}
-
+	
 	/**
 	 * @return
 	 */
@@ -69,7 +105,22 @@ public abstract class SimpleTagHandler extends FormatHandler implements IFormatI
 	 * @return
 	 */
 	abstract protected String getWrappingTagName();
+	
+	/**
+	 * @return
+	 */
+	abstract protected String getWrappingTagStyle();
+	
+	/**
+	 * @return
+	 */
+	abstract protected String getWrappingTagStyleValue();
 
+	/**
+	 * @return
+	 */
+	abstract protected boolean equalsWrappingTagStyle(String tagStyle);
+	
 	/**
 	 * @see org.jboss.tools.vpe.editor.toolbar.format.IFormatItemSelector#setToolbarItemEnabled(boolean)
 	 */

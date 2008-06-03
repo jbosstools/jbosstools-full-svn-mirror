@@ -15,7 +15,11 @@ package org.jboss.tools.vpe.editor.toolbar.format.handler;
  */
 public class BoldFormatHandler extends SimpleTagHandler {
 
-	private static String TAG_NAME = "b";
+	private static String TAG_NAME = "b"; //$NON-NLS-1$
+	
+	private static String TAG_STYLE = "FONT-WEIGHT"; //$NON-NLS-1$
+	
+	private static String TAG_STYLE_VALUE = "bold"; //$NON-NLS-1$
 
 	/**
 	 * Constructor
@@ -36,5 +40,23 @@ public class BoldFormatHandler extends SimpleTagHandler {
 	 */
 	protected String getWrappingTagName() {
 		return TAG_NAME;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected String getWrappingTagStyle() {
+	    return TAG_STYLE;
+	}
+
+	@Override
+	protected boolean equalsWrappingTagStyle(String tagStyle) {
+	   return TAG_STYLE.equalsIgnoreCase(tagStyle);
+	}
+
+	@Override
+	protected String getWrappingTagStyleValue() {
+	   return TAG_STYLE_VALUE;
 	}
 }

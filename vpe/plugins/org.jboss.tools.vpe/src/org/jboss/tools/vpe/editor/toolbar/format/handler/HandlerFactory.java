@@ -12,8 +12,6 @@ package org.jboss.tools.vpe.editor.toolbar.format.handler;
 
 import java.util.HashMap;
 
-import org.eclipse.core.runtime.Status;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.template.textformating.FormatData;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
@@ -24,7 +22,7 @@ import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 public class HandlerFactory {
 
 	private FormatControllerManager manager;
-	private HashMap handlers = new HashMap();
+	private HashMap<String,IFormatHandler> handlers = new HashMap<String,IFormatHandler>();
 
 	/**
 	 * Constructor 
@@ -58,11 +56,11 @@ public class HandlerFactory {
 					handlers.put(handlerClassName, handler);
 					return handler;
 				} else {
-					VpePlugin.getPluginLog().logError("Wrong format handler. Class - " + handlerClassName + ". Handler must be instance of org.jboss.tools.vpe.editor.toolbar.format.handler.IFormatHandler",
-							new Exception("Handler must be instance of org.jboss.tools.vpe.editor.toolbar.format.handler.IFormatHandler"));
+					VpePlugin.getPluginLog().logError("Wrong format handler. Class - " + handlerClassName + ". Handler must be instance of org.jboss.tools.vpe.editor.toolbar.format.handler.IFormatHandler",  //$NON-NLS-1$//$NON-NLS-2$
+							new Exception("Handler must be instance of org.jboss.tools.vpe.editor.toolbar.format.handler.IFormatHandler")); //$NON-NLS-1$
 				}
 			} catch (Exception e) {
-				VpePlugin.getPluginLog().logError("Can't create format handler. Class: " + handlerClassName, e);
+				VpePlugin.getPluginLog().logError("Can't create format handler. Class: " + handlerClassName, e); //$NON-NLS-1$
 			}
 		}
 		return null;
@@ -76,5 +74,14 @@ public class HandlerFactory {
 	public IAddNodeHandler createAddNodeHandler(FormatData formatData) {
 		// TODO
 		return null;
+	}
+	
+	/**
+	 * Get count of handlers
+	 * 
+	 * @return count of handlers 
+	 */
+	public int getCountHandlers() {
+	    return handlers.size();
 	}
 }

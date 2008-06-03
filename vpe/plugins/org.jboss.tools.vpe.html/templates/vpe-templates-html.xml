@@ -147,7 +147,7 @@
 				</vpe:drop>
 			</vpe:dnd>
 			<vpe:textFormatting use-default-formats="yes">
-				<vpe:format type="BlockFormat" addChildren="deny"
+				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
 				<vpe:format type="ItalicFormat" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.ItalicFormatHandler" />
@@ -1044,10 +1044,16 @@
 				<vpe:drop container="yes" />
 			</vpe:dnd>
 			<vpe:textFormatting>
-				<vpe:format type="BlockFormat" addChildren="deny"
+				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
+				<vpe:format type="BoldFormat">
+					<vpe:formatAttribute type="style" />
+				</vpe:format>
 				<vpe:format type="ItalicFormat" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.ItalicFormatHandler" />
+				<vpe:format type="ItalicFormat">
+					<vpe:formatAttribute type="style" />
+				</vpe:format>
 				<vpe:format type="UnderlineFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.UnderlineFormatHandler" />
 				<vpe:format type="UnderlineFormat">
 					<vpe:formatAttribute type="style" />
@@ -2062,8 +2068,10 @@
 					<vpe:format type="UnderlineFormat" setDefault="true">
 						<vpe:formatAttribute type="style" />
 					</vpe:format>
+					<vpe:format type="BoldFormat" addChildren="allow" 
+						handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
 					<vpe:format type="BoldFormat">
-						<vpe:formatAttribute type="style"/>
+						<vpe:formatAttribute type="style" />
 					</vpe:format>
 					<vpe:format type="ItalicFormat" addChildren="allow"
 						handler="org.jboss.tools.vpe.editor.toolbar.format.handler.ItalicFormatHandler" />				

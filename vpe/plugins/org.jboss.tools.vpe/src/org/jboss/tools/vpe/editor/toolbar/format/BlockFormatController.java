@@ -130,7 +130,7 @@ public class BlockFormatController extends ComboFormatController {
      */
     private String getNodeName(Node node) {
 
-	String nodeName = "";
+	String nodeName = ""; //$NON-NLS-1$
 	do {
 	    nodeName = node.getNodeName();
 	    node = node.getParentNode();

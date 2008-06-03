@@ -15,8 +15,11 @@ package org.jboss.tools.vpe.editor.toolbar.format.handler;
  */
 public class UnderlineFormatHandler extends SimpleTagHandler {
 
-	private static String TAG_NAME = "u";
+	private static String TAG_NAME = "u"; //$NON-NLS-1$
+	
+	private static String TAG_STYLE = "TEXT-DECORATION"; //$NON-NLS-1$
 
+	private static String TAG_STYLE_VALUE = "underline"; //$NON-NLS-1$
 	/**
 	 * Constructor
 	 */
@@ -36,5 +39,23 @@ public class UnderlineFormatHandler extends SimpleTagHandler {
 	 */
 	protected String getWrappingTagName() {
 		return TAG_NAME;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected String getWrappingTagStyle() {
+	    return TAG_STYLE;
+	}
+
+	@Override
+	protected boolean equalsWrappingTagStyle(String tagStyle) {
+	    return TAG_STYLE.equalsIgnoreCase(tagStyle);
+	}
+
+	@Override
+	protected String getWrappingTagStyleValue() {
+	    return TAG_STYLE_VALUE;
 	}
 }
