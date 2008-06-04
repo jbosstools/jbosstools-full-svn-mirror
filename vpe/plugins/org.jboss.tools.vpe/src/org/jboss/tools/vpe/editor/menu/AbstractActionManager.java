@@ -531,10 +531,17 @@ public abstract class AbstractActionManager extends BaseActionManager {
 				Element parentElement = (Element) parent;
 				parentElement.setAttributeNode((Attr) newNode);
 			} else {
-				if (type == 1 && refChild != null)
-					parent.insertBefore(newNode, nextChild);
-				else
-					parent.insertBefore(newNode, refChild);
+				if (type == 1 && refChild != null) {
+                    parent.insertBefore(newNode, nextChild);
+                 //Added by estherbin
+                 //Fix:http://jira.jboss.com/jira/browse/JBIDE-2275
+                } else if (type == 2) {
+                    parent.insertBefore(newNode, refChild);
+                } else if (type == ITextNodeSplitter.INSERT_AFTER) {
+                    parent.appendChild(newNode);
+                } else {
+                    parent.insertBefore(newNode, refChild);
+                }
 			}
 		}
 
