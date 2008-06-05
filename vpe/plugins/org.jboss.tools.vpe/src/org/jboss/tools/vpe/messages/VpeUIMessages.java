@@ -55,6 +55,7 @@ public class VpeUIMessages extends NLS {
 	public static String USE_ABSOLUTE_POSITION;
 	public static String ALWAYS_PROMPT_FOR_TAG_ATTRIBUTES_DURING_TAG_INSERT;
 	public static String OPTION_LIST;
+	public static String SOURCE_VISUAL_EDITORS_WEIGHTS;
 	public static String GENERAL;
 	public static String TEMPLATES;
 	public static String TEMPLATE;

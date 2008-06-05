@@ -9,6 +9,7 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
+import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.VpePlugin;
 
 
@@ -114,6 +115,28 @@ public class SashSetting implements EditorSettings.ISetting {
 				sash.setWeights(weights);
 				if (saved>=0)
 				   sash.setCurrentSavedWeight(saved);
+			} else {
+				/*
+				 * Set weights from the preference page
+				 */
+				String stringValue = VpePreference.SOURCE_VISUAL_EDITORS_WEIGHTS.getValue();
+				try {
+					int intValue = Integer.parseInt(stringValue);
+					int[] weights = sash.getWeights();
+					if (weights.length > 2) {
+						if (intValue == 0) {
+							sash.maxUp();
+						} else if (intValue == 1000) {
+							sash.maxDown();
+						} else {
+							weights[0] = intValue;
+							weights[1] = 1000 - intValue;
+							sash.setWeights(weights);
+						}
+					}
+				} catch (Exception e) {
+					// Do nothing
+				}
 			}
 		} catch (CoreException e1) {
 			VpePlugin.getPluginLog().logError(e1);
