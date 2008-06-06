@@ -2,3 +2,33 @@
 
 /* -----Override jbossorg.css----- */
 
+body {
+    background-image:url(../images/community/bkg_gradient.gif);
+    background-repeat:repeat-x;
+    text-align:center;
+    margin:0 auto;
+    padding:0;
+ }
+
+div.book{
+    font-family:'Lucida Grande', Geneva, Verdana, Arial, sans-serif;
+    font-size:12px;
+    margin:0;
+    padding:0em 2em;
+    color:#333;
+    line-height:150%;
+    text-align:justify;
+    width: 57em;
+   }
+   
+   div.chapter, #title{
+    text-align:justify;
+    width: 57em;
+}
+
+ul.docnav {
+    margin:0px;
+    width: 57em;
+    ! height:40px;
+    display:block;
+}
