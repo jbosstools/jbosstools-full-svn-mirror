@@ -432,14 +432,14 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
    		getChangeEvents().addLast(new VpeEventBean(notifier, eventType, feature, oldValue,newValue, pos));
 
-    	if(uiJob==null || uiJob.getState()==Job.NONE) {
+    	if(uiJob==null) {
     		uiJob = new UIJob(VpeUIMessages.VPE_UPDATE_JOB_TITLE){
     		@Override
     		public IStatus runInUIThread(IProgressMonitor monitor) {
 
     			monitor.beginTask(VpeUIMessages.VPE_UPDATE_JOB_TITLE, 100);
      			while(getChangeEvents().size()>0) {
-     				VpeDebugUtil.debugInfo(getChangeEvents().size()+"\n"); //$NON-NLS-1$
+     			
      				monitor.worked((int)(100/getChangeEvents().size()));
      				VpeEventBean eventBean = getChangeEvents().getFirst();
         			if (monitor.isCanceled()) {
@@ -464,10 +464,15 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     		}
     		
     		};
-    		uiJob.setPriority(Job.LONG);
-    		uiJob.schedule();
     	}
-    
+
+    	if(uiJob.getState()!=Job.RUNNING) {
+    	
+    		uiJob.setPriority(Job.LONG);
+    		//Fix of JBIDE-1900
+    		uiJob.cancel();
+    		uiJob.schedule(400L);
+    	}
     		
     		return;
     	}
