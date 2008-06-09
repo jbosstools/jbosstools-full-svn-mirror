@@ -57,8 +57,15 @@ public class VpeFunctionSrc extends VpeFunction {
 	try {
 	    tagValue = URLDecoder.decode(tagValue, "UTF-8"); //$NON-NLS-1$
 	} catch (UnsupportedEncodingException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+		
+	    VpePlugin.getPluginLog().logError(e);
+	} catch (IllegalArgumentException ex) {
+		//if user enter invalid URL, for example " % sss", 
+		//illegal argument exception will be throwed, 
+		//brouser will not processed this url, so we just slow this exeption
+		//You can check it's by inserting next code
+		//<h:graphicImage value=" %= request.getContextPath()%/images/logos/banner.png"/>
+		tagValue="";
 	}
 
 	IPath tagPath = new Path(tagValue);
