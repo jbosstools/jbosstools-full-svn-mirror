@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IContributionItem;
@@ -139,6 +140,7 @@ import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.util.TemplateManagingUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
+import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.VpeDndUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.selbar.SelectionBar;
@@ -151,7 +153,6 @@ import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMMutationEvent;
 import org.mozilla.interfaces.nsIDOMNode;
-import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionListener;
 import org.mozilla.interfaces.nsISupports;
@@ -212,11 +213,16 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     private UIJob job = null;
     private LinkedList<Job> jobQueue;
 	private IProgressMonitor progressMonitor;
-	private Object mutex = new Object();
+	private UIJob uiJob;
+	/**
+	 * Added by Max Areshkau
+	 * JBIDE-675, stores information about modification events
+	 */
+	private LinkedList<VpeEventBean> changeEvents;
 	
     Shell tip;
 
-    public final static String MODEL_FLAVOR = ModelTransfer.MODEL; //$NON-NLS-1$
+    public final static String MODEL_FLAVOR = ModelTransfer.MODEL; 
 
     public VpeController(VpeEditorPart editPart) {
 
@@ -226,7 +232,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
     void init(StructuredTextEditor sourceEditor, MozillaEditor visualEditor)
 	    throws Exception {
-	this.sourceEditor = sourceEditor;
+    this.sourceEditor = sourceEditor;
 	if (sourceEditor instanceof IJSPTextEditor) {
 	    ((IJSPTextEditor) sourceEditor).setVPEController(this);
 	    dropWindow.setEditor((IJSPTextEditor) sourceEditor);
@@ -320,10 +326,17 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     }
 
     public void dispose() {
+    	
     	if (job != null) {
 			job.cancel();
 			job = null;
 		}
+    	
+    	if(uiJob!=null) {
+    		uiJob.cancel();
+    		getChangeEvents().clear();
+    		uiJob=null;
+    	}
 	if (optionsListener != null) {
 	    XModelObject optionsObject = ModelUtilities.getPreferenceModel()
 		    .getByPath(VpePreference.EDITOR_PATH);
@@ -416,53 +429,45 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     	    display = PlatformUI.getWorkbench().getDisplay();
 
     	if (display != null && (Thread.currentThread() == display.getThread())) {
-//    	    notifyChangedInUiThread(notifier, eventType, feature, oldValue,
-//    		    newValue, pos);
-//    	    return;
-//    	    notifyChangedInUiThread(notifier, eventType, feature, oldValue,
-//    	    newValue, pos);
-//        return;
-    	UIJob nonUIJob = new UpdateJobGroup(VpeUIMessages.VPE_UPDATE_JOB_TITLE,UpdateJobGroup.UPDATE_JOB){
+
+   		getChangeEvents().addLast(new VpeEventBean(notifier, eventType, feature, oldValue,newValue, pos));
+
+    	if(uiJob==null || uiJob.getState()==Job.NONE) {
+    		uiJob = new UIJob(VpeUIMessages.VPE_UPDATE_JOB_TITLE){
     		@Override
     		public IStatus runInUIThread(IProgressMonitor monitor) {
 
-
-    			synchronized (mutex) {
+    			monitor.beginTask(VpeUIMessages.VPE_UPDATE_JOB_TITLE, 100);
+     			while(getChangeEvents().size()>0) {
+     				VpeDebugUtil.debugInfo(getChangeEvents().size()+"\n"); //$NON-NLS-1$
+     				monitor.worked((int)(100/getChangeEvents().size()));
+     				VpeEventBean eventBean = getChangeEvents().getFirst();
+        			if (monitor.isCanceled()) {
+        				getChangeEvents().clear();
+        				return Status.CANCEL_STATUS;
+        			}
+        			try {
+     				notifyChangedInUiThread(eventBean.getNotifier(), eventBean.getEventType(),
+     						eventBean.getFeature(), eventBean.getOldValue(), eventBean.getNewValue(), 
+     						eventBean.getPos()); 
+        			} catch (NullPointerException ex) {
+        				//TODO Max Areshkau
+        				//JBIDE-675 find possability correctly resolve nulpointer
+        				//exception when we closse editor and job is executed
+        				VpePlugin.getPluginLog().logError(ex);
+        			}
+     				getChangeEvents().remove(eventBean);
+				}
+   				monitor.done();
     			
-    			if (monitor.isCanceled()) {
-    				getJobQueue().clear();
-    				return Status.CANCEL_STATUS;
-    			}
-     			monitor.worked(1);
-    			notifyChangedInUiThread(notifier, eventType, feature, oldValue, newValue, pos);
-    			if (monitor.isCanceled()) {
-    				getJobQueue().clear();
-    				return Status.CANCEL_STATUS;
-    			}
-    			
-    			getJobQueue().remove(this);
-    			
-    			if(getJobQueue().size()>0) {
-    				Job job =getJobQueue().getFirst();
-    				job.schedule();
-    			}else {
-    				monitor.done();
-    			}
-    			}
     			return Status.OK_STATUS;
-    		}};
-    		nonUIJob.setPriority(Job.LONG);
-    		getJobQueue().addLast(nonUIJob);
-    		if(getJobQueue().size()==1) {
-    			setProgressMonitor(null);
-    			nonUIJob.setProgressGroup(getProgressMonitor(), 100);
-    			getProgressMonitor().beginTask(VpeUIMessages.VPE_UPDATE_JOB_TITLE, IProgressMonitor.UNKNOWN);
-    			Job job = getJobQueue().getFirst();
-    			job.schedule();
-    		} else {
-    			
-    			nonUIJob.setProgressGroup(getProgressMonitor(), 100);
     		}
+    		
+    		};
+    		uiJob.setPriority(Job.LONG);
+    		uiJob.schedule();
+    	}
+    
     		
     		return;
     	}
@@ -645,7 +650,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     	
     //we should processed if we have correct view in visual editor,
     //otherwise we shouldn't process this event  
-   	if(getJobQueue().size()>0) {
+   	if(getChangeEvents().size()>0) {
    		
    		return;
    	}
@@ -2876,17 +2881,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		synced = true;
 	}
- 	/**
-    * @return the jobQueue
-    */
-    private LinkedList<Job> getJobQueue() {
-		    
-    	if(jobQueue==null) {
-		    
-    		jobQueue = new LinkedList<Job>();
-	    }
-	    return jobQueue;
-    }
 
     /**
     * @return the progressMonitor
@@ -2908,5 +2902,17 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	   	
     	this.progressMonitor = progressMonitor;
     }
+
+	/**
+	 * @return the changeEvents
+	 */
+	public LinkedList<VpeEventBean> getChangeEvents() {
+		
+			if(changeEvents==null) {
+				
+				changeEvents = new LinkedList<VpeEventBean>();
+			}
+		return changeEvents;
+	}
 
 }

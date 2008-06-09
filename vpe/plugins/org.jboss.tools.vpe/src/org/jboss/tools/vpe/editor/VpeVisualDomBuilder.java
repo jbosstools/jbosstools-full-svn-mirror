@@ -447,6 +447,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	
 	//reads and dispatch events
 	getPageContext().processDisplayEvents();
+	//check source node can be changed and link can be a null in this case
+	//we shouldn't process this node
+	if(sourceNode==null) {
+		return null;
+	}
 	
 	switch (sourceNode.getNodeType()) {
 	case Node.ELEMENT_NODE:
