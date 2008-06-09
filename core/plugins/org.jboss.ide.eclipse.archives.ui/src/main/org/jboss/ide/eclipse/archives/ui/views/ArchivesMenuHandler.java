@@ -34,7 +34,6 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding.XbException;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.ExtensionManager;
@@ -389,17 +388,22 @@ public class ArchivesMenuHandler {
 	private void deleteSelectedNode () {
 		IArchiveNode node = getSelectedNode();
 		if (node != null) {
-			IArchiveNode parent = (IArchiveNode) node.getParent();
+			final IArchiveNode parent = (IArchiveNode) node.getParent();
 			parent.removeChild(node);
-			if( parent.getProjectPath() != null ) {
-				try {
-					ArchivesModel.instance().save(parent.getProjectPath(), new NullProgressMonitor());
-				} catch( ArchivesModelException ame ) {
-					IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, "Problem saving archives model", ame);
-					PackagesUIPlugin.getDefault().getLog().log(status);
+			new Job("Delete Archives Node") {
+				protected IStatus run(IProgressMonitor monitor) {
+					if( parent.getProjectPath() != null ) {
+						try {
+							ArchivesModel.instance().save(parent.getProjectPath(), new NullProgressMonitor());
+						} catch( ArchivesModelException ame ) {
+							IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, "Problem saving archives model", ame);
+							PackagesUIPlugin.getDefault().getLog().log(status);
+						}
+					}
+					return Status.OK_STATUS;
 				}
-
-			}
+				
+			}.schedule();
 		}
 	}
 
