@@ -264,16 +264,16 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 	 * @param projectToShow
 	 */
 	protected void registerProjects(final IProject[] projects, final IProject projectToShow) {
+		for( int i = 0; i < projects.length; i++ ) {
+			try {
+				ArchivesModel.instance().registerProject(projects[i].getLocation(), loadingProgress);
+			} catch( ArchivesModelException ame ) {
+				IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, ame.getMessage(), ame);
+				PackagesUIPlugin.getDefault().getLog().log(status);
+			}
+		}
 		getSite().getShell().getDisplay().asyncExec(new Runnable () {
 			public void run () {
-				for( int i = 0; i < projects.length; i++ ) {
-					try {
-						ArchivesModel.instance().registerProject(projects[i].getLocation(), loadingProgress);
-					} catch( ArchivesModelException ame ) {
-						IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, ame.getMessage(), ame);
-						PackagesUIPlugin.getDefault().getLog().log(status);
-					}
-				}
 				book.showPage(viewerComposite);
 				packageViewer.setInput(ArchivesModel.instance().getRoot(projectToShow.getLocation()));
 			}
