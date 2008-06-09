@@ -210,9 +210,10 @@ public class ModelTruezipBridge {
 				filesetRelative = inputFiles[i].lastSegment();
 			else
 				filesetRelative = inputFiles[i].toOSString().substring(fsLength);
-
 			String tmp = new Path(filesetRelative).removeLastSegments(1).toString();
 			File parentFile = new File(fsFile, tmp, ArchiveDetector.NULL);
+			if( parentFile.getEnclArchive() != null )
+				parentFile = new File(fsFile, tmp, ArchiveDetector.DEFAULT);
 			returnFiles[i] = new File(parentFile, new Path(filesetRelative).lastSegment(), ArchiveDetector.DEFAULT); 
 		}
 		return returnFiles;
