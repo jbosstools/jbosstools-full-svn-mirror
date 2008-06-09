@@ -40,7 +40,7 @@ public class HtmlBodyTemplate extends VpeAbstractTemplate {
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument) {
 
-		goToTree(visualDocument.getChildNodes().item(0));
+		goToTree(visualDocument.getDocumentElement());
 
 		nsIDOMNamedNodeMap attrsMap = bodyOld.getAttributes();
 		long len = attrsMap.getLength();

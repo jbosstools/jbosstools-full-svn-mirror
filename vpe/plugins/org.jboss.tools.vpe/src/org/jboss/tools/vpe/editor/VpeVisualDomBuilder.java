@@ -67,6 +67,7 @@ import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
+import org.jboss.tools.vpe.editor.util.FaceletUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
@@ -115,10 +116,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     private MozillaEditor visualEditor;
     private XulRunnerEditor xulRunnerEditor;
     private nsIDOMDocument visualDocument;
-    private nsIDOMElement visualContentArea;
+    // JBIDE-2170 Sergey Dzmitrovich 
+    // private nsIDOMElement visualContentArea;
     private VpePageContext pageContext;
     private VpeDnD dnd;
-    private nsIDOMNode headNode;
+    // JBIDE-2170 Sergey Dzmitrovich 
+    // private nsIDOMNode headNode;
     private List includeStack;
     // TODO Max Areshkau JBIDE-1457
     // boolean rebuildFlag = false;
@@ -167,18 +170,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
     private Map<IFile, Document> includeDocuments = new HashMap<IFile, Document>();
 
-    
-    /**
-	 * facelet elements, if there are these elements on a page then other
-	 * elements are deleted
-	 */
-	static private HashSet<String> faceletRootElements = new HashSet<String>();
-
-	static {
-		faceletRootElements.add("composition"); //$NON-NLS-1$
-		faceletRootElements.add("component"); //$NON-NLS-1$
-	}
-    
     public VpeVisualDomBuilder(VpeDomMapping domMapping,
 	    INodeAdapter sorceAdapter, VpeTemplateManager templateManager,
 	    MozillaEditor visualEditor, VpePageContext pageContext) {
@@ -186,10 +177,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	this.visualEditor = visualEditor;
 	xulRunnerEditor = visualEditor.getXulRunnerEditor();
 	this.visualDocument = visualEditor.getDomDocument();
-	this.visualContentArea = visualEditor.getContentArea();
+//	this.visualContentArea = visualEditor.getContentArea();
 	this.dnd = new VpeDnD();
 	this.pageContext = pageContext;
-	this.headNode = visualEditor.getHeadNode();
+//	this.headNode = visualEditor.getHeadNode();
 	dropper = new VpeDnd();
 	dropper.setDndData(false, true);
 
@@ -219,77 +210,35 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		pageContext.refreshConnector();
 		pageContext.installIncludeElements();
 		if (isFacelet()) {
-			Element root = getRootElement(sourceDocument);
-			if(root != null)
-			{
-				addNode(root, null, visualContentArea);
+			Element root = FaceletUtil.getRootFaceletElement(sourceDocument);
+			if (root != null) {
+				addNode(root, null, getContentArea());
 			}
 		} else {
-			addChildren(null, sourceDocument, visualContentArea);
+			addChildren(null, sourceDocument, getContentArea());
 		}
 		/*
 		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-2126.
 		 * To provide appropriate context menu functionality
 		 * visual content area should be mapped in any case. 
 		 */
-		registerNodes(new VpeNodeMapping(sourceDocument, visualContentArea));
+		registerNodes(new VpeNodeMapping(sourceDocument, getContentArea()));
 	}
 
-    private Element getRootElement(Document sourceDocument) {
-
-		NodeList nodeList = sourceDocument.getChildNodes();
-		Element root = null;
-
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node child = nodeList.item(i);
-			if (child.getNodeType() == Node.ELEMENT_NODE) {
-				root = (Element) child;
-				break;
-			}
-		}
-
-		if (root != null) {
-			Element trimmedElement = findFaceletRootElement(root);
-			if (trimmedElement != null)
-				root = trimmedElement;
-		}
-		return root;
-	}
-
-	private Element findFaceletRootElement(Element element) {
-
-		NodeList children = element.getChildNodes();
-
-		for (int i = 0; i < children.getLength(); i++) {
-			Node child = children.item(i);
-			if (child.getNodeType() == Node.ELEMENT_NODE) {
-
-				Element trimmedElement = findFaceletRootElement((Element) child);
-				if (trimmedElement != null)
-					return trimmedElement;
-
-			}
-		}
-
-		if (faceletRootElements.contains(element.getLocalName()))
-			return element;
-		return null;
-	}
-    
     public void rebuildDom(Document sourceDocument) {
 	// clearIncludeDocuments();
 	cleanHead();
-	domMapping.clear(visualContentArea);
+	domMapping.clear(getContentArea());
 	super.dispose();
 
 	pageContext.clearAll();
 	refreshExternalLinks();
 	pageContext.getBundle().refreshRegisteredBundles();
 
-	nsIDOMNodeList children = visualContentArea.getChildNodes();
+	nsIDOMNodeList children = getContentArea().getChildNodes();
 	long len = children.getLength();
 	for (long i = len - 1; i >= 0; i--) {
-	    visualContentArea.removeChild(children.item(i));
+		getContentArea().removeChild(children.item(i));
 	}
 
 	if (sourceDocument != null) {
@@ -663,7 +612,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    nsIDOMText newText = visualDocument.createTextNode(styleText);
 	    newStyle.appendChild(newText);
 	}
-	headNode.appendChild(newStyle);
+	getHeadNode().appendChild(newStyle);
 	return newStyle;
     }
 
@@ -677,12 +626,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    newStyle.appendChild(newText);
 	}
 
-	headNode.replaceChild(newStyle, oldStyleNode);
+	getHeadNode().replaceChild(newStyle, oldStyleNode);
 	return newStyle;
     }
 
     public void removeStyleNodeFromHead(nsIDOMNode oldStyleNode) {
-	headNode.removeChild(oldStyleNode);
+    	getHeadNode().removeChild(oldStyleNode);
     }
 
     void addExternalLinks() {
@@ -704,7 +653,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     void removeExternalLinks() {
-	nsIDOMNodeList childs = headNode.getChildNodes();
+	nsIDOMNodeList childs = getHeadNode().getChildNodes();
 	long length = childs.getLength();
 	for (long i = length - 1; i >= 0; i--) {
 	    nsIDOMNode node = childs.item(i);
@@ -721,7 +670,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			    .equalsIgnoreCase(element.getAttribute(ATTR_VPE))))
 			    && YES_STRING.equalsIgnoreCase(element
 				    .getAttribute(VpeTemplateManager.ATTR_LINK_EXT))) {
-			headNode.removeChild(node);
+		    	getHeadNode().removeChild(node);
 		    }
 		}
 	    }
@@ -850,7 +799,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     public boolean isEmptyDocument() {
-	nsIDOMNodeList visualNodes = visualContentArea.getChildNodes();
+	nsIDOMNodeList visualNodes = getContentArea().getChildNodes();
 	long len = visualNodes.getLength();
 	if ((len == 0)
 		|| (len == 1 && (isEmptyText(visualNodes.item(0)) || isPseudoElement(visualNodes
@@ -1291,11 +1240,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     boolean isContentArea(nsIDOMNode visualNode) {
-	return visualContentArea.equals(visualNode);
+	return getContentArea().equals(visualNode);
     }
 
     nsIDOMElement getContentArea() {
-	return visualContentArea;
+	return visualEditor.getContentArea();
     }
 
     public void setSelectionRectangle(nsIDOMElement visualElement) {
@@ -1314,8 +1263,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	//TODO Dzmitry Sakovich
 	// Fix priority CSS classes  JBIDE-1713
-	nsIDOMNode firstNode = headNode.getFirstChild();
-	headNode.insertBefore(newNode, firstNode);
+	nsIDOMNode firstNode = getHeadNode().getFirstChild();
+	getHeadNode().insertBefore(newNode, firstNode);
 	return newNode;
     }
 
@@ -1323,7 +1272,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    String href_val, String ext_val) {
 	nsIDOMNode newNode = createLinkNode(href_val,
 		ATTR_REL_STYLESHEET_VALUE, ext_val);
-	headNode.replaceChild(newNode, oldNode);
+	getHeadNode().replaceChild(newNode, oldNode);
 	return newNode;
     }
 
@@ -1337,7 +1286,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     public void removeLinkNodeFromHead(nsIDOMNode node) {
-	headNode.removeChild(node);
+    	getHeadNode().removeChild(node);
     }
 
     private nsIDOMElement createLinkNode(String href_val, String rel_val,
@@ -1401,7 +1350,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     private nsIDOMNode getLinkNode(String href_val, String ext_val) {
-	nsIDOMNodeList children = headNode.getChildNodes();
+	nsIDOMNodeList children = getHeadNode().getChildNodes();
 	long len = children.getLength();
 	for (long i = len - 1; i >= 0; i--) {
 	    nsIDOMNode node = children.item(i);
@@ -1424,7 +1373,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
 
     private void cleanHead() {
-	nsIDOMNodeList children = headNode.getChildNodes();
+	nsIDOMNodeList children = getHeadNode().getChildNodes();
 	long len = children.getLength();
 	for (long i = len - 1; i >= 0; i--) {
 	    nsIDOMNode node = children.item(i);
@@ -1444,14 +1393,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			// nsIStyleSheetLinkingElement linkingElement = new
 			// nsIStyleSheetLinkingElement(linkAddress);
 			// linkingElement.removeStyleSheet();
-			node = headNode.removeChild(node);
+			node = getHeadNode().removeChild(node);
 		    }
 		} else if (HTML.TAG_STYLE.equalsIgnoreCase(node.getNodeName())
 			&& (!YES_STRING
 				.equalsIgnoreCase(((nsIDOMElement) node
 					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
 					.getAttribute(ATTR_VPE)))) {
-		    node = headNode.removeChild(node);
+		    node = getHeadNode().removeChild(node);
 		}
 	    }
 	}
@@ -1580,7 +1529,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	    }
 	    if (sourceDropContainer == null) {
 		sourceDropContainer = domMapping
-			.getNearSourceNode(visualContentArea);
+			.getNearSourceNode(getContentArea());
 		sourceDropOffset = sourceDropContainer.getChildNodes()
 			.getLength();
 	    }
@@ -2144,7 +2093,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	clearIncludeDocuments();
 	includeDocuments = null;
 	cleanHead();
-	domMapping.clear(visualContentArea);
+	domMapping.clear(getContentArea());
 	pageContext.dispose();
 	super.dispose();
     }
@@ -2364,4 +2313,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     public Map<IFile, Document> getIncludeDocuments() {
 	return includeDocuments;
     }
+    
+    public nsIDOMNode getHeadNode() {
+		return visualEditor.getHeadNode();
+	}
 }

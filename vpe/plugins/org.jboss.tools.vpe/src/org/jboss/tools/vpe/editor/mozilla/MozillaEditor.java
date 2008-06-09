@@ -56,6 +56,7 @@ import org.jboss.tools.vpe.editor.toolbar.IVpeToolBarManager;
 import org.jboss.tools.vpe.editor.toolbar.VpeToolBarManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.toolbar.format.TextFormattingToolBar;
+import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
@@ -67,7 +68,7 @@ import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
-	protected static final String INIT_URL = "file://" + (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	protected static final String INIT_URL = /*"file://" +*/ (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 //	private static final String INIT_URL = "chrome://vpe/content/init.html"; //$NON-NLS-1$
 	private static final String CONTENT_AREA_ID = "__content__area__"; //$NON-NLS-1$
 
@@ -86,7 +87,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private FormatControllerManager formatControllerManager = new FormatControllerManager();
 	private VpeController controller;
 	private Link link = null;
-	private boolean loaded;	
+	private boolean loaded;
+	private boolean loadPage;
+	private String doctype;
 
 	public void doSave(IProgressMonitor monitor) {
 	}
@@ -212,10 +215,20 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		cmpEd.setBackground(buttonDarker);
 
 		try {
+			loadPage = true;
 			xulRunnerEditor = new XulRunnerEditor(cmpEd) {
 				public void onLoadWindow() {
-					super.onLoadWindow();
-					MozillaEditor.this.onLoadWindow();
+					// if the first load page
+					if (loadPage) {
+						super.onLoadWindow();
+						MozillaEditor.this.onLoadWindow();
+						loadPage = false;
+					}
+					// if only refresh page
+					else {
+						MozillaEditor.this.onReloadWindow();
+					}
+
 				}
 				public void onElementResize(nsIDOMElement element, int resizerConstrains, int top, int left, int width, int height) {
 					if (editorDomEventListener != null) {
@@ -249,7 +262,10 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				}
 				
 			});
-			xulRunnerEditor.setURL(INIT_URL);
+			
+			doctype = DocTypeUtil.getDoctype(getEditorInput());
+			xulRunnerEditor.setText(doctype
+					+ DocTypeUtil.getContentInitFile(new File(INIT_URL)));
 			// Wait while visual part is loaded
 			while (!loaded) {
 				if (!Display.getCurrent().readAndDispatch())
@@ -629,6 +645,36 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		
 		this.contentAreaEventListener = contentAreaEventListener;
 	}
-
 	
+	
+	/**
+	 * 
+	 */
+	private void onReloadWindow() {
+
+		removeDomEventListeners();
+		contentArea = findContentArea();
+		addDomEventListeners();
+		controller.reinit();
+
+	}
+	
+	/**
+	 * 
+	 */
+	public void reload() {
+
+		doctype = DocTypeUtil.getDoctype(getEditorInput());
+		xulRunnerEditor.setText(doctype
+				+ DocTypeUtil.getContentInitFile(new File(INIT_URL)));
+
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getDoctype() {
+		return doctype;
+	}
 }

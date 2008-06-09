@@ -434,4 +434,8 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	protected void onDispose() {
 		
 	}
+	
+	public void setText(String html) {
+		browser.setText(html);
+	}
 }
