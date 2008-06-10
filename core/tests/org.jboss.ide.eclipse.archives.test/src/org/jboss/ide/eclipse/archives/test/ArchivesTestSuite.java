@@ -11,6 +11,7 @@ import org.jboss.ide.eclipse.archives.test.model.XBMarshallTest;
 import org.jboss.ide.eclipse.archives.test.model.XBUnmarshallTest;
 import org.jboss.ide.eclipse.archives.test.projects.JBIDE2099Test;
 import org.jboss.ide.eclipse.archives.test.projects.JBIDE2311Test;
+import org.jboss.ide.eclipse.archives.test.projects.JBIDE2315Test;
 import org.jboss.ide.eclipse.archives.test.util.TruezipUtilTest;
 
 public class ArchivesTestSuite extends TestSuite {
@@ -27,6 +28,7 @@ public class ArchivesTestSuite extends TestSuite {
         // jiras
         suite.addTestSuite(JBIDE2099Test.class);
         suite.addTestSuite(JBIDE2311Test.class);
+        suite.addTestSuite(JBIDE2315Test.class);
         
         return suite; 
    }
