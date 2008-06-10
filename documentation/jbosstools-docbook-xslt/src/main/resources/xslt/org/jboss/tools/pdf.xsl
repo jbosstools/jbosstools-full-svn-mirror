@@ -9,8 +9,19 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
    <xsl:import href="classpath:/xslt/org/jboss/pdf.xsl"/>
-
-   <!-- Ignore image scaling in html version -->
-   <xsl:param name="ignore.image.scaling" select="1"/> 
+   
+   <!--            overwriting links properties                        -->
+   <xsl:param name="ulink.show" select="0"></xsl:param>
+   
+   <xsl:attribute-set name="xref.properties">
+      <xsl:attribute name="text-decoration">
+         <xsl:choose>
+            <xsl:when test="self::ulink">underline</xsl:when>
+            <xsl:when test="self::link">underline</xsl:when>
+            <!--xsl:otherwise>inherit</xsl:otherwise-->
+         </xsl:choose>
+      </xsl:attribute>
+   </xsl:attribute-set>
+   
    
 </xsl:stylesheet>
