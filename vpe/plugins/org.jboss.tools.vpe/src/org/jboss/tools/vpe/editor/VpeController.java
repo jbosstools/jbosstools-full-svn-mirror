@@ -499,146 +499,168 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
     
     public void notifyChangedInUiThread(INodeNotifier notifier, int eventType,
-	    Object feature, Object oldValue, Object newValue, int pos) {
-	if (switcher == null || !switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-	    return;
-	}
-	if (VpeDebug.PRINT_SOURCE_MUTATION_EVENT) {
-	    printSourceEvent(notifier, eventType, feature, oldValue, newValue,
-		    pos);
-	}
-	if (visualBuilder == null) {
-	    return;
-	}
-	// visualBuilder.rebuildFlag = false;
-
-	switch (eventType) {
-	case INodeNotifier.CHANGE:
-	    sourceChangeFlag = true;
-	    int type = ((Node) notifier).getNodeType();
-	    visualEditor.hideResizer();
-	    visualBuilder.setSelectionRectangle(null);
-	    if (type == Node.TEXT_NODE) {
-		boolean update = visualBuilder.setText((Node) notifier);
-		visualEditor.showResizer();
-		// Added by Max Areshkau JBIDE-1554
-		if (!update)
-		    visualBuilder.updateNode((Node) notifier);
-	    } else if (type == Node.COMMENT_NODE) {
-		if ("yes".equals(VpePreference.SHOW_COMMENTS.getValue())) { //$NON-NLS-1$
-		    visualBuilder.setSelectionRectangle(null);
-		    visualBuilder.updateNode((Node) notifier);
+			Object feature, Object oldValue, Object newValue, int pos) {
+		if (switcher == null
+				|| !switcher
+						.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+			return;
 		}
-	    } else if (feature != null
-		    && ((Node) feature).getNodeType() == Node.ATTRIBUTE_NODE) {
-		if (newValue != null) {
-		    String attrName = ((Attr) feature).getName();
-		    if ((Attr) feature == lastRemovedAttr
-			    && !attrName.equals(lastRemovedAttrName)) {
-			lastRemovedAttr = null;
-			visualBuilder.removeAttribute((Element) notifier,
-				lastRemovedAttrName);
-		    }
-		    visualBuilder.setAttribute((Element) notifier,
-			    ((Attr) feature).getName(), (String) newValue);
-		} else {
-		    lastRemovedAttr = (Attr) feature;
-		    lastRemovedAttrName = ((Attr) feature).getName();
-		    visualBuilder.removeAttribute((Element) notifier,
-			    lastRemovedAttrName);
+		try {
+			if (VpeDebug.PRINT_SOURCE_MUTATION_EVENT) {
+				printSourceEvent(notifier, eventType, feature, oldValue,
+						newValue, pos);
+			}
+			if (visualBuilder == null) {
+				return;
+			}
+			// visualBuilder.rebuildFlag = false;
+
+			switch (eventType) {
+			case INodeNotifier.CHANGE:
+				sourceChangeFlag = true;
+				int type = ((Node) notifier).getNodeType();
+				visualEditor.hideResizer();
+				visualBuilder.setSelectionRectangle(null);
+				if (type == Node.TEXT_NODE) {
+					boolean update = visualBuilder.setText((Node) notifier);
+					visualEditor.showResizer();
+					// Added by Max Areshkau JBIDE-1554
+					if (!update)
+						visualBuilder.updateNode((Node) notifier);
+				} else if (type == Node.COMMENT_NODE) {
+					if ("yes".equals(VpePreference.SHOW_COMMENTS.getValue())) { //$NON-NLS-1$
+						visualBuilder.setSelectionRectangle(null);
+						visualBuilder.updateNode((Node) notifier);
+					}
+				} else if (feature != null
+						&& ((Node) feature).getNodeType() == Node.ATTRIBUTE_NODE) {
+					if (newValue != null) {
+						String attrName = ((Attr) feature).getName();
+						if ((Attr) feature == lastRemovedAttr
+								&& !attrName.equals(lastRemovedAttrName)) {
+							lastRemovedAttr = null;
+							visualBuilder.removeAttribute((Element) notifier,
+									lastRemovedAttrName);
+						}
+						visualBuilder.setAttribute((Element) notifier,
+								((Attr) feature).getName(), (String) newValue);
+					} else {
+						lastRemovedAttr = (Attr) feature;
+						lastRemovedAttrName = ((Attr) feature).getName();
+						visualBuilder.removeAttribute((Element) notifier,
+								lastRemovedAttrName);
+					}
+				}
+				visualEditor.showResizer();
+				break;
+
+			case INodeNotifier.ADD:
+				// we should remove all parent nodes from vpe cash
+				visualBuilder.removeNode((Node) newValue);
+				break;
+
+			case INodeNotifier.REMOVE:
+				visualBuilder.stopToggle((Node) feature);
+				visualBuilder.removeNode((Node) feature);
+				break;
+
+			case INodeNotifier.STRUCTURE_CHANGED:
+				visualEditor.hideResizer();
+				visualBuilder.setSelectionRectangle(null);
+				visualBuilder.updateNode((Node) notifier);
+				break;
+			case INodeNotifier.CONTENT_CHANGED:
+				if (!sourceChangeFlag) {
+					if (feature != null
+							&& ((Node) feature).getNodeType() == Node.TEXT_NODE) {
+						// if
+						// (((Node)notifier).getNodeName().equalsIgnoreCase(
+						// "style"))
+						// {
+						visualEditor.hideResizer();
+						visualBuilder.setSelectionRectangle(null);
+						visualBuilder.setText((Node) feature);
+						visualEditor.showResizer();
+						// }
+					}
+				} else {
+					sourceChangeFlag = false;
+				}
+				break;
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
 		}
-	    }
-	    visualEditor.showResizer();
-	    break;
-
-	case INodeNotifier.ADD:
-	    // we should remove all parent nodes from vpe cash
-	    visualBuilder.removeNode((Node) newValue);
-	    break;
-
-	case INodeNotifier.REMOVE:
-	    visualBuilder.stopToggle((Node) feature);
-	    visualBuilder.removeNode((Node) feature);
-	    break;
-
-	case INodeNotifier.STRUCTURE_CHANGED:
-	    visualEditor.hideResizer();
-	    visualBuilder.setSelectionRectangle(null);
-	    visualBuilder.updateNode((Node) notifier);
-	    break;
-	case INodeNotifier.CONTENT_CHANGED:
-	    if (!sourceChangeFlag) {
-		if (feature != null
-			&& ((Node) feature).getNodeType() == Node.TEXT_NODE) {
-		    // if
-		    // (((Node)notifier).getNodeName().equalsIgnoreCase("style"))
-		    // {
-		    visualEditor.hideResizer();
-		    visualBuilder.setSelectionRectangle(null);
-		    visualBuilder.setText((Node) feature);
-		    visualEditor.showResizer();
-		    // }
-		}
-	    } else {
-		sourceChangeFlag = false;
-	    }
-	    break;
 	}
-	switcher.stopActiveEditor();
-    }
 
     // INodeSelectionListener implementation
     public void nodeSelectionChanged(NodeSelectionChangedEvent event) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+			return;
+		}
+		try {
+			List<?> nodes = event.getSelectedNodes();
+			if (nodes != null && nodes.size() > 0) {
+				Node sourceNode = (Node) nodes.get(0);
+				if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
+					System.out
+							.println(">>>>>>>>>>>>>> nodeSelectionChanged  sourceNode: " + sourceNode.getNodeName() + "  " + event.getCaretPosition()); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+				if (event.getSource() instanceof IContentOutlinePage) {
+					sourceSelectionChanged();
+				}
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	List<?> nodes = event.getSelectedNodes();
-	if (nodes != null && nodes.size() > 0) {
-	    Node sourceNode = (Node) nodes.get(0);
-	    if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-		System.out
-			.println(">>>>>>>>>>>>>> nodeSelectionChanged  sourceNode: " + sourceNode.getNodeName() + "  " + event.getCaretPosition()); //$NON-NLS-1$ //$NON-NLS-2$
-	    }
-	    if (event.getSource() instanceof IContentOutlinePage) {
-		sourceSelectionChanged();
-	    }
-	}
-	switcher.stopActiveEditor();
-    }
 
     // ITextSelectionListener implementation
     // TODO Max Areshau looks like this method don't used
     public void textSelectionChanged(TextSelectionChangedEvent event) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+			return;
+		}
+		try {
+			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
+				System.out
+						.println(">>>>>>>>>>>>>> textSelectionChanged  " + event.getSource()); //$NON-NLS-1$
+			}
+			// if (event.getSource() instanceof StyledText) {
+			sourceSelectionChanged();
+			// }
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-	    System.out
-		    .println(">>>>>>>>>>>>>> textSelectionChanged  " + event.getSource()); //$NON-NLS-1$
-	}
-	// if (event.getSource() instanceof StyledText) {
-	sourceSelectionChanged();
-	// }
-	switcher.stopActiveEditor();
-    }
 
     // SelectionListener implementation
     public void widgetSelected(SelectionEvent event) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+			return;
+		}
+		try {
+			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
+				System.out.println(">>>>>>>>>>>>>> widgetSelected"); //$NON-NLS-1$
+			}
+			if (event.getSource() instanceof StyledText) {
+				sourceSelectionChanged();
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-	    System.out.println(">>>>>>>>>>>>>> widgetSelected"); //$NON-NLS-1$
-	}
-	if (event.getSource() instanceof StyledText) {
-	    sourceSelectionChanged();
-	}
-	switcher.stopActiveEditor();
-    }
 
     public void widgetDefaultSelected(SelectionEvent event) {
 	if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
@@ -743,393 +765,477 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     }
 
     public void sourceSelectionToVisualSelection(boolean showCaret) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+			return;
+		}
+		try {
+			sourceSelectionChanged(showCaret);
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	sourceSelectionChanged(showCaret);
-	switcher.stopActiveEditor();
-    }
 
     // IModelLifecycleListener implementation
     public void processPreModelEvent(ModelLifecycleEvent event) {
     }
 
     public void processPostModelEvent(ModelLifecycleEvent event) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+			return;
+		}
+		try {
+			/*
+			 * Added by Max Areshkau JBIDE-1457
+			 * ModelLifecycleEvent.MODEL_RELEASED generated when model in model
+			 * calls methods releaseFromRead() or releaseFromEdit(). When editor
+			 * is open he has only when href on model, so nothing can generated
+			 * this event.When editor closes generation of this event depends
+			 * from cantains any service href on model or not. It's can be a
+			 * reason of problems on reopen file.
+			 * 
+			 * We shouldn't call here rebuild dom.
+			 */
+			if (event.getType() == ModelLifecycleEvent.MODEL_RELEASED) {
+				if (VpeDebug.PRINT_SOURCE_MODEL_LIFECYCLE_EVENT) {
+					System.out
+							.println(">>> processPostModelEvent: " + event.toString()); //$NON-NLS-1$
+				}
+				visualBuilder.setSelectionRectangle(null);
+				IStructuredModel model = event.getModel();
+				model.removeModelLifecycleListener(this);
+				IDOMModel sourceModel = (IDOMModel) getModel();
+				sourceModel.addModelLifecycleListener(this);
+				bundle.clearAll();
+				bundle.refresh();
+				visualBuilder.setSelectionRectangle(null);
+				IDOMDocument sourceDocument = sourceModel.getDocument();
+				// JBIDE-1457
+				// visualBuilder.rebuildDom(sourceDocument);
+				// pageContext.fireTaglibsChanged();
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	/*
-	 * Added by Max Areshkau JBIDE-1457 ModelLifecycleEvent.MODEL_RELEASED
-	 * generated when model in model calls methods releaseFromRead() or
-	 * releaseFromEdit(). When editor is open he has only when href on
-	 * model, so nothing can generated this event.When editor closes
-	 * generation of this event depends from cantains any service href on
-	 * model or not. It's can be a reason of problems on reopen file.
-	 * 
-	 * We shouldn't call here rebuild dom.
-	 */
-	if (event.getType() == ModelLifecycleEvent.MODEL_RELEASED) {
-	    if (VpeDebug.PRINT_SOURCE_MODEL_LIFECYCLE_EVENT) {
-		System.out
-			.println(">>> processPostModelEvent: " + event.toString()); //$NON-NLS-1$
-	    }
-	    visualBuilder.setSelectionRectangle(null);
-	    IStructuredModel model = event.getModel();
-	    model.removeModelLifecycleListener(this);
-	    IDOMModel sourceModel = (IDOMModel) getModel();
-	    sourceModel.addModelLifecycleListener(this);
-	    bundle.clearAll();
-	    bundle.refresh();
-	    visualBuilder.setSelectionRectangle(null);
-	    IDOMDocument sourceDocument = sourceModel.getDocument();
-	    // JBIDE-1457
-	    // visualBuilder.rebuildDom(sourceDocument);
-	    // pageContext.fireTaglibsChanged();
-	}
-	switcher.stopActiveEditor();
-    }
 
     // EditorDomEventListener implementation
     public void subtreeModified(nsIDOMMutationEvent mutationEvent) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+			return;
+		}
+		try {
+			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
+				printVisualEvent(mutationEvent);
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-	    printVisualEvent(mutationEvent);
-	}
-	switcher.stopActiveEditor();
-    }
 
     public void nodeInserted(nsIDOMMutationEvent mutationEvent) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+			return;
+		}
+		try {
+			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
+				printVisualEvent(mutationEvent);
+			}
+			nsIDOMNode targetNode = mutationEvent.getRelatedNode();
+			if (!VpeVisualDomBuilder.isAnonElement(targetNode)) {
+				sourceBuilder.addNode(targetNode);
+				visualBuilder.resetPseudoElement(targetNode);
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-	    printVisualEvent(mutationEvent);
-	}
-	nsIDOMNode targetNode = mutationEvent.getRelatedNode();
-	if (!VpeVisualDomBuilder.isAnonElement(targetNode)) {
-	    sourceBuilder.addNode(targetNode);
-	    visualBuilder.resetPseudoElement(targetNode);
-	}
-	switcher.stopActiveEditor();
-    }
 
     public void nodeRemoved(nsIDOMMutationEvent mutationEvent) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+			return;
+		}
+		try {
+			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
+				printVisualEvent(mutationEvent);
+			}
+			nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
+			if (!VpeVisualDomBuilder.isAnonElement(targetNode)) {
+				visualBuilder.setSelectionRectangle(null);
+				sourceBuilder.removeNode(targetNode);
+				visualBuilder.resetPseudoElement(targetNode);
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-	    printVisualEvent(mutationEvent);
-	}
-	nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
-	if (!VpeVisualDomBuilder.isAnonElement(targetNode)) {
-	    visualBuilder.setSelectionRectangle(null);
-	    sourceBuilder.removeNode(targetNode);
-	    visualBuilder.resetPseudoElement(targetNode);
-	}
-	switcher.stopActiveEditor();
-    }
 
     public void nodeRemovedFromDocument(nsIDOMMutationEvent mutationEvent) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+			return;
+		}
+		try {
+			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
+				printVisualEvent(mutationEvent);
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-	    printVisualEvent(mutationEvent);
-	}
-	switcher.stopActiveEditor();
-    }
 
     public void nodeInsertedIntoDocument(nsIDOMMutationEvent mutationEvent) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+			return;
+		}
+		try {
+			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
+				printVisualEvent(mutationEvent);
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-	    printVisualEvent(mutationEvent);
-	}
-	switcher.stopActiveEditor();
-    }
 
     public void attrModified(nsIDOMMutationEvent mutationEvent) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    return;
-	}
-	if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-	    printVisualEvent(mutationEvent);
-	}
-	switcher.stopActiveEditor();
+    	if (!switcher
+    			.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+    		return;
+    	}
+    	try {
+    		if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
+    			printVisualEvent(mutationEvent);
+    		}
+    	} catch (Exception e) {
+    		VpePlugin.reportProblem(e);
+    	} finally {
+    		switcher.stopActiveEditor();
+    	}
     }
 
     public void characterDataModified(nsIDOMMutationEvent mutationEvent) {
-
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    return;
-	}
-	if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-	    printVisualEvent(mutationEvent);
-	}
-	nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
-	sourceBuilder.setText(targetNode);
-	visualBuilder.resetPseudoElement(targetNode);
-	switcher.stopActiveEditor();
+    	if (!switcher
+    			.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+    		return;
+    	}
+    	try {
+    		if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
+    			printVisualEvent(mutationEvent);
+    		}
+    		nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
+    		sourceBuilder.setText(targetNode);
+    		visualBuilder.resetPseudoElement(targetNode);
+    	} catch (Exception e) {
+    		VpePlugin.reportProblem(e);
+    	} finally {
+    		switcher.stopActiveEditor();
+    	}
     }
 
     public void notifySelectionChanged(nsIDOMDocument doc,
-	    nsISelection selection, short reason) {
-	if (switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    mouseUpSelectionReasonFlag = (reason & nsISelectionListener.MOUSEUP_REASON) > 0;
-	    if (mouseUpSelectionReasonFlag
-		    || reason == nsISelectionListener.NO_REASON
-		    || reason == nsISelectionListener.KEYPRESS_REASON
-		    || reason == nsISelectionListener.SELECTALL_REASON
-		    || (reason & nsISelectionListener.MOUSEDOWN_REASON) > 0) {
-		if (VpeDebug.PRINT_VISUAL_SELECTION_EVENT) {
-		    System.out.println("<<< notifySelectionChanged: " + reason); //$NON-NLS-1$
+			nsISelection selection, short reason) {
+		if (switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+			try {
+				mouseUpSelectionReasonFlag = (reason & nsISelectionListener.MOUSEUP_REASON) > 0;
+				if (mouseUpSelectionReasonFlag
+						|| reason == nsISelectionListener.NO_REASON
+						|| reason == nsISelectionListener.KEYPRESS_REASON
+						|| reason == nsISelectionListener.SELECTALL_REASON
+						|| (reason & nsISelectionListener.MOUSEDOWN_REASON) > 0) {
+					if (VpeDebug.PRINT_VISUAL_SELECTION_EVENT) {
+						System.out
+								.println("<<< notifySelectionChanged: " + reason); //$NON-NLS-1$
+					}
+					selectionBuilder.setSelection(selection);
+				}
+			} catch (Exception e) {
+				VpePlugin.reportProblem(e);
+			} finally {
+				switcher.stopActiveEditor();
+			}
 		}
-		selectionBuilder.setSelection(selection);
-	    }
-	    switcher.stopActiveEditor();
 	}
-    }
 
     public void mouseDown(nsIDOMMouseEvent mouseEvent) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+			return;
+		}
+		try {
+			mouseDownSelectionFlag = false;
+			VpeTemplate template = TemplateManagingUtil
+					.getTemplateByVisualSelection(pageContext, VisualDomUtil
+							.getTargetNode(mouseEvent));
+			if (template instanceof ITemplateSelectionManager) {
+				((ITemplateSelectionManager) template).setSelectionByMouse(
+						pageContext, visualSelectionController, mouseEvent);
+				mouseDownSelectionFlag = true;
+			} else {
+				nsIDOMElement visualDragElement = selectionBuilder
+						.getDragElement(mouseEvent);
+				if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+					nsIDOMNode visualNode = VisualDomUtil
+							.getTargetNode(mouseEvent);
+					System.out
+							.println("<<< mouseDown  targetNode: " + visualNode.getNodeName() + " (" + visualNode + ")  selectedElement: " + (visualDragElement != null ? visualDragElement.getNodeName() + " (" + visualDragElement + ")" : null)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+				}
+
+				if (visualDragElement != null) {
+
+					// we shouldn't change selection when we click on <input
+					// type="text" /> element,
+					// because if we change after resizing the input element
+					// lost
+					// selection
+					// if(!(HTML.TAG_INPUT.equalsIgnoreCase(visualDragElement.
+					// getNodeName())&&
+					// HTML.ATTR_TEXT.equalsIgnoreCase(visualDragElement.
+					// getAttribute(HTML.ATTR_TYPE))
+					// &&visualDragElement.getAttribute(HTML.ATTR_TYPE)!=null))
+					// {
+
+					selectionBuilder
+							.setVisualElementSelection(visualDragElement);
+					mouseDownSelectionFlag = true;
+					// }
+				} else {
+					selectionBuilder.setCaretAtMouse(mouseEvent);
+				}
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-
-	mouseDownSelectionFlag = false;
-
-	VpeTemplate template = TemplateManagingUtil
-		.getTemplateByVisualSelection(pageContext, VisualDomUtil
-			.getTargetNode(mouseEvent));
-
-	if (template instanceof ITemplateSelectionManager) {
-
-	    ((ITemplateSelectionManager) template).setSelectionByMouse(
-		    pageContext, visualSelectionController, mouseEvent);
-
-	    mouseDownSelectionFlag = true;
-
-	} else {
-	    nsIDOMElement visualDragElement = selectionBuilder
-		    .getDragElement(mouseEvent);
-	    if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
-		System.out
-			.println("<<< mouseDown  targetNode: " + visualNode.getNodeName() + " (" + visualNode + ")  selectedElement: " + (visualDragElement != null ? visualDragElement.getNodeName() + " (" + visualDragElement + ")" : null)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-	    }
-
-	    if (visualDragElement != null) {
-
-		// we shouldn't change selection when we click on <input
-		// type="text" /> element,
-		// because if we change after resizing the input element lost
-		// selection
-		// if(!(HTML.TAG_INPUT.equalsIgnoreCase(visualDragElement.getNodeName())&&
-		// HTML.ATTR_TEXT.equalsIgnoreCase(visualDragElement.getAttribute(HTML.ATTR_TYPE))
-		// &&visualDragElement.getAttribute(HTML.ATTR_TYPE)!=null)) {
-
-		selectionBuilder.setVisualElementSelection(visualDragElement);
-		mouseDownSelectionFlag = true;
-		// }
-	    } else {
-		selectionBuilder.setCaretAtMouse(mouseEvent);
-	    }
-	}
-	switcher.stopActiveEditor();
-    }
 
     public void mouseUp(nsIDOMMouseEvent mouseEvent) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+			return;
+		}
+		try {
+			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+				System.out.println("<<< mouseUp"); //$NON-NLS-1$
+			}
+			if (mouseDownSelectionFlag) {
+				mouseEvent.preventDefault();
+				mouseEvent.stopPropagation();
+				mouseDownSelectionFlag = false;
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-	    System.out.println("<<< mouseUp"); //$NON-NLS-1$
-	}
-	if (mouseDownSelectionFlag) {
-	    mouseEvent.preventDefault();
-	    mouseEvent.stopPropagation();
-	    mouseDownSelectionFlag = false;
-	}
-	switcher.stopActiveEditor();
-    }
 
     public void mouseClick(nsIDOMMouseEvent mouseEvent) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    return;
-	}
-	nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
+    	if (!switcher
+    			.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+    		return;
+    	}
+    	try {
+    		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
+    		if (visualNode != null) {
+    			if (!mouseUpSelectionReasonFlag) {
+    				if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+    					System.out
+    					.println("<<< mouseClick  visualNode: " + visualNode.getNodeName() + " (" + visualNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    				}
+    				if (visualBuilder.isContentArea(visualNode)) {
+    					selectionBuilder.setClickContentAreaSelection();
+    				}
+    			} else {
+    				mouseUpSelectionReasonFlag = false;
+    			}
 
-	if (visualNode != null) {
-	    if (!mouseUpSelectionReasonFlag) {
-		if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-		    System.out
-			    .println("<<< mouseClick  visualNode: " + visualNode.getNodeName() + " (" + visualNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		}
-		if (visualBuilder.isContentArea(visualNode)) {
-		    selectionBuilder.setClickContentAreaSelection();
-		}
-	    } else {
-		mouseUpSelectionReasonFlag = false;
-	    }
-
-	    if (visualBuilder.doToggle(VisualDomUtil.getTargetNode(mouseEvent))) {
-		selectionBuilder.setClickContentAreaSelection();
-	    }
-	}
-	switcher.stopActiveEditor();
+    			if (visualBuilder.doToggle(VisualDomUtil
+    					.getTargetNode(mouseEvent))) {
+    				selectionBuilder.setClickContentAreaSelection();
+    			}
+    		}
+    	} catch (Exception e) {
+    		VpePlugin.reportProblem(e);
+    	} finally {
+    		switcher.stopActiveEditor();
+    	}
     }
 
     public void mouseDblClick(nsIDOMMouseEvent mouseEvent) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+			return;
+		}
+		try {
+			nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
+			if (visualNode != null) {
+				if (!sourceBuilder.openBundleEditors(visualNode)) {
+					sourceBuilder.openIncludeEditor(visualNode);
+				}
+				if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+					System.out
+							.println("<<< mouseDblClick  visualNode: " + visualNode.getNodeName() + " (" + visualNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				}
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
-	if (visualNode != null) {
-	    if (!sourceBuilder.openBundleEditors(visualNode)) {
-		sourceBuilder.openIncludeEditor(visualNode);
-	    }
-	    if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-		System.out
-			.println("<<< mouseDblClick  visualNode: " + visualNode.getNodeName() + " (" + visualNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	    }
-	}
-	switcher.stopActiveEditor();
-    }
 
     public void mouseMove(nsIDOMMouseEvent mouseEvent) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+			return;
+		}
+		try {
+			nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
+			if (visualNode != null) {
+				if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+					System.out.println("<<< mouseMove  visualNode: "
+							+ visualNode.getNodeName() + " (" + visualNode
+							+ ")");
+				}
+				visualBuilder.setMoveCursor(mouseEvent);
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
-	if (visualNode != null) {
-	    if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-		System.out.println("<<< mouseMove  visualNode: "
-			+ visualNode.getNodeName() + " (" + visualNode + ")");
-	    }
-	    visualBuilder.setMoveCursor(mouseEvent);
-	}
-	switcher.stopActiveEditor();
-    }
 
     public void keyPress(nsIDOMKeyEvent keyEvent) {
-	if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
-	    System.out
-		    .println("<<< keyPress  type: " + keyEvent.getType() + "  Ctrl: " + keyEvent.getCtrlKey() + "  Shift: " + keyEvent.getShiftKey() + "  CharCode: " + keyEvent.getCharCode() + "  KeyCode: " + keyEvent.getKeyCode()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-	}
-
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    switcher.stopActiveEditor();
-	    return;
-	}
-
-	visualEditor.hideResizer();
-	switcher.stopActiveEditor();
-
-	try {
-	    if (visualKeyHandler.keyPressHandler(keyEvent)) {
-		switcher
-			.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
-		// Edward
-		sourceSelectionChanged(true);
-		visualSelectionController.setCaretEnabled(true);
-		switcher.stopActiveEditor();
-	    } else {
-		// adding calls of core event handlers, for example 'CTR+H' or
-		// 'CTRL+M' event handler dialog
-		Event keyboardEvent = new Event();
-		// widget where event occur
-		keyboardEvent.widget = xulRunnerEditor.getBrowser();
-
-		keyboardEvent.stateMask = (keyEvent.getAltKey() ? SWT.ALT : 0)
-			| (keyEvent.getCtrlKey() ? SWT.CTRL : 0)
-			| (keyEvent.getShiftKey() ? SWT.SHIFT : 0)
-			| (keyEvent.getMetaKey() ? SWT.MOD1 : 0);
-		keyboardEvent.x = 0;
-		keyboardEvent.y = 0;
-		keyboardEvent.type = SWT.KeyDown;
-
-		if (keyEvent.getKeyCode() == 0) {
-
-		    keyboardEvent.keyCode = (int) keyEvent.getCharCode();
-		} else {
-		    keyboardEvent.keyCode = (int) keyEvent.getKeyCode();
+		if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
+			System.out
+					.println("<<< keyPress  type: " + keyEvent.getType() + "  Ctrl: " + keyEvent.getCtrlKey() + "  Shift: " + keyEvent.getShiftKey() + "  CharCode: " + keyEvent.getCharCode() + "  KeyCode: " + keyEvent.getKeyCode()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+		}
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+			switcher.stopActiveEditor();
+			return;
+		}
+		try {
+			visualEditor.hideResizer();
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
 		}
 
-		// JBIDE-1627
-		List<KeyStroke> possibleKeyStrokes = WorkbenchKeyboard
-			.generatePossibleKeyStrokes(keyboardEvent);
-		IWorkbench iWorkbench = VpePlugin.getDefault().getWorkbench();
-		if (iWorkbench.hasService(IBindingService.class)) {
-		    IBindingService iBindingService = (IBindingService) iWorkbench
-			    .getService(IBindingService.class);
+		try {
+			if (visualKeyHandler.keyPressHandler(keyEvent)) {
+				switcher
+						.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
+				try {
+					// Edward
+					sourceSelectionChanged(true);
+					visualSelectionController.setCaretEnabled(true);
+				} catch (Exception e) {
+					VpePlugin.reportProblem(e);
+				} finally {
+					switcher.stopActiveEditor();
+				}
+			} else {
+				// adding calls of core event handlers, for example' CTR+H' or
+				//' CTRL+M' event handler dialog
+				Event keyboardEvent = new Event();
+				// widget where event occur
+				keyboardEvent.widget = xulRunnerEditor.getBrowser();
 
-		    KeySequence sequenceBeforeKeyStroke = KeySequence
-			    .getInstance();
-		    for (Iterator<KeyStroke> iterator = possibleKeyStrokes
-			    .iterator(); iterator.hasNext();) {
-			KeySequence sequenceAfterKeyStroke = KeySequence
-				.getInstance(sequenceBeforeKeyStroke, iterator
-					.next());
-			if (iBindingService
-				.isPerfectMatch(sequenceAfterKeyStroke)) {
-			    final Binding binding = iBindingService
-				    .getPerfectMatch(sequenceAfterKeyStroke);
+				keyboardEvent.stateMask = (keyEvent.getAltKey() ? SWT.ALT : 0)
+						| (keyEvent.getCtrlKey() ? SWT.CTRL : 0)
+						| (keyEvent.getShiftKey() ? SWT.SHIFT : 0)
+						| (keyEvent.getMetaKey() ? SWT.MOD1 : 0);
+				keyboardEvent.x = 0;
+				keyboardEvent.y = 0;
+				keyboardEvent.type = SWT.KeyDown;
 
-			    if ((binding != null)
-				    && (binding.getParameterizedCommand() != null)
-				    && (binding.getParameterizedCommand()
-					    .getCommand() != null)
-				    && ContentAssistCommandAdapter.CONTENT_PROPOSAL_COMMAND
-					    .equals(binding
-						    .getParameterizedCommand()
-						    .getCommand().getId())) {
-				keyboardEvent.type = SWT.NONE;
-			    }
+				if (keyEvent.getKeyCode() == 0) {
+					keyboardEvent.keyCode = (int) keyEvent.getCharCode();
+				} else {
+					keyboardEvent.keyCode = (int) keyEvent.getKeyCode();
+				}
+				// JBIDE-1627
+				List<KeyStroke> possibleKeyStrokes = WorkbenchKeyboard
+						.generatePossibleKeyStrokes(keyboardEvent);
+				IWorkbench iWorkbench = VpePlugin.getDefault().getWorkbench();
+				if (iWorkbench.hasService(IBindingService.class)) {
+					IBindingService iBindingService = (IBindingService) iWorkbench
+							.getService(IBindingService.class);
+
+					KeySequence sequenceBeforeKeyStroke = KeySequence
+							.getInstance();
+					for (Iterator<KeyStroke> iterator = possibleKeyStrokes
+							.iterator(); iterator.hasNext();) {
+						KeySequence sequenceAfterKeyStroke = KeySequence
+								.getInstance(sequenceBeforeKeyStroke, iterator
+										.next());
+						if (iBindingService
+								.isPerfectMatch(sequenceAfterKeyStroke)) {
+							final Binding binding = iBindingService
+									.getPerfectMatch(sequenceAfterKeyStroke);
+
+							if ((binding != null)
+									&& (binding.getParameterizedCommand() != null)
+									&& (binding.getParameterizedCommand()
+											.getCommand() != null)
+									&& ContentAssistCommandAdapter.CONTENT_PROPOSAL_COMMAND
+											.equals(binding
+													.getParameterizedCommand()
+													.getCommand().getId())) {
+								keyboardEvent.type = SWT.NONE;
+							}
+						}
+					}
+				}
+				// sends xulrunner event to eclipse environment
+				getXulRunnerEditor().getBrowser().notifyListeners(
+						keyboardEvent.type, keyboardEvent);
 			}
-		    }
+		} catch (Exception e) {
+			VpePlugin.getPluginLog().logError(e);
+			visualRefresh();
 		}
-		// sends xulrunner event to eclipse environment
-		getXulRunnerEditor().getBrowser().notifyListeners(
-			keyboardEvent.type, keyboardEvent);
-
-	    }
-	} catch (Exception e) {
-	    VpePlugin.getPluginLog().logError(e);
-	    visualRefresh();
 	}
-
-    }
 
     public void elementResized(nsIDOMElement element, int resizerConstrains,
-	    int top, int left, int width, int height) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    return;
-	}
-	visualEditor.hideResizer();
-	switcher.stopActiveEditor();
-
-	visualBuilder.resize(element, resizerConstrains, top, left, width,
-		height);
-	sourceSelectionChanged();
+    		int top, int left, int width, int height) {
+    	if (!switcher
+    			.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+    		return;
+    	}
+    	try {
+    		visualEditor.hideResizer();
+    	} catch (Exception e) {
+    		VpePlugin.reportProblem(e);
+    	} finally {
+    		switcher.stopActiveEditor();
+    	}
+    	visualBuilder.resize(element, resizerConstrains, top, left, width, height);
+    	sourceSelectionChanged();
     }
 
     public void dragGesture(nsIDOMEvent domEvent) {
@@ -1443,14 +1549,18 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     }
 
     public void visualRefresh() {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+			return;
+		}
+		try {
+			visualRefreshImpl();
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	visualRefreshImpl();
-
-	switcher.stopActiveEditor();
-    }
 
     void visualRefreshImpl() {
 
@@ -1477,13 +1587,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
     public void preLongOperation() {
-	switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
-    }
+		switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
+	}
 
     public void postLongOperation() {
-	switcher.stopActiveEditor();
-	visualRefresh();
-    }
+		switcher.stopActiveEditor();
+		visualRefresh();
+	}
 
     // for debug
     private void printSourceEvent(INodeNotifier notifier, int eventType,
@@ -1602,38 +1712,48 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     }
 
     void refreshBundleValues() {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+			return;
+		}
+		try {
+			if (bundle != null) {
+				bundle.refresh();
+				if (pageContext != null) {
+					pageContext.refreshBundleValues();
+				}
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	if (bundle != null) {
-	    bundle.refresh();
-	    if (pageContext != null) {
-		pageContext.refreshBundleValues();
-	    }
-	}
-	switcher.stopActiveEditor();
-    }
 
     void refreshTemplates() {
-	if (includeList.includesRefresh()) {
-	    visualRefresh();
-	}
-	if (templateManager != null) {
-	    templateManager.reload();
-	}
-	if (bundle != null) {
-	    bundle.refresh();
-	    if (pageContext != null) {
-		if (!switcher
-			.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-		    return;
+		if (includeList.includesRefresh()) {
+			visualRefresh();
 		}
-		pageContext.refreshBundleValues();
-		switcher.stopActiveEditor();
-	    }
+		if (templateManager != null) {
+			templateManager.reload();
+		}
+		if (bundle != null) {
+			bundle.refresh();
+			if (pageContext != null) {
+				if (!switcher
+						.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+					return;
+				}
+				try {
+					pageContext.refreshBundleValues();
+				} catch (Exception e) {
+					VpePlugin.reportProblem(e);
+				} finally {
+					switcher.stopActiveEditor();
+				}
+			}
+		}
 	}
-    }
 
     // implements XModelTreeListener
     public void nodeChanged(XModelTreeEvent event) {
@@ -2118,48 +2238,49 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     }
 
     public void dragOver(nsIDOMEvent event) {
-
-	visualBuilder.getDnd().dragOver(event, this);
-
+    	visualBuilder.getDnd().dragOver(event, this);
     }
 
     public void _dragOver(nsIDOMEvent event) {
-	if (!switcher
-		.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-	    return;
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+			return;
+		}
+		try {
+			if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
+				System.out.println("<<<<<<<<<<<<<<<<<<<< dragOver"); //$NON-NLS-1$
+			}
+			// browser.computeDropPosition(event);
+			boolean canDrop = !xulRunnerEditor.isMozillaDragFlavor();
+			if (canDrop) {
+				Clipboard clipboard = new Clipboard(Display.getCurrent());
+				canDrop = clipboard.getContents(ModelTransfer.getInstance()) != null;
+			}
+			if (canDrop) {
+				canDrop = VpeDndUtil
+						.isDropEnabled((IModelObjectEditorInput) sourceEditor
+								.getEditorInput());
+			}
+			if (canDrop) {
+				VpeVisualCaretInfo caretInfo = selectionBuilder
+						.getVisualCaretInfo(event);
+				canDrop = caretInfo.exist();
+				if (canDrop) {
+					caretInfo.showCaret();
+				} else {
+					caretInfo.hideCaret();
+				}
+			}
+			if (!canDrop) {
+				event.stopPropagation();
+				event.preventDefault();
+			}
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
+		}
 	}
-	if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
-	    System.out.println("<<<<<<<<<<<<<<<<<<<< dragOver"); //$NON-NLS-1$
-	}
-
-	// browser.computeDropPosition(event);
-
-	boolean canDrop = !xulRunnerEditor.isMozillaDragFlavor();
-	if (canDrop) {
-	    Clipboard clipboard = new Clipboard(Display.getCurrent());
-	    canDrop = clipboard.getContents(ModelTransfer.getInstance()) != null;
-	}
-	if (canDrop) {
-	    canDrop = VpeDndUtil
-		    .isDropEnabled((IModelObjectEditorInput) sourceEditor
-			    .getEditorInput());
-	}
-	if (canDrop) {
-	    VpeVisualCaretInfo caretInfo = selectionBuilder
-		    .getVisualCaretInfo(event);
-	    canDrop = caretInfo.exist();
-	    if (canDrop) {
-		caretInfo.showCaret();
-	    } else {
-		caretInfo.hideCaret();
-	    }
-	}
-	if (!canDrop) {
-	    event.stopPropagation();
-	    event.preventDefault();
-	}
-	switcher.stopActiveEditor();
-    }
 
     public void drop(nsIDOMEvent event) {
 	if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
@@ -2719,33 +2840,37 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     }
 
     public void selectionChanged(SelectionChangedEvent event) {
-		//FIX for JBIDE-2114
-    	if (!isVisualEditorVisible()) {
-    		//selection event doesn't changes a content
-//			synced = false;
+		// FIX for JBIDE-2114
+		if (!isVisualEditorVisible()) {
+			// selection event doesn't changes a content
+			// synced = false;
 			return;
 		}
-    	//TODO Max Areshkau Adjust this code, now we haven's source mode
+		// TODO Max Areshkau Adjust this code, now we haven's source mode
 		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
-		    if (toolbarFormatControllerManager != null)
-			toolbarFormatControllerManager.selectionChanged();
+			if (toolbarFormatControllerManager != null)
+				toolbarFormatControllerManager.selectionChanged();
 		}
-	
+
 		if (selectionBar != null)
-		    selectionBar.selectionChanged();
-	
+			selectionBar.selectionChanged();
+
 		if (!switcher
-			.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-		    return;
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+			return;
 		}
-		if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-		    System.out
-			    .println(">>>>>>>>>>>>>> selectionChanged  " + event.getSource()); //$NON-NLS-1$
+		try {
+			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
+				System.out
+						.println(">>>>>>>>>>>>>> selectionChanged  " + event.getSource()); //$NON-NLS-1$
+			}
+			sourceSelectionChanged();
+		} catch (Exception e) {
+			VpePlugin.reportProblem(e);
+		} finally {
+			switcher.stopActiveEditor();
 		}
-		sourceSelectionChanged();
-		switcher.stopActiveEditor();
-		
-    }
+	}
 
     // nsIClipboardDragDropHooks implementation
     public void onPasteOrDrop(nsIDOMMouseEvent mouseEvent, String flavor,
