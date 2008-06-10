@@ -6,12 +6,11 @@
    Author: Mark Newton <mark.newton@jboss.org>
 -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:fo="http://www.w3.org/1999/XSL/Format">
 
    <xsl:import href="classpath:/xslt/org/jboss/pdf.xsl"/>
-   
+  
    <!--            overwriting links properties                        -->
-   <xsl:param name="ulink.show" select="0"></xsl:param>
    
    <xsl:attribute-set name="xref.properties">
       <xsl:attribute name="text-decoration">
@@ -23,5 +22,13 @@
       </xsl:attribute>
    </xsl:attribute-set>
    
+   <!--              highlighting meaningful words                      -->
+   
+   <xsl:template match="property">
+      <xsl:variable name="currant" select="child::node()"/>
+      <fo:inline color="#0066cc"> 
+         <xsl:value-of select="$currant"/> 
+      </fo:inline>
+   </xsl:template>
    
 </xsl:stylesheet>
