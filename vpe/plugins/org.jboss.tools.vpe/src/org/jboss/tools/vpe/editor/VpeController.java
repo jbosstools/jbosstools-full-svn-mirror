@@ -449,11 +449,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
      				notifyChangedInUiThread(eventBean.getNotifier(), eventBean.getEventType(),
      						eventBean.getFeature(), eventBean.getOldValue(), eventBean.getNewValue(), 
      						eventBean.getPos()); 
-        			} catch (NullPointerException ex) {
-        				//TODO Max Areshkau
-        				//JBIDE-675 find possability correctly resolve nulpointer
-        				//exception when we closse editor and job is executed
-        				VpePlugin.getPluginLog().logError(ex);
+        			} catch (VpeDisposeException ex) {
+        				//JBIDE-675 we will get this exception if user close editor,
+        				//when update visual editor job is running, we shoud ignore this
+        				//exception
+        				break;
         			}
      				getChangeEvents().remove(eventBean);
 				}
@@ -588,10 +588,17 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				}
 				break;
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
-		} finally {
-			switcher.stopActiveEditor();
+		} 
+		finally {
+			//fix for jbide-675, swithcer is null when vpecontroller is disposed
+			
+			if(switcher!=null) {
+				
+				switcher.stopActiveEditor();
+			} else {
+				
+				throw new VpeDisposeException("VpeController already disposed");
+			}
 		}
 	}
 

@@ -395,12 +395,19 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	boolean registerFlag = isCurrentMainDocument();
 	
 	//reads and dispatch events
+	//JBIDE-675, checks if editor was disposed or not
+	if(getPageContext().getSourceBuilder()==null ||includeDocuments==null) {
+		
+		throw new VpeDisposeException();
+}
 	getPageContext().processDisplayEvents();
+	
 	//check source node can be changed and link can be a null in this case
 	//we shouldn't process this node
 	if(sourceNode==null) {
 		return null;
 	}
+	
 	
 	switch (sourceNode.getNodeType()) {
 	case Node.ELEMENT_NODE:
