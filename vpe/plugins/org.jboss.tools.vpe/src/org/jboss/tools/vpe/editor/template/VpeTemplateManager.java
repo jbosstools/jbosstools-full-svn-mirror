@@ -849,7 +849,6 @@ public class VpeTemplateManager {
 					bundle = Platform.getBundle(confElement.getNamespaceIdentifier());
 				} else {
 					bundle = Platform.getBundle(nameSpaceIdentifyer);
-					System.out.println(nameSpaceIdentifyer);
 				}
 				Class templateClass = bundle.loadClass(templateClassName);
 				template = (VpeTemplate)templateClass.newInstance();
