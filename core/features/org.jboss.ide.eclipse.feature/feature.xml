@@ -463,18 +463,6 @@ END OF TERMS AND CONDITIONS
          version="0.0.0"/>
 
    <plugin
-         id="org.jboss.ide.eclipse.jdt.j2ee.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.jboss.ide.eclipse.jdt.j2ee.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="org.jboss.ide.eclipse.jdt.ui"
          download-size="0"
          install-size="0"
@@ -482,12 +470,6 @@ END OF TERMS AND CONDITIONS
 
    <plugin
          id="org.jboss.ide.eclipse.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.jboss.ide.eclipse.firstrun"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
