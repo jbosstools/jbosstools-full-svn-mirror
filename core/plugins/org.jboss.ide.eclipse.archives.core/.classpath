@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src/main"/>
 	<classpathentry kind="src" path="src/xml"/>
 	<classpathentry kind="src" path="src/eclipse"/>
-	<classpathentry exported="true" kind="lib" path="lib/truezip-6.6.jar" sourcepath="/home/rob/Desktop/truezip-6-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/truezip-6.6.jar" sourcepath="/home/rob/code/truezip/truezip/src"/>
 	<classpathentry exported="true" kind="lib" path="lib/jboss-common-core-2.2.1.GA.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jboss-common-logging-log4j-2.0.4.GA.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jboss-common-logging-spi-2.0.4.GA.jar"/>
