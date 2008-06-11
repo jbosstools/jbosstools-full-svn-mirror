@@ -210,15 +210,19 @@ public class ModelTruezipBridge {
 				filesetRelative = inputFiles[i].lastSegment();
 			else
 				filesetRelative = inputFiles[i].toOSString().substring(fsLength);
-			String tmp = new Path(filesetRelative).removeLastSegments(1).toString();
-			File parentFile = new File(fsFile, tmp, ArchiveDetector.NULL);
-			if( parentFile.getEnclArchive() != null )
-				parentFile = new File(fsFile, tmp, ArchiveDetector.DEFAULT);
+			File parentFile;
+			if(new Path(filesetRelative).segmentCount() > 1 ) { 
+				String tmp = new Path(filesetRelative).removeLastSegments(1).toString();
+				parentFile = new File(fsFile, tmp, ArchiveDetector.NULL);
+				if( parentFile.getEnclArchive() != null )
+					parentFile = new File(fsFile, tmp, ArchiveDetector.DEFAULT);
+			} else {
+				parentFile = fsFile;
+			}
 			returnFiles[i] = new File(parentFile, new Path(filesetRelative).lastSegment(), ArchiveDetector.DEFAULT); 
 		}
 		return returnFiles;
-	}
-	
+	}	
 	
 	/**
 	 * This should go through the tree and create a file that is 
