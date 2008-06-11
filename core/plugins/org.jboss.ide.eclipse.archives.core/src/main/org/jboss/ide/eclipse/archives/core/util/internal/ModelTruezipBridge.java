@@ -244,9 +244,10 @@ public class ModelTruezipBridge {
 			boolean exploded = ((IArchive)node).isExploded();
 			ArchiveDetector detector = exploded ? ArchiveDetector.NULL : TrueZipUtil.getJarArchiveDetector();
 			if( parentFile == null ) {
+				// we're a root archive, and so the destination folder must be a real folder
 				IPath p = node2.getGlobalDestinationPath();
 				if( p == null ) return null;
-				return new File(p.append(node2.getName()).toOSString(), detector);
+				parentFile = new File(p.toOSString(), ArchiveDetector.NULL);
 			}
 			return new File(parentFile, node2.getName(), detector);
 		}
