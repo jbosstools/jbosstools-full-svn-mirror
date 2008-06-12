@@ -39,10 +39,12 @@ public class VpeVisualLinkCreator extends VpeAbstractCreator {
 	private VpeExpression styleExpr;
 	private VpeExpression classExpr;
 	private VpeExpression valueExpr;
+	private VpeExpression dirExpr;
 
 	private String styleStr;
 	private String classStr;
 	private String valueStr;
+	private String dirStr;
 
 	// private Set dependencySet;
 
@@ -66,7 +68,20 @@ public class VpeVisualLinkCreator extends VpeAbstractCreator {
 				VpePlugin.reportProblem(e);
 			}
 		}
+		
+		
+		final Attr dirAttr = element.getAttributeNode(HTML.ATTR_DIR);
 
+        if (dirAttr != null) {
+            try {
+                dirStr = dirAttr.getValue();
+                VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(dirStr, caseSensitive);
+                dirExpr = info.getExpression();
+                dependencyMap.setCreator(this, info.getDependencySet());
+            } catch (VpeExpressionBuilderException e) {
+                VpePlugin.reportProblem(e);
+	            }
+		}
 		Attr classAttr = element
 				.getAttributeNode(VpeTemplateManager.ATTR_TEMPLATE_CLASS);
 		if (styleAttr != null) {
@@ -97,40 +112,40 @@ public class VpeVisualLinkCreator extends VpeAbstractCreator {
 
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode,
-			nsIDOMDocument visualDocument, nsIDOMElement visualElement,
-			Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement,
+            Map visualNodeMap) {
 
-		nsIDOMElement a = visualDocument.createElement(HTML.TAG_A);
+        nsIDOMElement a = visualDocument.createElement(HTML.TAG_A);
 
-		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(a);
+        VpeCreatorInfo creatorInfo = new VpeCreatorInfo(a);
 
-		if (styleExpr != null) {
-			String style = styleExpr.exec(pageContext, sourceNode)
-					.stringValue();
-			a.setAttribute(HTML.ATTR_STYLE, style);
-		}
+        if (dirExpr != null) {
+            String dir = dirExpr.exec(pageContext, sourceNode).stringValue();
+            a.setAttribute(HTML.ATTR_DIR, dirStr);
+        }
 
-		if (classExpr != null) {
-			String classStyle = classExpr.exec(pageContext, sourceNode)
-					.stringValue();
-			a.setAttribute(HTML.ATTR_CLASS, classStyle);
-		}
+        if (styleExpr != null) {
+            String style = styleExpr.exec(pageContext, sourceNode).stringValue();
+            a.setAttribute(HTML.ATTR_STYLE, style);
+        }
 
-		if (valueExpr != null) {
-			String value = valueExpr.exec(pageContext, sourceNode)
-					.stringValue();
-			if (value != null && value.length() > 0) {
-				nsIDOMElement span = visualDocument
-						.createElement(HTML.TAG_SPAN);
-				a.appendChild(span);
-				nsIDOMText text = visualDocument.createTextNode(value);
-				span.appendChild(text);
-			}
-		}
+        if (classExpr != null) {
+            String classStyle = classExpr.exec(pageContext, sourceNode).stringValue();
+            a.setAttribute(HTML.ATTR_CLASS, classStyle);
+        }
 
-		return creatorInfo;
-	}
+        if (valueExpr != null) {
+            String value = valueExpr.exec(pageContext, sourceNode).stringValue();
+            if (value != null && value.length() > 0) {
+                nsIDOMElement span = visualDocument.createElement(HTML.TAG_SPAN);
+                a.appendChild(span);
+                nsIDOMText text = visualDocument.createTextNode(value);
+                span.appendChild(text);
+            }
+        }
+
+        return creatorInfo;
+    }
 
 	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
