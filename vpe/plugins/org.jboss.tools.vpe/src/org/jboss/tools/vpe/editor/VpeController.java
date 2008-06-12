@@ -210,9 +210,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     private XModelTreeListenerSWTSync optionsListener;
     // Added by Max Areshkau Fix for JBIDE-1479
     private UIJob job = null;
-    private LinkedList<Job> jobQueue;
-	private IProgressMonitor progressMonitor;
+    private IProgressMonitor progressMonitor;
 	private UIJob uiJob;
+	//JBIDE-675, visual refresh job
+	private UIJob visualRefresfJob;
+	
 	/**
 	 * Added by Max Areshkau
 	 * JBIDE-675, stores information about modification events
@@ -336,6 +338,12 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     		getChangeEvents().clear();
     		uiJob=null;
     	}
+    	
+    	if(visualRefresfJob!=null) {
+    		visualRefresfJob.cancel();
+    		visualRefresfJob=null;
+    	}
+    	
 	if (optionsListener != null) {
 	    XModelObject optionsObject = ModelUtilities.getPreferenceModel()
 		    .getByPath(VpePreference.EDITOR_PATH);
@@ -1556,17 +1564,53 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     }
 
     public void visualRefresh() {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-			return;
-		}
-		try {
-			visualRefreshImpl();
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
-		} finally {
-			switcher.stopActiveEditor();
-		}
+    	
+    	if(visualRefresfJob==null || visualRefresfJob.getState()==Job.NONE) {
+    	
+    		visualRefresfJob =new UIJob(VpeUIMessages.VPE_VISUAL_REFRESH_JOB){
+
+				@Override
+				public IStatus runInUIThread(IProgressMonitor monitor) {
+			    	
+					if(monitor.isCanceled()) {
+						
+						return Status.CANCEL_STATUS;
+					}
+					
+					if(uiJob!=null && 
+							uiJob.getState()==Job.RUNNING) {
+						uiJob.cancel();
+						getChangeEvents().clear();
+						//wait while ui job is finished
+						schedule(500);
+					} else {
+					
+						if(uiJob!=null) {
+							
+							uiJob.cancel();
+						}
+						if (!switcher
+								.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+							return Status.CANCEL_STATUS;
+						}
+						try {
+							monitor.beginTask(VpeUIMessages.VPE_VISUAL_REFRESH_JOB, IProgressMonitor.UNKNOWN);
+							visualRefreshImpl();
+							monitor.done();
+						} finally {
+							
+							if(switcher!=null) {
+								
+								switcher.stopActiveEditor();
+							}
+						}
+					}
+					return Status.OK_STATUS;
+				}};
+				
+				visualRefresfJob.setPriority(Job.SHORT);
+				visualRefresfJob.schedule();
+    	}
 	}
 
     void visualRefreshImpl() {
