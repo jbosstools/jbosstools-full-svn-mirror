@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.selbar;
 
+import java.util.ArrayList;
+
 import org.eclipse.compare.Splitter;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
@@ -30,7 +32,10 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
+import org.jboss.tools.common.meta.XAttribute;
 import org.jboss.tools.common.model.XModelObject;
+import org.jboss.tools.common.model.ui.attribute.adapter.AdapterFactory;
+import org.jboss.tools.common.model.ui.attribute.adapter.IModelPropertyEditorAdapter;
 import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.VpePlugin;
@@ -138,6 +143,15 @@ public class SelectionBar extends Layout implements SelectionListener {
 				optionsObject.setAttributeValue(
 						VpePreference.ATT_SHOW_SELECTION_TAG_BAR,
 						PREFERENCE_STATUS_BAR_DISABLE);
+						
+				/*
+				 * Fixes http://jira.jboss.com/jira/browse/JBIDE-2298
+				 * To get stored in xml XModelObject 
+				 * should be marked as modified.
+				 */
+				optionsObject.setModified(true);
+				performStore(optionsObject);
+				
 				showBar(PREFERENCE_STATUS_BAR_DISABLE);
 			}
 		});
@@ -299,6 +313,40 @@ public class SelectionBar extends Layout implements SelectionListener {
 		vpeController.getPageContext().getSourceBuilder()
 				.getStructuredTextViewer().revealRange(offset, 0);
 	}
+	
+	/**
+	 * Performs storing model object in the model and xml file.
+	 * 
+	 * @param xmo the model object to store
+	 */
+	private void performStore(XModelObject xmo) {
+		if (null == xmo || null == xmo.getModel()
+				|| null == xmo.getModelEntity()) {
+			return;
+		}
+		
+		ArrayList<IModelPropertyEditorAdapter> adapters = new ArrayList<IModelPropertyEditorAdapter>();
+		XAttribute[] attribute = xmo.getModelEntity().getAttributes();
+		for (int i = 0; i < attribute.length; i++) {
+			if(!attribute[i].isVisible()) {
+				continue;
+			}
+			IModelPropertyEditorAdapter adapter = AdapterFactory.getAdapter(attribute[i], xmo, xmo.getModel());
+			adapters.add(adapter);
+		}
+		/*
+		 * Stores model object by its adaptors. 
+		 */
+		for (IModelPropertyEditorAdapter adapter : adapters) {
+			adapter.store();
+		}
+
+		/*
+		 * Saves model options
+		 */
+		xmo.getModel().saveOptions();
+	}
+	
 
     public String toString() {
 		StringBuffer st = new StringBuffer("CountItem: ");
