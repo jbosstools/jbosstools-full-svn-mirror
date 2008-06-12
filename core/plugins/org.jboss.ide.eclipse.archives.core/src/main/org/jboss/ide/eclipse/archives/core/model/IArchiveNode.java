@@ -188,4 +188,10 @@ public interface IArchiveNode {
 	 * @return true if it's ok, false if it should fail
 	 */
 	public boolean validateModel();
+	
+	/**
+	 * Are all of the fields here accessible to be built?
+	 * @throws AssertionFailedException with what's wrong
+	 */
+	public boolean canBuild();
 }

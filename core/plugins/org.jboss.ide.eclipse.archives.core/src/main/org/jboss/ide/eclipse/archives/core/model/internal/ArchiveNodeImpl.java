@@ -264,6 +264,10 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#validateModel()
+	 */
 	public boolean validateModel() {
 		IArchiveNode[] kids = getAllChildren();
 		for( int i = 0; i < kids.length; i++ ) 
@@ -272,6 +276,18 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		return true;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#canBuild()
+	 */
+	public boolean canBuild() {
+		IArchiveNode[] kids = getAllChildren();
+		for( int i = 0; i < kids.length; i++ ) 
+			if( !kids[i].canBuild() ) 
+				return false;
+		return true;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#removeChild(org.jboss.ide.eclipse.archives.core.model.IArchiveNode)

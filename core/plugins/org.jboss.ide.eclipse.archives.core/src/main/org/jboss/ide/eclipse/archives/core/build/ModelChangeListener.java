@@ -22,6 +22,7 @@
 package org.jboss.ide.eclipse.archives.core.build;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.EventManager;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
@@ -78,9 +79,10 @@ public class ModelChangeListener implements IArchiveModelListener {
 	 * @param delta
 	 */
 	private void handle(IArchiveNodeDelta delta) {
-		if( isTopLevelArchive(delta.getPostNode())) 
+		if( isTopLevelArchive(delta.getPostNode())) {
 			EventManager.startedBuildingArchive((IArchive)delta.getPostNode());
-
+		}
+		
 		if( (delta.getKind() & (IArchiveNodeDelta.NODE_REGISTERED | IArchiveNodeDelta.UNKNOWN_CHANGE)) != 0 ) {
 			nodeRemoved(delta.getPreNode());
 			nodeAdded(delta.getPostNode());
@@ -169,6 +171,10 @@ public class ModelChangeListener implements IArchiveModelListener {
 			}
 		} else if( added.getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
 			// create the package
+			if( ((IArchive)added).isTopLevel() && !added.canBuild() ) {
+				logCannotBuildError((IArchive)added);
+				return;
+			}
 			ModelTruezipBridge.createFile(added);
 		} else if( added.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FOLDER ) {
 			// create the folder
@@ -195,6 +201,10 @@ public class ModelChangeListener implements IArchiveModelListener {
 			postChange(removed);
 			return;
 		} else if( removed.getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
+			if( ((IArchive)removed).isTopLevel() && !removed.canBuild() ) {
+				logCannotBuildError((IArchive)removed);
+				return;
+			}
 			ModelTruezipBridge.deleteArchive((IArchive)removed);
 			postChange(removed);
 			return;
@@ -218,5 +228,12 @@ public class ModelChangeListener implements IArchiveModelListener {
 	
 	
 	protected void postChange(IArchiveNode node) {
+	}
+	
+	protected void logCannotBuildError(IArchive archive) {
+		ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, 
+				"Cannot Build archive \"" + archive.getName() + 
+				"\" due to a problem in the archive's configuration.", null);
+		return;
 	}
 }

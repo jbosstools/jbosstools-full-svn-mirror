@@ -21,6 +21,7 @@
  */
 package org.jboss.ide.eclipse.archives.core;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -51,7 +52,15 @@ import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 public class WorkspaceChangeListener implements IResourceChangeListener {
 
 	public void resourceChanged(IResourceChangeEvent event) {
-		final Set<IProject> projects = new TreeSet<IProject>();
+		Comparator c = new Comparator() {
+			public int compare(Object o1, Object o2) {
+				if( o1 instanceof IProject && o2 instanceof IProject)
+					return ((IProject)o1).getLocation().toOSString().compareTo(
+							((IProject)o2).getLocation().toOSString());
+				return 0;
+			}
+		};
+		final Set<IProject> projects = new TreeSet<IProject>(c);
 		
 		IResourceDelta delta = event.getDelta();
 		try {

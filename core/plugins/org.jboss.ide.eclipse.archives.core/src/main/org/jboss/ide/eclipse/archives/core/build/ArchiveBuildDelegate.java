@@ -26,6 +26,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.EventManager;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
@@ -76,12 +78,25 @@ public class ArchiveBuildDelegate {
 	 * @param pkg The archive to build
 	 */
 	public void fullArchiveBuild(IArchive pkg) {
+		if( !pkg.canBuild() ) {
+			ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, 
+					"Cannot Build archive \"" + pkg.getName() + 
+					"\" due to a problem in the archive's configuration.", null);
+			return;
+		}
+		
 		EventManager.cleanArchiveBuild(pkg);
 		EventManager.startedBuildingArchive(pkg);
 		
 		ModelTruezipBridge.deleteArchive(pkg);
 		if( !pkg.getGlobalDestinationPath().toFile().exists() ) {
-			pkg.getGlobalDestinationPath().toFile().mkdirs();
+			if( !pkg.getGlobalDestinationPath().toFile().mkdirs() ) {
+				ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, 
+						"Cannot Build archive \"" + pkg.getName() + 
+						"\". Output location " + pkg.getGlobalDestinationPath() + 
+						" is not writeable", null);
+				return;
+			}
 		}
 		
 		// Run the pre actions
