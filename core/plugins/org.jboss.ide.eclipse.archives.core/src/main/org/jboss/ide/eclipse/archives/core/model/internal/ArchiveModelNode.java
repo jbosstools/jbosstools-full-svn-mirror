@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.EventManager;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
@@ -156,6 +157,8 @@ public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelRo
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveModelNode#save(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void save(IProgressMonitor monitor) throws ArchivesModelException {
+		if( monitor == null )
+			monitor = new NullProgressMonitor();
 		XbPackages packs = (XbPackages)getNodeDelegate();
 		try {
 			XMLBinding.marshallToFile(packs, getDescriptor(), monitor);
