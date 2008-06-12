@@ -69,7 +69,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerActivation;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -80,11 +79,10 @@ import org.hibernate.eclipse.console.QueryEditor;
 import org.hibernate.eclipse.console.viewers.xpl.MTreeViewer;
 import org.hibernate.eclipse.console.views.KnownConfigurationsProvider;
 import org.hibernate.eclipse.console.workbench.LazySessionFactory;
-import org.hibernate.eclipse.console.workbench.LazySessionFactoryAdapter;
 import org.hibernate.eclipse.console.workbench.xpl.AnyAdaptableLabelProvider;
 import org.hibernate.eclipse.hqleditor.HQLEditorDocumentSetupParticipant;
 import org.hibernate.eclipse.hqleditor.HQLSourceViewerConfiguration;
-import org.jboss.tools.birt.oda.impl.HibernateConnection;
+import org.jboss.tools.birt.oda.IOdaSessionFactory;
 import org.jboss.tools.birt.oda.impl.HibernateDriver;
 import org.jboss.tools.birt.oda.ui.Activator;
 
@@ -139,7 +137,9 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.datatools.connectivity.oda.design.ui.wizards.DataSetWizardPage#createPageCustomControl(org.eclipse.swt.widgets.Composite)
+	 * @see
+	 * org.eclipse.datatools.connectivity.oda.design.ui.wizards.DataSetWizardPage
+	 * #createPageCustomControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createPageCustomControl(Composite parent) {
 		setControl(createPageControl(parent));
@@ -162,49 +162,47 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 
 		Control left = createTableSelectionComposite(composite);
 		GridData gridData = (GridData) left.getLayoutData();
-		gridData.widthHint=160;
-		//left.setLayoutData(gridData);
-		
+		gridData.widthHint = 160;
+		// left.setLayoutData(gridData);
+
 		Sash sash = createSash(composite);
 		Control right = createQueryComposite(composite);
-		//setWidthHints(composite, left, right, sash);
+		// setWidthHints(composite, left, right, sash);
 		addDragListerner(sash, composite, left, right);
 		initDragAndDrop();
 		return composite;
 	}
-	
+
 	private void initDragAndDrop() {
 		new HibernateDSDragSource(viewer);
-        new HibernateDSDropSource(sourceViewer);
+		new HibernateDSDropSource(sourceViewer);
 	}
 
-	private void addDragListerner( final Sash sash, final Composite parent,
-			final Control left, final Control right )
-	{
-		sash.addListener( SWT.Selection, new Listener( ) {
+	private void addDragListerner(final Sash sash, final Composite parent,
+			final Control left, final Control right) {
+		sash.addListener(SWT.Selection, new Listener() {
 
-			public void handleEvent( Event event )
-			{
-				if ( event.detail == SWT.DRAG )
-				{
+			public void handleEvent(Event event) {
+				if (event.detail == SWT.DRAG) {
 					return;
 				}
 				Sash sash = (Sash) event.widget;
-				int shift = event.x - sash.getBounds( ).x;
+				int shift = event.x - sash.getBounds().x;
 
-				left.setSize( left.getSize( ).x+shift, left.getSize( ).y );
-				right.setSize( right.getSize( ).x-shift, right.getSize( ).y );
-				right.setLocation( right.getLocation( ).x+shift, right.getLocation( ).y );
-				sash.setLocation( sash.getLocation( ).x+shift, sash.getLocation( ).y );
+				left.setSize(left.getSize().x + shift, left.getSize().y);
+				right.setSize(right.getSize().x - shift, right.getSize().y);
+				right.setLocation(right.getLocation().x + shift, right
+						.getLocation().y);
+				sash.setLocation(sash.getLocation().x + shift, sash
+						.getLocation().y);
 			}
-		} );
+		});
 	}
-
 
 	private Control createQueryComposite(Composite parent) {
 
 		Composite composite = new Composite(parent, SWT.FILL
-				| SWT.LEFT_TO_RIGHT );
+				| SWT.LEFT_TO_RIGHT);
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 1;
 		composite.setLayout(layout);
@@ -223,7 +221,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 			public void modifyText(ModifyEvent e) {
 				validateData();
 			}
-			
+
 		});
 		styledText.setFont(JFaceResources.getTextFont());
 		Control control = sourceViewer.getControl();
@@ -242,40 +240,33 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 
 		attachMenus(sourceViewer);
 		// add support of additional accelerated key
-		sourceViewer.getTextWidget( ).addKeyListener( new KeyListener( ) {
+		sourceViewer.getTextWidget().addKeyListener(new KeyListener() {
 
-			public void keyPressed( KeyEvent e )
-			{
-				if ( isUndoKeyPress( e ) )
-				{
-					sourceViewer.doOperation( ITextOperationTarget.UNDO );
-				}
-				else if ( isRedoKeyPress( e ) )
-				{
-					sourceViewer.doOperation( ITextOperationTarget.REDO );
+			public void keyPressed(KeyEvent e) {
+				if (isUndoKeyPress(e)) {
+					sourceViewer.doOperation(ITextOperationTarget.UNDO);
+				} else if (isRedoKeyPress(e)) {
+					sourceViewer.doOperation(ITextOperationTarget.REDO);
 				}
 				validateData();
 			}
 
-			private boolean isUndoKeyPress( KeyEvent e )
-			{
+			private boolean isUndoKeyPress(KeyEvent e) {
 				// CTRL + z
-				return ( ( e.stateMask & SWT.CONTROL ) > 0 )
-						&& ( ( e.keyCode == 'z' ) || ( e.keyCode == 'Z' ) );
+				return ((e.stateMask & SWT.CONTROL) > 0)
+						&& ((e.keyCode == 'z') || (e.keyCode == 'Z'));
 			}
 
-			private boolean isRedoKeyPress( KeyEvent e )
-			{
+			private boolean isRedoKeyPress(KeyEvent e) {
 				// CTRL + y
-				return ( ( e.stateMask & SWT.CONTROL ) > 0 )
-						&& ( ( e.keyCode == 'y' ) || ( e.keyCode == 'Y' ) );
+				return ((e.stateMask & SWT.CONTROL) > 0)
+						&& ((e.keyCode == 'y') || (e.keyCode == 'Y'));
 			}
 
-			public void keyReleased( KeyEvent e )
-			{
+			public void keyReleased(KeyEvent e) {
 				// do nothing
 			}
-		} );
+		});
 
 		IHandler handler = new AbstractHandler() {
 			public Object execute(ExecutionEvent event)
@@ -318,19 +309,18 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 
 			public void setConsoleConfigurationName(String text) {
 			}
-			
+
 		};
-		SourceViewerConfiguration svc = new HQLSourceViewerConfiguration(
-				editor);
+		SourceViewerConfiguration svc = new HQLSourceViewerConfiguration(editor);
 		sourceViewer.configure(svc);
-		testButton = new Button(composite,SWT.NONE);
+		testButton = new Button(composite, SWT.NONE);
 		testButton.setText("Test query ...");
 		testButton.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent e) {
 				testQuery();
 			}
-			
+
 		});
 		return composite;
 	}
@@ -353,8 +343,8 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 					"The query is valid.");
 		} catch (Exception e) {
 			String message = "The query is not valid.";
-			IStatus status = new Status(Status.ERROR, Activator.PLUGIN_ID,
-					e.getLocalizedMessage(), e);
+			IStatus status = new Status(Status.ERROR, Activator.PLUGIN_ID, e
+					.getLocalizedMessage(), e);
 			Activator.getDefault().getLog().log(status);
 			ErrorDialog.openError(getShell(), title, message, status);
 		} finally {
@@ -363,28 +353,27 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 			}
 		}
 	}
-	
-	private final void attachMenus( SourceViewer viewer )
-	{
-		StyledText widget = viewer.getTextWidget( );
-		TextMenuManager menuManager = new TextMenuManager( viewer );
-		widget.setMenu( menuManager.getContextMenu( widget ) );
+
+	private final void attachMenus(SourceViewer viewer) {
+		StyledText widget = viewer.getTextWidget();
+		TextMenuManager menuManager = new TextMenuManager(viewer);
+		widget.setMenu(menuManager.getContextMenu(widget));
 	}
-	
+
 	private String getConfigurationName() {
 		DataSetDesign design = getInitializationDesign();
 		DataSourceDesign dsDesign = design.getDataSourceDesign();
 		Property property = dsDesign.getPublicProperties().findProperty(
-				HibernateConnection.CONFIGURATION);
+				IOdaSessionFactory.CONFIGURATION);
 		NameValuePair propertyValue = property.getNameValue();
 		String name = propertyValue.getValue();
 		return name;
 	}
-	
+
 	private ConsoleConfiguration getInternalConsoleConfiguration() {
 		return getConsoleConfiguration(getConfigurationName());
 	}
-	
+
 	private Sash createSash(final Composite composite) {
 		final Sash sash = new Sash(composite, SWT.VERTICAL);
 		sash.setLayoutData(new GridData(GridData.FILL_VERTICAL));
@@ -412,7 +401,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 		data = new GridData(GridData.FILL_BOTH);
 		data.grabExcessHorizontalSpace = true;
 		data.grabExcessVerticalSpace = true;
-		
+
 		viewer.getControl().setLayoutData(data);
 
 		viewer.setLabelProvider(new AnyAdaptableLabelProvider());
@@ -426,8 +415,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 				configuration.getSessionFactory();
 			}
 			viewer.setInput(new LazySessionFactory(configuration));
-		}
-		else
+		} else
 			viewer.setInput(KnownConfigurations.getInstance());
 
 		return composite;
@@ -493,7 +481,10 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.datatools.connectivity.oda.design.ui.wizards.DataSetWizardPage#collectDataSetDesign(org.eclipse.datatools.connectivity.oda.design.DataSetDesign)
+	 * @see
+	 * org.eclipse.datatools.connectivity.oda.design.ui.wizards.DataSetWizardPage
+	 * #collectDataSetDesign(org.eclipse.datatools.connectivity.oda.design.
+	 * DataSetDesign)
 	 */
 	protected DataSetDesign collectDataSetDesign(DataSetDesign design) {
 		if (!hasValidData())
@@ -505,7 +496,9 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.datatools.connectivity.oda.design.ui.wizards.DataSetWizardPage#collectResponseState()
+	 * @see
+	 * org.eclipse.datatools.connectivity.oda.design.ui.wizards.DataSetWizardPage
+	 * #collectResponseState()
 	 */
 	protected void collectResponseState() {
 		super.collectResponseState();
@@ -520,7 +513,9 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.datatools.connectivity.oda.design.ui.wizards.DataSetWizardPage#canLeave()
+	 * @see
+	 * org.eclipse.datatools.connectivity.oda.design.ui.wizards.DataSetWizardPage
+	 * #canLeave()
 	 */
 	protected boolean canLeave() {
 		return isPageComplete();

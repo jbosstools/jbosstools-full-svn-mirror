@@ -34,7 +34,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
-import org.jboss.tools.birt.oda.impl.HibernateConnection;
+import org.jboss.tools.birt.oda.IOdaSessionFactory;
 import org.jboss.tools.birt.oda.ui.Activator;
 
 /**
@@ -150,12 +150,12 @@ public class HibernateSelectionPageHelper {
 	public void initCustomControl(Properties profileProps) {
 		if (profileProps != null) {
 			String confName = profileProps
-					.getProperty(HibernateConnection.CONFIGURATION);
+					.getProperty(IOdaSessionFactory.CONFIGURATION);
 			if (confName != null) {
 				configurationCombo.setText(confName);
 			}
 			String maxResult = profileProps
-					.getProperty(HibernateConnection.MAX_ROWS);
+					.getProperty(IOdaSessionFactory.MAX_ROWS);
 			maxRows.setText(maxResult);
 		} else {
 			if (configurationCombo.getItemCount() > 0) {
@@ -224,9 +224,9 @@ public class HibernateSelectionPageHelper {
 			props = new Properties();
 
 		props
-				.setProperty(HibernateConnection.CONFIGURATION,
+				.setProperty(IOdaSessionFactory.CONFIGURATION,
 						getConfiguration());
-		props.setProperty(HibernateConnection.MAX_ROWS, getMaxRows());
+		props.setProperty(IOdaSessionFactory.MAX_ROWS, getMaxRows());
 		return props;
 	}
 
