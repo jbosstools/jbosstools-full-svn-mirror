@@ -57,4 +57,15 @@ public class Activator extends Plugin {
 		return plugin;
 	}
 
+	public static Class classForName(String name, Class caller) throws ClassNotFoundException {
+		try {
+			ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+			if ( contextClassLoader != null ) {
+				return contextClassLoader.loadClass( name );
+			}
+		}
+		catch ( Throwable e ) {
+		}
+		return Class.forName( name, true, caller.getClassLoader() );
+	}
 }

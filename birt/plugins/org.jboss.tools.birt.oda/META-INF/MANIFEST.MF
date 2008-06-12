@@ -7,10 +7,10 @@ Bundle-ClassPath: .
 Bundle-Activator: org.jboss.tools.birt.oda.Activator
 Bundle-Vendor: RedHat, Inc.
 Bundle-Localization: plugin
-Export-Package: org.jboss.tools.birt.oda.impl
+Export-Package: org.jboss.tools.birt.oda,
+ org.jboss.tools.birt.oda.impl
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.datatools.connectivity.oda;bundle-version="[3.1.0,4.0.0)",
  org.eclipse.datatools.connectivity.oda.profile;bundle-version="[3.0.4,4.0.0)",
- org.hibernate.eclipse.console;visibility:=reexport,
- org.hibernate.eclipse;visibility:=reexport
+ org.hibernate.eclipse;resolution:=optional;visibility:=reexport
 Eclipse-LazyStart: true

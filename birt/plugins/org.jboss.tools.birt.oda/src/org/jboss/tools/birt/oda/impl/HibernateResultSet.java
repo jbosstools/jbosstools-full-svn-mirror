@@ -24,13 +24,6 @@ import org.eclipse.datatools.connectivity.oda.IClob;
 import org.eclipse.datatools.connectivity.oda.IResultSet;
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
-import org.hibernate.EntityMode;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.hibernate.classic.Session;
-import org.hibernate.metadata.ClassMetadata;
-import org.hibernate.type.Type;
 
 /**
  * Implementation class of IResultSet for an ODA runtime driver.
@@ -39,32 +32,16 @@ import org.hibernate.type.Type;
  */
 public class HibernateResultSet implements IResultSet {
 	private int _maxRows;
-	private HibernateQuery query;
-	private List result;
-	private Iterator iterator;
-	private Object currentRow;
+	private HibernateOdaQuery query;
+	
 	private int rowNumber = -1;
 	private boolean wasNull;
-	private Type[] queryReturnTypes;
-	private static DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-	private Session session;
+	
+	private static DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");	
 
-	public HibernateResultSet(HibernateQuery query) throws OdaException {
+	public HibernateResultSet(HibernateOdaQuery query) throws OdaException {
 		this.query = query;
-		try {
-			_maxRows = query.getMaxRows();
-		} catch (OdaException e) {
-			// ignore
-		}
-		try {
-			session = query.getConnection().getSessionFactory().openSession(); 
-			Query q = session.createQuery(query.getQueryText());
-			result = q.list();
-			iterator = result.iterator();
-			this.queryReturnTypes = q.getReturnTypes();
-		} catch (HibernateException e) {
-			throw new OdaException(e.getLocalizedMessage());
-		}
+		query.getConnection().getOdaSessionFactory().executeQuery(query);
 	}
 
 	/*
@@ -95,8 +72,8 @@ public class HibernateResultSet implements IResultSet {
 	 * @see org.eclipse.datatools.connectivity.oda.IResultSet#next()
 	 */
 	public boolean next() throws OdaException {
-		if (iterator.hasNext()) {
-			currentRow = iterator.next();
+		if (getIterator().hasNext()) {
+			query.getConnection().getOdaSessionFactory().next();
 			rowNumber++;
 			return true;
 		}
@@ -104,15 +81,23 @@ public class HibernateResultSet implements IResultSet {
 
 	}
 
+	private Iterator getIterator() {
+		return query.getConnection().getOdaSessionFactory().getIterator();
+	}
+
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IResultSet#close()
 	 */
 	public void close() throws OdaException {
+		List result = getResult();
 		if (result != null)
 			result.clear();
-		if (session != null)
-			session.close();
+		query.getConnection().getOdaSessionFactory().close();
 		result = null;
+	}
+
+	private List getResult() {
+		return query.getConnection().getOdaSessionFactory().getResult();
 	}
 
 	/*
@@ -124,32 +109,7 @@ public class HibernateResultSet implements IResultSet {
 	}
 
 	private Object getResult(int rstcol) throws OdaException {
-		Object obj = this.currentRow;
-		Object value = null;
-		try {
-			if (queryReturnTypes.length > 0
-					&& queryReturnTypes[0].isEntityType()) {
-				String checkClass = ((HibernateResultSetMetaData) getMetaData())
-						.getColumnClass(rstcol);
-				SessionFactory sf = query.getConnection().getSessionFactory();
-				ClassMetadata metadata = sf.getClassMetadata(checkClass);
-				if (metadata == null) {
-					metadata = sf.getClassMetadata(obj.getClass());
-				} 
-				value = metadata.getPropertyValue(obj, getMetaData()
-						.getColumnName(rstcol), EntityMode.POJO);
-			} else {
-				if (getMetaData().getColumnCount() == 1) {
-					value = obj;
-				} else {
-					Object[] values = (Object[]) obj;
-					value = values[rstcol - 1];
-				}
-			}
-		} catch (Exception e) {
-			throw new OdaException(e.getLocalizedMessage());
-		}
-		return (value);
+		return query.getConnection().getOdaSessionFactory().getResult(rstcol);
 	}
 
 	/*

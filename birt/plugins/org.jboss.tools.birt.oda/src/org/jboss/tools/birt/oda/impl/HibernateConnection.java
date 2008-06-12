@@ -8,16 +8,16 @@
  ******************************************************************************/
 package org.jboss.tools.birt.oda.impl;
 
+import java.util.Map;
 import java.util.Properties;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.datatools.connectivity.oda.IConnection;
 import org.eclipse.datatools.connectivity.oda.IDataSetMetaData;
 import org.eclipse.datatools.connectivity.oda.IQuery;
 import org.eclipse.datatools.connectivity.oda.OdaException;
-import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
-import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.console.KnownConfigurations;
+import org.jboss.tools.birt.oda.IOdaSessionFactory;
+import org.osgi.framework.Bundle;
 
 /**
  * Implementation class of IConnection for an ODA runtime driver.
@@ -26,46 +26,21 @@ import org.hibernate.console.KnownConfigurations;
  */
 public class HibernateConnection implements IConnection
 {
-    public static final String MAX_ROWS = "maxRows";
-	public static final String CONFIGURATION = "configuration";
-	private boolean isOpen = false;
-    private ConsoleConfiguration consoleConfiguration;
-    private SessionFactory sessionFactory;
-    private Integer maxRows = -1;
+	private IOdaSessionFactory odaSessionFactory;
+	private Map appContext;
     
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IConnection#open(java.util.Properties)
 	 */
 	public void open( Properties connProperties ) throws OdaException
 	{
-        String configurationName = connProperties.getProperty(CONFIGURATION);
-        ConsoleConfiguration[] configurations = KnownConfigurations.getInstance().getConfigurations();
-        for (int i = 0; i < configurations.length; i++) {
-			if (configurations[i].getName().equals(configurationName)) {
-				consoleConfiguration=configurations[i];
-				break;
-			}
-		}
-        isOpen = (consoleConfiguration != null);
-        if (isOpen) {
-        	try {
-				sessionFactory = consoleConfiguration.getSessionFactory();
-				if (sessionFactory == null) {
-					consoleConfiguration.build();
-					consoleConfiguration.buildSessionFactory();
-					sessionFactory = consoleConfiguration.getSessionFactory();
-				}
-			} catch (HibernateException e) {
-				throw new OdaException(e.getLocalizedMessage());
-			}
-        } else {
-        	throw new OdaException("Invalid configuration '" + configurationName + "'");
-        }
-        String maxRowString = connProperties.getProperty(MAX_ROWS);
-        try {
-			maxRows = new Integer(maxRowString);
-		} catch (NumberFormatException e) {
-			// ignore
+		Bundle bundle = Platform.getBundle(IOdaSessionFactory.ORG_HIBERNATE_ECLIPSE_BUNDLE_ID);
+		if (bundle != null) {
+			odaSessionFactory = new ConsoleConfigurationOdaSessionFactory(connProperties);
+		} else {
+			//parentClassLoader = appContext.get(key);
+			// FIXME
+			odaSessionFactory = new ServerOdaSessionFactory(connProperties);
 		}
  	}
 
@@ -74,7 +49,10 @@ public class HibernateConnection implements IConnection
 	 */
 	public void setAppContext( Object context ) throws OdaException
 	{
-	    // do nothing; assumes no support for pass-through context
+	    if (!(context instanceof Map)) {
+	    	throw new OdaException("Invalid AppContext");
+	    }
+	    this.appContext = (Map) context;
 	}
 
 	/*
@@ -82,9 +60,7 @@ public class HibernateConnection implements IConnection
 	 */
 	public void close() throws OdaException
 	{
-        consoleConfiguration = null;
-        sessionFactory = null;
-	    isOpen = false;
+        odaSessionFactory.close();
 	}
 
 	/*
@@ -92,7 +68,7 @@ public class HibernateConnection implements IConnection
 	 */
 	public boolean isOpen() throws OdaException
 	{
-		return isOpen;
+		return odaSessionFactory != null && odaSessionFactory.isOpen();
 	}
 
 	/*
@@ -112,7 +88,7 @@ public class HibernateConnection implements IConnection
 	{
         // assumes that this driver supports only one type of data set,
         // ignores the specified dataSetType
-		return new HibernateQuery(this);
+		return new HibernateOdaQuery(this);
 	}
 
 	/*
@@ -139,12 +115,12 @@ public class HibernateConnection implements IConnection
         // do nothing; assumes no transaction support needed
 	}
 
-	public Integer getMaxRows() {
-		return maxRows;
-	}
-
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
+	/*public SessionFactory getSessionFactory() {
+		return odaSessionFactory.getSessionFactory();
+	}*/
+	
+	public IOdaSessionFactory getOdaSessionFactory() {
+		return odaSessionFactory;
 	}
     
 }

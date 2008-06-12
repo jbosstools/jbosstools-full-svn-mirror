@@ -13,8 +13,6 @@ import java.util.StringTokenizer;
 
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
-import org.hibernate.Query;
-import org.hibernate.type.Type;
 
 /**
  * Implementation class of IResultSetMetaData for an ODA runtime driver.
@@ -28,7 +26,7 @@ public class HibernateResultSetMetaData implements IResultSetMetaData
 	private String[] columnType = null;
 	private String[] columnLabel = null;
 	private String[] columnClass = null;
-	private HibernateQuery query;
+	//private HibernateOdaQuery query;
 	
 	HibernateResultSetMetaData( String[] cName, String[] cType, String[] cLabel, String[] cClass )
 			throws OdaException
