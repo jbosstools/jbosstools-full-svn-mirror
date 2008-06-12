@@ -94,7 +94,6 @@ public abstract class ArchiveNodeDestinationComposite extends Composite {
 	}
 
 	public void setPackageNodeDestination (Object destination) {
-		System.out.println("setting destination to " + destination);
 		nodeDestination = destination;
 		updateDestinationViewer();
 		fireDestinationChanged();

@@ -269,4 +269,8 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 		return super.validateModel();
 	}
 
+	public boolean canBuild() {
+		return getGlobalDestinationPath() != null 
+			&& super.canBuild();
+	}
 }

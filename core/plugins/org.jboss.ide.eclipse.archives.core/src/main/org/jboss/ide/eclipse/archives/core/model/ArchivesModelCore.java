@@ -72,6 +72,10 @@ public class ArchivesModelCore {
 			
 			DirectoryScanner scanner  = 
 				DirectoryScannerFactory.createDirectoryScanner(root, includes, excludes, true);
+
+			if( scanner == null )
+				return new IPath[] {};
+			
 			String[] files = scanner.getIncludedFiles();
 			IPath[] paths = new IPath[files.length];
 			for( int i = 0; i < files.length; i++ ) {
@@ -79,7 +83,6 @@ public class ArchivesModelCore {
 			}
 			return paths;
 		} catch( IllegalStateException ise ) {
-			ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, "Error creating directory scanner", ise);
 			return new IPath[]{};
 		}
 	}

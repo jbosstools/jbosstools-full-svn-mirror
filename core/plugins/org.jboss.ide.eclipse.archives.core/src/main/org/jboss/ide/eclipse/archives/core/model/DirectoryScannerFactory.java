@@ -35,6 +35,8 @@ public class DirectoryScannerFactory {
 	public static DirectoryScannerExtension createDirectoryScanner (IPath filesystemFolder, String includes, String excludes, boolean scan) {
 		if (includes == null) includes = "";
 		if (excludes == null) excludes = "";
+		if( filesystemFolder == null ) 
+			return null;
 		
 		DirectoryScannerExtension scanner = new DirectoryScannerExtension();
 		String excludesList[] = excludes.split(" ?, ?");

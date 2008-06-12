@@ -97,12 +97,6 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		} else {
 			ret = new Path(path);
 		}
-		
-		if( ret == null ) {
-			String message = "Error in fileset: " + toString() + ";  No global source path found.";
-			ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_WARN, message, new Exception(message));
-		}
-		
 		return ret;
 	}
 	
@@ -152,13 +146,15 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 				scanner = DirectoryScannerFactory.createDirectoryScanner(
 						getGlobalSourcePath(), getIncludesPattern(), getExcludesPattern(), true);
 				
-				// cache the paths
 				ArrayList<IPath> paths = new ArrayList<IPath>();
-				IPath sp = getGlobalSourcePath();
-				String matched[] = scanner.getIncludedFiles();
-				for (int i = 0; i < matched.length; i++) {
-					IPath path = sp.append(new Path(matched[i]));
-					paths.add(path);
+				if( scanner != null ) {
+					// cache the paths
+					IPath sp = getGlobalSourcePath();
+					String matched[] = scanner.getIncludedFiles();
+					for (int i = 0; i < matched.length; i++) {
+						IPath path = sp.append(new Path(matched[i]));
+						paths.add(path);
+					}
 				}
 				matchingPaths = paths;
 			} catch( IllegalStateException ise ) {
@@ -273,6 +269,11 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	 */
 	public boolean validateModel() {
 		return getAllChildren().length == 0 ? true : false; 
+	}
+	
+	public boolean canBuild() {
+		return getGlobalSourcePath() != null 
+			&& super.canBuild();
 	}
 	
 	public String toString() {

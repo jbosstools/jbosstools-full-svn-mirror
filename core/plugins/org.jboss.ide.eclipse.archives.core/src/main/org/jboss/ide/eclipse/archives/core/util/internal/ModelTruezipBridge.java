@@ -203,6 +203,9 @@ public class ModelTruezipBridge {
 	private static File[] getFiles(IPath[] inputFiles, IArchiveFileSet fs ) {
 		String filesetRelative;
 		File fsFile = getFile(fs);
+		if( fsFile == null )
+			return new File[]{};
+		
 		File[] returnFiles = new File[inputFiles.length];
 		int fsLength = fs.getGlobalSourcePath().toOSString().length()+1;
 		for( int i = 0; i < inputFiles.length; i++ ) {

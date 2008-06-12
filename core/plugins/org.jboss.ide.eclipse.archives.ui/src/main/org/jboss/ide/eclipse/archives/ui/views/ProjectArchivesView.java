@@ -11,6 +11,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -264,31 +265,39 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 	 * @param projectToShow
 	 */
 	protected void registerProjects(final IProject[] projects, final IProject projectToShow) {
-		for( int i = 0; i < projects.length; i++ ) {
-			try {
-				ArchivesModel.instance().registerProject(projects[i].getLocation(), loadingProgress);
-			} catch( ArchivesModelException ame ) {
-				IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, ame.getMessage(), ame);
-				PackagesUIPlugin.getDefault().getLog().log(status);
+		new Job("Register Project Archives") {
+			protected IStatus run(IProgressMonitor monitor) {
+				// register the projects
+				for( int i = 0; i < projects.length; i++ ) {
+					try {
+						ArchivesModel.instance().registerProject(projects[i].getLocation(), loadingProgress);
+					} catch( ArchivesModelException ame ) {
+						IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, ame.getMessage(), ame);
+						return status;
+					}
+				}
+				
+				// then refresh the view (if no errors)
+				getSite().getShell().getDisplay().asyncExec(new Runnable () {
+					public void run () {
+						book.showPage(viewerComposite);
+						packageViewer.setInput(ArchivesModel.instance().getRoot(projectToShow.getLocation()));
+					}
+				});
+				return Status.OK_STATUS;
 			}
-		}
-		getSite().getShell().getDisplay().asyncExec(new Runnable () {
-			public void run () {
-				book.showPage(viewerComposite);
-				packageViewer.setInput(ArchivesModel.instance().getRoot(projectToShow.getLocation()));
-			}
-		});
+		}.schedule();
 	}
 	
 	public IProject[] getAllProjectsWithPackages() {
 		IProject[] projects2 = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-		ArrayList list = new ArrayList();
+		ArrayList<IProject> list = new ArrayList<IProject>();
 		for( int i = 0; i < projects2.length; i++ ) {
 			if( projects2[i].isAccessible() && ArchivesModelCore.packageFileExists(projects2[i].getLocation())) {
 				list.add(projects2[i]);
 			}
 		}
-		return (IProject[]) list.toArray(new IProject[list.size()]);
+		return list.toArray(new IProject[list.size()]);
 	}
 	public IStructuredSelection getSelection() {
 		return (IStructuredSelection)packageViewer.getSelection();
@@ -347,14 +356,14 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 	protected IArchiveNode[] getChanges(IArchiveNodeDelta delta) {
 		
 		IArchiveNodeDelta[] children = delta.getAllAffectedChildren();
-		ArrayList list = new ArrayList();
+		ArrayList<IArchiveNode> list = new ArrayList<IArchiveNode>();
 		for( int i = 0; i < children.length; i++ ) {
 			if( children[i].getKind() == IArchiveNodeDelta.DESCENDENT_CHANGED) 
 				list.addAll(Arrays.asList(getChanges(children[i])));
 			else
 				list.add(children[i].getPostNode());
 		}
-		return (IArchiveNode[]) list.toArray(new IArchiveNode[list.size()]);
+		return list.toArray(new IArchiveNode[list.size()]);
 	}
 	
 	public void refreshViewer(final Object node) {

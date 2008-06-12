@@ -143,11 +143,12 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 			if (archive.isTopLevel()) {
 				
 				// TODO:  FIX THIS
-				IContainer container = ResourcesPlugin.getWorkspace().getRoot().getContainerForLocation(archive.getGlobalDestinationPath());
+				IPath globalDest = archive.getGlobalDestinationPath();
+				IContainer container = globalDest == null ? null : ResourcesPlugin.getWorkspace().getRoot().getContainerForLocation(globalDest);
 				if( container != null )
 					destinationComposite.setPackageNodeDestination(container);
 				else 
-					destinationComposite.setPackageNodeDestination(archive.getGlobalDestinationPath());
+					destinationComposite.setPackageNodeDestination(globalDest);
 			} else {
 				destinationComposite.setPackageNodeDestination(archive.getParent());
 			}
