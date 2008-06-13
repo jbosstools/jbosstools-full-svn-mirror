@@ -845,11 +845,10 @@ public class VpeTemplateManager {
 			try {
 				Bundle bundle;
 				if(nameSpaceIdentifyer==null||nameSpaceIdentifyer.length()==0) {
-				
-					bundle = Platform.getBundle(confElement.getNamespaceIdentifier());
-				} else {
-					bundle = Platform.getBundle(nameSpaceIdentifyer);
+					nameSpaceIdentifyer = confElement.getNamespaceIdentifier();
 				}
+				bundle = Platform.getBundle(nameSpaceIdentifyer);
+				
 				Class templateClass = bundle.loadClass(templateClassName);
 				template = (VpeTemplate)templateClass.newInstance();
 			} catch (Exception e) {
