@@ -21,8 +21,8 @@ public class FaceletUtil {
 	static public HashSet<String> componentElements = new HashSet<String>();
 
 	static {
-		componentElements.add(TAG_COMPOSITION); //$NON-NLS-1$
-		componentElements.add(TAG_COMPONENT); //$NON-NLS-1$
+		componentElements.add(TAG_COMPOSITION); 
+		componentElements.add(TAG_COMPONENT); 
 	}
 
 	/**
@@ -32,6 +32,10 @@ public class FaceletUtil {
 	 */
 	public static Element findComponentElement(Element root) {
 
+		if(root==null) {
+			
+			return null;
+		}
 		NodeList children = root.getChildNodes();
 
 		for (int i = 0; i < children.getLength(); i++) {
