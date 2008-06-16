@@ -82,7 +82,7 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 		
 		if (performed) {
 			try {
-				getContainer().run(false, false, new IRunnableWithProgress () {
+				getContainer().run(true, false, new IRunnableWithProgress () {
 					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 						IArchiveNode parent = null;
 						

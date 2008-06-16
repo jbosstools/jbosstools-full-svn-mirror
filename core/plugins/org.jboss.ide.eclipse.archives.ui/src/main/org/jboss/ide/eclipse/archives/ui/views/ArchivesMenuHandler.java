@@ -27,6 +27,7 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
+import org.jboss.ide.eclipse.archives.core.build.SaveArchivesJob;
 import org.jboss.ide.eclipse.archives.core.model.ArchiveNodeFactory;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
@@ -185,13 +186,7 @@ public class ArchivesMenuHandler {
 		
 		buildAction = new ActionWithDelegate("", ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_BUILD_PACKAGES)) {
 			public void run() {
-				final Object selected = getSelectedObject();
-				new Job("Build Archive Node") {
-					protected IStatus run(IProgressMonitor monitor) {
-						buildSelectedNode(selected);
-						return Status.OK_STATUS;
-					}
-				}.schedule();
+				buildSelectedNode(getSelectedObject());
 			}
 
 			public IStructuredSelection getSelection() {
@@ -226,7 +221,7 @@ public class ArchivesMenuHandler {
 					};
 					contextMenuManager.add(action);
 				}
-			} catch( Exception e) { System.out.println(e.getMessage()); }
+			} catch( Exception e) {}
 		}
 
 	}
@@ -301,41 +296,31 @@ public class ArchivesMenuHandler {
 		
 		int response = dialog.open();
 		if (response == Dialog.OK) {
-			try {
-				String[] folderPaths = dialog.getValue().split("[\\\\/]");
-				IArchiveNode selected = getSelectedNode();
-				IArchiveFolder current = null;
-				IArchiveFolder temp = null;
-				
-				for(int i = folderPaths.length-1; i >= 0 ; i-- ) {
-					temp = ArchiveNodeFactory.createFolder();
-					temp.setName(folderPaths[i]);
-					if( current == null ) 
-						current = temp;
-					else {
-						temp.addChild(current);
-						current = temp;
-					}
+			String[] folderPaths = dialog.getValue().split("[\\\\/]");
+			IArchiveNode selected = getSelectedNode();
+			IArchiveFolder current = null;
+			IArchiveFolder temp = null;
+			
+			for(int i = folderPaths.length-1; i >= 0 ; i-- ) {
+				temp = ArchiveNodeFactory.createFolder();
+				temp.setName(folderPaths[i]);
+				if( current == null ) 
+					current = temp;
+				else {
+					temp.addChild(current);
+					current = temp;
 				}
-				
-				selected.addChild(current);
-				ArchivesModel.instance().save(selected.getProjectPath(), new NullProgressMonitor());
-			} catch( ArchivesModelException ame ) {
-				IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, "Error Attaching Archives Node", ame);
-				PackagesUIPlugin.getDefault().getLog().log(status);
 			}
+			
+			selected.addChild(current);
+			new SaveArchivesJob(selected.getProjectPath()).schedule();
 		}
 	}
 	
 	private void createFileset () {
-		try {
-			IArchiveNode selected = getSelectedNode();
-			WizardDialog dialog = new WizardDialog(getSite().getShell(), new FilesetWizard(null, selected));
-			
-			dialog.open();
-		} catch( Exception e ) {
-			e.printStackTrace();
-		}
+		IArchiveNode selected = getSelectedNode();
+		WizardDialog dialog = new WizardDialog(getSite().getShell(), new FilesetWizard(null, selected));
+		dialog.open();
 	}
 	
 	private void editSelectedNode () {
@@ -344,9 +329,7 @@ public class ArchivesMenuHandler {
 			if (node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FILESET) {
 				IArchiveFileSet fileset = (IArchiveFileSet) node;
 				WizardDialog dialog = new WizardDialog(getSite().getShell(), new FilesetWizard(fileset, node.getParent()));
-				try {
-					dialog.open();
-				} catch( Exception e ) { e.printStackTrace(); }
+				dialog.open();
 			} else if (node.getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
 				IArchive pkg = (IArchive) node;
 				WizardDialog dialog = new WizardDialog(getSite().getShell(), new NewJARWizard(pkg));
@@ -355,34 +338,33 @@ public class ArchivesMenuHandler {
 				// folder can do the model save here. 
 				IArchiveFolder folder = (IArchiveFolder) node;
 				InputDialog dialog = new InputDialog(getSite().getShell(),
-					ArchivesUIMessages.ProjectPackagesView_createFolderDialog_title,
-					ArchivesUIMessages.ProjectPackagesView_createFolderDialog_message, folder.getName(), null);
+						ArchivesUIMessages.ProjectPackagesView_createFolderDialog_title,
+						ArchivesUIMessages.ProjectPackagesView_createFolderDialog_message, folder.getName(), null);
 				
 				int response = dialog.open();
 				if (response == Dialog.OK) {
 					folder.setName(dialog.getValue());
-					try {
-						ArchivesModel.instance().save(folder.getProjectPath(), new NullProgressMonitor());
-					} catch( ArchivesModelException ame ) {
-						IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, "Problem saving archives model", ame);
-						PackagesUIPlugin.getDefault().getLog().log(status);
-					}
+					new SaveArchivesJob(folder.getProjectPath()).schedule();
 				}
 			} 
 		}
 	}
 	
-	private void buildSelectedNode(Object selected) {
-		if( selected == null ) return;
-		if (selected instanceof IArchiveNode &&  
-				((IArchiveNode)selected).getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
-			new ArchiveBuildDelegate().fullArchiveBuild((IArchive)selected);
-		} else if( selected != null && selected instanceof WrappedProject ){
-			new ArchiveBuildDelegate().fullProjectBuild(((WrappedProject)selected).getProject().getLocation());
-		} else {
-			new ArchiveBuildDelegate().fullArchiveBuild(((IArchiveNode)selected).getRootArchive());
-		}
-		
+	private void buildSelectedNode(final Object selected) {
+		new Job("Build Archive Node") {
+			protected IStatus run(IProgressMonitor monitor) {
+				if( selected == null ) return Status.OK_STATUS;
+				if (selected instanceof IArchiveNode &&  
+						((IArchiveNode)selected).getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
+					new ArchiveBuildDelegate().fullArchiveBuild((IArchive)selected);
+				} else if( selected != null && selected instanceof WrappedProject ){
+					new ArchiveBuildDelegate().fullProjectBuild(((WrappedProject)selected).getProject().getLocation());
+				} else {
+					new ArchiveBuildDelegate().fullArchiveBuild(((IArchiveNode)selected).getRootArchive());
+				}
+				return Status.OK_STATUS;
+			}
+		}.schedule();
 	}
 	
 	private void deleteSelectedNode () {
@@ -390,24 +372,10 @@ public class ArchivesMenuHandler {
 		if (node != null) {
 			final IArchiveNode parent = (IArchiveNode) node.getParent();
 			parent.removeChild(node);
-			new Job("Delete Archives Node") {
-				protected IStatus run(IProgressMonitor monitor) {
-					if( parent.getProjectPath() != null ) {
-						try {
-							ArchivesModel.instance().save(parent.getProjectPath(), new NullProgressMonitor());
-						} catch( ArchivesModelException ame ) {
-							IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, "Problem saving archives model", ame);
-							PackagesUIPlugin.getDefault().getLog().log(status);
-						}
-					}
-					return Status.OK_STATUS;
-				}
-				
-			}.schedule();
+			SaveArchivesJob job = new SaveArchivesJob(parent.getProjectPath());
+			job.schedule();
 		}
 	}
-
-	
 	
 	/*
 	 * Utility methods below
