@@ -37,11 +37,11 @@ public class FilesetWizard extends Wizard {
 				
 		fillFilesetFromPage(fileset);
 		try {
-			getContainer().run(false, false, new IRunnableWithProgress () {
+			getContainer().run(true, false, new IRunnableWithProgress () {
 				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+					if (createFileset) 
+						parentNode.addChild(fileset);
 					try {
-						if (createFileset) 
-							parentNode.addChild(fileset);
 						ArchivesModel.instance().save(fileset.getProjectPath(), monitor);
 					}  catch( ArchivesModelException ame ) {
 						IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, "Error Completing Wizard", ame);
