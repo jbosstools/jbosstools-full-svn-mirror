@@ -438,7 +438,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     	if (display != null && (Thread.currentThread() == display.getThread())) {
 
    		getChangeEvents().addLast(new VpeEventBean(notifier, eventType, feature, oldValue,newValue, pos));
-
     	if(uiJob==null) {
     		uiJob = new UIJob(VpeUIMessages.VPE_UPDATE_JOB_TITLE){
     		@Override
@@ -446,7 +445,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
     			monitor.beginTask(VpeUIMessages.VPE_UPDATE_JOB_TITLE, 100);
      			while(getChangeEvents().size()>0) {
-     			
+
      				monitor.worked((int)(100/getChangeEvents().size()));
      				VpeEventBean eventBean = getChangeEvents().getFirst();
         			if (monitor.isCanceled()) {
@@ -1588,6 +1587,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						if(uiJob!=null) {
 							
 							uiJob.cancel();
+							getChangeEvents().clear();
 						}
 						if (!switcher
 								.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
