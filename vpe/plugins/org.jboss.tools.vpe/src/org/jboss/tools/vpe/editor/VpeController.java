@@ -450,6 +450,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
      				VpeEventBean eventBean = getChangeEvents().getFirst();
         			if (monitor.isCanceled()) {
         				getChangeEvents().clear();
+        				sourceSelectionChanged();
         				return Status.CANCEL_STATUS;
         			}
         			try {
@@ -464,6 +465,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
         			}
      				getChangeEvents().remove(eventBean);
 				}
+     			sourceSelectionChanged();
    				monitor.done();
     			
     			return Status.OK_STATUS;
