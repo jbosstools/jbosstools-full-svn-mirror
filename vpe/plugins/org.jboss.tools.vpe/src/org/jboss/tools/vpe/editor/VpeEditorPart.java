@@ -897,7 +897,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				try {
 					if (sourceEditor != null) {
 						if (visualEditor != null)
-						if (visualEditor.getController() != null) {
+						//added by estherbin
+						//fix http://jira.jboss.com/jira/browse/JBIDE-2337
+						if ((visualEditor.getController() != null) && !container.isHidden()) {
 							visualEditor.getController().refreshTemplates();
 						}
 						sourceEditor.safelySanityCheckState(getEditorInput());
