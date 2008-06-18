@@ -135,6 +135,7 @@ import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateListener;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
+import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.TemplateManagingUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
@@ -1385,16 +1386,25 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
     }
 
     void visualRefreshImpl() {
-	visualEditor.hideResizer();
-	visualBuilder.setSelectionRectangle(null);
-	IDOMModel sourceModel = (IDOMModel) getModel();
-	if (sourceModel != null) {
-	    IDOMDocument sourceDocument = sourceModel.getDocument();
-	    visualBuilder.rebuildDom(sourceDocument);
-	} else {
-	    visualBuilder.rebuildDom(null);
+		visualEditor.hideResizer();
+		String currentDoctype = DocTypeUtil.getDoctype(visualEditor
+				.getEditorInput());
+
+		if (!visualEditor.getDoctype().equals(currentDoctype)) {
+
+			visualEditor.reload();
+
+		} else {
+			visualBuilder.setSelectionRectangle(null);
+			IDOMModel sourceModel = (IDOMModel) getModel();
+			if (sourceModel != null) {
+				IDOMDocument sourceDocument = sourceModel.getDocument();
+				visualBuilder.rebuildDom(sourceDocument);
+			} else {
+				visualBuilder.rebuildDom(null);
+			}
+		}
 	}
-    }
 
     public void preLongOperation() {
 	switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
@@ -2816,6 +2826,22 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			visualBuilder.rebuildDom(null);
 		}
 		synced = true;
+	}
+	
+	public void reinit() {
+
+		visualBuilder.setSelectionRectangle(null);
+		visualEditor.setEditorDomEventListener(this);
+		IDOMModel sourceModel = (IDOMModel) getModel();
+		if (sourceModel != null) {
+			IDOMDocument sourceDocument = sourceModel.getDocument();
+			visualBuilder.rebuildDom(sourceDocument);
+		} else {
+			visualBuilder.rebuildDom(null);
+		}
+
+		visualSelectionController.setSelection(xulRunnerEditor.getSelection());
+
 	}
 
 }
