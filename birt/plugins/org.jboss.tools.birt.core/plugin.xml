@@ -58,4 +58,10 @@
 	    <page class="org.eclipse.birt.integration.wtp.ui.internal.wizards.BirtWebProjectWizardConfigurationPage"/>
 	  </wizard-pages>
 	</extension>
+	
+	<extension point="org.eclipse.wst.common.project.facet.core.listeners">
+  		<listener class="org.jboss.tools.birt.core.internal.project.facet.BirtPostInstallListener" 
+  		eventTypes="POST_INSTALL"/>
+	</extension>
+	
 </plugin>
