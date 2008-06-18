@@ -16,7 +16,7 @@ import org.eclipse.datatools.connectivity.oda.IConnection;
 import org.eclipse.datatools.connectivity.oda.IDataSetMetaData;
 import org.eclipse.datatools.connectivity.oda.IQuery;
 import org.eclipse.datatools.connectivity.oda.OdaException;
-import org.jboss.tools.birt.oda.IOdaSessionFactory;
+import org.jboss.tools.birt.oda.IOdaFactory;
 import org.osgi.framework.Bundle;
 
 /**
@@ -24,103 +24,102 @@ import org.osgi.framework.Bundle;
  * 
  * @author snjeza
  */
-public class HibernateConnection implements IConnection
-{
-	private IOdaSessionFactory odaSessionFactory;
+public class HibernateConnection implements IConnection {
+	private IOdaFactory odaSessionFactory;
 	private Map appContext;
-    
-	/*
-	 * @see org.eclipse.datatools.connectivity.oda.IConnection#open(java.util.Properties)
-	 */
-	public void open( Properties connProperties ) throws OdaException
-	{
-		Bundle bundle = Platform.getBundle(IOdaSessionFactory.ORG_HIBERNATE_ECLIPSE_BUNDLE_ID);
-		if (bundle != null) {
-			odaSessionFactory = new ConsoleConfigurationOdaSessionFactory(connProperties);
-		} else {
-			//parentClassLoader = appContext.get(key);
-			// FIXME
-			odaSessionFactory = new ServerOdaSessionFactory(connProperties);
-		}
- 	}
 
 	/*
-	 * @see org.eclipse.datatools.connectivity.oda.IConnection#setAppContext(java.lang.Object)
+	 * @see
+	 * org.eclipse.datatools.connectivity.oda.IConnection#open(java.util.Properties
+	 * )
 	 */
-	public void setAppContext( Object context ) throws OdaException
-	{
-	    if (!(context instanceof Map)) {
-	    	throw new OdaException("Invalid AppContext");
-	    }
-	    this.appContext = (Map) context;
+	public void open(Properties connProperties) throws OdaException {
+		Bundle bundle = Platform
+				.getBundle(IOdaFactory.ORG_HIBERNATE_ECLIPSE_BUNDLE_ID);
+		if (bundle != null) {
+			odaSessionFactory = new ConsoleConfigurationOdaFactory(
+					connProperties);
+		} else {
+			odaSessionFactory = new ServerOdaFactory(connProperties);
+		}
+	}
+
+	/*
+	 * @see
+	 * org.eclipse.datatools.connectivity.oda.IConnection#setAppContext(java
+	 * .lang.Object)
+	 */
+	public void setAppContext(Object context) throws OdaException {
+		if (!(context instanceof Map)) {
+			throw new OdaException("Invalid AppContext");
+		}
+		this.appContext = (Map) context;
 	}
 
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IConnection#close()
 	 */
-	public void close() throws OdaException
-	{
-        odaSessionFactory.close();
+	public void close() throws OdaException {
+		odaSessionFactory.close();
 	}
 
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IConnection#isOpen()
 	 */
-	public boolean isOpen() throws OdaException
-	{
+	public boolean isOpen() throws OdaException {
 		return odaSessionFactory != null && odaSessionFactory.isOpen();
 	}
 
 	/*
-	 * @see org.eclipse.datatools.connectivity.oda.IConnection#getMetaData(java.lang.String)
+	 * @see
+	 * org.eclipse.datatools.connectivity.oda.IConnection#getMetaData(java.lang
+	 * .String)
 	 */
-	public IDataSetMetaData getMetaData( String dataSetType ) throws OdaException
-	{
-	    // assumes that this driver supports only one type of data set,
-        // ignores the specified dataSetType
-		return new HibernateDataSetMetaData( this );
+	public IDataSetMetaData getMetaData(String dataSetType) throws OdaException {
+		// assumes that this driver supports only one type of data set,
+		// ignores the specified dataSetType
+		return new HibernateDataSetMetaData(this);
 	}
 
 	/*
-	 * @see org.eclipse.datatools.connectivity.oda.IConnection#newQuery(java.lang.String)
+	 * @see
+	 * org.eclipse.datatools.connectivity.oda.IConnection#newQuery(java.lang
+	 * .String)
 	 */
-	public IQuery newQuery( String dataSetType ) throws OdaException
-	{
-        // assumes that this driver supports only one type of data set,
-        // ignores the specified dataSetType
+	public IQuery newQuery(String dataSetType) throws OdaException {
+		// assumes that this driver supports only one type of data set,
+		// ignores the specified dataSetType
 		return new HibernateOdaQuery(this);
 	}
 
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IConnection#getMaxQueries()
 	 */
-	public int getMaxQueries() throws OdaException
-	{
-		return 0;	// no limit
+	public int getMaxQueries() throws OdaException {
+		return 0; // no limit
 	}
 
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IConnection#commit()
 	 */
-	public void commit() throws OdaException
-	{
-	    // do nothing; assumes no transaction support needed
+	public void commit() throws OdaException {
+		// do nothing; assumes no transaction support needed
 	}
 
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IConnection#rollback()
 	 */
-	public void rollback() throws OdaException
-	{
-        // do nothing; assumes no transaction support needed
+	public void rollback() throws OdaException {
+		// do nothing; assumes no transaction support needed
 	}
 
-	/*public SessionFactory getSessionFactory() {
-		return odaSessionFactory.getSessionFactory();
-	}*/
-	
-	public IOdaSessionFactory getOdaSessionFactory() {
+	/*
+	 * public SessionFactory getSessionFactory() { return
+	 * odaSessionFactory.getSessionFactory(); }
+	 */
+
+	public IOdaFactory getOdaSessionFactory() {
 		return odaSessionFactory;
 	}
-    
+
 }

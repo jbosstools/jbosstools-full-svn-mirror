@@ -23,15 +23,16 @@ import javax.naming.InitialContext;
 
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
+import org.hibernate.SessionFactory;
 import org.jboss.tools.birt.oda.Activator;
-import org.jboss.tools.birt.oda.IOdaSessionFactory;
+import org.jboss.tools.birt.oda.IOdaFactory;
 
 /**
  * 
  * @author snjeza
  * 
  */
-public class ServerOdaSessionFactory implements IOdaSessionFactory {
+public class ReflectServerOdaFactory implements IOdaFactory {
 
 	private static final Integer INTZERO = new Integer(0);
 	private static Class[] emptyClassArg = new Class[0];
@@ -46,9 +47,9 @@ public class ServerOdaSessionFactory implements IOdaSessionFactory {
 	private Object session;
 	private Object[] queryReturnTypes;
 
-	public ServerOdaSessionFactory(Properties properties) throws OdaException {
+	public ReflectServerOdaFactory(Properties properties) throws OdaException {
 		getSessionFactory(properties);
-		String maxRowString = properties.getProperty(IOdaSessionFactory.MAX_ROWS);
+		String maxRowString = properties.getProperty(IOdaFactory.MAX_ROWS);
         try {
 			maxRows = new Integer(maxRowString);
 		} catch (NumberFormatException e) {
@@ -65,6 +66,8 @@ public class ServerOdaSessionFactory implements IOdaSessionFactory {
 				ctx = new InitialContext();
 				Object obj = ctx.lookup("java:/" + configurationName);
 				sessionFactory = obj;
+				SessionFactory sf = (SessionFactory) obj;
+				System.out.println(sf);
 			} catch (Exception e) {
 					e.printStackTrace();
 				throw new OdaException(

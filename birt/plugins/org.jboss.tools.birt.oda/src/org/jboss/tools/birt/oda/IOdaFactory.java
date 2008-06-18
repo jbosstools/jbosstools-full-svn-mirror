@@ -22,7 +22,7 @@ import org.jboss.tools.birt.oda.impl.HibernateResultSetMetaData;
  * @author snjeza
  * 
  */
-public interface IOdaSessionFactory {
+public interface IOdaFactory {
 
 	public static final String MAX_ROWS = "maxRows";
 	public static final String CONFIGURATION = "configuration";
