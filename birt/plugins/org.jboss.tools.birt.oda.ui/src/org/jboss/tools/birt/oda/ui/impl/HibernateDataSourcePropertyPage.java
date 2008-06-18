@@ -11,7 +11,7 @@ import java.util.Properties;
 
 import org.eclipse.datatools.connectivity.oda.design.ui.wizards.DataSourceEditorPage;
 import org.eclipse.swt.widgets.Composite;
-import org.jboss.tools.birt.oda.IOdaSessionFactory;
+import org.jboss.tools.birt.oda.IOdaFactory;
 
 /**
  * Hibernate property page
@@ -31,8 +31,8 @@ public class HibernateDataSourcePropertyPage extends DataSourceEditorPage {
 		if (dataSourceProps == null) {
 			props = new Properties();
 		}
-		props.setProperty(IOdaSessionFactory.CONFIGURATION, helper.getConfiguration());
-		props.setProperty(IOdaSessionFactory.MAX_ROWS, helper.getMaxRows());
+		props.setProperty(IOdaFactory.CONFIGURATION, helper.getConfiguration());
+		props.setProperty(IOdaFactory.MAX_ROWS, helper.getMaxRows());
 		return props;
 	}
 

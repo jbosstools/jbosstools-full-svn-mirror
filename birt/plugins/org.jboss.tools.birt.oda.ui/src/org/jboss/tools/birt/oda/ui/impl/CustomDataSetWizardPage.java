@@ -82,7 +82,7 @@ import org.hibernate.eclipse.console.workbench.LazySessionFactory;
 import org.hibernate.eclipse.console.workbench.xpl.AnyAdaptableLabelProvider;
 import org.hibernate.eclipse.hqleditor.HQLEditorDocumentSetupParticipant;
 import org.hibernate.eclipse.hqleditor.HQLSourceViewerConfiguration;
-import org.jboss.tools.birt.oda.IOdaSessionFactory;
+import org.jboss.tools.birt.oda.IOdaFactory;
 import org.jboss.tools.birt.oda.impl.HibernateDriver;
 import org.jboss.tools.birt.oda.ui.Activator;
 
@@ -364,7 +364,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 		DataSetDesign design = getInitializationDesign();
 		DataSourceDesign dsDesign = design.getDataSourceDesign();
 		Property property = dsDesign.getPublicProperties().findProperty(
-				IOdaSessionFactory.CONFIGURATION);
+				IOdaFactory.CONFIGURATION);
 		NameValuePair propertyValue = property.getNameValue();
 		String name = propertyValue.getValue();
 		return name;
