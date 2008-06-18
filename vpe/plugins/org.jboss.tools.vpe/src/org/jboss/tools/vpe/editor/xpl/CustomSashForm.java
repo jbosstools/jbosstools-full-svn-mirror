@@ -43,6 +43,13 @@ import org.eclipse.swt.widgets.Sash;
 public class CustomSashForm extends SashForm {
 
 	public static final String copyright = "(c) Copyright IBM Corporation 2002."; //$NON-NLS-1$
+	
+	//added by estherbin
+	//fix http://jira.jboss.com/jira/browse/JBIDE-2337
+	/**
+	 * Determine is hidden or not.
+	 */
+	private boolean isHidden = false;
 	/**
 	 * Custom style bits. They set whether max to one side of the other
 	 * is not permitted. For example, if NO_MAX_UP, then there will be only
@@ -286,6 +293,11 @@ public class CustomSashForm extends SashForm {
 				 * @see org.eclipse.swt.events.ControlAdapter#controlMoved(ControlEvent)
 				 */
 				public void controlMoved(ControlEvent e) {
+					if(e.widget instanceof Sash){
+					Sash s = (Sash) e.widget;
+					String text = s.getToolTipText();
+//					 if(text.equalsIgnoreCase(anotherString))
+					}
 					recomputeSashInfo();
 				}
 				
@@ -496,6 +508,9 @@ public class CustomSashForm extends SashForm {
 				drawArrows[1] = DOWN_ARROW;	
 				currentSashInfo.sashBorderLeft = false;
 				currentSashInfo.sashBorderRight = sashBorders != null ? sashBorders[1] : false;
+				//added by estherbin
+				//fix http://jira.jboss.com/jira/browse/JBIDE-2337
+				this.isHidden = true;
 			} else if (weights[1] == 0 || (currentSashInfo.weight != NO_WEIGHT && sashBounds.y+sashBounds.height >= clientArea.height-DRAG_MINIMUM)) {
 				// Slammed to the bottom
 				addArrows[0] = UP_ARROW;
@@ -504,6 +519,9 @@ public class CustomSashForm extends SashForm {
 				drawArrows[1] = UP_MAX_ARROW;
 				currentSashInfo.sashBorderLeft = sashBorders != null ? sashBorders[0] : false;
 				currentSashInfo.sashBorderRight = false;
+				//added by estherbin
+				//fix http://jira.jboss.com/jira/browse/JBIDE-2337
+				this.isHidden = true;
 			} else {
 				// Not slammed
 				addArrows[0] = UP_MAX_ARROW;
@@ -512,7 +530,10 @@ public class CustomSashForm extends SashForm {
 				drawArrows[1] = DOWN_ARROW;
 				currentSashInfo.weight = NO_WEIGHT;	// Since we are in the middle, there is no weight. We've could of been dragged here.
 				currentSashInfo.sashBorderLeft = sashBorders != null ? sashBorders[0] : false;
-				currentSashInfo.sashBorderRight = sashBorders != null ? sashBorders[1] : false;				
+				currentSashInfo.sashBorderRight = sashBorders != null ? sashBorders[1] : false;	
+				//added by estherbin
+				//fix http://jira.jboss.com/jira/browse/JBIDE-2337
+				this.isHidden=false;
 			}
 		}
 		getNewSashArray(currentSashInfo, addArrows, drawArrows);
@@ -641,6 +662,16 @@ public class CustomSashForm extends SashForm {
 			else
 				y+=tSize;
 		}		
+	}
+	//added by estherbin
+	//fix http://jira.jboss.com/jira/browse/JBIDE-2337
+	/**
+	 * Determine is hidden or not.
+	 * @return <code>true</code> if hidden otherwise <code>false</code>
+	 */
+	
+	public boolean isHidden(){
+		return this.isHidden;
 	}
 
 	protected void drawSashBorder(GC gc, Sash sash, boolean leftBorder) {
