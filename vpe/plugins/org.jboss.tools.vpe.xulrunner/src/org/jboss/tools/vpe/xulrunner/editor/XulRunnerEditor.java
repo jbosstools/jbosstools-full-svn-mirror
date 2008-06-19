@@ -338,6 +338,13 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 				}
 				
 			}
+			try {
+				((nsIBaseWindow) getWebBrowser().queryInterface(
+						nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
+			} catch (XPCOMException ex) {
+				// just ignore its
+				BrowserPlugin.getDefault().logInfo("repaint failed", ex);
+			}
 
 		} else if (element != null) {
 			
