@@ -2,7 +2,7 @@
 <?eclipse version="3.2"?>
 <!-- This plugin contains test for which test must be successful -->
 <plugin>
-   <extension id="org.jboss.tools.vpe.tests.okExtensions"
+   <extension
          point="org.jboss.tools.vpe.templates">
       <templates
             name="Test3"

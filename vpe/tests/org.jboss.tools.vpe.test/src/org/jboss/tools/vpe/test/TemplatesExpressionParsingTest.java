@@ -93,6 +93,20 @@ public class TemplatesExpressionParsingTest extends TestCase {
 	}
 
 	/**
+	 * Creates test template and testing possible(without errors) variants
+	 * 
+	 * @throws Exception
+	 */
+	public void testCorrectTemplates() throws Exception {
+		createTemplatesForTesting(PLUGIN_OK_NAME);
+		vpeTemplateManager = VpeTemplateManager.getInstance();
+		vpeTemplateManager.reload();
+		assertNull("Can not parse template from ReDHat DevStudio" + iStatus, iStatus);
+		assertEquals("There exist some errors", 0, errorNumber);
+		return;
+	}
+	
+	/**
 	 * Creates test template and testing that extensions with errors have errors
 	 * variants
 	 * 
@@ -109,19 +123,6 @@ public class TemplatesExpressionParsingTest extends TestCase {
 		return;
 	}
 
-	/**
-	 * Creates test template and testing possible(without errors) variants
-	 * 
-	 * @throws Exception
-	 */
-	public void testCorrectTemplates() throws Exception {
-		createTemplatesForTesting(PLUGIN_OK_NAME);
-		vpeTemplateManager = VpeTemplateManager.getInstance();
-		vpeTemplateManager.reload();
-		assertNull("Can not parse template from ReDHat DevStudio" + iStatus, iStatus);
-		assertEquals("There exist some errors", 0, errorNumber);
-		return;
-	}
 
 	/**
 	 * Tests passible template

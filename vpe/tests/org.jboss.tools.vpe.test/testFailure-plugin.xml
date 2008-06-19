@@ -2,7 +2,7 @@
 <?eclipse version="3.2"?>
 <!-- This plugin contains test templates for which test must failed -->
 <plugin>
-   <extension id="org.jboss.tools.vpe.tests.failureExtensions"
+   <extension
          point="org.jboss.tools.vpe.templates">
       <templates
             name="Test1"
