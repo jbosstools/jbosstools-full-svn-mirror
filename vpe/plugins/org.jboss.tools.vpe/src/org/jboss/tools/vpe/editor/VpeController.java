@@ -461,7 +461,15 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
         				//when update visual editor job is running, we shoud ignore this
         				//exception
         				break;
-        			}
+        			} catch (NullPointerException ex) {
+						
+						if(switcher!=null ) {
+							throw ex;
+						} else {
+							//class was disposed and exception result of that we can't stop
+							//refresh job in time, so we just ignore this exception
+						}
+					} 
      				getChangeEvents().remove(eventBean);
 				}
    				monitor.done();
@@ -1597,6 +1605,16 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 							monitor.beginTask(VpeUIMessages.VPE_VISUAL_REFRESH_JOB, IProgressMonitor.UNKNOWN);
 							visualRefreshImpl();
 							monitor.done();
+						} catch (VpeDisposeException exc) {
+							//just ignore this exception
+						} catch (NullPointerException ex) {
+							
+							if(switcher!=null ) {
+								throw ex;
+							} else {
+								//class was disposed and exception result of that we can't stop
+								//refresh job in time, so we just ignore this exception
+							}
 						} finally {
 							
 							if(switcher!=null) {
