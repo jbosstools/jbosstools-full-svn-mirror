@@ -65,7 +65,7 @@ public class VpeFunctionSrc extends VpeFunction {
 		//brouser will not processed this url, so we just slow this exeption
 		//You can check it's by inserting next code
 		//<h:graphicImage value=" %= request.getContextPath()%/images/logos/banner.png"/>
-		tagValue="";
+		tagValue=""; //$NON-NLS-1$
 	}
 
 	IPath tagPath = new Path(tagValue);
