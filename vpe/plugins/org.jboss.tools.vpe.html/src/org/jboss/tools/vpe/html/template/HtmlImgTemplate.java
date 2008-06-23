@@ -19,6 +19,7 @@ import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.xpcom.XPCOMException;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
@@ -105,6 +106,13 @@ public class HtmlImgTemplate extends VpeAbstractTemplate {
 		VpeCreationData creationData = new VpeCreationData(img);
 		
 		return creationData;
+	}
+
+	@Override
+	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
+			Element sourceElement, nsIDOMDocument visualDocument,
+			nsIDOMElement visualNode, Object data, String name, String value) {
+		return true;
 	}
 
 }
