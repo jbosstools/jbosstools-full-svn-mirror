@@ -8,10 +8,11 @@ Bundle-Vendor: RedHat, Inc.
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.datatools.connectivity.oda.design.ui;bundle-version="[3.0.4,4.0.0)",
+ org.eclipse.datatools.connectivity.oda.design.ui,
  org.jboss.tools.birt.oda,
  org.eclipse.jface.text,
  org.eclipse.jdt.core,
  org.eclipse.ui.workbench.texteditor,
- org.hibernate.eclipse.console
+ org.hibernate.eclipse.console,
+ org.hibernate.eclipse
 Eclipse-LazyStart: true
