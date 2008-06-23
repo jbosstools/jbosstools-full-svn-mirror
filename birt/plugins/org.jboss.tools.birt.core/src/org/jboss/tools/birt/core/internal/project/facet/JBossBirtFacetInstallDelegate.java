@@ -37,13 +37,6 @@ import org.osgi.framework.Bundle;
 
 public class JBossBirtFacetInstallDelegate extends BirtFacetInstallDelegate {
 
-	private static final IOverwriteQuery OVERWRITE_ALL_QUERY = new IOverwriteQuery()
-    {
-      public String queryOverwrite(String pathString)
-      {
-        return IOverwriteQuery.ALL;
-      }
-    };
 	@Override
 	public void execute(IProject project, IProjectFacetVersion fv,
 			Object config, IProgressMonitor monitor) throws CoreException {
@@ -53,56 +46,11 @@ public class JBossBirtFacetInstallDelegate extends BirtFacetInstallDelegate {
 				.getProperty(FacetInstallDataModelProvider.MASTER_PROJECT_DM);
 		String configFolder = BirtWizardUtil.getConfigFolder(masterDataModel);
 		String platformFolder = configFolder + "/WEB-INF/platform/plugins";
-		copyPlugin(project,"org.jboss.tools.birt.oda",platformFolder,monitor);
+		BirtCoreActivator.copyPlugin(project,"org.jboss.tools.birt.oda",platformFolder,monitor);
 		//copyPlugin(project,"org.hibernate.eclipse",platformFolder,monitor);
 		//copyPlugin(project,"org.eclipse.ui.console",platformFolder,monitor);
 		//copyPlugin(project,"org.eclipse.jface",platformFolder,monitor);
 		
-		
-	}
-
-	private void copyPlugin(IProject project,String pluginId, String destination, IProgressMonitor monitor) {
-		IResource destResource = project.findMember(destination);
-		if (!destResource.exists()) {
-			IStatus status = new Status(IStatus.WARNING,BirtCoreActivator.PLUGIN_ID,"The " + destination + " folder doesn't exist");
-			BirtCoreActivator.getDefault().getLog().log(status);
-			return;
-		}
-		if (destResource.getType() != IResource.FOLDER ) {
-			IStatus status = new Status(IStatus.WARNING,BirtCoreActivator.PLUGIN_ID,"The " + destination + " resource is not a folder");
-			BirtCoreActivator.getDefault().getLog().log(status);
-			return;
-		}
-		try {
-			IFolder destFolder = (IFolder) destResource;
-			Bundle bundle = Platform.getBundle(pluginId);
-			File bundleFile = FileLocator.getBundleFile(bundle);
-			IFolder folder = null;
-			File file = null;
-			List<File> filesToImport = new ArrayList<File>();
-			if (bundleFile.isDirectory()) {
-				URL url = bundle.getEntry("/");
-				String fileName = FileLocator.toFileURL(url).getFile();
-				file = new File(fileName);
-				filesToImport.addAll(Arrays.asList(file.listFiles()));
-				String name = file.getName();
-				folder = destFolder.getFolder(new Path(name));
-				folder.create(true, true, monitor);
-			} else {
-				filesToImport.add(bundleFile);
-				file = bundleFile.getParentFile();
-				folder = destFolder;
-			}
-			ImportOperation importOperation = new ImportOperation(folder.getFullPath(),
-					file, FileSystemStructureProvider.INSTANCE,
-					OVERWRITE_ALL_QUERY, filesToImport);
-			importOperation.setCreateContainerStructure(false);
-			importOperation.run(monitor);
-		} catch (Exception e) {
-			IStatus status = new Status(IStatus.WARNING,BirtCoreActivator.PLUGIN_ID,e.getMessage());
-			BirtCoreActivator.getDefault().getLog().log(status);
-			return;
-		}
 		
 	}
 
