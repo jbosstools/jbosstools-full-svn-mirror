@@ -4,7 +4,7 @@
 <book>
     <bookinfo>
         <title>JBoss Tools Guides - Latest Version</title>
-        <pubdate>April 2008</pubdate>
+        <pubdate>Last published: <?dbtimestamp format="B d, Y"?></pubdate>
         <copyright>
             <year>2007</year>
             <year>2008</year>
