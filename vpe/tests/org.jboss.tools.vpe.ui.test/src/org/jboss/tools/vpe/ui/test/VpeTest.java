@@ -207,7 +207,8 @@ public class VpeTest extends TestCase implements ILogListener {
         assertNotNull(editor);
 
         TestUtil.waitForJobs();
-        TestUtil.delay(1000);
+        //JBIDE-1628
+//        TestUtil.delay(1000);
 
         PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeAllEditors(true);
 
