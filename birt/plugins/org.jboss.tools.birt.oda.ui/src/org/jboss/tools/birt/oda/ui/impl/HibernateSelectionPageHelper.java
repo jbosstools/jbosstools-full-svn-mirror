@@ -49,6 +49,7 @@ public class HibernateSelectionPageHelper {
 	private WizardPage wizardPage;
 	private PreferencePage propertyPage;
 	private Combo configurationCombo;
+	private Text jndiSessionFactoryName;
 	private Text maxRows;
 	private Button testButton;
 
@@ -80,6 +81,16 @@ public class HibernateSelectionPageHelper {
 		gridData.horizontalAlignment = SWT.FILL;
 		gridData.grabExcessHorizontalSpace = true;
 		configurationCombo.setLayoutData(gridData);
+		
+		Label jndiLabel = new Label(composite, SWT.RIGHT);
+		jndiLabel.setText("JNDI URL:");
+		
+		jndiSessionFactoryName = new Text(composite,SWT.BORDER);
+		gridData = new GridData();
+		gridData.horizontalSpan = 2;
+		gridData.horizontalAlignment = SWT.FILL;
+		gridData.grabExcessHorizontalSpace = true;
+		jndiSessionFactoryName.setLayoutData(gridData);
 
 		ConsoleConfiguration[] configurations = KnownConfigurations
 				.getInstance().getConfigurations();
@@ -99,9 +110,12 @@ public class HibernateSelectionPageHelper {
 
 			public void modifyText(ModifyEvent e) {
 				validateData();
+				adjustJndiName();
 			}
 
 		});
+		
+		adjustJndiName();
 
 		new Label(composite, SWT.NONE);
 		testButton = new Button(composite, SWT.PUSH);
@@ -118,6 +132,20 @@ public class HibernateSelectionPageHelper {
 
 		validateData();
 
+	}
+
+	private void adjustJndiName() {
+		String jndiName = jndiSessionFactoryName.getText();
+		if (jndiName == null || jndiName.length() <= 0) {
+			String configurationName = configurationCombo.getText();
+			if (configurationName != null && configurationName.length() > 0) {
+				int index = configurationName.indexOf("-ejb");
+				if (index > 0) {
+					configurationName = configurationName.substring(0,index);
+				}
+				jndiSessionFactoryName.setText("java:/" + configurationName);
+			}
+		}
 	}
 
 	private void setMessage(String message, int type) {
