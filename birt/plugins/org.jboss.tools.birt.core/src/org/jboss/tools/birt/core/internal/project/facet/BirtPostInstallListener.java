@@ -101,7 +101,7 @@ public class BirtPostInstallListener implements IFacetedProjectListener {
 				properties.load(inputStream);
 				String bootDelegation = "org.osgi.framework.bootdelegation";
 				String loader = "osgi.parentClassloader";
-				properties.put(bootDelegation, "org.hibernate,org.hibernate.type,org.hibernate.metadata");
+				properties.put(bootDelegation, "org.hibernate,org.hibernate.type,org.hibernate.metadata,org.hibernate.ejb, javax.persistence");
 				properties.put(loader,"fwk");
 				// FIXME
 				//String compatibility = "osgi.compatibility.bootdelegation";
