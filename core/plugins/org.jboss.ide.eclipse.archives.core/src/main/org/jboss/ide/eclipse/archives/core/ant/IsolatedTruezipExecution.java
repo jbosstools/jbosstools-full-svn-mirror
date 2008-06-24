@@ -6,6 +6,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelCore;
@@ -33,10 +34,10 @@ public class IsolatedTruezipExecution {
         ClassLoader myCL = getClass().getClassLoader();
         Thread.currentThread().setContextClassLoader(myCL);
         
-        ((AntVariables)ArchivesCore.getInstance().getVariables()).setCurrentTask(task);
+        ((AntVariables)ArchivesCore.getInstance().getVFS()).setCurrentTask(task);
 		// figure out which one to build
 		ArchivesModel.instance().addBuildListener(listener);
-		IPath path = ArchivesCore.getInstance().getVariables().getProjectPath(task.getEclipseProject());
+		IPath path = ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(new Path(task.getEclipseProject()));
 		if( verifyBuildPrereqs(path) )  {
 			task.log("Building archives for project project: " + path, Project.MSG_VERBOSE);
 	        ArchivesModelCore.buildProject(path, null);
@@ -95,9 +96,9 @@ public class IsolatedTruezipExecution {
 		});
 		
 		boolean retVal = true;
-		AntVariables vars = ((AntVariables)ArchivesCore.getInstance().getVariables());
+		AntVariables vars = ((AntVariables)ArchivesCore.getInstance().getVFS());
 		for( int i = 0; i < requiredProjects.size(); i++ ) {
-			IPath p = vars.getProjectPath(requiredProjects.get(i));
+			IPath p = vars.workspacePathToAbsolutePath(new Path(requiredProjects.get(i)));
 			if( p == null ) {
 				retVal = false;
 				task.log("Required project \"" + requiredProjects.get(i) + 

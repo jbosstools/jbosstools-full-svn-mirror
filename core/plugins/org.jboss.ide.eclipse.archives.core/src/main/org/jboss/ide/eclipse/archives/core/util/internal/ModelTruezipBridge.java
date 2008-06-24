@@ -31,6 +31,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
+import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFileSetImpl;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 
 import de.schlichtherle.io.ArchiveDetector;
@@ -207,12 +208,17 @@ public class ModelTruezipBridge {
 			return new File[]{};
 		
 		File[] returnFiles = new File[inputFiles.length];
-		int fsLength = fs.getGlobalSourcePath().toOSString().length()+1;
 		for( int i = 0; i < inputFiles.length; i++ ) {
 			if( fs.isFlattened() )
 				filesetRelative = inputFiles[i].lastSegment();
-			else
-				filesetRelative = inputFiles[i].toOSString().substring(fsLength);
+			else if( fs.isInWorkspace() ){
+				IPath wsPath = ((ArchiveFileSetImpl)fs).getScanner().getWorkspacePath(inputFiles[i]);
+				filesetRelative = wsPath.removeFirstSegments(fs.getSourcePath().segmentCount()).toString();
+			} else {
+				int fsLength = fs.getGlobalSourcePath().toOSString().length()+1;
+				filesetRelative = inputFiles[i].toOSString().substring(fsLength);	
+			}
+			
 			File parentFile;
 			if(new Path(filesetRelative).segmentCount() > 1 ) { 
 				String tmp = new Path(filesetRelative).removeLastSegments(1).toString();

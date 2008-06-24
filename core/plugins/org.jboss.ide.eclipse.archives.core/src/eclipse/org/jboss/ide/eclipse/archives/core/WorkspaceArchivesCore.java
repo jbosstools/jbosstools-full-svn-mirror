@@ -7,7 +7,7 @@ import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.IPreferenceManager;
-import org.jboss.ide.eclipse.archives.core.model.IRuntimeVariables;
+import org.jboss.ide.eclipse.archives.core.model.IArchivesVFS;
 import org.jboss.ide.eclipse.archives.core.model.other.internal.ArchivesWorkspaceLogger;
 import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspaceExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspacePreferenceManager;
@@ -31,7 +31,7 @@ public class WorkspaceArchivesCore extends ArchivesCore {
 		return new WorkspacePreferenceManager();
 	}
 	
-	protected IRuntimeVariables createVariables() {
+	protected IArchivesVFS createVFS() {
 		return new WorkspaceVariables();
 	}
 

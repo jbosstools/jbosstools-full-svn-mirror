@@ -25,7 +25,7 @@ import org.eclipse.core.runtime.IPath;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.IPreferenceManager;
-import org.jboss.ide.eclipse.archives.core.model.IRuntimeVariables;
+import org.jboss.ide.eclipse.archives.core.model.IArchivesVFS;
 
 /**
  * The core entry point for Archives
@@ -51,20 +51,20 @@ public abstract class ArchivesCore {
 	public static final int WORKSPACE = 1;
 	
 	private int runType;
-	private IRuntimeVariables variables;
+	private IArchivesVFS vfs;
 	private IExtensionManager extensionManager;
 	private IPreferenceManager preferenceManager;
 	private IArchivesLogger logger;
 	
 	public ArchivesCore(int runType) {
 		this.runType = runType;
-		variables = createVariables();
+		vfs = createVFS();
 		extensionManager = createExtensionManager();
 		preferenceManager = createPreferenceManager();
 		logger = createLogger();
 	}
 	
-	protected abstract IRuntimeVariables createVariables();
+	protected abstract IArchivesVFS createVFS();
 	protected abstract IExtensionManager createExtensionManager();
 	protected abstract IPreferenceManager createPreferenceManager();
 	protected abstract IArchivesLogger createLogger();
@@ -72,8 +72,8 @@ public abstract class ArchivesCore {
 	public int getRunType() {
 		return runType;
 	}
-	public IRuntimeVariables getVariables() {
-		return variables;
+	public IArchivesVFS getVFS() {
+		return vfs;
 	}
 	public IExtensionManager getExtensionManager() {
 		return extensionManager;

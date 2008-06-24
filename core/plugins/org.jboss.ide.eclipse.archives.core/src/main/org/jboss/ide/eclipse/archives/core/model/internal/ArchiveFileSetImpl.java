@@ -22,6 +22,7 @@
 package org.jboss.ide.eclipse.archives.core.model.internal;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
@@ -30,10 +31,8 @@ import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
-import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFileSet;
-import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 
 /**
  * An implementation for filesets
@@ -93,7 +92,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 		if (path == null || path.equals(".") || path.equals("")) {
 			ret = getProjectPath();
 		} else if( isInWorkspace()){
-			ret = ModelUtil.workspacePathToAbsolutePath(new Path(path)); 
+			ret = ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(new Path(path)); 
 		} else {
 			ret = new Path(path);
 		}
@@ -137,26 +136,14 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	 * Will re-scan if required, or use cached scanner
 	 * @return
 	 */
-	private synchronized DirectoryScannerExtension getScanner() {
+	public synchronized DirectoryScannerExtension getScanner() {
 		if( scanner == null || rescanRequired) {
 			rescanRequired = false;
 
 			try {
-				// new scanner
-				scanner = DirectoryScannerFactory.createDirectoryScanner(
-						getGlobalSourcePath(), getIncludesPattern(), getExcludesPattern(), true);
-				
-				ArrayList<IPath> paths = new ArrayList<IPath>();
-				if( scanner != null ) {
-					// cache the paths
-					IPath sp = getGlobalSourcePath();
-					String matched[] = scanner.getIncludedFiles();
-					for (int i = 0; i < matched.length; i++) {
-						IPath path = sp.append(new Path(matched[i]));
-						paths.add(path);
-					}
-				}
-				matchingPaths = paths;
+				scanner = DirectoryScannerFactory.createDirectoryScanner(this, true);
+				if( scanner != null )
+					matchingPaths = new ArrayList(Arrays.asList(scanner.getAbsoluteIncludedFiles()));
 			} catch( IllegalStateException ise ) {
 				ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, "Could not create directory scanner", ise);
 			}

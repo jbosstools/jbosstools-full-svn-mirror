@@ -7,7 +7,7 @@ import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.IPreferenceManager;
-import org.jboss.ide.eclipse.archives.core.model.IRuntimeVariables;
+import org.jboss.ide.eclipse.archives.core.model.IArchivesVFS;
 
 /**
  * A core API entry point for ant.
@@ -29,7 +29,7 @@ public class AntArchivesCore extends ArchivesCore {
 		return new AntPreferenceManager();
 	}
 
-	protected IRuntimeVariables createVariables() {
+	protected IArchivesVFS createVFS() {
 		return new AntVariables();
 	}
 

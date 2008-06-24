@@ -29,13 +29,25 @@ import org.eclipse.core.runtime.IPath;
  * @author rob.stryker <rob.stryker@redhat.com>
  *
  */
-public interface IRuntimeVariables {
-
-	public boolean isDebugging(String option);
-	public IPath getProjectPath(String projectName);
-	public String getProjectName(IPath path);
+public interface IArchivesVFS {
 	
-	// allow for variable replacement
+	/**
+	 * Returns a list of workspace-relative paths
+	 * that are children of the parameter. 
+	 * @param path
+	 * @return
+	 */
+	public IPath[] getWorkspaceChildren(IPath path);
+	
+	/**
+	 * Translates a workspace path to a global path
+	 * @param path
+	 * @return
+	 */
+	public IPath workspacePathToAbsolutePath(IPath path);
+	
+	public IPath[] workspacePathToAbsolutePath(IPath[] paths);
+	
 	public String performStringSubstitution(String expression,	boolean reportUndefinedVariables) throws CoreException;
 
 }

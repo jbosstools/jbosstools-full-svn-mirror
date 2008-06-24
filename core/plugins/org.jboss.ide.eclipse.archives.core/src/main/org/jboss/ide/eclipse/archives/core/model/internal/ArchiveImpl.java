@@ -35,7 +35,6 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
 import org.jboss.ide.eclipse.archives.core.model.INamedContainerArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
-import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 
 /**
  * An archive
@@ -78,7 +77,7 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 			return getProjectPath() == null ? Path.EMPTY : getProjectPath();
 		
 		if (isDestinationInWorkspace()) {	
-			return ModelUtil.workspacePathToAbsolutePath(new Path(packageDelegate.getToDir()));
+			return ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(new Path(packageDelegate.getToDir()));
 		} else 
 			return new Path(packageDelegate.getToDir());
 	}

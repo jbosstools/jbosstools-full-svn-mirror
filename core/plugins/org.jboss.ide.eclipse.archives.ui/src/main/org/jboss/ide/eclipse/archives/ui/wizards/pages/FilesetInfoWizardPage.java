@@ -308,6 +308,14 @@ public class FilesetInfoWizardPage extends WizardPage {
 	}
 	
 	private void fillDefaults () {
+		String projectName = "";
+		IProject[] project = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+		for( int i = 0; i < project.length; i++ ) 
+			if( project[i].getLocation().equals(parentNode.getProjectPath()))
+				projectName = project[i].getName();
+
+		rootProjectLabel.setText(projectName);
+
 		if (fileset != null) {
 				if (fileset.getIncludesPattern() != null) {
 					includes = fileset.getIncludesPattern();
@@ -332,15 +340,11 @@ public class FilesetInfoWizardPage extends WizardPage {
 		} else {
 			rootDirIsWorkspaceRelative = true;
 			rootDir = parentNode.getProjectPath();
-			workspaceRelativeRootDir = "";
+			workspaceRelativeRootDir = projectName;
 			flattened = false;
 			flattenedYes.setSelection(flattened);
 			flattenedNo.setSelection(!flattened);
 		}
-		IProject[] project = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-		for( int i = 0; i < project.length; i++ ) 
-			if( project[i].getLocation().equals(parentNode.getProjectPath()))
-				rootProjectLabel.setText(project[i].getName());
 
 	}
 	
@@ -375,7 +379,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 			if (project != null) {
 				IPath projectRelativePath = path.removeFirstSegments(1);
 				rootProjectLabel.setText(project.getName());
-				rootDir = ArchivesCore.getInstance().getVariables().getProjectPath(projectName).append(projectRelativePath);
+				rootDir = ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(path);
 				workspaceRelativeRootDir = path.toString();
 				if (!projectRelativePath.isEmpty()) {
 					rootDirText.setText(projectRelativePath.toString());

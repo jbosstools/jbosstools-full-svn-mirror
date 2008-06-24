@@ -21,13 +21,11 @@
  */
 package org.jboss.ide.eclipse.archives.core.model;
 
-import org.apache.tools.ant.DirectoryScanner;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.jboss.ide.eclipse.archives.core.ArchivesCore;
+import org.jboss.ide.eclipse.archives.core.asf.DirectoryScanner;
 import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
 
 /**
