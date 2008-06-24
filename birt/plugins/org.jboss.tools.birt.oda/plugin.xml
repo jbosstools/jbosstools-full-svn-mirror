@@ -20,6 +20,13 @@
                   isEncryptable="false">
             </property>
             <property
+                  name="jndiName"
+                  allowsEmptyValueAsNull="true"
+                  defaultDisplayName="JNDI Session Factory Name"
+                  type="string"
+                  isEncryptable="false">
+            </property>
+            <property
                   allowsEmptyValueAsNull="true"
                   defaultDisplayName="Max results"
                   defaultValue="100"
