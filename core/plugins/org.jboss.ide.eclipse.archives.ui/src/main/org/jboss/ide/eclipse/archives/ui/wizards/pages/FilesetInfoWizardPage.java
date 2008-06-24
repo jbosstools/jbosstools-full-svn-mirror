@@ -322,7 +322,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 					rootDir = fileset.getGlobalSourcePath();
 					workspaceRelativeRootDir = fileset.getSourcePath().toString();
 					rootDirIsWorkspaceRelative = fileset.isInWorkspace();
-					rootDirText.setText(rootDir.toString());
+					rootDirText.setText(fileset.getSourcePath().toString());
 				}
 
 				flattened = fileset.isFlattened();
