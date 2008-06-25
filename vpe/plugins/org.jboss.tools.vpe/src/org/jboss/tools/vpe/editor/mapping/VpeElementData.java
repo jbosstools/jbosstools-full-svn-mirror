@@ -17,45 +17,47 @@ import java.util.List;
  * 
  * @author Sergey Dzmitrovich
  * 
- * keep information about element
+ *         keep information about element
  */
 public class VpeElementData {
 
 	/**
-	 * list of attribute data
+	 * list of node data
 	 * 
-	 * keep information about output attributes
+	 * keep information about output nodes ( one element can contain some nodes
+	 * )
 	 */
-	private List<VpeAttributeData> attributesData;
+	private List<NodeData> nodesData;
 
 	/**
-	 * get attributes data
+	 * get nodes data
 	 * 
 	 * @return
 	 */
-	public List<VpeAttributeData> getAttributesData() {
-		return attributesData;
+	public List<NodeData> getNodesData() {
+		return nodesData;
 	}
 
 	/**
-	 * set attributes data
+	 * set nodes data
 	 * 
-	 * @param attributesData
+	 * @param nodesData
 	 */
-	public void setAttributesData(List<VpeAttributeData> attributesData) {
-		this.attributesData = attributesData;
+	public void setNodesData(List<NodeData> nodesData) {
+		this.nodesData = nodesData;
 	}
 
 	/**
 	 * add <code>VpeAttributeData</code>
+	 * 
 	 * @param attributeData
 	 */
-	public void addAttributeData(VpeAttributeData attributeData) {
+	public void addNodeData(NodeData nodeData) {
 
-		if (attributesData == null)
-			attributesData = new ArrayList<VpeAttributeData>();
+		if (nodesData == null)
+			nodesData = new ArrayList<NodeData>();
 
-		attributesData.add(attributeData);
+		nodesData.add(nodeData);
 
 	}
 
