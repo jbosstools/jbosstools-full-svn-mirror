@@ -117,7 +117,7 @@ public class DirectoryScannerFactory {
 	    }
 	    
 	    protected String getName(File file) {
-	    	return absoluteToWorkspace.get(file).lastSegment();
+	    	return workspaceRelative ? absoluteToWorkspace.get(file).lastSegment() : super.getName(file);
 	    }
 	    
 	    /* Only used when workspace relative! */
