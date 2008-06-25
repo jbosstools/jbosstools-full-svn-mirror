@@ -7,20 +7,43 @@
  *
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 package org.jboss.tools.vpe.editor.template.expression;
 
-import org.w3c.dom.Node;
+import java.util.List;
 
+import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.editor.util.XmlUtil;
+import org.w3c.dom.Node;
 
 public class VpeFunctionHasInParents extends VpeFunction {
 
 	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
-		String prm = getParameter(0).exec(pageContext, sourceNode).stringValue();
+		String prm = getParameter(0).exec(pageContext, sourceNode)
+				.stringValue();
 		Node parentNode = sourceNode.getParentNode();
+
 		while (parentNode != null) {
-			if (parentNode.getNodeName().equals(prm)) {
+			String parentSourcePrefix = parentNode.getPrefix();
+			List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(parentNode,
+					pageContext);
+			TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(
+					parentSourcePrefix, taglibs);
+
+			String parentNodeName = parentNode.getNodeName();
+			if (sourceNodeTaglib != null) {
+				String sourceNodeUri = sourceNodeTaglib.getUri();
+				String templateTaglibPrefix = VpeTemplateManager.getInstance()
+						.getTemplateTaglibPrefix(sourceNodeUri);
+
+				if (templateTaglibPrefix != null) {
+					parentNodeName = templateTaglibPrefix
+							+ ":" + parentNode.getLocalName(); //$NON-NLS-1$
+				}
+			}
+			if (parentNodeName.equals(prm)) {
 				return new VpeValue(true);
 			}
 			parentNode = parentNode.getParentNode();
