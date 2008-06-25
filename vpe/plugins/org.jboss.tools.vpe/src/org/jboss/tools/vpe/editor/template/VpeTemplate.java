@@ -14,10 +14,6 @@ import org.jboss.tools.jst.jsp.editor.ITextFormatter;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDropInfo;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.jboss.tools.vpe.editor.mapping.NodeData;
-import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
-import org.jboss.tools.vpe.editor.mapping.VpeElementData;
-import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -326,7 +322,7 @@ public interface VpeTemplate {
 	/**
 	 * Returns a list of attributes of an element of the source tree, the values
 	 * which one are mapped in the visiblis editor
-	 * @deprecated
+	 * 
 	 * @return attrubute name array
 	 */
 	String[] getOutputAtributeNames();
@@ -345,7 +341,6 @@ public interface VpeTemplate {
 			Object data);
 
 	/**
-	 * @deprecated
 	 * Opens proprties editor for bundle value Is invoked at double mouse click
 	 * on visual element
 	 * 
@@ -388,7 +383,7 @@ public interface VpeTemplate {
 	 * If the value of attribute of an element of an source tree is mapped by
 	 * the way of text node of a visual tree, this method returns the text
 	 * node, otherwise - null
-	 * @deprecated
+	 * 
 	 * @param pageContext
 	 *            Contains the information on edited page.
 	 * @param sourceElement
@@ -451,37 +446,5 @@ public interface VpeTemplate {
 	public boolean isModify();
 	
 	public void setModify(boolean modify);
-	
-	/**
-	 * open bundle
-	 * 
-	 * @param pageContext
-	 * @param visualNod
-	 * @return
-	 */
-	public boolean openBundle(VpePageContext pageContext,
-			nsIDOMNode visualNode, VpeElementMapping elementMapping);
-
-	/**
-	 * 
-	 * @param node
-	 * @param elementData
-	 * @param domMapping
-	 * @return
-	 */
-	public NodeData getNodeData(nsIDOMNode node, VpeElementData elementData,
-			VpeDomMapping domMapping);
-
-	/**
-	 * 
-	 * @param elementMapping
-	 * @param focusPosition
-	 * @param anchorPosition
-	 * @param domMapping
-	 * @return
-	 */
-	public nsIDOMNode getVisualNodeByBySourcePosition(
-			VpeElementMapping elementMapping, int focusPosition,
-			int anchorPosition, VpeDomMapping domMapping);
 	
 }

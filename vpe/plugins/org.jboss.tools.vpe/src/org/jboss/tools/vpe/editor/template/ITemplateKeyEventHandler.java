@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
+import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 
 /**
@@ -18,7 +19,7 @@ import org.mozilla.interfaces.nsIDOMKeyEvent;
  * @author Sergey Dzmitrovich
  * 
  */
-public interface IKeyEventHandler {
+public interface ITemplateKeyEventHandler {
 
 	/**
 	 * handle keyEvent
@@ -29,6 +30,6 @@ public interface IKeyEventHandler {
 	 *            is pressed key
 	 * @return
 	 */
-	boolean handleKeyPress(nsIDOMKeyEvent keyEvent);
+	boolean handleKeyPress(VpePageContext pageContext, nsIDOMKeyEvent keyEvent);
 
 }

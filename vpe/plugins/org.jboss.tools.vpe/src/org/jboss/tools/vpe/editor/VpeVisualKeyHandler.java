@@ -42,7 +42,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectedNodeInfo;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelectionBuilder;
-import org.jboss.tools.vpe.editor.template.IKeyEventHandler;
+import org.jboss.tools.vpe.editor.template.ITemplateKeyEventHandler;
 import org.jboss.tools.vpe.editor.template.VpeHtmlTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.util.FlatIterator;
@@ -174,11 +174,11 @@ public class VpeVisualKeyHandler {
 		
 		// if template сan handle keyEvent than pass control to him. And if
 		// template handled event return true
-//		if ((template instanceof ITemplateKeyEventHandler)
-//				&& ((ITemplateKeyEventHandler) template).handleKeyPress(
-//						pageContext, keyEvent)) {
-//			return true;
-//		}
+		if ((template instanceof ITemplateKeyEventHandler)
+				&& ((ITemplateKeyEventHandler) template).handleKeyPress(
+						pageContext, keyEvent)) {
+			return true;
+		}
 		
 		if (keyCode == VK_ENTER) {
 			return split();

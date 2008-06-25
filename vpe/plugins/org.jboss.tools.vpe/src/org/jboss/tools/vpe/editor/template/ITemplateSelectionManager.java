@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
+import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsISelection;
 
@@ -19,25 +21,34 @@ import org.mozilla.interfaces.nsISelection;
  * 
  * @author Sergey Dzmitrovich
  */
-public interface ISelectionManager {
+public interface ITemplateSelectionManager {
 
 	/**
-	 * set selection
+	 * selection
 	 * 
+	 * @param pageContext
 	 * @param selection
 	 */
-	public void setSelection(nsISelection selection);
+	public void setSelection(VpePageContext pageContext, nsISelection selection);
+
+	/**
+	 * select visual element by source selection
+	 * 
+	 * @param pageContext
+	 * @return true if visual element was selected
+	 */
+	public void setSelectionBySource(VpePageContext pageContext,
+			VpeSelectionController selectionController, int focus, int anchor);
 
 	/**
 	 * set selection by mouse
 	 * 
+	 * @param visualSelectionController
+	 * 
 	 * @param mouseEvent
 	 */
-	public void setSelection(nsIDOMMouseEvent mouseEvent);
-
-	/**
-	 * to bring in correspondence visual selection and source selection
-	 */
-	public void refreshVisualSelection();
+	public void setSelectionByMouse(VpePageContext pageContext,
+			VpeSelectionController selectionController,
+			nsIDOMMouseEvent mouseEvent);
 
 }

@@ -20,7 +20,6 @@ import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.mozilla.interfaces.nsIDOMElement;
-import org.mozilla.interfaces.nsIDOMHTMLInputElement;
 import org.mozilla.interfaces.nsIDOMNSHTMLInputElement;
 import org.mozilla.interfaces.nsIDOMNSHTMLTextAreaElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -29,11 +28,6 @@ import org.mozilla.interfaces.nsISelection;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-/**
- * @deprecated
- * @author S. Dzmitrovich
- *
- */
 public class TemplateManagingUtil {
 
 	/**
@@ -434,13 +428,9 @@ public class TemplateManagingUtil {
 
 		if ((node != null) && (range != null))
 			if (HTML.TAG_INPUT.equalsIgnoreCase(node.getLocalName())) {
-				
-				nsIDOMHTMLInputElement inputElement = (nsIDOMHTMLInputElement) node
-						.queryInterface(nsIDOMHTMLInputElement.NS_IDOMHTMLINPUTELEMENT_IID);
-				System.out.print("\ninput:"+inputElement.getType());
-//				nsIDOMNSHTMLInputElement inputElement = (nsIDOMNSHTMLInputElement) node
-//						.queryInterface(nsIDOMNSHTMLInputElement.NS_IDOMNSHTMLINPUTELEMENT_IID);
-//				inputElement.setSelectionRange(range.x, range.x + range.y);
+				nsIDOMNSHTMLInputElement inputElement = (nsIDOMNSHTMLInputElement) node
+						.queryInterface(nsIDOMNSHTMLInputElement.NS_IDOMNSHTMLINPUTELEMENT_IID);
+				inputElement.setSelectionRange(range.x, range.x + range.y);
 			} else if (HTML.TAG_TEXTAREA.equalsIgnoreCase(node.getLocalName())) {
 				nsIDOMNSHTMLTextAreaElement textAreaElement = (nsIDOMNSHTMLTextAreaElement) node
 						.queryInterface(nsIDOMNSHTMLTextAreaElement.NS_IDOMNSHTMLTEXTAREAELEMENT_IID);
