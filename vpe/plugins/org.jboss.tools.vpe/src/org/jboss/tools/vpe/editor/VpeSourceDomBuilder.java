@@ -35,10 +35,9 @@ import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
-import org.jboss.tools.vpe.editor.template.ITemplateNodesManager;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
-import org.jboss.tools.vpe.editor.util.TemplateManagingUtil;
+import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -252,21 +251,20 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 	}
 	
 	boolean openBundleEditors(nsIDOMNode visualNode) {
-		VpeElementMapping elementMapping = TemplateManagingUtil
-				.getElementMappingByVisualSelection(pageContext, visualNode);
-		if (elementMapping != null) {
+
+		VpeNodeMapping nodeMapping = NodesManagingUtil.getNodeMapping(
+				domMapping, visualNode);
+		if (nodeMapping != null
+				&& nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+
+			VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
 
 			VpeTemplate template = elementMapping.getTemplate();
 
-			// if template implements VpeTemplateNodesManager interface
-			if (template instanceof ITemplateNodesManager) {
-				return ((ITemplateNodesManager) template).openBundle(
-						pageContext, visualNode, elementMapping);
-			} else {
+			if (!template.openBundle(pageContext, visualNode, elementMapping))
 				template.openBundleEditors(pageContext,
 						(Element) elementMapping.getSourceNode(),
 						elementMapping.getData());
-			}
 		}
 		return false;
 	}

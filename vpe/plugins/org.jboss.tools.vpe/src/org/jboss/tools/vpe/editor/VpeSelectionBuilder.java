@@ -21,7 +21,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
-import org.jboss.tools.vpe.editor.template.ITemplateSelectionManager;
+import org.jboss.tools.vpe.editor.template.ISelectionManager;
 import org.jboss.tools.vpe.editor.template.VpePseudoContentCreator;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -47,6 +47,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ *	
+ *	@deprecated 
+ *
+ */
 public class VpeSelectionBuilder {
 	private static int HUGE_DISTANCE = 999999;
 	private VpeDomMapping domMapping;
@@ -76,11 +81,11 @@ public class VpeSelectionBuilder {
 		VpeTemplate vpeTemplate = TemplateManagingUtil
 				.getTemplateByVisualSelection(visualBuilder.getPageContext(),
 						TemplateManagingUtil.getSelectedNode(selection));
-		if (vpeTemplate instanceof ITemplateSelectionManager) {
-			((ITemplateSelectionManager) vpeTemplate).setSelection(
-					visualBuilder.getPageContext(), selection);
-			return;
-		}
+//		if (vpeTemplate instanceof ITemplateSelectionManager) {
+//			((ITemplateSelectionManager) vpeTemplate).setSelection(
+//					visualBuilder.getPageContext(), selection);
+//			return;
+//		}
 		
 		if (selection.getIsCollapsed()) {
 			VisualSelectionInfo info = getVisualFocusSelectedInfo(selection);

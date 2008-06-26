@@ -13,6 +13,8 @@ package org.jboss.tools.vpe.editor.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.mozilla.interfaces.nsIDOMKeyEvent;
+
 public class TextUtil {
 	private final static String SOURCE_BREAK = "\r\n"; 
 	private final static String VISUAL_BREAK = "\n"; 
@@ -351,5 +353,18 @@ public class TextUtil {
 			}
 		}
 		return true;
+	}
+	
+	public static String getChar(nsIDOMKeyEvent keyEvent) {
+		// get inserted string
+		long charCode = keyEvent.getCharCode();
+		char[] s = new char[1];
+		s[0] = (char) charCode;
+		String str = new String(s);
+		if (TextUtil.containsKey(s[0])) {
+			str = TextUtil.getValue(s[0]);
+		}
+
+		return str;
 	}
 }

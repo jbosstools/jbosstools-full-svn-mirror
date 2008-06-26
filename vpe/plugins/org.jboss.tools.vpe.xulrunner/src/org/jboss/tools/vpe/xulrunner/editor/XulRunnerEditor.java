@@ -50,6 +50,8 @@ import org.mozilla.interfaces.nsIWebProgressListener;
 import org.mozilla.xpcom.Mozilla;
 import org.mozilla.xpcom.XPCOMException;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
 /**
  * @author Sergey Vasilyev (svasilyev@exadel.com)
  *
@@ -100,7 +102,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 */
 	private static final String STYLE_ATTR="style";
 
-	private nsIDOMElement lastSelectedElement;
+//	private nsIDOMElement lastSelectedElement;
+	private nsIDOMNode lastSelectedNode;
 	private int lastResizerConstrains;
 	/**
 	 *  Scroll selection into view flag
@@ -290,14 +293,23 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 */
 	public nsIDOMElement getLastSelectedElement() {
 
-		return lastSelectedElement;
+		return getElement(lastSelectedNode);
 	}
-	/**
-	 * Function created to restore functionality of MozillaBrowser
-	 * @return
-	 */
-	private void setLastSelectedElement(nsIDOMElement lastSelectedElement) {
-		this.lastSelectedElement = lastSelectedElement;
+	
+	public nsIDOMNode getLastSelectedNode() {
+		return lastSelectedNode;
+	}
+
+	// /**
+	// * Function created to restore functionality of MozillaBrowser
+	// * @return
+	// */
+	// private void setLastSelectedElement(nsIDOMElement lastSelectedElement) {
+	// this.lastSelectedElement = lastSelectedElement;
+	// }
+	
+	private void setLastSelectedNode(nsIDOMNode lastSelectedNode) {
+		this.lastSelectedNode = lastSelectedNode;
 	}
 
 	/**
@@ -306,14 +318,17 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * @param resizerConstrains
 	 * @param scroll
 	 */
-	public void setSelectionRectangle(nsIDOMElement element, int resizerConstrains, boolean scroll) {
+	public void setSelectionRectangle(nsIDOMNode node, int resizerConstrains, boolean scroll) {
 		if (getIFlasher() == null) {
 			
 			return;
 		}
+		
+		nsIDOMElement element = getElement(node);
+		
 		if (getLastSelectedElement() != null) {
 			
-			scrollRegtangleFlag = scroll && element != null;
+			scrollRegtangleFlag = scroll && node != null;
 			
 			if(checkVisability(getLastSelectedElement())){
 				
@@ -385,7 +400,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 			}
 		}
 
-		setLastSelectedElement(element);
+//		setLastSelectedElement(element);
+		setLastSelectedNode(node);
 		lastResizerConstrains = resizerConstrains;
 	}
 	
@@ -490,8 +506,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * 
 	 */
 	public void showResizer() {
-		if (xulRunnerVpeResizer != null && lastSelectedElement != null && lastResizerConstrains != 0) {
-			xulRunnerVpeResizer.show(lastSelectedElement, lastResizerConstrains);
+		if (xulRunnerVpeResizer != null && getLastSelectedElement() != null && lastResizerConstrains != 0) {
+			xulRunnerVpeResizer.show(getLastSelectedElement(), lastResizerConstrains);
 		}
 	}
 
@@ -562,6 +578,37 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		nsISelectionPrivate selectionPrivate = (nsISelectionPrivate) selection.queryInterface(nsISelectionPrivate.NS_ISELECTIONPRIVATE_IID);
 		selectionPrivate.addSelectionListener(selectionListener);
 		this.selectionListener = selectionListener;
+	}
+	
+	/**
+	 * get nsIDomElement from nsIDomNode
+	 * 
+	 * if node is nsIDomElement - return it 
+	 * 
+	 * if node is text node - return it's
+	 * 
+	 * parent else return null
+	 * 
+	 * @param node
+	 * @return
+	 */
+	private nsIDOMElement getElement(nsIDOMNode node) {
+
+		if (node != null) {
+
+			if (node.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+				return (nsIDOMElement) node
+						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			} else if (node.getNodeType() == nsIDOMNode.TEXT_NODE) {
+
+				return (nsIDOMElement) node.getParentNode().queryInterface(
+						nsIDOMElement.NS_IDOMELEMENT_IID);
+
+			}
+
+		}
+
+		return null;
 	}
 	
 }
