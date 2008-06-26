@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Author Max Areshkau
+	In this file contains configurations vpe:textFormatting tag
+-->
+<vpe:textFormatting>
+	<vpe:format type="UnderlineFormat">
+		<vpe:formatAttribute type="style" />
+	</vpe:format>
+	<vpe:format type="BoldFormat">
+		<vpe:formatAttribute type="style" />
+	</vpe:format>
+	<vpe:format type="ItalicFormat">
+		<vpe:formatAttribute type="style" />
+	</vpe:format>
+	<vpe:format type="FontNameFormat">
+		<vpe:formatAttribute type="style" />
+	</vpe:format>
+	<vpe:format type="FontSizeFormat">
+		<vpe:formatAttribute type="style" />
+	</vpe:format>
+	<vpe:format type="BackgroundColorFormat">
+		<vpe:formatAttribute type="style" />
+	</vpe:format>
+	<vpe:format type="ForegroundColorFormat">
+		<vpe:formatAttribute type="style" />
+	</vpe:format>
+</vpe:textFormatting>
