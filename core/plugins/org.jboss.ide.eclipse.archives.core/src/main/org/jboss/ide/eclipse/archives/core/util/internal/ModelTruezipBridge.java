@@ -31,7 +31,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
-import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFileSetImpl;
+import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension.FileWrapper;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 
 import de.schlichtherle.io.ArchiveDetector;
@@ -72,8 +72,8 @@ public class ModelTruezipBridge {
 		fullFilesetBuild(fileset, true);
 	}
 	public static void fullFilesetBuild(final IArchiveFileSet fileset, boolean sync) {
-		IPath[] paths = fileset.findMatchingPaths();
-		copyFiles(fileset, paths, false);
+		FileWrapper[] files = fileset.findMatchingPaths();
+		copyFiles(fileset, files, false);
 		if( sync )
 			TrueZipUtil.sync();
 	}
@@ -88,15 +88,15 @@ public class ModelTruezipBridge {
 	
 	// Let them know which files were removed, for events
 	public static IPath[] fullFilesetRemove(final IArchiveFileSet fileset, boolean sync) {
-		IPath[] paths = fileset.findMatchingPaths();
-		final ArrayList<IPath> list = new ArrayList<IPath>();
-		list.addAll(Arrays.asList(paths));
-		for( int i = 0; i < paths.length; i++ ) {
-			if( !ModelUtil.otherFilesetMatchesPathAndOutputLocation(fileset, paths[i])) {
+		FileWrapper[] files = fileset.findMatchingPaths();
+		final ArrayList<FileWrapper> list = new ArrayList<FileWrapper>();
+		list.addAll(Arrays.asList(files));
+		for( int i = 0; i < files.length; i++ ) {
+			if( !ModelUtil.otherFilesetMatchesPathAndOutputLocation(fileset, files[i])) {
 				// remove
-				deleteFiles(fileset, new IPath[] {paths[i]}, false);
+				deleteFiles(fileset, new FileWrapper[] {files[i]}, false);
 			} else {
-				list.remove(paths[i]);
+				list.remove(files[i]);
 			}
 		}
 		
@@ -109,7 +109,7 @@ public class ModelTruezipBridge {
 				if( node.getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
 					createFile(node);
 				} else if( node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FOLDER) {
-						createFile(node);
+					createFile(node);
 				}
 				return true;
 			} 
@@ -122,26 +122,27 @@ public class ModelTruezipBridge {
 	}
 
 	
-	public static void copyFiles(IArchiveFileSet[] filesets, IPath[] paths) {
-		copyFiles(filesets, paths, true);
+	public static void copyFiles(IArchiveFileSet[] filesets, FileWrapper[] files) {
+		copyFiles(filesets, files, true);
 	}
 	
-	public static void copyFiles(final IArchiveFileSet[] filesets, final IPath[] paths, boolean sync) {
+	public static void copyFiles(final IArchiveFileSet[] filesets, final FileWrapper[] files, boolean sync) {
 		for( int i = 0; i < filesets.length; i++ ) {
-			copyFiles(filesets[i], paths, false);
+			copyFiles(filesets[i], files, false);
 		}
 		if( sync ) 
 			TrueZipUtil.sync();
 		
 	}
 	
-	public static void copyFiles(IArchiveFileSet fileset, final IPath[] paths) {
-		copyFiles(fileset, paths, true);
+	public static void copyFiles(IArchiveFileSet fileset, final FileWrapper[] files) {
+		copyFiles(fileset, files, true);
 	}
-	public static void copyFiles(IArchiveFileSet fileset, final IPath[] sourcePaths, boolean sync) {
-		final File[] destFiles = getFiles(sourcePaths, fileset);
-		for( int i = 0; i < sourcePaths.length; i++ ) {
-			TrueZipUtil.copyFile(sourcePaths[i].toOSString(), destFiles[i]);
+	
+	public static void copyFiles(IArchiveFileSet fileset, final FileWrapper[] files, boolean sync) {
+		final File[] destFiles = getFiles(files, fileset);
+		for( int i = 0; i < files.length; i++ ) {
+			TrueZipUtil.copyFile(files[i].getAbsolutePath(), destFiles[i]);
 		}
 		if( sync ) 
 			TrueZipUtil.sync();
@@ -151,23 +152,23 @@ public class ModelTruezipBridge {
 	/*
 	 * Deleting files
 	 */
-	public static void deleteFiles(IArchiveFileSet[] filesets, IPath[] paths ) {
-		deleteFiles(filesets, paths, true);
+	public static void deleteFiles(IArchiveFileSet[] filesets, FileWrapper[] files ) {
+		deleteFiles(filesets, files, true);
 	}
-	public static void deleteFiles(final IArchiveFileSet[] filesets, final IPath[] paths, boolean sync ) {
+	public static void deleteFiles(final IArchiveFileSet[] filesets, final FileWrapper[] files, boolean sync ) {
 		for( int i = 0; i < filesets.length; i++ ) {
-			deleteFiles(filesets[i], paths, false);
+			deleteFiles(filesets[i], files, false);
 		}
 		if( sync ) 
 			TrueZipUtil.sync();
 	}
 	
-	public static void deleteFiles(IArchiveFileSet fileset, final IPath[] paths ) {
+	public static void deleteFiles(IArchiveFileSet fileset, final FileWrapper[] paths ) {
 		deleteFiles(fileset, paths, true);
 	}
-	public static void deleteFiles(IArchiveFileSet fileset, final IPath[] paths, boolean sync ) {
-		final File[] destFiles = getFiles(paths, fileset);
-		for( int i = 0; i < paths.length; i++ ) {
+	public static void deleteFiles(IArchiveFileSet fileset, final FileWrapper[] files, boolean sync ) {
+		final File[] destFiles = getFiles(files, fileset);
+		for( int i = 0; i < files.length; i++ ) {
 			TrueZipUtil.deleteAll(destFiles[i]);
 		}
 		
@@ -197,11 +198,12 @@ public class ModelTruezipBridge {
 	
 	/**
 	 * Gets all properly-created de.sch destination files for a fileset
+	 * - // TODO MAKE SURE VARIABLES ARE TRANSLATED
 	 * @param inputFiles
 	 * @param fs
 	 * @return
 	 */
-	private static File[] getFiles(IPath[] inputFiles, IArchiveFileSet fs ) {
+	private static File[] getFiles(FileWrapper[] inputFiles, IArchiveFileSet fs ) {
 		String filesetRelative;
 		File fsFile = getFile(fs);
 		if( fsFile == null )
@@ -210,14 +212,9 @@ public class ModelTruezipBridge {
 		File[] returnFiles = new File[inputFiles.length];
 		for( int i = 0; i < inputFiles.length; i++ ) {
 			if( fs.isFlattened() )
-				filesetRelative = inputFiles[i].lastSegment();
-			else if( fs.isInWorkspace() ){
-				IPath wsPath = ((ArchiveFileSetImpl)fs).getScanner().getWorkspacePath(inputFiles[i]);
-				filesetRelative = wsPath.removeFirstSegments(fs.getSourcePath().segmentCount()).toString();
-			} else {
-				int fsLength = fs.getGlobalSourcePath().toOSString().length()+1;
-				filesetRelative = inputFiles[i].toOSString().substring(fsLength);	
-			}
+				filesetRelative = inputFiles[i].getOutputName();
+			else 
+				filesetRelative = inputFiles[i].getFilesetRelative();
 			
 			File parentFile;
 			if(new Path(filesetRelative).segmentCount() > 1 ) { 

@@ -8,8 +8,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
+import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
-import org.jboss.ide.eclipse.archives.core.model.ArchivesModelCore;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveBuildListener;
@@ -40,7 +40,7 @@ public class IsolatedTruezipExecution {
 		IPath path = ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(new Path(task.getEclipseProject()));
 		if( verifyBuildPrereqs(path) )  {
 			task.log("Building archives for project project: " + path, Project.MSG_VERBOSE);
-	        ArchivesModelCore.buildProject(path, null);
+			new ArchiveBuildDelegate().fullProjectBuild(path);
 		} else {
 			throw new BuildException("Eclipse-relative paths missing absolute path mappings.");
 		}

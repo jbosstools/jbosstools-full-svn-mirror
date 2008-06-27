@@ -33,6 +33,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
+import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension.FileWrapper;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 import org.jboss.ide.eclipse.archives.core.util.internal.ModelTruezipBridge;
 
@@ -183,8 +184,8 @@ public class ModelChangeListener implements IArchiveModelListener {
 		IArchiveFileSet[] filesets = ModelUtil.findAllDescendentFilesets(added);
 		for( int i = 0; i < filesets.length; i++ ) {
 			ModelTruezipBridge.fullFilesetBuild(filesets[i]);
-			IPath[] paths = filesets[i].findMatchingPaths();
-			EventManager.filesUpdated(filesets[i].getRootArchive(), filesets[i], paths);
+			FileWrapper[] files = filesets[i].findMatchingPaths();
+			EventManager.filesUpdated(filesets[i].getRootArchive(), filesets[i], files);
 		}
 		postChange(added);
 	}

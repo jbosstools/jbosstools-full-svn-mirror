@@ -38,7 +38,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
-import org.jboss.ide.eclipse.archives.core.model.ArchivesModelCore;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
@@ -234,8 +233,8 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 		
 		if( !project.isAccessible() ) {
 			 book.showPage(noSelectionComposite);
-		} else if(  ArchivesModelCore.packageFileExists(project.getLocation()) ) {
-			if( ArchivesModelCore.projectRegistered(project.getLocation()))
+		} else if(  ArchivesModel.instance().canReregister(project.getLocation()) ) {
+			if( ArchivesModel.instance().isProjectRegistered(project.getLocation()))
 				book.showPage(viewerComposite);
 			else {
 				this.project = project;
@@ -293,7 +292,7 @@ public class ProjectArchivesView extends ViewPart implements IArchiveModelListen
 		IProject[] projects2 = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 		ArrayList<IProject> list = new ArrayList<IProject>();
 		for( int i = 0; i < projects2.length; i++ ) {
-			if( projects2[i].isAccessible() && ArchivesModelCore.packageFileExists(projects2[i].getLocation())) {
+			if( projects2[i].isAccessible() && ArchivesModel.instance().canReregister(projects2[i].getLocation())) {
 				list.add(projects2[i]);
 			}
 		}

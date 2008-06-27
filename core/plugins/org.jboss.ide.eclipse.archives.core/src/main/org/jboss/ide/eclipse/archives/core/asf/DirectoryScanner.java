@@ -1162,15 +1162,24 @@ public class DirectoryScanner
         boolean included = false;
         if (isExcluded(name)) {
             exc.add(name);
+            postExclude(file, name);
         } else if (isSelected(name, file)) {
             included = true;
             inc.add(name);
+            postInclude(file, name);
         } else {
             des.add(name);
         }
         everythingIncluded &= included;
     }
 
+    protected void postInclude(File f, String name) {
+    	// do nothing
+    }
+    
+    protected void postExclude(File f, String name) {
+    	// do nothing
+    }
     /**
      * Test whether or not a name matches against at least one include
      * pattern.

@@ -22,6 +22,7 @@
 package org.jboss.ide.eclipse.archives.core.model;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.eclipse.core.runtime.IPath;
@@ -34,39 +35,38 @@ import org.jboss.ide.eclipse.archives.core.asf.DirectoryScanner;
  * @author rob.stryker@jboss.com
  */
 public class DirectoryScannerFactory {
-
-	public static DirectoryScannerExtension createDirectoryScanner (IPath filesystemFolder, String includes, String excludes, boolean scan) {
-		if (includes == null) includes = "";
-		if (excludes == null) excludes = "";
-		if( filesystemFolder == null ) 
-			return null;
-		
-		DirectoryScannerExtension scanner = new DirectoryScannerExtension(false);
-		String excludesList[] = excludes.split(" ?, ?");
-		String includesList[] = includes.split(" ?, ?");
-		
-		scanner.setBasedir2(filesystemFolder);
-		scanner.setExcludes(excludesList);
-		scanner.setIncludes(includesList);
-		if (scan) {
-			scanner.scan();
-		}
-		
-		return scanner;
-	}
+	private static class ScannableFileSet {
+		public IPath rawPath;
+		public IPath rootArchiveRelativePath;
+		public String includes;
+		public String excludes;
+		public boolean inWorkspace;
+	};
 
 	public static DirectoryScannerExtension createDirectoryScanner(IArchiveFileSet fs, boolean scan) {
-		if( !fs.isInWorkspace()) {
-			return createDirectoryScanner(fs.getGlobalSourcePath(), fs.getIncludesPattern(), fs.getExcludesPattern(), scan);
-		}
-		
-		// in workspace
+		return createDirectoryScanner(fs.getSourcePath(), fs.getRootArchiveRelativePath(), fs.getIncludesPattern(), fs.getExcludesPattern(), fs.isInWorkspace(), scan);
+	}
+
+	// THIS SHOULD NOT BE USED ;)  just here for now
+	// eradicate all uses!
+	public static DirectoryScannerExtension createDirectoryScanner (IPath rawPath, String includes, String excludes, boolean scan) {
+		return createDirectoryScanner(rawPath, null, includes, excludes, false, scan);
+	}
+	
+	public static DirectoryScannerExtension createDirectoryScanner (IPath rawPath, IPath rootArchiveRelativePath, String includes, String excludes, boolean inWorkspace, boolean scan) {
+		ScannableFileSet fs = new ScannableFileSet();
+		fs.rawPath = rawPath;
+		fs.rootArchiveRelativePath = rootArchiveRelativePath;
+		fs.includes = includes;
+		fs.excludes = excludes;
+		fs.inWorkspace = inWorkspace;
 		DirectoryScannerExtension scanner = new DirectoryScannerExtension(fs);
 		if (scan) {
 			scanner.scan();
 		}
 		return scanner;
 	}
+
 	
 	/**
 	 * Exposes the isIncluded method so that entire scans do not need to occur
@@ -76,54 +76,52 @@ public class DirectoryScannerFactory {
 	 */
 	public static class DirectoryScannerExtension extends DirectoryScanner {
 		protected boolean workspaceRelative;
-		// maps a File to it's workspace path
-		protected HashMap<File, IPath> absoluteToWorkspace;
-		protected IArchiveFileSet fs;
-		
-		public DirectoryScannerExtension(boolean relative) {
-			workspaceRelative = relative;
-			absoluteToWorkspace = new HashMap<File, IPath>();
-		}
-		
-		public DirectoryScannerExtension(IArchiveFileSet fs) {
+		protected ScannableFileSet fs;
+		protected ArrayList<FileWrapper> matches;
+		protected HashMap<String, ArrayList<FileWrapper>> matchesMap;
+		public DirectoryScannerExtension(ScannableFileSet fs) {
 			this.fs = fs;
-			String includes = fs.getIncludesPattern() == null ? "" : fs.getIncludesPattern();
-			String excludes = fs.getExcludesPattern() == null ? "" : fs.getExcludesPattern();
+			String includes = fs.includes == null ? "" : fs.includes;
+			String excludes = fs.excludes == null ? "" : fs.excludes;
 			String includesList[] = includes.split(" ?, ?");
 			String excludesList[] = excludes.split(" ?, ?");
 			setExcludes(excludesList);
 			setIncludes(includesList);
-			workspaceRelative = fs.isInWorkspace();
-			absoluteToWorkspace = new HashMap<File, IPath>();
-			setBasedir2(fs.getSourcePath());
+			workspaceRelative = fs.inWorkspace;
+			matches = new ArrayList<FileWrapper>();
+			matchesMap = new HashMap<String, ArrayList<FileWrapper>>();
+			setBasedir2(fs.rawPath);
 		}
 		
+		/* TODO:
+		 * This *must* translate all variables out before
+		 * setting in superclass. Ant will not understand
+		 * variables!
+		 */
 		public void setBasedir2(IPath path) {
-			IPath p = path;
 			if( workspaceRelative ) {
-				p = ArchivesCore.getInstance().getVFS()
+				IPath p = ArchivesCore.getInstance().getVFS()
 					.workspacePathToAbsolutePath(path);
-				absoluteToWorkspace.put(p.toFile(), path);
+				setBasedir(new FileWrapper(p.toFile(), path));
+			} else {
+				setBasedir(new FileWrapper(path.toFile(), path));
 			}
-			setBasedir(p.toFile());
 		}
-	    
-		public IPath getWorkspacePath(IPath absolutePath) {
-			return absoluteToWorkspace.get(absolutePath.toFile());
-		}
-		
-	    protected File[] list2(File file) {
-	    	return workspaceRelative ? list3(file) : file.listFiles();
-	    }
 	    
 	    protected String getName(File file) {
-	    	return workspaceRelative ? absoluteToWorkspace.get(file).lastSegment() : super.getName(file);
+	    	return workspaceRelative ? ((FileWrapper)file).getOutputName() : super.getName(file);
 	    }
 	    
 	    /* Only used when workspace relative! */
-	    protected File[] list3(File file) {
-	    	IPath workspaceRelative = absoluteToWorkspace.get(file);
-	    	
+	    protected File[] list2(File file) {
+	    	if( fs.inWorkspace ) 
+	    		return list2workspace(file);
+	    	else
+	    		return list2absolute(file);
+	    }
+	    
+	    protected File[] list2workspace(File file) {
+	    	IPath workspaceRelative = ((FileWrapper)file).getWrapperPath(); 
 	    	if( workspaceRelative == null )
 	    		return new File[0];
 	    	
@@ -133,32 +131,87 @@ public class DirectoryScannerFactory {
 	    			.getVFS().workspacePathToAbsolutePath(childrenWorkspace);
 	    	File[] files = new File[childrenAbsolute.length];
 	    	for( int i = 0; i < files.length; i++ ) {
-	    		files[i] = childrenAbsolute[i].toFile();
-	    		if( files[i] != null && childrenWorkspace[i] != null )
-	    			absoluteToWorkspace.put(files[i], childrenWorkspace[i]);
+	    		files[i] = new FileWrapper(childrenAbsolute[i].toFile(), childrenWorkspace[i]);
 	    	}
 	    	return files;
 	    }
+	    
+	    protected File[] list2absolute(File file) {
+	    	File[] children = file.listFiles();
+	    	FileWrapper[] children2 = new FileWrapper[children.length];
+	    	for( int i = 0; i < children.length; i++ )
+	    		children2[i] = new FileWrapper(children[i], new Path(children[i].getAbsolutePath()));
+	    	return children2;
+	    }
 
-	    public boolean isUltimatelyIncluded(String name) {
-	    	return super.isIncluded(name) && !super.isExcluded(name);
+	    protected void postInclude(File f, String relative) {
+	    	if( f.isFile() ) {
+		    	if( f instanceof FileWrapper ) {
+		    		FileWrapper f2 = ((FileWrapper)f);
+		    		f2.setFilesetRelative(relative);
+		    		matches.add(f2);
+		    		ArrayList<FileWrapper> l = matchesMap.get(f2);
+		    		if( l == null ) {
+		    			l = new ArrayList<FileWrapper>();
+		    			matchesMap.put(((FileWrapper)f).getAbsolutePath(), l);
+		    		}
+		    		l.add(f2);
+		    	} 
+	    	}
+	    }
+
+	    // what files are being added
+	    public FileWrapper[] getMatchedArray() {
+	    	return (FileWrapper[]) matches.toArray(new FileWrapper[matches.size()]);
 	    }
 	    
-	    public IPath[] getAbsoluteIncludedFiles() {
-	    	String[] relative = super.getIncludedFiles();
-	    	if( workspaceRelative ) {
-	    		IPath[] absolutes = new IPath[relative.length];
-	    		for( int i = 0; i < relative.length; i++ ) 
-	    			absolutes[i] = ArchivesCore.getInstance()
-	    			.getVFS().workspacePathToAbsolutePath(fs.getSourcePath().append(relative[i]));
-	    		return absolutes;
-	    	} else {
-				IPath base2 = new Path(basedir.getAbsolutePath());
-				IPath[] absolutes = new IPath[relative.length];
-				for( int i = 0; i < relative.length; i++ )
-					absolutes[i] =  base2.append(relative[i]);
-				return absolutes;
-	    	}
+	    public HashMap<String, ArrayList<FileWrapper>> getMatchedMap() {
+	    	return matchesMap;
+	    }
+	    
+	    public class FileWrapper extends File {
+	    	// The actual source file
+	    	File f;
+	    	
+	    	// The path of this file, either workspace relative or global
+	    	IPath path;
+	    	
+	    	// the path of this file relative to the fileset
+	    	String fsRelative;
+	    	
+			public FileWrapper(File delegate, IPath path2) {
+				super(delegate.getAbsolutePath());
+				f = delegate;
+				path = path2;
+			}
+			public IPath getWrapperPath() {
+				return path;
+			}
+			// workspace name is the one we care about, or absolute if not in workspace
+			public String getOutputName() {
+				return path.lastSegment();
+			}
+			public String getFilesetRelative() {
+				return fsRelative;
+			}
+			
+			void setFilesetRelative(String s) {
+				fsRelative = s;
+			}
+			
+			public IPath getRootArchiveRelative() {
+				if( fs.rootArchiveRelativePath != null )
+					return fs.rootArchiveRelativePath.append(fsRelative);
+				return null;
+			}
+			
+			public boolean equals(Object o) {
+				if( o instanceof FileWrapper ) {
+					FileWrapper fo = (FileWrapper)o;
+					return f.equals(fo.f) && path.equals(fo.path);
+				}
+				return false;
+			}
 	    }
 	}
 }

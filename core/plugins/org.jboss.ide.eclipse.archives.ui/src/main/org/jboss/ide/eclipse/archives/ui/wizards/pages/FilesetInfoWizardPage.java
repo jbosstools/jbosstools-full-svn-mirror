@@ -30,9 +30,10 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 import org.eclipse.ui.ide.IDE;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
-import org.jboss.ide.eclipse.archives.core.model.ArchivesModelCore;
+import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.util.composites.ArchiveFilesetDestinationComposite;
@@ -349,14 +350,17 @@ public class FilesetInfoWizardPage extends WizardPage {
 	}
 	
 	private void changePreview() {
-		IPath inputFiles[] = ArchivesModelCore.findMatchingPaths(rootDir, includes, excludes);
+		IPath path = rootDirIsWorkspaceRelative ? new Path(workspaceRelativeRootDir) : rootDir;
+		DirectoryScannerExtension ds = DirectoryScannerFactory.createDirectoryScanner( 
+					path, null, includes, excludes, rootDirIsWorkspaceRelative, true);
+		String[] fsRelative = ds.getIncludedFiles();
 		IPath filesetRelative;
 		ArrayList<IPath> list = new ArrayList<IPath>();
-		for( int i = 0; i < inputFiles.length; i++ ) {
+		for( int i = 0; i < fsRelative.length; i++ ) {
 			if( flattened )
-				filesetRelative = new Path(inputFiles[i].lastSegment());
+				filesetRelative = new Path(new Path(fsRelative[i]).lastSegment());
 			else
-				filesetRelative = inputFiles[i];
+				filesetRelative = new Path(fsRelative[i]);
 			if( !list.contains(filesetRelative))
 				list.add(filesetRelative);
 		}

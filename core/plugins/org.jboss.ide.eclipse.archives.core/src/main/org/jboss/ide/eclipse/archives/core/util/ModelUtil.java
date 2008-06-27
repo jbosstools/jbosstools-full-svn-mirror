@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
@@ -39,6 +40,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
+import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension.FileWrapper;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveActionImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFileSetImpl;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveFolderImpl;
@@ -134,8 +136,8 @@ public class ModelUtil {
 	}
 
 	
-	public static boolean otherFilesetMatchesPathAndOutputLocation(IArchiveFileSet fileset, IPath path) {
-		return otherFilesetMatchesPathAndOutputLocation(fileset, path, null);
+	public static boolean otherFilesetMatchesPathAndOutputLocation(IArchiveFileSet fileset, FileWrapper file) {
+		return otherFilesetMatchesPathAndOutputLocation(fileset, file, null);
 	}
 
 
@@ -146,8 +148,14 @@ public class ModelUtil {
 	 * @param root a node to start with, or null if the entire model
 	 * @return
 	 */
-	public static boolean otherFilesetMatchesPathAndOutputLocation(IArchiveFileSet fileset, IPath path, IArchiveNode root) {
-		IArchiveFileSet[] filesets = ModelUtil.getMatchingFilesets(root, path);
+	public static boolean otherFilesetMatchesPathAndOutputLocation(IArchiveFileSet fileset, FileWrapper file, IArchiveNode root) {
+		return otherFilesetMatchesPathAndOutputLocation(fileset, new Path(file.getAbsolutePath()), file.getFilesetRelative(), root);
+	}
+	public static boolean otherFilesetMatchesPathAndOutputLocation(IArchiveFileSet fileset, IPath absolute, IArchiveNode root) {
+		return otherFilesetMatchesPathAndOutputLocation(fileset, absolute, null, root);
+	}	
+	public static boolean otherFilesetMatchesPathAndOutputLocation(IArchiveFileSet fileset, IPath absolute, String fsRelative, IArchiveNode root) {
+		IArchiveFileSet[] filesets = ModelUtil.getMatchingFilesets(root, absolute);
 		if( filesets.length == 0 || (filesets.length == 1 && Arrays.asList(filesets).contains(fileset))) {
 			return false;
 		} else {
@@ -156,7 +164,7 @@ public class ModelUtil {
 			boolean destinationsMatch;
 			for( int i = 0; i < filesets.length; i++ ) {
 				if( fileset.equals(filesets[i])) continue;
-				relativePathsMatch = fileset.getRootArchiveRelativePath(path).equals(filesets[i].getRootArchiveRelativePath(path));
+				relativePathsMatch = filesets[i].matchesPath(absolute, fsRelative);
 				destinationsMatch = fileset.getRootArchive().getArchiveFilePath().equals(filesets[i].getRootArchive().getArchiveFilePath());
 				
 				if( relativePathsMatch && destinationsMatch ) {
@@ -167,16 +175,6 @@ public class ModelUtil {
 		}
 		return false;
 	}
-	
-	/**
-	 * Get the raw file for this node, specifically, 
-	 * the file actually saved as an OS file.
-	 * @param node
-	 * @return
-	 */
-	public static IPath getBaseDestinationFile(IArchiveNode node) {
-		return getBaseDestinationFile(node, null);
-	}
 
 	/**
 	 * Get the raw file for this node, specifically, 
@@ -184,8 +182,7 @@ public class ModelUtil {
 	 * @param node
 	 * @return
 	 */
-	public static IPath getBaseDestinationFile(IArchiveNode node, IPath absolutePath) {
-		IArchiveNode parameterNode = node;
+	public static IPath getBaseDestinationFile(IArchiveNode node) {
 		ArrayList<IArchiveNode> list = new ArrayList<IArchiveNode>();
 		while( node != null && !(node instanceof ArchiveModelNode)) {
 			list.add(node);
@@ -208,26 +205,16 @@ public class ModelUtil {
 				lastConcrete = lastConcrete.append(((IArchiveFolder)nodes[i]).getName());
 			}
 		}
-		
-		if( absolutePath != null && parameterNode.getNodeType() ==  IArchiveNode.TYPE_ARCHIVE_FILESET ) {
-			 IArchiveFileSet fs = ((IArchiveFileSet)parameterNode);
-			 IPath sourcePath = fs.getGlobalSourcePath();
-			 if( sourcePath.isPrefixOf(absolutePath)) {
-				 lastConcrete = lastConcrete.append(absolutePath.removeFirstSegments(sourcePath.segmentCount()));
-			 }
-		} 
 		return lastConcrete; 
 	}
 	
-	
-//	public static IPath workspacePathToAbsolutePath (IPath workspacePath) {
-//		String projectName = workspacePath.segment(0);
-//		if( projectName == null ) return null;
-//		IPath projectPath = ArchivesCore.getInstance().getVariables().getProjectPath(projectName);
-//		if( projectPath == null ) return null;
-//		return projectPath.append(workspacePath.removeFirstSegments(1));
-//	}
-	
+	public static IPath getBaseDestinationFile(IArchiveFileSet node, IPath fsRelative) {
+		IPath last = getBaseDestinationFile(node);
+		if( fsRelative != null )
+			last = last.append(fsRelative);
+		return last;
+	}
+
 	public static void fillArchiveModel( XbPackages node, IArchiveModelRootNode modelNode) throws ArchivesModelException { 
 		for (Iterator iter = node.getAllChildren().iterator(); iter.hasNext(); ) {
 			XbPackageNode child = (XbPackageNode) iter.next();
@@ -277,7 +264,7 @@ public class ModelUtil {
 			if( root == null ) return new IArchive[0];
 			IArchiveNode[] archives = model.getRoot(project).getAllChildren();
 			List<IArchiveNode> list = Arrays.asList(archives);
-			return (IArchive[]) list.toArray(new IArchive[list.size()]);
+			return list.toArray(new IArchive[list.size()]);
 		}
 		return null;
 	}

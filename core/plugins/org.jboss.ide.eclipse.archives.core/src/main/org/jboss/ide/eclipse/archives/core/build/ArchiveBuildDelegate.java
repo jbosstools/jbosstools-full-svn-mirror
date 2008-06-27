@@ -36,6 +36,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension.FileWrapper;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 import org.jboss.ide.eclipse.archives.core.util.internal.ModelTruezipBridge;
 import org.jboss.ide.eclipse.archives.core.util.internal.TrueZipUtil;
@@ -141,7 +142,7 @@ public class ArchiveBuildDelegate {
 		
 		// reset the scanner. It *is* a full build afterall
 		fileset.resetScanner();
-		IPath[] paths = fileset.findMatchingPaths();
+		FileWrapper[] paths = fileset.findMatchingPaths();
 		ModelTruezipBridge.fullFilesetBuild(fileset);
 
 		EventManager.filesUpdated(topLevel, fileset, paths);
@@ -182,7 +183,9 @@ public class ArchiveBuildDelegate {
 			path = i.next();
 			matchingFilesets = ModelUtil.getMatchingFilesets(archive, path);
 			localFireAffectedTopLevelPackages(topPackagesChanged, matchingFilesets);
-			ModelTruezipBridge.copyFiles(matchingFilesets, new IPath[] { path }, false);
+			for( int j = 0; j < matchingFilesets.length; j++ ) {
+				ModelTruezipBridge.copyFiles(matchingFilesets[j], matchingFilesets[j].getMatches(path));
+			}
 			EventManager.fileUpdated(path, matchingFilesets);
 		}
 		
@@ -191,7 +194,9 @@ public class ArchiveBuildDelegate {
 			path = ((IPath)i.next());
 			matchingFilesets = ModelUtil.getMatchingFilesets(archive, path);
 			localFireAffectedTopLevelPackages(topPackagesChanged, matchingFilesets);
-			ModelTruezipBridge.deleteFiles(matchingFilesets, new IPath[] { path }, false);
+			for( int j = 0; j < matchingFilesets.length; j++ ) {
+				ModelTruezipBridge.deleteFiles(matchingFilesets[j], matchingFilesets[j].getMatches(path));
+			}
 			EventManager.fileRemoved(path, matchingFilesets);
 		}
 		

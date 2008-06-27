@@ -23,7 +23,9 @@ package org.jboss.ide.eclipse.archives.core.model;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
+import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension.FileWrapper;
 
 /**
  * The event manager to fire events
@@ -105,9 +107,9 @@ public class EventManager {
 	}
 
 	// Bulk events
-	public static void filesUpdated(IArchive topLevelArchive, IArchiveFileSet fileset, IPath[] filePath) {
+	public static void filesUpdated(IArchive topLevelArchive, IArchiveFileSet fileset, FileWrapper[] filePath) {
 		for( int i = 0; i < filePath.length; i++ ) {
-			fileUpdated(topLevelArchive, fileset, filePath[i]);
+			fileUpdated(topLevelArchive, fileset, new Path(filePath[i].getAbsolutePath()));
 		}
 	}
 	

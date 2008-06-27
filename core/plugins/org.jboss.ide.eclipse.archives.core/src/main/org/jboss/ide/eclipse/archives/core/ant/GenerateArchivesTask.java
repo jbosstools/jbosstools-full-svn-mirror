@@ -30,8 +30,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
+import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
-import org.jboss.ide.eclipse.archives.core.model.ArchivesModelCore;
 
 /**
  * @author rob.stryker <rob.stryker@redhat.com>
@@ -66,7 +66,7 @@ public class GenerateArchivesTask extends Task {
 			Thread.currentThread().setContextClassLoader(myCL);
 			
 			ArchivesModel.instance().registerProject(projectPath, monitor);
-			ArchivesModelCore.buildProject(projectPath, monitor);
+			new ArchiveBuildDelegate().fullProjectBuild(projectPath);
 		} catch(RuntimeException e ) {
 			e.printStackTrace();
 			throw e;

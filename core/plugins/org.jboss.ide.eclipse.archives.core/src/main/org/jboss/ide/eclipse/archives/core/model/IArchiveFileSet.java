@@ -22,6 +22,7 @@
 package org.jboss.ide.eclipse.archives.core.model;
 
 import org.eclipse.core.runtime.IPath;
+import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension.FileWrapper;
 
 /**
  * <p>
@@ -81,13 +82,31 @@ public interface IArchiveFileSet extends IArchiveNode {
 	/**
 	 * @return An array of matching IPath's in the filesystem (for external filesystem filesets)
 	 */
-	public IPath[] findMatchingPaths();
+	public FileWrapper[] findMatchingPaths();
+	
+	/**
+	 * Get the FileWrapper objects that match this path
+	 * @param path
+	 * @return
+	 */
+	public FileWrapper[] getMatches(IPath path);
 	
 	/**
 	 * @param path The absolute path on the filesystem to check
 	 * @return Whether or not this fileset matches the passed-in path
 	 */
 	public boolean matchesPath(IPath path);
+	
+	/**
+	 * Does this global path file match this fileset 
+	 * at the specific fileset-relative location?
+	 * 
+	 * If fsRelative is null, just match the path
+	 * @param globalPath
+	 * @param fsRelative
+	 * @return
+	 */
+	public boolean matchesPath(IPath globalPath, String fsRelative);
 	
 	/**
 	 * Sets the "root" or "source" of this fileset (file-system or workspace relative)
@@ -118,19 +137,5 @@ public interface IArchiveFileSet extends IArchiveNode {
 	 * Sets whether or not this fileset is flattened.
 	 */
 	public void setFlattened(boolean flattened);
-	
-	/**
-	 * Get the relative path of the input file to the root archive
-	 * @param inputFile
-	 * @return
-	 */
-	public IPath getRootArchiveRelativePath(IPath inputFile);
-	
-	/**
-	 * Get a path relative only to the folder or archive that is the direct parent of the fileset
-	 * @param inputFile
-	 * @return
-	 */
-	public IPath getPathRelativeToParent(IPath inputFile);
 	
 }
