@@ -227,6 +227,9 @@ public class SelectionManager implements ISelectionManager {
 
 		Point range = SelectionUtil.getSourceSelection(getSourceEditor());
 
+		if (range == null)
+			return;
+		
 		int focus = range.x;
 
 		int anchor = focus + range.y;

@@ -8,6 +8,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.core.StructuredModelManager;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
+import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
@@ -209,7 +210,13 @@ public class SelectionUtil {
 	}
 
 	static public Point getSourceSelection(StructuredTextEditor sourceEditor) {
-		return sourceEditor.getTextViewer().getSelectedRange();
+
+		StructuredTextViewer textViewer = sourceEditor.getTextViewer();
+
+		if (textViewer != null)
+			return textViewer.getSelectedRange();
+
+		return null;
 	}
 
 }
