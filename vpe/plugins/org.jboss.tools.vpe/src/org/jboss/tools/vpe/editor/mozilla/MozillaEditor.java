@@ -88,7 +88,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private VpeController controller;
 	private Link link = null;
 	private boolean loaded;
-	private boolean loadPage;
+	private boolean isRefreshPage = false;
 	private String doctype;
 
 	public void doSave(IProgressMonitor monitor) {
@@ -215,18 +215,17 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		cmpEd.setBackground(buttonDarker);
 
 		try {
-			loadPage = true;
 			xulRunnerEditor = new XulRunnerEditor(cmpEd) {
 				public void onLoadWindow() {
 					// if the first load page
-					if (loadPage) {
+					if (!isRefreshPage()) {
 						super.onLoadWindow();
 						MozillaEditor.this.onLoadWindow();
-						loadPage = false;
 					}
 					// if only refresh page
 					else {
 						MozillaEditor.this.onReloadWindow();
+						setRefreshPage(false);
 					}
 
 				}
@@ -676,5 +675,13 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 */
 	public String getDoctype() {
 		return doctype;
+	}
+	
+	public boolean isRefreshPage() {
+		return isRefreshPage;
+	}
+
+	public void setRefreshPage(boolean isRefreshPage) {
+		this.isRefreshPage = isRefreshPage;
 	}
 }
