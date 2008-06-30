@@ -136,35 +136,29 @@ public class ModelUtil {
 	}
 
 	
-	public static boolean otherFilesetMatchesPathAndOutputLocation(IArchiveFileSet fileset, FileWrapper file) {
-		return otherFilesetMatchesPathAndOutputLocation(fileset, file, null);
-	}
-
 
 	/**
 	 * Do any filesets other than the parameter match this path?
-	 * @param fileset
-	 * @param path
-	 * @param root a node to start with, or null if the entire model
-	 * @return
 	 */
-	public static boolean otherFilesetMatchesPathAndOutputLocation(IArchiveFileSet fileset, FileWrapper file, IArchiveNode root) {
-		return otherFilesetMatchesPathAndOutputLocation(fileset, new Path(file.getAbsolutePath()), file.getFilesetRelative(), root);
+	public static boolean otherFilesetMatchesPathAndOutputLocation(IArchiveFileSet fileset, FileWrapper file) {
+		return otherFilesetMatchesPathAndOutputLocation(fileset, new Path(file.getAbsolutePath()), 
+				file.getFilesetRelative(), file.getRootArchiveRelative().toString(), null);
 	}
-	public static boolean otherFilesetMatchesPathAndOutputLocation(IArchiveFileSet fileset, IPath absolute, IArchiveNode root) {
-		return otherFilesetMatchesPathAndOutputLocation(fileset, absolute, null, root);
-	}	
-	public static boolean otherFilesetMatchesPathAndOutputLocation(IArchiveFileSet fileset, IPath absolute, String fsRelative, IArchiveNode root) {
+	public static boolean otherFilesetMatchesPathAndOutputLocation(IArchiveFileSet fileset, IPath absolute, 
+			String fsRelative, String rootArchiveRelative, IArchiveNode root) {
 		IArchiveFileSet[] filesets = ModelUtil.getMatchingFilesets(root, absolute);
 		if( filesets.length == 0 || (filesets.length == 1 && Arrays.asList(filesets).contains(fileset))) {
 			return false;
 		} else {
 			// other filesets DO match... but are they at the same location in the archive?
-			boolean relativePathsMatch;
-			boolean destinationsMatch;
+			boolean relativePathsMatch = false;
+			boolean destinationsMatch = false;
+			FileWrapper[] matches;
 			for( int i = 0; i < filesets.length; i++ ) {
 				if( fileset.equals(filesets[i])) continue;
-				relativePathsMatch = filesets[i].matchesPath(absolute, fsRelative);
+				matches = filesets[i].getMatches(absolute);
+				for( int j = 0; j < matches.length; j++ )
+					relativePathsMatch |= matches[j].getRootArchiveRelative().toString().equals(rootArchiveRelative);
 				destinationsMatch = fileset.getRootArchive().getArchiveFilePath().equals(filesets[i].getRootArchive().getArchiveFilePath());
 				
 				if( relativePathsMatch && destinationsMatch ) {

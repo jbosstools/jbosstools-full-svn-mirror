@@ -5,6 +5,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.variables.VariablesPlugin;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesVFS;
 
@@ -60,8 +61,14 @@ public class WorkspaceVariables implements IArchivesVFS {
 
 	public IPath workspacePathToAbsolutePath(IPath path) {
 		IResource r = ResourcesPlugin.getWorkspace().getRoot().findMember(path);
+		IPath append = new Path("");
+		while( r == null && path.segmentCount() > 0) {
+			append = new Path(path.lastSegment()).append(append);
+			path = path.removeLastSegments(1);
+			r = ResourcesPlugin.getWorkspace().getRoot().findMember(path);
+		}
 		if( r != null )
-			return r.getLocation();
+			return r.getLocation().append(append);
 		return null;
 	}
 

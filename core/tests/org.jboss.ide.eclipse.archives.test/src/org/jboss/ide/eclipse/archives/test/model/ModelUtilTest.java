@@ -14,6 +14,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension.FileWrapper;
 import org.jboss.ide.eclipse.archives.core.model.internal.ArchiveNodeImpl;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 import org.jboss.ide.eclipse.archives.test.ArchivesTest;
@@ -127,13 +128,13 @@ public class ModelUtilTest extends TestCase {
 		IPath xml = inputs.append("fileTrees").append("misc").append("rug.xml");
 		IArchiveFileSet[] xmlFS = ModelUtil.getMatchingFilesets(rootArchive, xml);
 		assertTrue(xmlFS.length == 2);
-		assertFalse(ModelUtil.otherFilesetMatchesPathAndOutputLocation(xmlFS[0], xml, rootArchive));
-		assertFalse(ModelUtil.otherFilesetMatchesPathAndOutputLocation(xmlFS[1], xml, rootArchive));
+		assertFalse(testMatches(xmlFS[0], xml, rootArchive));
+		assertFalse(testMatches(xmlFS[1], xml, rootArchive));
 
 		IPath html = inputs.append("fileTrees").append("misc").append("someHtml.html");
 		IArchiveFileSet[] htmlFS = ModelUtil.getMatchingFilesets(rootArchive, html);
 		assertTrue(htmlFS.length == 1);
-		assertFalse(ModelUtil.otherFilesetMatchesPathAndOutputLocation(htmlFS[0], html, rootArchive));
+		assertFalse(testMatches(htmlFS[0], html, rootArchive));
 		
 		// add a temporary fileset that will match exactly
 		IArchiveFileSet otherFS = ArchiveNodeFactory.createFileset();
@@ -142,6 +143,13 @@ public class ModelUtilTest extends TestCase {
 		otherFS.setSourcePath(xmlFS[0].getSourcePath());
 		xmlFS[0].getParent().addChild(otherFS);
 		
-		assertTrue(ModelUtil.otherFilesetMatchesPathAndOutputLocation(xmlFS[0], xml, rootArchive));
+		assertTrue(testMatches(xmlFS[0], xml, rootArchive));
 	}
+	
+	private boolean testMatches(IArchiveFileSet fs, IPath absoluteFile, IArchiveNode node) {
+		FileWrapper[] wrappers = fs.getMatches(absoluteFile);
+		return ModelUtil.otherFilesetMatchesPathAndOutputLocation(fs, absoluteFile, wrappers[0].getFilesetRelative(), wrappers[0].getRootArchiveRelative().toString(), node); 
+				
+	}
+
 }
