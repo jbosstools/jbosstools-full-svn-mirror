@@ -1,10 +1,12 @@
 package org.jboss.tools.birt.oda.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.eclipse.datatools.connectivity.oda.IParameterMetaData;
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
 import org.hibernate.EntityMode;
@@ -12,6 +14,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.engine.query.HQLQueryPlan;
+import org.hibernate.impl.SessionFactoryImpl;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.type.Type;
 import org.jboss.tools.birt.oda.IOdaFactory;
@@ -42,6 +46,11 @@ public abstract class AbstractOdaFactory implements IOdaFactory {
 
 	public HibernateResultSetMetaData prepare(String queryText) throws OdaException {
 		this.queryText = queryText;
+		return parseQuery();
+	}
+
+	private HibernateResultSetMetaData parseQuery()
+			throws OdaException {
 		List arColsType = new ArrayList();
 		List arCols = new ArrayList();
 		List arColClass = new ArrayList();
@@ -152,6 +161,19 @@ public abstract class AbstractOdaFactory implements IOdaFactory {
 		try {
 			session = getSessionFactory().openSession(); 
 			Query q = session.createQuery(queryText);
+			HibernateParameterMetaData parameterMetaData = (HibernateParameterMetaData) query.getParameterMetaData();
+			List<Parameter> parameters = parameterMetaData.getParameters();
+			int position=0;
+			SessionFactoryImpl sfimpl = (SessionFactoryImpl) sessionFactory; // hack - to get to the actual queries..
+			HQLQueryPlan plan = new HQLQueryPlan(queryText, false, Collections.EMPTY_MAP, sfimpl);
+			int pCount = plan.getParameterMetadata().getOrdinalParameterCount();
+			if (pCount > 0) {
+				for(Parameter parameter:parameters) {
+					q.setParameter(position++, parameter.getValue(), parameter.getHibernateType());
+					if (position >= pCount)
+						break;
+				}
+			}
 			result = q.list();
 			iterator = result.iterator();
 			this.queryReturnTypes = q.getReturnTypes();

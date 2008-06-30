@@ -9,6 +9,9 @@
 
 package org.jboss.tools.birt.oda.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.datatools.connectivity.oda.IParameterMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
 
@@ -20,12 +23,14 @@ import org.eclipse.datatools.connectivity.oda.OdaException;
 public class HibernateParameterMetaData implements IParameterMetaData 
 {
 
+	private List<Parameter> parameters = new ArrayList<Parameter>();
+	
 	/* 
 	 * @see org.eclipse.datatools.connectivity.oda.IParameterMetaData#getParameterCount()
 	 */
 	public int getParameterCount() throws OdaException 
 	{
-        return 0;
+        return parameters.size();
 	}
 
     /*
@@ -41,7 +46,11 @@ public class HibernateParameterMetaData implements IParameterMetaData
      */
     public String getParameterName( int param ) throws OdaException
     {
-        return null;    // name is not available
+    	if (getParameterCount() > param) {
+    		return null;
+    	}
+        Parameter parameter = parameters.get(param);
+        return parameter.getName();
     }
 
 	/* 
@@ -49,7 +58,11 @@ public class HibernateParameterMetaData implements IParameterMetaData
 	 */
 	public int getParameterType( int param ) throws OdaException 
 	{
-        return java.sql.Types.CHAR;   // as defined in data set extension manifest
+		if (getParameterCount() > param) {
+    		return -1;
+    	}
+        Parameter parameter = parameters.get(param);
+        return parameter.getType();
 	}
 
 	/* 
@@ -83,6 +96,10 @@ public class HibernateParameterMetaData implements IParameterMetaData
 	public int isNullable( int param ) throws OdaException 
 	{
 		return IParameterMetaData.parameterNullableUnknown;
+	}
+
+	public List<Parameter> getParameters() {
+		return parameters;
 	}
 
 }
