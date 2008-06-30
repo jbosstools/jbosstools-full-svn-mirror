@@ -325,4 +325,8 @@ public class VpeDomMapping {
 	public Map<nsIDOMNode, VpeNodeMapping> getVisualMap() {
 		return visualMap;
 	}
+	
+	public Map<Node, VpeNodeMapping> getSourceMap() {
+		return sourceMap;
+	}
 }
