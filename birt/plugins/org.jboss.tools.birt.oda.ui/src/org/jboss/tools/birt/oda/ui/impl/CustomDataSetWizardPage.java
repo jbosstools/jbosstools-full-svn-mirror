@@ -9,6 +9,9 @@
 
 package org.jboss.tools.birt.oda.ui.impl;
 
+import java.util.Collections;
+import java.util.Iterator;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.IHandler;
@@ -75,13 +78,19 @@ import org.hibernate.SessionFactory;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.QueryInputModel;
+import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.QueryEditor;
+import org.hibernate.eclipse.console.utils.QLFormatHelper;
 import org.hibernate.eclipse.console.viewers.xpl.MTreeViewer;
 import org.hibernate.eclipse.console.views.KnownConfigurationsProvider;
 import org.hibernate.eclipse.console.workbench.LazySessionFactory;
 import org.hibernate.eclipse.console.workbench.xpl.AnyAdaptableLabelProvider;
 import org.hibernate.eclipse.hqleditor.HQLEditorDocumentSetupParticipant;
 import org.hibernate.eclipse.hqleditor.HQLSourceViewerConfiguration;
+import org.hibernate.engine.query.HQLQueryPlan;
+import org.hibernate.hql.QueryTranslator;
+import org.hibernate.impl.SessionFactoryImpl;
+import org.hibernate.type.Type;
 import org.jboss.tools.birt.oda.IOdaFactory;
 import org.jboss.tools.birt.oda.impl.HibernateDriver;
 import org.jboss.tools.birt.oda.ui.Activator;
@@ -332,13 +341,14 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 			MessageDialog.openConfirm(getShell(), title,
 					"Invalid configuration '" + getConfigurationName() + "'.");
 		}
-		Session session = null;
 		try {
-			session = configuration.getSessionFactory().openSession();
-			Query q = session.createQuery(getQueryText());
-			q.setFirstResult(0);
-			q.setMaxResults(1);
-			q.list();
+			//session = configuration.getSessionFactory().openSession();
+			//Query q = session.createQuery(getQueryText());
+			String sql = generateSQL(configuration.getSessionFactory(),getQueryText());
+			//System.out.println(sql);
+			//q.setFirstResult(0);
+			//q.setMaxResults(1);
+			//q.list();
 			MessageDialog.openInformation(getShell(), title,
 					"The query is valid.");
 		} catch (Exception e) {
@@ -347,11 +357,47 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 					.getLocalizedMessage(), e);
 			Activator.getDefault().getLog().log(status);
 			ErrorDialog.openError(getShell(), title, message, status);
-		} finally {
-			if (session != null) {
-				session.close();
+		} 
+	}
+
+	/* 
+	 * copied from the DynamicSQLPreviewView.generateSQL method 
+	 */
+	private String generateSQL(SessionFactory sessionFactory, String queryText) {
+		SessionFactoryImpl sfimpl = (SessionFactoryImpl) sessionFactory; // hack - to get to the actual queries..
+		StringBuffer str = new StringBuffer(256);
+		HQLQueryPlan plan = new HQLQueryPlan(queryText, false, Collections.EMPTY_MAP, sfimpl);
+
+		QueryTranslator[] translators = plan.getTranslators();
+		for (int i = 0; i < translators.length; i++) {
+			QueryTranslator translator = translators[i];
+			if(translator.isManipulationStatement()) {
+				str.append(HibernateConsoleMessages.DynamicSQLPreviewView_manipulation_of + i + ":"); //$NON-NLS-1$
+				Iterator iterator = translator.getQuerySpaces().iterator();
+				while ( iterator.hasNext() ) {
+					Object qspace = iterator.next();
+					str.append(qspace);
+					if(iterator.hasNext()) { str.append(", "); } //$NON-NLS-1$
+				}
+
+			} else {
+				Type[] returnTypes = translator.getReturnTypes();
+				str.append(i +": "); //$NON-NLS-1$
+				for (int j = 0; j < returnTypes.length; j++) {
+					Type returnType = returnTypes[j];
+					str.append(returnType.getName());
+					if(j<returnTypes.length-1) { str.append(", "); }							 //$NON-NLS-1$
+				}
 			}
-		}
+			str.append("\n-----------------\n"); //$NON-NLS-1$
+			Iterator sqls = translator.collectSqlStrings().iterator();
+			while ( sqls.hasNext() ) {
+				String sql = (String) sqls.next();
+				str.append(QLFormatHelper.formatForScreen(sql));
+				str.append("\n\n");	 //$NON-NLS-1$
+			}
+		};
+		return str.toString();
 	}
 
 	private final void attachMenus(SourceViewer viewer) {
