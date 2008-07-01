@@ -11,7 +11,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchivesVFS;
 import org.jboss.ide.eclipse.archives.core.model.other.internal.ArchivesWorkspaceLogger;
 import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspaceExtensionManager;
 import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspacePreferenceManager;
-import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspaceVariables;
+import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspaceVFS;
 import org.jboss.ide.eclipse.archives.core.project.ProjectUtils;
 
 public class WorkspaceArchivesCore extends ArchivesCore {
@@ -32,7 +32,7 @@ public class WorkspaceArchivesCore extends ArchivesCore {
 	}
 	
 	protected IArchivesVFS createVFS() {
-		return new WorkspaceVariables();
+		return new WorkspaceVFS();
 	}
 
 	public void preRegisterProject(IPath project) {
