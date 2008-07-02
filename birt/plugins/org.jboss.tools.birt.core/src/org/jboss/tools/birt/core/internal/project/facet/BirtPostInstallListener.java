@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -19,12 +20,21 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jst.j2ee.model.IModelProvider;
+import org.eclipse.jst.j2ee.model.ModelProviderManager;
+import org.eclipse.jst.javaee.core.JavaeeFactory;
+import org.eclipse.jst.javaee.core.UrlPatternType;
+import org.eclipse.jst.javaee.web.Servlet;
+import org.eclipse.jst.javaee.web.ServletMapping;
+import org.eclipse.jst.javaee.web.WebApp;
+import org.eclipse.jst.javaee.web.WebFactory;
 import org.eclipse.ui.wizards.datatransfer.FileSystemStructureProvider;
 import org.eclipse.ui.wizards.datatransfer.ImportOperation;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
@@ -55,38 +65,38 @@ public class BirtPostInstallListener implements IFacetedProjectListener {
 					.getId())) {
 				isJBossBirtProject = true;
 			}
-			if (BirtCoreActivator.BIRT_FACET_ID.equals(projectFacet
-					.getId())) {
+			if (BirtCoreActivator.BIRT_FACET_ID.equals(projectFacet.getId())) {
 				isBirtProject = true;
 			}
-			if (BirtCoreActivator.SEAM_FACET_ID.equals(projectFacet
-					.getId())) {
+			if (BirtCoreActivator.SEAM_FACET_ID.equals(projectFacet.getId())) {
 				isSeamProject = true;
 			}
-			
+
 		}
 		if (!isBirtProject && !isJBossBirtProject && !isSeamProject)
 			return;
-		
+
 		if (isBirtProject || isJBossBirtProject) {
 			IProjectFacetActionEvent actionEvent = (IProjectFacetActionEvent) event;
 			IDataModel dataModel = (IDataModel) actionEvent.getActionConfig();
 			try {
 				configFolder = dataModel
-					.getStringProperty("IJ2EEFacetInstallDataModelProperties.CONFIG_FOLDER"); //$NON-NLS-1$
+						.getStringProperty("IJ2EEFacetInstallDataModelProperties.CONFIG_FOLDER"); //$NON-NLS-1$
 				if (configFolder == null) {
 					String message = BirtWTPMessages.BIRTErrors_wrong_webcontent;
 					Logger.log(Logger.ERROR, message);
 					return;
 				}
 			} catch (Exception e) {
-				//e.printStackTrace();
+				// e.printStackTrace();
 			}
 		}
 		if (isJBossBirtProject || isBirtProject) {
-			String configIniString = configFolder + "/WEB-INF/platform/configuration/config.ini";
+			String configIniString = configFolder
+					+ "/WEB-INF/platform/configuration/config.ini";
 			IProject project = facetedProject.getProject();
-			IResource configFile = project.findMember(new Path(configIniString));
+			IResource configFile = project
+					.findMember(new Path(configIniString));
 			if (!configFile.exists()) {
 				String message = "The config.ini file doesn't exist";
 				Logger.log(Logger.ERROR, message);
@@ -101,17 +111,20 @@ public class BirtPostInstallListener implements IFacetedProjectListener {
 				properties.load(inputStream);
 				String bootDelegation = "org.osgi.framework.bootdelegation";
 				String loader = "osgi.parentClassloader";
-				properties.put(bootDelegation, "org.hibernate,org.hibernate.type,org.hibernate.metadata,org.hibernate.ejb, javax.persistence");
-				properties.put(loader,"fwk");
+				properties
+						.put(
+								bootDelegation,
+								"org.hibernate,org.hibernate.type,org.hibernate.metadata,org.hibernate.ejb, javax.persistence");
+				properties.put(loader, "fwk");
 				// FIXME
-				//String compatibility = "osgi.compatibility.bootdelegation";
-				//properties.put(compatibility,"false");
+				// String compatibility = "osgi.compatibility.bootdelegation";
+				// properties.put(compatibility,"false");
 				IFile file = (IFile) configFile;
 				outputStream = new ByteArrayOutputStream();
 				properties.store(outputStream, null);
 				file.setContents(new ByteArrayInputStream(outputStream
-				        .toByteArray()), true, true, null);
-				
+						.toByteArray()), true, true, null);
+
 			} catch (Exception e) {
 				Logger.log(Logger.ERROR, e.getLocalizedMessage());
 			} finally {
@@ -130,44 +143,146 @@ public class BirtPostInstallListener implements IFacetedProjectListener {
 					}
 				}
 			}
-			
+
 		}
 		if (isBirtProject && !isJBossBirtProject) {
 			String platformFolder = configFolder + "/WEB-INF/platform/plugins";
 			IProject project = facetedProject.getProject();
 			IProgressMonitor monitor = new NullProgressMonitor();
-			BirtCoreActivator.copyPlugin(project,"org.jboss.tools.birt.oda",platformFolder,monitor);
+			BirtCoreActivator.copyPlugin(project, "org.jboss.tools.birt.oda",
+					platformFolder, monitor);
 		}
 		if (isSeamProject && (isBirtProject || isJBossBirtProject)) {
 			IProject project = facetedProject.getProject();
 			String libFolder = configFolder + "/WEB-INF/lib";
 			IResource destResource = project.findMember(libFolder);
-			if (destResource.getType() != IResource.FOLDER ) {
-				IStatus status = new Status(IStatus.WARNING,BirtCoreActivator.PLUGIN_ID,"The " + libFolder + " resource is not a folder");
+			if (destResource.getType() != IResource.FOLDER) {
+				IStatus status = new Status(IStatus.WARNING,
+						BirtCoreActivator.PLUGIN_ID, "The " + libFolder
+								+ " resource is not a folder");
 				BirtCoreActivator.getDefault().getLog().log(status);
 				return;
 			}
 			IFolder folder = (IFolder) destResource;
 			Bundle bundle = Platform.getBundle(JBossBirtCorePluginId);
-			URL entry = bundle.getEntry("/resources/jboss-seam-birt.jar");
+			URL entryComponent = bundle
+					.getEntry("/resources/jboss-seam-birt.jar");
+			URL entryServlet = bundle
+					.getEntry("/resources/jboss-birt-servlet.jar");
 			try {
-				String fileName = FileLocator.toFileURL(entry).getFile();
-				File file = new File(fileName);
-				List<File> filesToImport = new ArrayList<File>();
-				filesToImport.add(file);
-				ImportOperation importOperation = new ImportOperation(folder.getFullPath(),
-						file.getParentFile(), FileSystemStructureProvider.INSTANCE,
-						BirtCoreActivator.OVERWRITE_ALL_QUERY, filesToImport);
-				importOperation.setCreateContainerStructure(false);
-				IProgressMonitor monitor = new NullProgressMonitor();
-				importOperation.run(monitor);
+				copyEntry(entryComponent, folder);
+				copyEntry(entryServlet, folder);
+				configureJBossBirtServlet(facetedProject.getProject());
 			} catch (Exception e) {
-				IStatus status = new Status(IStatus.WARNING,BirtCoreActivator.PLUGIN_ID,"Error while copying jboss-seam-birt.jar",e);
+				IStatus status = new Status(IStatus.WARNING,
+						BirtCoreActivator.PLUGIN_ID,
+						"Error while creating JBoss BIRT artifacts", e);
 				BirtCoreActivator.getDefault().getLog().log(status);
 			} finally {
-				configFolder=null;
+				configFolder = null;
 			}
 		}
+	}
+
+	private void configureJBossBirtServlet(final IProject project) {
+		IModelProvider modelProvider = ModelProviderManager
+				.getModelProvider(project);
+		Object modelObject = modelProvider.getModelObject();
+		if (!(modelObject instanceof WebApp)) {
+			// TODO log
+			return;
+		}
+		IPath modelPath = new Path("WEB-INF").append("web.xml"); //$NON-NLS-1$ //$NON-NLS-2$
+		boolean exists = project.getProjectRelativePath().append(modelPath)
+				.toFile().exists();
+		if (!exists) {
+			modelPath = IModelProvider.FORCESAVE;
+		}
+		modelProvider.modify(new Runnable() {
+
+			public void run() {
+				IModelProvider modelProvider = ModelProviderManager
+						.getModelProvider(project);
+				Object modelObject = modelProvider.getModelObject();
+				if (!(modelObject instanceof WebApp)) {
+					// TODO log
+					return;
+				}
+				WebApp webApp = (WebApp) modelObject;
+				String servletClass = "org.jboss.tools.birt.servlet.JBossBirtServlet";
+				String servletName = "JBoss BIRT Servlet";
+				List servlets = webApp.getServlets();
+				boolean added = false;
+				for (Iterator iterator = servlets.iterator(); iterator
+						.hasNext();) {
+					Servlet servlet = (Servlet) iterator.next();
+					if (servletName.equals(servlet.getServletName())) {
+						servlet.setServletName(servletName);
+						added = true;
+						break;
+					}
+				}
+				if (!added) {
+					Servlet servlet = WebFactory.eINSTANCE.createServlet();
+					servlet.setServletName(servletName);
+					servlet.setServletClass(servletClass);
+					webApp.getServlets().add(servlet);
+				}
+				
+				String name = servletName;
+				String value="/embed";
+				List servletMappings = webApp.getServletMappings();
+				added = false;
+				for (Iterator iterator = servletMappings.iterator(); iterator.hasNext();) {
+					ServletMapping servletMapping = (ServletMapping) iterator.next();
+					if (servletMapping != null
+							&& name.equals(servletMapping.getServletName())) {
+						added = true;
+						// FIXME
+					}
+				}
+				if (!added) {
+					ServletMapping mapping = WebFactory.eINSTANCE
+							.createServletMapping();
+					Servlet servlet = findServletByName(webApp, name);
+					if (servlet != null) {
+						mapping.setServletName(servlet.getServletName());
+						UrlPatternType urlPattern = JavaeeFactory.eINSTANCE
+								.createUrlPatternType();
+						urlPattern.setValue(value);
+						mapping.getUrlPatterns().add(urlPattern);
+						webApp.getServletMappings().add(mapping);
+					}
+				}
+			}
+
+		}, modelPath);
+
+	}
+
+	private Servlet findServletByName(WebApp webApp, String name) {
+		Iterator it = webApp.getServlets().iterator();
+		while (it.hasNext()) {
+			Servlet servlet = (Servlet) it.next();
+			if (servlet.getServletName() != null
+					&& servlet.getServletName().trim().equals(name)) {
+				return servlet;
+			}
+		}
+		return null;
+	}
+	private void copyEntry(URL entry, IFolder folder) throws Exception {
+		String fileName = FileLocator.toFileURL(entry).getFile();
+		File file = new File(fileName);
+		List<File> filesToImport = new ArrayList<File>();
+		filesToImport.add(file);
+		ImportOperation importOperation = new ImportOperation(folder
+				.getFullPath(), file.getParentFile(),
+				FileSystemStructureProvider.INSTANCE,
+				BirtCoreActivator.OVERWRITE_ALL_QUERY, filesToImport);
+		importOperation.setCreateContainerStructure(false);
+		IProgressMonitor monitor = new NullProgressMonitor();
+		importOperation.run(monitor);
 	}
 
 }
