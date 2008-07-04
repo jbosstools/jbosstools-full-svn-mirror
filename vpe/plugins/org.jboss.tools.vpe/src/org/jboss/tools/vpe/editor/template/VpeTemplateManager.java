@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor.template;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -360,15 +361,11 @@ public class VpeTemplateManager {
 	}
 
 	private void loadTemplates(IPath vpeFilePath, IConfigurationElement confElement) {
-		try {
 			Element root = XMLUtilities.getElement(vpeFilePath.toFile(), null);
 			loadTemplates(root,confElement);
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
-		}
 	}
 	
-	private void loadTemplates(Element root, IConfigurationElement confElement) throws Exception {
+	private void loadTemplates(Element root, IConfigurationElement confElement) {
 		if (root == null || !TAG_TEMPLATES.equals(root.getNodeName())) {
 			return;
 		}
@@ -437,7 +434,7 @@ public class VpeTemplateManager {
 		addChildren(ifElement, set, confElement,caseSensitive);
 	}
 	
-	private void setDefTemplate(VpeTemplate defTemplate) {
+	public void setDefTemplate(VpeTemplate defTemplate) {
 		if (this.defTemplate == null) {
 			this.defTemplate = defTemplate;
 		}
@@ -508,7 +505,7 @@ public class VpeTemplateManager {
 		try {
 			IPath path = VpeTemplateFileList.getFilePath(AUTO_TEMPLATES_FILE_NAME,null);
 			XMLUtilities.serialize(root, path.toOSString());
-		} catch(Exception e) {
+		} catch(IOException e) {
 			VpePlugin.reportProblem(e);
 		}
 		
@@ -685,7 +682,7 @@ public class VpeTemplateManager {
 				IPath path = VpeTemplateFileList.getFilePath(AUTO_TEMPLATES_FILE_NAME, null);
 				// fixed bug [EFWPE-869] - uncomment this line
 				XMLUtilities.serialize(root, path.toOSString());
-			} catch(Exception e) {
+			} catch(IOException e) {
 				VpePlugin.reportProblem(e);
 			}
 		}
@@ -738,7 +735,7 @@ public class VpeTemplateManager {
 			if (root != null && TAG_TEMPLATES.equals(root.getNodeName())) {
 				return root;
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			VpePlugin.reportProblem(e);
 		}
 		return null;
@@ -851,24 +848,58 @@ public class VpeTemplateManager {
 				
 				Class templateClass = bundle.loadClass(templateClassName);
 				template = (VpeTemplate)templateClass.newInstance();
-			} catch (Exception e) {
-				try {
-					Class templateClass = Class.forName(templateClassName);
-					template = (VpeTemplate)templateClass.newInstance();
-				} catch (Exception e2) { 
-					String message = e.getMessage();
-					if(message==null) {
-						message = "Can't get VPE template class: " + templateClassName + ", from bundle:" + nameSpaceIdentifyer; //$NON-NLS-1$
-					}
-					VpePlugin.getPluginLog().logError(message, e);
-					return null;
-				}
+			} catch (ClassNotFoundException e) {
+				template = handleTemplateClassLoadException(template,
+						templateClassName, nameSpaceIdentifyer, e);
+			} catch(IllegalAccessException e) {
+				template = handleTemplateClassLoadException(template,
+						templateClassName, nameSpaceIdentifyer, e);
+			} catch(InstantiationException e) {
+				template = handleTemplateClassLoadException(template,
+						templateClassName, nameSpaceIdentifyer, e);
 			}
 		} else {
 			template = new VpeHtmlTemplate();
 		}
-		template.init(templateElement, caseSensitive);
+		if(template!=null) {
+			template.init(templateElement, caseSensitive);
+		}
 		return template;
+	}
+
+	private VpeTemplate handleTemplateClassLoadException(VpeTemplate template,
+			String templateClassName, String nameSpaceIdentifyer,
+			Exception e) {
+
+			Class templateClass = null;
+			try {
+				templateClass = Class.forName(templateClassName);
+			} catch (ClassNotFoundException e1) {
+				handleTemplateLoadException(templateClassName,
+						nameSpaceIdentifyer, e1);
+			}
+			try {
+				if(templateClass!=null) {
+					template = (VpeTemplate)templateClass.newInstance();
+				}
+			} catch (InstantiationException e2) {
+				handleTemplateLoadException(templateClassName,
+						nameSpaceIdentifyer, e2);
+			} catch (IllegalAccessException e3) {
+				handleTemplateLoadException(templateClassName,
+						nameSpaceIdentifyer, e3);
+			}
+
+		return template;
+	}
+
+	private void handleTemplateLoadException(String templateClassName,
+			String nameSpaceIdentifyer, Exception e) {
+		String message = e.getMessage();
+		if(message==null) {
+			message = "Can't get VPE template class: " + templateClassName + ", from bundle:" + nameSpaceIdentifyer; //$NON-NLS-1$
+		}
+		VpePlugin.getPluginLog().logError(message, e);
 	}
 	
 	private VpeTemplate createDefTemplate() {
@@ -897,7 +928,7 @@ public class VpeTemplateManager {
 				InputStream is = VpePlugin.getDefault().getBundle().getResource(DEFAUL_TEXT_FORMATTING_CONF_FILE_NAME).openStream();
 				Element root = XMLUtilities.getElement(new InputStreamReader(is), null);
 				defaultTextFormattingData = new TextFormatingData(root);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				VpePlugin.getPluginLog().logError(e);
 			}
 		}
