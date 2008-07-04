@@ -10,6 +10,9 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.test;
 
+import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPageTest;
+import org.jboss.tools.vpe.editor.template.VpeTemplateManagerTest;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -28,6 +31,8 @@ public class VpeAllTests extends TestCase{
 		// $JUnit-BEGIN$
 		suite.addTestSuite(TemplateLoadingTest.class);
 		suite.addTestSuite(TemplatesExpressionParsingTest.class);
+		suite.addTestSuite(VpeEditorPreferencesPageTest.class);
+		suite.addTestSuite(VpeTemplateManagerTest.class);
 		// $JUnit-END$
 		return suite;
 	}
