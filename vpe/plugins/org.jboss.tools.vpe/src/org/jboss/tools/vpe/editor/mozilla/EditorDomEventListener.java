@@ -20,6 +20,10 @@ import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMMutationEvent;
 import org.mozilla.interfaces.nsISelection;
 
+/**
+ *  TODO Split it up to several interfaces related to Mouse Events, DOM tree modification events,
+ *  Selection events, etc.
+ */
 
 public interface EditorDomEventListener extends nsIContextMenuListener {
 
