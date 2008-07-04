@@ -10,6 +10,7 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +101,7 @@ public class VpeTemplateFileList {
 		return templateList;
 	}
 
-	static IPath getFilePath(String name, IConfigurationElement confElement) throws Exception {
+	static IPath getFilePath(String name, IConfigurationElement confElement) throws IOException {
 		VpePlugin plugin = VpePlugin.getDefault();
 		Bundle bundle = 
 			confElement==null?plugin.getBundle():Platform.getBundle(confElement.getContributor().getName());
@@ -110,7 +111,7 @@ public class VpeTemplateFileList {
 		return path;
 	}
 	
-	static String getAutoTemplateFileName() throws Exception {
+	static String getAutoTemplateFileName() throws IOException {
 		IPath path = getFilePath(VpeTemplateManager.AUTO_TEMPLATES_FILE_NAME, null);
 		return path.toOSString();
 	}
