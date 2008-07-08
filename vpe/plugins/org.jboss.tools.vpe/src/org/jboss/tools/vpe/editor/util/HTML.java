@@ -66,7 +66,7 @@ public final class HTML {
 	public static final String ATTR_CLASS = "class"; //$NON-NLS-1$
 	public static final String ATTR_TITLE = "TITLE"; //$NON-NLS-1$
 	public static final String ATTR_NAME = "NAME"; //$NON-NLS-1$
-	public static final String ATTR_VALUE = "VALUE"; //$NON-NLS-1$
+	public static final String ATTR_VALUE = "value"; //$NON-NLS-1$
 	public static final String ATTR_STYLE = "style"; //$NON-NLS-1$
 	public static final String ATTR_SIZE = "size"; //$NON-NLS-1$
 	public static final String ATTR_MULTIPLE = "MULTIPLE"; //$NON-NLS-1$
