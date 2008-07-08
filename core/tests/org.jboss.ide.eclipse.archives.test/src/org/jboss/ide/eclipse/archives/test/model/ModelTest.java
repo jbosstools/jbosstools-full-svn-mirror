@@ -47,7 +47,7 @@ public abstract class ModelTest extends TestCase {
 	protected IArchiveFileSet createFileSet(String includes, String path) {
 		IArchiveFileSet fs = ArchiveNodeFactory.createFileset();
 		fs.setIncludesPattern(includes);
-		fs.setSourcePath(new Path(path));
+		fs.setRawSourcePath( path );
 		return fs;
 	}
 	

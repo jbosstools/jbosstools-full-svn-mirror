@@ -30,7 +30,7 @@ public class StringSubstitutionEngineClone {
 	// delimiters
 	private static final String VARIABLE_START = "${"; //$NON-NLS-1$
 	private static final char VARIABLE_END = '}'; 
-	private static final char VARIABLE_ARG = ':'; 
+//	private static final char VARIABLE_ARG = ':'; 
 	// parsing states
 	private static final int SCAN_FOR_START = 0;
 	private static final int SCAN_FOR_END = 1;
@@ -236,25 +236,26 @@ public class StringSubstitutionEngineClone {
 	 */
 	private String resolve(VariableReference var, boolean reportUndefinedVariables, IVariableManager manager) throws CoreException {
 		String text = var.getText();
-		int pos = text.indexOf(VARIABLE_ARG);
 		String name = null;
-		String arg = null;
-		if (pos > 0) {
-			name = text.substring(0, pos);
-			pos++;
-			if (pos < text.length()) {
-				arg = text.substring(pos);
-			} 
-		} else {
-			name = text;
-		}
+//		int pos = text.indexOf(VARIABLE_ARG);
+//		String arg = null;
+//		if (pos > 0) {
+//			name = text.substring(0, pos);
+//			pos++;
+//			if (pos < text.length()) {
+//				arg = text.substring(pos);
+//			} 
+//		} else {
+//			name = text;
+//		}
+		name = text;
 		if( !manager.containsVariable(name)) {
 			if( reportUndefinedVariables )
 				throw new CoreException(new Status(IStatus.ERROR, ArchivesCore.PLUGIN_ID, "Variable " + name + " undefined")); 
 			return getOriginalVarText(var);
 		}
 		
-		String ret = manager.getVariableValue(name, arg);
+		String ret = manager.getVariableValue(name);
 		if(ret == null)
 			return getOriginalVarText(var);
 		return ret;

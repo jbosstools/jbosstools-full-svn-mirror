@@ -121,6 +121,11 @@ public interface IArchiveNode {
 	public IPath getProjectPath();
 	
 	/**
+	 * @return the name of the project this node is defined in
+	 */
+	public String getProjectName();
+	
+	/**
 	 * Recursively visit the package node tree below this node with the passed-in package node visitor.
 	 * @param visitor A package node visitor
 	 * @return Whether or not the entire sub-tree was visited

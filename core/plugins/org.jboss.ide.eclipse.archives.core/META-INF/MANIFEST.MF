@@ -31,5 +31,9 @@ Export-Package: de.schlichtherle.io;x-friends:="org.jboss.ide.eclipse.archives.t
  org.jboss.ide.eclipse.archives.core.model,
  org.jboss.ide.eclipse.archives.core.model.internal;x-friends:="org.jboss.ide.eclipse.archives.test",
  org.jboss.ide.eclipse.archives.core.model.internal.xb;x-friends:="org.jboss.ide.eclipse.archives.test",
+ org.jboss.ide.eclipse.archives.core.model.other.internal,
+ org.jboss.ide.eclipse.archives.core.model.types,
+ org.jboss.ide.eclipse.archives.core.project,
  org.jboss.ide.eclipse.archives.core.util;x-friends:="org.jboss.ide.eclipse.archives.test",
- org.jboss.ide.eclipse.archives.core.util.internal;x-friends:="org.jboss.ide.eclipse.archives.test"
+ org.jboss.ide.eclipse.archives.core.util.internal;x-friends:="org.jboss.ide.eclipse.archives.test",
+ org.jboss.ide.eclipse.archives.core.xpl

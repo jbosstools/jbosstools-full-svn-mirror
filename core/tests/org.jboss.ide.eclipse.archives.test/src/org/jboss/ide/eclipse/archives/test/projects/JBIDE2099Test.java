@@ -1,5 +1,6 @@
 package org.jboss.ide.eclipse.archives.test.projects;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IProject;
@@ -34,8 +35,10 @@ public class JBIDE2099Test extends TestCase {
 		try {
 			delegate.fullProjectBuild(project.getLocation());
 			assertTrue(outputWar.toFile().isDirectory());
+		} catch( AssertionFailedError afe) {
+			throw afe;
 		} catch( RuntimeException re ) {
-			fail();
+			fail(re.getMessage());
 		}
 	}
 }

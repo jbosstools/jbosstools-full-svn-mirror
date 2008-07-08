@@ -28,6 +28,7 @@ import java.util.Properties;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
+import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
@@ -173,6 +174,15 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	public IPath getProjectPath() {
 		IArchiveModelRootNode root = getModelRootNode();
 		return root == null ? null : root.getProjectPath();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getProjectName()
+	 */
+	public String getProjectName() {
+		IPath path = getProjectPath();
+		return ArchivesCore.getInstance().getVFS().findProject(path);
 	}
 	
 	/*

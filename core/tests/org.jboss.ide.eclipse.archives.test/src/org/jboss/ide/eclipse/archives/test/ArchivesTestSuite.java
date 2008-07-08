@@ -9,6 +9,7 @@ import org.jboss.ide.eclipse.archives.test.model.ModelTruezipBridgeTest;
 import org.jboss.ide.eclipse.archives.test.model.ModelUtilTest;
 import org.jboss.ide.eclipse.archives.test.model.XBMarshallTest;
 import org.jboss.ide.eclipse.archives.test.model.XBUnmarshallTest;
+import org.jboss.ide.eclipse.archives.test.projects.JBIDE1406Test;
 import org.jboss.ide.eclipse.archives.test.projects.JBIDE2099Test;
 import org.jboss.ide.eclipse.archives.test.projects.JBIDE2296Test;
 import org.jboss.ide.eclipse.archives.test.projects.JBIDE2311Test;
@@ -28,6 +29,7 @@ public class ArchivesTestSuite extends TestSuite {
         suite.addTestSuite(ModelTruezipBridgeTest.class);
               
         // jiras
+        suite.addTestSuite(JBIDE1406Test.class);
         suite.addTestSuite(JBIDE2099Test.class);
         suite.addTestSuite(JBIDE2296Test.class);
         suite.addTestSuite(JBIDE2311Test.class);

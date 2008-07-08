@@ -1,5 +1,6 @@
 package org.jboss.ide.eclipse.archives.test.projects;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IProject;
@@ -30,8 +31,10 @@ public class JBIDE2311Test extends TestCase {
 		ArchiveBuildDelegate delegate = new ArchiveBuildDelegate();
 		try {
 			delegate.fullProjectBuild(project.getLocation());
+		} catch( AssertionFailedError afe ) {
+			throw afe;
 		} catch( RuntimeException re ) {
-			fail();
+			fail(re.getMessage());
 		}
 	}
 }

@@ -34,38 +34,38 @@ public class FilesetWizard extends Wizard {
 		
 		if (createFileset)
 			this.fileset = ArchiveNodeFactory.createFileset();
-				
-		fillFilesetFromPage(fileset);
-		try {
-			getContainer().run(true, false, new IRunnableWithProgress () {
-				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-					if (createFileset) 
-						parentNode.addChild(fileset);
-					try {
-						ArchivesModel.instance().save(fileset.getProjectPath(), monitor);
-					}  catch( ArchivesModelException ame ) {
-						IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, "Error Completing Wizard", ame);
-						PackagesUIPlugin.getDefault().getLog().log(status);
-					}
-				}
-			});
-		} catch (InvocationTargetException e) {
-		} catch (InterruptedException e) {
-		} catch(Exception e) {e.printStackTrace();}
 		return true;
-	}
-	
-	private void fillFilesetFromPage (IArchiveFileSet fileset) {
-		fileset.setExcludesPattern(page1.getExcludes());
-		fileset.setIncludesPattern(page1.getIncludes());
-		fileset.setFlattened(page1.getFlatten());
-		if( page1.isRootDirWorkspaceRelative()) {
-			fileset.setSourcePath(new Path(page1.getWorkspaceRelativeRootDir()));
-			fileset.setInWorkspace(true);
-		} else {
-			fileset.setSourcePath(new Path(page1.getAbsoluteRootDir()));
-			fileset.setInWorkspace(false);
-		}
+//		fillFilesetFromPage(fileset);
+//		try {
+//			getContainer().run(true, false, new IRunnableWithProgress () {
+//				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+//					if (createFileset) 
+//						parentNode.addChild(fileset);
+//					try {
+//						ArchivesModel.instance().save(fileset.getProjectPath(), monitor);
+//					}  catch( ArchivesModelException ame ) {
+//						IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, "Error Completing Wizard", ame);
+//						PackagesUIPlugin.getDefault().getLog().log(status);
+//					}
+//				}
+//			});
+//		} catch (InvocationTargetException e) {
+//		} catch (InterruptedException e) {
+//		} catch(Exception e) {e.printStackTrace();}
+//		return true;
+//	}
+//	
+//	private void fillFilesetFromPage (IArchiveFileSet fileset) {
+//		fileset.setExcludesPattern(page1.getExcludes());
+//		fileset.setIncludesPattern(page1.getIncludes());
+//		fileset.setFlattened(page1.getFlatten());
+//		if( page1.isRootDirWorkspaceRelative()) {
+//			fileset.setSourcePath(new Path(page1.getWorkspaceRelativeRootDir()));
+//			fileset.setInWorkspace(true);
+//		} else {
+//			fileset.setSourcePath(new Path(page1.getAbsoluteRootDir()));
+//			fileset.setInWorkspace(false);
+//		}
 	}
 
 	public void addPages() {

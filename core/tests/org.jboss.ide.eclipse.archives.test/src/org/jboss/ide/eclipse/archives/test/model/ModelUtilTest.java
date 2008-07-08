@@ -73,14 +73,14 @@ public class ModelUtilTest extends TestCase {
 		
 		IArchiveFileSet outerFileset = ArchiveNodeFactory.createFileset();
 		outerFileset.setInWorkspace(false);
-		outerFileset.setSourcePath(fileTrees.append("misc"));
+		outerFileset.setRawSourcePath(fileTrees.append("misc").toString());
 		outerFileset.setExcludesPattern("**/*.gif,**/*.png");
 		outerFileset.setIncludesPattern("**/*");
 		topFolder.addChild(outerFileset);
 		
 		IArchiveFileSet imageFileset = ArchiveNodeFactory.createFileset();
 		imageFileset.setInWorkspace(false);
-		imageFileset.setSourcePath(fileTrees.append("misc"));
+		imageFileset.setRawSourcePath(fileTrees.append("misc").toString());
 		imageFileset.setIncludesPattern("**/*.gif,**/*.png,**/*.xml");
 		images.addChild(imageFileset);
 		
@@ -140,7 +140,7 @@ public class ModelUtilTest extends TestCase {
 		IArchiveFileSet otherFS = ArchiveNodeFactory.createFileset();
 		otherFS.setIncludesPattern(xmlFS[0].getIncludesPattern());
 		otherFS.setInWorkspace(xmlFS[0].isInWorkspace());
-		otherFS.setSourcePath(xmlFS[0].getSourcePath());
+		otherFS.setRawSourcePath(xmlFS[0].getRawSourcePath());
 		xmlFS[0].getParent().addChild(otherFS);
 		
 		assertTrue(testMatches(xmlFS[0], xml, rootArchive));

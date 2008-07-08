@@ -25,6 +25,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
@@ -36,30 +37,32 @@ import org.jboss.ide.eclipse.archives.core.asf.DirectoryScanner;
  */
 public class DirectoryScannerFactory {
 	private static class ScannableFileSet {
-		public IPath rawPath;
+		public String rawPath;
 		public IPath rootArchiveRelativePath;
 		public String includes;
 		public String excludes;
 		public boolean inWorkspace;
+		public String projectName;
 	};
 
 	public static DirectoryScannerExtension createDirectoryScanner(IArchiveFileSet fs, boolean scan) {
-		return createDirectoryScanner(fs.getSourcePath(), fs.getRootArchiveRelativePath(), fs.getIncludesPattern(), fs.getExcludesPattern(), fs.isInWorkspace(), scan);
+		return createDirectoryScanner(fs.getRawSourcePath(), fs.getRootArchiveRelativePath(), fs.getIncludesPattern(), fs.getExcludesPattern(), fs.getProjectName(), fs.isInWorkspace(), scan);
 	}
 
 	// THIS SHOULD NOT BE USED ;)  just here for now
 	// eradicate all uses!
-	public static DirectoryScannerExtension createDirectoryScanner (IPath rawPath, String includes, String excludes, boolean scan) {
-		return createDirectoryScanner(rawPath, null, includes, excludes, false, scan);
+	public static DirectoryScannerExtension createDirectoryScanner (String rawPath, String includes, String excludes, boolean scan) {
+		return createDirectoryScanner(rawPath, null, includes, excludes, null, false, scan);
 	}
 	
-	public static DirectoryScannerExtension createDirectoryScanner (IPath rawPath, IPath rootArchiveRelativePath, String includes, String excludes, boolean inWorkspace, boolean scan) {
+	public static DirectoryScannerExtension createDirectoryScanner (String rawPath, IPath rootArchiveRelativePath, String includes, String excludes, String projectName, boolean inWorkspace, boolean scan) {
 		ScannableFileSet fs = new ScannableFileSet();
 		fs.rawPath = rawPath;
 		fs.rootArchiveRelativePath = rootArchiveRelativePath;
 		fs.includes = includes;
 		fs.excludes = excludes;
 		fs.inWorkspace = inWorkspace;
+		fs.projectName = projectName;
 		DirectoryScannerExtension scanner = new DirectoryScannerExtension(fs);
 		if (scan) {
 			scanner.scan();
@@ -98,16 +101,27 @@ public class DirectoryScannerFactory {
 		 * setting in superclass. Ant will not understand
 		 * variables!
 		 */
-		public void setBasedir2(IPath path) {
-			if( workspaceRelative ) {
-				IPath p = ArchivesCore.getInstance().getVFS()
-					.workspacePathToAbsolutePath(path);
-				setBasedir(new FileWrapper(p.toFile(), path));
-			} else {
-				setBasedir(new FileWrapper(path.toFile(), path));
+		public void setBasedir2(String path) {
+			String translatedPath = replaceVariables(path);
+			if( translatedPath != null ) {
+				IPath translatedPath2 = new Path(translatedPath);
+				if( workspaceRelative ) {
+					IPath p = ArchivesCore.getInstance().getVFS()
+					.workspacePathToAbsolutePath(translatedPath2);
+					setBasedir(new FileWrapper(p.toFile(), translatedPath2));
+				} else {
+					setBasedir(new FileWrapper(new File(translatedPath), translatedPath2));
+				}
 			}
 		}
-	    
+		public String replaceVariables(String rawPath) {
+			try {
+				return ArchivesCore.getInstance().getVFS().
+					performStringSubstitution(rawPath, fs.projectName, true);
+			} catch( CoreException ce ) {
+			}
+			return null;
+		}
 	    protected String getName(File file) {
 	    	return workspaceRelative ? ((FileWrapper)file).getOutputName() : super.getName(file);
 	    }

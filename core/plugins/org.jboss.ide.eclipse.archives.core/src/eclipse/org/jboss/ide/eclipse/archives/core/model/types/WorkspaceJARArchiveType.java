@@ -60,7 +60,7 @@ public class WorkspaceJARArchiveType extends AbstractArchiveType {
 		
 		IArchiveFileSet classes = new ArchiveFileSetImpl();
 		classes.setIncludesPattern("**/*");
-		classes.setSourcePath(outputContainer.getFullPath());
+		classes.setRawSourcePath(outputContainer.getFullPath().toString());
 		classes.setInWorkspace(true);
 		
 		try {

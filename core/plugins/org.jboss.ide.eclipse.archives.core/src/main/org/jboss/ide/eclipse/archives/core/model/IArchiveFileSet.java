@@ -60,10 +60,18 @@ public interface IArchiveFileSet extends IArchiveNode {
 	public IPath getGlobalSourcePath();
 	
 	/**
+	 * @return the source path from the delegate with no translation at all
+	 */
+	public String getRawSourcePath();
+
+	/**
+	 * Return a source path that is file-system or workspace
+	 * relative but has all of its variables translated already.
+	 * 
 	 * @return the source path from the delegate (file-system or workspace-relative)
 	 */
 	public IPath getSourcePath();
-	
+
 	/**
 	 * Force the scanner to check for matched files again
 	 */
@@ -112,7 +120,7 @@ public interface IArchiveFileSet extends IArchiveNode {
 	 * Sets the "root" or "source" of this fileset (file-system or workspace relative)
 	 * @param path The absolute path that is the source of this fileset
 	 */
-	public void setSourcePath(IPath path);
+	public void setRawSourcePath (String raw);
 	
 	/**
 	 * Set the includes pattern for this fileset. This pattern uses the same syntax as Ant's include pattern.

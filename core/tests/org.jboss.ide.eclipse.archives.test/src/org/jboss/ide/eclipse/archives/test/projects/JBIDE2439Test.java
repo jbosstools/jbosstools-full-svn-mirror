@@ -2,6 +2,7 @@ package org.jboss.ide.eclipse.archives.test.projects;
 
 import java.util.ArrayList;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IFile;
@@ -55,7 +56,7 @@ public class JBIDE2439Test extends TestCase {
 			delegate.fullProjectBuild(aProject.getLocation());
 			aProject.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 			IResource outs = aProject.getFolder("outputs");
-			final ArrayList list = new ArrayList();
+			final ArrayList<IResource> list = new ArrayList<IResource>();
 			outs.accept(new IResourceVisitor() {
 	
 				public boolean visit(IResource resource) throws CoreException {
@@ -66,6 +67,8 @@ public class JBIDE2439Test extends TestCase {
 				} 
 			});
 			assertEquals(5, list.size());
+		} catch( AssertionFailedError afe ) {
+			throw afe;
 		} catch( RuntimeException re ) {
 			fail(re.getMessage());
 		} catch( CoreException ce ) {

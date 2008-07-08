@@ -116,7 +116,7 @@ public class ArchivesLabelProvider implements ILabelProvider {
 		if (showFullPath) {
 			text += fileset.getGlobalSourcePath().toString();
 		} else if( inWorkspace ){
-			text += fileset.getSourcePath().toString();
+			text += fileset.getRawSourcePath();
 		} else {
 			text += fileset.getGlobalSourcePath().lastSegment();
 		}

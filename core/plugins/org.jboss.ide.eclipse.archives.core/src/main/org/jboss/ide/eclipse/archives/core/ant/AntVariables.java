@@ -16,6 +16,12 @@ public class AntVariables implements IArchivesVFS, IVariableManager {
 			boolean reportUndefinedVariables) throws CoreException {
 		return new StringSubstitutionEngineClone().performStringSubstitution(expression, reportUndefinedVariables, this);
 	}
+	public String performStringSubstitution(String expression,
+			String projectName, boolean reportUndefinedVariables)
+			throws CoreException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	public boolean containsVariable(String variable) {
 		return false;
@@ -33,6 +39,14 @@ public class AntVariables implements IArchivesVFS, IVariableManager {
 		return null;
 	}
 	public IPath[] workspacePathToAbsolutePath(IPath[] paths) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public String getVariableValue(String variable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public String findProject(IPath absolutePath) {
 		// TODO Auto-generated method stub
 		return null;
 	}

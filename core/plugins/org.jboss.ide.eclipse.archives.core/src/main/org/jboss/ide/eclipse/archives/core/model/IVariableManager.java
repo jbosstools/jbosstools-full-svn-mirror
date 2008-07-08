@@ -27,5 +27,5 @@ package org.jboss.ide.eclipse.archives.core.model;
  */
 public interface IVariableManager {
 	public boolean containsVariable(String variable);
-	public String getVariableValue(String variable, String arg);
+	public String getVariableValue(String variable);
 }

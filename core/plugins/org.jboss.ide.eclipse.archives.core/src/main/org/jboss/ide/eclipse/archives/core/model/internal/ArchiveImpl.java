@@ -23,6 +23,7 @@ package org.jboss.ide.eclipse.archives.core.model.internal;
 
 import java.util.ArrayList;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
@@ -76,10 +77,16 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 		if( packageDelegate.getToDir().equals("."))
 			return getProjectPath() == null ? Path.EMPTY : getProjectPath();
 		
-		if (isDestinationInWorkspace()) {	
-			return ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(new Path(packageDelegate.getToDir()));
-		} else 
-			return new Path(packageDelegate.getToDir());
+		try {
+			String replaced = ArchivesCore.getInstance().getVFS().
+				performStringSubstitution(packageDelegate.getToDir(), getProjectName(), true);
+			if (isDestinationInWorkspace()) {
+				return ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(new Path(replaced));
+			} else {
+				return new Path(replaced);
+			}
+		} catch( CoreException ce ) {}
+		return null;
 	}
 
 	public IPath getDestinationPath() {

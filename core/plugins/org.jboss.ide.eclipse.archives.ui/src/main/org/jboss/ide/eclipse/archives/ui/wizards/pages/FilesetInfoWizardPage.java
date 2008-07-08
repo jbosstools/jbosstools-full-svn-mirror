@@ -2,12 +2,11 @@ package org.jboss.ide.eclipse.archives.ui.wizards.pages;
 
 import java.util.ArrayList;
 
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -21,14 +20,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.dialogs.ContainerSelectionDialog;
-import org.eclipse.ui.ide.IDE;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
@@ -42,29 +37,28 @@ import org.jboss.ide.eclipse.archives.ui.util.composites.FilesetPreviewComposite
 
 public class FilesetInfoWizardPage extends WizardPage {
 
-	private IArchiveFileSet fileset;
 	private IArchiveNode parentNode;
-	private Text includesText;
-	private Text excludesText;
-	private ArchiveNodeDestinationComposite destinationComposite;
-
-	private String includes, excludes, workspaceRelativeRootDir;
+	private IArchiveFileSet fileset;
+	private String includes, excludes, rawPath;
+	private String projectName;
+	private boolean flattened;
+	private boolean workspaceRelative;
 	
 	/**
 	 * This variable must at all times be global. ALWAYS
 	 */
-	private IPath rootDir;
-	private boolean rootDirIsWorkspaceRelative;
 	private FilesetPreviewComposite previewComposite;
 
 	private Composite mainComposite;
 	private Text rootDirText;
-	private Label rootProjectLabel, flattenedLabel;
+	private Label flattenedLabel;
 	private Button rootDirWorkspaceBrowseButton;
 	private Button rootDirFilesystemBrowseButton;
 	private Button flattenedYes;
 	private Button flattenedNo;
-	private boolean flattened;
+	private Text includesText;
+	private Text excludesText;
+	private ArchiveNodeDestinationComposite destinationComposite;
 
 	public FilesetInfoWizardPage (Shell parent, IArchiveFileSet fileset, IArchiveNode parentNode) {
 		super(ArchivesUIMessages.FilesetInfoWizardPage_new_title, ArchivesUIMessages.FilesetInfoWizardPage_new_title, null);
@@ -158,20 +152,6 @@ public class FilesetInfoWizardPage extends WizardPage {
 		destinationKey.setLayoutData(createFormData(0,10,null,0,null,5, 0, max));
 		destinationComposite.setLayoutData(createFormData(0,5,null,0,destinationKey,5, 100, -5));
 		
-		
-		// root project row
-		Label rootProjectKey = new Label(infoGroup, SWT.NONE);
-		Composite rootProjectVal = new Composite(infoGroup, SWT.NONE);
-		rootProjectVal.setLayout(new FormLayout());
-		Label projectImageLabel = new Label(rootProjectVal, SWT.NONE);
-		rootProjectLabel = new Label(rootProjectVal, SWT.NONE);
-		
-		projectImageLabel.setLayoutData(createFormData(0,0,null,0,0,0, null,0));
-		rootProjectLabel.setLayoutData(createFormData(0,0,null,0,projectImageLabel, 10, 100,-5));
-		rootProjectKey.setLayoutData(createFormData(destinationComposite,5,null,0,null,5,0,max));
-		rootProjectVal.setLayoutData(createFormData(destinationComposite,5, null, 0, destinationKey, 5, 100, -5));
-		
-
 		// root dir
 		Label rootDirectoryLabel = new Label(infoGroup, SWT.NONE);
 		Composite rootDirValue = new Composite(infoGroup, SWT.NONE);
@@ -185,8 +165,8 @@ public class FilesetInfoWizardPage extends WizardPage {
 		rootDirFilesystemBrowseButton.setLayoutData(createFormData(rootDirText,5,null,0,null,0,100,-5));
 		rootDirWorkspaceBrowseButton.setLayoutData(createFormData(rootDirText,5,null,0,null,0,rootDirFilesystemBrowseButton, -5));
 		
-		rootDirectoryLabel.setLayoutData(createFormData(rootProjectVal,10,null,0,null,5,0,max));
-		rootDirValue.setLayoutData(createFormData(rootProjectVal,5,null,0,rootDirectoryLabel,5,100,-5));
+		rootDirectoryLabel.setLayoutData(createFormData(destinationComposite,10,null,0,null,5,0,max));
+		rootDirValue.setLayoutData(createFormData(destinationComposite,5,null,0,rootDirectoryLabel,5,100,-5));
 		
 		flattenedLabel = new Label(infoGroup, SWT.NONE);
 		flattenedYes = new Button(infoGroup, SWT.RADIO);
@@ -222,9 +202,6 @@ public class FilesetInfoWizardPage extends WizardPage {
 
 		// customize widgets
 		destinationKey.setText(ArchivesUIMessages.FilesetInfoWizardPage_destination_label);
-		rootProjectKey.setText(ArchivesUIMessages.FilesetInfoWizardPage_rootProject_label);
-		projectImageLabel.setImage(
-				PlatformUI.getWorkbench().getSharedImages().getImage(IDE.SharedImages.IMG_OBJ_PROJECT));
 		rootDirectoryLabel.setText(ArchivesUIMessages.FilesetInfoWizardPage_rootDirectory_label);
 		rootDirWorkspaceBrowseButton.setText(ArchivesUIMessages.FilesetInfoWizardPage_rootDirWorkspaceBrowseButton_label);
 		rootDirFilesystemBrowseButton.setText(ArchivesUIMessages.FilesetInfoWizardPage_rootDirFilesystemBrowseButton_label);
@@ -260,13 +237,13 @@ public class FilesetInfoWizardPage extends WizardPage {
 		
 		rootDirWorkspaceBrowseButton.addSelectionListener(new SelectionAdapter () {
 			public void widgetSelected(SelectionEvent e) {
-				browseWorkspaceForRootDir();
+				//browseWorkspaceForRootDir();
 			}
 		});
 		
 		rootDirFilesystemBrowseButton.addSelectionListener(new SelectionAdapter () {
 			public void widgetSelected(SelectionEvent e) {
-				browseFilesystemForRootDir();
+				//browseFilesystemForRootDir();
 			}
 		});
 		
@@ -292,31 +269,34 @@ public class FilesetInfoWizardPage extends WizardPage {
 		return excludes;
 	}
 	
-	public boolean getFlatten() {
+	public boolean isFlattened() {
 		return flattened;
 	}
 	
-	public String getAbsoluteRootDir () {
-		return rootDir.toOSString();
+	public boolean isRootDirWorkspaceRelative () {
+		return workspaceRelative;
 	}
 	
-	public String getWorkspaceRelativeRootDir() {
-		return workspaceRelativeRootDir;
+	public String getRawPath() {
+		return rawPath;
 	}
-		
-	public boolean isRootDirWorkspaceRelative () {
-		return rootDirIsWorkspaceRelative;
+	
+	public String replaceVariables() {
+		try {
+			return ArchivesCore.getInstance().getVFS().
+				performStringSubstitution(rawPath, 
+						projectName, true);
+		} catch( CoreException ce ) {
+		}
+		return null;
 	}
 	
 	private void fillDefaults () {
-		String projectName = "";
 		IProject[] project = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 		for( int i = 0; i < project.length; i++ ) 
 			if( project[i].getLocation().equals(parentNode.getProjectPath()))
 				projectName = project[i].getName();
-
-		rootProjectLabel.setText(projectName);
-
+		
 		if (fileset != null) {
 				if (fileset.getIncludesPattern() != null) {
 					includes = fileset.getIncludesPattern();
@@ -327,22 +307,21 @@ public class FilesetInfoWizardPage extends WizardPage {
 					excludesText.setText(excludes);
 				}
 				
-				if (fileset.getGlobalSourcePath() != null) {
-					rootDir = fileset.getGlobalSourcePath();
-					workspaceRelativeRootDir = fileset.getSourcePath().toString();
-					rootDirIsWorkspaceRelative = fileset.isInWorkspace();
-					rootDirText.setText(fileset.getSourcePath().toString());
+				if (fileset.getRawSourcePath() != null) {
+					rawPath = fileset.getRawSourcePath();
+					rootDirText.setText(rawPath);
 				}
 
+				workspaceRelative = fileset.isInWorkspace();
 				flattened = fileset.isFlattened();
 				flattenedYes.setSelection(flattened);
 				flattenedNo.setSelection(!flattened);
 				
 		} else {
-			rootDirIsWorkspaceRelative = true;
-			rootDir = parentNode.getProjectPath();
-			workspaceRelativeRootDir = projectName;
+			rawPath = "${current_project}";
+			workspaceRelative = true;
 			flattened = false;
+			rootDirText.setText(rawPath);
 			flattenedYes.setSelection(flattened);
 			flattenedNo.setSelection(!flattened);
 		}
@@ -350,9 +329,8 @@ public class FilesetInfoWizardPage extends WizardPage {
 	}
 	
 	private void changePreview() {
-		IPath path = rootDirIsWorkspaceRelative ? new Path(workspaceRelativeRootDir) : rootDir;
 		DirectoryScannerExtension ds = DirectoryScannerFactory.createDirectoryScanner( 
-					path, null, includes, excludes, rootDirIsWorkspaceRelative, true);
+				replaceVariables(), null, includes, excludes, parentNode.getProjectName(), workspaceRelative, true);
 		String[] fsRelative = ds.getIncludedFiles();
 		IPath filesetRelative;
 		ArrayList<IPath> list = new ArrayList<IPath>();
@@ -367,7 +345,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 		previewComposite.setInput(list.toArray());
 	}
 	
-	
+	/*
 	private void browseWorkspaceForRootDir () {
 		IContainer workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 		ContainerSelectionDialog dialog = new ContainerSelectionDialog(getShell(), workspaceRoot, true,
@@ -413,5 +391,6 @@ public class FilesetInfoWizardPage extends WizardPage {
 			changePreview();
 		}
 	}
+	*/
 	
 }

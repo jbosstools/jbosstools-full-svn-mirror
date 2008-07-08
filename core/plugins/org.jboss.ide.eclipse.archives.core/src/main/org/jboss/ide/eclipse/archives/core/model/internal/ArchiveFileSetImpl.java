@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -94,11 +95,25 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	}
 	
 	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet#getRawSourcePath()
+	 */
+	public String getRawSourcePath() {
+		return getFileSetDelegate().getDir();
+	}
+	
+	/*
 	 * @see IArchiveFileSet#getSourcePath()
 	 */
 	public IPath getSourcePath() {
-		return getFileSetDelegate().getDir() == null ? 
-				null : new Path(getFileSetDelegate().getDir());
+		try {
+			String out = ArchivesCore.getInstance().getVFS().
+					performStringSubstitution(getRawSourcePath(), 
+					getProjectName(), true);
+			return new Path(out);
+		} catch( CoreException ce ) {
+		}
+		return null;
 	}
 	
 	/*
@@ -216,11 +231,13 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	/*
 	 * @see IArchiveFileSet#setSourcePath(IPath, boolean)
 	 */
-	public void setSourcePath (IPath path) {
-		Assert.isNotNull(path);
-		IPath src = getSourcePath();
-		attributeChanged(SOURCE_PATH_ATTRIBUTE, src == null ? null : src.toString(), path == null ? null : path.toString());
-		getFileSetDelegate().setDir(path.toString());
+	public void setRawSourcePath (String raw) {
+		Assert.isNotNull(raw);
+		String src = getRawSourcePath();
+		attributeChanged(SOURCE_PATH_ATTRIBUTE, 
+				src == null ? null : src.toString(), 
+				raw == null ? null : raw);
+		getFileSetDelegate().setDir(raw);
 		rescanRequired = true;
 	}
 	
