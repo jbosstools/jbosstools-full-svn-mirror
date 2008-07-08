@@ -182,7 +182,7 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	 */
 	public String getProjectName() {
 		IPath path = getProjectPath();
-		return ArchivesCore.getInstance().getVFS().findProject(path);
+		return ArchivesCore.getInstance().getVFS().getProjectName(path);
 	}
 	
 	/*

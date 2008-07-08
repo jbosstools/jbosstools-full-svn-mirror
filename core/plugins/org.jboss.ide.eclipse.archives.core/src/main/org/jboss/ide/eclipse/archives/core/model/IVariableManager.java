@@ -26,6 +26,7 @@ package org.jboss.ide.eclipse.archives.core.model;
  *
  */
 public interface IVariableManager {
+	public static final String CURRENT_PROJECT = "current.project";
 	public boolean containsVariable(String variable);
 	public String getVariableValue(String variable);
 }

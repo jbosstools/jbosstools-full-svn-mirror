@@ -46,7 +46,7 @@ public class AntVariables implements IArchivesVFS, IVariableManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public String findProject(IPath absolutePath) {
+	public String getProjectName(IPath absolutePath) {
 		// TODO Auto-generated method stub
 		return null;
 	}
