@@ -24,6 +24,7 @@ import org.eclipse.wst.sse.core.internal.provisional.text.IStructuredDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocumentType;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
+import org.jboss.tools.vpe.VpePlugin;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -50,8 +51,9 @@ public class DocTypeUtil {
 	 * @param editorInput
 	 * @return
 	 */
-	static public String getDoctype(IEditorInput editorInput) {
+	public static String getDoctype(IEditorInput editorInput) {
 
+		try{
 		// if opened file is located in eclipse workspace
 		if (editorInput instanceof IFileEditorInput) {
 			IFile f = ((IFileEditorInput) editorInput).getFile();
@@ -64,7 +66,12 @@ public class DocTypeUtil {
 				return null;
 			return getDoctype(path.toFile());
 		}
-		return null;
+		}catch(StackOverflowError stackOverflowError) {
+			//Fix For JBIDE-2434
+			VpePlugin.getPluginLog().logInfo(stackOverflowError.toString());
+			return ""; //$NON-NLS-1$
+		}
+		return null; 
 
 	}
 
@@ -74,7 +81,7 @@ public class DocTypeUtil {
 	 * @param file
 	 * @return
 	 */
-	static public String getDoctype(IFile file) {
+	private static String getDoctype(IFile file) {
 
 		String docTypeValue = null;
 
