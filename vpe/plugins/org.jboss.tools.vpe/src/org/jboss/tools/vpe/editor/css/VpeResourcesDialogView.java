@@ -25,6 +25,9 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 	IFile file;
 	IPath path;
 	CssReferencesComposite css = new CssReferencesComposite();
+    //changed by estherbin
+    //http://jira.jboss.com/jira/browse/JBIDE-2010
+	ElVariablesComposite   el  = new ElVariablesComposite();
 	TaglibReferencesComposite tld = new TaglibReferencesComposite();
 	AbsoluteFolderReferenceComposite absFolder = new AbsoluteFolderReferenceComposite();
 	RelativeFolderReferenceComposite relFolder = new RelativeFolderReferenceComposite();
@@ -36,6 +39,9 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 		path = (IPath)p.get("path");
 
 		css.setObject(object);
+	    //changed by estherbin
+        //http://jira.jboss.com/jira/browse/JBIDE-2010
+		el.setObject(object);
 		tld.setObject(object);
 		absFolder.setObject(p);
 		relFolder.setObject(p);
@@ -63,6 +69,12 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 		Control tldControl = tld.createControl(c);
 		data = new GridData(GridData.FILL_BOTH);
 		tldControl.setLayoutData(data);
+		
+	     //changed by estherbin
+        //http://jira.jboss.com/jira/browse/JBIDE-2010
+		Control elControl = el.createControl(c);
+		data = new GridData(GridData.FILL_BOTH);
+		elControl.setLayoutData(data);
 		return c;
 	}
 
@@ -78,12 +90,16 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 
 	public Point getPreferredSize() {
 		try {
+		    //changed by estherbin
+		    //http://jira.jboss.com/jira/browse/JBIDE-2010
 			String os_name = System.getProperty("os.name");
-			if(os_name != null && os_name.indexOf("Windows") >= 0) return new Point(600, 400);
+			if(os_name != null && os_name.indexOf("Windows") >= 0) return new Point(800, 600);
 		} catch (Exception e) {
 			//ignore
 		}
-		return new Point(600, 500);
+	    //changed by estherbin
+        //http://jira.jboss.com/jira/browse/JBIDE-2010
+		return new Point(700, 600);
 	}
 
 }

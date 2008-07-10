@@ -106,6 +106,119 @@
   </XActionItem>
   <XDependencies/>
  </XModelEntity>
+ 
+ <!--  Added by estherbin //JBIDE-2010 -->
+ <XModelEntity ImplementingClass="%Regular%" name="VPEElReference">
+  
+ <XChildrenEntities/>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="action.empty" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute name="location" xmlname="location">
+    <Constraint loader="ListString"/>
+    <Editor name="List"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="border=true"
+    default="Folder: Any Page at the Same Folder" name="scope" xmlname="scope">
+    <Constraint loader="ListString">
+     <value name="Page: Only This Page"/>
+     <value name="Folder: Any Page at the Same Folder"/>
+     <value name="Project: Any Page at the Same Project"/>
+    </Constraint>
+    <Editor name="RadioArray"/>
+   </XModelAttribute>
+   <XModelAttribute name="prefix">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem kind="list" name="CreateActions">
+    <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
+     PROPERTIES="support=org.jboss.tools.vpe.editor.css.VpeAddReferenceSupport"
+     displayName="Add El Reference..." kind="action" name="AddItem">
+     <EntityData EntityName="VPETLDReference">
+      <AttributeData AttributeName="location"/>
+      <AttributeData AttributeName="scope" Mandatory="no"/>
+      <AttributeData AttributeName="prefix" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem kind="list" name="EditActions">
+    <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
+     PROPERTIES="support=org.jboss.tools.vpe.editor.css.VpeAddReferenceSupport"
+     displayName="Edit El Reference..." kind="action" name="EditItem">
+     <EntityData EntityName="VPEElReference">
+      <AttributeData AttributeName="location"/>
+      <AttributeData AttributeName="scope" Mandatory="no"/>
+      <AttributeData AttributeName="prefix" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ 
+ <XModelEntity ImplementingClass="%Regular%" name="VPEElReferenceExt">
+ 
+ 
+  <XChildrenEntities/>
+  <XEntityRenderer>
+   <ICONS>
+    <ICON info="action.empty" type="main"/>
+   </ICONS>
+  </XEntityRenderer>
+  <XModelAttributes>
+   <XModelAttribute name="location" xmlname="location">
+    <Constraint loader="ListString"/>
+    <Editor name="List"/>
+   </XModelAttribute>
+   <XModelAttribute PROPERTIES="border=true"
+    default="Folder: Any Page at the Same Folder" name="scope" xmlname="scope">
+    <Constraint loader="ListString">
+     <value name="Page: Only This Page"/>
+     <value name="Folder: Any Page at the Same Folder"/>
+    </Constraint>
+    <Editor name="RadioArray"/>
+   </XModelAttribute>
+   <XModelAttribute name="prefix">
+    <Constraint/>
+    <Editor/>
+   </XModelAttribute>
+  </XModelAttributes>
+  <XActionItem kind="list">
+   <XActionItem kind="list" name="CreateActions">
+    <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
+     PROPERTIES="support=org.jboss.tools.vpe.editor.css.VpeAddReferenceSupport"
+     displayName="Add El Reference..." kind="action" name="AddItem">
+     <EntityData EntityName="VPEELReferenceExt">
+      <AttributeData AttributeName="location"/>
+      <AttributeData AttributeName="scope" Mandatory="no"/>
+      <AttributeData AttributeName="prefix" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+   <XActionItem kind="list" name="EditActions">
+    <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
+     PROPERTIES="support=org.jboss.tools.vpe.editor.css.VpeAddReferenceSupport"
+     displayName="Edit El Reference..." kind="action" name="EditItem">
+     <EntityData EntityName="VPEElReference">
+      <AttributeData AttributeName="location"/>
+      <AttributeData AttributeName="scope" Mandatory="no"/>
+      <AttributeData AttributeName="prefix" Mandatory="no"/>
+     </EntityData>
+    </XActionItem>
+   </XActionItem>
+  </XActionItem>
+  <XDependencies/>
+ </XModelEntity>
+ <!--  -->
+ 
+ 
+ 
  <XModelEntity ImplementingClass="%Regular%" name="VPEFolderReference">
   <XChildrenEntities/>
   <XEntityRenderer>
