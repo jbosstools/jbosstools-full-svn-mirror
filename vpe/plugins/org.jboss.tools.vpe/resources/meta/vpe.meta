@@ -118,8 +118,8 @@
   </XEntityRenderer>
   <XModelAttributes>
    <XModelAttribute name="location" xmlname="location">
-    <Constraint loader="ListString"/>
-    <Editor name="List"/>
+    <Constraint/>
+    <Editor/>
    </XModelAttribute>
    <XModelAttribute PROPERTIES="border=true"
     default="Folder: Any Page at the Same Folder" name="scope" xmlname="scope">
@@ -140,8 +140,8 @@
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
      PROPERTIES="support=org.jboss.tools.vpe.editor.css.VpeAddReferenceSupport"
      displayName="Add El Reference..." kind="action" name="AddItem">
-     <EntityData EntityName="VPETLDReference">
-      <AttributeData AttributeName="location"/>
+     <EntityData EntityName="VPEElReference">
+      <AttributeData AttributeName="location" Mandatory="no"/>
       <AttributeData AttributeName="scope" Mandatory="no"/>
       <AttributeData AttributeName="prefix" Mandatory="no"/>
      </EntityData>
@@ -173,8 +173,8 @@
   </XEntityRenderer>
   <XModelAttributes>
    <XModelAttribute name="location" xmlname="location">
-    <Constraint loader="ListString"/>
-    <Editor name="List"/>
+      <Constraint/>
+  	  <Editor/>
    </XModelAttribute>
    <XModelAttribute PROPERTIES="border=true"
     default="Folder: Any Page at the Same Folder" name="scope" xmlname="scope">
