@@ -82,6 +82,7 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 		if(OK.equals(command)) {
 			absFolder.commit();
 			relFolder.commit();
+			el.commit();
 			css.commit();
 			tld.commit();
 		}
