@@ -99,6 +99,12 @@ public interface IArchive extends INamedContainerArchiveNode {
 	public IPath getDestinationPath();
 
 	/**
+	 * Exactly as from the delegate
+	 * @return
+	 */
+	public String getRawDestinationPath();
+
+	/**
 	 * Set the package type of this package
 	 * @param type The package type
 	 */

@@ -96,11 +96,6 @@ public class DirectoryScannerFactory {
 			setBasedir2(fs.rawPath);
 		}
 		
-		/* TODO:
-		 * This *must* translate all variables out before
-		 * setting in superclass. Ant will not understand
-		 * variables!
-		 */
 		public void setBasedir2(String path) {
 			String translatedPath = replaceVariables(path);
 			if( translatedPath != null ) {

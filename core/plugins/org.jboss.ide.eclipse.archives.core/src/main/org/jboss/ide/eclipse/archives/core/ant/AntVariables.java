@@ -22,7 +22,9 @@ public class AntVariables implements IArchivesVFS, IVariableManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	public String[] getVariableNames() {
+		return new String[0];
+	}
 	public boolean containsVariable(String variable) {
 		return false;
 	}

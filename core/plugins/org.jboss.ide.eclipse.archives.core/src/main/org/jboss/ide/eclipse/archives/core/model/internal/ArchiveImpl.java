@@ -95,6 +95,13 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 		return packageDelegate.getToDir() == null ? Path.EMPTY : new Path(packageDelegate.getToDir());
 	}
 	
+	public String getRawDestinationPath() {
+		if( !isTopLevel() )
+			return "";
+		return packageDelegate.getToDir() == null ? "" : packageDelegate.getToDir();
+	}
+	
+	
 	/*
 	 * @see IArchive#getArchiveFilePath()
 	 */
@@ -148,7 +155,7 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchive#getPreActions()
 	 */
 	public IArchiveAction[] getPreActions() {
-		return new IArchiveAction[0]; // TODO
+		return new IArchiveAction[0]; // TODO getPreActions
 	}
 	
 	/*
@@ -156,7 +163,7 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchive#getPostActions()
 	 */
 	public IArchiveAction[] getPostActions() {
-		return new IArchiveAction[0]; // TODO
+		return new IArchiveAction[0]; // TODO getPostActions
 	}
 
 	/*

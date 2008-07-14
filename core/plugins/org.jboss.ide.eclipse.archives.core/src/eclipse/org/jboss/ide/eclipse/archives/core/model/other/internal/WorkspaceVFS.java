@@ -6,17 +6,10 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.preferences.DefaultScope;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.jdt.core.JavaCore;
-import org.jboss.ide.eclipse.archives.core.ArchivesCorePlugin;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesVFS;
 import org.jboss.ide.eclipse.archives.core.model.IVariableManager;
 import org.jboss.ide.eclipse.archives.core.xpl.StringSubstitutionEngineClone;
-import org.osgi.service.prefs.BackingStoreException;
 
 public class WorkspaceVFS implements IArchivesVFS {
 	protected WorkspaceVariableManager manager;
@@ -26,60 +19,8 @@ public class WorkspaceVFS implements IArchivesVFS {
 		engine = new StringSubstitutionEngineClone();
 	}
 	
-	public WorkspaceVariableManager getManager() {
+	public WorkspaceVariableManager getVariableManager() {
 		return manager;
-	}
-	
-	public class WorkspaceVariableManager implements IVariableManager {
-		private static final String PREFIX = "org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspaceVariableManager.";
-		private static final int TYPE_NONE = -1;
-		private static final int TYPE_CUSTOM = 0;
-		private static final int TYPE_LINK = 1;
-		private static final int TYPE_CLASSPATH = 2;
-		
-		public boolean containsVariable(String variable) {
-			return getVariableLocation(variable) != -1;
-		}
-
-		public String getVariableValue(String variable) {
-			int type = getVariableLocation(variable);
-			if( type == TYPE_CUSTOM ) {
-				IEclipsePreferences prefs = new DefaultScope().getNode(ArchivesCorePlugin.PLUGIN_ID);
-				return prefs.get(PREFIX + variable, null);
-			}else if( type == TYPE_LINK ) {
-				return ResourcesPlugin.getWorkspace().getPathVariableManager().getValue(variable).toString();
-			} else if( type == TYPE_CLASSPATH ) {
-				return JavaCore.getClasspathVariable(variable).toString();
-			}
-			return null;
-		}
-		
-		public int getVariableLocation(String variable) {
-			IEclipsePreferences prefs = new DefaultScope().getNode(ArchivesCorePlugin.PLUGIN_ID);
-			if( prefs.get(PREFIX + variable, null) != null ) 
-				return TYPE_CUSTOM;
-			
-			if( ResourcesPlugin.getWorkspace().getPathVariableManager().getValue(variable) != null )
-				return TYPE_LINK;
-			
-			if( JavaCore.getClasspathVariable(variable) != null)
-				return TYPE_CLASSPATH;
-			return TYPE_NONE;
-		}
-		
-		public void setValue(String name, IPath value) throws CoreException {
-			try {
-				IEclipsePreferences prefs = new DefaultScope().getNode(ArchivesCorePlugin.PLUGIN_ID);
-				if( value != null )
-					prefs.put(PREFIX + name, value.toString());
-				else 
-					prefs.remove(PREFIX + name);
-				prefs.flush();
-			} catch (BackingStoreException e) { 
-				IStatus status = new Status(IStatus.ERROR, ArchivesCorePlugin.PLUGIN_ID, e.getMessage(), e);
-				throw new CoreException(status); 
-			}
-		}
 	}
 	
 	public String performStringSubstitution(String expression,
@@ -91,8 +32,11 @@ public class WorkspaceVFS implements IArchivesVFS {
 			String projectName, boolean reportUndefinedVariables)
 			throws CoreException {
 		// set this project name
+		if( expression == null )
+			return null;
+		
 		if( projectName != null ) {
-			manager.setValue(IVariableManager.CURRENT_PROJECT, new Path(projectName));
+			manager.setValue(IVariableManager.CURRENT_PROJECT, projectName);
 		}
 		
 		String ret = engine.performStringSubstitution(expression, reportUndefinedVariables, manager);

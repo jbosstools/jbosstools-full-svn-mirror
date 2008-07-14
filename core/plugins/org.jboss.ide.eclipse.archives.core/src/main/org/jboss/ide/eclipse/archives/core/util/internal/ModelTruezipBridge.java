@@ -198,7 +198,6 @@ public class ModelTruezipBridge {
 	
 	/**
 	 * Gets all properly-created de.sch destination files for a fileset
-	 * - // TODO MAKE SURE VARIABLES ARE TRANSLATED
 	 * @param inputFiles
 	 * @param fs
 	 * @return

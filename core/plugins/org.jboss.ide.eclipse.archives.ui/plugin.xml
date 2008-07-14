@@ -56,6 +56,11 @@
             class="org.jboss.ide.eclipse.archives.ui.preferences.MainPreferencePage"
             id="org.jboss.ide.eclipse.archives.ui.archivesPreferencePage"
             name="Packaging Archives"/>
+      <page
+            category="org.jboss.ide.eclipse.archives.ui.archivesPreferencePage"
+            class="org.jboss.ide.eclipse.archives.ui.preferences.VariablesPreferencePage"
+            id="org.jboss.ide.eclipse.archives.ui.variablesPreferencePage"
+            name="Archives Variables"/>
    </extension>
    
    

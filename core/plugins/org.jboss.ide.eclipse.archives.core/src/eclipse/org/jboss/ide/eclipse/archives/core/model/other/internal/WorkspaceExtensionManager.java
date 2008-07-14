@@ -36,6 +36,7 @@ import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IActionType;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
 import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
+import org.jboss.ide.eclipse.archives.core.model.IVariableProvider;
 
 /**
  * This class will be responsible for loading extension points in the core.
@@ -46,6 +47,7 @@ import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
 public class WorkspaceExtensionManager implements IExtensionManager {
 	public static final String ARCHIVE_TYPES_EXTENSION_ID = "org.jboss.ide.eclipse.archives.core.archiveTypes";
 	public static final String ACTION_TYPES_EXTENSION_ID = "org.jboss.ide.eclipse.archives.core.actionTypes";
+	public static final String VARIABLE_PROVIDER_EXTENSION_ID = "org.jboss.ide.eclipse.archives.core.variableProviders";
 	
 	private IExtension[] findExtension (String extensionId) {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
@@ -53,9 +55,9 @@ public class WorkspaceExtensionManager implements IExtensionManager {
 		return extensionPoint.getExtensions();
 	}
 	
-	private static Hashtable archiveTypes;
+	private static Hashtable<String, IArchiveType> archiveTypes;
 	private void loadPackageTypes () {
-		archiveTypes = new Hashtable();
+		archiveTypes = new Hashtable<String, IArchiveType>();
 		IExtension[] extensions = findExtension(ARCHIVE_TYPES_EXTENSION_ID);
 		
 		for (int i = 0; i < extensions.length; i++) {
@@ -77,22 +79,22 @@ public class WorkspaceExtensionManager implements IExtensionManager {
 	public IArchiveType getArchiveType (String packageType) {
 		if (archiveTypes == null)
 			loadPackageTypes();
-		return (IArchiveType)archiveTypes.get(packageType);
+		return archiveTypes.get(packageType);
 	}
 
 	public IArchiveType[] getArchiveTypes() {
 		if( archiveTypes == null )
 			loadPackageTypes();
-		Collection c = archiveTypes.values();
-		return (IArchiveType[]) c.toArray(new IArchiveType[c.size()]);
+		Collection<IArchiveType> c = archiveTypes.values();
+		return c.toArray(new IArchiveType[c.size()]);
 	}
 
 
-	private static Hashtable actionTypes;
+	private static Hashtable<String, IActionType> actionTypes;
 	public IActionType getActionType(String id) {
 		if (actionTypes == null)
 			loadActionTypes();
-		return (IActionType)actionTypes.get(id);
+		return actionTypes.get(id);
 	}
 
 	/* (non-Javadoc)
@@ -101,12 +103,12 @@ public class WorkspaceExtensionManager implements IExtensionManager {
 	public IActionType[] getActionTypes() {
 		if( actionTypes == null )
 			loadActionTypes();
-		Collection c = archiveTypes.values();
-		return (IActionType[]) c.toArray(new IActionType[c.size()]);
+		Collection<IArchiveType> c = archiveTypes.values();
+		return c.toArray(new IActionType[c.size()]);
 	}
 
 	private void loadActionTypes() {
-		actionTypes = new Hashtable();
+		actionTypes = new Hashtable<String, IActionType>();
 		IExtension[] extensions = findExtension(ACTION_TYPES_EXTENSION_ID);
 		for (int i = 0; i < extensions.length; i++) {
 			IConfigurationElement elements[] = extensions[i].getConfigurationElements();
@@ -123,4 +125,39 @@ public class WorkspaceExtensionManager implements IExtensionManager {
 			}
 		}
 	}
+	
+	
+	
+	private static Hashtable<String, IVariableProvider> variableProviders;
+	public IVariableProvider getVariableProvider(String id) {
+		if (variableProviders == null)
+			loadVariableProviders();
+		return variableProviders.get(id);
+	}
+	public IVariableProvider[] getVariableProviders() {
+		if( variableProviders == null )
+			loadVariableProviders();
+		Collection<IVariableProvider> c = variableProviders.values();
+		return c.toArray(new IVariableProvider[c.size()]);
+	}
+
+	private void loadVariableProviders() {
+		variableProviders = new Hashtable<String, IVariableProvider>();
+		IExtension[] extensions = findExtension(VARIABLE_PROVIDER_EXTENSION_ID);
+		for (int i = 0; i < extensions.length; i++) {
+			IConfigurationElement elements[] = extensions[i].getConfigurationElements();
+			for (int j = 0; j < elements.length; j++) {
+				try {
+					Object executable = elements[j].createExecutableExtension("class");
+					IVariableProvider type = (IVariableProvider)executable;
+					variableProviders.put(type.getId(), type);
+				} catch (InvalidRegistryObjectException e) {
+					ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, e.getMessage(), e);
+				} catch( CoreException e ) {
+					ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, e.getMessage(), e);
+				}
+			}
+		}
+	}
+	
 }

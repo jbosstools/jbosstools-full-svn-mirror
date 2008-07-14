@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.archives.ui.util.composites;
+package org.jboss.ide.eclipse.archives.ui.util.garbage;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.runtime.IPath;
@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
-import org.jboss.ide.eclipse.archives.ui.dialogs.ArchiveNodeDestinationDialog;
+import org.jboss.ide.eclipse.archives.ui.util.composites.ArchiveNodeDestinationDialog;
 
 public class ArchiveDestinationComposite extends ArchiveNodeDestinationComposite {
 
@@ -47,7 +47,7 @@ public class ArchiveDestinationComposite extends ArchiveNodeDestinationComposite
 	}
 	
 	protected void openDestinationDialog() {
-		ArchiveNodeDestinationDialog dialog = new ArchiveNodeDestinationDialog(getShell(), nodeDestination, true, true);
+		ArchiveNodeDestinationDialog dialog = new ArchiveNodeDestinationDialog(getShell(), true, true);
 		if (nodeDestination != null)
 			dialog.setInitialSelection(nodeDestination);
 		

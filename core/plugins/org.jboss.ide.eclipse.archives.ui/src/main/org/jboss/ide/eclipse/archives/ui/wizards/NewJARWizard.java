@@ -7,24 +7,22 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 
-public class NewJARWizard extends AbstractArchiveWizard
-{
+public class NewJARWizard extends AbstractArchiveWizard {
 	public WizardPage[] createWizardPages() {
 		return new WizardPage[0];
 	}
 
 	public NewJARWizard () {
+		super();
 		setWindowTitle(ArchivesUIMessages.NewJARWizard_windowTitle);
 	}
 	
 	public NewJARWizard (IArchive existingPackage) {
 		super(existingPackage);
-		
 		setWindowTitle(ArchivesUIMessages.NewJARWizard_windowTitle_editJAR);
 	}
 	
 	public boolean performFinish(IArchive pkg) {
-		
 		pkg.setArchiveType(ArchivesCore.getInstance().getExtensionManager().getArchiveType("jar"));
 		return true;
 	}

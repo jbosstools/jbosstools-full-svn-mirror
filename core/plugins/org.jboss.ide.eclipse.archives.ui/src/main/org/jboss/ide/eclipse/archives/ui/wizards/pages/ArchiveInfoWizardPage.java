@@ -1,8 +1,7 @@
 package org.jboss.ide.eclipse.archives.ui.wizards.pages;
 
-import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -16,15 +15,16 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.ArchiveNodeFactory;
-import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
-import org.jboss.ide.eclipse.archives.ui.util.DestinationChangeListener;
-import org.jboss.ide.eclipse.archives.ui.util.composites.ArchiveDestinationComposite;
+import org.jboss.ide.eclipse.archives.ui.util.composites.ArchiveSourceDestinationComposite;
+import org.jboss.ide.eclipse.archives.ui.util.composites.ArchiveSourceDestinationComposite.ChangeListener;
 import org.jboss.ide.eclipse.archives.ui.wizards.AbstractArchiveWizard;
 import org.jboss.ide.eclipse.archives.ui.wizards.WizardPageWithNotification;
 import org.jboss.ide.eclipse.archives.ui.wizards.WizardWithNotification;
@@ -37,7 +37,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 	private Button explodedButton;
 	private String packageName;
 	private boolean packageExploded;
-	private ArchiveDestinationComposite destinationComposite;
+	private ArchiveSourceDestinationComposite destinationComposite;
 	private IArchive archive;
 	
 	public ArchiveInfoWizardPage (AbstractArchiveWizard wizard, IArchive existingPackage) {
@@ -47,7 +47,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 	}
 	
 	public void createControl(Composite parent) {
-		setMessage(ArchivesUIMessages.PackageInfoWizardPage_message);		
+		setMessage(ArchivesUIMessages.PackageInfoWizardPage_message);
 		
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
@@ -79,26 +79,26 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 		
 		packageNameText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				if (validate())
-				{
+				if (validate()) {
 					packageName = packageNameText.getText();
 				}
 			}
 		});
 
-		new Label(infoGroup, SWT.NONE).setText(ArchivesUIMessages.PackageInfoWizardPage_destination_label);
-
+		Label l = new Label(infoGroup, SWT.NONE);
+		l.setText(ArchivesUIMessages.PackageInfoWizardPage_destination_label);
+		GridData lData = new GridData(GridData.BEGINNING, GridData.BEGINNING,false,false);
+		l.setLayoutData(lData);
+		
 		GridData destinationTextData = new GridData(GridData.FILL_BOTH);
 		destinationTextData.horizontalSpan = 2;
 		GridData buttonData = new GridData(GridData.FILL_HORIZONTAL);
 		buttonData.horizontalSpan = 3;
 		buttonData.horizontalAlignment = SWT.END;
 		
-		Object destination = wizard.getSelectedDestination();
-		destinationComposite = new ArchiveDestinationComposite(
-			infoGroup, SWT.NONE, destination);
-		destinationComposite.addDestinationChangeListener(new DestinationChangeListener () {
-			public void destinationChanged(Object newDestination) {
+		destinationComposite = new ArchiveSourceDestinationComposite(infoGroup, wizard.getProject().getName());
+		destinationComposite.addChangeListener(new ChangeListener () {
+			public void compositeChanged() {
 				validate();
 			}
 		});
@@ -131,112 +131,71 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 		validate();
 	}
 	
-	private void fillDefaults ()
-	{
-		if (archive != null)
-		{
+	private void fillDefaults () {
+		if (archive != null) {
 			compressedButton.setSelection(!archive.isExploded());
 			explodedButton.setSelection(archive.isExploded());
 			packageNameText.setText(archive.getName());
 			packageName = archive.getName();
-			
-			if (archive.isTopLevel()) {
-				
-				// TODO:  FIX THIS
-				IPath globalDest = archive.getGlobalDestinationPath();
-				IContainer container = globalDest == null ? null : ResourcesPlugin.getWorkspace().getRoot().getContainerForLocation(globalDest);
-				if( container != null )
-					destinationComposite.setPackageNodeDestination(container);
-				else 
-					destinationComposite.setPackageNodeDestination(globalDest);
+			explodedButton.setSelection(archive.isExploded());
+			compressedButton.setSelection(!archive.isExploded());
+			IArchiveNode parent = archive.getParent();
+			if( parent != null && !(parent instanceof IArchiveModelRootNode)) {
+				destinationComposite.init(parent);
 			} else {
-				destinationComposite.setPackageNodeDestination(archive.getParent());
-			}
-			
-			if (archive.isExploded()) {
-				explodedButton.setEnabled(true);
-			} else {
-				compressedButton.setEnabled(true);
+				destinationComposite.init(archive.getDestinationPath().toString(), archive.isDestinationInWorkspace());
 			}
 		}
 	}
 
-	private boolean validate ()
-	{
+	private boolean validate () {
+		String errorMessage = null;
 		if (packageNameText.getText() == null || packageNameText.getText().length() == 0)
-		{
-			setErrorMessage(ArchivesUIMessages.PackageInfoWizardPage_error_noPackageName);
-			setPageComplete(false);
-			return false;
-		}
-		else {
-			setErrorMessage(null);
-		}
-		
-		Object destination = getPackageDestination();
-		if (destination instanceof IArchiveNode)
-		{
-			IArchiveNode parentNode = (IArchiveNode) destination;
-			
-			// verify no child has the same name
-			IArchiveNode subPackages[] = parentNode.getChildren(IArchiveNode.TYPE_ARCHIVE);
-			for (int i = 0; i < subPackages.length; i++)
-			{
-				IArchive subPackage = (IArchive) subPackages[i];
-				if (subPackage.getName().equals(packageNameText.getText())
-					&& (!subPackage.equals(this.archive)))
-				{
-					setErrorMessage(
-						ArchivesUIMessages.bind(
-							ArchivesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
-					setPageComplete(false);
-					return false;
+			errorMessage = ArchivesUIMessages.PackageInfoWizardPage_error_noPackageName;
+		else if( !destinationComposite.isValid() ) 
+			errorMessage = destinationComposite.getErrorMessage();
+		else if( destinationComposite.getDestinationNode() != null ) {
+				IArchiveNode parentNode = destinationComposite.getDestinationNode();
+				// verify no child has the same name
+				IArchiveNode subPackages[] = parentNode.getChildren(IArchiveNode.TYPE_ARCHIVE);
+				for (int i = 0; i < subPackages.length; i++) {
+					IArchive subPackage = (IArchive) subPackages[i];
+					if (subPackage.getName().equals(packageNameText.getText())
+						&& (!subPackage.equals(this.archive))) {
+							errorMessage =  ArchivesUIMessages.bind(
+								ArchivesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, 
+								packageNameText.getText());
+					}
 				}
+		} else if( destinationComposite.getPath() != null ) {
+			boolean relative = destinationComposite.isWorkspaceRelative();
+			IPath destinationLocation; 
+			if( relative ) {
+				IPath translatedPath = new Path(destinationComposite.getTranslatedPath());
+				destinationLocation = ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(translatedPath);
+			} else {
+				destinationLocation = new Path(destinationComposite.getPath());
 			}
-		} else if (destination instanceof IContainer) {
-			IContainer container = (IContainer) destination;
+
 			IArchive[] packages = ModelUtil.getProjectArchives(wizard.getProject().getLocation());
 			if (packages != null) {
 				for( int i = 0; i < packages.length; i++ ) {
 					IArchive pkg = (IArchive) packages[i];
 					if (pkg.getName().equals(packageNameText.getText())
-						&& (pkg.getGlobalDestinationPath() != null && pkg.getGlobalDestinationPath().equals(container.getFullPath()))
-						&& (!pkg.equals(this.archive)))
-					{
-						setErrorMessage(
-								ArchivesUIMessages.bind(
-									ArchivesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
-							setPageComplete(false);
-							return false;
+						&& (pkg.getGlobalDestinationPath() != null && pkg.getGlobalDestinationPath().equals(destinationLocation))
+						&& (!pkg.equals(this.archive))) {
+						errorMessage = ArchivesUIMessages.bind(
+									ArchivesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText());
 					}
 				}
 			}
-		} else if (destination instanceof IPath) {
-			IPath path = (IPath) destination;
-			IArchive[] packages = ModelUtil.getProjectArchives(wizard.getProject().getLocation());
-			if (packages != null) {
-				for( int i = 0; i < packages.length; i++ ) {
-					IArchive pkg = (IArchive) packages[i];
-					if (pkg.getName().equals(packageNameText.getText())
-						&& (pkg.getGlobalDestinationPath() != null && pkg.getGlobalDestinationPath().equals(path))
-						&& (!pkg.equals(this.archive)))
-					{
-						setErrorMessage(
-								ArchivesUIMessages.bind(
-									ArchivesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText()));
-							setPageComplete(false);
-							return false;
-					}
-				}
-			} else if (destination == null) {
-				setErrorMessage(ArchivesUIMessages.PackageInfoWizardPage_error_noDestination);
-				setPageComplete(false);
-				return false;
-			}
+		} else {
+			errorMessage = (ArchivesUIMessages.PackageInfoWizardPage_error_noDestination);
 		}
 		
-		setPageComplete(true);
-		return true;
+		setErrorMessage(errorMessage);
+		setPageComplete(errorMessage == null);
+		return errorMessage == null;
 	}
 	
 	
@@ -247,27 +206,19 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 	}
 	
 	private void createPackage () {
-		Object destContainer = getPackageDestination();
-		
-		
 		if (archive == null) {
 			archive = ArchiveNodeFactory.createArchive();
 		}
 		
 		archive.setName(getPackageName());
 		archive.setExploded(isPackageExploded());
-		
-		if (destContainer instanceof IContainer) {
-			archive.setDestinationPath(((IContainer)destContainer).getFullPath());
-			archive.setInWorkspace(true);
-		} else if (destContainer instanceof IPath) {
-			archive.setDestinationPath((IPath) destContainer);
-			archive.setInWorkspace(false);
+		if( destinationComposite.getPath() != null ) {
+			archive.setInWorkspace(destinationComposite.isWorkspaceRelative());
+			archive.setDestinationPath(new Path(destinationComposite.getPath()));
 		}
 	}
 	
-	private void expand(Control control)
-	{
+	private void expand(Control control) {
 		control.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 	}
 
@@ -278,18 +229,23 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 	public boolean isPackageExploded() {
 		return packageExploded;
 	}
-
-	public Object getPackageDestination() {
-		return destinationComposite.getPackageNodeDestination();
-	}
 	
-	private void setWizard(AbstractArchiveWizard wizard)
-	{
+	private void setWizard(AbstractArchiveWizard wizard) {
 		this.wizard = wizard;
 	}
 	
-	public IArchive getArchive ()
-	{
+	public IArchive getArchive () {
 		return archive;
+	}
+	
+	// Getters for the wizard to call
+	public String getDestinationPath() {
+		return destinationComposite.getPath();
+	}
+	public IArchiveNode getDestinationNode() {
+		return destinationComposite.getDestinationNode();
+	}
+	public boolean isDestinationWorkspaceRelative() {
+		return destinationComposite.isWorkspaceRelative();
 	}
 }

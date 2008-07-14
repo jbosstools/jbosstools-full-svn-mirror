@@ -32,7 +32,9 @@ import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.ArchivesCorePlugin;
+import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.IPreferenceManager;
 import org.osgi.service.prefs.BackingStoreException;
 
@@ -90,7 +92,7 @@ public class WorkspacePreferenceManager extends AbstractPreferenceInitializer im
 		try {
 			prefs.flush();
 		} catch (BackingStoreException e) {	
-			e.printStackTrace();
+			ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_ERR, e.getMessage(), e);
 		}
 	}
 	
@@ -100,8 +102,7 @@ public class WorkspacePreferenceManager extends AbstractPreferenceInitializer im
 		try {
 			prefs.flush();
 		} catch (BackingStoreException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_ERR, e1.getMessage(), e1);
 		}
 	}
 	

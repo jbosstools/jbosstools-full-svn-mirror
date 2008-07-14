@@ -1,7 +1,4 @@
-package org.jboss.ide.eclipse.archives.ui.util.composites;
-
-import java.util.ArrayList;
-import java.util.Iterator;
+package org.jboss.ide.eclipse.archives.ui.util.garbage;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -10,7 +7,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -21,7 +17,6 @@ import org.eclipse.ui.ide.IDE;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
-import org.jboss.ide.eclipse.archives.ui.util.DestinationChangeListener;
 
 public abstract class ArchiveNodeDestinationComposite extends Composite {
 
@@ -29,13 +24,13 @@ public abstract class ArchiveNodeDestinationComposite extends Composite {
 	protected Label destinationImage;
 	protected Text destinationText;
 	protected Object nodeDestination;
-	protected ArrayList<DestinationChangeListener> listeners;
+	//protected ArrayList<DestinationChangeListener> listeners;
 	
 	public ArchiveNodeDestinationComposite(Composite parent, int style, Object destination) {
 		super(parent, style);
 		this.parent = parent;
 		this.nodeDestination = destination;
-		this.listeners = new ArrayList<DestinationChangeListener>();
+		//this.listeners = new ArrayList<DestinationChangeListener>();
 		
 		createComposite();
 	}
@@ -96,7 +91,7 @@ public abstract class ArchiveNodeDestinationComposite extends Composite {
 	public void setPackageNodeDestination (Object destination) {
 		nodeDestination = destination;
 		updateDestinationViewer();
-		fireDestinationChanged();
+		//fireDestinationChanged();
 	}
 	
 	protected void updateDestinationViewer () {
@@ -139,18 +134,18 @@ public abstract class ArchiveNodeDestinationComposite extends Composite {
 	/*
 	 * Destination change listeners
 	 */
-	
-	public void addDestinationChangeListener (DestinationChangeListener listener) {
-		listeners.add(listener);
-	}
-	
-	public void removeDestinationChangeListener (DestinationChangeListener listener) {
-		listeners.remove(listener);
-	}
-	
-	private void fireDestinationChanged () {
-		for (Iterator<DestinationChangeListener> iter = listeners.iterator(); iter.hasNext(); ) {
-			((DestinationChangeListener) iter.next()).destinationChanged(nodeDestination);
-		}
-	}
+//	
+//	public void addDestinationChangeListener (DestinationChangeListener listener) {
+//		listeners.add(listener);
+//	}
+//	
+//	public void removeDestinationChangeListener (DestinationChangeListener listener) {
+//		listeners.remove(listener);
+//	}
+//	
+//	private void fireDestinationChanged () {
+//		for (Iterator<DestinationChangeListener> iter = listeners.iterator(); iter.hasNext(); ) {
+//			((DestinationChangeListener) iter.next()).destinationChanged(nodeDestination);
+//		}
+//	}
 }

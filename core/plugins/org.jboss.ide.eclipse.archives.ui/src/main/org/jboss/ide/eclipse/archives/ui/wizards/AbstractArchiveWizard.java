@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -28,8 +27,10 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 	private ArchiveInfoWizardPage firstPage;
 	private WizardPage pages[];
 	protected IProject project;
-	protected Object selectedDestination;
 	protected IArchive existingPackage;
+	protected String initialDestinationPath;
+	protected boolean isPathWorkspaceRelative;
+	protected IArchiveNode initialDestinationNode;
 	
 	public AbstractArchiveWizard () {	
 		this.project = ProjectArchivesView.getInstance().getCurrentProject();
@@ -37,19 +38,12 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 	
 	public AbstractArchiveWizard (IArchive existingPackage) {
 		this.existingPackage = existingPackage;
-		this.project = findProject(existingPackage.getProjectPath());
+		this.project = ResourcesPlugin.getWorkspace().getRoot().getProject(existingPackage.getProjectName());
 	}
-	protected IProject findProject(IPath path) {
-		IProject[] list = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-		for( int i = 0; i < list.length; i++ )
-			if( list[i].getProject().getLocation().equals(path))
-				return list[i];
-		return null;
-	}
+	
 	public void addPages() {
 		firstPage = new ArchiveInfoWizardPage(this, existingPackage);
 		addPage(firstPage);
-		
 		pages = createWizardPages();
 		for (int i = 0; i < pages.length; i++) {
 			addPage(pages[i]);
@@ -63,20 +57,17 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 			}
 			return true;
 		}
-		
 		return false;
 	}
 	
 	public boolean performFinish() {
 		IWizardPage currentPage = getContainer().getCurrentPage();
-		
 		if (currentPage instanceof WizardPageWithNotification) {
 			((WizardPageWithNotification)currentPage).pageExited(WizardWithNotification.FINISH);
 		}
 		
-		final boolean create = this.existingPackage == null;
+		final boolean create = (this.existingPackage == null);
 		final IArchive pkg = firstPage.getArchive();
-		final Object destination = firstPage.getPackageDestination();
 		
 		boolean performed = performFinish(pkg);
 		
@@ -84,23 +75,24 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 			try {
 				getContainer().run(true, false, new IRunnableWithProgress () {
 					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-						IArchiveNode parent = null;
+						IArchiveNode parent;
+						IArchiveNode destNode = firstPage.getDestinationNode();
+						if( destNode != null ) {
+							// if we're modifying an existing package, remove old parentage
+							if (!create && !destNode.equals(pkg.getParent())) {
+								if (pkg.getParent() != null) {
+									pkg.getParent().removeChild(pkg);
+								}
+							}							
+							parent = (IArchiveNode)destNode;
+						} else {
+							// parent is a String / path, so this is a top level node
+							parent = ArchivesModel.instance().getRoot(project.getLocation());
+							if( parent == null ) 
+								parent = ArchivesModel.instance().registerProject(project.getLocation(), null);
+						}
 						
 						try {
-							if (destination instanceof IArchiveNode) {
-								// if we're modifying an existing package, remove old parentage
-								if (!create && !destination.equals(pkg.getParent())) {
-									if (pkg.getParent() != null) {
-										pkg.getParent().removeChild(pkg);
-									}
-								}
-								parent = (IArchiveNode)destination;
-							} else {
-								parent = ArchivesModel.instance().getRoot(project.getLocation());
-								if( parent == null ) 
-									parent = ArchivesModel.instance().registerProject(project.getLocation(), null);
-							}
-						
 							if( create ) 
 								parent.addChild(pkg);
 							ArchivesModel.instance().save(project.getLocation(), monitor);
@@ -108,7 +100,6 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 							IStatus status = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, "Error Completing Wizard", ame);
 							PackagesUIPlugin.getDefault().getLog().log(status);
 						}
-
 					}
 				});
 			} catch (InvocationTargetException e) {
@@ -121,45 +112,36 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		if (selection == null) return;
 		project = ProjectArchivesView.getInstance().getCurrentProject();
-		Object selected;
+		Object selected = (selection.isEmpty() ? project : selection.getFirstElement());
 		
-		if( selection.isEmpty() ) {
-			selected = project;
-		} else {
-			selected = selection.getFirstElement();
-		}
-
-		if (selected instanceof IArchiveNode)
-		{
+		if (selected instanceof IArchiveNode) {
 			IArchiveNode node = (IArchiveNode) selected;
-			if (node.getNodeType() == IArchiveNode.TYPE_ARCHIVE || node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FOLDER)
-			{
-				selectedDestination = selected;
+			if (node.getNodeType() == IArchiveNode.TYPE_ARCHIVE || node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FOLDER) {
+				initialDestinationNode = (IArchiveNode)selected;
 			}
-			project = findProject(node.getProjectPath());
-		}
-		else if (selected instanceof IContainer)
-		{
-			selectedDestination = selected;
-		}
-		else {
-			// find project
-			String proj = project.getLocation().toOSString().substring(ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString().length()+1);
-			selectedDestination = ResourcesPlugin.getWorkspace().getRoot().getProject(proj);
+			project = ResourcesPlugin.getWorkspace().getRoot().getProject(node.getProjectName());
+		} else if (selected instanceof IContainer) {
+			initialDestinationPath = ((IContainer)selected).getFullPath().toString();
+			isPathWorkspaceRelative = true;
+		} else {
+			initialDestinationPath = project.getFullPath().toString();
+			isPathWorkspaceRelative = true;
 		}
 		
-		setNeedsProgressMonitor(true);
+		setNeedsProgressMonitor(true);	
 	}
 	
-	public Object getSelectedDestination ()
-	{
-		return selectedDestination;
+	public IArchiveNode getInitialNode() {
+		return initialDestinationNode;
 	}
 	
-	public abstract boolean performFinish(IArchive pkg);
-	public abstract WizardPage[] createWizardPages();
-	public abstract ImageDescriptor getImageDescriptor();
-	public abstract String getArchiveExtension();
+	public String getInitialPath() {
+		return initialDestinationPath;
+	}
+	
+	public boolean isInitialPathWorkspaceRelative() {
+		return isPathWorkspaceRelative;
+	}
 	
 	public IProject getProject() {
 		return project;
@@ -173,4 +155,9 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 	public IArchive getArchive () {
 		return firstPage.getArchive();
 	}
+	
+	public abstract boolean performFinish(IArchive pkg);
+	public abstract WizardPage[] createWizardPages();
+	public abstract ImageDescriptor getImageDescriptor();
+	public abstract String getArchiveExtension();
 }

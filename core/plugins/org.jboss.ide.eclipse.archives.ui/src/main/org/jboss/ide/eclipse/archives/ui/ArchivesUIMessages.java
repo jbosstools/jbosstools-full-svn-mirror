@@ -87,6 +87,27 @@ public class ArchivesUIMessages extends NLS {
 	public static String FilesetInfoWizardPage_fileWorkspaceBrowser_title;
 	public static String FilesetInfoWizardPage_fileWorkspaceBrowser_message;
 	
+	/* Preference Page */
+	public static String PreferencePageTitle;
+	public static String ProjectSpecificSettings;
+	public static String CorePreferences;
+	public static String EnableIncrementalBuilder;
+
+	public static String ProjectPackagesView;
+	public static String ShowFullOutputPath;
+	public static String ShowFullRootDirectory;
+	public static String ShowRootProject;
+	public static String ShowAllProjects;
+	public static String ArchivesVariables;
+	public static String VariablesGroup;
+	public static String Add;
+	public static String Edit;
+	public static String Remove;
+	public static String Enable;
+	public static String Disable;
+	public static String MoveUp;
+	public static String MoveDown;
+	
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ArchivesUIMessages.class);
 	}

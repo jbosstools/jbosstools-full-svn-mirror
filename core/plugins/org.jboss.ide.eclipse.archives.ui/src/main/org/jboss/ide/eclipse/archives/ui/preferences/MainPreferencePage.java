@@ -19,6 +19,7 @@ import org.eclipse.ui.dialogs.PropertyPage;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IPreferenceManager;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
 import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesView;
 
@@ -34,7 +35,7 @@ public class MainPreferencePage extends PropertyPage implements
 	
 	public MainPreferencePage() {
 		super();
-		setTitle("Packaging Archives");
+		setTitle(ArchivesUIMessages.PreferencePageTitle);
 		setImageDescriptor(ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_PACKAGE));
 	}
 
@@ -86,7 +87,7 @@ public class MainPreferencePage extends PropertyPage implements
 			overrideComp = new Composite(main, SWT.NONE);
 			overrideComp.setLayout(new FillLayout());
 			overrideButton = new Button(overrideComp, SWT.CHECK);
-			overrideButton.setText("Enable Project Specific Settings");
+			overrideButton.setText(ArchivesUIMessages.ProjectSpecificSettings);
 			
 			overrideButton.addSelectionListener(new SelectionListener(){
 				public void widgetDefaultSelected(SelectionEvent e) {
@@ -110,29 +111,29 @@ public class MainPreferencePage extends PropertyPage implements
 	
 	protected void createCorePrefs(Composite main) {
 		corePrefGroup = new Group(main, SWT.NONE);
-		corePrefGroup.setText("Core Preferences");
+		corePrefGroup.setText(ArchivesUIMessages.CorePreferences);
 		corePrefGroup.setLayout(new GridLayout(1, false));
 		corePrefGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));		
 		
 		automaticBuilder = new Button(corePrefGroup, SWT.CHECK);
-		automaticBuilder.setText("Enable incremental builder");
+		automaticBuilder.setText(ArchivesUIMessages.EnableIncrementalBuilder);
 	}
 	
 	protected void createViewPrefs(Composite main) {
 		
 		viewPrefGroup = new Group(main, SWT.NONE);
-		viewPrefGroup.setText("Project Packages View");
+		viewPrefGroup.setText(ArchivesUIMessages.ProjectPackagesView);
 		viewPrefGroup.setLayout(new GridLayout(1, false));
 		viewPrefGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
 		showPackageOutputPath = new Button(viewPrefGroup, SWT.CHECK);
-		showPackageOutputPath.setText("Show full output path next to packages.");
+		showPackageOutputPath.setText(ArchivesUIMessages.ShowFullOutputPath);
 		
 		showFullFilesetRootDir = new Button(viewPrefGroup, SWT.CHECK);
-		showFullFilesetRootDir.setText("Show the full root directory of filesets.");
+		showFullFilesetRootDir.setText(ArchivesUIMessages.ShowFullRootDirectory);
 		
 		showProjectRoot = new Button(viewPrefGroup, SWT.CHECK);
-		showProjectRoot.setText("Show project at the root");
+		showProjectRoot.setText(ArchivesUIMessages.ShowRootProject);
 		
 		showProjectRoot.addSelectionListener(new SelectionListener () {
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -149,13 +150,13 @@ public class MainPreferencePage extends PropertyPage implements
 		});
 		
 		showAllProjects = new Button(viewPrefGroup, SWT.CHECK);
-		showAllProjects.setText("Show all projects that contain packages");
+		showAllProjects.setText(ArchivesUIMessages.ShowAllProjects);
 		showAllProjects.setEnabled(showProjectRoot.getSelection());
 		if( !showProjectRoot.getSelection() ) 
 			showAllProjects.setSelection(false);
 
 	}
-
+	
 	public void init(IWorkbench workbench) {
 	}
 

@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.archives.ui.dialogs;
+package org.jboss.ide.eclipse.archives.ui.util.composites;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,11 +12,9 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
@@ -24,7 +22,6 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.ide.IDE;
-import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
@@ -33,7 +30,7 @@ import org.jboss.ide.eclipse.archives.ui.providers.ArchivesLabelProvider;
 
 public class ArchiveNodeDestinationDialog extends ElementTreeSelectionDialog {
 
-	public ArchiveNodeDestinationDialog(Shell parent, Object destination,
+	public ArchiveNodeDestinationDialog(Shell parent,
 			boolean showWorkspace, boolean showNodes) {
 		super(parent, new DestinationLabelProvider(),
 				new DestinationContentProvider(showWorkspace, showNodes));
@@ -56,17 +53,17 @@ public class ArchiveNodeDestinationDialog extends ElementTreeSelectionDialog {
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof IArchiveNode) {
 				IArchiveNode node = (IArchiveNode) parentElement;
-				List children = new ArrayList(Arrays.asList(node
+				List<IArchiveNode> children = new ArrayList<IArchiveNode>(Arrays.asList(node
 						.getAllChildren()));
-				for (Iterator iter = children.iterator(); iter.hasNext();) {
-					IArchiveNode child = (IArchiveNode) iter.next();
+				for (Iterator<IArchiveNode> iter = children.iterator(); iter.hasNext();) {
+					IArchiveNode child = iter.next();
 					if (child.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FILESET)
 						iter.remove();
 				}
 				return children.toArray();
 			} else if (parentElement instanceof IContainer) {
 				IContainer container = (IContainer) parentElement;
-				ArrayList result = new ArrayList();
+				ArrayList<Object> result = new ArrayList<Object>();
 				if (showWorkspace) {
 					try {
 						IResource members[] = container.members();
@@ -103,21 +100,19 @@ public class ArchiveNodeDestinationDialog extends ElementTreeSelectionDialog {
 		}
 
 		public Object[] getElements(Object inputElement) {
-			 ArrayList destinations = new ArrayList();
+			 ArrayList<IProject> destinations = new ArrayList<IProject>();
 
 			 if (showWorkspace) {
 				 destinations.addAll(Arrays.asList(ResourcesPlugin.getWorkspace().getRoot().getProjects()));
 			 }
-			 
-			 IProgressMonitor monitor = new NullProgressMonitor();
-			 
+
 			 if( showNodes ) {
 				 // add ALL packages from ALL projects
 				 IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 				 for( int i = 0; i < projects.length; i++ ) {
 					 if( projects[i].isAccessible()) {
 						 IArchive[] archives = ModelUtil.getProjectArchives(projects[i].getLocation());
-						 List tmp = Arrays.asList(archives);
+						 List<IArchive> tmp = Arrays.asList(archives);
 						 if( tmp.size() > 0 && !destinations.contains(projects[i]))
 							 destinations.add(projects[i]);
 					 }
@@ -133,7 +128,7 @@ public class ArchiveNodeDestinationDialog extends ElementTreeSelectionDialog {
 		}
 	}
 
-	private static class DestinationLabelProvider implements ILabelProvider {
+	private static class DestinationLabelProvider extends LabelProvider {
 		private ArchivesLabelProvider delegate;
 
 		public DestinationLabelProvider() {
