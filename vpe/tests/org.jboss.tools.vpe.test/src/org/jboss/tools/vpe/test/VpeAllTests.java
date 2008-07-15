@@ -10,12 +10,19 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.test;
 
-import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPageTest;
-import org.jboss.tools.vpe.editor.template.VpeTemplateManagerTest;
+import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.jboss.tools.jsf.vpe.jsf.test.JsfComponentTest;
+import org.jboss.tools.jsf.vpe.jsf.test.JsfTestPlugin;
+import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPageTest;
+import org.jboss.tools.vpe.editor.template.VpeTemplateManagerTest;
+import org.jboss.tools.vpe.ui.test.VpeTestSetup;
+import org.jboss.tools.vpe.ui.test.beans.ImportBean;
 
 /**
  * Class created for run tests for org.jboss.tools.vpe plugin.
@@ -33,7 +40,15 @@ public class VpeAllTests extends TestCase{
 		suite.addTestSuite(TemplatesExpressionParsingTest.class);
 		suite.addTestSuite(VpeEditorPreferencesPageTest.class);
 		suite.addTestSuite(VpeTemplateManagerTest.class);
-		// $JUnit-END$
-		return suite;
+		suite.addTestSuite(ElPreferencesTestCase.class);
+		
+
+        List<ImportBean> projectToImport = new ArrayList<ImportBean>();
+        ImportBean importBean = new ImportBean();
+        importBean.setImportProjectName(JsfComponentTest.IMPORT_PROJECT_NAME);
+        importBean.setImportProjectPath(JsfTestPlugin.getPluginResourcePath());
+        projectToImport.add(importBean);
+
+        return new VpeTestSetup(suite, projectToImport);
 	}
 }
