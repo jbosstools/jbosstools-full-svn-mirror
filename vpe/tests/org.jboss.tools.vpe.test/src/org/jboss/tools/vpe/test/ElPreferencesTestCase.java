@@ -7,20 +7,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Path;
 import org.jboss.tools.vpe.editor.css.ELReferenceList;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
 import org.jboss.tools.vpe.editor.util.ElService;
 import org.jboss.tools.vpe.ui.test.TestUtil;
 import org.jboss.tools.vpe.ui.test.VpeTest;
 
-
-// TODO: Auto-generated Javadoc
 /**
- * The Class ElPreferencesTestCase.
+ * <p>
+ * Test case for testing service {@link ElService} 
+ * <p>
+ * See <a href="http://jira.jboss.com/jira/browse/JBIDE-2010">JBIDE-2010</a> issue
  */
 public class ElPreferencesTestCase extends VpeTest {
 
@@ -78,7 +77,7 @@ public class ElPreferencesTestCase extends VpeTest {
         ResourceReference[] entries = new ResourceReference[elValuesMap.size()];
         int i = 0;
         for (Entry<String, String> string : elValuesMap.entrySet()) {
-            
+
             entries[i] = new ResourceReference(string.getValue(), ResourceReference.PROJECT_SCOPE);
             entries[i].setProperties(string.getKey());
             i++;
@@ -93,9 +92,10 @@ public class ElPreferencesTestCase extends VpeTest {
      * @param key the key
      * @param value the value
      * @param scope the scope
+     * @param entries the entries
      */
     protected void setValues(ResourceReference[] entries) {
- 
+
         ELReferenceList.getInstance().setAllResources(file, entries);
     }
 
@@ -137,5 +137,14 @@ public class ElPreferencesTestCase extends VpeTest {
                 + "/smalle.gif";
         assertEquals("Should be equals " + check, check, replacedValue);
 
+    }
+
+    /**
+     * Test replace not in set.
+     */
+    public void testReplaceNotInSet() {
+        String string1 = "#{requestScope}/smalle.gif";
+
+        assertEquals("Should be equals", string1, ElService.getInstance().replaceEl(file, string1));
     }
 }
