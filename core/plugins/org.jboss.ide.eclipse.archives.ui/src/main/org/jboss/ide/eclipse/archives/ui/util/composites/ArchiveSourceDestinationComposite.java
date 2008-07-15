@@ -10,6 +10,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -35,6 +36,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.INamedContainerArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PackagesUIPlugin;
+import org.jboss.ide.eclipse.archives.ui.dialogs.SelectVariableDialog;
 
 public class ArchiveSourceDestinationComposite extends Composite {
 	private Text text;
@@ -58,7 +60,6 @@ public class ArchiveSourceDestinationComposite extends Composite {
 		layoutWidgets();
 		setWidgetData();
 		addListeners();
-		variablesButton.setEnabled(false); // todo
 	}
 	
 	protected void createWidgets() {
@@ -134,10 +135,21 @@ public class ArchiveSourceDestinationComposite extends Composite {
 	protected void textModified() {validateAndUpdateWidgets();}
 	protected void filesystemButtonPressed() {browseFilesystem();}
 	protected void workspaceButtonPressed() {openDestinationDialog();}
-	protected void variablesButtonPressed() {}
+	protected void variablesButtonPressed() {variablesPressed();}
 	protected void fsRadioButtonPressed() {radioPressed(fsRadioButton);}
 	protected void wsRadioButtonPressed() {radioPressed(wsRadioButton);}
 	
+	protected void variablesPressed() {
+		SelectVariableDialog d = new SelectVariableDialog(Display.getDefault().getActiveShell());
+		if( d.open() == Window.OK) {
+			String val = d.getSelectedVarName();
+			if( val != null ) {
+				path = path + "${" + val + "}";
+				destinationNode = null;
+			}
+			validateAndUpdateWidgets();
+		}
+	}
 	
 	protected void openDestinationDialog() {
 		ArchiveNodeDestinationDialog dialog = new ArchiveNodeDestinationDialog(getShell(), true, true);

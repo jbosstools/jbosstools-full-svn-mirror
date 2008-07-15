@@ -1,29 +1,17 @@
 package org.jboss.ide.eclipse.archives.ui.preferences;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.jdt.internal.ui.JavaPlugin;
-import org.eclipse.jdt.internal.ui.JavaPluginImages;
-import org.eclipse.jface.viewers.BaseLabelProvider;
-import org.eclipse.jface.viewers.DecorationOverlayIcon;
-import org.eclipse.jface.viewers.IDecoration;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -33,10 +21,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IPreferenceManager;
@@ -47,6 +33,9 @@ import org.jboss.ide.eclipse.archives.core.model.other.internal.WorkspaceVariabl
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.dialogs.ArchivesVariableDialog;
+import org.jboss.ide.eclipse.archives.ui.providers.VariablesContentProvider;
+import org.jboss.ide.eclipse.archives.ui.providers.VariablesLabelProvider;
+import org.jboss.ide.eclipse.archives.ui.providers.VariablesLabelProvider.IVariableEnablementChecker;
 
 public class VariablesPreferencePage extends PropertyPage implements
 		IWorkbenchPreferencePage {
@@ -56,15 +45,33 @@ public class VariablesPreferencePage extends PropertyPage implements
 	private Button add,edit,remove,moveUp,moveDown,enable,disable;
 	private HashMap<IVariableProvider, Integer> newWeights;
 	private HashMap<IVariableProvider, Boolean> newEnablement;
-	
+	private Comparator<IVariableProvider> pageComparator;
+	private VariablesContentProvider cProvider;
+	private VariablesLabelProvider lProvider;
 	public VariablesPreferencePage() {
 		super();
 		setTitle(ArchivesUIMessages.ArchivesVariables);
 		setImageDescriptor(ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_PACKAGE));
 		newWeights = new HashMap<IVariableProvider, Integer>();
 		newEnablement = new HashMap<IVariableProvider, Boolean>();
+		pageComparator = createComparator();
 	}
 
+	protected Comparator<IVariableProvider> createComparator() {
+		Comparator<IVariableProvider> x = new Comparator<IVariableProvider>() {
+			public int compare(IVariableProvider o1, IVariableProvider o2) {
+				if( nowEnabled(o1) != nowEnabled(o2))
+					return nowEnabled(o1) ? -1 : 1;
+
+				// now weights
+				if( nowWeight(o1) != nowWeight(o2) ) 
+					return nowWeight(o1) > nowWeight(o2) ? 1 : -1;
+				return 0;
+			}
+		};
+		return x;
+	}
+	
 	protected Control createContents(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
@@ -90,8 +97,14 @@ public class VariablesPreferencePage extends PropertyPage implements
 		fd.right = new FormAttachment(0,300);
 		fd.bottom = new FormAttachment(80,0);
 		variablesViewer.getTree().setLayoutData(fd);
-		variablesViewer.setContentProvider(new VariablesContentProvider());
-		variablesViewer.setLabelProvider(new VariablesLabelProvider());
+		cProvider = new VariablesContentProvider(pageComparator);
+		lProvider = new VariablesLabelProvider(new IVariableEnablementChecker() {
+			public boolean isEnabled(IVariableProvider element) {
+				return nowEnabled((IVariableProvider)element);
+			}
+		});
+		variablesViewer.setContentProvider(cProvider);
+		variablesViewer.setLabelProvider(lProvider);
 		variablesViewer.setInput("");
 		
 		variablesViewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -147,7 +160,7 @@ public class VariablesPreferencePage extends PropertyPage implements
 			}
 			public void widgetSelected(SelectionEvent e) {
 				Object sel = getSelection();
-				List<IVariableProvider> sorted = getSortedDelegates();
+				List<IVariableProvider> sorted = cProvider.getSortedDelegates();
 				int current = sorted.indexOf(sel);
 				if( current > 0 ) {
 					newWeights.put(sorted.get(current-1), new Integer(current));
@@ -161,7 +174,7 @@ public class VariablesPreferencePage extends PropertyPage implements
 			}
 			public void widgetSelected(SelectionEvent e) {
 				Object sel = getSelection();
-				List<IVariableProvider> sorted = getSortedDelegates();
+				List<IVariableProvider> sorted = cProvider.getSortedDelegates();
 				int current = sorted.indexOf(sel);
 				if( current < sorted.size()-1 ) {
 					newWeights.put(sorted.get(current+1), new Integer(current));
@@ -242,7 +255,7 @@ public class VariablesPreferencePage extends PropertyPage implements
 		return fd;
 	}
 
-	protected class Wrapped {
+	public static class Wrapped {
 		protected IVariableProvider p;
 		protected String name;
 		public Wrapped(IVariableProvider p, String name) {
@@ -255,62 +268,7 @@ public class VariablesPreferencePage extends PropertyPage implements
 			return name + ": " + p.getVariableValue(name);
 		}
 	}
-	
-	protected class VariablesContentProvider implements ITreeContentProvider {
 
-		public Object[] getChildren(Object parentElement) {
-			if( parentElement instanceof IVariableProvider ) {
-				String[] props = ((IVariableProvider)parentElement).getVariableNames();
-				Wrapped[] items = new Wrapped[props.length];
-				for( int i = 0; i < props.length; i++ ) 
-					items[i] = new Wrapped((IVariableProvider)parentElement, props[i]);
-				return items;
-			}
-			return null;
-		}
-
-		public Object getParent(Object element) {
-			return null;
-		}
-
-		public boolean hasChildren(Object element) {
-			return element instanceof IVariableProvider && ((IVariableProvider)element).getVariableNames().length > 0;
-		}
-
-		public Object[] getElements(Object inputElement) {
-			List<IVariableProvider> elements = getSortedDelegates();
-			return (IVariableProvider[]) elements
-					.toArray(new IVariableProvider[elements.size()]);
-		}
-
-		public void dispose() {
-		}
-
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		}
-	}
-
-	protected List<IVariableProvider> getSortedDelegates() {
-		WorkspaceVFS vfs = (WorkspaceVFS)ArchivesCore.getInstance().getVFS();
-		WorkspaceVariableManager mgr = vfs.getVariableManager();
-		IVariableProvider[] delegates = mgr.getDelegates();
-		
-		// sort with changed data
-		List<IVariableProvider> l = Arrays.asList(delegates);
-		Comparator<IVariableProvider> x = new Comparator<IVariableProvider>() {
-			public int compare(IVariableProvider o1, IVariableProvider o2) {
-				if( nowEnabled(o1) != nowEnabled(o2))
-					return nowEnabled(o1) ? -1 : 1;
-
-				// now weights
-				if( nowWeight(o1) != nowWeight(o2) ) 
-					return nowWeight(o1) > nowWeight(o2) ? 1 : -1;
-				return 0;
-			}
-		};
-		Collections.sort(l, x);
-		return l;
-	}
 	protected boolean nowEnabled(IVariableProvider o) {
 		boolean enabled = o.getEnabled();
 		if( newEnablement.get(o) != null)
@@ -324,53 +282,6 @@ public class VariablesPreferencePage extends PropertyPage implements
 		return weight;
 	}
 	
-	protected class VariablesLabelProvider extends BaseLabelProvider implements ILabelProvider {
-		
-		private HashMap<Image, Image> disabledImages;
-		public VariablesLabelProvider() {
-			disabledImages = new HashMap<Image, Image>();
-		}
-		public Image getImage(Object element) {
-			if( element instanceof IVariableProvider ) {
-				String id = ((IVariableProvider)element).getId();
-				boolean enabled = nowEnabled((IVariableProvider)element);
-				if(id.equals("org.jboss.ide.eclipse.archives.core.resourceVariableProvider"))
-					return getImage2(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER), enabled);
-				if( id.equals("org.jboss.ide.eclipse.archives.core.classpathVariableProvider"))
-					return getImage2(JavaPlugin.getDefault().getImageRegistry().get(JavaPluginImages.IMG_OBJS_EXTJAR), enabled);
-				if( id.equals("org.jboss.ide.eclipse.archives.core.stringReplacementValueVariables"))
-					return getImage2(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_PASTE), enabled);
-			}
-			if( element instanceof Wrapped ) {
-				return getImage(((Wrapped)element).getProvider());
-			}
-			return null;
-		}
-		protected Image getImage2(Image original, boolean enabled) {
-			if( enabled ) 
-				return original;
-			if( disabledImages.get(original) == null ) {
-				Image i2 = new DecorationOverlayIcon(original, JavaPluginImages.DESC_OVR_DEPRECATED, IDecoration.TOP_LEFT).createImage();
-				disabledImages.put(original, i2);
-			}
-			return disabledImages.get(original);
-		}
-		public String getText(Object element) {
-			if( element instanceof IVariableProvider ) {
-				return ((IVariableProvider)element).getName();
-			}
-			if( element instanceof Wrapped )
-				return ((Wrapped)element).toString();
-			return "";
-		}
-	    public void dispose() {
-	    	super.dispose();
-	    	Iterator<Image> i = disabledImages.values().iterator();
-	    	while(i.hasNext()) 
-	    		i.next().dispose();
-	    }
-	}
-	
 	protected Object getSelection() {
 		IStructuredSelection sel = (IStructuredSelection)variablesViewer.getSelection();
 		return sel.getFirstElement();
@@ -378,7 +289,7 @@ public class VariablesPreferencePage extends PropertyPage implements
 	
 	protected void viewerSelectionChanged() {
 		Object selected = getSelection();
-		List<IVariableProvider> dels = getSortedDelegates();
+		List<IVariableProvider> dels = cProvider.getSortedDelegates();
 		boolean variableProvider = selected != null && selected instanceof IVariableProvider;
 		boolean defaultProvider = selected != null && 
 			(variableProvider ? (IVariableProvider)selected : ((Wrapped)selected).getProvider())
@@ -404,7 +315,7 @@ public class VariablesPreferencePage extends PropertyPage implements
 	}
 
 	public void performDefaults() {
-		List<IVariableProvider> dels = getSortedDelegates();
+		List<IVariableProvider> dels = cProvider.getSortedDelegates();
 		IVariableProvider provider;
 		for( int i = 0; i < dels.size(); i++ ) {
 			provider = dels.get(i);
@@ -415,7 +326,7 @@ public class VariablesPreferencePage extends PropertyPage implements
 	}
 
 	public boolean performOk() {
-		List<IVariableProvider> dels = getSortedDelegates();
+		List<IVariableProvider> dels = cProvider.getSortedDelegates();
 		IVariableProvider provider;
 		for( int i = 0; i < dels.size(); i++ ) {
 			provider = dels.get(i);
