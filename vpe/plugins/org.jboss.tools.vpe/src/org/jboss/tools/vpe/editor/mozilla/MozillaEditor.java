@@ -59,6 +59,7 @@ import org.jboss.tools.vpe.editor.toolbar.format.TextFormattingToolBar;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
+import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -66,10 +67,15 @@ import org.mozilla.interfaces.nsIDOMEventTarget;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
+import org.mozilla.interfaces.nsIEditingSession;
+import org.mozilla.interfaces.nsIEditor;
+import org.mozilla.interfaces.nsIHTMLAbsPosEditor;
+import org.mozilla.interfaces.nsIHTMLInlineTableEditor;
+import org.mozilla.interfaces.nsIHTMLObjectResizer;
+import org.mozilla.interfaces.nsIPlaintextEditor;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
-	protected static final String INIT_URL = /*"file://" +*/ (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-//	private static final String INIT_URL = "chrome://vpe/content/init.html"; //$NON-NLS-1$
+	protected static final String INIT_URL = /*"file://" +*/ (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath(); //$NON-NLS-1$ //$NON-NLS-2$
 	private static final String CONTENT_AREA_ID = "__content__area__"; //$NON-NLS-1$
 
 	static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
@@ -90,6 +96,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private boolean loaded;
 	private boolean isRefreshPage = false;
 	private String doctype;
+	/**
+	 * Used for manupalation of browser in design mode,
+	 * for example enable or disable readOnlyMode
+	 */
+	private nsIEditor editor;
 
 	public void doSave(IProgressMonitor monitor) {
 	}
@@ -120,7 +131,10 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		formatControllerManager.setVpeController(controller);
 		controller.setToolbarFormatControllerManager(formatControllerManager);
 	}
-
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
+	 */
 	public void createPartControl(final Composite parent) {
 		vpeToolBarManager = new VpeToolBarManager();
 		//Setting  Layout for the parent Composite
@@ -258,6 +272,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				public void completed(ProgressEvent event) {
 					loaded = true;
 					xulRunnerEditor.getBrowser().removeProgressListener(this);
+					//here we switchs xulrunner to design mode JBIDE-2505
 				}
 				
 			});
@@ -316,7 +331,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	        });
 	        link.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 	        Label fill = new Label(cmpEd, SWT.WRAP);		
-	        fill.setLayoutData(new GridData(GridData.FILL_BOTH));	        
+	        fill.setLayoutData(new GridData(GridData.FILL_BOTH));
 		}		
 	}
 
@@ -512,7 +527,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.DRAGOVEREVENT, getContentAreaEventListener(), false);
 				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.DBLCLICK, getContentAreaEventListener(), false);
 				documentEventTarget = (nsIDOMEventTarget) getDomDocument().queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
-				documentEventTarget.addEventListener(MozillaDomEventListener.KEYPRESS, getContentAreaEventListener(), false); 
+				documentEventTarget.addEventListener(MozillaDomEventListener.KEYPRESS, getContentAreaEventListener(), false);
 			} else {
 				//baseEventListener = new MozillaBaseEventListener();
 			}
@@ -670,8 +685,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * @return Doctype for document
 	 */
 	public String getDoctype() {
 		return doctype;
@@ -683,5 +697,36 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 	public void setRefreshPage(boolean isRefreshPage) {
 		this.isRefreshPage = isRefreshPage;
+	}
+	/**
+	 * Returns Editor for This Document
+	 * @return
+	 */
+	public nsIEditor getEditor() {
+		
+		if(editor==null) {
+			//creating editing session
+			nsIEditingSession iEditingSession = (nsIEditingSession) getXulRunnerEditor().
+							getComponentManager().createInstanceByContractID(XPCOM.NS_EDITINGSESSION_CONTRACTID, null, nsIEditingSession.NS_IEDITINGSESSION_IID);
+			//make window editable
+			iEditingSession.makeWindowEditable(getXulRunnerEditor().getWebBrowser().getContentDOMWindow(), "html", true); //$NON-NLS-1$
+			//here we setup editor for window
+			iEditingSession.setupEditorOnWindow(getXulRunnerEditor().getWebBrowser().getContentDOMWindow());
+			//getting some editor to disable some actions
+			editor = iEditingSession.getEditorForWindow(getXulRunnerEditor().getWebBrowser().getContentDOMWindow());
+			editor.setFlags(nsIPlaintextEditor.eEditorReadonlyMask);
+			//here we hide nsIHTMLObjectResizers
+			nsIHTMLObjectResizer htmlObjectResizer = (nsIHTMLObjectResizer) editor.queryInterface(nsIHTMLObjectResizer.NS_IHTMLOBJECTRESIZER_IID);
+			//we disable abject resizers
+			htmlObjectResizer.hideResizers();
+			htmlObjectResizer.setObjectResizingEnabled(false);
+			//here we getting position editor and disable it's too
+			nsIHTMLAbsPosEditor htmlAbsPosEditor = (nsIHTMLAbsPosEditor) editor.queryInterface(nsIHTMLAbsPosEditor.NS_IHTMLABSPOSEDITOR_IID);
+			htmlAbsPosEditor.setAbsolutePositioningEnabled(false);
+			//here we getting inline table editor and disable it's too
+			nsIHTMLInlineTableEditor inlineTableEditor = (nsIHTMLInlineTableEditor) editor.queryInterface(nsIHTMLInlineTableEditor.NS_IHTMLINLINETABLEEDITOR_IID);
+			inlineTableEditor.setInlineTableEditingEnabled(false);
+		}
+		return editor;
 	}
 }

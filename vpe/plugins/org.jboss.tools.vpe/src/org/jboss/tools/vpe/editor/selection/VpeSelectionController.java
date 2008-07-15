@@ -12,41 +12,61 @@
 package org.jboss.tools.vpe.editor.selection;
 
 import org.mozilla.interfaces.nsISelection;
+import org.mozilla.interfaces.nsISelectionController;
 
 /**
+ * Class decorator for nsISelectionController
  * @author Maxim Areshkau
- * Class which replace nsISelectionController functionality
  */
 public class VpeSelectionController {
 
-	private nsISelection selection;
+	private nsISelectionController selectionController;
 
 	/**
 	 * @param selection
 	 */
-	public VpeSelectionController(nsISelection selection) {
-		this.selection = selection;
+	public VpeSelectionController(nsISelectionController selectionController) {
+		
+		setSelectionController(selectionController);
 	}
 
 	/**
 	 * type - not used in 
 	 * @return the selection
 	 */
-	public nsISelection getSelection(long type) {
-		return selection;
+	public nsISelection getSelection(short type) {
+		
+		return getSelectionController().getSelection(type);
+	}
+	
+	/**
+	 * Sets caret enables or disabled
+	 * @param value
+	 */
+	public void setCaretEnabled(boolean value){	
+		
+		getSelectionController().setCaretEnabled(value);
+	}
+	/**
+	 * Sets selection flags
+	 * @param selectionFlags
+	 */
+	public void setSelectionFlags(short selectionFlags){		
+	
+		getSelectionController().setSelectionFlags(selectionFlags);
 	}
 
 	/**
-	 * @param selection the selection to set
+	 * @return the selectionController
 	 */
-	public void setSelection(nsISelection selection) {
-		this.selection = selection;
+	private nsISelectionController getSelectionController() {
+		return selectionController;
 	}
-	
-	//method stub just because it is exist in nsISelectionController
-	public void setCaretEnabled(boolean value){	
-	}
-	//method stub just because it is exist in nsISelectionController
-	public void setSelectionFlags(short selectionFlags){		
+
+	/**
+	 * @param selectionController the selectionController to set
+	 */
+	private void setSelectionController(nsISelectionController selectionController) {
+		this.selectionController = selectionController;
 	}
 }

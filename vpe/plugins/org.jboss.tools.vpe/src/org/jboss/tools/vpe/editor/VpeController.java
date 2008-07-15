@@ -180,7 +180,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	XulRunnerEditor xulRunnerEditor;
 	// TODO Sergey Vasilyev figure out with nsIPressShell
 	// private nsIPresShell presShell;
-	// TODO Max Areshkau figure out with nsISelectionController
 	private VpeSelectionController visualSelectionController;
 	VpeDomMapping domMapping;
 	private VpeTemplateManager templateManager;
@@ -280,8 +279,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		xulRunnerEditor = visualEditor.getXulRunnerEditor();
 		// TODO Sergey Vasilyev figure out with nsIPressShell
 		// presShell = browser.getPresShell();
-		visualSelectionController = new VpeSelectionController(xulRunnerEditor
-				.getSelection());
+		
+		visualSelectionController = new VpeSelectionController(visualEditor.getEditor().getSelectionController());
 
 		selectionBuilder = new VpeSelectionBuilder(domMapping, sourceBuilder,
 				visualBuilder, visualSelectionController);
@@ -412,7 +411,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		if (visualEditor != null) {
 			visualEditor.setEditorDomEventListener(null);
 			if (visualSelectionController != null) {
-				// visualSelectionController.Release();
+				
+//				visualSelectionController.Release();
 				visualSelectionController = null;
 			}
 			// TODO Sergey Vasilyev figure out with Press Shell
@@ -3217,9 +3217,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		} else {
 			visualBuilder.rebuildDom(null);
 		}
-
-		visualSelectionController.setSelection(xulRunnerEditor.getSelection());
-
 	}
 
 }
