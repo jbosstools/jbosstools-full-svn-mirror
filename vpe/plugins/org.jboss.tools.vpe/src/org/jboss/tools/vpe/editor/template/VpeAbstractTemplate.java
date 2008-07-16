@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
@@ -33,54 +34,91 @@ import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.template.resize.VpeResizer;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
+import org.jboss.tools.vpe.editor.util.ElService;
 import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMText;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
+// TODO: Auto-generated Javadoc
 /**
  * Class which response for configuration template element from configuration
  * file.
- * 
  */
 public abstract class VpeAbstractTemplate implements VpeTemplate {
-	protected boolean caseSensitive;
+
+
+    /** The case sensitive. */
+    protected boolean caseSensitive;
+	
+	/** The children. */
 	protected boolean children;
+	
+	/** The modify. */
 	protected boolean modify;
 
+	/** The has imaginary border. */
 	protected boolean hasImaginaryBorder;
 
-	/** a resizer instance */
+	/** a resizer instance. */
 	private VpeResizer resizer;
 
 	// TODO Max Areshkau add DnD support
+	/** The dragger. */
 	private VpeDnd dragger;
+	
+	/** The text formating data. */
 	private TextFormatingData textFormatingData;
+	
+	/** The pseudo content creator. */
 	private VpePseudoContentCreator pseudoContentCreator;
 
+	/** The Constant TAG_BREAKER. */
 	private static final String TAG_BREAKER = VpeTemplateManager.VPE_PREFIX
 			+ "breaker"; //$NON-NLS-1$
+	
+	/** The Constant ATTR_BREAKER_TYPE. */
 	private static final String ATTR_BREAKER_TYPE = "type"; //$NON-NLS-1$
+	
+	/** The Constant ATTR_BREAKER_TYPE_IGNORE. */
 	private static final String ATTR_BREAKER_TYPE_IGNORE = "ignore"; //$NON-NLS-1$
+	
+	/** The Constant ATTR_BREAKER_TYPE_SELECTITEM. */
 	private static final String ATTR_BREAKER_TYPE_SELECTITEM = "selectItem"; //$NON-NLS-1$
+	
+	/** The Constant BREAKER_TYPE_NONE. */
 	private static final int BREAKER_TYPE_NONE = 0;
+	
+	/** The Constant BREAKER_TYPE_IGNORE. */
 	private static final int BREAKER_TYPE_IGNORE = 1;
+	
+	/** The Constant BREAKER_TYPE_SELECTITEM. */
 	private static final int BREAKER_TYPE_SELECTITEM = 2;
 
+	/** The Constant TAG_PSEUDOCONTENT. */
 	private static final String TAG_PSEUDOCONTENT = VpeTemplateManager.VPE_PREFIX
 			+ "pseudoContent"; //$NON-NLS-1$
+	
+	/** The Constant ATTR_PSEUDOCONTENT_DEFAULTTEXT. */
 	private static final String ATTR_PSEUDOCONTENT_DEFAULTTEXT = "defaultText"; //$NON-NLS-1$
+	
+	/** The Constant ATTR_PSEUDOCONTENT_ATTRNAME. */
 	private static final String ATTR_PSEUDOCONTENT_ATTRNAME = "attrName"; //$NON-NLS-1$
 
+	/** The breaker type. */
 	private int breakerType = BREAKER_TYPE_NONE;
 
+	/** The inline tags. */
 	static private HashSet<String> inlineTags = new HashSet<String>();
 	static {
 		inlineTags.add("b"); //$NON-NLS-1$
@@ -98,6 +136,8 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		inlineTags.add("button"); //$NON-NLS-1$
 		inlineTags.add("label"); //$NON-NLS-1$
 	}
+	
+	/** The tag resize constrans. */
 	static private HashMap<String, Integer> tagResizeConstrans = new HashMap<String, Integer>();
 	static {
 		tagResizeConstrans
@@ -130,6 +170,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 				"a", Integer.valueOf(VpeTagDescription.RESIZE_CONSTRAINS_NONE)); //$NON-NLS-1$
 	}
 
+	/** The break with paragraph tags. */
 	static private HashSet<String> breakWithParagraphTags = new HashSet<String>();
 	static {
 		breakWithParagraphTags.add("b"); //$NON-NLS-1$
@@ -160,6 +201,8 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		breakWithParagraphTags.add("u"); //$NON-NLS-1$
 		breakWithParagraphTags.add("var"); //$NON-NLS-1$
 	}
+	
+	/** The break without paragraph tags. */
 	static private HashSet<String> breakWithoutParagraphTags = new HashSet<String>();
 	static {
 		breakWithoutParagraphTags.add("p"); //$NON-NLS-1$
@@ -178,13 +221,11 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 
 	/**
-	 * Initiates template after its creating
+	 * Initiates template after its creating.
 	 * 
-	 * @param templateElement
-	 *            <code>Element</code> with a name "vpe:template" from the
-	 *            template file
-	 * @param caseSensitive
-	 *            The case sensitive of an element of a source file
+	 * @param caseSensitive The case sensitive of an element of a source file
+	 * @param templateElement <code>Element</code> with a name "vpe:template" from the
+	 * template file
 	 */
 	public void init(Element templateElement, boolean caseSensitive) {
 		this.caseSensitive = caseSensitive;
@@ -204,10 +245,25 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		init(templateElement);
 	}
 
+	/**
+	 * Init.
+	 * 
+	 * @param templateElement the template element
+	 */
 	protected void init(Element templateElement) {
 		initTemplateSections(templateElement, true, true, true, true, true);
 	}
 
+	/**
+	 * Inits the template sections.
+	 * 
+	 * @param templateElement the template element
+	 * @param breakHandler the break handler
+	 * @param textFormatingHandler the text formating handler
+	 * @param pseudoContentHandler the pseudo content handler
+	 * @param resizeHandler the resize handler
+	 * @param dndHandler the dnd handler
+	 */
 	protected void initTemplateSections(Element templateElement,
 			boolean resizeHandler, boolean dndHandler,
 			boolean textFormatingHandler, boolean breakHandler,
@@ -243,6 +299,11 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		}
 	}
 
+	/**
+	 * Inits the resize handler.
+	 * 
+	 * @param templateSection the template section
+	 */
 	private void initResizeHandler(Element templateSection) {
 		if (resizer == null) {
 			resizer = new VpeResizer();
@@ -250,6 +311,11 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		}
 	}
 
+	/**
+	 * Inits the dnd handler.
+	 * 
+	 * @param templateSection the template section
+	 */
 	private void initDndHandler(Element templateSection) {
 
 		if (getDragger() == null) {
@@ -258,12 +324,22 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		}
 	}
 
+	/**
+	 * Inits the text formating handler.
+	 * 
+	 * @param templateSection the template section
+	 */
 	private void initTextFormatingHandler(Element templateSection) {
 		if (textFormatingData == null) {
 			textFormatingData = new TextFormatingData(templateSection);
 		}
 	}
 
+	/**
+	 * Inits the break handler.
+	 * 
+	 * @param templateSection the template section
+	 */
 	private void initBreakHandler(Element templateSection) {
 		if (breakerType == BREAKER_TYPE_NONE) {
 			String typeValue = templateSection.getAttribute(ATTR_BREAKER_TYPE);
@@ -278,6 +354,11 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		}
 	}
 
+	/**
+	 * Inits the pseudo content handler.
+	 * 
+	 * @param templateSection the template section
+	 */
 	private void initPseudoContentHandler(Element templateSection) {
 		if (pseudoContentCreator == null) {
 			if ("yes".equalsIgnoreCase(templateSection.getAttribute(ATTR_PSEUDOCONTENT_DEFAULTTEXT))) { //$NON-NLS-1$
@@ -314,6 +395,11 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		}
 	}
 
+	/**
+	 * Inits the template section.
+	 * 
+	 * @param templateSection the template section
+	 */
 	protected void initTemplateSection(Element templateSection) {
 	}
 
@@ -321,30 +407,40 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * Is invoked after construction of all child nodes of the current visual
 	 * node.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceNode
-	 *            The current node of the source tree.
-	 * @param visualDocument
-	 *            The document of the visual tree.
-	 * @param data
-	 *            Object <code>VpeCreationData</code>, built by a method
-	 *            <code>create</code>
+	 * @param visualDocument The document of the visual tree.
+	 * @param sourceNode The current node of the source tree.
+	 * @param data Object <code>VpeCreationData</code>, built by a method
+	 * <code>create</code>
+	 * @param pageContext Contains the information on edited page.
 	 */
 	public void validate(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument, VpeCreationData data) {
 	}
 
+	/** The f current region to format. */
 	IRegion fCurrentRegionToFormat = null;
 
+	/**
+	 * Gets the region to format.
+	 * 
+	 * @return the region to format
+	 */
 	private IRegion getRegionToFormat() {
 		return fCurrentRegionToFormat;
 	}
 
+	/**
+	 * Clear region to format.
+	 */
 	private void clearRegionToFormat() {
 		fCurrentRegionToFormat = null;
 	}
 
+	/**
+	 * Update region to format.
+	 * 
+	 * @param node the node
+	 */
 	private void updateRegionToFormat(Node node) {
 		if (node instanceof IndexedRegion) {
 			IndexedRegion region = (IndexedRegion) node;
@@ -368,6 +464,11 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		}
 	}
 
+	/**
+	 * Reformat callback.
+	 * 
+	 * @param pageContext the page context
+	 */
 	private void reformatCallback(VpePageContext pageContext) {
 		try {
 			StructuredTextEditor editor = pageContext.getEditPart()
@@ -387,24 +488,17 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 
 	/**
-	 * Processes keyboard input (without the pressed key Ctrl)
+	 * Processes keyboard input (without the pressed key Ctrl).
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceDocument
-	 *            The document of the source tree.
-	 * @param sourceNode
-	 *            The current node of the source tree.
-	 * @param visualNode
-	 *            The current node of the visual tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
-	 * @param charCode
-	 *            Code of the pressed key
-	 * @param selection
-	 *            The current selection
-	 * @param formatter
-	 *            Interface for formatting the source text
+	 * @param visualNode The current node of the visual tree.
+	 * @param sourceNode The current node of the source tree.
+	 * @param charCode Code of the pressed key
+	 * @param data The arbitrary data, built by a method <code>create</code>
+	 * @param pageContext Contains the information on edited page.
+	 * @param sourceDocument The document of the source tree.
+	 * @param selection The current selection
+	 * @param formatter Interface for formatting the source text
+	 * 
 	 * @return <code>true</code> if the key is processed
 	 */
 	public boolean nonctrlKeyPressHandler(VpePageContext pageContext,
@@ -424,6 +518,20 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		}
 	}
 
+	/**
+	 * Nonctrl key press handler impl.
+	 * 
+	 * @param visualNode the visual node
+	 * @param sourceNode the source node
+	 * @param charCode the char code
+	 * @param data the data
+	 * @param pageContext the page context
+	 * @param sourceDocument the source document
+	 * @param selection the selection
+	 * @param formatter the formatter
+	 * 
+	 * @return true, if nonctrl key press handler impl
+	 */
 	private boolean nonctrlKeyPressHandlerImpl(VpePageContext pageContext,
 			Document sourceDocument, Node sourceNode, nsIDOMNode visualNode,
 			Object data, long charCode, VpeSourceSelection selection,
@@ -695,6 +803,14 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		return false;
 	}
 
+	/**
+	 * Make new parent.
+	 * 
+	 * @param clone the clone
+	 * @param parent the parent
+	 * 
+	 * @return the node
+	 */
 	private Node makeNewParent(Node parent, boolean clone) {
 		Node newParent = null;
 		if (parent != null) {
@@ -711,6 +827,12 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		return newParent;
 	}
 
+	/**
+	 * Sets the cursor.
+	 * 
+	 * @param node the node
+	 * @param pageContext the page context
+	 */
 	private void setCursor(VpePageContext pageContext, Node node) {
 		int nodeOffset = ((IndexedRegion) node).getStartOffset();
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -724,16 +846,12 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 
 	/**
-	 * Is invoked before removal of the visiblis node from the tree
+	 * Is invoked before removal of the visiblis node from the tree.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceNode
-	 *            The current node of the source tree.
-	 * @param visualNode
-	 *            The current node of the visual tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
+	 * @param visualNode The current node of the visual tree.
+	 * @param sourceNode The current node of the source tree.
+	 * @param data The arbitrary data, built by a method <code>create</code>
+	 * @param pageContext Contains the information on edited page.
 	 */
 	public void beforeRemove(VpePageContext pageContext, Node sourceNode,
 			nsIDOMNode visualNode, Object data) {
@@ -743,16 +861,13 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * At a modification of the node of an source tree, the method update for
 	 * this node is invoked. Template can indicate other node for update
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceNode
-	 *            The current node of the source tree.
-	 * @param visualNode
-	 *            The current node of the visual tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
+	 * @param visualNode The current node of the visual tree.
+	 * @param sourceNode The current node of the source tree.
+	 * @param data The arbitrary data, built by a method <code>create</code>
+	 * @param pageContext Contains the information on edited page.
+	 * 
 	 * @return For this node of an source tree the method update is invoked. If
-	 *         null, that is invoked update for current source node
+	 * null, that is invoked update for current source node
 	 */
 	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode,
 			nsIDOMNode visualNode, Object data) {
@@ -760,36 +875,26 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 
 	/**
-	 * Is invoked at resize of an element visual tree
+	 * Is invoked at resize of an element visual tree.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param visualDocument
-	 *            The document of the visual tree.
-	 * @param visualElement
-	 *            The current element of the visual tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
-	 * @param resizerConstrains
-	 *            Code of resizer:<br>
-	 *            top-left: 1<br>
-	 *            top: 2<br>
-	 *            top-right: 4<br>
-	 *            left: 8<br>
-	 *            right: 16<br>
-	 *            bottomleft: 32<br>
-	 *            bottom: 64<br>
-	 *            bottom-right: 128<br>
-	 * @param top
-	 *            Element top
-	 * @param left
-	 *            Element left
-	 * @param width
-	 *            Element width
-	 * @param height
-	 *            Element height
+	 * @param sourceElement The current element of the source tree.
+	 * @param visualDocument The document of the visual tree.
+	 * @param width Element width
+	 * @param top Element top
+	 * @param height Element height
+	 * @param left Element left
+	 * @param data The arbitrary data, built by a method <code>create</code>
+	 * @param pageContext Contains the information on edited page.
+	 * @param resizerConstrains Code of resizer:<br>
+	 * top-left: 1<br>
+	 * top: 2<br>
+	 * top-right: 4<br>
+	 * left: 8<br>
+	 * right: 16<br>
+	 * bottomleft: 32<br>
+	 * bottom: 64<br>
+	 * bottom-right: 128<br>
+	 * @param visualElement The current element of the visual tree.
 	 */
 	public void resize(VpePageContext pageContext, Element sourceElement,
 			nsIDOMDocument visualDocument, nsIDOMElement visualElement,
@@ -803,18 +908,14 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 
 	/**
-	 * Checks a capability of drag of visual element
+	 * Checks a capability of drag of visual element.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param visualDocument
-	 *            The document of the visual tree.
-	 * @param visualElement
-	 *            The current element of the visual tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
+	 * @param sourceElement The current element of the source tree.
+	 * @param visualDocument The document of the visual tree.
+	 * @param data The arbitrary data, built by a method <code>create</code>
+	 * @param pageContext Contains the information on edited page.
+	 * @param visualElement The current element of the visual tree.
+	 * 
 	 * @return <code>true</code> The element can be dragged
 	 */
 	public boolean canInnerDrag(VpePageContext pageContext,
@@ -830,14 +931,12 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 
 	/**
-	 * Checks a capability to drop an element in the container
+	 * Checks a capability to drop an element in the container.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param container
-	 *            Element-Container
-	 * @param sourceDragNode
-	 *            Node for drop
+	 * @param container Element-Container
+	 * @param sourceDragNode Node for drop
+	 * @param pageContext Contains the information on edited page.
+	 * 
 	 * @return <code>true</code> The node can be dropped
 	 */
 	public boolean canInnerDrop(VpePageContext pageContext, Node container,
@@ -852,14 +951,11 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 
 	/**
-	 * Is invoked at drop of an element visual tree
+	 * Is invoked at drop of an element visual tree.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param dragInfo
-	 *            The information on the dragged element
-	 * @param dropInfo
-	 *            The information on the drop container
+	 * @param dropInfo The information on the drop container
+	 * @param pageContext Contains the information on edited page.
+	 * @param dragInfo The information on the dragged element
 	 */
 	public void innerDrop(VpePageContext pageContext,
 			VpeSourceInnerDragInfo dragInfo, VpeSourceInnerDropInfo dropInfo) {
@@ -869,6 +965,15 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		// }
 	}
 
+	/**
+	 * Delete from string.
+	 * 
+	 * @param end the end
+	 * @param data the data
+	 * @param begin the begin
+	 * 
+	 * @return the string
+	 */
 	protected String deleteFromString(String data, String begin, String end) {
 		int startPosition = data.indexOf(begin);
 
@@ -887,24 +992,18 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 
 	/**
 	 * Checks, whether it is necessary to re-create an element at change of
-	 * attribute
+	 * attribute.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param visualDocument
-	 *            The document of the visual tree.
-	 * @param visualNode
-	 *            The current node of the visual tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
-	 * @param name
-	 *            Atrribute name
-	 * @param value
-	 *            Attribute value
+	 * @param sourceElement The current element of the source tree.
+	 * @param value Attribute value
+	 * @param visualDocument The document of the visual tree.
+	 * @param visualNode The current node of the visual tree.
+	 * @param data The arbitrary data, built by a method <code>create</code>
+	 * @param pageContext Contains the information on edited page.
+	 * @param name Atrribute name
+	 * 
 	 * @return <code>true</code> if it is required to re-create an element at a
-	 *         modification of attribute, <code>false</code> otherwise.
+	 * modification of attribute, <code>false</code> otherwise.
 	 */
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
 			Element sourceElement, nsIDOMDocument visualDocument,
@@ -913,21 +1012,35 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 
 	/**
+	 * Checks if is children.
+	 * 
 	 * @return <code>true</code> if the element can have children
 	 */
 	public boolean isChildren() {
 		return children;
 	}
 
+	/**
+	 * Checks if is modify.
+	 * 
+	 * @return true, if is modify
+	 */
 	public boolean isModify() {
 		return modify;
 	}
 
+	/**
+	 * Sets the modify.
+	 * 
+	 * @param modify the modify
+	 */
 	public void setModify(boolean modify) {
 		this.modify = modify;
 	}
 
 	/**
+	 * Checks if is case sensitive.
+	 * 
 	 * @return <code>true</code> if the element is case sensitive
 	 */
 	public boolean isCaseSensitive() {
@@ -935,7 +1048,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 
 	/**
-	 * Returns the data for formatting an element of source tree
+	 * Returns the data for formatting an element of source tree.
 	 * 
 	 * @return <code>TextFormatingData</code>
 	 */
@@ -944,18 +1057,14 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 
 	/**
-	 * Returns <code>VpeTagDescription</code>
+	 * Returns <code>VpeTagDescription</code>.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param visualDocument
-	 *            The document of the visual tree.
-	 * @param visualElement
-	 *            The current element of the visual tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
+	 * @param sourceElement The current element of the source tree.
+	 * @param visualDocument The document of the visual tree.
+	 * @param data The arbitrary data, built by a method <code>create</code>
+	 * @param pageContext Contains the information on edited page.
+	 * @param visualElement The current element of the visual tree.
+	 * 
 	 * @return <code>VpeTagDescription</code>
 	 */
 	public VpeTagDescription getTagDescription(VpePageContext pageContext,
@@ -978,20 +1087,13 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * Sets value of attribute of the current visual element. Is invoked at
 	 * change of attribute of an source element.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param visualDocument
-	 *            The document of the visual tree.
-	 * @param visualNode
-	 *            The current node of the visual tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
-	 * @param name
-	 *            Attribute name.
-	 * @param value
-	 *            Attribute value.
+	 * @param sourceElement The current element of the source tree.
+	 * @param value Attribute value.
+	 * @param visualDocument The document of the visual tree.
+	 * @param visualNode The current node of the visual tree.
+	 * @param data The arbitrary data, built by a method <code>create</code>
+	 * @param pageContext Contains the information on edited page.
+	 * @param name Attribute name.
 	 */
 	public void setAttribute(VpePageContext pageContext, Element sourceElement,
 			nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data,
@@ -1001,18 +1103,12 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	/**
 	 * Informs on remove of attribute of the current source element.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param visualDocument
-	 *            The document of the visual tree.
-	 * @param visualNode
-	 *            The current node of the visual tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
-	 * @param name
-	 *            Attribute name.
+	 * @param sourceElement The current element of the source tree.
+	 * @param visualDocument The document of the visual tree.
+	 * @param visualNode The current node of the visual tree.
+	 * @param data The arbitrary data, built by a method <code>create</code>
+	 * @param pageContext Contains the information on edited page.
+	 * @param name Attribute name.
 	 */
 	public void removeAttribute(VpePageContext pageContext,
 			Element sourceElement, nsIDOMDocument visualDocument,
@@ -1021,7 +1117,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 
 	/**
 	 * Returns a list of attributes of an element of the source tree, the values
-	 * which one are mapped in the visiblis editor
+	 * which one are mapped in the visiblis editor.
 	 * 
 	 * @return attrubute name array
 	 */
@@ -1032,14 +1128,12 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	/**
 	 * If the value of attribute of an element of an source tree is mapped by
 	 * the way of text node of a visual treer, this method returns the text
-	 * node, otherwise - null
+	 * node, otherwise - null.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
+	 * @param sourceElement The current element of the source tree.
+	 * @param data The arbitrary data, built by a method <code>create</code>
+	 * @param pageContext Contains the information on edited page.
+	 * 
 	 * @return Text node or null
 	 */
 	public nsIDOMText getOutputTextNode(VpePageContext pageContext,
@@ -1048,14 +1142,21 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 
 	/**
+	 * Checks if is output attributes.
+	 * 
+	 * @return true, if is output attributes
+	 * 
 	 * @deprecated
-	 * @return
 	 */
 	public boolean isOutputAttributes() {
 		return false;
 	}
 
 	/**
+	 * Gets the type.
+	 * 
+	 * @return the type
+	 * 
 	 * @deprecated
 	 */
 	public int getType() {
@@ -1063,49 +1164,50 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 
 	/**
+	 * Gets the any data.
+	 * 
+	 * @return the any data
+	 * 
 	 * @deprecated
-	 * @return
 	 */
 	public VpeAnyData getAnyData() {
 		return null;
 	}
 
 	/**
+	 * Sets the source attribute selection.
+	 * 
+	 * @param sourceElement The current element of the source tree.
+	 * @param data the data
+	 * @param length the length
+	 * @param pageContext Contains the information on edited page.
+	 * @param offset the offset
+	 * 
 	 * @deprecated
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param offset
-	 * @param length
-	 * @param data
 	 */
 	public void setSourceAttributeSelection(VpePageContext pageContext,
 			Element sourceElement, int offset, int length, Object data) {
 	}
 
 	/**
+	 * Sets the source attribute value.
+	 * 
+	 * @param sourceElement The current element of the source tree.
+	 * @param data The arbitrary data, built by a method <code>create</code>
+	 * @param pageContext Contains the information on edited page.
+	 * 
 	 * @deprecated
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
 	 */
 	public void setSourceAttributeValue(VpePageContext pageContext,
 			Element sourceElement, Object data) {
 	}
 
 	/**
-	 * Is invoked at a change of bundle values
+	 * Is invoked at a change of bundle values.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
+	 * @param sourceElement The current element of the source tree.
+	 * @param data The arbitrary data, built by a method <code>create</code>
+	 * @param pageContext Contains the information on edited page.
 	 */
 	public void refreshBundleValues(VpePageContext pageContext,
 			Element sourceElement, Object data) {
@@ -1113,28 +1215,22 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 
 	/**
 	 * Opens proprties editor for bundle value Is invoked at double mouse click
-	 * on visual element
+	 * on visual element.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
+	 * @param sourceElement The current element of the source tree.
+	 * @param data The arbitrary data, built by a method <code>create</code>
+	 * @param pageContext Contains the information on edited page.
 	 */
 	public void openBundleEditors(VpePageContext pageContext,
 			Element sourceElement, Object data) {
 	}
 
 	/**
-	 * Opens editor of source file for include-element
+	 * Opens editor of source file for include-element.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
+	 * @param sourceElement The current element of the source tree.
+	 * @param data The arbitrary data, built by a method <code>create</code>
+	 * @param pageContext Contains the information on edited page.
 	 */
 	public void openIncludeEditor(VpePageContext pageContext,
 			Element sourceElement, Object data) {
@@ -1142,16 +1238,12 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 
 	/**
 	 * The unfilled element of an source tree can be mapped in the visiblis
-	 * editor with the default contents This method fills default contents
+	 * editor with the default contents This method fills default contents.
 	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceContainer
-	 *            The current element of the source tree.
-	 * @param visualContainer
-	 *            The current element of the visual tree.
-	 * @param visualDocument
-	 *            The document of the visual tree.
+	 * @param visualDocument The document of the visual tree.
+	 * @param pageContext Contains the information on edited page.
+	 * @param sourceContainer The current element of the source tree.
+	 * @param visualContainer The current element of the visual tree.
 	 */
 	public void setPseudoContent(VpePageContext pageContext,
 			Node sourceContainer, nsIDOMNode visualContainer,
@@ -1166,15 +1258,27 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		}
 	}
 
+	/**
+	 * Contains text.
+	 * 
+	 * @return true, if contains text
+	 */
 	public boolean containsText() {
 		return true;
 	}
 
+	/**
+	 * Checks for imaginary border.
+	 * 
+	 * @return true, if has imaginary border
+	 */
 	public boolean hasImaginaryBorder() {
 		return hasImaginaryBorder;
 	}
 
 	/**
+	 * Gets the dragger.
+	 * 
 	 * @return the dragger
 	 */
 	public VpeDnd getDragger() {
@@ -1183,8 +1287,9 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	}
 
 	/**
-	 * @param dragger
-	 *            the dragger to set
+	 * Sets the dragger.
+	 * 
+	 * @param dragger the dragger to set
 	 */
 	public void setDragger(VpeDnd dragger) {
 		this.dragger = dragger;
@@ -1198,6 +1303,15 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * .interfaces.nsIDOMNode,
 	 * org.jboss.tools.vpe.editor.mapping.VpeElementData,
 	 * org.jboss.tools.vpe.editor.mapping.VpeDomMapping)
+	 */
+	/**
+	 * Gets the node data.
+	 * 
+	 * @param domMapping the dom mapping
+	 * @param elementData the element data
+	 * @param node the node
+	 * 
+	 * @return the node data
 	 */
 	public NodeData getNodeData(nsIDOMNode node, VpeElementData elementData,
 			VpeDomMapping domMapping) {
@@ -1227,6 +1341,16 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * (org.jboss.tools.vpe.editor.mapping.VpeElementMapping, int, int,
 	 * org.jboss.tools.vpe.editor.mapping.VpeDomMapping)
 	 */
+	/**
+	 * Gets the visual node by by source position.
+	 * 
+	 * @param domMapping the dom mapping
+	 * @param focusPosition the focus position
+	 * @param anchorPosition the anchor position
+	 * @param elementMapping the element mapping
+	 * 
+	 * @return the visual node by by source position
+	 */
 	public nsIDOMNode getVisualNodeByBySourcePosition(
 			VpeElementMapping elementMapping, int focusPosition,
 			int anchorPosition, VpeDomMapping domMapping) {
@@ -1248,6 +1372,14 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 
 	}
 
+	/**
+	 * Find node by position.
+	 * 
+	 * @param position the position
+	 * @param elementData the element data
+	 * 
+	 * @return the ns IDOM node
+	 */
 	private nsIDOMNode findNodeByPosition(VpeElementData elementData,
 			int position) {
 
@@ -1280,6 +1412,15 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * org.mozilla.interfaces.nsIDOMNode,
 	 * org.jboss.tools.vpe.editor.mapping.VpeElementMapping)
 	 */
+	/**
+	 * Open bundle.
+	 * 
+	 * @param visualNode the visual node
+	 * @param pageContext the page context
+	 * @param elementMapping the element mapping
+	 * 
+	 * @return true, if open bundle
+	 */
 	public boolean openBundle(VpePageContext pageContext,
 			nsIDOMNode visualNode, VpeElementMapping elementMapping) {
 
@@ -1300,4 +1441,54 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 
 		return false;
 	}
+	
+    
+    /**
+     * After template created.
+     * 
+     * @param visualDocument the visual document
+     * @param sourceNode the source node
+     * @param pageContext the page context
+     */
+    public void afterTemplateCreated(VpePageContext pageContext, nsIDOMElement source, nsIDOMDocument visualDocument) {
+
+//        final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
+//
+//        if ((file != null) && ElService.getInstance().isAvailable(file)) {
+//            final nsIDOMNamedNodeMap nodeMap = source.getAttributes();
+//            for (int i = 0; i < nodeMap.getLength(); i++) {
+//                nsIDOMNode n = nodeMap.item(i);
+//
+//                source.setAttribute(n.getNodeName(), ElService.getInstance().replaceEl(file, n.getNodeValue()));
+//          
+//            }
+////            if(source.getNodeName().equalsIgnoreCase("img")){
+////                source.setAttribute("src", ElService.getInstance().replaceEl(file, source.getAttribute("src")));
+////            }
+//            if ((source.getChildNodes() != null) && source.getChildNodes().getLength() > 0) {
+//                for (int j = 0; j < source.getChildNodes().getLength(); j++) {
+//                    if (source.getChildNodes().item(j).getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+//                        afterTemplateCreated(pageContext, (nsIDOMElement) source.getChildNodes().item(j).queryInterface(
+//                                nsIDOMElement.NS_IDOMELEMENT_IID), visualDocument);
+//                    }
+//                }
+//            }   
+//        }
+//
+//        System.err.println("Hello world4");
+    }
+
+    public void beforeTemplateCreated(VpePageContext pageContext, Node sourceNode, nsIDOMDocument domDocument) {
+        final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
+
+        if ((file != null) && (sourceNode.getNodeType() == Node.ELEMENT_NODE) && ElService.getInstance().isAvailable(file)) {
+            final NamedNodeMap nodeMap = sourceNode.getAttributes();            
+            for (int i = 0; i < nodeMap.getLength(); i++) {
+                final Attr n = (Attr)nodeMap.item(i);
+                
+               n.setValue(ElService.getInstance().replaceEl(file, n.getValue()));
+          
+            }
+        }
+    }
 }

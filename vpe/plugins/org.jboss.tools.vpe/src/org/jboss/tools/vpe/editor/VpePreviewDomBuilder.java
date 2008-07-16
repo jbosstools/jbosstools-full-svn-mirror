@@ -79,7 +79,13 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			
 			//FIX FOR JBIDE-1568, added by Max Areshkau
 			try {
-				creationData = template.create(getPageContext(), sourceNode, getVisualDocument());
+		          if (template.getClass().getName().contains("Rich") || template.getClass().getName().contains("Jsf")) {
+                    final Element sourceNodeClone = (Element) ((Element) sourceNode).cloneNode(true);
+                    template.beforeTemplateCreated(getPageContext(), sourceNodeClone, getVisualDocument());
+                    creationData = template.create(getPageContext(), sourceNodeClone, getVisualDocument());
+                } else {
+                    creationData = template.create(getPageContext(), sourceNode, getVisualDocument());
+                }
 			}catch (XPCOMException ex) {
 				VpePlugin.getPluginLog().logError(ex);
 				VpeTemplate defTemplate = templateManager.getDefTemplate();

@@ -93,12 +93,12 @@ import org.w3c.dom.NodeList;
 
 public class VpeVisualDomBuilder extends VpeDomBuilder {
 
-	public static final String VPE_USER_TOGGLE_ID = "vpe-user-toggle-id"; //$NON-NLS-1$
-	public static final String VPE_USER_TOGGLE_LOOKUP_PARENT = "vpe-user-toggle-lookup-parent"; //$NON-NLS-1$
+    public static final String VPE_USER_TOGGLE_ID = "vpe-user-toggle-id"; //$NON-NLS-1$
+    public static final String VPE_USER_TOGGLE_LOOKUP_PARENT = "vpe-user-toggle-lookup-parent"; //$NON-NLS-1$
 
-	/** REGEX_EL */
+    /** REGEX_EL */
     private static final Pattern REGEX_EL = Pattern.compile(
-	    "[\\$|\\#]\\{.*\\}", Pattern.MULTILINE + Pattern.DOTALL); //$NON-NLS-1$
+        "[\\$|\\#]\\{.*\\}", Pattern.MULTILINE + Pattern.DOTALL); //$NON-NLS-1$
     
     private static final String PSEUDO_ELEMENT = "br"; //$NON-NLS-1$
     private static final String PSEUDO_ELEMENT_ATTR = "vpe:pseudo-element"; //$NON-NLS-1$
@@ -111,7 +111,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     private static final int DRAG_AREA_WIDTH = 10;
     private static final int DRAG_AREA_HEIGHT = 10;
     private static final String ATTR_DRAG_AVAILABLE_CLASS = "__drag__available_style"; //$NON-NLS-1$
-	private static String DOTTED_BORDER = "border: 1px dotted #FF6600; padding: 5px;"; //$NON-NLS-1$
+    private static String DOTTED_BORDER = "border: 1px dotted #FF6600; padding: 5px;"; //$NON-NLS-1$
 
     private MozillaEditor visualEditor;
     private XulRunnerEditor xulRunnerEditor;
@@ -149,101 +149,101 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
     static private HashSet<String> unborderedSourceNodes = new HashSet<String>();
     static {
-	unborderedSourceNodes.add(HTML.TAG_HTML);
-	unborderedSourceNodes.add(HTML.TAG_HEAD);
-	unborderedSourceNodes.add(HTML.TAG_BODY);
+    unborderedSourceNodes.add(HTML.TAG_HTML);
+    unborderedSourceNodes.add(HTML.TAG_HEAD);
+    unborderedSourceNodes.add(HTML.TAG_BODY);
     }
 
     static private HashSet<String> unborderedVisualNodes = new HashSet<String>();
     static {
-	unborderedVisualNodes.add(HTML.TAG_TBODY);
-	unborderedVisualNodes.add(HTML.TAG_THEAD);
-	unborderedVisualNodes.add(HTML.TAG_TR);
-	unborderedVisualNodes.add(HTML.TAG_TD);
-	unborderedVisualNodes.add(HTML.TAG_COL);
-	unborderedVisualNodes.add(HTML.TAG_COLS);
-	unborderedVisualNodes.add(HTML.TAG_COLGROUP);
-	unborderedVisualNodes.add(HTML.TAG_LI);
-	unborderedVisualNodes.add(HTML.TAG_BR);
+    unborderedVisualNodes.add(HTML.TAG_TBODY);
+    unborderedVisualNodes.add(HTML.TAG_THEAD);
+    unborderedVisualNodes.add(HTML.TAG_TR);
+    unborderedVisualNodes.add(HTML.TAG_TD);
+    unborderedVisualNodes.add(HTML.TAG_COL);
+    unborderedVisualNodes.add(HTML.TAG_COLS);
+    unborderedVisualNodes.add(HTML.TAG_COLGROUP);
+    unborderedVisualNodes.add(HTML.TAG_LI);
+    unborderedVisualNodes.add(HTML.TAG_BR);
     }
     private VpeDnd dropper;
 
     private Map<IFile, Document> includeDocuments = new HashMap<IFile, Document>();
 
     public VpeVisualDomBuilder(VpeDomMapping domMapping,
-	    INodeAdapter sorceAdapter, VpeTemplateManager templateManager,
-	    MozillaEditor visualEditor, VpePageContext pageContext) {
-	super(domMapping, sorceAdapter, templateManager);
-	this.visualEditor = visualEditor;
-	xulRunnerEditor = visualEditor.getXulRunnerEditor();
-	this.visualDocument = visualEditor.getDomDocument();
-//	this.visualContentArea = visualEditor.getContentArea();
-	this.dnd = new VpeDnD();
-	this.pageContext = pageContext;
-//	this.headNode = visualEditor.getHeadNode();
-	dropper = new VpeDnd();
-	dropper.setDndData(false, true);
+        INodeAdapter sorceAdapter, VpeTemplateManager templateManager,
+        MozillaEditor visualEditor, VpePageContext pageContext) {
+    super(domMapping, sorceAdapter, templateManager);
+    this.visualEditor = visualEditor;
+    xulRunnerEditor = visualEditor.getXulRunnerEditor();
+    this.visualDocument = visualEditor.getDomDocument();
+//  this.visualContentArea = visualEditor.getContentArea();
+    this.dnd = new VpeDnD();
+    this.pageContext = pageContext;
+//  this.headNode = visualEditor.getHeadNode();
+    dropper = new VpeDnd();
+    dropper.setDndData(false, true);
 
-	if (isFacelet()) {
-	    faceletFile = true;
-	} else {
-	    faceletFile = false;
-	}
+    if (isFacelet()) {
+        faceletFile = true;
+    } else {
+        faceletFile = false;
+    }
 
     }
 
     public void buildDom(Document sourceDocument) {
-		VpeSourceDomBuilder sourceBuilder = pageContext.getSourceBuilder();
-		IDocument document = sourceBuilder.getStructuredTextViewer()
-				.getDocument();
-		if (document == null)
-			return;
-		includeStack = new ArrayList();
-		IEditorInput input = pageContext.getEditPart().getEditorInput();
-		if (input instanceof IFileEditorInput) {
-			IFile file = ((IFileEditorInput) input).getFile();
-			if (file != null) {
-				includeStack.add(new VpeIncludeInfo(null, file, pageContext
-						.getSourceBuilder().getSourceDocument()));
-			}
-		}
-		pageContext.refreshConnector();
-		pageContext.installIncludeElements();
-		if (isFacelet()) {
-			Element root = FaceletUtil.getRootFaceletElement(sourceDocument);
-			if (root != null) {
-				addNode(root, null, getContentArea());
-			}
-		} else {
-			addChildren(null, sourceDocument, getContentArea());
-		}
-		/*
-		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-2126.
-		 * To provide appropriate context menu functionality
-		 * visual content area should be mapped in any case. 
-		 */
-		registerNodes(new VpeNodeMapping(sourceDocument, getContentArea()));
-	}
+        VpeSourceDomBuilder sourceBuilder = pageContext.getSourceBuilder();
+        IDocument document = sourceBuilder.getStructuredTextViewer()
+                .getDocument();
+        if (document == null)
+            return;
+        includeStack = new ArrayList();
+        IEditorInput input = pageContext.getEditPart().getEditorInput();
+        if (input instanceof IFileEditorInput) {
+            IFile file = ((IFileEditorInput) input).getFile();
+            if (file != null) {
+                includeStack.add(new VpeIncludeInfo(null, file, pageContext
+                        .getSourceBuilder().getSourceDocument()));
+            }
+        }
+        pageContext.refreshConnector();
+        pageContext.installIncludeElements();
+        if (isFacelet()) {
+            Element root = FaceletUtil.getRootFaceletElement(sourceDocument);
+            if (root != null) {
+                addNode(root, null, getContentArea());
+            }
+        } else {
+            addChildren(null, sourceDocument, getContentArea());
+        }
+        /*
+         * Fixes http://jira.jboss.com/jira/browse/JBIDE-2126.
+         * To provide appropriate context menu functionality
+         * visual content area should be mapped in any case. 
+         */
+        registerNodes(new VpeNodeMapping(sourceDocument, getContentArea()));
+    }
 
     public void rebuildDom(Document sourceDocument) {
-	// clearIncludeDocuments();
-	cleanHead();
-	domMapping.clear(getContentArea());
-	super.dispose();
+    // clearIncludeDocuments();
+    cleanHead();
+    domMapping.clear(getContentArea());
+    super.dispose();
 
-	pageContext.clearAll();
-	refreshExternalLinks();
-	pageContext.getBundle().refreshRegisteredBundles();
+    pageContext.clearAll();
+    refreshExternalLinks();
+    pageContext.getBundle().refreshRegisteredBundles();
 
-	nsIDOMNodeList children = getContentArea().getChildNodes();
-	long len = children.getLength();
-	for (long i = len - 1; i >= 0; i--) {
-		getContentArea().removeChild(children.item(i));
-	}
+    nsIDOMNodeList children = getContentArea().getChildNodes();
+    long len = children.getLength();
+    for (long i = len - 1; i >= 0; i--) {
+        getContentArea().removeChild(children.item(i));
+    }
 
-	if (sourceDocument != null) {
-	    buildDom(sourceDocument);
-	}
+    if (sourceDocument != null) {
+        buildDom(sourceDocument);
+    }
 
     }
 
@@ -251,725 +251,752 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     // private boolean borderVisible = true;
     
     private boolean addNode(Node sourceNode, nsIDOMNode visualNextNode,
-	    nsIDOMNode visualContainer) {
-    	
-	nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer);
-	
-	// Fix for JBIDE-1097
-	try {
-	    if (visualNewNode != null) {
-		nsIDOMHTMLInputElement iDOMInputElement = (nsIDOMHTMLInputElement) visualNewNode
-			.queryInterface(nsIDOMHTMLInputElement.NS_IDOMHTMLINPUTELEMENT_IID);
-		iDOMInputElement.setReadOnly(true);
-	    }
-	} catch (XPCOMException ex) {
-	    // just ignore this exception
-	}
-	if (visualNewNode != null) {
-	    if (visualNextNode == null) {
-		visualContainer.appendChild(visualNewNode);
-	    } else {
-		visualContainer.insertBefore(visualNewNode, visualNextNode);
-	    }
-	    return true;
-	}
+        nsIDOMNode visualContainer) {
+        
+    nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer);
+    
+    // Fix for JBIDE-1097
+    try {
+        if (visualNewNode != null) {
+        nsIDOMHTMLInputElement iDOMInputElement = (nsIDOMHTMLInputElement) visualNewNode
+            .queryInterface(nsIDOMHTMLInputElement.NS_IDOMHTMLINPUTELEMENT_IID);
+        iDOMInputElement.setReadOnly(true);
+        }
+    } catch (XPCOMException ex) {
+        // just ignore this exception
+    }
+    if (visualNewNode != null) {
+        if (visualNextNode == null) {
+        visualContainer.appendChild(visualNewNode);
+        } else {
+        visualContainer.insertBefore(visualNewNode, visualNextNode);
+        }
+        return true;
+    }
 
-	return false;
+    return false;
     }
 
     private nsIDOMElement createBorder(Node sourceNode,
-	    nsIDOMElement visualNode, boolean block) {
-	nsIDOMElement border = null;
-	if (visualNode == null)
-	    return null;
-	if (unborderedSourceNodes.contains(sourceNode.getNodeName()
-		.toLowerCase()))
-	    return null;
-	if (unborderedVisualNodes.contains(visualNode.getNodeName()
-		.toLowerCase()))
-	    return null;
-	if (HTML.TAG_IMG.equalsIgnoreCase(visualNode.getNodeName())) {
-	    String width = visualNode.getAttribute(ATRIBUTE_BORDER);
-	    if (width == null || ZERO_STRING.equalsIgnoreCase(width)
-		    || EMPTY_STRING.equalsIgnoreCase(width)) {
-		String style = visualNode
-			.getAttribute(VpeStyleUtil.ATTRIBUTE_STYLE);
-		style = VpeStyleUtil.setParameterInStyle(style,
-			ATRIBUTE_BORDER, DOTTED_BORDER_STYLE_FOR_IMG);
-		visualNode.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
-	    }
-	    return null;
-	}
-	if (block) {
-	    if (YES_STRING.equals(VpePreference.USE_DETAIL_BORDER.getValue())) {
-		border = visualDocument.createElement(HTML.TAG_TABLE);
-		border.setAttribute(ATRIBUTE_CELLSPACING, ZERO_STRING);
-		border.setAttribute(ATRIBUTE_CELLPADDING, ZERO_STRING);
+        nsIDOMElement visualNode, boolean block) {
+    nsIDOMElement border = null;
+    if (visualNode == null)
+        return null;
+    if (unborderedSourceNodes.contains(sourceNode.getNodeName()
+        .toLowerCase()))
+        return null;
+    if (unborderedVisualNodes.contains(visualNode.getNodeName()
+        .toLowerCase()))
+        return null;
+    if (HTML.TAG_IMG.equalsIgnoreCase(visualNode.getNodeName())) {
+        String width = visualNode.getAttribute(ATRIBUTE_BORDER);
+        if (width == null || ZERO_STRING.equalsIgnoreCase(width)
+            || EMPTY_STRING.equalsIgnoreCase(width)) {
+        String style = visualNode
+            .getAttribute(VpeStyleUtil.ATTRIBUTE_STYLE);
+        style = VpeStyleUtil.setParameterInStyle(style,
+            ATRIBUTE_BORDER, DOTTED_BORDER_STYLE_FOR_IMG);
+        visualNode.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
+        }
+        return null;
+    }
+    if (block) {
+        if (YES_STRING.equals(VpePreference.USE_DETAIL_BORDER.getValue())) {
+        border = visualDocument.createElement(HTML.TAG_TABLE);
+        border.setAttribute(ATRIBUTE_CELLSPACING, ZERO_STRING);
+        border.setAttribute(ATRIBUTE_CELLPADDING, ZERO_STRING);
 
-		nsIDOMElement tr1 = visualDocument.createElement(HTML.TAG_TR);
-		border.appendChild(tr1);
-		nsIDOMElement td1 = visualDocument.createElement(HTML.TAG_TD);
-		td1.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
-			DOTTED_BORDER_STYLE_FOR_TD);
-		nsIDOMText text = visualDocument.createTextNode(sourceNode
-			.getNodeName());
-		td1.appendChild(text);
-		tr1.appendChild(td1);
-		nsIDOMElement tr2 = visualDocument.createElement(HTML.TAG_TR);
-		border.appendChild(tr2);
-		nsIDOMElement td2 = visualDocument.createElement(HTML.TAG_TD);
-		tr2.appendChild(td2);
-		nsIDOMElement p = visualDocument.createElement(HTML.TAG_P);
-		p.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
-			DOTTED_BORDER_STYLE);
-		td2.appendChild(p);
+        nsIDOMElement tr1 = visualDocument.createElement(HTML.TAG_TR);
+        border.appendChild(tr1);
+        nsIDOMElement td1 = visualDocument.createElement(HTML.TAG_TD);
+        td1.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
+            DOTTED_BORDER_STYLE_FOR_TD);
+        nsIDOMText text = visualDocument.createTextNode(sourceNode
+            .getNodeName());
+        td1.appendChild(text);
+        tr1.appendChild(td1);
+        nsIDOMElement tr2 = visualDocument.createElement(HTML.TAG_TR);
+        border.appendChild(tr2);
+        nsIDOMElement td2 = visualDocument.createElement(HTML.TAG_TD);
+        tr2.appendChild(td2);
+        nsIDOMElement p = visualDocument.createElement(HTML.TAG_P);
+        p.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
+            DOTTED_BORDER_STYLE);
+        td2.appendChild(p);
 
-		p.appendChild(visualNode);
+        p.appendChild(visualNode);
 
-	    } else {
-		border = visualDocument.createElement(HTML.TAG_TABLE);
-		border.setAttribute(ATRIBUTE_CELLSPACING, ZERO_STRING);
-		border.setAttribute(ATRIBUTE_CELLPADDING, ZERO_STRING);
+        } else {
+        border = visualDocument.createElement(HTML.TAG_TABLE);
+        border.setAttribute(ATRIBUTE_CELLSPACING, ZERO_STRING);
+        border.setAttribute(ATRIBUTE_CELLPADDING, ZERO_STRING);
 
-		nsIDOMElement tr2 = visualDocument.createElement(HTML.TAG_TR);
-		border.appendChild(tr2);
-		nsIDOMElement td2 = visualDocument.createElement(HTML.TAG_TD);
-		tr2.appendChild(td2);
-		nsIDOMElement p = visualDocument.createElement(HTML.TAG_P);
-		p.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
-			DOTTED_BORDER_STYLE);
-		td2.appendChild(p);
+        nsIDOMElement tr2 = visualDocument.createElement(HTML.TAG_TR);
+        border.appendChild(tr2);
+        nsIDOMElement td2 = visualDocument.createElement(HTML.TAG_TD);
+        tr2.appendChild(td2);
+        nsIDOMElement p = visualDocument.createElement(HTML.TAG_P);
+        p.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
+            DOTTED_BORDER_STYLE);
+        td2.appendChild(p);
 
-		p.appendChild(visualNode);
-	    }
-	} else {
-	    border = visualDocument.createElement(HTML.TAG_SPAN);
-	    border.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
-		    DOTTED_BORDER_STYLE);
-	    if (YES_STRING.equals(VpePreference.USE_DETAIL_BORDER.getValue())) {
-		nsIDOMElement name = visualDocument
-			.createElement(HTML.TAG_SPAN);
-		name.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
-			DOTTED_BORDER_STYLE_FOR_SPAN);
-		nsIDOMText text = visualDocument.createTextNode(sourceNode
-			.getNodeName());
-		name.appendChild(text);
-		border.appendChild(name);
-	    }
-	    border.appendChild(visualNode);
-	}
-	if (VpeStyleUtil.getAbsolute((Element) sourceNode) && border != null) {
-	    int top = VpeStyleUtil.getSizeFromStyle((Element) sourceNode,
-		    VpeStyleUtil.ATTRIBUTE_STYLE + VpeStyleUtil.DOT_STRING
-			    + VpeStyleUtil.PARAMETER_TOP);
-	    int left = VpeStyleUtil.getSizeFromStyle((Element) sourceNode,
-		    VpeStyleUtil.ATTRIBUTE_STYLE + VpeStyleUtil.DOT_STRING
-			    + VpeStyleUtil.PARAMETER_LEFT);
+        p.appendChild(visualNode);
+        }
+    } else {
+        border = visualDocument.createElement(HTML.TAG_SPAN);
+        border.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
+            DOTTED_BORDER_STYLE);
+        if (YES_STRING.equals(VpePreference.USE_DETAIL_BORDER.getValue())) {
+        nsIDOMElement name = visualDocument
+            .createElement(HTML.TAG_SPAN);
+        name.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
+            DOTTED_BORDER_STYLE_FOR_SPAN);
+        nsIDOMText text = visualDocument.createTextNode(sourceNode
+            .getNodeName());
+        name.appendChild(text);
+        border.appendChild(name);
+        }
+        border.appendChild(visualNode);
+    }
+    if (VpeStyleUtil.getAbsolute((Element) sourceNode) && border != null) {
+        int top = VpeStyleUtil.getSizeFromStyle((Element) sourceNode,
+            VpeStyleUtil.ATTRIBUTE_STYLE + VpeStyleUtil.DOT_STRING
+                + VpeStyleUtil.PARAMETER_TOP);
+        int left = VpeStyleUtil.getSizeFromStyle((Element) sourceNode,
+            VpeStyleUtil.ATTRIBUTE_STYLE + VpeStyleUtil.DOT_STRING
+                + VpeStyleUtil.PARAMETER_LEFT);
 
-	    String style = visualNode
-		    .getAttribute(VpeStyleUtil.ATTRIBUTE_STYLE);
-	    style = VpeStyleUtil.deleteFromString(style,
-		    VpeStyleUtil.PARAMETER_POSITION,
-		    VpeStyleUtil.SEMICOLON_STRING);
-	    style = VpeStyleUtil.deleteFromString(style,
-		    VpeStyleUtil.PARAMETER_TOP, VpeStyleUtil.SEMICOLON_STRING);
-	    style = VpeStyleUtil.deleteFromString(style,
-		    VpeStyleUtil.PARAMETER_LEFT, VpeStyleUtil.SEMICOLON_STRING);
-	    visualNode.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
+        String style = visualNode
+            .getAttribute(VpeStyleUtil.ATTRIBUTE_STYLE);
+        style = VpeStyleUtil.deleteFromString(style,
+            VpeStyleUtil.PARAMETER_POSITION,
+            VpeStyleUtil.SEMICOLON_STRING);
+        style = VpeStyleUtil.deleteFromString(style,
+            VpeStyleUtil.PARAMETER_TOP, VpeStyleUtil.SEMICOLON_STRING);
+        style = VpeStyleUtil.deleteFromString(style,
+            VpeStyleUtil.PARAMETER_LEFT, VpeStyleUtil.SEMICOLON_STRING);
+        visualNode.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
 
-	    style = border.getAttribute(VpeStyleUtil.ATTRIBUTE_STYLE);
-	    style = VpeStyleUtil.setAbsolute(style);
-	    if (top != -1)
-		style = VpeStyleUtil.setSizeInStyle(style,
-			VpeStyleUtil.PARAMETER_TOP, top);
-	    if (left != -1)
-		style = VpeStyleUtil.setSizeInStyle(style,
-			VpeStyleUtil.PARAMETER_LEFT, left);
-	    border.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
-	}
-	return border;
+        style = border.getAttribute(VpeStyleUtil.ATTRIBUTE_STYLE);
+        style = VpeStyleUtil.setAbsolute(style);
+        if (top != -1)
+        style = VpeStyleUtil.setSizeInStyle(style,
+            VpeStyleUtil.PARAMETER_TOP, top);
+        if (left != -1)
+        style = VpeStyleUtil.setSizeInStyle(style,
+            VpeStyleUtil.PARAMETER_LEFT, left);
+        border.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
+    }
+    return border;
     }
 
     protected nsIDOMNode createNode(Node sourceNode,
-	    nsIDOMNode visualOldContainer) {
-	boolean registerFlag = isCurrentMainDocument();
-	
-	//reads and dispatch events
-	//JBIDE-675, checks if editor was disposed or not
-	if(getPageContext().getSourceBuilder()==null ||includeDocuments==null) {
-		
-		throw new VpeDisposeException();
+        nsIDOMNode visualOldContainer) {
+    boolean registerFlag = isCurrentMainDocument();
+    
+    //reads and dispatch events
+    //JBIDE-675, checks if editor was disposed or not
+    if(getPageContext().getSourceBuilder()==null ||includeDocuments==null) {
+        
+        throw new VpeDisposeException();
 }
-	getPageContext().processDisplayEvents();
-	
-	//check source node can be changed and link can be a null in this case
-	//we shouldn't process this node
-	if(sourceNode==null) {
-		return null;
-	}
-	
-	
-	switch (sourceNode.getNodeType()) {
-	case Node.ELEMENT_NODE:
-	    // Map<?, ?> xmlnsMap = createXmlns((Element) sourceNode);
-	    Set<Node> ifDependencySet = new HashSet<Node>();
-	    pageContext.setCurrentVisualNode(visualOldContainer);
-	    VpeTemplate template = templateManager.getTemplate(pageContext,
-		    (Element) sourceNode, ifDependencySet);
+    getPageContext().processDisplayEvents();
+    
+    //check source node can be changed and link can be a null in this case
+    //we shouldn't process this node
+    if(sourceNode==null) {
+        return null;
+    }
+    
+    
+    switch (sourceNode.getNodeType()) {
+    case Node.ELEMENT_NODE:
+        // Map<?, ?> xmlnsMap = createXmlns((Element) sourceNode);
+        Set<Node> ifDependencySet = new HashSet<Node>();
+        pageContext.setCurrentVisualNode(visualOldContainer);
+        VpeTemplate template = templateManager.getTemplate(pageContext,
+            (Element) sourceNode, ifDependencySet);
 
-	    VpeCreationData creationData = null;
-	    // FIX FOR JBIDE-1568, added by Max Areshkau
-	    try {
-//	    	if(getPageContext().isCreationDataExistInCash(sourceNode)) {
-	    		
-//	    		creationData = getPageContext().getVpeCreationDataFromCash(sourceNode).createHashCopy();
-//	    	} else {
-	    		creationData = template.create(getPageContext(), sourceNode,
-	    									getVisualDocument());
-//	    		if(creationData.getNode()!=null) {
-//	    			
-//	    		getPageContext().addCreationDataToCash(sourceNode, creationData.createHashCopy());
-//	    		
-//	    		}
-//	    	}
-	    } catch (XPCOMException ex) {
-		VpePlugin.getPluginLog().logError(ex);
-		VpeTemplate defTemplate = templateManager.getDefTemplate();
-		creationData = defTemplate.create(getPageContext(), sourceNode,
-			getVisualDocument());
-	    }
-	    
-	    pageContext.setCurrentVisualNode(null);
-	    nsIDOMElement visualNewElement = null;
+        VpeCreationData creationData = null;
+        // FIX FOR JBIDE-1568, added by Max Areshkau
+        try {
+//          if(getPageContext().isCreationDataExistInCash(sourceNode)) {
+                
+//              creationData = getPageContext().getVpeCreationDataFromCash(sourceNode).createHashCopy();
+//          } else {
+            
+//              VpeCreationData
+//              Map<String, String> oldAttributes = new HashMap<String, String>();
+//              NamedNodeMap map =   sourceNode.getAttributes();
+//              for( int i = 0 ; i < map.getLength() ; i ++ ){
+//                  final Attr attr = (Attr) map.item(i);
+//                
+//                  oldAttributes.put(attr.getName(),attr.getValue());
+//                  System.err.println(MessageFormat.format("name={0},value={1}", attr.getName(),attr.getValue()));
+//                  
+//              }
 
-	    	if(creationData.getNode()!=null) {
-	    	
-	     visualNewElement = (nsIDOMElement) creationData
-		    			.getNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-	    	}
-	    	
- 		if ((visualNewElement != null) && template.hasImaginaryBorder()) {
+                if (template.getClass().getName().contains("Rich") || template.getClass().getName().contains("Jsf")) {
+                    final Element sourceNodeClone = (Element) ((Element) sourceNode).cloneNode(true);
+                    template.beforeTemplateCreated(getPageContext(), sourceNodeClone, getVisualDocument());
+                    creationData = template.create(getPageContext(), sourceNodeClone, getVisualDocument());
+                }else{
+                    creationData = template.create(getPageContext(), sourceNode, getVisualDocument());
+                }
+                
+          
+//              
+//              map = sourceNode.getAttributes();
+//               for( int i = 0 ; i < map.getLength() ; i ++ ){
+//                   final Attr attr = (Attr) map.item(i);
+//                   
+//                   attr.setValue(oldAttributes.get(attr.getName()));
+//              }
+                
+//              if(creationData.getNode()!=null) {
+//                  
+//              getPageContext().addCreationDataToCash(sourceNode, creationData.createHashCopy());
+//              
+//              }
+//          }
+        } catch (XPCOMException ex) {
+        VpePlugin.getPluginLog().logError(ex);
+        VpeTemplate defTemplate = templateManager.getDefTemplate();
+        creationData = defTemplate.create(getPageContext(), sourceNode,
+            getVisualDocument());
+        }
+        
+        pageContext.setCurrentVisualNode(null);
+        nsIDOMElement visualNewElement = null;
 
-				visualNewElement.setAttribute(HTML.ATTR_STYLE, visualNewElement
-						.getAttribute(HTML.ATTR_STYLE)
-						+ VpeStyleUtil.SEMICOLON_STRING + DOTTED_BORDER);
+            if(creationData.getNode()!=null) {
+            
+         visualNewElement = (nsIDOMElement) creationData
+                        .getNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+            }
+            
+        if ((visualNewElement != null) && template.hasImaginaryBorder()) {
 
-			}
-	    
-	    if (visualNewElement != null)
-		correctVisualAttribute(visualNewElement);
-	    
+                visualNewElement.setAttribute(HTML.ATTR_STYLE, visualNewElement
+                        .getAttribute(HTML.ATTR_STYLE)
+                        + VpeStyleUtil.SEMICOLON_STRING + DOTTED_BORDER);
+
+            }
+        
+        if (visualNewElement != null)
+        correctVisualAttribute(visualNewElement);
+        
 
 
-	    nsIDOMElement border = null;
-	    setTooltip((Element) sourceNode, visualNewElement);
-	    if (YES_STRING.equals(VpePreference.SHOW_BORDER_FOR_ALL_TAGS
-		    .getValue())
-		    && visualNewElement != null) {
-		boolean block = true;
-		if (template.getTagDescription(null, null, null,
-			visualNewElement, null).getDisplayType() == VpeTagDescription.DISPLAY_TYPE_INLINE) {
-		    block = false;
-		}
-		border = createBorder(sourceNode, visualNewElement, block);
-	    }
-	    if (!isCurrentMainDocument() && visualNewElement != null) {
-		setReadOnlyElement(visualNewElement);
-	    }
-	    if (registerFlag) {
-				VpeElementMapping elementMapping = new VpeElementMapping(
-						(Element) sourceNode, visualNewElement, border,
-						template, ifDependencySet, creationData.getData(),
-						creationData.getElementData());
-				// elementMapping.setXmlnsMap(xmlnsMap);
-				registerNodes(elementMapping);
-			}
-	    if (template.isChildren()) {
-		List<?> childrenInfoList = creationData.getChildrenInfoList();
-		if (childrenInfoList == null) {
-		    addChildren(template, sourceNode,
-			    visualNewElement != null ? visualNewElement
-				    : visualOldContainer);
-		} else {
-		    addChildren(template, sourceNode, visualOldContainer,
-			    childrenInfoList);
-		}
-	    }
-	    pageContext.setCurrentVisualNode(visualOldContainer);
-	    template.validate(pageContext, (Element) sourceNode,
-		    visualDocument, creationData);
-	    pageContext.setCurrentVisualNode(null);
-	    if (border != null)
-		return border;
-	    else
-		return visualNewElement;
-	case Node.TEXT_NODE:
-	    return createTextNode(sourceNode, registerFlag);
-	case Node.COMMENT_NODE:
-	    if (!YES_STRING.equals(VpePreference.SHOW_COMMENTS.getValue())) {
-		return null;
-	    }
-	    nsIDOMElement visualNewComment = createComment(sourceNode);
-	    if (registerFlag) {
-		registerNodes(new VpeNodeMapping(sourceNode, visualNewComment));
-	    }
-	    return visualNewComment;
-	}
-	return null;
+        nsIDOMElement border = null;
+        setTooltip((Element) sourceNode, visualNewElement);
+        if (YES_STRING.equals(VpePreference.SHOW_BORDER_FOR_ALL_TAGS
+            .getValue())
+            && visualNewElement != null) {
+        boolean block = true;
+        if (template.getTagDescription(null, null, null,
+            visualNewElement, null).getDisplayType() == VpeTagDescription.DISPLAY_TYPE_INLINE) {
+            block = false;
+        }
+        border = createBorder(sourceNode, visualNewElement, block);
+        }
+        if (!isCurrentMainDocument() && visualNewElement != null) {
+        setReadOnlyElement(visualNewElement);
+        }
+        if (registerFlag) {
+                VpeElementMapping elementMapping = new VpeElementMapping(
+                        (Element) sourceNode, visualNewElement, border,
+                        template, ifDependencySet, creationData.getData(),
+                        creationData.getElementData());
+                // elementMapping.setXmlnsMap(xmlnsMap);
+                registerNodes(elementMapping);
+            }
+        if (template.isChildren()) {
+        List<?> childrenInfoList = creationData.getChildrenInfoList();
+        if (childrenInfoList == null) {
+            addChildren(template, sourceNode,
+                visualNewElement != null ? visualNewElement
+                    : visualOldContainer);
+        } else {
+            addChildren(template, sourceNode, visualOldContainer,
+                childrenInfoList);
+        }
+        }
+        pageContext.setCurrentVisualNode(visualOldContainer);
+        template.validate(pageContext, (Element) sourceNode,
+            visualDocument, creationData);
+        pageContext.setCurrentVisualNode(null);
+        if (border != null)
+        return border;
+        else
+        return visualNewElement;
+    case Node.TEXT_NODE:
+        return createTextNode(sourceNode, registerFlag);
+    case Node.COMMENT_NODE:
+        if (!YES_STRING.equals(VpePreference.SHOW_COMMENTS.getValue())) {
+        return null;
+        }
+        nsIDOMElement visualNewComment = createComment(sourceNode);
+        if (registerFlag) {
+        registerNodes(new VpeNodeMapping(sourceNode, visualNewComment));
+        }
+        return visualNewComment;
+    }
+    return null;
     }
 
     private void correctVisualAttribute(nsIDOMElement element) {
 
-	String styleValue = element.getAttribute(HTML.TAG_STYLE);
-	String backgroundValue = element
-		.getAttribute(VpeStyleUtil.PARAMETR_BACKGROND);
+    String styleValue = element.getAttribute(HTML.TAG_STYLE);
+    String backgroundValue = element
+        .getAttribute(VpeStyleUtil.PARAMETR_BACKGROND);
 
-	if (styleValue != null) {
-	    styleValue = VpeStyleUtil.addFullPathIntoURLValue(styleValue,
-		    pageContext.getEditPart().getEditorInput());
-	    element.setAttribute(HTML.TAG_STYLE, styleValue);
-	}
-	if (backgroundValue != null) {
-	    backgroundValue = VpeStyleUtil
-		    .addFullPathIntoBackgroundValue(backgroundValue,
-			    pageContext.getEditPart().getEditorInput());
-	    element.setAttribute(VpeStyleUtil.PARAMETR_BACKGROND,
-		    backgroundValue);
-	}
+    if (styleValue != null) {
+        styleValue = VpeStyleUtil.addFullPathIntoURLValue(styleValue,
+            pageContext.getEditPart().getEditorInput());
+        element.setAttribute(HTML.TAG_STYLE, styleValue);
+    }
+    if (backgroundValue != null) {
+        backgroundValue = VpeStyleUtil
+            .addFullPathIntoBackgroundValue(backgroundValue,
+                pageContext.getEditPart().getEditorInput());
+        element.setAttribute(VpeStyleUtil.PARAMETR_BACKGROND,
+            backgroundValue);
+    }
     }
 
     protected nsIDOMElement createComment(Node sourceNode) {
-	nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
-	div.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, COMMENT_STYLE);
-	String value = COMMENT_PREFIX + sourceNode.getNodeValue()
-		+ COMMENT_SUFFIX;
-	nsIDOMText text = visualDocument.createTextNode(value);
-	div.appendChild(text);
-	return div;
+    nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
+    div.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, COMMENT_STYLE);
+    String value = COMMENT_PREFIX + sourceNode.getNodeValue()
+        + COMMENT_SUFFIX;
+    nsIDOMText text = visualDocument.createTextNode(value);
+    div.appendChild(text);
+    return div;
     }
 
     protected void addChildren(VpeTemplate containerTemplate,
-			Node sourceContainer, nsIDOMNode visualContainer) {
-    	
-    	/*
-		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944
-		 * author: Denis Maliarevich
-		 * This method is called when template has no childrenInfoList.
-		 * In this case h:dataTable and h:panelGrid should display pseudo text
-		 */
-    	if (containerTemplate instanceof VpeHtmlTemplate) {
-			int type = ((VpeHtmlTemplate) containerTemplate).getType();
-			if ((VpeHtmlTemplate.TYPE_DATATABLE == type)
-					|| (VpeHtmlTemplate.TYPE_PANELGRID == type)) {
-				setPseudoContent(containerTemplate, sourceContainer,
-						visualContainer);
-				return;
-			}
-		}
-    	
-		NodeList sourceNodes = sourceContainer.getChildNodes();
-		int len = sourceNodes.getLength();
-		int childrenCount = 0;
-		for (int i = 0; i < len; i++) {
-			Node sourceNode = sourceNodes.item(i);
-			if (addNode(sourceNode, null, visualContainer)) {
-				if (Node.ELEMENT_NODE == sourceNode.getNodeType()) {
-				}
-				childrenCount++;
-			}
-		}
+            Node sourceContainer, nsIDOMNode visualContainer) {
+        
+        /*
+         * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944
+         * author: Denis Maliarevich
+         * This method is called when template has no childrenInfoList.
+         * In this case h:dataTable and h:panelGrid should display pseudo text
+         */
+        if (containerTemplate instanceof VpeHtmlTemplate) {
+            int type = ((VpeHtmlTemplate) containerTemplate).getType();
+            if ((VpeHtmlTemplate.TYPE_DATATABLE == type)
+                    || (VpeHtmlTemplate.TYPE_PANELGRID == type)) {
+                setPseudoContent(containerTemplate, sourceContainer,
+                        visualContainer);
+                return;
+            }
+        }
+        
+        NodeList sourceNodes = sourceContainer.getChildNodes();
+        int len = sourceNodes.getLength();
+        int childrenCount = 0;
+        for (int i = 0; i < len; i++) {
+            Node sourceNode = sourceNodes.item(i);
+            if (addNode(sourceNode, null, visualContainer)) {
+                if (Node.ELEMENT_NODE == sourceNode.getNodeType()) {
+                }
+                childrenCount++;
+            }
+        }
 
-		if (childrenCount == 0) {
-			setPseudoContent(containerTemplate, sourceContainer,
-					visualContainer);
-		}
-	}
+        if (childrenCount == 0) {
+            setPseudoContent(containerTemplate, sourceContainer,
+                    visualContainer);
+        }
+    }
 
     protected void addChildren(VpeTemplate containerTemplate,
-	    Node sourceContainer, nsIDOMNode visualOldContainer,
-	    List<?> childrenInfoList) {
-	for (int i = 0; i < childrenInfoList.size(); i++) {
-	    VpeChildrenInfo info = (VpeChildrenInfo) childrenInfoList.get(i);
-	    nsIDOMNode visualParent = info.getVisualParent();
-	    if (visualParent == null)
-		visualParent = visualOldContainer;
-	    List<?> sourceChildren = info.getSourceChildren();
-	    int childrenCount = 0;
-	    if (sourceChildren != null) {
-		for (int j = 0; j < sourceChildren.size(); j++) {
-		    if (addNode((Node) sourceChildren.get(j), null,
-			    visualParent)) {
-			childrenCount++;
-		    }
-		}
-	    }
-	    if (childrenCount == 0 && childrenInfoList.size() == 0) {
-		setPseudoContent(containerTemplate, sourceContainer,
-			visualParent);
-	    }
-	}
+        Node sourceContainer, nsIDOMNode visualOldContainer,
+        List<?> childrenInfoList) {
+    for (int i = 0; i < childrenInfoList.size(); i++) {
+        VpeChildrenInfo info = (VpeChildrenInfo) childrenInfoList.get(i);
+        nsIDOMNode visualParent = info.getVisualParent();
+        if (visualParent == null)
+        visualParent = visualOldContainer;
+        List<?> sourceChildren = info.getSourceChildren();
+        int childrenCount = 0;
+        if (sourceChildren != null) {
+        for (int j = 0; j < sourceChildren.size(); j++) {
+            if (addNode((Node) sourceChildren.get(j), null,
+                visualParent)) {
+            childrenCount++;
+            }
+        }
+        }
+        if (childrenCount == 0 && childrenInfoList.size() == 0) {
+        setPseudoContent(containerTemplate, sourceContainer,
+            visualParent);
+        }
+    }
     }
 
     // /////////////////////////////////////////////////////////////////////////
     public nsIDOMNode addStyleNodeToHead(String styleText) {
-	nsIDOMNode newStyle = visualDocument
-		.createElement(VpeStyleUtil.ATTRIBUTE_STYLE);
+    nsIDOMNode newStyle = visualDocument
+        .createElement(VpeStyleUtil.ATTRIBUTE_STYLE);
 
-	if (styleText != null) {
-	    nsIDOMText newText = visualDocument.createTextNode(styleText);
-	    newStyle.appendChild(newText);
-	}
-	getHeadNode().appendChild(newStyle);
-	return newStyle;
+    if (styleText != null) {
+        nsIDOMText newText = visualDocument.createTextNode(styleText);
+        newStyle.appendChild(newText);
+    }
+    getHeadNode().appendChild(newStyle);
+    return newStyle;
     }
 
     public nsIDOMNode replaceStyleNodeToHead(nsIDOMNode oldStyleNode,
-	    String styleText) {
-	nsIDOMElement newStyle = visualDocument
-		.createElement(VpeStyleUtil.ATTRIBUTE_STYLE);
+        String styleText) {
+    nsIDOMElement newStyle = visualDocument
+        .createElement(VpeStyleUtil.ATTRIBUTE_STYLE);
 
-	if (styleText != null) {
-	    nsIDOMNode newText = visualDocument.createTextNode(styleText);
-	    newStyle.appendChild(newText);
-	}
+    if (styleText != null) {
+        nsIDOMNode newText = visualDocument.createTextNode(styleText);
+        newStyle.appendChild(newText);
+    }
 
-	getHeadNode().replaceChild(newStyle, oldStyleNode);
-	return newStyle;
+    getHeadNode().replaceChild(newStyle, oldStyleNode);
+    return newStyle;
     }
 
     public void removeStyleNodeFromHead(nsIDOMNode oldStyleNode) {
-    	getHeadNode().removeChild(oldStyleNode);
+        getHeadNode().removeChild(oldStyleNode);
     }
 
     void addExternalLinks() {
-	IEditorInput input = pageContext.getEditPart().getEditorInput();
-	IFile file = null;
-	if (input instanceof IFileEditorInput) {
-	    file = ((IFileEditorInput) input).getFile();
-	}
-	ResourceReference[] l = null;
-	if (file != null) {
-	    l = CSSReferenceList.getInstance().getAllResources(file);
-	}
-	if (l != null) {
-	    for (int i = 0; i < l.length; i++) {
-		ResourceReference item = l[i];
-		addLinkNodeToHead("file:///" + item.getLocation(), YES_STRING); //$NON-NLS-1$
-	    }
-	}
+    IEditorInput input = pageContext.getEditPart().getEditorInput();
+    IFile file = null;
+    if (input instanceof IFileEditorInput) {
+        file = ((IFileEditorInput) input).getFile();
+    }
+    ResourceReference[] l = null;
+    if (file != null) {
+        l = CSSReferenceList.getInstance().getAllResources(file);
+    }
+    if (l != null) {
+        for (int i = 0; i < l.length; i++) {
+        ResourceReference item = l[i];
+        addLinkNodeToHead("file:///" + item.getLocation(), YES_STRING); //$NON-NLS-1$
+        }
+    }
     }
 
     void removeExternalLinks() {
-	nsIDOMNodeList childs = getHeadNode().getChildNodes();
-	long length = childs.getLength();
-	for (long i = length - 1; i >= 0; i--) {
-	    nsIDOMNode node = childs.item(i);
-	    if (node.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-		boolean isLink = false;
-		boolean isStyle = false;
-		if ((isLink = HTML.TAG_LINK
-			.equalsIgnoreCase(node.getNodeName()))
-			|| (isStyle = HTML.TAG_STYLE.equalsIgnoreCase(node
-				.getNodeName()))) {
-		    nsIDOMElement element = (nsIDOMElement) node
-			    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-		    if ((isLink || (isStyle && ATTR_VPE_INLINE_LINK_VALUE
-			    .equalsIgnoreCase(element.getAttribute(ATTR_VPE))))
-			    && YES_STRING.equalsIgnoreCase(element
-				    .getAttribute(VpeTemplateManager.ATTR_LINK_EXT))) {
-		    	getHeadNode().removeChild(node);
-		    }
-		}
-	    }
-	}
+    nsIDOMNodeList childs = getHeadNode().getChildNodes();
+    long length = childs.getLength();
+    for (long i = length - 1; i >= 0; i--) {
+        nsIDOMNode node = childs.item(i);
+        if (node.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+        boolean isLink = false;
+        boolean isStyle = false;
+        if ((isLink = HTML.TAG_LINK
+            .equalsIgnoreCase(node.getNodeName()))
+            || (isStyle = HTML.TAG_STYLE.equalsIgnoreCase(node
+                .getNodeName()))) {
+            nsIDOMElement element = (nsIDOMElement) node
+                .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+            if ((isLink || (isStyle && ATTR_VPE_INLINE_LINK_VALUE
+                .equalsIgnoreCase(element.getAttribute(ATTR_VPE))))
+                && YES_STRING.equalsIgnoreCase(element
+                    .getAttribute(VpeTemplateManager.ATTR_LINK_EXT))) {
+                getHeadNode().removeChild(node);
+            }
+        }
+        }
+    }
     }
 
     void refreshExternalLinks() {
-	removeExternalLinks();
-	addExternalLinks();
+    removeExternalLinks();
+    addExternalLinks();
     }
 
     // ==========================================================
     void resetPseudoElement(nsIDOMNode visualNode) {
-	if (visualNode != null) {
-	    nsIDOMNode visualParent = visualNode.getParentNode();
-	    if (visualParent != null) {
-		PseudoInfo info = getPseudoInfo(visualParent);
-		if (info.pseudoNode == null && !info.isElements) {
-		    addPseudoElementImpl(visualParent);
-		} else if (info.pseudoNode != null && info.isElements) {
-		    visualParent.removeChild(info.pseudoNode);
-		}
-	    }
-	}
+    if (visualNode != null) {
+        nsIDOMNode visualParent = visualNode.getParentNode();
+        if (visualParent != null) {
+        PseudoInfo info = getPseudoInfo(visualParent);
+        if (info.pseudoNode == null && !info.isElements) {
+            addPseudoElementImpl(visualParent);
+        } else if (info.pseudoNode != null && info.isElements) {
+            visualParent.removeChild(info.pseudoNode);
+        }
+        }
+    }
     }
 
     private PseudoInfo getPseudoInfo(nsIDOMNode visualParent) {
-	nsIDOMNode pseudoNode = null;
-	boolean isElements = false;
+    nsIDOMNode pseudoNode = null;
+    boolean isElements = false;
 
-	if (visualParent == null)
-	    return new PseudoInfo();
-	nsIDOMNodeList visualNodes = visualParent.getChildNodes();
-	if (visualNodes == null)
-	    return new PseudoInfo();
+    if (visualParent == null)
+        return new PseudoInfo();
+    nsIDOMNodeList visualNodes = visualParent.getChildNodes();
+    if (visualNodes == null)
+        return new PseudoInfo();
 
-	long length = visualNodes.getLength();
-	for (long i = 0; i < length; i++) {
-	    nsIDOMNode visualNode = visualNodes.item(i);
-	    if (pseudoNode == null && isPseudoElement(visualNode)) {
-		pseudoNode = visualNode;
-	    } else if (!isEmptyText(visualNode)) {
-		isElements = true;
-	    }
-	    if (pseudoNode != null && isElements) {
-		break;
-	    }
-	}
-	return new PseudoInfo(pseudoNode, isElements);
+    long length = visualNodes.getLength();
+    for (long i = 0; i < length; i++) {
+        nsIDOMNode visualNode = visualNodes.item(i);
+        if (pseudoNode == null && isPseudoElement(visualNode)) {
+        pseudoNode = visualNode;
+        } else if (!isEmptyText(visualNode)) {
+        isElements = true;
+        }
+        if (pseudoNode != null && isElements) {
+        break;
+        }
+    }
+    return new PseudoInfo(pseudoNode, isElements);
     }
 
     static boolean isInitElement(nsIDOMNode visualNode) {
-	if (visualNode == null) {
-	    return false;
-	}
+    if (visualNode == null) {
+        return false;
+    }
 
-	if (visualNode.getNodeType() != Node.ELEMENT_NODE) {
-	    return false;
-	}
+    if (visualNode.getNodeType() != Node.ELEMENT_NODE) {
+        return false;
+    }
 
-	if (YES_STRING.equalsIgnoreCase(((nsIDOMElement) visualNode)
-		.getAttribute(INIT_ELEMENT_ATTR))) {
-	    return true;
-	}
+    if (YES_STRING.equalsIgnoreCase(((nsIDOMElement) visualNode)
+        .getAttribute(INIT_ELEMENT_ATTR))) {
+        return true;
+    }
 
-	return false;
+    return false;
     }
 
     static boolean isPseudoElement(nsIDOMNode visualNode) {
-	if (visualNode == null) {
-	    return false;
-	}
+    if (visualNode == null) {
+        return false;
+    }
 
-	if (visualNode.getNodeType() != Node.ELEMENT_NODE) {
-	    return false;
-	}
+    if (visualNode.getNodeType() != Node.ELEMENT_NODE) {
+        return false;
+    }
 
-	if (YES_STRING.equalsIgnoreCase(((nsIDOMElement) visualNode
-		.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
-		.getAttribute(PSEUDO_ELEMENT_ATTR))) {
-	    return true;
-	}
+    if (YES_STRING.equalsIgnoreCase(((nsIDOMElement) visualNode
+        .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
+        .getAttribute(PSEUDO_ELEMENT_ATTR))) {
+        return true;
+    }
 
-	return false;
+    return false;
     }
 
     private void setPseudoContent(VpeTemplate containerTemplate,
-	    Node sourceContainer, nsIDOMNode visualContainer) {
-	if (containerTemplate != null) {
-	    containerTemplate.setPseudoContent(pageContext, sourceContainer,
-		    visualContainer, visualDocument);
-	} else {
-	    VpeDefaultPseudoContentCreator.getInstance().setPseudoContent(
-		    pageContext, sourceContainer, visualContainer,
-		    visualDocument);
-	}
+        Node sourceContainer, nsIDOMNode visualContainer) {
+    if (containerTemplate != null) {
+        containerTemplate.setPseudoContent(pageContext, sourceContainer,
+            visualContainer, visualDocument);
+    } else {
+        VpeDefaultPseudoContentCreator.getInstance().setPseudoContent(
+            pageContext, sourceContainer, visualContainer,
+            visualDocument);
+    }
 
-	// if (isEmptyElement(visualContainer)) {
-	// addPseudoElementImpl(visualContainer);
-	// }
+    // if (isEmptyElement(visualContainer)) {
+    // addPseudoElementImpl(visualContainer);
+    // }
     }
 
     private void addPseudoElementImpl(nsIDOMNode visualParent) {
-	if (!templateManager.isWithoutPseudoElementContainer(visualParent
-		.getNodeName())) {
-	    if (VpeDebug.VISUAL_ADD_PSEUDO_ELEMENT) {
-		System.out.println("-------------------- addPseudoElement: " //$NON-NLS-1$
-			+ visualParent.getNodeName());
-	    }
-	    nsIDOMElement visualPseudoElement = visualDocument
-		    .createElement(PSEUDO_ELEMENT);
-	    visualPseudoElement.setAttribute(PSEUDO_ELEMENT_ATTR, YES_STRING);
-	    visualParent.appendChild(visualPseudoElement);
-	}
+    if (!templateManager.isWithoutPseudoElementContainer(visualParent
+        .getNodeName())) {
+        if (VpeDebug.VISUAL_ADD_PSEUDO_ELEMENT) {
+        System.out.println("-------------------- addPseudoElement: " //$NON-NLS-1$
+            + visualParent.getNodeName());
+        }
+        nsIDOMElement visualPseudoElement = visualDocument
+            .createElement(PSEUDO_ELEMENT);
+        visualPseudoElement.setAttribute(PSEUDO_ELEMENT_ATTR, YES_STRING);
+        visualParent.appendChild(visualPseudoElement);
+    }
     }
 
     public boolean isEmptyElement(nsIDOMNode visualParent) {
-	nsIDOMNodeList visualNodes = visualParent.getChildNodes();
-	long len = visualNodes.getLength();
+    nsIDOMNodeList visualNodes = visualParent.getChildNodes();
+    long len = visualNodes.getLength();
 
-	if ((len == 0) || (len == 1 && isEmptyText(visualNodes.item(0)))) {
-	    return true;
-	}
+    if ((len == 0) || (len == 1 && isEmptyText(visualNodes.item(0)))) {
+        return true;
+    }
 
-	return false;
+    return false;
     }
 
     public boolean isEmptyDocument() {
-	nsIDOMNodeList visualNodes = getContentArea().getChildNodes();
-	long len = visualNodes.getLength();
-	if ((len == 0)
-		|| (len == 1 && (isEmptyText(visualNodes.item(0)) || isPseudoElement(visualNodes
-			.item(0))))) {
-	    return true;
-	}
+    nsIDOMNodeList visualNodes = getContentArea().getChildNodes();
+    long len = visualNodes.getLength();
+    if ((len == 0)
+        || (len == 1 && (isEmptyText(visualNodes.item(0)) || isPseudoElement(visualNodes
+            .item(0))))) {
+        return true;
+    }
 
-	return false;
+    return false;
     }
 
     private boolean isEmptyText(nsIDOMNode visualNode) {
-	if (visualNode == null
-		|| (visualNode.getNodeType() != nsIDOMNode.TEXT_NODE)) {
-	    return false;
-	}
+    if (visualNode == null
+        || (visualNode.getNodeType() != nsIDOMNode.TEXT_NODE)) {
+        return false;
+    }
 
-	if (visualNode.getNodeValue().trim().length() == 0) {
-	    return true;
-	}
+    if (visualNode.getNodeValue().trim().length() == 0) {
+        return true;
+    }
 
-	return false;
+    return false;
     }
 
     // ==========================================================
 
     public void updateNode(Node sourceNode) {
-	if (sourceNode == null)
-	    return;
+    if (sourceNode == null)
+        return;
 
-	switch (sourceNode.getNodeType()) {
-	case Node.DOCUMENT_NODE:
-	    rebuildDom((Document) sourceNode);
-	    break;
-	case Node.COMMENT_NODE:
-	    updateComment(sourceNode);
-	    break;
-	default:
-	    updateElement(getNodeForUpdate(sourceNode));
-	}
+    switch (sourceNode.getNodeType()) {
+    case Node.DOCUMENT_NODE:
+        rebuildDom((Document) sourceNode);
+        break;
+    case Node.COMMENT_NODE:
+        updateComment(sourceNode);
+        break;
+    default:
+        updateElement(getNodeForUpdate(sourceNode));
+    }
     }
 
     // TODO Ssergey Vasilyev make a common code for figuring out
     // if it is need to update parent node or not
     private Node getNodeForUpdate(Node sourceNode) {
-	/* Changing of <tr> or <td> tags can affect whole the table */
-	Node sourceTable = getParentTable(sourceNode, 2);
-	if (sourceTable != null) {
-	    return sourceTable;
-	}
+    /* Changing of <tr> or <td> tags can affect whole the table */
+    Node sourceTable = getParentTable(sourceNode, 2);
+    if (sourceTable != null) {
+        return sourceTable;
+    }
 
-	/* Changing of an <option> tag can affect the parent select */
-	Node sourceSelect = getParentSelect(sourceNode);
-	if (sourceSelect != null) {
-	    return sourceSelect;
-	}
+    /* Changing of an <option> tag can affect the parent select */
+    Node sourceSelect = getParentSelect(sourceNode);
+    if (sourceSelect != null) {
+        return sourceSelect;
+    }
 
-	return sourceNode;
+    return sourceNode;
     }
 
     private void updateComment(Node sourceNode) {
-	VpeNodeMapping mapping = domMapping.getNodeMapping(sourceNode);
-	if (mapping != null
-		&& mapping.getType() == VpeNodeMapping.COMMENT_MAPPING) {
-	    nsIDOMNodeList visualNodes = mapping.getVisualNode()
-		    .getChildNodes();
+    VpeNodeMapping mapping = domMapping.getNodeMapping(sourceNode);
+    if (mapping != null
+        && mapping.getType() == VpeNodeMapping.COMMENT_MAPPING) {
+        nsIDOMNodeList visualNodes = mapping.getVisualNode()
+            .getChildNodes();
 
-	    if (visualNodes.getLength() > 0) {
-		visualNodes.item(0).setNodeValue(sourceNode.getNodeValue());
-	    }
-	}
+        if (visualNodes.getLength() > 0) {
+        visualNodes.item(0).setNodeValue(sourceNode.getNodeValue());
+        }
+    }
     }
 
     private void updateElement(Node sourceNode) {
-	VpeElementMapping elementMapping = null;
-	VpeNodeMapping nodeMapping = domMapping.getNodeMapping(sourceNode);
-	if (nodeMapping instanceof VpeElementMapping) {
-	
-	    elementMapping = (VpeElementMapping) nodeMapping;
-	    if (elementMapping != null && elementMapping.getTemplate() != null) {
-				Node updateNode = elementMapping.getTemplate()
-						.getNodeForUptate(pageContext,
-								elementMapping.getSourceNode(),
-								elementMapping.getVisualNode(),
-								elementMapping.getData());
-
-				/*
-				 * special processing of "style" element
-				 * 
-				 * for unification of updating nodes - or redevelop updating
-				 * mechanism (for example : transfer this function to template )
-				 * or redevelop template of "style" element
-				 */
-				if (HTML.TAG_STYLE.equalsIgnoreCase(sourceNode.getNodeName())) {
-					// refresh style node
-					VpeStyleUtil.refreshStyleElement(this, elementMapping);
-					return;
-				}
-				if (updateNode != null && updateNode != sourceNode) {
-					updateNode(updateNode);
-					return;
-				}
-			}
-	}
-	
+    VpeElementMapping elementMapping = null;
+    VpeNodeMapping nodeMapping = domMapping.getNodeMapping(sourceNode);
+    if (nodeMapping instanceof VpeElementMapping) {
     
-	nsIDOMNode visualOldNode = domMapping.remove(sourceNode);
-	getSourceNodes().remove(sourceNode);
-	
-	if (sourceNode instanceof INodeNotifier) {
-	    ((INodeNotifier) sourceNode).removeAdapter(getSorceAdapter());
-	}
-	if (visualOldNode != null) {
-	    if (elementMapping != null) {
-		nsIDOMElement border = elementMapping.getBorder();
-		if (border != null) {
-		    visualOldNode = border;
-		}
-	    }
-	    nsIDOMNode visualContainer = visualOldNode.getParentNode();
-	    nsIDOMNode visualNextNode = visualOldNode.getNextSibling();
-	    if (visualContainer != null) {
-		visualContainer.removeChild(visualOldNode);
-		addNode(sourceNode, visualNextNode, visualContainer);
-	    }
-	} else {
-	    // Max Areshkau Why we need update parent node when we update text
-	    // node?
-	    // lookd like we haven't need do it.
-	    if (sourceNode.getNodeType() == Node.TEXT_NODE) {
-		updateNode(sourceNode.getParentNode());
-	    }
-	}
+        elementMapping = (VpeElementMapping) nodeMapping;
+        if (elementMapping != null && elementMapping.getTemplate() != null) {
+                Node updateNode = elementMapping.getTemplate()
+                        .getNodeForUptate(pageContext,
+                                elementMapping.getSourceNode(),
+                                elementMapping.getVisualNode(),
+                                elementMapping.getData());
+
+                /*
+                 * special processing of "style" element
+                 * 
+                 * for unification of updating nodes - or redevelop updating
+                 * mechanism (for example : transfer this function to template )
+                 * or redevelop template of "style" element
+                 */
+                if (HTML.TAG_STYLE.equalsIgnoreCase(sourceNode.getNodeName())) {
+                    // refresh style node
+                    VpeStyleUtil.refreshStyleElement(this, elementMapping);
+                    return;
+                }
+                if (updateNode != null && updateNode != sourceNode) {
+                    updateNode(updateNode);
+                    return;
+                }
+            }
+    }
+    
+    
+    nsIDOMNode visualOldNode = domMapping.remove(sourceNode);
+    getSourceNodes().remove(sourceNode);
+    
+    if (sourceNode instanceof INodeNotifier) {
+        ((INodeNotifier) sourceNode).removeAdapter(getSorceAdapter());
+    }
+    if (visualOldNode != null) {
+        if (elementMapping != null) {
+        nsIDOMElement border = elementMapping.getBorder();
+        if (border != null) {
+            visualOldNode = border;
+        }
+        }
+        nsIDOMNode visualContainer = visualOldNode.getParentNode();
+        nsIDOMNode visualNextNode = visualOldNode.getNextSibling();
+        if (visualContainer != null) {
+        visualContainer.removeChild(visualOldNode);
+        addNode(sourceNode, visualNextNode, visualContainer);
+        }
+    } else {
+        // Max Areshkau Why we need update parent node when we update text
+        // node?
+        // lookd like we haven't need do it.
+        if (sourceNode.getNodeType() == Node.TEXT_NODE) {
+        updateNode(sourceNode.getParentNode());
+        }
+    }
     }
 
     public void removeNode(Node sourceNode) {
     //remove from cash should be called first
     getPageContext().removeNodeFromVpeCash(sourceNode);
-	domMapping.remove(sourceNode);
-	getSourceNodes().remove(sourceNode);
-	if (sourceNode instanceof INodeNotifier) {
-	    ((INodeNotifier) sourceNode).removeAdapter(getSorceAdapter());
-	}
+    domMapping.remove(sourceNode);
+    getSourceNodes().remove(sourceNode);
+    if (sourceNode instanceof INodeNotifier) {
+        ((INodeNotifier) sourceNode).removeAdapter(getSorceAdapter());
+    }
     }
 
     private Node getParentTable(Node sourceNode, int depth) {
-	Node parentNode = sourceNode.getParentNode();
-	for (int i = 0; parentNode != null && i < depth; parentNode = parentNode
-		.getParentNode(), i++) {
-	    if (HTML.TAG_TABLE.equalsIgnoreCase(parentNode.getNodeName())) {
-		return parentNode;
-	    }
-	}
-	return null;
+    Node parentNode = sourceNode.getParentNode();
+    for (int i = 0; parentNode != null && i < depth; parentNode = parentNode
+        .getParentNode(), i++) {
+        if (HTML.TAG_TABLE.equalsIgnoreCase(parentNode.getNodeName())) {
+        return parentNode;
+        }
+    }
+    return null;
     }
 
     private Node getParentSelect(Node sourceNode) {
-	if (HTML.TAG_OPTION.equalsIgnoreCase(sourceNode.getNodeName())) {
-	    Node parentNode = sourceNode.getParentNode();
-	    if (HTML.TAG_SELECT.equalsIgnoreCase(parentNode.getNodeName())) {
-		return parentNode;
-	    }
-	}
-	return null;
+    if (HTML.TAG_OPTION.equalsIgnoreCase(sourceNode.getNodeName())) {
+        Node parentNode = sourceNode.getParentNode();
+        if (HTML.TAG_SELECT.equalsIgnoreCase(parentNode.getNodeName())) {
+        return parentNode;
+        }
+    }
+    return null;
     }
 
     // public void setText(Node sourceText) {
@@ -998,1120 +1025,1120 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     // return;
     // }
     public boolean setText(Node sourceText) {
-	Node sourceParent = sourceText.getParentNode();
-	if (sourceParent != null && sourceParent.getLocalName() != null) {
-	    String sourceParentName = sourceParent.getLocalName();
-	    if (HTML.TAG_TEXTAREA.equalsIgnoreCase(sourceParentName)
-		    || HTML.TAG_OPTION.equalsIgnoreCase(sourceParentName) || HTML.TAG_STYLE.equalsIgnoreCase(sourceParentName)) {
-		updateNode(sourceText.getParentNode());
-		return true;
-	    }
-	}
-	nsIDOMNode visualText = domMapping.getVisualNode(sourceText);
-	if (visualText != null) {
-	    String visualValue = TextUtil.visualText(sourceText.getNodeValue());
-	    visualText.setNodeValue(visualValue);
-	} else {
-	    VpeNodeMapping nodeMapping = domMapping
-		    .getNodeMapping(sourceParent);
-	    if (nodeMapping != null
-		    && nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
-		VpeTemplate template = ((VpeElementMapping) nodeMapping)
-			.getTemplate();
-		if (template != null) {
-		    if (!template.containsText()) {
-			return false;
-		    }
-		}
-	    }
-	    updateNode(sourceText);
-	    return true;
-	}
+    Node sourceParent = sourceText.getParentNode();
+    if (sourceParent != null && sourceParent.getLocalName() != null) {
+        String sourceParentName = sourceParent.getLocalName();
+        if (HTML.TAG_TEXTAREA.equalsIgnoreCase(sourceParentName)
+            || HTML.TAG_OPTION.equalsIgnoreCase(sourceParentName) || HTML.TAG_STYLE.equalsIgnoreCase(sourceParentName)) {
+        updateNode(sourceText.getParentNode());
+        return true;
+        }
+    }
+    nsIDOMNode visualText = domMapping.getVisualNode(sourceText);
+    if (visualText != null) {
+        String visualValue = TextUtil.visualText(sourceText.getNodeValue());
+        visualText.setNodeValue(visualValue);
+    } else {
+        VpeNodeMapping nodeMapping = domMapping
+            .getNodeMapping(sourceParent);
+        if (nodeMapping != null
+            && nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+        VpeTemplate template = ((VpeElementMapping) nodeMapping)
+            .getTemplate();
+        if (template != null) {
+            if (!template.containsText()) {
+            return false;
+            }
+        }
+        }
+        updateNode(sourceText);
+        return true;
+    }
 
-	// }
-	// updateNode(sourceText);
-	return false;
+    // }
+    // updateNode(sourceText);
+    return false;
     }
 
     // }
 
     public void setAttribute(Element sourceElement, String name, String value) {
-	VpeElementMapping elementMapping = (VpeElementMapping) domMapping
-		.getNodeMapping(sourceElement);
-	if (elementMapping != null) {
-	    if (elementMapping.isIfDependencyFromAttribute(name)) {
-		updateElement(sourceElement);
-	    } else {
-		VpeTemplate template = elementMapping.getTemplate();
-		if (elementMapping.getBorder() != null) {
-		    updateElement(sourceElement);
-		} else if (template.isRecreateAtAttrChange(pageContext,
-			sourceElement, visualDocument,
-			(nsIDOMElement) elementMapping.getVisualNode(),
-			elementMapping.getData(), name, value)) {
-		    updateElement(sourceElement);
-		} else {
-		    nsIDOMElement visualElement = (nsIDOMElement) elementMapping
-			    .getVisualNode();
-		    if (visualElement != null) {
-			String visualElementName = visualElement.getNodeName();
-			if (HTML.TAG_SELECT.equalsIgnoreCase(visualElementName)) {
-			    updateElement(sourceElement);
-			    return;
-			} else if (HTML.TAG_OPTION
-				.equalsIgnoreCase(visualElementName)) {
-			    updateElement(sourceElement.getParentNode());
-			    return;
-			} else if (HTML.TAG_INPUT
-				.equalsIgnoreCase(visualElementName)) {
-			    updateElement(sourceElement);
-			    // Fixes JBIDE-1744 author dmaliarevich
-			    // unified h:dataTable border lookup
-			    // after attribute change and
-			    // after visual editor refresh
-			} else if (HTML.TAG_TABLE
-				.equalsIgnoreCase(visualElementName)) {
-			    updateElement(sourceElement);
-			}
-			// End of fix
-		    }
-		    // setXmlnsAttribute(elementMapping, name, value);
-		    template.setAttribute(pageContext, sourceElement,
-			    visualDocument, visualElement, elementMapping
-				    .getData(), name, value);
-		    resetTooltip(sourceElement, visualElement);
-		}
-	    }
-	}
+    VpeElementMapping elementMapping = (VpeElementMapping) domMapping
+        .getNodeMapping(sourceElement);
+    if (elementMapping != null) {
+        if (elementMapping.isIfDependencyFromAttribute(name)) {
+        updateElement(sourceElement);
+        } else {
+        VpeTemplate template = elementMapping.getTemplate();
+        if (elementMapping.getBorder() != null) {
+            updateElement(sourceElement);
+        } else if (template.isRecreateAtAttrChange(pageContext,
+            sourceElement, visualDocument,
+            (nsIDOMElement) elementMapping.getVisualNode(),
+            elementMapping.getData(), name, value)) {
+            updateElement(sourceElement);
+        } else {
+            nsIDOMElement visualElement = (nsIDOMElement) elementMapping
+                .getVisualNode();
+            if (visualElement != null) {
+            String visualElementName = visualElement.getNodeName();
+            if (HTML.TAG_SELECT.equalsIgnoreCase(visualElementName)) {
+                updateElement(sourceElement);
+                return;
+            } else if (HTML.TAG_OPTION
+                .equalsIgnoreCase(visualElementName)) {
+                updateElement(sourceElement.getParentNode());
+                return;
+            } else if (HTML.TAG_INPUT
+                .equalsIgnoreCase(visualElementName)) {
+                updateElement(sourceElement);
+                // Fixes JBIDE-1744 author dmaliarevich
+                // unified h:dataTable border lookup
+                // after attribute change and
+                // after visual editor refresh
+            } else if (HTML.TAG_TABLE
+                .equalsIgnoreCase(visualElementName)) {
+                updateElement(sourceElement);
+            }
+            // End of fix
+            }
+            // setXmlnsAttribute(elementMapping, name, value);
+            template.setAttribute(pageContext, sourceElement,
+                visualDocument, visualElement, elementMapping
+                    .getData(), name, value);
+            resetTooltip(sourceElement, visualElement);
+        }
+        }
+    }
     }
 
     public void stopToggle(Node sourceNode) {
-	if (!(sourceNode instanceof Element))
-	    return;
+    if (!(sourceNode instanceof Element))
+        return;
 
-	Element sourceElement = (Element) sourceNode;
-	VpeElementMapping elementMapping = (VpeElementMapping) domMapping
-		.getNodeMapping(sourceElement);
-	if (elementMapping != null) {
-	    VpeTemplate template = elementMapping.getTemplate();
+    Element sourceElement = (Element) sourceNode;
+    VpeElementMapping elementMapping = (VpeElementMapping) domMapping
+        .getNodeMapping(sourceElement);
+    if (elementMapping != null) {
+        VpeTemplate template = elementMapping.getTemplate();
 
-	    if (template instanceof VpeToggableTemplate) {
-		((VpeToggableTemplate) template).stopToggling(sourceElement);
-	    }
-	}
+        if (template instanceof VpeToggableTemplate) {
+        ((VpeToggableTemplate) template).stopToggling(sourceElement);
+        }
+    }
     }
 
     public boolean doToggle(nsIDOMNode visualNode) {
-		if (visualNode == null) {
-			return false;
-		}
-		nsIDOMElement visualElement = null;
-		try {
-			visualElement = (nsIDOMElement) visualNode
-					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-		} catch (XPCOMException exception) {
-			visualElement = (nsIDOMElement) visualNode.getParentNode()
-					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-		}
-		if (visualElement == null) {
-			return false;
-		}
+        if (visualNode == null) {
+            return false;
+        }
+        nsIDOMElement visualElement = null;
+        try {
+            visualElement = (nsIDOMElement) visualNode
+                    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+        } catch (XPCOMException exception) {
+            visualElement = (nsIDOMElement) visualNode.getParentNode()
+                    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+        }
+        if (visualElement == null) {
+            return false;
+        }
 
-		nsIDOMAttr toggleIdAttr = visualElement
-				.getAttributeNode(VPE_USER_TOGGLE_ID);
-		if (toggleIdAttr == null) {
-			return false;
-		}
-		String toggleId = toggleIdAttr.getNodeValue();
+        nsIDOMAttr toggleIdAttr = visualElement
+                .getAttributeNode(VPE_USER_TOGGLE_ID);
+        if (toggleIdAttr == null) {
+            return false;
+        }
+        String toggleId = toggleIdAttr.getNodeValue();
 
-		if (toggleId == null) {
-			return false;
-		}
+        if (toggleId == null) {
+            return false;
+        }
 
-		boolean toggleLookup = false;
-		nsIDOMAttr toggleLookupAttr = visualElement
-				.getAttributeNode(VPE_USER_TOGGLE_LOOKUP_PARENT);
-		if (toggleLookupAttr != null) {
-			toggleLookup = "true".equals(toggleLookupAttr.getNodeValue());
-		}
+        boolean toggleLookup = false;
+        nsIDOMAttr toggleLookupAttr = visualElement
+                .getAttributeNode(VPE_USER_TOGGLE_LOOKUP_PARENT);
+        if (toggleLookupAttr != null) {
+            toggleLookup = "true".equals(toggleLookupAttr.getNodeValue());
+        }
 
-		nsIDOMElement selectedElem = getLastSelectedElement();
-		// Fixes JBIDE-1823 author dmaliarevich
-		if (null == selectedElem) {
-			return false;
-		}
-		VpeElementMapping elementMapping = null;
-		VpeNodeMapping nodeMapping = domMapping.getNodeMapping(selectedElem);
-		if (nodeMapping instanceof VpeElementMapping) {
-			elementMapping = (VpeElementMapping) nodeMapping;
-		}
-		// end of fix
-		if (elementMapping == null) {
-			// may be toggle with facet
-			while (!selectedElem.getNodeName().equals(HTML.TAG_TABLE)) {
-				selectedElem = (nsIDOMElement) selectedElem.getParentNode()
-				.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-			}
-			// Fixes JBIDE-1823 author dmaliarevich
-			nodeMapping = domMapping.getNodeMapping(selectedElem);
-			if (nodeMapping instanceof VpeElementMapping) {
-				elementMapping = (VpeElementMapping) nodeMapping;
-			}
-			// end of fix
-		}
-		Node sourceNode = (Node) domMapping.getSourceNode(selectedElem);
-		if (sourceNode == null) {
-			return false;
-		}
+        nsIDOMElement selectedElem = getLastSelectedElement();
+        // Fixes JBIDE-1823 author dmaliarevich
+        if (null == selectedElem) {
+            return false;
+        }
+        VpeElementMapping elementMapping = null;
+        VpeNodeMapping nodeMapping = domMapping.getNodeMapping(selectedElem);
+        if (nodeMapping instanceof VpeElementMapping) {
+            elementMapping = (VpeElementMapping) nodeMapping;
+        }
+        // end of fix
+        if (elementMapping == null) {
+            // may be toggle with facet
+            while (!selectedElem.getNodeName().equals(HTML.TAG_TABLE)) {
+                selectedElem = (nsIDOMElement) selectedElem.getParentNode()
+                .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+            }
+            // Fixes JBIDE-1823 author dmaliarevich
+            nodeMapping = domMapping.getNodeMapping(selectedElem);
+            if (nodeMapping instanceof VpeElementMapping) {
+                elementMapping = (VpeElementMapping) nodeMapping;
+            }
+            // end of fix
+        }
+        Node sourceNode = (Node) domMapping.getSourceNode(selectedElem);
+        if (sourceNode == null) {
+            return false;
+        }
 
-		Element sourceElement = (Element) (sourceNode instanceof Element ? sourceNode
-				: sourceNode.getParentNode());
+        Element sourceElement = (Element) (sourceNode instanceof Element ? sourceNode
+                : sourceNode.getParentNode());
 
-		// Fixes JBIDE-1823 author dmaliarevich
-		// Template is looked according to <code>selectedElem</code>
-		// so <code>toggleLookupAttr</code> should be retrieved 
-		// from this element
-		toggleLookupAttr = selectedElem
-			.getAttributeNode(VPE_USER_TOGGLE_LOOKUP_PARENT);
-		if (toggleLookupAttr != null) {
-			toggleLookup = "true".equals(toggleLookupAttr.getNodeValue());
-		}
-		// end of fix
-		
-		if (elementMapping != null) {
-			VpeTemplate template = elementMapping.getTemplate();
+        // Fixes JBIDE-1823 author dmaliarevich
+        // Template is looked according to <code>selectedElem</code>
+        // so <code>toggleLookupAttr</code> should be retrieved 
+        // from this element
+        toggleLookupAttr = selectedElem
+            .getAttributeNode(VPE_USER_TOGGLE_LOOKUP_PARENT);
+        if (toggleLookupAttr != null) {
+            toggleLookup = "true".equals(toggleLookupAttr.getNodeValue());
+        }
+        // end of fix
+        
+        if (elementMapping != null) {
+            VpeTemplate template = elementMapping.getTemplate();
 
-			while (toggleLookup && sourceElement != null
-					&& !(template instanceof VpeToggableTemplate)) {
-				sourceElement = (Element) sourceElement.getParentNode();
-				if (sourceElement == null) {
-					break;
-				}
-				// Fixes JBIDE-1823 author dmaliarevich
-				nodeMapping = domMapping.getNodeMapping(sourceElement);
-				if (nodeMapping instanceof VpeElementMapping) {
-					elementMapping = (VpeElementMapping) nodeMapping;
-				}
-				// end of fix
-				if (elementMapping == null) {
-					continue;
-				}
-				template = elementMapping.getTemplate();
-			}
+            while (toggleLookup && sourceElement != null
+                    && !(template instanceof VpeToggableTemplate)) {
+                sourceElement = (Element) sourceElement.getParentNode();
+                if (sourceElement == null) {
+                    break;
+                }
+                // Fixes JBIDE-1823 author dmaliarevich
+                nodeMapping = domMapping.getNodeMapping(sourceElement);
+                if (nodeMapping instanceof VpeElementMapping) {
+                    elementMapping = (VpeElementMapping) nodeMapping;
+                }
+                // end of fix
+                if (elementMapping == null) {
+                    continue;
+                }
+                template = elementMapping.getTemplate();
+            }
 
-			if (template instanceof VpeToggableTemplate) {
-				((VpeToggableTemplate) template).toggle(this, sourceElement,
-						toggleId);
-				updateElement(sourceElement);
-				return true;
-			}
-		}
-		return false;
-	}
+            if (template instanceof VpeToggableTemplate) {
+                ((VpeToggableTemplate) template).toggle(this, sourceElement,
+                        toggleId);
+                updateElement(sourceElement);
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void removeAttribute(Element sourceElement, String name) {
-	VpeElementMapping elementMapping = (VpeElementMapping) domMapping
-		.getNodeMapping(sourceElement);
-	if (elementMapping != null) {
-	    if (elementMapping.isIfDependencyFromAttribute(name)) {
-		updateElement(sourceElement);
-	    } else {
-		VpeTemplate template = elementMapping.getTemplate();
-		if (template.isRecreateAtAttrChange(pageContext, sourceElement,
-			visualDocument, (nsIDOMElement) elementMapping
-				.getVisualNode(), elementMapping.getData(),
-			name, null)) {
-		    updateElement(sourceElement);
-		}
-		// else {
-		// removeXmlnsAttribute(elementMapping, name);
-		// template.removeAttribute(pageContext, sourceElement,
-		// visualDocument, (nsIDOMElement) elementMapping
-		// .getVisualNode(), elementMapping.getData(),
-		// name);
-		// resetTooltip(sourceElement, (nsIDOMElement) elementMapping
-		// .getVisualNode());
-		// }
-	    }
-	}
+    VpeElementMapping elementMapping = (VpeElementMapping) domMapping
+        .getNodeMapping(sourceElement);
+    if (elementMapping != null) {
+        if (elementMapping.isIfDependencyFromAttribute(name)) {
+        updateElement(sourceElement);
+        } else {
+        VpeTemplate template = elementMapping.getTemplate();
+        if (template.isRecreateAtAttrChange(pageContext, sourceElement,
+            visualDocument, (nsIDOMElement) elementMapping
+                .getVisualNode(), elementMapping.getData(),
+            name, null)) {
+            updateElement(sourceElement);
+        }
+        // else {
+        // removeXmlnsAttribute(elementMapping, name);
+        // template.removeAttribute(pageContext, sourceElement,
+        // visualDocument, (nsIDOMElement) elementMapping
+        // .getVisualNode(), elementMapping.getData(),
+        // name);
+        // resetTooltip(sourceElement, (nsIDOMElement) elementMapping
+        // .getVisualNode());
+        // }
+        }
+    }
     }
 
     public void refreshBundleValues(Element sourceElement) {
-	VpeElementMapping elementMapping = (VpeElementMapping) domMapping
-		.getNodeMapping(sourceElement);
-	if (elementMapping != null) {
-	    VpeTemplate template = elementMapping.getTemplate();
-	    template.refreshBundleValues(pageContext, sourceElement,
-		    elementMapping.getData());
-	}
+    VpeElementMapping elementMapping = (VpeElementMapping) domMapping
+        .getNodeMapping(sourceElement);
+    if (elementMapping != null) {
+        VpeTemplate template = elementMapping.getTemplate();
+        template.refreshBundleValues(pageContext, sourceElement,
+            elementMapping.getData());
+    }
     }
 
     boolean isContentArea(nsIDOMNode visualNode) {
-	return getContentArea().equals(visualNode);
+    return getContentArea().equals(visualNode);
     }
 
     nsIDOMElement getContentArea() {
-	return visualEditor.getContentArea();
+    return visualEditor.getContentArea();
     }
 
     public void setSelectionRectangle(/*nsIDOMElement*/ nsIDOMNode  visualElement) {
-	setSelectionRectangle(visualElement, true);
+    setSelectionRectangle(visualElement, true);
     }
 
     void setSelectionRectangle(/*nsIDOMElement*/ nsIDOMNode visualElement, boolean scroll) {
-	int resizerConstrains = getResizerConstrains(visualElement);
-	visualEditor.setSelectionRectangle(visualElement, resizerConstrains,
-		scroll);
+    int resizerConstrains = getResizerConstrains(visualElement);
+    visualEditor.setSelectionRectangle(visualElement, resizerConstrains,
+        scroll);
     }
 
     public nsIDOMNode addLinkNodeToHead(String href_val, String ext_val) {
-	nsIDOMElement newNode = createLinkNode(href_val,
-		ATTR_REL_STYLESHEET_VALUE, ext_val);
+    nsIDOMElement newNode = createLinkNode(href_val,
+        ATTR_REL_STYLESHEET_VALUE, ext_val);
 
-	//TODO Dzmitry Sakovich
-	// Fix priority CSS classes  JBIDE-1713
-	nsIDOMNode firstNode = getHeadNode().getFirstChild();
-	getHeadNode().insertBefore(newNode, firstNode);
-	return newNode;
+    //TODO Dzmitry Sakovich
+    // Fix priority CSS classes  JBIDE-1713
+    nsIDOMNode firstNode = getHeadNode().getFirstChild();
+    getHeadNode().insertBefore(newNode, firstNode);
+    return newNode;
     }
 
     public nsIDOMNode replaceLinkNodeToHead(nsIDOMNode oldNode,
-	    String href_val, String ext_val) {
-	nsIDOMNode newNode = createLinkNode(href_val,
-		ATTR_REL_STYLESHEET_VALUE, ext_val);
-	getHeadNode().replaceChild(newNode, oldNode);
-	return newNode;
+        String href_val, String ext_val) {
+    nsIDOMNode newNode = createLinkNode(href_val,
+        ATTR_REL_STYLESHEET_VALUE, ext_val);
+    getHeadNode().replaceChild(newNode, oldNode);
+    return newNode;
     }
 
     public nsIDOMNode replaceLinkNodeToHead(String href_val, String ext_val) {
-	nsIDOMNode newNode = null;
-	nsIDOMNode oldNode = getLinkNode(href_val, ext_val);
-	if (oldNode == null) {
-	    newNode = addLinkNodeToHead(href_val, ext_val);
-	}
-	return newNode;
+    nsIDOMNode newNode = null;
+    nsIDOMNode oldNode = getLinkNode(href_val, ext_val);
+    if (oldNode == null) {
+        newNode = addLinkNodeToHead(href_val, ext_val);
+    }
+    return newNode;
     }
 
     public void removeLinkNodeFromHead(nsIDOMNode node) {
-    	getHeadNode().removeChild(node);
+        getHeadNode().removeChild(node);
     }
 
     private nsIDOMElement createLinkNode(String href_val, String rel_val,
-	    String ext_val) {
-	nsIDOMElement linkNode = null;
-	if ((ATTR_REL_STYLESHEET_VALUE.equalsIgnoreCase(rel_val))
-		&& href_val.startsWith("file:")) {
-	    /*
-	     * Because of the Mozilla caches the linked css files we replace tag
-	     * <link rel="styleseet" href="file://..."> with tag <style
-	     * vpe="ATTR_VPE_INLINE_LINK_VALUE">file content</style> It is
-	     * LinkReplacer
-	     */
-	    linkNode = visualDocument.createElement(HTML.TAG_STYLE);
-	    linkNode.setAttribute(ATTR_VPE, ATTR_VPE_INLINE_LINK_VALUE);
+        String ext_val) {
+    nsIDOMElement linkNode = null;
+    if ((ATTR_REL_STYLESHEET_VALUE.equalsIgnoreCase(rel_val))
+        && href_val.startsWith("file:")) {
+        /*
+         * Because of the Mozilla caches the linked css files we replace tag
+         * <link rel="styleseet" href="file://..."> with tag <style
+         * vpe="ATTR_VPE_INLINE_LINK_VALUE">file content</style> It is
+         * LinkReplacer
+         */
+        linkNode = visualDocument.createElement(HTML.TAG_STYLE);
+        linkNode.setAttribute(ATTR_VPE, ATTR_VPE_INLINE_LINK_VALUE);
 
-	    /* Copy links attributes into our <style> */
-	    linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_HREF, href_val);
-	    linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_EXT, ext_val);
-	    try {
-		StringBuffer styleText = new StringBuffer(EMPTY_STRING);
-		URL url = new URL((new Path(href_val)).toOSString());
-		String fileName = url.getFile();
-		BufferedReader in = new BufferedReader(new FileReader(
-			(fileName)));
-		String str = EMPTY_STRING;
-		while ((str = in.readLine()) != null) {
-		    styleText.append(str);
-		}
+        /* Copy links attributes into our <style> */
+        linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_HREF, href_val);
+        linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_EXT, ext_val);
+        try {
+        StringBuffer styleText = new StringBuffer(EMPTY_STRING);
+        URL url = new URL((new Path(href_val)).toOSString());
+        String fileName = url.getFile();
+        BufferedReader in = new BufferedReader(new FileReader(
+            (fileName)));
+        String str = EMPTY_STRING;
+        while ((str = in.readLine()) != null) {
+            styleText.append(str);
+        }
 
-		String styleForParse = styleText.toString();
-		styleForParse = VpeStyleUtil.addFullPathIntoURLValue(
-			styleForParse, href_val);
+        String styleForParse = styleText.toString();
+        styleForParse = VpeStyleUtil.addFullPathIntoURLValue(
+            styleForParse, href_val);
 
-		in.close();
-		nsIDOMText textNode = visualDocument
-			.createTextNode(styleForParse);
-		linkNode.appendChild(textNode);
-		return linkNode;
-	    } catch (FileNotFoundException fnfe) {
-		/* File which was pointed by user is not exists. Do nothing. */
-	    } catch (IOException ioe) {
-		VpePlugin.getPluginLog().logError(ioe.getMessage(), ioe);
-	    }
-	}
+        in.close();
+        nsIDOMText textNode = visualDocument
+            .createTextNode(styleForParse);
+        linkNode.appendChild(textNode);
+        return linkNode;
+        } catch (FileNotFoundException fnfe) {
+        /* File which was pointed by user is not exists. Do nothing. */
+        } catch (IOException ioe) {
+        VpePlugin.getPluginLog().logError(ioe.getMessage(), ioe);
+        }
+    }
 
-	linkNode = visualDocument.createElement(HTML.TAG_LINK);
-	linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_REL, rel_val);
-	linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_HREF, href_val);
-	linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_EXT, ext_val);
+    linkNode = visualDocument.createElement(HTML.TAG_LINK);
+    linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_REL, rel_val);
+    linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_HREF, href_val);
+    linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_EXT, ext_val);
 
-	return linkNode;
+    return linkNode;
     }
 
     private boolean isLinkReplacer(nsIDOMNode node) {
-	return HTML.TAG_STYLE.equalsIgnoreCase(node.getNodeName())
-		&& ATTR_VPE_INLINE_LINK_VALUE
-			.equalsIgnoreCase(((nsIDOMElement) node
-				.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
-				.getAttribute(ATTR_VPE));
+    return HTML.TAG_STYLE.equalsIgnoreCase(node.getNodeName())
+        && ATTR_VPE_INLINE_LINK_VALUE
+            .equalsIgnoreCase(((nsIDOMElement) node
+                .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
+                .getAttribute(ATTR_VPE));
     }
 
     private nsIDOMNode getLinkNode(String href_val, String ext_val) {
-	nsIDOMNodeList children = getHeadNode().getChildNodes();
-	long len = children.getLength();
-	for (long i = len - 1; i >= 0; i--) {
-	    nsIDOMNode node = children.item(i);
-	    if (node.getNodeType() == Node.ELEMENT_NODE) {
-		if (HTML.TAG_LINK.equalsIgnoreCase(node.getNodeName())
-			|| isLinkReplacer(node)) {
-		    nsIDOMElement element = (nsIDOMElement) node
-			    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-		    if (ext_val.equalsIgnoreCase(element
-			    .getAttribute(VpeTemplateManager.ATTR_LINK_EXT))
-			    && href_val
-				    .equalsIgnoreCase(element
-					    .getAttribute(VpeTemplateManager.ATTR_LINK_HREF))) {
-			return node;
-		    }
-		}
-	    }
-	}
-	return null;
+    nsIDOMNodeList children = getHeadNode().getChildNodes();
+    long len = children.getLength();
+    for (long i = len - 1; i >= 0; i--) {
+        nsIDOMNode node = children.item(i);
+        if (node.getNodeType() == Node.ELEMENT_NODE) {
+        if (HTML.TAG_LINK.equalsIgnoreCase(node.getNodeName())
+            || isLinkReplacer(node)) {
+            nsIDOMElement element = (nsIDOMElement) node
+                .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+            if (ext_val.equalsIgnoreCase(element
+                .getAttribute(VpeTemplateManager.ATTR_LINK_EXT))
+                && href_val
+                    .equalsIgnoreCase(element
+                        .getAttribute(VpeTemplateManager.ATTR_LINK_HREF))) {
+            return node;
+            }
+        }
+        }
+    }
+    return null;
     }
 
     private void cleanHead() {
-	nsIDOMNodeList children = getHeadNode().getChildNodes();
-	long len = children.getLength();
-	for (long i = len - 1; i >= 0; i--) {
-	    nsIDOMNode node = children.item(i);
-	    if (node.getNodeType() == Node.ELEMENT_NODE) {
-		if (isLinkReplacer(node)) {
-		    /*Added by Max Areshkau(Fix for JBIDE-1941)
-		     * Ext. attribute used for adding external styles 
-		     * to editor. If was added external attribute, this 
-		     * property is true.
-		     */
-		    if (!YES_STRING.equalsIgnoreCase(((nsIDOMElement) node
-			    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
-			    .getAttribute(VpeTemplateManager.ATTR_LINK_EXT))) {
-			// int linkAddress =
-			// MozillaSupports.queryInterface(node,
-			// nsIStyleSheetLinkingElement.NS_ISTYLESHEETLINKINGELEMENT_IID);
-			// nsIStyleSheetLinkingElement linkingElement = new
-			// nsIStyleSheetLinkingElement(linkAddress);
-			// linkingElement.removeStyleSheet();
-			node = getHeadNode().removeChild(node);
-		    }
-		} else if (HTML.TAG_STYLE.equalsIgnoreCase(node.getNodeName())
-			&& (!YES_STRING
-				.equalsIgnoreCase(((nsIDOMElement) node
-					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
-					.getAttribute(ATTR_VPE)))) {
-		    node = getHeadNode().removeChild(node);
-		}
-	    }
-	}
+    nsIDOMNodeList children = getHeadNode().getChildNodes();
+    long len = children.getLength();
+    for (long i = len - 1; i >= 0; i--) {
+        nsIDOMNode node = children.item(i);
+        if (node.getNodeType() == Node.ELEMENT_NODE) {
+        if (isLinkReplacer(node)) {
+            /*Added by Max Areshkau(Fix for JBIDE-1941)
+             * Ext. attribute used for adding external styles 
+             * to editor. If was added external attribute, this 
+             * property is true.
+             */
+            if (!YES_STRING.equalsIgnoreCase(((nsIDOMElement) node
+                .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
+                .getAttribute(VpeTemplateManager.ATTR_LINK_EXT))) {
+            // int linkAddress =
+            // MozillaSupports.queryInterface(node,
+            // nsIStyleSheetLinkingElement.NS_ISTYLESHEETLINKINGELEMENT_IID);
+            // nsIStyleSheetLinkingElement linkingElement = new
+            // nsIStyleSheetLinkingElement(linkAddress);
+            // linkingElement.removeStyleSheet();
+            node = getHeadNode().removeChild(node);
+            }
+        } else if (HTML.TAG_STYLE.equalsIgnoreCase(node.getNodeName())
+            && (!YES_STRING
+                .equalsIgnoreCase(((nsIDOMElement) node
+                    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
+                    .getAttribute(ATTR_VPE)))) {
+            node = getHeadNode().removeChild(node);
+        }
+        }
+    }
     }
 
     private class PseudoInfo {
-	private nsIDOMNode pseudoNode;
-	private boolean isElements;
+    private nsIDOMNode pseudoNode;
+    private boolean isElements;
 
-	private PseudoInfo() {
-	    this(null, false);
-	}
+    private PseudoInfo() {
+        this(null, false);
+    }
 
-	private PseudoInfo(nsIDOMNode pseudoNode, boolean isElements) {
-	    this.pseudoNode = pseudoNode;
-	    this.isElements = isElements;
-	}
+    private PseudoInfo(nsIDOMNode pseudoNode, boolean isElements) {
+        this.pseudoNode = pseudoNode;
+        this.isElements = isElements;
+    }
     }
 
     void showDragCaret(nsIDOMNode node, int offset) {
-	xulRunnerEditor.showDragCaret(node, offset);
+    xulRunnerEditor.showDragCaret(node, offset);
     }
 
     void hideDragCaret() {
 
-	xulRunnerEditor.hideDragCaret();
+    xulRunnerEditor.hideDragCaret();
     }
 
     private int getResizerConstrains(nsIDOMNode visualNode) {
-	VpeNodeMapping nodeMapping = domMapping.getNodeMapping(visualNode);
-	if (nodeMapping != null
-		&& nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
-	    return ((VpeElementMapping) nodeMapping).getTemplate()
-		    .getTagDescription(pageContext,
-			    (Element) nodeMapping.getSourceNode(),
-			    visualDocument,
-			    (nsIDOMElement) nodeMapping.getVisualNode(),
-			    ((VpeElementMapping) nodeMapping).getData())
-		    .getResizeConstrains();
-	}
-	return VpeTagDescription.RESIZE_CONSTRAINS_NONE;
+    VpeNodeMapping nodeMapping = domMapping.getNodeMapping(visualNode);
+    if (nodeMapping != null
+        && nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+        return ((VpeElementMapping) nodeMapping).getTemplate()
+            .getTagDescription(pageContext,
+                (Element) nodeMapping.getSourceNode(),
+                visualDocument,
+                (nsIDOMElement) nodeMapping.getVisualNode(),
+                ((VpeElementMapping) nodeMapping).getData())
+            .getResizeConstrains();
+    }
+    return VpeTagDescription.RESIZE_CONSTRAINS_NONE;
     }
 
     public void resize(nsIDOMElement element, int resizerConstrains, int top,
-	    int left, int width, int height) {
-	VpeElementMapping elementMapping = (VpeElementMapping) domMapping
-		.getNodeMapping(element);
-	if (elementMapping != null) {
-	    elementMapping.getTemplate().resize(pageContext,
-		    (Element) elementMapping.getSourceNode(), visualDocument,
-		    element, elementMapping.getData(), resizerConstrains, top,
-		    left, width, height);
-	}
+        int left, int width, int height) {
+    VpeElementMapping elementMapping = (VpeElementMapping) domMapping
+        .getNodeMapping(element);
+    if (elementMapping != null) {
+        elementMapping.getTemplate().resize(pageContext,
+            (Element) elementMapping.getSourceNode(), visualDocument,
+            element, elementMapping.getData(), resizerConstrains, top,
+            left, width, height);
+    }
     }
 
     static boolean isAnonElement(nsIDOMNode visualNode) {
-	if (visualNode != null
-		&& visualNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-	    String attrValue = ((nsIDOMElement) visualNode
-		    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
-		    .getAttribute(MOZ_ANONCLASS_ATTR);
+    if (visualNode != null
+        && visualNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+        String attrValue = ((nsIDOMElement) visualNode
+            .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
+            .getAttribute(MOZ_ANONCLASS_ATTR);
 
-	    return attrValue != null && attrValue.length() > 0;
-	}
+        return attrValue != null && attrValue.length() > 0;
+    }
 
-	return false;
+    return false;
     }
 
     boolean canInnerDrag(nsIDOMElement visualDragElement) {
-	VpeNodeMapping node = domMapping.getNodeMapping(visualDragElement);
-	if (node instanceof VpeElementMapping) {
-	    VpeElementMapping elementMapping = (VpeElementMapping) node;
-	    if (elementMapping != null) {
-		return elementMapping.getTemplate().canInnerDrag(pageContext,
-			(Element) elementMapping.getSourceNode(),
-			visualDocument, visualDragElement,
-			elementMapping.getData());
-	    }
-	}
-	return false;
+    VpeNodeMapping node = domMapping.getNodeMapping(visualDragElement);
+    if (node instanceof VpeElementMapping) {
+        VpeElementMapping elementMapping = (VpeElementMapping) node;
+        if (elementMapping != null) {
+        return elementMapping.getTemplate().canInnerDrag(pageContext,
+            (Element) elementMapping.getSourceNode(),
+            visualDocument, visualDragElement,
+            elementMapping.getData());
+        }
+    }
+    return false;
     }
 
     VpeSourceInnerDropInfo getSourceInnerDropInfo(Node sourceDragNode,
-	    VpeVisualInnerDropInfo visualDropInfo, boolean checkParentTemplates) {
-	nsIDOMNode visualDropContainer = visualDropInfo.getDropContainer();
-	long visualDropOffset = visualDropInfo.getDropOffset();
-	Node sourceDropContainer = null;
-	int sourceDropOffset = 0;
+        VpeVisualInnerDropInfo visualDropInfo, boolean checkParentTemplates) {
+    nsIDOMNode visualDropContainer = visualDropInfo.getDropContainer();
+    long visualDropOffset = visualDropInfo.getDropOffset();
+    Node sourceDropContainer = null;
+    int sourceDropOffset = 0;
 
-	switch (visualDropContainer.getNodeType()) {
-	case nsIDOMNode.ELEMENT_NODE:
-	    nsIDOMNode visualOffsetNode = null;
-	    boolean afterFlag = false;
-	    long visualChildCount = VisualDomUtil
-		    .getChildCount(visualDropContainer);
-	    if (visualDropOffset < visualChildCount) {
-		visualOffsetNode = VisualDomUtil.getChildNode(
-			visualDropContainer, visualDropOffset);
-		if (isPseudoElement(visualOffsetNode)
-			|| isAnonElement(visualOffsetNode)) {
-		    visualOffsetNode = getLastAppreciableVisualChild(visualDropContainer);
-		    afterFlag = true;
-		}
-	    } else {
-		visualOffsetNode = getLastAppreciableVisualChild(visualDropContainer);
-		afterFlag = visualChildCount != 0;
-	    }
-	    if (visualOffsetNode != null) {
-		Node sourceOffsetNode = domMapping
-			.getSourceNode(visualOffsetNode);
-		if (sourceOffsetNode != null) {
-		    sourceDropContainer = sourceOffsetNode.getParentNode();
-		    sourceDropOffset = ((NodeImpl) sourceOffsetNode).getIndex();
-		    if (afterFlag) {
-			sourceDropOffset++;
-		    }
-		}
-	    }
-	    if (sourceDropContainer == null) {
-		sourceDropContainer = domMapping
-			.getNearSourceNode(visualDropContainer);
-		if (sourceDropContainer != null) {
-		    sourceDropOffset = sourceDropContainer.getChildNodes()
-			    .getLength();
-		}
-	    }
-	    if (sourceDropContainer == null) {
-		sourceDropContainer = domMapping
-			.getNearSourceNode(getContentArea());
-		sourceDropOffset = sourceDropContainer.getChildNodes()
-			.getLength();
-	    }
-	    break;
-	case nsIDOMNode.TEXT_NODE:
-	    VpeNodeMapping nodeMapping = domMapping
-		    .getNearNodeMapping(visualDropContainer);
-	    switch (nodeMapping.getType()) {
-	    case VpeNodeMapping.TEXT_MAPPING:
-		sourceDropContainer = nodeMapping.getSourceNode();
-		sourceDropOffset = TextUtil.sourceInnerPosition(
-			sourceDropContainer.getNodeValue(), visualDropOffset);
-		break;
-	    case VpeNodeMapping.ELEMENT_MAPPING:
-		// it's attribute
-		if (isTextEditable(visualDropContainer)) {
-		    String[] atributeNames = ((VpeElementMapping) nodeMapping)
-			    .getTemplate().getOutputAtributeNames();
-		    if (atributeNames != null && atributeNames.length > 0) {
-			Element sourceElement = (Element) nodeMapping
-				.getSourceNode();
-			sourceDropContainer = sourceElement
-				.getAttributeNode(atributeNames[0]);
-			sourceDropOffset = TextUtil.sourceInnerPosition(
-				sourceDropContainer.getNodeValue(),
-				visualDropOffset);
-		    }
-		}
-		nodeMapping.getVisualNode();
-	    }
-	    break;
-	}
-	if (sourceDropContainer != null) {
-	    return getSourceInnerDropInfo(sourceDragNode, sourceDropContainer,
-		    sourceDropOffset, checkParentTemplates);
-	} else {
-	    return new VpeSourceInnerDropInfo(null, 0, false);
-	}
+    switch (visualDropContainer.getNodeType()) {
+    case nsIDOMNode.ELEMENT_NODE:
+        nsIDOMNode visualOffsetNode = null;
+        boolean afterFlag = false;
+        long visualChildCount = VisualDomUtil
+            .getChildCount(visualDropContainer);
+        if (visualDropOffset < visualChildCount) {
+        visualOffsetNode = VisualDomUtil.getChildNode(
+            visualDropContainer, visualDropOffset);
+        if (isPseudoElement(visualOffsetNode)
+            || isAnonElement(visualOffsetNode)) {
+            visualOffsetNode = getLastAppreciableVisualChild(visualDropContainer);
+            afterFlag = true;
+        }
+        } else {
+        visualOffsetNode = getLastAppreciableVisualChild(visualDropContainer);
+        afterFlag = visualChildCount != 0;
+        }
+        if (visualOffsetNode != null) {
+        Node sourceOffsetNode = domMapping
+            .getSourceNode(visualOffsetNode);
+        if (sourceOffsetNode != null) {
+            sourceDropContainer = sourceOffsetNode.getParentNode();
+            sourceDropOffset = ((NodeImpl) sourceOffsetNode).getIndex();
+            if (afterFlag) {
+            sourceDropOffset++;
+            }
+        }
+        }
+        if (sourceDropContainer == null) {
+        sourceDropContainer = domMapping
+            .getNearSourceNode(visualDropContainer);
+        if (sourceDropContainer != null) {
+            sourceDropOffset = sourceDropContainer.getChildNodes()
+                .getLength();
+        }
+        }
+        if (sourceDropContainer == null) {
+        sourceDropContainer = domMapping
+            .getNearSourceNode(getContentArea());
+        sourceDropOffset = sourceDropContainer.getChildNodes()
+            .getLength();
+        }
+        break;
+    case nsIDOMNode.TEXT_NODE:
+        VpeNodeMapping nodeMapping = domMapping
+            .getNearNodeMapping(visualDropContainer);
+        switch (nodeMapping.getType()) {
+        case VpeNodeMapping.TEXT_MAPPING:
+        sourceDropContainer = nodeMapping.getSourceNode();
+        sourceDropOffset = TextUtil.sourceInnerPosition(
+            sourceDropContainer.getNodeValue(), visualDropOffset);
+        break;
+        case VpeNodeMapping.ELEMENT_MAPPING:
+        // it's attribute
+        if (isTextEditable(visualDropContainer)) {
+            String[] atributeNames = ((VpeElementMapping) nodeMapping)
+                .getTemplate().getOutputAtributeNames();
+            if (atributeNames != null && atributeNames.length > 0) {
+            Element sourceElement = (Element) nodeMapping
+                .getSourceNode();
+            sourceDropContainer = sourceElement
+                .getAttributeNode(atributeNames[0]);
+            sourceDropOffset = TextUtil.sourceInnerPosition(
+                sourceDropContainer.getNodeValue(),
+                visualDropOffset);
+            }
+        }
+        nodeMapping.getVisualNode();
+        }
+        break;
+    }
+    if (sourceDropContainer != null) {
+        return getSourceInnerDropInfo(sourceDragNode, sourceDropContainer,
+            sourceDropOffset, checkParentTemplates);
+    } else {
+        return new VpeSourceInnerDropInfo(null, 0, false);
+    }
     }
 
     VpeSourceInnerDropInfo getSourceInnerDropInfo(Node dragNode,
-	    Node container, int offset, boolean checkParentsTemplates) {
-	// Thread.dumpStack();
-	boolean canDrop = false;
-	switch (container.getNodeType()) {
-	case Node.ELEMENT_NODE:
-	    VpeNodeMapping nodeMapping = domMapping.getNodeMapping(container);
-	    if (nodeMapping != null
-		    && nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
-		canDrop = ((VpeElementMapping) nodeMapping).getTemplate()
-			.canInnerDrop(pageContext, container, dragNode);
-	    }
-	    if (!canDrop) {
-		if (!checkParentsTemplates)
-		    return new VpeSourceInnerDropInfo(container, offset,
-			    canDrop);
-		// offset = ((NodeImpl)container).getIndex();
-		// container = container.getParentNode();
-		// TODO Max Areshkau unclear logic , if we can drop on element
-		// why we trying to drop
-		// this on parent
-		// return getSourceInnerDropInfo(dragNode, container, offset,
-		// false);
-		return new VpeSourceInnerDropInfo(container, offset, canDrop);
-	    }
-	    break;
-	case Node.TEXT_NODE:
-	case Node.DOCUMENT_NODE:
-	    canDrop = true;
-	    break;
-	case Node.ATTRIBUTE_NODE:
-	    canDrop = true;
-	    break;
-	}
-	if (canDrop) {
-	    return new VpeSourceInnerDropInfo(container, offset, canDrop);
-	} else {
-	    return new VpeSourceInnerDropInfo(null, 0, canDrop);
-	}
+        Node container, int offset, boolean checkParentsTemplates) {
+    // Thread.dumpStack();
+    boolean canDrop = false;
+    switch (container.getNodeType()) {
+    case Node.ELEMENT_NODE:
+        VpeNodeMapping nodeMapping = domMapping.getNodeMapping(container);
+        if (nodeMapping != null
+            && nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+        canDrop = ((VpeElementMapping) nodeMapping).getTemplate()
+            .canInnerDrop(pageContext, container, dragNode);
+        }
+        if (!canDrop) {
+        if (!checkParentsTemplates)
+            return new VpeSourceInnerDropInfo(container, offset,
+                canDrop);
+        // offset = ((NodeImpl)container).getIndex();
+        // container = container.getParentNode();
+        // TODO Max Areshkau unclear logic , if we can drop on element
+        // why we trying to drop
+        // this on parent
+        // return getSourceInnerDropInfo(dragNode, container, offset,
+        // false);
+        return new VpeSourceInnerDropInfo(container, offset, canDrop);
+        }
+        break;
+    case Node.TEXT_NODE:
+    case Node.DOCUMENT_NODE:
+        canDrop = true;
+        break;
+    case Node.ATTRIBUTE_NODE:
+        canDrop = true;
+        break;
+    }
+    if (canDrop) {
+        return new VpeSourceInnerDropInfo(container, offset, canDrop);
+    } else {
+        return new VpeSourceInnerDropInfo(null, 0, canDrop);
+    }
     }
 
     public void innerDrop(Node dragNode, Node container, int offset) {
-	VpeNodeMapping mapping = domMapping.getNearNodeMapping(container);
-	if (mapping != null) {
-	    nsIDOMNode visualDropContainer = mapping.getVisualNode();
-	    switch (mapping.getType()) {
-	    case VpeNodeMapping.TEXT_MAPPING:
-		break;
-	    case VpeNodeMapping.ELEMENT_MAPPING:
-		nsIDOMNode visualParent = visualDropContainer.getParentNode();
-		VpeNodeMapping oldMapping = mapping;
-		mapping = domMapping.getNearNodeMapping(visualParent);
-		if (mapping != null
-			&& mapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
-		    ((VpeElementMapping) mapping).getTemplate()
-			    .innerDrop(
-				    pageContext,
-				    new VpeSourceInnerDragInfo(dragNode, 0, 0),
-				    new VpeSourceInnerDropInfo(container,
-					    offset, true));
-		} else {
-		    ((VpeElementMapping) oldMapping).getTemplate()
-			    .innerDrop(
-				    pageContext,
-				    new VpeSourceInnerDragInfo(dragNode, 0, 0),
-				    new VpeSourceInnerDropInfo(container,
-					    offset, true));
-		}
-	    }
+    VpeNodeMapping mapping = domMapping.getNearNodeMapping(container);
+    if (mapping != null) {
+        nsIDOMNode visualDropContainer = mapping.getVisualNode();
+        switch (mapping.getType()) {
+        case VpeNodeMapping.TEXT_MAPPING:
+        break;
+        case VpeNodeMapping.ELEMENT_MAPPING:
+        nsIDOMNode visualParent = visualDropContainer.getParentNode();
+        VpeNodeMapping oldMapping = mapping;
+        mapping = domMapping.getNearNodeMapping(visualParent);
+        if (mapping != null
+            && mapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+            ((VpeElementMapping) mapping).getTemplate()
+                .innerDrop(
+                    pageContext,
+                    new VpeSourceInnerDragInfo(dragNode, 0, 0),
+                    new VpeSourceInnerDropInfo(container,
+                        offset, true));
+        } else {
+            ((VpeElementMapping) oldMapping).getTemplate()
+                .innerDrop(
+                    pageContext,
+                    new VpeSourceInnerDragInfo(dragNode, 0, 0),
+                    new VpeSourceInnerDropInfo(container,
+                        offset, true));
+        }
+        }
 
-	}
+    }
     }
 
     void innerDrop(VpeSourceInnerDragInfo dragInfo,
-	    VpeSourceInnerDropInfo dropInfo) {
-	dropper.drop(pageContext, dragInfo, dropInfo);
+        VpeSourceInnerDropInfo dropInfo) {
+    dropper.drop(pageContext, dragInfo, dropInfo);
     }
 
     nsIDOMElement getNearDragElement(Element visualElement) {
-	VpeElementMapping elementMapping = domMapping
-		.getNearElementMapping(visualElement);
-	while (elementMapping != null) {
-	    if (canInnerDrag(elementMapping.getVisualElement())) {
-		return elementMapping.getVisualElement();
-	    }
-	    elementMapping = domMapping.getNearElementMapping(elementMapping
-		    .getVisualNode().getParentNode());
-	}
-	return null;
+    VpeElementMapping elementMapping = domMapping
+        .getNearElementMapping(visualElement);
+    while (elementMapping != null) {
+        if (canInnerDrag(elementMapping.getVisualElement())) {
+        return elementMapping.getVisualElement();
+        }
+        elementMapping = domMapping.getNearElementMapping(elementMapping
+            .getVisualNode().getParentNode());
+    }
+    return null;
     }
 
     nsIDOMElement getDragElement(nsIDOMElement visualElement) {
-	VpeElementMapping elementMapping = domMapping
-		.getNearElementMapping(visualElement);
-	if (elementMapping != null
-		&& canInnerDrag(elementMapping.getVisualElement())) {
-	    return elementMapping.getVisualElement();
-	}
-	return null;
+    VpeElementMapping elementMapping = domMapping
+        .getNearElementMapping(visualElement);
+    if (elementMapping != null
+        && canInnerDrag(elementMapping.getVisualElement())) {
+        return elementMapping.getVisualElement();
+    }
+    return null;
     }
 
     public boolean isTextEditable(nsIDOMNode visualNode) {
 
-		if (visualNode != null) {
-			nsIDOMNode parent = visualNode.getParentNode();
-			if (parent != null
-					&& parent.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-				nsIDOMElement element = (nsIDOMElement) parent
-						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-				nsIDOMAttr style = element.getAttributeNode("style");
-				if (style != null) {
-					String styleValue = style.getNodeValue();
-					String[] items = styleValue.split(";");
-					for (int i = 0; i < items.length; i++) {
-						String[] item = items[i].split(":");
-						if ("-moz-user-modify".equals(item[0].trim())
-								&& "read-only".equals(item[1].trim())) {
-							return false;
-						}
-					}
-				}
-				nsIDOMAttr classAttr = element.getAttributeNode("class");
-				if (classAttr != null) {
-					String classValue = classAttr.getNodeValue().trim();
-					if ("__any__tag__caption".equals(classValue)) {
-						return false;
-					}
-				}
-			}
-		}
-		return true;
-	}
+        if (visualNode != null) {
+            nsIDOMNode parent = visualNode.getParentNode();
+            if (parent != null
+                    && parent.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+                nsIDOMElement element = (nsIDOMElement) parent
+                        .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+                nsIDOMAttr style = element.getAttributeNode("style");
+                if (style != null) {
+                    String styleValue = style.getNodeValue();
+                    String[] items = styleValue.split(";");
+                    for (int i = 0; i < items.length; i++) {
+                        String[] item = items[i].split(":");
+                        if ("-moz-user-modify".equals(item[0].trim())
+                                && "read-only".equals(item[1].trim())) {
+                            return false;
+                        }
+                    }
+                }
+                nsIDOMAttr classAttr = element.getAttributeNode("class");
+                if (classAttr != null) {
+                    String classValue = classAttr.getNodeValue().trim();
+                    if ("__any__tag__caption".equals(classValue)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 
     VpeVisualInnerDropInfo getInnerDropInfo(Node sourceDropContainer,
-	    int sourceDropOffset) {
-	nsIDOMNode visualDropContainer = null;
-	long visualDropOffset = 0;
+        int sourceDropOffset) {
+    nsIDOMNode visualDropContainer = null;
+    long visualDropOffset = 0;
 
-	switch (sourceDropContainer.getNodeType()) {
-	case Node.TEXT_NODE:
-	    visualDropContainer = domMapping.getVisualNode(sourceDropContainer);
-	    visualDropOffset = TextUtil.visualInnerPosition(sourceDropContainer
-		    .getNodeValue(), sourceDropOffset);
-	    break;
-	case Node.ELEMENT_NODE:
-	case Node.DOCUMENT_NODE:
-	    NodeList sourceChildren = sourceDropContainer.getChildNodes();
-	    if (sourceDropOffset < sourceChildren.getLength()) {
-		Node sourceChild = sourceChildren.item(sourceDropOffset);
-		nsIDOMNode visualChild = domMapping.getVisualNode(sourceChild);
-		if (visualChild != null) {
-		    visualDropContainer = visualChild.getParentNode();
+    switch (sourceDropContainer.getNodeType()) {
+    case Node.TEXT_NODE:
+        visualDropContainer = domMapping.getVisualNode(sourceDropContainer);
+        visualDropOffset = TextUtil.visualInnerPosition(sourceDropContainer
+            .getNodeValue(), sourceDropOffset);
+        break;
+    case Node.ELEMENT_NODE:
+    case Node.DOCUMENT_NODE:
+        NodeList sourceChildren = sourceDropContainer.getChildNodes();
+        if (sourceDropOffset < sourceChildren.getLength()) {
+        Node sourceChild = sourceChildren.item(sourceDropOffset);
+        nsIDOMNode visualChild = domMapping.getVisualNode(sourceChild);
+        if (visualChild != null) {
+            visualDropContainer = visualChild.getParentNode();
 
-		    visualDropOffset = VisualDomUtil.getOffset(visualChild);
-		}
-	    }
-	    if (visualDropContainer == null) {
-		visualDropContainer = domMapping
-			.getNearVisualNode(sourceDropContainer);
-		nsIDOMNode visualChild = getLastAppreciableVisualChild(visualDropContainer);
-		if (visualChild != null) {
-		    visualDropOffset = VisualDomUtil.getOffset(visualChild) + 1;
-		} else {
-		    visualDropOffset = 0;
-		}
-	    }
-	    break;
-	case Node.ATTRIBUTE_NODE:
-	    Element sourceElement = ((Attr) sourceDropContainer)
-		    .getOwnerElement();
-	    VpeElementMapping elementMapping = domMapping
-		    .getNearElementMapping(sourceElement);
-	    nsIDOMNode textNode = elementMapping.getTemplate()
-		    .getOutputTextNode(pageContext, sourceElement,
-			    elementMapping.getData());
-	    if (textNode != null) {
-		visualDropContainer = textNode;
-		visualDropOffset = TextUtil.visualInnerPosition(
-			sourceDropContainer.getNodeValue(), sourceDropOffset);
-	    }
-	    break;
-	}
-	if (visualDropContainer == null) {
-	    return null;
-	}
-	return new VpeVisualInnerDropInfo(visualDropContainer,
-		visualDropOffset, 0, 0);
+            visualDropOffset = VisualDomUtil.getOffset(visualChild);
+        }
+        }
+        if (visualDropContainer == null) {
+        visualDropContainer = domMapping
+            .getNearVisualNode(sourceDropContainer);
+        nsIDOMNode visualChild = getLastAppreciableVisualChild(visualDropContainer);
+        if (visualChild != null) {
+            visualDropOffset = VisualDomUtil.getOffset(visualChild) + 1;
+        } else {
+            visualDropOffset = 0;
+        }
+        }
+        break;
+    case Node.ATTRIBUTE_NODE:
+        Element sourceElement = ((Attr) sourceDropContainer)
+            .getOwnerElement();
+        VpeElementMapping elementMapping = domMapping
+            .getNearElementMapping(sourceElement);
+        nsIDOMNode textNode = elementMapping.getTemplate()
+            .getOutputTextNode(pageContext, sourceElement,
+                elementMapping.getData());
+        if (textNode != null) {
+        visualDropContainer = textNode;
+        visualDropOffset = TextUtil.visualInnerPosition(
+            sourceDropContainer.getNodeValue(), sourceDropOffset);
+        }
+        break;
+    }
+    if (visualDropContainer == null) {
+        return null;
+    }
+    return new VpeVisualInnerDropInfo(visualDropContainer,
+        visualDropOffset, 0, 0);
     }
 
     protected void setTooltip(Element sourceElement, nsIDOMElement visualElement) {
-	if (visualElement != null && sourceElement != null
-		&& !((IDOMElement) sourceElement).isJSPTag()) {
-	    if (HTML.TAG_HTML.equalsIgnoreCase(sourceElement.getNodeName()))
-		return;
-	    String titleValue = getTooltip(sourceElement);
+    if (visualElement != null && sourceElement != null
+        && !((IDOMElement) sourceElement).isJSPTag()) {
+        if (HTML.TAG_HTML.equalsIgnoreCase(sourceElement.getNodeName()))
+        return;
+        String titleValue = getTooltip(sourceElement);
 
-	    if (titleValue != null) {
-		titleValue = titleValue.replaceAll("&", "&amp;");
-		titleValue = titleValue.replaceAll("<", "&lt;");
-		titleValue = titleValue.replaceAll(">", "&gt;");
-	    }
+        if (titleValue != null) {
+        titleValue = titleValue.replaceAll("&", "&amp;");
+        titleValue = titleValue.replaceAll("<", "&lt;");
+        titleValue = titleValue.replaceAll(">", "&gt;");
+        }
 
-	    if (titleValue != null) {
-		// visualElement.setAttribute("title", titleValue);
-		setTooltip(visualElement, titleValue);
-	    }
-	}
+        if (titleValue != null) {
+        // visualElement.setAttribute("title", titleValue);
+        setTooltip(visualElement, titleValue);
+        }
+    }
     }
 
     protected void setTooltip(nsIDOMElement visualElement, String titleValue) {
-	visualElement.setAttribute(HTML.ATTR_TITLE, titleValue);
-	nsIDOMNodeList children = visualElement.getChildNodes();
-	long len = children.getLength();
-	for (long i = 0; i < len; i++) {
-	    nsIDOMNode child = children.item(i);
-	    if (child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-		setTooltip(((nsIDOMElement) child
-			.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)),
-			titleValue);
-	    }
-	}
+    visualElement.setAttribute(HTML.ATTR_TITLE, titleValue);
+    nsIDOMNodeList children = visualElement.getChildNodes();
+    long len = children.getLength();
+    for (long i = 0; i < len; i++) {
+        nsIDOMNode child = children.item(i);
+        if (child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+        setTooltip(((nsIDOMElement) child
+            .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)),
+            titleValue);
+        }
+    }
     }
 
     private void resetTooltip(Element sourceElement, nsIDOMElement visualElement) {
-	if (visualElement != null && sourceElement != null
-		&& !((ElementImpl) sourceElement).isJSPTag()) {
-	    if (HTML.TAG_HTML.equalsIgnoreCase(sourceElement.getNodeName()))
-		return;
-	    String titleValue = getTooltip(sourceElement);
+    if (visualElement != null && sourceElement != null
+        && !((ElementImpl) sourceElement).isJSPTag()) {
+        if (HTML.TAG_HTML.equalsIgnoreCase(sourceElement.getNodeName()))
+        return;
+        String titleValue = getTooltip(sourceElement);
 
-	    if (titleValue != null) {
-		titleValue = titleValue.replaceAll("&", "&amp;"); //$NON-NLS-1$//$NON-NLS-2$
-		titleValue = titleValue.replaceAll("<", "&lt;");  //$NON-NLS-1$//$NON-NLS-2$
-		titleValue = titleValue.replaceAll(">", "&gt;");  //$NON-NLS-1$//$NON-NLS-2$
-	    }
+        if (titleValue != null) {
+        titleValue = titleValue.replaceAll("&", "&amp;"); //$NON-NLS-1$//$NON-NLS-2$
+        titleValue = titleValue.replaceAll("<", "&lt;");  //$NON-NLS-1$//$NON-NLS-2$
+        titleValue = titleValue.replaceAll(">", "&gt;");  //$NON-NLS-1$//$NON-NLS-2$
+        }
 
-	    if (titleValue != null) {
-		resetTooltip(visualElement, titleValue);
-	    }
-	}
+        if (titleValue != null) {
+        resetTooltip(visualElement, titleValue);
+        }
+    }
     }
 
     private void resetTooltip(nsIDOMElement visualElement, String titleValue) {
-	visualElement.setAttribute(HTML.ATTR_TITLE, titleValue);
-	nsIDOMNodeList children = visualElement.getChildNodes();
-	long len = children.getLength();
-	for (long i = 0; i < len; i++) {
-	    nsIDOMNode child = children.item(i);
-	    if (child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-		if (domMapping.getNodeMapping(child) == null) {
-		    resetTooltip((nsIDOMElement) child
-			    .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID),
-			    titleValue);
-		}
-	    }
-	}
+    visualElement.setAttribute(HTML.ATTR_TITLE, titleValue);
+    nsIDOMNodeList children = visualElement.getChildNodes();
+    long len = children.getLength();
+    for (long i = 0; i < len; i++) {
+        nsIDOMNode child = children.item(i);
+        if (child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+        if (domMapping.getNodeMapping(child) == null) {
+            resetTooltip((nsIDOMElement) child
+                .queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID),
+                titleValue);
+        }
+        }
+    }
     }
 
     private String getTooltip(Element sourceElement) {
-	StringBuffer buffer = new StringBuffer();
-	buffer.append(sourceElement.getNodeName());
-	NamedNodeMap attrs = sourceElement.getAttributes();
-	int len = attrs.getLength();
-	for (int i = 0; i < len; i++) {
-	    if (i == 7) {
-		return buffer.append("\n\t... ").toString(); //$NON-NLS-1$
-	    }
-	    int valueLength = attrs.item(i).getNodeValue().length();
-	    if (valueLength > 30) {
-		StringBuffer temp = new StringBuffer();
-		temp.append(attrs.item(i).getNodeValue().substring(0, 15)
-			+ " ... " //$NON-NLS-1$
-			+ attrs.item(i).getNodeValue().substring(
-				valueLength - 15, valueLength));
-		buffer.append("\n" + attrs.item(i).getNodeName() + ": " + temp); //$NON-NLS-1$ //$NON-NLS-2$
-	    } else
-		buffer.append("\n" + attrs.item(i).getNodeName() + ": " //$NON-NLS-1$ //$NON-NLS-2$
-			+ attrs.item(i).getNodeValue());
+    StringBuffer buffer = new StringBuffer();
+    buffer.append(sourceElement.getNodeName());
+    NamedNodeMap attrs = sourceElement.getAttributes();
+    int len = attrs.getLength();
+    for (int i = 0; i < len; i++) {
+        if (i == 7) {
+        return buffer.append("\n\t... ").toString(); //$NON-NLS-1$
+        }
+        int valueLength = attrs.item(i).getNodeValue().length();
+        if (valueLength > 30) {
+        StringBuffer temp = new StringBuffer();
+        temp.append(attrs.item(i).getNodeValue().substring(0, 15)
+            + " ... " //$NON-NLS-1$
+            + attrs.item(i).getNodeValue().substring(
+                valueLength - 15, valueLength));
+        buffer.append("\n" + attrs.item(i).getNodeName() + ": " + temp); //$NON-NLS-1$ //$NON-NLS-2$
+        } else
+        buffer.append("\n" + attrs.item(i).getNodeName() + ": " //$NON-NLS-1$ //$NON-NLS-2$
+            + attrs.item(i).getNodeValue());
 
-	}
+    }
 
-	return buffer.toString();
+    return buffer.toString();
     }
 
     Rectangle getNodeBounds(nsIDOMNode visualNode) {
 
-	return XulRunnerVpeUtils.getElementBounds(visualNode);
+    return XulRunnerVpeUtils.getElementBounds(visualNode);
     }
 
     static boolean canInsertAfter(int x, int y, Rectangle rect) {
-	if (y > (rect.y + rect.height) || x > (rect.x + rect.width)) {
-	    return true;
-	}
-	return y >= rect.x && x > (rect.x + rect.width / 2);
+    if (y > (rect.y + rect.height) || x > (rect.x + rect.width)) {
+        return true;
+    }
+    return y >= rect.x && x > (rect.x + rect.width / 2);
     }
 
     static nsIDOMNode getLastAppreciableVisualChild(nsIDOMNode visualParent) {
-	nsIDOMNode visualLastChild = null;
-	nsIDOMNodeList visualChildren = visualParent.getChildNodes();
-	long len = visualChildren.getLength();
-	for (long i = len - 1; i >= 0; i--) {
-	    nsIDOMNode visualChild = visualChildren.item(i);
-	    if (!isPseudoElement(visualChild) && !isAnonElement(visualChild)) {
-		visualLastChild = visualChild;
-		break;
-	    }
-	}
-	return visualLastChild;
+    nsIDOMNode visualLastChild = null;
+    nsIDOMNodeList visualChildren = visualParent.getChildNodes();
+    long len = visualChildren.getLength();
+    for (long i = len - 1; i >= 0; i--) {
+        nsIDOMNode visualChild = visualChildren.item(i);
+        if (!isPseudoElement(visualChild) && !isAnonElement(visualChild)) {
+        visualLastChild = visualChild;
+        break;
+        }
+    }
+    return visualLastChild;
     }
 
     void correctVisualDropPosition(VpeVisualInnerDropInfo newVisualDropInfo,
-	    VpeVisualInnerDropInfo oldVisualDropInfo) {
-	nsIDOMNode newVisualDropContainer = newVisualDropInfo
-		.getDropContainer();
-	nsIDOMNode oldVisualDropContainer = oldVisualDropInfo
-		.getDropContainer();
+        VpeVisualInnerDropInfo oldVisualDropInfo) {
+    nsIDOMNode newVisualDropContainer = newVisualDropInfo
+        .getDropContainer();
+    nsIDOMNode oldVisualDropContainer = oldVisualDropInfo
+        .getDropContainer();
 
-	if (newVisualDropContainer.equals(oldVisualDropContainer)) {
-	    newVisualDropInfo.setDropOffset(oldVisualDropInfo.getDropOffset());
-	    return;
-	}
+    if (newVisualDropContainer.equals(oldVisualDropContainer)) {
+        newVisualDropInfo.setDropOffset(oldVisualDropInfo.getDropOffset());
+        return;
+    }
 
-	nsIDOMNode child = oldVisualDropContainer;
-	while (child != null && child.getNodeType() != Node.DOCUMENT_NODE) {
-	    nsIDOMNode parent = child.getParentNode();
-	    if (newVisualDropContainer.equals(parent)) {
-		long offset = VisualDomUtil.getOffset(child);
-		Rectangle rect = getNodeBounds(child);
-		if (canInsertAfter(oldVisualDropInfo.getMouseX(),
-			oldVisualDropInfo.getMouseY(), rect)) {
-		    offset++;
-		}
-		newVisualDropInfo.setDropOffset(offset);
-	    }
-	    child = parent;
-	}
+    nsIDOMNode child = oldVisualDropContainer;
+    while (child != null && child.getNodeType() != Node.DOCUMENT_NODE) {
+        nsIDOMNode parent = child.getParentNode();
+        if (newVisualDropContainer.equals(parent)) {
+        long offset = VisualDomUtil.getOffset(child);
+        Rectangle rect = getNodeBounds(child);
+        if (canInsertAfter(oldVisualDropInfo.getMouseX(),
+            oldVisualDropInfo.getMouseY(), rect)) {
+            offset++;
+        }
+        newVisualDropInfo.setDropOffset(offset);
+        }
+        child = parent;
+    }
     }
 
     public nsIDOMRange createDOMRange() {
-	return xulRunnerEditor.createDOMRange();
+    return xulRunnerEditor.createDOMRange();
     }
 
     public nsIDOMRange createDOMRange(nsIDOMNode selectedNode) {
-	nsIDOMRange range = createDOMRange();
-	range.selectNode(selectedNode);
-	return range;
+    nsIDOMRange range = createDOMRange();
+    range.selectNode(selectedNode);
+    return range;
     }
 
     public static boolean isIncludeElement(nsIDOMElement visualElement) {
-	return YES_STRING.equalsIgnoreCase(visualElement
-		.getAttribute(INCLUDE_ELEMENT_ATTR));
+    return YES_STRING.equalsIgnoreCase(visualElement
+        .getAttribute(INCLUDE_ELEMENT_ATTR));
     }
 
     public static void markIncludeElement(nsIDOMElement visualElement) {
-	visualElement.setAttribute(INCLUDE_ELEMENT_ATTR, YES_STRING);
+    visualElement.setAttribute(INCLUDE_ELEMENT_ATTR, YES_STRING);
     }
 
     protected void setReadOnlyElement(nsIDOMElement node) {
-	String style = node.getAttribute(VpeStyleUtil.ATTRIBUTE_STYLE);
-	style = VpeStyleUtil.setParameterInStyle(style, "-moz-user-modify", //$NON-NLS-1$
-		"read-only"); //$NON-NLS-1$
-	node.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
+    String style = node.getAttribute(VpeStyleUtil.ATTRIBUTE_STYLE);
+    style = VpeStyleUtil.setParameterInStyle(style, "-moz-user-modify", //$NON-NLS-1$
+        "read-only"); //$NON-NLS-1$
+    node.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
     }
 
     void setMoveCursor(nsIDOMMouseEvent mouseEvent) {
 
-	nsIDOMElement selectedElement = xulRunnerEditor
-		.getLastSelectedElement();
-	if (selectedElement != null && canInnerDrag(selectedElement)) {
-	    String styleClasses = selectedElement.getAttribute(HTML.ATTR_CLASS);
-	    if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil
-		    .getMousePoint(mouseEvent))) {
-		// change cursor
-		if (styleClasses == null
-			|| !(styleClasses.contains(ATTR_DRAG_AVAILABLE_CLASS))) {
-		    // change cursor style to move
-		    styleClasses = ATTR_DRAG_AVAILABLE_CLASS + " " //$NON-NLS-1$
-			    + styleClasses;
-		}
-	    } else {
-		// change cursor style to normal
-		if (styleClasses != null) {
+    nsIDOMElement selectedElement = xulRunnerEditor
+        .getLastSelectedElement();
+    if (selectedElement != null && canInnerDrag(selectedElement)) {
+        String styleClasses = selectedElement.getAttribute(HTML.ATTR_CLASS);
+        if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil
+            .getMousePoint(mouseEvent))) {
+        // change cursor
+        if (styleClasses == null
+            || !(styleClasses.contains(ATTR_DRAG_AVAILABLE_CLASS))) {
+            // change cursor style to move
+            styleClasses = ATTR_DRAG_AVAILABLE_CLASS + " " //$NON-NLS-1$
+                + styleClasses;
+        }
+        } else {
+        // change cursor style to normal
+        if (styleClasses != null) {
 
-		    styleClasses = styleClasses.replaceAll(
-			    ATTR_DRAG_AVAILABLE_CLASS, ""); //$NON-NLS-1$
-		}
-	    }
-	    selectedElement.setAttribute(HTML.ATTR_CLASS, styleClasses);
-	}
+            styleClasses = styleClasses.replaceAll(
+                ATTR_DRAG_AVAILABLE_CLASS, ""); //$NON-NLS-1$
+        }
+        }
+        selectedElement.setAttribute(HTML.ATTR_CLASS, styleClasses);
+    }
     }
 
     private boolean inDragArea(Rectangle dragArea, Point mousePoint) {
-	// TODO add drag and drop support
-	return dragArea.contains(mousePoint)
-		&& mousePoint.x < (dragArea.x + DRAG_AREA_WIDTH)
-		&& mousePoint.y < (dragArea.y + DRAG_AREA_HEIGHT);
+    // TODO add drag and drop support
+    return dragArea.contains(mousePoint)
+        && mousePoint.x < (dragArea.x + DRAG_AREA_WIDTH)
+        && mousePoint.y < (dragArea.y + DRAG_AREA_HEIGHT);
     }
 
     nsIDOMElement getDragElement(nsIDOMMouseEvent mouseEvent) {
 
-	nsIDOMElement selectedElement = xulRunnerEditor
-		.getLastSelectedElement();
-	if (selectedElement != null && canInnerDrag(selectedElement)) {
-	    if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil
-		    .getMousePoint(mouseEvent))) {
-		return selectedElement;
-	    }
-	}
-	return null;
+    nsIDOMElement selectedElement = xulRunnerEditor
+        .getLastSelectedElement();
+    if (selectedElement != null && canInnerDrag(selectedElement)) {
+        if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil
+            .getMousePoint(mouseEvent))) {
+        return selectedElement;
+        }
+    }
+    return null;
     }
 
     VpeSourceInnerDragInfo getSourceInnerDragInfo(
-	    VpeVisualInnerDragInfo visualDragInfo) {
-	nsIDOMNode visualNode = visualDragInfo.getNode();
-	int offset = visualDragInfo.getOffset();
-	int length = visualDragInfo.getLength();
+        VpeVisualInnerDragInfo visualDragInfo) {
+    nsIDOMNode visualNode = visualDragInfo.getNode();
+    int offset = visualDragInfo.getOffset();
+    int length = visualDragInfo.getLength();
 
-	VpeNodeMapping nodeMapping = domMapping.getNearNodeMapping(visualNode);
-	Node sourceNode = nodeMapping.getSourceNode();
+    VpeNodeMapping nodeMapping = domMapping.getNearNodeMapping(visualNode);
+    Node sourceNode = nodeMapping.getSourceNode();
 
-	if (sourceNode != null) {
-	    switch (sourceNode.getNodeType()) {
-	    case Node.TEXT_NODE:
-		int end = TextUtil.sourceInnerPosition(visualNode
-			.getNodeValue(), offset + length);
-		offset = TextUtil.sourceInnerPosition(
-			visualNode.getNodeValue(), offset);
-		length = end - offset;
-		break;
-	    case Node.ELEMENT_NODE:
-		if (visualNode.getNodeType() == Node.TEXT_NODE) {
-		    // it's attribute
-		    sourceNode = null;
-		    if (isTextEditable(visualNode)) {
-			String[] atributeNames = ((VpeElementMapping) nodeMapping)
-				.getTemplate().getOutputAtributeNames();
-			if (atributeNames != null && atributeNames.length > 0) {
-			    Element sourceElement = (Element) nodeMapping
-				    .getSourceNode();
-			    sourceNode = sourceElement
-				    .getAttributeNode(atributeNames[0]);
-			    end = TextUtil.sourceInnerPosition(visualNode
-				    .getNodeValue(), offset + length);
-			    offset = TextUtil.sourceInnerPosition(visualNode
-				    .getNodeValue(), offset);
-			    length = end - offset;
-			}
-		    }
-		}
-		break;
-	    }
-	}
-	return new VpeSourceInnerDragInfo(sourceNode, offset, length);
+    if (sourceNode != null) {
+        switch (sourceNode.getNodeType()) {
+        case Node.TEXT_NODE:
+        int end = TextUtil.sourceInnerPosition(visualNode
+            .getNodeValue(), offset + length);
+        offset = TextUtil.sourceInnerPosition(
+            visualNode.getNodeValue(), offset);
+        length = end - offset;
+        break;
+        case Node.ELEMENT_NODE:
+        if (visualNode.getNodeType() == Node.TEXT_NODE) {
+            // it's attribute
+            sourceNode = null;
+            if (isTextEditable(visualNode)) {
+            String[] atributeNames = ((VpeElementMapping) nodeMapping)
+                .getTemplate().getOutputAtributeNames();
+            if (atributeNames != null && atributeNames.length > 0) {
+                Element sourceElement = (Element) nodeMapping
+                    .getSourceNode();
+                sourceNode = sourceElement
+                    .getAttributeNode(atributeNames[0]);
+                end = TextUtil.sourceInnerPosition(visualNode
+                    .getNodeValue(), offset + length);
+                offset = TextUtil.sourceInnerPosition(visualNode
+                    .getNodeValue(), offset);
+                length = end - offset;
+            }
+            }
+        }
+        break;
+        }
+    }
+    return new VpeSourceInnerDragInfo(sourceNode, offset, length);
     }
 
     public nsIDOMText getOutputTextNode(Attr attr) {
-	Element sourceElement = ((Attr) attr).getOwnerElement();
-	VpeElementMapping elementMapping = domMapping
-		.getNearElementMapping(sourceElement);
-	if (elementMapping != null) {
+    Element sourceElement = ((Attr) attr).getOwnerElement();
+    VpeElementMapping elementMapping = domMapping
+        .getNearElementMapping(sourceElement);
+    if (elementMapping != null) {
 
-			return elementMapping.getTemplate().getOutputTextNode(pageContext,
-					sourceElement, elementMapping.getData());
-		}
-	return null;
+            return elementMapping.getTemplate().getOutputTextNode(pageContext,
+                    sourceElement, elementMapping.getData());
+        }
+    return null;
     }
 
     nsIDOMElement getLastSelectedElement() {
 
-	return xulRunnerEditor.getLastSelectedElement();
+    return xulRunnerEditor.getLastSelectedElement();
     }
 
     public void pushIncludeStack(VpeIncludeInfo includeInfo) {
-	includeStack.add(includeInfo);
+    includeStack.add(includeInfo);
     }
 
     public VpeIncludeInfo popIncludeStack() {
-	VpeIncludeInfo includeInfo = null;
-	if (includeStack.size() > 0) {
-	    includeInfo = (VpeIncludeInfo) includeStack.remove(includeStack
-		    .size() - 1);
-	}
-	return includeInfo;
+    VpeIncludeInfo includeInfo = null;
+    if (includeStack.size() > 0) {
+        includeInfo = (VpeIncludeInfo) includeStack.remove(includeStack
+            .size() - 1);
+    }
+    return includeInfo;
     }
 
     public boolean isFileInIncludeStack(IFile file) {
-	if (file == null)
-	    return false;
-	for (int i = 0; i < includeStack.size(); i++) {
-	    if (file.equals(((VpeIncludeInfo) includeStack.get(i)).getFile())) {
-		return true;
-	    }
-	}
-	return false;
+    if (file == null)
+        return false;
+    for (int i = 0; i < includeStack.size(); i++) {
+        if (file.equals(((VpeIncludeInfo) includeStack.get(i)).getFile())) {
+        return true;
+        }
+    }
+    return false;
     }
 
     protected boolean isCurrentMainDocument() {
-	return includeStack.size() <= 1;
+    return includeStack.size() <= 1;
     }
 
     public int getCurrentMainIncludeOffset() {
-	if (includeStack.size() <= 1)
-	    return -1;
-	VpeIncludeInfo info = (VpeIncludeInfo) includeStack.get(1);
-	return ((IndexedRegion) info.getElement()).getStartOffset();
+    if (includeStack.size() <= 1)
+        return -1;
+    VpeIncludeInfo info = (VpeIncludeInfo) includeStack.get(1);
+    return ((IndexedRegion) info.getElement()).getStartOffset();
     }
 
     public VpeIncludeInfo getCurrentIncludeInfo() {
-	if (includeStack.size() <= 0)
-	    return null;
-	return (VpeIncludeInfo) includeStack.get(includeStack.size() - 1);
+    if (includeStack.size() <= 0)
+        return null;
+    return (VpeIncludeInfo) includeStack.get(includeStack.size() - 1);
     }
 
     public VpeIncludeInfo getRootIncludeInfo() {
-	if (includeStack.size() <= 1)
-	    return null;
-	return (VpeIncludeInfo) includeStack.get(1);
+    if (includeStack.size() <= 1)
+        return null;
+    return (VpeIncludeInfo) includeStack.get(1);
     }
 
     public void dispose() {
-	clearIncludeDocuments();
-	includeDocuments = null;
-	cleanHead();
-	domMapping.clear(getContentArea());
-	pageContext.dispose();
-	super.dispose();
+    clearIncludeDocuments();
+    includeDocuments = null;
+    cleanHead();
+    domMapping.clear(getContentArea());
+    pageContext.dispose();
+    super.dispose();
     }
 
     private void clearIncludeDocuments() {
-	Collection<Document> documents = includeDocuments.values();
-	for (Iterator iterator = documents.iterator(); iterator.hasNext();) {
-	    Document document = (Document) iterator.next();
-	    VpeCreatorUtil.releaseDocumentFromRead(document);
-	}
-	includeDocuments.clear();
+    Collection<Document> documents = includeDocuments.values();
+    for (Iterator iterator = documents.iterator(); iterator.hasNext();) {
+        Document document = (Document) iterator.next();
+        VpeCreatorUtil.releaseDocumentFromRead(document);
+    }
+    includeDocuments.clear();
     }
 
     // protected Map createXmlns(Element sourceNode) {
@@ -2173,7 +2200,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
      */
     public VpeDnD getDnd() {
 
-	return dnd;
+    return dnd;
     }
 
     /**
@@ -2182,14 +2209,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
      */
     public void setDnd(VpeDnD dnd) {
 
-	this.dnd = dnd;
+    this.dnd = dnd;
     }
 
     /**
      * @return the pageContext
      */
     protected VpePageContext getPageContext() {
-	return pageContext;
+    return pageContext;
     }
 
     /**
@@ -2197,14 +2224,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
      *                the pageContext to set
      */
     protected void setPageContext(VpePageContext pageContext) {
-	this.pageContext = pageContext;
+    this.pageContext = pageContext;
     }
 
     /**
      * @return the visualDocument
      */
     protected nsIDOMDocument getVisualDocument() {
-	return visualDocument;
+    return visualDocument;
     }
 
     /**
@@ -2212,7 +2239,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
      *                the visualDocument to set
      */
     protected void setVisualDocument(nsIDOMDocument visualDocument) {
-	this.visualDocument = visualDocument;
+    this.visualDocument = visualDocument;
     }
 
     /**
@@ -2221,32 +2248,32 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
      * @return this if file is facelet, otherwize false
      */
     private boolean isFacelet() {
-	boolean isFacelet = false;
+    boolean isFacelet = false;
 
-	IEditorInput iEditorInput = pageContext.getEditPart().getEditorInput();
-	if (iEditorInput instanceof IFileEditorInput) {
-	    IFileEditorInput iFileEditorInput = (IFileEditorInput) iEditorInput;
+    IEditorInput iEditorInput = pageContext.getEditPart().getEditorInput();
+    if (iEditorInput instanceof IFileEditorInput) {
+        IFileEditorInput iFileEditorInput = (IFileEditorInput) iEditorInput;
 
-	    IFile iFile = iFileEditorInput.getFile();
+        IFile iFile = iFileEditorInput.getFile();
 
-	    IProject project = iFile.getProject();
-	    IModelNature nature = EclipseResourceUtil.getModelNature(project);
-	    if (nature != null) {
-		XModel model = nature.getModel();
-		XModelObject webXML = WebAppHelper.getWebApp(model);
-		XModelObject param = WebAppHelper.findWebAppContextParam(
-			webXML, "javax.faces.DEFAULT_SUFFIX"); //$NON-NLS-1$
-		if (param != null) {
-		    String value = param.getAttributeValue("param-value"); //$NON-NLS-1$
+        IProject project = iFile.getProject();
+        IModelNature nature = EclipseResourceUtil.getModelNature(project);
+        if (nature != null) {
+        XModel model = nature.getModel();
+        XModelObject webXML = WebAppHelper.getWebApp(model);
+        XModelObject param = WebAppHelper.findWebAppContextParam(
+            webXML, "javax.faces.DEFAULT_SUFFIX"); //$NON-NLS-1$
+        if (param != null) {
+            String value = param.getAttributeValue("param-value"); //$NON-NLS-1$
 
-		    if (value.length() != 0 && iFile.getName().endsWith(value)) {
-			isFacelet = true;
-		    }
-		}
-	    }
-	}
+            if (value.length() != 0 && iFile.getName().endsWith(value)) {
+            isFacelet = true;
+            }
+        }
+        }
+    }
 
-	return isFacelet;
+    return isFacelet;
     }
 
     /**
@@ -2258,55 +2285,55 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
      */
 
     protected nsIDOMNode createTextNode(Node sourceNode, boolean registerFlag) {
-	String sourceText = sourceNode.getNodeValue();
+    String sourceText = sourceNode.getNodeValue();
 
-	/*
-	 * Max Areshkau this code causes very slow work of visual editor
-	 * when we editing in big files txt nodes.For example exmployee.xhtml
-	 * from JBIDE1105
-	 * 
-	 * Denis Maliarevich: 
-	 * To fix JBIDE-2003 and JBIDE-2042 
-	 * this code should be uncommented.
-	 */
-	if (sourceText.trim().length() <= 0) {
-		if (registerFlag) {
-			registerNodes(new VpeNodeMapping(sourceNode, null));
-		}
-		return null;
-	}
+    /*
+     * Max Areshkau this code causes very slow work of visual editor
+     * when we editing in big files txt nodes.For example exmployee.xhtml
+     * from JBIDE1105
+     * 
+     * Denis Maliarevich: 
+     * To fix JBIDE-2003 and JBIDE-2042 
+     * this code should be uncommented.
+     */
+    if (sourceText.trim().length() <= 0) {
+        if (registerFlag) {
+            registerNodes(new VpeNodeMapping(sourceNode, null));
+        }
+        return null;
+    }
 
-	if (faceletFile) {
-	    Matcher matcher_EL = REGEX_EL.matcher(sourceText);
-	    if (matcher_EL.find()) {
-		BundleMap bundle = pageContext.getBundle();
-		int offset = pageContext.getVisualBuilder()
-			.getCurrentMainIncludeOffset();
-		if (offset == -1)
-		    offset = ((IndexedRegion) sourceNode).getStartOffset();
-		String jsfValue = bundle.getBundleValue(sourceText, offset);
-		sourceText = jsfValue;
-	    }
-	}
-	String visualText = TextUtil.visualText(sourceText);
+    if (faceletFile) {
+        Matcher matcher_EL = REGEX_EL.matcher(sourceText);
+        if (matcher_EL.find()) {
+        BundleMap bundle = pageContext.getBundle();
+        int offset = pageContext.getVisualBuilder()
+            .getCurrentMainIncludeOffset();
+        if (offset == -1)
+            offset = ((IndexedRegion) sourceNode).getStartOffset();
+        String jsfValue = bundle.getBundleValue(sourceText, offset);
+        sourceText = jsfValue;
+        }
+    }
+    String visualText = TextUtil.visualText(sourceText);
 
-	nsIDOMNode visualNewTextNode = visualDocument
-		.createTextNode(visualText);
-	nsIDOMElement element = visualDocument.createElement(HTML.TAG_SPAN);
-	element.setAttribute(HTML.ATTR_STYLE, ""); //$NON-NLS-1$
-	element.appendChild(visualNewTextNode);
-	if (registerFlag) {
-	    registerNodes(new VpeNodeMapping(sourceNode, element));
-	}
+    nsIDOMNode visualNewTextNode = visualDocument
+        .createTextNode(visualText);
+    nsIDOMElement element = visualDocument.createElement(HTML.TAG_SPAN);
+    element.setAttribute(HTML.ATTR_STYLE, ""); //$NON-NLS-1$
+    element.appendChild(visualNewTextNode);
+    if (registerFlag) {
+        registerNodes(new VpeNodeMapping(sourceNode, element));
+    }
 
-	return element;
+    return element;
     }
 
     /**
      * @return the xulRunnerEditor
      */
     public XulRunnerEditor getXulRunnerEditor() {
-	return xulRunnerEditor;
+    return xulRunnerEditor;
     }
 
     /**
@@ -2314,14 +2341,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
      *                the xulRunnerEditor to set
      */
     public void setXulRunnerEditor(XulRunnerEditor xulRunnerEditor) {
-	this.xulRunnerEditor = xulRunnerEditor;
+    this.xulRunnerEditor = xulRunnerEditor;
     }
 
     public Map<IFile, Document> getIncludeDocuments() {
-	return includeDocuments;
+    return includeDocuments;
     }
     
     public nsIDOMNode getHeadNode() {
-		return visualEditor.getHeadNode();
-	}
+        return visualEditor.getHeadNode();
+    }
 }
