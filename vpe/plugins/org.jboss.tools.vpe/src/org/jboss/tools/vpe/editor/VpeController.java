@@ -14,7 +14,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -142,6 +141,7 @@ import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
+import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.VpeDndUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.selbar.SelectionBar;
@@ -289,14 +289,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				sourceEditor, visualSelectionController);
 
 		keyEventHandler = new KeyEventManager(sourceEditor, domMapping,
-				pageContext);
-
-		// visualKeyHandler = new VpeVisualKeyHandler(sourceEditor, domMapping,
-		// pageContext) {
-		// public void doSave(IProgressMonitor monitor) {
-		// editPart.doSave(monitor);
-		// }
-		// };
+				pageContext,visualSelectionController);
 
 		// glory
 		ISelectionProvider provider = sourceEditor.getSelectionProvider();
@@ -1026,7 +1019,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				mouseUpSelectionReasonFlag = (reason & nsISelectionListener.MOUSEUP_REASON) > 0;
 				if (mouseUpSelectionReasonFlag
 						|| reason == nsISelectionListener.NO_REASON
-//						|| reason == nsISelectionListener.KEYPRESS_REASON
+						|| reason == nsISelectionListener.KEYPRESS_REASON
 						|| reason == nsISelectionListener.SELECTALL_REASON
 						|| (reason & nsISelectionListener.MOUSEDOWN_REASON) > 0) {
 
@@ -1241,7 +1234,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 
 		try {
-			if (/* visualKeyHandler.keyPressHandler(keyEvent) */keyEventHandler
+			if (keyEventHandler
 					.handleKeyPress(keyEvent)) {
 				switcher
 						.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
@@ -2987,7 +2980,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		return includeList;
 	}
-
+	
+	/**
+	 * Processed selection events from source editor,
+	 * if reason of selection is visial editor,
+	 * selection will be stopped processing by 
+	 * this condition (!switcher.startActiveEditor)
+	 */
 	public void selectionChanged(SelectionChangedEvent event) {
 		// FIX for JBIDE-2114
 		if (!isVisualEditorVisible()) {
@@ -3009,6 +3008,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			return;
 		}
 		try {
+			
 			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 				System.out
 						.println(">>>>>>>>>>>>>> selectionChanged  " + event.getSource()); //$NON-NLS-1$

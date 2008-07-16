@@ -10,10 +10,13 @@ import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
+import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
+import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsISelection;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -40,12 +43,18 @@ public class KeyEventManager implements IKeyEventHandler {
 	 * page context
 	 */
 	private VpePageContext pageContext;
-
+	
+	/**
+	 * selection controller
+	 */
+	private VpeSelectionController selectionController;
+	
 	public KeyEventManager(StructuredTextEditor sourceEditor,
-			VpeDomMapping domMapping, VpePageContext pageContext) {
+			VpeDomMapping domMapping, VpePageContext pageContext, VpeSelectionController selectionController) {
 		this.sourceEditor = sourceEditor;
 		this.domMapping = domMapping;
 		this.pageContext = pageContext;
+		setSelectionController(selectionController);
 	}
 
 	final public boolean handleKeyPress(nsIDOMKeyEvent keyEvent) {
@@ -389,8 +398,16 @@ public class KeyEventManager implements IKeyEventHandler {
 	 * @return whether handled event
 	 */
 	protected boolean handleRight(nsIDOMKeyEvent keyEvent) {
-		return false;
+		
+		getSelectionController().setCaretEnabled(true);
+		
+		nsISelection selection = getSelectionController().getSelection((short)1);
+		nsIDOMNode node = selection.getAnchorNode();
 
+		VpeDebugUtil.debugInfo("Node name "+node.getNodeName()+"\n");
+		VpeDebugUtil.debugInfo("Node value "+node.getNodeValue()+"\n");
+		
+		return false;
 	}
 
 	/**
@@ -478,5 +495,19 @@ public class KeyEventManager implements IKeyEventHandler {
 		}
 		return null;
 
+	}
+
+	/**
+	 * @return the selectionController
+	 */
+	private VpeSelectionController getSelectionController() {
+		return selectionController;
+	}
+
+	/**
+	 * @param selectionController the selectionController to set
+	 */
+	private void setSelectionController(VpeSelectionController selectionController) {
+		this.selectionController = selectionController;
 	}
 }
