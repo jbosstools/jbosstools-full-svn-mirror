@@ -1,5 +1,10 @@
 package org.jboss.ide.eclipse.archives.ui.wizards.pages;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.SWT;
@@ -145,6 +150,11 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 			} else {
 				destinationComposite.init(archive.getDestinationPath().toString(), archive.isDestinationInWorkspace());
 			}
+		} else {
+			if(wizard.getInitialNode() != null )
+				destinationComposite.init(wizard.getInitialNode());
+			else
+				destinationComposite.init(wizard.getInitialPath(), wizard.isInitialPathWorkspaceRelative());
 		}
 	}
 
@@ -177,7 +187,12 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 				destinationLocation = new Path(destinationComposite.getPath());
 			}
 
-			IArchive[] packages = ModelUtil.getProjectArchives(wizard.getProject().getLocation());
+			ArrayList<IArchive> allArchives = new ArrayList<IArchive>();
+			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+			for( int i = 0; i < projects.length; i++ ) 
+				allArchives.addAll(Arrays.asList(ModelUtil.getProjectArchives(projects[i].getLocation())));
+			
+			IArchive[] packages = (IArchive[]) allArchives.toArray(new IArchive[allArchives.size()]);
 			if (packages != null) {
 				for( int i = 0; i < packages.length; i++ ) {
 					IArchive pkg = (IArchive) packages[i];

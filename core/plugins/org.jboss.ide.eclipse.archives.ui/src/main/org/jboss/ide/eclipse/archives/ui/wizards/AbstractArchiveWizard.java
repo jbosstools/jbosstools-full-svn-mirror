@@ -34,6 +34,10 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 	
 	public AbstractArchiveWizard () {	
 		this.project = ProjectArchivesView.getInstance().getCurrentProject();
+		IStructuredSelection selection = ProjectArchivesView.getInstance().getSelection();
+		Object s = selection.getFirstElement();
+		if( s instanceof IArchiveNode )
+			initialDestinationNode = (IArchiveNode)s;
 	}
 	
 	public AbstractArchiveWizard (IArchive existingPackage) {
