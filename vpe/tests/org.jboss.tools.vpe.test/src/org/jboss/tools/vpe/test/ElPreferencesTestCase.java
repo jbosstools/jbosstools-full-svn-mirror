@@ -78,8 +78,8 @@ public class ElPreferencesTestCase extends VpeTest {
         int i = 0;
         for (Entry<String, String> string : elValuesMap.entrySet()) {
 
-            entries[i] = new ResourceReference(string.getValue(), ResourceReference.PROJECT_SCOPE);
-            entries[i].setProperties(string.getKey());
+            entries[i] = new ResourceReference(string.getKey(), ResourceReference.PROJECT_SCOPE);
+            entries[i].setProperties(string.getValue());
             i++;
 
             setValues(entries);
