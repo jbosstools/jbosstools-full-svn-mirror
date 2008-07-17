@@ -436,11 +436,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 //                  
 //              }
 
-                if (template.getClass().getName().contains("Rich") || template.getClass().getName().contains("Jsf")) {
+                if (template.getClass().getName().contains("Rich") || template.getClass().getName().contains("Jsf")
+                        || template.getClass().getName().toLowerCase().contains("vpehtmltemplate")
+                        /*|| template.getClass().getName().toLowerCase().contains("vpecomposition")*/) {
                     final Element sourceNodeClone = (Element) ((Element) sourceNode).cloneNode(true);
+
                     template.beforeTemplateCreated(getPageContext(), sourceNodeClone, getVisualDocument());
                     creationData = template.create(getPageContext(), sourceNodeClone, getVisualDocument());
-                }else{
+                } else {
                     creationData = template.create(getPageContext(), sourceNode, getVisualDocument());
                 }
                 

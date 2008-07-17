@@ -21,6 +21,7 @@ import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
+import org.eclipse.wst.xml.core.internal.document.TextImpl;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
@@ -1473,22 +1474,34 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 //                    }
 //                }
 //            }   
-//        }
+//         }
 //
 //        System.err.println("Hello world4");
     }
 
+    @SuppressWarnings("restriction")
     public void beforeTemplateCreated(VpePageContext pageContext, Node sourceNode, nsIDOMDocument domDocument) {
         final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
 
         if ((file != null) && (sourceNode.getNodeType() == Node.ELEMENT_NODE) && ElService.getInstance().isAvailable(file)) {
+          //  Node first((Element
+            Node text = sourceNode.getFirstChild();
+            if(text instanceof TextImpl){
+                ((TextImpl)text).setData(ElService.getInstance().replaceEl(file, ((TextImpl)text).getData()));
+            }
             final NamedNodeMap nodeMap = sourceNode.getAttributes();            
             for (int i = 0; i < nodeMap.getLength(); i++) {
                 final Attr n = (Attr)nodeMap.item(i);
                 
-               n.setValue(ElService.getInstance().replaceEl(file, n.getValue()));
+               n.setValue(ElService.getInstance().replaceEl(file, n.getValue()));          
           
             }
+            if ((sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
+                for (int j = 0; j < sourceNode.getChildNodes().getLength(); j++) {
+                    beforeTemplateCreated(pageContext, sourceNode.getChildNodes().item(j), domDocument);
+                }
+            }
+        
         }
     }
 }

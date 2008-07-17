@@ -35,6 +35,7 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
 import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
+import org.jboss.tools.vpe.editor.util.ElService;
 import org.w3c.dom.Node;
 
 public class VpeFunctionSrc extends VpeFunction {
@@ -44,10 +45,9 @@ public class VpeFunctionSrc extends VpeFunction {
     public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
 	String tagValue = getParameter(0).exec(pageContext, sourceNode)
 		.stringValue();
-	
-	tagValue = resolveEL(tagValue);
-	
+	tagValue = resolveEL(pageContext,tagValue);
 	IFile iFile = VpeCreatorUtil.getFile(tagValue, pageContext);
+
 	if (iFile != null) {
 	    return new VpeValue(getPrefix()+iFile.getLocation().toString());
 	}
@@ -235,9 +235,11 @@ public class VpeFunctionSrc extends VpeFunction {
      * temporary solution to solve #{facesContext.externalContext.requestContextPath}
      * JBIDE-1410
      */
-    protected String resolveEL(String value) {
-	String resolvedValue = value.replaceFirst("^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", ""); //$NON-NLS-1$ //$NON-NLS-2$
-	
-	return resolvedValue;
+    protected String resolveEL(VpePageContext pageContext, String value) {
+        String resolvedValue = value.replaceFirst("^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
+
+        resolvedValue = ElService.getInstance().replaceEl(file, resolvedValue);
+        return resolvedValue;
     }
 }
