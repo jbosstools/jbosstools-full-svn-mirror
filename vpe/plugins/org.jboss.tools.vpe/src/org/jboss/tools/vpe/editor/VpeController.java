@@ -280,8 +280,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		// TODO Sergey Vasilyev figure out with nsIPressShell
 		// presShell = browser.getPresShell();
 		
+		//initialization visual selection controller
 		visualSelectionController = new VpeSelectionController(visualEditor.getEditor().getSelectionController());
-
+		
 		selectionBuilder = new VpeSelectionBuilder(domMapping, sourceBuilder,
 				visualBuilder, visualSelectionController);
 
@@ -1032,12 +1033,12 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					nsIDOMNode node = SelectionUtil.getSelectedNode(selection);
 					if (node != null
 							&& node.getNodeType() == nsIDOMNode.TEXT_NODE) {
-
-						// selectionBuilder.setSelection(selection);
-
+			
 						selectionManager.setSelection(selection);
 					}
 				}
+				//enables cursor on selection event
+				visualSelectionController.setCaretEnabled(true);
 			} catch (Exception e) {
 				VpePlugin.reportProblem(e);
 			} finally {
