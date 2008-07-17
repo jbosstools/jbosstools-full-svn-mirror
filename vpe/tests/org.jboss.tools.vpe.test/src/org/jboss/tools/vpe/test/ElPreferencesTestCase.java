@@ -1,39 +1,29 @@
-
+/*******************************************************************************
+ * Copyright (c) 2007 Exadel, Inc. and Red Hat, Inc.
+ * Distributed under license by Red Hat, Inc. All rights reserved.
+ * This program is made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
+ ******************************************************************************/ 
 
 package org.jboss.tools.vpe.test;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
-import org.jboss.tools.vpe.editor.css.ELReferenceList;
-import org.jboss.tools.vpe.editor.css.ResourceReference;
 import org.jboss.tools.vpe.editor.util.ElService;
-import org.jboss.tools.vpe.ui.test.TestUtil;
-import org.jboss.tools.vpe.ui.test.VpeTest;
 
 /**
  * <p>
- * Test case for testing service {@link ElService} 
+ * Test case for testing service {@link ElService}
  * <p>
  * See <a href="http://jira.jboss.com/jira/browse/JBIDE-2010">JBIDE-2010</a> issue
+ * 
  */
-public class ElPreferencesTestCase extends VpeTest {
+public class ElPreferencesTestCase extends CommonJBIDE2010Test {
 
-    /** The Constant KEY_3. */
-    private static final String KEY_3 = "#{facesContext.requestPath}";
-
-    /** The Constant KEY_2. */
-    private static final String KEY_2 = "#{beanA.property2}";
-
-    /** The Constant IMPORT_PROJECT_NAME. */
-    public static final String IMPORT_PROJECT_NAME = "jsfTest";
-
-    /** The Constant DIR_TEST_PAGE_NAME. */
-    private static final String DIR_TEST_PAGE_NAME = "JBIDE/2010/page.xhtml";
 
     /**
      * The Constructor.
@@ -42,71 +32,6 @@ public class ElPreferencesTestCase extends VpeTest {
      */
     public ElPreferencesTestCase(String name) {
         super(name);
-
-    }
-
-    /**
-     * The Constructor.
-     */
-    public ElPreferencesTestCase() {
-        super(ElPreferencesTestCase.class.getName());
-
-    }
-
-    /** The Constant KEY_1. */
-    private static final String KEY_1 = "#{beanA.property1}";
-
-    /** The Constant elValuesMap. */
-    protected static final Map<String, String> elValuesMap = new HashMap<String, String>();
-
-    /** The file. */
-    private IFile file;
-
-    /**
-     * Sets the up.
-     * 
-     * @throws Exception the exception
-     */
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        elValuesMap.put(KEY_1, "/path/image/path/to/image/");
-        elValuesMap.put(KEY_2, "/path2/");
-        elValuesMap.put(KEY_3, "/facesContext/");
-        file = (IFile) TestUtil.getComponentPath(DIR_TEST_PAGE_NAME, IMPORT_PROJECT_NAME);
-        ResourceReference[] entries = new ResourceReference[elValuesMap.size()];
-        int i = 0;
-        for (Entry<String, String> string : elValuesMap.entrySet()) {
-
-            entries[i] = new ResourceReference(string.getKey(), ResourceReference.PROJECT_SCOPE);
-            entries[i].setProperties(string.getValue());
-            i++;
-
-            setValues(entries);
-        }
-    }
-
-    /**
-     * Sets the values.
-     * 
-     * @param key the key
-     * @param value the value
-     * @param scope the scope
-     * @param entries the entries
-     */
-    protected void setValues(ResourceReference[] entries) {
-
-        ELReferenceList.getInstance().setAllResources(file, entries);
-    }
-
-    /**
-     * Tear down.
-     * 
-     * @throws Exception the exception
-     */
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
 
     }
 

@@ -41,7 +41,7 @@ public class VpeAllTests extends TestCase{
 		suite.addTestSuite(VpeEditorPreferencesPageTest.class);
 		suite.addTestSuite(VpeTemplateManagerTest.class);
 		suite.addTestSuite(ElPreferencesTestCase.class);
-		
+		suite.addTestSuite(JBIDE2010Test.class);
 
         List<ImportBean> projectToImport = new ArrayList<ImportBean>();
         ImportBean importBean = new ImportBean();
