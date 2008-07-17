@@ -11,6 +11,7 @@
 package org.jboss.ide.eclipse.archives.core.xpl;
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -28,9 +29,8 @@ import org.jboss.ide.eclipse.archives.core.model.IVariableManager;
 public class StringSubstitutionEngineClone {
 	
 	// delimiters
-	private static final String VARIABLE_START = "${"; //$NON-NLS-1$
-	private static final char VARIABLE_END = '}'; 
-//	private static final char VARIABLE_ARG = ':'; 
+	private static final String VARIABLE_START = "${"; 
+	private static final char VARIABLE_END = '}';
 	// parsing states
 	private static final int SCAN_FOR_START = 0;
 	private static final int SCAN_FOR_END = 1;
@@ -40,102 +40,32 @@ public class StringSubstitutionEngineClone {
 	 */
 	private StringBuffer fResult;
 	
-	/**
-	 * Whether substitutions were performed
-	 */
-	private boolean fSubs;
-	
-	/**
-	 * Stack of variables to resolve
-	 */
-	private Stack fStack;
-	
 	class VariableReference {
-		
-		// the text inside the variable reference
 		private StringBuffer fText;
-		
 		public VariableReference() {
 			fText = new StringBuffer();
 		}
-		
 		public void append(String text) {
 			fText.append(text);
 		}
-		
 		public String getText() {
 			return fText.toString();
 		}
-	
 	}
 	
-	/**
-	 * Performs recursive string substitution and returns the resulting string.
-	 * 
-	 * @param expression expression to resolve
-	 * @param reportUndefinedVariables whether to report undefined variables as an error
-	 * @return the resulting string with all variables recursively
-	 *  substituted
-	 * @exception CoreException if unable to resolve a referenced variable or if a cycle exists
-	 *  in referenced variables
-	 */
 	public String performStringSubstitution(String expression, boolean reportUndefinedVariables, IVariableManager manager ) throws CoreException {
 		substitute(expression, reportUndefinedVariables,manager );
-		List resolvedVariableSets = new ArrayList();
-		while (fSubs) {
-			HashSet resolved = substitute(fResult.toString(), reportUndefinedVariables,manager);			
-			
-			for(int i=resolvedVariableSets.size()-1; i>=0; i--) {
-				
-				HashSet prevSet = (HashSet)resolvedVariableSets.get(i);
-
-				if (prevSet.equals(resolved)) {
-					HashSet conflictingSet = new HashSet();
-					for (; i<resolvedVariableSets.size(); i++)
-						conflictingSet.addAll((HashSet)resolvedVariableSets.get(i));
-					
-					StringBuffer problemVariableList = new StringBuffer();
-					for (Iterator it=conflictingSet.iterator(); it.hasNext(); ) {
-						problemVariableList.append(it.next().toString());
-						problemVariableList.append(", "); //$NON-NLS-1$
-					}
-					problemVariableList.setLength(problemVariableList.length()-2); //truncate the last ", "
-					Status status = new Status(IStatus.ERROR, 
-							ArchivesCore.PLUGIN_ID, 
-							"Cycle found in variable replacement",
-							null);
-					throw new CoreException(status); 
-				}				
-			}		
-			
-			resolvedVariableSets.add(resolved);			
-		}
 		return fResult.toString();
 	}
 	
-	/**
-	 * Performs recursive string validation to ensure that all of the variables
-	 * contained in the expression exist
-	 * @param expression expression to validate
-	 * @exception CoreException if a referenced variable does not exist or if a cycle exists
-	 *  in referenced variables
-	 */
 	public void validateStringVariables(String expression, IVariableManager manager ) throws CoreException {
 		performStringSubstitution(expression, true, manager );
 	}
 	
-	/**
-	 * Makes a substitution pass of the given expression returns a Set of the variables that were resolved in this
-	 *  pass
-	 *  
-	 * @param expression source expression
-	 * @param reportUndefinedVariables whether to report undefined variables as an error
-	 * @exception CoreException if unable to resolve a variable
-	 */
 	private HashSet substitute(String expression, boolean reportUndefinedVariables, IVariableManager manager) throws CoreException {
+		Stack fStack;
 		fResult = new StringBuffer(expression.length());
 		fStack = new Stack();
-		fSubs = false;
 		
 		HashSet resolvedVariables = new HashSet();
 
@@ -237,17 +167,6 @@ public class StringSubstitutionEngineClone {
 	private String resolve(VariableReference var, boolean reportUndefinedVariables, IVariableManager manager) throws CoreException {
 		String text = var.getText();
 		String name = null;
-//		int pos = text.indexOf(VARIABLE_ARG);
-//		String arg = null;
-//		if (pos > 0) {
-//			name = text.substring(0, pos);
-//			pos++;
-//			if (pos < text.length()) {
-//				arg = text.substring(pos);
-//			} 
-//		} else {
-//			name = text;
-//		}
 		name = text;
 		if( !manager.containsVariable(name)) {
 			if( reportUndefinedVariables )

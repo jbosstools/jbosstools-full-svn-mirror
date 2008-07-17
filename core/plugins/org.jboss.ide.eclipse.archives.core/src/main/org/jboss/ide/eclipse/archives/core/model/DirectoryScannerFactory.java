@@ -97,7 +97,7 @@ public class DirectoryScannerFactory {
 		}
 		
 		public void setBasedir2(String path) {
-			String translatedPath = replaceVariables(path);
+			String translatedPath = refine(path);
 			if( translatedPath != null ) {
 				IPath translatedPath2 = new Path(translatedPath);
 				if( workspaceRelative ) {
@@ -109,10 +109,17 @@ public class DirectoryScannerFactory {
 				}
 			}
 		}
-		public String replaceVariables(String rawPath) {
+		public String refine(String rawPath) {
 			try {
-				return ArchivesCore.getInstance().getVFS().
+				String refined = ArchivesCore.getInstance().getVFS().
 					performStringSubstitution(rawPath, fs.projectName, true);
+				if( workspaceRelative ) {
+					IPath p = new Path(refined);
+					if( !p.isAbsolute() )
+						p = new Path(fs.projectName).append(p).makeAbsolute();
+					return p.toString();
+				}
+				return refined;
 			} catch( CoreException ce ) {
 			}
 			return null;

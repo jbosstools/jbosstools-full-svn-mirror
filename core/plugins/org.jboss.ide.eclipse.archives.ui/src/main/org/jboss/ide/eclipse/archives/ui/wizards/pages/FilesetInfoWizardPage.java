@@ -18,6 +18,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -26,14 +27,12 @@ import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.core.model.IVariableManager;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
+import org.jboss.ide.eclipse.archives.ui.util.composites.ArchiveFilesetDestinationComposite;
 import org.jboss.ide.eclipse.archives.ui.util.composites.ArchiveSourceDestinationComposite;
 import org.jboss.ide.eclipse.archives.ui.util.composites.FilesetPreviewComposite;
-import org.jboss.ide.eclipse.archives.ui.util.garbage.ArchiveFilesetDestinationComposite;
-import org.jboss.ide.eclipse.archives.ui.util.garbage.ArchiveNodeDestinationComposite;
 
 public class FilesetInfoWizardPage extends WizardPage {
 
@@ -55,7 +54,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 	private Button flattenedNo;
 	private Text includesText;
 	private Text excludesText;
-	private ArchiveNodeDestinationComposite destinationComposite;
+	private ArchiveFilesetDestinationComposite destinationComposite;
 
 	public FilesetInfoWizardPage (Shell parent, IArchiveFileSet fileset, IArchiveNode parentNode) {
 		super(ArchivesUIMessages.FilesetInfoWizardPage_new_title, ArchivesUIMessages.FilesetInfoWizardPage_new_title, null);
@@ -224,6 +223,12 @@ public class FilesetInfoWizardPage extends WizardPage {
 		};
 		flattenedYes.addSelectionListener(flattenAdapter);
 		flattenedNo.addSelectionListener(flattenAdapter);
+		
+		srcDestComposite.addChangeListener(new ArchiveSourceDestinationComposite.ChangeListener() {
+			public void compositeChanged() {
+				changePreview();
+			} 
+		});
 	}
 	
 	public IArchiveNode getRootNode () {
@@ -280,29 +285,61 @@ public class FilesetInfoWizardPage extends WizardPage {
 			}
 
 		} else {
-			String rawPath = "${" + IVariableManager.CURRENT_PROJECT + "}";
+			String rawPath = "";
 			srcDestComposite.init(rawPath, true);
 			flattened = false;
 			flattenedYes.setSelection(flattened);
 			flattenedNo.setSelection(!flattened);
+			includes = "**";
+			includesText.setText(includes);
 		}
 
 	}
 	
+	private ChangePreviewRunnable changePreviewRunnable;
 	private void changePreview() {
-		DirectoryScannerExtension ds = DirectoryScannerFactory.createDirectoryScanner( 
-				replaceVariables(), null, includes, excludes, parentNode.getProjectName(), srcDestComposite.isWorkspaceRelative(), true);
-		String[] fsRelative = ds.getIncludedFiles();
-		IPath filesetRelative;
-		ArrayList<IPath> list = new ArrayList<IPath>();
-		for( int i = 0; i < fsRelative.length; i++ ) {
-			if( flattened )
-				filesetRelative = new Path(new Path(fsRelative[i]).lastSegment());
-			else
-				filesetRelative = new Path(fsRelative[i]);
-			if( !list.contains(filesetRelative))
-				list.add(filesetRelative);
-		}
-		previewComposite.setInput(list.toArray());
+		if( changePreviewRunnable != null )
+			changePreviewRunnable.stop = true;
+		changePreviewRunnable = new ChangePreviewRunnable();
+		Thread t = new Thread(changePreviewRunnable);
+		t.start();
 	}	
+	
+	protected class ChangePreviewRunnable implements Runnable {
+		public boolean stop = false;
+		public void run() {
+			DirectoryScannerExtension ds = null; 
+			Runnable r;
+			try {
+				ds = DirectoryScannerFactory.createDirectoryScanner( 
+						replaceVariables(), null, includes, excludes, parentNode.getProjectName(), srcDestComposite.isWorkspaceRelative(), true);
+				String[] fsRelative = ds.getIncludedFiles();
+				IPath filesetRelative;
+				final ArrayList<IPath> list = new ArrayList<IPath>();
+				for( int i = 0; i < fsRelative.length; i++ ) {
+					if( flattened )
+						filesetRelative = new Path(new Path(fsRelative[i]).lastSegment());
+					else
+						filesetRelative = new Path(fsRelative[i]);
+					if( !list.contains(filesetRelative))
+						list.add(filesetRelative);
+				}
+				r = new Runnable() {
+					public void run() {
+						previewComposite.setInput(list.toArray());
+					}
+				};
+			} catch( Exception e ) {
+				r = new Runnable() {
+					public void run() {
+						previewComposite.setInput(new IPath[0]);
+					}
+				};
+			}
+			
+			if( !stop ) {
+				Display.getDefault().asyncExec(r);
+			}
+		}
+	}
 }

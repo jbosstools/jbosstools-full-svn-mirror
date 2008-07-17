@@ -9,6 +9,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.variables.IStringVariable;
+import org.eclipse.debug.ui.StringVariableSelectionDialog;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
@@ -36,7 +38,6 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.INamedContainerArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PackagesUIPlugin;
-import org.jboss.ide.eclipse.archives.ui.dialogs.SelectVariableDialog;
 
 public class ArchiveSourceDestinationComposite extends Composite {
 	private Text text;
@@ -140,14 +141,14 @@ public class ArchiveSourceDestinationComposite extends Composite {
 	protected void wsRadioButtonPressed() {radioPressed(wsRadioButton);}
 	
 	protected void variablesPressed() {
-		SelectVariableDialog d = new SelectVariableDialog(Display.getDefault().getActiveShell());
-		if( d.open() == Window.OK) {
-			String val = d.getSelectedVarName();
-			if( val != null ) {
-				path = path + "${" + val + "}";
+		StringVariableSelectionDialog d = new StringVariableSelectionDialog(Display.getDefault().getActiveShell());
+		if(d.open() == Window.OK) {
+			Object o = d.getFirstResult();
+			if( o != null && o instanceof IStringVariable) {
 				destinationNode = null;
+				path = path + "${" + ((IStringVariable)o).getName() + "}";
+				validateAndUpdateWidgets();;
 			}
-			validateAndUpdateWidgets();
 		}
 	}
 	
@@ -161,7 +162,11 @@ public class ArchiveSourceDestinationComposite extends Composite {
 				workspaceRelative = true;
 			} else if( result instanceof IContainer ) {
 				destinationNode = null;
-				path = ((IContainer)result).getFullPath().toString();
+				IPath tmpPath = ((IContainer)result).getFullPath();
+				if( tmpPath.segment(0).equals(projectName))
+					path = tmpPath.removeFirstSegments(1).makeRelative().toString();
+				else
+					path = ((IContainer)result).getFullPath().makeAbsolute().toString();
 				workspaceRelative = true;
 			}
 			validateAndUpdateWidgets();
@@ -260,7 +265,10 @@ public class ArchiveSourceDestinationComposite extends Composite {
 			String postSub = ArchivesCore.getInstance().getVFS().
 								performStringSubstitution(path, projectName, true);
 			if( workspaceRelative ) { 
-				IPath p = ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(new Path(postSub));
+				IPath p2 = new Path(postSub);
+				if( !p2.isAbsolute())
+					p2 = new Path(projectName).append(p2).makeAbsolute();
+				IPath p = ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(p2);
 				if( p != null ) return p.toString();
 				String ERROR ="Unable to convert workspace path into global path: " + postSub; 
 				Status s = new Status(IStatus.WARNING, PackagesUIPlugin.PLUGIN_ID, ERROR);

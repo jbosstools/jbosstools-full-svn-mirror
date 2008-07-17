@@ -7,44 +7,19 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.variables.IDynamicVariable;
+import org.eclipse.core.variables.IDynamicVariableResolver;
+import org.eclipse.core.variables.VariablesPlugin;
+import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesVFS;
-import org.jboss.ide.eclipse.archives.core.model.IVariableManager;
-import org.jboss.ide.eclipse.archives.core.xpl.StringSubstitutionEngineClone;
 
-public class WorkspaceVFS implements IArchivesVFS {
-	protected WorkspaceVariableManager manager;
-	protected StringSubstitutionEngineClone engine;
+public class WorkspaceVFS implements IArchivesVFS, IDynamicVariableResolver {
 	public WorkspaceVFS() {
-		manager = new WorkspaceVariableManager();
-		engine = new StringSubstitutionEngineClone();
 	}
-	
-	public WorkspaceVariableManager getVariableManager() {
-		return manager;
-	}
-	
+		
 	public String performStringSubstitution(String expression,
 			boolean reportUndefinedVariables) throws CoreException {
 		return performStringSubstitution(expression, null, reportUndefinedVariables);
-	}
-
-	public String performStringSubstitution(String expression,
-			String projectName, boolean reportUndefinedVariables)
-			throws CoreException {
-		// set this project name
-		if( expression == null )
-			return null;
-		
-		if( projectName != null ) {
-			manager.setValue(IVariableManager.CURRENT_PROJECT, projectName);
-		}
-		
-		String ret = engine.performStringSubstitution(expression, reportUndefinedVariables, manager);
-
-		if( projectName != null ) {
-			manager.setValue(IVariableManager.CURRENT_PROJECT, null);
-		}
-		return ret;
 	}
 
 	public IPath[] getWorkspaceChildren(IPath path) {
@@ -88,6 +63,35 @@ public class WorkspaceVFS implements IArchivesVFS {
 		for( int i = 0; i < projects.length; i++ ) 
 			if( projects[i].getLocation().equals(absolutePath))
 				return projects[i].getName();
+		return null;
+	}
+
+	
+	private String currentProject;
+	public synchronized String performStringSubstitution(String expression,
+			String projectName, boolean reportUndefinedVariables)
+			throws CoreException {
+		// set this project name
+		if( expression == null )
+			return null;
+		
+		currentProject = projectName;
+		try {
+			return VariablesPlugin.getDefault().getStringVariableManager().performStringSubstitution(expression);
+		} finally {
+			currentProject = null;
+		}
+	}
+	
+	// Since the extension point re-instantiates this, we must delegate to the official instance
+	public String resolveValue(IDynamicVariable variable, String argument)
+			throws CoreException {
+		if( this == ArchivesCore.getInstance().getVFS()) {
+			if( variable.getName().equals("archives_current_project"))
+				return currentProject;
+		} else {
+			return ((WorkspaceVFS)ArchivesCore.getInstance().getVFS()).resolveValue(variable, argument);
+		}
 		return null;
 	}
 }

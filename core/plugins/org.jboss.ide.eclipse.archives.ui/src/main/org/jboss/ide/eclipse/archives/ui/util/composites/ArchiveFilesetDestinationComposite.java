@@ -1,36 +1,46 @@
-package org.jboss.ide.eclipse.archives.ui.util.garbage;
+package org.jboss.ide.eclipse.archives.ui.util.composites;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import org.eclipse.ui.ide.IDE;
+import org.jboss.ide.eclipse.archives.core.ArchivesCorePlugin;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
+import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 
-public abstract class ArchiveNodeDestinationComposite extends Composite {
+public class ArchiveFilesetDestinationComposite extends Composite {
 
 	protected Composite parent;
 	protected Label destinationImage;
 	protected Text destinationText;
 	protected Object nodeDestination;
-	//protected ArrayList<DestinationChangeListener> listeners;
 	
-	public ArchiveNodeDestinationComposite(Composite parent, int style, Object destination) {
+	public ArchiveFilesetDestinationComposite(Composite parent, int style, Object destination) {
 		super(parent, style);
 		this.parent = parent;
 		this.nodeDestination = destination;
-		//this.listeners = new ArrayList<DestinationChangeListener>();
 		
 		createComposite();
 	}
@@ -58,8 +68,6 @@ public abstract class ArchiveNodeDestinationComposite extends Composite {
 		// call other functions required for startup
 		updateDestinationViewer();
 	}
-	
-	protected abstract void fillBrowseComposite(Composite browseComposite);
 	
 	private FormData createFormData(Object topStart, int topOffset, Object bottomStart, int bottomOffset, 
 									Object leftStart, int leftOffset, Object rightStart, int rightOffset) {
@@ -120,32 +128,38 @@ public abstract class ArchiveNodeDestinationComposite extends Composite {
 		}
 	}
 	
-	
-	/**
-	 * The current destination
-	 * @return
-	 */
-	
 	public Object getPackageNodeDestination () {
 		return nodeDestination;
 	}
+
+	protected void fillBrowseComposite(Composite parent) {
+		Composite browseComposite = new Composite(parent, SWT.NONE);
+		browseComposite.setLayout(new GridLayout(2, false));
+		
+		Button filesystemBrowseButton = new Button(browseComposite, SWT.PUSH);
+		filesystemBrowseButton.setText(ArchivesUIMessages.PackageDestinationComposite_workspaceBrowseButton_label);
+		filesystemBrowseButton.addSelectionListener(new SelectionAdapter () {
+			public void widgetSelected(SelectionEvent e) {
+				openDestinationDialog();
+			}
+		});
+	}
 	
-	
-	/*
-	 * Destination change listeners
-	 */
-//	
-//	public void addDestinationChangeListener (DestinationChangeListener listener) {
-//		listeners.add(listener);
-//	}
-//	
-//	public void removeDestinationChangeListener (DestinationChangeListener listener) {
-//		listeners.remove(listener);
-//	}
-//	
-//	private void fireDestinationChanged () {
-//		for (Iterator<DestinationChangeListener> iter = listeners.iterator(); iter.hasNext(); ) {
-//			((DestinationChangeListener) iter.next()).destinationChanged(nodeDestination);
-//		}
-//	}
+	protected void openDestinationDialog() {
+		ArchiveNodeDestinationDialog dialog = new ArchiveNodeDestinationDialog(getShell(), false, true);
+		dialog.setValidator(new ISelectionStatusValidator() {
+			public IStatus validate(Object[] selection) {
+				if( selection != null && selection.length == 1 ) {
+					if( selection[0] instanceof IArchiveNode && !(selection[0] instanceof IArchiveFileSet) )
+						return Status.OK_STATUS;
+				}
+				return new Status(IStatus.ERROR, ArchivesCorePlugin.PLUGIN_ID, "Selection not valid");
+			}
+		});
+		if (nodeDestination != null)
+			dialog.setInitialSelection(nodeDestination);
+		
+		if (dialog.open() == Dialog.OK) 
+			setPackageNodeDestination(dialog.getResult()[0]);
+	}
 }

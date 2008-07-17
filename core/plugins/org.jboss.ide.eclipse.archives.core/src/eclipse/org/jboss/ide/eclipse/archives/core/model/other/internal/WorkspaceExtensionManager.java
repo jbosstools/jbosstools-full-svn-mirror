@@ -36,7 +36,6 @@ import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IActionType;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
 import org.jboss.ide.eclipse.archives.core.model.IExtensionManager;
-import org.jboss.ide.eclipse.archives.core.model.IVariableProvider;
 
 /**
  * This class will be responsible for loading extension points in the core.
@@ -125,39 +124,4 @@ public class WorkspaceExtensionManager implements IExtensionManager {
 			}
 		}
 	}
-	
-	
-	
-	private static Hashtable<String, IVariableProvider> variableProviders;
-	public IVariableProvider getVariableProvider(String id) {
-		if (variableProviders == null)
-			loadVariableProviders();
-		return variableProviders.get(id);
-	}
-	public IVariableProvider[] getVariableProviders() {
-		if( variableProviders == null )
-			loadVariableProviders();
-		Collection<IVariableProvider> c = variableProviders.values();
-		return c.toArray(new IVariableProvider[c.size()]);
-	}
-
-	private void loadVariableProviders() {
-		variableProviders = new Hashtable<String, IVariableProvider>();
-		IExtension[] extensions = findExtension(VARIABLE_PROVIDER_EXTENSION_ID);
-		for (int i = 0; i < extensions.length; i++) {
-			IConfigurationElement elements[] = extensions[i].getConfigurationElements();
-			for (int j = 0; j < elements.length; j++) {
-				try {
-					Object executable = elements[j].createExecutableExtension("class");
-					IVariableProvider type = (IVariableProvider)executable;
-					variableProviders.put(type.getId(), type);
-				} catch (InvalidRegistryObjectException e) {
-					ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, e.getMessage(), e);
-				} catch( CoreException e ) {
-					ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, e.getMessage(), e);
-				}
-			}
-		}
-	}
-	
 }

@@ -85,7 +85,8 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 			} else {
 				return new Path(replaced);
 			}
-		} catch( CoreException ce ) {}
+		} catch( CoreException ce ) {
+		}
 		return null;
 	}
 
