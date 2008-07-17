@@ -29,6 +29,15 @@ import org.jboss.tools.vpe.ui.test.TestUtil;
  * >JBIDE-2010</a>issue.
  */
 public abstract class CommonJBIDE2010Test extends CommonRichFacesTestCase {
+    
+    /** The Constant DIR_TEST_PAGE_NAME_3. */
+    protected static final String DIR_TEST_PAGE_NAME_3 = "JBIDE/2010/page3.xhtml";
+
+    /** The Constant VALUE_5. */
+    protected static final String VALUE_5 = "world";
+
+    /** The Constant KEY_5. */
+    protected static final String KEY_5 = "#{bean1.property3}";
 
     /** The Constant VALUE_4. */
     protected static final String VALUE_4 = "background:red";
@@ -82,6 +91,7 @@ public abstract class CommonJBIDE2010Test extends CommonRichFacesTestCase {
         elValuesMap.put(KEY_2, "/path2/");
         elValuesMap.put(KEY_3, "/facesContext/");
         elValuesMap.put(KEY_4, VALUE_4);
+        elValuesMap.put(KEY_5, VALUE_5);
         file = (IFile) TestUtil.getComponentPath(DIR_TEST_PAGE_NAME, IMPORT_PROJECT_NAME);
         ResourceReference[] entries = new ResourceReference[elValuesMap.size()];
         int i = 0;

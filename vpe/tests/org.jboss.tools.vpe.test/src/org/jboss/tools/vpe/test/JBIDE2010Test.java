@@ -18,10 +18,8 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
-import org.jboss.tools.jsf.vpe.richfaces.test.RichFacesComponentTest;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.ui.test.TestUtil;
-import org.jboss.tools.vpe.xulrunner.browser.util.DOMTreeDumper;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 
@@ -33,6 +31,7 @@ import org.mozilla.interfaces.nsIDOMNode;
  * @author Eugeny Stherbin
  */
 public class JBIDE2010Test extends CommonJBIDE2010Test {
+
 
     /**
      * The Constructor.
@@ -63,15 +62,32 @@ public class JBIDE2010Test extends CommonJBIDE2010Test {
         final nsIDOMElement spanOne = (nsIDOMElement) elements.get(0).queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 
         assertEquals("Style attribute should be substituted", VALUE_4, spanOne.getFirstChild().getNodeValue());
-        int i = 0;
-        DOMTreeDumper dumper = new DOMTreeDumper();
-        dumper.dumpToStream(System.out, rst);
-        // for(nsIDOMNode n:elements){
-        // final nsIDOMElement d = (nsIDOMElement)
-        // elements.get(i++).queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-        // System.out.println("JBIDE2010Test.testElTemplateSimple()-"+d.
-        // getAttribute("style"));
-        // }
+
+    }
+    
+
+    /**
+     * Test el template simple.
+     * 
+     * @throws CoreException the core exception
+     * @throws Throwable the throwable
+     */
+    public void testElTemplateSimple2() throws CoreException, Throwable {
+        final nsIDOMElement rst = performTestForRichFacesComponent((IFile) TestUtil.getComponentPath(DIR_TEST_PAGE_NAME_3,
+                IMPORT_PROJECT_NAME));
+
+        List<nsIDOMNode> elements = new ArrayList<nsIDOMNode>();
+
+        // find "td" elements
+
+        TestUtil.findAllElementsByName(rst, elements, HTML.TAG_P);
+
+        assertEquals("Value should be equals", 1, elements.size());
+        final nsIDOMElement pOne = (nsIDOMElement) elements.get(0).queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+       // DOMTreeDumper d = new DOMTreeDumper();
+       // d.dumpToStream(System.out, rst);
+//        assertEquals("Value should be equals", "Hello "+VALUE_5, pOne.getFirstChild().getFirstChild().getNodeValue());
+        assertTrue("Value should be contains",pOne.getAttribute(HTML.ATTR_STYLE).contains(VALUE_4));
 
     }
 
