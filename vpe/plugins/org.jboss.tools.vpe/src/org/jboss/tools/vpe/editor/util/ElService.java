@@ -56,9 +56,17 @@ public final class ElService implements IELService {
      * 
      * @return the singleton instance
      */
-    public static IELService getInstance() {
+    public static synchronized IELService getInstance() {
         return INSTANCE;
     }
+
+    /**
+     * The Constructor.
+     */
+    private ElService() {
+        super();
+    }
+
 
     /**
      * Replace el.
