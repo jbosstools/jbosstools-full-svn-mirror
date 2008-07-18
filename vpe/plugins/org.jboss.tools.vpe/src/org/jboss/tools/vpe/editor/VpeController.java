@@ -114,6 +114,7 @@ import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.css.AbsoluteFolderReferenceList;
 import org.jboss.tools.vpe.editor.css.CSSReferenceList;
+import org.jboss.tools.vpe.editor.css.ELReferenceList;
 import org.jboss.tools.vpe.editor.css.RelativeFolderReferenceList;
 import org.jboss.tools.vpe.editor.css.ResourceReferenceListListener;
 import org.jboss.tools.vpe.editor.css.TaglibReferenceList;
@@ -205,6 +206,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	private CSSReferenceList cssReferenceListListener;
 	private TaglibReferenceList taglibReferenceListListener;
+	private ELReferenceList elReferenceListListener;
 	private AbsoluteFolderReferenceList absoluteFolderReferenceListListener;
 	private RelativeFolderReferenceList relativeFolderReferenceListListener;
 	private VpeIncludeList includeList = new VpeIncludeList();
@@ -338,6 +340,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		relativeFolderReferenceListListener = RelativeFolderReferenceList
 				.getInstance();
 		relativeFolderReferenceListListener.addChangeListener(this);
+		
+		elReferenceListListener = ELReferenceList.getInstance();
+		elReferenceListListener.addChangeListener(this);
 
 		// pageContext.fireTaglibsChanged();
 	}
@@ -425,6 +430,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		if (absoluteFolderReferenceListListener != null) {
 			absoluteFolderReferenceListListener.removeChangeListener(this);
+		}
+		if(elReferenceListListener!=null){
+		    elReferenceListListener.removeChangeListener(this);
 		}
 		if (relativeFolderReferenceListListener != null) {
 			relativeFolderReferenceListListener.removeChangeListener(this);
@@ -2360,7 +2368,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			pageContext.getVisualBuilder().refreshExternalLinks();
 		} else if (absoluteFolderReferenceListListener == source
 				|| relativeFolderReferenceListListener == source
-				|| taglibReferenceListListener == source) {
+				|| taglibReferenceListListener == source
+				|| elReferenceListListener == source) {
 			visualRefresh();
 		}
 	}

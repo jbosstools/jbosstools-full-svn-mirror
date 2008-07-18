@@ -24,6 +24,7 @@ import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.editor.util.ElService;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -79,7 +80,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			
 			//FIX FOR JBIDE-1568, added by Max Areshkau
 			try {
-		          if (template.getClass().getName().contains("Rich") || template.getClass().getName().contains("Jsf")) {
+		          if (ElService.getInstance().isCloneableNode(getPageContext(), (Element) sourceNode)) {
                     final Element sourceNodeClone = (Element) ((Element) sourceNode).cloneNode(true);
                     template.beforeTemplateCreated(getPageContext(), sourceNodeClone, getVisualDocument());
                     creationData = template.create(getPageContext(), sourceNodeClone, getVisualDocument());

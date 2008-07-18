@@ -67,6 +67,7 @@ import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
+import org.jboss.tools.vpe.editor.util.ElService;
 import org.jboss.tools.vpe.editor.util.FaceletUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
@@ -436,9 +437,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 //                  
 //              }
 
-                if (template.getClass().getName().contains("Rich") || template.getClass().getName().contains("Jsf")
-                        || template.getClass().getName().toLowerCase().contains("vpehtmltemplate")
-                        /*|| template.getClass().getName().toLowerCase().contains("vpecomposition")*/) {
+                if (ElService.getInstance().isCloneableNode(getPageContext(),(Element) sourceNode)) {
                     final Element sourceNodeClone = (Element) ((Element) sourceNode).cloneNode(true);
 
                     template.beforeTemplateCreated(getPageContext(), sourceNodeClone, getVisualDocument());
