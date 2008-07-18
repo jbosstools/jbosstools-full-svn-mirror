@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.core.StructuredModelManager;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
-import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
@@ -19,7 +19,7 @@ import org.mozilla.interfaces.nsISelection;
 import org.w3c.dom.Node;
 
 /**
- * 
+ * Util class for selection manupalating
  * @author S.Dzmitrovich
  * 
  */
@@ -147,8 +147,15 @@ public class SelectionUtil {
 
 		return node;
 	}
-
-	public static Point getSelectionRange(nsISelection selection) {
+	/**
+	 * Returns selection range for visual part of editor
+	 * Focus offset and anchor offset can be not equals to source focus offset and anchor offset
+	 * 
+	 * @param selection -selection in visual part of editor
+	 * 
+	 * @return selection range for visual part of editor
+	 */
+	public static Point getVisualSelectionRange(nsISelection selection) {
 		nsIDOMNode focusedNode = getSelectedNode(selection);
 
 		Point range = new Point(0, 0);
@@ -161,7 +168,24 @@ public class SelectionUtil {
 		}
 		return range;
 	}
-
+	/**
+	 * Return source editor part selection range, range returns relatively to start of text in source,
+	 * not for start of document  
+	 * 
+	 * @param selection
+	 * @return source editor selection range
+	 */
+	public static Point getSourceSelectionRange(nsISelection selection, Node sourceNode) {
+		
+		nsIDOMNode focusedNode = getSelectedNode(selection);
+		//gets visual selection range
+		Point sourceRange = new Point(0, 0);
+		//converts to source selection
+		sourceRange.x = TextUtil.sourcePosition(sourceNode.getNodeValue(), focusedNode.getNodeValue(), selection.getFocusOffset());
+		sourceRange.y = TextUtil.sourcePosition(sourceNode.getNodeValue(), focusedNode.getNodeValue(), selection.getAnchorOffset())-sourceRange.x;
+		return sourceRange;
+	}
+	
 	public static VpeNodeMapping getNodeMappingBySourceSelection(
 			StructuredTextEditor sourceEditor, VpeDomMapping domMapping) {
 
@@ -208,10 +232,14 @@ public class SelectionUtil {
 				.getLastSelectedNode();
 
 	}
+	/**
+	 * Returns sourceSelectionRange
+	 * @param sourceEditor
+	 * @return sourceSelectionRange
+	 */
+	static public Point getSourceSelectionRange(StructuredTextEditor sourceEditor) {
 
-	static public Point getSourceSelection(StructuredTextEditor sourceEditor) {
-
-		StructuredTextViewer textViewer = sourceEditor.getTextViewer();
+		ITextViewer textViewer = sourceEditor.getTextViewer();
 
 		if (textViewer != null)
 			return textViewer.getSelectedRange();

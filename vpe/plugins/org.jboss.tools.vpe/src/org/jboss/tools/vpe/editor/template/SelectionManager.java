@@ -1,6 +1,8 @@
 package org.jboss.tools.vpe.editor.template;
 
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.NodeData;
@@ -10,7 +12,9 @@ import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
+import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
+import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNSUIEvent;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -47,7 +51,7 @@ public class SelectionManager implements ISelectionManager {
 		this.selectionController = selectionController;
 	}
 
-	final public void setSelection(nsISelection selection) {
+	public final void setSelection(nsISelection selection) {
 
 		nsIDOMNode selectedVisualNode = SelectionUtil
 				.getSelectedNode(selection);
@@ -99,7 +103,7 @@ public class SelectionManager implements ISelectionManager {
 			}
 
 		} else {
-
+			//here we processed text node
 			targetVisualNode = nodeMapping.getVisualNode();
 			targetSourceNode = nodeMapping.getSourceNode();
 			isNodeEditable = true;
@@ -111,10 +115,10 @@ public class SelectionManager implements ISelectionManager {
 
 		if (isNodeEditable) {
 
-			Point range = SelectionUtil.getSelectionRange(selection);
+			Point sourceSelectionRange = SelectionUtil.getSourceSelectionRange(selection,targetSourceNode);
 
-			focusOffset = range.x;
-			length = range.y;
+			focusOffset = sourceSelectionRange.x;
+			length = sourceSelectionRange.y;
 
 		} else {
 
@@ -222,30 +226,40 @@ public class SelectionManager implements ISelectionManager {
 				targetVisualNode);
 
 	}
-
+	/**
+	 * Syncronization visual selection and source selection,
+	 * actually moves source selection to visual selection
+	 */
 	final public void refreshVisualSelection() {
-
-		Point range = SelectionUtil.getSourceSelection(getSourceEditor());
+		//TODO Max Areshkau Adjust for restoring cursor position
+		Point range = SelectionUtil.getSourceSelectionRange(getSourceEditor());
+		
+		ISelection selection = getSourceEditor().getTextViewer().getSelection();
 
 		if (range == null)
 			return;
 		
-		int focus = range.x;
+		int focusOffcetInSourceDocument = range.x;
 
-		int anchor = focus + range.y;
+		int anchorOffcetInSourceDocument = focusOffcetInSourceDocument + range.y;
 
 		// get element mapping
 		VpeNodeMapping nodeMapping = SelectionUtil
 				.getNodeMappingBySourceSelection(NodesManagingUtil
 						.getStructuredModel(getSourceEditor()),
-						getDomMapping(), focus, anchor);
+						getDomMapping(), focusOffcetInSourceDocument, anchorOffcetInSourceDocument);
 
 		if (nodeMapping == null)
 			return;
 
 		// visual node which will be selected
 		nsIDOMNode targetVisualNode;
-
+		
+		IndexedRegion targetSourceNode = (IndexedRegion) SelectionUtil.getSourceNodeByPosition(NodesManagingUtil
+				.getStructuredModel(getSourceEditor()), focusOffcetInSourceDocument);
+		
+		int offcetReferenceToSourceNode = focusOffcetInSourceDocument-targetSourceNode.getStartOffset();
+		
 		// if mapping is elementMapping
 		if (nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
 
@@ -254,19 +268,28 @@ public class SelectionManager implements ISelectionManager {
 			VpeTemplate template = elementMapping.getTemplate();
 
 			targetVisualNode = template.getVisualNodeByBySourcePosition(
-					elementMapping, focus, anchor, getDomMapping());
+					elementMapping, focusOffcetInSourceDocument, anchorOffcetInSourceDocument, getDomMapping());
 
 		} else {
 
 			targetVisualNode = nodeMapping.getVisualNode();
 
 		}
-
+		//here we restore only highlight
 		getPageContext().getVisualBuilder().setSelectionRectangle(
 				targetVisualNode);
-
+		//TODO Max Areshkau now it's workd only for simple text, and should be adjusted
+		targetVisualNode = targetVisualNode.getFirstChild();
+		int visualNodeOffcet = TextUtil.visualPosition(((Node)targetSourceNode).getNodeValue(),offcetReferenceToSourceNode);
+		//added by Max Areshkau restore selection
+//		Point visualSelectionRange = SelectionUtil.getVisualSelectionRange(selection);
+		VpeDebugUtil.debugInfo(targetVisualNode.getNodeValue());
+//		TextUtil.visualPosition(sourceText, sourcePosition)
+		selectionController.getSelection((short)1).collapse(targetVisualNode, visualNodeOffcet);
+//		selectionController.getSelection((short)1).extend(targetVisualNode, focus);
 	}
-
+	
+	
 	protected VpePageContext getPageContext() {
 		return pageContext;
 	}
