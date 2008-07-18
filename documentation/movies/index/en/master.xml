@@ -23,6 +23,12 @@
 		<ulink url="../../../../../../cust_tag_lib_to_pallete/cust_tag_lib_to_pallete.htm">Importing Custom Tag Library to Pallete</ulink>
             </primaryie>
         </indexentry>
+        
+        <indexentry>
+            <primaryie>
+                <ulink url="../../../../../../seam2_plus_ejb3/seam2_plus_ejb3.htm">Creating Seam2 + EJB3 EAR Project</ulink>
+            </primaryie>
+        </indexentry>
 
         <!--indexentry>
             <primaryie>Visual Web Tools Reference Guide <ulink url="en/jsf/html/index.html"
