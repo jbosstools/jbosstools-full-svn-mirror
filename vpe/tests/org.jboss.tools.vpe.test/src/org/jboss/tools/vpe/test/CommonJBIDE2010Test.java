@@ -40,7 +40,7 @@ public abstract class CommonJBIDE2010Test extends CommonRichFacesTestCase {
     protected static final String KEY_5 = "#{bean1.property3}";
 
     /** The Constant VALUE_4. */
-    protected static final String VALUE_4 = "background:red";
+    protected static final String VALUE_4 = "background: red";
 
     /** The Constant KEY_4. */
     protected static final String KEY_4 = "#{bean1.property2}";

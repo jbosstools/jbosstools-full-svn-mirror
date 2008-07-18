@@ -87,7 +87,7 @@ public class JBIDE2010Test extends CommonJBIDE2010Test {
        // DOMTreeDumper d = new DOMTreeDumper();
        // d.dumpToStream(System.out, rst);
 //        assertEquals("Value should be equals", "Hello "+VALUE_5, pOne.getFirstChild().getFirstChild().getNodeValue());
-        assertTrue("Value should be contains",pOne.getAttribute(HTML.ATTR_STYLE).contains(VALUE_4));
+        assertTrue("Value should be contains",pOne.getAttribute(HTML.ATTR_STYLE).startsWith(VALUE_4));
 
     }
 
