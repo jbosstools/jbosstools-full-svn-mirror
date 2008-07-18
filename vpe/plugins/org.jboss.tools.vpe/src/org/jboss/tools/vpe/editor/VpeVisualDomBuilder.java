@@ -2288,7 +2288,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
     protected nsIDOMNode createTextNode(Node sourceNode, boolean registerFlag) {
     String sourceText = sourceNode.getNodeValue();
-
+    if(sourceText!=null){
+        final IFile file = getPageContext().getVisualBuilder().getCurrentIncludeInfo().getFile();
+        
+        sourceText = ElService.getInstance().replaceEl(file, sourceText);
+    }
     /*
      * Max Areshkau this code causes very slow work of visual editor
      * when we editing in big files txt nodes.For example exmployee.xhtml

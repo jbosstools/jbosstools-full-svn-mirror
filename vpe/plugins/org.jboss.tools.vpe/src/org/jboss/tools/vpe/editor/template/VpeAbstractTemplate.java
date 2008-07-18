@@ -40,7 +40,6 @@ import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
-import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMText;
 import org.w3c.dom.Attr;
@@ -1483,22 +1482,28 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
     public void beforeTemplateCreated(VpePageContext pageContext, Node sourceNode, nsIDOMDocument domDocument) {
         final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
 
-        if ((file != null) && (sourceNode.getNodeType() == Node.ELEMENT_NODE) && ElService.getInstance().isAvailable(file)) {
+        if ((file != null) && ElService.getInstance().isAvailable(file)) {
           //  Node first((Element
             Node text = sourceNode.getFirstChild();
-            if(text instanceof TextImpl){
-                ((TextImpl)text).setData(ElService.getInstance().replaceEl(file, ((TextImpl)text).getData()));
+            if(text instanceof Text){
+                ((Text)text).setData(ElService.getInstance().replaceEl(file, ((TextImpl)text).getData()));
+            }else if((sourceNode.getFirstChild()!=null) && (sourceNode.getFirstChild().getFirstChild() instanceof Text)){
+                text = sourceNode.getFirstChild().getFirstChild();
+                ((Text)text).setData(ElService.getInstance().replaceEl(file, ((TextImpl)text).getData()));
             }
-            final NamedNodeMap nodeMap = sourceNode.getAttributes();            
-            for (int i = 0; i < nodeMap.getLength(); i++) {
-                final Attr n = (Attr)nodeMap.item(i);
-                
-               n.setValue(ElService.getInstance().replaceEl(file, n.getValue()));          
-          
-            }
-            if ((sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
-                for (int j = 0; j < sourceNode.getChildNodes().getLength(); j++) {
-                    beforeTemplateCreated(pageContext, sourceNode.getChildNodes().item(j), domDocument);
+            final NamedNodeMap nodeMap = sourceNode.getAttributes();  
+            
+            if ((nodeMap != null) && (nodeMap.getLength() > 0)) {
+                for (int i = 0; i < nodeMap.getLength(); i++) {
+                    final Attr n = (Attr) nodeMap.item(i);
+
+                    n.setValue(ElService.getInstance().replaceEl(file, n.getValue()));
+
+                }
+                if ((sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
+                    for (int j = 0; j < sourceNode.getChildNodes().getLength(); j++) {
+                        beforeTemplateCreated(pageContext, sourceNode.getChildNodes().item(j), domDocument);
+                    }
                 }
             }
         
