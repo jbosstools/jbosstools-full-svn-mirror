@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension point="org.eclipse.wst.common.project.facet.core.facets">
+      
+      <project-facet id="jboss.portlet">
+    	<label>JBoss Portlet</label>
+    	<description>
+      		Adds support for the Java Portlet API.
+    	</description>
+    	<default-version version="2.0"/>
+  	  </project-facet>
+  	  
+  	  <project-facet-version facet="jboss.portlet" version="1.0">
+      	<constraint>
+        	<and>
+          		<requires facet="jst.java" version="[5.0"/>
+          		<requires facet="jst.web" version="[2.3"/>
+        	</and>
+      	</constraint>
+      </project-facet-version>
+      
+      <project-facet-version facet="jboss.portlet" version="2.0">
+      	<constraint>
+        	<and>
+          		<requires facet="jst.java" version="[5.0"/>
+          		<requires facet="jst.web" version="[2.5"/>
+        	</and>
+      	</constraint>
+      </project-facet-version>
+      
+      <action id="jboss.portlet.install" facet="jboss.portlet" type="INSTALL" version="[1.0">
+      	<delegate class="org.jboss.tools.portlet.core.internal.project.facet.PortletFacetInstallDelegate"/>
+        <config-factory class="org.jboss.tools.portlet.core.internal.project.facet.PortletFacetInstallDataModelProvider"/>
+      </action>  
+      
+      <action id="jboss.portlet.uninstall" facet="jboss.portlet" type="UNINSTALL" version="[1.0" >
+	 	<delegate class="org.jboss.tools.portlet.core.internal.project.facet.PortletFacetUninstallDelegate"/>
+ 	  </action>
+      
+   </extension>
+
+   <extension
+        point="org.eclipse.wst.common.project.facet.core.presets">
+     <static-preset id="preset.jboss.portlet.v20">
+	    <label>Portlet Project v2.0</label>
+	    <facet id="jst.java" version="5.0" />
+	    <facet id="jst.web" version="2.5"/>
+	    <facet id="jboss.portlet" version="2.0" />
+        <description>Portlet Project v2.0</description>
+     </static-preset>
+   </extension>
+   
+   <extension
+        point="org.eclipse.wst.common.project.facet.core.presets">
+     <static-preset id="preset.jboss.portlet.v10">
+        <label>Portlet Project v1.0</label>
+	    <facet id="jst.java" version="5.0" />
+	    <facet id="jst.web" version="2.3"/>
+	    <facet id="jboss.portlet" version="1.0" />
+	    <description>Portlet Project v1.0</description>
+     </static-preset>
+   </extension>
+   
+   <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
+    	<supported>
+			<runtime-component any="true"/>
+        		<facet id="jboss.portlet" version="1.0,2.0"/> 
+    	</supported>
+   </extension>
+    
+   <extension
+        point="org.eclipse.wst.common.project.facet.core.listeners">
+     <listener
+           class="org.jboss.tools.portlet.core.internal.project.facet.PortletFacetPrimaryRuntimeChangedListener"
+           eventTypes="PRIMARY_RUNTIME_CHANGED">
+     </listener>
+   </extension>
+   
+   <extension point="org.eclipse.jdt.core.classpathContainerInitializer">
+     <classpathContainerInitializer class="org.jboss.tools.portlet.core.internal.Portlet10LibrariesContainerInitializer"
+      id="org.jboss.tools.portlet.core.internal.portletlibrarycontainer.v10"/>
+   </extension>
+   <extension point="org.eclipse.jdt.core.classpathContainerInitializer">
+     <classpathContainerInitializer class="org.jboss.tools.portlet.core.internal.Portlet20LibrariesContainerInitializer"
+      id="org.jboss.tools.portlet.core.internal.portletlibrarycontainer.v20"/>
+   </extension>
+  
+</plugin>
