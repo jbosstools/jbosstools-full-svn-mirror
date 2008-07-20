@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   
+   <!--
+   <extension 
+        point="org.eclipse.wst.common.project.facet.ui.wizardPages">
+    <wizard-pages action="jboss.portlet.install">
+        <page class="org.jboss.tools.portlet.ui.internal.project.facet.PortletFacetInstallPage"/>
+    </wizard-pages>
+  </extension> 
+  -->
+  
+  <!-- New Java Portlet wizard -->
+  <extension point="org.eclipse.ui.newWizards">
+    <category id="org.jboss.tools.portlet" 
+    	name="Portlet" 
+    	parentCategory="org.jboss.tools.jst.web">
+    </category>
+    <wizard
+		id="org.jboss.tools.portlet.ui.wizard.NewJavaPortletWizard"
+		name="Java Portlet"
+		class="org.jboss.tools.portlet.ui.internal.wizard.NewPortletWizard"
+		category="org.jboss.tools.jst.web/org.jboss.tools.portlet"
+		icon="icons/portlet_wiz.gif">
+		<description>Create a new Java Portlet</description>
+		<selection class="org.eclipse.core.resources.IResource" />
+	</wizard>
+  </extension>
+  
+</plugin>

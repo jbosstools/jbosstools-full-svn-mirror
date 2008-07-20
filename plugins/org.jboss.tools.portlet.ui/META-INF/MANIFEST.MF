@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JBoss Portlet
+Bundle-SymbolicName: org.jboss.tools.portlet.ui;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.jboss.tools.portlet.ui.PortletUIActivator
+Bundle-Vendor: Red Hat, Inc.
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.wst.common.project.facet.ui,
+ org.eclipse.wst.common.frameworks.ui,
+ org.eclipse.core.resources,
+ org.eclipse.jst.servlet.ui,
+ org.eclipse.jst.j2ee.web,
+ org.eclipse.jst.j2ee.core,
+ org.eclipse.jst.j2ee.ui,
+ org.eclipse.jst.jee.ui,
+ org.eclipse.wst.common.modulecore,
+ org.eclipse.jdt.core,
+ org.eclipse.jst.j2ee,
+ org.eclipse.jem.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.edit,
+ org.jboss.tools.portlet.core,
+ org.eclipse.emf.codegen,
+ org.eclipse.wst.xml.core,
+ org.eclipse.wst.sse.core
+Bundle-ActivationPolicy: lazy
