@@ -52,6 +52,9 @@ public class VpeResizerMouseListener implements nsIDOMEventListener {
 
 		if (XulRunnerConstants.EVENT_NAME_MOUSEDOWN.equals(mouseEvent.getType())) {
 			mouseDown(mouseEvent);
+			//Added By Max Areshkau without this code, when we resize, eclipse is crashes
+			event.preventDefault();
+			event.stopPropagation();
 		} else if (XulRunnerConstants.EVENT_NAME_MOUSEUP.equals(mouseEvent.getType())) {
 			mouseUp(mouseEvent);
 		} 
