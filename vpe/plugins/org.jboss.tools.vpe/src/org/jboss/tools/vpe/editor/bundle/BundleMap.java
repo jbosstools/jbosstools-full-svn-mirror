@@ -405,7 +405,8 @@ public class BundleMap {
 	private String getBundleValue(String prefix, String propertyName, int offset) {
 		BundleEntry entry = getBundle(prefix);
 		if(entry != null) {
-			if(entry.offset > offset)return null;
+		    //Added by estherbin fix JBIDE-2010 (issue with resources). 
+			if(offset!=0 && (entry.offset > offset))return null;
 			String name = prefix + "." + propertyName;
 			try{
 				String value = (String)entry.bundle.getObject(propertyName);
