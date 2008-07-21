@@ -192,9 +192,12 @@ public class SelectionUtil {
 		Point range = sourceEditor.getTextViewer().getSelectedRange();
 
 		IDocument document = sourceEditor.getTextViewer().getDocument();
-
-		IStructuredModel model = StructuredModelManager.getModelManager()
-				.getExistingModelForEdit(document);
+		
+		IStructuredModel model =null;
+		
+		try {
+		model = StructuredModelManager.getModelManager()
+				.getExistingModelForRead(document);
 
 		int anchor = range.x;
 		int focus = range.x + range.y;
@@ -222,6 +225,14 @@ public class SelectionUtil {
 			return NodesManagingUtil.getNodeMapping(domMapping, focusNode);
 
 		}
+		} finally {
+			
+			if(model!=null) {
+				
+				model.releaseFromRead();
+			}
+		}
+		
 		return null;
 
 	}
@@ -238,7 +249,6 @@ public class SelectionUtil {
 	 * @return sourceSelectionRange
 	 */
 	static public Point getSourceSelectionRange(StructuredTextEditor sourceEditor) {
-
 		ITextViewer textViewer = sourceEditor.getTextViewer();
 
 		if (textViewer != null)

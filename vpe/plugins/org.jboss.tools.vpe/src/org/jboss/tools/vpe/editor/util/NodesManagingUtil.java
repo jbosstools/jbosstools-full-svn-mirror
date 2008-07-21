@@ -1,10 +1,6 @@
 package org.jboss.tools.vpe.editor.util;
 
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.wst.sse.core.StructuredModelManager;
-import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
-import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
@@ -54,20 +50,6 @@ public class NodesManagingUtil {
 
 		return domMapping.getNearNodeMappingAtVisualNode(node);
 
-	}
-
-	/**
-	 * 
-	 * @param sourceEditor
-	 * @return
-	 */
-	public static IStructuredModel getStructuredModel(
-			StructuredTextEditor sourceEditor) {
-
-		IDocument document = sourceEditor.getTextViewer().getDocument();
-
-		return StructuredModelManager.getModelManager()
-				.getExistingModelForEdit(document);
 	}
 
 	/**

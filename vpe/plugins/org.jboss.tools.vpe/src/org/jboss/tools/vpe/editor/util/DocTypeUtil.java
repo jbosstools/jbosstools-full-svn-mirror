@@ -219,21 +219,25 @@ public class DocTypeUtil {
 	static private IDOMDocument getDocument(IFile file) {
 
 		IDOMDocument document = null;
-
+		
+		IDOMModel model = null;
+		
 		if (file != null) {
 			try {
 
 				// get model
-				IDOMModel model = (IDOMModel) StructuredModelManager
-						.getModelManager().getModelForRead(file);
+				model = (IDOMModel) StructuredModelManager
+						.getModelManager().getExistingModelForRead(file);
 
 				if (model != null)
 					document = model.getDocument();
 
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (CoreException e) {
-				e.printStackTrace();
+			} finally {
+				//see JBIDE-2219
+				if(model!=null) {
+					
+					model.releaseFromRead();
+				}
 			}
 		}
 

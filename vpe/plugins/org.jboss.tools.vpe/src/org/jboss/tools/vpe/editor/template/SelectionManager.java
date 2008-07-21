@@ -2,6 +2,8 @@ package org.jboss.tools.vpe.editor.template;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.wst.sse.core.StructuredModelManager;
+import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
@@ -232,6 +234,13 @@ public class SelectionManager implements ISelectionManager {
 	 */
 	final public void refreshVisualSelection() {
 		//TODO Max Areshkau Adjust for restoring cursor position
+		IStructuredModel model = null;
+		
+		try {
+		//gets source model for read, model should be released see JBIDE-2219
+		model = StructuredModelManager.getModelManager()
+			.getExistingModelForRead(getSourceEditor().getTextViewer().getDocument());
+			
 		Point range = SelectionUtil.getSourceSelectionRange(getSourceEditor());
 		
 		ISelection selection = getSourceEditor().getTextViewer().getSelection();
@@ -245,8 +254,7 @@ public class SelectionManager implements ISelectionManager {
 
 		// get element mapping
 		VpeNodeMapping nodeMapping = SelectionUtil
-				.getNodeMappingBySourceSelection(NodesManagingUtil
-						.getStructuredModel(getSourceEditor()),
+				.getNodeMappingBySourceSelection(model,
 						getDomMapping(), focusOffcetInSourceDocument, anchorOffcetInSourceDocument);
 
 		if (nodeMapping == null)
@@ -255,8 +263,7 @@ public class SelectionManager implements ISelectionManager {
 		// visual node which will be selected
 		nsIDOMNode targetVisualNode;
 		
-		IndexedRegion targetSourceNode = (IndexedRegion) SelectionUtil.getSourceNodeByPosition(NodesManagingUtil
-				.getStructuredModel(getSourceEditor()), focusOffcetInSourceDocument);
+		IndexedRegion targetSourceNode = (IndexedRegion) SelectionUtil.getSourceNodeByPosition(model, focusOffcetInSourceDocument);
 		
 		int offcetReferenceToSourceNode = focusOffcetInSourceDocument-targetSourceNode.getStartOffset();
 		
@@ -278,6 +285,11 @@ public class SelectionManager implements ISelectionManager {
 		//here we restore only highlight
 		getPageContext().getVisualBuilder().setSelectionRectangle(
 				targetVisualNode);
+		} finally {
+			if(model!=null) {
+				model.releaseFromRead();
+			}
+		}
 //		//TODO Max Areshkau now it's workd only for simple text, and should be adjusted
 //		targetVisualNode = targetVisualNode.getFirstChild();
 //		int visualNodeOffcet = TextUtil.visualPosition(((Node)targetSourceNode).getNodeValue(),offcetReferenceToSourceNode);
