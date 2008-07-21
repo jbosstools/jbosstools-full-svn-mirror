@@ -278,15 +278,15 @@ public class SelectionManager implements ISelectionManager {
 		//here we restore only highlight
 		getPageContext().getVisualBuilder().setSelectionRectangle(
 				targetVisualNode);
-		//TODO Max Areshkau now it's workd only for simple text, and should be adjusted
-		targetVisualNode = targetVisualNode.getFirstChild();
-		int visualNodeOffcet = TextUtil.visualPosition(((Node)targetSourceNode).getNodeValue(),offcetReferenceToSourceNode);
-		//added by Max Areshkau restore selection
-//		Point visualSelectionRange = SelectionUtil.getVisualSelectionRange(selection);
-		VpeDebugUtil.debugInfo(targetVisualNode.getNodeValue());
-//		TextUtil.visualPosition(sourceText, sourcePosition)
-		selectionController.getSelection((short)1).collapse(targetVisualNode, visualNodeOffcet);
-//		selectionController.getSelection((short)1).extend(targetVisualNode, focus);
+//		//TODO Max Areshkau now it's workd only for simple text, and should be adjusted
+//		targetVisualNode = targetVisualNode.getFirstChild();
+//		int visualNodeOffcet = TextUtil.visualPosition(((Node)targetSourceNode).getNodeValue(),offcetReferenceToSourceNode);
+//		//added by Max Areshkau restore selection
+////		Point visualSelectionRange = SelectionUtil.getVisualSelectionRange(selection);
+//		VpeDebugUtil.debugInfo(targetVisualNode.getNodeValue());
+////		TextUtil.visualPosition(sourceText, sourcePosition)
+//		selectionController.getSelection((short)1).collapse(targetVisualNode, visualNodeOffcet);
+////		selectionController.getSelection((short)1).extend(targetVisualNode, focus);
 	}
 	
 	
