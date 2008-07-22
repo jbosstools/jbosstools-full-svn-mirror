@@ -109,8 +109,8 @@ public class AddPortletOperation extends AddWebClassOperation {
 			Element deployment = document.createElement("deployment");
 			element.appendChild(deployment);
 			
-			addNode(document,deployment,"if-exists",ifExists);
 			addNode(document,deployment,"parent-ref",parent);
+			addNode(document,deployment,"if-exists",ifExists);
 			
 			Element window = addNode(document,deployment,"window",null);
 			
