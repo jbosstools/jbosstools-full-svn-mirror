@@ -12,6 +12,8 @@ package org.jboss.tools.vpe.editor.css;
 
 import java.util.List;
 
+import org.jboss.tools.vpe.messages.VpeUIMessages;
+
 public class TaglibReferencesComposite extends ResourceReferencesComposite {
 
 	protected String getEntity() {
@@ -25,5 +27,15 @@ public class TaglibReferencesComposite extends ResourceReferencesComposite {
 	protected ResourceReferenceList getReferenceList() {
 		return TaglibReferenceList.getInstance();
 	}
+
+	/**
+	 * @see ResourceReferencesComposite#createGroupLabel()
+	 */
+    @Override
+    protected String createGroupLabel() {
+        return VpeUIMessages.INCLUDED_TAG_LIBS;
+    }
+
+
 
 }

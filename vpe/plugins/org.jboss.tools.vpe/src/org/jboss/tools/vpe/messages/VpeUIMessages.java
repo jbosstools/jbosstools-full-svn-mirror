@@ -95,5 +95,8 @@ public class VpeUIMessages extends NLS {
 	public static String CONFIRM_SELECTION_BAR_DIALOG_TOGGLE_MESSAGE;
 	public static String VPE_UPDATE_JOB_TITLE;
 	public static String VPE_VISUAL_REFRESH_JOB;
+	public static String INCLUDED_CSS_FILES;
+	public static String INCLUDED_TAG_LIBS;
+	public static String SUBSTITUTED_EL_EXPRESSIONS;
 	
 }

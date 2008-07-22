@@ -2,6 +2,8 @@ package org.jboss.tools.vpe.editor.css;
 
 import java.util.List;
 
+import org.jboss.tools.vpe.messages.VpeUIMessages;
+
 /**
  * The Class ElVariablesComposite.
  */
@@ -39,5 +41,15 @@ public class ElVariablesComposite extends ResourceReferencesComposite {
     protected ResourceReferenceList getReferenceList() {
         return ELReferenceList.getInstance();
     }
+
+    /**
+     * @see ResourceReferencesComposite#createGroupLabel()
+     */
+    @Override
+    protected String createGroupLabel() {
+        return VpeUIMessages.SUBSTITUTED_EL_EXPRESSIONS;
+    }
+
+
 
 }

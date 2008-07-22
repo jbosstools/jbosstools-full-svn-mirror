@@ -28,8 +28,11 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 
 public abstract class ResourceReferencesComposite {
 	static String ADD = "Add";
@@ -57,6 +60,15 @@ public abstract class ResourceReferencesComposite {
 	
 	protected abstract ResourceReferencesTableProvider createTableProvider(List dataList);
 	protected abstract ResourceReferenceList getReferenceList();
+	
+	/**
+	 * Returned the label that will display in group.
+	 *
+	 * @return label displayed in group
+	 * @see #createControl(Composite)
+	 */
+	protected abstract String createGroupLabel();
+	   
 
 	public void setObject(Object object) {
 		Properties p = (Properties)object;
@@ -69,13 +81,24 @@ public abstract class ResourceReferencesComposite {
 	}
 
 	public Control createControl(Composite parent) {
-		Composite c = new Composite(parent, SWT.NONE);
-		c.setLayoutData(new GridData(GridData.FILL_BOTH));
+		Composite c1 = new Composite(parent, SWT.NONE);
+		
+		c1.setLayoutData(new GridData(GridData.FILL_BOTH));
+		c1.setLayout(new GridLayout(2,false));
+		
+		final Group group = new Group(c1,SWT.NONE);
+		
+		group.setText(createGroupLabel());
+		group.setLayoutData(new GridData(GridData.FILL_BOTH));
 		GridLayout g = new GridLayout(2, false);
-		c.setLayout(g);
-		Control slc = table.createControl(c);
+		group.setLayout(g);
+
+	    
+		Control slc = table.createControl(group);
 		slc.setLayoutData(new GridData(GridData.FILL_BOTH));
-		Control bc = bar.createControl(c);
+		Control bc = bar.createControl(group);
+		
+	
 		GridData gd = new GridData(GridData.FILL_VERTICAL);
 		bc.setLayoutData(gd);
 		table.getTable().addSelectionListener(new SelectionListener() {
@@ -87,7 +110,7 @@ public abstract class ResourceReferencesComposite {
 			}
 		});
 		update();
-		return c;
+		return c1;
 	}
 	
 	ResourceReference[] getReferenceArray() {
