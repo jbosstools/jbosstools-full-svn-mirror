@@ -540,18 +540,18 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
    <orderedlist>
     <listitem><para>On Red Hat based Linux distributions install the xpLib.i386 package</para></listitem>
-    <listitem><para>Type <programlisting role="JAVA"><![CDATA[ln -s libstdc++.so.5.0.7 libstdc++.so.5
-]]></programlisting></para>
+    <listitem><para>Type</para> <programlisting role="JAVA"><![CDATA[ln -s libstdc++.so.5.0.7 libstdc++.so.5
+]]></programlisting>
     </listitem>
-    <listitem><para>and/or use <programlisting role="JAVA"><![CDATA[yum install libXp
-]]></programlisting></para>
+    <listitem><para>and/or use</para><programlisting role="JAVA"><![CDATA[yum install libXp
+]]></programlisting>
     </listitem>
     <listitem><para>Open the JBDS perspective. If you see the Help view open, close it and restart JBDS</para></listitem>
     <listitem><para>If none of these work, do the following:</para><itemizedlist>
       <listitem><para>Clear the Eclipse log file,
        <emphasis>&lt;workspace&gt;\.metadata\.log</emphasis></para></listitem>
-      <listitem><para>Start Eclipse with the -debug option: <programlisting role="JAVA"><![CDATA[eclipse -debug
-]]></programlisting></para>
+     <listitem><para>Start Eclipse with the -debug option:</para> <programlisting role="JAVA"><![CDATA[eclipse -debug
+]]></programlisting>
       </listitem>
       <listitem><para>Post the Eclipse log file
        (<emphasis>&lt;workspace&gt;\.metadata\.log</emphasis>) on the forums.</para></listitem>
@@ -623,7 +623,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <para>JBoss Developer Studio preconfigures eclipse via the eclipse.ini file to allocate extra
     memory, but if you for some reason need more memory then by default, you can manually make
     adjustments in this file. For example:</para>
-   <programlisting role="JAVA"><![CDATA[-vmargs -Xms128m -Xmx512m -XX:MaxPermSize=128m
+   <programlisting role="XML">
+    <![CDATA[-vmargs -Xms128m -Xmx512m -XX:MaxPermSize=128m
 ]]></programlisting>
 
 
