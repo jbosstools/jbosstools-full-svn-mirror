@@ -86,4 +86,29 @@
       id="org.jboss.tools.portlet.core.internal.portletlibrarycontainer.v20"/>
    </extension>
   
+   <extension point="org.eclipse.wst.xml.core.catalogContributions">
+        <catalogContribution id="default">
+            <public
+                publicId="-//JBoss Portal//DTD Portlet Instances 2.6//EN"
+                uri="dtdsAndSchemas/portlet-instances_2_6.dtd"
+                webURL="http://www.jboss.org/portal/dtd/portlet-instances_2_6.dtd" />
+            <public
+                publicId="-//JBoss Portal//DTD Portal Object 2.6//EN"
+                uri="dtdsAndSchemas/portal-object_2_6.dtd"
+                webURL="http://www.jboss.org/portal/dtd/portal-object_2_6.dtd" />
+            <public
+                publicId="-//JBoss Portal//DTD JBoss Portlet 2.6//EN"
+                uri="dtdsAndSchemas/jboss-portlet_2_6.dtd"
+                webURL="http://www.jboss.org/portal/dtd/jboss-portlet_2_6.dtd" />
+            
+            <uri
+                name="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+                uri="dtdsAndSchemas/portlet-app_1_0.xsd" />
+            
+            <uri
+                name="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+                uri="dtdsAndSchemas/portlet-app_2_0.xsd" />
+        </catalogContribution>
+
+    </extension>
 </plugin>
