@@ -1,0 +1,52 @@
+<chapter id="installation">
+    <title>Install &amp; Upgrade</title>
+    <para>Eclipse offers an easy way to install/upgrade features. It is done by hand the first time and then, Eclipse can check whether updates are available, download them and install them.</para>
+    <para>This chapter describes how to install JBoss-IDE with the install/update features of Eclipse, and how to stay up-to-date automatically.</para>
+    <section>
+    	<title>Eclipse 3.1.x</title>
+    	<para>
+    		Follow these steps :
+    		<itemizedlist>
+    			<listitem>Start Eclipse.</listitem>
+    			<listitem>Select <literal>Help</literal> &gt; <literal>Software Updates</literal> &gt; <literal>Find and Install...</literal></listitem>
+    			<listitem>Select <literal>Search for new features to install</literal>, and press <literal>Next &gt;</literal></listitem>
+    			<listitem>
+    				Select <literal>New Remote Site...</literal> from the right menu. In the dialog fill the name with <literal>JBoss Eclipse IDE</literal>
+    				and the URL with <ulink url="http://download.jboss.org/jbosside/updates/stable">http://download.jboss.org/jbosside/updates/stable</ulink>
+    			</listitem>
+    			<listitem>
+    				Make sure <literal>JBoss Eclipse IDE</literal> has a check next to it, and press <literal>Finish</literal>.
+    			</listitem>
+    			<listitem>
+    				Expand the <literal>JBoss Eclipse IDE</literal> tree, and check the release named <literal>JBossIDE 1.5</literal>.
+    				Click <literal>Next &gt;</literal>, and Eclipse will ask you if you agree to the licensing terms of JBoss Eclipse IDE.
+    				If you agree, select <literal>I accept the terms in the license agreement</literal>, and press <literal>Next &gt;</literal>
+    			</listitem>
+    			<listitem>
+    				Eclipse will show you a list of features it is going to install. See <link linkend="jbosside.features">Figure 1</link>. Press <literal>Finish</literal> to start installation.
+    			</listitem>
+    			<listitem>
+    				After all the features have been downloaded, Eclipse will prompt if you want to install each feature.
+    				The quickest way to install everything is to press the <literal>Install All</literal> button.
+    			</listitem>
+    			<listitem>At the end of the installation, you will be prompted to restart Eclipse. Click <literal>Yes</literal>.</listitem>
+    		</itemizedlist>
+    		
+			<tip>If you are behind a proxy you have to go to <literal>Window</literal> &gt; <literal>Preferences</literal> &gt; <literal>Install/Update</literal>,
+			select <literal>Enable HTTP Proxy Connection</literal> and insert values for <literal>Host Address</literal> and <literal>Port</literal>.</tip>
+			
+			<tip>You can be notified when new updates are available. You can also configure Eclipse to fetch new updates and make them ready to install.
+			All this configuration can be done through the  <literal>Help</literal> &gt; <literal>Software Updates</literal> &gt; <literal>Configuration Manager</literal> menu.</tip>
+		
+    		Have a look at the Eclipse documentation to get more information about the Configuration Manager.
+			<figure id="jbosside.features">
+            <title>Features in JBoss Eclipse IDE 1.5.</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata align="center" fileref="images/jbosside-1.5-features.jpg"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    	</para>
+    </section>
+</chapter>
