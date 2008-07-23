@@ -23,6 +23,7 @@ import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.TIT
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.INSTANCE_NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.WINDOW_NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IF_EXISTS;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.ADD_PORTLET;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PAGE_REGION;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PARENT_PORTAL;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PORTLET_HEIGHT;
@@ -33,6 +34,7 @@ import static org.jboss.tools.portlet.ui.IPortletUIConstants.IF_EXISTS_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.PAGE_REGION_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.PARENT_PORTAL_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.PORTLET_HEIGHT_LABEL;
+import static org.jboss.tools.portlet.ui.IPortletUIConstants.ADD_PORTLET_LABEL;
  
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jem.util.emf.workbench.ProjectUtilities;
@@ -44,6 +46,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -112,11 +115,18 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		composite.setLayout(new GridLayout(2, false));
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
+		final Button addPortlet = new Button(composite,SWT.CHECK);
+		addPortlet.setText(ADD_PORTLET_LABEL);
+		GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+		gd.horizontalSpan = 2;
+		addPortlet.setLayoutData(gd);
+		synchHelper.synchCheckbox(addPortlet, ADD_PORTLET, null);
+		
 		// if exists
 		Label ifExistsLabel = new Label(composite, SWT.LEFT);
 		ifExistsLabel.setText(IF_EXISTS_LABEL);
 		ifExistsLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		Combo ifExistsCombo = new Combo(composite,SWT.NONE);
+		final Combo ifExistsCombo = new Combo(composite,SWT.NONE);
 		ifExistsCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));		
 		ifExistsCombo.setItems(new String[] {"overwrite","keep"});
 		synchHelper.synchCombo(ifExistsCombo, IF_EXISTS, null);
@@ -125,7 +135,7 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		Label instanceNameLabel = new Label(composite, SWT.LEFT);
 		instanceNameLabel.setText(INSTANCE_NAME_LABEL);
 		instanceNameLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		Text instanceNameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		final Text instanceNameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
 		instanceNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		synchHelper.synchText(instanceNameText, INSTANCE_NAME, null);
 
@@ -133,7 +143,7 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		Label windowNameLabel = new Label(composite, SWT.LEFT);
 		windowNameLabel.setText(WINDOW_NAME_LABEL);
 		windowNameLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		Text windowNameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		final Text windowNameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
 		windowNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		synchHelper.synchText(windowNameText, WINDOW_NAME, null);
 		
@@ -141,7 +151,7 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		Label parentReferenceLabel = new Label(composite, SWT.LEFT);
 		parentReferenceLabel.setText(PARENT_PORTAL_LABEL);
 		parentReferenceLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		Text parentReferenceText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		final Text parentReferenceText = new Text(composite, SWT.SINGLE | SWT.BORDER);
 		parentReferenceText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		synchHelper.synchText(parentReferenceText, PARENT_PORTAL, null);
 
@@ -149,7 +159,7 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		Label regionLabel = new Label(composite, SWT.LEFT);
 		regionLabel.setText(PAGE_REGION_LABEL);
 		regionLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		Text regionText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		final Text regionText = new Text(composite, SWT.SINGLE | SWT.BORDER);
 		regionText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		synchHelper.synchText(regionText, PAGE_REGION, null);
 		
@@ -157,9 +167,30 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		Label heightLabel = new Label(composite, SWT.LEFT);
 		heightLabel.setText(PORTLET_HEIGHT_LABEL);
 		heightLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		Text heightText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		final Text heightText = new Text(composite, SWT.SINGLE | SWT.BORDER);
 		heightText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		synchHelper.synchText(heightText, PORTLET_HEIGHT, null);
+		
+		addPortlet.addSelectionListener(new SelectionListener() {
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				//enableComponents();
+			}
+
+			public void widgetSelected(SelectionEvent e) {
+				enableComponents();
+			}
+
+			private void enableComponents() {
+				boolean enable = addPortlet.getSelection();
+				ifExistsCombo.setEnabled(enable);
+				instanceNameText.setEnabled(enable);
+				windowNameText.setEnabled(enable);
+				parentReferenceText.setEnabled(enable);
+				regionText.setEnabled(enable);
+				heightText.setEnabled(enable);
+			}
+		});
 		
 	}
 	

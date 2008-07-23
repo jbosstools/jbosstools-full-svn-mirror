@@ -13,6 +13,7 @@ import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IF_
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PAGE_REGION;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PARENT_PORTAL;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PORTLET_HEIGHT;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.ADD_PORTLET;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -63,13 +64,16 @@ public class AddPortletOperation extends AddWebClassOperation {
 
 	protected void generateMetaData(IDataModel aModel, String qualifiedClassName) {
 		// update the portlet.xml file
-		updatePortletXml(aModel); 
+		updatePortletXml(aModel);
 
-		// generate/update portlet-instances.xml
-		updatePortletInstance(aModel);
-		
-		// generate/update *.object.xml
-		updatePortletObject(aModel);
+		boolean addPortlet = model.getBooleanProperty(ADD_PORTLET);
+		if (addPortlet) {
+			// generate/update portlet-instances.xml
+			updatePortletInstance(aModel);
+
+			// generate/update *.object.xml
+			updatePortletObject(aModel);
+		}
 	}
 
 	private void updatePortletObject(IDataModel model) {
@@ -82,12 +86,10 @@ public class AddPortletOperation extends AddWebClassOperation {
 		String region = model.getStringProperty(PAGE_REGION);
 		String height = model.getStringProperty(PORTLET_HEIGHT);
 		
-		String fileName = name.toLowerCase() + "-object.xml";
-		
 		IProject project = getTargetProject();
 		IVirtualComponent component = ComponentCore.createComponent(project);
-		IVirtualFile portletVirtualFile = component.getRootFolder().getFolder("WEB-INF").getFile(
-				fileName);
+		IVirtualFile portletVirtualFile = component.getRootFolder().getFile(
+				IPortletConstants.PORTLET_OBJECT_FILE);
 		
 		if (!portletVirtualFile.getUnderlyingFile().exists()) {
 			try {
@@ -135,6 +137,7 @@ public class AddPortletOperation extends AddWebClassOperation {
 		}
 	}
 	private void updatePortletInstance(IDataModel model) {
+		
 		
 		String name = model.getStringProperty(NAME);
 		String instanceId = model.getStringProperty(INSTANCE_NAME);
