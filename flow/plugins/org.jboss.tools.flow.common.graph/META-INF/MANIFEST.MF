@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JBoss Tools Process Plug-in
+Bundle-SymbolicName: org.jboss.tools.flow.common.graph;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.jboss.tools.flow.JBossToolsProcessPlugin
+Bundle-Vendor: JBoss
+Require-Bundle: 
+ org.eclipse.ui.views,
+ org.eclipse.draw2d,
+ org.eclipse.gef,
+ org.eclipse.jface,
+ org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.core.resources,
+ org.eclipse.ui.ide
+Bundle-ActivationPolicy: lazy
+Export-Package: org.jboss.tools.flow;uses:="org.eclipse.core.runtime,org.eclipse.ui.plugin,org.osgi.framework",
+ org.jboss.tools.flow.editor,
+ org.jboss.tools.flow.editor.action,
+ org.jboss.tools.flow.editor.command,
+ org.jboss.tools.flow.editor.core,
+ org.jboss.tools.flow.editor.editpart,
+ org.jboss.tools.flow.editor.figure,
+ org.jboss.tools.flow.editor.policy
+Bundle-ClassPath: .
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
