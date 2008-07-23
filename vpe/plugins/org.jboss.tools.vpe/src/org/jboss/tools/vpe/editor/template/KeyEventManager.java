@@ -398,15 +398,6 @@ public class KeyEventManager implements IKeyEventHandler {
 	 * @return whether handled event
 	 */
 	protected boolean handleRight(nsIDOMKeyEvent keyEvent) {
-		
-		getSelectionController().setCaretEnabled(true);
-		
-		nsISelection selection = getSelectionController().getSelection((short)1);
-		nsIDOMNode node = selection.getAnchorNode();
-
-		VpeDebugUtil.debugInfo("Node name "+node.getNodeName()+"\n");
-		VpeDebugUtil.debugInfo("Node value "+node.getNodeValue()+"\n");
-		
 		return false;
 	}
 

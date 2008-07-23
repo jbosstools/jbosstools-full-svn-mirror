@@ -5,7 +5,9 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.core.StructuredModelManager;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
+import org.eclipse.wst.sse.core.internal.provisional.text.ITextRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
+import org.eclipse.wst.xml.core.internal.document.NodeImpl;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.NodeData;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
@@ -16,11 +18,11 @@ import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
-import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNSUIEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsISelection;
+import org.mozilla.interfaces.nsISelectionController;
 import org.w3c.dom.Node;
 
 /**
@@ -263,10 +265,8 @@ public class SelectionManager implements ISelectionManager {
 		// visual node which will be selected
 		nsIDOMNode targetVisualNode;
 		
-		IndexedRegion targetSourceNode = (IndexedRegion) SelectionUtil.getSourceNodeByPosition(model, focusOffcetInSourceDocument);
-		
-		int offcetReferenceToSourceNode = focusOffcetInSourceDocument-targetSourceNode.getStartOffset();
-		
+//		int visualNodeOffcet = TextUtil.visualPosition(((Node)targetSourceNode).getNodeValue(),offcetReferenceToSourceNode);
+	
 		// if mapping is elementMapping
 		if (nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
 
@@ -276,11 +276,18 @@ public class SelectionManager implements ISelectionManager {
 
 			targetVisualNode = template.getVisualNodeByBySourcePosition(
 					elementMapping, focusOffcetInSourceDocument, anchorOffcetInSourceDocument, getDomMapping());
-
+			
+			NodeData nodeData = template.getNodeData(targetVisualNode, elementMapping.getElementData(), getDomMapping());
+			//we can restore cursor position only if we have nodeData and range.y==0			
+			if(nodeData!=null && range.y==0) {
+				//restore cursor position in source document
+				restoreVisualCursorPosition(template, nodeData, focusOffcetInSourceDocument);
+			}
 		} else {
 
 			targetVisualNode = nodeMapping.getVisualNode();
-
+			//restore cursor position for source node
+			restoreVisualCursorPositionForTextNode(targetVisualNode, focusOffcetInSourceDocument, model);
 		}
 		//here we restore only highlight
 		getPageContext().getVisualBuilder().setSelectionRectangle(
@@ -290,17 +297,54 @@ public class SelectionManager implements ISelectionManager {
 				model.releaseFromRead();
 			}
 		}
-//		//TODO Max Areshkau now it's workd only for simple text, and should be adjusted
-//		targetVisualNode = targetVisualNode.getFirstChild();
-//		int visualNodeOffcet = TextUtil.visualPosition(((Node)targetSourceNode).getNodeValue(),offcetReferenceToSourceNode);
-//		//added by Max Areshkau restore selection
-////		Point visualSelectionRange = SelectionUtil.getVisualSelectionRange(selection);
-//		VpeDebugUtil.debugInfo(targetVisualNode.getNodeValue());
-////		TextUtil.visualPosition(sourceText, sourcePosition)
-//		selectionController.getSelection((short)1).collapse(targetVisualNode, visualNodeOffcet);
-////		selectionController.getSelection((short)1).extend(targetVisualNode, focus);
 	}
-	
+	/**
+	 * Restores visual cursor position in visual part of editor
+	 * 
+	 * @param template  - current template in scope of which we are editing data
+	 * !IMPORTANT for current implementation in should be a text node
+	 * @param nodeData -contains mapping before sourceNode(it's can be an attribute) and visual node, attribute 
+	 */
+	private void restoreVisualCursorPosition(VpeTemplate template, NodeData nodeData,int focusOffcetInSourceDocument) {
+		
+		nsIDOMNode visualNode = nodeData.getVisualNode();
+		
+		if(visualNode!=null&&visualNode.getNodeType()==nsIDOMNode.TEXT_NODE&&nodeData.getSourceNode()!=null) {			
+			NodeImpl targetSourceNode = (NodeImpl)nodeData.getSourceNode();
+			String sourceNodeValue = nodeData.getSourceNode().getNodeValue();
+			ITextRegion valueRegion = targetSourceNode.getValueRegion();
+			ITextRegion nameRegion = targetSourceNode.getNameRegion();					 
+			int offcetReferenceToSourceNode = focusOffcetInSourceDocument-valueRegion.getStart()-targetSourceNode.getStartOffset()+nameRegion.getStart()-1;
+			selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(visualNode, offcetReferenceToSourceNode);
+		}
+	}
+	/**
+	 * Restore cursor position in visual document for by source position
+	 * @param visualNode
+	 * @param focusOffcetInSourceDocument
+	 */
+	private void restoreVisualCursorPositionForTextNode(nsIDOMNode visualNode, int focusOffcetInSourceDocument,IStructuredModel model) {
+		
+		if(visualNode==null) return;
+		
+		nsIDOMNode targetVisualNode = visualNode.getFirstChild();
+		
+		if(targetVisualNode==null||targetVisualNode.getNodeType()!=nsIDOMNode.TEXT_NODE) {
+			return;
+		}
+		
+		IndexedRegion targetSourceNode = (IndexedRegion) SelectionUtil.getSourceNodeByPosition(model, focusOffcetInSourceDocument);
+		// should be a text node
+		if(((Node)targetSourceNode).getNodeType()!=Node.TEXT_NODE) {
+			return;
+		}
+		int offcetReferenceToSourceNode = focusOffcetInSourceDocument-targetSourceNode.getStartOffset();
+
+		int visualNodeOffcet = TextUtil.visualPosition(((Node)targetSourceNode).getNodeValue(),offcetReferenceToSourceNode);
+
+		selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(targetVisualNode, visualNodeOffcet);
+
+	}
 	
 	protected VpePageContext getPageContext() {
 		return pageContext;

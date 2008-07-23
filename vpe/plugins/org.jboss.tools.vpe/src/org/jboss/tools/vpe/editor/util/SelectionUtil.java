@@ -37,7 +37,7 @@ public class SelectionUtil {
 	}
 
 	/**
-	 * get selected visual node from nsiDelection
+	 * get selected visual node from nsISelection
 	 * 
 	 * @param selection
 	 * @return
