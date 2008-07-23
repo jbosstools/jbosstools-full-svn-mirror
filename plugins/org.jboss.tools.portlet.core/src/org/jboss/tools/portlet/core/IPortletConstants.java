@@ -33,4 +33,6 @@ public interface IPortletConstants {
 
 	static final String PORTLET_INSTANCES_FILE = "WEB-INF/portlet-instances.xml";
 	
+	static final String PORTLET_OBJECT_FILE = "WEB-INF/default-object.xml";
+	
 }
