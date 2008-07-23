@@ -41,4 +41,6 @@ public interface INewPortletClassDataModelProperties extends
 	
 	static final String IF_EXISTS = "NewPortletClassDataModel.IF_EXISTS";
 	
+	static final String ADD_PORTLET = "NewPortletClassDataModel.ADD_PORTLET";
+	
 }

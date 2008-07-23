@@ -96,6 +96,7 @@ public class NewPortletClassDataModelProvider extends
 		propertyNames.add(PAGE_REGION);
 		propertyNames.add(PORTLET_HEIGHT);
 		propertyNames.add(IF_EXISTS);
+		propertyNames.add(ADD_PORTLET);
 		
 		return propertyNames;
 	}
@@ -125,6 +126,9 @@ public class NewPortletClassDataModelProvider extends
 	@Override
 	public Object getDefaultProperty(String propertyName) {
 		
+		if (propertyName.equals(ADD_PORTLET)) {
+			return Boolean.TRUE;
+		}
 		if (propertyName.equals(DO_VIEW)) {
 			return Boolean.TRUE;
 		}

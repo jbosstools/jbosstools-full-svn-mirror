@@ -51,6 +51,7 @@ public interface IPortletUIConstants {
 	static final String RENDER_SIGNATURE = "(Ljavax/portlet/RenderRequest;Ljavax/portlet/RenderResponse;)V"; //$NON-NLS-1$
 	static final String PROCESS_ACTION_SIGNATURE = "(Ljavax/portlet/ActionRequest;Ljavax/portlet/ActionResponse;)V"; //$NON-NLS-1$
 	
+	static final String ADD_PORTLET_LABEL = "Create Portlet Instance";
 	static final String INSTANCE_NAME_LABEL = "Instance Name:";
 	static final String WINDOW_NAME_LABEL = "Window Name:";
 	static final String PARENT_PORTAL_LABEL = "Parent Reference:";

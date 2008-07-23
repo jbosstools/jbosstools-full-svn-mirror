@@ -58,10 +58,10 @@ public class NewPortletClassOptionsWizardPage extends
 				getConfigButton.setEnabled(enable);
 				doDispatchButton.setEnabled(enable);
 				doEditButton.setEnabled(enable);
-				doViewButton.setEnabled(true);
-				doHelpButton.setEnabled(true);
-				processActionButton.setEnabled(true);
-				renderButton.setEnabled(true);
+				doViewButton.setEnabled(enable);
+				doHelpButton.setEnabled(enable);
+				processActionButton.setEnabled(enable);
+				renderButton.setEnabled(enable);
 			}
 			
 		});
@@ -97,10 +97,6 @@ public class NewPortletClassOptionsWizardPage extends
 		doHelpButton = new Button(comp, SWT.CHECK);
 		doHelpButton.setText("doHelp"); //$NON-NLS-1$
 		synchHelper.synchCheckbox(doHelpButton, INewPortletClassDataModelProperties.DO_HELP, null);
-
-		doDispatchButton = new Button(comp, SWT.CHECK);
-		doDispatchButton.setText("doDispatch"); //$NON-NLS-1$
-		synchHelper.synchCheckbox(doDispatchButton, INewPortletClassDataModelProperties.DO_DISPATCH, null);
 		
 		doDispatchButton = new Button(comp, SWT.CHECK);
 		doDispatchButton.setText("doDispatch"); //$NON-NLS-1$
