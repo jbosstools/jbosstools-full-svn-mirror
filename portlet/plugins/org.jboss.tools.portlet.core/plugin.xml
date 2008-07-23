@@ -53,13 +53,9 @@
    
    <extension
         point="org.eclipse.wst.common.project.facet.core.presets">
-     <static-preset id="preset.jboss.portlet.v10">
-        <label>Portlet Project v1.0</label>
-	    <facet id="jst.java" version="5.0" />
-	    <facet id="jst.web" version="2.3"/>
-	    <facet id="jboss.portlet" version="1.0" />
-	    <description>Portlet Project v1.0</description>
-     </static-preset>
+     <dynamic-preset id="preset.jboss.portlet.v10">
+       <factory class="org.jboss.tools.portlet.core.internal.project.facet.PortletConfigurationPresetFactory10"/>
+     </dynamic-preset>
    </extension>
    
    <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
