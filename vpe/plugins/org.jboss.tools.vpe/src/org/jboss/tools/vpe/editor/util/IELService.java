@@ -26,6 +26,17 @@ public interface IELService {
      * @return string where el values was substituted.
      */
     String replaceEl(IFile resourceFile, String resourceString);
+    
+    
+    /**
+     * Reverse replace.
+     * 
+     * @param resourceFile the resource file
+     * @param replacedString the replaced string
+     * 
+     * @return the string
+     */
+    String reverseReplace(IFile resourceFile,String replacedString);
 
     /**
      * Checks if is available.

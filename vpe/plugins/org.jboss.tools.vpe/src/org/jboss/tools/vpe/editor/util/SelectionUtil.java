@@ -3,6 +3,7 @@ package org.jboss.tools.vpe.editor.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.swt.graphics.Point;
@@ -75,8 +76,17 @@ public class SelectionUtil {
 
 		int start = NodesManagingUtil.getStartOffsetNode(node);
 
-		pageContext.getSourceBuilder().getStructuredTextViewer()
-				.setSelectedRange(start + offset, length);
+		//added by estherbin fix bug JBIDE-2010 with selection.
+        if (start == 0 || start == 1) {
+            final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
+            
+            if (file != null) {
+                final String findString = ElService.getInstance().reverseReplace(file, node.getNodeValue());
+                
+                start = pageContext.getSourceBuilder().getStructuredTextViewer().getTextWidget().getText().indexOf(findString);
+            }
+        }
+		pageContext.getSourceBuilder().getStructuredTextViewer().setSelectedRange(start + offset, length);
 		pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(
 				start + offset, length);
 

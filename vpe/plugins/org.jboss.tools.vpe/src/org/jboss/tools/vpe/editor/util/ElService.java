@@ -186,4 +186,28 @@ public final class ElService implements IELService {
         return rst;
     }
 
+
+    /**
+     * Reverse replace.
+     * 
+     * @param resourceFile the resource file
+     * @param replacedString the replaced string
+     * 
+     * @return the string
+     */
+    public String reverseReplace(IFile resourceFile, String replacedString) {
+        String str = replacedString;
+
+        final ResourceReference[] references = ELReferenceList.getInstance().getAllResources(resourceFile);
+
+        if ((references != null) && (references.length > 0)) {
+            for (ResourceReference rf : references) {
+                if (replacedString.contains(rf.getProperties())) {
+                    str = str.replace(rf.getProperties(), rf.getLocation());
+                }
+            }
+        }
+        return str;
+    }
+
 }
