@@ -17,7 +17,7 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 /**
  * @author Igels
  */
-public class FormatAttributeData implements Cloneable{
+public class FormatAttributeData{
 
 	public static final String STYLE_TYPE = "style"; //$NON-NLS-1$
 
@@ -28,23 +28,6 @@ public class FormatAttributeData implements Cloneable{
 	private FormatData parentFormatData;
 
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#clone()
-	 */
-	@Override
-	public FormatAttributeData clone() throws CloneNotSupportedException {
-		
-		FormatAttributeData result = new FormatAttributeData(parentFormatData, null);
-		
-		result.type = new String(this.type);
-		result.name = new String(this.name);
-		result.value = new String(this.value);
-		result.caseSensitive = caseSensitive;
-		result.parentFormatData =  this.parentFormatData;
-		
-		return result;
-	}
-
 	/**
 	 * @param formatAttribute - Element <vpe:formatAttribute>
 	 */
