@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.document.TextImpl;
@@ -89,7 +90,7 @@ public class FormatControllerManager {
 							return;
 						}
 						currentSelectedTagValue = newSelectedTagValue;
-					 } catch (Exception e) {
+					 } catch (BadLocationException e) {
 						 VpePlugin.getPluginLog().logError(e);
 					 }
 				 } else {
@@ -163,7 +164,6 @@ public class FormatControllerManager {
 	private TextFormatingData getParentFormatingDataForTextNode(VpeSelectedNodeInfo selectedNodeInfo) {
 		Node selectedNode = selectedNodeInfo.getNode();
 		if(selectedNode instanceof TextImpl) {
-			try {
 //				int startOffset = selectedNodeInfo.getStartOffset()>selectedNodeInfo.getEndOffset()?selectedNodeInfo.getEndOffset():selectedNodeInfo.getStartOffset();
 //				int endOffset = selectedNodeInfo.getStartOffset()>selectedNodeInfo.getEndOffset()?selectedNodeInfo.getStartOffset():selectedNodeInfo.getEndOffset();
 //
@@ -182,11 +182,6 @@ public class FormatControllerManager {
 //				}
 				currentSelectedElement = selectedNode.getParentNode();
 				return getFormatTemplateForTag(selectedNode.getParentNode());
-			} catch(Exception e) {
-				Status status = new Status(Status.WARNING, VpePlugin.PLUGIN_ID, Status.ERROR, "Can't get value of selected text node.", e);
-	        	ProblemReportingHelper.reportProblem(status);
-				VpePlugin.getDefault().getLog().log(status);
-			}
 		}
 
 		return null;

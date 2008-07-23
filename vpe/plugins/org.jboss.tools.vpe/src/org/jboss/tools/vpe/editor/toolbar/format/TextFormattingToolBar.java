@@ -104,7 +104,7 @@ public class TextFormattingToolBar extends SplitToolBar {
 		String[] font = null;
 		try {
 			font = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-		} catch (Exception ex) {
+		} catch (Error ex) {
 			VpePlugin.getPluginLog().logWarning(ex);
 			font = FONT_ARRAY;
 		}

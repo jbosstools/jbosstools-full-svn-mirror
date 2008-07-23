@@ -44,10 +44,12 @@ public class VpeFunctionFactory {
 		}
 		try {
 			return (VpeFunction)cls.newInstance();
-		} catch(Exception e) {
+		} catch(IllegalAccessException e) {
 			VpePlugin.getPluginLog().logError(e);
-			return null;
+		} catch (InstantiationException e) {
+			VpePlugin.getPluginLog().logError(e);
 		}
+		return null;
 	}
 	
 	private static Class<?> createCls(String name) {

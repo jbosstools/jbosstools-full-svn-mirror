@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
@@ -30,6 +31,7 @@ import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 import org.eclipse.wst.sse.ui.internal.actions.StructuredTextEditorActionConstants;
 import org.eclipse.wst.xml.core.internal.document.AttrImpl;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
+import org.eclipse.wst.xml.core.internal.document.InvalidCharacterException;
 import org.eclipse.wst.xml.core.internal.document.TextImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
@@ -241,13 +243,8 @@ public class VpeVisualKeyHandler {
 	
 	
 	private boolean paste() {
-		try {
 			sourceEditor.getAction(ActionFactory.PASTE.getId()).run();
 			return true;
-		} catch (Exception e) {
-			VpePlugin.getPluginLog().logError(e);
-			return false;
-		}
 	}
 	
 	private boolean deleteRight() {
@@ -399,7 +396,7 @@ public class VpeVisualKeyHandler {
 							atLeastOneCharIsDeleted = true;
 							continue;
 						}
-					} catch(Exception e) {
+					} catch(BadLocationException e) {
 						VpePlugin.getPluginLog().logError(e);
 					}
 				}
@@ -743,7 +740,7 @@ public class VpeVisualKeyHandler {
 							atLeastOneCharIsDeleted = true;
 							return selection;
 						}
-					} catch(Exception ex) {
+					} catch(BadLocationException ex) {
 						VpePlugin.getPluginLog().logError(ex);
 					}
 				}
@@ -895,68 +892,52 @@ public class VpeVisualKeyHandler {
 	}
 
 	private boolean isVisualEditableForNode(Node node) {
-		try {
-			nsIDOMNode visualNode = domMapping.getVisualNode(node);
-			if (visualNode.getNodeType() == Node.ELEMENT_NODE) {
-				nsIDOMNode styleAttr = visualNode.getAttributes().getNamedItem("style");
-				if (styleAttr != null) {
-					String style = styleAttr.getNodeValue();
-					if (style != null) {
-						if (style.indexOf(VpeHtmlTemplate.ATTR_STYLE_MODIFY_READ_ONLY_VALUE) < 0) {
-							return true;
-						}
+
+		nsIDOMNode visualNode = domMapping.getVisualNode(node);
+		if (visualNode.getNodeType() == Node.ELEMENT_NODE) {
+			nsIDOMNode styleAttr = visualNode.getAttributes().getNamedItem("style");
+			if (styleAttr != null) {
+				String style = styleAttr.getNodeValue();
+				if (style != null) {
+					if (style.indexOf(VpeHtmlTemplate.ATTR_STYLE_MODIFY_READ_ONLY_VALUE) < 0) {
+						return true;
 					}
 				}
-			} else if (visualNode.getNodeType() == Node.TEXT_NODE) {
-				return true;
 			}
-		} catch (Exception e) {
-			VpePlugin.getPluginLog().logError(e);
+		} else if (visualNode.getNodeType() == Node.TEXT_NODE) {
+			return true;
 		}
 		return false;
 	}
 	
 	private boolean isVisualNodeSourceAttribute(Node node) {
-		try {
-			nsIDOMNode visualNode = domMapping.getVisualNode(node);
-			VpeNodeMapping nm = domMapping.getNodeMapping(visualNode);
-			if (nm.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
-				VpeElementMapping em = (VpeElementMapping)nm;
-				return em.getTemplate().isOutputAttributes();
-			}
-		} catch (Exception e) {
-			VpePlugin.getPluginLog().logError(e);
+		nsIDOMNode visualNode = domMapping.getVisualNode(node);
+		VpeNodeMapping nm = domMapping.getNodeMapping(visualNode);
+		if (nm.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+			VpeElementMapping em = (VpeElementMapping)nm;
+			return em.getTemplate().isOutputAttributes();
 		}
 		return false;
 	}
 
 	private boolean isVisualNodeEmpty(Node node) {
-		try {
-			nsIDOMNode visualNode = domMapping.getVisualNode(node);
-			return pageContext.getVisualBuilder().isEmptyElement(visualNode);
-		} catch (Exception e) {
-			VpePlugin.getPluginLog().logError(e);
-		}
-		return false;
+		nsIDOMNode visualNode = domMapping.getVisualNode(node);
+		return pageContext.getVisualBuilder().isEmptyElement(visualNode);
 	}
 
 	private Attr getVisualNodeSourceAttribute(Node node) {
-		try {
-			nsIDOMNode visualNode = domMapping.getVisualNode(node);
-			if(visualNode==null) {
-				return null;
+		nsIDOMNode visualNode = domMapping.getVisualNode(node);
+		if(visualNode==null) {
+			return null;
+		}
+		VpeNodeMapping nm = domMapping.getNodeMapping(visualNode);
+		if (nm.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+			VpeElementMapping mapping = (VpeElementMapping)nm;
+			String[] names = mapping.getTemplate().getOutputAtributeNames();
+			if(names!=null) {
+				String name = names[0];
+				return (Attr)node.getAttributes().getNamedItem(name);
 			}
-			VpeNodeMapping nm = domMapping.getNodeMapping(visualNode);
-			if (nm.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
-				VpeElementMapping mapping = (VpeElementMapping)nm;
-				String[] names = mapping.getTemplate().getOutputAtributeNames();
-				if(names!=null) {
-					String name = names[0];
-					return (Attr)node.getAttributes().getNamedItem(name);
-				}
-			}
-		} catch (Exception e) {
-			VpePlugin.getPluginLog().logError(e);
 		}
 		return null;
 	}
@@ -1158,12 +1139,8 @@ public class VpeVisualKeyHandler {
 			Node focusNode = selection.getFocusNode();
 			
 			int formatStart = 0;
-			try {
-				formatStart = ((IDOMNode)focusNode).getStartOffset();
-			} catch (Exception e) {
-				VpePlugin.reportProblem(e);
-			}
-			
+			formatStart = ((IDOMNode)focusNode).getStartOffset();
+		
 			VpeNodeMapping parentMapping = domMapping.getNearParentMapping(focusNode);
 			if (parentMapping != null) {
 				boolean handled = false;
@@ -1226,15 +1203,11 @@ public class VpeVisualKeyHandler {
 				}
 			}
 			
-			try {
-				StructuredTextViewer viewer = sourceEditor.getTextViewer();
-				if (region != null){
-					if (sourceEditor instanceof ITextFormatter) {
-						((ITextFormatter)sourceEditor).formatTextRegion(sourceEditor.getTextViewer().getDocument(), region);
-					}						
-				}
-			} catch (Exception x) {
-				VpePlugin.reportProblem(x);
+			StructuredTextViewer viewer = sourceEditor.getTextViewer();
+			if (region != null){
+				if (sourceEditor instanceof ITextFormatter) {
+					((ITextFormatter)sourceEditor).formatTextRegion(sourceEditor.getTextViewer().getDocument(), region);
+				}						
 			}
 			return true;
 		}
@@ -1252,7 +1225,7 @@ public class VpeVisualKeyHandler {
 					break;
 			}
 			return linePrefix.substring(0, linePrefixLength);
-		} catch (Exception e) {
+		} catch (BadLocationException e) {
 			VpePlugin.getPluginLog().logError(e);
 			return "";
 		}
@@ -1274,7 +1247,7 @@ public class VpeVisualKeyHandler {
 				try {
 					String source = ((TextImpl)node).getSource();
 					((TextImpl)node).setSource(source.substring(0, so) + source.substring(eo));
-				} catch (Exception e) {
+				} catch (InvalidCharacterException e) {
 					VpePlugin.getPluginLog().logError(e);
 				}
 				if (node.getNodeValue().trim().length() == 0) {
@@ -1385,7 +1358,6 @@ public class VpeVisualKeyHandler {
 	}
 	
 	private boolean isTextToSkip(char[] chars, int position) {
-		try {
 			if (chars[position] == ' ')
 				return true;
 			
@@ -1393,12 +1365,7 @@ public class VpeVisualKeyHandler {
 					TextUtil.isWhitespaceText(new String(chars, position, chars.length - position))) {
 				return true;
 			}
-			
 			return false;
-		} catch (Exception e) {
-			VpePlugin.getPluginLog().logError(e);
-			return true;
-		}
 	}
 	
 	

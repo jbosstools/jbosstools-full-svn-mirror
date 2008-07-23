@@ -78,28 +78,20 @@ public class DragNodeCommand2 extends DefaultDragAndDropCommand {
 			if (parentNode.getNodeType() == Node.ELEMENT_NODE && sourceAttributeOwnerElement != parentNode) {
 				result = true;
 				if (!testOnly) {
-					try {
-						if(getOperation() == DND.DROP_MOVE) {
-							Element targetElement = (Element) parentNode;
-							sourceAttributeOwnerElement.removeAttributeNode(sourceAttribute);
-							targetElement.getAttributes().setNamedItem(sourceAttribute);
-							fSelections.add(sourceAttribute);
-						}
-						else if (getOperation() == DND.DROP_COPY) {
-							Attr cloneAttribute = (Attr) sourceAttribute.cloneNode(false);						
-							Element targetElement = (Element) parentNode;
-							targetElement.getAttributes().setNamedItem(cloneAttribute);
-							fSelections.add(cloneAttribute);
-						}
+
+					if(getOperation() == DND.DROP_MOVE) {
+						Element targetElement = (Element) parentNode;
+						sourceAttributeOwnerElement.removeAttributeNode(sourceAttribute);
+						targetElement.getAttributes().setNamedItem(sourceAttribute);
+						fSelections.add(sourceAttribute);
 					}
-					catch (Exception e) {
-						ResourcesPlugin.getPlugin().getLog()
-								.log(new Status(IStatus.ERROR,
-										"org.jboss.tools.vpe",
-										0,
-										e.getMessage(),
-										e));
+					else if (getOperation() == DND.DROP_COPY) {
+						Attr cloneAttribute = (Attr) sourceAttribute.cloneNode(false);						
+						Element targetElement = (Element) parentNode;
+						targetElement.getAttributes().setNamedItem(cloneAttribute);
+						fSelections.add(cloneAttribute);
 					}
+
 				}
 			}
 		}

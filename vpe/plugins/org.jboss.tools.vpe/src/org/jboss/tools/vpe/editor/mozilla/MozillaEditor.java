@@ -60,6 +60,7 @@ import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
+import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -287,7 +288,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			}
 			xulRunnerEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		}
-		catch (Exception e) {
+		catch (XulRunnerException e) {
 			VpePlugin.getPluginLog().logError(e);
 			
 	        layout.verticalSpacing = 10;

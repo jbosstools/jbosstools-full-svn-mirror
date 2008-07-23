@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.viewers.ISelectionProvider;
+import org.jboss.tools.common.model.XModelException;
 import org.jboss.tools.common.model.ui.dnd.DnDUtil;
 import org.jboss.tools.common.model.ui.editor.IModelObjectEditorInput;
 import org.jboss.tools.common.model.ui.views.palette.PaletteInsertHelper;
@@ -33,12 +34,12 @@ public class VpeDndUtil {
 	properties.put("selectionProvider", provider);
 	properties.put("viewer", viewer);
 
-	try {
-	    DnDUtil.paste(input.getXModelObject(), properties);
-	    PaletteInsertHelper.insertIntoEditor(viewer, properties);
-	} catch (Exception ex) {
-	    VpePlugin.getPluginLog().logError(ex);
-	}
+		try {
+		    DnDUtil.paste(input.getXModelObject(), properties);
+		    PaletteInsertHelper.insertIntoEditor(viewer, properties);
+		} catch (XModelException ex) {
+		    VpePlugin.getPluginLog().logError(ex);
+		}
     }
 
 }

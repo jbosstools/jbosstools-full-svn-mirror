@@ -90,14 +90,10 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 	}
 
 	public Point getPreferredSize() {
-		try {
-		    //changed by estherbin
-		    //http://jira.jboss.com/jira/browse/JBIDE-2010
-			String os_name = System.getProperty("os.name");
-			if(os_name != null && os_name.indexOf("Windows") >= 0) return new Point(800, 600);
-		} catch (Exception e) {
-			//ignore
-		}
+		//changed by estherbin
+		//http://jira.jboss.com/jira/browse/JBIDE-2010
+		String os_name = System.getProperty("os.name");
+		if(os_name != null && os_name.indexOf("Windows") >= 0) return new Point(800, 600);
 	    //changed by estherbin
         //http://jira.jboss.com/jira/browse/JBIDE-2010
 		return new Point(700, 600);

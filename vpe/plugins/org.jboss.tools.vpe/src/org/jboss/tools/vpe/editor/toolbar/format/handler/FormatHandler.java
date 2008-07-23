@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.editor.toolbar.format.handler;
 import java.util.Properties;
 
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
@@ -171,7 +172,7 @@ abstract public class FormatHandler implements IFormatHandler {
 		}
 		try {
 			document.replace(element.getStartOffset(), length, body);
-		} catch (Exception e) {
+		} catch (BadLocationException e) {
 			VpePlugin.getPluginLog().logError("Can't format text", e);
 		}
 
@@ -214,7 +215,7 @@ abstract public class FormatHandler implements IFormatHandler {
 		}
 		try {
 			document.replace(element.getStartOffset(), length, newElement);
-		} catch (Exception e) {
+		} catch (BadLocationException e) {
 			VpePlugin.getPluginLog().logError("Can't format text", e);
 		}
 

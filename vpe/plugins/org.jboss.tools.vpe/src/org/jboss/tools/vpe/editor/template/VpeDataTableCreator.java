@@ -628,12 +628,9 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 	private VisualDataTableElements getVisualDataTableElements(Map visualNodeMap) {
 		if (visualNodeMap != null) {
 			Object o = visualNodeMap.get(this);
-			try {
-				if (o != null && o instanceof Object[]
-						&& ((Object[]) o)[0] instanceof VisualDataTableElements) {
-					return (VisualDataTableElements) ((Object[]) o)[0];
-				}
-			} catch (Exception e) {
+			if (o != null && o instanceof Object[]
+					&& ((Object[]) o)[0] instanceof VisualDataTableElements) {
+				return (VisualDataTableElements) ((Object[]) o)[0];
 			}
 		}
 		return null;
@@ -642,12 +639,9 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 	private SourceDataTableElements getSourceDataTableElements(Map visualNodeMap) {
 		if (visualNodeMap != null) {
 			Object o = visualNodeMap.get(this);
-			try {
-				if (o != null && o instanceof Object[]
-						&& ((Object[]) o)[1] instanceof SourceDataTableElements) {
-					return (SourceDataTableElements) ((Object[]) o)[1];
-				}
-			} catch (Exception e) {
+			if (o != null && o instanceof Object[]
+					&& ((Object[]) o)[1] instanceof SourceDataTableElements) {
+				return (SourceDataTableElements) ((Object[]) o)[1];
 			}
 		}
 		return null;

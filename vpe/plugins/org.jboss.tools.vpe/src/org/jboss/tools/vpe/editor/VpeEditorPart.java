@@ -18,6 +18,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.action.IAction;
@@ -329,7 +330,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			} else
 				return null;
 
-		} catch (Exception e) {
+		} catch (CoreException e) {
 			VpePlugin.getPluginLog().logError(e);
 			return null;
 		}
@@ -348,7 +349,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			file.setPersistentProperty(SPLITTER_POSITION_KEY2, s);
 			s = String.valueOf(weights[2]);
 			file.setPersistentProperty(SPLITTER_POSITION_KEY3, s);
-		} catch (Exception e) {
+		} catch (CoreException e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
 	}
@@ -640,7 +641,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			window.getPartService().addPartListener(activationListener);
 			window.getShell().addShellListener(activationListener);
 
-		} catch (Exception e) {
+		} catch (CoreException e) {
 			VpePlugin.reportProblem(e);
 		}
 		// setVisualMode(visualMode);
@@ -731,7 +732,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		visualEditor = new MozillaEditor();
 		try {
 			visualEditor.init(getEditorSite(), getEditorInput());
-		} catch (Exception e) {
+		} catch (PartInitException e) {
 			VpePlugin.reportProblem(e);
 		}
 		if (visualEditor != null) {
@@ -766,7 +767,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 						}
 					});
 			previewWebBrowser.createPartControl(previewContent);
-		} catch (Exception e) {
+		} catch (PartInitException e) {
 			VpePlugin.reportProblem(e);
 		}
 	}

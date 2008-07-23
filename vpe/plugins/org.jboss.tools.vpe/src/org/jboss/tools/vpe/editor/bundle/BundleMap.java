@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
@@ -114,7 +115,7 @@ public class BundleMap {
 				if (project.getNature(JSF_PROJECT_NATURES[i]) != null) 
 					return true;
 			}
-		} catch (Exception e) {
+		} catch (CoreException e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
 		return false;
@@ -186,7 +187,7 @@ public class BundleMap {
 				IFile file = (IFile)project.getWorkspace().getRoot().getFolder(es[i].getPath()).findMember("/"+name);
 				if(file != null && file.exists()) return file;
 			}
-		} catch (Exception e) {
+		} catch (CoreException e) {
 			VpePlugin.getPluginLog().logError(e);
 			return null;
 		}
@@ -317,7 +318,7 @@ public class BundleMap {
 				String value;
 				try{
 					value = (String)entry.bundle.getObject(key.key);
-				}catch(Exception ex){
+				}catch(MissingResourceException ex){
 					value = null;
 					fireBundleKeyChanged(key.prefix, key.key, value);
 					usedKeys.remove(key);
@@ -413,7 +414,7 @@ public class BundleMap {
 				if(!usedKeys.containsKey(name))
 					usedKeys.put(name, new UsedKey(entry.uri, prefix, propertyName, value, entry.hashCode, entry.offset));
 				return value;
-			}catch(Exception ex){
+			}catch(MissingResourceException ex){
 				return null;
 			}
 		} 

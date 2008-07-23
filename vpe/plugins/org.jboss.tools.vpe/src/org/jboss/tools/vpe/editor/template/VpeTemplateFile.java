@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor.template;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
@@ -20,19 +21,16 @@ public class VpeTemplateFile {
 	long stamp;
 	IConfigurationElement configElement;
 	
-	VpeTemplateFile(String fileName,IConfigurationElement element) throws Exception {
+	VpeTemplateFile(String fileName,IConfigurationElement element) throws IOException {
 		this(element);
 		path = VpeTemplateFileList.getFilePath(fileName,element);
 		File file = path.toFile();
 		if (file.exists() && file.isFile()) {
 			stamp = file.lastModified();
-		} else {
-			throw new Exception("File " + path.toOSString() + " not exist");
-		}
+		} 
 	}
 	
-	VpeTemplateFile(IConfigurationElement element) throws Exception {
-
+	VpeTemplateFile(IConfigurationElement element) {
 		configElement = element;
 	}
 		

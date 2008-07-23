@@ -688,7 +688,7 @@ public class VpeTemplateManager {
 		}
 	}
 
-	private Element createNewTagElement(Document document, VpeAnyData data) {
+	static public Element createNewTagElement(Document document, VpeAnyData data) {
 		Element newTagElement = document.createElement(TAG_TAG);
 		newTagElement.setAttribute(ATTR_TAG_NAME, data.getName());
 		newTagElement.setAttribute(ATTR_TAG_CASE_SENSITIVE, data.isCaseSensitive() ? ATTR_VALUE_YES : ATTR_VALUE_NO);

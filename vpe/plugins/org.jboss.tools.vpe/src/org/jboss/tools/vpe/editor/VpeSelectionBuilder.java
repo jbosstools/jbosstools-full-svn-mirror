@@ -10,6 +10,7 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor;
 
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
@@ -117,7 +118,7 @@ public class VpeSelectionBuilder {
 							IndexedRegion region = (IndexedRegion)sourceNode;
 							String text = sourceBuilder.getStructuredTextViewer().getDocument().get(region.getStartOffset(), region.getEndOffset()-region.getStartOffset());
 							pos = TextUtil.sourcePosition(text, visualSelectedNode.getNodeValue(), selection.getFocusOffset());
-						}catch(Exception ex){
+						}catch(BadLocationException ex){
 							VpePlugin.reportProblem(ex);
 						}
 						sourceBuilder.setSelection(sourceNode, pos, 0);
@@ -135,7 +136,7 @@ public class VpeSelectionBuilder {
 								IndexedRegion region = (IndexedRegion)sourceNode;
 								String text = sourceBuilder.getStructuredTextViewer().getDocument().get(region.getStartOffset(), region.getEndOffset()-region.getStartOffset());
 								pos = TextUtil.sourcePosition(text, visualSelectedNode.getNodeValue(), selection.getFocusOffset());
-							}catch(Exception ex){
+							}catch(BadLocationException ex){
 								VpePlugin.reportProblem(ex);
 							}
 							sourceBuilder.setSelection(sourceNode, pos, 0);
@@ -222,7 +223,7 @@ public class VpeSelectionBuilder {
 						String text = sourceBuilder.getStructuredTextViewer().getDocument().get(region.getStartOffset(), region.getEndOffset()-region.getStartOffset());
 						start = TextUtil.sourcePosition(text, visualSelectedAncestor.getNodeValue(), selection.getAnchorOffset());
 						end = TextUtil.sourcePosition(text, visualSelectedAncestor.getNodeValue(), selection.getFocusOffset());
-					}catch(Exception ex){
+					}catch(BadLocationException ex){
 						VpePlugin.reportProblem(ex);
 					}
 					
@@ -240,7 +241,7 @@ public class VpeSelectionBuilder {
 							String text = sourceBuilder.getStructuredTextViewer().getDocument().get(region.getStartOffset(), region.getEndOffset()-region.getStartOffset());
 							start = TextUtil.sourcePosition(text, sourceAncestor.getNodeValue(), selection.getAnchorOffset());
 							end = TextUtil.sourcePosition(text, sourceAncestor.getNodeValue(), selection.getFocusOffset());
-						}catch(Exception ex){
+						}catch(BadLocationException ex){
 							VpePlugin.reportProblem(ex);
 						}
 						sourceBuilder.setSelection(sourceAncestor, start, end - start);
@@ -299,7 +300,7 @@ public class VpeSelectionBuilder {
 							String visualValue = visualNode.getNodeValue();
 							return start + TextUtil.sourcePosition(sourceText, visualValue, visualValue.length());
 						}
-					} catch(Exception ex){
+					} catch(BadLocationException ex){
 						VpePlugin.reportProblem(ex);
 						return 0;
 					}
@@ -382,12 +383,8 @@ public class VpeSelectionBuilder {
 		if(sourceNode.getNodeType()!=Node.TEXT_NODE) {
 				sourceBuilder.setSelection(sourceNode, 0, 0);
 		} else if(sourceNode.getNodeType()==Node.TEXT_NODE) {
-			try{
-				IndexedRegion region = (IndexedRegion)sourceNode;
-				sourceBuilder.setSelection(sourceNode, 0, region.getLength());
-			}catch(Exception ex){
-				VpePlugin.reportProblem(ex);
-			}
+			IndexedRegion region = (IndexedRegion)sourceNode;
+			sourceBuilder.setSelection(sourceNode, 0, region.getLength());
 		}
 		return sourceNode;
 	}
@@ -902,7 +899,7 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 						int start = region.getStartOffset();
 						String text = sourceBuilder.getStructuredTextViewer().getDocument().get(start, region.getEndOffset() - start);
 						position = start + TextUtil.sourcePosition(text, visualSelectedNode.getNodeValue(), visualInitOffset);
-					}catch(Exception ex){
+					}catch(BadLocationException ex){
 						VpePlugin.reportProblem(ex);
 					}
 					

@@ -71,63 +71,58 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 	
 	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
 		//gets function parameter
-		try { 
-		String tagValue = getParameter(0).exec(pageContext, sourceNode)
-		.stringValue();
-		
-		double startValue = getStartVersion(tagValue);
-		
-		double endValue = getEndVersion(tagValue);
-		
-		if(sourceNode==null || sourceNode.getPrefix()==null) {
-			 
-			return new VpeValue(false);
-		}
-		
-		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,pageContext);
-		
-		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourceNode.getPrefix(), taglibs);
-		//this function works only for jsp files
-		String  tldVersion = TLDVersionHelper.getTldVersion(sourceNodeTaglib.getUri(), sourceNodeTaglib.getPrefix(), 
-							pageContext.getSourceBuilder().getStructuredTextViewer().getDocument());
-		
-		double tldVersionNumber =0;
-		if(tldVersion!=null) {
-			
-			tldVersionNumber = Double.parseDouble(tldVersion);
-		
-		} else {
-			//here we getting tld version for xhtml files
-			XModel xm = null;
-			IProject project = ((IFileEditorInput)pageContext.getEditPart().getEditorInput()).getFile().getProject();
-			IModelNature mn = EclipseResourceUtil.getModelNature(project);
-			if(mn!=null) {
-				xm = mn.getModel();
-			}
-			tldVersion=WebProject.getTldVersion(sourceNodeTaglib.getUri(), 
-					sourceNodeTaglib.getPrefix(),
-					pageContext.getSourceBuilder().getStructuredTextViewer().getDocument(), 
-					xm);
-			if(tldVersion!=null) {
-			
-				tldVersionNumber = Double.parseDouble(tldVersion);
-			} else {
-				tldVersionNumber = 0;
-			}
-		}
-		if((startValue<=tldVersionNumber)&&
-				(endValue>=tldVersionNumber)) {
-			
-			return new VpeValue(true);
-		} else {
 
-			return new VpeValue(false);
-		}
-		}catch (Exception e) {
-			//if this function throws exception templates are not working more, so we should processed it's here
-			VpePlugin.getPluginLog().logError(e);
-		}
-		return null;
+			String tagValue = getParameter(0).exec(pageContext, sourceNode)
+			.stringValue();
+			
+			double startValue = getStartVersion(tagValue);
+			
+			double endValue = getEndVersion(tagValue);
+			
+			if(sourceNode==null || sourceNode.getPrefix()==null) {
+				 
+				return new VpeValue(false);
+			}
+			
+			List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,pageContext);
+			
+			TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourceNode.getPrefix(), taglibs);
+			//this function works only for jsp files
+			String  tldVersion = TLDVersionHelper.getTldVersion(sourceNodeTaglib.getUri(), sourceNodeTaglib.getPrefix(), 
+								pageContext.getSourceBuilder().getStructuredTextViewer().getDocument());
+			
+			double tldVersionNumber =0;
+			if(tldVersion!=null) {
+				
+				tldVersionNumber = Double.parseDouble(tldVersion);
+			
+			} else {
+				//here we getting tld version for xhtml files
+				XModel xm = null;
+				IProject project = ((IFileEditorInput)pageContext.getEditPart().getEditorInput()).getFile().getProject();
+				IModelNature mn = EclipseResourceUtil.getModelNature(project);
+				if(mn!=null) {
+					xm = mn.getModel();
+				}
+				tldVersion=WebProject.getTldVersion(sourceNodeTaglib.getUri(), 
+						sourceNodeTaglib.getPrefix(),
+						pageContext.getSourceBuilder().getStructuredTextViewer().getDocument(), 
+						xm);
+				if(tldVersion!=null) {
+				
+					tldVersionNumber = Double.parseDouble(tldVersion);
+				} else {
+					tldVersionNumber = 0;
+				}
+			}
+			if((startValue<=tldVersionNumber)&&
+					(endValue>=tldVersionNumber)) {
+				
+				return new VpeValue(true);
+			} else {
+				return new VpeValue(false);
+			}
+
 	}
 	
 	private double getStartVersion(String tagValue) {

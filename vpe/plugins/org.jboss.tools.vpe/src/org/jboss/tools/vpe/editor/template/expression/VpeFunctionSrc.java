@@ -24,6 +24,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.jboss.tools.common.kb.AttributeDescriptor;
 import org.jboss.tools.common.kb.AttributeValueDescriptor;
+import org.jboss.tools.common.kb.KbException;
 import org.jboss.tools.common.kb.ParamList;
 import org.jboss.tools.common.kb.wtp.WtpKbConnector;
 import org.jboss.tools.common.model.XModel;
@@ -224,7 +225,7 @@ public class VpeFunctionSrc extends VpeFunction {
 		    tagValue = tagValue.substring(vs[0].length());
 		}
 	    }
-	} catch (Exception e) {
+	} catch (KbException e) {
 	    VpePlugin.getPluginLog().logError(e);
 	}
 	

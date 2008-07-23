@@ -28,16 +28,7 @@ public class VpeAttributeOperand extends VpeOperand {
 
 	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
 		String value = null; 
-
-		try {
-			value = ((Element)sourceNode).getAttribute(name);
-			if (value == null) {
-				value = "";
-			}
-		} catch (Exception e) {
-//			throw new VpeExpressionError(x.getMessage());
-			VpePlugin.getPluginLog().logError(e);
-		}
+		value = ((Element)sourceNode).getAttribute(name);
 		return new VpeValue((value == null ? "" : value));
 	}
 	

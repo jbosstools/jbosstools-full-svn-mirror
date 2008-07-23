@@ -86,7 +86,7 @@ public abstract class ResourceReferenceList {
 		String s = null;
 		try {
 			s = resource.getPersistentProperty(getPropertyName());
-		} catch (Exception e) {
+		} catch (CoreException e) {
 			//ignore
 		}
 		if(s == null || s.length() == 0) return new String[0];
@@ -121,7 +121,7 @@ public abstract class ResourceReferenceList {
 			String newValue = encodeDeclaredResources(entries, scope, depth);
 			if(oldValue.equals(newValue)) return false;
 			resource.setPersistentProperty(getPropertyName(), newValue);
-		} catch (Exception e) {
+		} catch (CoreException e) {
 			return false;
 		}
 		return true;
@@ -162,7 +162,7 @@ public abstract class ResourceReferenceList {
 			try {
 				s = ModelPlugin.getWorkspace().getRoot().getPersistentProperty(getPropertyName());
 				if(s != null) parseExternalResources(s);
-			} catch (Exception e) {
+			} catch (CoreException e) {
 				//ignore
 			}
 		}
@@ -192,7 +192,7 @@ public abstract class ResourceReferenceList {
 		}
 		try {
 			ModelPlugin.getWorkspace().getRoot().setPersistentProperty(getPropertyName(), sb.toString());
-		} catch (Exception e) {
+		} catch (CoreException e) {
 			//ignore
 		}
 	}
@@ -248,7 +248,6 @@ public abstract class ResourceReferenceList {
 	}
 
 	private boolean setDeclaredResources(IPath path, ResourceReference[] entries, int scope, int depth) {
-		try {
 			String oldValue = (String)getAllExternalResources().get(path.toString());
 			if(oldValue == null) oldValue = "";
 			String newValue = encodeDeclaredResources(entries, scope, depth);
@@ -258,9 +257,6 @@ public abstract class ResourceReferenceList {
 			} else {
 				getAllExternalResources().put(path.toString(), newValue);
 			}
-		} catch (Exception e) {
-			return false;
-		}
 		return true;
 	}
 

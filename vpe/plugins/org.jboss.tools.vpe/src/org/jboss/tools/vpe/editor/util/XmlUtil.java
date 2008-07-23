@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor.util;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class XmlUtil {
 		} finally {
 			try {
 				if (inStream != null) inStream.close();
-			} catch (Exception e) {
+			} catch (IOException e) {
 				VpePlugin.getPluginLog().logError(e);
 			}
 		}

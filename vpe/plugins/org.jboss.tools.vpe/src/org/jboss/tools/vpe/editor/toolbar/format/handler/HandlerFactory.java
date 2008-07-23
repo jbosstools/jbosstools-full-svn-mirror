@@ -57,10 +57,14 @@ public class HandlerFactory {
 					return handler;
 				} else {
 					VpePlugin.getPluginLog().logError("Wrong format handler. Class - " + handlerClassName + ". Handler must be instance of org.jboss.tools.vpe.editor.toolbar.format.handler.IFormatHandler",  //$NON-NLS-1$//$NON-NLS-2$
-							new Exception("Handler must be instance of org.jboss.tools.vpe.editor.toolbar.format.handler.IFormatHandler")); //$NON-NLS-1$
+							new FormatHandlerLoadingException("Handler must be instance of org.jboss.tools.vpe.editor.toolbar.format.handler.IFormatHandler")); //$NON-NLS-1$
 				}
-			} catch (Exception e) {
-				VpePlugin.getPluginLog().logError("Can't create format handler. Class: " + handlerClassName, e); //$NON-NLS-1$
+			} catch (IllegalAccessException e) {
+				reportException(e,handlerClassName);
+			} catch (InstantiationException e) {
+				reportException(e,handlerClassName);
+			} catch (ClassNotFoundException e) {
+				reportException(e,handlerClassName);
 			}
 		}
 		return null;
@@ -83,5 +87,9 @@ public class HandlerFactory {
 	 */
 	public int getCountHandlers() {
 	    return handlers.size();
+	}
+	
+	private void reportException(Exception e, String handlerClassName) {
+		VpePlugin.getPluginLog().logError("Can't create format handler. Class: " + handlerClassName, e); //$NON-NLS-1$			
 	}
 }

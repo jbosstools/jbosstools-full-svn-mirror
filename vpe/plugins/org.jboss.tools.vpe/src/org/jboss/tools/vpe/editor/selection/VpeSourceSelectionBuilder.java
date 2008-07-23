@@ -68,24 +68,20 @@ public class VpeSourceSelectionBuilder {
 		if (focusNode instanceof IDOMElement) {
 			IDOMElement element = (IDOMElement)focusNode;
 			if (focusPosition < element.getEndStartOffset()) {
-				try {
-					NamedNodeMap attrs = focusNode.getAttributes();
-					for (int i = 0; i < attrs.getLength(); i++) {
-						AttrImpl attr = (AttrImpl)attrs.item(i);
-						ITextRegion region = attr.getValueRegion();
-						if(region==null) {
-							break;
-						}
-						int attrStart = region.getStart();
-						int attrEnd = attrStart + attr.getValue().length();
-						if (range.x - ((ElementImpl)attr.getOwnerElement()).getStartOffset() - 1 >= attrStart && range.x - ((ElementImpl)attr.getOwnerElement()).getStartOffset() - 1 <= attrEnd) {
-							selectedNodes = new ArrayList();
-							selectedNodes.add(attr);
-							break;
-						}
+				NamedNodeMap attrs = focusNode.getAttributes();
+				for (int i = 0; i < attrs.getLength(); i++) {
+					AttrImpl attr = (AttrImpl)attrs.item(i);
+					ITextRegion region = attr.getValueRegion();
+					if(region==null) {
+						break;
 					}
-				} catch (Exception e) {
-					VpePlugin.getPluginLog().logError(e);
+					int attrStart = region.getStart();
+					int attrEnd = attrStart + attr.getValue().length();
+					if (range.x - ((ElementImpl)attr.getOwnerElement()).getStartOffset() - 1 >= attrStart && range.x - ((ElementImpl)attr.getOwnerElement()).getStartOffset() - 1 <= attrEnd) {
+						selectedNodes = new ArrayList();
+						selectedNodes.add(attr);
+						break;
+					}
 				}
 			}
 		}

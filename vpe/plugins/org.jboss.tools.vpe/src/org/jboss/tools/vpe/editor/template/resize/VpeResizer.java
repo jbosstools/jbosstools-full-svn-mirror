@@ -16,6 +16,7 @@ import org.jboss.tools.vpe.editor.template.VpeTagDescription;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
 import org.jboss.tools.vpe.editor.util.SourceDomUtil;
@@ -135,7 +136,7 @@ public class VpeResizer {
 					}else{
 						resizeData = resizeData.getNext();
 					}
-				}catch(Exception ex){
+				}catch(VpeExpressionBuilderException ex){
 					VpePlugin.reportProblem(ex);
 					resizeData = resizeData.getNext();
 				}

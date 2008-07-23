@@ -10,7 +10,11 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
+import java.io.IOException;
+
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.wst.sse.core.internal.provisional.StructuredModelManager;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
@@ -76,8 +80,10 @@ public class VpeCreatorUtil {
 		if (file != null && file.exists()) {
 			try {
 				return (IDOMModel)StructuredModelManager.getModelManager().getModelForRead(file);
-			} catch(Exception ex) {
+			} catch(IOException ex) {
 				VpePlugin.reportProblem(ex);
+			} catch(CoreException ex) {
+				VpePlugin.reportProblem(ex);	
 			}
 		}
 		return null;
@@ -114,23 +120,22 @@ public class VpeCreatorUtil {
 		}
 		IEditorInput input = pageContext.getEditPart().getEditorInput();
 		IFile file = null;
-		try {
-			if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null) {
-				file = FileUtil.getFile(input, fileName);
-			} else {
-				IFile includedFile = 
-					pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
-				file = FileUtil.getFile(fileName, includedFile);
-			}
-		} catch (Exception e) {
-			// nothing
+
+		if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null) {
+			file = FileUtil.getFile(input, fileName);
+		} else {
+			IFile includedFile = 
+				pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
+			file = FileUtil.getFile(fileName, includedFile);
 		}
 		
 		if (file != null) {
 			if (!file.isSynchronized(0)){
 				try {
 					file.refreshLocal(0, null);
-				} catch (Exception ex) {
+				} catch (CoreException ex) {
+					VpePlugin.getPluginLog().logError(ex);
+				} catch (OperationCanceledException ex) {
 					VpePlugin.getPluginLog().logError(ex);
 				}
 			}
@@ -146,7 +151,9 @@ public class VpeCreatorUtil {
 		try {
 			wtpModel = (IDOMModel)StructuredModelManager.getModelManager().getModelForRead(file);
 			if (wtpModel != null) return wtpModel.getDocument();
-		} catch(Exception e) {
+		} catch(IOException e) {
+			VpePlugin.getPluginLog().logError(e);
+		} catch(CoreException e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
 		return null;

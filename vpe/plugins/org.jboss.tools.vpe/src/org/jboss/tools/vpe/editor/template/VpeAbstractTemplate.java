@@ -480,8 +480,6 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 							.getDocument(), getRegionToFormat());
 				}
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			clearRegionToFormat();
 		}

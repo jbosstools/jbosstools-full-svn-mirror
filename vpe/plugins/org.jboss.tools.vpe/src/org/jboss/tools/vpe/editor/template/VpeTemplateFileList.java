@@ -39,8 +39,8 @@ public class VpeTemplateFileList {
 		VpeTemplateFile newAutoTemplateFile = null;
 		try {
 			newAutoTemplateFile = new VpeTemplateFile(VpeTemplateManager.AUTO_TEMPLATES_FILE_NAME, null);
-		} catch (Exception e) {
-			VpePlugin.getPluginLog().logError(e);
+		} catch (IOException e) {
+			VpePlugin.getPluginLog().logError("Default template for unknown tags loading error ",e);
 		}
 		changed = (autoTemplateFile == null) != (newAutoTemplateFile == null);
 		if (!changed && autoTemplateFile != null) {
@@ -93,8 +93,8 @@ public class VpeTemplateFileList {
 					try {
 					VpeTemplateFile templateFile = new VpeTemplateFile(pathAttrValue, elements[j]);
 						templateList.add(templateFile);
-					} catch (Exception e) {
-						VpePlugin.reportProblem(e);
+					} catch (IOException e) {
+						VpePlugin.getPluginLog().logError("Error during loading template '" + pathAttrValue + "'", e);
 					}
 				}
 			}

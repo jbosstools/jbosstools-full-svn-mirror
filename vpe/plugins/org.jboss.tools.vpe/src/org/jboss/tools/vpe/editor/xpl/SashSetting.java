@@ -134,7 +134,7 @@ public class SashSetting implements EditorSettings.ISetting {
 							sash.setWeights(weights);
 						}
 					}
-				} catch (Exception e) {
+				} catch (NumberFormatException e) {
 					// Do nothing
 				}
 			}

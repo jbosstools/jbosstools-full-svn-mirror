@@ -414,53 +414,40 @@ public abstract class AbstractActionManager extends BaseActionManager {
 	}
 
 	public void fillContextMenu(IMenuManager menuManager, ISelection selection) {
-		try {
-			List selectionList = new ArrayList();
-			if (selection instanceof IStructuredSelection) {
-				IStructuredSelection es = (IStructuredSelection) selection;
-				for (Iterator i = es.iterator(); i.hasNext();) {
-					selectionList.add(i.next());
-				}
+		List selectionList = new ArrayList();
+		if (selection instanceof IStructuredSelection) {
+			IStructuredSelection es = (IStructuredSelection) selection;
+			for (Iterator i = es.iterator(); i.hasNext();) {
+				selectionList.add(i.next());
 			}
-
-			contributeActions(menuManager, selectionList);
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		}
+		contributeActions(menuManager, selectionList);
 	}
 
 	public void fillContextMenuForVpe(IMenuManager menuManager,
-			ISelection selection) {
-		try {
-			List selectionList = new ArrayList();
-			if (selection instanceof IStructuredSelection) {
-				IStructuredSelection es = (IStructuredSelection) selection;
-				for (Iterator i = es.iterator(); i.hasNext();) {
-					selectionList.add(i.next());
-				}
+		ISelection selection) {
+		List selectionList = new ArrayList();
+		if (selection instanceof IStructuredSelection) {
+			IStructuredSelection es = (IStructuredSelection) selection;
+			for (Iterator i = es.iterator(); i.hasNext();) {
+				selectionList.add(i.next());
 			}
-
-			contributeActionsForVpe(menuManager, selectionList);
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		}
+
+		contributeActionsForVpe(menuManager, selectionList);
 	}
 
 	public void addContextMenuForVpe(IMenuManager menuManager,
 			ISelection selection) {
-		try {
-			List selectionList = new ArrayList();
-			if (selection instanceof IStructuredSelection) {
-				IStructuredSelection es = (IStructuredSelection) selection;
-				for (Iterator i = es.iterator(); i.hasNext();) {
-					selectionList.add(i.next());
-				}
+		List selectionList = new ArrayList();
+		if (selection instanceof IStructuredSelection) {
+			IStructuredSelection es = (IStructuredSelection) selection;
+			for (Iterator i = es.iterator(); i.hasNext();) {
+				selectionList.add(i.next());
 			}
-
-			contributeDeleteActionForVpe(menuManager, selectionList);
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		}
+
+		contributeDeleteActionForVpe(menuManager, selectionList);
 	}
 
 	public void remove(Node parent, int startIndex, int endIndex) {

@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.jboss.tools.common.kb.KbConnectorFactory;
@@ -89,12 +90,16 @@ public class VpePageContext implements IVisualContext {
 	}
 	
 	public void refreshConnector() {
-		try {
 			IDocument document = sourceBuilder.getStructuredTextViewer().getDocument();
-			connector = (WtpKbConnector)KbConnectorFactory.getIntstance().createConnector(KbConnectorType.JSP_WTP_KB_CONNECTOR, document);
-		} catch (Exception e) {
-			VpePlugin.getPluginLog().logError(e);
-		}
+			try {
+				connector = (WtpKbConnector)KbConnectorFactory.getIntstance().createConnector(KbConnectorType.JSP_WTP_KB_CONNECTOR, document);
+			} catch (InstantiationException e) {
+				VpePlugin.getPluginLog().logError(e);
+			} catch (IllegalAccessException e) {
+				VpePlugin.getPluginLog().logError(e);
+			} catch (ClassNotFoundException e) {
+				VpePlugin.getPluginLog().logError(e);
+			}
 	}
 	
 	public VpeVisualDomBuilder getVisualBuilder(){
@@ -219,7 +224,7 @@ public class VpePageContext implements IVisualContext {
 		    if (f != null) {
 				IDE.openEditor(workbenchPage, f, true);
 		    }
-		}catch(Exception ex){
+		}catch(PartInitException ex){
 			VpePlugin.reportProblem(ex);
 		}
 	}

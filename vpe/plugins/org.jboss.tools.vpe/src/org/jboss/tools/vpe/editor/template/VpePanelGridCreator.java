@@ -195,11 +195,11 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 			if (vpeValue != null) {
 				String strValue = vpeValue.stringValue();
 				try {
-					int val = Integer.valueOf(strValue).intValue();
+					int val = Integer.parseInt(strValue);
 					if (val > 0) {
 						tableSize = val;
 					}
-				} catch (Exception e) {
+				} catch (NumberFormatException e) {
 				}
 			}
 		}

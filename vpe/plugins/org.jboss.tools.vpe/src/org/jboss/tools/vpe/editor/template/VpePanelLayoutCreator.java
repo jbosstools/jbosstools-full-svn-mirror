@@ -10,27 +10,28 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.wst.sse.core.internal.provisional.StructuredModelManager;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class VpePanelLayoutCreator extends VpeAbstractCreator {
 
@@ -268,7 +269,9 @@ public class VpePanelLayoutCreator extends VpeAbstractCreator {
 											if(wtpModel != null){
 												init(wtpModel.getDocument(), node);												
 											}
-										}catch(Exception ex){
+										} catch(IOException ex) {
+											VpePlugin.reportProblem(ex);
+										} catch(CoreException ex) {
 											VpePlugin.reportProblem(ex);
 										} finally {
 											if(wtpModel!=null)

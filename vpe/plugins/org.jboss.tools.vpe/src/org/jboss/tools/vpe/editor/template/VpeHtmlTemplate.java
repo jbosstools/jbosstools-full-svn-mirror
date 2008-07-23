@@ -351,9 +351,6 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 			String locale = jsfCoreViewTag.getAttribute(LOCALE_ATTRNAME);
 			if (locale == null || locale.length() == 0) return null;
 			return locale;
-		} catch (Exception e) {
-			VpePlugin.getPluginLog().logError(e);
-			return null;
 		} finally {
 			if (model != null)	model.releaseFromRead();
 		}

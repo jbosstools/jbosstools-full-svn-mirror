@@ -336,17 +336,14 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 //					}
 					//Added by Max Areshkau in scope of bug JBIDE-1209
 				} else  {
-							try{
-								IndexedRegion region = (IndexedRegion)sourceParent;
-								String text = sourceParent.getNodeValue();
-								int start= TextUtil.sourcePosition(text, visualText.getNodeValue(), offset);
-								int end =TextUtil.sourcePosition(text, visualText.getNodeValue(), offset+length);
-								offset=start;
-								length=end-start;
-							}catch(Exception ex){
-								VpePlugin.reportProblem(ex);
-							}
-							setSelection(sourceParent, offset, length);
+					IndexedRegion region = (IndexedRegion)sourceParent;
+					String text = sourceParent.getNodeValue();
+					int start= TextUtil.sourcePosition(text, visualText.getNodeValue(), offset);
+					int end =TextUtil.sourcePosition(text, visualText.getNodeValue(), offset+length);
+					offset=start;
+					length=end-start;
+
+					setSelection(sourceParent, offset, length);
 				}
 			}
 		}
