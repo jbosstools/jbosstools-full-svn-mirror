@@ -1,0 +1,87 @@
+<chapter id="deployment">
+	<title>Deployment</title>
+	
+	<para>
+	The deployment within JBoss Eclipse IDE can be done in two ways:
+	<itemizedlist>
+		<listitem>A file-system copy: Copies a file from your project into any other location on your computer (including network drives, etc)</listitem>
+		<listitem>A local deployment through the MainDeployer MBean (Experimental). The URL of the resource is sent to the MainDeployer Mbean, which deploys and watches it.</listitem>
+	</itemizedlist>
+	
+	In addition, the deployment target is stored during the workbench session. This means that if you have deployed a package on a target, you can redeploy or undeploy it without specifying the target.
+	The Deployer plugin automatically creates file-system targets from the debug configurations. Other deployment target can be defined.
+	</para>
+	
+	<informaltable frame="none">
+	<tgroup cols="2" align="left" colsep="1" rowsep="1">
+		<tbody>
+			<row>
+				<entry>
+					<para>Select <literal>Window</literal> &gt; <literal>Preferences</literal>. The workbench preferences appears.</para>
+					<para>Select <literal>JBoss-IDE</literal> &gt; <literal>Deployer</literal> to display the defined deployment targets.</para>
+					<para>The upper area contains the file system targets build upon the debug configuration defined.</para>
+					<para>The lower area contains the user-defined deployment targets.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/deployer-prefs.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>We assume that we want to deploy to a pre-defined JBoss instance and we don’t define custom deployment targets.</para>
+					<para>The deployment is fairly simple. Right click on the <literal>FiboApp.ear</literal> file and select the <literal>Deployment</literal> &gt; <literal>Deploy To…</literal> item.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/deploy-menu.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>A dialog box appears with the list of the deployment targets. It contains both the default and the user-defined deployment targets.</para>
+					<para>Select the one you are interested in (the one for the running server is probably a good idea !).</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/deploy-to-targets.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>In the console view, you should see some deployment activity. The J2EE application is now deployed.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/j2ee-app-deployed.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>When a resource is deployed, a small decorator appears in the top-left corner of the icon.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/deployed-fibo-app.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+		</tbody>
+	</tgroup>
+	</informaltable>
+	
+</chapter>
