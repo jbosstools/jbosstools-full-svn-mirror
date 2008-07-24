@@ -239,6 +239,11 @@ public class SelectionManager implements ISelectionManager {
 		IStructuredModel model = null;
 		
 		try {
+		//checks for null, for case when we close editor and background update job is running 
+		if(getSourceEditor().getTextViewer()==null) {
+			
+			return;
+		}
 		//gets source model for read, model should be released see JBIDE-2219
 		model = StructuredModelManager.getModelManager()
 			.getExistingModelForRead(getSourceEditor().getTextViewer().getDocument());
@@ -313,9 +318,16 @@ public class SelectionManager implements ISelectionManager {
 			NodeImpl targetSourceNode = (NodeImpl)nodeData.getSourceNode();
 			String sourceNodeValue = nodeData.getSourceNode().getNodeValue();
 			ITextRegion valueRegion = targetSourceNode.getValueRegion();
+			if(valueRegion==null) {
+				return;
+			}
 			ITextRegion nameRegion = targetSourceNode.getNameRegion();					 
 			int offcetReferenceToSourceNode = focusOffcetInSourceDocument-valueRegion.getStart()-targetSourceNode.getStartOffset()+nameRegion.getStart()-1;
-			selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(visualNode, offcetReferenceToSourceNode);
+			
+			if(offcetReferenceToSourceNode<visualNode.getNodeValue().length()){
+				
+				selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(visualNode, offcetReferenceToSourceNode);
+			}
 		}
 	}
 	/**

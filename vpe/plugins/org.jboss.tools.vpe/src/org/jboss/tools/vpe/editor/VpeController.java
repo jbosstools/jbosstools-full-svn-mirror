@@ -760,7 +760,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			selectionManager.refreshVisualSelection();
 
 		} catch (Exception ex) {
-			VpePlugin.reportProblem(ex);
+			VpePlugin.getPluginLog().logError(ex);
 		}
 
 		// VpeTemplate template = TemplateManagingUtil
