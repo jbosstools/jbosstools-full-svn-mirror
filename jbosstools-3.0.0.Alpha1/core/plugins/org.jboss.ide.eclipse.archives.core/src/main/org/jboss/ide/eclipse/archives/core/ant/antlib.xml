@@ -1,3 +1,0 @@
-<antlib>
-        <taskdef resource="org/jboss/ide/eclipse/archives/core/ant/tasks.properties"/>
-</antlib>
