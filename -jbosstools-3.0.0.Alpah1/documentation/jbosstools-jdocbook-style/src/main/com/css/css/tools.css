@@ -1,0 +1,52 @@
+@import url("jbossenterprise.css");
+
+/* -----Override jbossenterprise-single.css----- */
+
+body {
+    text-align:center;
+  }
+
+div.book, div.chapter, #title{
+    text-align:justify;
+    width: 70em;
+}
+
+ul.docnav {
+    margin:0px;
+    width: 70em;
+    ! height:40px; /* CSS hack for IE*/
+    display:block;
+}
+
+#title a.site_href, #title a.doc_href{
+display:block;
+height:60px;
+} 
+
+#title a.site_href {
+background:transparent url(../images/enterprise/jbossdivisionlogo.png) no-repeat scroll left top;
+! background:none; /* CSS hack for IE*/
+! filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/enterprise/jbossdivisionlogo.png'); /* CSS hack for IE*/
+float:left;
+width:310px;
+}
+
+#title a.doc_href {
+background:transparent url(../images/enterprise/enterprise_doc.png) no-repeat scroll right top;
+! background:none; /* CSS hack for IE*/
+! filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/enterprise/enterprise_doc.png'); /* CSS hack for IE*/
+margin-top:5px;
+}
+
+#title{
+text-align:right;
+}
+
+a.new { 
+background:transparent url(../images/new.png) no-repeat scroll right top; 
+padding-right:70px; 
+} 
+a.updated { 
+background:transparent url(../images/updated.png) no-repeat scroll right top; 
+padding-right:70px; 
+}

@@ -1,0 +1,93 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="../whatsnew.css">
+<title>JBoss AS Tools 1.0.beta4 News</title>
+</head>
+
+<body>
+
+<h1>JBoss AS Tools 1.0.beta4 - New and Noteworthy</h1>
+
+<html>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+  <tr>
+    <td colspan="2">
+      <hr>
+      <h3>Deployment</h3>
+      <hr>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+      <p align="right"><b>Exploded WebTools WAR and EAR projects</b></td>
+    <td valign="top">
+      <p>WebTool's EAR and WAR's are automatically deployed as exploded to support fastest possible turnaround during development.</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+      <p align="right"><b>Single file deployment</b></td>
+    <td valign="top">
+<p>There is now a "Deploy to server" in the context menu of files to allow single file deployement.</p>
+      <p>
+        This is to remedy that Eclipse WebTools currently only support deployment of complete WTP projects.</p>
+<p>To deploy these non-WTP files/projects right click on the file
+(-ds.xml, .ear, .jar etc.) and select "Deploy to server..." and it
+will be automatically deployed.
+      </p>
+
+	  <p><img src="deploy-to-server.png"/><br/>
+          Deploy to Server is available in the context menu of files
+          </p>
+	  <p><img src="deploy-to-server-view.png"/></br>
+The deployed files are listed side-by-side with other "modules" that are deployed to the server.
+</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+      <p align="right"><b>Classpath containers</b></td>
+    <td valign="top">
+<p>In previous versions our classpath containers were too conservative about which jars to include (we only included the minimal). To fix this we started including (almost) all libraries found in the AS installation.</p>
+<p>In future versions we would like to provide more finegrained options for what is actually included in the runtime libraries.</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr>
+      <h3>Configuration</h3>
+      <hr>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+      <p align="right"><b>Username/Password in UI</b></td>
+    <td valign="top">
+      <p>A username/password is now available in the UI when configuring the server.</p>
+<p>Previously this had to be specified via command line arguments manually, now the adapter maintains this for you.</p>
+<p>If you get an SecurityException when trying to launch the server it is most likely because your server is protected and hence you need to fill the username/password fields with apropriate values</p>
+
+	  <p><img src="jmx-usernamepassword.png"/></p>
+
+    </td>
+  </tr>
+
+</table>
+
+</body>
+
+</html>
+
+
