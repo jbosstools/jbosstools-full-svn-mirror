@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="test_environments">
+  <title>Test environments and procedures</title>
+  <sect1>
+  	<title>Test case identifiers</title>
+  	<para>TBD</para>
+  </sect1>
+  <sect1>
+  	<title>Environment</title>
+  	<orderedlist>
+  		<title>Products that should be installed before testing</title>
+  		<listitem>Java Runtime Environment 1.5.0 or above</listitem>
+  		<listitem>JBoss AS 4.2.X</listitem>
+  		<listitem>JBoss Seam 1.2.X</listitem>
+  		<listitem>WTP 2.0.1 All-In-One bundle</listitem>
+  	</orderedlist>
+  	<para>TBD - add the links to download pages</para>
+  	<para>JBoss AS home folder shouldn't contains spaces in full path. 
+  		(TBD - add link to the known issue).</para>
+  </sect1>
+ </chapter>
