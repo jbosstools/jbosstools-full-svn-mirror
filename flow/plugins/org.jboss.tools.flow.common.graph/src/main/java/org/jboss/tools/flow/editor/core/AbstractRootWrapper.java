@@ -59,6 +59,7 @@ public abstract class AbstractRootWrapper extends AbstractWrapper implements Con
     }
     
     public void addElement(NodeWrapper element) {
+    	if (!acceptsElement(element)) return;
         internalAddElement(element);
 		localAddElement(element);
 		notifyListeners(CHANGE_ELEMENTS);
@@ -66,6 +67,10 @@ public abstract class AbstractRootWrapper extends AbstractWrapper implements Con
     
     public void localAddElement(NodeWrapper element) {
         elements.put(element.getId(), element);
+    }
+    
+    public boolean acceptsElement(NodeWrapper element) {
+    	return true;
     }
     
     protected abstract void internalAddElement(NodeWrapper element);

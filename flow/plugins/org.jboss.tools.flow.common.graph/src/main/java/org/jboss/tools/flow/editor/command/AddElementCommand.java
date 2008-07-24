@@ -55,5 +55,9 @@ public class AddElementCommand extends Command {
         parent.removeElement(child);
         child.setParent(null);
     }
+    
+    public boolean canExecute() {
+    	return parent.acceptsElement(child);
+    }
 
 }
