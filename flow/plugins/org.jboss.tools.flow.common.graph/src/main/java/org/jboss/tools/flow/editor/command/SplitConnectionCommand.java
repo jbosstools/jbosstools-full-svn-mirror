@@ -84,5 +84,11 @@ public class SplitConnectionCommand extends Command {
     	newElement.setParent(null);
     	oldConnection.connect(oldSource, oldTarget);    	
     }
+    
+    public boolean canExecute() {
+    	return parent.acceptsElement(newElement) && 
+    		newElement.acceptsIncomingConnection(oldConnection, oldSource) &&
+    		newElement.acceptsOutgoingConnection(secondConnection, oldTarget);
+    }
 
 }
