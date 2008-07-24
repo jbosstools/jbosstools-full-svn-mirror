@@ -53,11 +53,11 @@ public class DocTypeUtil {
 	 */
 	public static String getDoctype(IEditorInput editorInput) {
 
-		try{
+
 		// if opened file is located in eclipse workspace
 		if (editorInput instanceof IFileEditorInput) {
 			IFile f = ((IFileEditorInput) editorInput).getFile();
-			return (f == null || !f.exists()) ? null : getDoctype(f);
+			return (f == null || !f.exists()) ? null : getDoctype(f,null);
 		}
 		// if opened file is not located in eclipse workspace
 		else if (editorInput instanceof ILocationProvider) {
@@ -65,11 +65,6 @@ public class DocTypeUtil {
 			if (path == null || path.segmentCount() < 1)
 				return null;
 			return getDoctype(path.toFile());
-		}
-		}catch(StackOverflowError stackOverflowError) {
-			//Fix For JBIDE-2434
-			VpePlugin.getPluginLog().logInfo(stackOverflowError.toString());
-			return ""; //$NON-NLS-1$
 		}
 		return null; 
 
@@ -81,7 +76,7 @@ public class DocTypeUtil {
 	 * @param file
 	 * @return
 	 */
-	private static String getDoctype(IFile file) {
+	private static String getDoctype(IFile file, List<IFile> previousFiles) {
 
 		String docTypeValue = null;
 
@@ -133,7 +128,17 @@ public class DocTypeUtil {
 					IFile templateFile = FileUtil.getFile(fileName, file);
 
 					if (templateFile != null)
-						docTypeValue = getDoctype(templateFile);
+						//if it's was first call of DOCTYPE function
+						if(previousFiles==null) {
+							
+							previousFiles = new ArrayList<IFile>();
+						}
+						//Added by Max Areshkau JBIDE-2434
+						if(!previousFiles.contains(templateFile)) {
+							
+						previousFiles.add(templateFile);	
+						docTypeValue = getDoctype(templateFile,previousFiles);
+						}
 
 				}
 
@@ -227,11 +232,15 @@ public class DocTypeUtil {
 
 				// get model
 				model = (IDOMModel) StructuredModelManager
-						.getModelManager().getExistingModelForRead(file);
+						.getModelManager().getModelForRead(file);
 
 				if (model != null)
 					document = model.getDocument();
 
+			} catch (IOException e) {
+				VpePlugin.getPluginLog().logError(e);
+			} catch (CoreException e) {
+				 VpePlugin.getPluginLog().logError(e);
 			} finally {
 				//see JBIDE-2219
 				if(model!=null) {
