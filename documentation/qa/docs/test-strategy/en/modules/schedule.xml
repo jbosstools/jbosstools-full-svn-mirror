@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="schedule">
+	<title>Schedule</title>
+	<para>Test task must be described in Separate JBoss Tools Test Plan 
+	document.Test Plan should contain testing activities connected to development,
+	bug fixing or release dates.</para>
+</chapter>
