@@ -14,21 +14,33 @@
         <title/>
         <indexentry>
             <primaryie>
-		<ulink url="../../../../../../create_console_config/create_console_config.htm">Creating Console Configuration</ulink>                                          
+		<ulink url="demos/create_console_config/create_console_config.htm">Creating Console Configuration</ulink>                                          
             </primaryie>
         </indexentry>
 
         <indexentry>
             <primaryie>
-		<ulink url="../../../../../../cust_tag_lib_to_pallete/cust_tag_lib_to_pallete.htm">Importing Custom Tag Library to Pallete</ulink>
+		<ulink url="demos/cust_tag_lib_to_pallete/cust_tag_lib_to_pallete.htm">Importing Custom Tag Library to Pallete</ulink>
             </primaryie>
         </indexentry>
         
         <indexentry>
             <primaryie>
-                <ulink url="../../../../../../seam2_plus_ejb3/seam2_plus_ejb3.htm">Creating Seam2 + EJB3 EAR Project</ulink>
+                <ulink url="demos/seam2_plus_ejb3/seam2_plus_ejb3.htm">Creating Seam2 + EJB3 EAR Project</ulink>
             </primaryie>
         </indexentry>
+
+	<indexentry>
+            <primaryie>
+                <ulink url="demos/ootb_new_seam_project/ootb_new_seam_project.htm">New Seam Project</ulink>
+            </primaryie>
+        </indexentry>
+
+	  <indexentry>
+            <primaryie>
+                <ulink url="demos/archiving/archiving.htm">Archiving</ulink>
+            </primaryie>
+	  </indexentry>
 
         <!--indexentry>
             <primaryie>Visual Web Tools Reference Guide <ulink url="en/jsf/html/index.html"
