@@ -1,0 +1,119 @@
+<%@ jet package="org.jboss.tools.portlet.ui" 
+	imports="java.util.* org.eclipse.jst.j2ee.internal.common.operations.* org.eclipse.jst.j2ee.internal.web.operations.* org.jboss.tools.portlet.operations.* org.jboss.tools.portlet.ui.*" 
+	class="PortletTemplate" 
+%>
+<% CreatePortletTemplateModel model = (CreatePortletTemplateModel) argument; %>
+<%@ include file="_flags.template" %>
+<%@ include file="_package.template" %>
+<%@ include file="_imports.template" %>
+<%@ include file="_class.template" %>
+<%@ include file="_constructors.template" %>
+<%@ include file="_methods.template" %>
+<% if (model.shouldGenInit()) { %>
+
+	/* (non-Javadoc)
+	 * @see javax.portlet.Portlet#init()
+	 */
+	@Override
+	public void init() throws PortletException {
+		// TODO Auto-generated method stub
+		super.init();
+	}
+<% } %>
+<% if (model.shouldGenDestroy()) { %>
+
+	/* (non-Javadoc)
+	 * @see javax.portlet.Portlet#destroy()
+	 */
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		super.destroy();
+	}
+<% } %>
+<% if (model.shouldGenGetPortletConfig()) { %>
+
+	/* (non-Javadoc)
+	 * @see javax.portlet.GenericPortlet#getPortletConfig()
+	 */
+	@Override
+	public PortletConfig getPortletConfig() {
+		// TODO Auto-generated method stub
+		return super.getPortletConfig();
+	}
+<% } %>
+<% if (model.shouldGenDoView()) { %>
+
+	/* (non-Javadoc)
+	 * @see javax.portlet.GenericPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
+	 */
+	@Override
+	protected void doView(RenderRequest request, RenderResponse response)
+			throws PortletException, IOException, UnavailableException {
+		response.setContentType("text/html");
+		PrintWriter writer = response.getWriter();
+		writer.write("Hello World!");
+		writer.close();
+	}
+<% } %>
+<% if (model.shouldGenDoEdit()) { %>
+
+	/* (non-Javadoc)
+	 * @see javax.portlet.GenericPortlet#doEdit(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
+	 */
+	@Override
+	protected void doEdit(RenderRequest request, RenderResponse response)
+			throws PortletException, PortletSecurityException, IOException {
+		// TODO Auto-generated method stub
+		super.doEdit(request, response);
+	}
+<% } %>
+<% if (model.shouldGenDoHelp()) { %>
+
+	/* (non-Javadoc)
+	 * @see javax.portlet.GenericPortlet#doHelp(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
+	 */
+	@Override
+	protected void doHelp(RenderRequest request, RenderResponse response)
+			throws PortletException, PortletSecurityException, IOException {
+		// TODO Auto-generated method stub
+		super.doHelp(request, response);
+	}
+<% } %>
+<% if (model.shouldGenDoDispatch()) { %>
+
+	/* (non-Javadoc)
+	 * @see javax.portlet.GenericPortlet#doDispatch(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
+	 */
+	@Override
+	protected void doDispatch(RenderRequest arg0, RenderResponse arg1)
+			throws PortletException, PortletSecurityException, IOException {
+		// TODO Auto-generated method stub
+		super.doDispatch(arg0, arg1);
+	}
+<% } %>
+<% if (model.shouldGenRender()) { %>
+
+	/* (non-Javadoc)
+	 * @see javax.portlet.Portlet#render(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
+	 */
+	@Override
+	public void render(RenderRequest request, RenderResponse response)
+			throws PortletException, PortletSecurityException, IOException {
+		// TODO Auto-generated method stub
+		super.render(request, response);
+	}
+<% } %>
+<% if (model.shouldGenProcessAction()) { %>
+
+	/* (non-Javadoc)
+	 * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
+	 */
+	@Override
+	public void processAction(ActionRequest request, ActionResponse response)
+			throws PortletException, PortletSecurityException, IOException {
+		// TODO Auto-generated method stub
+		super.processAction(request, response);
+	}
+<% } %>
+}
