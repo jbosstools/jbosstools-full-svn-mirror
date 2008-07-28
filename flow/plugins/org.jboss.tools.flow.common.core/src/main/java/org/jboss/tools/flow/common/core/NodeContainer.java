@@ -1,5 +1,7 @@
 package org.jboss.tools.flow.common.core;
 
+import java.util.List;
+
 /**
  * A container of nodes.
  * 
@@ -12,7 +14,7 @@ public interface NodeContainer {
      * 
      * @return the nodes of this node container
      */
-    Node[] getNodes();
+    List<Node> getNodes();
 
     /**
      * Returns the node with the given id
