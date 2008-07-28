@@ -62,7 +62,7 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 						if (!pageContext.getVisualBuilder().isFileInIncludeStack(file)) {
 							Document document = pageContext.getVisualBuilder().getIncludeDocuments().get(file);
 							if (document == null) {
-								document = VpeCreatorUtil.getDocumentForRead(file, pageContext);
+								document = VpeCreatorUtil.getDocumentForRead(file);
 								if (document != null)
 									pageContext.getVisualBuilder().getIncludeDocuments().put(file, document);
 							}

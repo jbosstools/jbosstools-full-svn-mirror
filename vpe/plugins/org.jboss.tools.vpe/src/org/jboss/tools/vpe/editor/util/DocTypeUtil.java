@@ -1,7 +1,6 @@
 package org.jboss.tools.vpe.editor.util;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +17,15 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.ILocationProvider;
-import org.eclipse.wst.sse.core.StructuredModelManager;
 import org.eclipse.wst.sse.core.internal.FileBufferModelManager;
 import org.eclipse.wst.sse.core.internal.provisional.text.IStructuredDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocumentType;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -64,6 +64,8 @@ public class DocTypeUtil {
 			IPath path = ((ILocationProvider) editorInput).getPath(editorInput);
 			if (path == null || path.segmentCount() < 1)
 				return null;
+			//TODO SDzmitrovich Fix This Method, convert to IPath to IFile,
+			//or smht. else, should be only one getDoctype(IFile, List<IFile>); 
 			return getDoctype(path.toFile());
 		}
 		return null; 
@@ -81,7 +83,10 @@ public class DocTypeUtil {
 		String docTypeValue = null;
 
 		// get document
-		IDOMDocument document = getDocument(file);
+		Document document = null;
+		try	{ 
+		
+			document = VpeCreatorUtil.getDocumentForRead(file);
 
 		if (document != null) {
 
@@ -144,6 +149,11 @@ public class DocTypeUtil {
 
 			}
 		}
+		} finally {
+			if(document!=null) {
+				VpeCreatorUtil.getDocumentForRead(file);
+			}
+		}
 		return docTypeValue != null ? docTypeValue.trim() : ""; //$NON-NLS-1$
 	}
 
@@ -153,7 +163,7 @@ public class DocTypeUtil {
 	 * @param file
 	 * @return
 	 */
-	static public String getDoctype(File file) {
+	private static String getDoctype(File file) {
 
 		String docTypeValue = null;
 
@@ -216,44 +226,6 @@ public class DocTypeUtil {
 	}
 
 	/**
-	 * get document by {@link IFile}
-	 * 
-	 * @param file
-	 * @return
-	 */
-	static private IDOMDocument getDocument(IFile file) {
-
-		IDOMDocument document = null;
-		
-		IDOMModel model = null;
-		
-		if (file != null) {
-			try {
-
-				// get model
-				model = (IDOMModel) StructuredModelManager
-						.getModelManager().getModelForRead(file);
-
-				if (model != null)
-					document = model.getDocument();
-
-			} catch (IOException e) {
-				VpePlugin.getPluginLog().logError(e);
-			} catch (CoreException e) {
-				 VpePlugin.getPluginLog().logError(e);
-			} finally {
-				//see JBIDE-2219
-				if(model!=null) {
-					
-					model.releaseFromRead();
-				}
-			}
-		}
-
-		return document;
-	}
-
-	/**
 	 * get document by {@link File}
 	 * 
 	 * @param file
@@ -304,7 +276,7 @@ public class DocTypeUtil {
 				}
 			}
 		} catch (CoreException e) {
-			e.printStackTrace();
+			VpePlugin.getPluginLog().logError(e);
 		}
 
 		return model.getDocument();

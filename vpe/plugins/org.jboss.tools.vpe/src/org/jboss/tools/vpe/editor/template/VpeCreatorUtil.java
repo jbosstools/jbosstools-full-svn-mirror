@@ -104,7 +104,11 @@ public class VpeCreatorUtil {
 		}
 		return null;
 	}
-
+	/**
+	 * Releases document model from read
+	 * @see VpeCreatorUtil#getDocumentForRead(IFile)
+	 * @param document
+	 */
 	public static void releaseDocumentFromRead(Document document) {
 		if (document instanceof IDOMNode) {
 			IDOMModel wtpModel = ((IDOMNode)document).getModel();
@@ -145,8 +149,13 @@ public class VpeCreatorUtil {
 		}
 		return null;
 	}
-
-	public static Document getDocumentForRead(IFile file, VpePageContext pageContext) {
+	/**
+	 * Return dom document for read, document shoud be released from read
+	 * @see VpeCreatorUtil#releaseDocumentFromRead(Document)
+	 * @param file
+	 * @return dom document for read
+	 */
+	public static Document getDocumentForRead(IFile file) {
 		IDOMModel wtpModel = null;
 		try {
 			wtpModel = (IDOMModel)StructuredModelManager.getModelManager().getModelForRead(file);
