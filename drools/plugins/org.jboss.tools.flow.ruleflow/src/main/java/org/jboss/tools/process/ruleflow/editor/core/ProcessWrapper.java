@@ -18,7 +18,7 @@ package org.jboss.tools.process.ruleflow.editor.core;
 
 import org.drools.ruleflow.core.RuleFlowProcess;
 import org.drools.workflow.core.Node;
-import org.jboss.tools.flow.editor.core.AbstractRootWrapper;
+import org.jboss.tools.flow.editor.core.AbstractFlowWrapper;
 import org.jboss.tools.flow.editor.core.NodeWrapper;
 
 /**
@@ -26,7 +26,7 @@ import org.jboss.tools.flow.editor.core.NodeWrapper;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
-public class ProcessWrapper extends AbstractRootWrapper {
+public class ProcessWrapper extends AbstractFlowWrapper {
 
 	private static final long serialVersionUID = 400L;
 
