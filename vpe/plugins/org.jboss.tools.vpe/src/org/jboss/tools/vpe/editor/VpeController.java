@@ -1037,11 +1037,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 								.println("<<< notifySelectionChanged: " + reason); //$NON-NLS-1$
 
 					}
-
 					nsIDOMNode node = SelectionUtil.getSelectedNode(selection);
-					if (node != null
-							&& node.getNodeType() == nsIDOMNode.TEXT_NODE) {
-			
+					/*
+					 * Fixes https://jira.jboss.org/jira/browse/JBIDE-2571
+					 * Checking if the node is of text type was removed
+					 * to allow <select> node to be selected on the first click.
+					 */
+					if (node != null) {
 						selectionManager.setSelection(selection);
 					}
 				}
@@ -1243,75 +1245,101 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 
 		try {
-			if (keyEventHandler
-					.handleKeyPress(keyEvent)) {
-				switcher
-						.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
-				try {
-					// Edward
-					sourceSelectionChanged(true);
-					visualSelectionController.setCaretEnabled(true);
-				} catch (Exception e) {
-					VpePlugin.reportProblem(e);
-				} finally {
-					switcher.stopActiveEditor();
-				}
+			/*
+			 * adding calls of core event handlers, for example' CTR+H' or
+			 * 'CTRL+M' event handler dialog
+			 */
+			boolean keyBindingPressed = false;
+			Event keyboardEvent = new Event();
+			/*
+			 * widget where event occur
+			 */
+			keyboardEvent.widget = xulRunnerEditor.getBrowser();
+
+			keyboardEvent.stateMask = (keyEvent.getAltKey() ? SWT.ALT : 0)
+					| (keyEvent.getCtrlKey() ? SWT.CTRL : 0)
+					| (keyEvent.getShiftKey() ? SWT.SHIFT : 0)
+					| (keyEvent.getMetaKey() ? SWT.MOD1 : 0);
+			keyboardEvent.x = 0;
+			keyboardEvent.y = 0;
+			keyboardEvent.type = SWT.KeyDown;
+
+			if (keyEvent.getKeyCode() == 0) {
+				keyboardEvent.keyCode = (int) keyEvent.getCharCode();
 			} else {
-				// adding calls of core event handlers, for example' CTR+H' or
-				// ' CTRL+M' event handler dialog
-				Event keyboardEvent = new Event();
-				// widget where event occur
-				keyboardEvent.widget = xulRunnerEditor.getBrowser();
+				keyboardEvent.keyCode = (int) keyEvent.getKeyCode();
+			}
+			/*
+			 * JBIDE-1627
+			 */
+			List<KeyStroke> possibleKeyStrokes = WorkbenchKeyboard
+					.generatePossibleKeyStrokes(keyboardEvent);
+			IWorkbench iWorkbench = VpePlugin.getDefault().getWorkbench();
+			if (iWorkbench.hasService(IBindingService.class)) {
+				IBindingService iBindingService = (IBindingService) iWorkbench
+						.getService(IBindingService.class);
 
-				keyboardEvent.stateMask = (keyEvent.getAltKey() ? SWT.ALT : 0)
-						| (keyEvent.getCtrlKey() ? SWT.CTRL : 0)
-						| (keyEvent.getShiftKey() ? SWT.SHIFT : 0)
-						| (keyEvent.getMetaKey() ? SWT.MOD1 : 0);
-				keyboardEvent.x = 0;
-				keyboardEvent.y = 0;
-				keyboardEvent.type = SWT.KeyDown;
+				KeySequence sequenceBeforeKeyStroke = KeySequence.getInstance();
+				
+				for (Iterator<KeyStroke> iterator = possibleKeyStrokes
+						.iterator(); iterator.hasNext();) {
+					
+					KeySequence sequenceAfterKeyStroke = KeySequence
+							.getInstance(sequenceBeforeKeyStroke, iterator
+									.next());
+					if (iBindingService.isPerfectMatch(sequenceAfterKeyStroke)) {
+						final Binding binding = iBindingService
+								.getPerfectMatch(sequenceAfterKeyStroke);
 
-				if (keyEvent.getKeyCode() == 0) {
-					keyboardEvent.keyCode = (int) keyEvent.getCharCode();
-				} else {
-					keyboardEvent.keyCode = (int) keyEvent.getKeyCode();
-				}
-				// JBIDE-1627
-				List<KeyStroke> possibleKeyStrokes = WorkbenchKeyboard
-						.generatePossibleKeyStrokes(keyboardEvent);
-				IWorkbench iWorkbench = VpePlugin.getDefault().getWorkbench();
-				if (iWorkbench.hasService(IBindingService.class)) {
-					IBindingService iBindingService = (IBindingService) iWorkbench
-							.getService(IBindingService.class);
+						if ((binding != null)
+								&& (binding.getParameterizedCommand() != null)
+								&& (binding.getParameterizedCommand()
+										.getCommand() != null)) {
 
-					KeySequence sequenceBeforeKeyStroke = KeySequence
-							.getInstance();
-					for (Iterator<KeyStroke> iterator = possibleKeyStrokes
-							.iterator(); iterator.hasNext();) {
-						KeySequence sequenceAfterKeyStroke = KeySequence
-								.getInstance(sequenceBeforeKeyStroke, iterator
-										.next());
-						if (iBindingService
-								.isPerfectMatch(sequenceAfterKeyStroke)) {
-							final Binding binding = iBindingService
-									.getPerfectMatch(sequenceAfterKeyStroke);
+							keyBindingPressed = true;
 
-							if ((binding != null)
-									&& (binding.getParameterizedCommand() != null)
-									&& (binding.getParameterizedCommand()
-											.getCommand() != null)
-									&& ContentAssistCommandAdapter.CONTENT_PROPOSAL_COMMAND
-											.equals(binding
-													.getParameterizedCommand()
-													.getCommand().getId())) {
+							if (ContentAssistCommandAdapter.CONTENT_PROPOSAL_COMMAND
+									.equals(binding.getParameterizedCommand()
+											.getCommand().getId())) {
 								keyboardEvent.type = SWT.NONE;
 							}
 						}
 					}
 				}
-				// sends xulrunner event to eclipse environment
-				getXulRunnerEditor().getBrowser().notifyListeners(
-						keyboardEvent.type, keyboardEvent);
+			}
+			
+			
+			/*
+			 * Sends xulrunner event to eclipse environment. 
+			 * dmaliarevich: while fixing JBIDE-2562 I found that
+			 * eclipse handles key shortcuts without this notification.
+			 */
+			// getXulRunnerEditor().getBrowser().notifyListeners(
+			// keyboardEvent.type, keyboardEvent);
+
+			/*
+			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-2562 
+			 * author: dmaliarevich
+			 * 
+			 * When shortcut key is pressed do not handle this event in the
+			 * handler.
+			 */
+			if (!keyBindingPressed) {
+				if (keyEventHandler.handleKeyPress(keyEvent)) {
+					switcher
+							.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
+					try {
+						/*
+						 *  Edward
+						 */
+						sourceSelectionChanged(true);
+						visualSelectionController.setCaretEnabled(true);
+					} catch (Exception e) {
+						VpePlugin.reportProblem(e);
+					} finally {
+						switcher.stopActiveEditor();
+					}
+				}
 			}
 		} catch (Exception e) {
 			VpePlugin.getPluginLog().logError(e);
