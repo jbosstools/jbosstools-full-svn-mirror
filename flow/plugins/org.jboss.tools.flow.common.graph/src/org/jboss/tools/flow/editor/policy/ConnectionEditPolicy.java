@@ -25,7 +25,7 @@ import org.eclipse.gef.requests.GroupRequest;
 import org.jboss.tools.flow.editor.command.DeleteConnectionCommand;
 import org.jboss.tools.flow.editor.command.SplitConnectionCommand;
 import org.jboss.tools.flow.editor.core.AbstractConnectionWrapper;
-import org.jboss.tools.flow.editor.core.AbstractRootWrapper;
+import org.jboss.tools.flow.editor.core.AbstractFlowWrapper;
 import org.jboss.tools.flow.editor.core.ConnectionFactory;
 import org.jboss.tools.flow.editor.core.NodeWrapper;
 import org.jboss.tools.flow.editor.editpart.ConnectionEditPart;
@@ -70,7 +70,7 @@ public class ConnectionEditPolicy extends org.eclipse.gef.editpolicies.Connectio
         SplitConnectionCommand cmd = new SplitConnectionCommand();
         cmd.setElementConnection(((AbstractConnectionWrapper) getHost().getModel()));
         cmd.setNewSecondConnection(elementConnectionFactory.createElementConnection());
-        cmd.setParent(((AbstractRootWrapper) ((ConnectionEditPart) getHost())
+        cmd.setParent(((AbstractFlowWrapper) ((ConnectionEditPart) getHost())
             .getSource().getParent().getModel()));
         cmd.setNewElement(((NodeWrapper) ((CreateRequest) request).getNewObject()));
         return cmd;

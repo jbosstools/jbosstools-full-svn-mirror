@@ -27,7 +27,7 @@ import java.util.Map;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
-public abstract class AbstractRootWrapper extends AbstractWrapper implements ContainerWrapper {
+public abstract class AbstractFlowWrapper extends AbstractWrapper implements ContainerWrapper {
 
 	public static final int CHANGE_ELEMENTS = 1;
 	public static final int CHANGE_VISUAL = 2;
@@ -83,7 +83,7 @@ public abstract class AbstractRootWrapper extends AbstractWrapper implements Con
     
     protected abstract void internalRemoveElement(NodeWrapper element);
     
-    public AbstractRootWrapper getProcessWrapper() {
+    public AbstractFlowWrapper getProcessWrapper() {
         return this;
     }
     

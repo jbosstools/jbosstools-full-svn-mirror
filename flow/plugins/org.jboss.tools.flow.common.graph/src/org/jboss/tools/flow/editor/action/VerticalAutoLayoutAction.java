@@ -31,7 +31,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.actions.ActionDelegate;
 import org.jboss.tools.flow.editor.GenericModelEditor;
 import org.jboss.tools.flow.editor.core.AbstractConnectionWrapper;
-import org.jboss.tools.flow.editor.core.AbstractRootWrapper;
+import org.jboss.tools.flow.editor.core.AbstractFlowWrapper;
 import org.jboss.tools.flow.editor.core.NodeWrapper;
 
 /**
@@ -60,7 +60,7 @@ public class VerticalAutoLayoutAction extends ActionDelegate implements IEditorA
         for (Map.Entry<String, Node> entry: mapping.entrySet()) {
             Node node = entry.getValue();
             NodeWrapper nodeWrapper =
-                ((AbstractRootWrapper) ((GenericModelEditor) editor).getModel()).getElement(entry.getKey());
+                ((AbstractFlowWrapper) ((GenericModelEditor) editor).getModel()).getElement(entry.getKey());
             nodeWrapper.setConstraint(new Rectangle(node.x, node.y, node.width, node.height));
         }
         // TODO: implement changes as a command, so we can support undo
@@ -70,7 +70,7 @@ public class VerticalAutoLayoutAction extends ActionDelegate implements IEditorA
     @SuppressWarnings("unchecked")
     protected DirectedGraph createDirectedGraph(Map<String, Node> mapping) {
         DirectedGraph graph = new DirectedGraph();
-        AbstractRootWrapper processWrapper = (AbstractRootWrapper) ((GenericModelEditor) editor).getModel();
+        AbstractFlowWrapper processWrapper = (AbstractFlowWrapper) ((GenericModelEditor) editor).getModel();
         for (NodeWrapper elementWrapper: processWrapper.getElements()) {
             Node node = new Node();
             Integer width = (Integer) elementWrapper.getConstraint().width;

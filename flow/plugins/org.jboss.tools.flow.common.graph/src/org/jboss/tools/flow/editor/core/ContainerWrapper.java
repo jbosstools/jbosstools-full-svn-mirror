@@ -28,7 +28,7 @@ public interface ContainerWrapper extends Wrapper {
     
     List<NodeWrapper> getElements();
     
-    AbstractRootWrapper getProcessWrapper();
+    AbstractFlowWrapper getProcessWrapper();
     
     boolean acceptsElement(NodeWrapper element);
 

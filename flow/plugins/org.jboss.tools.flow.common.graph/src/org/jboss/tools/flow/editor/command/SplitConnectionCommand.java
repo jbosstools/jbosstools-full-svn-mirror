@@ -18,7 +18,7 @@ package org.jboss.tools.flow.editor.command;
 
 import org.eclipse.gef.commands.Command;
 import org.jboss.tools.flow.editor.core.AbstractConnectionWrapper;
-import org.jboss.tools.flow.editor.core.AbstractRootWrapper;
+import org.jboss.tools.flow.editor.core.AbstractFlowWrapper;
 import org.jboss.tools.flow.editor.core.NodeWrapper;
 
 /**
@@ -28,7 +28,7 @@ import org.jboss.tools.flow.editor.core.NodeWrapper;
  */
 public class SplitConnectionCommand extends Command {
 
-    private AbstractRootWrapper parent;
+    private AbstractFlowWrapper parent;
     private NodeWrapper oldSource;
     private NodeWrapper oldTarget;
     private AbstractConnectionWrapper oldConnection;
@@ -53,7 +53,7 @@ public class SplitConnectionCommand extends Command {
     	secondConnection.connect(newElement, oldTarget);
     }
 
-    public void setParent(AbstractRootWrapper process) {
+    public void setParent(AbstractFlowWrapper process) {
     	if (process == null) {
     		throw new IllegalArgumentException("process is null");
     	}
