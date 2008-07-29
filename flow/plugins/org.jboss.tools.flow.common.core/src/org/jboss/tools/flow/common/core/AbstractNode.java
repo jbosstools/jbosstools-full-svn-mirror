@@ -1,12 +1,14 @@
 package org.jboss.tools.flow.common.core;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class AbstractNode {
+public class AbstractNode implements Node {
 	
 	private long id;
 	private String name;
-	private AbstractFlow container;
+	private NodeContainer container;
 	
 	private HashMap<String, Object> metaData = new HashMap<String, Object>();
 
@@ -34,12 +36,52 @@ public class AbstractNode {
 		return metaData.get(key);
 	}
 
-	public Object getNodeContainer() {
+	public NodeContainer getNodeContainer() {
 		return container;
 	}
 	
-	public void setNodeContainer(AbstractFlow container) {
+	public void setNodeContainer(NodeContainer container) {
 		this.container = container;
+	}
+
+	public void addIncomingConnection(String type, Connection connection) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addOutgoingConnection(String type, Connection connection) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Map<String, List<Connection>> getIncomingConnections() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Connection> getIncomingConnections(String type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Map<String, List<Connection>> getOutgoingConnections() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Connection> getOutgoingConnections(String type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void removeIncomingConnection(String type, Connection connection) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void removeOutgoingConnection(String type, Connection connection) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
