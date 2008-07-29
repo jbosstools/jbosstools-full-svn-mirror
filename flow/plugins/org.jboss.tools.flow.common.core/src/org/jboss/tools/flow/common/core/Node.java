@@ -80,9 +80,9 @@ public interface Node {
     
     List<Connection> getOutgoingConnections(String type);
     
-    NodeContainer getNodeContainer();
+    Container getNodeContainer();
     
-    void setNodeContainer(NodeContainer nodeContainer);
+    void setNodeContainer(Container nodeContainer);
     
     void setMetaData(String name, Object value);
     

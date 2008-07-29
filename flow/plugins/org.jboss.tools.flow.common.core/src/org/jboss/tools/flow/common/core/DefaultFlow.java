@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AbstractFlow implements Flow {
+public class DefaultFlow implements Flow {
 	
 	private String name;
 	private HashMap<String, Object> metaData = new HashMap<String, Object>();

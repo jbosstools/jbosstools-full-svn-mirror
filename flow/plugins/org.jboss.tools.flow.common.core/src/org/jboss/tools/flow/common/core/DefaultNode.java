@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AbstractNode implements Node {
+public class DefaultNode implements Node {
 	
 	private long id;
 	private String name;
-	private NodeContainer container;
+	private Container container;
 	
 	private HashMap<String, Object> metaData = new HashMap<String, Object>();
 
@@ -36,11 +36,11 @@ public class AbstractNode implements Node {
 		return metaData.get(key);
 	}
 
-	public NodeContainer getNodeContainer() {
+	public Container getNodeContainer() {
 		return container;
 	}
 	
-	public void setNodeContainer(NodeContainer container) {
+	public void setNodeContainer(Container container) {
 		this.container = container;
 	}
 

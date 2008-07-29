@@ -25,7 +25,7 @@ package org.jboss.tools.flow.common.core;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
-public interface Flow  extends NodeContainer {
+public interface Flow  extends Container {
 
     /**
      * Sets the id of this process.
