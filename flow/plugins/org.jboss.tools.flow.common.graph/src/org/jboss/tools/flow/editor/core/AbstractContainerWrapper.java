@@ -54,4 +54,18 @@ public abstract class AbstractContainerWrapper extends AbstractNodeWrapper imple
         return getParent().getProcessWrapper();
     }
 
+    public boolean acceptsElement(NodeWrapper element) {
+    	return true;
+    }
+    
+	public boolean acceptsIncomingConnection(
+			AbstractConnectionWrapper connection, NodeWrapper source) {
+		return true;
+	}
+
+	public boolean acceptsOutgoingConnection(
+			AbstractConnectionWrapper connection, NodeWrapper target) {
+		return true;
+	}
+
 }
