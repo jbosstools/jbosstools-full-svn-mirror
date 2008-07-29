@@ -1,13 +1,13 @@
-/*******************************************************************************
- * Copyright (c) 2007 Exadel, Inc. and Red Hat, Inc.
+/******************************************************************************* 
+ * Copyright (c) 2007 Red Hat, Inc.
  * Distributed under license by Red Hat, Inc. All rights reserved.
  * This program is made available under the terms of the
  * Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
- ******************************************************************************/ 
+ *     Red Hat, Inc. - initial API and implementation
+ ******************************************************************************/
 
 package org.jboss.tools.vpe.test;
 
@@ -92,7 +92,7 @@ public abstract class CommonJBIDE2010Test extends CommonRichFacesTestCase {
         elValuesMap.put(KEY_3, "/facesContext/");
         elValuesMap.put(KEY_4, VALUE_4);
         elValuesMap.put(KEY_5, VALUE_5);
-        file = (IFile) TestUtil.getComponentPath(DIR_TEST_PAGE_NAME, IMPORT_PROJECT_NAME);
+        file = (IFile) TestUtil.getComponentPath(getOpenPageName(), getOpenProjectName());
         ResourceReference[] entries = new ResourceReference[elValuesMap.size()];
         int i = 0;
         for (Entry<String, String> string : elValuesMap.entrySet()) {
@@ -101,10 +101,19 @@ public abstract class CommonJBIDE2010Test extends CommonRichFacesTestCase {
             entries[i].setProperties(string.getValue());
             i++;
 
-            setValues(entries);
+          
         }
+        setValues(entries);
     }
 
+    
+    protected String getOpenPageName(){
+        return DIR_TEST_PAGE_NAME;
+    }
+    
+    protected String getOpenProjectName(){
+        return IMPORT_PROJECT_NAME;
+    }
     /**
      * Sets the values.
      * 
