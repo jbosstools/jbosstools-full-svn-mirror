@@ -1,12 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2007 Exadel, Inc. and Red Hat, Inc.
+/******************************************************************************* 
+ * Copyright (c) 2007 Red Hat, Inc.
  * Distributed under license by Red Hat, Inc. All rights reserved.
  * This program is made available under the terms of the
  * Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
+ *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
 
 package org.jboss.tools.vpe.editor.util;
@@ -14,6 +14,8 @@ package org.jboss.tools.vpe.editor.util;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Assert;
+import org.jboss.tools.jsf.vpe.richfaces.ComponentUtil;
+import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.css.ELReferenceList;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
@@ -31,7 +33,7 @@ import org.w3c.dom.Node;
 public final class ElService implements IELService {
 
     /** The Constant INSTANCE. */
-    private static final ElService INSTANCE = new ElService();
+    private static final IELService INSTANCE = new ElService();
 
     /**
      * Checks if is available.
@@ -78,9 +80,10 @@ public final class ElService implements IELService {
      * 
      * @see IELService#getReplacedElValue(IFile, String)
      */
+    //@Deprecated
     public String replaceEl(IFile resourceFile, String resourceString) {
      //   Assert.isNotNull(resourceString);
-        if(resourceString == null){
+        if ((resourceString == null) || (resourceFile == null)) {
             return "";
         }
         Assert.isNotNull(resourceFile);
@@ -126,9 +129,62 @@ public final class ElService implements IELService {
         boolean rst = false;
         final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
         
-        if(this.isAvailable(file) && this.isAvailableForNode(sourceNode,file)){
+        if (((this.isAvailable(file) && this.isAvailableForNode(sourceNode, file))) || isInResourcesBundle(pageContext, sourceNode)){
             rst = true;
         }
+        return rst;
+    }
+
+    /**
+     * 
+     * @param pageContext
+     * @param sourceNode
+     * @return
+     */
+    public boolean isInResourcesBundle(VpePageContext pageContext, Element sourceNode) {
+        boolean rst = false;
+
+        BundleMap bundleMap = pageContext.getBundle();
+
+        String textValue = null;
+        if (sourceNode.getFirstChild() != null && sourceNode.getFirstChild().getNodeType() == Node.TEXT_NODE) {
+            textValue = sourceNode.getFirstChild().getNodeValue();
+        }
+        if (textValue != null && textValue.contains("#{")) {
+            final String newValue = bundleMap.getBundleValue(sourceNode.getNodeValue(), 0);
+            
+            if (!textValue.equals(newValue)) {
+                rst = true;
+            }
+        }
+        final NamedNodeMap nodeMap =  sourceNode.getAttributes();
+        
+        if (nodeMap != null && nodeMap.getLength() > 0) {
+            for (int i = 0; i < nodeMap.getLength(); i++) {
+                final Attr attr = (Attr) nodeMap.item(i);
+                final String value = attr.getValue();
+
+                if (value != null && value.contains("#{")) {
+                    final String value2 = bundleMap.getBundleValue(value, 0);
+
+                    if (!value2.equals(value)) {
+                        rst = true;
+                        break;
+                    }
+                }
+            }
+        }
+//        final NamedNodeMap nodeMap = sourceNode.getAttributes();
+//
+//        if ((nodeMap != null) && (nodeMap.getLength() > 0)) {
+//            for (int i = 0; i < nodeMap.getLength(); i++) {
+//                if (isInResourcesBundle(pageContext, sourceNode)) {
+//                    rst = true;
+//                    break;
+//                }
+//            }
+//        }
+
         return rst;
     }
 
@@ -209,5 +265,24 @@ public final class ElService implements IELService {
         }
         return str;
     }
+
+
+    public String replaceElAndResources(VpePageContext pageContext, Attr attributeNode) {
+        final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
+        final String attribuString = attributeNode.getValue();
+        String rst  = attribuString;
+        
+        rst = ComponentUtil.getBundleValue(pageContext, attributeNode);
+      
+        rst = replaceEl(file, rst);
+
+        return rst;
+    }
+    
+//    private String replaceResourceBundle(VpePageContext context,Attr attributeNode){
+//        
+//    }
+    
+    
 
 }

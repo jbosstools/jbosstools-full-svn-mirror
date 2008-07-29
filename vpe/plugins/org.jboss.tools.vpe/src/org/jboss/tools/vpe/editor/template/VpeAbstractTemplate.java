@@ -1480,14 +1480,15 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
     public void beforeTemplateCreated(VpePageContext pageContext, Node sourceNode, nsIDOMDocument domDocument) {
         final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
 
-        if ((file != null) && ElService.getInstance().isAvailable(file)) {
+        if ((file != null)) {
           //  Node first((Element
             Node text = sourceNode.getFirstChild();
-            if(text instanceof Text){
-                ((Text)text).setData(ElService.getInstance().replaceEl(file, ((TextImpl)text).getData()));
-            }else if((sourceNode.getFirstChild()!=null) && (sourceNode.getFirstChild().getFirstChild() instanceof Text)){
+            
+            if (text instanceof Text) {
+                ((Text) text).setData(ElService.getInstance().replaceEl(file, ((TextImpl) text).getData()));
+            } else if ((sourceNode.getFirstChild() != null) && (sourceNode.getFirstChild().getFirstChild() instanceof Text)) {
                 text = sourceNode.getFirstChild().getFirstChild();
-                ((Text)text).setData(ElService.getInstance().replaceEl(file, ((TextImpl)text).getData()));
+                ((Text) text).setData(ElService.getInstance().replaceEl(file, ((TextImpl) text).getData()));
             }
             final NamedNodeMap nodeMap = sourceNode.getAttributes();  
             
@@ -1495,7 +1496,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
                 for (int i = 0; i < nodeMap.getLength(); i++) {
                     final Attr n = (Attr) nodeMap.item(i);
 
-                    n.setValue(ElService.getInstance().replaceEl(file, n.getValue()));
+                    n.setValue(ElService.getInstance().replaceElAndResources(pageContext,n));
 
                 }
                 if ((sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
