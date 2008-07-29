@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class AbstractNodeContainer implements NodeContainer {
+public abstract class AbstractNodeContainer extends AbstractNode implements NodeContainer {
 	
 	private String name;
 	private HashMap<String, Object> metaData = new HashMap<String, Object>();
