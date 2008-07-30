@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="manage" xreflabel="manage">
-    <?dbhtml filename="manage.html"?>
+  <?dbhtml filename="manage.html"?>
   <chapterinfo>
     <keywordset>
       <keyword>JBoss Developer Studio</keyword>
