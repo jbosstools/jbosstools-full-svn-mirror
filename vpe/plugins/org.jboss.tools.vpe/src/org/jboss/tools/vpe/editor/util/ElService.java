@@ -14,7 +14,7 @@ package org.jboss.tools.vpe.editor.util;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Assert;
-import org.jboss.tools.jsf.vpe.richfaces.ComponentUtil;
+import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.css.ELReferenceList;
@@ -270,10 +270,12 @@ public final class ElService implements IELService {
     public String replaceElAndResources(VpePageContext pageContext, Attr attributeNode) {
         final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
         final String attribuString = attributeNode.getValue();
+        final BundleMap bundle = pageContext.getBundle();
         String rst  = attribuString;
-        
-        rst = ComponentUtil.getBundleValue(pageContext, attributeNode);
       
+        int offset = ((IDOMAttr) attributeNode).getValueRegionStartOffset();
+        rst = bundle.getBundleValue(attribuString, offset);
+
         rst = replaceEl(file, rst);
 
         return rst;
