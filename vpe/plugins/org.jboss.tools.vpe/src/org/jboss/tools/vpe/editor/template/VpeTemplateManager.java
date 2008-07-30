@@ -230,6 +230,10 @@ public class VpeTemplateManager {
 	private VpeTemplateFileList templateFileList = new VpeTemplateFileList();
 	private Set<String> withoutWhitespaceContainerSet = new HashSet<String>();
 	private Set<String> withoutPseudoElementContainerSet = new HashSet<String>();
+	//text template name
+	private static final String TEXT_TEMPLATE_NAME="#text"; //$NON-NLS-1$
+	//comment template name
+	private static final String COMMENT_TEMPLATE_NAME="#comment"; //$NON-NLS-1$
 	
 	/**
 	 * added by Max Areshkau, JBIDE-1494
@@ -300,31 +304,55 @@ public class VpeTemplateManager {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param pageContext
+	 * @param sourceNode
+	 * @return name of template
+	 */
 	private String getTemplateName(VpePageContext pageContext, Node sourceNode) {
-		String sourcePrefix = sourceNode.getPrefix();
-
-		if (sourcePrefix == null
-				|| ((IDOMElement)sourceNode).isJSPTag()
-					|| "jsp".equals(sourcePrefix)) { //$NON-NLS-1$
-			return sourceNode.getNodeName();
+		
+		if(sourceNode==null) {
+			return null;
 		}
+		switch (sourceNode.getNodeType()){
 		
-		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,pageContext);
-		
-		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix, taglibs);		
+		case Node.TEXT_NODE:
+			
+			return TEXT_TEMPLATE_NAME;
+			
+		case Node.COMMENT_NODE:
+			
+			return COMMENT_TEMPLATE_NAME;
+			
+		case Node.ELEMENT_NODE:
+			String sourcePrefix = sourceNode.getPrefix();
 
-		if(sourceNodeTaglib == null) {
+			if (sourcePrefix == null
+					|| ((IDOMElement)sourceNode).isJSPTag()
+						|| "jsp".equals(sourcePrefix)) { //$NON-NLS-1$
+				return sourceNode.getNodeName();
+			}
+			
+			List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,pageContext);
+			
+			TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix, taglibs);		
+
+			if(sourceNodeTaglib == null) {
+				return null;
+			}
+			
+			String sourceNodeUri = sourceNodeTaglib.getUri();
+			String templateTaglibPrefix = getTemplateTaglibPrefix(sourceNodeUri);
+
+			if(templateTaglibPrefix != null) {
+				return templateTaglibPrefix + ":" + sourceNode.getLocalName(); //$NON-NLS-1$
+			}
+			return null;
+		default : 
 			return null;
 		}
 		
-		String sourceNodeUri = sourceNodeTaglib.getUri();
-		String templateTaglibPrefix = getTemplateTaglibPrefix(sourceNodeUri);
-
-		if(templateTaglibPrefix != null) {
-			return templateTaglibPrefix + ":" + sourceNode.getLocalName(); //$NON-NLS-1$
-		}
-
-		return null;
 	}
 	
 	public String getTemplateTaglibPrefix(String sourceUri) {

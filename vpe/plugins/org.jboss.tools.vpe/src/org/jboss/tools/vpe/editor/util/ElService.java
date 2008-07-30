@@ -83,7 +83,7 @@ public final class ElService implements IELService {
     public String replaceEl(IFile resourceFile, String resourceString) {
      //   Assert.isNotNull(resourceString);
         if ((resourceString == null) || (resourceFile == null)) {
-            return "";
+            return ""; //$NON-NLS-1$
         }
         Assert.isNotNull(resourceFile);
         String rst = resourceString;
@@ -124,7 +124,7 @@ public final class ElService implements IELService {
      * 
      * @return true, if is cloneable node
      */
-    public boolean isCloneableNode(VpePageContext pageContext,Element sourceNode) {
+    public boolean isCloneableNode(VpePageContext pageContext,Node sourceNode) {
         boolean rst = false;
         final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
         
@@ -140,7 +140,7 @@ public final class ElService implements IELService {
      * @param sourceNode
      * @return
      */
-    public boolean isInResourcesBundle(VpePageContext pageContext, Element sourceNode) {
+    public boolean isInResourcesBundle(VpePageContext pageContext, Node sourceNode) {
         boolean rst = findInResourcesBundle(pageContext, sourceNode);
 
         if (!rst && (sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
@@ -167,7 +167,7 @@ public final class ElService implements IELService {
      * @param sourceNode
      * @return
      */
-    private boolean findInResourcesBundle(VpePageContext pageContext, Element sourceNode) {
+    private boolean findInResourcesBundle(VpePageContext pageContext, Node sourceNode) {
         boolean rst = false;
 
         BundleMap bundleMap = pageContext.getBundle();
@@ -209,8 +209,9 @@ public final class ElService implements IELService {
      * @param value
      * @return
      */
+    //TODO E Sherbin It's shouldn't bee here
     private boolean isContainsEl(final String value) {
-        return (value.contains("#{") || value.contains("${"));
+        return (value.contains("#{") || value.contains("${"));  //$NON-NLS-1$//$NON-NLS-2$
     }
 
 
@@ -222,7 +223,7 @@ public final class ElService implements IELService {
      * 
      * @return true, if is available for node
      */
-    private boolean isAvailableForNode(Element sourceNode, IFile resourceFile) {
+    private boolean isAvailableForNode(Node sourceNode, IFile resourceFile) {
         boolean rst = findForNode(sourceNode, resourceFile);
 
         if (!rst && (sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
@@ -247,7 +248,7 @@ public final class ElService implements IELService {
      * @param resourceFile
      * @return
      */
-    private boolean findForNode(Element sourceNode, IFile resourceFile) {
+    private boolean findForNode(Node sourceNode, IFile resourceFile) {
         boolean rst = false;
         final NamedNodeMap nodeMap = sourceNode.getAttributes();
         final ResourceReference[] references = ELReferenceList.getInstance().getAllResources(resourceFile);

@@ -390,9 +390,16 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
     return border;
     }
-
+    
+    /**
+     * Generates visual node
+     * @param sourceNode
+     * @param visualOldContainer
+     * @return
+     */
     protected nsIDOMNode createNode(Node sourceNode,
         nsIDOMNode visualOldContainer) {
+    	
     boolean registerFlag = isCurrentMainDocument();
     
     //reads and dispatch events
@@ -400,67 +407,41 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     if(getPageContext().getSourceBuilder()==null ||includeDocuments==null) {
         
         throw new VpeDisposeException();
-}
+    }
     getPageContext().processDisplayEvents();
     
     //check source node can be changed and link can be a null in this case
     //we shouldn't process this node
-    if(sourceNode==null) {
+    if(sourceNode==null||(
+    		sourceNode.getNodeType()!=Node.TEXT_NODE
+    		&&sourceNode.getNodeType()!=Node.ELEMENT_NODE
+    		&&sourceNode.getNodeType()!=Node.COMMENT_NODE)) {
         return null;
     }
+
     
+//    switch (sourceNode.getNodeType()) {
     
-    switch (sourceNode.getNodeType()) {
-    case Node.ELEMENT_NODE:
+//    case Node.ELEMENT_NODE:
         // Map<?, ?> xmlnsMap = createXmlns((Element) sourceNode);
         Set<Node> ifDependencySet = new HashSet<Node>();
         pageContext.setCurrentVisualNode(visualOldContainer);
         VpeTemplate template = templateManager.getTemplate(pageContext,
-            (Element) sourceNode, ifDependencySet);
+             sourceNode, ifDependencySet);
 
         VpeCreationData creationData = null;
         // FIX FOR JBIDE-1568, added by Max Areshkau
         try {
-//          if(getPageContext().isCreationDataExistInCash(sourceNode)) {
-                
-//              creationData = getPageContext().getVpeCreationDataFromCash(sourceNode).createHashCopy();
-//          } else {
-            
-//              VpeCreationData
-//              Map<String, String> oldAttributes = new HashMap<String, String>();
-//              NamedNodeMap map =   sourceNode.getAttributes();
-//              for( int i = 0 ; i < map.getLength() ; i ++ ){
-//                  final Attr attr = (Attr) map.item(i);
-//                
-//                  oldAttributes.put(attr.getName(),attr.getValue());
-//                  System.err.println(MessageFormat.format("name={0},value={1}", attr.getName(),attr.getValue()));
-//                  
-//              }
 
-                if (ElService.getInstance().isCloneableNode(getPageContext(),(Element) sourceNode)) {
-                    final Element sourceNodeClone = (Element) ((Element) sourceNode).cloneNode(true);
+                if (ElService.getInstance().isCloneableNode(getPageContext(), sourceNode)) {
+                    final Node sourceNodeClone =  (sourceNode).cloneNode(true);
 
                     template.beforeTemplateCreated(getPageContext(), sourceNodeClone, getVisualDocument());
                     creationData = template.create(getPageContext(), sourceNodeClone, getVisualDocument());
                 } else {
                     creationData = template.create(getPageContext(), sourceNode, getVisualDocument());
                 }
-                
-          
-//              
-//              map = sourceNode.getAttributes();
-//               for( int i = 0 ; i < map.getLength() ; i ++ ){
-//                   final Attr attr = (Attr) map.item(i);
-//                   
-//                   attr.setValue(oldAttributes.get(attr.getName()));
-//              }
-                
-//              if(creationData.getNode()!=null) {
-//                  
-//              getPageContext().addCreationDataToCash(sourceNode, creationData.createHashCopy());
-//              
-//              }
-//          }
+
         } catch (XPCOMException ex) {
         VpePlugin.getPluginLog().logError(ex);
         VpeTemplate defTemplate = templateManager.getDefTemplate();
@@ -468,46 +449,52 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
             getVisualDocument());
         }
         
-        pageContext.setCurrentVisualNode(null);
-        nsIDOMElement visualNewElement = null;
+        getPageContext().setCurrentVisualNode(null);
 
-            if(creationData.getNode()!=null) {
-            
-         visualNewElement = (nsIDOMElement) creationData
-                        .getNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-            }
-            
-        if ((visualNewElement != null) && template.hasImaginaryBorder()) {
+       	nsIDOMNode visualNewNode =creationData.getNode();
 
-                visualNewElement.setAttribute(HTML.ATTR_STYLE, visualNewElement
-                        .getAttribute(HTML.ATTR_STYLE)
-                        + VpeStyleUtil.SEMICOLON_STRING + DOTTED_BORDER);
-
-            }
-        
-        if (visualNewElement != null)
-        correctVisualAttribute(visualNewElement);
+//        nsIDOMElement visualNewElement = null;
+        //TODO Max Areshkau process it's correctly
+//            if(creationData.getNode()!=null) {
+//            
+//         visualNewElement = (nsIDOMElement) creationData
+//                        .getNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+//            }
+//            
+//        if ((visualNewElement != null) && template.hasImaginaryBorder()) {
+//
+//                visualNewElement.setAttribute(HTML.ATTR_STYLE, visualNewElement
+//                        .getAttribute(HTML.ATTR_STYLE)
+//                        + VpeStyleUtil.SEMICOLON_STRING + DOTTED_BORDER);
+//
+//            }
+//        
+//        if (visualNewElement != null)
+//        correctVisualAttribute(visualNewElement);
         
 
 
         nsIDOMElement border = null;
-        setTooltip((Element) sourceNode, visualNewElement);
-        if (YES_STRING.equals(VpePreference.SHOW_BORDER_FOR_ALL_TAGS
-            .getValue())
-            && visualNewElement != null) {
-        boolean block = true;
-        if (template.getTagDescription(null, null, null,
-            visualNewElement, null).getDisplayType() == VpeTagDescription.DISPLAY_TYPE_INLINE) {
-            block = false;
+        if(sourceNode instanceof Element && visualNewNode!= null) {
+        	
+        	setTooltip((Element) sourceNode, (nsIDOMElement)visualNewNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
         }
-        border = createBorder(sourceNode, visualNewElement, block);
-        }
-        if (!isCurrentMainDocument() && visualNewElement != null) {
-        setReadOnlyElement(visualNewElement);
-        }
+//        if (YES_STRING.equals(VpePreference.SHOW_BORDER_FOR_ALL_TAGS
+//            .getValue())
+//            && visualNewElement != null) {
+//        boolean block = true;
+//        if (template.getTagDescription(null, null, null,
+//            visualNewElement, null).getDisplayType() == VpeTagDescription.DISPLAY_TYPE_INLINE) {
+//            block = false;
+//        }
+//        border = createBorder(sourceNode, visualNewElement, block);
+//        }
+//        if (!isCurrentMainDocument() && visualNewElement != null) {
+//        setReadOnlyElement(visualNewElement);
+//        }
         if (registerFlag) {
                 VpeElementMapping elementMapping = new VpeElementMapping(
-                        (Element) sourceNode, visualNewElement, border,
+                        sourceNode, visualNewNode, border,
                         template, ifDependencySet, creationData.getData(),
                         creationData.getElementData());
                 // elementMapping.setXmlnsMap(xmlnsMap);
@@ -517,34 +504,35 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
         List<?> childrenInfoList = creationData.getChildrenInfoList();
         if (childrenInfoList == null) {
             addChildren(template, sourceNode,
-                visualNewElement != null ? visualNewElement
+                visualNewNode != null ? visualNewNode
                     : visualOldContainer);
         } else {
             addChildren(template, sourceNode, visualOldContainer,
                 childrenInfoList);
         }
         }
-        pageContext.setCurrentVisualNode(visualOldContainer);
-        template.validate(pageContext, (Element) sourceNode,
+        getPageContext().setCurrentVisualNode(visualOldContainer);
+        template.validate(getPageContext(),  sourceNode,
             visualDocument, creationData);
-        pageContext.setCurrentVisualNode(null);
+        getPageContext().setCurrentVisualNode(null);
+        
         if (border != null)
-        return border;
+        	return border;
         else
-        return visualNewElement;
-    case Node.TEXT_NODE:
-        return createTextNode(sourceNode, registerFlag);
-    case Node.COMMENT_NODE:
-        if (!YES_STRING.equals(VpePreference.SHOW_COMMENTS.getValue())) {
-        return null;
-        }
-        nsIDOMElement visualNewComment = createComment(sourceNode);
-        if (registerFlag) {
-        registerNodes(new VpeNodeMapping(sourceNode, visualNewComment));
-        }
-        return visualNewComment;
-    }
-    return null;
+        	return visualNewNode;
+//    case Node.TEXT_NODE:
+//        return createTextNode(sourceNode, registerFlag);
+//    case Node.COMMENT_NODE:
+//        if (!YES_STRING.equals(VpePreference.SHOW_COMMENTS.getValue())) {
+//        return null;
+//        }
+//        nsIDOMElement visualNewComment = createComment(sourceNode);
+//        if (registerFlag) {
+//        registerNodes(new VpeNodeMapping(sourceNode, visualNewComment));
+//        }
+//        return visualNewComment;
+//    }
+//    return null;
     }
 
     private void correctVisualAttribute(nsIDOMElement element) {
@@ -1509,9 +1497,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     VpeNodeMapping node = domMapping.getNodeMapping(visualDragElement);
     if (node instanceof VpeElementMapping) {
         VpeElementMapping elementMapping = (VpeElementMapping) node;
-        if (elementMapping != null) {
+        if (elementMapping != null && elementMapping.getSourceNode() instanceof Element) {
         return elementMapping.getTemplate().canInnerDrag(pageContext,
-            (Element) elementMapping.getSourceNode(),
+            (Element)elementMapping.getSourceNode(),
             visualDocument, visualDragElement,
             elementMapping.getData());
         }

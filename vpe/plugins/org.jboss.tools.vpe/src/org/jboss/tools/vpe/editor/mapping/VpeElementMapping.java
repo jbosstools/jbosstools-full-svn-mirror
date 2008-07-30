@@ -17,6 +17,7 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 public class VpeElementMapping extends VpeNodeMapping {
 	private VpeTemplate template;
@@ -30,10 +31,10 @@ public class VpeElementMapping extends VpeNodeMapping {
 	private VpeElementData elementData;
 	private nsIDOMElement border;
 	
-	public VpeElementMapping(Element sourceElement,
-			nsIDOMElement visualElement, nsIDOMElement border,
+	public VpeElementMapping(Node sourceElement,
+			nsIDOMNode visualNode, nsIDOMElement border,
 			VpeTemplate template, Set ifDependencySet, Object data, VpeElementData elementData) {
-		super(sourceElement, visualElement);
+		super(sourceElement, visualNode);
 		this.template = template;
 		if (ifDependencySet != null && ifDependencySet.size() > 0) {
 			this.ifDependencySet = ifDependencySet;

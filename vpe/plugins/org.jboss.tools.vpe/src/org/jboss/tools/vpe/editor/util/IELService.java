@@ -16,6 +16,7 @@ import org.eclipse.core.resources.IFile;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 
 /**
@@ -77,7 +78,7 @@ public interface IELService {
      * 
      * @return true, if is cloneable node
      */
-    public boolean isCloneableNode(VpePageContext pageContext, Element sourceNode);
+    public boolean isCloneableNode(VpePageContext pageContext, Node sourceNode);
     
     
     /**
@@ -88,6 +89,6 @@ public interface IELService {
      * 
      * @return true, if is in resources bundle
      */
-    boolean isInResourcesBundle(VpePageContext pageContext, Element sourceNode);
+    boolean isInResourcesBundle(VpePageContext pageContext, Node sourceNode);
 
 }
