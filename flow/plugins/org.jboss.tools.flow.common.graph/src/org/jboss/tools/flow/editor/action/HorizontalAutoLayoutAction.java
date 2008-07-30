@@ -43,7 +43,7 @@ public class HorizontalAutoLayoutAction extends VerticalAutoLayoutAction {
 		setText("Auto Layout (Horizontal)");
 		setImageDescriptor(
 				ImageDescriptor.createFromURL(
-						Activator.getDefault().getBundle().getEntry("/icons/layoutH.gif")));
+						Activator.getDefault().getBundle().getEntry("icons/layoutH.gif")));
 		setToolTipText("Auto layout the process (horizontal)");
 	}
 

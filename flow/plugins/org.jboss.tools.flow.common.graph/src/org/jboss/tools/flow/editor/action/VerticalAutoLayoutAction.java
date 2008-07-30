@@ -55,7 +55,7 @@ public class VerticalAutoLayoutAction extends Action implements IAction {
 		setText("Auto Layout (Vertical)");
 		setImageDescriptor(
 				ImageDescriptor.createFromURL(
-						Activator.getDefault().getBundle().getEntry("/icons/layoutV.gif")));
+						Activator.getDefault().getBundle().getEntry("icons/layoutV.gif")));
 		setToolTipText("Auto layout the process (vertical)");
 	}
 

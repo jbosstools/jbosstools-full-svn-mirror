@@ -28,8 +28,10 @@ import org.eclipse.gef.ui.actions.ZoomInRetargetAction;
 import org.eclipse.gef.ui.actions.ZoomOutRetargetAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.RetargetAction;
+import org.jboss.tools.flow.Activator;
 import org.jboss.tools.flow.editor.action.HorizontalAutoLayoutAction;
 import org.jboss.tools.flow.editor.action.VerticalAutoLayoutAction;
 
@@ -58,8 +60,16 @@ public class GenericActionBarContributor extends ActionBarContributor {
     	addRetargetAction( new RetargetAction(
 			GEFActionConstants.TOGGLE_GRID_VISIBILITY, "Grid" ));
     	
-    	addRetargetAction( new RetargetAction(VerticalAutoLayoutAction.ID, null));
-    	addRetargetAction( new RetargetAction(HorizontalAutoLayoutAction.ID, null));
+    	RetargetAction verticalAutoLayoutAction = new RetargetAction(VerticalAutoLayoutAction.ID, null);
+    	verticalAutoLayoutAction.setImageDescriptor(
+    			ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/layoutV.gif")));
+    	addRetargetAction(verticalAutoLayoutAction);
+
+    	RetargetAction horizontalAutoLayoutAction = new RetargetAction(HorizontalAutoLayoutAction.ID, null);
+    	horizontalAutoLayoutAction.setImageDescriptor(
+    			ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/layoutH.gif")));
+    	addRetargetAction(horizontalAutoLayoutAction);
+
     }
 
     public void contributeToToolBar(IToolBarManager toolBarManager) {
