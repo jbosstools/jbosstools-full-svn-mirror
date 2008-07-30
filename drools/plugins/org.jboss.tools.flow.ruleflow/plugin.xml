@@ -13,7 +13,7 @@
       </editor>
    </extension>
 
-   <extension
+<!--   <extension
          point = "org.eclipse.ui.editorActions">
       <editorContribution
             id="org.jboss.tools.process.editor.action.VerticalAutoLayoutAction"
@@ -39,6 +39,6 @@
             class="org.jboss.tools.flow.editor.action.HorizontalAutoLayoutAction"
          />
       </editorContribution>
-   </extension>
+   </extension> -->
    
 </plugin>

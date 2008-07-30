@@ -26,7 +26,6 @@ import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.requests.SimpleFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.jboss.tools.flow.JBossToolsProcessPlugin;
 import org.jboss.tools.flow.editor.PaletteFactory;
 import org.jboss.tools.process.ruleflow.Activator;
 import org.jboss.tools.process.ruleflow.editor.core.ConnectionWrapper;
@@ -51,8 +50,8 @@ public class RuleFlowPaletteFactory extends PaletteFactory {
                 "Connection Creation",
                 "Creating connections",
                 new SimpleFactory(ConnectionWrapper.class),
-                ImageDescriptor.createFromURL(JBossToolsProcessPlugin.getDefault().getBundle().getEntry("icons/connection.gif")), 
-                ImageDescriptor.createFromURL(JBossToolsProcessPlugin.getDefault().getBundle().getEntry("icons/connection.gif"))
+                ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/connection.gif")), 
+                ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/connection.gif"))
             );
     }
     
