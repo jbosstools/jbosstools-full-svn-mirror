@@ -41,7 +41,7 @@ import org.jboss.tools.flow.editor.core.ConnectionFactory;
  */
 public abstract class PaletteFactory {
     
-    private ConnectionFactory connectionFactory;
+    protected ConnectionFactory connectionFactory;
     
     public PaletteFactory(ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
@@ -72,21 +72,21 @@ public abstract class PaletteFactory {
         tool = new MarqueeToolEntry();
         entries.add(tool);
         
-        tool = new ConnectionCreationToolEntry(
-            "Connection Creation",
-            "Creating connections",
-            new CreationFactory() {
-                public Object getNewObject() {
-                	return connectionFactory.createElementConnection();
-                }
-                public Object getObjectType() {
-                	return AbstractConnectionWrapper.class;
-                }
-            },
-            ImageDescriptor.createFromURL(JBossToolsProcessPlugin.getDefault().getBundle().getEntry("icons/connection.gif")), 
-            ImageDescriptor.createFromURL(JBossToolsProcessPlugin.getDefault().getBundle().getEntry("icons/connection.gif"))
-        );
-        entries.add(tool);
+//        tool = new ConnectionCreationToolEntry(
+//            "Connection Creation",
+//            "Creating connections",
+//            new CreationFactory() {
+//                public Object getNewObject() {
+//                	return connectionFactory.createElementConnection();
+//                }
+//                public Object getObjectType() {
+//                	return AbstractConnectionWrapper.class;
+//                }
+//            },
+//            ImageDescriptor.createFromURL(JBossToolsProcessPlugin.getDefault().getBundle().getEntry("icons/connection.gif")), 
+//            ImageDescriptor.createFromURL(JBossToolsProcessPlugin.getDefault().getBundle().getEntry("icons/connection.gif"))
+//        );
+//        entries.add(tool);
         
         controlGroup.addAll(entries);
         return controlGroup;
