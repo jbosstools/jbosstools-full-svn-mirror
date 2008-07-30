@@ -83,7 +83,7 @@ public abstract class AbstractFlowWrapper extends AbstractWrapper implements Con
     
     protected abstract void internalRemoveElement(NodeWrapper element);
     
-    public AbstractFlowWrapper getProcessWrapper() {
+    public AbstractFlowWrapper getFlowWrapper() {
         return this;
     }
     
