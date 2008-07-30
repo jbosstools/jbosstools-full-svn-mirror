@@ -30,6 +30,8 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.RetargetAction;
+import org.jboss.tools.flow.editor.action.HorizontalAutoLayoutAction;
+import org.jboss.tools.flow.editor.action.VerticalAutoLayoutAction;
 
 /**
  * Common implementation of a ActionBarContributor.
@@ -55,6 +57,9 @@ public class GenericActionBarContributor extends ActionBarContributor {
         
     	addRetargetAction( new RetargetAction(
 			GEFActionConstants.TOGGLE_GRID_VISIBILITY, "Grid" ));
+    	
+    	addRetargetAction( new RetargetAction(VerticalAutoLayoutAction.ID, null));
+    	addRetargetAction( new RetargetAction(HorizontalAutoLayoutAction.ID, null));
     }
 
     public void contributeToToolBar(IToolBarManager toolBarManager) {
@@ -76,6 +81,10 @@ public class GenericActionBarContributor extends ActionBarContributor {
         
         toolBarManager.add( new Separator() );                              
         toolBarManager.add( getAction(GEFActionConstants.TOGGLE_GRID_VISIBILITY) );
+        
+        toolBarManager.add( new Separator());
+        toolBarManager.add( getAction(VerticalAutoLayoutAction.ID));
+        toolBarManager.add( getAction(HorizontalAutoLayoutAction.ID));
     }
     
     protected void declareGlobalActionKeys() {

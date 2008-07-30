@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: JBoss Tools Process Plug-in
 Bundle-SymbolicName: org.jboss.tools.flow.common.graph;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: org.jboss.tools.flow.JBossToolsProcessPlugin
+Bundle-Activator: org.jboss.tools.flow.Activator
 Bundle-Vendor: JBoss
 Require-Bundle: 
  org.jboss.tools.flow.common.core;bundle-version="1.0.0",

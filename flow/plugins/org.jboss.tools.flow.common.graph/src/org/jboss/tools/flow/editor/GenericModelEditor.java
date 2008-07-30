@@ -68,7 +68,9 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
-import org.jboss.tools.flow.JBossToolsProcessPlugin;
+import org.jboss.tools.flow.Activator;
+import org.jboss.tools.flow.editor.action.HorizontalAutoLayoutAction;
+import org.jboss.tools.flow.editor.action.VerticalAutoLayoutAction;
 
 /**
  * Abstract implementation of a graphical editor.
@@ -160,11 +162,17 @@ public abstract class GenericModelEditor extends GraphicalEditorWithPalette {
 
 		IAction showGrid = new ToggleGridAction(getGraphicalViewer());
 		getActionRegistry().registerAction(showGrid);
+		
+		IAction layoutVertically = new VerticalAutoLayoutAction(getGraphicalViewer());
+		getActionRegistry().registerAction(layoutVertically);
+		IAction layoutHorizontally = new HorizontalAutoLayoutAction(getGraphicalViewer());
+		getActionRegistry().registerAction(layoutHorizontally);
+		
 
 		ContextMenuProvider provider = new GenericContextMenuProvider(
 				getGraphicalViewer(), getActionRegistry());
 		getGraphicalViewer().setContextMenu(provider);
-		getSite().registerContextMenu("org.drools.eclipse.flow.editor.contextmenu",
+		getSite().registerContextMenu("org.jboss.tools.flow.editor.contextmenu",
 				provider, getGraphicalViewer());
 	}
 	
@@ -279,7 +287,7 @@ public abstract class GenericModelEditor extends GraphicalEditorWithPalette {
 			InputStream is = file.getContents(false);
 			createModel(is);
 		} catch (Throwable t) {
-			JBossToolsProcessPlugin.log(t);
+			Activator.log(t);
 		}
 		if (getGraphicalViewer() != null) {
 			initializeGraphicalViewer();
@@ -350,7 +358,7 @@ public abstract class GenericModelEditor extends GraphicalEditorWithPalette {
             imageLoader.data = new ImageData[] { image.getImageData() };
             imageLoader.save(stream, format);
         } catch (Throwable t) {
-            JBossToolsProcessPlugin.log(t);
+            Activator.log(t);
 	    } finally {
             if (g != null) {
                 g.dispose();

@@ -39,7 +39,7 @@ import org.jboss.tools.flow.editor.core.NodeWrapper;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
-public class VerticalAutoLayoutAction extends ActionDelegate implements IEditorActionDelegate {
+public class VerticalAutoLayoutActionDelegate extends ActionDelegate implements IEditorActionDelegate {
 
     private IEditorPart editor;
     

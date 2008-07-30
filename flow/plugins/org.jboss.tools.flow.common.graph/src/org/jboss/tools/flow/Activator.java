@@ -26,13 +26,13 @@ import org.osgi.framework.BundleContext;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">kris verlaenen </a>
  */
-public class JBossToolsProcessPlugin extends AbstractUIPlugin {
+public class Activator extends AbstractUIPlugin {
 
     public static final String PLUGIN_ID = "org.jboss.tools.process";
 
-    private static JBossToolsProcessPlugin plugin;
+    private static Activator plugin;
 
-    public JBossToolsProcessPlugin() {
+    public Activator() {
         plugin = this;
     }
 
@@ -41,7 +41,7 @@ public class JBossToolsProcessPlugin extends AbstractUIPlugin {
         plugin = null;
     }
 
-    public static JBossToolsProcessPlugin getDefault() {
+    public static Activator getDefault() {
         return plugin;
     }
 

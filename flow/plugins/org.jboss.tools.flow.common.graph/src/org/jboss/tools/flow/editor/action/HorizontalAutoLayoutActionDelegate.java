@@ -27,7 +27,7 @@ import org.eclipse.draw2d.graph.Node;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
-public class HorizontalAutoLayoutAction extends VerticalAutoLayoutAction {
+public class HorizontalAutoLayoutActionDelegate extends VerticalAutoLayoutActionDelegate {
 
     protected DirectedGraph createDirectedGraph(Map<String, Node> mapping) {
         DirectedGraph graph = super.createDirectedGraph(mapping);
