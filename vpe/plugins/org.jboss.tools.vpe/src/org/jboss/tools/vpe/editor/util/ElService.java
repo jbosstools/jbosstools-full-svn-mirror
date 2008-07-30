@@ -141,50 +141,76 @@ public final class ElService implements IELService {
      * @return
      */
     public boolean isInResourcesBundle(VpePageContext pageContext, Element sourceNode) {
+        boolean rst = findInResourcesBundle(pageContext, sourceNode);
+
+        if (!rst && (sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
+            for (int i = 0; i < sourceNode.getChildNodes().getLength(); i++) {
+                final Node node = sourceNode.getChildNodes().item(i);
+                
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    if((rst = findInResourcesBundle(pageContext, (Element) node))){
+                        break;
+                    }
+                    
+
+                }
+
+            }
+        }
+
+        return rst;
+    }
+
+
+    /**
+     * @param pageContext
+     * @param sourceNode
+     * @return
+     */
+    private boolean findInResourcesBundle(VpePageContext pageContext, Element sourceNode) {
         boolean rst = false;
 
         BundleMap bundleMap = pageContext.getBundle();
-
-        String textValue = null;
-        if (sourceNode.getFirstChild() != null && sourceNode.getFirstChild().getNodeType() == Node.TEXT_NODE) {
-            textValue = sourceNode.getFirstChild().getNodeValue();
-        }
-        if (textValue != null && textValue.contains("#{")) {
-            final String newValue = bundleMap.getBundleValue(sourceNode.getNodeValue(), 0);
-            
-            if (!textValue.equals(newValue)) {
-                rst = true;
+        if (bundleMap != null) {
+            String textValue = null;
+            if ((sourceNode.getFirstChild() != null) && (sourceNode.getFirstChild().getNodeType() == Node.TEXT_NODE)) {
+                textValue = sourceNode.getFirstChild().getNodeValue();
             }
-        }
-        final NamedNodeMap nodeMap =  sourceNode.getAttributes();
-        
-        if (nodeMap != null && nodeMap.getLength() > 0) {
-            for (int i = 0; i < nodeMap.getLength(); i++) {
-                final Attr attr = (Attr) nodeMap.item(i);
-                final String value = attr.getValue();
+            if ((textValue != null) && isContainsEl(textValue)) {
+                final String newValue = bundleMap.getBundleValue(sourceNode.getNodeValue(), 0);
 
-                if (value != null && value.contains("#{")) {
-                    final String value2 = bundleMap.getBundleValue(value, 0);
+                if (!textValue.equals(newValue)) {
+                    rst = true;
+                }
+            }
+            final NamedNodeMap nodeMap = sourceNode.getAttributes();
 
-                    if (!value2.equals(value)) {
-                        rst = true;
-                        break;
+            if (nodeMap != null && nodeMap.getLength() > 0) {
+                for (int i = 0; i < nodeMap.getLength(); i++) {
+                    final Attr attr = (Attr) nodeMap.item(i);
+                    final String value = attr.getValue();
+
+                    if (value != null && isContainsEl(value)) {
+                        final String value2 = bundleMap.getBundleValue(value, 0);
+
+                        if (!value2.equals(value)) {
+                            rst = true;
+                            break;
+                        }
                     }
                 }
             }
         }
-//        final NamedNodeMap nodeMap = sourceNode.getAttributes();
-//
-//        if ((nodeMap != null) && (nodeMap.getLength() > 0)) {
-//            for (int i = 0; i < nodeMap.getLength(); i++) {
-//                if (isInResourcesBundle(pageContext, sourceNode)) {
-//                    rst = true;
-//                    break;
-//                }
-//            }
-//        }
-
         return rst;
+    }
+
+
+    /**
+     * @param value
+     * @return
+     */
+    private boolean isContainsEl(final String value) {
+        return (value.contains("#{") || value.contains("${"));
     }
 
 
@@ -197,10 +223,36 @@ public final class ElService implements IELService {
      * @return true, if is available for node
      */
     private boolean isAvailableForNode(Element sourceNode, IFile resourceFile) {
+        boolean rst = findForNode(sourceNode, resourceFile);
+
+        if (!rst && (sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
+            for (int i = 0; i < sourceNode.getChildNodes().getLength(); i++) {
+                final Node node = sourceNode.getChildNodes().item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    if((rst = findForNode((Element) node, resourceFile))){
+                        break;
+                    }
+                }
+
+            }
+        }
+
+        return rst;
+    }
+
+
+    /**
+     * @param sourceNode
+     * @param resourceFile
+     * @return
+     */
+    private boolean findForNode(Element sourceNode, IFile resourceFile) {
         boolean rst = false;
         final NamedNodeMap nodeMap = sourceNode.getAttributes();
         final ResourceReference[] references = ELReferenceList.getInstance().getAllResources(resourceFile);
         String textValue = null;
+        
         if (sourceNode.getFirstChild() != null && sourceNode.getFirstChild().getNodeType() == Node.TEXT_NODE) {
             textValue = sourceNode.getFirstChild().getNodeValue();
         }
@@ -217,7 +269,6 @@ public final class ElService implements IELService {
                 }
             }
         }
-
         return rst;
     }
 
