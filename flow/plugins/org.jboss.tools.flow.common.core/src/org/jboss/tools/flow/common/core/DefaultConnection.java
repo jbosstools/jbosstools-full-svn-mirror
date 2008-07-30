@@ -2,7 +2,7 @@ package org.jboss.tools.flow.common.core;
 
 import java.util.HashMap;
 
-public abstract class DefaultConnection implements Connection {
+public class DefaultConnection implements Connection {
 	
 	private HashMap<String, Object> metaData = new HashMap<String, Object>();
 	private Node from, to;
