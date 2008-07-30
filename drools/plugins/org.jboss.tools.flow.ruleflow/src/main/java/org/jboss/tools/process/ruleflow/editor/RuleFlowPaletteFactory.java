@@ -20,10 +20,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.gef.palette.CombinedTemplateCreationEntry;
+import org.eclipse.gef.palette.ConnectionCreationToolEntry;
+import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteEntry;
+import org.eclipse.gef.palette.PaletteRoot;
+import org.eclipse.gef.requests.CreationFactory;
 import org.eclipse.gef.requests.SimpleFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jboss.tools.flow.JBossToolsProcessPlugin;
 import org.jboss.tools.flow.editor.PaletteFactory;
+import org.jboss.tools.flow.editor.core.AbstractConnectionWrapper;
 import org.jboss.tools.process.ruleflow.Activator;
 import org.jboss.tools.process.ruleflow.editor.core.ConnectionWrapperFactory;
 import org.jboss.tools.process.ruleflow.editor.core.StartNodeWrapper;
@@ -35,11 +41,34 @@ import org.jboss.tools.process.ruleflow.editor.core.SubProcessWrapper;
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
 public class RuleFlowPaletteFactory extends PaletteFactory {
-    
+	
     public RuleFlowPaletteFactory() {
         super(new ConnectionWrapperFactory());
     }
+    
+    protected PaletteContainer createControlGroup(PaletteRoot root) {
+        PaletteContainer controlGroup = super.createControlGroup(root);
+        controlGroup.add(createConnectionEntry());
+        return controlGroup;
+    }
 
+    protected PaletteEntry createConnectionEntry() {
+    	return new ConnectionCreationToolEntry(
+                "Connection Creation",
+                "Creating connections",
+                new CreationFactory() {
+                    public Object getNewObject() {
+                    	return connectionFactory.createElementConnection();
+                    }
+                    public Object getObjectType() {
+                    	return AbstractConnectionWrapper.class;
+                    }
+                },
+                ImageDescriptor.createFromURL(JBossToolsProcessPlugin.getDefault().getBundle().getEntry("icons/connection.gif")), 
+                ImageDescriptor.createFromURL(JBossToolsProcessPlugin.getDefault().getBundle().getEntry("icons/connection.gif"))
+            );
+    }
+    
     protected List<PaletteEntry> createComponentEntries() {
         List<PaletteEntry> entries = new ArrayList<PaletteEntry>();
         
