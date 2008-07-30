@@ -19,7 +19,6 @@ package org.jboss.tools.flow.editor;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.gef.palette.ConnectionCreationToolEntry;
 import org.eclipse.gef.palette.MarqueeToolEntry;
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteDrawer;
@@ -28,11 +27,6 @@ import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.SelectionToolEntry;
 import org.eclipse.gef.palette.ToolEntry;
-import org.eclipse.gef.requests.CreationFactory;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.jboss.tools.flow.JBossToolsProcessPlugin;
-import org.jboss.tools.flow.editor.core.AbstractConnectionWrapper;
-import org.jboss.tools.flow.editor.core.ConnectionFactory;
 
 /**
  * Factory for creating a RuleFlow palette.
@@ -41,12 +35,6 @@ import org.jboss.tools.flow.editor.core.ConnectionFactory;
  */
 public abstract class PaletteFactory {
     
-    protected ConnectionFactory connectionFactory;
-    
-    public PaletteFactory(ConnectionFactory connectionFactory) {
-        this.connectionFactory = connectionFactory;
-    }
-
     public PaletteRoot createPalette() {
         PaletteRoot palette = new PaletteRoot();
         palette.addAll(createCategories(palette));
@@ -71,22 +59,6 @@ public abstract class PaletteFactory {
 
         tool = new MarqueeToolEntry();
         entries.add(tool);
-        
-//        tool = new ConnectionCreationToolEntry(
-//            "Connection Creation",
-//            "Creating connections",
-//            new CreationFactory() {
-//                public Object getNewObject() {
-//                	return connectionFactory.createElementConnection();
-//                }
-//                public Object getObjectType() {
-//                	return AbstractConnectionWrapper.class;
-//                }
-//            },
-//            ImageDescriptor.createFromURL(JBossToolsProcessPlugin.getDefault().getBundle().getEntry("icons/connection.gif")), 
-//            ImageDescriptor.createFromURL(JBossToolsProcessPlugin.getDefault().getBundle().getEntry("icons/connection.gif"))
-//        );
-//        entries.add(tool);
         
         controlGroup.addAll(entries);
         return controlGroup;

@@ -21,12 +21,12 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.CreateRequest;
+import org.eclipse.gef.requests.CreationFactory;
 import org.eclipse.gef.requests.GroupRequest;
 import org.jboss.tools.flow.editor.command.DeleteConnectionCommand;
 import org.jboss.tools.flow.editor.command.SplitConnectionCommand;
 import org.jboss.tools.flow.editor.core.AbstractConnectionWrapper;
 import org.jboss.tools.flow.editor.core.AbstractFlowWrapper;
-import org.jboss.tools.flow.editor.core.ConnectionFactory;
 import org.jboss.tools.flow.editor.core.NodeWrapper;
 import org.jboss.tools.flow.editor.editpart.ConnectionEditPart;
 
@@ -37,9 +37,11 @@ import org.jboss.tools.flow.editor.editpart.ConnectionEditPart;
  */
 public class ConnectionEditPolicy extends org.eclipse.gef.editpolicies.ConnectionEditPolicy {
 
-	private ConnectionFactory elementConnectionFactory;
+//	private ConnectionFactory elementConnectionFactory;
 	
-	public void setElementConnectionFactory(ConnectionFactory elementConnectionFactory) {
+	private CreationFactory elementConnectionFactory;
+	
+	public void setElementConnectionFactory(CreationFactory elementConnectionFactory) {
 		this.elementConnectionFactory = elementConnectionFactory;
 	}
 	
@@ -69,7 +71,7 @@ public class ConnectionEditPolicy extends org.eclipse.gef.editpolicies.Connectio
     	}
         SplitConnectionCommand cmd = new SplitConnectionCommand();
         cmd.setElementConnection(((AbstractConnectionWrapper) getHost().getModel()));
-        cmd.setNewSecondConnection(elementConnectionFactory.createElementConnection());
+        cmd.setNewSecondConnection((AbstractConnectionWrapper)elementConnectionFactory.getNewObject());
         cmd.setParent(((AbstractFlowWrapper) ((ConnectionEditPart) getHost())
             .getSource().getParent().getModel()));
         cmd.setNewElement(((NodeWrapper) ((CreateRequest) request).getNewObject()));

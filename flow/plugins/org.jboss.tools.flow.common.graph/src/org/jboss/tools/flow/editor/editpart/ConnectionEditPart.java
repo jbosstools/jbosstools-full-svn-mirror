@@ -29,8 +29,9 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.editparts.AbstractConnectionEditPart;
 import org.eclipse.gef.editpolicies.ConnectionEndpointEditPolicy;
+import org.eclipse.gef.requests.CreationFactory;
+import org.eclipse.gef.requests.SimpleFactory;
 import org.jboss.tools.flow.editor.core.AbstractConnectionWrapper;
-import org.jboss.tools.flow.editor.core.ConnectionFactory;
 import org.jboss.tools.flow.editor.core.ModelEvent;
 import org.jboss.tools.flow.editor.core.ModelListener;
 import org.jboss.tools.flow.editor.policy.ConnectionBendpointEditPolicy;
@@ -55,7 +56,14 @@ public abstract class ConnectionEditPart extends AbstractConnectionEditPart impl
         installEditPolicy(EditPolicy.CONNECTION_BENDPOINTS_ROLE, new ConnectionBendpointEditPolicy());
     }
     
-    protected abstract ConnectionFactory getElementConnectionFactory();
+    protected CreationFactory getElementConnectionFactory() {
+    	return new SimpleFactory(getElementConnectionType());
+    }
+    
+    
+    protected abstract Class<?> getElementConnectionType();
+    
+//    protected abstract ConnectionFactory getElementConnectionFactory();
 
     protected IFigure createFigure() {
         PolylineConnection result = new PolylineConnection();
