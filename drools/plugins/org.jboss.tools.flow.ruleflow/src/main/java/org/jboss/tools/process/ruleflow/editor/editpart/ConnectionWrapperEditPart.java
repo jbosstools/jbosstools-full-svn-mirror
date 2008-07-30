@@ -16,14 +16,13 @@ package org.jboss.tools.process.ruleflow.editor.editpart;
  * limitations under the License.
  */
 
-import org.jboss.tools.flow.editor.core.ConnectionFactory;
 import org.jboss.tools.flow.editor.editpart.ConnectionEditPart;
-import org.jboss.tools.process.ruleflow.editor.core.ConnectionWrapperFactory;
+import org.jboss.tools.process.ruleflow.editor.core.ConnectionWrapper;
 
 public class ConnectionWrapperEditPart extends ConnectionEditPart {
 
-	protected ConnectionFactory getElementConnectionFactory() {
-    	return new ConnectionWrapperFactory();
-    }
+	protected Class<?> getElementConnectionType() {
+		return ConnectionWrapper.class;
+	}
 	
 }

@@ -7,7 +7,7 @@
             name="RuleFlow Editor"
             extensions="rf"
             icon="icons/process.gif"
-            contributorClass="org.jboss.tools.process.editor.GenericActionBarContributor"
+            contributorClass="org.jboss.tools.flow.editor.GenericActionBarContributor"
             class="org.jboss.tools.process.ruleflow.editor.RuleFlowEditor"
             id="org.jboss.tools.process.ruleflow.editor.RuleFlowModelEditor">
       </editor>
@@ -24,7 +24,7 @@
 	        toolbarPath="Process"
             icon="icons/processV.gif"
             tooltip="Auto layout the process (vertical)"
-            class="org.jboss.tools.process.editor.action.VerticalAutoLayoutAction"
+            class="org.jboss.tools.flow.editor.action.VerticalAutoLayoutAction"
          />
       </editorContribution>
       <editorContribution
@@ -36,7 +36,7 @@
 	        toolbarPath="Process"
             icon="icons/process.gif"
             tooltip="Auto layout the process (horizontal)"
-            class="org.jboss.tools.process.editor.action.HorizontalAutoLayoutAction"
+            class="org.jboss.tools.flow.editor.action.HorizontalAutoLayoutAction"
          />
       </editorContribution>
    </extension>
