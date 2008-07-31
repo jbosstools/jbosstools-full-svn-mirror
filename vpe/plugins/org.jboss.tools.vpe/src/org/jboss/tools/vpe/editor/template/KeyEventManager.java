@@ -133,7 +133,7 @@ public class KeyEventManager implements IKeyEventHandler {
 		String enteredChar = TextUtil.getChar(keyEvent);
 
 		// if selected node is element
-		if (selectedNodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+		if (selectedNodeMapping instanceof VpeElementMapping) {
 
 			VpeElementMapping elementMapping = (VpeElementMapping) selectedNodeMapping;
 
@@ -215,7 +215,7 @@ public class KeyEventManager implements IKeyEventHandler {
 		boolean editable = false;
 
 		// if selected node is element
-		if (selectedNodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+		if (selectedNodeMapping instanceof VpeElementMapping) {
 
 			VpeElementMapping elementMapping = (VpeElementMapping) selectedNodeMapping;
 
@@ -292,7 +292,7 @@ public class KeyEventManager implements IKeyEventHandler {
 		boolean editable = false;
 
 		// if selected node is element
-		if (selectedNodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+		if (selectedNodeMapping instanceof VpeElementMapping) {
 
 			VpeElementMapping elementMapping = (VpeElementMapping) selectedNodeMapping;
 

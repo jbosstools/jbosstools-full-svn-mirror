@@ -202,7 +202,7 @@ public class VpeSelectionBuilder {
 			VpeNodeMapping nodeMapping = domMapping.getNodeMapping(visualSelectedAncestor);
 			
 			if (visualSelectedAncestor.getNodeType() == Node.ELEMENT_NODE){
-				if (nodeMapping != null && nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING && ((VpeElementMapping)nodeMapping).isBorder(visualAncestor)){
+				if (nodeMapping != null && (nodeMapping instanceof VpeElementMapping)  && ((VpeElementMapping)nodeMapping).isBorder(visualAncestor)){
 					visualSelectedAncestor = ((VpeElementMapping)nodeMapping).getBorder();
 					border = true;
 				}

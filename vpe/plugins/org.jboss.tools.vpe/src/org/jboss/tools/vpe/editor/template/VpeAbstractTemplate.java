@@ -919,7 +919,6 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	public boolean canInnerDrag(VpePageContext pageContext,
 			Element sourceElement, nsIDOMDocument visualDocument,
 			nsIDOMElement visualElement, Object data) {
-		// TODO Max Areshkau add DnD support
 		if (getDragger() != null) {
 
 			return getDragger().isDragEnabled();

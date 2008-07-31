@@ -77,7 +77,7 @@ public class SelectionManager implements ISelectionManager {
 		boolean isNodeEditable;
 
 		// if mapping is elementMapping
-		if (nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+		if (nodeMapping instanceof VpeElementMapping) {
 
 			VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
 
@@ -161,7 +161,7 @@ public class SelectionManager implements ISelectionManager {
 		boolean isNodeEditable;
 
 		// if mapping is elementMapping
-		if (nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+		if (nodeMapping instanceof VpeElementMapping) {
 
 			VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
 
@@ -273,7 +273,7 @@ public class SelectionManager implements ISelectionManager {
 //		int visualNodeOffcet = TextUtil.visualPosition(((Node)targetSourceNode).getNodeValue(),offcetReferenceToSourceNode);
 	
 		// if mapping is elementMapping
-		if (nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+		if (nodeMapping instanceof VpeElementMapping) {
 
 			VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
 

@@ -36,7 +36,7 @@ public class VpeDomMapping {
 		sourceMap.put(nodeMapping.getSourceNode(), nodeMapping);
 		if (nodeMapping.getVisualNode() != null) {
 			visualMap.put(nodeMapping.getVisualNode(), nodeMapping);
-			if (nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+			if (nodeMapping instanceof VpeElementMapping) {
 				if (((VpeElementMapping)nodeMapping).getBorder() != null) {
 					visualMap.put(((VpeElementMapping)nodeMapping).getBorder(), nodeMapping);
 				}
@@ -199,11 +199,17 @@ public class VpeDomMapping {
 	public VpeElementMapping getNearElementMappingAtSourceNode(Node sourceNode) {
 		VpeNodeMapping nodeMapping = getNearNodeMappingAtSourceNode(sourceNode);
 		if (nodeMapping != null) {
-			switch (nodeMapping.getType()) {
-			case VpeNodeMapping.TEXT_MAPPING:
-				return getNearElementMappingAtSourceNode(nodeMapping.getSourceNode().getParentNode());
-			case VpeNodeMapping.ELEMENT_MAPPING:
+		
+//			switch (nodeMapping.getType()) {
+//			case VpeNodeMapping.TEXT_MAPPING:
+//				return getNearElementMappingAtSourceNode(nodeMapping.getSourceNode().getParentNode());
+//			case VpeNodeMapping.ELEMENT_MAPPING:
+//				return (VpeElementMapping)nodeMapping;
+//			}
+			if(nodeMapping instanceof VpeElementMapping) {
 				return (VpeElementMapping)nodeMapping;
+			} else {
+				return getNearElementMappingAtSourceNode(nodeMapping.getSourceNode().getParentNode());
 			}
 		}
 		return null;
@@ -212,11 +218,16 @@ public class VpeDomMapping {
 	public VpeElementMapping getNearElementMappingAtVisualNode(nsIDOMNode visualNode) {
 		VpeNodeMapping nodeMapping = getNearNodeMappingAtVisualNode(visualNode);
 		if (nodeMapping != null) {
-			switch (nodeMapping.getType()) {
-			case VpeNodeMapping.TEXT_MAPPING:
-				return getNearElementMappingAtSourceNode(nodeMapping.getSourceNode().getParentNode());
-			case VpeNodeMapping.ELEMENT_MAPPING:
+//			switch (nodeMapping.getType()) {
+//			case VpeNodeMapping.TEXT_MAPPING:
+//				return getNearElementMappingAtSourceNode(nodeMapping.getSourceNode().getParentNode());
+//			case VpeNodeMapping.ELEMENT_MAPPING:
+//				return (VpeElementMapping)nodeMapping;
+//			}
+			if(nodeMapping instanceof VpeElementMapping) {
 				return (VpeElementMapping)nodeMapping;
+			} else {
+				return getNearElementMappingAtSourceNode(nodeMapping.getSourceNode().getParentNode());
 			}
 		}
 		return null;
@@ -279,7 +290,7 @@ public class VpeDomMapping {
 			if (visualNode != null) {
 				visualMap.remove(visualNode);
 			}
-			if (nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+			if (nodeMapping instanceof VpeElementMapping) { 
 				VpeElementMapping elementMapping = (VpeElementMapping)nodeMapping;
 //				Map xmlnsMap = elementMapping.getXmlnsMap();
 //				if (xmlnsMap != null) {
@@ -291,7 +302,7 @@ public class VpeDomMapping {
 				if (elementMapping.getBorder() != null) {
 					visualMap.remove(elementMapping.getBorder());
 				}
-				elementMapping.getTemplate().beforeRemove(pageContext, (Element)elementMapping.getSourceNode(), (nsIDOMElement)elementMapping.getVisualNode(), elementMapping.getData());
+				elementMapping.getTemplate().beforeRemove(pageContext, elementMapping.getSourceNode(), elementMapping.getVisualNode(), elementMapping.getData());
 			}
 		}
 		removeChildren(sourceNode);

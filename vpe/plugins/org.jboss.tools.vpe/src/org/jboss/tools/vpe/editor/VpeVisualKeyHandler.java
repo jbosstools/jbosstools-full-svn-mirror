@@ -174,7 +174,7 @@ public class VpeVisualKeyHandler {
 		VpeTemplate template = TemplateManagingUtil
 				.getTemplateByVisualSelection(pageContext,getSelectedNode());
 		
-		// if template сan handle keyEvent than pass control to him. And if
+		// if template an handle keyEvent than pass control to him. And if
 		// template handled event return true
 //		if ((template instanceof ITemplateKeyEventHandler)
 //				&& ((ITemplateKeyEventHandler) template).handleKeyPress(
@@ -913,7 +913,7 @@ public class VpeVisualKeyHandler {
 	private boolean isVisualNodeSourceAttribute(Node node) {
 		nsIDOMNode visualNode = domMapping.getVisualNode(node);
 		VpeNodeMapping nm = domMapping.getNodeMapping(visualNode);
-		if (nm.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+		if (nm instanceof VpeElementMapping) {
 			VpeElementMapping em = (VpeElementMapping)nm;
 			return em.getTemplate().isOutputAttributes();
 		}
@@ -931,7 +931,7 @@ public class VpeVisualKeyHandler {
 			return null;
 		}
 		VpeNodeMapping nm = domMapping.getNodeMapping(visualNode);
-		if (nm.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+		if (nm instanceof VpeElementMapping) {
 			VpeElementMapping mapping = (VpeElementMapping)nm;
 			String[] names = mapping.getTemplate().getOutputAtributeNames();
 			if(names!=null) {

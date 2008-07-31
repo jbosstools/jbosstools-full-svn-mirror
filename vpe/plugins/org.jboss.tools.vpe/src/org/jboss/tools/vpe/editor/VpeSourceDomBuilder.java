@@ -255,7 +255,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		VpeNodeMapping nodeMapping = NodesManagingUtil.getNodeMapping(
 				domMapping, visualNode);
 		if (nodeMapping != null
-				&& nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+				&& nodeMapping instanceof VpeElementMapping) {
 
 			VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
 

@@ -474,7 +474,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 
         nsIDOMElement border = null;
-        if(sourceNode instanceof Element && visualNewNode!= null) {
+        if(sourceNode instanceof Element && visualNewNode!= null &&visualNewNode.getNodeType()==nsIDOMNode.ELEMENT_NODE) {
         	
         	setTooltip((Element) sourceNode, (nsIDOMElement)visualNewNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
         }
@@ -496,7 +496,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
                         sourceNode, visualNewNode, border,
                         template, ifDependencySet, creationData.getData(),
                         creationData.getElementData());
-                // elementMapping.setXmlnsMap(xmlnsMap);
                 registerNodes(elementMapping);
             }
         if (template.isChildren()) {
@@ -856,9 +855,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     case Node.DOCUMENT_NODE:
         rebuildDom((Document) sourceNode);
         break;
-    case Node.COMMENT_NODE:
-        updateComment(sourceNode);
-        break;
+//    case Node.COMMENT_NODE:
+//        updateComment(sourceNode);
+//        break;
     default:
         updateElement(getNodeForUpdate(sourceNode));
     }
@@ -882,18 +881,18 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     return sourceNode;
     }
 
-    private void updateComment(Node sourceNode) {
-    VpeNodeMapping mapping = domMapping.getNodeMapping(sourceNode);
-    if (mapping != null
-        && mapping.getType() == VpeNodeMapping.COMMENT_MAPPING) {
-        nsIDOMNodeList visualNodes = mapping.getVisualNode()
-            .getChildNodes();
-
-        if (visualNodes.getLength() > 0) {
-        visualNodes.item(0).setNodeValue(sourceNode.getNodeValue());
-        }
-    }
-    }
+//    private void updateComment(Node sourceNode) {
+//    VpeNodeMapping mapping = domMapping.getNodeMapping(sourceNode);
+//    if (mapping != null
+//        && mapping.getType() == VpeNodeMapping.COMMENT_MAPPING) {
+//        nsIDOMNodeList visualNodes = mapping.getVisualNode()
+//            .getChildNodes();
+//
+//        if (visualNodes.getLength() > 0) {
+//        visualNodes.item(0).setNodeValue(sourceNode.getNodeValue());
+//        }
+//    }
+//    }
 
     private void updateElement(Node sourceNode) {
     VpeElementMapping elementMapping = null;
@@ -1031,7 +1030,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
         VpeNodeMapping nodeMapping = domMapping
             .getNodeMapping(sourceParent);
         if (nodeMapping != null
-            && nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+            && nodeMapping instanceof VpeElementMapping) {
         VpeTemplate template = ((VpeElementMapping) nodeMapping)
             .getTemplate();
         if (template != null) {
@@ -1455,12 +1454,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     private int getResizerConstrains(nsIDOMNode visualNode) {
     VpeNodeMapping nodeMapping = domMapping.getNodeMapping(visualNode);
     if (nodeMapping != null
-        && nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+        &&( nodeMapping instanceof VpeElementMapping)
+        &&( nodeMapping.getSourceNode() instanceof Element)
+        &&(nodeMapping.getVisualNode().getNodeType()==nsIDOMNode.ELEMENT_NODE)) {
         return ((VpeElementMapping) nodeMapping).getTemplate()
             .getTagDescription(pageContext,
                 (Element) nodeMapping.getSourceNode(),
                 visualDocument,
-                (nsIDOMElement) nodeMapping.getVisualNode(),
+                (nsIDOMElement) nodeMapping.getVisualNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID),
                 ((VpeElementMapping) nodeMapping).getData())
             .getResizeConstrains();
     }
@@ -1560,13 +1561,13 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     case nsIDOMNode.TEXT_NODE:
         VpeNodeMapping nodeMapping = domMapping
             .getNearNodeMapping(visualDropContainer);
-        switch (nodeMapping.getType()) {
-        case VpeNodeMapping.TEXT_MAPPING:
+//        switch (nodeMapping.getType()) {
+//        case VpeNodeMapping.TEXT_MAPPING:
         sourceDropContainer = nodeMapping.getSourceNode();
         sourceDropOffset = TextUtil.sourceInnerPosition(
             sourceDropContainer.getNodeValue(), visualDropOffset);
-        break;
-        case VpeNodeMapping.ELEMENT_MAPPING:
+//        break;
+//        case VpeNodeMapping.ELEMENT_MAPPING:
         // it's attribute
         if (isTextEditable(visualDropContainer)) {
             String[] atributeNames = ((VpeElementMapping) nodeMapping)
@@ -1582,8 +1583,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
             }
         }
         nodeMapping.getVisualNode();
-        }
-        break;
+//        }
+//        break;
     }
     if (sourceDropContainer != null) {
         return getSourceInnerDropInfo(sourceDragNode, sourceDropContainer,
@@ -1601,7 +1602,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     case Node.ELEMENT_NODE:
         VpeNodeMapping nodeMapping = domMapping.getNodeMapping(container);
         if (nodeMapping != null
-            && nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+            && nodeMapping instanceof VpeElementMapping) {
         canDrop = ((VpeElementMapping) nodeMapping).getTemplate()
             .canInnerDrop(pageContext, container, dragNode);
         }
@@ -1638,15 +1639,15 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     VpeNodeMapping mapping = domMapping.getNearNodeMapping(container);
     if (mapping != null) {
         nsIDOMNode visualDropContainer = mapping.getVisualNode();
-        switch (mapping.getType()) {
-        case VpeNodeMapping.TEXT_MAPPING:
-        break;
-        case VpeNodeMapping.ELEMENT_MAPPING:
+//        switch (mapping.getType()) {
+//        case VpeNodeMapping.TEXT_MAPPING:
+//        break;
+//        case VpeNodeMapping.ELEMENT_MAPPING:
         nsIDOMNode visualParent = visualDropContainer.getParentNode();
         VpeNodeMapping oldMapping = mapping;
         mapping = domMapping.getNearNodeMapping(visualParent);
         if (mapping != null
-            && mapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
+            && mapping instanceof VpeElementMapping) {
             ((VpeElementMapping) mapping).getTemplate()
                 .innerDrop(
                     pageContext,
@@ -1661,7 +1662,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
                     new VpeSourceInnerDropInfo(container,
                         offset, true));
         }
-        }
+//        }
 
     }
     }
