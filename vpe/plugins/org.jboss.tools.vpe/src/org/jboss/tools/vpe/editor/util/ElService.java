@@ -177,7 +177,7 @@ public final class ElService implements IELService {
                 textValue = sourceNode.getFirstChild().getNodeValue();
             }
             if ((textValue != null) && isContainsEl(textValue)) {
-                final String newValue = bundleMap.getBundleValue(sourceNode.getNodeValue(), 0);
+                final String newValue = bundleMap.getBundleValue(textValue, 0);
 
                 if (!textValue.equals(newValue)) {
                     rst = true;
