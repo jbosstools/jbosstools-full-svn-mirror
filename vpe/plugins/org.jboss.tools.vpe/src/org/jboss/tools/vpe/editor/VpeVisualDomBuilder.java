@@ -452,45 +452,42 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
        	nsIDOMNode visualNewNode =creationData.getNode();
 
-//        nsIDOMElement visualNewElement = null;
-        //TODO Max Areshkau process it's correctly
-//            if(creationData.getNode()!=null) {
-//            
-//         visualNewElement = (nsIDOMElement) creationData
-//                        .getNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-//            }
-//            
-//        if ((visualNewElement != null) && template.hasImaginaryBorder()) {
-//
-//                visualNewElement.setAttribute(HTML.ATTR_STYLE, visualNewElement
-//                        .getAttribute(HTML.ATTR_STYLE)
-//                        + VpeStyleUtil.SEMICOLON_STRING + DOTTED_BORDER);
-//
-//            }
-//        
-//        if (visualNewElement != null)
-//        correctVisualAttribute(visualNewElement);
-        
+       	nsIDOMElement  border = null;
 
+            if(visualNewNode!=null && visualNewNode.getNodeType()==nsIDOMNode.ELEMENT_NODE) {
+            
+            nsIDOMElement	visualNewElement = (nsIDOMElement) creationData
+            					.getNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+                     
+            	if ((visualNewElement != null) && template.hasImaginaryBorder()) {
 
-        nsIDOMElement border = null;
+	                visualNewElement.setAttribute(HTML.ATTR_STYLE, visualNewElement
+	                        .getAttribute(HTML.ATTR_STYLE)
+	                        + VpeStyleUtil.SEMICOLON_STRING + DOTTED_BORDER);
+
+            	}
+                if (visualNewElement != null) {
+                    correctVisualAttribute(visualNewElement);
+                }
+	              if (YES_STRING.equals(VpePreference.SHOW_BORDER_FOR_ALL_TAGS
+	              .getValue())
+	              && visualNewElement != null) {
+		          boolean block = true;
+		          if (template.getTagDescription(null, null, null,
+		              visualNewElement, null).getDisplayType() == VpeTagDescription.DISPLAY_TYPE_INLINE) {
+		              block = false;
+		          }
+		          border = createBorder(sourceNode, visualNewElement, block);
+		          }
+		          if (!isCurrentMainDocument() && visualNewElement != null) {
+		          setReadOnlyElement(visualNewElement);
+		          }
+            }
+
         if(sourceNode instanceof Element && visualNewNode!= null &&visualNewNode.getNodeType()==nsIDOMNode.ELEMENT_NODE) {
         	
         	setTooltip((Element) sourceNode, (nsIDOMElement)visualNewNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
         }
-//        if (YES_STRING.equals(VpePreference.SHOW_BORDER_FOR_ALL_TAGS
-//            .getValue())
-//            && visualNewElement != null) {
-//        boolean block = true;
-//        if (template.getTagDescription(null, null, null,
-//            visualNewElement, null).getDisplayType() == VpeTagDescription.DISPLAY_TYPE_INLINE) {
-//            block = false;
-//        }
-//        border = createBorder(sourceNode, visualNewElement, block);
-//        }
-//        if (!isCurrentMainDocument() && visualNewElement != null) {
-//        setReadOnlyElement(visualNewElement);
-//        }
         if (registerFlag) {
                 VpeElementMapping elementMapping = new VpeElementMapping(
                         sourceNode, visualNewNode, border,
