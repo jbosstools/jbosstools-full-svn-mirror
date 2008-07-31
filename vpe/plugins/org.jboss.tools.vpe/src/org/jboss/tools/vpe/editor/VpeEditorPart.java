@@ -747,7 +747,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 							try {
 								visualEditor.getController().init(sourceEditor, visualEditor);
 							} catch (Exception e) {
-								VpePlugin.reportProblem(e);
+								VpePlugin.getDefault().logError(e);
 							}
 						}
 					});

@@ -148,7 +148,7 @@ public final class ElService implements IELService {
                 final Node node = sourceNode.getChildNodes().item(i);
                 
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    if((rst = findInResourcesBundle(pageContext, (Element) node))){
+                    if((rst = findInResourcesBundle(pageContext, node))){
                         break;
                     }
                     
