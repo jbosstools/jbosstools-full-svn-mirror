@@ -329,7 +329,7 @@ public class SelectionManager implements ISelectionManager {
 				&&visualNode.getNodeType()==nsIDOMNode.TEXT_NODE
 				&&nodeData.getSourceNode()!=null){
 				
-				if(nodeData.getSourceNode().getNodeType()==Node.ELEMENT_NODE) {			
+				if(nodeData.getSourceNode().getNodeType()==Node.ATTRIBUTE_NODE) {			
 					NodeImpl targetSourceNode = (NodeImpl)nodeData.getSourceNode();
 					String sourceNodeValue = nodeData.getSourceNode().getNodeValue();
 					ITextRegion valueRegion = targetSourceNode.getValueRegion();
