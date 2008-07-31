@@ -10,7 +10,6 @@
   ******************************************************************************/
 package org.jboss.tools.vpe.html.template;
 
-import org.jboss.tools.jst.jsp.jspeditor.SourceEditorPageContext;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
@@ -28,11 +27,6 @@ import org.w3c.dom.Node;
  */
 public class HtmlImgTemplate extends VpeAbstractTemplate {
 
-	/*
-	 * Facelets "jsfc" attribute
-	 */
-	private static final String JSFC = "jsfc";
-	
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.vpe.editor.template.VpeTemplate#create(org.jboss.tools.vpe.editor.context.VpePageContext, org.w3c.dom.Node, org.mozilla.interfaces.nsIDOMDocument)
 	 */
@@ -54,7 +48,7 @@ public class HtmlImgTemplate extends VpeAbstractTemplate {
 			if (HTML.ATTR_SRC.equalsIgnoreCase(name)) {
 				continue;
 			}
-			if (JSFC.equalsIgnoreCase(name)) {
+			if (HTML.ATTR_JSFC.equalsIgnoreCase(name)) {
 				jsfc = true;
 				continue;
 			}
