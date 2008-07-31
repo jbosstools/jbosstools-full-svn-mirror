@@ -12,6 +12,10 @@
 package org.jboss.tools.vpe.html.template;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.mapping.NodeData;
+import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
+import org.jboss.tools.vpe.editor.mapping.VpeElementData;
+import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -48,4 +52,22 @@ public class HtmlTextTemplate extends VpeAbstractTemplate {
 	    return new VpeCreationData(element);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.vpe.editor.template.VpeAbstractTemplate#getNodeData(org.mozilla.interfaces.nsIDOMNode, org.jboss.tools.vpe.editor.mapping.VpeElementData, org.jboss.tools.vpe.editor.mapping.VpeDomMapping)
+	 */
+	@Override
+	public NodeData getNodeData(nsIDOMNode node, VpeElementData elementData,
+			VpeDomMapping domMapping) {
+	
+		NodeData result;
+		VpeNodeMapping nodeMapping = domMapping.getNearNodeMapping(node);
+		if(node.getNodeType()==nsIDOMNode.ELEMENT_NODE) {
+			result = new NodeData(nodeMapping.getSourceNode(),node.getFirstChild(),true);		
+		} else {
+			result = new NodeData(nodeMapping.getSourceNode(),node,true);
+		}
+		return result;
+	}
+
+	
 }

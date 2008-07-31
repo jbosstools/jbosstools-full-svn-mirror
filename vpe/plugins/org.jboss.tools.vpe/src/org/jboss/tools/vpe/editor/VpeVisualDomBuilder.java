@@ -422,7 +422,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 //    switch (sourceNode.getNodeType()) {
     
 //    case Node.ELEMENT_NODE:
-        // Map<?, ?> xmlnsMap = createXmlns((Element) sourceNode);
+//      Map<?, ?> xmlnsMap = createXmlns((Element) sourceNode);
         Set<Node> ifDependencySet = new HashSet<Node>();
         pageContext.setCurrentVisualNode(visualOldContainer);
         VpeTemplate template = templateManager.getTemplate(pageContext,
@@ -553,7 +553,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     }
     }
 
-    protected nsIDOMElement createComment(Node sourceNode) {
+    private nsIDOMElement createComment(Node sourceNode) {
     nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
     div.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, COMMENT_STYLE);
     String value = COMMENT_PREFIX + sourceNode.getNodeValue()

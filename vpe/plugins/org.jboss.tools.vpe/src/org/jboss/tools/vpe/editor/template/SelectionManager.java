@@ -325,21 +325,37 @@ public class SelectionManager implements ISelectionManager {
 		
 		nsIDOMNode visualNode = nodeData.getVisualNode();
 		
-		if(visualNode!=null&&visualNode.getNodeType()==nsIDOMNode.TEXT_NODE&&nodeData.getSourceNode()!=null) {			
-			NodeImpl targetSourceNode = (NodeImpl)nodeData.getSourceNode();
-			String sourceNodeValue = nodeData.getSourceNode().getNodeValue();
-			ITextRegion valueRegion = targetSourceNode.getValueRegion();
-			if(valueRegion==null) {
-				return;
-			}
-			ITextRegion nameRegion = targetSourceNode.getNameRegion();					 
-			int offcetReferenceToSourceNode = focusOffcetInSourceDocument-valueRegion.getStart()-targetSourceNode.getStartOffset()+nameRegion.getStart()-1;
-			
-			if(offcetReferenceToSourceNode<visualNode.getNodeValue().length()){
+		if(visualNode!=null
+				&&visualNode.getNodeType()==nsIDOMNode.TEXT_NODE
+				&&nodeData.getSourceNode()!=null){
 				
-				selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(visualNode, offcetReferenceToSourceNode);
+				if(nodeData.getSourceNode().getNodeType()==Node.ELEMENT_NODE) {			
+					NodeImpl targetSourceNode = (NodeImpl)nodeData.getSourceNode();
+					String sourceNodeValue = nodeData.getSourceNode().getNodeValue();
+					ITextRegion valueRegion = targetSourceNode.getValueRegion();
+					if(valueRegion==null) {
+						return;
+					}	
+					ITextRegion nameRegion = targetSourceNode.getNameRegion();					 
+					int offcetReferenceToSourceNode = focusOffcetInSourceDocument-valueRegion.getStart()-targetSourceNode.getStartOffset()+nameRegion.getStart()-1;
+					
+					if(offcetReferenceToSourceNode<visualNode.getNodeValue().length()){
+					
+							selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(visualNode, offcetReferenceToSourceNode);
+				 }
+				}else if (nodeData.getSourceNode().getNodeType()==Node.TEXT_NODE){
+					 
+					 IndexedRegion targetSourceNode = (IndexedRegion) nodeData.getSourceNode();
+					 
+					 int offcetReferenceToSourceNode = focusOffcetInSourceDocument-targetSourceNode.getStartOffset();
+
+         			 int visualNodeOffcet = TextUtil.visualPosition(((Node)targetSourceNode).getNodeValue(),offcetReferenceToSourceNode);
+
+					 selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(visualNode, visualNodeOffcet);
+
+				 }
 			}
-		}
+				
 	}
 	/**
 	 * Restore cursor position in visual document for by source position
