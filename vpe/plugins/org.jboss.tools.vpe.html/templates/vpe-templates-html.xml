@@ -2132,8 +2132,8 @@
 	</vpe:tag>
 
 	<vpe:tag name="#comment" case-sensitive="no">
-		<vpe:template children="no" modify="yes">
-			<vpe:comment />
+		<vpe:template children="no" modify="yes" 
+				class="org.jboss.tools.vpe.html.template.HtmlCommentTemplate">
 		</vpe:template>
 	</vpe:tag>
 	

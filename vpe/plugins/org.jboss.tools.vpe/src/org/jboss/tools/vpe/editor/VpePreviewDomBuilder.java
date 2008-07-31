@@ -12,21 +12,16 @@ package org.jboss.tools.vpe.editor;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
-import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
-import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.ElService;
-import org.jboss.tools.vpe.editor.util.HTML;
-import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.xpcom.XPCOMException;
@@ -41,7 +36,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 
 	boolean rebuildFlag = false;
 	
-	private static final String YES_STRING   = "yes";
+//	private static final String YES_STRING   = "yes";
 	
 	/**
 	 * 
@@ -63,9 +58,9 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 	 */
 	@Override
 	protected nsIDOMNode createNode(Node sourceNode, nsIDOMNode visualOldContainer) {
-		boolean registerFlag = isCurrentMainDocument();
-		switch (sourceNode.getNodeType()) {
-		case Node.ELEMENT_NODE:
+//		boolean registerFlag = isCurrentMainDocument();
+//		switch (sourceNode.getNodeType()) {
+//		case Node.ELEMENT_NODE:
 //			Map xmlnsMap = createXmlns((Element)sourceNode);
 			Set ifDependencySet = new HashSet();
 			
@@ -74,14 +69,20 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			 * to fix h:dataTable content visibility on Preview tab.
 			 * http://jira.jboss.com/jira/browse/JBIDE-2059
 			 */
+		    if(sourceNode==null||(
+		    		sourceNode.getNodeType()!=Node.TEXT_NODE
+		    		&&sourceNode.getNodeType()!=Node.ELEMENT_NODE
+		    		&&sourceNode.getNodeType()!=Node.COMMENT_NODE)) {
+		        return null;
+		    }
 			getPageContext().setCurrentVisualNode(visualOldContainer);
-			VpeTemplate template = templateManager.getTemplate(getPageContext(), (Element)sourceNode, ifDependencySet);
+			VpeTemplate template = templateManager.getTemplate(getPageContext(), sourceNode, ifDependencySet);
 			VpeCreationData creationData;
 			
 			//FIX FOR JBIDE-1568, added by Max Areshkau
 			try {
-		          if (ElService.getInstance().isCloneableNode(getPageContext(), (Element) sourceNode)) {
-                    final Element sourceNodeClone = (Element) ((Element) sourceNode).cloneNode(true);
+		          if (ElService.getInstance().isCloneableNode(getPageContext(),  sourceNode)) {
+                    final Node sourceNodeClone =  sourceNode.cloneNode(true);
                     template.beforeTemplateCreated(getPageContext(), sourceNodeClone, getVisualDocument());
                     creationData = template.create(getPageContext(), sourceNodeClone, getVisualDocument());
                 } else {
@@ -93,19 +94,21 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 				creationData = defTemplate.create(getPageContext(), sourceNode, getVisualDocument());
 			}
 			getPageContext().setCurrentVisualNode(null);
-			nsIDOMElement visualNewElement;
-			visualNewElement = (nsIDOMElement)creationData.getNode();
+			nsIDOMNode visualNewNode;
+			visualNewNode = creationData.getNode();
 
-			setTooltip((Element)sourceNode, visualNewElement);
-
-			if (!isCurrentMainDocument() && visualNewElement != null) {
-				setReadOnlyElement(visualNewElement);
+			if(sourceNode instanceof Element && visualNewNode != null) {
+			
+				setTooltip((Element)sourceNode, (nsIDOMElement)visualNewNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
 			}
+//			if (!isCurrentMainDocument() && visualNewElement != null) {
+//				setReadOnlyElement(visualNewElement);
+//			}
 			
 			if (template.isChildren()) {
 				List<?> childrenInfoList = creationData.getChildrenInfoList();
 				if (childrenInfoList == null) {
-					addChildren(template, sourceNode, visualNewElement != null ? visualNewElement : visualOldContainer);
+					addChildren(template, sourceNode, visualNewNode != null ? visualNewNode : visualOldContainer);
 				} else {
 					addChildren(template, sourceNode, visualOldContainer, childrenInfoList);
 				}
@@ -117,23 +120,23 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			 * http://jira.jboss.com/jira/browse/JBIDE-2059
 			 */
 			getPageContext().setCurrentVisualNode(visualOldContainer);
-			template.validate(getPageContext(), (Element)sourceNode, getVisualDocument(), creationData);
+			template.validate(getPageContext(), sourceNode, getVisualDocument(), creationData);
 			getPageContext().setCurrentVisualNode(null);
 			
-			return visualNewElement;
-		case Node.TEXT_NODE:
-			return createTextNode(sourceNode, registerFlag);
-		case Node.COMMENT_NODE:
-			if(!YES_STRING.equals(VpePreference.SHOW_COMMENTS.getValue())) {
-				return null;
-			}
-			nsIDOMElement visualNewComment = createComment(sourceNode);
-			if (registerFlag) {
-				registerNodes(new VpeNodeMapping(sourceNode, visualNewComment));
-			}
-			return visualNewComment;
-		}
-		return null;
+			return visualNewNode;
+//		case Node.TEXT_NODE:
+//			return createTextNode(sourceNode, registerFlag);
+//		case Node.COMMENT_NODE:
+//			if(!YES_STRING.equals(VpePreference.SHOW_COMMENTS.getValue())) {
+//				return null;
+//			}
+//			nsIDOMElement visualNewComment = createComment(sourceNode);
+//			if (registerFlag) {
+//				registerNodes(new VpeNodeMapping(sourceNode, visualNewComment));
+//			}
+//			return visualNewComment;
+//		}
+//		return null;
 	}
 
 }

@@ -418,8 +418,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     		&&sourceNode.getNodeType()!=Node.COMMENT_NODE)) {
         return null;
     }
-
-    
+   
 //    switch (sourceNode.getNodeType()) {
     
 //    case Node.ELEMENT_NODE:
@@ -2274,54 +2273,54 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
      * @return a visual element for text node
      */
 
-    protected nsIDOMNode createTextNode(Node sourceNode, boolean registerFlag) {
-    String sourceText = sourceNode.getNodeValue();
-    if(sourceText!=null){
-        final IFile file = getPageContext().getVisualBuilder().getCurrentIncludeInfo().getFile();
-        
-        sourceText = ElService.getInstance().replaceEl(file, sourceText);
-    }
-    /*
-     * Max Areshkau this code causes very slow work of visual editor
-     * when we editing in big files txt nodes.For example exmployee.xhtml
-     * from JBIDE1105
-     * 
-     * Denis Maliarevich: 
-     * To fix JBIDE-2003 and JBIDE-2042 
-     * this code should be uncommented.
-     */
-    if (sourceText.trim().length() <= 0) {
-        if (registerFlag) {
-            registerNodes(new VpeNodeMapping(sourceNode, null));
-        }
-        return null;
-    }
-
-    if (faceletFile) {
-        Matcher matcher_EL = REGEX_EL.matcher(sourceText);
-        if (matcher_EL.find()) {
-        BundleMap bundle = pageContext.getBundle();
-        int offset = pageContext.getVisualBuilder()
-            .getCurrentMainIncludeOffset();
-        if (offset == -1)
-            offset = ((IndexedRegion) sourceNode).getStartOffset();
-        String jsfValue = bundle.getBundleValue(sourceText, offset);
-        sourceText = jsfValue;
-        }
-    }
-    String visualText = TextUtil.visualText(sourceText);
-
-    nsIDOMNode visualNewTextNode = visualDocument
-        .createTextNode(visualText);
-    nsIDOMElement element = visualDocument.createElement(HTML.TAG_SPAN);
-    element.setAttribute(HTML.ATTR_STYLE, ""); //$NON-NLS-1$
-    element.appendChild(visualNewTextNode);
-    if (registerFlag) {
-        registerNodes(new VpeNodeMapping(sourceNode, element));
-    }
-
-    return element;
-    }
+//    protected nsIDOMNode createTextNode(Node sourceNode, boolean registerFlag) {
+//    String sourceText = sourceNode.getNodeValue();
+//    if(sourceText!=null){
+//        final IFile file = getPageContext().getVisualBuilder().getCurrentIncludeInfo().getFile();
+//        
+//        sourceText = ElService.getInstance().replaceEl(file, sourceText);
+//    }
+//    /*
+//     * Max Areshkau this code causes very slow work of visual editor
+//     * when we editing in big files txt nodes.For example exmployee.xhtml
+//     * from JBIDE1105
+//     * 
+//     * Denis Maliarevich: 
+//     * To fix JBIDE-2003 and JBIDE-2042 
+//     * this code should be uncommented.
+//     */
+//    if (sourceText.trim().length() <= 0) {
+//        if (registerFlag) {
+//            registerNodes(new VpeNodeMapping(sourceNode, null));
+//        }
+//        return null;
+//    }
+//
+//    if (faceletFile) {
+//        Matcher matcher_EL = REGEX_EL.matcher(sourceText);
+//        if (matcher_EL.find()) {
+//        BundleMap bundle = pageContext.getBundle();
+//        int offset = pageContext.getVisualBuilder()
+//            .getCurrentMainIncludeOffset();
+//        if (offset == -1)
+//            offset = ((IndexedRegion) sourceNode).getStartOffset();
+//        String jsfValue = bundle.getBundleValue(sourceText, offset);
+//        sourceText = jsfValue;
+//        }
+//    }
+//    String visualText = TextUtil.visualText(sourceText);
+//
+//    nsIDOMNode visualNewTextNode = visualDocument
+//        .createTextNode(visualText);
+//    nsIDOMElement element = visualDocument.createElement(HTML.TAG_SPAN);
+//    element.setAttribute(HTML.ATTR_STYLE, ""); //$NON-NLS-1$
+//    element.appendChild(visualNewTextNode);
+//    if (registerFlag) {
+//        registerNodes(new VpeNodeMapping(sourceNode, element));
+//    }
+//
+//    return element;
+//    }
 
     /**
      * @return the xulRunnerEditor
