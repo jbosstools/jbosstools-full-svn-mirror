@@ -42,6 +42,13 @@
             </primaryie>
 	  </indexentry>
 
+	  <indexentry>
+            <primaryie>
+                <ulink url="demos/HQL_JPA-QL_queries/HQL_JPA-QL_queries.htm">Edit and run HQL/JPA-QL queries.</ulink>
+            </primaryie>
+	  </indexentry>
+
+
         <!--indexentry>
             <primaryie>Visual Web Tools Reference Guide <ulink url="en/jsf/html/index.html"
                     >(html)</ulink>
