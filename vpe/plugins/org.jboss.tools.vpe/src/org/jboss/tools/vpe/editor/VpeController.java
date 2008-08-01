@@ -1120,7 +1120,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 			selectionManager.setSelection(mouseEvent);
 		} catch (Exception e) {
-
+			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
