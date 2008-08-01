@@ -82,6 +82,70 @@
       id="org.jboss.tools.portlet.core.internal.portletlibrarycontainer.v20"/>
    </extension>
   
+   <extension point="org.eclipse.wst.common.project.facet.core.facets">
+      
+      <project-facet id="jboss.jsfportlet">
+    	<label>JBoss JSF Portlet</label>
+    	<description>
+      		Adds support for the JSF Portlet.
+    	</description>
+    	<default-version version="1.0"/>
+  	  </project-facet>
+  	  
+  	  <project-facet-version facet="jboss.jsfportlet" version="1.0">
+      	<constraint>
+        	<and>
+          		<requires facet="jst.java" version="[5.0"/>
+          		<requires facet="jst.web" version="[2.3"/>
+          		<requires facet="jboss.portlet" version="[1.0"/>
+          		<requires facet="jst.jsf" version="[1.2"/>
+        	</and>
+      	</constraint>
+      </project-facet-version>
+      
+      <action id="jboss.jsfportlet.install" facet="jboss.jsfportlet" type="INSTALL" version="1.0">
+      	<delegate class="org.jboss.tools.portlet.core.internal.project.facet.JSFPortletFacetInstallDelegate"/>
+        <config-factory class="org.jboss.tools.portlet.core.internal.project.facet.JSFPortletFacetInstallDataModelProvider"/>
+      </action>  
+      
+      <action id="jboss.jsfportlet.uninstall" facet="jboss.jsfportlet" type="UNINSTALL" version="1.0" >
+	 	<delegate class="org.jboss.tools.portlet.core.internal.project.facet.JSFPortletFacetUninstallDelegate"/>
+ 	  </action>
+      
+   </extension>
+
+   <extension
+        point="org.eclipse.wst.common.project.facet.core.presets">
+     <static-preset id="preset.jboss.jsfportlet.v20">
+	    <label>JBoss JSF Portlet Project v2.0</label>
+	    <facet id="jst.java" version="5.0" />
+	    <facet id="jst.web" version="2.5"/>
+	    <facet id="jst.jsf" version="1.2"/>
+	    <facet id="jboss.portlet" version="2.0" />
+	    <facet id="jboss.jsfportlet" version="1.0" />
+        <description>JBoss JSF Portlet Project v2.0</description>
+     </static-preset>
+   </extension>
+   
+   <extension
+        point="org.eclipse.wst.common.project.facet.core.presets">
+     <dynamic-preset id="preset.jboss.jsfportlet.v10">
+       <factory class="org.jboss.tools.portlet.core.internal.project.facet.JSFPortletConfigurationPresetFactory10"/>
+     </dynamic-preset>
+   </extension>
+   
+   <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
+    	<supported>
+			<runtime-component any="true"/>
+        		<facet id="jboss.jsfportlet" version="1.0"/> 
+    	</supported>
+   </extension>
+   
+   <extension point="org.eclipse.jdt.core.classpathContainerInitializer">
+     <classpathContainerInitializer class="org.jboss.tools.portlet.core.internal.JSFPortlet10LibrariesContainerInitializer"
+      id="org.jboss.tools.portlet.core.internal.jsfportletlibrarycontainer.v10"/>
+   </extension>
+   
    <extension point="org.eclipse.wst.xml.core.catalogContributions">
         <catalogContribution id="default">
             <public
@@ -96,6 +160,11 @@
                 publicId="-//JBoss Portal//DTD JBoss Portlet 2.6//EN"
                 uri="dtdsAndSchemas/jboss-portlet_2_6.dtd"
                 webURL="http://www.jboss.org/portal/dtd/jboss-portlet_2_6.dtd" />
+                
+            <public
+                publicId="-//JBoss Portal//DTD JBoss Web Application 2.6//EN"
+                uri="dtdsAndSchemas/jboss-app_2_6.dtd"
+                webURL="http://www.jboss.org/portal/dtd/jboss-app_2_6.dtd" />
             
             <uri
                 name="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
