@@ -4,6 +4,9 @@ import static org.eclipse.jst.j2ee.internal.web.operations.INewServletClassDataM
 import static org.eclipse.jst.j2ee.internal.web.operations.INewWebClassDataModelProperties.DESCRIPTION;
 import static org.eclipse.jst.j2ee.internal.web.operations.INewWebClassDataModelProperties.DISPLAY_NAME;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.eclipse.jst.j2ee.internal.web.operations.INewWebClassDataModelProperties.USE_EXISTING_CLASS;
 import static org.eclipse.jst.servlet.ui.internal.wizard.IWebWizardConstants.ADD_BUTTON_LABEL;
 import static org.eclipse.jst.servlet.ui.internal.wizard.IWebWizardConstants.DESCRIPTION_LABEL;
@@ -20,6 +23,7 @@ import static org.eclipse.jst.servlet.ui.internal.wizard.IWebWizardConstants.VAL
 import static org.eclipse.wst.common.componentcore.internal.operation.IArtifactEditOperationDataModelProperties.PROJECT_NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.TITLE;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_JSF_PORTLET;
  
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.Dialog;
@@ -34,6 +38,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.frameworks.internal.datamodel.ui.DataModelWizardPage;
@@ -89,6 +95,30 @@ public class AddPortletWizardPage extends DataModelWizardPage {
 				INIT_PARAM);
 		initSection.setCallback(callback);
 		
+		if (isJSFPortlet()) {
+			List<String[]> initParamList = new ArrayList<String[]>();
+			String[] arrayString = new String[3];
+			arrayString[0]="javax.portlet.faces.defaultViewId.view";
+			arrayString[1]="/jsf/view.jsp";
+			arrayString[2]="";
+			initParamList.add(arrayString);
+			
+			arrayString = new String[3];
+			arrayString[0]="javax.portlet.faces.defaultViewId.edit";
+			arrayString[1]="/jsf/edit.jsp";
+			arrayString[2]="";
+			initParamList.add(arrayString);
+			
+			arrayString = new String[3];
+			arrayString[0]="javax.portlet.faces.defaultViewId.help";
+			arrayString[1]="/jsf/help.jsp";
+			arrayString[2]="";
+			initParamList.add(arrayString);
+			
+			initSection.setInput(initParamList);
+			
+		}
+		
 		String text = nameText.getText();
 		
 		nameText.setFocus();
@@ -141,6 +171,9 @@ public class AddPortletWizardPage extends DataModelWizardPage {
 		nameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
 		nameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		synchHelper.synchText(nameText, NAME, null);
+		if (isJSFPortlet()) {
+			nameText.setText(IPortletUIConstants.JBOSS_JSF_PORTLET_NAME);
+		}
 
 		// display name
 		Label displayNameLabel = new Label(composite, SWT.LEFT);
@@ -149,7 +182,9 @@ public class AddPortletWizardPage extends DataModelWizardPage {
 		Text displayNameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
 		displayNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		synchHelper.synchText(displayNameText, DISPLAY_NAME, null);
-		
+		if (isJSFPortlet()) {
+			displayNameText.setText(IPortletUIConstants.JBOSS_JSF_DISPLAY_PORTLET_NAME);
+		}
 		// title
 		Label titleLabel = new Label(composite, SWT.LEFT);
 		titleLabel.setText(IPortletUIConstants.TITLE_LABEL);
@@ -157,7 +192,9 @@ public class AddPortletWizardPage extends DataModelWizardPage {
 		Text titleText = new Text(composite, SWT.SINGLE | SWT.BORDER);
 		titleText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		synchHelper.synchText(titleText, TITLE, null);
-
+		if (isJSFPortlet()) {
+			titleText.setText(IPortletUIConstants.JBOSS_JSF_PORTLET_TITLE);
+		}
 		// description
 		Label descLabel = new Label(composite, SWT.LEFT);
 		descLabel.setText(DESCRIPTION_LABEL);
@@ -182,4 +219,7 @@ public class AddPortletWizardPage extends DataModelWizardPage {
 		return true;
 	}
 	
+	protected boolean isJSFPortlet() {
+		return model.getBooleanProperty(IS_JSF_PORTLET);
+	}
 }

@@ -18,22 +18,33 @@ import static org.eclipse.jst.servlet.ui.internal.wizard.IWebWizardConstants.REM
 import static org.eclipse.jst.servlet.ui.internal.wizard.IWebWizardConstants.VALUE_LABEL;
 import static org.eclipse.jst.servlet.ui.internal.wizard.IWebWizardConstants.VALUE_TITLE;
 import static org.eclipse.wst.common.componentcore.internal.operation.IArtifactEditOperationDataModelProperties.PROJECT_NAME;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_JSF_PORTLET;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.TITLE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.INSTANCE_NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.WINDOW_NAME;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PAGE_NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IF_EXISTS;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.ADD_PORTLET;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.ADD_JBOSS_APP;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.ADD_JBOSS_PORTLET;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PAGE_REGION;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PARENT_PORTAL;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PORTLET_HEIGHT;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.JBOSS_APP;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.COPY_JSF_TEMPLATES;
 
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.INSTANCE_NAME_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.WINDOW_NAME_LABEL;
+import static org.jboss.tools.portlet.ui.IPortletUIConstants.PAGE_NAME_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.IF_EXISTS_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.PAGE_REGION_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.PARENT_PORTAL_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.PORTLET_HEIGHT_LABEL;
+import static org.jboss.tools.portlet.ui.IPortletUIConstants.JBOSS_APP_LABEL;
+import static org.jboss.tools.portlet.ui.IPortletUIConstants.ADD_JBOSS_APP_LABEL;
+import static org.jboss.tools.portlet.ui.IPortletUIConstants.ADD_JBOSS_PORTLET_LABEL;
+import static org.jboss.tools.portlet.ui.IPortletUIConstants.COPY_JSF_TEMPLATES_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.ADD_PORTLET_LABEL;
  
 import org.eclipse.core.runtime.IStatus;
@@ -140,6 +151,14 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		synchHelper.synchText(instanceNameText, INSTANCE_NAME, null);
 
 		// window name
+		Label pageNameLabel = new Label(composite, SWT.LEFT);
+		pageNameLabel.setText(PAGE_NAME_LABEL);
+		pageNameLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+		final Text pageNameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		pageNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		synchHelper.synchText(pageNameText, PAGE_NAME, null);
+		
+		// window name
 		Label windowNameLabel = new Label(composite, SWT.LEFT);
 		windowNameLabel.setText(WINDOW_NAME_LABEL);
 		windowNameLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
@@ -171,17 +190,9 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		heightText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		synchHelper.synchText(heightText, PORTLET_HEIGHT, null);
 		
-		addPortlet.addSelectionListener(new SelectionListener() {
-
-			public void widgetDefaultSelected(SelectionEvent e) {
-				//enableComponents();
-			}
+		addPortlet.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent e) {
-				enableComponents();
-			}
-
-			private void enableComponents() {
 				boolean enable = addPortlet.getSelection();
 				ifExistsCombo.setEnabled(enable);
 				instanceNameText.setEnabled(enable);
@@ -192,6 +203,45 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 			}
 		});
 		
+		if (isJSFPortlet()) {
+			final Button addJBossApp = new Button(composite, SWT.CHECK);
+			addJBossApp.setText(ADD_JBOSS_APP_LABEL);
+			gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+			gd.horizontalSpan = 2;
+			addJBossApp.setLayoutData(gd);
+			synchHelper.synchCheckbox(addJBossApp, ADD_JBOSS_APP, null);
+			
+			// JBoss Application Name
+			Label jbossAppLabel = new Label(composite, SWT.LEFT);
+			jbossAppLabel.setText(JBOSS_APP_LABEL);
+			jbossAppLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+			final Text jbossAppText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+			jbossAppText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			synchHelper.synchText(jbossAppText, JBOSS_APP, null);
+			
+			addJBossApp.addSelectionListener(new SelectionAdapter() {
+
+				public void widgetSelected(SelectionEvent e) {
+					boolean enable = addJBossApp.getSelection();
+					jbossAppText.setEnabled(enable);
+					
+				}
+			});
+			
+			final Button addJBossPortlet = new Button(composite, SWT.CHECK);
+			addJBossPortlet.setText(ADD_JBOSS_PORTLET_LABEL);
+			gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+			gd.horizontalSpan = 2;
+			addJBossPortlet.setLayoutData(gd);
+			synchHelper.synchCheckbox(addJBossPortlet, ADD_JBOSS_PORTLET, null);
+			
+			final Button copyJSFTemplates = new Button(composite, SWT.CHECK);
+			copyJSFTemplates.setText(COPY_JSF_TEMPLATES_LABEL);
+			gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+			gd.horizontalSpan = 2;
+			copyJSFTemplates.setLayoutData(gd);
+			synchHelper.synchCheckbox(copyJSFTemplates, COPY_JSF_TEMPLATES, null);
+		}
 	}
 	
 	public boolean canFlipToNextPage() {
@@ -205,4 +255,7 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		return true;
 	}
 	
+	protected boolean isJSFPortlet() {
+		return model.getBooleanProperty(IS_JSF_PORTLET);
+	}
 }

@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.jboss.tools.portlet.ui.internal.wizard;
 import static org.eclipse.jst.j2ee.internal.common.operations.INewJavaClassDataModelProperties.PROJECT;
+import static org.eclipse.jst.j2ee.internal.web.operations.INewServletClassDataModelProperties.IS_SERVLET_TYPE;
 import static org.eclipse.jst.j2ee.internal.web.operations.INewWebClassDataModelProperties.USE_EXISTING_CLASS;
 
 import org.eclipse.core.resources.IContainer;
@@ -26,7 +27,6 @@ import org.eclipse.jst.j2ee.internal.war.ui.util.WebServletGroupItemProvider;
 import org.eclipse.jst.j2ee.webapplication.WebApp;
 import org.eclipse.jst.jee.ui.internal.navigator.web.GroupServletItemProvider;
 import org.eclipse.jst.jee.ui.internal.navigator.web.WebAppProvider;
-import org.eclipse.jst.servlet.ui.internal.wizard.MultiSelectFilteredFileSelectionDialog;
 import org.eclipse.jst.servlet.ui.internal.wizard.NewWebClassWizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Cursor;
@@ -37,6 +37,7 @@ import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.FacetedProjectFramework;
 import org.eclipse.wst.common.project.facet.core.internal.FacetedProject;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.ui.MultiSelectFilteredFileSelectionDialog;
 
 public class NewPortletClassWizardPage extends NewWebClassWizardPage {
 
@@ -99,6 +100,10 @@ public class NewPortletClassWizardPage extends NewWebClassWizardPage {
 		ms.open();
 		if (ms.getReturnCode() == Window.OK) {
 			String qualifiedClassName = ""; //$NON-NLS-1$
+			IType type = (IType) ms.getFirstResult();
+			if (type != null) {
+				qualifiedClassName = type.getFullyQualifiedName();
+			}
 			existingClassText.setText(qualifiedClassName);
 		}
 		getControl().setCursor(null);

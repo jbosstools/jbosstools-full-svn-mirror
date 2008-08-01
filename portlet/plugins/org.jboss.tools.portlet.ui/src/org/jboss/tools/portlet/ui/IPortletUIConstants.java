@@ -9,6 +9,7 @@ public interface IPortletUIConstants {
 	static final String ADD_PORTLET_WIZARD_PAGE_DESC = "Enter portlet deployment descriptor specific information.";
 	
 	static final String ADD_JBOSS_PORTLET_WIZARD_PAGE_TITLE = "Create Portlet";
+	static final String ADD_JBOSS_JSF_PORTLET_WIZARD_PAGE_TITLE = "Create JBoss JSF Portlet";
 	static final String ADD_JBOSS_PORTLET_WIZARD_PAGE_DESC = "Enter JBoss portlet specific information";
 
 	static final String DISPLAY_NAME_LABEL = "Display name:";
@@ -54,9 +55,20 @@ public interface IPortletUIConstants {
 	static final String ADD_PORTLET_LABEL = "Create Portlet Instance";
 	static final String INSTANCE_NAME_LABEL = "Instance Name:";
 	static final String WINDOW_NAME_LABEL = "Window Name:";
+	static final String PAGE_NAME_LABEL = "Page Name:";
 	static final String PARENT_PORTAL_LABEL = "Parent Reference:";
 	static final String PAGE_REGION_LABEL = "Region:";
 	static final String PORTLET_HEIGHT_LABEL = "Height:";
 	static final String IF_EXISTS_LABEL = "If Exists:";
+	static final String NEW_JBOSS_JSF_PORTLET_WIZARD_PAGE_DESC = "Specify class file information";
+	static final String JBOSS_JSF_PORTLET_CLASS = "javax.portlet.faces.GenericFacesPortlet";
+	static final String JBOSS_JSF_PORTLET_NAME = "riPortlet";
+	static final String JBOSS_JSF_DISPLAY_PORTLET_NAME = "JBoss JSF Portlet";
+	static final String JBOSS_JSF_PORTLET_TITLE = "JBoss JSF Portlet";
+	static final String JBOSS_APP_LABEL = "JBoss Application Name:";
+	static final String ADD_JBOSS_APP_LABEL = "Create JBoss Application";
+	static final String ADD_JBOSS_PORTLET_LABEL = "Add the jboss-portlet.xml file";
+	static final String COPY_JSF_TEMPLATES_LABEL = "Copy JSF Templates";
+	
 	
 }

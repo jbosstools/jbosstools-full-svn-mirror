@@ -1,12 +1,13 @@
 package org.jboss.tools.portlet.ui.internal.wizard;
 
-import static org.eclipse.jst.j2ee.web.IServletConstants.QUALIFIED_SERVLET;
+
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.Signature;
 import org.eclipse.jst.j2ee.internal.web.operations.INewServletClassDataModelProperties;
 import org.eclipse.jst.j2ee.internal.web.operations.NewServletClassDataModelProvider;
@@ -45,6 +46,16 @@ public class NewPortletClassDataModelProvider extends
 	private final static String ANNOTATED_TEMPLATE_DEFAULT = "portlet.javajet"; //$NON-NLS-1$
 
 	private final static String NON_ANNOTATED_TEMPLATE_DEFAULT = "portlet.javajet"; //$NON-NLS-1$
+
+	private boolean isJSFPortlet;
+
+	public NewPortletClassDataModelProvider(boolean isJSFPortlet) {
+		this.isJSFPortlet = isJSFPortlet;
+	}
+
+	public NewPortletClassDataModelProvider() {
+		this(false);
+	}
 
 	/**
 	 * Subclasses may extend this method to provide their own default operation
@@ -92,11 +103,17 @@ public class NewPortletClassDataModelProvider extends
 		propertyNames.add(TEMPLATE_FILE);
 		propertyNames.add(INSTANCE_NAME);
 		propertyNames.add(WINDOW_NAME);
+		propertyNames.add(PAGE_NAME);
 		propertyNames.add(PARENT_PORTAL);
 		propertyNames.add(PAGE_REGION);
 		propertyNames.add(PORTLET_HEIGHT);
 		propertyNames.add(IF_EXISTS);
 		propertyNames.add(ADD_PORTLET);
+		propertyNames.add(ADD_JBOSS_APP);
+		propertyNames.add(ADD_JBOSS_PORTLET);
+		propertyNames.add(JBOSS_APP);
+		propertyNames.add(IS_JSF_PORTLET);
+		propertyNames.add(COPY_JSF_TEMPLATES);
 		
 		return propertyNames;
 	}
@@ -126,11 +143,29 @@ public class NewPortletClassDataModelProvider extends
 	@Override
 	public Object getDefaultProperty(String propertyName) {
 		
+		if (propertyName.equals(IS_JSF_PORTLET)) {
+			if (isJSFPortlet)
+				return Boolean.TRUE;
+			return Boolean.FALSE;
+		}
+		if (propertyName.equals(COPY_JSF_TEMPLATES)) {
+			return Boolean.FALSE;
+		}
 		if (propertyName.equals(ADD_PORTLET)) {
+			return Boolean.TRUE;
+		}
+		if (propertyName.equals(ADD_JBOSS_APP)) {
+			return Boolean.TRUE;
+		}
+		if (propertyName.equals(ADD_JBOSS_PORTLET)) {
 			return Boolean.TRUE;
 		}
 		if (propertyName.equals(DO_VIEW)) {
 			return Boolean.TRUE;
+		}
+		if (isJSFPortlet) {
+			if (propertyName.equals(EDIT_MODE) || propertyName.equals(HELP_MODE))
+					return Boolean.TRUE;
 		}
 		if (propertyName.equals(DO_EDIT) ||	propertyName.equals(DO_HELP) || propertyName.equals(INIT) || propertyName.equals(DESTROY) || 
 			propertyName.equals(GET_PORTLET_CONFIG)) {
@@ -179,8 +214,14 @@ public class NewPortletClassDataModelProvider extends
 		if (propertyName.equals(WINDOW_NAME)) {
 			return getDefaultProperty(NAME) + "Window";
 		}
+		if (propertyName.equals(PAGE_NAME)) {
+			return "";
+		}
 		if (propertyName.equals(PORTLET_HEIGHT)) {
 			return "1";
+		}
+		if (propertyName.equals(JBOSS_APP)) {
+			return "riPortletApp";
 		}
 		if (propertyName.equals(PAGE_REGION)) {
 			return "center";
@@ -202,6 +243,12 @@ public class NewPortletClassDataModelProvider extends
 		if (propertyName.equals(SUPERCLASS)) 
 			return validateSuperClassName(getStringProperty(propertyName));
 
+		if (isJSFPortlet && propertyName.equals(CLASS_NAME)) {
+			if (getStringProperty(propertyName).length()!=0) {
+				return Status.OK_STATUS;
+			}
+				
+		}
 		// Otherwise defer to super to validate the property
 		return super.validate(propertyName);
 	}
@@ -247,7 +294,7 @@ public class NewPortletClassDataModelProvider extends
 			model.notifyPropertyChange(PROCESS_ACTION, IDataModel.DEFAULT_CHG);
 			
 			List ifaces = (List) model.getProperty(INTERFACES);
-			ifaces.add(QUALIFIED_SERVLET);
+			ifaces.add(QUALIFIED_PORTLET);
 			
 		}
 		

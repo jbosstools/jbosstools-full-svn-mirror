@@ -11,6 +11,13 @@
   </extension> 
   -->
   
+  <extension 
+        point="org.eclipse.wst.common.project.facet.ui.wizardPages">
+    <wizard-pages action="jboss.jsfportlet.install">
+        <page class="org.jboss.tools.portlet.ui.internal.project.facet.JSFPortletFacetInstallPage"/>
+    </wizard-pages>
+  </extension> 
+  
   <!-- New Java Portlet wizard -->
   <extension point="org.eclipse.ui.newWizards">
     <category id="org.jboss.tools.portlet" 
@@ -24,6 +31,15 @@
 		category="org.jboss.tools.jst.web/org.jboss.tools.portlet"
 		icon="icons/portlet_wiz.gif">
 		<description>Create a new Java Portlet</description>
+		<selection class="org.eclipse.core.resources.IResource" />
+	</wizard>
+	<wizard
+		id="org.jboss.tools.portlet.ui.wizard.NewJSFPortletWizard"
+		name="JBoss JSF Portlet"
+		class="org.jboss.tools.portlet.ui.internal.wizard.NewJSFPortletWizard"
+		category="org.jboss.tools.jst.web/org.jboss.tools.portlet"
+		icon="icons/portlet_wiz.gif">
+		<description>Create a new JBoss JSF Portlet</description>
 		<selection class="org.eclipse.core.resources.IResource" />
 	</wizard>
   </extension>

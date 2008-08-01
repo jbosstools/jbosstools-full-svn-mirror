@@ -33,6 +33,8 @@ public interface INewPortletClassDataModelProperties extends
 	
 	static final String WINDOW_NAME = "NewPortletClassDataModel.WINDOW_NAME";
 	
+	static final String PAGE_NAME = "NewPortletClassDataModel.PAGE_NAME";
+	
 	static final String PARENT_PORTAL = "NewPortletClassDataModel.PARENT_PORTAL";
 	
 	static final String PAGE_REGION = "NewPortletClassDataModel.PAGE_REGION";
@@ -43,4 +45,13 @@ public interface INewPortletClassDataModelProperties extends
 	
 	static final String ADD_PORTLET = "NewPortletClassDataModel.ADD_PORTLET";
 	
+	static final String ADD_JBOSS_APP = "NewPortletClassDataModel.ADD_JBOSS_APP";
+	
+	static final String ADD_JBOSS_PORTLET = "NewPortletClassDataModel.ADD_JBOSS_PORTLET";
+	
+	static final String JBOSS_APP = "NewPortletClassDataModel.JBOSS_APP";
+	
+	static final String IS_JSF_PORTLET = "NewPortletClassDataModel.IS_JSF_PORTLET";
+	
+	static final String COPY_JSF_TEMPLATES = "NewPortletClassDataModel.COPY_JSF_TEMPLATES";
 }
