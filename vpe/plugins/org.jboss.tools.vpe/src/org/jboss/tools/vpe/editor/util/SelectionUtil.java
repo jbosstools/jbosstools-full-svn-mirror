@@ -93,8 +93,10 @@ public class SelectionUtil {
             
             if (file != null) {
                 final String findString = ElService.getInstance().reverseReplace(file, node.getNodeValue());
-                
-                start = pageContext.getSourceBuilder().getStructuredTextViewer().getTextWidget().getText().indexOf(findString);
+
+                if ((findString != null) && (pageContext.getSourceBuilder().getStructuredTextViewer().getTextWidget().getText() != null)) {
+                    start = pageContext.getSourceBuilder().getStructuredTextViewer().getTextWidget().getText().indexOf(findString);
+                }
             }
         }
 		pageContext.getSourceBuilder().getStructuredTextViewer().setSelectedRange(start + offset, length);
@@ -202,8 +204,8 @@ public class SelectionUtil {
 		//gets visual selection range
 		Point sourceRange = new Point(0, 0);
 		//converts to source selection
-		sourceRange.x = TextUtil.sourcePosition(sourceNode.getNodeValue(), focusedNode.getNodeValue(), selection.getFocusOffset());
-		sourceRange.y = TextUtil.sourcePosition(sourceNode.getNodeValue(), focusedNode.getNodeValue(), selection.getAnchorOffset())-sourceRange.x;
+        sourceRange.x = TextUtil.sourcePosition(sourceNode.getNodeValue(), focusedNode.getNodeValue(), selection.getFocusOffset());
+        sourceRange.y = TextUtil.sourcePosition(sourceNode.getNodeValue(), focusedNode.getNodeValue(), selection.getAnchorOffset())-sourceRange.x;
 		return sourceRange;
 	}
 	
