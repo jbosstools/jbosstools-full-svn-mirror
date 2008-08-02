@@ -24,7 +24,7 @@ public class NodeContribution implements Comparable {
 		try {
 			actionDelegate = (INodeActionDelegate) element.createExecutableExtension("class");
 		} catch (CoreException e) {
-//TODO			Trace.trace(getClass(), e);
+			//TODO			Trace.trace(getClass(), e);
 		}
 		
 		String iconPath = element.getAttribute("icon");

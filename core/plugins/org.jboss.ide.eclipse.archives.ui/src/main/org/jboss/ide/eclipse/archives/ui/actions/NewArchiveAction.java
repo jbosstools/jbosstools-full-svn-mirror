@@ -29,15 +29,14 @@ public class NewArchiveAction {
 		try {
 			action = (IActionDelegate) element.createExecutableExtension("class");
 		} catch (CoreException e) {
-//TODO			Trace.trace(getClass(), e);
+			//TODO			
 		}
 		
 		String iconPath = element.getAttribute("icon");
 		String pluginId = element.getDeclaringExtension().getNamespaceIdentifier();
 		Bundle bundle = Platform.getBundle(pluginId);
 		URL iconURL = FileLocator.find(bundle, new Path(iconPath), null);
-		if (iconURL == null)
-		{
+		if (iconURL == null) {
 			iconURL = bundle.getEntry(iconPath);
 		}
 		icon = ImageDescriptor.createFromURL(iconURL);
@@ -52,8 +51,7 @@ public class NewArchiveAction {
 		return icon;
 	}
 	
-	public Image getIcon()
-	{
+	public Image getIcon() {
 		return iconImage;
 	}
 

@@ -1,7 +1,8 @@
 package org.jboss.ide.eclipse.archives.ui.providers;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
@@ -12,9 +13,9 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
-import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProvider.WrappedProject;
+import org.jboss.ide.eclipse.archives.ui.views.ArchivesContentProvider.DelayProxy;
 
-public class ArchivesLabelProvider implements ILabelProvider {
+public class ArchivesLabelProvider extends BaseLabelProvider implements ILabelProvider {
 	
 	
 	/*
@@ -43,8 +44,7 @@ public class ArchivesLabelProvider implements ILabelProvider {
 	}
 	
 	private Image internalGetImage(Object element) {
-		element = unwrapElement(element);
-		if( element instanceof WrappedProject ) 
+		if( element instanceof IProject ) 
 			return PlatformUI.getWorkbench().getSharedImages().getImage(org.eclipse.ui.ide.IDE.SharedImages.IMG_OBJ_PROJECT);
 		if( element instanceof IArchiveNode ) {
 			IArchiveNode node = (IArchiveNode) element;
@@ -69,9 +69,10 @@ public class ArchivesLabelProvider implements ILabelProvider {
 	}
 
 	private String internalGetText(Object element) {
-		element = unwrapElement(element);
-		if( element instanceof WrappedProject) 
-			return ((WrappedProject)element).getProject().getName();
+		if( element instanceof DelayProxy ) 
+			return "Loading...";
+		if( element instanceof IProject) 
+			return ((IProject)element).getProject().getName();
 		if( element instanceof IArchiveNode ) {
 			switch (((IArchiveNode)element).getNodeType()) {
 				case IArchiveNode.TYPE_ARCHIVE: return getPackageText((IArchive)element);
@@ -123,22 +124,5 @@ public class ArchivesLabelProvider implements ILabelProvider {
 		
 		return text;
 	}
-
-
-	
-	protected Object unwrapElement(Object element) {
-		return element; // to be used if we wrap everything for preferences
-	}
-	
-	
-	public void addListener(ILabelProviderListener listener) {}
-
-	public void dispose() {	}
-
-	public boolean isLabelProperty(Object element, String property) {
-		return true;
-	}
-
-	public void removeListener(ILabelProviderListener listener) {	}
 
 }

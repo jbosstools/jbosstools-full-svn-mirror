@@ -20,7 +20,6 @@ import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.PackagesUIPlugin;
-import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesView;
 import org.jboss.ide.eclipse.archives.ui.wizards.pages.ArchiveInfoWizardPage;
 
 public abstract class AbstractArchiveWizard extends WizardWithNotification implements INewWizard {
@@ -33,11 +32,6 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 	protected IArchiveNode initialDestinationNode;
 	
 	public AbstractArchiveWizard () {	
-		this.project = ProjectArchivesView.getInstance().getCurrentProject();
-		IStructuredSelection selection = ProjectArchivesView.getInstance().getSelection();
-		Object s = selection.getFirstElement();
-		if( s instanceof IArchiveNode )
-			initialDestinationNode = (IArchiveNode)s;
 	}
 	
 	public AbstractArchiveWizard (IArchive existingPackage) {
@@ -115,7 +109,8 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		if (selection == null) return;
-		project = ProjectArchivesView.getInstance().getCurrentProject();
+		project = null;
+
 		Object selected = (selection.isEmpty() ? project : selection.getFirstElement());
 		
 		if (selected instanceof IArchiveNode) {
@@ -125,9 +120,10 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 			}
 			project = ResourcesPlugin.getWorkspace().getRoot().getProject(node.getProjectName());
 		} else if (selected instanceof IContainer) {
+			project = ((IContainer)selected).getProject();
 			initialDestinationPath = ((IContainer)selected).getFullPath().toString();
 			isPathWorkspaceRelative = true;
-		} else {
+		} else if( project != null ){
 			initialDestinationPath = project.getFullPath().toString();
 			isPathWorkspaceRelative = true;
 		}

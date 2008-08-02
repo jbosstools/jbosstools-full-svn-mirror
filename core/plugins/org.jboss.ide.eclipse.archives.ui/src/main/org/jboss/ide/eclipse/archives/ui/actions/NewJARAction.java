@@ -1,42 +1,33 @@
 package org.jboss.ide.eclipse.archives.ui.actions;
 
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.ui.IActionDelegate;
 import org.eclipse.ui.PlatformUI;
-import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
-import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesView;
 import org.jboss.ide.eclipse.archives.ui.wizards.NewJARWizard;
 
-public class NewJARAction extends ActionWithDelegate {
+public class NewJARAction implements IActionDelegate {
 	public void run() {
 		try {
-		NewJARWizard wizard = new NewJARWizard();
-		
-		wizard.init(PlatformUI.getWorkbench(), getSelection());
-		
-		WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wizard);
-		int response = dialog.open();
-		if (response == Dialog.OK) {
-		}
+			NewJARWizard wizard = new NewJARWizard();
+			wizard.init(PlatformUI.getWorkbench(), selection);
+			WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wizard);
+			dialog.open();
 		} catch( Exception e ) {
-			e.printStackTrace();
+			// TODO
 		}
 	}
 	
-	public IStructuredSelection getSelection() {
-		return ProjectArchivesView.getInstance().getSelection();
+	private IStructuredSelection selection;
+	public void run(IAction action) {
+		run();
 	}
-	public ImageDescriptor getImageDescriptor() {
-		return ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_NEW_PACKAGE);
-	}
-	
-	public String getText() {
-		return "JAR";
-	}
-	
-	public String getToolTipText() {
-		return "Create a new JAR package";
+
+	public void selectionChanged(IAction action, ISelection selection) {
+		if( selection instanceof IStructuredSelection) {
+			this.selection = (IStructuredSelection)selection;
+		}
 	}
 }

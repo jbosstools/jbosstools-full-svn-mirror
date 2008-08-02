@@ -21,7 +21,6 @@ import org.jboss.ide.eclipse.archives.core.model.IPreferenceManager;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
-import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesView;
 
 public class MainPreferencePage extends PropertyPage implements
 		IWorkbenchPreferencePage {
@@ -183,8 +182,9 @@ public class MainPreferencePage extends PropertyPage implements
 		PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_FULL_FILESET_ROOT_DIR, showFullFilesetRootDir.getSelection(), getElement());
 		PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_PROJECT_ROOT, showProjectRoot.getSelection(), getElement());
 		PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS, showAllProjects.getSelection(), getElement());
-		if( ProjectArchivesView.getInstance() != null )
-			ProjectArchivesView.getInstance().refreshViewer(null);
+		// TODO FIX THIS
+//			if( ProjectArchivesCommonView.getInstance() != null )
+//			ProjectArchivesCommonView.getInstance().refreshViewer(null);
 		
 		return true;
 	}
