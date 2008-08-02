@@ -224,8 +224,7 @@ public class ArchivesActionProvider extends CommonActionProvider {
 	 * the implementations of the action, where the action does its work etc
 	 */
 	
-	private void createFolder ()
-	{
+	private void createFolder () {
 		IInputValidator validator = new IInputValidator () {
 			public String isValid(String newText) {
 				IArchiveNode selected = getSelectedNode();

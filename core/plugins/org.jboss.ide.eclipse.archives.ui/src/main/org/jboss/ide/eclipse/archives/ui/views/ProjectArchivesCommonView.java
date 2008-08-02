@@ -12,7 +12,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.INullSelectionListener;
 import org.eclipse.ui.ISelectionListener;
@@ -22,15 +21,12 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.navigator.CommonNavigator;
 import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
-import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
-import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
 
-public class ProjectArchivesCommonView extends CommonNavigator implements IArchiveModelListener {
+public class ProjectArchivesCommonView extends CommonNavigator {
 	protected static ProjectArchivesCommonView instance;
 	protected ISelectionListener selectionListener;
 	protected IProject currentProject;
@@ -53,13 +49,11 @@ public class ProjectArchivesCommonView extends CommonNavigator implements IArchi
 	public void init(IViewSite site) throws PartInitException {
 		super.init(site);
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService().addPostSelectionListener(selectionListener);
-		ArchivesModel.instance().addModelListener(this);
 	}
 	
     public void dispose() {
     	super.dispose();
     	PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService().removePostSelectionListener(selectionListener);
-    	ArchivesModel.instance().removeModelListener(this);
     }
 
 	protected ISelectionListener createSelectionListener() {
@@ -95,14 +89,6 @@ public class ProjectArchivesCommonView extends CommonNavigator implements IArchi
 			}
 
 		};
-	}
-	
-	public void modelChanged(IArchiveNodeDelta delta) {
-		Display.getDefault().asyncExec(new Runnable() { 
-			public void run() {
-				getCommonViewer().refresh();
-			}
-		});
 	}
 	
 	public IProject getCurrentProject() { 

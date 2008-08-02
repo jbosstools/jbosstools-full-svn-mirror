@@ -1,6 +1,5 @@
 package org.jboss.ide.eclipse.archives.ui.providers;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -13,7 +12,8 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
-import org.jboss.ide.eclipse.archives.ui.views.ArchivesContentProvider.DelayProxy;
+import org.jboss.ide.eclipse.archives.ui.views.ArchivesContentProviderDelegate.DelayProxy;
+import org.jboss.ide.eclipse.archives.ui.views.ArchivesContentProviderDelegate.WrappedProject;
 
 public class ArchivesLabelProvider extends BaseLabelProvider implements ILabelProvider {
 	
@@ -44,8 +44,15 @@ public class ArchivesLabelProvider extends BaseLabelProvider implements ILabelPr
 	}
 	
 	private Image internalGetImage(Object element) {
-		if( element instanceof IProject ) 
-			return PlatformUI.getWorkbench().getSharedImages().getImage(org.eclipse.ui.ide.IDE.SharedImages.IMG_OBJ_PROJECT);
+		if( element instanceof WrappedProject ) {
+			switch(((WrappedProject)element).getType()) {
+				case WrappedProject.NAME: 
+					return PlatformUI.getWorkbench().getSharedImages().getImage(org.eclipse.ui.ide.IDE.SharedImages.IMG_OBJ_PROJECT);
+				case WrappedProject.CATEGORY:
+					return ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_PACKAGE);
+			}
+		}
+
 		if( element instanceof IArchiveNode ) {
 			IArchiveNode node = (IArchiveNode) element;
 			if (node != null) {
@@ -69,10 +76,16 @@ public class ArchivesLabelProvider extends BaseLabelProvider implements ILabelPr
 	}
 
 	private String internalGetText(Object element) {
+		if( element instanceof WrappedProject ) {
+			switch(((WrappedProject)element).getType()) {
+				case WrappedProject.NAME: 
+					return (((WrappedProject)element).getElement().getName());
+				case WrappedProject.CATEGORY:
+					return "Project Archives";
+			}
+		}
 		if( element instanceof DelayProxy ) 
 			return "Loading...";
-		if( element instanceof IProject) 
-			return ((IProject)element).getProject().getName();
 		if( element instanceof IArchiveNode ) {
 			switch (((IArchiveNode)element).getNodeType()) {
 				case IArchiveNode.TYPE_ARCHIVE: return getPackageText((IArchive)element);
