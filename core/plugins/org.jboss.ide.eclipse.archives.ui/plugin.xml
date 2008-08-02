@@ -9,7 +9,7 @@
       <view
             allowMultiple="false"
             category="org.jboss.ide.eclipse.ui.views"
-            class="org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesView"
+            class="org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesCommonView"
             icon="icons/jar_obj.gif"
             id="org.jboss.ide.eclipse.archives.ui.ProjectArchivesView"
             name="Project archives"/>
@@ -75,6 +75,72 @@
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer class="org.jboss.ide.eclipse.archives.ui.PrefsInitializer"/>
+   </extension>
+   
+   
+   
+   <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewer
+            viewerId="org.jboss.ide.eclipse.archives.ui.ProjectArchivesView">
+      </viewer>
+      <viewerContentBinding
+            viewerId="org.jboss.ide.eclipse.archives.ui.ProjectArchivesView">
+         <includes>
+            <contentExtension
+                  isRoot="true"
+                  pattern="org.jboss.ide.eclipse.archives.ui.archivesRootContent">
+            </contentExtension>
+            <contentExtension
+                  isRoot="true"
+                  pattern="org.jboss.ide.eclipse.archives.ui.archivesContent">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <navigatorContent
+            activeByDefault="true"
+            contentProvider="org.jboss.ide.eclipse.archives.ui.views.ArchivesRootContentProvider"
+            icon="icons/jar_obj.gif"
+            id="org.jboss.ide.eclipse.archives.ui.archivesRootContent"
+            labelProvider="org.jboss.ide.eclipse.archives.ui.providers.ArchivesLabelProvider"
+            name="Archives Content Root"
+            priority="normal"
+            providesSaveables="true">
+         <triggerPoints>
+            <instanceof
+                  value="org.eclipse.core.resources.IWorkspaceRoot">
+            </instanceof>
+         </triggerPoints>
+      </navigatorContent>
+      <navigatorContent
+            activeByDefault="true"
+            contentProvider="org.jboss.ide.eclipse.archives.ui.views.ArchivesContentProvider"
+            icon="icons/jar_obj.gif"
+            id="org.jboss.ide.eclipse.archives.ui.archivesContent"
+            labelProvider="org.jboss.ide.eclipse.archives.ui.providers.ArchivesLabelProvider"
+            name="Archives Content"
+            priority="normal"
+            providesSaveables="true">
+         <triggerPoints>
+            <instanceof
+                  value="org.eclipse.core.resources.IProject">
+            </instanceof>
+         </triggerPoints>
+         <actionProvider
+               class="org.jboss.ide.eclipse.archives.ui.views.ArchivesActionProvider"
+               id="org.jboss.ide.eclipse.archives.ui.views.ArchivesActionProvider">
+         </actionProvider>
+         <possibleChildren>
+            <or>
+               <instanceof
+                     value="org.jboss.ide.eclipse.archives.core.model.IArchiveNode">
+               </instanceof>
+            </or>
+         </possibleChildren>
+      </navigatorContent>
    </extension>
    
 </plugin>
