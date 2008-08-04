@@ -142,7 +142,6 @@ import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
-import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.VpeDndUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.selbar.SelectionBar;
@@ -3255,6 +3254,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		} else {
 			visualBuilder.rebuildDom(null);
 		}
+	}
+
+	/**
+	 * @return the visualSelectionController
+	 */
+	public VpeSelectionController getVisualSelectionController() {
+		return visualSelectionController;
 	}
 
 }

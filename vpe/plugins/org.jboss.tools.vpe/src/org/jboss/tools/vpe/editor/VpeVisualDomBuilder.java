@@ -977,7 +977,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
     public void removeNode(Node sourceNode) {
     //remove from cash should be called first
-    getPageContext().removeNodeFromVpeCash(sourceNode);
     domMapping.remove(sourceNode);
     getSourceNodes().remove(sourceNode);
     if (sourceNode instanceof INodeNotifier) {

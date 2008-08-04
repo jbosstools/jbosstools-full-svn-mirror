@@ -67,9 +67,6 @@ public class VpePageContext implements IVisualContext {
 	WtpKbConnector connector;
 	private nsIDOMNode currentVisualNode;
 	
-	//Added by Max Areshkau to increase perfomance of VPE JBIDE-675
-	private Map<Node,VpeCreationData> vpeCash;
-	
 	public VpePageContext(VpeTemplateManager templateManager, BundleMap bundle, VpeEditorPart editPart) {
 		this.bundle = bundle;
 		this.editPart = editPart;
@@ -117,8 +114,6 @@ public class VpePageContext implements IVisualContext {
 	public void clearAll() {
 		bundleDependencySet.clear();
 		bundle.clearAll();
-		//clean a cash nodes
-		clearVpeCash();
 	}
 	
 	public void dispose() {
@@ -341,79 +336,6 @@ public class VpePageContext implements IVisualContext {
 		this.currentVisualNode = currentVisualNode;
 	}
 
-	/**
-	 * Removes  information about source node from vpe cash
-	 * @param sourceNode
-	 */
-	public void removeNodeFromVpeCash(Node sourceNode) {
-		
-		getVpeCash().remove(sourceNode);
-		Node parentNode = sourceNode.getParentNode();
-		//we should on change remove also parent nodes because information for
-		//this nodes doen't actual when we change child
-		while(parentNode!=null) {
-			getVpeCash().remove(parentNode);
-			parentNode=parentNode.getParentNode();
-		}
-	}
-	/**
-	 * Clears all information in cash
-	 */
-	public void clearVpeCash() {
-		
-		getVpeCash().clear();
-	}
-	/**
-	 * Checs is creation data exist in cash
-	 * @param sourceNode
-	 * @return true - if date exist 
-	 * 		   false -otherwise
-	 */
-	public boolean isCreationDataExistInCash(Node sourceNode){
-		
-//		Iterator<Node> keys =	getVpeCash().keySet().iterator();
-//
-//		//Map.get() doesn't work correctly for this situation	
-////			while(keys.hasNext()){
-////				Node key= keys.next();
-////				if(sourceNode.isEqu alNode(key)) {
-////					return true;
-////				}
-////			}
-////			return false;
-		return getVpeCash().containsKey(sourceNode);
-	}
-	/**
-	 * Inserts creation data into cash
-	 * @param sourceNode
-	 * @param creationData
-	 */
-	public void addCreationDataToCash(Node sourceNode,VpeCreationData creationData) {
-		//TODO Max Areshkau JBIDE-675 Adds data to cash, think about cloning creationData
-		getVpeCash().put(sourceNode, creationData);
-	}
-	/**
-	 * Looks creates data in cash
-	 * @param sourceNode
-	 * @return returns creation data
-	 */
-	public VpeCreationData getVpeCreationDataFromCash(Node sourceNode) {
-		
-		return getVpeCash().get(sourceNode);
-	}
-	/**
-	 * Return vpe Cash
-	 * @return the vpeCash
-	 */
-	private Map<Node, VpeCreationData> getVpeCash() {
-		
-		if(vpeCash ==null) {
-			
-			vpeCash = new HashMap<Node, VpeCreationData>();	
-		}
-		return vpeCash;
-	}
-	
 	/**
 	 * Processes display events to prevent eclipse froze
 	 */

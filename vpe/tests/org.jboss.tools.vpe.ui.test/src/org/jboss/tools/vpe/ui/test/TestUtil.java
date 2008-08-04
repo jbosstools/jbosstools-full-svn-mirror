@@ -21,6 +21,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.IOverwriteQuery;
@@ -247,5 +248,47 @@ public class TestUtil {
 		importBean.setImportProjectName(projectName);
 		importBean.setImportProjectPath(resourcePath);
 		return importBean;
+	}
+	/**
+	 * Utility function which is used to calculate offcet in document by line number and character position
+	 * 
+	 * @param textViewer
+	 * @param lineIndex
+	 * @param linePosition
+	 * @return offcet in document
+	 * @throws IllegalArgumentException
+	 */
+	public static final int getLinePositionOffcet(ITextViewer textViewer, int lineIndex, int linePosition) throws IllegalArgumentException {
+		
+		int resultOffcet = 0;
+		
+		if(textViewer==null) {
+				
+				throw new IllegalArgumentException("Text viewer shouldn't be a null"); //$NON-NLS-1$
+		}	
+		//lineIndex-1 becose calculating of line begibns in eclipse from one, but should be form zero
+		resultOffcet=textViewer.getTextWidget().getOffsetAtLine(lineIndex-1);
+		//here we get's tabs length
+		//for more example you can see code org.eclipse.ui.texteditor.AbstractTextEditor@getCursorPosition() and class $PositionLabelValue
+		int tabWidth = textViewer.getTextWidget().getTabs();
+		int characterOffset=0;
+		String currentString = textViewer.getTextWidget().getLine(lineIndex-1);
+		int pos=1;
+		for (int i= 0; (i < currentString.length())&&(pos<linePosition); i++) {
+			if ('\t' == currentString.charAt(i)) {
+				
+				characterOffset += (tabWidth == 0 ? 0 : 1);
+				pos+=tabWidth;
+			}else{
+				pos++;
+				characterOffset++;
+			}
+		}
+		resultOffcet+=characterOffset;
+		if(textViewer.getTextWidget().getLineAtOffset(resultOffcet)!=(lineIndex-1)) {
+				
+				throw new IllegalArgumentException("Incorrect character position in line"); //$NON-NLS-1$
+		}
+		return resultOffcet;
 	}
 }
