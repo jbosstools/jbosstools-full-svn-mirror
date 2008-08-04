@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.archives.ui.views;
+package org.jboss.ide.eclipse.archives.ui.providers;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,8 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
-import org.jboss.ide.eclipse.archives.ui.views.ArchivesContentProviderDelegate.WrappedProject;
+import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate.WrappedProject;
+import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesCommonView;
 
 public class ArchivesRootContentProvider implements ITreeContentProvider {
 	private ArchivesContentProviderDelegate delegate;

@@ -12,8 +12,8 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
-import org.jboss.ide.eclipse.archives.ui.views.ArchivesContentProviderDelegate.DelayProxy;
-import org.jboss.ide.eclipse.archives.ui.views.ArchivesContentProviderDelegate.WrappedProject;
+import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate.DelayProxy;
+import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate.WrappedProject;
 
 public class ArchivesLabelProvider extends BaseLabelProvider implements ILabelProvider {
 	

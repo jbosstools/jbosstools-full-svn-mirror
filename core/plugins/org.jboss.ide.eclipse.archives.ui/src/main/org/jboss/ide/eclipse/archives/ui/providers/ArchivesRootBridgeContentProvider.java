@@ -1,9 +1,9 @@
-package org.jboss.ide.eclipse.archives.ui.views;
+package org.jboss.ide.eclipse.archives.ui.providers;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.jboss.ide.eclipse.archives.ui.views.ArchivesContentProviderDelegate.WrappedProject;
+import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate.WrappedProject;
 
 public class ArchivesRootBridgeContentProvider implements ITreeContentProvider {
 	private ArchivesContentProviderDelegate delegate;

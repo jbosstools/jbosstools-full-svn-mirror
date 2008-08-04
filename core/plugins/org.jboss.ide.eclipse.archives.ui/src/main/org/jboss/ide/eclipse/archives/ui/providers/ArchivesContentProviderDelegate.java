@@ -1,4 +1,4 @@
-package org.jboss.ide.eclipse.archives.ui.views;
+package org.jboss.ide.eclipse.archives.ui.providers;
 
 import java.util.ArrayList;
 import java.util.Arrays;

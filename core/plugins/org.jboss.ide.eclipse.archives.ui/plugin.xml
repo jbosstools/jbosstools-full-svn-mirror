@@ -104,7 +104,7 @@
          point="org.eclipse.ui.navigator.navigatorContent">
       <navigatorContent
             activeByDefault="true"
-            contentProvider="org.jboss.ide.eclipse.archives.ui.views.ArchivesRootContentProvider"
+            contentProvider="org.jboss.ide.eclipse.archives.ui.providers.ArchivesRootContentProvider"
             icon="icons/jar_obj.gif"
             id="org.jboss.ide.eclipse.archives.ui.archivesContent"
             labelProvider="org.jboss.ide.eclipse.archives.ui.providers.ArchivesLabelProvider"
@@ -124,12 +124,12 @@
             </or>
          </possibleChildren>
          <actionProvider
-               class="org.jboss.ide.eclipse.archives.ui.views.ArchivesActionProvider"
+               class="org.jboss.ide.eclipse.archives.ui.providers.ArchivesActionProvider"
                id="org.jboss.ide.eclipse.archives.ui.views.ArchivesActionProvider1">
          </actionProvider>
       </navigatorContent>
       <navigatorContent
-            contentProvider="org.jboss.ide.eclipse.archives.ui.views.ArchivesRootBridgeContentProvider"
+            contentProvider="org.jboss.ide.eclipse.archives.ui.providers.ArchivesRootBridgeContentProvider"
             icon="icons/jar_obj.gif"
             id="org.jboss.ide.eclipse.archives.ui.archivesRootBridgeContent"
             labelProvider="org.jboss.ide.eclipse.archives.ui.providers.ArchivesLabelProvider"
@@ -141,7 +141,7 @@
             </instanceof>
          </triggerPoints>
          <actionProvider
-               class="org.jboss.ide.eclipse.archives.ui.views.ArchivesActionProvider"
+               class="org.jboss.ide.eclipse.archives.ui.providers.ArchivesActionProvider"
                id="org.jboss.ide.eclipse.archives.ui.views.ArchivesActionProvider2">
          </actionProvider>
          <possibleChildren>
