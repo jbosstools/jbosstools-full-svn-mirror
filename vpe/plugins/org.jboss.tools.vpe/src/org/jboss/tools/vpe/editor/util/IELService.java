@@ -49,7 +49,7 @@ public interface IELService {
      * 
      * @return the string
      */
-   String replaceElAndResources(VpePageContext pageContext, Attr attributeNode);
+   String replaceElAndResources(VpePageContext pageContext, Node attributeNode);
 
     /**
      * Reverse replace.

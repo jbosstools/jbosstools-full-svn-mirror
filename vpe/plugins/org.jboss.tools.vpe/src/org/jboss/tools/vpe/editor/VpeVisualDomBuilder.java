@@ -419,6 +419,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
         return null;
     }
    
+//    
+//    if(sourceNode.getNodeType() == Node.TEXT_NODE){
+//        System.err.println("Hello world");
+//    }
 //    switch (sourceNode.getNodeType()) {
     
 //    case Node.ELEMENT_NODE:
@@ -429,11 +433,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
              sourceNode, ifDependencySet);
 
         VpeCreationData creationData = null;
+        Node sourceNodeClone = null;
         // FIX FOR JBIDE-1568, added by Max Areshkau
         try {
 
                 if (ElService.getInstance().isCloneableNode(getPageContext(), sourceNode)) {
-                    final Node sourceNodeClone =  (sourceNode).cloneNode(true);
+                    sourceNodeClone =  (sourceNode).cloneNode(true);
 
                     template.beforeTemplateCreated(getPageContext(), sourceNodeClone, getVisualDocument());
                     creationData = template.create(getPageContext(), sourceNodeClone, getVisualDocument());

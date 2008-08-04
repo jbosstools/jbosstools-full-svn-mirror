@@ -1481,14 +1481,17 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 
         if ((file != null)) {
           //  Node first((Element
-            Node text = sourceNode.getFirstChild();
-            
-            if (text instanceof Text) {
-                ((Text) text).setData(ElService.getInstance().replaceEl(file, ((TextImpl) text).getData()));
-            } else if ((sourceNode.getFirstChild() != null) && (sourceNode.getFirstChild().getFirstChild() instanceof Text)) {
-                text = sourceNode.getFirstChild().getFirstChild();
-                ((Text) text).setData(ElService.getInstance().replaceEl(file, ((TextImpl) text).getData()));
+            if (sourceNode.getNodeType() == Node.TEXT_NODE) {
+                sourceNode.setNodeValue(
+                        ElService.getInstance().replaceElAndResources(pageContext, sourceNode));
             }
+            /*
+            else if (sourceNode.getFirstChild() instanceof Text) {
+                sourceNode.getFirstChild().setNodeValue(ElService.getInstance().replaceElAndResources(pageContext, sourceNode.getFirstChild()));
+            } else if ((sourceNode.getFirstChild() != null) && (sourceNode.getFirstChild().getFirstChild() instanceof Text)) {
+                sourceNode.getFirstChild().getFirstChild().setNodeValue(ElService.getInstance().replaceElAndResources(pageContext,sourceNode.getFirstChild().getFirstChild()));
+            }
+            */
             final NamedNodeMap nodeMap = sourceNode.getAttributes();  
             
             if ((nodeMap != null) && (nodeMap.getLength() > 0)) {

@@ -14,6 +14,7 @@ package org.jboss.tools.vpe.editor.util;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Assert;
+import org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.css.ELReferenceList;
@@ -143,20 +144,20 @@ public final class ElService implements IELService {
     public boolean isInResourcesBundle(VpePageContext pageContext, Node sourceNode) {
         boolean rst = findInResourcesBundle(pageContext, sourceNode);
 
-        if (!rst && (sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
-            for (int i = 0; i < sourceNode.getChildNodes().getLength(); i++) {
-                final Node node = sourceNode.getChildNodes().item(i);
-                
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    if((rst = findInResourcesBundle(pageContext, node))){
-                        break;
-                    }
-                    
-
-                }
-
-            }
-        }
+//        if (!rst && (sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
+//            for (int i = 0; i < sourceNode.getChildNodes().getLength(); i++) {
+//                final Node node = sourceNode.getChildNodes().item(i);
+//                
+//                if (node.getNodeType() == Node.ELEMENT_NODE) {
+//                    if((rst = findInResourcesBundle(pageContext, node))){
+//                        break;
+//                    }
+//                    
+//
+//                }
+//
+//            }
+//        }
 
         return rst;
     }
@@ -169,33 +170,41 @@ public final class ElService implements IELService {
      */
     private boolean findInResourcesBundle(VpePageContext pageContext, Node sourceNode) {
         boolean rst = false;
-
+      
         BundleMap bundleMap = pageContext.getBundle();
         if (bundleMap != null) {
             String textValue = null;
-            if ((sourceNode.getFirstChild() != null) && (sourceNode.getFirstChild().getNodeType() == Node.TEXT_NODE)) {
-                textValue = sourceNode.getFirstChild().getNodeValue();
-            }
-            if ((textValue != null) && isContainsEl(textValue)) {
-                final String newValue = bundleMap.getBundleValue(textValue, 0);
+            
+            if (sourceNode.getNodeType() == Node.TEXT_NODE) {
+                textValue = sourceNode.getNodeValue();
 
-                if (!textValue.equals(newValue)) {
-                    rst = true;
+                if ((textValue != null) && isContainsEl(textValue)) {
+                    final String newValue = bundleMap.getBundleValue(textValue, 0);
+
+                    if (!textValue.equals(newValue)) {
+                        rst = true;
+                    }
                 }
             }
-            final NamedNodeMap nodeMap = sourceNode.getAttributes();
+//            }else if ((sourceNode.getFirstChild() != null) && (sourceNode.getFirstChild().getNodeType() == Node.TEXT_NODE)) {
+//                textValue = sourceNode.getFirstChild().getNodeValue();
+//            }
 
-            if (nodeMap != null && nodeMap.getLength() > 0) {
-                for (int i = 0; i < nodeMap.getLength(); i++) {
-                    final Attr attr = (Attr) nodeMap.item(i);
-                    final String value = attr.getValue();
+            if (!rst) {
+                final NamedNodeMap nodeMap = sourceNode.getAttributes();
 
-                    if (value != null && isContainsEl(value)) {
-                        final String value2 = bundleMap.getBundleValue(value, 0);
+                if (nodeMap != null && nodeMap.getLength() > 0) {
+                    for (int i = 0; i < nodeMap.getLength(); i++) {
+                        final Attr attr = (Attr) nodeMap.item(i);
+                        final String value = attr.getValue();
 
-                        if (!value2.equals(value)) {
-                            rst = true;
-                            break;
+                        if (value != null && isContainsEl(value)) {
+                            final String value2 = bundleMap.getBundleValue(value, 0);
+
+                            if (!value2.equals(value)) {
+                                rst = true;
+                                break;
+                            }
                         }
                     }
                 }
@@ -226,18 +235,18 @@ public final class ElService implements IELService {
     private boolean isAvailableForNode(Node sourceNode, IFile resourceFile) {
         boolean rst = findForNode(sourceNode, resourceFile);
 
-        if (!rst && (sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
-            for (int i = 0; i < sourceNode.getChildNodes().getLength(); i++) {
-                final Node node = sourceNode.getChildNodes().item(i);
-
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    if((rst = findForNode((Element) node, resourceFile))){
-                        break;
-                    }
-                }
-
-            }
-        }
+//        if (!rst && (sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
+//            for (int i = 0; i < sourceNode.getChildNodes().getLength(); i++) {
+//                final Node node = sourceNode.getChildNodes().item(i);
+//
+//                if (node.getNodeType() == Node.ELEMENT_NODE) {
+//                    if((rst = findForNode((Element) node, resourceFile))){
+//                        break;
+//                    }
+//                }
+//
+//            }
+//        }
 
         return rst;
     }
@@ -254,14 +263,22 @@ public final class ElService implements IELService {
         final ResourceReference[] references = ELReferenceList.getInstance().getAllResources(resourceFile);
         String textValue = null;
         
-        if (sourceNode.getFirstChild() != null && sourceNode.getFirstChild().getNodeType() == Node.TEXT_NODE) {
-            textValue = sourceNode.getFirstChild().getNodeValue();
-        }
-        if (textValue != null) {
-            if (isInReferenceResourcesList(references, textValue)) {
-                return true;
+        if (sourceNode.getNodeType() == Node.TEXT_NODE/*
+                                                       * sourceNode.getFirstChild
+                                                       * () != null &&
+                                                       * sourceNode
+                                                       * .getFirstChild
+                                                       * ().getNodeType() ==
+                                                       * Node.TEXT_NODE
+                                                       */) {
+            textValue = sourceNode.getNodeValue();
+            if (textValue != null) {
+                if (isInReferenceResourcesList(references, textValue)) {
+                    return true;
+                }
             }
         }
+
         if ((nodeMap != null) && (nodeMap.getLength() > 0)) {
             for (int i = 0; i < nodeMap.getLength(); i++) {
                 if (isInReferenceResourcesList(references, ((Attr) nodeMap.item(i)).getValue())) {
@@ -307,7 +324,7 @@ public final class ElService implements IELService {
 
         final ResourceReference[] references = ELReferenceList.getInstance().getAllResources(resourceFile);
 
-        if ((references != null) && (references.length > 0)) {
+        if ((str != null) && (references != null) && (references.length > 0)) {
             for (ResourceReference rf : references) {
                 if (replacedString.contains(rf.getProperties())) {
                     str = str.replace(rf.getProperties(), rf.getLocation());
@@ -318,9 +335,15 @@ public final class ElService implements IELService {
     }
 
 
-    public String replaceElAndResources(VpePageContext pageContext, Attr attributeNode) {
+    public String replaceElAndResources(VpePageContext pageContext, Node attributeNode) {
         final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
-        final String attribuString = attributeNode.getValue();
+        
+        String attribuString = null;
+        if (attributeNode instanceof Attr) {
+            attribuString = ((Attr) attributeNode).getValue();
+        } else {
+            attribuString = attributeNode.getNodeValue();
+        }
         String rst  = attribuString;
         
         rst = ResourceUtil.getBundleValue(pageContext, attributeNode);

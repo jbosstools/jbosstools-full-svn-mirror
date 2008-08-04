@@ -15,6 +15,7 @@ import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Node;
 
 /**
  * @author Evgenij Stherbin
@@ -49,6 +50,24 @@ public class ResourceUtil {
      */
     public static String getBundleValue(VpePageContext pageContext, Attr attr) {
         return getBundleValue(pageContext, attr.getNodeValue(), ((IDOMAttr) attr).getValueRegionStartOffset());
+    }
+    
+    
+
+    /**
+     * get bundle.
+     * 
+     * @param pageContext the page context
+     * @param attr the attr
+     * 
+     * @return the bundle value
+     */
+    public static String getBundleValue(VpePageContext pageContext, Node attr) {
+        if(attr instanceof IDOMAttr){
+            return getBundleValue(pageContext, attr.getNodeValue(), ((IDOMAttr) attr).getValueRegionStartOffset());
+        }else{
+            return getBundleValue(pageContext,attr.getNodeValue(),0);
+        }
     }
 
 }
