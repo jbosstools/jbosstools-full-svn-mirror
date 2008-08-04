@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IFile;
@@ -49,14 +48,15 @@ import org.jboss.tools.jst.web.model.helpers.WebAppHelper;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.dnd.VpeDnD;
-import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.css.CSSReferenceList;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
+import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
+import org.jboss.tools.vpe.editor.template.IEditableTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
@@ -494,10 +494,27 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
         	setTooltip((Element) sourceNode, (nsIDOMElement)visualNewNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
         }
         if (registerFlag) {
-                VpeElementMapping elementMapping = new VpeElementMapping(
+     
+               final VpeElementData data = creationData.getElementData();
+
+            if ((sourceNodeClone != null) && (data != null) && (data.getNodesData() != null) && (data.getNodesData().size() > 0)) {
+
+                if (template instanceof IEditableTemplate) {
+                    final IEditableTemplate editableTemplate = (IEditableTemplate) template;
+                    
+                    for (org.jboss.tools.vpe.editor.mapping.NodeData nodeData : data.getNodesData()) {
+                        Attr attr = editableTemplate.getOutputAttributeNode((Element) sourceNode);
+                        if(attr!=null){
+                            nodeData.setSourceNode(attr);
+                        }
+                    }
+                }
+          
+            }
+            VpeElementMapping elementMapping = new VpeElementMapping(
                         sourceNode, visualNewNode, border,
                         template, ifDependencySet, creationData.getData(),
-                        creationData.getElementData());
+                        data);
                 registerNodes(elementMapping);
             }
         if (template.isChildren()) {
