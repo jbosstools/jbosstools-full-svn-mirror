@@ -3,11 +3,17 @@
 <plugin>
    <extension point="org.eclipse.wst.common.project.facet.core.facets">
       
+      <category id="portlet.category">
+    	<label>JBoss Portlets</label>
+    	<description>JBoss Portlets</description>
+  	  </category>
+  	  
       <project-facet id="jboss.portlet">
-    	<label>JBoss Portlet</label>
+    	<label>JBoss Core Portlet</label>
     	<description>
       		Adds support for the Java Portlet API.
     	</description>
+    	<member category="portlet.category "/>
     	<default-version version="2.0"/>
   	  </project-facet>
   	  
@@ -89,6 +95,7 @@
     	<description>
       		Adds support for the JSF Portlet.
     	</description>
+    	<member category="portlet.category "/>
     	<default-version version="1.0"/>
   	  </project-facet>
   	  
@@ -145,6 +152,77 @@
      <classpathContainerInitializer class="org.jboss.tools.portlet.core.internal.JSFPortlet10LibrariesContainerInitializer"
       id="org.jboss.tools.portlet.core.internal.jsfportletlibrarycontainer.v10"/>
    </extension>
+   
+   <extension point="org.eclipse.wst.common.project.facet.core.facets">
+      
+      <project-facet id="jboss.seamportlet">
+    	<label>JBoss Seam Portlet</label>
+    	<description>
+      		Adds support for the Seam Portlet.
+    	</description>
+    	<member category="portlet.category "/>
+    	<default-version version="1.0"/>
+  	  </project-facet>
+  	  
+  	  <project-facet-version facet="jboss.seamportlet" version="1.0">
+      	<constraint>
+        	<and>
+          		<requires facet="jst.java" version="[5.0"/>
+          		<requires facet="jst.web" version="[2.3"/>
+          		<requires facet="jboss.portlet" version="[1.0"/>
+          		<requires facet="jboss.jsfportlet" version="[1.0"/>
+          		<requires facet="jst.jsf" version="[1.2"/>
+          		<requires facet="jst.seam" version="[2.0"/>
+        	</and>
+      	</constraint>
+      </project-facet-version>
+      
+      <action id="jboss.seamportlet.install" facet="jboss.seamportlet" type="INSTALL" version="1.0">
+      	<delegate class="org.jboss.tools.portlet.core.internal.project.facet.SeamPortletFacetInstallDelegate"/>
+        <config-factory class="org.jboss.tools.portlet.core.internal.project.facet.SeamPortletFacetInstallDataModelProvider"/>
+      </action>  
+      
+      <action id="jboss.seamportlet.uninstall" facet="jboss.seamportlet" type="UNINSTALL" version="1.0" >
+	 	<delegate class="org.jboss.tools.portlet.core.internal.project.facet.SeamPortletFacetUninstallDelegate"/>
+ 	  </action>
+      
+   </extension>
+
+   <extension
+        point="org.eclipse.wst.common.project.facet.core.presets">
+     <static-preset id="preset.jboss.seamportlet.v20">
+	    <label>JBoss Seam Portlet Project v2.0</label>
+	    <facet id="jst.java" version="5.0" />
+	    <facet id="jst.web" version="2.5"/>
+	    <facet id="jst.jsf" version="1.2"/>
+	    <facet id="jboss.portlet" version="2.0" />
+	    <facet id="jboss.jsfportlet" version="1.0" />
+	    <facet id="jboss.seamportlet" version="1.0" />
+	    <facet id="jst.seam" version="2.0" />
+        <description>JBoss Seam Portlet Project v2.0</description>
+     </static-preset>
+   </extension>
+   
+   <extension
+        point="org.eclipse.wst.common.project.facet.core.presets">
+     <dynamic-preset id="preset.jboss.seamportlet.v10">
+       <factory class="org.jboss.tools.portlet.core.internal.project.facet.SeamPortletConfigurationPresetFactory10"/>
+     </dynamic-preset>
+   </extension>
+   
+   <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
+    	<supported>
+			<runtime-component any="true"/>
+        		<facet id="jboss.seamportlet" version="1.0"/> 
+    	</supported>
+   </extension>
+   
+   <!--
+   <extension point="org.eclipse.jdt.core.classpathContainerInitializer">
+     <classpathContainerInitializer class="org.jboss.tools.portlet.core.internal.SeamPortlet10LibrariesContainerInitializer"
+      id="org.jboss.tools.portlet.core.internal.seamportletlibrarycontainer.v10"/>
+   </extension>
+   -->
    
    <extension point="org.eclipse.wst.xml.core.catalogContributions">
         <catalogContribution id="default">

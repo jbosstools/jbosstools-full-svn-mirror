@@ -265,7 +265,6 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 				util.configureFilterMapping(project, monitor, filterName,
 						servletName);
 
-				// FIXME add Seam settings
 			}
 		}, modelPath);
 	}

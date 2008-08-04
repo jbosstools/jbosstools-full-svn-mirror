@@ -23,6 +23,8 @@ public interface IPortletConstants {
 	
 	static final String JSFPORTLET_FACET_ID="jboss.jsfportlet";
 	
+	static final String SEAMPORTLET_FACET_ID="jboss.seamportlet";
+	
 	static final String CONFIG_PATH = "WEB-INF/portlet.xml";
 	
 	static final String PORTLET_FACET_VERSION_10 = "1.0";
