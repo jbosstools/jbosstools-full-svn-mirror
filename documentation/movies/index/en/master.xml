@@ -44,7 +44,14 @@
 
 	  <indexentry>
             <primaryie>
-                <ulink url="demos/HQL_JPA-QL_queries/HQL_JPA-QL_queries.htm">Edit and run HQL/JPA-QL queries.</ulink>
+                <ulink url="demos/HQL_JPA-QL_queries/HQL_JPA-QL_queries.htm">Edit and run HQL/JPA-QL queries</ulink>
+            </primaryie>
+	  </indexentry>
+
+
+	  <indexentry>
+            <primaryie>
+                <ulink url="demos/rich_faces_demo/rich_faces_demo.htm">RichFaces Toolkit for developing Web application</ulink>
             </primaryie>
 	  </indexentry>
 
