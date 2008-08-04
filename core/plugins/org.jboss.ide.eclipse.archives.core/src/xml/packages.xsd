@@ -34,7 +34,8 @@
         <xsd:sequence>
             <xsd:element maxOccurs="unbounded" minOccurs="0" name="package" type="package-type"/>
             <xsd:element maxOccurs="1" minOccurs="0" name="properties" type="properties-type"/>
-        </xsd:sequence>        
+        </xsd:sequence>
+        <xsd:attribute name="version" type="xsd:float" use="optional"/>
     </xsd:complexType>
     
     <xsd:complexType name="package-type">

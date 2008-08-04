@@ -72,7 +72,11 @@ public class XbPackagesObjectProvider implements GenericObjectModelProvider {
 	
 	public Object getAttributeValue(Object object, MarshallingContext context,
 			String namespaceURI, String localName) {
-		if (object instanceof XbPackage) {
+		if( object instanceof XbPackages ) {
+			if("version".equals(localName))
+				return ((XbPackages)object).getVersion();
+		}
+		else if (object instanceof XbPackage) {
 			XbPackage pkg = (XbPackage)object;
 			if("id".equals(localName))
 				return pkg.getId();

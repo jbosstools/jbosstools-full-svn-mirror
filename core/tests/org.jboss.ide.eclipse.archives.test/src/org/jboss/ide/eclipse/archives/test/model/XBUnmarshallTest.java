@@ -191,6 +191,11 @@ public class XBUnmarshallTest extends TestCase {
 		parse("MissingActionType.xml", false, failedMissingRequiredAtt("type"));
 	}
 	
+	public void testReadPackagesVersion() {
+		XbPackages packs = parse("ReadVersion.xml", true, failedFalsePositiveRequiredAtt("exploded"));
+		assertEquals(new Float(packs.getVersion()), new Float(1.2));
+	}
+
 	
 	/*
 	 * Utility

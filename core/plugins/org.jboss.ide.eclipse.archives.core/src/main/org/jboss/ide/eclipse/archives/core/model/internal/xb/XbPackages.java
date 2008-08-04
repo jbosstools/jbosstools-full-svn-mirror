@@ -25,22 +25,33 @@ import java.util.List;
 
 public class XbPackages extends XbPackageNodeWithProperties {
 	
+	private float version;
 	public XbPackages () {
 		super();
 	}
 	
-	public XbPackages (XbPackages packages)
-	{
+	public XbPackages (XbPackages packages) {
 		super(packages);
 		copyFrom(packages);
 	}
-	
+	public void copyFrom (XbPackages node) {
+		super.copyFrom(node);
+		this.version = node.version;
+	}
+
 	protected Object clone() throws CloneNotSupportedException {
 		return new XbPackages(this);
 	}
 	
-	public List getPackages ()
-	{
+	public List getPackages () {
 		return getChildren(XbPackage.class);
+	}
+
+	public float getVersion() {
+		return version;
+	}
+
+	public void setVersion(float version) {
+		this.version = version;
 	}
 }
