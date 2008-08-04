@@ -367,4 +367,14 @@ public class TextUtil {
 
 		return str;
 	}
+	
+
+    /**
+     * @param value
+     * @return
+     */
+    public static boolean isContainsEl(final String value) {
+        return (value.contains("#{") || value.contains("${")); //$NON-NLS-1$//$NON-NLS-2$
+    }
+
 }

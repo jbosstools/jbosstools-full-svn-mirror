@@ -14,13 +14,11 @@ package org.jboss.tools.vpe.editor.util;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Assert;
-import org.jboss.tools.common.meta.action.impl.handlers.ReplaceSignificanceMessageImpl;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.css.ELReferenceList;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
 import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -178,7 +176,7 @@ public final class ElService implements IELService {
             if (sourceNode.getNodeType() == Node.TEXT_NODE) {
                 textValue = sourceNode.getNodeValue();
 
-                if ((textValue != null) && isContainsEl(textValue)) {
+                if ((textValue != null) && TextUtil.isContainsEl(textValue)) {
                     final String newValue = bundleMap.getBundleValue(textValue, 0);
 
                     if (!textValue.equals(newValue)) {
@@ -198,7 +196,7 @@ public final class ElService implements IELService {
                         final Attr attr = (Attr) nodeMap.item(i);
                         final String value = attr.getValue();
 
-                        if (value != null && isContainsEl(value)) {
+                        if (value != null && TextUtil.isContainsEl(value)) {
                             final String value2 = bundleMap.getBundleValue(value, 0);
 
                             if (!value2.equals(value)) {
@@ -213,15 +211,6 @@ public final class ElService implements IELService {
         return rst;
     }
 
-
-    /**
-     * @param value
-     * @return
-     */
-    //TODO E Sherbin It's shouldn't bee here
-    private boolean isContainsEl(final String value) {
-        return (value.contains("#{") || value.contains("${"));  //$NON-NLS-1$//$NON-NLS-2$
-    }
 
 
     /**
@@ -321,9 +310,8 @@ public final class ElService implements IELService {
      */
     public String reverseReplace(IFile resourceFile, String replacedString) {
         String str = replacedString;
-
         final ResourceReference[] references = ELReferenceList.getInstance().getAllResources(resourceFile);
-
+        
         if ((str != null) && (references != null) && (references.length > 0)) {
             for (ResourceReference rf : references) {
                 if (replacedString.contains(rf.getProperties())) {
@@ -331,6 +319,7 @@ public final class ElService implements IELService {
                 }
             }
         }
+   
         return str;
     }
 
