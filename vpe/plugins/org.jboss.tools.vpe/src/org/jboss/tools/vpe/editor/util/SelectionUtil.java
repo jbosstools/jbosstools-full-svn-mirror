@@ -87,18 +87,6 @@ public class SelectionUtil {
 
 		int start = NodesManagingUtil.getStartOffsetNode(node);
 
-		//added by estherbin fix bug JBIDE-2010 with selection.
-        if (start == 0 || start == 1) {
-            final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
-            
-            if (file != null) {
-                final String findString = ElService.getInstance().reverseReplace(file, node.getNodeValue());
-
-                if ((findString != null) && (pageContext.getSourceBuilder().getStructuredTextViewer().getTextWidget().getText() != null)) {
-                    start = pageContext.getSourceBuilder().getStructuredTextViewer().getTextWidget().getText().indexOf(findString);
-                }
-            }
-        }
 		pageContext.getSourceBuilder().getStructuredTextViewer().setSelectedRange(start + offset, length);
 		pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(
 				start + offset, length);
@@ -204,8 +192,11 @@ public class SelectionUtil {
 		//gets visual selection range
 		Point sourceRange = new Point(0, 0);
 		//converts to source selection
-        sourceRange.x = TextUtil.sourcePosition(sourceNode.getNodeValue(), focusedNode.getNodeValue(), selection.getFocusOffset());
-        sourceRange.y = TextUtil.sourcePosition(sourceNode.getNodeValue(), focusedNode.getNodeValue(), selection.getAnchorOffset())-sourceRange.x;
+        if (sourceNode != null) {
+            sourceRange.x = TextUtil.sourcePosition(sourceNode.getNodeValue(), focusedNode.getNodeValue(), selection.getFocusOffset());
+            sourceRange.y = TextUtil.sourcePosition(sourceNode.getNodeValue(), focusedNode.getNodeValue(), selection.getAnchorOffset())
+                    - sourceRange.x;
+        }
 		return sourceRange;
 	}
 	
