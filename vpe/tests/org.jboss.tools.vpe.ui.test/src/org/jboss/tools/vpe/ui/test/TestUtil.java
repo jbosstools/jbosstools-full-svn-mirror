@@ -22,14 +22,19 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.IOverwriteQuery;
 import org.eclipse.ui.wizards.datatransfer.ImportOperation;
+import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
+import org.eclipse.wst.sse.ui.internal.contentassist.ContentAssistUtils;
+import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.ui.test.beans.ImportBean;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.xpcom.XPCOMException;
+import org.w3c.dom.Node;
 
 /**
  * Class for importing project from jar file
@@ -249,6 +254,18 @@ public class TestUtil {
 		importBean.setImportProjectPath(resourcePath);
 		return importBean;
 	}
+	/**
+	 * Utility function which returns node mapping by source position(line and position in line)
+	 * @param lineIndex
+	 * @param linePosition
+	 * @return node for specified src position
+	 */
+	public static Node getNodeMappingBySourcePosition(ITextViewer itextViewer, int lineIndex, int linePosition) {
+		int offset = getLinePositionOffcet(itextViewer, lineIndex, linePosition);
+		IndexedRegion treeNode = ContentAssistUtils.getNodeAt(itextViewer, offset);
+		return (Node) treeNode;
+	}
+	
 	/**
 	 * Utility function which is used to calculate offcet in document by line number and character position
 	 * 
