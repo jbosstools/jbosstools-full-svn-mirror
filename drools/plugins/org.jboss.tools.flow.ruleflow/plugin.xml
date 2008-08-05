@@ -7,7 +7,7 @@
             name="RuleFlow Editor"
             extensions="rf"
             icon="icons/process.gif"
-            contributorClass="org.jboss.tools.flow.editor.GenericActionBarContributor"
+            contributorClass="org.jboss.tools.flow.common.editor.GenericActionBarContributor"
             class="org.jboss.tools.process.ruleflow.editor.RuleFlowEditor"
             id="org.jboss.tools.process.ruleflow.editor.RuleFlowModelEditor">
       </editor>
