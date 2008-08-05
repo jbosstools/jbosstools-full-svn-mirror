@@ -45,7 +45,7 @@ public class TestUtil {
 
 	private static final long MAX_IDLE = 30*60*1000L;
 
-	@SuppressWarnings("restriction")
+
 	static void importProjectIntoWorkspace(String path, String projectName) {
 
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
@@ -172,7 +172,7 @@ public class TestUtil {
 		while (!Job.getJobManager().isIdle()) {
 			delay(500);
 			if ( (System.currentTimeMillis()-start) > MAX_IDLE ) 
-				throw new RuntimeException("A long running task detected");
+				throw new RuntimeException("A long running task detected"); //$NON-NLS-1$
 		}
 	}
 
