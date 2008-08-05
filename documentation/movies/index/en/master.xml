@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
-"http://www.oasis-open.org/docbook/xml/4.3CR3/docbookx.dtd">
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.docbook.org/xsd/4.3/docbook.xsd" >
+
 <book>
     <bookinfo>
         <title>JBoss Tools Movies</title>
@@ -10,137 +11,58 @@
             <holder>JBoss, a division of Red Hat Inc.</holder>
         </copyright>
     </bookinfo>
-    <index>
-        <title/>
-        <indexentry>
-            <primaryie>
-		<ulink url="demos/create_console_config/create_console_config.htm">Creating Console Configuration</ulink>                                          
-            </primaryie>
-        </indexentry>
-
-        <indexentry>
-            <primaryie>
-		<ulink url="demos/cust_tag_lib_to_palette/cust_tag_lib_to_palette.htm">Importing Custom Tag Library to Palette</ulink>
-            </primaryie>
-        </indexentry>
-        
-        <indexentry>
-            <primaryie>
-                <ulink url="demos/seam2_plus_ejb3/seam2_plus_ejb3.htm">Creating Seam2 + EJB3 EAR Project</ulink>
-            </primaryie>
-        </indexentry>
-
-	<indexentry>
-            <primaryie>
-                <ulink url="demos/ootb_new_seam_project/ootb_new_seam_project.htm">New Seam Project</ulink>
-            </primaryie>
-        </indexentry>
-
-	  <indexentry>
-            <primaryie>
-                <ulink url="demos/archiving/archiving.htm">Archiving</ulink>
-            </primaryie>
-	  </indexentry>
-
-	  <indexentry>
-            <primaryie>
-                <ulink url="demos/HQL_JPA-QL_queries/HQL_JPA-QL_queries.htm">Edit and run HQL/JPA-QL queries</ulink>
-            </primaryie>
-	  </indexentry>
-
-
-	  <indexentry>
-            <primaryie>
-                <ulink url="demos/rich_faces_demo/rich_faces_demo.htm">RichFaces Toolkit for developing Web application</ulink>
-            </primaryie>
-	  </indexentry>
-
-
-        <!--indexentry>
-            <primaryie>Visual Web Tools Reference Guide <ulink url="en/jsf/html/index.html"
-                    >(html)</ulink>
-                <ulink url="en/jsf/html_single/index.html">(html single)</ulink>
-                <ulink url="en/jsf/pdf/Visual_Web_Tools_Reference_Guide.pdf">(pdf)</ulink>
-            </primaryie>
-        </indexentry>
-
-        <indexentry>
-            <primaryie>JBoss Server Manager Reference Guide <ulink url="en/as/html/index.html"
-                    >(html)</ulink>
-                <ulink url="en/as/html_single/index.html">(html single)</ulink>
-                <ulink url="en/as/pdf/AS_Reference_Guide.pdf">(pdf)</ulink>
-            </primaryie>
-        </indexentry>
-
-        <indexentry>
-            <primaryie>jBPM Tools Reference Guide <ulink url="en/jbpm/html/index.html">(html)</ulink>
-                <ulink url="en/jbpm/html_single/index.html">(html single)</ulink>
-                <ulink url="en/jbpm/pdf/JBPM_Reference_Guide.pdf">(pdf)</ulink>
-            </primaryie>
-        </indexentry>
-
-        <indexentry>
-            <primaryie>Hibernate Tools Reference Guide 
-                <ulink url="en/hibernatetools/html/index.html">(html)</ulink>
-                <ulink url="en/hibernatetools/html_single/index.html">(html single)</ulink>
-                <ulink url="en/hibernatetools/pdf/Hibernatetools_Reference_Guide.pdf"
-                >(pdf)</ulink>
-            </primaryie>
-        </indexentry>
-
-        <indexentry>
-            <primaryie>ESB Editor Reference Guide <ulink
-                    url="en/esb_ref_guide/html/index.html">(html)</ulink>
-                <ulink url="en/esb_ref_guide/html_single/index.html">(html single)</ulink>
-                <ulink url="en/esb_ref_guide/pdf/Hibernatetools_Reference_Guide.pdf"
-                >(pdf)</ulink>
-            </primaryie>
-        </indexentry>
-
-        <indexentry>
-            <primaryie>JSF Tools Reference Guide <ulink
-                    url="en/jsf_tools_ref_Guide/html/index.html">(html)</ulink>
-                <ulink url="en/jsf_tools_ref_guide/html_single/index.html">(html single)</ulink>
-                <ulink url="en/jsf_tools_ref_guide/pdf/JSF_Tools_Reference_Guide.pdf"
-                >(pdf)</ulink>
-            </primaryie>
-        </indexentry>
-
-        <indexentry>
-            <primaryie>JSF Tools Tutorial <ulink url="en/jsf_tools_tutorial/html/index.html"
-                    >(html)</ulink>
-                <ulink url="en/jsf_tools_tutorial/html_single/index.html">(html single)</ulink>
-                <ulink url="en/jsf_tools_tutorial/pdf/JSF_Tools_Tutorial.pdf">(pdf)</ulink>
-            </primaryie>
-        </indexentry>
-
-        <indexentry>
-            <primaryie>Struts Tools Reference Guide <ulink
-                    url="en/struts_tools_ref_guide/html/index.html">(html)</ulink>
-                <ulink url="en/struts_tools_ref_guide/html_single/index.html">(html single)</ulink>
-                <ulink url="en/struts_tools_ref_guide/pdf/Struts_Tools_Reference_Guide.pdf"
-                    >(pdf)</ulink>
-            </primaryie>
-        </indexentry>
-
-        <indexentry>
-            <primaryie>Struts Tools Tutorial <ulink
-                    url="en/struts_tools_tutorial/html/index.html">(html)</ulink>
-                <ulink url="en/struts_tools_tutorial/html_single/index.html">(html single)</ulink>
-                <ulink url="en/struts_tools_tutorial/pdf/Struts_Tools_Tutorial.pdf"
-                >(pdf)</ulink>
-            </primaryie>
-        </indexentry>
-
-
-        <indexentry>
-            <primaryie>Exadel Studio Migration Guide <ulink
-                    url="en/Exadel-migration/html/index.html">(html)</ulink>
-                <ulink url="en/Exadel-migration/html_single/index.html">(html single)</ulink>
-                <ulink url="en/Exadel-migration/pdf/Exadel_Studio_Migration_Guide.pdf"
-                >(pdf)</ulink>
-            </primaryie>
-        </indexentry-->
-
-    </index>
+              <index>
+                  <title/>
+                 <!--title>The following viewlets illustrate various aspects of JBoss Tools and JBDS.</title-->
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <ulink url="demos/create_console_config/create_console_config.htm">Creating Console Configuration</ulink>
+                    </para>
+                    <para>This movie shows how to create a console configuration for JPA; but it is the same steps needed for projects using hbm.xml or Hibernate Annotations stand alone</para>
+                </listitem>
+                
+                <listitem>
+                    <para>
+                        <ulink url="demos/cust_tag_lib_to_palette/cust_tag_lib_to_palette.htm">Importing Custom Tag Library to Palette</ulink>
+                    </para>
+                    <para>It explains how you can easy and fast add a CustomTag Library to the Palette </para>
+                </listitem>
+                
+                <listitem>
+                    <para>
+                        <ulink url="demos/seam2_plus_ejb3/seam2_plus_ejb3.htm">Creating Seam2 + EJB3 EAR Project</ulink>
+                    </para>
+                    <para>The online demo shows all the basics you'll need  to create such application</para>
+                </listitem>
+                
+                <listitem>
+                    <para>
+                        <ulink url="demos/archiving/archiving.htm">Archiving</ulink>
+                    </para>
+                    <para>This screencast tells you how to create archives with JBDS</para>
+                </listitem>
+                
+                <listitem>
+                    <para>
+                        <ulink url="demos/ootb_new_seam_project/ootb_new_seam_project.htm">Archiving</ulink>
+                    </para>
+                    <para>This movie shows you step-by-step how to crete a new seam project</para>
+                </listitem>
+                
+                <listitem>
+                    <para>
+                        <ulink url="demos/HQL_JPA-QL_queries/HQL_JPA-QL_queries.htm">Edit and run HQL/JPA-QL queries</ulink>
+                    </para>
+                    <para>It demonstrates how to use the HQL editor with code completion and dynamic sql preview and how to inspect the results</para>
+                </listitem>
+                
+                <listitem>
+                    <para>
+                        <ulink url="demos/rich_faces_demo/rich_faces_demo.htm">RichFaces Toolkit for developing Web application</ulink>
+                    </para>
+                    <para>This demo covers a creation of a jsf application with simple content using the RichFaces components</para>
+                </listitem>
+                </itemizedlist>
+       </index>
 </book>
