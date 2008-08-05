@@ -26,7 +26,7 @@ import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.requests.SimpleFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.jboss.tools.flow.editor.PaletteFactory;
+import org.jboss.tools.flow.common.editor.PaletteFactory;
 import org.jboss.tools.process.ruleflow.Activator;
 import org.jboss.tools.process.ruleflow.editor.core.BaseConnectionWrapper;
 import org.jboss.tools.process.ruleflow.editor.core.StartNodeWrapper;

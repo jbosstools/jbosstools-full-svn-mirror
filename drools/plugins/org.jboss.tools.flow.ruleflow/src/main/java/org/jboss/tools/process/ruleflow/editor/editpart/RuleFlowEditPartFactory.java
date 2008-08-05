@@ -18,7 +18,7 @@ package org.jboss.tools.process.ruleflow.editor.editpart;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
-import org.jboss.tools.flow.editor.editpart.RootEditPart;
+import org.jboss.tools.flow.common.editpart.RootEditPart;
 import org.jboss.tools.process.ruleflow.editor.core.BaseConnectionWrapper;
 import org.jboss.tools.process.ruleflow.editor.core.ProcessWrapper;
 import org.jboss.tools.process.ruleflow.editor.core.StartNodeWrapper;

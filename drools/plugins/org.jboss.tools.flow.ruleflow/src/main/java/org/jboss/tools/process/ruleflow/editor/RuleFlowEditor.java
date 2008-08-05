@@ -25,7 +25,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.ui.IFileEditorInput;
-import org.jboss.tools.flow.editor.GenericModelEditor;
+import org.jboss.tools.flow.common.editor.GenericModelEditor;
 import org.jboss.tools.process.ruleflow.editor.core.ProcessWrapper;
 import org.jboss.tools.process.ruleflow.editor.core.StartNodeWrapper;
 import org.jboss.tools.process.ruleflow.editor.editpart.RuleFlowEditPartFactory;

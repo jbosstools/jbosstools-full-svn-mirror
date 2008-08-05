@@ -24,8 +24,8 @@ import org.drools.workflow.core.Connection;
 import org.drools.workflow.core.Node;
 import org.drools.workflow.core.impl.ConnectionImpl;
 import org.eclipse.draw2d.geometry.Point;
-import org.jboss.tools.flow.editor.core.AbstractConnectionWrapper;
-import org.jboss.tools.flow.editor.core.NodeWrapper;
+import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
 /**
  * Wrapper for a connection.

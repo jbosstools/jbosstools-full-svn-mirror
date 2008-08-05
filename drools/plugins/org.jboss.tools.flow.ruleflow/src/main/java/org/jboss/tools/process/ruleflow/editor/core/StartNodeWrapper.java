@@ -17,8 +17,8 @@ package org.jboss.tools.process.ruleflow.editor.core;
  */
 
 import org.drools.workflow.core.node.StartNode;
-import org.jboss.tools.flow.editor.core.ConnectionWrapper;
-import org.jboss.tools.flow.editor.core.NodeWrapper;
+import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
 /**
  * Wrapper for a start node.

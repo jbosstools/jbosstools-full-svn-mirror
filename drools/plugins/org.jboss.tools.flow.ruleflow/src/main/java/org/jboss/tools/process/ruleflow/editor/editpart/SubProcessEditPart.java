@@ -21,8 +21,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.jboss.tools.flow.editor.editpart.ElementEditPart;
-import org.jboss.tools.flow.editor.figure.RoundedRectangleElementFigure;
+import org.jboss.tools.flow.common.editpart.ElementEditPart;
+import org.jboss.tools.flow.common.figure.RoundedRectangleElementFigure;
 import org.jboss.tools.process.ruleflow.Activator;
 
 /**

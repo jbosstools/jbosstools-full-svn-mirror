@@ -18,9 +18,9 @@ package org.jboss.tools.process.ruleflow.editor.core;
 
 import org.drools.workflow.core.Node;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.jboss.tools.flow.editor.core.AbstractNodeWrapper;
-import org.jboss.tools.flow.editor.core.ConnectionWrapper;
-import org.jboss.tools.flow.editor.core.NodeWrapper;
+import org.jboss.tools.flow.common.wrapper.AbstractNodeWrapper;
+import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
 /**
  * Wrapper for a node.

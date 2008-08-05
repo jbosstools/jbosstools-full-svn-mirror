@@ -18,8 +18,8 @@ package org.jboss.tools.process.ruleflow.editor.core;
 
 import org.drools.ruleflow.core.RuleFlowProcess;
 import org.drools.workflow.core.Node;
-import org.jboss.tools.flow.editor.core.AbstractFlowWrapper;
-import org.jboss.tools.flow.editor.core.NodeWrapper;
+import org.jboss.tools.flow.common.wrapper.AbstractFlowWrapper;
+import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
 /**
  * Wrapper for a RuleFlow process.

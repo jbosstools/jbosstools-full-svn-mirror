@@ -19,8 +19,8 @@ package org.jboss.tools.process.ruleflow.editor.editpart;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
-import org.jboss.tools.flow.editor.editpart.ElementEditPart;
-import org.jboss.tools.flow.editor.figure.RectangleElementFigure;
+import org.jboss.tools.flow.common.editpart.ElementEditPart;
+import org.jboss.tools.flow.common.figure.RectangleElementFigure;
 import org.jboss.tools.process.ruleflow.Activator;
 
 /**
