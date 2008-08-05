@@ -17,7 +17,7 @@ package org.jboss.tools.process.ruleflow.editor.core;
  */
 
 import org.drools.workflow.core.node.SubProcessNode;
-import org.jboss.tools.flow.editor.core.AbstractConnectionWrapper;
+import org.jboss.tools.flow.editor.core.ConnectionWrapper;
 import org.jboss.tools.flow.editor.core.NodeWrapper;
 
 /**
@@ -38,12 +38,12 @@ public class SubProcessWrapper extends BaseNodeWrapper {
         return (SubProcessNode) getNode();
     }
     
-    public boolean acceptsIncomingConnection(AbstractConnectionWrapper connection, NodeWrapper source) {
+    public boolean acceptsIncomingConnection(ConnectionWrapper connection, NodeWrapper source) {
         return super.acceptsIncomingConnection(connection, source)
         	&& getIncomingConnections().isEmpty();
     }
 
-    public boolean acceptsOutgoingConnection(AbstractConnectionWrapper connection, NodeWrapper target) {
+    public boolean acceptsOutgoingConnection(ConnectionWrapper connection, NodeWrapper target) {
         return super.acceptsOutgoingConnection(connection, target)
         	&& getOutgoingConnections().isEmpty();
     }

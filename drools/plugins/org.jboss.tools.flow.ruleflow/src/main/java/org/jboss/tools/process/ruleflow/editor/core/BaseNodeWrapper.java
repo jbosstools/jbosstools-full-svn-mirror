@@ -18,8 +18,8 @@ package org.jboss.tools.process.ruleflow.editor.core;
 
 import org.drools.workflow.core.Node;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.jboss.tools.flow.editor.core.AbstractConnectionWrapper;
 import org.jboss.tools.flow.editor.core.AbstractNodeWrapper;
+import org.jboss.tools.flow.editor.core.ConnectionWrapper;
 import org.jboss.tools.flow.editor.core.NodeWrapper;
 
 /**
@@ -72,12 +72,12 @@ public abstract class BaseNodeWrapper extends AbstractNodeWrapper {
             height == null ? -1 : height);
     }
 
-    public boolean acceptsIncomingConnection(AbstractConnectionWrapper connection, NodeWrapper source) {
+    public boolean acceptsIncomingConnection(ConnectionWrapper connection, NodeWrapper source) {
         return source == null
     		|| ((BaseNodeWrapper) source).getNode().getNodeContainer() == getNode().getNodeContainer();
     }
 
-    public boolean acceptsOutgoingConnection(AbstractConnectionWrapper connection, NodeWrapper target) {
+    public boolean acceptsOutgoingConnection(ConnectionWrapper connection, NodeWrapper target) {
         return target == null
     		|| ((BaseNodeWrapper) target).getNode().getNodeContainer() == getNode().getNodeContainer();
     }

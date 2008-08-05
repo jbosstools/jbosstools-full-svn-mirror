@@ -17,12 +17,12 @@ package org.jboss.tools.process.ruleflow.editor.editpart;
  */
 
 import org.jboss.tools.flow.editor.editpart.ConnectionEditPart;
-import org.jboss.tools.process.ruleflow.editor.core.ConnectionWrapper;
+import org.jboss.tools.process.ruleflow.editor.core.BaseConnectionWrapper;
 
 public class ConnectionWrapperEditPart extends ConnectionEditPart {
 
 	protected Class<?> getElementConnectionType() {
-		return ConnectionWrapper.class;
+		return BaseConnectionWrapper.class;
 	}
 	
 }

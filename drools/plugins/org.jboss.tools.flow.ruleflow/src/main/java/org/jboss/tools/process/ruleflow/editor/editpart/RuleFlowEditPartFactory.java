@@ -19,7 +19,7 @@ package org.jboss.tools.process.ruleflow.editor.editpart;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 import org.jboss.tools.flow.editor.editpart.RootEditPart;
-import org.jboss.tools.process.ruleflow.editor.core.ConnectionWrapper;
+import org.jboss.tools.process.ruleflow.editor.core.BaseConnectionWrapper;
 import org.jboss.tools.process.ruleflow.editor.core.ProcessWrapper;
 import org.jboss.tools.process.ruleflow.editor.core.StartNodeWrapper;
 import org.jboss.tools.process.ruleflow.editor.core.SubProcessWrapper;
@@ -39,7 +39,7 @@ public class RuleFlowEditPartFactory implements EditPartFactory {
             result = new StartNodeEditPart();
         } else if (model instanceof SubProcessWrapper) {
             result = new SubProcessEditPart();
-        } else if (model instanceof ConnectionWrapper) {
+        } else if (model instanceof BaseConnectionWrapper) {
             result = new ConnectionWrapperEditPart();
         } else {
             throw new IllegalArgumentException(

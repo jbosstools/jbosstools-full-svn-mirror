@@ -32,13 +32,13 @@ import org.jboss.tools.flow.editor.core.NodeWrapper;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
-public class ConnectionWrapper extends AbstractConnectionWrapper {
+public class BaseConnectionWrapper extends AbstractConnectionWrapper {
 		
 	private static final long serialVersionUID = 400L;
 
 	private Connection connection;
 	
-	public ConnectionWrapper() {
+	public BaseConnectionWrapper() {
 	}
 	
 	public Connection getConnection() {
