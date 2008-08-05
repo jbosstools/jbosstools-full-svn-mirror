@@ -4,8 +4,11 @@ import org.jboss.tools.flow.common.core.Flow;
 import org.jboss.tools.flow.common.core.Node;
 import org.jboss.tools.flow.editor.core.AbstractFlowWrapper;
 import org.jboss.tools.flow.editor.core.NodeWrapper;
+import org.jboss.tools.flow.editor.strategy.AcceptsElementStrategy;
 
 public class DefaultFlowWrapper extends AbstractFlowWrapper {
+	
+	private AcceptsElementStrategy acceptsElementStrategy;
 
     public Integer getRouterLayout() {
         Integer routerLayout = (Integer) ((Flow)getElement()).getMetaData("routerLayout");
@@ -33,6 +36,20 @@ public class DefaultFlowWrapper extends AbstractFlowWrapper {
 
     protected void internalRemoveElement(NodeWrapper element) {
     	((Flow)getElement()).removeNode((Node)element.getElement()); 
+    }
+    
+    public boolean acceptsElement(NodeWrapper wrapper) {
+    	if (wrapper == null) {
+    		return false;
+    	} else if (acceptsElementStrategy != null) {
+    		return acceptsElementStrategy.acceptsElement(wrapper.getElement());
+    	} else {
+    		return true;
+    	}
+    }
+    
+    public void setAcceptsElementStrategy(AcceptsElementStrategy strategy) {
+    	this.acceptsElementStrategy = strategy;
     }
     
 }

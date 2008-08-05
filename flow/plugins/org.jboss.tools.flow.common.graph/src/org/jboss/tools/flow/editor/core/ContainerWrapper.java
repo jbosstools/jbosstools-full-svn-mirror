@@ -31,5 +31,5 @@ public interface ContainerWrapper extends Wrapper {
     AbstractFlowWrapper getFlowWrapper();
     
     boolean acceptsElement(NodeWrapper element);
-
+    
 }

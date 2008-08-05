@@ -23,6 +23,7 @@ Export-Package: org.jboss.tools.flow;uses:="org.eclipse.core.runtime,org.eclipse
  org.jboss.tools.flow.editor.core,
  org.jboss.tools.flow.editor.editpart,
  org.jboss.tools.flow.editor.figure,
- org.jboss.tools.flow.editor.policy
+ org.jboss.tools.flow.editor.policy,
+ org.jboss.tools.flow.editor.strategy
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

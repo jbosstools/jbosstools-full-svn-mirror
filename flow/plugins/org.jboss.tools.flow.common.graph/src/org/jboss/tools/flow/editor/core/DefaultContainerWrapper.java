@@ -61,4 +61,8 @@ public class DefaultContainerWrapper extends AbstractContainerWrapper {
 		return (Node)getElement();
 	}
 	
+	public boolean acceptsElement(NodeWrapper element) {
+		return getParent().acceptsElement(element);
+	}
+
 }
