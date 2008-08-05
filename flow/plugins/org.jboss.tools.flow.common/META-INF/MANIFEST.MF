@@ -6,7 +6,6 @@ Bundle-Version: 1.0.0
 Bundle-Activator: org.jboss.tools.flow.Activator
 Bundle-Vendor: JBoss
 Require-Bundle: 
- org.jboss.tools.flow.common.core;bundle-version="1.0.0",
  org.eclipse.ui.views,
  org.eclipse.draw2d,
  org.eclipse.gef,
