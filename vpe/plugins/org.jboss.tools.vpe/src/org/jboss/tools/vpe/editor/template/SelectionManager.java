@@ -350,9 +350,11 @@ public class SelectionManager implements ISelectionManager {
 					 int offcetReferenceToSourceNode = focusOffcetInSourceDocument-targetSourceNode.getStartOffset();
 
          			 int visualNodeOffcet = TextUtil.visualPosition(((Node)targetSourceNode).getNodeValue(),offcetReferenceToSourceNode);
-
-					 selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(visualNode, visualNodeOffcet);
-
+         			 
+         			 if(visualNodeOffcet<visualNode.getNodeValue().length()) {
+					 
+         				 selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(visualNode, visualNodeOffcet);
+         			 }
 				 }
 			}
 				
