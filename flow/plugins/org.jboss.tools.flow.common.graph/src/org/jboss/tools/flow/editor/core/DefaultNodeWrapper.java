@@ -1,12 +1,15 @@
 package org.jboss.tools.flow.editor.core;
 
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.jboss.tools.flow.common.core.Connection;
 import org.jboss.tools.flow.common.core.Node;
-import org.jboss.tools.flow.editor.core.AbstractConnectionWrapper;
-import org.jboss.tools.flow.editor.core.AbstractNodeWrapper;
-import org.jboss.tools.flow.editor.core.NodeWrapper;
+import org.jboss.tools.flow.editor.strategy.AcceptsIncomingConnectionStrategy;
+import org.jboss.tools.flow.editor.strategy.AcceptsOutgoingConnectionStrategy;
 
 public abstract class DefaultNodeWrapper extends AbstractNodeWrapper {
+	
+	private AcceptsIncomingConnectionStrategy incomingConnectionStrategy;
+	private AcceptsOutgoingConnectionStrategy outgoingConnectionStrategy;
 
 	public void setNode(Node node) {
 		setElement(node);
@@ -47,14 +50,38 @@ public abstract class DefaultNodeWrapper extends AbstractNodeWrapper {
 		return new Rectangle(x == null ? 0 : x, y == null ? 0 : y,
 				width == null ? -1 : width, height == null ? -1 : height);
 	}
+	
+	public void setAcceptsIncomingConnectionStrategy(AcceptsIncomingConnectionStrategy strategy) {
+		this.incomingConnectionStrategy = strategy;
+	}
+
+	public void setAcceptsOutgoingConnectionStrategy(AcceptsOutgoingConnectionStrategy strategy) {
+		this.outgoingConnectionStrategy = strategy;
+	}
 
 	public boolean acceptsIncomingConnection(
-			AbstractConnectionWrapper connection, NodeWrapper source) {
-		return true;
+			ConnectionWrapper connectionWrapper, NodeWrapper sourceWrapper) {
+		if (connectionWrapper == null || sourceWrapper == null) {
+			return false;
+		} else if (incomingConnectionStrategy != null) {
+			return incomingConnectionStrategy.acceptsIncomingConnection(
+					(Connection)connectionWrapper.getElement(), 
+					(Node)sourceWrapper.getElement());
+		} else {
+			return true;
+		}
 	}
 
 	public boolean acceptsOutgoingConnection(
-			AbstractConnectionWrapper connection, NodeWrapper target) {
-		return true;
+			ConnectionWrapper connectionWrapper, NodeWrapper targetWrapper) {
+		if (connectionWrapper == null || targetWrapper == null) {
+			return false;
+		} else if (outgoingConnectionStrategy != null) {
+			return outgoingConnectionStrategy.acceptsOutgoingConnection(
+					(Connection)connectionWrapper.getElement(), 
+					(Node)targetWrapper.getElement());
+		} else {
+			return true;
+		}
 	}
 }

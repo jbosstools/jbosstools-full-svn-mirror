@@ -59,12 +59,12 @@ public abstract class AbstractContainerWrapper extends AbstractNodeWrapper imple
     }
     
 	public boolean acceptsIncomingConnection(
-			AbstractConnectionWrapper connection, NodeWrapper source) {
+			ConnectionWrapper connection, NodeWrapper source) {
 		return true;
 	}
 
 	public boolean acceptsOutgoingConnection(
-			AbstractConnectionWrapper connection, NodeWrapper target) {
+			ConnectionWrapper connection, NodeWrapper target) {
 		return true;
 	}
 

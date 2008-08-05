@@ -49,8 +49,8 @@ public interface NodeWrapper extends Wrapper {
     void addOutgoingConnection(AbstractConnectionWrapper connection);
     void localAddOutgoingConnection(AbstractConnectionWrapper connection);
     void removeOutgoingConnection(AbstractConnectionWrapper connection);
-    boolean acceptsIncomingConnection(AbstractConnectionWrapper connection, NodeWrapper source);
-    boolean acceptsOutgoingConnection(AbstractConnectionWrapper connection, NodeWrapper target);
+    boolean acceptsIncomingConnection(ConnectionWrapper connection, NodeWrapper source);
+    boolean acceptsOutgoingConnection(ConnectionWrapper connection, NodeWrapper target);
     
     void addListener(ModelListener listener);
     void removeListener(ModelListener listener);

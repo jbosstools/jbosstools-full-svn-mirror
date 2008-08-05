@@ -26,7 +26,7 @@ import org.eclipse.draw2d.geometry.Point;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
-public abstract class AbstractConnectionWrapper extends AbstractWrapper {
+public abstract class AbstractConnectionWrapper extends AbstractWrapper implements ConnectionWrapper {
     
 	private static final long serialVersionUID = 1L;
 	
