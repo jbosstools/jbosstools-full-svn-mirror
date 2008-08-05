@@ -1,4 +1,4 @@
-package org.jboss.tools.flow.common.core;
+package org.jboss.tools.flow.common.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;

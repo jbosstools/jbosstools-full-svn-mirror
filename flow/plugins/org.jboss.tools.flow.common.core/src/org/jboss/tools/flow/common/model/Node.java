@@ -1,4 +1,4 @@
-package org.jboss.tools.flow.common.core;
+package org.jboss.tools.flow.common.model;
 
 /*
  * Copyright 2005 JBoss Inc
