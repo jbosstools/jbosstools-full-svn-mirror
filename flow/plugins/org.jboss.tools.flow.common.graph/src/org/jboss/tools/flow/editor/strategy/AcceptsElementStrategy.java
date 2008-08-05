@@ -1,6 +1,6 @@
 package org.jboss.tools.flow.editor.strategy;
 
-import org.jboss.tools.flow.common.core.Container;
+import org.jboss.tools.flow.common.model.Container;
 
 public interface AcceptsElementStrategy {
 	

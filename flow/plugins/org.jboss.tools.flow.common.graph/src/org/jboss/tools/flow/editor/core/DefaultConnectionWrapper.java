@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.draw2d.geometry.Point;
-import org.jboss.tools.flow.common.core.Connection;
-import org.jboss.tools.flow.common.core.DefaultConnection;
-import org.jboss.tools.flow.common.core.Node;
+import org.jboss.tools.flow.common.model.Connection;
+import org.jboss.tools.flow.common.model.DefaultConnection;
+import org.jboss.tools.flow.common.model.Node;
 
 
 public class DefaultConnectionWrapper extends AbstractConnectionWrapper {

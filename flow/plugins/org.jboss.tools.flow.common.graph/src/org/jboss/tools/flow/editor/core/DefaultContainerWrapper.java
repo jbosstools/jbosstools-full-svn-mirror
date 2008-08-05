@@ -3,10 +3,10 @@ package org.jboss.tools.flow.editor.core;
 import java.util.List;
 
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.jboss.tools.flow.common.core.Connection;
-import org.jboss.tools.flow.common.core.Container;
-import org.jboss.tools.flow.common.core.Flow;
-import org.jboss.tools.flow.common.core.Node;
+import org.jboss.tools.flow.common.model.Connection;
+import org.jboss.tools.flow.common.model.Container;
+import org.jboss.tools.flow.common.model.Flow;
+import org.jboss.tools.flow.common.model.Node;
 import org.jboss.tools.flow.editor.strategy.AcceptsIncomingConnectionStrategy;
 import org.jboss.tools.flow.editor.strategy.AcceptsOutgoingConnectionStrategy;
 

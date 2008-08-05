@@ -1,7 +1,7 @@
 package org.jboss.tools.flow.editor.strategy;
 
-import org.jboss.tools.flow.common.core.Connection;
-import org.jboss.tools.flow.common.core.Node;
+import org.jboss.tools.flow.common.model.Connection;
+import org.jboss.tools.flow.common.model.Node;
 
 public interface AcceptsOutgoingConnectionStrategy {
 	

@@ -1,7 +1,7 @@
 package org.jboss.tools.flow.editor.core;
 
-import org.jboss.tools.flow.common.core.Flow;
-import org.jboss.tools.flow.common.core.Node;
+import org.jboss.tools.flow.common.model.Flow;
+import org.jboss.tools.flow.common.model.Node;
 import org.jboss.tools.flow.editor.core.AbstractFlowWrapper;
 import org.jboss.tools.flow.editor.core.NodeWrapper;
 import org.jboss.tools.flow.editor.strategy.AcceptsElementStrategy;

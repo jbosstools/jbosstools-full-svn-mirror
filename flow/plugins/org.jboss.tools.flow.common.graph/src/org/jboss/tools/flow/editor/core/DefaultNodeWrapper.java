@@ -1,8 +1,8 @@
 package org.jboss.tools.flow.editor.core;
 
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.jboss.tools.flow.common.core.Connection;
-import org.jboss.tools.flow.common.core.Node;
+import org.jboss.tools.flow.common.model.Connection;
+import org.jboss.tools.flow.common.model.Node;
 import org.jboss.tools.flow.editor.strategy.AcceptsIncomingConnectionStrategy;
 import org.jboss.tools.flow.editor.strategy.AcceptsOutgoingConnectionStrategy;
 
