@@ -105,9 +105,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     private static final String PSEUDO_ELEMENT_ATTR = "vpe:pseudo-element"; //$NON-NLS-1$
     private static final String INIT_ELEMENT_ATTR = "vpe:init-element"; //$NON-NLS-1$
     private static final String MOZ_ANONCLASS_ATTR = "_MOZ_ANONCLASS"; //$NON-NLS-1$
-    private static final String COMMENT_STYLE = "font-style:italic; color:green"; //$NON-NLS-1$
-    private static final String COMMENT_PREFIX = ""; //$NON-NLS-1$
-    private static final String COMMENT_SUFFIX = ""; //$NON-NLS-1$
     private static final String INCLUDE_ELEMENT_ATTR = "vpe:include-element"; //$NON-NLS-1$
     private static final int DRAG_AREA_WIDTH = 10;
     private static final int DRAG_AREA_HEIGHT = 10;
@@ -419,14 +416,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
         return null;
     }
    
-//    
-//    if(sourceNode.getNodeType() == Node.TEXT_NODE){
-//        System.err.println("Hello world");
-//    }
-//    switch (sourceNode.getNodeType()) {
-    
-//    case Node.ELEMENT_NODE:
-//      Map<?, ?> xmlnsMap = createXmlns((Element) sourceNode);
         Set<Node> ifDependencySet = new HashSet<Node>();
         pageContext.setCurrentVisualNode(visualOldContainer);
         VpeTemplate template = templateManager.getTemplate(pageContext,
@@ -537,19 +526,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
         	return border;
         else
         	return visualNewNode;
-//    case Node.TEXT_NODE:
-//        return createTextNode(sourceNode, registerFlag);
-//    case Node.COMMENT_NODE:
-//        if (!YES_STRING.equals(VpePreference.SHOW_COMMENTS.getValue())) {
-//        return null;
-//        }
-//        nsIDOMElement visualNewComment = createComment(sourceNode);
-//        if (registerFlag) {
-//        registerNodes(new VpeNodeMapping(sourceNode, visualNewComment));
-//        }
-//        return visualNewComment;
-//    }
-//    return null;
     }
 
     private void correctVisualAttribute(nsIDOMElement element) {
@@ -570,16 +546,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
         element.setAttribute(VpeStyleUtil.PARAMETR_BACKGROND,
             backgroundValue);
     }
-    }
-
-    private nsIDOMElement createComment(Node sourceNode) {
-    nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
-    div.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, COMMENT_STYLE);
-    String value = COMMENT_PREFIX + sourceNode.getNodeValue()
-        + COMMENT_SUFFIX;
-    nsIDOMText text = visualDocument.createTextNode(value);
-    div.appendChild(text);
-    return div;
     }
 
     protected void addChildren(VpeTemplate containerTemplate,
