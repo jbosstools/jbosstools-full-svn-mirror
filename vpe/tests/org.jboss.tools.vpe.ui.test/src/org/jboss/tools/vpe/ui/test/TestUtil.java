@@ -258,7 +258,7 @@ public class TestUtil {
 	 * @return offcet in document
 	 * @throws IllegalArgumentException
 	 */
-	public static final int getLinePositionOffcet(ITextViewer textViewer, int lineIndex, int linePosition) throws IllegalArgumentException {
+	public static final int getLinePositionOffcet(ITextViewer textViewer, int lineIndex, int linePosition) {
 		
 		int resultOffcet = 0;
 		
