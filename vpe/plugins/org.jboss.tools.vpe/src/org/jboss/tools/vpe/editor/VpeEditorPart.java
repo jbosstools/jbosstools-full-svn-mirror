@@ -232,12 +232,12 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	}
 
 	public void setStatusField(IStatusField field, String category) {
-		if (visualMode == VISUAL_MODE) {
-			if (field != null) {
-				field.setImage(null);
-				field.setText(null);
-			}
-		} else if (sourceEditor != null)
+//		if (visualMode == VISUAL_MODE) {
+//			if (field != null) {
+//				field.setImage(null);
+//				field.setText(null);
+//			}
+//		} else if (sourceEditor != null)
 			sourceEditor.setStatusField(field, category);
 	}
 
@@ -372,16 +372,16 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			}
 			break;
 
-		case VISUAL_MODE:
-			selectionBar.showBar(showSelectionBar);
-			if (sourceContent != null)
-				sourceContent.setVisible(false);
-			if (visualContent != null)
-				visualContent.setVisible(true);
-			if (previewContent != null) {
-				previewContent.setVisible(false);
-			}
-			break;
+//		case VISUAL_MODE:
+//			selectionBar.showBar(showSelectionBar);
+//			if (sourceContent != null)
+//				sourceContent.setVisible(false);
+//			if (visualContent != null)
+//				visualContent.setVisible(true);
+//			if (previewContent != null) {
+//				previewContent.setVisible(false);
+//			}
+//			break;
 
 		case SOURCE_MODE:
 			selectionBar.showBar(showSelectionBar);
