@@ -59,12 +59,16 @@ public interface IPortletUIConstants {
 	static final String PARENT_PORTAL_LABEL = "Parent Reference:";
 	static final String PAGE_REGION_LABEL = "Region:";
 	static final String PORTLET_HEIGHT_LABEL = "Height:";
+	static final String INITIAL_WINDOW_STATE_LABEL = "Initial Window State:";
 	static final String IF_EXISTS_LABEL = "If Exists:";
 	static final String NEW_JBOSS_JSF_PORTLET_WIZARD_PAGE_DESC = "Specify class file information";
 	static final String JBOSS_JSF_PORTLET_CLASS = "javax.portlet.faces.GenericFacesPortlet";
 	static final String JBOSS_JSF_PORTLET_NAME = "riPortlet";
+	static final String JBOSS_SEAM_PORTLET_NAME = "seamPortlet";
 	static final String JBOSS_JSF_DISPLAY_PORTLET_NAME = "JBoss JSF Portlet";
 	static final String JBOSS_JSF_PORTLET_TITLE = "JBoss JSF Portlet";
+	static final String JBOSS_SEAM_DISPLAY_PORTLET_NAME = "JBoss Seam Portlet";
+	static final String JBOSS_SEAM_PORTLET_TITLE = "JBoss Seam Portlet";
 	static final String JBOSS_APP_LABEL = "JBoss Application Name:";
 	static final String ADD_JBOSS_APP_LABEL = "Create JBoss Application";
 	static final String ADD_JBOSS_PORTLET_LABEL = "Add the jboss-portlet.xml file";

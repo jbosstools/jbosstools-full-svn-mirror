@@ -41,6 +41,8 @@ public interface INewPortletClassDataModelProperties extends
 	
 	static final String PORTLET_HEIGHT = "NewPortletClassDataModel.PORTLET_HEIGHT";
 	
+	static final String INITIAL_WINDOW_STATE = "NewPortletClassDataModel.INITIAL_WINDOW_STATE";
+	
 	static final String IF_EXISTS = "NewPortletClassDataModel.IF_EXISTS";
 	
 	static final String ADD_PORTLET = "NewPortletClassDataModel.ADD_PORTLET";
@@ -52,6 +54,8 @@ public interface INewPortletClassDataModelProperties extends
 	static final String JBOSS_APP = "NewPortletClassDataModel.JBOSS_APP";
 	
 	static final String IS_JSF_PORTLET = "NewPortletClassDataModel.IS_JSF_PORTLET";
+	
+	static final String IS_SEAM_PORTLET = "NewPortletClassDataModel.IS_SEAM_PORTLET";
 	
 	static final String COPY_JSF_TEMPLATES = "NewPortletClassDataModel.COPY_JSF_TEMPLATES";
 }

@@ -12,12 +12,14 @@ import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.HEL
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IF_EXISTS;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.INSTANCE_NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_JSF_PORTLET;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_SEAM_PORTLET;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.JBOSS_APP;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PAGE_NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PAGE_REGION;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PARENT_PORTAL;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PORTLET_HEIGHT;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.INITIAL_WINDOW_STATE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.TITLE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.VIEW_MODE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.WINDOW_NAME;
@@ -96,7 +98,9 @@ public class AddPortletOperation extends AddWebClassOperation {
 	@Override
 	protected NewJavaEEArtifactClassOperation getNewClassOperation() {
 		boolean isJSFPortlet = model.getBooleanProperty(IS_JSF_PORTLET);
-		if (!isJSFPortlet) {
+		boolean isSeamPortlet = model.getBooleanProperty(IS_SEAM_PORTLET);
+		
+		if (!isJSFPortlet && !isSeamPortlet) {
 			return new NewPortletClassOperation(getDataModel());
 		}
 		NewJavaEEArtifactClassOperation op = new NewJavaEEArtifactClassOperation(getDataModel()) {
@@ -275,6 +279,7 @@ public class AddPortletOperation extends AddWebClassOperation {
 		String parent = model.getStringProperty(PARENT_PORTAL);;
 		String region = model.getStringProperty(PAGE_REGION);
 		String height = model.getStringProperty(PORTLET_HEIGHT);
+		String initialWindowState = model.getStringProperty(INITIAL_WINDOW_STATE);
 		
 		IProject project = getTargetProject();
 		IVirtualComponent component = ComponentCore.createComponent(project);
@@ -318,6 +323,7 @@ public class AddPortletOperation extends AddWebClassOperation {
 			addNode(document,window,"instance-ref",instanceId);
 			addNode(document,window,"region",region);
 			addNode(document,window,"height",height);
+			addNode(document,window,"initial-window-state",initialWindowState);
 			
 			domModel.save();
 		} catch (Exception e) {

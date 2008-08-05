@@ -24,6 +24,7 @@ import static org.eclipse.wst.common.componentcore.internal.operation.IArtifactE
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.TITLE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_JSF_PORTLET;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_SEAM_PORTLET;
  
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.Dialog;
@@ -118,6 +119,17 @@ public class AddPortletWizardPage extends DataModelWizardPage {
 			initSection.setInput(initParamList);
 			
 		}
+		if (isSeamPortlet()) {
+			List<String[]> initParamList = new ArrayList<String[]>();
+			String[] arrayString = new String[3];
+			arrayString[0]="javax.portlet.faces.defaultViewId.view";
+			arrayString[1]="/home.xhtml";
+			arrayString[2]="";
+			initParamList.add(arrayString);
+			
+			initSection.setInput(initParamList);
+			
+		}
 		
 		String text = nameText.getText();
 		
@@ -174,6 +186,9 @@ public class AddPortletWizardPage extends DataModelWizardPage {
 		if (isJSFPortlet()) {
 			nameText.setText(IPortletUIConstants.JBOSS_JSF_PORTLET_NAME);
 		}
+		if (isSeamPortlet()) {
+			nameText.setText(IPortletUIConstants.JBOSS_SEAM_PORTLET_NAME);
+		}
 
 		// display name
 		Label displayNameLabel = new Label(composite, SWT.LEFT);
@@ -185,6 +200,10 @@ public class AddPortletWizardPage extends DataModelWizardPage {
 		if (isJSFPortlet()) {
 			displayNameText.setText(IPortletUIConstants.JBOSS_JSF_DISPLAY_PORTLET_NAME);
 		}
+		if (isSeamPortlet()) {
+			displayNameText.setText(IPortletUIConstants.JBOSS_SEAM_DISPLAY_PORTLET_NAME);
+		}
+		
 		// title
 		Label titleLabel = new Label(composite, SWT.LEFT);
 		titleLabel.setText(IPortletUIConstants.TITLE_LABEL);
@@ -195,6 +214,10 @@ public class AddPortletWizardPage extends DataModelWizardPage {
 		if (isJSFPortlet()) {
 			titleText.setText(IPortletUIConstants.JBOSS_JSF_PORTLET_TITLE);
 		}
+		if (isSeamPortlet()) {
+			titleText.setText(IPortletUIConstants.JBOSS_SEAM_PORTLET_TITLE);
+		}
+		
 		// description
 		Label descLabel = new Label(composite, SWT.LEFT);
 		descLabel.setText(DESCRIPTION_LABEL);
@@ -221,5 +244,9 @@ public class AddPortletWizardPage extends DataModelWizardPage {
 	
 	protected boolean isJSFPortlet() {
 		return model.getBooleanProperty(IS_JSF_PORTLET);
+	}
+	
+	protected boolean isSeamPortlet() {
+		return model.getBooleanProperty(IS_SEAM_PORTLET);
 	}
 }

@@ -49,12 +49,15 @@ public class NewPortletClassDataModelProvider extends
 
 	private boolean isJSFPortlet;
 
-	public NewPortletClassDataModelProvider(boolean isJSFPortlet) {
+	private boolean isSeamPortlet;
+
+	public NewPortletClassDataModelProvider(boolean isJSFPortlet, boolean isSeamPortlet) {
 		this.isJSFPortlet = isJSFPortlet;
+		this.isSeamPortlet = isSeamPortlet;
 	}
 
 	public NewPortletClassDataModelProvider() {
-		this(false);
+		this(false,false);
 	}
 
 	/**
@@ -107,12 +110,14 @@ public class NewPortletClassDataModelProvider extends
 		propertyNames.add(PARENT_PORTAL);
 		propertyNames.add(PAGE_REGION);
 		propertyNames.add(PORTLET_HEIGHT);
+		propertyNames.add(INITIAL_WINDOW_STATE);
 		propertyNames.add(IF_EXISTS);
 		propertyNames.add(ADD_PORTLET);
 		propertyNames.add(ADD_JBOSS_APP);
 		propertyNames.add(ADD_JBOSS_PORTLET);
 		propertyNames.add(JBOSS_APP);
 		propertyNames.add(IS_JSF_PORTLET);
+		propertyNames.add(IS_SEAM_PORTLET);
 		propertyNames.add(COPY_JSF_TEMPLATES);
 		
 		return propertyNames;
@@ -145,6 +150,11 @@ public class NewPortletClassDataModelProvider extends
 		
 		if (propertyName.equals(IS_JSF_PORTLET)) {
 			if (isJSFPortlet)
+				return Boolean.TRUE;
+			return Boolean.FALSE;
+		}
+		if (propertyName.equals(IS_SEAM_PORTLET)) {
+			if (isSeamPortlet)
 				return Boolean.TRUE;
 			return Boolean.FALSE;
 		}
@@ -209,24 +219,42 @@ public class NewPortletClassDataModelProvider extends
 			return Boolean.FALSE;
 		
 		if (propertyName.equals(INSTANCE_NAME)) {
-			return getDefaultProperty(NAME) + "Instance";
+			return getPortletPrefix() + "Instance";
 		}
 		if (propertyName.equals(WINDOW_NAME)) {
-			return getDefaultProperty(NAME) + "Window";
+			return getPortletPrefix() + "Window";
 		}
 		if (propertyName.equals(PAGE_NAME)) {
+			if (isSeamPortlet) {
+				return "SeamPortlet";
+			}
+			if (isJSFPortlet) {
+				return "JSFPortlet";
+			}
 			return "";
 		}
 		if (propertyName.equals(PORTLET_HEIGHT)) {
 			return "1";
 		}
+		if (propertyName.equals(INITIAL_WINDOW_STATE)) {
+			return "maximized";
+		}
 		if (propertyName.equals(JBOSS_APP)) {
-			return "riPortletApp";
+			if (isSeamPortlet) {
+				return "seamPortletApp";
+			}
+			if (isJSFPortlet) {
+				return "riPortletApp";
+			}
+			return "portletApp";
 		}
 		if (propertyName.equals(PAGE_REGION)) {
 			return "center";
 		}
 		if (propertyName.equals(PARENT_PORTAL)) {
+			if (isSeamPortlet || isJSFPortlet) {
+				return "default";
+			}
 			return "default.default";
 		}
 		if (propertyName.equals(IF_EXISTS)) {
@@ -237,13 +265,25 @@ public class NewPortletClassDataModelProvider extends
 		return super.getDefaultProperty(propertyName);
 	}
 
+	private String getPortletPrefix() {
+		String prefix = null;
+		if (isSeamPortlet) {
+			prefix = "SeamPortlet";
+		} else if (isJSFPortlet) {
+			prefix = "JSFPortlet";
+		} else {
+			prefix = (String) getDefaultProperty(NAME);
+		}
+		return prefix;
+	}
+
 	@Override
 	public IStatus validate(String propertyName) {
 		// Validate super class
 		if (propertyName.equals(SUPERCLASS)) 
 			return validateSuperClassName(getStringProperty(propertyName));
 
-		if (isJSFPortlet && propertyName.equals(CLASS_NAME)) {
+		if ((isJSFPortlet || isSeamPortlet) && propertyName.equals(CLASS_NAME)) {
 			if (getStringProperty(propertyName).length()!=0) {
 				return Status.OK_STATUS;
 			}

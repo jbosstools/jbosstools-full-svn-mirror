@@ -22,15 +22,13 @@ import org.jboss.tools.portlet.ui.PortletUIActivator;
 /**
  * New portlet wizard
  */
-public class NewJSFPortletWizard extends NewWebArtifactWizard {
+public class NewSeamPortletWizard extends NewWebArtifactWizard {
 	
-	//protected static final String PAGE_FOUR = "pageFour";
-	
-	public NewJSFPortletWizard() {
+	public NewSeamPortletWizard() {
 	    this(null);
 	}
 	
-	public NewJSFPortletWizard(IDataModel model) {
+	public NewSeamPortletWizard(IDataModel model) {
 		super(model);
 	}
 
@@ -55,15 +53,8 @@ public class NewJSFPortletWizard extends NewWebArtifactWizard {
 		AddPortletWizardPage page2 = new AddPortletWizardPage(getDataModel(), PAGE_TWO);
 		//page2.setInfopopID(IWebUIContextIds.WEBEDITOR_SERVLET_PAGE_ADD_SERVLET_WIZARD_2);
 		addPage(page2);
-		/*NewPortletClassOptionsWizardPage page3 = new NewPortletClassOptionsWizardPage(
-				getDataModel(), 
-				PAGE_THREE,
-				"Specify modifiers, interfaces to implement and method stubs to generate.",
-				IPortletUIConstants.NEW_PORTLET_WIZARD_PAGE_TITLE);
-		//page3.setInfopopID(IWebUIContextIds.WEBEDITOR_SERVLET_PAGE_ADD_SERVLET_WIZARD_3);
-		addPage(page3);*/
-		AddJBossPortletWizardPage page4 = new AddJBossPortletWizardPage(getDataModel(), PAGE_THREE);
-		addPage(page4);
+		AddJBossPortletWizardPage page3 = new AddJBossPortletWizardPage(getDataModel(), PAGE_THREE);
+		addPage(page3);
 	}
 	
 	@Override
@@ -79,7 +70,7 @@ public class NewJSFPortletWizard extends NewWebArtifactWizard {
 
 	@Override
 	protected IDataModelProvider getDefaultProvider() {
-		return new NewPortletClassDataModelProvider(true,false);
+		return new NewPortletClassDataModelProvider(false,true);
 	}
 	
 }

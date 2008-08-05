@@ -6,6 +6,9 @@ import static org.eclipse.jst.j2ee.internal.web.operations.INewWebClassDataModel
 import static org.eclipse.jst.servlet.ui.internal.wizard.IWebWizardConstants.BROWSE_BUTTON_LABEL;
 import static org.eclipse.jst.servlet.ui.internal.wizard.IWebWizardConstants.CLASS_NAME_LABEL;
 
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_JSF_PORTLET;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_SEAM_PORTLET;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,13 +120,19 @@ public class NewJSFPortletClassWizardPage extends NewJavaClassWizardPage {
 		getControl().setCursor(new Cursor(getShell().getDisplay(), SWT.CURSOR_WAIT));
 		IProject project = (IProject) model.getProperty(PROJECT);
 		IVirtualComponent component = ComponentCore.createComponent(project);
-		MultiSelectFilteredFileSelectionDialog ms = new MultiSelectFilteredFileSelectionDialog(
-				getShell(),
-				"New JSF Portlet",
-				"Choose a JSF portlet class:", 
-				new String[0], 
-				false, 
-				project);
+		MultiSelectFilteredFileSelectionDialog ms = null;
+		if (model.getBooleanProperty(IS_JSF_PORTLET)) {
+			ms = new MultiSelectFilteredFileSelectionDialog(
+					getShell(), "New JSF Portlet",
+					"Choose a JSF portlet class:", new String[0], false,
+					project);
+		}
+		if (model.getBooleanProperty(IS_SEAM_PORTLET)) {
+			ms = new MultiSelectFilteredFileSelectionDialog(
+					getShell(), "New Seam Portlet",
+					"Choose a Seam portlet class:", new String[0], false,
+					project);
+		}
 		IContainer root = component.getRootFolder().getUnderlyingFolder();
 		ms.setInput(root);
 		ms.open();
@@ -244,6 +253,13 @@ public class NewJSFPortletClassWizardPage extends NewJavaClassWizardPage {
 			return result;
 		try {
 			result = FacetedProjectFramework.hasProjectFacet(project, IPortletConstants.JSFPORTLET_FACET_ID);
+			if (!result) {
+				return result;
+			}
+			boolean isSeamProject = model.getBooleanProperty(IS_SEAM_PORTLET);
+			if (isSeamProject) {
+				result = FacetedProjectFramework.hasProjectFacet(project, IPortletConstants.SEAMPORTLET_FACET_ID);
+			}
 		} catch (CoreException ce) {
 			result = false;
 		}

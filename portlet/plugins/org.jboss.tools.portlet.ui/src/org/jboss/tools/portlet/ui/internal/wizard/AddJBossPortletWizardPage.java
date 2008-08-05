@@ -19,6 +19,7 @@ import static org.eclipse.jst.servlet.ui.internal.wizard.IWebWizardConstants.VAL
 import static org.eclipse.jst.servlet.ui.internal.wizard.IWebWizardConstants.VALUE_TITLE;
 import static org.eclipse.wst.common.componentcore.internal.operation.IArtifactEditOperationDataModelProperties.PROJECT_NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_JSF_PORTLET;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_SEAM_PORTLET;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.TITLE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.INSTANCE_NAME;
@@ -31,6 +32,7 @@ import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.ADD
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PAGE_REGION;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PARENT_PORTAL;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PORTLET_HEIGHT;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.INITIAL_WINDOW_STATE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.JBOSS_APP;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.COPY_JSF_TEMPLATES;
 
@@ -41,6 +43,7 @@ import static org.jboss.tools.portlet.ui.IPortletUIConstants.IF_EXISTS_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.PAGE_REGION_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.PARENT_PORTAL_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.PORTLET_HEIGHT_LABEL;
+import static org.jboss.tools.portlet.ui.IPortletUIConstants.INITIAL_WINDOW_STATE_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.JBOSS_APP_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.ADD_JBOSS_APP_LABEL;
 import static org.jboss.tools.portlet.ui.IPortletUIConstants.ADD_JBOSS_PORTLET_LABEL;
@@ -137,7 +140,7 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		Label ifExistsLabel = new Label(composite, SWT.LEFT);
 		ifExistsLabel.setText(IF_EXISTS_LABEL);
 		ifExistsLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		final Combo ifExistsCombo = new Combo(composite,SWT.NONE);
+		final Combo ifExistsCombo = new Combo(composite,SWT.READ_ONLY);
 		ifExistsCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));		
 		ifExistsCombo.setItems(new String[] {"overwrite","keep"});
 		synchHelper.synchCombo(ifExistsCombo, IF_EXISTS, null);
@@ -190,6 +193,15 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		heightText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		synchHelper.synchText(heightText, PORTLET_HEIGHT, null);
 		
+		// initial window state
+		Label initialWindowStateLabel = new Label(composite, SWT.LEFT);
+		initialWindowStateLabel.setText(INITIAL_WINDOW_STATE_LABEL);
+		initialWindowStateLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+		final Combo initialWindowStateCombo = new Combo(composite,SWT.READ_ONLY);
+		initialWindowStateCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));		
+		initialWindowStateCombo.setItems(new String[] {"maximized","minimized","normal"});
+		synchHelper.synchCombo(initialWindowStateCombo, INITIAL_WINDOW_STATE, null);
+		
 		addPortlet.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent e) {
@@ -203,7 +215,7 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 			}
 		});
 		
-		if (isJSFPortlet()) {
+		if (isJSFPortlet() || isSeamPortlet()) {
 			final Button addJBossApp = new Button(composite, SWT.CHECK);
 			addJBossApp.setText(ADD_JBOSS_APP_LABEL);
 			gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
@@ -257,5 +269,9 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 	
 	protected boolean isJSFPortlet() {
 		return model.getBooleanProperty(IS_JSF_PORTLET);
+	}
+	
+	protected boolean isSeamPortlet() {
+		return model.getBooleanProperty(IS_SEAM_PORTLET);
 	}
 }
