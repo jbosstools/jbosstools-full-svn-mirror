@@ -17,11 +17,6 @@ public class WorkspaceVFS implements IArchivesVFS, IDynamicVariableResolver {
 	public WorkspaceVFS() {
 	}
 		
-	public String performStringSubstitution(String expression,
-			boolean reportUndefinedVariables) throws CoreException {
-		return performStringSubstitution(expression, null, reportUndefinedVariables);
-	}
-
 	public IPath[] getWorkspaceChildren(IPath path) {
 		IResource res = ResourcesPlugin.getWorkspace().getRoot().findMember(path);
 		if( res != null || !(res instanceof IContainer)) {
@@ -49,13 +44,6 @@ public class WorkspaceVFS implements IArchivesVFS, IDynamicVariableResolver {
 		if( r != null )
 			return r.getLocation().append(append);
 		return null;
-	}
-
-	public IPath[] workspacePathToAbsolutePath(IPath[] paths) {
-		IPath[] results = new IPath[paths.length];
-		for( int i = 0; i < paths.length; i++ )
-			results[i] = workspacePathToAbsolutePath(paths[i]);
-		return results;
 	}
 
 	public String getProjectName(IPath absolutePath) {

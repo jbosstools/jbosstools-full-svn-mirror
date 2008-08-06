@@ -33,6 +33,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension.FileWrapper;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
+import org.jboss.ide.eclipse.archives.core.util.PathUtils;
 
 import de.schlichtherle.io.ArchiveDetector;
 import de.schlichtherle.io.File;
@@ -54,7 +55,7 @@ import de.schlichtherle.io.File;
 public class ModelTruezipBridge {
 	public static void deleteArchive(IArchive archive) {
 		final File file = getFile(archive);
-		file.deleteAll();
+		boolean b = file.deleteAll();
 		TrueZipUtil.sync();
 	}
 		
@@ -255,7 +256,7 @@ public class ModelTruezipBridge {
 			ArchiveDetector detector = exploded ? ArchiveDetector.NULL : TrueZipUtil.getJarArchiveDetector();
 			if( parentFile == null ) {
 				// we're a root archive, and so the destination folder must be a real folder
-				IPath p = node2.getGlobalDestinationPath();
+				IPath p = PathUtils.getGlobalLocation(node2);
 				if( p == null ) return null;
 				parentFile = new File(p.toOSString(), ArchiveDetector.NULL);
 			}

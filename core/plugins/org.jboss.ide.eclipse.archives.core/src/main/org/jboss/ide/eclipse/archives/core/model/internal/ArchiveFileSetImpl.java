@@ -25,16 +25,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension.FileWrapper;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbFileSet;
+import org.jboss.ide.eclipse.archives.core.util.PathUtils;
 
 /**
  * An implementation for filesets
@@ -79,42 +78,13 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	}
 
 	/*
-	 * @see IArchiveFileSet#getGlobalSourcePath()
-	 */
-	public IPath getGlobalSourcePath() {
-		IPath ret;
-		String path = getFileSetDelegate().getDir();
-		if (path == null || path.equals(".") || path.equals("")) {
-			ret = getProjectPath();
-		} else if( isInWorkspace()){
-			ret = ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(new Path(path)); 
-		} else {
-			ret = new Path(path);
-		}
-		return ret;
-	}
-	
-	/*
 	 * (non-Javadoc)
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet#getRawSourcePath()
 	 */
 	public String getRawSourcePath() {
 		return getFileSetDelegate().getDir();
 	}
-	
-	/*
-	 * @see IArchiveFileSet#getSourcePath()
-	 */
-	public IPath getSourcePath() {
-		try {
-			String out = ArchivesCore.getInstance().getVFS().
-					performStringSubstitution(getRawSourcePath(), 
-					getProjectName(), true);
-			return new Path(out);
-		} catch( CoreException ce ) {
-		}
-		return null;
-	}
+
 	
 	/*
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet#isFlattened()
@@ -272,8 +242,7 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	}
 	
 	public boolean canBuild() {
-		return getGlobalSourcePath() != null 
-			&& super.canBuild();
+		return PathUtils.getGlobalLocation(this) != null && super.canBuild();
 	}
 	
 	public String toString() {

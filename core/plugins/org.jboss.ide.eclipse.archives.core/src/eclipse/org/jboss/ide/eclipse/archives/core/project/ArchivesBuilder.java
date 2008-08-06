@@ -25,6 +25,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeSet;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
@@ -44,6 +45,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeVisitor;
+import org.jboss.ide.eclipse.archives.core.util.PathUtils;
 import org.jboss.ide.eclipse.archives.core.util.internal.TrueZipUtil;
 
 /**
@@ -69,8 +71,8 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 		
 		IProject[] interestingProjects = getInterestingProjectsInternal();
 
-		final TreeSet addedChanged = createDefaultTreeSet();
-		final TreeSet removed = createDefaultTreeSet();
+		final TreeSet<IPath> addedChanged = createPathTreeSet();
+		final TreeSet<IPath> removed = createPathTreeSet();
 
 		ArchiveBuildDelegate delegate = new ArchiveBuildDelegate();
 		if (kind == IncrementalProjectBuilder.INCREMENTAL_BUILD || kind == IncrementalProjectBuilder.AUTO_BUILD) {
@@ -109,7 +111,7 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 	 * @param addedChanged A collection of resources that have been added or changed
 	 * @param removed A collection of resources that have been removed.
 	 */
-	protected void fillDeltas(IProject[] projects, final TreeSet addedChanged, final TreeSet removed) {
+	protected void fillDeltas(IProject[] projects, final TreeSet<IPath> addedChanged, final TreeSet<IPath> removed) {
 		for( int i = 0; i < projects.length; i++ ) {
 			final IProject proj = projects[i];
 			IResourceDelta delta = getDelta(proj);
@@ -144,11 +146,10 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 	 * @return The list of projects that matter
 	 */
 	protected IProject[] getInterestingProjectsInternal() {
-		final TreeSet set = createDefaultTreeSet();
+		final TreeSet<IProject> set = createProjectTreeSet();
 		set.add(getProject());
 		
 		final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-		final int count = workspaceRoot.getLocation().segmentCount();
 
 		IArchiveModelRootNode root = ArchivesModel.instance().getRoot(getProject().getLocation());
 		if(root!=null) {
@@ -156,11 +157,11 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 				public boolean visit (IArchiveNode node) {
 					if (node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FILESET) {
 						IArchiveFileSet fileset = (IArchiveFileSet)node;
-						IPath p = fileset.getGlobalSourcePath();
+						IPath p = PathUtils.getGlobalLocation(fileset);
 						if( p != null ) {
-							if( workspaceRoot.getLocation().isPrefixOf(p)) {
-								IProject proj = workspaceRoot.getProject(p.segment(count));
-								set.add(proj);
+							IContainer[] containers = workspaceRoot.findContainersForLocation(p);
+							for( int i = 0; i < containers.length; i++ ) { 
+								set.add(containers[i].getProject());
 							}
 						}
 					}
@@ -177,13 +178,21 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 	 * Default treeset with default comparator
 	 * @return
 	 */
-	protected TreeSet createDefaultTreeSet() {
-		return new TreeSet(new Comparator () {
-			public int compare(Object o1, Object o2) {
+	protected TreeSet<IProject> createProjectTreeSet() {
+		return new TreeSet<IProject>(new Comparator<IProject> () {
+			public int compare(IProject o1, IProject o2) {
 				if (o1.equals(o2)) return 0;
 				else return -1;
 			}
 		});		
 	}
 	
+	protected TreeSet<IPath> createPathTreeSet() {
+		return new TreeSet<IPath>(new Comparator<IPath> () {
+			public int compare(IPath o1, IPath o2) {
+				if (o1.equals(o2)) return 0;
+				else return -1;
+			}
+		});		
+	}
 }

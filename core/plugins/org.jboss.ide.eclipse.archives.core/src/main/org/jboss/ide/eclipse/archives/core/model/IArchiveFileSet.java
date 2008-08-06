@@ -54,23 +54,9 @@ public interface IArchiveFileSet extends IArchiveNode {
 	public boolean isFlattened();
 	
 	/**
-	 * Returns the absolute file-system relative source path
-	 * @return The path to the source folder ("basedir" in ant terminology) for this fileset. 
-	 */
-	public IPath getGlobalSourcePath();
-	
-	/**
 	 * @return the source path from the delegate with no translation at all
 	 */
 	public String getRawSourcePath();
-
-	/**
-	 * Return a source path that is file-system or workspace
-	 * relative but has all of its variables translated already.
-	 * 
-	 * @return the source path from the delegate (file-system or workspace-relative)
-	 */
-	public IPath getSourcePath();
 
 	/**
 	 * Force the scanner to check for matched files again

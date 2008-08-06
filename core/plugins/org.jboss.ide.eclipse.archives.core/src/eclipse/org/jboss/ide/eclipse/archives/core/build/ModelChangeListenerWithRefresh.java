@@ -37,7 +37,7 @@ public class ModelChangeListenerWithRefresh extends ModelChangeListener {
 				proj.setSessionProperty(new QualifiedName(ArchivesCorePlugin.PLUGIN_ID, "localname"), "inUse");
 				if( pack.isDestinationInWorkspace() ) {
 					// refresh the root package node
-					IResource res = root.getContainerForLocation(pack.getGlobalDestinationPath());
+					IResource res = root.getContainerForLocation(pack.getProjectPath());
 					if( res != null ) {
 						try {
 							// refresh infinitely in case the output is exploded

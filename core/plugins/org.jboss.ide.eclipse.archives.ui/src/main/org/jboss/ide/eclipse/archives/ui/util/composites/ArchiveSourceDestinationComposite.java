@@ -36,6 +36,7 @@ import org.eclipse.ui.PlatformUI;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.INamedContainerArchiveNode;
+import org.jboss.ide.eclipse.archives.core.util.PathUtils;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PackagesUIPlugin;
 
@@ -51,11 +52,13 @@ public class ArchiveSourceDestinationComposite extends Composite {
 	private String path;
 	private boolean error;
 	private String errorString;
+	private double version;
 	private ArrayList<ChangeListener> listeners = new ArrayList<ChangeListener>();
 
-	public ArchiveSourceDestinationComposite(Composite parent, String project) {
+	public ArchiveSourceDestinationComposite(Composite parent, String project, double version) {
 		super(parent, SWT.NONE);
 		this.projectName = project;
+		this.version = version;
 		setLayout(new FormLayout());
 		createWidgets();
 		layoutWidgets();
@@ -163,7 +166,7 @@ public class ArchiveSourceDestinationComposite extends Composite {
 			} else if( result instanceof IContainer ) {
 				destinationNode = null;
 				IPath tmpPath = ((IContainer)result).getFullPath();
-				if( tmpPath.segment(0).equals(projectName))
+				if( tmpPath.segment(0).equals(projectName) && getDescriptorVersion() < 2.0)
 					path = tmpPath.removeFirstSegments(1).makeRelative().toString();
 				else
 					path = ((IContainer)result).getFullPath().makeAbsolute().toString();
@@ -223,7 +226,7 @@ public class ArchiveSourceDestinationComposite extends Composite {
 				translated=""; img=null;
 			} else {
 				translated = getTranslatedGlobalPath();
-				if( !new Path(translated).toFile().exists()) {
+				if( translated == null || !new Path(translated).toFile().exists()) {
 					translated=translated + " does not exist in the filesystem.";
 					img = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_WARN_TSK);
 				} else {
@@ -262,19 +265,11 @@ public class ArchiveSourceDestinationComposite extends Composite {
 
 	protected String getTranslatedGlobalPath() throws CoreException {
 		try {
-			String postSub = ArchivesCore.getInstance().getVFS().
-								performStringSubstitution(path, projectName, true);
-			if( workspaceRelative ) { 
-				IPath p2 = new Path(postSub);
-				if( !p2.isAbsolute())
-					p2 = new Path(projectName).append(p2).makeAbsolute();
-				IPath p = ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(p2);
-				if( p != null ) return p.toString();
-				String ERROR ="Unable to convert workspace path into global path: " + postSub; 
-				Status s = new Status(IStatus.WARNING, PackagesUIPlugin.PLUGIN_ID, ERROR);
-				throw new CoreException(s);
-			}
-			return postSub;
+			IPath p = PathUtils.getGlobalLocation(path, projectName, workspaceRelative, getDescriptorVersion());
+			if( p != null ) return p.toString();
+			String ERROR ="Unable to convert workspace path into global path: " + p.toOSString(); 
+			Status s = new Status(IStatus.WARNING, PackagesUIPlugin.PLUGIN_ID, ERROR);
+			throw new CoreException(s);
 		} catch( CoreException e ) {
 			String ERROR = "Error during string substitution: " + e.getMessage();
 			Status s = new Status(IStatus.ERROR, PackagesUIPlugin.PLUGIN_ID, ERROR, e);
@@ -351,14 +346,12 @@ public class ArchiveSourceDestinationComposite extends Composite {
 		return path;
 	}
 	
-	public String getTranslatedPath() {
-		try {
-			return ArchivesCore.getInstance().getVFS().
-				performStringSubstitution(path, projectName, true);
-		} catch( CoreException ce ) {}
-		return null;
+	public void setDescriptorVersion(double version) {
+		this.version = version;
 	}
-	
+	public double getDescriptorVersion() {
+		return version;
+	}
 	
 	public static interface ChangeListener {
 		public void compositeChanged();

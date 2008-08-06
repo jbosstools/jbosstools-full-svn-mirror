@@ -89,6 +89,16 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 	
 	/*
 	 * (non-Javadoc)
+	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getDescriptorVersion()
+	 */
+	public double getDescriptorVersion() {
+		IArchiveModelRootNode root = getModelRootNode();
+		return root != null ? root.getDescriptorVersion() : 
+			IArchiveModelRootNode.DESCRIPTOR_VERSION_1_2;
+	}
+	
+	/*
+	 * (non-Javadoc)
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getRootArchive()
 	 */
 	public IArchive getRootArchive() {

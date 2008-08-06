@@ -10,6 +10,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveAction;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.util.PathUtils;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate.DelayProxy;
@@ -105,7 +106,7 @@ public class ArchivesLabelProvider extends BaseLabelProvider implements ILabelPr
 	private String getPackageText (IArchive pkg) {
 		String text = pkg.getName();
 		if (PrefsInitializer.getBoolean( PrefsInitializer.PREF_SHOW_PACKAGE_OUTPUT_PATH)) {
-			text += " [" + pkg.getGlobalDestinationPath() + "]";
+			text += " [" + PathUtils.getGlobalLocation(pkg) + "]";
 		}
 		return text;
 	}
@@ -128,11 +129,11 @@ public class ArchivesLabelProvider extends BaseLabelProvider implements ILabelPr
 		}
 
 		if (showFullPath) {
-			text += fileset.getGlobalSourcePath().toString();
+			text += PathUtils.getGlobalLocation(fileset);
 		} else if( inWorkspace ){
 			text += fileset.getRawSourcePath();
 		} else {
-			text += fileset.getGlobalSourcePath().lastSegment();
+			text += PathUtils.getGlobalLocation(fileset).lastSegment();
 		}
 		
 		return text;

@@ -38,6 +38,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
+import org.jboss.ide.eclipse.archives.core.util.PathUtils;
 import org.jboss.ide.eclipse.archives.core.util.internal.ModelTruezipBridge;
 import org.jboss.ide.eclipse.archives.core.util.internal.TrueZipUtil;
 import org.jboss.ide.eclipse.archives.test.ArchivesTest;
@@ -103,7 +104,7 @@ public class ModelTruezipBridgeTest extends ModelTest {
 		explodedInExploded.setExploded(true);
 		exploded.addChild(explodedInExploded);
 		ModelTruezipBridge.createFile(explodedInExploded);
-		File eIeF = exploded.getGlobalDestinationPath().append("exploded.war").append("explodedInExploded.jar").toFile();
+		File eIeF = PathUtils.getGlobalLocation(exploded).append("exploded.war").append("explodedInExploded.jar").toFile();
 		assertTrue(eIeF.exists());
 		
 		// zip inside exploded
@@ -111,7 +112,7 @@ public class ModelTruezipBridgeTest extends ModelTest {
 		ZipInExploded.setExploded(false);
 		exploded.addChild(ZipInExploded);
 		ModelTruezipBridge.createFile(ZipInExploded);
-		File zIeF = exploded.getGlobalDestinationPath().append("exploded.war").append("zipInExploded.jar").toFile();
+		File zIeF = PathUtils.getGlobalLocation(exploded).append("exploded.war").append("zipInExploded.jar").toFile();
 		assertTrue(zIeF.exists());
 		assertFalse(zIeF.isDirectory());
 
@@ -136,7 +137,7 @@ public class ModelTruezipBridgeTest extends ModelTest {
 	}
 	
 	public void testCreateFileInWorkspace() {
-		IArchive zipped = createArchive("zipped.war", new Path(proj.getName()).append("outputs").toString());
+		IArchive zipped = createArchive("zipped.war", new Path(proj.getName()).append("outputs").makeAbsolute().toString());
 		zipped.setInWorkspace(true);
 		zipped.setExploded(false);
 		ModelTruezipBridge.createFile(zipped);
@@ -181,7 +182,7 @@ public class ModelTruezipBridgeTest extends ModelTest {
 	
 	
 	public void testDeleteArchive() {
-		IArchive zipped = createArchive("zipped.war", new Path(proj.getName()).append("outputs").toString());
+		IArchive zipped = createArchive("zipped.war", new Path(proj.getName()).append("outputs").makeAbsolute().toString());
 		zipped.setInWorkspace(true);
 		zipped.setExploded(false);
 		ModelTruezipBridge.createFile(zipped);
@@ -215,7 +216,7 @@ public class ModelTruezipBridgeTest extends ModelTest {
 	 * Fileset-related
 	 */
 	public void testFileset() {
-		IArchive zipped = createArchive("zipped.war", new Path(proj.getName()).append("outputs").toString());
+		IArchive zipped = createArchive("zipped.war", new Path(proj.getName()).append("outputs").makeAbsolute().toString());
 		zipped.setInWorkspace(true);
 		zipped.setExploded(false);
 		ModelTruezipBridge.createFile(zipped);
@@ -223,7 +224,7 @@ public class ModelTruezipBridgeTest extends ModelTest {
 		assertTrue(zippedF.exists());
 		assertTrue(!zippedF.isDirectory());
 
-		IArchiveFileSet fs = createFileSet("**/*.gif", proj.getName());
+		IArchiveFileSet fs = createFileSet("**/*.gif", new Path(proj.getName()).makeAbsolute().toString());
 		fs.setInWorkspace(true);
 		zipped.addChild(fs);
 		ModelTruezipBridge.fullFilesetBuild(fs);
@@ -231,7 +232,7 @@ public class ModelTruezipBridgeTest extends ModelTest {
 	}
 	
 	public void testFlattenedFileset() {
-		IArchive zipped = createArchive("zipped.war", new Path(proj.getName()).append("outputs").toString());
+		IArchive zipped = createArchive("zipped.war", new Path(proj.getName()).append("outputs").makeAbsolute().toString());
 		zipped.setInWorkspace(true);
 		zipped.setExploded(false);
 		ModelTruezipBridge.createFile(zipped);
@@ -239,7 +240,7 @@ public class ModelTruezipBridgeTest extends ModelTest {
 		assertTrue(zippedF.exists());
 		assertTrue(!zippedF.isDirectory());
 
-		IArchiveFileSet fs = createFileSet("**/*.gif", proj.getName());
+		IArchiveFileSet fs = createFileSet("**/*.gif", new Path(proj.getName()).makeAbsolute().toString());
 		fs.setInWorkspace(true);
 		fs.setFlattened(true);
 		zipped.addChild(fs);

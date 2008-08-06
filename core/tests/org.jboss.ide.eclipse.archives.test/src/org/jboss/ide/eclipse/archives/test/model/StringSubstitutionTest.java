@@ -16,7 +16,7 @@ public class StringSubstitutionTest extends TestCase {
 	public void testNoVariables() {
 		WorkspaceVFS vfs = (WorkspaceVFS)ArchivesCore.getInstance().getVFS();
 		try {
-			String out1 = vfs.performStringSubstitution(ONE, true);
+			String out1 = vfs.performStringSubstitution(ONE, null, true);
 			assertEquals(ONE, out1);
 		} catch( CoreException ce ) {
 			fail();
@@ -26,7 +26,7 @@ public class StringSubstitutionTest extends TestCase {
 	public void testVariableNotSet() {
 		WorkspaceVFS vfs = (WorkspaceVFS)ArchivesCore.getInstance().getVFS();
 		try {
-			vfs.performStringSubstitution(TWO, true);
+			vfs.performStringSubstitution(TWO, null, true);
 		} catch( CoreException ce ) {
 			return;
 		}
@@ -36,7 +36,7 @@ public class StringSubstitutionTest extends TestCase {
 	public void testVariableNotSet2() {
 		WorkspaceVFS vfs = (WorkspaceVFS)ArchivesCore.getInstance().getVFS();
 		try {
-			String out2 = vfs.performStringSubstitution(TWO, false);
+			String out2 = vfs.performStringSubstitution(TWO, null, false);
 			assertEquals(TWO, out2);
 		} catch( CoreException ce ) {
 			fail();
@@ -47,7 +47,7 @@ public class StringSubstitutionTest extends TestCase {
 		try {
 			ResourcesPlugin.getWorkspace().getPathVariableManager().setValue("test_variable", new Path("/here"));
 			WorkspaceVFS vfs = (WorkspaceVFS)ArchivesCore.getInstance().getVFS();
-			String out = vfs.performStringSubstitution("${test_variable}", true);
+			String out = vfs.performStringSubstitution("${test_variable}",null, true);
 			assertEquals("/here", out);
 			ResourcesPlugin.getWorkspace().getPathVariableManager().setValue("test_variable", null);
 		} catch( CoreException ce ) {

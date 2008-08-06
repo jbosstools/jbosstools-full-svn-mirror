@@ -9,9 +9,23 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
+import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory;
+import org.jboss.ide.eclipse.archives.core.util.PathUtils;
 import org.jboss.ide.eclipse.archives.test.ArchivesTest;
 import org.jboss.tools.common.test.util.TestProjectProvider;
 
+/**
+ * This class tests first and foremost 
+ * the presence of a ${archives_current_project}
+ * extension to allow the currently building 
+ * project to be agnostic
+ * 
+ * During this JIRA, workspace paths became conscious of 
+ * their absolute / relative status and are now interpreted
+ * differently according to their status.
+ * @author rob
+ *
+ */
 public class JBIDE1406Test extends TestCase {
 	private TestProjectProvider provider;
 	private IProject project;
@@ -43,5 +57,47 @@ public class JBIDE1406Test extends TestCase {
 		} catch( RuntimeException re ) {
 			fail(re.getMessage());
 		}
+	}
+	
+	/*
+	 * Time to test that this commit has not ruined other things.
+	 * Specifically, with an older archives descriptor 
+	 * all workspace paths should still be interpreted as
+	 * absolute paths even if they're not visibly absolute.
+	 */
+	
+	public void testJBIDE1406_descriptor_path_utils() {
+		// These 3 should work regardless of version.
+		// they are "", ".", and anything absolute "/proj/out"
+		assertEquals(new Path("JBIDE1406").makeAbsolute().toString(),
+				PathUtils.getAbsoluteLocation("", "JBIDE1406", true, 1.0));
+		assertEquals(new Path("JBIDE1406").makeAbsolute().toString(),
+				PathUtils.getAbsoluteLocation(".", "JBIDE1406", true, 1.0));
+		assertEquals(new Path("JBIDE1406").append("output").makeAbsolute().toString(),
+				PathUtils.getAbsoluteLocation("/JBIDE1406/output", "JBIDE1406", true, 1.0));
+		
+		// Test 1.2
+		assertEquals(new Path("JBIDE1406").makeAbsolute().toString(),
+				PathUtils.getAbsoluteLocation("", "JBIDE1406", true, 1.2));
+		assertEquals(new Path("JBIDE1406").makeAbsolute().toString(),
+				PathUtils.getAbsoluteLocation(".", "JBIDE1406", true, 1.2));
+		assertEquals(new Path("JBIDE1406").append("output").makeAbsolute().toString(),
+				PathUtils.getAbsoluteLocation("/JBIDE1406/output", "JBIDE1406", true, 1.2));
+
+		
+		// in 1.0, a leading slash does not matter
+		assertEquals(new Path("JBIDE1406").append("output").makeAbsolute().toString(),
+				PathUtils.getAbsoluteLocation("JBIDE1406/output", "JBIDE1406", true, 1.0));
+		
+		assertEquals(
+				PathUtils.getAbsoluteLocation("JBIDE1406/output", "JBIDE1406", true, 1.0),
+				PathUtils.getAbsoluteLocation("/JBIDE1406/output", "JBIDE1406", true, 1.0));
+				
+		// In 1.2 the leading slash matters
+		assertEquals(new Path("JBIDE1406").append("output").makeAbsolute().toString(),
+				PathUtils.getAbsoluteLocation("output", "JBIDE1406", true, 1.2));
+		assertNotSame(
+				PathUtils.getAbsoluteLocation("JBIDE1406/output", "JBIDE1406", true, 1.2),
+				PathUtils.getAbsoluteLocation("/JBIDE1406/output", "JBIDE1406", true, 1.2));
 	}
 }

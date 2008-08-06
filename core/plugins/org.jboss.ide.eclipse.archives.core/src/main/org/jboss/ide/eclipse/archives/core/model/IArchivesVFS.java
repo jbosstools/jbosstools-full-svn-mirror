@@ -45,8 +45,21 @@ public interface IArchivesVFS {
 	 * @return
 	 */
 	public IPath workspacePathToAbsolutePath(IPath path);
-	public IPath[] workspacePathToAbsolutePath(IPath[] paths);
+	
+	/**
+	 * Get the project name that matches this path
+	 * @param absolutePath
+	 * @return
+	 */
 	public String getProjectName(IPath absolutePath);
-	public String performStringSubstitution(String expression,	boolean reportUndefinedVariables) throws CoreException;
+	
+	/**
+	 * Substitute some strings
+	 * @param expression
+	 * @param projectName
+	 * @param reportUndefinedVariables
+	 * @return
+	 * @throws CoreException
+	 */
 	public String performStringSubstitution(String expression,	String projectName, boolean reportUndefinedVariables) throws CoreException;
 }

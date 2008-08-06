@@ -148,7 +148,7 @@ public class FilesetInfoWizardPage extends WizardPage {
 		
 		// root dir
 		Label rootDirectoryLabel = new Label(infoGroup, SWT.NONE);
-		srcDestComposite = new ArchiveSourceDestinationComposite(infoGroup, projectName);
+		srcDestComposite = new ArchiveSourceDestinationComposite(infoGroup, projectName, getDescriptorVersion());
 		Composite rootDirValue = srcDestComposite; 
 		rootDirectoryLabel.setLayoutData(createFormData(destinationComposite,10,null,0,null,5,0,100));
 		rootDirValue.setLayoutData(createFormData(destinationComposite,5,null,0,rootDirectoryLabel,5,100,-5));
@@ -312,7 +312,8 @@ public class FilesetInfoWizardPage extends WizardPage {
 			Runnable r;
 			try {
 				ds = DirectoryScannerFactory.createDirectoryScanner( 
-						replaceVariables(), null, includes, excludes, parentNode.getProjectName(), srcDestComposite.isWorkspaceRelative(), true);
+						replaceVariables(), null, includes, excludes, parentNode.getProjectName(), 
+						srcDestComposite.isWorkspaceRelative(), parentNode.getModelRootNode().getDescriptorVersion(), true);
 				String[] fsRelative = ds.getIncludedFiles();
 				IPath filesetRelative;
 				final ArrayList<IPath> list = new ArrayList<IPath>();
@@ -341,5 +342,9 @@ public class FilesetInfoWizardPage extends WizardPage {
 				Display.getDefault().asyncExec(r);
 			}
 		}
+	}
+	
+	protected double getDescriptorVersion() {
+		return parentNode.getModelRootNode().getDescriptorVersion();
 	}
 }

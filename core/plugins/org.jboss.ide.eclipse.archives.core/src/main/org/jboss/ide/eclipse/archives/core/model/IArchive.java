@@ -77,26 +77,6 @@ public interface IArchive extends INamedContainerArchiveNode {
 	 * @return  the path
 	 */
 	public IPath getArchiveFilePath();
-	
-	/**
-	 * If top level:
-	 *   The absolute raw file system path to the 
-	 *   destination (containing folder) of this archive
-	 * Else
-	 *   The empty path
-	 * @return An IPath to this package's destination folder
-	 */
-	public IPath getGlobalDestinationPath();
-
-	/**
-	 * If top level:
-	 *   A path representing the string from the delegate
-	 *   May be work-space relative or global
-	 * Else
-	 *   The empty path
-	 * @return
-	 */
-	public IPath getDestinationPath();
 
 	/**
 	 * Exactly as from the delegate

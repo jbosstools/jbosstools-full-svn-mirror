@@ -25,7 +25,7 @@ import java.util.List;
 
 public class XbPackages extends XbPackageNodeWithProperties {
 	
-	private float version;
+	private double version;
 	public XbPackages () {
 		super();
 	}
@@ -47,11 +47,11 @@ public class XbPackages extends XbPackageNodeWithProperties {
 		return getChildren(XbPackage.class);
 	}
 
-	public float getVersion() {
+	public double getVersion() {
 		return version;
 	}
 
-	public void setVersion(float version) {
+	public void setVersion(double version) {
 		this.version = version;
 	}
 }

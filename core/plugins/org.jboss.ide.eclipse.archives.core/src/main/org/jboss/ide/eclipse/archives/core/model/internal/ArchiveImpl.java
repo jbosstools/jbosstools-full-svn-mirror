@@ -23,7 +23,6 @@ package org.jboss.ide.eclipse.archives.core.model.internal;
 
 import java.util.ArrayList;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
@@ -36,6 +35,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveType;
 import org.jboss.ide.eclipse.archives.core.model.INamedContainerArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackage;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
+import org.jboss.ide.eclipse.archives.core.util.PathUtils;
 
 /**
  * An archive
@@ -68,34 +68,6 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 		return packageDelegate.isInWorkspace();
 	}
 	
-	/*
-	 * @see IArchive#getDestinationPath()
-	 */
-	public IPath getGlobalDestinationPath () {
-		if (!isTopLevel() || packageDelegate.getToDir() == null || packageDelegate.getToDir().equals(""))
-			return Path.EMPTY;
-		if( packageDelegate.getToDir().equals("."))
-			return getProjectPath() == null ? Path.EMPTY : getProjectPath();
-		
-		try {
-			String replaced = ArchivesCore.getInstance().getVFS().
-				performStringSubstitution(packageDelegate.getToDir(), getProjectName(), true);
-			if (isDestinationInWorkspace()) {
-				return ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(new Path(replaced));
-			} else {
-				return new Path(replaced);
-			}
-		} catch( CoreException ce ) {
-		}
-		return null;
-	}
-
-	public IPath getDestinationPath() {
-		if( !isTopLevel() )
-			return Path.EMPTY;
-		return packageDelegate.getToDir() == null ? Path.EMPTY : new Path(packageDelegate.getToDir());
-	}
-	
 	public String getRawDestinationPath() {
 		if( !isTopLevel() )
 			return "";
@@ -107,7 +79,8 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 	 * @see IArchive#getArchiveFilePath()
 	 */
 	public IPath getArchiveFilePath() {
-		return getGlobalDestinationPath().append(getName());
+		IPath p = PathUtils.getGlobalLocation(this);
+		return p == null ? null : p.append(getName());
 	}
 	
 	/*
@@ -200,7 +173,7 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 	 * @see IArchive#setDestinationPath(IPath, boolean)
 	 */
 	public void setDestinationPath(IPath path) {
-		IPath destPath = getDestinationPath();
+		String destPath = getRawDestinationPath();
 		attributeChanged(DESTINATION_ATTRIBUTE, destPath == null ? null : destPath.toString(), path == null ? null : path.toString());
 		packageDelegate.setToDir(path.toString());
 	}
@@ -284,7 +257,6 @@ public class ArchiveImpl extends ArchiveNodeImpl implements IArchive {
 	}
 
 	public boolean canBuild() {
-		return getGlobalDestinationPath() != null 
-			&& super.canBuild();
+		return PathUtils.getGlobalLocation(this) != null && super.canBuild();
 	}
 }

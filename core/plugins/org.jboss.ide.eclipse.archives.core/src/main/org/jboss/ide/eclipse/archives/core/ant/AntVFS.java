@@ -7,7 +7,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchivesVFS;
 import org.jboss.ide.eclipse.archives.core.model.IVariableManager;
 import org.jboss.ide.eclipse.archives.core.xpl.StringSubstitutionEngineClone;
 
-public class AntVariables implements IArchivesVFS, IVariableManager {
+public class AntVFS implements IArchivesVFS, IVariableManager {
 	private Task currentTask;
 	public void setCurrentTask(Task task) { currentTask = task; }
 	public Task getCurrentTask() { return currentTask; }
@@ -37,10 +37,6 @@ public class AntVariables implements IArchivesVFS, IVariableManager {
 		return null;
 	}
 	public IPath workspacePathToAbsolutePath(IPath path) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public IPath[] workspacePathToAbsolutePath(IPath[] paths) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -67,6 +67,7 @@ public class WorkspaceChangeListener implements IResourceChangeListener {
 			if(delta!=null) {
 				delta.accept(new IResourceDeltaVisitor() {
 					public boolean visit(IResourceDelta delta) throws CoreException {
+						// TODO modify to make sure this file is a descriptor in use / registered
 						if( delta.getResource() != null && delta.getResource().getLocation() != null && 
 								delta.getResource().getLocation().lastSegment().equals(IArchiveModel.DEFAULT_PACKAGES_FILE)) {
 							projects.add(delta.getResource().getProject());

@@ -25,11 +25,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.asf.DirectoryScanner;
+import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
+import org.jboss.ide.eclipse.archives.core.util.PathUtils;
 
 /**
  * Utility methods to create scanners for matching
@@ -43,19 +44,20 @@ public class DirectoryScannerFactory {
 		public String excludes;
 		public boolean inWorkspace;
 		public String projectName;
+		public double version;
 	};
 
 	public static DirectoryScannerExtension createDirectoryScanner(IArchiveFileSet fs, boolean scan) {
-		return createDirectoryScanner(fs.getRawSourcePath(), fs.getRootArchiveRelativePath(), fs.getIncludesPattern(), fs.getExcludesPattern(), fs.getProjectName(), fs.isInWorkspace(), scan);
-	}
-
-	// THIS SHOULD NOT BE USED ;)  just here for now
-	// eradicate all uses!
-	public static DirectoryScannerExtension createDirectoryScanner (String rawPath, String includes, String excludes, boolean scan) {
-		return createDirectoryScanner(rawPath, null, includes, excludes, null, false, scan);
+		return createDirectoryScanner(fs.getRawSourcePath(), fs.getRootArchiveRelativePath(), 
+				fs.getIncludesPattern(), fs.getExcludesPattern(), fs.getProjectName(), 
+				fs.isInWorkspace(), fs.getDescriptorVersion(), scan);
 	}
 	
-	public static DirectoryScannerExtension createDirectoryScanner (String rawPath, IPath rootArchiveRelativePath, String includes, String excludes, String projectName, boolean inWorkspace, boolean scan) {
+	public static DirectoryScannerExtension createDirectoryScanner (
+			String rawPath, IPath rootArchiveRelativePath, 
+			String includes, String excludes, String projectName, 
+			boolean inWorkspace, double version, boolean scan) {
+		
 		ScannableFileSet fs = new ScannableFileSet();
 		fs.rawPath = rawPath;
 		fs.rootArchiveRelativePath = rootArchiveRelativePath;
@@ -63,6 +65,7 @@ public class DirectoryScannerFactory {
 		fs.excludes = excludes;
 		fs.inWorkspace = inWorkspace;
 		fs.projectName = projectName;
+		fs.version = version;
 		DirectoryScannerExtension scanner = new DirectoryScannerExtension(fs);
 		if (scan) {
 			scanner.scan();
@@ -97,34 +100,17 @@ public class DirectoryScannerFactory {
 		}
 		
 		public void setBasedir2(String path) {
-			String translatedPath = refine(path);
-			if( translatedPath != null ) {
-				IPath translatedPath2 = new Path(translatedPath);
-				if( workspaceRelative ) {
-					IPath p = ArchivesCore.getInstance().getVFS()
-					.workspacePathToAbsolutePath(translatedPath2);
-					setBasedir(new FileWrapper(p.toFile(), translatedPath2));
-				} else {
-					setBasedir(new FileWrapper(new File(translatedPath), translatedPath2));
-				}
+			
+			IPath translatedPath = new Path(PathUtils.getAbsoluteLocation(path, fs.projectName, fs.inWorkspace, fs.version)); 
+			if( workspaceRelative ) {
+				IPath p = PathUtils.getGlobalLocation(path, fs.projectName, true, fs.version);
+				setBasedir(new FileWrapper(p.toFile(), translatedPath));
+			} else {
+				setBasedir(new FileWrapper(translatedPath.toFile(), translatedPath));
 			}
 		}
-		public String refine(String rawPath) {
-			try {
-				String refined = ArchivesCore.getInstance().getVFS().
-					performStringSubstitution(rawPath, fs.projectName, true);
-				if( workspaceRelative ) {
-					IPath p = new Path(refined);
-					if( !p.isAbsolute() )
-						p = new Path(fs.projectName).append(p).makeAbsolute();
-					return p.toString();
-				}
-				return refined;
-			} catch( CoreException ce ) {
-			}
-			return null;
-		}
-	    protected String getName(File file) {
+
+		protected String getName(File file) {
 	    	return workspaceRelative ? ((FileWrapper)file).getOutputName() : super.getName(file);
 	    }
 	    
@@ -143,13 +129,20 @@ public class DirectoryScannerFactory {
 	    	
 	    	IPath[] childrenWorkspace = ArchivesCore.getInstance()
 	    			.getVFS().getWorkspaceChildren(workspaceRelative);
-	    	IPath[] childrenAbsolute = ArchivesCore.getInstance()
-	    			.getVFS().workspacePathToAbsolutePath(childrenWorkspace);
+	    	IPath[] childrenAbsolute = globalize(childrenWorkspace);
 	    	File[] files = new File[childrenAbsolute.length];
 	    	for( int i = 0; i < files.length; i++ ) {
 	    		files[i] = new FileWrapper(childrenAbsolute[i].toFile(), childrenWorkspace[i]);
 	    	}
 	    	return files;
+	    }
+	    
+	    protected IPath[] globalize(IPath[] paths) {
+			IPath[] results = new IPath[paths.length];
+			for( int i = 0; i < paths.length; i++ )
+				results[i] = ArchivesCore.getInstance()
+    			.getVFS().workspacePathToAbsolutePath(paths[i]);
+			return results;
 	    }
 	    
 	    protected File[] list2absolute(File file) {

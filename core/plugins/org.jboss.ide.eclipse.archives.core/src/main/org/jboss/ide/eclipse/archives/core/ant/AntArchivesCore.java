@@ -22,19 +22,19 @@ public class AntArchivesCore extends ArchivesCore {
 	}
 	
 	protected IExtensionManager createExtensionManager() {
-		return new AntExtensionManager();
+		return null; // not necessary right now
 	}
 
 	protected IPreferenceManager createPreferenceManager() {
-		return new AntPreferenceManager();
+		return null; // not necessary right now
 	}
 
 	protected IArchivesVFS createVFS() {
-		return new AntVariables();
+		return new AntVFS();
 	}
 
 	public void preRegisterProject(IPath project) {
-		
+		// do nothing
 	}
 
 	protected IArchivesLogger createLogger() {

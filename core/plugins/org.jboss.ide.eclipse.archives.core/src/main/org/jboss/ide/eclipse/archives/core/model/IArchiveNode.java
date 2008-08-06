@@ -164,6 +164,13 @@ public interface IArchiveNode {
 	public IArchiveModelRootNode getModelRootNode();
 
 	/**
+	 * Get the descriptor version that this node is using.
+	 * If the node is unattached to a descriptor object,
+	 * use the latest descriptor version.
+	 */
+	public double getDescriptorVersion();
+		
+	/**
 	 * Get the path relative to the root archive,
 	 * or null if not applicable. 
 	 * @return

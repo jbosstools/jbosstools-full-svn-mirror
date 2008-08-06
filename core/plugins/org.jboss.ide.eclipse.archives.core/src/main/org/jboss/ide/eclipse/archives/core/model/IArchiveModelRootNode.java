@@ -22,6 +22,7 @@
 package org.jboss.ide.eclipse.archives.core.model;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding.XbException;
 
 
@@ -32,7 +33,12 @@ import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding.XbExcept
  *
  */
 public interface IArchiveModelRootNode extends IArchiveNode {
+	public static final double DESCRIPTOR_VERSION_1_0 = 1.0;
+	public static final double DESCRIPTOR_VERSION_1_2 = 1.2;
+	
 	public void setModel(IArchiveModel model);
 	public IArchiveModel getModel();
 	public void save(IProgressMonitor monitor) throws ArchivesModelException;
+	public double getDescriptorVersion();
+	public void setDescriptorVersion(double d);	
 }

@@ -22,10 +22,12 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.ArchiveNodeFactory;
+import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
+import org.jboss.ide.eclipse.archives.core.util.PathUtils;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.util.composites.ArchiveSourceDestinationComposite;
@@ -101,7 +103,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 		buttonData.horizontalSpan = 3;
 		buttonData.horizontalAlignment = SWT.END;
 		
-		destinationComposite = new ArchiveSourceDestinationComposite(infoGroup, wizard.getProject().getName());
+		destinationComposite = new ArchiveSourceDestinationComposite(infoGroup, wizard.getProject().getName(), getDescriptorVersion());
 		destinationComposite.addChangeListener(new ChangeListener () {
 			public void compositeChanged() {
 				validate();
@@ -148,7 +150,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 			if( parent != null && !(parent instanceof IArchiveModelRootNode)) {
 				destinationComposite.init(parent);
 			} else {
-				destinationComposite.init(archive.getDestinationPath().toString(), archive.isDestinationInWorkspace());
+				destinationComposite.init(PathUtils.getGlobalLocation(archive).toString(), archive.isDestinationInWorkspace());
 			}
 		} else {
 			if(wizard.getInitialNode() != null )
@@ -178,14 +180,11 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 					}
 				}
 		} else if( destinationComposite.getPath() != null ) {
+			// checking for another archive with the same destination / name
 			boolean relative = destinationComposite.isWorkspaceRelative();
-			IPath destinationLocation; 
-			if( relative ) {
-				IPath translatedPath = new Path(destinationComposite.getTranslatedPath());
-				destinationLocation = ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(translatedPath);
-			} else {
-				destinationLocation = new Path(destinationComposite.getPath());
-			}
+			IPath destinationLocation = 
+				PathUtils.getGlobalLocation(destinationComposite.getPath(), 
+						wizard.getProject().getName(), relative, 1);
 
 			ArrayList<IArchive> allArchives = new ArrayList<IArchive>();
 			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
@@ -197,7 +196,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 				for( int i = 0; i < packages.length; i++ ) {
 					IArchive pkg = (IArchive) packages[i];
 					if (pkg.getName().equals(packageNameText.getText())
-						&& (pkg.getGlobalDestinationPath() != null && pkg.getGlobalDestinationPath().equals(destinationLocation))
+						&& (PathUtils.getGlobalLocation(pkg)!= null && PathUtils.getGlobalLocation(pkg).equals(destinationLocation))
 						&& (!pkg.equals(this.archive))) {
 						errorMessage = ArchivesUIMessages.bind(
 									ArchivesUIMessages.PackageInfoWizardPage_error_packageAlreadyExists, packageNameText.getText());
@@ -251,6 +250,13 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 	
 	public IArchive getArchive () {
 		return archive;
+	}
+	
+	protected double getDescriptorVersion() {
+		IPath loc = wizard.getProject().getLocation();
+		if( ArchivesModel.instance().isProjectRegistered(loc))
+			return ArchivesModel.instance().getRoot(loc).getDescriptorVersion();
+		return (float)2.0;
 	}
 	
 	// Getters for the wizard to call

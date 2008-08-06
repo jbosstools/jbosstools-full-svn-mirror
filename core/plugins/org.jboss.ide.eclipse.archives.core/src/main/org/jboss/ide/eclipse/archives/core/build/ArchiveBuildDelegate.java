@@ -38,6 +38,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension.FileWrapper;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
+import org.jboss.ide.eclipse.archives.core.util.PathUtils;
 import org.jboss.ide.eclipse.archives.core.util.internal.ModelTruezipBridge;
 import org.jboss.ide.eclipse.archives.core.util.internal.TrueZipUtil;
 
@@ -90,11 +91,12 @@ public class ArchiveBuildDelegate {
 		EventManager.startedBuildingArchive(pkg);
 		
 		ModelTruezipBridge.deleteArchive(pkg);
-		if( !pkg.getGlobalDestinationPath().toFile().exists() ) {
-			if( !pkg.getGlobalDestinationPath().toFile().mkdirs() ) {
+		IPath dest = PathUtils.getGlobalLocation(pkg);
+		if( dest != null && !dest.toFile().exists() ) {
+			if( !dest.toFile().mkdirs() ) {
 				ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, 
 						"Cannot Build archive \"" + pkg.getName() + 
-						"\". Output location " + pkg.getGlobalDestinationPath() + 
+						"\". Output location " + dest + 
 						" is not writeable", null);
 				return;
 			}

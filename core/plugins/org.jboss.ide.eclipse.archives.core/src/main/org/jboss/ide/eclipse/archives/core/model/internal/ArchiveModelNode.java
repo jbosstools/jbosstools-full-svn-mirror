@@ -33,7 +33,6 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
-import org.jboss.ide.eclipse.archives.core.model.INamedContainerArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding.XbException;
@@ -145,6 +144,14 @@ public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelRo
 		this.model = model;
 	}
 	
+	public double getDescriptorVersion() {
+		return ((XbPackages)getNodeDelegate()).getVersion();
+	}
+	
+	public void setDescriptorVersion(double d) {
+		((XbPackages)getNodeDelegate()).setVersion(d);
+	}
+	
 	/**
 	 * I have no relative path. I'm above the root archive
 	 * @see org.jboss.ide.eclipse.archives.core.model.IArchiveNode#getRootArchiveRelativePath()
@@ -180,10 +187,10 @@ public class ArchiveModelNode extends ArchiveNodeImpl implements IArchiveModelRo
 		for( int i = 0; i < children.length; i++ ) {
 			child = (IArchive)children[i];
 			
-			if( child.getGlobalDestinationPath() != null ) 
-				p = child.getGlobalDestinationPath().append(child.getName());
+			if( child.getArchiveFilePath() != null )
+				p = child.getArchiveFilePath();
 			else 
-				p = child.getDestinationPath().append(child.getName());
+				return false;
 			
 			if( list.contains(p))
 				return false;
