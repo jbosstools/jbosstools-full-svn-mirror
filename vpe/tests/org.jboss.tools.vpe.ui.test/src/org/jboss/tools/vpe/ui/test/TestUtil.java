@@ -15,6 +15,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.Assert;
+
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -22,35 +25,52 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.text.ITextViewer;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.IOverwriteQuery;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.wizards.datatransfer.ImportOperation;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.internal.contentassist.ContentAssistUtils;
-import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
+import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
+import org.jboss.tools.vpe.editor.VpeController;
+import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.ui.test.beans.ImportBean;
+import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Node;
 
 /**
- * Class for importing project from jar file
+ * Class for importing project from jar file.
  * 
  * @author sdzmitrovich
- * 
  */
 public class TestUtil {
 
+	/** The Constant COMPONENTS_PATH. */
 	private static final String COMPONENTS_PATH = "WebContent/pages"; //$NON-NLS-1$
 
+	/** The Constant WEBCONTENT_PATH. */
 	private static final String WEBCONTENT_PATH = "WebContent"; //$NON-NLS-1$
+	
+    /** Editor in which we open visual page. */
+    protected final static String EDITOR_ID = "org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor"; //$NON-NLS-1$
 
+	/** The Constant MAX_IDLE. */
 	private static final long MAX_IDLE = 30*60*1000L;
 
 
+	/**
+	 * Import project into workspace.
+	 * 
+	 * @param path the path
+	 * @param projectName the project name
+	 */
 	static void importProjectIntoWorkspace(String path, String projectName) {
 
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
@@ -93,9 +113,14 @@ public class TestUtil {
 	}
 
 	/**
+	 * Gets the component path.
 	 * 
-	 * @return
-	 * @throws CoreException
+	 * @param componentPage the component page
+	 * @param projectName the project name
+	 * 
+	 * @return the component path
+	 * 
+	 * @throws CoreException the core exception
 	 */
 	public static IResource getComponentPath(String componentPage,
 			String projectName) throws CoreException {
@@ -110,9 +135,14 @@ public class TestUtil {
 	}
 
 	/**
+	 * Gets the web content path.
 	 * 
-	 * @return
-	 * @throws CoreException
+	 * @param componentPage the component page
+	 * @param projectName the project name
+	 * 
+	 * @return the web content path
+	 * 
+	 * @throws CoreException the core exception
 	 */
 	public static IResource getWebContentPath(String componentPage,
 			String projectName) throws CoreException {
@@ -126,8 +156,11 @@ public class TestUtil {
 	}
 
 	/**
+	 * Removes the project.
 	 * 
-	 * @throws CoreException
+	 * @param projectName the project name
+	 * 
+	 * @throws CoreException the core exception
 	 */
 	static void removeProject(String projectName) throws CoreException {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
@@ -141,8 +174,7 @@ public class TestUtil {
 	/**
 	 * Process UI input but do not return for the specified time interval.
 	 * 
-	 * @param waitTimeMillis
-	 *            the number of milliseconds
+	 * @param waitTimeMillis the number of milliseconds
 	 */
 	public static void delay(long waitTimeMillis) {
 		Display display = Display.getCurrent();
@@ -172,6 +204,9 @@ public class TestUtil {
 			delay(100);
 	}
 	
+	/**
+	 * Wait for idle.
+	 */
 	public static void waitForIdle() {
 		long start = System.currentTimeMillis();
 		while (!Job.getJobManager().isIdle()) {
@@ -182,14 +217,14 @@ public class TestUtil {
 	}
 
 	/**
-	 * find elements by name
+	 * find elements by name.
 	 * 
 	 * @param node -
-	 *            current node
-	 * @param elements -
-	 *            list of found elements
+	 * current node
 	 * @param name -
-	 *            name element
+	 * name element
+	 * @param elements -
+	 * list of found elements
 	 */
 	static public void findElementsByName(nsIDOMNode node,
 			List<nsIDOMNode> elements, String name) {
@@ -214,14 +249,14 @@ public class TestUtil {
 	}
 
 	/**
-	 * find all elements by name
+	 * find all elements by name.
 	 * 
 	 * @param node -
-	 *            current node
-	 * @param elements -
-	 *            list of found elements
+	 * current node
 	 * @param name -
-	 *            name element
+	 * name element
+	 * @param elements -
+	 * list of found elements
 	 */
 	static public void findAllElementsByName(nsIDOMNode node,
 			List<nsIDOMNode> elements, String name) {
@@ -240,6 +275,14 @@ public class TestUtil {
 		}
 	}
 
+	/**
+	 * Creates the import bean list.
+	 * 
+	 * @param projectName the project name
+	 * @param resourcePath the resource path
+	 * 
+	 * @return the list< import bean>
+	 */
 	static public List<ImportBean> createImportBeanList(String projectName,
 			String resourcePath) {
 		List<ImportBean> projectToImport = new ArrayList<ImportBean>();
@@ -247,6 +290,14 @@ public class TestUtil {
 		return projectToImport;
 	}
 
+	/**
+	 * Creates the import bean.
+	 * 
+	 * @param projectName the project name
+	 * @param resourcePath the resource path
+	 * 
+	 * @return the import bean
+	 */
 	static public ImportBean createImportBean(String projectName,
 			String resourcePath) {
 		ImportBean importBean = new ImportBean();
@@ -254,27 +305,33 @@ public class TestUtil {
 		importBean.setImportProjectPath(resourcePath);
 		return importBean;
 	}
+	
 	/**
-	 * Utility function which returns node mapping by source position(line and position in line)
-	 * @param lineIndex
-	 * @param linePosition
+	 * Utility function which returns node mapping by source position(line and position in line).
+	 * 
+	 * @param linePosition the line position
+	 * @param lineIndex the line index
+	 * @param itextViewer the itext viewer
+	 * 
 	 * @return node for specified src position
 	 */
-	public static Node getNodeMappingBySourcePosition(ITextViewer itextViewer, int lineIndex, int linePosition) {
+	@SuppressWarnings("restriction")
+    public static Node getNodeMappingBySourcePosition(ITextViewer itextViewer, int lineIndex, int linePosition) {
 		int offset = getLinePositionOffcet(itextViewer, lineIndex, linePosition);
 		IndexedRegion treeNode = ContentAssistUtils.getNodeAt(itextViewer, offset);
 		return (Node) treeNode;
 	}
 	
 	/**
-	 * Utility function which is used to calculate offcet in document by line number and character position
+	 * Utility function which is used to calculate offcet in document by line number and character position.
 	 * 
-	 * @param textViewer
-	 * @param lineIndex
-	 * @param linePosition
+	 * @param linePosition the line position
+	 * @param textViewer the text viewer
+	 * @param lineIndex the line index
+	 * 
 	 * @return offcet in document
-	 * @throws IllegalArgumentException
-	 */
+	 * 
+	 * @throws IllegalArgumentException 	 */
 	public static final int getLinePositionOffcet(ITextViewer textViewer, int lineIndex, int linePosition) {
 		
 		int resultOffcet = 0;
@@ -308,4 +365,66 @@ public class TestUtil {
 		}
 		return resultOffcet;
 	}
+	
+
+    /**
+     * get xulrunner source page.
+     * 
+     * @param part - JSPMultiPageEditor
+     * 
+     * @return nsIDOMDocument
+     */
+    public static nsIDOMDocument getVpeVisualDocument(JSPMultiPageEditor part) {
+
+        VpeEditorPart visualEditor = (VpeEditorPart) part.getVisualEditor();
+
+        VpeController vpeController = visualEditor.getController();
+
+        // get xulRunner editor
+        XulRunnerEditor xulRunnerEditor = vpeController.getXulRunnerEditor();
+
+        // get dom document
+        nsIDOMDocument document = xulRunnerEditor.getDOMDocument();
+
+        return document;
+    }
+
+    /**
+     * Perform test for rich faces component.
+     * 
+     * @param componentPage the component page
+     * 
+     * @return the ns IDOM element
+     * 
+     * @throws Throwable the throwable
+     */
+    public static nsIDOMElement performTestForRichFacesComponent(IFile componentPage) throws Throwable {
+        nsIDOMElement rst = null;
+        TestUtil.waitForJobs();
+
+        // IFile file = (IFile)
+        // TestUtil.getComponentPath(componentPage,getImportProjectName());
+        IEditorInput input = new FileEditorInput(componentPage);
+
+        TestUtil.waitForJobs();
+        //
+        JSPMultiPageEditor editor = (JSPMultiPageEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
+                input, EDITOR_ID, true);
+
+        // get dom document
+        nsIDOMDocument document = getVpeVisualDocument(editor);
+        rst = document.getDocumentElement();
+        // check that element is not null
+        Assert.assertNotNull(rst);
+        return rst;
+    }
+    
+    /**
+     * Fail.
+     * 
+     * @param t the t
+     */
+    public static void fail(Throwable t){
+        Assert.fail("Test case was fail "+t.getMessage()+":"+t);
+    }
 }
