@@ -61,8 +61,10 @@ import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.SaveAsDialog;
@@ -71,6 +73,7 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.jboss.tools.flow.common.Activator;
 import org.jboss.tools.flow.common.action.HorizontalAutoLayoutAction;
 import org.jboss.tools.flow.common.action.VerticalAutoLayoutAction;
+import org.jboss.tools.flow.common.registry.LanguageRegistry;
 
 /**
  * Abstract implementation of a graphical editor.
@@ -85,6 +88,8 @@ public abstract class GenericModelEditor extends GraphicalEditorWithPalette {
 	private PaletteRoot root;
 	private OverviewOutlinePage overviewOutlinePage;
 
+	private String language;
+
 	public GenericModelEditor() {
 		setEditDomain(new DefaultEditDomain(this));
 	}
@@ -97,8 +102,27 @@ public abstract class GenericModelEditor extends GraphicalEditorWithPalette {
 		return model;
 	}
 
+	public void init(IEditorSite site, IEditorInput input)
+			throws PartInitException {
+		super.init(site, input);
+		initializeEditDomain();
+		initializeLanguage();
+	}
+	
+	protected void initializeEditDomain() {
+		setEditDomain(new DefaultEditDomain(this));
+	}
+	
+	protected void initializeLanguage() {
+		language = LanguageRegistry.getLanguageRegisteredFor(getSite().getId());
+	}
+	
+	public String getLanguage() {
+		return language;
+	}
+
 	@SuppressWarnings("unchecked")
-    protected void createActions() {
+	protected void createActions() {
 		super.createActions();
 		ActionRegistry registry = getActionRegistry();
 
@@ -162,20 +186,22 @@ public abstract class GenericModelEditor extends GraphicalEditorWithPalette {
 
 		IAction showGrid = new ToggleGridAction(getGraphicalViewer());
 		getActionRegistry().registerAction(showGrid);
-		
-		IAction layoutVertically = new VerticalAutoLayoutAction(getGraphicalViewer());
+
+		IAction layoutVertically = new VerticalAutoLayoutAction(
+				getGraphicalViewer());
 		getActionRegistry().registerAction(layoutVertically);
-		IAction layoutHorizontally = new HorizontalAutoLayoutAction(getGraphicalViewer());
+		IAction layoutHorizontally = new HorizontalAutoLayoutAction(
+				getGraphicalViewer());
 		getActionRegistry().registerAction(layoutHorizontally);
-		
 
 		ContextMenuProvider provider = new GenericContextMenuProvider(
 				getGraphicalViewer(), getActionRegistry());
 		getGraphicalViewer().setContextMenu(provider);
-		getSite().registerContextMenu("org.jboss.tools.flow.editor.contextmenu",
-				provider, getGraphicalViewer());
+		getSite().registerContextMenu(
+				"org.jboss.tools.flow.editor.contextmenu", provider,
+				getGraphicalViewer());
 	}
-	
+
 	protected abstract EditPartFactory createEditPartFactory();
 
 	protected void initializeGraphicalViewer() {
@@ -293,11 +319,11 @@ public abstract class GenericModelEditor extends GraphicalEditorWithPalette {
 			initializeGraphicalViewer();
 		}
 	}
-	
+
 	public IFile getFile() {
-	    return ((IFileEditorInput) getEditorInput()).getFile();
+		return ((IFileEditorInput) getEditorInput()).getFile();
 	}
-	
+
 	public IProject getProject() {
 		IFile file = getFile();
 		if (file != null) {
@@ -305,10 +331,10 @@ public abstract class GenericModelEditor extends GraphicalEditorWithPalette {
 		}
 		return null;
 	}
-	
+
 	protected abstract void createModel(InputStream is);
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public Object getAdapter(Class type) {
 		if (type == IContentOutlinePage.class) {
 			return getOverviewOutlinePage();
@@ -328,47 +354,47 @@ public abstract class GenericModelEditor extends GraphicalEditorWithPalette {
 		}
 		return overviewOutlinePage;
 	}
-	
+
 	public String getContributorId() {
-	    return getSite().getId();
+		return getSite().getId();
 	}
-	
+
 	/**
-	 * Writes the content of this editor to the given stream.
-	 * Possible formats are for example SWT.IMAGE_BMP, IMAGE_GIF,
-	 * IMAGE_JPEG, IMAGE_PNG.
+	 * Writes the content of this editor to the given stream. Possible formats
+	 * are for example SWT.IMAGE_BMP, IMAGE_GIF, IMAGE_JPEG, IMAGE_PNG.
+	 * 
 	 * @param stream
 	 * @param format
 	 */
 	public void createImage(OutputStream stream, int format) {
-        SWTGraphics g = null;
-        GC gc = null;
-        Image image = null;
-        LayerManager layerManager = (LayerManager)
-            getGraphicalViewer().getEditPartRegistry().get(LayerManager.ID);
-        IFigure figure = layerManager.getLayer(LayerConstants.PRINTABLE_LAYERS);
-        Rectangle r = figure.getBounds();
-        try {
-            image = new Image(Display.getDefault(), r.width, r.height);
-            gc = new GC(image);
-            g = new SWTGraphics(gc);
-            g.translate(r.x * -1, r.y * -1);
-            figure.paint(g);
-            ImageLoader imageLoader = new ImageLoader();
-            imageLoader.data = new ImageData[] { image.getImageData() };
-            imageLoader.save(stream, format);
-        } catch (Throwable t) {
-            Activator.log(t);
-	    } finally {
-            if (g != null) {
-                g.dispose();
-            }
-            if (gc != null) {
-                gc.dispose();
-            }
-            if (image != null) {
-                image.dispose();
-            }
-        }
+		SWTGraphics g = null;
+		GC gc = null;
+		Image image = null;
+		LayerManager layerManager = (LayerManager) getGraphicalViewer()
+				.getEditPartRegistry().get(LayerManager.ID);
+		IFigure figure = layerManager.getLayer(LayerConstants.PRINTABLE_LAYERS);
+		Rectangle r = figure.getBounds();
+		try {
+			image = new Image(Display.getDefault(), r.width, r.height);
+			gc = new GC(image);
+			g = new SWTGraphics(gc);
+			g.translate(r.x * -1, r.y * -1);
+			figure.paint(g);
+			ImageLoader imageLoader = new ImageLoader();
+			imageLoader.data = new ImageData[] { image.getImageData() };
+			imageLoader.save(stream, format);
+		} catch (Throwable t) {
+			Activator.log(t);
+		} finally {
+			if (g != null) {
+				g.dispose();
+			}
+			if (gc != null) {
+				gc.dispose();
+			}
+			if (image != null) {
+				image.dispose();
+			}
+		}
 	}
 }
