@@ -21,9 +21,6 @@ import org.jboss.tools.jsf.vpe.jsf.test.JsfComponentTest;
 import org.jboss.tools.jsf.vpe.jsf.test.JsfTestPlugin;
 import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPageTest;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManagerTest;
-import org.jboss.tools.vpe.ui.test.ElPreferencesTestCase;
-import org.jboss.tools.vpe.ui.test.JBIDE2010Test;
-import org.jboss.tools.vpe.ui.test.JBIDE2582Test;
 import org.jboss.tools.vpe.ui.test.VpeTestSetup;
 import org.jboss.tools.vpe.ui.test.beans.ImportBean;
 
