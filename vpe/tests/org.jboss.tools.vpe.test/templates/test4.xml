@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+class="<?xml version="1.0" encoding="UTF-8"?>
 <!-- This class contains invalid template expressions -->
 <vpe:templates>
 	<vpe:template-taglib uri="http://myfaces.apache.org/extensions"
@@ -377,7 +377,7 @@
 				<div style="display:hidden" />
 			</vpe:template>
 		</vpe:if>
-		<vpe:template children="yes" modify="no" class="org.jboss.tools.vpe.editor.template.myfaces.VpeMyFacesDataScrollerTemplate"/>
+		<vpe:template children="yes" modify="no"/>
 	</vpe:tag>
 	
 	<vpe:tag name="x:dataTable" case-sensitive="yes">
