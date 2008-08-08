@@ -1678,6 +1678,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 	
 	public void visualRefresh() {
+		if (!visualEditorVisible) {
+			synced = false;
+			return;
+		}
 		if (uiJob != null && uiJob.getState() != Job.NONE) {
 			return;
 		}
@@ -1701,6 +1705,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 								IProgressMonitor.UNKNOWN);
 						visualRefreshImpl();
 						monitor.done();
+						synced=true;
 					} catch (VpeDisposeException exc) {
 						// just ignore this exception
 					} catch (NullPointerException ex) {
