@@ -14,9 +14,12 @@ package org.jboss.tools.vpe.editor.util;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Platform;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.css.ELReferenceList;
+import org.jboss.tools.vpe.editor.css.GlobalELReferenceList;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
@@ -42,7 +45,7 @@ public final class ElService implements IELService {
      */
     public boolean isAvailable(IFile resourceFile) {
         boolean rst = false;
-        final ResourceReference[] references = ELReferenceList.getInstance().getAllResources(resourceFile);
+        final ResourceReference[] references = getAllResources(resourceFile);
 
         if ((references != null) && (references.length > 0)) {
             rst = true;
@@ -86,14 +89,16 @@ public final class ElService implements IELService {
         }
         Assert.isNotNull(resourceFile);
         String rst = resourceString;
+        final ResourceReference[] references = getAllResources(resourceFile);
+ 
     
-        final ResourceReference[] references = ELReferenceList.getInstance().getAllResources(resourceFile);
-
         if ((references != null) && (references.length > 0)) {
             rst = replace(resourceString, references);
         }
         return rst;
     }
+
+
 
     /**
      * Replace.
@@ -249,7 +254,8 @@ public final class ElService implements IELService {
     private boolean findForNode(Node sourceNode, IFile resourceFile) {
         boolean rst = false;
         final NamedNodeMap nodeMap = sourceNode.getAttributes();
-        final ResourceReference[] references = ELReferenceList.getInstance().getAllResources(resourceFile);
+        final ResourceReference[] references = getAllResources(resourceFile);
+        //ELReferenceList.getInstance().getAllResources(resourceFile);
         String textValue = null;
         
         if (sourceNode.getNodeType() == Node.TEXT_NODE/*
@@ -310,7 +316,8 @@ public final class ElService implements IELService {
      */
     public String reverseReplace(IFile resourceFile, String replacedString) {
         String str = replacedString;
-        final ResourceReference[] references = ELReferenceList.getInstance().getAllResources(resourceFile);
+        final ResourceReference[] references = getAllResources(resourceFile); 
+            //ELReferenceList.getInstance().getAllResources(resourceFile);
         
         if ((str != null) && (references != null) && (references.length > 0)) {
             for (ResourceReference rf : references) {
@@ -323,6 +330,35 @@ public final class ElService implements IELService {
         return str;
     }
 
+    
+    
+    protected ResourceReference[] getAllResources(IFile resourceFile) {
+        ResourceReference[] rst = null;
+        final IPath workspacePath = Platform.getLocation();
+
+        final ResourceReference[] gResources = GlobalELReferenceList.getInstance().getAllResources(workspacePath);
+        final ResourceReference[] elResources = ELReferenceList.getInstance().getAllResources(resourceFile);
+
+        int size = (gResources == null ? 0 : gResources.length);
+        size += (elResources == null ? 0 : elResources.length);
+        rst = new ResourceReference[size];
+        int counter = 0;
+        if ((gResources != null) && (gResources.length > 0)) {
+            for (ResourceReference r : gResources) {
+                rst[counter] = r;
+                counter++;
+            }
+        }
+        if ((elResources != null) && (elResources.length > 0)) {
+            for (ResourceReference r : elResources) {
+                rst[counter] = r;
+                counter++;
+            }
+        }
+
+        return rst;
+
+    }
 
     public String replaceElAndResources(VpePageContext pageContext, Node attributeNode) {
         final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
