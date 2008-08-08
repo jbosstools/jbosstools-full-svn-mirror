@@ -50,7 +50,11 @@ public class VpeAddReferenceSupport extends SpecialWizardSupport {
 		if(ok) {
 			css.setLocation(object.getAttributeValue("location"));
 			Integer scope = (Integer)p.get("scope");
+			
 			css.setScope(scope.intValue());
+			if(css.isGlobal()){
+			    css.setScope(ResourceReference.GLOBAL_SCOPE);
+			}
 			String properties = object.getAttributeValue("prefix");
 			if(properties != null) css.setProperties(properties);
 		}
@@ -70,8 +74,18 @@ public class VpeAddReferenceSupport extends SpecialWizardSupport {
 		if(initialPrefix != null) {
 			setAttributeValue(0, "prefix", initialPrefix);
 		}
-		scopeNames = ((XAttributeConstraintL)getTarget().getModelEntity().getAttribute("scope").getConstraint()).getValues();
+        final XAttributeConstraintL scopeAttribute = ((XAttributeConstraintL) getTarget().getModelEntity().getAttribute("scope")
+                .getConstraint());
+        if (scopeAttribute != null) {
+            scopeNames = scopeAttribute.getValues();
+        }
 		int scopeIndex = ((Integer)getProperties().get("scope")).intValue();
+		
+		if(scopeIndex == 1 && scopeNames.length == 1){
+		    scopeIndex = 0;
+		}else if(scopeIndex > scopeNames.length){
+		    scopeIndex = scopeNames.length -1;
+		}
 		String scope = scopeNames[scopeIndex];
 		setAttributeValue(0, "scope", scope);
 		list = (ResourceReference[])getProperties().get("list");

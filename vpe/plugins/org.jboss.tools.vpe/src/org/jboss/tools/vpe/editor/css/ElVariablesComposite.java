@@ -13,7 +13,7 @@ public class ElVariablesComposite extends ResourceReferencesComposite {
      * Creates the table provider.
      * 
      * @param dataList the data list
-     * 
+     * g
      * @return the resource references table provider
      */
     @Override
@@ -32,7 +32,7 @@ public class ElVariablesComposite extends ResourceReferencesComposite {
         return (file != null) ? "VPEElReference" : "VPEElReferenceExt";
     }
 
-    /**
+    /**c
      * Gets the reference list.
      * 
      * @return the reference list

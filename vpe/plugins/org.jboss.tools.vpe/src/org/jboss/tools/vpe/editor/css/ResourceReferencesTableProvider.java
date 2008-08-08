@@ -19,6 +19,7 @@ public class ResourceReferencesTableProvider implements XTableProvider, XTableIm
 	static String[] IMG_COLUMNS = new String[]{"Scope", "Image Folder Path"};
 	static String[] TLD_COLUMNS = new String[]{"Scope", "URI", "Prefix"};
 	static String[] EL_COLUMNS = new String[]{"Scope", "El Expression", "Value"};
+	private final static String[] GLOBAL_EL_COLUMNS = new String[]{"Scope","El Expression", "Value"};
 	
 	int[] widths = new int[]{50, 200};
 	List dataList;
@@ -49,6 +50,15 @@ public class ResourceReferencesTableProvider implements XTableProvider, XTableIm
 	        p.widths = new int[]{50, 150, 50};
 	        return p;
 	    }
+	   
+	    
+       public static ResourceReferencesTableProvider getGlobalELTableProvider(final List dataList) {
+            ResourceReferencesTableProvider p = new ResourceReferencesTableProvider(dataList);
+            
+            p.columns = GLOBAL_EL_COLUMNS;
+            p.widths = new int[]{50,150, 50};
+            return p;
+        }
 	    
 	
 	

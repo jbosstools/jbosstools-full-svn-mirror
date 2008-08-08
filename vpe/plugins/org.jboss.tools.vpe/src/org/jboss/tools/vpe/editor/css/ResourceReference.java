@@ -11,18 +11,29 @@
 package org.jboss.tools.vpe.editor.css;
 
 public class ResourceReference {
-	public static int FILE_SCOPE = 0;
-	public static int FOLDER_SCOPE = 1;
-	public static int PROJECT_SCOPE = 2;
+	public final static int FILE_SCOPE = 0;
+	public final static int FOLDER_SCOPE = 1;
+	public final static int PROJECT_SCOPE = 2;
+	public final static int GLOBAL_SCOPE  = 3;
 	
-	public static String[] SCOPE_NAMES = new String[]{"Page", "Folder", "Project"};
+	public final  static String[] SCOPE_NAMES = new String[]{"Page", "Folder", "Project","Global"};
 
-	private String location;
-	private int scope;
-	private int depth = 0;
-	private String properties = "";
+	protected String location;
+	protected int scope;
+	protected int depth = 0;
+	protected String properties = "";
 	
-	public ResourceReference(String location, int scope) {
+	protected boolean isGlobal = false;
+	
+	public boolean isGlobal() {
+        return isGlobal;
+    }
+
+    public void setGlobal(boolean isGlobal) {
+        this.isGlobal = isGlobal;
+    }
+
+    public ResourceReference(String location, int scope) {
 		this.location = location;
 		this.scope = scope;
 		int q = location.indexOf('%');
@@ -75,5 +86,24 @@ public class ResourceReference {
 		}
 		return v;
 	}
+	
+	
+//	public static ResourceReference createResourceReference(String location, int scope) {
+//        ResourceReference rst = null;
+//
+//        switch (scope) {
+//        case FILE_SCOPE:
+//        case FOLDER_SCOPE:
+//        case PROJECT_SCOPE:
+//            rst = new ResourceReference(location, scope);
+//            break;
+//        case GLOBAL_SCOPE:
+//            rst = new GlobalResourceReference(location, scope);
+//            break;
+//        default:
+//            throw new IllegalArgumentException("Illegal scope=" + scope);
+//        }
+//        return rst;
+//    }
 
 }

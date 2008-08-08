@@ -128,7 +128,7 @@ public abstract class ResourceReferencesComposite {
 		public void action(String command) {
 			int index = table.getSelectionIndex();
 			if(ADD.equals(command)) {
-				add(index);
+ 				add(index);
 			} else if(EDIT.equals(command)) {
 				edit(index);
 			} else if(REMOVE.equals(command)) {
@@ -139,7 +139,8 @@ public abstract class ResourceReferencesComposite {
 	}
 
 	protected void add(int index) {
-		ResourceReference css = new ResourceReference("", ResourceReference.FOLDER_SCOPE);
+		ResourceReference css = getDefaultResourceReference();
+		
 		initFilterInFileChooser();
 		boolean ok = VpeAddReferenceSupport.add(file, css, getReferenceArray(), getEntity());
 		if(!ok) return;
@@ -147,6 +148,13 @@ public abstract class ResourceReferencesComposite {
 		update();
 		table.setSelection(dataList.size() - 1);
 	}
+
+    /**
+     * @return
+     */
+	protected ResourceReference getDefaultResourceReference() {
+        return new ResourceReference("", ResourceReference.FOLDER_SCOPE);
+    }
 	
 	protected void edit(int index) {
 		if(index < 0) return;

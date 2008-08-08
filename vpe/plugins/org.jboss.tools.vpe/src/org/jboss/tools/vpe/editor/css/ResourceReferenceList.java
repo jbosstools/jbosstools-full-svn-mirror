@@ -202,11 +202,16 @@ public abstract class ResourceReferenceList {
 		List css = new ArrayList();
 		IPath parent = path.removeLastSegments(1);
 		int depth = 0;
+		boolean isGlobal = path.equals(Platform.getLocation());
+		int setScope = isGlobal ? ResourceReference.GLOBAL_SCOPE : ResourceReference.FILE_SCOPE;
 		while(parent != null && parent.segmentCount() > 1) {
-			String[] dcss = getDeclaredResources(parent);
+			String[] dcss = getDeclaredResources(path);
 			for (int i = 0; i < dcss.length; i++) {
 				if(locations.contains(dcss[i])) continue;
-				ResourceReference ref = new ResourceReference(dcss[i], ResourceReference.FOLDER_SCOPE);
+				ResourceReference ref = new ResourceReference(dcss[i],isGlobal ? ResourceReference.GLOBAL_SCOPE :  ResourceReference.FOLDER_SCOPE);
+				if(isGlobal){
+				    ref.setGlobal(true);
+				}
 				ref.setDepth(depth);
 				locations.add(dcss[i]);
 				css.add(ref);
@@ -217,7 +222,10 @@ public abstract class ResourceReferenceList {
 		String[] dcss = getDeclaredResources(path);
 		for (int i = 0; i < dcss.length; i++) {
 			if(locations.contains(dcss[i])) continue;
-			ResourceReference ref = new ResourceReference(dcss[i], ResourceReference.FILE_SCOPE);
+			ResourceReference ref = new ResourceReference(dcss[i], setScope);
+			if(setScope == ResourceReference.GLOBAL_SCOPE){
+			    ref.setGlobal(true);
+			}
 			locations.add(dcss[i]);
 			css.add(ref);
 		}
@@ -231,7 +239,10 @@ public abstract class ResourceReferenceList {
 
 	public void setAllResources(IPath path, ResourceReference[] entries) {
 		IPath changed = null;
-		boolean b = setDeclaredResources(path, entries, ResourceReference.FILE_SCOPE, 0);
+		boolean b = false;
+		int checkScope = path.equals(Platform.getLocation()) ? ResourceReference.GLOBAL_SCOPE : ResourceReference.FILE_SCOPE;
+
+        b = setDeclaredResources(path, entries, checkScope, 0);
 		if(b) changed = path;
 		IPath parent = path.removeLastSegments(1);
 		int depth = 0;
