@@ -524,6 +524,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 				uiJob.setPriority(Job.LONG);
 				// Fix of JBIDE-1900
+				
+				uiJob.schedule(400L);
+			} else {
 				uiJob.cancel();
 				uiJob.schedule(400L);
 			}
@@ -1673,9 +1676,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	public void templateReloaded() {
 		visualRefresh();
 	}
-
+	
 	public void visualRefresh() {
-
+		if (uiJob != null && uiJob.getState() != Job.NONE) {
+			return;
+		}
 		if (visualRefresfJob == null || visualRefresfJob.getState() == Job.NONE) {
 
 			visualRefresfJob = new UIJob(VpeUIMessages.VPE_VISUAL_REFRESH_JOB) {
@@ -1687,47 +1692,32 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 						return Status.CANCEL_STATUS;
 					}
+					if (!switcher
+							.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+						return Status.CANCEL_STATUS;
+					}
+					try {
+						monitor.beginTask(VpeUIMessages.VPE_VISUAL_REFRESH_JOB,
+								IProgressMonitor.UNKNOWN);
+						visualRefreshImpl();
+						monitor.done();
+					} catch (VpeDisposeException exc) {
+						// just ignore this exception
+					} catch (NullPointerException ex) {
 
-					if (uiJob != null && uiJob.getState() == Job.RUNNING) {
-						uiJob.cancel();
-						getChangeEvents().clear();
-						// wait while ui job is finished
-						schedule(500);
-					} else {
-
-						if (uiJob != null) {
-
-							uiJob.cancel();
-							getChangeEvents().clear();
+						if (switcher != null) {
+							throw ex;
+						} else {
+							// class was disposed and exception result of
+							// that we can't stop
+							// refresh job in time, so we just ignore this
+							// exception
 						}
-						if (!switcher
-								.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-							return Status.CANCEL_STATUS;
-						}
-						try {
-							monitor.beginTask(
-									VpeUIMessages.VPE_VISUAL_REFRESH_JOB,
-									IProgressMonitor.UNKNOWN);
-							visualRefreshImpl();
-							monitor.done();
-						} catch (VpeDisposeException exc) {
-							// just ignore this exception
-						} catch (NullPointerException ex) {
+					} finally {
 
-							if (switcher != null) {
-								throw ex;
-							} else {
-								// class was disposed and exception result of
-								// that we can't stop
-								// refresh job in time, so we just ignore this
-								// exception
-							}
-						} finally {
+						if (switcher != null) {
 
-							if (switcher != null) {
-
-								switcher.stopActiveEditor();
-							}
+							switcher.stopActiveEditor();
 						}
 					}
 					return Status.OK_STATUS;
