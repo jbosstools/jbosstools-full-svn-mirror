@@ -7,11 +7,13 @@ import org.jboss.tools.flow.common.model.Connection;
 import org.jboss.tools.flow.common.model.Container;
 import org.jboss.tools.flow.common.model.Flow;
 import org.jboss.tools.flow.common.model.Node;
+import org.jboss.tools.flow.common.strategy.AcceptsElementStrategy;
 import org.jboss.tools.flow.common.strategy.AcceptsIncomingConnectionStrategy;
 import org.jboss.tools.flow.common.strategy.AcceptsOutgoingConnectionStrategy;
 
 public class DefaultContainerWrapper extends AbstractContainerWrapper {
 	
+	private AcceptsElementStrategy acceptsElementStrategy;
 	private AcceptsIncomingConnectionStrategy incomingConnectionStrategy;
 	private AcceptsOutgoingConnectionStrategy outgoingConnectionStrategy;
 
@@ -67,10 +69,20 @@ public class DefaultContainerWrapper extends AbstractContainerWrapper {
 		return (Node)getElement();
 	}
 	
-	public boolean acceptsElement(NodeWrapper element) {
-		return getParent().acceptsElement(element);
-	}
-
+    public boolean acceptsElement(NodeWrapper wrapper) {
+    	if (wrapper == null) {
+    		return false;
+    	} else if (acceptsElementStrategy != null) {
+    		return acceptsElementStrategy.acceptsElement(wrapper.getElement());
+    	} else {
+    		return getParent().acceptsElement(wrapper);
+    	}
+    }
+    
+    public void setAcceptsElementStrategy(AcceptsElementStrategy strategy) {
+    	this.acceptsElementStrategy = strategy;
+    }
+    
 	public void setAcceptsIncomingConnectionStrategy(AcceptsIncomingConnectionStrategy strategy) {
 		this.incomingConnectionStrategy = strategy;
 	}

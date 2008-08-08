@@ -34,6 +34,7 @@ import org.eclipse.gef.requests.SimpleFactory;
 import org.jboss.tools.flow.common.policy.ConnectionBendpointEditPolicy;
 import org.jboss.tools.flow.common.policy.ConnectionEditPolicy;
 import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.DefaultConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.ModelEvent;
 import org.jboss.tools.flow.common.wrapper.ModelListener;
 
@@ -42,7 +43,7 @@ import org.jboss.tools.flow.common.wrapper.ModelListener;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
-public abstract class ConnectionEditPart extends AbstractConnectionEditPart implements ModelListener {
+public class ConnectionEditPart extends AbstractConnectionEditPart implements ModelListener {
     
     public AbstractConnectionWrapper getElementConnection() {
         return (AbstractConnectionWrapper) getModel();
@@ -61,10 +62,10 @@ public abstract class ConnectionEditPart extends AbstractConnectionEditPart impl
     }
     
     
-    protected abstract Class<?> getElementConnectionType();
-    
-//    protected abstract ConnectionFactory getElementConnectionFactory();
-
+	protected Class<?> getElementConnectionType() {
+		return DefaultConnectionWrapper.class;
+	}
+	
     protected IFigure createFigure() {
         PolylineConnection result = new PolylineConnection();
         result.setConnectionRouter(new BendpointConnectionRouter());

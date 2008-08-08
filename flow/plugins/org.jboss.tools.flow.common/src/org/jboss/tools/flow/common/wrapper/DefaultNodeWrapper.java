@@ -6,7 +6,7 @@ import org.jboss.tools.flow.common.model.Node;
 import org.jboss.tools.flow.common.strategy.AcceptsIncomingConnectionStrategy;
 import org.jboss.tools.flow.common.strategy.AcceptsOutgoingConnectionStrategy;
 
-public abstract class DefaultNodeWrapper extends AbstractNodeWrapper {
+public class DefaultNodeWrapper extends AbstractNodeWrapper {
 	
 	private AcceptsIncomingConnectionStrategy incomingConnectionStrategy;
 	private AcceptsOutgoingConnectionStrategy outgoingConnectionStrategy;
