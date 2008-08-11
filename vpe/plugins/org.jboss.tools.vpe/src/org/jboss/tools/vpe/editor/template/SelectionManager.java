@@ -361,7 +361,7 @@ public class SelectionManager implements ISelectionManager {
 			int anchorOffcetReferenceToSourceNode = anchorOffsetrInSourceDocument
 					- NodesManagingUtil.getStartOffsetNode(targetSourceNode);
 
-			int length = targetSourceNode.getNodeValue().length();
+			int length = visualNode.getNodeValue().length();
 			if (focusOffcetReferenceToSourceNode > length
 					|| anchorOffcetReferenceToSourceNode > length)
 				return;
