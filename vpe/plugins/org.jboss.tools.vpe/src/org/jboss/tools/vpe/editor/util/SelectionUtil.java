@@ -11,7 +11,6 @@
 
 package org.jboss.tools.vpe.editor.util;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.swt.graphics.Point;
@@ -166,23 +165,6 @@ public class SelectionUtil {
 	public static Point getSourceSelectionRange(nsISelection selection,
 			Node sourceNode) {
 
-		if (selection.getAnchorNode() != null) {
-
-			System.out.print("\n anchor name:"
-					+ selection.getAnchorNode().getNodeName() + "\t value:"
-					+ selection.getAnchorNode().getNodeValue());
-			System.out.print("\n anchor offset " + selection.getAnchorOffset());
-
-		}
-		if (selection.getFocusNode() != null) {
-
-			System.out.print("\n focus name:"
-					+ selection.getFocusNode().getNodeName() + "\t value:"
-					+ selection.getFocusNode().getNodeValue());
-			System.out.print("\n focus offset " + selection.getFocusOffset());
-
-		}
-		
 		nsIDOMNode focusedNode = getSelectedNode(selection);
 		// gets visual selection range
 		Point sourceRange = new Point(0, 0);
