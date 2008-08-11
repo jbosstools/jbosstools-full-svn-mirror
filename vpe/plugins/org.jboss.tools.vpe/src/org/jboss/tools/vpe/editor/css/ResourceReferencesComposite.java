@@ -16,6 +16,14 @@ import java.util.Properties;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.jboss.tools.common.meta.XAttribute;
 import org.jboss.tools.common.meta.XModelEntity;
 import org.jboss.tools.common.meta.constraint.impl.XAttributeConstraintFileFilter;
@@ -23,16 +31,6 @@ import org.jboss.tools.common.meta.impl.XModelMetaDataImpl;
 import org.jboss.tools.common.model.ui.action.CommandBar;
 import org.jboss.tools.common.model.ui.action.CommandBarListener;
 import org.jboss.tools.common.model.ui.objecteditor.XTable;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 
 public abstract class ResourceReferencesComposite {
 	static String ADD = "Add";
@@ -115,6 +113,15 @@ public abstract class ResourceReferencesComposite {
 	
 	ResourceReference[] getReferenceArray() {
 		return (ResourceReference[])dataList.toArray(new ResourceReference[0]);
+	}
+	
+	/**
+	 * Clear all entries from table.
+	 */
+	public void clearAll(){
+	    if(this.dataList!=null){
+	        this.dataList.clear();
+	    }
 	}
 	
 	public void commit() {
