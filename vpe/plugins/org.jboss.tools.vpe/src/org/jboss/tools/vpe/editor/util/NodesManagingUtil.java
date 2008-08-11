@@ -99,6 +99,22 @@ public class NodesManagingUtil {
 	}
 
 	/**
+	 * if position belong to node return true
+	 * 
+	 * @param node
+	 * @param position
+	 * @return
+	 */
+	public static boolean isNodeContainsPosition(Node node, int position) {
+
+		if ((NodesManagingUtil.getStartOffsetNode(node) <= position)
+				&& (NodesManagingUtil.getEndOffsetNode(node) > position))
+			return true;
+
+		return false;
+	}
+
+	/**
 	 * 
 	 * @param pageContext
 	 * @param sourceElement
