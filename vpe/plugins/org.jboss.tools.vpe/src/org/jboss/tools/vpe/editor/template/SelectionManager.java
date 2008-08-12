@@ -122,7 +122,11 @@ public class SelectionManager implements ISelectionManager {
 			isNodeEditable = true;
 
 		}
-
+		
+		if (targetVisualNode.getNodeType() != nsIDOMNode.TEXT_NODE
+				&& SelectionUtil.getLastSelectedNode(getPageContext()) == targetVisualNode)
+			return;
+			
 		int focusOffset;
 		int length;
 
@@ -294,7 +298,7 @@ public class SelectionManager implements ISelectionManager {
 
 			// if mapping is elementMapping
 			
-			SelectionUtil.clearSelection(selectionController);
+//			SelectionUtil.clearSelection(selectionController);
 			
 			if (nodeMapping instanceof VpeElementMapping) {
 
@@ -373,6 +377,9 @@ public class SelectionManager implements ISelectionManager {
 			int visualNodeAnchorOffcet = TextUtil.visualPosition(
 					((Node) targetSourceNode).getNodeValue(),
 					anchorOffcetReferenceToSourceNode);
+			
+			nsISelection selection = selectionController.getSelection(
+					nsISelectionController.SELECTION_NORMAL);
 
 			selectionController.getSelection(
 					nsISelectionController.SELECTION_NORMAL).collapse(

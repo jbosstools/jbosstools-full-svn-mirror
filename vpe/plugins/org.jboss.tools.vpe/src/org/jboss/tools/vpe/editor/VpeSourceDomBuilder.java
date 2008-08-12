@@ -261,10 +261,13 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 
 			VpeTemplate template = elementMapping.getTemplate();
 
-			if (!template.openBundle(pageContext, visualNode, elementMapping))
-				template.openBundleEditors(pageContext,
-						(Element) elementMapping.getSourceNode(),
-						elementMapping.getData());
+			// as all templates implement new method 
+			template.openBundle(pageContext, visualNode, elementMapping);
+			// if (!template.openBundle(pageContext, visualNode,
+			// elementMapping))
+			// template.openBundleEditors(pageContext,
+			// (Element) elementMapping.getSourceNode(),
+			// elementMapping.getData());
 		}
 		return false;
 	}
