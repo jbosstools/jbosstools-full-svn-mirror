@@ -143,7 +143,7 @@ public class DocTypeUtil {
 					// get file
 					IFile templateFile = FileUtil.getFile(fileName, file);
 
-					if (templateFile != null)
+					if (templateFile != null) {
 						//if it's was first call of DOCTYPE function
 						if(previousFiles==null) {
 							
@@ -155,7 +155,7 @@ public class DocTypeUtil {
 						previousFiles.add(templateFile);	
 						docTypeValue = getDoctype(templateFile,previousFiles);
 						}
-
+					}
 				}
 
 			}

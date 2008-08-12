@@ -3241,7 +3241,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	public void reinit() {
 
 		visualBuilder.setSelectionRectangle(null);
-		visualEditor.setEditorDomEventListener(this);
+		visualEditor.setEditorDomEventListener(this);	
 		IDOMModel sourceModel = (IDOMModel) getModel();
 		if (sourceModel != null) {
 			IDOMDocument sourceDocument = sourceModel.getDocument();
@@ -3249,6 +3249,18 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		} else {
 			visualBuilder.rebuildDom(null);
 		}
+		//reinits selection controller+ controller
+		visualEditor.reinitDesignMode();
+		visualSelectionController = new VpeSelectionController(visualEditor.getEditor().getSelectionController());
+	
+		selectionBuilder = new VpeSelectionBuilder(domMapping, sourceBuilder,
+				visualBuilder, visualSelectionController);
+
+		selectionManager = new SelectionManager(pageContext,
+				sourceEditor, visualSelectionController);
+
+		keyEventHandler = new KeyEventManager(sourceEditor, domMapping,
+				pageContext,visualSelectionController);
 	}
 
 	/**

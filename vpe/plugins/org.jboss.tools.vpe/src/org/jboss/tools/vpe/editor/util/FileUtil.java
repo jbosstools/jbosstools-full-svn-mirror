@@ -31,6 +31,8 @@ import org.jboss.tools.common.model.*;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.editor.css.AbsoluteFolderReferenceList;
+import org.jboss.tools.vpe.editor.css.ResourceReference;
 
 
 public class FileUtil {
@@ -77,17 +79,24 @@ public class FileUtil {
 	 */
 	public static IFile getFile(String fileName, IFile includeFile) {
 		IFile file = null;
-		if(fileName.startsWith("/")) {
+		if(fileName.startsWith("/")) { //$NON-NLS-1$
 			try {
-				WebArtifactEdit edit = 
-					WebArtifactEdit.getWebArtifactEditForRead(includeFile.getProject());
-				IVirtualComponent com = ComponentCore.createComponent(includeFile.getProject());
-				IVirtualFolder webRootFolder = com.getRootFolder().getFolder(new Path("/"));
-				IContainer folder = webRootFolder.getUnderlyingFolder();
-				IPath path = folder.getFullPath().append(fileName);
-				file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-			} catch (Exception ex) {
-				// do nothing that means include will shown as text region with included file name
+			ResourceReference[] resources =  AbsoluteFolderReferenceList.getInstance().getAllResources(includeFile);
+			if(resources!=null && resources.length==1) {
+					String location =resources[0].getLocation()+fileName;
+					IPath path=new Path(location);
+					return ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);
+			}else {
+					WebArtifactEdit edit = 
+						WebArtifactEdit.getWebArtifactEditForRead(includeFile.getProject());
+					IVirtualComponent com = ComponentCore.createComponent(includeFile.getProject());
+					IVirtualFolder webRootFolder = com.getRootFolder().getFolder(new Path("/"));
+					IContainer folder = webRootFolder.getUnderlyingFolder();
+					IPath path = folder.getFullPath().append(fileName);
+					file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+				} 
+			}catch (Exception ex) {
+					// do nothing that means include will shown as text region with included file name
 			}
 		} else {
 			IPath currentFolder = includeFile.getParent().getFullPath();

@@ -74,6 +74,8 @@ import org.mozilla.interfaces.nsIHTMLAbsPosEditor;
 import org.mozilla.interfaces.nsIHTMLInlineTableEditor;
 import org.mozilla.interfaces.nsIHTMLObjectResizer;
 import org.mozilla.interfaces.nsIPlaintextEditor;
+import org.mozilla.interfaces.nsISelection;
+import org.mozilla.interfaces.nsISelectionPrivate;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
 	protected static final String INIT_URL = /*"file://" +*/ (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath(); //$NON-NLS-1$ //$NON-NLS-2$
@@ -668,8 +670,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private void onReloadWindow() {
 
 		removeDomEventListeners();
+		xulRunnerEditor.removeResizerListener();
 		contentArea = findContentArea();
 		addDomEventListeners();
+		addSelectionListener();
+		xulRunnerEditor.addResizerListener();
 		controller.reinit();
 
 	}
@@ -678,11 +683,19 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 * 
 	 */
 	public void reload() {
-
+		
 		doctype = DocTypeUtil.getDoctype(getEditorInput());
+		//coused page to be refreshed
+		setRefreshPage(true);
 		xulRunnerEditor.setText(doctype
 				+ DocTypeUtil.getContentInitFile(new File(INIT_URL)));
-
+	}
+	/**
+	 * Initialized design mode in visual refresh
+	 */
+	public void initDesingMode() {
+		editor=null;
+		getEditor();
 	}
 	
 	/**
@@ -692,12 +705,17 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		return doctype;
 	}
 	
-	public boolean isRefreshPage() {
+	private boolean isRefreshPage() {
 		return isRefreshPage;
 	}
 
 	public void setRefreshPage(boolean isRefreshPage) {
 		this.isRefreshPage = isRefreshPage;
+	}
+	
+	public void reinitDesignMode() {
+		editor=null;
+		getEditor();
 	}
 	/**
 	 * Returns Editor for This Document
