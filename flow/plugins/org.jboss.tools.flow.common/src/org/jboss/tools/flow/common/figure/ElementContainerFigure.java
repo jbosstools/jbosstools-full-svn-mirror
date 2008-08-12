@@ -27,6 +27,7 @@ import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.ScrollPane;
 import org.eclipse.draw2d.StackLayout;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 
 public class ElementContainerFigure extends Figure implements ElementFigure {
@@ -44,6 +45,10 @@ public class ElementContainerFigure extends Figure implements ElementFigure {
         scrollpane.setViewport(new FreeformViewport());
         scrollpane.setContents(pane);
         setBorder(new LineBorder(1));
+    }
+    
+    public void setColor(Color color) {
+    	setBackgroundColor(color);
     }
 
     public Label getLabel() {

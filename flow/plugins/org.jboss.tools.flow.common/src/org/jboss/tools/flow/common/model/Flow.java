@@ -92,8 +92,4 @@ public interface Flow  extends Container {
      */
     String getPackageName();
     
-    void setMetaData(String name, Object value);
-    
-    Object getMetaData(String name);
-
 }

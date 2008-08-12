@@ -86,6 +86,16 @@
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="figure" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 
@@ -106,6 +116,9 @@
 
    <element name="node">
       <complexType>
+         <sequence>
+            <element ref="figure" minOccurs="0" maxOccurs="1"/>
+         </sequence>
          <attribute name="acceptsIncomingConnectionStrategy" type="string">
             <annotation>
                <documentation>
@@ -165,6 +178,52 @@
    </element>
 
    <element name="connection" type="string">
+   </element>
+
+   <element name="figure">
+      <complexType>
+         <choice minOccurs="0" maxOccurs="1">
+            <element ref="ellipse"/>
+            <element ref="rectangle"/>
+            <element ref="rounded-rectangle"/>
+         </choice>
+         <attribute name="class" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":org.jboss.tools.flow.common.figure.ElementFigure"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="color" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="icon" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="ellipse" type="string">
+   </element>
+
+   <element name="rectangle" type="string">
+   </element>
+
+   <element name="rounded-rectangle" type="string">
    </element>
 
    <annotation>

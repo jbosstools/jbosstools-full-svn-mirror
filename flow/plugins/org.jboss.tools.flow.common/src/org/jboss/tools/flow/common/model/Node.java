@@ -24,7 +24,7 @@ import java.util.Map;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
-public interface Node {
+public interface Node extends Element {
 
     /**
      * Returns the id of the node

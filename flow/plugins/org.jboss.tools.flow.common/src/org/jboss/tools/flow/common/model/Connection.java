@@ -21,7 +21,7 @@ package org.jboss.tools.flow.common.model;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
-public interface Connection {
+public interface Connection extends Element {
 
     /**
      * Returns the from node of the connection.
@@ -49,8 +49,4 @@ public interface Connection {
      */
     String getToType();
 
-    void setMetaData(String name, Object value);
-    
-    Object getMetaData(String name);
-    
 }

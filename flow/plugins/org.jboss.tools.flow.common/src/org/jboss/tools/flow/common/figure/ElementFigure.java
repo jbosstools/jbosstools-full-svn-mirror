@@ -19,6 +19,7 @@ package org.jboss.tools.flow.common.figure;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 
 /**
@@ -29,6 +30,8 @@ import org.eclipse.swt.graphics.Image;
 public interface ElementFigure extends IFigure {
     
     void setIcon(Image icon);
+    
+    void setColor(Color color);
     
     void setText(String text);
     
