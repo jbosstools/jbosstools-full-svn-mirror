@@ -1,6 +1,6 @@
-class="<?xml version="1.0" encoding="UTF-8"?>
-<!-- This class contains invalid template expressions -->
+<?xml version="1.0" encoding="UTF-8"?>
 <vpe:templates>
+	<!-- This class contains invalid template expressions -->
 	<vpe:template-taglib uri="http://myfaces.apache.org/extensions"
 		prefix="x" />
 

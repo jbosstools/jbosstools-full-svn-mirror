@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- there contains incorrect templates. Just for testing  -->
 <vpe:templates>
+	<!-- there contains incorrect templates. Just for testing  -->
 	<vpe:template-taglib uri="http://xmlns.oracle.com/adf/faces/EA10/html" prefix="afh"/>
 	<vpe:template-taglib uri="http://xmlns.oracle.com/adf/faces/EA10" prefix="af"/>
 	<vpe:template-taglib uri="http://xmlns.oracle.com/adf/faces/EA11/html" prefix="afh"/>

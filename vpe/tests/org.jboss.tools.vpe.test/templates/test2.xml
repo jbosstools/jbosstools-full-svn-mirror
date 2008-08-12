@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- there contains incorrect templates. Just for testing  -->
 <vpe:templates>
+	<!-- there contains incorrect templates. Just for testing  -->
 	<vpe:tag name="a" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class">

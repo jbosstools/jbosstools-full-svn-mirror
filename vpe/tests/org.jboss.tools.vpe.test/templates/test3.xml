@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- This class contains valid template expressions -->
 <vpe:templates>
+	<!-- This class contains valid template expressions -->
 	<vpe:template-taglib uri="http://java.sun.com/jsf/html" prefix="h"/>
 	<vpe:template-taglib uri="http://java.sun.com/jsf/core" prefix="f"/>
 
