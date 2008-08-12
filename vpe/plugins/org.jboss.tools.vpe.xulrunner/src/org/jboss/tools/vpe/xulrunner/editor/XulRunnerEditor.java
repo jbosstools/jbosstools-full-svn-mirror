@@ -46,11 +46,8 @@ import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsITooltipListener;
 import org.mozilla.interfaces.nsITransferable;
-import org.mozilla.interfaces.nsIWebProgressListener;
 import org.mozilla.xpcom.Mozilla;
 import org.mozilla.xpcom.XPCOMException;
-
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 /**
  * @author Sergey Vasilyev (svasilyev@exadel.com)
@@ -66,7 +63,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	/**
 	 * color which used for highlight elements which user can see
 	 */
-	public static final String flasherVisialElementColor = "blue";
+	public static final String flasherVisialElementColor = "blue"; //$NON-NLS-1$
 	
 	/**
 	 * color which used for highlight parent elements for elements which user 
@@ -133,11 +130,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 				//TODO Max Areshkau this caused en error when we close editor under Mac OS
 //				getWebBrowser().removeWebBrowserListener(XulRunnerEditor.this, nsIWebProgressListener.NS_IWEBPROGRESSLISTENER_IID);
 				getWebBrowser().removeWebBrowserListener(XulRunnerEditor.this, nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
-				if (selectionListener != null) {
-					nsISelection selection = getSelection();
-					nsISelectionPrivate selectionPrivate = (nsISelectionPrivate) selection.queryInterface(nsISelectionPrivate.NS_ISELECTIONPRIVATE_IID);
-					selectionPrivate.removeSelectionListener(selectionListener);
-				}
+				removeSelectionListener();
 				if (resizeListener != null)
 					getIXulRunnerVpeResizer().removeResizeListener(resizeListener);
 				xulRunnerVpeResizer.dispose();
@@ -214,12 +207,25 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	public void onElementResize(nsIDOMElement element, int handle, int top, int left, int width, int height) {
 	}
 	
-	public void onLoadWindow() {
+	/**
+	 * Removes resizer listener
+	 */
+	public void removeResizerListener() {
+		if (resizeListener != null)
+			getIXulRunnerVpeResizer().removeResizeListener(resizeListener);
+	}
+	/**
+	 * Add Resizer Listener
+	 */
+	public void addResizerListener() {
 	    if (getIXulRunnerVpeResizer() != null) {
 	    	getIXulRunnerVpeResizer().init(getDOMDocument());
 	    	getIXulRunnerVpeResizer().addResizeListener(resizeListener);
 	    }
-
+	}
+	
+	public void onLoadWindow() {
+		addResizerListener();
 	}
 	
 	public nsIDragSession getCurrentDragSession() {
@@ -572,6 +578,10 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		getIFlasher().scrollElementIntoView(element);
 	}
 
+	/**
+	 * Adds selection listener
+	 * @param selectionListener
+	 */
 	public void addSelectionListener (
 			nsISelectionListener selectionListener) {
 		nsISelection selection = getSelection();
@@ -579,7 +589,17 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		selectionPrivate.addSelectionListener(selectionListener);
 		this.selectionListener = selectionListener;
 	}
-	
+	/**
+	 * Removes selection listener
+	 */
+	public void removeSelectionListener() {
+		if (this.selectionListener != null) {
+			nsISelection selection = getSelection();
+			nsISelectionPrivate selectionPrivate = (nsISelectionPrivate) selection.queryInterface(nsISelectionPrivate.NS_ISELECTIONPRIVATE_IID);
+			selectionPrivate.removeSelectionListener(selectionListener);
+		}
+		selectionListener=null;
+	}
 	/**
 	 * get nsIDomElement from nsIDomNode
 	 * 
