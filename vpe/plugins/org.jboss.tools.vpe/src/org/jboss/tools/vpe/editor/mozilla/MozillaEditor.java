@@ -728,9 +728,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			nsIHTMLInlineTableEditor inlineTableEditor = (nsIHTMLInlineTableEditor) editor.queryInterface(nsIHTMLInlineTableEditor.NS_IHTMLINLINETABLEEDITOR_IID);
 			inlineTableEditor.setInlineTableEditingEnabled(false);
 			
-			// Added by Sergey Dzmitrovich Fix for JBIDE-2526
-			// It need for correct work of selection in source
-			iEditingSession.tearDownEditorOnWindow(getXulRunnerEditor().getWebBrowser().getContentDOMWindow());
 		}
 		return editor;
 	}
