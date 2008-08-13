@@ -676,8 +676,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					sourceSelectionChanged();
 				}
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -698,8 +696,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			// if (event.getSource() instanceof StyledText) {
 			sourceSelectionChanged();
 			// }
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -718,8 +714,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			if (event.getSource() instanceof StyledText) {
 				sourceSelectionChanged();
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -842,8 +836,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		try {
 			sourceSelectionChanged(showCaret);
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -888,8 +880,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				// visualBuilder.rebuildDom(sourceDocument);
 				// pageContext.fireTaglibsChanged();
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -905,8 +895,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
 				printVisualEvent(mutationEvent);
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -926,8 +914,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				sourceBuilder.addNode(targetNode);
 				visualBuilder.resetPseudoElement(targetNode);
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -948,8 +934,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				sourceBuilder.removeNode(targetNode);
 				visualBuilder.resetPseudoElement(targetNode);
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -964,8 +948,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
 				printVisualEvent(mutationEvent);
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -980,8 +962,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
 				printVisualEvent(mutationEvent);
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -996,8 +976,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
 				printVisualEvent(mutationEvent);
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -1015,8 +993,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
 			sourceBuilder.setText(targetNode);
 			visualBuilder.resetPseudoElement(targetNode);
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -1051,8 +1027,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				}
 				//enables cursor on selection event
 				visualSelectionController.setCaretEnabled(true);
-			} catch (Exception e) {
-				VpePlugin.reportProblem(e);
 			} finally {
 				switcher.stopActiveEditor();
 			}
@@ -1121,8 +1095,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 
 			selectionManager.setSelection(mouseEvent);
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -1143,8 +1115,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				mouseEvent.stopPropagation();
 				mouseDownSelectionFlag = false;
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -1175,8 +1145,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					// selectionBuilder.setClickContentAreaSelection();
 				}
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -1199,8 +1167,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				}
 
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -1221,8 +1187,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				// }
 				visualBuilder.setMoveCursor(mouseEvent);
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -1240,8 +1204,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		try {
 			visualEditor.hideResizer();
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -1336,8 +1298,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						 */
 						sourceSelectionChanged(true);
 						visualSelectionController.setCaretEnabled(true);
-					} catch (Exception e) {
-						VpePlugin.reportProblem(e);
 					} finally {
 						switcher.stopActiveEditor();
 					}
@@ -1357,8 +1317,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		try {
 			visualEditor.hideResizer();
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -1895,8 +1853,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					pageContext.refreshBundleValues();
 				}
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -1918,8 +1874,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				}
 				try {
 					pageContext.refreshBundleValues();
-				} catch (Exception e) {
-					VpePlugin.reportProblem(e);
 				} finally {
 					switcher.stopActiveEditor();
 				}
@@ -2448,8 +2402,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				event.stopPropagation();
 				event.preventDefault();
 			}
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -3046,8 +2998,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						.println(">>>>>>>>>>>>>> selectionChanged  " + event.getSource()); //$NON-NLS-1$
 			}
 			sourceSelectionChanged();
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
 		} finally {
 			switcher.stopActiveEditor();
 		}
