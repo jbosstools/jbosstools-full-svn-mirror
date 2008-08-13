@@ -96,7 +96,7 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 		if(os_name != null && os_name.indexOf("Windows") >= 0) return new Point(800, 600);
 	    //changed by estherbin
         //http://jira.jboss.com/jira/browse/JBIDE-2010
-		return new Point(800, 600);
+		return new Point(600, 700);
 	}
 
 }
