@@ -37,6 +37,7 @@ import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.ExtensionManager;
 import org.jboss.ide.eclipse.archives.ui.NodeContribution;
 import org.jboss.ide.eclipse.archives.ui.actions.NewArchiveAction;
+import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate.WrappedProject;
 import org.jboss.ide.eclipse.archives.ui.wizards.FilesetWizard;
 import org.jboss.ide.eclipse.archives.ui.wizards.NewJARWizard;
 
@@ -76,7 +77,7 @@ public class ArchivesActionProvider extends CommonActionProvider {
 		if (selection != null && !selection.isEmpty()) {
 			Object element = selection.getFirstElement();
 			
-			if (element instanceof IProject) {
+			if (element instanceof IProject || element instanceof WrappedProject ) {
 				manager.add(newPackageManager);
 				manager.add(buildAction);
 				buildAction.setText(ArchivesUIMessages.ProjectPackagesView_buildProjectAction_label);

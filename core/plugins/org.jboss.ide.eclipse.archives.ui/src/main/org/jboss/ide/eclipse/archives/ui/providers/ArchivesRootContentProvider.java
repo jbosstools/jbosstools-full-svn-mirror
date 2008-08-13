@@ -6,7 +6,6 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate.WrappedProject;
 import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesCommonView;
@@ -34,9 +33,10 @@ public class ArchivesRootContentProvider implements ITreeContentProvider {
 			if( showAllProjects() ) {
 				IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 				ArrayList<IProject> tmp = new ArrayList<IProject>();
-				for( int i = 0; i < projects.length; i++ )
-					if( ArchivesModel.instance().canReregister(projects[i].getLocation()))
+				for( int i = 0; i < projects.length; i++ ) {
+					if( projects[i].isAccessible())
 						tmp.add(projects[i]);
+				}
 				return wrap((IProject[]) tmp.toArray(new IProject[tmp.size()]));
 			}
 			IProject cp = ProjectArchivesCommonView.getInstance().getCurrentProject();

@@ -5,6 +5,14 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate.WrappedProject;
 
+/**
+ * This class is the contribution to the Project Explorer. 
+ * It returns a wrapped project suitable for adding archives to.
+ * It delegates all further content to the common provider.
+ * 
+ * @author rob.stryker@redhat.com
+ *
+ */
 public class ArchivesRootBridgeContentProvider implements ITreeContentProvider {
 	private ArchivesContentProviderDelegate delegate;
 	public ArchivesRootBridgeContentProvider() {

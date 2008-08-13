@@ -98,6 +98,22 @@
             <contentExtension pattern="org.jboss.ide.eclipse.archives.ui.archivesRootBridgeContent"/>
          </includes>
       </viewerContentBinding>
+      <viewerActionBinding
+            viewerId="org.jboss.ide.eclipse.archives.ui.ProjectArchivesView">
+         <includes>
+            <actionExtension
+                  pattern="org.jboss.ide.eclipse.archives.ui.providers.ArchivesActionProvider">
+            </actionExtension>
+         </includes>
+      </viewerActionBinding>
+      <viewerActionBinding
+            viewerId="org.eclipse.ui.navigator.ProjectExplorer">
+         <includes>
+            <actionExtension
+                  pattern="org.jboss.ide.eclipse.archives.ui.providers.ArchivesActionProvider">
+            </actionExtension>
+         </includes>
+      </viewerActionBinding>
       
    </extension>
    <extension
@@ -123,10 +139,6 @@
                </instanceof>
             </or>
          </possibleChildren>
-         <actionProvider
-               class="org.jboss.ide.eclipse.archives.ui.providers.ArchivesActionProvider"
-               id="org.jboss.ide.eclipse.archives.ui.views.ArchivesActionProvider1">
-         </actionProvider>
       </navigatorContent>
       <navigatorContent
             contentProvider="org.jboss.ide.eclipse.archives.ui.providers.ArchivesRootBridgeContentProvider"
@@ -140,10 +152,6 @@
                   value="org.eclipse.core.resources.IProject">
             </instanceof>
          </triggerPoints>
-         <actionProvider
-               class="org.jboss.ide.eclipse.archives.ui.providers.ArchivesActionProvider"
-               id="org.jboss.ide.eclipse.archives.ui.views.ArchivesActionProvider2">
-         </actionProvider>
          <possibleChildren>
             <or>
                <instanceof
@@ -152,6 +160,23 @@
             </or>
          </possibleChildren>
       </navigatorContent>
+      <actionProvider
+            class="org.jboss.ide.eclipse.archives.ui.providers.ArchivesActionProvider"
+            id="org.jboss.ide.eclipse.archives.ui.providers.ArchivesActionProvider">
+         <enablement>
+            <or>
+               <instanceof
+                     value="org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate$WrappedProject">
+               </instanceof>
+               <instanceof
+                     value="org.jboss.ide.eclipse.archives.core.model.IArchiveNode">
+               </instanceof>
+               <count
+                     value="0">
+               </count>
+            </or>
+         </enablement>
+      </actionProvider>
    </extension>
    
 </plugin>
