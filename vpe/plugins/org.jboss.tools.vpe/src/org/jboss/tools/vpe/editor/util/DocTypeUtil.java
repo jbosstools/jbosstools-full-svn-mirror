@@ -162,7 +162,8 @@ public class DocTypeUtil {
 		}
 		} finally {
 			if(document!=null) {
-				VpeCreatorUtil.getDocumentForRead(file);
+				
+				VpeCreatorUtil.releaseDocumentFromRead(document);
 			}
 		}
 		return docTypeValue != null ? docTypeValue.trim() : ""; //$NON-NLS-1$
