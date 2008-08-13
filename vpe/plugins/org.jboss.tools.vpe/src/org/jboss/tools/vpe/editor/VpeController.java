@@ -510,8 +510,17 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 							}
 							getChangeEvents().remove(eventBean);
 						}
+						
+						// cause is to lock calls others events  
+						if (switcher
+								.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE))
+							try {
+								sourceSelectionChanged();
 
-						sourceSelectionChanged();
+							} finally {
+								switcher.stopActiveEditor();
+							}
+						
 						monitor.done();
 
 						return Status.OK_STATUS;
@@ -726,7 +735,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void sourceSelectionChanged() {
-		sourceSelectionChanged(false);
+			sourceSelectionChanged(false);
 	}
 
 	public void sourceSelectionChanged(boolean showCaret) {

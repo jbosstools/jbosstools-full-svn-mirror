@@ -381,13 +381,11 @@ public class SelectionManager implements ISelectionManager {
 			nsISelection selection = selectionController.getSelection(
 					nsISelectionController.SELECTION_NORMAL);
 
-			selectionController.getSelection(
-					nsISelectionController.SELECTION_NORMAL).collapse(
+			selection.collapse(
 					visualNode, visualNodeFocusOffcet);
 
 			if (visualNodeAnchorOffcet != visualNodeFocusOffcet) {
-				selectionController.getSelection(
-						nsISelectionController.SELECTION_NORMAL).extend(
+				selection.extend(
 						visualNode, visualNodeAnchorOffcet);
 			}
 
