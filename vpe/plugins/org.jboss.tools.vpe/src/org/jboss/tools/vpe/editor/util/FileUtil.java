@@ -10,6 +10,8 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.util;
 
+import java.io.File;
+
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -26,12 +28,14 @@ import org.eclipse.ui.ide.IDE;
 import org.eclipse.wst.common.componentcore.ComponentCore;
 import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 import org.eclipse.wst.common.componentcore.resources.IVirtualFolder;
-
-import org.jboss.tools.common.model.*;
+import org.jboss.tools.common.model.XModel;
+import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
+import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.css.AbsoluteFolderReferenceList;
+import org.jboss.tools.vpe.editor.css.RelativeFolderReferenceList;
 import org.jboss.tools.vpe.editor.css.ResourceReference;
 
 
@@ -98,12 +102,28 @@ public class FileUtil {
 			}catch (Exception ex) {
 					// do nothing that means include will shown as text region with included file name
 			}
-		} else {
-			IPath currentFolder = includeFile.getParent().getFullPath();
-			IPath path = currentFolder.append(fileName);
-			file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-		}
-		return file;
+		} else  {
+            try {
+                ResourceReference[] resources = RelativeFolderReferenceList.getInstance().getAllResources(includeFile);
+                if ((resources != null) && resources.length == 1) {
+                    String location = resources[0].getLocation() + File.separator+fileName;
+                    IPath path = new Path(location);
+                    //new File(location);
+                    return ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);//ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);
+                } else {
+
+                    IPath currentFolder = includeFile.getParent().getFullPath();
+                    IPath path = currentFolder.append(fileName);
+                    file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+                }
+            } catch (Exception e) {
+                if(VpeDebug.USE_PRINT_STACK_TRACE){
+                   e.printStackTrace();
+                }
+                return null;
+            }
+        }
+        return file;
 	}
 	
 	/**
