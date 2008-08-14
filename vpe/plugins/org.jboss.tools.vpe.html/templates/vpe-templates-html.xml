@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<vpe:templates>
+<vpe:templates xmlns:vpe="http://www.w3.org/2001/XMLSchema-instance">
 	<vpe:tag name="a" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:a class="{@class}" style="{@style}"/>
@@ -2143,8 +2143,4 @@
 		 		 class="org.jboss.tools.vpe.html.template.HtmlTextTemplate">
 		 </vpe:template>
 	</vpe:tag>
-			
-	<vpe:template children="yes" modify="yes">
-		<vpe:any value="{name()}" title="{tagstring()}" />
-	</vpe:template>
 </vpe:templates>

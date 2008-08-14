@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<vpe:templates>
+<vpe:templates xmlns:vpe="http://www.w3.org/2001/XMLSchema-instance">
 
     <vpe:tag name="jsp:declaration" case-sensitive="yes">
 	    <vpe:template children="no" modify="no">

@@ -37,6 +37,7 @@ public class VpeAllTests extends TestCase{
 		TestSuite suite = new TestSuite("Tests for vpe");
 		// $JUnit-BEGIN$
 		suite.addTestSuite(TemplateLoadingTest.class);
+		suite.addTestSuite(TemplateSchemeValidateTest.class);
 		suite.addTestSuite(TemplatesExpressionParsingTest.class);
 		suite.addTestSuite(VpeEditorPreferencesPageTest.class);
 		suite.addTestSuite(VpeTemplateManagerTest.class);
