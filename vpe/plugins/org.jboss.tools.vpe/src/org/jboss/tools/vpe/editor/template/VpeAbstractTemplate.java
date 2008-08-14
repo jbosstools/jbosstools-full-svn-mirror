@@ -1430,7 +1430,8 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		NodeData nodeData = getNodeData(lastSelectedNode, elementMapping
 				.getElementData(), pageContext.getDomMapping());
 
-		if (nodeData != null && nodeData.getSourceNode() != null)
+		if (nodeData != null && nodeData.getSourceNode() != null
+				&& nodeData.getSourceNode().getNodeValue() != null)
 			return pageContext.getBundle().openBundle(
 					nodeData.getSourceNode().getNodeValue(),
 					NodesManagingUtil.getPageLocale(pageContext, nodeData
