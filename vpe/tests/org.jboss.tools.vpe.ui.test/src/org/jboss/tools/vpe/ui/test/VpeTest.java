@@ -33,6 +33,7 @@ import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMDocument;
+import org.w3c.dom.Document;
 
 
 /**
@@ -168,6 +169,16 @@ public class VpeTest extends TestCase implements ILogListener {
 
         return document;
     }
+    
+    /**
+	 * 
+	 * @return source document
+	 */
+	protected Document getSourceDocument(VpeController controller) {
+
+		return controller.getSourceBuilder().getSourceDocument();
+
+	}
 
     /**
      * Gets visual page editor controller.
@@ -278,7 +289,5 @@ public class VpeTest extends TestCase implements ILogListener {
     protected void setCheckWarning(boolean checkWarning) {
         this.checkWarning = checkWarning;
     }
-
-
 
 }

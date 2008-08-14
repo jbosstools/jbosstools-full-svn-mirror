@@ -3228,5 +3228,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	public VpeSelectionController getVisualSelectionController() {
 		return visualSelectionController;
 	}
+	
+	/**
+	 * 
+	 * @return sourceBuilder
+	 */
+	public VpeSourceDomBuilder getSourceBuilder() {
+		return sourceBuilder;
+	}
 
 }
