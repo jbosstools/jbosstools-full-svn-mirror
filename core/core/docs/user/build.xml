@@ -1,0 +1,19 @@
+
+<project default="docs-distribution">
+
+	<import file="install/build.xml"/>
+	<import file="tutorial/build.xml"/>
+	
+	<property name="jbosside.version" value="1.4.1"/>
+		
+	<target name="docs-distribution">
+		<zip destfile="jbosside-docs-${jbosside.version}.zip">
+			<fileset dir=".">
+				<patternset>
+					<include name="install/build/**"/>
+					<include name="tutorial/build/**"/>
+				</patternset>
+			</fileset>
+		</zip>
+	</target>
+</project>
