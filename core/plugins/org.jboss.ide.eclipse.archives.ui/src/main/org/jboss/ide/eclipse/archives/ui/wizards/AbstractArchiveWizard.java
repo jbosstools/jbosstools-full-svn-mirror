@@ -20,6 +20,8 @@ import org.jboss.ide.eclipse.archives.core.model.ArchivesModelException;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.PackagesUIPlugin;
+import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate.WrappedProject;
+import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesCommonView;
 import org.jboss.ide.eclipse.archives.ui.wizards.pages.ArchiveInfoWizardPage;
 
 public abstract class AbstractArchiveWizard extends WizardWithNotification implements INewWizard {
@@ -123,10 +125,17 @@ public abstract class AbstractArchiveWizard extends WizardWithNotification imple
 			project = ((IContainer)selected).getProject();
 			initialDestinationPath = ((IContainer)selected).getFullPath().toString();
 			isPathWorkspaceRelative = true;
-		} else if( project != null ){
+		} else if(selected instanceof WrappedProject) {
+			project = ((WrappedProject)selected).getElement();
 			initialDestinationPath = project.getFullPath().toString();
 			isPathWorkspaceRelative = true;
-		}
+		} else {
+			project = ProjectArchivesCommonView.getInstance().getCurrentProject();
+			if( project != null ) {
+				initialDestinationPath = project.getFullPath().toString();
+				isPathWorkspaceRelative = true;
+			}
+		} 
 		
 		setNeedsProgressMonitor(true);	
 	}

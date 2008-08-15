@@ -11,6 +11,8 @@ import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelega
 import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesCommonView;
 
 public class ArchivesRootContentProvider implements ITreeContentProvider {
+	public static final Object NO_PROJECT = new Object();
+	
 	private ArchivesContentProviderDelegate delegate;
 	public ArchivesRootContentProvider() {
 		delegate = ArchivesContentProviderDelegate.getDefault();
@@ -29,6 +31,7 @@ public class ArchivesRootContentProvider implements ITreeContentProvider {
 	}
 
 	public Object[] getElements(Object inputElement) {
+		IProject cp = ProjectArchivesCommonView.getInstance().getCurrentProject();
 		if( showProjectRoot() ) {
 			if( showAllProjects() ) {
 				IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
@@ -39,11 +42,12 @@ public class ArchivesRootContentProvider implements ITreeContentProvider {
 				}
 				return wrap((IProject[]) tmp.toArray(new IProject[tmp.size()]));
 			}
-			IProject cp = ProjectArchivesCommonView.getInstance().getCurrentProject();
 			if( cp != null )
 				return wrap(new IProject[]{cp});
+		} else if( cp != null ){
+			return getChildren(new WrappedProject(cp, WrappedProject.NAME));
 		}
-		return new Object[]{};
+		return new Object[]{NO_PROJECT};
 	}
 
 	protected Object[] wrap(IProject[] objs) {

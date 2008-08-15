@@ -77,6 +77,8 @@ public class ArchivesLabelProvider extends BaseLabelProvider implements ILabelPr
 	}
 
 	private String internalGetText(Object element) {
+		if( element == ArchivesRootContentProvider.NO_PROJECT)
+			return "Please select a project";
 		if( element instanceof WrappedProject ) {
 			switch(((WrappedProject)element).getType()) {
 				case WrappedProject.NAME: 

@@ -171,9 +171,12 @@
                <instanceof
                      value="org.jboss.ide.eclipse.archives.core.model.IArchiveNode">
                </instanceof>
-               <count
-                     value="0">
-               </count>
+               <adapt
+                     type="java.util.Collection">
+                  <count
+                        value="0">
+                  </count>
+               </adapt>
             </or>
          </enablement>
       </actionProvider>

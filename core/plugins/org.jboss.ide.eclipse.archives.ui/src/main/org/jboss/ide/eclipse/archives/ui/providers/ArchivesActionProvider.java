@@ -38,6 +38,7 @@ import org.jboss.ide.eclipse.archives.ui.ExtensionManager;
 import org.jboss.ide.eclipse.archives.ui.NodeContribution;
 import org.jboss.ide.eclipse.archives.ui.actions.NewArchiveAction;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate.WrappedProject;
+import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesCommonView;
 import org.jboss.ide.eclipse.archives.ui.wizards.FilesetWizard;
 import org.jboss.ide.eclipse.archives.ui.wizards.NewJARWizard;
 
@@ -111,7 +112,7 @@ public class ArchivesActionProvider extends CommonActionProvider {
 				manager.add(deleteAction);
 				addContextMenuContributions(node, manager);
 			}
-		} else {
+		} else if( ProjectArchivesCommonView.getInstance().getCurrentProject() != null ){
 			manager.add(newPackageManager);
 		}
 	}

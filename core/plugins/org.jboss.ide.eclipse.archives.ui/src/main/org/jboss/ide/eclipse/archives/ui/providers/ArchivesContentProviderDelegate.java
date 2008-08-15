@@ -16,6 +16,8 @@ import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
+import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
+import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesCommonView;
 
 public class ArchivesContentProviderDelegate implements ITreeContentProvider, IArchiveModelListener {
 
@@ -96,7 +98,9 @@ public class ArchivesContentProviderDelegate implements ITreeContentProvider, IA
 						Iterator<Viewer> it = viewersInUse.iterator();
 						while(it.hasNext()) {
 							Viewer next = ((Viewer)it.next());
-							if( next instanceof StructuredViewer)
+							if( shouldRefreshProject(next))
+								((StructuredViewer)next).refresh(dp.project);
+							else if( next instanceof StructuredViewer)
 								((StructuredViewer)next).refresh(dp.wProject);
 							else
 								next.refresh();	
@@ -109,6 +113,13 @@ public class ArchivesContentProviderDelegate implements ITreeContentProvider, IA
 		job.schedule();
 	}
 	
+	protected boolean shouldRefreshProject(Viewer viewer) {
+		if( viewer == ProjectArchivesCommonView.getInstance().getCommonViewer() && 
+				!PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_PROJECT_ROOT))
+			return true;
+		return false;
+	}
+	
 	public Object getParent(Object element) {
 		return null;
 	}
@@ -118,6 +129,10 @@ public class ArchivesContentProviderDelegate implements ITreeContentProvider, IA
 			return getChildren(element).length > 0;
 		if( element instanceof IResource ) 
 			return ArchivesModel.instance().canReregister(((IResource)element).getLocation());
+		if( element == ArchivesRootContentProvider.NO_PROJECT)
+			return false;
+		if( element instanceof DelayProxy)
+			return false;
 		return true;
 	}
 
