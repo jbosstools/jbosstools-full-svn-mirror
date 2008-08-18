@@ -17,4 +17,6 @@ public class Constants {
 	public static final String FALSE = "false"; //$NON-NLS-1$
 	public static final String EMPTY = ""; //$NON-NLS-1$
 	public static final String YES_STRING = "yes"; //$NON-NLS-1$
+	public static final String JSP_FILE_EXTENSION = "jsp"; //$NON-NLS-1$
+	
 }

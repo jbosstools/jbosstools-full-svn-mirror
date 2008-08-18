@@ -18,6 +18,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jst.jsp.core.internal.contentmodel.TaglibController;
 import org.eclipse.jst.jsp.core.internal.contentmodel.tld.TLDCMDocumentManager;
@@ -111,29 +112,40 @@ public class XmlUtil {
 	* @param document
 	* @return collection of taglibs
 	*/	
-	public static List<TaglibData> getTaglibsForNode(Node source,VpePageContext pageContext) {
-		
+	public static List<TaglibData> getTaglibsForNode(Node source,
+			VpePageContext pageContext) {
+
 		List<TaglibData> taglibData = new ArrayList<TaglibData>();
+
 		
-		IDocument document = pageContext.getSourceBuilder().getStructuredTextViewer().getDocument();
-		//TODO Max Areshkau Looks like exist possability to check is it jsp document
-		//node.getOwnerDocument return null for jsp apply it for CA
-		TLDCMDocumentManager tldcmDocumentManager= TaglibController.getTLDCMDocumentManager(document);
-		if(tldcmDocumentManager!=null) {
-				List<TaglibTracker> taglibs_JSP =  tldcmDocumentManager.getTaglibTrackers();
+		// Added by Sergey Dzmitrovich Fix for JBIDE-2581
+		IPath path = FileUtil.getInputPath(pageContext.getEditPart()
+				.getEditorInput());
+		
+		if (path != null
+				&& path.getFileExtension().equals(Constants.JSP_FILE_EXTENSION)) {
+			IDocument document = pageContext.getSourceBuilder()
+					.getStructuredTextViewer().getDocument();
+
+			TLDCMDocumentManager tldcmDocumentManager = TaglibController
+					.getTLDCMDocumentManager(document);
+			if (tldcmDocumentManager != null) {
+				List<TaglibTracker> taglibs_JSP = tldcmDocumentManager
+						.getTaglibTrackers();
 				for (TaglibTracker taglibTracker : taglibs_JSP) {
-					addTaglib(taglibData, taglibTracker.getURI(), taglibTracker.getPrefix(), true);
+					addTaglib(taglibData, taglibTracker.getURI(), taglibTracker
+							.getPrefix(), true);
 				}
-		}
-		
-		if(taglibData.size()==0) {
-			
+			}
+		} else {
 			taglibData = getTaglibsForNode(source);
+
 		}
-		//add internal taglibs JBIDE-2065
+		// add internal taglibs JBIDE-2065
 		List<TaglibData> includeTaglibs = pageContext.getIncludeTaglibs();
-		for (TaglibData includedTaglib :  includeTaglibs) {
-			addTaglib(taglibData, includedTaglib.getUri(), includedTaglib.getPrefix(), true);
+		for (TaglibData includedTaglib : includeTaglibs) {
+			addTaglib(taglibData, includedTaglib.getUri(), includedTaglib
+					.getPrefix(), true);
 		}
 		return taglibData;
 	} 

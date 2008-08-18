@@ -143,5 +143,24 @@ public class FileUtil {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * @param input
+	 *            The editor input
+	 * @return Path
+	 */
+	public static IPath getInputPath(IEditorInput input) {
+		IPath inputPath = null;
+		if (input instanceof ILocationProvider) {
+			inputPath = ((ILocationProvider) input).getPath(input);
+		} else if (input instanceof IFileEditorInput) {
+			IFile inputFile = ((IFileEditorInput) input).getFile();
+			if (inputFile != null) {
+				inputPath = inputFile.getLocation();
+			}
+		}
+		return inputPath;
+	}
 
 }
