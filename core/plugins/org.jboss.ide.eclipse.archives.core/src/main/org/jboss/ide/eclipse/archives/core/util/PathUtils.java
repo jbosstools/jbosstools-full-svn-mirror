@@ -56,7 +56,7 @@ public class PathUtils {
 	public static String getAbsoluteLocation(String expression, 
 			String projectName, boolean inWorkspace, double version) {
 		
-		if( "".equals(expression) || ".".equals(expression))
+		if( inWorkspace && ("".equals(expression) || ".".equals(expression)))
 			return new Path(projectName).makeAbsolute().toString();
 		
 		try {
