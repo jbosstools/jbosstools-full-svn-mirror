@@ -20,6 +20,8 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.navigator.CommonNavigator;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
+import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
@@ -132,5 +134,11 @@ public class ProjectArchivesCommonView extends CommonNavigator {
 		if (selection != null && !selection.isEmpty())
 			return selection.getFirstElement();
 		return null;
+	}
+	
+	public Object getAdapter(Class adapter) {
+		if( adapter == IPropertySheetPage.class )
+			return new PropertySheetPage();
+		return super.getAdapter(adapter);
 	}
 }

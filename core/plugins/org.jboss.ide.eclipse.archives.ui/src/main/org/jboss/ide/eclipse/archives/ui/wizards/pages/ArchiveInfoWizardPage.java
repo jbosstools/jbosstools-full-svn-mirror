@@ -256,7 +256,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 		IPath loc = wizard.getProject().getLocation();
 		if( ArchivesModel.instance().isProjectRegistered(loc))
 			return ArchivesModel.instance().getRoot(loc).getDescriptorVersion();
-		return (float)2.0;
+		return IArchiveModelRootNode.DESCRIPTOR_VERSION_LATEST;
 	}
 	
 	// Getters for the wizard to call

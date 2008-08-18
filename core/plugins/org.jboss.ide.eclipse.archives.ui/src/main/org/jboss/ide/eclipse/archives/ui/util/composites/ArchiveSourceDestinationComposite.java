@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.INamedContainerArchiveNode;
 import org.jboss.ide.eclipse.archives.core.util.PathUtils;
@@ -166,7 +167,8 @@ public class ArchiveSourceDestinationComposite extends Composite {
 			} else if( result instanceof IContainer ) {
 				destinationNode = null;
 				IPath tmpPath = ((IContainer)result).getFullPath();
-				if( tmpPath.segment(0).equals(projectName) && getDescriptorVersion() < 2.0)
+				if( tmpPath.segment(0).equals(projectName) && 
+						getDescriptorVersion() >= IArchiveModelRootNode.DESCRIPTOR_VERSION_1_2)
 					path = tmpPath.removeFirstSegments(1).makeRelative().toString();
 				else
 					path = ((IContainer)result).getFullPath().makeAbsolute().toString();
