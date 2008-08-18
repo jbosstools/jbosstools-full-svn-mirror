@@ -150,7 +150,7 @@ public class ArchiveInfoWizardPage extends WizardPageWithNotification {
 			if( parent != null && !(parent instanceof IArchiveModelRootNode)) {
 				destinationComposite.init(parent);
 			} else {
-				destinationComposite.init(PathUtils.getGlobalLocation(archive).toString(), archive.isDestinationInWorkspace());
+				destinationComposite.init(archive.getRawDestinationPath(), archive.isDestinationInWorkspace());
 			}
 		} else {
 			if(wizard.getInitialNode() != null )

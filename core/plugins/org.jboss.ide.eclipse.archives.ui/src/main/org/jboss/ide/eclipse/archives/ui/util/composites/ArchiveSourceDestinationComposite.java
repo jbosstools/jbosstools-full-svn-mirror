@@ -216,8 +216,13 @@ public class ArchiveSourceDestinationComposite extends Composite {
 				PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER) : 
 				ArchivesSharedImages.getImage(ArchivesSharedImages.IMG_PACKAGE));
 		pathImage.setImage(image);
-		text.setText(destinationNode == null ? 
-				(path == null ? "" : path) : ((INamedContainerArchiveNode)destinationNode).getName());
+		
+		String destText = destinationNode == null ? 
+				(path == null ? "" : path) : ((INamedContainerArchiveNode)destinationNode).getName();
+		if(!text.getText().equals(destText)) {
+			text.setText(destText);	
+		}
+		
 
 		String translated;
 		Image img=null;
