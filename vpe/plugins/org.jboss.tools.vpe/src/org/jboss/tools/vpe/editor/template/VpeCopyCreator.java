@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -88,7 +89,7 @@ public class VpeCopyCreator extends VpeAbstractCreator {
 
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument, nsIDOMElement visualElement,
-			Map visualNodeMap) {
+			Map visualNodeMap) throws VpeExpressionException {
 		nsIDOMElement visualNewElement = visualDocument
 				.createElement(sourceNode.getNodeName());
 		visualNodeMap.put(this, visualNewElement);

@@ -21,6 +21,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -185,7 +186,7 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 		}
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) throws VpeExpressionException {
 		nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(div);
 
@@ -224,7 +225,7 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 		return creatorInfo;
 	}
 
-	private void setStyles(VpePageContext pageContext, Node sourceNode, nsIDOMElement div, nsIDOMElement span) {
+	private void setStyles(VpePageContext pageContext, Node sourceNode, nsIDOMElement div, nsIDOMElement span) throws VpeExpressionException {
 		boolean display = true;
 		boolean displayBlock = true;
 
@@ -289,9 +290,16 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 	private String getExprValue(VpePageContext pageContext, VpeExpression expr, Node sourceNode) {
 		String value;
 		if (expr != null) {
-			value = expr.exec(pageContext, sourceNode).stringValue();
+			try {
+				value = expr.exec(pageContext, sourceNode).stringValue();
+			} catch (VpeExpressionException e) {
+				
+					VpeExpressionException exception = new VpeExpressionException(sourceNode.toString()+" "+expr.toString(),e); //$NON-NLS-1$
+					VpePlugin.reportProblem(exception);
+					value=""; //$NON-NLS-1$
+			}
 		} else {
-			value = "";
+			value = ""; //$NON-NLS-1$
 		}
 		return value;
 	}
@@ -300,7 +308,12 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 		Object elements = visualNodeMap.get(this);
 		if (elements != null && elements instanceof VisualElements) {
 			VisualElements o = (VisualElements)elements;
-			setStyles(pageContext, sourceElement, o.div, o.span);
+			try {
+				setStyles(pageContext, sourceElement, o.div, o.span);
+			} catch (VpeExpressionException e) {
+				VpeExpressionException exception = new VpeExpressionException(sourceElement.toString()+" "+name+" "+value,e); //$NON-NLS-1$ //$NON-NLS-2$
+				VpePlugin.reportProblem(exception) ;
+			}
 		}
 	}
 
@@ -308,7 +321,12 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 		Object elements = visualNodeMap.get(this);
 		if (elements != null && elements instanceof VisualElements) {
 			VisualElements o = (VisualElements)elements;
-			setStyles(pageContext, sourceElement, o.div, o.span);
+			try {
+				setStyles(pageContext, sourceElement, o.div, o.span);
+			} catch (VpeExpressionException e) {
+				VpeExpressionException exception = new VpeExpressionException(sourceElement.toString()+" "+name,e); //$NON-NLS-1$
+				VpePlugin.reportProblem(exception);
+			}
 		}
 	}
 

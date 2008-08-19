@@ -16,7 +16,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeFunctionIif extends VpeFunction {
 
-	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
+	public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 		if (getParameter(0).exec(pageContext, sourceNode).booleanValue()) {
 			return getParameter(1).exec(pageContext, sourceNode); 
 		} else {

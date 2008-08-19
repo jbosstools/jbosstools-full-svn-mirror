@@ -18,6 +18,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
 import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -31,9 +32,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class VpeIncludeTemplate extends VpeAbstractTemplate {
-	private static final String ATTR_FILE = "file";
+	private static final String ATTR_FILE = "file"; //$NON-NLS-1$
 	private VpeExpression fileNameExpression;
 	
+	@Override
 	protected void init(Element templateElement) {
 		modify = false;
 		Attr fileAttr = ((Element)templateElement).getAttributeNode(ATTR_FILE);
@@ -50,7 +52,9 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 		String fileName = null;
 		if (fileNameExpression != null) {
-			VpeValue vpeValue = fileNameExpression.exec(pageContext, sourceNode);
+			VpeValue vpeValue;
+			try {
+				vpeValue = fileNameExpression.exec(pageContext, sourceNode);
 			if (vpeValue != null && vpeValue.stringValue().length() > 0) {
 				fileName = vpeValue.stringValue();
 				VpeIncludeInfo info = pageContext.getVisualBuilder().getCurrentIncludeInfo();
@@ -75,6 +79,11 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 						}
 					}
 				}
+			}
+			} catch (VpeExpressionException e) {
+				VpeExpressionException exception = new VpeExpressionException(
+						sourceNode.toString(),e);
+				VpePlugin.reportProblem(exception);
 			}
 		}
 		
@@ -131,9 +140,15 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 
 	public void openIncludeEditor(VpePageContext pageContext, Element sourceElement, Object data) {
 		if (sourceElement != null && fileNameExpression != null) {
-			VpeValue vpeValue = fileNameExpression.exec(pageContext, sourceElement);
-			if (vpeValue != null && vpeValue.stringValue().length() > 0) {
-			    pageContext.openIncludeFile(vpeValue.stringValue());
+			VpeValue vpeValue;
+			try {
+				vpeValue = fileNameExpression.exec(pageContext, sourceElement);
+				if (vpeValue != null && vpeValue.stringValue().length() > 0) {
+				    pageContext.openIncludeFile(vpeValue.stringValue());
+				}
+			} catch (VpeExpressionException e) {
+					
+					VpePlugin.reportProblem(e);
 			}
 		}
 	}

@@ -17,7 +17,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeFunctionAttrPresent extends VpeFunction {
 
-	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
+	public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 		boolean present = false;
 		NamedNodeMap attrs = sourceNode.getAttributes();
 		if (attrs != null) {
@@ -30,6 +30,7 @@ public class VpeFunctionAttrPresent extends VpeFunction {
 		return new VpeValue(present);
 	}
 
+	@Override
 	String[] getSignatures() {
 		return new String[] {VpeExpressionBuilder.SIGNATURE_ANY_ATTR};
 	}

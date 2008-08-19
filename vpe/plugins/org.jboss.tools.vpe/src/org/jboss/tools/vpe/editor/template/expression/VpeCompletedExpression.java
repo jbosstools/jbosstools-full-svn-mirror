@@ -21,9 +21,9 @@ public class VpeCompletedExpression implements VpeExpression {
 		this.expressions = expressions;
 	}
 
-	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
+	public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 		if (expressions == null) {
-			return new VpeValue("");
+			return new VpeValue(""); //$NON-NLS-1$
 		}
 		StringBuffer result = new StringBuffer();
 		for (int i = 0; i < expressions.length; i++) {

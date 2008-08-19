@@ -19,6 +19,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
 
@@ -54,10 +55,17 @@ public class VpeTemplateConditionSet extends VpeTemplateSet {
 		if (expression == null) {
 			return false;
 		}
-		VpeValue value = expression.exec(pageContext, sourceNode);
-		if (value == null) {
+		try {
+			VpeValue value = expression.exec(pageContext, sourceNode);
+			
+			if (value == null) {
+				return false;
+			}
+			return value.booleanValue();
+		} catch (VpeExpressionException e) {
+			
+			VpePlugin.reportProblem(e);
 			return false;
 		}
-		return value.booleanValue();
 	}
 }

@@ -20,7 +20,7 @@ import org.w3c.dom.Node;
 
 public class VpeFunctionHasInParents extends VpeFunction {
 
-	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
+	public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 		String prm = getParameter(0).exec(pageContext, sourceNode)
 				.stringValue();
 		Node parentNode = sourceNode.getParentNode();

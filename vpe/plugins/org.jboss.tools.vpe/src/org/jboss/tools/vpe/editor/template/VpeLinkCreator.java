@@ -18,6 +18,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -112,9 +113,14 @@ public class VpeLinkCreator extends VpeAbstractCreator {
 	private String getExprValue(VpePageContext pageContext, VpeExpression expr, Node sourceNode) {
 		String value;
 		if (expr != null) {
-			value = expr.exec(pageContext, sourceNode).stringValue();
+			try {
+				value = expr.exec(pageContext, sourceNode).stringValue();
+			} catch (VpeExpressionException ex) {
+					VpePlugin.reportProblem(ex);
+					value=""; //$NON-NLS-1$
+			}
 		} else {
-			value = "";
+			value = ""; //$NON-NLS-1$
 		}
 		return value;
 	}

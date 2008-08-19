@@ -22,6 +22,7 @@ import org.jboss.tools.vpe.editor.VpeSourceDomBuilder;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -189,8 +190,14 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		if (creator == null) {
 			return null;
 		}
-		
-		VpeCreatorInfo elementInfo = creator.create(pageContext, sourceElement, visualDocument, visualParent, visualNodeMap);
+		VpeCreatorInfo elementInfo =null;
+		try {
+			elementInfo = creator.create(pageContext, sourceElement, visualDocument, visualParent, visualNodeMap);
+		} catch(VpeExpressionException ex) {
+			
+			VpeExpressionException exception = new VpeExpressionException("Exception on processing node "+sourceElement.toString(), ex); //$NON-NLS-1$
+			VpePlugin.reportProblem(exception);
+		}
 		if (elementInfo != null) {
 			nsIDOMElement visualElement = (nsIDOMElement)elementInfo.getVisualNode();
 			if (visualElement != null) {

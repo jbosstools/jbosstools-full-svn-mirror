@@ -16,11 +16,12 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeEqualOperation extends VpeOperation {
 	
+	@Override
 	int getPriority() {
 		return PRIORITY_OPERATION_EQUAL;
 	}
 
-	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
+	public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 		VpeValue leftValue = getLeftOperand().exec(pageContext, sourceNode);
 		VpeValue rightValue = getRightOperand().exec(pageContext, sourceNode);
 		return leftValue.equal(rightValue);

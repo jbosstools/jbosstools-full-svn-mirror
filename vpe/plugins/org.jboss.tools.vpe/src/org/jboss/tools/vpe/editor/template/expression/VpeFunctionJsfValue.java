@@ -18,7 +18,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeFunctionJsfValue extends VpeFunction {
 
-	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
+	public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 		String value = getParameter(0).exec(pageContext, sourceNode).stringValue();
 		BundleMap bundle = pageContext.getBundle();
 		int offset = pageContext.getVisualBuilder().getCurrentMainIncludeOffset();
@@ -27,6 +27,7 @@ public class VpeFunctionJsfValue extends VpeFunction {
 		return new VpeValue(jsfValue != null ? jsfValue : value);
 	}
 
+	@Override
 	String[] getSignatures() {
 		return new String[] {VpeExpressionBuilder.SIGNATURE_JSF_VALUE};
 	}

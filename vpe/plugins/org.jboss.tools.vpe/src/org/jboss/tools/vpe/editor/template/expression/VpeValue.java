@@ -37,11 +37,11 @@ public class VpeValue {
 		return type;
 	}
 	
-	public boolean booleanValue() {
+	public boolean booleanValue() throws VpeExpressionException {
 		if (type == BOOLEAN_VALUE) {
 			return booleanValue;
 		} else {
-			throw new VpeExpressionError(ERROR_TYPE_CONVERSION);
+			throw new VpeExpressionException(ERROR_TYPE_CONVERSION+" for["+stringValue+"]"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 	
@@ -56,9 +56,9 @@ public class VpeValue {
 		}
 	}
 	
-	VpeValue equal(VpeValue other) {
+	VpeValue equal(VpeValue other) throws VpeExpressionException {
 		if (type != other.type()) {
-			throw new VpeExpressionError(ERROR_TYPE_CONVERSION);
+			throw new VpeExpressionException(ERROR_TYPE_CONVERSION+" for["+stringValue+"]");  //$NON-NLS-1$//$NON-NLS-2$
 		}
 		boolean value;
 		switch (type) {
@@ -75,31 +75,31 @@ public class VpeValue {
 		return new VpeValue(value); 
 	}
 	
-	VpeValue not() {
+	VpeValue not() throws VpeExpressionException{
 		if (type != BOOLEAN_VALUE) {
-			throw new VpeExpressionError(ERROR_TYPE_CONVERSION);
+			throw new VpeExpressionException(ERROR_TYPE_CONVERSION+" for["+stringValue+"]");  //$NON-NLS-1$//$NON-NLS-2$
 		}
 		return new VpeValue(!booleanValue);
 	}
 	
-	VpeValue and(VpeValue other) {
+	VpeValue and(VpeValue other) throws VpeExpressionException {
 		if (type != BOOLEAN_VALUE || other.type() != BOOLEAN_VALUE) {
-			throw new VpeExpressionError(ERROR_TYPE_CONVERSION);
+			throw new VpeExpressionException(ERROR_TYPE_CONVERSION+" for["+stringValue+"]"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		return new VpeValue(booleanValue && other.booleanValue());
 	}
 	
-	VpeValue or(VpeValue other) {
+	VpeValue or(VpeValue other) throws VpeExpressionException{
 		if (type != BOOLEAN_VALUE || other.type() != BOOLEAN_VALUE) {
-			throw new VpeExpressionError(ERROR_TYPE_CONVERSION);
+			throw new VpeExpressionException(ERROR_TYPE_CONVERSION+" for["+stringValue+"]"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		return new VpeValue(booleanValue || other.booleanValue());
 	}
 	
 	
-	VpeValue plus(VpeValue other) {
+	VpeValue plus(VpeValue other) throws VpeExpressionException{
 		if (type != STRING_VALUE || other.type() != STRING_VALUE) {
-			throw new VpeExpressionError(ERROR_TYPE_CONVERSION);
+			throw new VpeExpressionException(ERROR_TYPE_CONVERSION+" for["+stringValue+"]");  //$NON-NLS-1$//$NON-NLS-2$
 		}
 		return new VpeValue(stringValue +  other.stringValue());
 	}

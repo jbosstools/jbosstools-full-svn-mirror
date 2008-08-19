@@ -15,6 +15,7 @@ import java.util.Map;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -35,7 +36,7 @@ public abstract class VpeAbstractCreator implements VpeCreator {
 	 * @param visualNodeMap Is used for a storage padding information.
 	 * @return The information on the created node of the visual tree. 
 	 */
-	public abstract VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap);
+	public abstract VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap)throws VpeExpressionException ;
 
 	/**
 	 * Is invoked after construction of all child nodes of the current visual node.

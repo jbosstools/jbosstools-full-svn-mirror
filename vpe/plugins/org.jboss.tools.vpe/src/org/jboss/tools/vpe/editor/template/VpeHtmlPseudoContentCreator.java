@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -65,7 +66,8 @@ public class VpeHtmlPseudoContentCreator extends VpePseudoContentCreator {
 		}
 	}
 
-	public void setPseudoContent(VpePageContext pageContext, Node sourceContainer, nsIDOMNode visualContainer, nsIDOMDocument visualDocument) {
+	@Override
+	public void setPseudoContent(VpePageContext pageContext, Node sourceContainer, nsIDOMNode visualContainer, nsIDOMDocument visualDocument) throws VpeExpressionException {
 		nsIDOMElement visualNewElement = visualDocument.createElement(name);
 		setPseudoAttribute(visualNewElement);
 		if (attrs != null) {

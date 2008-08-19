@@ -24,13 +24,14 @@ public abstract class VpeFunction extends VpeOperand {
 		this.paramertes = paramertes;
 	}
 	
+	@Override
 	int getPriority() {
 		return PRIORITY_OPERAND;
 	}
 
-	VpeOperand getParameter(int index) {
+	VpeOperand getParameter(int index) throws VpeExpressionException {
 		if (paramertes == null || paramertes.length < index) {
-			throw new VpeExpressionError(ERROR_PARAMETER_INCORRECT);
+			throw new VpeExpressionException(ERROR_PARAMETER_INCORRECT);
 		}
 		return paramertes[index];
 	}

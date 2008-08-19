@@ -22,6 +22,7 @@ import org.jboss.tools.vpe.editor.template.VpeDataTableElements.VisualDataTableE
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.mozilla.interfaces.nsIDOMAttr;
@@ -145,9 +146,10 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 
 	}
 
+	@Override
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument, nsIDOMElement visualElement,
-			Map visualNodeMap) {
+			Map visualNodeMap) throws VpeExpressionException {
 
 		SourceDataTableElements sourceElements = new SourceDataTableElements(
 				sourceNode);

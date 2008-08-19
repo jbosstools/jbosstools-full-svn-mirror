@@ -69,7 +69,7 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 	
 	private static final String MAX_VERSION_KEYWORD="max";//$NON-NLS-1$
 	
-	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
+	public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 		//gets function parameter
 
 			String tagValue = getParameter(0).exec(pageContext, sourceNode)

@@ -21,15 +21,18 @@ import org.w3c.dom.Node;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeFunctionHref extends VpeFunctionSrc {
-    protected String getUnresolved() {
+    @Override
+	protected String getUnresolved() {
 	    return ""; //$NON-NLS-1$
     }
 
-    String[] getSignatures() {
+    @Override
+	String[] getSignatures() {
 		return new String[] {VpeExpressionBuilder.SIGNATURE_ANY_ATTR};
 	}
 
-    public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
+    @Override
+	public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 	String tagValue = getParameter(0).exec(pageContext, sourceNode).stringValue();
 
 	tagValue = resolveEL(pageContext,tagValue);

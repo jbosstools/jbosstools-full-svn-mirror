@@ -16,7 +16,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeFunctionNot extends VpeFunction {
 
-	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
+	public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 		return getParameter(0).exec(pageContext, sourceNode).not();
 	}
 }

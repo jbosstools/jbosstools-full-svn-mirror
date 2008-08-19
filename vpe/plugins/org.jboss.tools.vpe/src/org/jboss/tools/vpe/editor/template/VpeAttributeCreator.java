@@ -17,6 +17,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
 import org.mozilla.interfaces.nsIDOMAttr;
@@ -46,7 +47,7 @@ public class VpeAttributeCreator extends VpeAbstractCreator {
 		}
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) throws VpeExpressionException {
 
 		if (expression != null) {
 			if (visualNodeMap != null) {
@@ -71,6 +72,7 @@ public class VpeAttributeCreator extends VpeAbstractCreator {
 	}
 	
 	private void setValue(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
+		try{
 		if (expression != null) {
 			nsIDOMElement visualElement = (nsIDOMElement) visualNodeMap.get(this);
 			VpeValue vpeValue = expression.exec(pageContext, sourceElement);
@@ -79,6 +81,10 @@ public class VpeAttributeCreator extends VpeAbstractCreator {
 			} else {
 				visualElement.removeAttribute(this.name);
 			}
+		}
+		} catch(VpeExpressionException ex) {
+			VpeExpressionException exception = new VpeExpressionException(sourceElement.toString()+" "+expression.toString(),ex); //$NON-NLS-1$
+			VpePlugin.reportProblem(exception);
 		}
 	}
 }

@@ -16,8 +16,8 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeFunctionParentAttrValue extends VpeFunction {
 
-	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
-		String prm = getParameter(0).exec(pageContext, sourceNode).stringValue();
+	public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
+	
 		Node parentNode = sourceNode.getParentNode();
 		if (parentNode != null) {
 			String a = getParameter(0).exec(pageContext, parentNode).stringValue();
@@ -26,6 +26,6 @@ public class VpeFunctionParentAttrValue extends VpeFunction {
 				return new VpeValue(attr.getNodeValue());
 			}
 		}
-		return new VpeValue("");
+		return new VpeValue(""); //$NON-NLS-1$
 	}
 }

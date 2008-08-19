@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor.template;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -20,7 +21,7 @@ import org.w3c.dom.Node;
 public abstract class VpePseudoContentCreator {
 	private static final String PSEUDO_CONTENT_ATTR = "vpe:pseudo-element";
 	
-	public abstract void setPseudoContent(VpePageContext pageContext, Node sourceContainer, nsIDOMNode visualContainer, nsIDOMDocument visualDocument);
+	public abstract void setPseudoContent(VpePageContext pageContext, Node sourceContainer, nsIDOMNode visualContainer, nsIDOMDocument visualDocument) throws VpeExpressionException;
 	
 	public static void setPseudoAttribute(nsIDOMElement visualPseudoElement) {
 		visualPseudoElement.setAttribute(PSEUDO_CONTENT_ATTR, "yes");

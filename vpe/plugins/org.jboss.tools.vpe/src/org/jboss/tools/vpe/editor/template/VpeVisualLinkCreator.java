@@ -17,6 +17,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -113,7 +114,7 @@ public class VpeVisualLinkCreator extends VpeAbstractCreator {
 	}
 
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement,
-            Map visualNodeMap) {
+            Map visualNodeMap) throws VpeExpressionException {
 
         nsIDOMElement a = visualDocument.createElement(HTML.TAG_A);
 

@@ -43,7 +43,7 @@ public class VpeFunctionSrc extends VpeFunction {
     static final String IMG_UNRESOLVED = "unresolved.gif"; //$NON-NLS-1$
     static final String IMG_PREFIX = "file:///"; //$NON-NLS-1$
 
-    public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
+    public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 	String tagValue = getParameter(0).exec(pageContext, sourceNode)
 		.stringValue();
 	tagValue = resolveEL(pageContext,tagValue);
@@ -186,8 +186,8 @@ public class VpeFunctionSrc extends VpeFunction {
 	return IMG_PREFIX;
     }
 
-    String processValue(VpePageContext pageContext, Node sourceNode,
-	    String tagValue) {
+    private String processValue(VpePageContext pageContext, Node sourceNode,
+	    String tagValue) throws VpeExpressionException {
 	String attrName = null;
 	if (getParameter(0) instanceof VpeAttributeOperand) {
 	    attrName = ((VpeAttributeOperand) getParameter(0)).getAttributeName();

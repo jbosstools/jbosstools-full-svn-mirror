@@ -18,6 +18,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -28,7 +29,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class VpeValueCreator extends VpeAbstractCreator implements VpeOutputAttributes {
-	public static final String SIGNATURE_VPE_VALUE = ":vpe:value";
+	public static final String SIGNATURE_VPE_VALUE = ":vpe:value"; //$NON-NLS-1$
 
 	private VpeExpression expression;
 	private String outputAttrName;
@@ -51,7 +52,7 @@ public class VpeValueCreator extends VpeAbstractCreator implements VpeOutputAttr
 		}
 	}
 
-	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
+	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) throws VpeExpressionException {
 		String value;
 		if (expression != null) {
 			value = expression.exec(pageContext, sourceNode).stringValue();
@@ -78,9 +79,14 @@ public class VpeValueCreator extends VpeAbstractCreator implements VpeOutputAttr
 	private void setValue(VpePageContext pageContext, Element sourceElement, Map<?,?> visualNodeMap) {
 		String value;
 		if (expression != null) {
-			value = expression.exec(pageContext, sourceElement).stringValue();
+			try {
+				value = expression.exec(pageContext, sourceElement).stringValue();
+			} catch (VpeExpressionException ex) {
+				VpePlugin.reportProblem(ex);
+				value=""; //$NON-NLS-1$
+			}
 		} else {
-			value = "";
+			value = ""; //$NON-NLS-1$
 		}
 		nsIDOMNode valueNode = (nsIDOMNode) visualNodeMap.get(this);
 		valueNode.setNodeValue(value);
@@ -110,8 +116,14 @@ public class VpeValueCreator extends VpeAbstractCreator implements VpeOutputAttr
 	public boolean isEditabledAtribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
 		if (outputAttrName != null && expression != null) {
 			String attrValue = sourceElement.getAttribute(outputAttrName);
-			String exprValue = expression.exec(pageContext, sourceElement).stringValue();
-			return exprValue.equals(attrValue);
+			String exprValue;
+			try {
+				exprValue = expression.exec(pageContext, sourceElement).stringValue();
+				return exprValue.equals(attrValue);
+			} catch (VpeExpressionException ex) {
+				VpePlugin.reportProblem(ex);
+			}
+
 		}
 		return false;
 	}

@@ -19,6 +19,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -188,7 +189,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument, nsIDOMElement visualElement,
-			Map visualNodeMap) {
+			Map visualNodeMap) throws VpeExpressionException {
 		int tableSize = 1;
 		if (tableSizeExpr != null) {
 			VpeValue vpeValue = tableSizeExpr.exec(pageContext, sourceNode);
@@ -417,7 +418,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 	}
 
 	private List getClasses(VpeExpression expression, Node sourceNode,
-			VpePageContext pageContext) {
+			VpePageContext pageContext) throws VpeExpressionException {
 		List b = new ArrayList();
 		if (expression != null && sourceNode != null) {
 			String classes = expression.exec(pageContext, sourceNode)
@@ -435,7 +436,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 	private void makeSpecial(Node header, nsIDOMElement visualHead,
 			nsIDOMDocument visualDocument, int tableSize,
 			VpeCreatorInfo creatorInfo, String cellTag,
-			VpeExpression headerClassExpr, VpePageContext pageContext) {
+			VpeExpression headerClassExpr, VpePageContext pageContext) throws VpeExpressionException {
 		if (header != null && visualHead != null) {
 			nsIDOMElement visualRow = visualDocument.createElement(HTML.TAG_TR);
 			visualHead.appendChild(visualRow);

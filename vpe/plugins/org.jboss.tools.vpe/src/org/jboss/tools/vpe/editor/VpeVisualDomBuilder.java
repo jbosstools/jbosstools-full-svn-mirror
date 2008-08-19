@@ -67,6 +67,7 @@ import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.util.ElService;
 import org.jboss.tools.vpe.editor.util.FaceletUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -440,7 +441,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
         VpeTemplate defTemplate = templateManager.getDefTemplate();
         creationData = defTemplate.create(getPageContext(), sourceNode,
             getVisualDocument());
-        }
+        } 
         
         getPageContext().setCurrentVisualNode(null);
 
@@ -770,9 +771,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
         containerTemplate.setPseudoContent(pageContext, sourceContainer,
             visualContainer, visualDocument);
     } else {
-        VpeDefaultPseudoContentCreator.getInstance().setPseudoContent(
-            pageContext, sourceContainer, visualContainer,
-            visualDocument);
+        try {
+			VpeDefaultPseudoContentCreator.getInstance().setPseudoContent(
+			    pageContext, sourceContainer, visualContainer,
+			    visualDocument);
+		} catch (VpeExpressionException ex) {
+			VpeExpressionException exception = new VpeExpressionException("Error for source node"+sourceContainer.toString(),ex); //$NON-NLS-1$
+			VpePlugin.reportProblem(exception);
+		}
     }
 
     // if (isEmptyElement(visualContainer)) {

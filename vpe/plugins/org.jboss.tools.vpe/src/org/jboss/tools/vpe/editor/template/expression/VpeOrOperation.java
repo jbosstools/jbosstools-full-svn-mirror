@@ -16,11 +16,12 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeOrOperation extends VpeOperation {
 
+	@Override
 	int getPriority() {
 		return PRIORITY_OPERATION_OR;
 	}
 
-	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
+	public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 		VpeValue leftValue = getLeftOperand().exec(pageContext, sourceNode);
 		VpeValue rightValue = getRightOperand().exec(pageContext, sourceNode);
 		return leftValue.or(rightValue);

@@ -9,10 +9,20 @@
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template.expression;
+/**
+ * 
+ * Expression parsing Exception
+ *
+ */
+public class VpeExpressionException extends Exception {
 
-public class VpeExpressionError extends Error {
-
-	VpeExpressionError(String message) {
+	private static final long serialVersionUID = 3620963302559253556L;
+	
+	public VpeExpressionException(String message) {
 		super(message);
+	}
+	
+	public VpeExpressionException(String message, Throwable throwable) {
+		super(message, throwable);
 	}
 }

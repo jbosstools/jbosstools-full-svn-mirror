@@ -33,6 +33,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.resize.VpeResizer;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
 import org.jboss.tools.vpe.editor.util.ElService;
@@ -1245,6 +1246,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	public void setPseudoContent(VpePageContext pageContext,
 			Node sourceContainer, nsIDOMNode visualContainer,
 			nsIDOMDocument visualDocument) {
+		try{
 		if (pseudoContentCreator != null) {
 			pseudoContentCreator.setPseudoContent(pageContext, sourceContainer,
 					visualContainer, visualDocument);
@@ -1252,6 +1254,11 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 			VpeDefaultPseudoContentCreator.getInstance().setPseudoContent(
 					pageContext, sourceContainer, visualContainer,
 					visualDocument);
+		}
+		} catch (VpeExpressionException ex) {
+			
+			VpeExpressionException exception = new VpeExpressionException(sourceContainer+" ",ex);
+			VpePlugin.reportProblem(exception);
 		}
 	}
 
