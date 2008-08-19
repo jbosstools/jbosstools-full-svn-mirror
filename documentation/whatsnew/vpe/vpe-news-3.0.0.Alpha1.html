@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>What's New Visual Page Editor</title>
+</head>
+<body>
+<h1>What's New Visual Page Editor</h1>
+<p>Last revised August 8, 2008</p>
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Visual Page Editor</h3>
+	<hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left"><a name="itemnam2e" id="itemname2"></a><b>Custom EL substitution</b></td>
+    <td width="70%" valign="top"><p>There are now an a section in "Page Design Options" for Visual Page Editor that allows user to configure values to substitute with when the editor encounter an EL expression.
+    </p>
+
+<p>This is very usefull if you have custom skins or image resources that you refer to by EL which value are normally only known at runtime. By setting up the values in the Page Design Options the visual editor will "resolve" the EL and be able to locate the resources and provide a closer to real life visualization.</p>
+
+    <p><img src="images/el-configuration.png" alt="El Configuration Example"/></p>
+    
+    <p>The variables can be set at Project, folder and page level allowing for flexible overrides in custom project layouts.</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+      <p><b>CSS Editor</b></p></td>
+      <td valign="top"><p>An CSS Editor was added for editing inline styles for elements that has a style attribute.
+		It is started by selecting an element in VPE and then via the properties view find the style attribute and click ... to start the dialog. </p>
+
+   		<p><img src="images/css-dialog-calling.png" alt="Call Place Of CSS Dialog"/></p>
+
+	<p>The editor dialog has four tabs where CSS properties for text, color, position and others can be specified and adjusted. 
+        The quick edit tab shows just the edited properties, removing the need to browse multiple tabs to adjust an existing styling.</p>
+
+	<p>The bottom of dialog a preview is continously updated while the styling are adjusted.</p>
+	
+
+   	<p><img src="images/css-editor-dialog.png" alt="CSS Editor Dialog"/></p>	
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Update Visual Editor Preview Improvements</b></td>
+    <td valign="top"><p>
+    Update of visual editor preview on change source code was made in separate thread, and now it does not cause eclipse to 
+ 	'sleep' when we edit something in source part of visual editor for large files.
+   	</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left"><a name="itemname4" id="itemname4"></a><b>Visual Editor Caret and Speed improvements</b></td>
+    <td valign="top"><p> The visual editor now has a visible caret for
+	editing and we also made the update mechanism run in the background so Eclipse
+	should no longer 'pause' when updating the visual preview plus we started waiting for the user to stop typing before actually doing the update.
+   	</p>
+
+        <p>The preview also now obeys the used doctype in the HTML source to provide better and more consistent preview via Mozilla.</p>
+
+       <p>All-in-all improvements that should make the editing process faster and give a better editing flow.</p>
+    </td>
+  </tr>
+   <tr>
+    <td colspan="2"><hr />
+    </td>
+</table>
+
+</body>
+
+</html>
+
+
