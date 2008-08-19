@@ -11,7 +11,7 @@
 <body>
 <h1>Core 3.0.0.Alpha1 What's New</h1>
 
-<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../vpe/vpe-news-2.1.0.CR1.html">Visual Page Editor News &gt;</a></p>
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../seam/seam-news-2.0.0.Alpha1.html">Seam News &gt;</a></p>
 
 
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
@@ -39,7 +39,7 @@
   </tr>
   <tr>
     <td valign="top" align="right">
-       <a name="itemname3" id="itemname3"></a><b>Relative paths</b>
+       <a name="itemname3" id="itemname3"></a><b>Common Navigator Views</b>
     </td>
     <td valign="top">
 
@@ -48,6 +48,8 @@
     archive view, but also makes "Project Archives" node available in
     Project Explorer for even easier access.</p>
 
+   <p><img src="../images/projectarchivesinprojextexplorer.png"/></p>
+
   </tr>
   <tr>
     <td colspan="2"><hr />
@@ -55,11 +57,21 @@
   </tr>
   <tr>
     <td valign="top" align="right">
-       <a name="itemname3" id="itemname3"></a><b>Variable support</b>
+       <a name="itemname3" id="itemname3"></a><b>Variable and relative path support</b>
     </td>
     <td valign="top">
 
-<p>Archives can now use Eclipse variables to specify destination paths.</p>
+      <p>Archives can now use Eclipse variables to specify destination paths and paths are now relative to the location of the .packages file.</p>
+
+      <p>These two features allow teams to more easily share .packages files because it allows for more flexibile/dynamic archive specification</p>
+
+<p>Example 1: Because we no longer require absolute paths including the project name you can now have /projectA-1.0 and /projectA-2.3 and not having to change the .packages file to reflect the change in version numbers. Instead of using /projectA-1.0 or /projectA-2.3 as path you just use "" (blank) or ".".</p>
+
+<p>Example 2: By using Eclipse variables you can setup a system specific location but just refer to it via an eclipse variable. e.g. the following screenshots shows how usage of a custom defined variable (${hudson_loc}).</p>
+
+<img src="../images/archivescustomvariablesupport.png"/>
+
+<p>Variables can be selected and configured via the "Variables" button.</p>
 
   </tr>
   <tr>
@@ -72,17 +84,34 @@
     </td>
     <td valign="top">
 
-<p>The Archives view is now implemented with the
+<p>The Project Archives view is now implemented with the
     "Common Navigator" API which allow us to have a more customizable
     archive view, but also makes "Project Archives" node available in
     Project Explorer for even easier access.</p>
 
+   <p><img src="../images/projectarchivesinprojextexplorer.png"/></p>
+
+<p>Note: this feature is only available on Project Archives created with this version. See below.</p>
   </tr>
   <tr>
     <td colspan="2"><hr />
     </td>
   </tr>
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemname3" id="itemname3"></a><b>New .packages format</b>
+    </td>
+    <td valign="top">
 
+      <p>To accomdate the new features the .packages file format has
+      changed slightly. Old files will still work, but new ones will
+      have version="1.2" in the first element and should not be used
+      with old JBoss Tools versions.</p>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
 
 </table>
 

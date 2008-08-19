@@ -9,9 +9,9 @@
 <title>JBoss BIRT Integration</title>
 </head>
 <body>
-<h1>JBoss BIRT Integration 3.0.0.alpha1 - New and Noteworthy</h1>
-<p>Last revised August 8, 2008</p>
+<h1>JBoss BIRT Integration 1.0.0.alpha1 - New and Noteworthy</h1>
 
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../vpe/vpe-news-3.0.0.Alpha1.html">Visual Page Editor News &gt;</a></p>
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
   <tr>
     <td colspan="2">
@@ -79,6 +79,12 @@
 	<p><b>Deployment</b></p>
 	</td>
     <td valign="top">
+
+<p>Basic understanding on BIRT is required to use the integration, see <a href="http://www.eclipse.org/birt/phoenix/">BIRT homepage</a> for details.</p>
+<p>Below we describe the current needed configuration - these might change before GA.</p>
+<p>In any case when configured correctly you will be able to view/render the designed reports in your Seam (or any other Web application)</p>
+<p><img src="images/examplereport.png"/></p>
+
     <p>
     A Seam project that includes the BIRT facet can be deployed as any project.
     If you define the Hibernate ODA driver, the JBoss BIRT engine will use JNDI URL
@@ -107,6 +113,7 @@ HSF can be bound to JNDI adding the following property to the persistence.xml fi
 <code>&lt;property name="hibernate.session_factory_name" value="java:/projectname"/&gt;</code>
 
 <p>the user can use 'java:/projectname' as the JNDI URL property when creating a BIRT Hibernate Data Source.</p>
+
 
     </td>
   </tr>
