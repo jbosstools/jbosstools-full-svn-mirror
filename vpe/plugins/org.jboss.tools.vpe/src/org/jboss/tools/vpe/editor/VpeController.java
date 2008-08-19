@@ -73,6 +73,7 @@ import org.eclipse.wst.sse.core.internal.provisional.INodeNotifier;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
+import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 import org.eclipse.wst.sse.ui.internal.view.events.INodeSelectionListener;
 import org.eclipse.wst.sse.ui.internal.view.events.ITextSelectionListener;
 import org.eclipse.wst.sse.ui.internal.view.events.NodeSelectionChangedEvent;
@@ -2174,19 +2175,44 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				String uri = (parent == null) ? "" : parent.getAttributeValue(URIConstants.LIBRARY_URI); //$NON-NLS-1$
 				String libraryVersion = (parent == null) ? "" : parent.getAttributeValue(URIConstants.LIBRARY_VERSION); //$NON-NLS-1$
 				String defaultPrefix = (parent == null) ? "" : parent.getAttributeValue(URIConstants.DEFAULT_PREFIX); //$NON-NLS-1$
-				VpeSelectionProvider selProvider = new VpeSelectionProvider(
-						region);
-
+				
+				/*
+				 * Fixes https://jira.jboss.org/jira/browse/JBIDE-1363.
+				 * Fixes https://jira.jboss.org/jira/browse/JBIDE-2442.
+				 * author: dmaliarevich
+				 * StructuredSelectionProvider from source view is used 
+				 * instead of VpeSelectionProvider.
+				 * It helps automatically update selection range
+				 * after taglib insertion.
+				 */
+				StructuredTextViewer structuredTextViewer = null;
+				structuredTextViewer = getSourceEditor().getTextViewer();
+				int offset = 0;
+				int length = 0;
+				
 				String startText = "" + item.getAttributeValue("start text"); //$NON-NLS-1$ //$NON-NLS-2$
 				String endText = "" + item.getAttributeValue("end text"); //$NON-NLS-1$ //$NON-NLS-2$
 				if (type == AROUND_MENU) {
+					/*
+					 * In this case node was already selected correctly.
+					 */
 				} else if (type == BEFORE_MENU) {
-					selProvider = new VpeSelectionProvider(region
-							.getStartOffset());
+					offset = region.getStartOffset();
+					length = 0;
+					structuredTextViewer.setSelectedRange(offset, length);
+					structuredTextViewer.revealRange(offset, length);
 				} else if (type == AFTER_MENU) {
-					selProvider = new VpeSelectionProvider(region
-							.getEndOffset());
+					offset = region.getEndOffset();
+					length = 0;
+					structuredTextViewer.setSelectedRange(offset, length);
+					structuredTextViewer.revealRange(offset, length);
 				}
+				
+				/*
+				 * Gets source editor's selection provider 
+				 * with updated text selection.
+				 */
+				ISelectionProvider selProvider = getSourceEditor().getSelectionProvider();
 
 				Properties p = new Properties();
 				p.setProperty("tag name", tagName); //$NON-NLS-1$
