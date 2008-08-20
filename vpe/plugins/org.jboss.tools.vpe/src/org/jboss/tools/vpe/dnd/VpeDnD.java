@@ -140,7 +140,7 @@ public class VpeDnD {
 	 * @param event
 	 */
 	public void dragOver(nsIDOMEvent event, EditorDomEventListener editorDomEventListener) {
-		boolean canDrop = false;
+		boolean canDrop = true;
 		
 		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 		//in this condition  early was check for xulelement
