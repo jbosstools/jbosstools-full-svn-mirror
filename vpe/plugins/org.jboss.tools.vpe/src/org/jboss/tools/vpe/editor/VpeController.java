@@ -46,6 +46,7 @@ import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.MenuListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -89,12 +90,15 @@ import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
+import org.jboss.tools.common.model.ui.dnd.DnDUtil;
 import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
 import org.jboss.tools.common.model.ui.editor.IModelObjectEditorInput;
 import org.jboss.tools.common.model.ui.editors.dnd.DropCommandFactory;
 import org.jboss.tools.common.model.ui.editors.dnd.DropData;
 import org.jboss.tools.common.model.ui.editors.dnd.IDropCommand;
 import org.jboss.tools.common.model.ui.editors.dnd.JSPTagProposalFactory;
+import org.jboss.tools.common.model.ui.editors.dnd.context.DropContext;
+import org.jboss.tools.common.model.ui.editors.dnd.context.IDNDTextEditor;
 import org.jboss.tools.common.model.ui.editors.dnd.context.InnerDragBuffer;
 import org.jboss.tools.common.model.ui.objecteditor.ExtendedProperties;
 import org.jboss.tools.common.model.ui.objecteditor.ExtendedPropertiesWizard;
@@ -155,6 +159,7 @@ import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMMutationEvent;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIFile;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionListener;
 import org.mozilla.interfaces.nsISupports;
@@ -2772,52 +2777,66 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void externalDrop(nsIDOMMouseEvent mouseEvent, String flavor,
-			String data) {
-		onHideTooltip();
+            String data) {
+        onHideTooltip();
 
-		VpeVisualInnerDropInfo visualDropInfo = selectionBuilder
-				.getInnerDropInfo(mouseEvent);
-		Point range = selectionBuilder.getSourceSelectionRangeAtVisualNode(
-				visualDropInfo.getDropContainer(), (int) visualDropInfo
-						.getDropOffset());
-		VpeSourceInnerDropInfo sourceDropInfo = null;
+        VpeVisualInnerDropInfo visualDropInfo = selectionBuilder
+                .getInnerDropInfo(mouseEvent);
+        Point range = selectionBuilder.getSourceSelectionRangeAtVisualNode(
+                visualDropInfo.getDropContainer(), (int) visualDropInfo
+                        .getDropOffset());
+        VpeSourceInnerDropInfo sourceDropInfo = null;
 
-		if (MODEL_FLAVOR.equals(flavor)) {
-			XModelObject object = PreferenceModelUtilities.getPreferenceModel()
-					.getModelBuffer().source();
-			if (object.getFileType() == XModelObject.FILE
-					&& !TLDUtil.isTaglib(object)) {
-				flavor = "application/x-moz-file"; //$NON-NLS-1$
-				IFile f = (IFile) EclipseResourceUtil.getResource(object);
-				try {
-					data = f.getLocation().toFile().toURL().toString();
-				} catch (Exception e) {
-					VpePlugin.getPluginLog().logError(e);
-				}
-			} else {
-				String tagname = getTagName(object);
-				if (tagname.indexOf("taglib") >= 0)tagname = "taglib"; //$NON-NLS-1$ //$NON-NLS-2$
-				Node sourceDragNode = ((Document) getModel().getAdapter(
-						Document.class)).createElement(tagname);
-				if (visualDropInfo.getDropContainer() != null) {
-					sourceDropInfo = visualBuilder.getSourceInnerDropInfo(
-							sourceDragNode, visualDropInfo, true);
-					range = selectionBuilder.getSourceSelectionRange(
-							sourceDropInfo.getContainer(), sourceDropInfo
-									.getOffset());
-				}
-			}
-		}
+//      if (MODEL_FLAVOR.equals(flavor)) {
+//          XModelObject object = PreferenceModelUtilities.getPreferenceModel()
+//                  .getModelBuffer().source();
+//          if(object  == null)
 
-		if (visualDropInfo.getDropContainer() != null) {
-			if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
-				System.out
-						.println("  drop!  container: " + visualDropInfo.getDropContainer().getNodeName()); //$NON-NLS-1$
-			}
-			externalDropAny(flavor, data, range, sourceDropInfo == null ? null
-					: sourceDropInfo.getContainer());
-		}
-	}
+               nsIFile aFile = DnDUtil.getDnDFile(mouseEvent);
+               if(aFile!=null){
+                   data = aFile.getPath();
+               }
+//          if (object.getFileType() == XModelObject.FILE
+//                  && !TLDUtil.isTaglib(object)) {
+//              flavor = "application/x-moz-file"; //$NON-NLS-1$
+//              IFile f = (IFile) EclipseResourceUtil.getResource(object);
+//              try {
+//                  data = f.getLocation().toFile().toURL().toString();
+//              } catch (Exception e) {
+//                  VpePlugin.getPluginLog().logError(e);
+//              }
+//          } else {
+//              String tagname = getTagName(object);
+//              if (tagname.indexOf("taglib") >= 0)tagname = "taglib"; //$NON-NLS-1$ //$NON-NLS-2$
+//              Node sourceDragNode = ((Document) getModel().getAdapter(
+//                      Document.class)).createElement(tagname);
+//              if (visualDropInfo.getDropContainer() != null) {
+//                  sourceDropInfo = visualBuilder.getSourceInnerDropInfo(
+//                          sourceDragNode, visualDropInfo, true);
+//                  range = selectionBuilder.getSourceSelectionRange(
+//                          sourceDropInfo.getContainer(), sourceDropInfo
+//                                  .getOffset());
+//              }
+//          }
+    
+
+        if (visualDropInfo.getDropContainer() != null && data!=null) {
+            if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
+                System.out
+                        .println("  drop!  container: " + visualDropInfo.getDropContainer().getNodeName()); //$NON-NLS-1$
+            }
+            externalDropAny(flavor, data, range, sourceDropInfo == null ? null
+                    : sourceDropInfo.getContainer());
+                
+            DropContext dropContext = new DropContext(); 
+            IDNDTextEditor textEditor = (IDNDTextEditor) VpeController.this.editPart.getSourceEditor();
+            
+            TypedEvent tEvent = new TypedEvent(mouseEvent);
+            dropContext.setFlavor(DnDUtil.kFileMime);
+            dropContext.setMimeData(data);
+            DnDUtil.fireDnDEvent(dropContext, textEditor, tEvent);
+        }
+    }
 
 	public void onShowTooltip(int x, int y, final String text) {
 
