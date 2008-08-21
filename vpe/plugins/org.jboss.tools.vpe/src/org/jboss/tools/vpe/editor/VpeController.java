@@ -1320,6 +1320,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					}
 				}
 			}
+		
+		/*
+		 *  JBIDE-2670	
+		 */
+		keyEvent.stopPropagation();
 		} catch (Exception e) {
 			VpePlugin.getPluginLog().logError(e);
 			visualRefresh();
