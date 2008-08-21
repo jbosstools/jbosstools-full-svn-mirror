@@ -103,7 +103,6 @@ public class FileUtil {
 					// do nothing that means include will shown as text region with included file name
 			}
 		} else  {
-            try {
                 ResourceReference[] resources = RelativeFolderReferenceList.getInstance().getAllResources(includeFile);
                 if ((resources != null) && resources.length == 1) {
                     String location = resources[0].getLocation() + File.separator+fileName;
@@ -111,17 +110,10 @@ public class FileUtil {
                     //new File(location);
                     return ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);//ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);
                 } else {
-
                     IPath currentFolder = includeFile.getParent().getFullPath();
                     IPath path = currentFolder.append(fileName);
                     file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-                }
-            } catch (Exception e) {
-                if(VpeDebug.USE_PRINT_STACK_TRACE){
-                   e.printStackTrace();
-                }
-                return null;
-            }
+                } 
         }
         return file;
 	}
