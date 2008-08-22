@@ -68,7 +68,7 @@ public class ProjectArchivesCommonView extends CommonNavigator {
 				
 				Object element = ((IStructuredSelection)selection).getFirstElement();
 				IProject project = getProject(element);
-				if( project != null ) {
+				if( project != null && project != currentProject ) {
 					currentProject = project;
 					if( showProjectRoot())
 						getCommonViewer().setInput(ResourcesPlugin.getWorkspace().getRoot());
