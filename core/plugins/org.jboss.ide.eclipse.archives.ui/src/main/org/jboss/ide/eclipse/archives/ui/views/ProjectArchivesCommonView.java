@@ -27,6 +27,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
+import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate.WrappedProject;
 
 public class ProjectArchivesCommonView extends CommonNavigator {
 	protected static ProjectArchivesCommonView instance;
@@ -70,10 +71,13 @@ public class ProjectArchivesCommonView extends CommonNavigator {
 				IProject project = getProject(element);
 				if( project != null && project != currentProject ) {
 					currentProject = project;
-					if( showProjectRoot())
-						getCommonViewer().setInput(ResourcesPlugin.getWorkspace().getRoot());
-					else
+					if( showProjectRoot()) {
+						boolean showAll = PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS);
+						if( !showAll ||  !getCommonViewer().getInput().equals(ResourcesPlugin.getWorkspace().getRoot()))
+							getCommonViewer().setInput(ResourcesPlugin.getWorkspace().getRoot());
+					} else {
 						getCommonViewer().setInput(currentProject);
+					}
 				}
 			}
 			
@@ -86,6 +90,12 @@ public class ProjectArchivesCommonView extends CommonNavigator {
 					IResource resource = (IResource) adaptable.getAdapter(IResource.class);
 					if( resource != null )
 						return resource.getProject();
+				}
+				if( element instanceof WrappedProject ) 
+					return ((WrappedProject)element).getElement();
+				if( element instanceof IArchiveNode ) {
+					String projName = ((IArchiveNode)element).getProjectName();
+					return ResourcesPlugin.getWorkspace().getRoot().getProject(projName);
 				}
 				return null;
 			}
