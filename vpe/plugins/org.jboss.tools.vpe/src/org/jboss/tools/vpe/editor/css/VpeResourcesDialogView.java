@@ -11,15 +11,21 @@
 package org.jboss.tools.vpe.editor.css;
 
 import java.util.Properties;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
-import org.jboss.tools.common.model.ui.wizards.query.AbstractQueryWizardView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.jboss.tools.common.editor.el.ElVariablesComposite;
+import org.jboss.tools.common.editor.rreferences.AbsoluteFolderReferenceComposite;
+import org.jboss.tools.common.editor.rreferences.CssReferencesComposite;
+import org.jboss.tools.common.editor.rreferences.RelativeFolderReferenceComposite;
+import org.jboss.tools.common.editor.rreferences.TaglibReferencesComposite;
+import org.jboss.tools.common.model.ui.wizards.query.AbstractQueryWizardView;
 
 public class VpeResourcesDialogView extends AbstractQueryWizardView {
 	IFile file;

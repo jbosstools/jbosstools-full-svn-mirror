@@ -39,7 +39,6 @@ public class VpeUIMessages extends NLS {
 	}
 
 	public static String NAMESPACE_NOT_DEFINED;
-	public static String ACTUAL_RUN_TIME_ABSOLUTE_FOLDER;
 	public static String PREFERENCES;
 	public static String REFRESH;
 	public static String PAGE_DESIGN_OPTIONS;
@@ -95,8 +94,5 @@ public class VpeUIMessages extends NLS {
 	public static String CONFIRM_SELECTION_BAR_DIALOG_TOGGLE_MESSAGE;
 	public static String VPE_UPDATE_JOB_TITLE;
 	public static String VPE_VISUAL_REFRESH_JOB;
-	public static String INCLUDED_CSS_FILES;
-	public static String INCLUDED_TAG_LIBS;
-	public static String SUBSTITUTED_EL_EXPRESSIONS;
 	
 }

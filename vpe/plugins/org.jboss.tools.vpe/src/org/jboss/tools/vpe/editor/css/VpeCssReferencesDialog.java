@@ -13,6 +13,9 @@ package org.jboss.tools.vpe.editor.css;
 import java.util.*;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
+import org.jboss.tools.common.editor.rreferences.CSSReferenceList;
+import org.jboss.tools.common.editor.rreferences.ResourceReferenceList;
+import org.jboss.tools.common.editor.rreferences.ResourceReferencesTableProvider;
 import org.jboss.tools.common.model.ui.wizards.query.*;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
 
