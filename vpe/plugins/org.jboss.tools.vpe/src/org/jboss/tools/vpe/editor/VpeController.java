@@ -1225,7 +1225,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			switcher.stopActiveEditor();
 		}
 
-		try {
 			/*
 			 * adding calls of core event handlers, for example' CTR+H' or
 			 * 'CTRL+M' event handler dialog
@@ -1325,10 +1324,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		 *  JBIDE-2670	
 		 */
 		keyEvent.stopPropagation();
-		} catch (Exception e) {
-			VpePlugin.getPluginLog().logError(e);
-			visualRefresh();
-		}
 	}
 
 	public void elementResized(nsIDOMElement element, int resizerConstrains,
