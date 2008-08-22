@@ -72,8 +72,7 @@ public class ProjectArchivesCommonView extends CommonNavigator {
 				if( project != null && project != currentProject ) {
 					currentProject = project;
 					if( showProjectRoot()) {
-						boolean showAll = PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS);
-						if( !showAll ||  !getCommonViewer().getInput().equals(ResourcesPlugin.getWorkspace().getRoot()))
+						if( !showAllProjects() ||  !getCommonViewer().getInput().equals(ResourcesPlugin.getWorkspace().getRoot()))
 							getCommonViewer().setInput(ResourcesPlugin.getWorkspace().getRoot());
 					} else {
 						getCommonViewer().setInput(currentProject);
@@ -106,10 +105,15 @@ public class ProjectArchivesCommonView extends CommonNavigator {
 	public IProject getCurrentProject() { 
 		return currentProject;
 	}
-	private boolean showProjectRoot () {
+
+	private boolean showProjectRoot() {
 		return PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_PROJECT_ROOT);
 	}
-	
+
+	private boolean showAllProjects() {
+		return PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS);
+	}
+
 	public void addBuildActionToSite() {
 		Action buildAction = new Action("", ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_BUILD_PACKAGES)) {
 			public void run() {
