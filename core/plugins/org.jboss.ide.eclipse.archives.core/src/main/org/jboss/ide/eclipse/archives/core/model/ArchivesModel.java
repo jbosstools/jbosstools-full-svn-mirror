@@ -153,7 +153,7 @@ public class ArchivesModel implements IArchiveModel {
 	}
 	
 	public boolean isProjectRegistered(IPath projectPath) {
-		return archivesRoot.containsKey(projectPath);
+		return projectPath != null && archivesRoot.containsKey(projectPath);
 	}
 	
 	public boolean canReregister(IPath projectPath) {
@@ -161,7 +161,7 @@ public class ArchivesModel implements IArchiveModel {
 	}
 	
 	public boolean canReregister(IPath projectPath, String file) {
-		return projectPath.append(file).toFile().exists();
+		return projectPath != null && file != null && projectPath.append(file).toFile().exists();
 	}
 	
 	public IArchiveModelRootNode registerProject(IPath projectPath, IProgressMonitor monitor) throws ArchivesModelException {
