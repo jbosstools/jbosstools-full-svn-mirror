@@ -93,6 +93,8 @@ public class ArchivesModelModuleContributor implements IModuleContributor {
 	}
 	
 	protected void createModules(IProject project) throws ArchivesModelException {
+		if( project == null )
+			return;
 		IArchive[] packages = ModelUtil.getProjectArchives(project.getLocation());
 		if( packages != null && packages.length > 0 ) {
 			IModule module;
