@@ -27,9 +27,10 @@ import org.jboss.ide.eclipse.archives.core.model.IArchive;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
+import org.jboss.ide.eclipse.archives.ui.PrefsInitializer.IArchivesPreferenceListener;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate.WrappedProject;
 
-public class ProjectArchivesCommonView extends CommonNavigator {
+public class ProjectArchivesCommonView extends CommonNavigator implements IArchivesPreferenceListener {
 	protected static ProjectArchivesCommonView instance;
 	protected ISelectionListener selectionListener;
 	protected IProject currentProject;
@@ -47,6 +48,7 @@ public class ProjectArchivesCommonView extends CommonNavigator {
 	public void createPartControl(Composite aParent) {
 		super.createPartControl(aParent);
 		addBuildActionToSite();
+		PrefsInitializer.addListener(this);
 	}
 	
 	public void init(IViewSite site) throws PartInitException {
@@ -57,6 +59,7 @@ public class ProjectArchivesCommonView extends CommonNavigator {
     public void dispose() {
     	super.dispose();
     	PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService().removePostSelectionListener(selectionListener);
+		PrefsInitializer.removeListener(this);
     }
 
 	protected ISelectionListener createSelectionListener() {
@@ -71,13 +74,7 @@ public class ProjectArchivesCommonView extends CommonNavigator {
 				IProject project = getProject(element);
 				if( project != null && project != currentProject ) {
 					currentProject = project;
-					if( showProjectRoot()) {
-						// if we're showing all projects, then the view is already set. 
-						if( !showAllProjects() ||  !getCommonViewer().getInput().equals(ResourcesPlugin.getWorkspace().getRoot()))
-							getCommonViewer().setInput(ResourcesPlugin.getWorkspace().getRoot());
-					} else {
-						getCommonViewer().setInput(currentProject);
-					}
+					jiggleViewerInput();
 				}
 			}
 			
@@ -105,6 +102,16 @@ public class ProjectArchivesCommonView extends CommonNavigator {
 	
 	public IProject getCurrentProject() { 
 		return currentProject;
+	}
+	
+	protected void jiggleViewerInput() {
+		if( showProjectRoot()) {
+			// if we're showing all projects, then the view is already set. 
+			if( !showAllProjects() ||  !getCommonViewer().getInput().equals(ResourcesPlugin.getWorkspace().getRoot()))
+				getCommonViewer().setInput(ResourcesPlugin.getWorkspace().getRoot());
+		} else {
+			getCommonViewer().setInput(currentProject);
+		}
 	}
 
 	private boolean showProjectRoot() {
@@ -155,5 +162,9 @@ public class ProjectArchivesCommonView extends CommonNavigator {
 		if( adapter == IPropertySheetPage.class )
 			return new PropertySheetPage();
 		return super.getAdapter(adapter);
+	}
+
+	public void preferenceChanged(String key, boolean val) {
+		jiggleViewerInput();
 	}
 }

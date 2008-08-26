@@ -182,10 +182,6 @@ public class MainPreferencePage extends PropertyPage implements
 		PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_FULL_FILESET_ROOT_DIR, showFullFilesetRootDir.getSelection(), getElement());
 		PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_PROJECT_ROOT, showProjectRoot.getSelection(), getElement());
 		PrefsInitializer.setBoolean(PrefsInitializer.PREF_SHOW_ALL_PROJECTS, showAllProjects.getSelection(), getElement());
-		// TODO FIX THIS
-//			if( ProjectArchivesCommonView.getInstance() != null )
-//			ProjectArchivesCommonView.getInstance().refreshViewer(null);
-		
 		return true;
 	}
 }

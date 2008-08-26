@@ -1,5 +1,8 @@
 package org.jboss.ide.eclipse.archives.ui;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
@@ -18,6 +21,11 @@ public class PrefsInitializer extends AbstractPreferenceInitializer {
 	public static final String PREF_SHOW_FULL_FILESET_ROOT_DIR = "showFullFilesetRootDir";
 	public static final String PREF_SHOW_PROJECT_ROOT = "showProjectRoot";
 	public static final String PREF_SHOW_ALL_PROJECTS = "showAllProjects";
+	public static final ArrayList<IArchivesPreferenceListener> listeners = new ArrayList<IArchivesPreferenceListener>();
+	
+	public static interface IArchivesPreferenceListener {
+		public void preferenceChanged(String key, boolean val);
+	}
 	
 	public void initializeDefaultPreferences() {
 		IEclipsePreferences prefs = new DefaultScope().getNode(PackagesUIPlugin.PLUGIN_ID);
@@ -52,7 +60,23 @@ public class PrefsInitializer extends AbstractPreferenceInitializer {
 		try {
 			prefs.flush();
 		} catch (org.osgi.service.prefs.BackingStoreException e) { } // swallow
-
+		fireChanged(key, val);
+	}
+	
+	protected static void fireChanged(String key, boolean val) {
+		Iterator<IArchivesPreferenceListener> i = listeners.iterator();
+		while(i.hasNext()) {
+			i.next().preferenceChanged(key, val);
+		}
+	}
+	
+	public static void addListener(IArchivesPreferenceListener listener) {
+		if( !listeners.contains(listener))
+			listeners.add(listener);
+	}
+	
+	public static void removeListener(IArchivesPreferenceListener listener) {
+		listeners.remove(listener);
 	}
 	
 	/**
@@ -63,19 +87,6 @@ public class PrefsInitializer extends AbstractPreferenceInitializer {
 	public static boolean getBoolean(String key) {
 		return getBoolean(key, null, true);
 	}
-	
-	/**
-	 * Get the *effective* value of this preference upon this adaptable / resource
-	 * Effective values are the stored value if project-specific prefs are turned on.
-	 * Effective values are the global value if project-specific prefs are *NOT* turned on.
-	 * 
-	 * @param key
-	 * @param adaptable
-	 * @return
-	 */
-//	public static boolean getBoolean(String key, IAdaptable adaptable) {
-//		return getBoolean(key, adaptable, true);
-//	}
 	
 	/**
 	 * 
