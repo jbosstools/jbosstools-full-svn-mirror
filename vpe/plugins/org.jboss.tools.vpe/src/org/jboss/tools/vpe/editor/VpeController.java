@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -46,7 +47,6 @@ import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.MenuListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -86,17 +86,10 @@ import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
-import org.jboss.tools.common.editor.el.ELReferenceList;
-import org.jboss.tools.common.editor.rreferences.AbsoluteFolderReferenceList;
-import org.jboss.tools.common.editor.rreferences.CSSReferenceList;
-import org.jboss.tools.common.editor.rreferences.RelativeFolderReferenceList;
-import org.jboss.tools.common.editor.rreferences.ResourceReferenceListListener;
-import org.jboss.tools.common.editor.rreferences.TaglibReferenceList;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
-import org.jboss.tools.common.model.ui.dnd.DnDUtil;
 import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
 import org.jboss.tools.common.model.ui.editor.IModelObjectEditorInput;
 import org.jboss.tools.common.model.ui.editors.dnd.DropCommandFactory;
@@ -116,11 +109,18 @@ import org.jboss.tools.common.model.util.XModelTreeListenerSWTSync;
 import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
 import org.jboss.tools.jst.jsp.editor.IVisualController;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.jst.web.el.ELReferenceList;
+import org.jboss.tools.jst.web.rreferences.AbsoluteFolderReferenceList;
+import org.jboss.tools.jst.web.rreferences.CSSReferenceList;
+import org.jboss.tools.jst.web.rreferences.RelativeFolderReferenceList;
+import org.jboss.tools.jst.web.rreferences.ResourceReferenceListListener;
+import org.jboss.tools.jst.web.rreferences.TaglibReferenceList;
 import org.jboss.tools.jst.web.tld.TLDToPaletteHelper;
 import org.jboss.tools.jst.web.tld.TLDUtil;
 import org.jboss.tools.jst.web.tld.URIConstants;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.dnd.DndUtil;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
@@ -2818,20 +2818,20 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
         // .getModelBuffer().source();
         // if(object == null)
 
-        nsISupports aValue = DnDUtil.getDnDValue(mouseEvent);
+        nsISupports aValue = DndUtil.getDnDValue(mouseEvent);
         String aFlavor = "";
         if (isNsIFileInstance(aValue)) {
             nsIFile aFile = (nsIFile) aValue.queryInterface(nsIFile.NS_IFILE_IID);
 
             if (aValue != null) {
                 data = aFile.getPath();
-                aFlavor = DnDUtil.kFileMime;
+                aFlavor = DndUtil.kFileMime;
             }
 
         } else if (isNsIStringInstance(aValue)) {
             nsISupportsCString aString = (nsISupportsCString) aValue.queryInterface(nsISupportsCString.NS_ISUPPORTSCSTRING_IID);
             data = aString.getData();
-            aFlavor = DnDUtil.kHTMLMime;
+            aFlavor = DndUtil.kHTMLMime;
         }
 
         // if (object.getFileType() == XModelObject.FILE

@@ -26,7 +26,6 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
-import org.jboss.tools.common.editor.rreferences.ResourceReference;
 import org.jboss.tools.common.xml.XMLUtilities;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpePlugin;

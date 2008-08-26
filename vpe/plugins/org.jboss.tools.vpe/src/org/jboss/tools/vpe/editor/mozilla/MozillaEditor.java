@@ -48,9 +48,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.part.EditorPart;
+import org.jboss.tools.jst.web.rreferences.VpeResourcesDialog;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
-import org.jboss.tools.vpe.editor.css.VpeResourcesDialog;
 import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage;
 import org.jboss.tools.vpe.editor.toolbar.IVpeToolBarManager;
 import org.jboss.tools.vpe.editor.toolbar.VpeToolBarManager;
@@ -74,8 +74,6 @@ import org.mozilla.interfaces.nsIHTMLAbsPosEditor;
 import org.mozilla.interfaces.nsIHTMLInlineTableEditor;
 import org.mozilla.interfaces.nsIHTMLObjectResizer;
 import org.mozilla.interfaces.nsIPlaintextEditor;
-import org.mozilla.interfaces.nsISelection;
-import org.mozilla.interfaces.nsISelectionPrivate;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
 	protected static final String INIT_URL = /*"file://" +*/ (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath(); //$NON-NLS-1$ //$NON-NLS-2$

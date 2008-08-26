@@ -28,8 +28,8 @@
       />
    </extension>
     <extension point="org.jboss.tools.common.model.classes">
-       <xclass id="org.jboss.tools.common.editor.rreferences.VpeAddReferenceSupport"
-	class="org.jboss.tools.common.editor.rreferences.VpeAddReferenceSupport"/>
+       <xclass id="org.jboss.tools.jst.web.rreferences.VpeAddReferenceSupport"
+	class="org.jboss.tools.jst.web.rreferences.VpeAddReferenceSupport"/>
     </extension>
 	<extension point="org.eclipse.ui.preferencePages">
       <page category="org.jboss.tools.common.xstudio.editors" class="org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage" id="org.jboss.tools.vpe.editor" name="Visual Page Editor"></page>

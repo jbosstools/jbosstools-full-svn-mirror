@@ -62,6 +62,7 @@ Require-Bundle: org.jboss.tools.common.model.ui,
  org.eclipse.ui.ide,
  org.jboss.tools.vpe.xulrunner,
  org.mozilla.xpcom,
- org.eclipse.draw2d
+ org.eclipse.draw2d,
+ org.jboss.tools.jst.web
 Bundle-Version: 2.1.0
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007 Exadel, Inc. and Red Hat, Inc.
+// * Copyright (c) 2007 Exadel, Inc. and Red Hat, Inc.
  * Distributed under license by Red Hat, Inc. All rights reserved.
  * This program is made available under the terms of the
  * Eclipse Public License v1.0 which accompanies this distribution,
@@ -28,14 +28,13 @@ import org.eclipse.ui.ide.IDE;
 import org.eclipse.wst.common.componentcore.ComponentCore;
 import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 import org.eclipse.wst.common.componentcore.resources.IVirtualFolder;
-import org.jboss.tools.common.editor.rreferences.AbsoluteFolderReferenceList;
-import org.jboss.tools.common.editor.rreferences.RelativeFolderReferenceList;
-import org.jboss.tools.common.editor.rreferences.ResourceReference;
 import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
-import org.jboss.tools.vpe.VpeDebug;
+import org.jboss.tools.jst.web.rreferences.AbsoluteFolderReferenceList;
+import org.jboss.tools.jst.web.rreferences.RelativeFolderReferenceList;
+import org.jboss.tools.jst.web.rreferences.ResourceReference;
 import org.jboss.tools.vpe.VpePlugin;
 
 
