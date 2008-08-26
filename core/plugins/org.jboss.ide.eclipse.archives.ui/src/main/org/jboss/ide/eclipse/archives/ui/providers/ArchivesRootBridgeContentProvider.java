@@ -16,7 +16,7 @@ import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelega
 public class ArchivesRootBridgeContentProvider implements ITreeContentProvider {
 	private ArchivesContentProviderDelegate delegate;
 	public ArchivesRootBridgeContentProvider() {
-		delegate = ArchivesContentProviderDelegate.getDefault();
+		delegate = new ArchivesContentProviderDelegate(WrappedProject.CATEGORY);
 	}
 	
 	public Object[] getChildren(Object parentElement) {
@@ -26,7 +26,7 @@ public class ArchivesRootBridgeContentProvider implements ITreeContentProvider {
 	}
 
 	public Object getParent(Object element) {
-		return null;
+		return delegate.getParent(element);
 	}
 
 	public boolean hasChildren(Object element) {

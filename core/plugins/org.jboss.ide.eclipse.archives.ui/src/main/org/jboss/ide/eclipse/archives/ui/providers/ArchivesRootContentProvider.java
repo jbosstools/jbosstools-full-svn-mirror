@@ -15,7 +15,7 @@ public class ArchivesRootContentProvider implements ITreeContentProvider {
 	
 	private ArchivesContentProviderDelegate delegate;
 	public ArchivesRootContentProvider() {
-		delegate = ArchivesContentProviderDelegate.getDefault();
+		delegate = new ArchivesContentProviderDelegate(WrappedProject.NAME);
 	}
 	
 	public Object[] getChildren(Object parentElement) {
@@ -23,7 +23,7 @@ public class ArchivesRootContentProvider implements ITreeContentProvider {
 	}
 
 	public Object getParent(Object element) {
-		return null;
+		return delegate.getParent(element);
 	}
 
 	public boolean hasChildren(Object element) {

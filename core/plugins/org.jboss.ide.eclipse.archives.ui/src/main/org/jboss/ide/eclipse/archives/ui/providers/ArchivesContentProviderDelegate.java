@@ -2,10 +2,10 @@ package org.jboss.ide.eclipse.archives.ui.providers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -14,27 +14,19 @@ import org.eclipse.swt.widgets.Display;
 import org.jboss.ide.eclipse.archives.core.build.RegisterArchivesJob;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelListener;
+import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNodeDelta;
 import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
 import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesCommonView;
 
 public class ArchivesContentProviderDelegate implements ITreeContentProvider, IArchiveModelListener {
-
-	// Because all viewers need to be updated, this must be a singleton
-	private static ArchivesContentProviderDelegate singleton;
-	public static ArchivesContentProviderDelegate getDefault() {
-		if( singleton == null )
-			singleton = new ArchivesContentProviderDelegate();
-		return singleton;
-	}
 	
 	public static class WrappedProject {
 		public static final int NAME = 1;
 		public static final int CATEGORY = 2;
 		private IProject element;
 		private int type;
-		public WrappedProject(IProject element) { this.element = element; }
 		public WrappedProject(IProject element, int type) { this.element = element; this.type = type;}
 		public IProject getElement() { return element; }
 		public int getType() { return type; }
@@ -42,6 +34,9 @@ public class ArchivesContentProviderDelegate implements ITreeContentProvider, IA
 			if( otherObject instanceof WrappedProject && element.equals(((WrappedProject)otherObject).element))
 					return true;
 			return false;
+		}
+		public int hashCode() {
+			return element.hashCode();
 		}
 	}
 
@@ -52,17 +47,27 @@ public class ArchivesContentProviderDelegate implements ITreeContentProvider, IA
 			this.wProject = wp;
 			this.project = wProject.element;
 		}
+		public boolean equals(Object otherObject) {
+			return otherObject instanceof DelayProxy && 
+				wProject.equals(((DelayProxy)otherObject).wProject);
+		}
+		public int hashCode() {
+			return wProject.hashCode() + 15;
+		}
 	}
 	
-	public ArchivesContentProviderDelegate() {
+	private int type;
+	public ArchivesContentProviderDelegate(int type) {
+		this.type = type;
 		ArchivesModel.instance().addModelListener(this);
 	}
 	public ArchivesContentProviderDelegate(boolean addListener) {
+		this.type = WrappedProject.NAME;
 		if( addListener)
 			ArchivesModel.instance().addModelListener(this);
 	}
 	
-	protected ArrayList<Viewer> viewersInUse = new ArrayList<Viewer>();
+	protected Viewer viewerInUse;
 	protected ArrayList<IProject> loadingProjects = new ArrayList<IProject>();
 
 	public Object[] getChildren(Object parentElement) {
@@ -95,16 +100,7 @@ public class ArchivesContentProviderDelegate implements ITreeContentProvider, IA
 				Display.getDefault().asyncExec(new Runnable() { 
 					public void run() {
 						loadingProjects.remove(dp.project);
-						Iterator<Viewer> it = viewersInUse.iterator();
-						while(it.hasNext()) {
-							Viewer next = ((Viewer)it.next());
-							if( shouldRefreshProject(next))
-								((StructuredViewer)next).refresh(dp.project);
-							else if( next instanceof StructuredViewer)
-								((StructuredViewer)next).refresh(dp.wProject);
-							else
-								next.refresh();	
-						}
+						refreshViewer(dp.wProject);
 					}
 				});
 			}
@@ -113,8 +109,8 @@ public class ArchivesContentProviderDelegate implements ITreeContentProvider, IA
 		job.schedule();
 	}
 	
-	protected boolean shouldRefreshProject(Viewer viewer) {
-		if( viewer == ProjectArchivesCommonView.getInstance().getCommonViewer() && 
+	protected boolean shouldRefreshProject() {
+		if( viewerInUse == ProjectArchivesCommonView.getInstance().getCommonViewer() && 
 				!PrefsInitializer.getBoolean(PrefsInitializer.PREF_SHOW_PROJECT_ROOT))
 			return true;
 		return false;
@@ -145,13 +141,7 @@ public class ArchivesContentProviderDelegate implements ITreeContentProvider, IA
 	}
 
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		if( newInput != null) {
-			if( !viewersInUse.contains(viewer)) {
-				viewersInUse.add(viewer);
-			}
-		} else {
-			viewersInUse.remove(viewer);
-		}
+		viewerInUse = viewer;
 	}
 	public void modelChanged(IArchiveNodeDelta delta) {
 			
@@ -163,28 +153,41 @@ public class ArchivesContentProviderDelegate implements ITreeContentProvider, IA
 		else
 			topChanges = new IArchiveNode[]{delta.getPostNode()};
 		
-		final Viewer[] viewers = (Viewer[]) viewersInUse.toArray(new Viewer[viewersInUse.size()]);
-		
 		// now go through and refresh them
 		Display.getDefault().asyncExec(new Runnable () {
 			public void run () {
 				for( int i = 0; i < topChanges.length; i++ ) {
-					for (int j = 0; j < viewers.length; j++ ) {
-						if( viewers[j] instanceof StructuredViewer ) {
-							((StructuredViewer)viewers[j]).refresh(topChanges[i]);
-							if( viewers[j] instanceof TreeViewer ) {
-								((TreeViewer)viewers[j]).expandToLevel(topChanges[i], 1);
-							}
-						} else 
-							viewers[j].refresh();
-					}
+					refreshViewer(topChanges[i]);
 				}
 			}
 		});
 	}
 
-	protected IArchiveNode[] getChanges(IArchiveNodeDelta delta) {
+	/*
+	 * The inputs to ProjectArchivesCommonView are either an IProject, if no root projects are shown,
+	 * or an IWorkspaceRoot, if they are. A parent, though can be a WrappedProject 
+	 */
+	
+	protected void refreshViewer(Object o) {
+		if( o instanceof IArchiveModelRootNode) {
+			String projName = ((IArchiveModelRootNode)o).getProjectName();
+			IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject(projName);
+			if( p != null ) 
+				o = new WrappedProject(p, type);
+		}
+		if( o instanceof WrappedProject && shouldRefreshProject())
+			o = ((WrappedProject)o).element;
 		
+		if( viewerInUse instanceof StructuredViewer ) {
+			((StructuredViewer)viewerInUse).refresh(o);
+			if( viewerInUse instanceof TreeViewer ) {
+				((TreeViewer)viewerInUse).expandToLevel(o, 1);
+			}
+		} else 
+			viewerInUse.refresh();
+
+	}
+	protected IArchiveNode[] getChanges(IArchiveNodeDelta delta) {
 		IArchiveNodeDelta[] children = delta.getAllAffectedChildren();
 		ArrayList<IArchiveNode> list = new ArrayList<IArchiveNode>();
 		for( int i = 0; i < children.length; i++ ) {

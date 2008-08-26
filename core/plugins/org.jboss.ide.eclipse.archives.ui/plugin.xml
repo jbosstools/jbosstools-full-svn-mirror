@@ -137,6 +137,9 @@
                <instanceof
                      value="org.jboss.ide.eclipse.archives.core.model.IArchiveNode">
                </instanceof>
+               <instanceof
+                     value="org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate$DelayProxy">
+               </instanceof>
             </or>
          </possibleChildren>
       </navigatorContent>
@@ -156,6 +159,9 @@
             <or>
                <instanceof
                      value="org.jboss.ide.eclipse.archives.core.model.IArchiveNode">
+               </instanceof>
+               <instanceof
+                     value="org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate$DelayProxy">
                </instanceof>
             </or>
          </possibleChildren>

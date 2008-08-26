@@ -72,6 +72,7 @@ public class ProjectArchivesCommonView extends CommonNavigator {
 				if( project != null && project != currentProject ) {
 					currentProject = project;
 					if( showProjectRoot()) {
+						// if we're showing all projects, then the view is already set. 
 						if( !showAllProjects() ||  !getCommonViewer().getInput().equals(ResourcesPlugin.getWorkspace().getRoot()))
 							getCommonViewer().setInput(ResourcesPlugin.getWorkspace().getRoot());
 					} else {
