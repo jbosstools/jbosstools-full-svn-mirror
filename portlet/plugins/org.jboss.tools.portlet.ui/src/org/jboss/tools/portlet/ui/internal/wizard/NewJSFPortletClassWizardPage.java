@@ -61,6 +61,7 @@ public class NewJSFPortletClassWizardPage extends NewJavaClassWizardPage {
 	private Label existingClassLabel;
 	private Text existingClassText;
 	private Button existingClassButton;
+	private boolean disableExistingClassButton = false;
 	
 	public NewJSFPortletClassWizardPage(IDataModel model, String pageName, String pageDesc, String pageTitle,
 			String moduleType) {
@@ -96,24 +97,31 @@ public class NewJSFPortletClassWizardPage extends NewJavaClassWizardPage {
 	}
 	
 	private void createUseExistingGroup(Composite composite) {
-		
+
 		existingClassLabel = new Label(composite, SWT.LEFT);
 		existingClassLabel.setText(CLASS_NAME_LABEL);
-		existingClassLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		
-		existingClassText = new Text(composite, SWT.SINGLE | SWT.BORDER | SWT.READ_ONLY);
+		existingClassLabel.setLayoutData(new GridData(
+				GridData.HORIZONTAL_ALIGN_BEGINNING));
+
+		existingClassText = new Text(composite, SWT.SINGLE | SWT.BORDER
+				| SWT.READ_ONLY);
 		existingClassText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		synchHelper.synchText(existingClassText, CLASS_NAME, null);
 		existingClassText.setText(IPortletUIConstants.JBOSS_JSF_PORTLET_CLASS);
-		
+
 		existingClassButton = new Button(composite, SWT.PUSH);
 		existingClassButton.setText(BROWSE_BUTTON_LABEL);
-		existingClassButton.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
-		existingClassButton.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				handleClassButtonSelected();
-			}
-		});
+		existingClassButton.setLayoutData(new GridData(
+				GridData.HORIZONTAL_ALIGN_FILL));
+		if (disableExistingClassButton) {
+			existingClassButton.setEnabled(false);
+		} else {
+			existingClassButton.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					handleClassButtonSelected();
+				}
+			});
+		}
 	}
 	
 	private void handleClassButtonSelected() {
@@ -179,7 +187,10 @@ public class NewJSFPortletClassWizardPage extends NewJavaClassWizardPage {
 			if (isProjectValid(project))
 				items.add(project.getName());
 		}
-		if (items.isEmpty()) return;
+		if (items.isEmpty()) {
+			disableExistingClassButton  = true;
+			return;
+		}
 		String[] names = new String[items.size()];
 		for (int i = 0; i < items.size(); i++) {
 			names[i] = (String) items.get(i);
