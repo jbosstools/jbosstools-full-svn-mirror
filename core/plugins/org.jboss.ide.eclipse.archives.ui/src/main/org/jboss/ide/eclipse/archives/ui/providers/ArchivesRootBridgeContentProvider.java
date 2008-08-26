@@ -3,6 +3,8 @@ package org.jboss.ide.eclipse.archives.ui.providers;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.jboss.ide.eclipse.archives.ui.PrefsInitializer;
+import org.jboss.ide.eclipse.archives.ui.PrefsInitializer.IArchivesPreferenceListener;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate.WrappedProject;
 
 /**
@@ -13,10 +15,12 @@ import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelega
  * @author rob.stryker@redhat.com
  *
  */
-public class ArchivesRootBridgeContentProvider implements ITreeContentProvider {
+public class ArchivesRootBridgeContentProvider 
+	implements ITreeContentProvider, IArchivesPreferenceListener {
 	private ArchivesContentProviderDelegate delegate;
 	public ArchivesRootBridgeContentProvider() {
 		delegate = new ArchivesContentProviderDelegate(WrappedProject.CATEGORY);
+		PrefsInitializer.addListener(this);
 	}
 	
 	public Object[] getChildren(Object parentElement) {
@@ -38,10 +42,17 @@ public class ArchivesRootBridgeContentProvider implements ITreeContentProvider {
 	}
 
 	public void dispose() {
+		PrefsInitializer.removeListener(this);
 	}
 
+	private Viewer viewer;
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+		this.viewer = viewer;
 		delegate.inputChanged(viewer, oldInput, newInput);
+	}
+
+	public void preferenceChanged(String key, boolean val) {
+		viewer.refresh();
 	}
 
 }
