@@ -41,8 +41,6 @@ public interface IArchiveFileSet extends IArchiveNode {
 	public static final String FLATTENED_ATTRIBUTE = ATTRIBUTE_PREFIX + "flattened";
 	public static final String SOURCE_PATH_ATTRIBUTE = ATTRIBUTE_PREFIX + "sourcePath";
 
-
-	
 	/**
 	 * @return Whether or not this fileset's basedir is inside the workspace
 	 */
@@ -74,35 +72,6 @@ public interface IArchiveFileSet extends IArchiveNode {
 	public String getExcludesPattern();
 	
 	/**
-	 * @return An array of matching IPath's in the filesystem (for external filesystem filesets)
-	 */
-	public FileWrapper[] findMatchingPaths();
-	
-	/**
-	 * Get the FileWrapper objects that match this path
-	 * @param path
-	 * @return
-	 */
-	public FileWrapper[] getMatches(IPath path);
-	
-	/**
-	 * @param path The absolute path on the filesystem to check
-	 * @return Whether or not this fileset matches the passed-in path
-	 */
-	public boolean matchesPath(IPath path);
-	
-	/**
-	 * Does this global path file match this fileset 
-	 * at the specific fileset-relative location?
-	 * 
-	 * If fsRelative is null, just match the path
-	 * @param globalPath
-	 * @param fsRelative
-	 * @return
-	 */
-	public boolean matchesPath(IPath globalPath, String fsRelative);
-	
-	/**
 	 * Sets the "root" or "source" of this fileset (file-system or workspace relative)
 	 * @param path The absolute path that is the source of this fileset
 	 */
@@ -132,4 +101,35 @@ public interface IArchiveFileSet extends IArchiveNode {
 	 */
 	public void setFlattened(boolean flattened);
 	
+	
+	/**
+	 * @return An array of matching IPath's in the filesystem (for external filesystem filesets)
+	 */
+	public FileWrapper[] findMatchingPaths();
+	
+	/**
+	 * Get the FileWrapper objects that match this path
+	 * @param path
+	 * @return
+	 */
+	public FileWrapper[] getMatches(IPath path);
+	
+	/**
+	 * This method returns whether the global path passed in matches this fileset.
+	 * It must give an accurate answer regardless of whether the path is cached or not. 
+	 * 
+	 * @param path The absolute path on the filesystem to check.
+	 * @return Whether or not this fileset matches the passed-in path
+	 */
+	public boolean matchesPath(IPath path);
+
+	/**
+	 * This method returns whether the path passed in matches this fileset.
+	 * It must give an accurate answer regardless of whether the path is cached or not. 
+	 * 
+	 * @param path The absolute path on the filesystem to check.
+	 * @param inWorkspace Whether this is a workspace path or a global path
+	 * @return Whether or not this fileset matches the passed-in path
+	 */
+	public boolean matchesPath(IPath path, boolean inWorkspace);
 }

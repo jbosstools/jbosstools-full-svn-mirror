@@ -96,27 +96,24 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 	/*
 	 * @see IArchiveFileSet#matchesPath(IPath)
 	 */
-	public boolean matchesPath(IPath path) {
-		return matchesPath(path, null);
+	public boolean matchesPath(IPath globalPath) {
+		return matchesPath(globalPath, false);
 	}
 
-	public boolean matchesPath(IPath globalPath, String fsRelative) {
+	public boolean matchesPath(IPath path, boolean inWorkspace) {
 		getScanner();
+		IPath globalPath = path;
+		if( inWorkspace )
+			globalPath = ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(path);
+		
 		ArrayList<FileWrapper> result = matchingMap.get(globalPath.toFile().getAbsolutePath());
-		if( result != null ) {
-			if( result.size() > 0 && fsRelative == null ) 
+		if( result != null )
+			if( result.size() > 0 ) 
 				return true;
-			
-			FileWrapper tmp;
-			for( int i = 0; i < result.size(); i++ ) {
-				tmp = result.get(i);
-				if( tmp.getFilesetRelative().equals(fsRelative))
-					return true;
-			}
-		}
-		return false;
+		
+		return getScanner().couldBeIncluded(path.toString(), inWorkspace);
 	}
-	
+
 	public FileWrapper[] getMatches(IPath path) {
 		getScanner();
 		ArrayList<FileWrapper> l = matchingMap.get(path.toFile().getAbsolutePath());

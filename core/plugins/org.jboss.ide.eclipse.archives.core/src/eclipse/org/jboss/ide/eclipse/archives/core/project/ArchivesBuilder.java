@@ -77,7 +77,7 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 		ArchiveBuildDelegate delegate = new ArchiveBuildDelegate();
 		if (kind == IncrementalProjectBuilder.INCREMENTAL_BUILD || kind == IncrementalProjectBuilder.AUTO_BUILD) {
 			fillDeltas(interestingProjects, addedChanged, removed);
-			delegate.projectIncrementalBuild(addedChanged, removed);
+			delegate.incrementalBuild(null,addedChanged, removed,true);
 			
 		} else if (kind == IncrementalProjectBuilder.FULL_BUILD){
 			// build each package fully
@@ -126,9 +126,9 @@ public class ArchivesBuilder extends IncrementalProjectBuilder {
 								// ignore the packages project. that will it's own build call, 
 								// or will handle the change in some other way
 								if( !delta.getResource().equals(proj.findMember(IArchiveModel.DEFAULT_PACKAGES_FILE))) 
-									addedChanged.add(delta.getResource().getLocation());
+									addedChanged.add(delta.getResource().getFullPath());
 							} else if( (delta.getKind() & IResourceDelta.REMOVED ) > 0 ) {
-								removed.add(delta.getResource().getLocation());
+								removed.add(delta.getResource().getFullPath());
 							}
 						} 
 						return true;

@@ -222,5 +222,9 @@ public class DirectoryScannerFactory {
 				return false;
 			}
 	    }
+	    
+	    public boolean couldBeIncluded(String name, boolean inWorkspace) {
+	    	return super.isIncluded(name) && !super.isExcluded(name);
+	    }
 	}
 }

@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
@@ -61,16 +60,7 @@ import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
  *
  */
 public class ModelUtil {
-	
-	/**
-	 * Get any declared fileset that matches this path and are registered with the model
-	 * @param path
-	 * @return
-	 */
-	public static IArchiveFileSet[] getMatchingFilesets(final IPath path) {
-		return getMatchingFilesets(null, path);
-	}
-	
+
 	/**
 	 * Get any declared filesets that match this path and are
 	 * a child of the given node
@@ -79,11 +69,15 @@ public class ModelUtil {
 	 * @return
 	 */
 	public static IArchiveFileSet[] getMatchingFilesets(IArchiveNode node, final IPath path) {
+		return getMatchingFilesets(node, path, false);
+	}
+
+	public static IArchiveFileSet[] getMatchingFilesets(IArchiveNode node, final IPath path, final boolean inWorkspace) {
 		final ArrayList<IArchiveFileSet> rets = new ArrayList<IArchiveFileSet>();
 		IArchiveNodeVisitor visitor = new IArchiveNodeVisitor() {
 			public boolean visit(IArchiveNode node) {
 				if( node.getNodeType() == IArchiveNode.TYPE_ARCHIVE_FILESET && 
-						((IArchiveFileSet)node).matchesPath(path)) {
+						((IArchiveFileSet)node).matchesPath(path, inWorkspace)) {
 					rets.add((IArchiveFileSet)node);
 				}
 				return true;
@@ -178,14 +172,7 @@ public class ModelUtil {
 	 * @return
 	 */
 	public static IPath getBaseDestinationFile(IArchiveNode node) {
-		ArrayList<IArchiveNode> list = new ArrayList<IArchiveNode>();
-		while( node != null && !(node instanceof ArchiveModelNode)) {
-			list.add(node);
-			node = node.getParent();
-		}
-		Collections.reverse(list);
-		IArchiveNode[] nodes = list.toArray(new IArchiveNode[list.size()]);
-		
+		IArchiveNode[] nodes = getReverseNodeTree(node);
 		IPath lastConcrete = null;
 		for( int i = 0; i < nodes.length; i++ ) {
 			if( nodes[i] instanceof IArchive) {
@@ -205,9 +192,28 @@ public class ModelUtil {
 	
 	public static IPath getBaseDestinationFile(IArchiveFileSet node, IPath fsRelative) {
 		IPath last = getBaseDestinationFile(node);
-		if( fsRelative != null )
-			last = last.append(fsRelative);
+		if( fsRelative != null ) {
+			IArchiveNode[] nodes = getReverseNodeTree(node);
+			boolean anyZipped = false;
+			for( int i = 0; !anyZipped && i < nodes.length; i++ ) 
+				if( nodes[i] instanceof IArchive && !((IArchive)nodes[i]).isExploded())
+					anyZipped = true;
+			
+			if(!anyZipped) // none are zipped, we can append this path
+				last = last.append(fsRelative);
+		}
 		return last;
+	}
+	
+	private static IArchiveNode[] getReverseNodeTree(IArchiveNode node) {
+		ArrayList<IArchiveNode> list = new ArrayList<IArchiveNode>();
+		while( node != null && !(node instanceof ArchiveModelNode)) {
+			list.add(node);
+			node = node.getParent();
+		}
+		Collections.reverse(list);
+		IArchiveNode[] nodes = list.toArray(new IArchiveNode[list.size()]);
+		return nodes;
 	}
 
 	public static void fillArchiveModel( XbPackages node, IArchiveModelRootNode modelNode) throws ArchivesModelException { 

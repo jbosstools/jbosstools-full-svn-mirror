@@ -151,21 +151,6 @@ public class ArchiveBuildDelegate {
 		EventManager.finishedCollectingFileSet(fileset);
 	}
 
-	
-	
-	
-	/**
-	 * Incremental Build!! 
-	 * Parameters are instances of changed IPath objects.
-	 * Will search the entire model for matching filesets.
-	 * 
-	 * @param addedChanged  Set of changed / added resources
-	 * @param setRemoved	Set of removed resources
-	 */
-	public void projectIncrementalBuild(Set<IPath> addedChanged, Set<IPath> removed) {
-		incrementalBuild(null, addedChanged, removed);
-	}
-	
 	/**
 	 * Incremental build.
 	 * Parameters are instance sof changed IPath objects
@@ -174,33 +159,57 @@ public class ArchiveBuildDelegate {
 	 * @param addedChanged  A list of added or changed resource paths
 	 * @param removed       A list of removed resource paths
 	 */
-	public void incrementalBuild(IArchive archive, Set<IPath> addedChanged, Set<IPath> removed) {
+	public void incrementalBuild(IArchive archive, Set<IPath> addedChanged, 
+			Set<IPath> removed, boolean workspaceRelative) {
 		
 		// find any and all filesets that match each file
-		Iterator<IPath> i = addedChanged.iterator();
-		IPath path;
+		Iterator<IPath> i;
+		IPath path, globalPath;
 		IArchiveFileSet[] matchingFilesets;
 		ArrayList<IArchive> topPackagesChanged = new ArrayList<IArchive>();
+		ArrayList<IArchiveFileSet> seen = new ArrayList<IArchiveFileSet>();
+		
+		// Handle the removed files first. Hopefully the fileset hasn't been reset yet
+		// or it could make this block of code fail. 
+		i = removed.iterator();
 		while(i.hasNext()) {
-			path = i.next();
-			matchingFilesets = ModelUtil.getMatchingFilesets(archive, path);
+			path = ((IPath)i.next());
+			globalPath = !workspaceRelative ? path : 
+				ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(path);
+
+			matchingFilesets = ModelUtil.getMatchingFilesets(archive, path, workspaceRelative);
 			localFireAffectedTopLevelPackages(topPackagesChanged, matchingFilesets);
 			for( int j = 0; j < matchingFilesets.length; j++ ) {
-				ModelTruezipBridge.copyFiles(matchingFilesets[j], matchingFilesets[j].getMatches(path));
+				ModelTruezipBridge.deleteFiles(matchingFilesets[j], matchingFilesets[j].getMatches(globalPath));
+				if( !seen.contains(matchingFilesets[j])) {
+					seen.add(matchingFilesets[j]);
+				}
+			}
+			EventManager.fileRemoved(path, matchingFilesets);
+		}
+
+		// reset all of the filesets that have already matched
+		Iterator<IArchiveFileSet> fit = seen.iterator();
+		while(fit.hasNext())
+			fit.next().resetScanner();
+		
+		i = addedChanged.iterator();
+		while(i.hasNext()) {
+			path = i.next();
+			globalPath = !workspaceRelative ? path : 
+				ArchivesCore.getInstance().getVFS().workspacePathToAbsolutePath(path);
+			matchingFilesets = ModelUtil.getMatchingFilesets(archive, path, workspaceRelative);
+			localFireAffectedTopLevelPackages(topPackagesChanged, matchingFilesets);
+			for( int j = 0; j < matchingFilesets.length; j++ ) {
+				if( !seen.contains(matchingFilesets[j])) {
+					seen.add(matchingFilesets[j]);
+					matchingFilesets[j].resetScanner();
+				}
+				ModelTruezipBridge.copyFiles(matchingFilesets[j], matchingFilesets[j].getMatches(globalPath));
 			}
 			EventManager.fileUpdated(path, matchingFilesets);
 		}
 		
-		i = removed.iterator();
-		while(i.hasNext()) {
-			path = ((IPath)i.next());
-			matchingFilesets = ModelUtil.getMatchingFilesets(archive, path);
-			localFireAffectedTopLevelPackages(topPackagesChanged, matchingFilesets);
-			for( int j = 0; j < matchingFilesets.length; j++ ) {
-				ModelTruezipBridge.deleteFiles(matchingFilesets[j], matchingFilesets[j].getMatches(path));
-			}
-			EventManager.fileRemoved(path, matchingFilesets);
-		}
 		
 		TrueZipUtil.sync();
 
