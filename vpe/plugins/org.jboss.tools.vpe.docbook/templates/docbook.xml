@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<vpe:templates>
+<vpe:templates  xmlns:vpe="http://org.jboss.org/tools/vpe/template"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<!--vpe:template-taglib uri="-//OASIS//DTD DocBook XML V4.3CR3//EN"/-->
 
 	<vpe:tag name="chapter" case-sensitive="yes">

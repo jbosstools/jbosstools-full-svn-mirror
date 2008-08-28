@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.test;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 
@@ -26,17 +27,26 @@ import javax.xml.validation.Validator;
 
 import junit.framework.TestCase;
 
+import org.eclipse.core.internal.registry.ExtensionRegistry;
+import org.eclipse.core.runtime.ContributorFactoryOSGi;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IContributor;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.RegistryFactory;
+import org.jboss.tools.common.reporting.IProblemReporter;
+import org.jboss.tools.common.reporting.ProblemReporterFactory;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.osgi.framework.Bundle;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 /**
  * JUnit Test for scheme validate template
@@ -49,66 +59,173 @@ public class TemplateSchemeValidateTest extends TestCase {
      */
     private static final String COM_REDHAT_VPE_TEMPLATES = "org.jboss.tools.vpe.templates";
 
+    private static final String VPE_TEST_EXTENSION = "org.jboss.tools.vpe.test";
+
     private static final String SCHEME_PATH = "/scheme/scheme.xsd";
+
+    private static final String PLUGIN_FAILURE_NAME = "testFailure-plugin.xml";
+
+    private static Schema schema = null;
+
+    private static final String PLUGIN_OK_NAME = "testOk-plugin.xml";
+
+    private static final String SCHEME_LANGUAGE = "http://www.w3.org/2001/XMLSchema";
+
+    @Override
+    protected void setUp() throws Exception {
+	super.setUp();
+	Bundle bundle = VpeTestPlugin.getDefault().getBundle();
+	URL url = null;
+	url = bundle == null ? null : FileLocator.resolve(bundle
+		.getEntry(SCHEME_PATH));
+	File schemeFile = new File(url.getPath());
+	if (!schemeFile.exists() || !schemeFile.isFile()) {
+	    fail("scheme is not exist");
+	}
+	SchemaFactory factory = SchemaFactory.newInstance(SCHEME_LANGUAGE);
+	schema = factory.newSchema(schemeFile);
+    }
 
     /**
      * Test for load all templates
      */
-    public void testParseTemplates() {
+    public void testValidationGlobalTemplates() {
 	// 
+	assertNotNull("Schema is not exist", schema);
+	IExtensionRegistry extensionRepository = Platform
+		.getExtensionRegistry();
 
-	Bundle bundle = VpeTestPlugin.getDefault().getBundle();
-	URL url = null;
-	try {
-	    url = bundle == null ? null : FileLocator.resolve(bundle
-		    .getEntry(SCHEME_PATH));
-	    File schemeFile = new File(url.getPath());
-	    if (!schemeFile.exists() || !schemeFile.isFile()) {
-		fail("scheme is not exist");
-	    }
+	IExtensionPoint extensionPoint = extensionRepository
+		.getExtensionPoint(COM_REDHAT_VPE_TEMPLATES);
+	IExtension[] extensions = extensionPoint.getExtensions();
 
-	    IExtensionRegistry extensionRepository = Platform
-		    .getExtensionRegistry();
-
-	    IExtensionPoint extensionPoint = extensionRepository
-		    .getExtensionPoint(COM_REDHAT_VPE_TEMPLATES);
-	    IExtension[] extensions = extensionPoint.getExtensions();
-
-	    // iterate for all extensions
-	    for (int i = 0; i < extensions.length; i++) {
-		IExtension extension = extensions[i];
-		IConfigurationElement[] elements = extension
-			.getConfigurationElements();
-		for (int j = 0; j < elements.length; j++) {
-		    String pathAttrValue = elements[j].getAttribute("path");
-
+	// iterate for all extensions
+	for (int i = 0; i < extensions.length; i++) {
+	    IExtension extension = extensions[i];
+	    IConfigurationElement[] elements = extension
+		    .getConfigurationElements();
+	    for (int j = 0; j < elements.length; j++) {
+		String pathAttrValue = elements[j].getAttribute("path");
+		try {
 		    IPath templateFile = getFullpathForConfigurationElement(
 			    pathAttrValue, elements[j]);
 
-		    File file = templateFile.toFile();
-		    if (file.exists() && file.isFile()) {
-			DocumentBuilderFactory docFactory = DocumentBuilderFactory
-				.newInstance();
-			docFactory.setNamespaceAware(true);
-			DocumentBuilder parser = docFactory
-				.newDocumentBuilder();
-
-			Document document = parser.parse(file);
-			SchemaFactory factory = SchemaFactory
-				.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-
-			Source schemaFile = new StreamSource(schemeFile);
-			Schema schema = factory.newSchema(schemaFile);
+		    try {
 			Validator validator = schema.newValidator();
-			validator.validate(new DOMSource(document));
+			Source source = new StreamSource(templateFile
+				.toOSString());
+			validator.validate(source);
+		    } catch (SAXException ex) {
+			fail("Sheme " + templateFile.toFile().getName()
+				+ " is not valid : " + ex.getMessage());
 		    }
-
+		} catch (IOException e) {
+		    fail(e.getMessage());
 		}
 	    }
-
-	} catch (Exception exception) {
-	    fail(exception.getMessage());
 	}
+
+    }
+
+    public void testValidationIncorrectTemplplates() throws Exception {
+
+	assertNotNull("Schema is not exist", schema);
+	createTemplatesForTesting(PLUGIN_FAILURE_NAME);
+
+	IExtensionRegistry extensionRepository = Platform
+		.getExtensionRegistry();
+
+	IExtensionPoint extensionPoint = extensionRepository
+		.getExtensionPoint(COM_REDHAT_VPE_TEMPLATES);
+	IExtension[] extensions = extensionPoint.getExtensions();
+	for (int i = 0; i < extensions.length; i++) {
+	    if (extensions[i].getNamespaceIdentifier().equals(
+		    VPE_TEST_EXTENSION)) {
+		IConfigurationElement[] elements = extensions[i]
+			.getConfigurationElements();
+		for (int j = 0; j < elements.length; j++) {
+		    String pathAttrValue = elements[j].getAttribute("path");
+		    try {
+			IPath templateFile = getFullpathForConfigurationElement(
+				pathAttrValue, elements[j]);
+
+			try {
+			    Validator validator = schema.newValidator();
+			    Source source = new StreamSource(templateFile
+				    .toOSString());
+			    validator.validate(source);
+			} catch (SAXException ex) {
+			    assertTrue("Scheme "
+				    + templateFile.toFile().getName()
+				    + " is not valid", true);
+			}
+		    } catch (IOException e) {
+			fail(e.getMessage());
+		    }
+		}
+	    }
+	}
+	return;
+    }
+
+    public void testValidationCorrectTemplplates() throws Exception {
+
+	assertNotNull("Schema is not exist", schema);
+	createTemplatesForTesting(PLUGIN_OK_NAME);
+
+	IExtensionRegistry extensionRepository = Platform
+		.getExtensionRegistry();
+
+	IExtensionPoint extensionPoint = extensionRepository
+		.getExtensionPoint(COM_REDHAT_VPE_TEMPLATES);
+	IExtension[] extensions = extensionPoint.getExtensions();
+	for (int i = 0; i < extensions.length; i++) {
+	    if (extensions[i].getNamespaceIdentifier().equals(
+		    VPE_TEST_EXTENSION)) {
+		IConfigurationElement[] elements = extensions[i]
+			.getConfigurationElements();
+		for (int j = 0; j < elements.length; j++) {
+		    String pathAttrValue = elements[j].getAttribute("path");
+		    try {
+			IPath templateFile = getFullpathForConfigurationElement(
+				pathAttrValue, elements[j]);
+
+			try {
+			    Validator validator = schema.newValidator();
+			    Source source = new StreamSource(templateFile
+				    .toOSString());
+			    validator.validate(source);
+			} catch (SAXException ex) {
+			    fail("Sheme " + templateFile.toFile().getName()
+				    + " is not valid : " + ex.getMessage());
+			}
+		    } catch (IOException e) {
+			fail(e.getMessage());
+		    }
+		}
+	    }
+	}
+
+	return;
+    }
+
+    /**
+     * Tests possible template
+     * 
+     * @throws Exception
+     */
+    private void createTemplatesForTesting(String pluginXmlFileName)
+	    throws Exception {
+	IPath iPath = getFullpathForConfigurationElement(pluginXmlFileName,
+		null);
+	File file = iPath.toFile();
+	FileInputStream is = new FileInputStream(file);
+	IExtensionRegistry registry = RegistryFactory.getRegistry();
+	Object key = ((ExtensionRegistry) registry).getTemporaryUserToken();
+	Bundle bundle = VpeTestPlugin.getDefault().getBundle();
+	IContributor contributor = ContributorFactoryOSGi
+		.createContributor(bundle);
+	registry.addContribution(is, contributor, false, null, null, key);
     }
 
     /**
@@ -124,8 +241,7 @@ public class TemplateSchemeValidateTest extends TestCase {
      */
     private static IPath getFullpathForConfigurationElement(String name,
 	    IConfigurationElement confElement) throws IOException {
-	// 1. get a shared instance
-	VpePlugin plugin = VpePlugin.getDefault();
+	VpeTestPlugin plugin = VpeTestPlugin.getDefault();
 
 	Bundle bundle = null;
 
@@ -142,4 +258,29 @@ public class TemplateSchemeValidateTest extends TestCase {
 	return path;
     }
 
+    /**
+     * Removing extensions from eclipse
+     * 
+     * @param extensionPointId
+     * @param extensionId
+     */
+    private void removeExtension(String extensionPointId, String extensionId) {
+	IExtensionRegistry extensionRepository = Platform
+	.getExtensionRegistry();
+	
+	Object token = ((ExtensionRegistry) extensionRepository).getTemporaryUserToken();
+	IExtensionPoint extensionPoint = extensionRepository
+		.getExtensionPoint(extensionPointId);
+	IExtension[] extensions = extensionPoint.getExtensions();
+	for (int i = 0; i < extensions.length; i++) {
+	    if (extensions[i].getNamespaceIdentifier().equals(extensionId)) 
+		extensionRepository.removeExtension(extensions[i], token);
+	}
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+	removeExtension(COM_REDHAT_VPE_TEMPLATES, VPE_TEST_EXTENSION);
+	super.tearDown();
+    }
 }

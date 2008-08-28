@@ -1,516 +1,562 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/2001/XMLSchema-instance" xmlns:vpe="http://www.w3.org/2001/XMLSchema-instance">
-  <xs:element name="templates">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="vpe:template-taglib"/>
-        <xs:element maxOccurs="unbounded" ref="vpe:tag"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="template-taglib">
-    <xs:complexType>
-      <xs:attribute name="prefix" use="required" type="xs:NCName"/>
-      <xs:attribute name="uri" use="required" type="xs:anyURI"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="tag">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:choice>
-          <xs:element ref="vpe:copy"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="vpe:if"/>
-        </xs:choice>
-        <xs:element minOccurs="0" ref="vpe:template"/>
-      </xs:sequence>
-      <xs:attribute name="case-sensetive" type="xs:NCName"/>
-      <xs:attribute name="case-sensitive" type="xs:NCName"/>
-      <xs:attribute name="haveVisualPreview" type="xs:NCName"/>
-      <xs:attribute name="name" use="required" type="xs:anyURI"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="copy">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" ref="vpe:attribute"/>
-      </xs:sequence>
-      <xs:attribute name="attrs"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="attribute">
-    <xs:complexType>
-      <xs:attribute name="name" use="required" type="xs:NCName"/>
-      <xs:attribute name="value" use="required"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="if">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="vpe:if"/>
-        <xs:element minOccurs="0" ref="vpe:template"/>
-        <xs:element minOccurs="0" ref="vpe:textFormatting"/>
-      </xs:sequence>
-      <xs:attribute name="test" use="required"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="template">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="span" form="unqualified">
-          <xs:complexType mixed="true">
-            <xs:choice minOccurs="0" maxOccurs="unbounded">
-              <xs:group ref="vpe:input"/>
-              <xs:element ref="vpe:value"/>
-            </xs:choice>
-            <xs:attribute name="class"/>
-            <xs:attribute name="dir"/>
-            <xs:attribute name="style" type="xs:anyURI"/>
-            <xs:attribute name="title"/>
-          </xs:complexType>
-        </xs:element>
-        <xs:choice minOccurs="0">
-          <xs:element ref="vpe:jsproot"/>
-          <xs:element ref="vpe:taglib"/>
-        </xs:choice>
-        <xs:choice minOccurs="0">
-          <xs:element name="button" form="unqualified">
-            <xs:complexType mixed="true">
-              <xs:sequence>
-                <xs:element minOccurs="0" maxOccurs="unbounded" ref="vpe:value"/>
-              </xs:sequence>
-              <xs:attribute name="class" use="required"/>
-              <xs:attribute name="style" use="required"/>
-              <xs:attribute name="title" use="required"/>
-              <xs:attribute name="value"/>
-            </xs:complexType>
-          </xs:element>
-          <xs:element name="label" form="unqualified">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element ref="vpe:value"/>
-              </xs:sequence>
-              <xs:attribute name="class" use="required"/>
-              <xs:attribute name="for" use="required"/>
-              <xs:attribute name="style" use="required"/>
-              <xs:attribute name="title" use="required"/>
-            </xs:complexType>
-          </xs:element>
-        </xs:choice>
-        <xs:element minOccurs="0" ref="vpe:grid"/>
-        <xs:choice minOccurs="0">
-          <xs:group ref="vpe:td"/>
-          <xs:element ref="vpe:copy"/>
-          <xs:element ref="vpe:panelgrid"/>
-        </xs:choice>
-        <xs:choice minOccurs="0">
-          <xs:group ref="vpe:option"/>
-          <xs:element ref="vpe:style"/>
-        </xs:choice>
-        <xs:choice minOccurs="0">
-          <xs:group ref="vpe:textarea"/>
-          <xs:element name="nobr" form="unqualified">
-            <xs:complexType>
-              <xs:choice>
-                <xs:element ref="vpe:value"/>
-                <xs:group maxOccurs="unbounded" ref="vpe:input"/>
-              </xs:choice>
-            </xs:complexType>
-          </xs:element>
-        </xs:choice>
-        <xs:choice minOccurs="0">
-          <xs:element ref="vpe:any"/>
-          <xs:element ref="vpe:load-bundle"/>
-        </xs:choice>
-        <xs:element minOccurs="0" name="img" form="unqualified">
-          <xs:complexType>
-            <xs:attribute name="alt"/>
-            <xs:attribute name="border"/>
-            <xs:attribute name="class"/>
-            <xs:attribute name="height"/>
-            <xs:attribute name="src" use="required"/>
-            <xs:attribute name="style"/>
-            <xs:attribute name="title"/>
-            <xs:attribute name="width"/>
-          </xs:complexType>
-        </xs:element>
-        <xs:choice minOccurs="0">
-          <xs:element ref="vpe:column"/>
-          <xs:element ref="vpe:link"/>
-        </xs:choice>
-        <xs:group minOccurs="0" ref="vpe:select"/>
-        <xs:element minOccurs="0" ref="vpe:panellayout"/>
-        <xs:element minOccurs="0" ref="vpe:a"/>
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:group ref="vpe:div"/>
-          <xs:group ref="vpe:input"/>
-          <xs:element ref="vpe:datatable"/>
-          <xs:element ref="vpe:dnd"/>
-          <xs:element ref="vpe:resize"/>
-        </xs:choice>
-        <xs:choice minOccurs="0">
-          <xs:group ref="vpe:table"/>
-          <xs:element name="textFormatting" form="unqualified">
-            <xs:complexType>
-              <xs:attribute name="use-default-formats" use="required" type="xs:NCName"/>
-            </xs:complexType>
-          </xs:element>
-        </xs:choice>
-        <xs:choice minOccurs="0">
-          <xs:element ref="vpe:breaker"/>
-          <xs:element ref="vpe:list"/>
-          <xs:sequence>
-            <xs:element ref="vpe:drag"/>
-            <xs:element ref="vpe:drop"/>
-          </xs:sequence>
-        </xs:choice>
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element ref="vpe:textFormatting"/>
-          <xs:element ref="vpe:pseudoContent"/>
-        </xs:choice>
-      </xs:sequence>
-      <xs:attribute name="children" type="xs:NCName"/>
-      <xs:attribute name="class"/>
-      <xs:attribute name="file"/>
-      <xs:attribute name="hasImaginaryBorder" type="xs:NCName"/>
-      <xs:attribute name="modify" type="xs:NCName"/>
-      <xs:attribute name="namespaceIdentifier"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="jsproot">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="taglib">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="grid">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" ref="vpe:value"/>
-        <xs:group minOccurs="0" ref="vpe:input"/>
-      </xs:sequence>
-      <xs:attribute name="border"/>
-      <xs:attribute name="class"/>
-      <xs:attribute name="disabled" type="xs:boolean"/>
-      <xs:attribute name="layout"/>
-      <xs:attribute name="style"/>
-      <xs:attribute name="title" use="required"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="panelgrid">
-    <xs:complexType>
-      <xs:attribute name="bgcolor" use="required"/>
-      <xs:attribute name="border" use="required"/>
-      <xs:attribute name="captionClass" use="required"/>
-      <xs:attribute name="captionStyle" use="required"/>
-      <xs:attribute name="cellpadding" use="required"/>
-      <xs:attribute name="cellspacing" use="required"/>
-      <xs:attribute name="class" use="required"/>
-      <xs:attribute name="columnClasses" use="required"/>
-      <xs:attribute name="dir" use="required"/>
-      <xs:attribute name="footerClass" use="required"/>
-      <xs:attribute name="frame" use="required"/>
-      <xs:attribute name="headerClass" use="required"/>
-      <xs:attribute name="rowClasses" use="required"/>
-      <xs:attribute name="rules" use="required"/>
-      <xs:attribute name="style" use="required"/>
-      <xs:attribute name="table-size" use="required"/>
-      <xs:attribute name="title" use="required"/>
-      <xs:attribute name="width" use="required"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="style">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="any">
-    <xs:complexType>
-      <xs:attribute name="display" use="required" type="xs:NCName"/>
-      <xs:attribute name="title" use="required"/>
-      <xs:attribute name="value" use="required"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="load-bundle">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="column">
-    <xs:complexType>
-      <xs:attribute name="title" use="required"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="link">
-    <xs:complexType>
-      <xs:attribute name="href" use="required"/>
-      <xs:attribute name="rel" use="required"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="panellayout">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="a">
-    <xs:complexType>
-      <xs:attribute name="class" use="required"/>
-      <xs:attribute name="dir"/>
-      <xs:attribute name="style" use="required"/>
-      <xs:attribute name="title" use="optional"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="datatable">
-    <xs:complexType>
-      <xs:attribute name="bgcolor" use="required"/>
-      <xs:attribute name="border" use="required"/>
-      <xs:attribute name="cellpadding" use="required"/>
-      <xs:attribute name="cellspacing" use="required"/>
-      <xs:attribute name="class" use="required"/>
-      <xs:attribute name="columnClasses" use="required"/>
-      <xs:attribute name="dir"/>
-      <xs:attribute name="footerClass" use="required"/>
-      <xs:attribute name="frame" use="required"/>
-      <xs:attribute name="headerClass" use="required"/>
-      <xs:attribute name="height"/>
-      <xs:attribute name="rowClasses" use="required"/>
-      <xs:attribute name="rules" use="required"/>
-      <xs:attribute name="style" use="required"/>
-      <xs:attribute name="title" use="required"/>
-      <xs:attribute name="width"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="dnd">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" ref="vpe:drag"/>
-        <xs:element minOccurs="0" ref="vpe:drop"/>
-        <xs:element minOccurs="0" ref="vpe:container-child"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="resize">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="vpe:width"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="vpe:height"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="width">
-    <xs:complexType>
-      <xs:attribute name="disable-absolute-position" type="xs:NCName"/>
-      <xs:attribute name="width-attr" use="required" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="height">
-    <xs:complexType>
-      <xs:attribute name="disable-absolute-position" type="xs:NCName"/>
-      <xs:attribute name="height-attr" use="required" type="xs:NCName"/>
-      <xs:attribute name="tag-xpath" type="xs:NCName"/>
-      <xs:attribute name="test"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="breaker">
-    <xs:complexType>
-      <xs:attribute name="type" use="required" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="list">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="vpe:value"/>
-      </xs:sequence>
-      <xs:attribute name="class" use="required"/>
-      <xs:attribute name="ordered" use="required"/>
-      <xs:attribute name="style" use="required"/>
-      <xs:attribute name="title" use="required"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="pseudoContent">
-    <xs:complexType>
-      <xs:attribute name="attrName" type="xs:NCName"/>
-      <xs:attribute name="defaultText" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="textFormatting">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="vpe:format"/>
-      </xs:sequence>
-      <xs:attribute name="use-default-formats" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="format">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" ref="vpe:formatAttribute"/>
-      </xs:sequence>
-      <xs:attribute name="addChildren" type="xs:NCName"/>
-      <xs:attribute name="addParent" type="xs:NCName"/>
-      <xs:attribute name="handler"/>
-      <xs:attribute name="setDefault" type="xs:boolean"/>
-      <xs:attribute name="type" use="required" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="formatAttribute">
-    <xs:complexType>
-      <xs:attribute name="type" use="required" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:group name="input">
-    <xs:sequence>
-      <xs:element name="input" form="unqualified">
-        <xs:complexType>
-          <xs:attribute name="border"/>
-          <xs:attribute name="checked"/>
-          <xs:attribute name="class"/>
-          <xs:attribute name="dir"/>
-          <xs:attribute name="disabled" type="xs:NCName"/>
-          <xs:attribute name="size"/>
-          <xs:attribute name="src"/>
-          <xs:attribute name="style"/>
-          <xs:attribute name="title"/>
-          <xs:attribute name="type"/>
-          <xs:attribute name="value"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:group>
-  <xs:element name="value">
-    <xs:complexType>
-      <xs:attribute name="expr" use="required"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:group name="td">
-    <xs:sequence>
-      <xs:element name="td" form="unqualified">
-        <xs:complexType mixed="true">
-          <xs:choice minOccurs="0" maxOccurs="unbounded">
-            <xs:element ref="vpe:value"/>
-            <xs:element name="a" form="unqualified">
-              <xs:complexType mixed="true">
-                <xs:attribute name="href" use="required"/>
-              </xs:complexType>
-            </xs:element>
-          </xs:choice>
-          <xs:attribute name="class"/>
-          <xs:attribute name="colspan" type="xs:integer"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:group>
-  <xs:group name="option">
-    <xs:sequence>
-      <xs:element name="option" form="unqualified">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" ref="vpe:value"/>
-          </xs:sequence>
-          <xs:attribute name="title"/>
-          <xs:attribute name="value" use="required"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:group>
-  <xs:group name="textarea">
-    <xs:sequence>
-      <xs:element name="textarea" form="unqualified">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element ref="vpe:value"/>
-          </xs:sequence>
-          <xs:attribute name="class" use="required"/>
-          <xs:attribute name="cols"/>
-          <xs:attribute name="disabled" type="xs:boolean"/>
-          <xs:attribute name="rows" use="required"/>
-          <xs:attribute name="style" use="required"/>
-          <xs:attribute name="title" use="required"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:group>
-  <xs:group name="select">
-    <xs:sequence>
-      <xs:element name="select" form="unqualified">
-        <xs:complexType>
-          <xs:choice minOccurs="0">
-            <xs:group ref="vpe:option"/>
-            <xs:element ref="vpe:value"/>
-          </xs:choice>
-          <xs:attribute name="class"/>
-          <xs:attribute name="dir"/>
-          <xs:attribute name="disabled" type="xs:boolean"/>
-          <xs:attribute name="multiple" type="xs:NCName"/>
-          <xs:attribute name="size"/>
-          <xs:attribute name="style"/>
-          <xs:attribute name="title"/>
-          <xs:attribute name="value"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:group>
-  <xs:element name="drag">
-    <xs:complexType>
-      <xs:attribute name="start-enable" use="required" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="drop">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="vpe:container-child"/>
-      </xs:sequence>
-      <xs:attribute name="container" use="required" type="xs:NCName"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="container-child">
-    <xs:complexType>
-      <xs:attribute name="tag-name" use="required" type="xs:anyURI"/>
-    </xs:complexType>
-  </xs:element>
-  <xs:group name="div">
-    <xs:sequence>
-      <xs:element name="div" form="unqualified">
-        <xs:complexType mixed="true">
-          <xs:choice minOccurs="0" maxOccurs="unbounded">
-            <xs:group ref="vpe:div"/>
-            <xs:group ref="vpe:input"/>
-            <xs:group ref="vpe:select"/>
-            <xs:group ref="vpe:table"/>
-            <xs:group ref="vpe:textarea"/>
-            <xs:element ref="vpe:value"/>
-            <xs:element name="b" form="unqualified">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element ref="vpe:value"/>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-          </xs:choice>
-          <xs:attribute name="action"/>
-          <xs:attribute name="bgcolor"/>
-          <xs:attribute name="border"/>
-          <xs:attribute name="class"/>
-          <xs:attribute name="cols"/>
-          <xs:attribute name="onclick"/>
-          <xs:attribute name="rendered"/>
-          <xs:attribute name="rows"/>
-          <xs:attribute name="size"/>
-          <xs:attribute name="style"/>
-          <xs:attribute name="title"/>
-          <xs:attribute name="width"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:group>
-  <xs:group name="table">
-    <xs:sequence>
-      <xs:element name="table" form="unqualified">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" maxOccurs="unbounded" name="tr" form="unqualified">
-              <xs:complexType>
-                <xs:group maxOccurs="unbounded" ref="vpe:td"/>
-                <xs:attribute name="class"/>
-              </xs:complexType>
-            </xs:element>
-          </xs:sequence>
-          <xs:attribute name="cellspacing" type="xs:integer"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:group>
-</xs:schema>
+<!-- 
+    * Copyright (c) 2007 Exadel, Inc. and Red Hat, Inc.
+    * Distributed under license by Red Hat, Inc. All rights reserved.
+    * This program is made available under the terms of the
+    * Eclipse Public License v1.0 which accompanies this distribution,
+    * and is available at http://www.eclipse.org/legal/epl-v10.html
+    *
+    * Contributors:
+    *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
+-->
+<xsd:schema 
+    targetNamespace="http://org.jboss.org/tools/vpe/template"
+    xmlns:vpe="http://org.jboss.org/tools/vpe/template"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    version="1.0.0"
+    elementFormDefault="qualified" 
+    attributeFormDefault="unqualified">
+    
+<!--  -->    
+    <xsd:element name="templates" type="vpe:TEMPLATES"/>
+        
+    
+<!--  -->
+    <xsd:complexType name="TEMPLATES">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="template-taglib" type="vpe:TEMPLATE-TAGLIB"/>
+            <xsd:element maxOccurs="unbounded"  name="tag" type="vpe:TAG"/>
+        </xsd:sequence>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="TAG">
+        <xsd:sequence>
+            <xsd:element name="if" type="vpe:IF" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="template" type="vpe:TEMPLATE" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="case-sensitive" type="vpe:VPE-BOOLEAN" use="optional"/>
+        <xsd:attribute name="name" use="required" type="xsd:string"/>
+        <xsd:attribute name="haveVisualPreview" use="optional" type="vpe:VPE-BOOLEAN"/>
+    </xsd:complexType>
+<!--  -->  
+    <xsd:complexType name="TEMPLATE">
+        <xsd:choice maxOccurs="unbounded">
+            <!--  HTML tags -->
+            <xsd:element minOccurs="0" name="nobr" type="vpe:HTML_NOBR" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="span" type="vpe:HTML_SPAN" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="input" type="vpe:HTML_INPUT" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="div" type="vpe:HTML_DIV" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="img" type="vpe:HTML_IMG" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="select" type="vpe:HTML_SELECT" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="option" type="vpe:HTML_OPTION" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="table" type="vpe:HTML_TABLE" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="textarea" type="vpe:HTML_TEXTAREA" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="td" type="vpe:HTML_TD" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="label" type="vpe:HTML_LABEL" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="button" type="vpe:HTML_BUTTON" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="tr" type="vpe:HTML_TR" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="h0" type="vpe:HTML_H" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="h1" type="vpe:HTML_H" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="h2" type="vpe:HTML_H" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="h3" type="vpe:HTML_H" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="h4" type="vpe:HTML_H" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="h5" type="vpe:HTML_H" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="h6" type="vpe:HTML_H" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="hr" type="vpe:HTML_HR" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="a" type="vpe:HTML_A" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="p" type="vpe:HTML_P" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="ul" type="vpe:HTML_UL" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="li" type="vpe:HTML_LI" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="pre" type="vpe:HTML_PRE" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="em" type="vpe:HTML_EM" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="i" type="vpe:HTML_I" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="ol" type="vpe:HTML_OL" form="unqualified" maxOccurs="unbounded"/>
+          
+            <!-- VPE tags -->
+            <xsd:element minOccurs="0" name="panellayout" type="vpe:PANELLAYOT"/>
+            <xsd:element minOccurs="0" name="list" type="vpe:LIST"/>
+            <xsd:element minOccurs="0" name="datatable" type="vpe:DATATABLE"/>
+            <xsd:element minOccurs="0" name="grid" type="vpe:GRID"/>
+            <xsd:element minOccurs="0" name="panelgrid" type="vpe:PANELGRID"/>
+            <xsd:element minOccurs="0" name="column" type="vpe:COLUMN"/>
+            <xsd:element minOccurs="0" name="a" type="vpe:A" />
+            <xsd:element minOccurs="0" name="any" type="vpe:ANY"/>
+            <xsd:element minOccurs="0" name="copy" type="vpe:COPY"/>
+            <xsd:element minOccurs="0" name="taglib" type="vpe:TAGLIB"/>
+            <xsd:element minOccurs="0" name="jsproot" type="vpe:JSPROOT"/>
+            <xsd:element minOccurs="0" name="resize" type="vpe:RESIZE"/>
+            <xsd:element minOccurs="0" name="dnd" type="vpe:DND"/>
+            <xsd:element minOccurs="0" name="load-bundle" type="vpe:LOAD-BUNDLE"/>
+            <xsd:element minOccurs="0" name="link" type="vpe:LINK"/>
+            <xsd:element minOccurs="0" name="textFormatting" type="vpe:TEXT-FORMATING" />
+            <xsd:element minOccurs="0" name="pseudoContent" type="vpe:PSEUDO-CONTENT"/>
+            <xsd:element minOccurs="0" name="style" type="vpe:STYLE" />
+            <xsd:element minOccurs="0" name="breaker" type="vpe:BREAKER" />
+            <xsd:element minOccurs="0" name="facet" type="vpe:FACET" />
+        </xsd:choice>
+        <xsd:attribute name="children" type="vpe:VPE-BOOLEAN"/>
+        <xsd:attribute name="modify" type="vpe:VPE-BOOLEAN"/>
+        <xsd:attribute name="class" type="xsd:string" use="optional" />
+        <xsd:attribute name="file" type="xsd:string" use="optional"/>
+        <xsd:attribute name="namespaceIdentifier" type="xsd:string" use="optional"/>
+        <xsd:attribute name="invisible" type="vpe:VPE-BOOLEAN" use="optional"/>
+        <xsd:attribute name="hasImaginaryBorder" type="vpe:VPE-BOOLEAN" use="optional"/>
+    </xsd:complexType>
+<!--  -->   
+   
+        <xsd:complexType name="ATTRIBUTE">
+            <xsd:attribute name="name" use="required" type="xsd:NCName"/>
+            <xsd:attribute name="value" use="required" type="xsd:string"/>
+        </xsd:complexType>
+<!--  -->    
+    <xsd:complexType name="TEMPLATE-TAGLIB">
+         <xsd:attribute name="prefix" use="required" type="xsd:NCName"/>
+         <xsd:attribute name="uri" use="required" type="xsd:anyURI"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="RESIZE">
+          <xsd:choice maxOccurs="unbounded" >
+            <xsd:element minOccurs="0" name="height" type="vpe:HEIGHT"/>
+            <xsd:element minOccurs="0" name="width" type="vpe:WIDTH"/>
+          </xsd:choice>
+    </xsd:complexType>
+<!--  -->    
+    <xsd:complexType name="WIDTH">
+        <xsd:attribute name="width-attr" use="required" type="xsd:string"/>
+        <xsd:attribute name="disable-absolute-position" use="optional" type="vpe:VPE-BOOLEAN"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HEIGHT">
+        <xsd:attribute name="height-attr" use="required" type="xsd:string"/>
+        <xsd:attribute name="tag-xpath" use="optional" type="xsd:string"/>
+        <xsd:attribute name="test" use="optional" type="xsd:string"/>
+        <xsd:attribute name="disable-absolute-position" use="optional" type="vpe:VPE-BOOLEAN"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="DRAG" >
+        <xsd:attribute name="start-enable" use="required" type="vpe:VPE-BOOLEAN" /> 
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="DROP">
+        <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="container-child" type="vpe:CONTAINER-CHILD"/>
+        </xsd:sequence>
+        <xsd:attribute name="container" use="required" type="vpe:VPE-BOOLEAN"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="DND">
+        <xsd:sequence>
+            <xsd:element name="drag" type="vpe:DRAG" minOccurs="0"/>
+            <xsd:element name="drop" type="vpe:DROP" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+<!--  --> 
+    <xsd:complexType name="COPY">
+        <xsd:sequence>
+            <xsd:element name="attribute" type="vpe:ATTRIBUTE" minOccurs="0" />
+        </xsd:sequence>
+        <xsd:attribute name="attrs" type="xsd:string" />
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="CONTAINER-CHILD" >
+        <xsd:attribute name="tag-name" use="required" type="xsd:string"/> 
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="LOAD-BUNDLE"/>
+<!--  -->
+    <xsd:complexType name="LINK">
+        <xsd:attribute name="rel" type="xsd:string" use="required"/>
+        <xsd:attribute name="href" type="xsd:string" use="required"/>
+    </xsd:complexType>
+<!--  -->    
+    <xsd:complexType name="IF">
+        <xsd:sequence>
+            <xsd:element name="if" type="vpe:IF" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="template" type="vpe:TEMPLATE" minOccurs="0"/>
+            <xsd:element name="textFormatting" type="vpe:TEXT-FORMATING" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="test" use="required" type="xsd:string"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="A">
+        <xsd:attribute name="style" use="required" type="xsd:string"/>
+        <xsd:attribute name="class" use="required" type="xsd:string"/>
+        <xsd:attribute name="dir" use="optional" type="xsd:string"/>
+        <xsd:attribute name="title" use="optional" type="xsd:string"/>
+    </xsd:complexType>
+<!--  -->    
+    <xsd:complexType name="TEXT-FORMATING">
+        <xsd:sequence>
+            <xsd:element name="format" minOccurs="0" maxOccurs="unbounded" type="vpe:FORMAT"/>
+        </xsd:sequence>
+        <xsd:attribute name="use-default-formats" type="vpe:VPE-BOOLEAN" use="optional"/>
+    </xsd:complexType>
+ <!--  -->
+    <xsd:complexType name="FORMAT">
+        <xsd:sequence>
+            <xsd:element name="formatAttribute" minOccurs="0" type="vpe:FORMAT-ATTRIBUTE"/>
+        </xsd:sequence>
+        <xsd:attribute name="type" type="vpe:FORMAT-TYPE" use="required"/>
+        <xsd:attribute name="addChildren" type="vpe:CHILDREN-FORMAT" use="optional"/>
+        <xsd:attribute name="addParent" type="vpe:CHILDREN-FORMAT" use="optional"/>
+        <xsd:attribute name="setDefault" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="handler" type="xsd:string" use="optional" />
+    </xsd:complexType>
+ <!--  -->   
+    <xsd:complexType name="FORMAT-ATTRIBUTE">
+        <xsd:attribute name="type" type="xsd:string" use="required"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="PSEUDO-CONTENT">
+        <xsd:attribute name="defaultText" type="vpe:VPE-BOOLEAN" use="optional"/>
+        <xsd:attribute name="attrName" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->        
+    <xsd:complexType name="STYLE"/> 
+<!--  -->
+    <xsd:complexType name="BREAKER">
+        <xsd:attribute name="type" use="required" type="xsd:string"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="FACET"/>
+<!--  -->    
+    <xsd:complexType name="PANELGRID">
+        <xsd:attribute name="bgcolor" use="optional"/>
+        <xsd:attribute name="border" use="optional"/>
+        <xsd:attribute name="captionClass" use="optional"/>
+        <xsd:attribute name="captionStyle" use="optional"/>
+        <xsd:attribute name="cellpadding" use="optional"/>
+        <xsd:attribute name="cellspacing" use="optional"/>
+        <xsd:attribute name="class" use="optional"/>
+        <xsd:attribute name="columnClasses" use="optional"/>
+        <xsd:attribute name="dir" use="optional"/>
+        <xsd:attribute name="footerClass" use="optional"/>
+        <xsd:attribute name="frame" use="optional"/>
+        <xsd:attribute name="headerClass" use="optional"/>
+        <xsd:attribute name="rowClasses" use="optional"/>
+        <xsd:attribute name="rules" use="optional"/>
+        <xsd:attribute name="style" use="optional"/>
+        <xsd:attribute name="table-size" use="optional"/>
+        <xsd:attribute name="title" use="optional"/>
+        <xsd:attribute name="width" use="optional"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="DATATABLE">
+        <xsd:attribute name="bgcolor" use="optional"/>
+        <xsd:attribute name="border" use="optional"/>
+        <xsd:attribute name="cellpadding" use="optional"/>
+        <xsd:attribute name="cellspacing" use="optional"/>
+        <xsd:attribute name="class" use="optional"/>
+        <xsd:attribute name="columnClasses" use="optional"/>
+        <xsd:attribute name="dir" use="optional"/>
+        <xsd:attribute name="footerClass" use="optional"/>
+        <xsd:attribute name="frame" use="optional"/>
+        <xsd:attribute name="headerClass" use="optional"/>
+        <xsd:attribute name="height" use="optional"/>
+        <xsd:attribute name="rowClasses" use="optional"/>
+        <xsd:attribute name="rules" use="optional"/>
+        <xsd:attribute name="style" use="optional"/>
+        <xsd:attribute name="title" use="optional"/>
+        <xsd:attribute name="width" use="optional"/>
+    </xsd:complexType>
+ <!--  -->
+    <xsd:complexType name="COLUMN">
+        <xsd:attribute name="title" use="optional" type="xsd:string" />
+    </xsd:complexType>
+ <!--  -->
+    <xsd:complexType name="ANY">
+        <xsd:attribute name="value" type="xsd:string" use="optional"/>
+        <xsd:attribute name="title" type="xsd:string" use="optional"/>
+        <xsd:attribute name="display" type="xsd:string" use="optional"/>
+        <xsd:attribute name="icon" type="vpe:VPE-BOOLEAN" use="optional"/>
+        <xsd:attribute name="background-color" type="xsd:string" use="optional"/>
+        <xsd:attribute name="border" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="TAGLIB"/>
+<!--  -->
+    <xsd:complexType name="JSPROOT" />
+<!--  -->
+    <xsd:complexType name="GRID">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="input" type="vpe:HTML_INPUT" minOccurs="0" form="unqualified"/>
+            <xsd:element name="value" type="vpe:VALUE" minOccurs="0"/>
+        </xsd:choice>
+        <xsd:attribute name="style" type="xsd:string" use="optional"/>
+        <xsd:attribute name="title" type="xsd:string" use="optional"/>
+        <xsd:attribute name="class" type="xsd:string" use="optional"/>
+        <xsd:attribute name="disabled" use="optional" type="xsd:boolean"/>
+        <xsd:attribute name="layout" type="xsd:string" use="optional"/>
+        <xsd:attribute name="border" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+ <!--  -->
+    <xsd:complexType name="VALUE">
+        <xsd:attribute name="expr" use="required" type="xsd:string"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="LIST">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="value" type="vpe:VALUE" />
+        </xsd:sequence>
+        <xsd:attribute name="style" use="optional" type="xsd:string" />
+        <xsd:attribute name="class" use="optional" type="xsd:string" />
+        <xsd:attribute name="ordered" type="xsd:string" use="optional"/>
+        <xsd:attribute name="title" type="xsd:string" use="optional" />
+    </xsd:complexType>
+ <!--  -->
+    <xsd:complexType name="PANELLAYOT"/>
+<!--  -->
+    <xsd:complexType name="HTML_NOBR">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="value" type="vpe:VALUE" minOccurs="0"/>
+            <xsd:element name="input" type="vpe:HTML_INPUT" minOccurs="0" form="unqualified"/>
+            <xsd:element name="copy" type="vpe:COPY" minOccurs="0"/>
+        </xsd:choice>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HTML_SPAN" mixed="true">
+        <xsd:choice maxOccurs="unbounded">
+           
+            <xsd:element name="value" type="vpe:VALUE" minOccurs="0"/>
+            <xsd:element name="copy" type="vpe:COPY" minOccurs="0"/>
+            <xsd:element name="input" type="vpe:HTML_INPUT" minOccurs="0" form="unqualified" />
+        </xsd:choice>
+        <xsd:attribute name="style" type="xsd:string" use="optional"/>
+        <xsd:attribute name="class" type="xsd:string" use="optional"/>
+        <xsd:attribute name="title" type="xsd:string" use="optional"/>
+        <xsd:attribute name="dir" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HTML_INPUT">
+        <xsd:attribute name="type" type="xsd:string" use="optional"/>
+        <xsd:attribute name="value" type="xsd:string" use="optional"/>
+        <xsd:attribute name="style" type="xsd:string" use="optional"/>
+        <xsd:attribute name="class" type="xsd:string" use="optional"/>
+        <xsd:attribute name="title" type="xsd:string" use="optional"/>
+        <xsd:attribute name="src" type="xsd:string" use="optional"/>
+        <xsd:attribute name="size" type="xsd:string" use="optional"/>
+        <xsd:attribute name="dir" type="xsd:string" use="optional"/>
+        <xsd:attribute name="checked" type="xsd:string" use="optional"/>
+        <xsd:attribute name="border" type="xsd:string" use="optional"/>
+        <xsd:attribute name="disabled" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HTML_DIV" mixed="true">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="select" minOccurs="0" type="vpe:HTML_SELECT" form="unqualified"/>
+            <xsd:element name="input" type="vpe:HTML_INPUT" form="unqualified"/>
+            <xsd:element name="div" minOccurs="0"  type="vpe:HTML_DIV" form="unqualified"/>
+            <xsd:element name="table" minOccurs="0"  type="vpe:HTML_TABLE" form="unqualified"/>
+            <xsd:element name="b" minOccurs="0"  type="vpe:HTML_B" form="unqualified"/>
+            <xsd:element name="textarea" minOccurs="0"  type="vpe:HTML_TEXTAREA" form="unqualified"/>
+            <xsd:element name="value" type="vpe:VALUE" minOccurs="0"/>
+            <xsd:element minOccurs="0" name="h0" type="vpe:HTML_H" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="h1" type="vpe:HTML_H" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="h2" type="vpe:HTML_H" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="h3" type="vpe:HTML_H" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="h4" type="vpe:HTML_H" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="h5" type="vpe:HTML_H" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="h6" type="vpe:HTML_H" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="img" type="vpe:HTML_IMG" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="hr" type="vpe:HTML_HR" form="unqualified" maxOccurs="unbounded"/>
+            
+            
+        </xsd:choice>
+        <xsd:attribute name="style" type="xsd:string" use="optional"/>
+        <xsd:attribute name="class" type="xsd:string" use="optional"/>
+        <xsd:attribute name="title" type="xsd:string" use="optional"/>
+        <xsd:attribute name="action" type="xsd:string" use="optional"/>
+        <xsd:attribute name="size" type="xsd:string" use="optional"/>
+        <xsd:attribute name="rows" type="xsd:string" use="optional"/>
+        <xsd:attribute name="cols" type="xsd:string" use="optional"/>
+        <xsd:attribute name="onclick" type="xsd:string" use="optional"/>
+        <xsd:attribute name="rendered" type="xsd:string" use="optional"/>
+        <xsd:attribute name="width" type="xsd:string" use="optional"/>
+        <xsd:attribute name="border" type="xsd:string" use="optional"/>
+        <xsd:attribute name="bgcolor" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HTML_IMG">
+        <xsd:attribute name="src" type="xsd:string" use="optional"/>
+        <xsd:attribute name="width" type="xsd:string" use="optional"/>
+        <xsd:attribute name="height" type="xsd:string" use="optional"/>
+        <xsd:attribute name="style" type="xsd:string" use="optional"/>
+        <xsd:attribute name="class" type="xsd:string" use="optional"/>
+        <xsd:attribute name="title" type="xsd:string" use="optional"/>
+        <xsd:attribute name="alt" type="xsd:string" use="optional"/>
+        <xsd:attribute name="border" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HTML_SELECT">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="option" type="vpe:HTML_OPTION" minOccurs="0" form="unqualified"/>
+            <xsd:element name="value" type="vpe:VALUE" minOccurs="0"/>
+        </xsd:choice>
+        <xsd:attribute name="style" type="xsd:string" use="optional"/>
+        <xsd:attribute name="class" type="xsd:string" use="optional"/>
+        <xsd:attribute name="title" type="xsd:string" use="optional"/>
+        <xsd:attribute name="multiple" type="xsd:string" use="optional"/>
+        <xsd:attribute name="size" type="xsd:string" use="optional"/>
+        <xsd:attribute name="dir" type="xsd:string" use="optional"/>
+        <xsd:attribute name="disabled" type="xsd:string" use="optional"/>
+        <xsd:attribute name="value" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->    
+    <xsd:complexType name="HTML_OPTION">
+        <xsd:sequence>
+            <xsd:element name="value" minOccurs="0" type="vpe:VALUE" /> 
+        </xsd:sequence>
+        <xsd:attribute name="value" type="xsd:string" use="optional"/>
+        <xsd:attribute name="title" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HTML_TABLE">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="tr" type="vpe:HTML_TR" minOccurs="0" form="unqualified" />
+        </xsd:choice>
+        <xsd:attribute name="style" type="xsd:string" use="optional"/>
+        <xsd:attribute name="title" type="xsd:string" use="optional"/>
+        <xsd:attribute name="class" type="xsd:string" use="optional"/>
+        <xsd:attribute name="cellpadding" type="xsd:string" use="optional"/>
+        <xsd:attribute name="cellspacing" type="xsd:string" use="optional"/>
+        <xsd:attribute name="border" type="xsd:string" use="optional"/>
+        <xsd:attribute name="align" type="xsd:string" use="optional"/>
+        <xsd:attribute name="valign" type="xsd:string" use="optional"/>
+        <xsd:attribute name="width" type="xsd:string" use="optional"/>
+        <xsd:attribute name="height" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HTML_TR">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="td" minOccurs="0" type="vpe:HTML_TD" form="unqualified"/>
+        </xsd:choice>
+        <xsd:attribute name="class" type="xsd:string" use="optional"/>
+        <xsd:attribute name="style" type="xsd:string" use="optional"/>
+        <xsd:attribute name="height" type="xsd:string" use="optional"/>
+        <xsd:attribute name="align" type="xsd:string" use="optional"/>
+        <xsd:attribute name="valign" type="xsd:string" use="optional"/>
+        <xsd:attribute name="width" type="xsd:string" use="optional"/>
+        <xsd:attribute name="rowspan" type="xsd:string" use="optional"/>
+        <xsd:attribute name="nowrap" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HTML_TD" mixed="true">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="a" type="vpe:HTML_A" minOccurs="0" form="unqualified"/>
+            <xsd:element name="value" type="vpe:VALUE" minOccurs="0"/>
+        </xsd:choice>
+        <xsd:attribute name="colspan" type="xsd:string" use="optional"/>
+        <xsd:attribute name="style" type="xsd:string" use="optional"/>
+        <xsd:attribute name="class" type="xsd:string" use="optional"/>
+        <xsd:attribute name="title" type="xsd:string" use="optional"/>
+        <xsd:attribute name="height" type="xsd:string" use="optional"/>
+        <xsd:attribute name="align" type="xsd:string" use="optional"/>
+        <xsd:attribute name="valign" type="xsd:string" use="optional"/>
+        <xsd:attribute name="width" type="xsd:string" use="optional"/>
+        <xsd:attribute name="rowspan" type="xsd:string" use="optional"/>
+        <xsd:attribute name="nowrap" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HTML_A" mixed="true">
+       <xsd:attribute name="href" type="xsd:string" use="optional"/>
+       <xsd:attribute name="style" type="xsd:string" use="optional"/>
+       <xsd:attribute name="class" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HTML_B">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="value" minOccurs="0" type="vpe:VALUE" />
+        </xsd:choice>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HTML_TEXTAREA">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="value" minOccurs="0" type="vpe:VALUE"/>
+        </xsd:choice>
+        <xsd:attribute name="style" type="xsd:string" use="optional"/>
+        <xsd:attribute name="class" type="xsd:string" use="optional"/>
+        <xsd:attribute name="disabled" type="xsd:string" use="optional"/>
+        <xsd:attribute name="title" type="xsd:string" use="optional"/>
+        <xsd:attribute name="rows" type="xsd:string" use="optional"/>
+        <xsd:attribute name="cols" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HTML_LABEL">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="a" type="vpe:HTML_A" minOccurs="0" form="unqualified"/>
+            <xsd:element name="value" type="vpe:VALUE" minOccurs="0"/>
+        </xsd:choice>
+        <xsd:attribute name="style" type="xsd:string" use="optional"/>
+        <xsd:attribute name="class" type="xsd:string" use="optional"/>
+        <xsd:attribute name="for" type="xsd:string" use="optional"/>
+        <xsd:attribute name="title" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HTML_BUTTON" mixed="true">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="value" type="vpe:VALUE" minOccurs="0"/>
+        </xsd:choice>
+        <xsd:attribute name="style" type="xsd:string" use="optional"/>
+        <xsd:attribute name="class" type="xsd:string" use="optional"/>
+        <xsd:attribute name="value" type="xsd:string" use="optional"/>
+        <xsd:attribute name="title" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+<!--  -->    
+    <xsd:complexType name="HTML_H">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="value" type="vpe:VALUE" minOccurs="0"/>
+        </xsd:choice>
+       <xsd:attribute name="align" type="xsd:string" use="optional"/>
+       <xsd:attribute name="style" type="xsd:string" use="optional"/> 
+       <xsd:attribute name="class" type="xsd:string" use="optional"/> 
+    </xsd:complexType>
+ <!--  -->    
+    <xsd:complexType name="HTML_HR">
+        <xsd:attribute name="align" use="optional" type="xsd:string"/>
+        <xsd:attribute name="width" use="optional" type="xsd:string"/>
+        <xsd:attribute name="title" use="optional" type="xsd:string"/>
+    </xsd:complexType>
+<!--  -->
+    <xsd:complexType name="HTML_OL"/>
+<!--  -->
+    <xsd:complexType name="HTML_I"/>
+<!--  -->
+    <xsd:complexType name="HTML_EM"/> 
+<!--  -->
+    <xsd:complexType name="HTML_PRE"/> 
+<!--  -->
+    <xsd:complexType name="HTML_LI"/>
+<!--  -->
+    <xsd:complexType name="HTML_UL"/>   
+<!--  -->
+    <xsd:complexType name="HTML_P"/>     
+    
+<!-- VPE types  -->
+    <xsd:simpleType name="CHILDREN-FORMAT">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="deny"/>
+            <xsd:enumeration value="allow"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+<!--  -->
+    <xsd:simpleType name="FORMAT-TYPE">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="BlockFormat"/>
+            <xsd:enumeration value="UnderlineFormat"/>
+            <xsd:enumeration value="BoldFormat"/>
+            <xsd:enumeration value="ItalicFormat"/>
+            <xsd:enumeration value="FontNameFormat"/>
+            <xsd:enumeration value="FontSizeFormat"/>
+            <xsd:enumeration value="BackgroundColorFormat"/>
+            <xsd:enumeration value="ForegroundColorFormat"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+<!--  -->
+    <xsd:simpleType name="VPE-BOOLEAN">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="yes"/>
+            <xsd:enumeration value="no"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+<!--  -->
+</xsd:schema>
