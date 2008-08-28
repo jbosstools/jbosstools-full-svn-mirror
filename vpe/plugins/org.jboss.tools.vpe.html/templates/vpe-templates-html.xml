@@ -1201,11 +1201,7 @@
 			</vpe:template>
 		</vpe:if>
 		<vpe:if test="@type='hidden'">
-			<vpe:template children="no" modify="no">
-				<!--input type="text" value="{@value}" class="{@class}" size="{@size}" style="{@style}border-style:dotted;"/-->
-				<!--span class="__input__tag" style="{@style}">
-					<nobr><vpe:value expr="{@value}"/></nobr>
-					</span-->
+			<vpe:template children="no" modify="no" invisible="yes" >
 			</vpe:template>
 		</vpe:if>
 		<vpe:if test="@type='image'">
