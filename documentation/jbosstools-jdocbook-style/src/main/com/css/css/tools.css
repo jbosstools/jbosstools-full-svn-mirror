@@ -22,7 +22,7 @@ ul.docnav {
 
 #title a.site_href, #title a.doc_href{
 display:block;
-height:60px;
+height:100px;
 } 
 
 #title a.site_href {
