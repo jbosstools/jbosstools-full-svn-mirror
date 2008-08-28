@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 
-package org.jboss.tools.jst.web.messages;
+package org.jboss.tools.vpe.el.messages;
 
 
 import org.eclipse.osgi.util.NLS;

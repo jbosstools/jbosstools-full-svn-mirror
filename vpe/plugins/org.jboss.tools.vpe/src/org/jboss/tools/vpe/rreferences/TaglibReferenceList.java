@@ -8,18 +8,20 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.jst.web.rreferences;
+package org.jboss.tools.vpe.rreferences;
 
-import org.jboss.tools.jst.web.messages.Messages;
+import org.eclipse.core.runtime.QualifiedName;
 
-public class AbsoluteFolderReferenceComposite extends FolderReferenceComposite {
-
-	protected ResourceReferenceList getReferenceList() {
-		return AbsoluteFolderReferenceList.getInstance();
+public class TaglibReferenceList extends ResourceReferenceList {
+	private static QualifiedName PROPERTY_NAME = new QualifiedName("", "org.jboss.tools.vpe.editor.css.TLDList");
+	static TaglibReferenceList instance = new TaglibReferenceList();
+	
+	public static TaglibReferenceList getInstance() {
+		return instance;
 	}
 
-	protected String getTitle() {
-		return Messages.ACTUAL_RUN_TIME_ABSOLUTE_FOLDER;
+	protected QualifiedName getPropertyName() {
+		return PROPERTY_NAME;
 	}
 
 }

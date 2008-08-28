@@ -9,7 +9,7 @@
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
 
-package org.jboss.tools.jst.web.ui.internal.preferences;
+package org.jboss.tools.vpe.editor.preferences;
 
 import java.util.Properties;
 
@@ -23,9 +23,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
-import org.jboss.tools.jst.web.el.GlobalElVariablesComposite;
-import org.jboss.tools.jst.web.rreferences.ResourceReference;
-import org.jboss.tools.jst.web.rreferences.VpeResourcesDialog;
+import org.jboss.tools.vpe.el.GlobalElVariablesComposite;
+import org.jboss.tools.vpe.rreferences.ResourceReference;
+import org.jboss.tools.vpe.rreferences.VpeResourcesDialog;
 
 /**
  * Page for the El preferences.

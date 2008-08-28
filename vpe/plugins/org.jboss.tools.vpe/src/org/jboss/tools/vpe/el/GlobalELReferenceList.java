@@ -9,10 +9,10 @@
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
 
-package org.jboss.tools.jst.web.el;
+package org.jboss.tools.vpe.el;
 
 import org.eclipse.core.runtime.QualifiedName;
-import org.jboss.tools.jst.web.rreferences.ResourceReferenceList;
+import org.jboss.tools.vpe.rreferences.ResourceReferenceList;
 
 /**
  * @author Evgenij Stherbin

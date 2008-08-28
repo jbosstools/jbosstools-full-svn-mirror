@@ -8,17 +8,18 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.jst.web.rreferences;
+package org.jboss.tools.vpe.rreferences;
 
+import org.jboss.tools.vpe.el.messages.Messages;
 
-public class RelativeFolderReferenceComposite extends FolderReferenceComposite {
+public class AbsoluteFolderReferenceComposite extends FolderReferenceComposite {
 
 	protected ResourceReferenceList getReferenceList() {
-		return RelativeFolderReferenceList.getInstance();
+		return AbsoluteFolderReferenceList.getInstance();
 	}
 
 	protected String getTitle() {
-		return "Actual Run-Time Relative Folder";
+		return Messages.ACTUAL_RUN_TIME_ABSOLUTE_FOLDER;
 	}
 
 }

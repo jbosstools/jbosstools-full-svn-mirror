@@ -31,12 +31,12 @@ import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.jst.web.project.WebProject;
-import org.jboss.tools.jst.web.rreferences.ResourceReference;
 import org.jboss.tools.jst.web.tld.IFilePathEncoder;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
 import org.jboss.tools.vpe.editor.util.ElService;
+import org.jboss.tools.vpe.rreferences.ResourceReference;
 import org.w3c.dom.Node;
 
 public class VpeFunctionSrc extends VpeFunction {

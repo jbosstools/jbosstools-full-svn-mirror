@@ -8,19 +8,20 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.jst.web.rreferences;
+package org.jboss.tools.vpe.rreferences;
 
 import org.eclipse.core.runtime.QualifiedName;
 
-public class AbsoluteFolderReferenceList extends ResourceReferenceList {
-	private static QualifiedName PROPERTY_NAME = new QualifiedName("", "org.jboss.tools.vpe.editor.css.AbsoluteFolder");
-	static AbsoluteFolderReferenceList instance = new AbsoluteFolderReferenceList();
+public class CSSReferenceList extends ResourceReferenceList {
+	private static QualifiedName PROPERTY_NAME = new QualifiedName("", "org.jboss.tools.vpe.editor.css.CSSList");
+	static CSSReferenceList instance = new CSSReferenceList();
 	
-	public static AbsoluteFolderReferenceList getInstance() {
+	public static CSSReferenceList getInstance() {
 		return instance;
 	}
 
 	protected QualifiedName getPropertyName() {
 		return PROPERTY_NAME;
-	}	
+	}
+	
 }

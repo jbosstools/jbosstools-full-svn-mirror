@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.jst.web.rreferences;
+package org.jboss.tools.vpe.rreferences;
 
 public class ResourceReference {
 	public final static int FILE_SCOPE = 0;

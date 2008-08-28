@@ -9,14 +9,14 @@
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
 
-package org.jboss.tools.jst.web.el;
+package org.jboss.tools.vpe.el;
 
 import java.util.List;
 
-import org.jboss.tools.jst.web.rreferences.ResourceReference;
-import org.jboss.tools.jst.web.rreferences.ResourceReferenceList;
-import org.jboss.tools.jst.web.rreferences.ResourceReferencesComposite;
-import org.jboss.tools.jst.web.rreferences.ResourceReferencesTableProvider;
+import org.jboss.tools.vpe.rreferences.ResourceReference;
+import org.jboss.tools.vpe.rreferences.ResourceReferenceList;
+import org.jboss.tools.vpe.rreferences.ResourceReferencesComposite;
+import org.jboss.tools.vpe.rreferences.ResourceReferencesTableProvider;
 
 
 /**
@@ -27,7 +27,7 @@ import org.jboss.tools.jst.web.rreferences.ResourceReferencesTableProvider;
 public class GlobalElVariablesComposite extends ResourceReferencesComposite {
 
     /**
-     * @see org.jboss.tools.jst.web.rreferences.ResourceReferencesComposite#createGroupLabel()
+     * @see org.jboss.tools.vpe.rreferences.ResourceReferencesComposite#createGroupLabel()
      */
     @Override
     protected String createGroupLabel() {
@@ -35,7 +35,7 @@ public class GlobalElVariablesComposite extends ResourceReferencesComposite {
     }
 
     /**
-     * @see org.jboss.tools.jst.web.rreferences.ResourceReferencesComposite#createTableProvider(java.util.List)
+     * @see org.jboss.tools.vpe.rreferences.ResourceReferencesComposite#createTableProvider(java.util.List)
      */
     @Override
     protected ResourceReferencesTableProvider createTableProvider(List dataList) {
@@ -43,7 +43,7 @@ public class GlobalElVariablesComposite extends ResourceReferencesComposite {
     }
 
     /**
-     * @see org.jboss.tools.jst.web.rreferences.ResourceReferencesComposite#getEntity()
+     * @see org.jboss.tools.vpe.rreferences.ResourceReferencesComposite#getEntity()
      */
     @Override
     protected String getEntity() {
@@ -51,7 +51,7 @@ public class GlobalElVariablesComposite extends ResourceReferencesComposite {
     }
 
     /**
-     * @see org.jboss.tools.jst.web.rreferences.ResourceReferencesComposite#getReferenceList()
+     * @see org.jboss.tools.vpe.rreferences.ResourceReferencesComposite#getReferenceList()
      */
     @Override
     protected ResourceReferenceList getReferenceList() {

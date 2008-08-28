@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.jst.web.rreferences;
+package org.jboss.tools.vpe.rreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,30 +23,32 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
+import org.jboss.tools.common.meta.XAttribute;
+import org.jboss.tools.common.meta.XModelEntity;
+import org.jboss.tools.common.meta.constraint.impl.XAttributeConstraintFileFilter;
+import org.jboss.tools.common.meta.impl.XModelMetaDataImpl;
 import org.jboss.tools.common.model.ui.action.CommandBar;
 import org.jboss.tools.common.model.ui.action.CommandBarListener;
 import org.jboss.tools.common.model.ui.objecteditor.XTable;
-import org.jboss.tools.common.model.ui.wizards.query.AbstractQueryWizardView;
 
-public abstract class ResourceReferencesDialogView extends AbstractQueryWizardView {
-	static String ADD = "Add";
-	static String EDIT = "Edit";
-	static String REMOVE = "Remove";
+public abstract class ResourceReferencesComposite {
+	protected static String ADD = "Add";
+	protected static String EDIT = "Edit";
+	protected static String REMOVE = "Remove";
 	protected XTable table = new XTable();
 	protected CommandBar bar = new CommandBar();
 	protected ResourceReferencesTableProvider tableProvider;// = new TemplatesTableProvider();
-	IFile file;
-	IPath path;
+	protected IFile file;
+	protected IPath path;
 	protected List dataList = new ArrayList();
 	
-	public ResourceReferencesDialogView() {
+	public ResourceReferencesComposite() {
 		init();
 	}
 
 	private void init() {
-//		changed = false;
 		tableProvider = createTableProvider(dataList);
-///ResourceReferencesTableProvider.getCSSTableProvider(dataList);
 		bar.getLayout().buttonWidth = 80;
 		bar.getLayout().direction = SWT.VERTICAL;
 		bar.setCommands(new String[]{ADD, EDIT, REMOVE});
@@ -56,10 +58,18 @@ public abstract class ResourceReferencesDialogView extends AbstractQueryWizardVi
 	
 	protected abstract ResourceReferencesTableProvider createTableProvider(List dataList);
 	protected abstract ResourceReferenceList getReferenceList();
+	
+	/**
+	 * Returned the label that will display in group.
+	 *
+	 * @return label displayed in group
+	 * @see #createControl(Composite)
+	 */
+	protected abstract String createGroupLabel();
+	   
 
 	public void setObject(Object object) {
-		super.setObject(object);
-		Properties p = findProperties(object);
+		Properties p = (Properties)object;
 		file = (IFile)p.get("file");
 		path = (IPath)p.get("path");
 		ResourceReference[] rs = (file != null) ? getReferenceList().getAllResources(file) :
@@ -69,13 +79,24 @@ public abstract class ResourceReferencesDialogView extends AbstractQueryWizardVi
 	}
 
 	public Control createControl(Composite parent) {
-		Composite c = new Composite(parent, SWT.NONE);
-		c.setLayoutData(new GridData(GridData.FILL_BOTH));
+		Composite c1 = new Composite(parent, SWT.NONE);
+		
+		c1.setLayoutData(new GridData(GridData.FILL_BOTH));
+		c1.setLayout(new GridLayout(2,false));
+		
+		final Group group = new Group(c1,SWT.NONE);
+		
+		group.setText(createGroupLabel());
+		group.setLayoutData(new GridData(GridData.FILL_BOTH));
 		GridLayout g = new GridLayout(2, false);
-		c.setLayout(g);
-		Control slc = table.createControl(c);
+		group.setLayout(g);
+
+	    
+		Control slc = table.createControl(group);
 		slc.setLayoutData(new GridData(GridData.FILL_BOTH));
-		Control bc = bar.createControl(c);
+		Control bc = bar.createControl(group);
+		
+	
 		GridData gd = new GridData(GridData.FILL_VERTICAL);
 		bc.setLayoutData(gd);
 		table.getTable().addSelectionListener(new SelectionListener() {
@@ -87,29 +108,34 @@ public abstract class ResourceReferencesDialogView extends AbstractQueryWizardVi
 			}
 		});
 		update();
-		return c;
+		return c1;
 	}
 	
 	ResourceReference[] getReferenceArray() {
 		return (ResourceReference[])dataList.toArray(new ResourceReference[0]);
 	}
 	
-	public void action(String command) {
-		stopEditing();
-		if(OK.equalsIgnoreCase(command)) {
-			if(file != null) {
-				getReferenceList().setAllResources(file, getReferenceArray());
-			} else {
-				getReferenceList().setAllResources(path, getReferenceArray());
-			}
+	/**
+	 * Clear all entries from table.
+	 */
+	public void clearAll(){
+	    if(this.dataList!=null){
+	        this.dataList.clear();
+	    }
+	}
+	
+	public void commit() {
+		if(file != null) {
+			getReferenceList().setAllResources(file, getReferenceArray());
+		} else {
+			getReferenceList().setAllResources(path, getReferenceArray());
 		}
-		super.action(command);
 	}
 	class BarListener implements CommandBarListener {
 		public void action(String command) {
 			int index = table.getSelectionIndex();
 			if(ADD.equals(command)) {
-				add(index);
+ 				add(index);
 			} else if(EDIT.equals(command)) {
 				edit(index);
 			} else if(REMOVE.equals(command)) {
@@ -120,17 +146,27 @@ public abstract class ResourceReferencesDialogView extends AbstractQueryWizardVi
 	}
 
 	protected void add(int index) {
-		ResourceReference css = new ResourceReference("", ResourceReference.FOLDER_SCOPE);
+		ResourceReference css = getDefaultResourceReference();
+		
+		initFilterInFileChooser();
 		boolean ok = VpeAddReferenceSupport.add(file, css, getReferenceArray(), getEntity());
 		if(!ok) return;
 		dataList.add(css);
 		update();
 		table.setSelection(dataList.size() - 1);
 	}
+
+    /**
+     * @return
+     */
+	protected ResourceReference getDefaultResourceReference() {
+        return new ResourceReference("", ResourceReference.FOLDER_SCOPE);
+    }
 	
 	protected void edit(int index) {
 		if(index < 0) return;
 		ResourceReference css = getReferenceArray()[index];
+		initFilterInFileChooser();
 		boolean ok = VpeAddReferenceSupport.edit(file, css, getReferenceArray(), getEntity());
 		if(!ok) return;
 		update();
@@ -155,5 +191,20 @@ public abstract class ResourceReferencesDialogView extends AbstractQueryWizardVi
 	private boolean canModify() {
 		return table.getSelectionIndex() >= 0;
 	}
+	
+	private void initFilterInFileChooser() {
+		String entityName = getEntity();
+		XModelEntity entity = XModelMetaDataImpl.getInstance().getEntity(entityName);
+		if(entity != null && file != null && file.getProject() != null) {
+			XAttribute[] as = entity.getAttributes();
+			for (int i = 0; i < as.length; i++) {
+				 if(as[i].getConstraint() instanceof XAttributeConstraintFileFilter) {
+					 XAttributeConstraintFileFilter f = (XAttributeConstraintFileFilter)as[i].getConstraint();
+					 f.getProperties().setProperty("filterFolder", file.getProject().getLocation().toFile().getAbsolutePath());
+				 }
+			}
+		}
+	}
+
 
 }

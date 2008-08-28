@@ -1,11 +1,11 @@
-package org.jboss.tools.jst.web.el;
+package org.jboss.tools.vpe.el;
 
 import java.util.List;
 
-import org.jboss.tools.jst.web.messages.Messages;
-import org.jboss.tools.jst.web.rreferences.ResourceReferenceList;
-import org.jboss.tools.jst.web.rreferences.ResourceReferencesComposite;
-import org.jboss.tools.jst.web.rreferences.ResourceReferencesTableProvider;
+import org.jboss.tools.vpe.el.messages.Messages;
+import org.jboss.tools.vpe.rreferences.ResourceReferenceList;
+import org.jboss.tools.vpe.rreferences.ResourceReferencesComposite;
+import org.jboss.tools.vpe.rreferences.ResourceReferencesTableProvider;
 
 /**
  * The Class ElVariablesComposite.

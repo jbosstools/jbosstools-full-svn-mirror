@@ -8,20 +8,12 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.jst.web.rreferences;
+package org.jboss.tools.vpe.rreferences;
 
-import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.core.runtime.IPath;
 
-public class TaglibReferenceList extends ResourceReferenceList {
-	private static QualifiedName PROPERTY_NAME = new QualifiedName("", "org.jboss.tools.vpe.editor.css.TLDList");
-	static TaglibReferenceList instance = new TaglibReferenceList();
+public interface ResourceReferenceListListener {
+	public IPath getPath();
+	public void changed(Object source);
 	
-	public static TaglibReferenceList getInstance() {
-		return instance;
-	}
-
-	protected QualifiedName getPropertyName() {
-		return PROPERTY_NAME;
-	}
-
 }

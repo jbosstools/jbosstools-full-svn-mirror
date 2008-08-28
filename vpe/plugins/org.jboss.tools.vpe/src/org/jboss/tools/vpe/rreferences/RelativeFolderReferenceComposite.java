@@ -8,20 +8,17 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.jst.web.rreferences;
+package org.jboss.tools.vpe.rreferences;
 
-import org.eclipse.core.runtime.QualifiedName;
 
-public class CSSReferenceList extends ResourceReferenceList {
-	private static QualifiedName PROPERTY_NAME = new QualifiedName("", "org.jboss.tools.vpe.editor.css.CSSList");
-	static CSSReferenceList instance = new CSSReferenceList();
-	
-	public static CSSReferenceList getInstance() {
-		return instance;
+public class RelativeFolderReferenceComposite extends FolderReferenceComposite {
+
+	protected ResourceReferenceList getReferenceList() {
+		return RelativeFolderReferenceList.getInstance();
 	}
 
-	protected QualifiedName getPropertyName() {
-		return PROPERTY_NAME;
+	protected String getTitle() {
+		return "Actual Run-Time Relative Folder";
 	}
-	
+
 }

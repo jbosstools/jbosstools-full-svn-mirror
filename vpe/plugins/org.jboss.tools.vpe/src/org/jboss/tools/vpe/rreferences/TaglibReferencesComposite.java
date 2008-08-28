@@ -8,11 +8,11 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.jst.web.rreferences;
+package org.jboss.tools.vpe.rreferences;
 
 import java.util.List;
 
-import org.jboss.tools.jst.web.messages.Messages;
+import org.jboss.tools.vpe.el.messages.Messages;
 
 /**
  * 
