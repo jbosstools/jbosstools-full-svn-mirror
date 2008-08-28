@@ -32,3 +32,12 @@ ul.docnav {
     ! height:40px;
     display:block;
 }
+
+a.new { 
+background:transparent url(../images/new.png) no-repeat scroll right top; 
+padding-right:70px; 
+} 
+a.updated { 
+background:transparent url(../images/updated.png) no-repeat scroll right top; 
+padding-right:70px; 
+}
