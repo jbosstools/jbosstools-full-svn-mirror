@@ -486,4 +486,6 @@ public interface VpeTemplate extends IVpeTemplateAdvice {
 			VpeElementMapping elementMapping, int focusPosition,
 			int anchorPosition, VpeDomMapping domMapping);
 	
+	public boolean isInvisible();
+	
 }

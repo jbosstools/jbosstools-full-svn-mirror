@@ -55,6 +55,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.template.IEditableTemplate;
+import org.jboss.tools.vpe.editor.template.InvisibleTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
@@ -66,6 +67,7 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
+import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.ElService;
 import org.jboss.tools.vpe.editor.util.FaceletUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -168,10 +170,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     private VpeDnd dropper;
 
     private Map<IFile, Document> includeDocuments = new HashMap<IFile, Document>();
+	private boolean showInvisibleTags;
 
     public VpeVisualDomBuilder(VpeDomMapping domMapping,
         INodeAdapter sorceAdapter, VpeTemplateManager templateManager,
         MozillaEditor visualEditor, VpePageContext pageContext) {
+    
     super(domMapping, sorceAdapter, templateManager);
     this.visualEditor = visualEditor;
     xulRunnerEditor = visualEditor.getXulRunnerEditor();
@@ -188,6 +192,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     } else {
         faceletFile = false;
     }
+    
+    this.showInvisibleTags = Constants.YES_STRING
+				.equals(VpePreference.SHOW_INVISIBLE_TAGS.getValue());
 
     }
 
@@ -206,6 +213,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
                         .getSourceBuilder().getSourceDocument()));
             }
         }
+        
         pageContext.refreshConnector();
         pageContext.installIncludeElements();
         if (isFacelet()) {
@@ -523,6 +531,13 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
             visualDocument, creationData);
         getPageContext().setCurrentVisualNode(null);
         
+        // if showInvisibleTags mode  
+        if (isShowInvisibleTags() && (visualNewNode != null)
+				&& (sourceNode.getNodeType() == Node.ELEMENT_NODE)) {
+        	// add invisible children to node 
+			visualNewNode = addInvisibleChildren(sourceNode, visualNewNode);
+		}
+        
         if (border != null)
         	return border;
         else
@@ -573,7 +588,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
         int childrenCount = 0;
         for (int i = 0; i < len; i++) {
             Node sourceNode = sourceNodes.item(i);
-            if (addNode(sourceNode, null, visualContainer)) {
+            if ((!isInvisibleNode(sourceNode))
+					&& (addNode(sourceNode, null, visualContainer))) {
                 if (Node.ELEMENT_NODE == sourceNode.getNodeType()) {
                 }
                 childrenCount++;
@@ -598,10 +614,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
         int childrenCount = 0;
         if (sourceChildren != null) {
         for (int j = 0; j < sourceChildren.size(); j++) {
-            if (addNode((Node) sourceChildren.get(j), null,
-                visualParent)) {
-            childrenCount++;
-            }
+        	Node child = (Node) sourceChildren.get(j);
+            if ((!isInvisibleNode(child))
+							&& addNode((Node) sourceChildren.get(j), null,
+									visualParent)) {
+						childrenCount++;
+					}
         }
         }
         if (childrenCount == 0 && childrenInfoList.size() == 0) {
@@ -610,6 +628,60 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
         }
     }
     }
+    
+    /**
+	 * 
+	 * @param containerTemplate
+	 * @param sourceContainer
+	 * @param visualContainer
+	 */
+	protected nsIDOMNode addInvisibleChildren(Node sourceContainer,
+			nsIDOMNode visualContainer) {
+		nsIDOMElement wrapper = null;
+		int count = 0;
+		// node is not null
+		if (visualContainer != null) {
+
+			// wrap node to span
+			wrapper = visualDocument.createElement(HTML.TAG_SPAN);
+			wrapper.appendChild(visualContainer);
+
+			// add all invisible tags to wrapper
+			NodeList sourceNodes = sourceContainer.getChildNodes();
+			
+
+			for (int i = 0; i < sourceNodes.getLength(); i++) {
+
+				Node child = sourceNodes.item(i);
+				
+				if (isInvisibleNode(child)) {
+					addNode(child, null, wrapper);
+					count++ ;
+				}
+			}
+		}
+
+		return count > 0 ? wrapper : visualContainer;
+
+	}
+	
+	/**
+	 * 
+	 * @param node
+	 * @return
+	 */
+	private boolean isInvisibleNode(Node node) {
+
+		// get template
+		Set<Node> ifDependencySet = new HashSet<Node>();
+		VpeTemplate template = templateManager.getTemplate(pageContext, node,
+				ifDependencySet);
+		// check if invisible tag
+		if (template.isInvisible())
+			return true;
+		return false;
+
+	}
 
     // /////////////////////////////////////////////////////////////////////////
     public nsIDOMNode addStyleNodeToHead(String styleText) {
@@ -2335,4 +2407,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     public nsIDOMNode getHeadNode() {
         return visualEditor.getHeadNode();
     }
+
+	public boolean isShowInvisibleTags() {
+		return showInvisibleTags;
+	}
+
+	public void setShowInvisibleTags(boolean showInvisibleTags) {
+		this.showInvisibleTags = showInvisibleTags;
+	}
 }

@@ -1557,6 +1557,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						}
 					});
 		}
+		
+		manager.add(new Separator());
+		manager.add(new ShowInvisbleTagAction());
 
 		if (VpeDebug.VISUAL_CONTEXTMENU_DUMP_SOURCE) {
 			manager.add(new Action("Dump Source") { //$NON-NLS-1$
@@ -3316,6 +3319,21 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	 */
 	public VpeSourceDomBuilder getSourceBuilder() {
 		return sourceBuilder;
+	}
+	
+	class ShowInvisbleTagAction extends Action{
+		
+		public ShowInvisbleTagAction() {
+			super("Show Invisible Tags", AS_CHECK_BOX);
+			setChecked(visualBuilder.isShowInvisibleTags());
+		}
+		
+		public void run() {
+			visualBuilder.setShowInvisibleTags(isChecked());
+			visualRefresh();
+		}
+		
+
 	}
 
 }

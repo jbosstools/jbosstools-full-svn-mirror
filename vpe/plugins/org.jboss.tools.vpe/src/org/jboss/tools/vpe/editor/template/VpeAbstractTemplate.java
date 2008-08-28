@@ -36,6 +36,7 @@ import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.resize.VpeResizer;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
+import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.ElService;
 import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
@@ -70,6 +71,9 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 
 	/** The has imaginary border. */
 	protected boolean hasImaginaryBorder;
+	
+	/** the invisible */
+	protected boolean invisible;
 
 	/** a resizer instance. */
 	private VpeResizer resizer;
@@ -230,15 +234,16 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 */
 	public void init(Element templateElement, boolean caseSensitive) {
 		this.caseSensitive = caseSensitive;
-		children = "yes".equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_CHILDREN)); //$NON-NLS-1$
-		modify = "yes".equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_MODIFY)); //$NON-NLS-1$
+		children = Constants.YES_STRING.equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_CHILDREN)); //$NON-NLS-1$
+		modify = Constants.YES_STRING.equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_MODIFY)); //$NON-NLS-1$
+		invisible = Constants.YES_STRING.equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_INVISIBLE)); //$NON-NLS-1$
 
 		String strHasImaginaryBorder = templateElement
 				.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_HAS_IMAGINARY_BORDER);
 
 		if (strHasImaginaryBorder != null
 				&& strHasImaginaryBorder.length() != 0) {
-			hasImaginaryBorder = "yes".equalsIgnoreCase(strHasImaginaryBorder); //$NON-NLS-1$			
+			hasImaginaryBorder = Constants.YES_STRING.equalsIgnoreCase(strHasImaginaryBorder); //$NON-NLS-1$			
 		} else {
 			hasImaginaryBorder = false;
 		}
@@ -1518,4 +1523,13 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
         
         }
     }
+
+	public boolean isInvisible() {
+		return invisible;
+	}
+
+	public void setInvisible(boolean invisible) {
+		this.invisible = invisible;
+	}
+    
 }

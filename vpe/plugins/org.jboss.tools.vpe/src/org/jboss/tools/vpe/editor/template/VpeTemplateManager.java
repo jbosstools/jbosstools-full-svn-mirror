@@ -31,6 +31,7 @@ import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
+import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.osgi.framework.Bundle;
@@ -135,6 +136,8 @@ public class VpeTemplateManager {
 	static final String ATTR_TEMPLATE_MODIFY = "modify"; //$NON-NLS-1$
 	
 	static final String ATTR_TEMPLATE_HAS_IMAGINARY_BORDER = "hasImaginaryBorder"; //$NON-NLS-1$
+	
+	static final String ATTR_TEMPLATE_INVISIBLE = "invisible"; //$NON-NLS-1$
 
 	static final String ATTR_COPY_ATTRS = "attrs"; //$NON-NLS-1$
 
@@ -863,32 +866,42 @@ public class VpeTemplateManager {
 	@SuppressWarnings("unchecked")
 	private VpeTemplate createTemplate(Element templateElement,IConfigurationElement confElement, boolean caseSensitive) {
 		VpeTemplate template = null;
-		String templateClassName = templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_CLASS);
-		String nameSpaceIdentifyer = templateElement.getAttribute(VpeTemplateManager.NAMESPACE_IDENTIFIER_ATTRIBUTE);
+		String templateClassName = templateElement
+				.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_CLASS);
+		String nameSpaceIdentifyer = templateElement
+				.getAttribute(VpeTemplateManager.NAMESPACE_IDENTIFIER_ATTRIBUTE);
+		String isInvisibleTemplate = templateElement
+				.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_INVISIBLE);
 		if (templateClassName != null && templateClassName.length() > 0) {
 			try {
 				Bundle bundle;
-				if(nameSpaceIdentifyer==null||nameSpaceIdentifyer.length()==0) {
+				if (nameSpaceIdentifyer == null
+						|| nameSpaceIdentifyer.length() == 0) {
 					nameSpaceIdentifyer = confElement.getNamespaceIdentifier();
 				}
 				bundle = Platform.getBundle(nameSpaceIdentifyer);
-				
+
 				Class templateClass = bundle.loadClass(templateClassName);
-				template = (VpeTemplate)templateClass.newInstance();
+				template = (VpeTemplate) templateClass.newInstance();
 			} catch (ClassNotFoundException e) {
 				template = handleTemplateClassLoadException(template,
 						templateClassName, nameSpaceIdentifyer, e);
-			} catch(IllegalAccessException e) {
+			} catch (IllegalAccessException e) {
 				template = handleTemplateClassLoadException(template,
 						templateClassName, nameSpaceIdentifyer, e);
-			} catch(InstantiationException e) {
+			} catch (InstantiationException e) {
 				template = handleTemplateClassLoadException(template,
 						templateClassName, nameSpaceIdentifyer, e);
 			}
+		} else if (isInvisibleTemplate != null
+				&& Constants.YES_STRING.equalsIgnoreCase(isInvisibleTemplate)) {
+
+			template = new InvisibleTemplate();
+
 		} else {
 			template = new VpeHtmlTemplate();
 		}
-		if(template!=null) {
+		if (template != null) {
 			template.init(templateElement, caseSensitive);
 		}
 		return template;
