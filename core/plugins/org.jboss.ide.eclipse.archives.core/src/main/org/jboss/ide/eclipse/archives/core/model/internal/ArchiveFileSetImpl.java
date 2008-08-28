@@ -146,6 +146,8 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 				}
 			} catch( IllegalStateException ise ) {
 				ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, "Could not create directory scanner", ise);
+				matchingPaths = new FileWrapper[0];
+				matchingMap = new HashMap<String, ArrayList<FileWrapper>>();
 			}
 		}
 		return scanner;
