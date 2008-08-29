@@ -57,6 +57,8 @@
     <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="images/favicon0.ico" /> 
     
     <xsl:apply-templates select="." mode="head.keywords.content"/> 
+<script type="text/javascript" src="script/toggle.js"><xsl:comment>If you see this message, your web browser doesn't support JavaScript or JavaScript is disabled.</xsl:comment></script>
+
   </xsl:template>
   
   
