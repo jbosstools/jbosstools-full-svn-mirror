@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.jboss.tools.common.meta.XAttribute;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.ui.attribute.adapter.AdapterFactory;
@@ -42,6 +41,7 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelectionBuilder;
+import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.w3c.dom.Node;
 
@@ -248,7 +248,7 @@ public class SelectionBar extends Layout implements SelectionListener {
 			return;
 		}
 		Rectangle r = selBar.getItem(allItems - 1).getBounds();
-		int width = r.x + r.width;
+		int width = r.x + r.width +1;
 		int height = r.height;
 
 		if (allItems >= itemCount) {
@@ -300,20 +300,14 @@ public class SelectionBar extends Layout implements SelectionListener {
 
     public void widgetSelected(SelectionEvent e) {
 		ToolItem toolItem = (ToolItem) e.widget;
-		int offset = ((ElementImpl) toolItem.getData()).getStartOffset();
-		setSourceFocus(offset);
+
+		SelectionUtil.setSourceSelection(vpeController.getPageContext(),
+				(Node) toolItem.getData());
 	}
 
 	public void widgetDefaultSelected(SelectionEvent e) {
 	}
 
-	private void setSourceFocus(int offset) {
-		vpeController.getPageContext().getSourceBuilder()
-				.getStructuredTextViewer().setSelectedRange(offset, 0);
-		vpeController.getPageContext().getSourceBuilder()
-				.getStructuredTextViewer().revealRange(offset, 0);
-	}
-	
 	/**
 	 * Performs storing model object in the model and xml file.
 	 * 

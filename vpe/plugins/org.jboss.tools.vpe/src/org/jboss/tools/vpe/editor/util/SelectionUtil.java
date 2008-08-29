@@ -62,6 +62,23 @@ public class SelectionUtil {
 		}
 		return null;
 	}
+	
+	/**
+	 * select node completely
+	 * @param pageContext
+	 * @param node
+	 */
+	public static void setSourceSelection(VpePageContext pageContext, Node node) {
+
+		int start = NodesManagingUtil.getStartOffsetNode(node);
+		int length = NodesManagingUtil.getNodeLength(node);
+
+		pageContext.getSourceBuilder().getStructuredTextViewer()
+				.setSelectedRange(start, length);
+		pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(
+				start, length);
+
+	}
 
 	/**
 	 * 
