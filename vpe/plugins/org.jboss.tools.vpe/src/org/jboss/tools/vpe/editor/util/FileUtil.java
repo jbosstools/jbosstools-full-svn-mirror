@@ -23,6 +23,7 @@ import org.eclipse.jst.j2ee.web.componentcore.util.WebArtifactEdit;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.wst.common.componentcore.ComponentCore;
@@ -82,39 +83,41 @@ public class FileUtil {
 	 */
 	public static IFile getFile(String fileName, IFile includeFile) {
 		IFile file = null;
-		if(fileName.startsWith("/")) { //$NON-NLS-1$
-			try {
-			ResourceReference[] resources =  AbsoluteFolderReferenceList.getInstance().getAllResources(includeFile);
-			if(resources!=null && resources.length==1) {
-					String location =resources[0].getLocation()+fileName;
-					IPath path=new Path(location);
-					return ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);
-			}else {
-					WebArtifactEdit edit = 
-						WebArtifactEdit.getWebArtifactEditForRead(includeFile.getProject());
-					IVirtualComponent com = ComponentCore.createComponent(includeFile.getProject());
-					IVirtualFolder webRootFolder = com.getRootFolder().getFolder(new Path("/"));
-					IContainer folder = webRootFolder.getUnderlyingFolder();
-					IPath path = folder.getFullPath().append(fileName);
-					file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-				} 
-			}catch (Exception ex) {
-					// do nothing that means include will shown as text region with included file name
+		if (fileName.startsWith("/")) { //$NON-NLS-1$
+			ResourceReference[] resources = AbsoluteFolderReferenceList
+					.getInstance().getAllResources(includeFile);
+			if (resources != null && resources.length == 1) {
+				String location = resources[0].getLocation() + fileName;
+				IPath path = new Path(location);
+				return ResourcesPlugin.getWorkspace().getRoot()
+						.getFileForLocation(path);
+			} else {
+				WebArtifactEdit edit = WebArtifactEdit
+						.getWebArtifactEditForRead(includeFile.getProject());
+				IVirtualComponent com = ComponentCore
+						.createComponent(includeFile.getProject());
+				IVirtualFolder webRootFolder = com.getRootFolder().getFolder(
+						new Path("/"));
+				IContainer folder = webRootFolder.getUnderlyingFolder();
+				IPath path = folder.getFullPath().append(fileName);
+				file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 			}
-		} else  {
-                ResourceReference[] resources = RelativeFolderReferenceList.getInstance().getAllResources(includeFile);
-                if ((resources != null) && resources.length == 1) {
-                    String location = resources[0].getLocation() + File.separator+fileName;
-                    IPath path = new Path(location);
-                    //new File(location);
-                    return ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);//ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);
-                } else {
-                    IPath currentFolder = includeFile.getParent().getFullPath();
-                    IPath path = currentFolder.append(fileName);
-                    file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-                } 
-        }
-        return file;
+		} else {
+			ResourceReference[] resources = RelativeFolderReferenceList
+					.getInstance().getAllResources(includeFile);
+			if ((resources != null) && resources.length == 1) {
+				String location = resources[0].getLocation() + File.separator
+						+ fileName;
+				IPath path = new Path(location);
+				return ResourcesPlugin.getWorkspace().getRoot()
+						.getFileForLocation(path);
+			} else {
+				IPath currentFolder = includeFile.getParent().getFullPath();
+				IPath path = currentFolder.append(fileName);
+				file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+			}
+		}
+		return file;
 	}
 	
 	/**
@@ -129,7 +132,7 @@ public class FileUtil {
 			if (file != null) {
 				IDE.openEditor(workbenchPage, file, true);
 			}
-		} catch (Exception ex) {
+		} catch (PartInitException ex) {
 			VpePlugin.reportProblem(ex);
 		}
 

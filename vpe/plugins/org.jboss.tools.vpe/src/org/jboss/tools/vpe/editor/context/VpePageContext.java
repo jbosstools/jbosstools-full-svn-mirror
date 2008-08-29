@@ -27,6 +27,7 @@ import org.eclipse.ui.ide.IDE;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.jboss.tools.common.kb.KbConnectorFactory;
 import org.jboss.tools.common.kb.KbConnectorType;
+import org.jboss.tools.common.kb.KbException;
 import org.jboss.tools.common.kb.wtp.WtpKbConnector;
 import org.jboss.tools.jst.jsp.editor.IVisualContext;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
@@ -87,11 +88,7 @@ public class VpePageContext implements IVisualContext {
 			IDocument document = sourceBuilder.getStructuredTextViewer().getDocument();
 			try {
 				connector = (WtpKbConnector)KbConnectorFactory.getIntstance().createConnector(KbConnectorType.JSP_WTP_KB_CONNECTOR, document);
-			} catch (InstantiationException e) {
-				VpePlugin.getPluginLog().logError(e);
-			} catch (IllegalAccessException e) {
-				VpePlugin.getPluginLog().logError(e);
-			} catch (ClassNotFoundException e) {
+			} catch (KbException e) {
 				VpePlugin.getPluginLog().logError(e);
 			}
 	}
