@@ -298,7 +298,7 @@ public class SelectionManager implements ISelectionManager {
 
 			// if mapping is elementMapping
 			
-//			SelectionUtil.clearSelection(selectionController);
+			SelectionUtil.clearSelection(selectionController); 
 			
 			if (nodeMapping instanceof VpeElementMapping) {
 

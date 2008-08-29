@@ -108,7 +108,7 @@ public class NodesManagingUtil {
 	public static boolean isNodeContainsPosition(Node node, int position) {
 
 		if ((NodesManagingUtil.getStartOffsetNode(node) <= position)
-				&& (NodesManagingUtil.getEndOffsetNode(node) > position))
+				&& (NodesManagingUtil.getEndOffsetNode(node) >= position))
 			return true;
 
 		return false;
