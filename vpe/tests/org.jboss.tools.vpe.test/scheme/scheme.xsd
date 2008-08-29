@@ -23,10 +23,11 @@
     
 <!--  -->
     <xsd:complexType name="TEMPLATES">
-        <xsd:sequence>
-            <xsd:element minOccurs="0" maxOccurs="unbounded" name="template-taglib" type="vpe:TEMPLATE-TAGLIB"/>
-            <xsd:element maxOccurs="unbounded"  name="tag" type="vpe:TAG"/>
-        </xsd:sequence>
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element minOccurs="0" name="template-taglib" type="vpe:TEMPLATE-TAGLIB"/>
+            <xsd:element minOccurs="0" name="tag" type="vpe:TAG"/>
+            <xsd:element minOccurs="0" name="template" type="vpe:DEFAULT_TEMPLATE" />
+        </xsd:choice>
     </xsd:complexType>
 <!--  -->
     <xsd:complexType name="TAG">
@@ -529,7 +530,15 @@
 <!--  -->
     <xsd:complexType name="HTML_UL"/>   
 <!--  -->
-    <xsd:complexType name="HTML_P"/>     
+    <xsd:complexType name="HTML_P"/>
+<!--  -->
+    <xsd:complexType name="DEFAULT_TEMPLATE">
+        <xsd:sequence>
+            <xsd:element name="any" type="vpe:ANY" />
+        </xsd:sequence>
+        <xsd:attribute name="children" type="vpe:VPE-BOOLEAN" use="required"/>
+        <xsd:attribute name="modify" type="vpe:VPE-BOOLEAN" use="required"/>
+    </xsd:complexType>
     
 <!-- VPE types  -->
     <xsd:simpleType name="CHILDREN-FORMAT">
