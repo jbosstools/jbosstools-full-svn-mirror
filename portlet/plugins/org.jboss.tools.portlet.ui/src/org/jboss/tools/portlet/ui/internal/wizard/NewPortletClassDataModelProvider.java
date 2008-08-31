@@ -2,13 +2,32 @@ package org.jboss.tools.portlet.ui.internal.wizard;
 
 
 
+import static org.eclipse.jst.j2ee.internal.common.operations.INewJavaClassDataModelProperties.SOURCE_FOLDER;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jdt.core.IClasspathEntry;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.Signature;
+import org.eclipse.jem.util.logger.proxy.Logger;
+import org.eclipse.jst.j2ee.internal.common.J2EECommonMessages;
+import org.eclipse.jst.j2ee.internal.common.operations.INewJavaClassDataModelProperties;
+import org.eclipse.jst.j2ee.internal.common.operations.NewJavaClassDataModelProvider;
+import org.eclipse.jst.j2ee.internal.project.J2EEProjectUtilities;
 import org.eclipse.jst.j2ee.internal.web.operations.INewServletClassDataModelProperties;
 import org.eclipse.jst.j2ee.internal.web.operations.NewServletClassDataModelProvider;
 import org.eclipse.jst.j2ee.internal.web.operations.NewServletClassOperation;
@@ -260,9 +279,55 @@ public class NewPortletClassDataModelProvider extends
 		if (propertyName.equals(IF_EXISTS)) {
 			return "overwrite";
 		}
-		
+		if (propertyName.equals(INewJavaClassDataModelProperties.JAVA_SOURCE_FOLDER)) {
+			return getSourceFolder();
+		}
 		// Otherwise check super for default value for property
 		return super.getDefaultProperty(propertyName);
+	}
+
+	private Object getSourceFolder() {
+		Object result = getJavaSourceFolder();
+		if (result != null) {
+			return result;
+		}
+		return getDefaultJavaSourceFolder();
+	}
+
+	@Override
+	protected IFolder getDefaultJavaSourceFolder() {
+		IProject project = getTargetProject();
+		if (project == null)
+			return null;
+		IPackageFragmentRoot[] sources = J2EEProjectUtilities.getSourceContainers(project);
+		// Try and return the first source folder
+		if (sources.length > 0) {
+			try {
+				return (IFolder) sources[0].getCorrespondingResource();
+			} catch (Exception e) {
+				return null;
+			}
+		}
+		IJavaProject javaProject = JavaCore.create(project);
+		if (javaProject == null) {
+			return null;
+		}
+		try {
+			IClasspathEntry[] entries = javaProject.getResolvedClasspath(false);
+			for (int i = 0; i < entries.length; i++) {
+				IClasspathEntry entry = entries[i];
+				if (entry.getContentKind() == IPackageFragmentRoot.K_SOURCE) {
+					IPath path = entry.getPath();
+					IResource resource = ResourcesPlugin.getWorkspace().getRoot().findMember(path);
+					if (resource instanceof IFolder) {
+						return (IFolder) resource;
+					}
+				}
+			}
+		} catch (JavaModelException e) {
+			// ignore
+		}
+		return null;
 	}
 
 	private String getPortletPrefix() {
@@ -365,5 +430,51 @@ public class NewPortletClassDataModelProvider extends
 		}
 		return interfaceList;
 	}
+	
+	@Override
+	protected boolean isAnnotationsSupported() {
+		return false;
+	}
 
+	@Override
+	protected IStatus validateJavaSourceFolder(String folderFullPath) {
+		// Ensure that the source folder path is not empty
+		if (folderFullPath == null || folderFullPath.length() == 0) {
+			String msg = J2EECommonMessages.ERR_JAVA_CLASS_FOLDER_NAME_EMPTY;
+			return WTPCommonPlugin.createErrorStatus(msg);
+		}
+		// Ensure that the source folder path is absolute
+		else if (!new Path(folderFullPath).isAbsolute()) {
+			String msg = J2EECommonMessages.ERR_JAVA_CLASS_FOLDER_NOT_ABSOLUTE;
+			return WTPCommonPlugin.createErrorStatus(msg);
+		}
+		IProject project = getTargetProject();
+		// Ensure project is not closed
+		if (project == null) {
+			String msg = J2EECommonMessages.ERR_JAVA_CLASS_FOLDER_NOT_EXIST;
+			return WTPCommonPlugin.createErrorStatus(msg);
+		}
+		// Ensure project is accessible.
+		if (!project.isAccessible()) {
+			String msg = J2EECommonMessages.ERR_JAVA_CLASS_FOLDER_NOT_EXIST;
+			return WTPCommonPlugin.createErrorStatus(msg);
+		}
+		// Ensure the project is a java project.
+		try {
+			if (!project.hasNature(JavaCore.NATURE_ID)) {
+				String msg = J2EECommonMessages.ERR_JAVA_CLASS_NOT_JAVA_PROJECT;
+				return WTPCommonPlugin.createErrorStatus(msg);
+			}
+		} catch (CoreException e) {
+			Logger.getLogger().log(e);
+		}
+		// Ensure the selected folder is a valid java source folder for the component
+		IFolder sourcefolder = (IFolder) getSourceFolder();
+		if (sourcefolder == null || (sourcefolder != null && !sourcefolder.getFullPath().equals(new Path(folderFullPath)))) {
+			String msg = J2EECommonMessages.getResourceString(J2EECommonMessages.ERR_JAVA_CLASS_FOLDER_NOT_SOURCE, new String[]{folderFullPath});
+			return WTPCommonPlugin.createErrorStatus(msg);
+		}
+		// Valid source is selected
+		return WTPCommonPlugin.OK_STATUS;
+	}
 }

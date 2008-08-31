@@ -1,5 +1,10 @@
 package org.jboss.tools.portlet.ui.internal.wizard;
 
+import static org.eclipse.wst.common.componentcore.internal.operation.IArtifactEditOperationDataModelProperties.PROJECT_NAME;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jem.util.emf.workbench.ProjectUtilities;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -16,7 +21,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
+import org.eclipse.wst.common.project.facet.core.IFacetedProject;
+import org.eclipse.wst.common.project.facet.core.IProjectFacet;
+import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
+import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties;
+import org.jboss.tools.portlet.ui.PortletUIActivator;
 
 public class NewPortletClassOptionsWizardPage extends
 		NewWebClassOptionsWizardPage implements ISelectionChangedListener {
@@ -141,4 +151,10 @@ public class NewPortletClassOptionsWizardPage extends
 	private boolean canRemoveSelectedInterfaces(IStructuredSelection selection) {
 		return true;
 	}
+	
+	@Override
+	public boolean canFlipToNextPage() {
+		return isPageComplete() && PortletUIActivator.isPortletProject(model);
+	}
+	
 }

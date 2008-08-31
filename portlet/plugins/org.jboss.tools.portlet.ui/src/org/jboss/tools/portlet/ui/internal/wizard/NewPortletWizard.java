@@ -49,15 +49,16 @@ public class NewPortletWizard extends NewWebArtifactWizard {
 				IPortletUIConstants.NEW_PORTLET_WIZARD_PAGE_TITLE, IModuleConstants.JST_WEB_MODULE);
 		//page1.setInfopopID(IWebUIContextIds.WEBEDITOR_SERVLET_PAGE_ADD_SERVLET_WIZARD_1);
 		addPage(page1);
-		AddPortletWizardPage page2 = new AddPortletWizardPage(getDataModel(), PAGE_TWO);
-		//page2.setInfopopID(IWebUIContextIds.WEBEDITOR_SERVLET_PAGE_ADD_SERVLET_WIZARD_2);
-		addPage(page2);
-		NewPortletClassOptionsWizardPage page3 = new NewPortletClassOptionsWizardPage(
+		
+		NewPortletClassOptionsWizardPage page2 = new NewPortletClassOptionsWizardPage(
 				getDataModel(), 
-				PAGE_THREE,
+				PAGE_TWO,
 				"Specify modifiers, interfaces to implement and method stubs to generate.",
 				IPortletUIConstants.NEW_PORTLET_WIZARD_PAGE_TITLE);
 		//page3.setInfopopID(IWebUIContextIds.WEBEDITOR_SERVLET_PAGE_ADD_SERVLET_WIZARD_3);
+		addPage(page2);
+		AddPortletWizardPage page3 = new AddPortletWizardPage(getDataModel(), PAGE_THREE);
+		//page2.setInfopopID(IWebUIContextIds.WEBEDITOR_SERVLET_PAGE_ADD_SERVLET_WIZARD_2);
 		addPage(page3);
 		AddJBossPortletWizardPage page4 = new AddJBossPortletWizardPage(getDataModel(), PAGE_FOUR);
 		addPage(page4);

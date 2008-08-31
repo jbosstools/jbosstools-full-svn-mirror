@@ -1,13 +1,21 @@
 package org.jboss.tools.portlet.ui;
 
+import static org.eclipse.wst.common.componentcore.internal.operation.IArtifactEditOperationDataModelProperties.PROJECT_NAME;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jem.util.emf.workbench.ProjectUtilities;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.wst.common.componentcore.ComponentCore;
 import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 import org.eclipse.wst.common.componentcore.resources.IVirtualFile;
+import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
+import org.eclipse.wst.common.project.facet.core.IFacetedProject;
+import org.eclipse.wst.common.project.facet.core.IProjectFacet;
+import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 import org.osgi.framework.BundleContext;
@@ -78,5 +86,28 @@ public class PortletUIActivator extends AbstractUIPlugin {
 	public static void log(Throwable e) {
 		IStatus status = new Status(IStatus.ERROR,PLUGIN_ID,e.getLocalizedMessage(),e);
 		PortletCoreActivator.getDefault().getLog().log(status);
+	}
+
+	public static boolean isPortletProject(IDataModel model) {
+		String projectName = model.getStringProperty(PROJECT_NAME);
+		if(projectName != null && !"".equals(projectName.trim())){
+			IProject project = ProjectUtilities.getProject(projectName);
+			try {
+				IFacetedProject facetedProject = ProjectFacetsManager.create(project);
+				return facetedProject != null && facetedProject.hasProjectFacet(getPortletFacet());
+			} catch (CoreException e) {
+				PortletUIActivator.log(e);
+			}
+		}
+		return false;
+		
+	}
+	
+	private static IProjectFacet getPortletFacet() {
+		try {
+			return ProjectFacetsManager.getProjectFacet(IPortletConstants.PORTLET_FACET_ID);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
 	}
 }

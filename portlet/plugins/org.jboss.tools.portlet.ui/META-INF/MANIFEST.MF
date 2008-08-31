@@ -26,5 +26,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.wst.xml.core,
  org.eclipse.wst.sse.core,
  org.eclipse.jdt.ui,
- org.eclipse.ui.ide
+ org.eclipse.ui.ide,
+ org.eclipse.ui.views
 Bundle-ActivationPolicy: lazy

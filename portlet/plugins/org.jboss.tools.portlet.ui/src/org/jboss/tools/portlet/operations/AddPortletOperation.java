@@ -10,6 +10,7 @@ import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.COP
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.EDIT_MODE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.HELP_MODE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IF_EXISTS;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.INITIAL_WINDOW_STATE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.INSTANCE_NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_JSF_PORTLET;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_SEAM_PORTLET;
@@ -19,7 +20,6 @@ import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PAG
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PAGE_REGION;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PARENT_PORTAL;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.PORTLET_HEIGHT;
-import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.INITIAL_WINDOW_STATE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.TITLE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.VIEW_MODE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.WINDOW_NAME;
@@ -46,7 +46,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jst.j2ee.internal.common.operations.NewJavaEEArtifactClassOperation;
-import org.eclipse.jst.j2ee.internal.web.operations.AddWebClassOperation;
 import org.eclipse.ui.dialogs.IOverwriteQuery;
 import org.eclipse.ui.wizards.datatransfer.FileSystemStructureProvider;
 import org.eclipse.ui.wizards.datatransfer.ImportOperation;
@@ -64,6 +63,7 @@ import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 import org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties;
 import org.jboss.tools.portlet.ui.PortletUIActivator;
+import org.jboss.tools.portlet.ui.internal.wizard.action.xpl.AddWebClassOperationEx;
 import org.osgi.framework.Bundle;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -73,7 +73,7 @@ import org.w3c.dom.Text;
 /**
  * @author snjeza
  */
-public class AddPortletOperation extends AddWebClassOperation {
+public class AddPortletOperation extends AddWebClassOperationEx {
 
 	public static final IOverwriteQuery OVERWRITE_NO_QUERY = new IOverwriteQuery()
     {
@@ -124,6 +124,10 @@ public class AddPortletOperation extends AddWebClassOperation {
 
 	protected void generateMetaData(IDataModel aModel, String qualifiedClassName) {
 		// update the portlet.xml file
+		boolean isPortletProject = PortletUIActivator.isPortletProject(aModel);
+		if (!isPortletProject) {
+			return;
+		}
 		updatePortletXml(aModel);
 
 		boolean addPortlet = model.getBooleanProperty(ADD_PORTLET);
@@ -133,6 +137,11 @@ public class AddPortletOperation extends AddWebClassOperation {
 
 			// generate/update *.object.xml
 			updatePortletObject(aModel);
+		}
+		boolean isJSFPortlet = model.getBooleanProperty(IS_JSF_PORTLET);
+		boolean isSeamPortlet = model.getBooleanProperty(IS_SEAM_PORTLET);
+		if (!isJSFPortlet && !isSeamPortlet) {
+			return;
 		}
 		boolean addJBossApp = model.getBooleanProperty(ADD_JBOSS_APP);
 		if (addJBossApp) {
