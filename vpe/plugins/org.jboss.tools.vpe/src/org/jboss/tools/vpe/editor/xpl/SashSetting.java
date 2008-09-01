@@ -125,9 +125,9 @@ public class SashSetting implements EditorSettings.ISetting {
 					int[] weights = sash.getWeights();
 					if (weights.length > 2) {
 						if (intValue == 0) {
-							sash.maxUp();
-						} else if (intValue == 1000) {
 							sash.maxDown();
+						} else if (intValue == 1000) {
+							sash.maxUp();
 						} else {
 							weights[0] = intValue;
 							weights[1] = 1000 - intValue;
