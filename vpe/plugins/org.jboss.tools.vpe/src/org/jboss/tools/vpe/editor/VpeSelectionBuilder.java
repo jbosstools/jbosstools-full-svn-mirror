@@ -991,7 +991,7 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 		return originalNode;
 	}
 	
-	VpeVisualInnerDropInfo getInnerDropInfo(nsIDOMEvent event) {
+	public VpeVisualInnerDropInfo getInnerDropInfo(nsIDOMEvent event) {
 		nsIDOMNSUIEvent nsuiEvent = (nsIDOMNSUIEvent) event.queryInterface(nsIDOMNSUIEvent.NS_IDOMNSUIEVENT_IID);
 		nsIDOMNode dropContainer = null;
 		int dropOffset = 0;

@@ -31,6 +31,10 @@ public class VpeVisualCaretInfo {
 		return rangeParent != null;
 	}
 	
+	public int getRageOffset(){
+	    return rangeOffset;
+	}
+	
 	public void showCaret() {
 		selectionBuilder.showVisualDragCaret(rangeParent, rangeOffset);
 	}

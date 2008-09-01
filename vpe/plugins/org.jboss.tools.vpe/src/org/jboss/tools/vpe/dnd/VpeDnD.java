@@ -12,14 +12,19 @@
 package org.jboss.tools.vpe.dnd;
 
 import org.jboss.tools.vpe.editor.VpeController;
+import org.jboss.tools.vpe.editor.VpeVisualCaretInfo;
+import org.jboss.tools.vpe.editor.VpeVisualInnerDropInfo;
 import org.jboss.tools.vpe.editor.mozilla.EditorDomEventListener;
 import org.jboss.tools.vpe.editor.mozilla.MozillaDropInfo;
+import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMEvent;
+import org.mozilla.interfaces.nsIDOMEventTarget;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDragService;
+import org.mozilla.interfaces.nsISelectionController;
 import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupportsArray;
 import org.mozilla.interfaces.nsISupportsString;
@@ -161,6 +166,30 @@ public class VpeDnD {
 				}
 			}
 		}
+      //sets possability to drop current element here
+		//Added by estherbin fix jbide-1046
+		VpeController controller = null;
+		
+        if (editorDomEventListener instanceof VpeController) {
+            controller = (VpeController) editorDomEventListener;
+        }
+        VpeSelectionController selectionController = controller.getVisualSelectionController();
+        final VpeVisualCaretInfo visualCaretInfo = controller.getSelectionBuilder().getVisualCaretInfo(event);
+
+        final nsIDOMEventTarget target = event.getTarget();
+        final nsIDOMNode targetDomNode = (nsIDOMNode) target.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
+        final nsIDOMNode selectedVisualNode = controller.getXulRunnerEditor().getLastSelectedNode();
+
+        if ((targetDomNode.getFirstChild() != null) && (targetDomNode.getFirstChild().getNodeType() == nsIDOMNode.TEXT_NODE)) {
+            selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(targetDomNode.getFirstChild(),
+                    visualCaretInfo.getRageOffset());
+        }
+//        }else if((targetDomNode.getNodeType()!=nsIDOMNode.TEXT_NODE)){
+//            selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(targetDomNode,visualCaretInfo.getRageOffset());
+//        }
+
+       
+
 		//sets possability to drop current element here
 		getDragService().getCurrentSession().setCanDrop(canDrop);
 		mouseEvent.preventDefault();
