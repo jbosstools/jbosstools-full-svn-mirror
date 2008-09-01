@@ -92,10 +92,13 @@ public class FileUtil {
 				return ResourcesPlugin.getWorkspace().getRoot()
 						.getFileForLocation(path);
 			} else {
-				WebArtifactEdit edit = WebArtifactEdit
-						.getWebArtifactEditForRead(includeFile.getProject());
+				//WebArtifactEdit edit = WebArtifactEdit
+				//		.getWebArtifactEditForRead(includeFile.getProject());
 				IVirtualComponent com = ComponentCore
 						.createComponent(includeFile.getProject());
+				if (com == null) {
+					return null;
+				}
 				IVirtualFolder webRootFolder = com.getRootFolder().getFolder(
 						new Path("/"));
 				IContainer folder = webRootFolder.getUnderlyingFolder();
