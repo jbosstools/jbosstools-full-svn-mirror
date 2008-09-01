@@ -345,8 +345,9 @@ public class NewPortletClassDataModelProvider extends
 	@Override
 	public IStatus validate(String propertyName) {
 		// Validate super class
-		if (propertyName.equals(SUPERCLASS)) 
+		if (propertyName.equals(SUPERCLASS)) {
 			return validateSuperClassName(getStringProperty(propertyName));
+		}
 
 		if ((isJSFPortlet || isSeamPortlet) && propertyName.equals(CLASS_NAME)) {
 			if (getStringProperty(propertyName).length()!=0) {
@@ -412,8 +413,10 @@ public class NewPortletClassDataModelProvider extends
 		IStatus status = null;
 		if (superclassName.trim().length() > 0) {
 			status = super.validate(SUPERCLASS);
-			if (status.getSeverity() == IStatus.ERROR)
-				return status;
+			if (status.getSeverity() == IStatus.ERROR) {
+				IStatus warningStatus = new Status(IStatus.WARNING,status.getPlugin(),status.getMessage());
+				return warningStatus;
+			}
 		}
 		
 		return status;
