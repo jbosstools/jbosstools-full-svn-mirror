@@ -10,22 +10,25 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.preferences;
 
-import org.jboss.tools.common.model.ui.action.*;
-import org.jboss.tools.common.model.ui.objecteditor.XTable;
+import java.util.List;
+
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
-
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.jboss.tools.common.model.ui.action.CommandBar;
+import org.jboss.tools.common.model.ui.action.CommandBarListener;
+import org.jboss.tools.common.model.ui.objecteditor.XTable;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.editor.template.VpeEditAnyDialog;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
-
-import java.util.List;
 
 public class TemplatesPreferencePage extends PreferencePage implements IWorkbenchPreferencePage, CommandBarListener {
 	static String EDIT = "Edit"; //$NON-NLS-1$

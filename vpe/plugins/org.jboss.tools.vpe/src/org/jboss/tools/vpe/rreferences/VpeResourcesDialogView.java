@@ -20,8 +20,12 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.jboss.tools.common.el.vpe.ElVariablesComposite;
 import org.jboss.tools.common.model.ui.wizards.query.AbstractQueryWizardView;
-import org.jboss.tools.vpe.el.ElVariablesComposite;
+import org.jboss.tools.common.rreferences.core.AbsoluteFolderReferenceComposite;
+import org.jboss.tools.common.rreferences.core.CssReferencesComposite;
+import org.jboss.tools.common.rreferences.core.RelativeFolderReferenceComposite;
+import org.jboss.tools.common.rreferences.core.TaglibReferencesComposite;
 
 public class VpeResourcesDialogView extends AbstractQueryWizardView {
 	IFile file;
