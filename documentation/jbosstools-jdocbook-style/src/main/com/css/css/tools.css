@@ -52,9 +52,10 @@ left:0px;
 z-index:-1;
 }
 
-div.book, div.chapter, #title{
+div.book, div.chapter{
     text-align:justify;
     width: 70em;
+    margin-left:50px;
 }
 
 ul.docnav {
