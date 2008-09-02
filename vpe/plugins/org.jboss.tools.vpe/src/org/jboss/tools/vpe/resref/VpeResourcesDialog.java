@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.rreferences;
+package org.jboss.tools.vpe.resref;
 
 import java.util.Properties;
 

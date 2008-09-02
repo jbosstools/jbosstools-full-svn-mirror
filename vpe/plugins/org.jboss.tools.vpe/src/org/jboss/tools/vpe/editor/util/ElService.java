@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.jboss.tools.common.el.global.GlobalELReferenceList;
 import org.jboss.tools.common.el.vpe.ELReferenceList;
-import org.jboss.tools.common.rreferences.core.ResourceReference;
+import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.w3c.dom.Attr;

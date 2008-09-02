@@ -30,7 +30,7 @@ import org.jboss.tools.common.kb.wtp.WtpKbConnector;
 import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
-import org.jboss.tools.common.rreferences.core.ResourceReference;
+import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.jst.web.tld.IFilePathEncoder;
 import org.jboss.tools.vpe.VpePlugin;

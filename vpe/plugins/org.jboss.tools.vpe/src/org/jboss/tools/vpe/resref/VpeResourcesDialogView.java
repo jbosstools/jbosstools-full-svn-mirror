@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.rreferences;
+package org.jboss.tools.vpe.resref;
 
 import java.util.Properties;
 
@@ -22,10 +22,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.jboss.tools.common.el.vpe.ElVariablesComposite;
 import org.jboss.tools.common.model.ui.wizards.query.AbstractQueryWizardView;
-import org.jboss.tools.common.rreferences.core.AbsoluteFolderReferenceComposite;
-import org.jboss.tools.common.rreferences.core.CssReferencesComposite;
-import org.jboss.tools.common.rreferences.core.RelativeFolderReferenceComposite;
-import org.jboss.tools.common.rreferences.core.TaglibReferencesComposite;
+import org.jboss.tools.common.resref.core.AbsoluteFolderReferenceComposite;
+import org.jboss.tools.common.resref.core.CssReferencesComposite;
+import org.jboss.tools.common.resref.core.RelativeFolderReferenceComposite;
+import org.jboss.tools.common.resref.core.TaglibReferencesComposite;
 
 public class VpeResourcesDialogView extends AbstractQueryWizardView {
 	IFile file;

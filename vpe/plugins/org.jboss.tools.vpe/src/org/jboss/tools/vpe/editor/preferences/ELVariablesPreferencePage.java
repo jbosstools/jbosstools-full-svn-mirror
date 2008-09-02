@@ -24,8 +24,8 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.jboss.tools.common.el.global.GlobalElVariablesComposite;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
-import org.jboss.tools.common.rreferences.core.ResourceReference;
-import org.jboss.tools.vpe.rreferences.VpeResourcesDialog;
+import org.jboss.tools.common.resref.core.ResourceReference;
+import org.jboss.tools.vpe.resref.VpeResourcesDialog;
 
 /**
  * Page for the El preferences.

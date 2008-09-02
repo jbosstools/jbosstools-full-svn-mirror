@@ -33,9 +33,9 @@ import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
-import org.jboss.tools.common.rreferences.core.AbsoluteFolderReferenceList;
-import org.jboss.tools.common.rreferences.core.RelativeFolderReferenceList;
-import org.jboss.tools.common.rreferences.core.ResourceReference;
+import org.jboss.tools.common.resref.core.AbsoluteFolderReferenceList;
+import org.jboss.tools.common.resref.core.RelativeFolderReferenceList;
+import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.vpe.VpePlugin;
 
 

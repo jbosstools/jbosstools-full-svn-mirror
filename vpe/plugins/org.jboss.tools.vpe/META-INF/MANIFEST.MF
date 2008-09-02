@@ -37,7 +37,7 @@ Provide-Package: meta,
  org.jboss.tools.vpe.el,
  org.jboss.tools.vpe.el.messages,
  org.jboss.tools.vpe.messages,
- org.jboss.tools.vpe.rreferences,
+ org.jboss.tools.vpe.resref,
  org.jboss.tools.vpe.selbar
 Require-Bundle: org.jboss.tools.common.model.ui,
  org.eclipse.jface.text,
@@ -73,7 +73,7 @@ Require-Bundle: org.jboss.tools.common.model.ui,
  org.mozilla.xpcom,
  org.eclipse.draw2d,
  org.jboss.tools.jst.web,
- org.jboss.tools.common.rreferences,
+ org.jboss.tools.common.resref,
  org.jboss.tools.common.el
 Bundle-Version: 2.1.0
 
