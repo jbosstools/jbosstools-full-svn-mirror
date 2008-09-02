@@ -97,7 +97,11 @@ import org.w3c.dom.NodeList;
 
 public class VpeVisualDomBuilder extends VpeDomBuilder {
 
-	public static final String VPE_USER_TOGGLE_ID = "vpe-user-toggle-id"; //$NON-NLS-1$
+	/**
+     * 
+     */
+    public static final String PARENT = "PARENT"; //$NON-NLS-1$
+    public static final String VPE_USER_TOGGLE_ID = "vpe-user-toggle-id"; //$NON-NLS-1$
 	public static final String VPE_USER_TOGGLE_LOOKUP_PARENT = "vpe-user-toggle-lookup-parent"; //$NON-NLS-1$
 
 	/** REGEX_EL */
@@ -440,7 +444,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			if (ElService.getInstance().isCloneableNode(getPageContext(),
 					sourceNode)) {
 				sourceNodeClone = (sourceNode).cloneNode(true);
-
+				if(sourceNodeClone instanceof Element){
+				   ((Element)sourceNodeClone).setAttribute(PARENT,"");
+				    Attr a = ((Element)sourceNodeClone).getAttributeNode(PARENT);
+				    a.setUserData(PARENT, sourceNode.getParentNode(),null);
+				    
+				}
 				template.beforeTemplateCreated(getPageContext(),
 						sourceNodeClone, getVisualDocument());
 				creationData = template.create(getPageContext(),
