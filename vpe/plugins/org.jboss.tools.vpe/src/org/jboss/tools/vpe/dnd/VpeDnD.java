@@ -30,6 +30,7 @@ import org.mozilla.interfaces.nsISupportsArray;
 import org.mozilla.interfaces.nsISupportsString;
 import org.mozilla.interfaces.nsITransferable;
 import org.mozilla.xpcom.Mozilla;
+import org.mozilla.xpcom.XPCOMException;
 
 /**
  * @author Max Areshkau
@@ -178,15 +179,18 @@ public class VpeDnD {
 
         final nsIDOMEventTarget target = event.getTarget();
         final nsIDOMNode targetDomNode = (nsIDOMNode) target.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
-        final nsIDOMNode selectedVisualNode = controller.getXulRunnerEditor().getLastSelectedNode();
-
-        if ((targetDomNode.getFirstChild() != null) && (targetDomNode.getFirstChild().getNodeType() == nsIDOMNode.TEXT_NODE)) {
-            selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(targetDomNode.getFirstChild(),
-                    visualCaretInfo.getRageOffset());
+//        final nsIDOMNode selectedVisualNode = controller.getXulRunnerEditor().getLastSelectedNode();
+        try {
+            if ((targetDomNode.getFirstChild() != null) && (targetDomNode.getFirstChild().getNodeType() == nsIDOMNode.TEXT_NODE)) {
+                selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(targetDomNode.getFirstChild(),
+                        visualCaretInfo.getRageOffset());
+            } else if ((targetDomNode.getNodeType() != nsIDOMNode.TEXT_NODE)) {
+                selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(targetDomNode, 0);
+            }
+        } catch (XPCOMException xpcome) {
+            event.stopPropagation();
+            event.preventDefault();
         }
-//        }else if((targetDomNode.getNodeType()!=nsIDOMNode.TEXT_NODE)){
-//            selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).collapse(targetDomNode,visualCaretInfo.getRageOffset());
-//        }
 
        
 
