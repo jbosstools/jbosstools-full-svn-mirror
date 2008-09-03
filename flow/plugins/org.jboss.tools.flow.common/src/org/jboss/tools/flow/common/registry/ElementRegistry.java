@@ -74,7 +74,9 @@ public class ElementRegistry {
 	
 	private static Wrapper createConnection(IConfigurationElement configurationElement)
 			throws CoreException {
-		return new DefaultConnectionWrapper();
+		Wrapper result = new DefaultConnectionWrapper();
+		((Element)result.getElement()).setMetaData("configurationElement", configurationElement);
+		return result;
 	}
 	
 	private static Wrapper createNode(IConfigurationElement configurationElement)
@@ -232,9 +234,9 @@ public class ElementRegistry {
 				children = figureElement.getChildren();
 				if (children.length < 1) {
 					result = new RectangleElementFigure();
-				} else if ("ellipse".equals(children[0])){
+				} else if ("ellipse".equals(children[0].getName())){
 					result = new EllipseElementFigure();
-				} else if ("rounded-rectangle".equals(children[0])) {
+				} else if ("rounded-rectangle".equals(children[0].getName())) {
 					result = new RoundedRectangleElementFigure();
 				} else {
 					result = new RectangleElementFigure();
@@ -251,8 +253,8 @@ public class ElementRegistry {
 					}
 					result.setIcon(icon);
 				} else if (configurationElement.getAttribute("figure") != null) {
-					String iconPath = configurationElement.getAttribute("icon");
-					URL url = Platform.getBundle(figureElement.getContributor().getName()).getEntry(iconPath);
+					String iconPath = configurationElement.getAttribute("figure");
+					URL url = Platform.getBundle(configurationElement.getContributor().getName()).getEntry(iconPath);
 					Image icon = null;
 					if (imageMap.containsKey(url.getPath())) {
 						icon = imageMap.get(url.getPath());

@@ -4,6 +4,7 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 import org.jboss.tools.flow.common.model.Element;
 import org.jboss.tools.flow.common.registry.ElementRegistry;
+import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.Wrapper;
 
 public class DefaultEditPartFactory implements EditPartFactory {
@@ -14,24 +15,9 @@ public class DefaultEditPartFactory implements EditPartFactory {
         Object element = ((Wrapper)model).getElement();
         if (element != null && element instanceof Element) {
         	result = ElementRegistry.createEditPart((Element)element);
+        } else if (model instanceof ConnectionWrapper) {
+        	result = new ConnectionEditPart();
         }
-//        result = createEditPart()
-//        if (model instanceof DefaultFlowWrapper) {
-//            result = new RootEditPart();
-//        } else if (model instanceof DefaultContainerWrapper) {
-//        	result = new ContainerEditPart();
-//        } else if (model instanceof DefaultConnectionWrapper) {
-//            result = new ConnectionEditPart();
-//        } else if (model instanceof DefaultNodeWrapper && element instanceof StartState) {
-//            result = new StartStateEditPart();
-//        } else if (model instanceof DefaultNodeWrapper && element instanceof State) {
-//            result = new StateEditPart();
-//        } else if (model instanceof DefaultNodeWrapper && element instanceof EndState) {
-//            result = new EndStateEditPart();
-//        } else {
-//            throw new IllegalArgumentException(
-//                "Unknown model object " + model);
-//        }
         if (result != null) {
         	result.setModel(model);
         }

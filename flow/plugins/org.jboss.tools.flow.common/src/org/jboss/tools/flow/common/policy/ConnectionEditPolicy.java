@@ -26,6 +26,7 @@ import org.eclipse.gef.requests.GroupRequest;
 import org.jboss.tools.flow.common.command.DeleteConnectionCommand;
 import org.jboss.tools.flow.common.command.SplitConnectionCommand;
 import org.jboss.tools.flow.common.editpart.ConnectionEditPart;
+import org.jboss.tools.flow.common.model.Element;
 import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.AbstractFlowWrapper;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
@@ -47,7 +48,7 @@ public class ConnectionEditPolicy extends org.eclipse.gef.editpolicies.Connectio
 	
     public Command getCommand(Request request) {
         if (REQ_CREATE.equals(request.getType())) {
-            return getSplitTransitionCommand(request);
+            return getSplitConnectionCommand(request);
         }
         return super.getCommand(request);
     }
@@ -65,13 +66,19 @@ public class ConnectionEditPolicy extends org.eclipse.gef.editpolicies.Connectio
         return cmd;
     }
 
-    protected Command getSplitTransitionCommand(Request request) {
+    protected Command getSplitConnectionCommand(Request request) {
     	if (elementConnectionFactory == null) {
     		throw new IllegalStateException("DefaultElementConnectionFactory is null");
     	}
         SplitConnectionCommand cmd = new SplitConnectionCommand();
-        cmd.setElementConnection(((AbstractConnectionWrapper) getHost().getModel()));
-        cmd.setNewSecondConnection((AbstractConnectionWrapper)elementConnectionFactory.getNewObject());
+        AbstractConnectionWrapper elementConnection = (AbstractConnectionWrapper)getHost().getModel();
+        AbstractConnectionWrapper newSecondConnection = (AbstractConnectionWrapper)elementConnectionFactory.getNewObject();
+        // Copy the configurationElement from the first connection as it is empty
+        ((Element)newSecondConnection.getElement()).setMetaData(
+        		"configurationElement", 
+        		((Element)elementConnection.getElement()).getMetaData("configurationElement"));
+        cmd.setElementConnection(elementConnection);
+        cmd.setNewSecondConnection(newSecondConnection);
         cmd.setParent(((AbstractFlowWrapper) ((ConnectionEditPart) getHost())
             .getSource().getParent().getModel()));
         cmd.setNewElement(((NodeWrapper) ((CreateRequest) request).getNewObject()));
