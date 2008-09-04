@@ -36,6 +36,12 @@ public final class ElService implements IELService {
     /** The Constant INSTANCE. */
     private static final IELService INSTANCE = new ElService();
 
+     public static final String DOLLAR_PREFIX = "${"; //$NON-NLS-1$
+
+    private static final String SUFFIX = "}"; //$NON-NLS-1$
+
+    public static final String SHARP_PREFIX = "#{"; //$NON-NLS-1$
+
     /**
      * Checks if is available.
      * 
@@ -108,12 +114,17 @@ public final class ElService implements IELService {
      * 
      * @return the string
      */
-    private String replace(String resourceString, ResourceReference[] references) {
+      private String replace(String resourceString, ResourceReference[] references) {
         String result = resourceString;
 
         for (ResourceReference rf : references) {
-            if (resourceString.contains(rf.getLocation())) {
-                result = result.replace(rf.getLocation(),rf.getProperties());
+            final String dollarEl = String.valueOf(DOLLAR_PREFIX)+rf.getLocation()+String.valueOf(SUFFIX);
+            final String sharpEl  = String.valueOf(SHARP_PREFIX)+rf.getLocation()+String.valueOf(SUFFIX);
+            
+            if (resourceString.contains(dollarEl)) {
+                result = result.replace(dollarEl, rf.getProperties());
+            }else if(resourceString.contains(sharpEl)){
+                result = result.replace(sharpEl, rf.getProperties());
             }
         }
         return result;
