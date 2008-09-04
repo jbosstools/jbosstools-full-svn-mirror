@@ -20,7 +20,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.jboss.tools.common.el.vpe.ElVariablesComposite;
+import org.jboss.tools.common.el.ui.ElVariablesComposite;
 import org.jboss.tools.common.model.ui.wizards.query.AbstractQueryWizardView;
 import org.jboss.tools.common.resref.core.AbsoluteFolderReferenceComposite;
 import org.jboss.tools.common.resref.core.CssReferencesComposite;

@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.jboss.tools.common.el.global.GlobalElVariablesComposite;
+import org.jboss.tools.common.el.ui.GlobalElVariablesComposite;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.vpe.resref.VpeResourcesDialog;
