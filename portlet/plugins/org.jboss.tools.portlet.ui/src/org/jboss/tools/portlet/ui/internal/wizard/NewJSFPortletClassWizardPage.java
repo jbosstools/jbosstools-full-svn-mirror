@@ -5,7 +5,6 @@ import static org.eclipse.jst.j2ee.internal.common.operations.INewJavaClassDataM
 import static org.eclipse.jst.j2ee.internal.web.operations.INewWebClassDataModelProperties.USE_EXISTING_CLASS;
 import static org.eclipse.jst.servlet.ui.internal.wizard.IWebWizardConstants.BROWSE_BUTTON_LABEL;
 import static org.eclipse.jst.servlet.ui.internal.wizard.IWebWizardConstants.CLASS_NAME_LABEL;
-
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_JSF_PORTLET;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_SEAM_PORTLET;
 
@@ -28,6 +27,7 @@ import org.eclipse.jst.j2ee.internal.wizard.NewJavaClassWizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -170,12 +170,44 @@ public class NewJSFPortletClassWizardPage extends NewJavaClassWizardPage {
 		data.widthHint = 300;
 		data.horizontalSpan = 1;
 		projectNameCombo.setLayoutData(data);
+		projectNameCombo.addSelectionListener(new SelectionListener() {
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				updateProject();
+			}
+
+			public void widgetSelected(SelectionEvent e) {
+				updateProject();
+			}
+			
+		});
 		
 		synchHelper.synchCombo(projectNameCombo, IArtifactEditOperationDataModelProperties.PROJECT_NAME, null);
 		initializeProjectList();
+		updateProject();
 		new Label(parent, SWT.NONE);
 	}
 	
+	protected void updateProject() {
+		String projectName = projectNameCombo.getText();
+		IProject project = ProjectUtilities.getProject(projectName);
+		try {
+			boolean isSeamPortlet = FacetedProjectFramework.hasProjectFacet(project, IPortletConstants.SEAMPORTLET_FACET_ID);
+			boolean isJSFPortlet;
+			if (isSeamPortlet) {
+				isJSFPortlet = false;
+			} else {
+				isJSFPortlet = FacetedProjectFramework.hasProjectFacet(project, IPortletConstants.JSFPORTLET_FACET_ID);
+			}
+			NewJSFPortletWizard wizard = (NewJSFPortletWizard) getWizard(); 
+			NewPortletClassDataModelProvider provider = (NewPortletClassDataModelProvider) wizard.getDefaultProvider();
+			provider.setSeamPortlet(isSeamPortlet);
+			provider.setJSFPortlet(isJSFPortlet);
+		} catch (CoreException e) {
+			// ignore
+		}
+	}
+
 	/**
 	 * 
 	 */

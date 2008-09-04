@@ -24,6 +24,8 @@ import org.jboss.tools.portlet.ui.PortletUIActivator;
  */
 public class NewJSFPortletWizard extends NewWebArtifactWizard {
 	
+	private NewPortletClassDataModelProvider provider;
+
 	//protected static final String PAGE_FOUR = "pageFour";
 	
 	public NewJSFPortletWizard() {
@@ -78,8 +80,11 @@ public class NewJSFPortletWizard extends NewWebArtifactWizard {
 	}
 
 	@Override
-	protected IDataModelProvider getDefaultProvider() {
-		return new NewPortletClassDataModelProvider(true,false);
+	public IDataModelProvider getDefaultProvider() {
+		if (provider == null) {
+			provider = new NewPortletClassDataModelProvider(true,false);
+		}
+		return provider;
 	}
 	
 }

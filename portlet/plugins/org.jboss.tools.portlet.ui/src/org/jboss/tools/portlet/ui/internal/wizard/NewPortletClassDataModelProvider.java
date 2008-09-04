@@ -480,4 +480,12 @@ public class NewPortletClassDataModelProvider extends
 		// Valid source is selected
 		return WTPCommonPlugin.OK_STATUS;
 	}
+	
+	public void setJSFPortlet(boolean isJSFPortlet) {
+		this.isJSFPortlet = isJSFPortlet;
+	}
+
+	public void setSeamPortlet(boolean isSeamPortlet) {
+		this.isSeamPortlet = isSeamPortlet;
+	}
 }
