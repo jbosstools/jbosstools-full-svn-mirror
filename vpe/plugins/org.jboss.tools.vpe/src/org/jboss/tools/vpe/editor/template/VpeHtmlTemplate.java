@@ -147,7 +147,10 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument) {
 		Map<VpeTemplate, ModifyInfo> visualNodeMap = new HashMap<VpeTemplate, ModifyInfo> ();
-		VpeCreatorInfo creatorInfo = createVisualElement(pageContext, (Element)sourceNode, visualDocument, null, visualNodeMap);
+		VpeCreatorInfo creatorInfo = null;
+		if (sourceNode instanceof Element) {
+			creatorInfo = createVisualElement(pageContext, (Element)sourceNode, visualDocument, null, visualNodeMap);
+		}
 		nsIDOMElement newVisualElement = null;
 		if (creatorInfo != null) {
 			newVisualElement = (nsIDOMElement)creatorInfo.getVisualNode();
@@ -166,8 +169,9 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	}
 	@Override
 	public void validate(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, VpeCreationData creationdata) {
-		validateVisualElement(pageContext, (Element)sourceNode, visualDocument, null, creationdata.getNode()==null?null:
-			(nsIDOMElement)(creationdata.getNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)), (Map<VpeTemplate,ModifyInfo>)creationdata.getData());
+		if (sourceNode instanceof Element)
+			validateVisualElement(pageContext, (Element)sourceNode, visualDocument, null, creationdata.getNode()==null?null:
+				(nsIDOMElement)(creationdata.getNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)), (Map<VpeTemplate,ModifyInfo>)creationdata.getData());
 	}
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name, String value) {
@@ -179,7 +183,8 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	}
 	@Override
 	public void beforeRemove(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
-		removeElement(pageContext, (Element)sourceNode, (Map<VpeTemplate,?>) data);
+		if (sourceNode instanceof Element)
+			removeElement(pageContext, (Element)sourceNode, (Map<VpeTemplate,?>) data);
 	}
 	@Override
 	public boolean isChildren() {
