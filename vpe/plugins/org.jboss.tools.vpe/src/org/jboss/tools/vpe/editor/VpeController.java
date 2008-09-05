@@ -768,13 +768,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 //			focusPosition = range.x;
 //		}
 
-		try {
-
+		if (selectionManager != null)
 			selectionManager.refreshVisualSelection();
-
-		} catch (Exception ex) {
-			VpePlugin.getPluginLog().logError(ex);
-		}
 
 		// VpeTemplate template = TemplateManagingUtil
 		// .getTemplateBySourceSelection(pageContext, focusPosition,
@@ -3168,8 +3163,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 		Display.getDefault().asyncExec(new Thread() {
 			public void run() {
-
-				getXulRunnerEditor().showSelectionRectangle();
+				if (getXulRunnerEditor() != null)
+					getXulRunnerEditor().showSelectionRectangle();
 			}
 		});
 
