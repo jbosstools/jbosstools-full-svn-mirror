@@ -220,6 +220,7 @@ public class SelectionBar extends Layout implements SelectionListener {
 		cmpToolBar.layout();
 		// bug was fixed when toolbar are not shown for resizeble components
 		cmpToolBar.layout();
+		splitter.getParent().layout(true,true);
 	}
 
     protected Point computeSize(Composite composite, int wHint, int hHint, boolean flushCache) {
