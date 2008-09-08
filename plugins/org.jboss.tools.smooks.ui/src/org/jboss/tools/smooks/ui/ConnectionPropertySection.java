@@ -25,6 +25,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -54,11 +55,19 @@ public class ConnectionPropertySection extends AbstractPropertySection {
 	}
 
 	@Override
-	public void createControls(Composite parent,
+	public void createControls(Composite rootParent,
 			TabbedPropertySheetPage tabbedPropertySheetPage) {
-		super.createControls(parent, tabbedPropertySheetPage);
+		super.createControls(rootParent, tabbedPropertySheetPage);
 		TabbedPropertySheetWidgetFactory factory = this.getWidgetFactory();
-
+		Composite parent = factory.createComposite(rootParent);
+		FillLayout fill = new FillLayout();
+		fill.marginHeight = 8;
+		fill.marginWidth = 8;
+		parent.setLayout(fill);
+		GridData pgd = new GridData(GridData.FILL_BOTH);
+		pgd.grabExcessHorizontalSpace = true;
+		pgd.grabExcessVerticalSpace = true;
+		rootParent.setLayoutData(pgd);
 		Section section = factory.createSection(parent, Section.TITLE_BAR);
 		section.setText("Mapping Properties");
 
@@ -201,12 +210,12 @@ public class ConnectionPropertySection extends AbstractPropertySection {
 			}
 
 		});
-		gd = new GridData(GridData.FILL_VERTICAL);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
 		button1.setLayoutData(gd);
 
 		Button button2 = factory.createButton(buttonComposite, "Delete  ",
 				SWT.NONE);
-		gd = new GridData(GridData.FILL_VERTICAL);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
 		button2.setLayoutData(gd);
 		button2.addSelectionListener(new SelectionAdapter() {
 
