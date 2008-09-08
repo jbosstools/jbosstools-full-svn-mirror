@@ -100,6 +100,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	/**
      * 
      */
+    public static final String SRC_NODE = "SRC_NODE"; //$NON-NLS-1$
     public static final String PARENT = "PARENT"; //$NON-NLS-1$
     public static final String VPE_USER_TOGGLE_ID = "vpe-user-toggle-id"; //$NON-NLS-1$
 	public static final String VPE_USER_TOGGLE_LOOKUP_PARENT = "vpe-user-toggle-lookup-parent"; //$NON-NLS-1$
@@ -448,6 +449,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				   ((Element)sourceNodeClone).setAttribute(PARENT,"");
 				    Attr a = ((Element)sourceNodeClone).getAttributeNode(PARENT);
 				    a.setUserData(PARENT, sourceNode.getParentNode(),null);
+				    
+				    //added by estherbin fix https://jira.jboss.org/jira/browse/JBIDE-1605 issue.          
+                    sourceNodeClone.setUserData(SRC_NODE, sourceNode,null);
 				    
 				}
 				template.beforeTemplateCreated(getPageContext(),
