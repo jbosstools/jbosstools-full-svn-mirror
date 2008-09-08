@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+  <extension
+         point="org.jboss.tools.smooks.ui.viewerInitor">
+      <viewerInitor
+            contentProvider="org.jboss.tools.smooks.javabean.model.BeanContentProvider"
+            creationWizard="org.jboss.tools.smooks.javabean.ui.NewJavaBeanStrucutredDataWizard"
+            labelProvider="org.jboss.tools.smooks.javabean.model.BeanlabelProvider"
+            name="JavaBean"
+            typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+      </viewerInitor>
+   </extension>
+  <extension
+        point="org.jboss.tools.smooks.ui.analyzer">
+     <mappingAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           name="JavaBean Analyzer"
+           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+        <targetSourceType
+              id="org.jboss.tools.smooks.ui.viewerInitor.javabean"
+              name="java2java">
+        </targetSourceType>
+     </mappingAnalyzer>
+     <sourceModelAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           level="0"
+           name="JavaBean SourceModel Analyzer"
+           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+     </sourceModelAnalyzer>
+     <targetModelAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           level="0"
+           name="JavaBean TargetModel Analyzer"
+           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+     </targetModelAnalyzer>
+     <sourceModelAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           level="0"
+           name="Javaa12"
+           typeID="org.jboss.tools.smooks.ui.viewerInitor.jadavabean">
+     </sourceModelAnalyzer>
+     <sourceModelAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           level="0"
+           name="421a"
+           typeID="org.jboss.tools.smooks.ui.viea123nitor.javabean">
+     </sourceModelAnalyzer>
+     <sourceModelAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           level="0"
+           name="yyy"
+           typeID="org.jboss.tools.sm55555555555555555">
+     </sourceModelAnalyzer>
+     <targetModelAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           level="0"
+           name="zer"
+           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabea1">
+     </targetModelAnalyzer>
+     <targetModelAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           level="0"
+           name="J512"
+           typeID="org.jb1">
+     </targetModelAnalyzer>
+     <targetModelAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           level="0"
+           name="55t"
+           typeID="o5114141">
+     </targetModelAnalyzer>
+  </extension>
+</plugin>
