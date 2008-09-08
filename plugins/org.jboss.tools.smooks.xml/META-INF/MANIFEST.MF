@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Xml StrucutredData Extention Plug-in
+Bundle-SymbolicName: org.jboss.tools.smooks.xml;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.jboss.tools.smooks.xml.XmlActivator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.xsd,
+ org.jboss.tools.smooks.model,
+ org.jboss.tools.smooks.model.edit,
+ org.jboss.tools.smooks.ui,
+ org.eclipse.ui.views,
+ org.junit,
+ org.eclipse.core.resources,
+ org.eclipse.ui.ide,
+ org.eclipse.xsd.edit,
+ org.eclipse.emf.edit.ui
+Eclipse-LazyStart: true
+Bundle-ClassPath: libs/dom4j-1.6.1.jar,
+ .
+Export-Package: org.jboss.tools.smooks.xml,
+ org.jboss.tools.smooks.xml.model,
+ org.jboss.tools.smooks.xml.ui,
+ org.jboss.tools.smooks.xml2java.model,
+ org.jboss.tools.smooks.xsd.model,
+ org.jboss.tools.smooks.xsd.ui

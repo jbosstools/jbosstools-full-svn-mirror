@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.jboss.tools.smooks.ui.viewerInitor">
+      <viewerInitor
+            contentProvider="org.jboss.tools.smooks.xsd.model.XSDStructuredModelContentProvider"
+            creationWizard="org.jboss.tools.smooks.xsd.ui.XSDStructuredDataWizard"
+            labelProvider="org.jboss.tools.smooks.xsd.model.XSDStructuredModelLabelProvider"
+            name="XSD"
+            typeID="org.jboss.tools.smooks.xml.viewerInitor.xsd">
+      </viewerInitor>
+      <viewerInitor
+            contentProvider="org.jboss.tools.smooks.xml.ui.XMLStructuredDataContentProvider"
+            creationWizard="org.jboss.tools.smooks.xml.ui.XMLStructuredDataWizard"
+            labelProvider="org.jboss.tools.smooks.xml.ui.XMLStructuredDataLabelProvider"
+            name="XML"
+            typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
+      </viewerInitor>
+   </extension>
+
+</plugin>
