@@ -18,8 +18,7 @@
          point="org.eclipse.emf.ecore.generated_package">
       <package
             class="org.milyn.xsd.smooks.SmooksPackage"
-            genModel="graphical/graphical.genmodel"
-            uri="http://www.jboss.org/tools/smooks">
+            uri="http://www.milyn.org/xsd/smooks-1.0.xsd">
       </package>
    </extension>
    <extension
