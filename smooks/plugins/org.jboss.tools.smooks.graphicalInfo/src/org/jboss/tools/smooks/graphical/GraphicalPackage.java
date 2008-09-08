@@ -41,7 +41,7 @@ public interface GraphicalPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.jboss.org/tools/smooks";
+	String eNS_URI = "http://www.jboss.org/tools/smooks/graphicalInformation";
 
 	/**
 	 * The package namespace name.
