@@ -12,7 +12,7 @@
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
-       uri = "http://www.jboss.org/tools/smooks" 
+       uri = "http://www.jboss.org/tools/smooks/graphicalInformation" 
        class = "org.jboss.tools.smooks.graphical.GraphicalPackage"
        genModel = "model/graphical.genmodel" /> 
   </extension>
