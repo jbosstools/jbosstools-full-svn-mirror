@@ -24,10 +24,12 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionLayer;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.IOWrappedException;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.KeyStroke;
@@ -72,6 +74,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Tree;
@@ -201,6 +204,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		try {
 			this.initTansformViewerModel((IEditorSite) getSite(),
 					getEditorInput());
+		}catch(IOWrappedException ex){
+			MessageDialog.openWarning(getSite().getShell(), "Waring", "Exceptions occurd during parsing Smooks file, no worries");
 		} catch (Throwable e) {
 			Status status = UIUtils.createErrorStatus(e);
 			ErrorDialog.openError(getSite().getShell(), "Error", "error",
@@ -502,7 +507,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	protected GraphicalViewer createGraphicalViewer(Composite parent) {
 		GraphicalViewer viewer = new ScrollingGraphicalViewer();
-		viewer.createControl(parent);
+		Control control = viewer.createControl(parent);
+		control.setBackground(ColorConstants.white);
 		return viewer;
 	}
 
@@ -725,7 +731,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			graph = graphicalInformationSaver.doLoad();
 			initFormEditorWithGraphInfo(graph);
 		} catch (Throwable t) {
-
+			// ignore
 		}
 
 		if (sourceDataTypeID == null || targetDataTypeID == null) {
