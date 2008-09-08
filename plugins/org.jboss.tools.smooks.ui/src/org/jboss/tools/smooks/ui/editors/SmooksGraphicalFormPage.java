@@ -446,6 +446,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			Class<? extends Object> modelClass) {
 		for (int i = 0; i < items.length; i++) {
 			TreeItem item = (TreeItem) items[i];
+			if(item == null) continue;
 			if (item.getData(REFERENCE_MODEL) != null) {
 
 			} else {
@@ -810,7 +811,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		wizard.setForcePreviousAndNextButtons(true);
 		StructuredDataCreationWizardDailog dialog = new StructuredDataCreationWizardDailog(
 				getEditorSite().getShell(), wizard);
-		if (dialog.open() == Dialog.OK) {
+		if (dialog.open() == WizardDialog.OK) {
 			IStrucutredDataCreationWizard cw = dialog
 					.getCurrentCreationWizard();
 			String typeID = cw.getInputDataTypeID();
