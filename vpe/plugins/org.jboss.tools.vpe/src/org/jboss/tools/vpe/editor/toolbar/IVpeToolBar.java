@@ -21,6 +21,11 @@ public interface IVpeToolBar {
 	 * Return the name of the ToolBar
 	 */
 	public String getName();
+	
+	/**
+	 * Return the id of the ToolBar
+	 */
+	public String getId();
 
 	/**
 	 * create toolbar control use given composite as parent for it

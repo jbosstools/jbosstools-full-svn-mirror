@@ -893,11 +893,6 @@ public class VpeTemplateManager {
 				template = handleTemplateClassLoadException(template,
 						templateClassName, nameSpaceIdentifyer, e);
 			}
-		} else if (isInvisibleTemplate != null
-				&& Constants.YES_STRING.equalsIgnoreCase(isInvisibleTemplate)) {
-
-			template = new InvisibleTemplate();
-
 		} else {
 			template = new VpeHtmlTemplate();
 		}

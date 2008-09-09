@@ -35,12 +35,5 @@ public interface IVpeToolBarManager {
 	 */
 	public void addToolBar(IVpeToolBar bar);
 
-	/**
-	 * This method create and add a new menuitem to the toolbars Menu. 
-	 * @param parent
-	 * @return
-	 */
-	public Composite createMenuComposite(Composite parent);
-
 	public void dispose();
 }

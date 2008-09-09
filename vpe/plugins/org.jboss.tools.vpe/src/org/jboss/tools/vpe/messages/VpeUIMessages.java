@@ -72,6 +72,7 @@ public class VpeUIMessages extends NLS {
 	public static String ERROR_OF_TYPE_CONVERSION;
 	public static String INCORRECT_PARAMETER_ERROR;
 	public static String HIDE_TOOLBAR;
+	public static String SHOW_TOOLBAR;
 	public static String MENU;
 	public static String SET_BACKGROUND_COLOR;
 	public static String SET_FOREGROUND_COLOR;
@@ -94,5 +95,8 @@ public class VpeUIMessages extends NLS {
 	public static String CONFIRM_SELECTION_BAR_DIALOG_TOGGLE_MESSAGE;
 	public static String VPE_UPDATE_JOB_TITLE;
 	public static String VPE_VISUAL_REFRESH_JOB;
+	public static String NON_VISUAL_TAGS;
+	public static String SHOW;
+	public static String HIDE;
 	
 }

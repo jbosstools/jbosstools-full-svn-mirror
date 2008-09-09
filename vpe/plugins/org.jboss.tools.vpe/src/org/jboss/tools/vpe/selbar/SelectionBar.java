@@ -249,7 +249,7 @@ public class SelectionBar extends Layout implements SelectionListener {
 			return;
 		}
 		Rectangle r = selBar.getItem(allItems - 1).getBounds();
-		int width = r.x + r.width +1;
+		int width = r.x + r.width ;
 		int height = r.height;
 
 		if (allItems >= itemCount) {

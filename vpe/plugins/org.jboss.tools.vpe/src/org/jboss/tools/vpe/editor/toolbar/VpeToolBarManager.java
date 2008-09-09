@@ -7,72 +7,66 @@
  *
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 package org.jboss.tools.vpe.editor.toolbar;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.eclipse.compare.Splitter;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
-
 import org.jboss.tools.vpe.VpePlugin;
-import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
+import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 /**
- * @author Erick
- * Created on 14.07.2005
- * @see IVpeToolBarManager 
+ * @author Erick Created on 14.07.2005
+ * @see IVpeToolBarManager
  */
 public class VpeToolBarManager implements IVpeToolBarManager {
 
-	static String TOOLBAR = "VPE_TOOLBAR";
-	static String HIDE = "HIDE";
-
 	private Splitter splitter;
-	private Composite cmpTlEmpty;
-	private List toolbarContainers = new ArrayList();
-	private MenuItem hideMenuItem;
-	private VpePlugin plugin = VpePlugin.getDefault();
 
-	public VpeToolBarManager() {
+	private Menu dropDownMenu;
+
+	public static final String SHOW = "show"; //$NON-NLS-1$
+	public static final String HIDE = "hide"; //$NON-NLS-1$
+
+	public VpeToolBarManager(Menu dropDownMenu) {
+
+		this.dropDownMenu = dropDownMenu;
 	}
 
 	public Composite createToolBarComposite(Composite parent) {
-		splitter =  new Splitter(parent, SWT.NONE);
-		GridData data = new GridData(GridData.FILL_HORIZONTAL);
-		splitter.setLayoutData(data);
+		splitter = new Splitter(parent, SWT.NONE) {
 
-		/*
-		 * The empty composite
-		 */
-		cmpTlEmpty = new Composite(splitter, SWT.NONE) {
-			public Point computeSize (int wHint, int hHint, boolean changed) {
-				Point point = super.computeSize(wHint, hHint, changed);
-				point.y = 1;
-				return point;
+			// if there is not visual children then return Point(0,0)
+			public Point computeSize(int hint, int hint2, boolean changed) {
+
+				int countVisibleChild = 0;
+				for (Control child : getChildren()) {
+					if (child.isVisible())
+						countVisibleChild++;
+				}
+
+				if (countVisibleChild == 0)
+					return new Point(0, 0);
+				else
+					return super.computeSize(hint, hint2, changed);
 			}
 		};
-		cmpTlEmpty.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		splitter.setVisible(cmpTlEmpty, false);
 		return splitter;
+
 	}
 
 	public void addToolBar(IVpeToolBar bar) {
+
 		Composite cmpToolBar = new Composite(splitter, SWT.NONE);
 		GridLayout layoutTl = new GridLayout(2, false);
 		layoutTl.marginBottom = 0;
@@ -83,134 +77,142 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 		cmpToolBar.setLayout(layoutTl);
 		cmpToolBar.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
+		// create toolbar control
 		bar.createToolBarControl(cmpToolBar);
-		toolbarContainers.add(new ToolbarContainer(cmpToolBar, bar));
+
+		// create tolbar container
+		ToolbarContainer toolbarContainer = new ToolbarContainer(cmpToolBar,
+				bar);
+
+		// show or hide toolbar
+		setStateToolbar(cmpToolBar, isShowedToolbar(bar));
+
+		// create item to manage show/hide toolbar
+		attachToMenu(dropDownMenu, toolbarContainer);
 	}
 
-	public Composite createMenuComposite(final Composite parent) {
-		/*
-		 * Menu for the menu bar
-		 */
-		final Menu menu = new Menu(parent.getShell(), SWT.POP_UP);
-		hideMenuItem = new MenuItem(menu, SWT.PUSH);
-		String hideMenuText = VpeUIMessages.HIDE_TOOLBAR;
-		hideMenuItem.setText(hideMenuText);
-		for(int i=0; i<toolbarContainers.size(); i++) {
-			final ToolbarContainer toolbarContainer = (ToolbarContainer)toolbarContainers.get(i);
-			MenuItem menuItem = new MenuItem(menu, SWT.PUSH);
-			toolbarContainer.setMenuItem(menuItem);
-			menuItem.setText(toolbarContainer.getToolbar().getName());
-			
-			menuItem.addListener(SWT.Selection, new Listener() {
-				public void handleEvent(Event event) {
-					showToolbar(toolbarContainer);
-					parent.getParent().layout(true, true);
-				}
-			});
-		}
+	/**
+	 * create item to manage show/hide toolbar
+	 * 
+	 * @param menu
+	 * @param toolbarContainer
+	 */
+	public void attachToMenu(Menu menu, ToolbarContainer toolbarContainer) {
+		MenuItem menuItem = new MenuItem(dropDownMenu, SWT.PUSH);
 
-		String defaultPreferenceValue = null;
-		if(toolbarContainers.size()>0) {
-			defaultPreferenceValue = ((ToolbarContainer)toolbarContainers.get(0)).getToolbar().getName();
-		} else {
-			defaultPreferenceValue = HIDE;
-		}
-		plugin.getPreferenceStore().setDefault(TOOLBAR, defaultPreferenceValue);
+		boolean showToolbar = isShowedToolbar(toolbarContainer.getToolbar());
 
-		String value = plugin.getPreferenceStore().getString(TOOLBAR);
-		if (HIDE.equals(value)) {
-			hideToolbars();
-		} else {
-//				Sets active toolbar
-			for(int i = 0; i < toolbarContainers.size(); i++) {
-				if( ((ToolbarContainer)toolbarContainers.get(i)).getToolbar().getName().equals(value)) { 
-					showToolbar((ToolbarContainer)toolbarContainers.get(i));
-				}
-			}
-		}
+		// set text to menu item
+		menuItem
+				.setText((showToolbar ? VpeUIMessages.HIDE : VpeUIMessages.SHOW)
+						+ Constants.WHITE_SPACE
+						+ toolbarContainer.getToolbar().getName());
 
-		hideMenuItem.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				hideToolbars();
-				parent.getParent().layout(true, true);
-			}
-		});
+		// add listener
+		menuItem.addSelectionListener(new ToolbarManagerSelectionListener(
+				toolbarContainer, showToolbar));
 
-		/*
-		 * The menu ButtonBar
-		 */
-		final ToolBar btnBar = new ToolBar(parent, SWT.FLAT);
-		GridLayout layout = new GridLayout(1,false);
-		layout.marginHeight = 0;
-		layout.marginWidth = 0;
-		layout.verticalSpacing = 0;	
-		btnBar.setLayout(layout);
-		btnBar.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
-		btnBar.setSize(23,22);
-		btnBar.pack();
-
-		final ToolItem button = new ToolItem(btnBar, SWT.MENU); 
-			button.setImage(ImageDescriptor.createFromFile(MozillaEditor.class, "icons/arrow.gif").createImage());		 //$NON-NLS-1$
-			button.setToolTipText(VpeUIMessages.MENU);
-			button.addListener(SWT.Selection, new Listener() {
-
-			public void handleEvent(Event event) {
-				Rectangle bounds = button.getBounds();
-				Point point = btnBar.toDisplay( bounds.x + 15, bounds.y + 12);
-				menu.setLocation(point);
-				menu.setVisible(true);
-			}
-		});
-			
-			// add dispose listener 
-			button.addDisposeListener(new DisposeListener() {
-
-				public void widgetDisposed(DisposeEvent e) {
-					// dispose tollitem's image
-					((ToolItem) e.widget).getImage().dispose();
-
-				}
-			});
-
-		return btnBar;
 	}
 
-	private void showToolbar(ToolbarContainer toolbarContainer) {
-		plugin.getPreferenceStore().setValue(TOOLBAR, toolbarContainer.getToolbar().getName());
-		plugin.savePluginPreferences();
-		hideMenuItem.setEnabled(true);			
-		toolbarContainer.getMenuItem().setEnabled(false);
-		splitter.setVisible(toolbarContainer.getParent(), true);
-		for(int i=0; i<toolbarContainers.size(); i++) {
-			ToolbarContainer container = (ToolbarContainer)toolbarContainers.get(i);
-			if(container != toolbarContainer) {
-				splitter.setVisible(container.getParent(), false);
-				container.getMenuItem().setEnabled(true);
-			}
-		}
-		splitter.setVisible(cmpTlEmpty, false);
+	/**
+	 * 
+	 * @param bar
+	 * @return
+	 */
+	protected boolean isShowedToolbar(IVpeToolBar bar) {
+
+		return !HIDE.equalsIgnoreCase(getPreference(bar.getId()));
 	}
 
-	private void hideToolbars() {
-		plugin.getPreferenceStore().setValue(TOOLBAR, HIDE);
-		plugin.savePluginPreferences();
-		hideMenuItem.setEnabled(false);
-		for(int i=0; i<toolbarContainers.size(); i++) {
-			ToolbarContainer container = (ToolbarContainer)toolbarContainers.get(i);
-			splitter.setVisible(container.getParent(), false);
-			container.getMenuItem().setEnabled(true);
+	/**
+	 * show/hide toolbar
+	 * 
+	 * @param toolBar
+	 * @param show
+	 */
+	protected void setStateToolbar(Control toolBar, boolean show) {
+		splitter.setVisible(toolBar, show);
+		splitter.getParent().layout(true, true);
+	}
+
+	public void dispose() {
+		if (splitter != null) {
+			splitter.dispose();
+			splitter = null;
 		}
-		splitter.setVisible(cmpTlEmpty, true);
+
+		for (MenuItem menuItem : dropDownMenu.getItems()) {
+			menuItem.dispose();
+		}
+
+	}
+
+	/**
+	 * get preference by key
+	 * 
+	 * @param key
+	 * @return
+	 */
+	private String getPreference(String key) {
+
+		return VpePlugin.getDefault().getPreferenceStore().getString(key);
+	}
+
+	/**
+	 * set preference
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	private void setPreference(String key, String value) {
+
+		VpePlugin.getDefault().getPreferenceStore().setValue(key, value);
+	}
+
+	/**
+	 * selection listener to manage toolbars
+	 * 
+	 * @author Sergey Dzmitrovich
+	 * 
+	 */
+	private class ToolbarManagerSelectionListener extends SelectionAdapter {
+
+		private ToolbarContainer toolbarContainer;
+		private boolean showBar;
+
+		public ToolbarManagerSelectionListener(
+				ToolbarContainer toolbarContainer, boolean showBar) {
+			this.toolbarContainer = toolbarContainer;
+			this.showBar = showBar;
+		}
+
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			MenuItem selectedItem = (MenuItem) e.widget;
+
+			// change flag
+			showBar = !showBar;
+
+			// set new value of preference 
+			setPreference(toolbarContainer.getToolbar().getId(), showBar ? SHOW
+					: HIDE);
+			// change text
+			selectedItem.setText((showBar ? VpeUIMessages.HIDE
+					: VpeUIMessages.SHOW)
+					+ Constants.WHITE_SPACE
+					+ toolbarContainer.getToolbar().getName());
+			// show or hide toolbar
+			setStateToolbar(toolbarContainer.getParent(), showBar);
+		}
 	}
 
 	/*
-	 * This class describe the container for toolbars 
+	 * This class describe the container for toolbars
 	 */
 	private static class ToolbarContainer {
 
 		private Composite parent;
 		private IVpeToolBar toolbar;
-		private MenuItem menuItem;
 
 		public ToolbarContainer(Composite parent, IVpeToolBar toolbar) {
 			this.parent = parent;
@@ -225,27 +227,6 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 			return toolbar;
 		}
 
-		public MenuItem getMenuItem() {
-			return menuItem;
-		}
-
-		public void setMenuItem(MenuItem menuItem) {
-			this.menuItem = menuItem;
-		}
 	}
 
-	public void dispose() {
-		if (splitter != null) {
-			splitter.dispose();
-			splitter=null;
-		}
-		hideMenuItem.dispose();
-		
-		for(int i=0; i<toolbarContainers.size(); i++) {
-			ToolbarContainer container = (ToolbarContainer)toolbarContainers.get(i);
-			container.getMenuItem().dispose();
-		}
-		toolbarContainers.clear();
-		toolbarContainers=null;
-	}
 }

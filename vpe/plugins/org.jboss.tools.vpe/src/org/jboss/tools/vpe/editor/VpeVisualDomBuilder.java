@@ -473,14 +473,16 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		getPageContext().setCurrentVisualNode(null);
 
 		nsIDOMNode visualNewNode = creationData.getNode();
+		
+		if (sourceNode.getNodeType() == Node.ELEMENT_NODE && visualNewNode == null && isShowInvisibleTags())
+			visualNewNode = createInvisbleElementLabel(sourceNode);
 
 		nsIDOMElement border = null;
 
 		if (visualNewNode != null
 				&& visualNewNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 
-			nsIDOMElement visualNewElement = (nsIDOMElement) creationData
-					.getNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			nsIDOMElement visualNewElement = (nsIDOMElement) visualNewNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
 
 			if ((visualNewElement != null) && template.hasImaginaryBorder()) {
 
@@ -550,18 +552,17 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				addChildren(template, sourceNode, visualOldContainer,
 						childrenInfoList);
 			}
+		} else if(sourceNode.getNodeType() == Node.ELEMENT_NODE&&visualNewNode != null && isShowInvisibleTags()){
+			nsIDOMElement span =  visualDocument.createElement(HTML.TAG_SPAN);
+			span.appendChild(visualNewNode);
+			addChildren(template, sourceNode,span);
+			visualNewNode= span;
 		}
 		getPageContext().setCurrentVisualNode(visualOldContainer);
 		template.validate(getPageContext(), sourceNode, visualDocument,
 				creationData);
 		getPageContext().setCurrentVisualNode(null);
 
-		// if showInvisibleTags mode
-		if (isShowInvisibleTags() && (visualNewNode != null)
-				&& (sourceNode.getNodeType() == Node.ELEMENT_NODE)) {
-			// add invisible children to node
-			visualNewNode = addInvisibleChildren(sourceNode, visualNewNode);
-		}
 
 		if (border != null)
 			return border;
@@ -613,8 +614,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		int childrenCount = 0;
 		for (int i = 0; i < len; i++) {
 			Node sourceNode = sourceNodes.item(i);
-			if ((!isInvisibleNode(sourceNode))
-					&& (addNode(sourceNode, null, visualContainer))) {
+			if ((addNode(sourceNode, null, visualContainer))) {
 				if (Node.ELEMENT_NODE == sourceNode.getNodeType()) {
 				}
 				childrenCount++;
@@ -2449,5 +2449,24 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	public void setShowInvisibleTags(boolean showInvisibleTags) {
 		this.showInvisibleTags = showInvisibleTags;
+	}
+	
+	/**
+	 * 
+	 * @param sourceNode
+	 * @return
+	 */
+	public nsIDOMNode createInvisbleElementLabel(Node sourceNode) {
+		nsIDOMElement span = visualDocument.createElement(HTML.TAG_SPAN);
+
+		span.setAttribute(HTML.TAG_STYLE,
+				"border: dashed 1px GREY;color:GREY;font-size:12px;");
+
+		nsIDOMText text = visualDocument.createTextNode(sourceNode
+				.getNodeName());
+
+		span.appendChild(text);
+
+		return span;
 	}
 }

@@ -26,7 +26,12 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -37,6 +42,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IEditorInput;
@@ -48,13 +54,16 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.part.EditorPart;
+import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage;
+import org.jboss.tools.vpe.editor.toolbar.VpeDropDownMenu;
 import org.jboss.tools.vpe.editor.toolbar.IVpeToolBarManager;
 import org.jboss.tools.vpe.editor.toolbar.VpeToolBarManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.toolbar.format.TextFormattingToolBar;
+import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
@@ -137,7 +146,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createPartControl(final Composite parent) {
-		vpeToolBarManager = new VpeToolBarManager();
+		
 		//Setting  Layout for the parent Composite
 		GridLayout layout = new GridLayout(2,false);
 		layout.marginHeight = 0;
@@ -167,17 +176,60 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		cmpEdTl.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 
-		 // Use vpeToolBarManager to create a horizontal toolbar. 
-		if(vpeToolBarManager!=null) {
-			vpeToolBarManager.createToolBarComposite(cmpEdTl);
-			vpeToolBarManager.addToolBar(new TextFormattingToolBar(formatControllerManager));
-			// Create a Toolbar menu button 
-			vpeToolBarManager.createMenuComposite(cmpVerticalToolbar);
-		}
-
-		// The Left standalone Vertical Tool Bar  
 		ToolBar verBar = new ToolBar(cmpVerticalToolbar, SWT.VERTICAL|SWT.FLAT);
 		verBar.setLayoutData(new GridData(GridData.FILL_VERTICAL));
+		
+		VpeDropDownMenu dropDownMenu = new VpeDropDownMenu(verBar,
+				VpeUIMessages.MENU); 
+		
+		 // Use vpeToolBarManager to create a horizontal toolbar.
+		vpeToolBarManager = new VpeToolBarManager(dropDownMenu
+				.getDropDownMenu());
+		if (vpeToolBarManager != null) {
+			vpeToolBarManager.createToolBarComposite(cmpEdTl);
+			vpeToolBarManager.addToolBar(new TextFormattingToolBar(
+					formatControllerManager));
+		}
+
+		// add Invisible tags support to menu
+
+		// create menu item
+		MenuItem menuItem = new MenuItem(dropDownMenu.getDropDownMenu(),
+				SWT.PUSH);
+
+		// get default value of flag
+		boolean showInvisibleTags = Constants.YES_STRING
+				.equals(VpePreference.SHOW_INVISIBLE_TAGS.getValue());
+
+		// set text
+		menuItem.setText((showInvisibleTags ? VpeUIMessages.HIDE
+				: VpeUIMessages.SHOW)
+				+ Constants.WHITE_SPACE + VpeUIMessages.NON_VISUAL_TAGS);
+
+		// add listener
+		menuItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				MenuItem selectedItem = (MenuItem) e.widget;
+
+				// get current value of flag
+				boolean showInvisibleTags = !controller.getVisualBuilder()
+						.isShowInvisibleTags();
+
+				// change text
+				selectedItem
+						.setText((showInvisibleTags ? VpeUIMessages.HIDE
+								: VpeUIMessages.SHOW)
+								+ Constants.WHITE_SPACE
+								+ VpeUIMessages.NON_VISUAL_TAGS);
+
+				// change flag
+				controller.getVisualBuilder().setShowInvisibleTags(
+						showInvisibleTags);
+				// update vpe
+				controller.visualRefresh();
+			}
+		});
 		
 		ToolItem item = null;
 		item = createToolItem(verBar, SWT.BUTTON1, "icons/preference.gif", VpeUIMessages.PREFERENCES); //$NON-NLS-1$
@@ -210,6 +262,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				}
 			}
 		});
+		
+
 		verBar.pack();
 		
 		//Create a composite to the Editor
@@ -746,5 +800,49 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			
 		}
 		return editor;
+	}
+	
+	/**
+	 * 
+	 * @param menu
+	 */
+	private void addInvisibleTagsSupportToMenu(Menu menu) {
+
+		// create menu item
+		MenuItem menuItem = new MenuItem(menu, SWT.PUSH);
+
+		// get default value of flag
+		boolean showInvisibleTags = Constants.YES_STRING
+				.equals(VpePreference.SHOW_INVISIBLE_TAGS.getValue());
+
+		// set text
+		menuItem.setText((showInvisibleTags ? VpeUIMessages.HIDE
+				: VpeUIMessages.SHOW)
+				+ Constants.WHITE_SPACE + VpeUIMessages.NON_VISUAL_TAGS);
+
+		// add listener
+		menuItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				MenuItem selectedItem = (MenuItem) e.widget;
+
+				// get current value of flag
+				boolean showInvisibleTags = !controller.getVisualBuilder()
+						.isShowInvisibleTags();
+
+				// change text
+				selectedItem
+						.setText((showInvisibleTags ? VpeUIMessages.HIDE
+								: VpeUIMessages.SHOW)
+								+ Constants.WHITE_SPACE
+								+ VpeUIMessages.NON_VISUAL_TAGS);
+
+				// change flag
+				controller.getVisualBuilder().setShowInvisibleTags(
+						showInvisibleTags);
+				// update vpe
+				controller.visualRefresh();
+			}
+		});
 	}
 }

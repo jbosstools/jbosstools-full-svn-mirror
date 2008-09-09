@@ -37,6 +37,8 @@ import org.jboss.tools.vpe.messages.VpeUIMessages;
 public class TextFormattingToolBar extends SplitToolBar {
 
 	private static final String NORMAL_FONT = "Normal"; //$NON-NLS-1$
+	
+	private static final String ID = "TEXT_FORMATTING_TOOLBAR"; //$NON-NLS-1$
 
 	private static String[] FONT_ARRAY = { "Arial",  "Courier New", "Times New Roman",    //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 										   "Comic Sans", "MS Serif", "Tahoma", "Verdana" };   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$ //$NON-NLS-4$
@@ -50,6 +52,10 @@ public class TextFormattingToolBar extends SplitToolBar {
 
 	public String getName() {
 		return VpeUIMessages.TEXT_FORMATTING;
+	}
+	
+	public String getId() {
+		return ID;
 	}
 
 	private ToolItem createToolItem(ToolBar parent, int type, String image, String toolTipText) {
