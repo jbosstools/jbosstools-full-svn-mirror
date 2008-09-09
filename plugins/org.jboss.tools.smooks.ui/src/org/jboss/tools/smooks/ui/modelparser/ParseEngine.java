@@ -42,7 +42,7 @@ public class ParseEngine {
 	public AbstractStructuredDataModel parseModel(Object model,
 			ITreeContentProvider provider, IStructuredModelParser parser) {
 		AbstractStructuredDataModel adm = parser.parse(model);
-
+		if(adm == null) return null;
 		if (provider.hasChildren(model)) {
 			Object[] array = provider.getChildren(model);
 			for (int j = 0; j < array.length; j++) {
