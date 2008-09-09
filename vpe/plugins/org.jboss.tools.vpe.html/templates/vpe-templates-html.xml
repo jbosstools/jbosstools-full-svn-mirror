@@ -1201,7 +1201,7 @@
 			</vpe:template>
 		</vpe:if>
 		<vpe:if test="@type='hidden'">
-			<vpe:template children="no" modify="no" invisible="yes" >
+			<vpe:template children="no" modify="no" >
 			</vpe:template>
 		</vpe:if>
 		<vpe:if test="@type='image'">
