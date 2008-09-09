@@ -51,7 +51,6 @@ import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
 import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
 import org.eclipse.gef.ui.parts.SelectionSynchronizer;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -73,9 +72,11 @@ import org.eclipse.swt.events.TreeListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -204,8 +205,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		try {
 			this.initTansformViewerModel((IEditorSite) getSite(),
 					getEditorInput());
-		}catch(IOWrappedException ex){
-			MessageDialog.openWarning(getSite().getShell(), "Waring", "Exceptions occurd during parsing Smooks file, no worries");
+		} catch (IOWrappedException ex) {
+			MessageDialog.openWarning(getSite().getShell(), "Waring",
+					"Exceptions occurd during parsing Smooks file, no worries");
 		} catch (Throwable e) {
 			Status status = UIUtils.createErrorStatus(e);
 			ErrorDialog.openError(getSite().getShell(), "Error", "error",
@@ -305,10 +307,12 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		}
 
 		{
-			Composite underToolPanel = toolkit.createComposite(rootMainControl);
+			Composite underToolPanel = toolkit
+					.createComposite(mappingMainComposite);
 			GridData sgd1 = new GridData(GridData.FILL_HORIZONTAL);
 			GridLayout underLayout = new GridLayout();
 			underLayout.numColumns = 3;
+			sgd1.horizontalSpan = 3;
 			underToolPanel.setLayout(underLayout);
 			underToolPanel.setLayoutData(sgd1);
 			{
@@ -342,14 +346,19 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 		// other fragment edit panel
 
-		Section section1 = this.createPageSectionHeader(rootMainControl,
-				Section.TITLE_BAR | Section.DESCRIPTION | Section.TWISTIE,
-				"Filter Edit Panel", "Edit the filter panel");
-		Composite otherComposite = this.createUISectionContainer(section1, 1);
-		section1.setClient(otherComposite);
-
-		GridData sgd1 = new GridData(GridData.FILL_HORIZONTAL);
-		section1.setLayoutData(sgd1);
+		// Section section1 = this.createPageSectionHeader(rootMainControl,
+		// Section.TITLE_BAR | Section.TWISTIE,
+		// "Other Edit Panel", "Edit the filter panel");
+		// Composite otherComposite = this.createUISectionContainer(section1,
+		// 1);
+		// section1.setClient(otherComposite);
+		// FillLayout otherFillLayout = new FillLayout();
+		// otherFillLayout.marginHeight = 0;
+		// otherFillLayout.marginWidth = 0;
+		// otherComposite.setLayout(otherFillLayout);
+		// createOtherSmooksGUI(otherComposite,toolkit);
+		// GridData sgd1 = new GridData(GridData.FILL_HORIZONTAL);
+		// section1.setLayoutData(sgd1);
 
 		toolkit.paintBordersFor(rootMainControl);
 
@@ -364,8 +373,45 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		}
 		this.hookGraphicalViewer();
 		this.initGraphicalViewer();
+	}
 
-		// getSite().setSelectionProvider(this);
+	protected void createOtherSmooksGUI(Composite parent, FormToolkit tool) {
+		Composite mainComposite = tool.createComposite(parent);
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		gridLayout.marginHeight = 0;
+		gridLayout.marginWidth = 0;
+		mainComposite.setLayout(gridLayout);
+
+		createSmooksTypeGUI(mainComposite, tool);
+	}
+
+	protected void createSmooksTypeGUI(Composite mainComposite, FormToolkit tool) {
+		Composite typeSelectComposite = tool.createComposite(mainComposite);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 2;
+		typeSelectComposite.setLayoutData(gd);
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 3;
+		typeSelectComposite.setLayout(layout);
+
+		Label label = tool.createLabel(typeSelectComposite,
+				"Smooks Parse Type : ");
+		gd = new GridData();
+		gd.horizontalSpan = 3;
+
+		label.setLayoutData(gd);
+		createTypeSelectRadioButton(typeSelectComposite, tool, "SAX")
+				.setSelection(true);
+		createTypeSelectRadioButton(typeSelectComposite, tool, "DOM");
+		createTypeSelectRadioButton(typeSelectComposite, tool, "SAX/DOM");
+
+	}
+
+	private Button createTypeSelectRadioButton(Composite parent,
+			FormToolkit tool, String labelName) {
+		Button button = tool.createButton(parent, labelName, SWT.RADIO);
+		return button;
 	}
 
 	protected SmooksFileBuilder createSmooksFileBulder() {
@@ -446,7 +492,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			Class<? extends Object> modelClass) {
 		for (int i = 0; i < items.length; i++) {
 			TreeItem item = (TreeItem) items[i];
-			if(item == null) continue;
+			if (item == null)
+				continue;
 			if (item.getData(REFERENCE_MODEL) != null) {
 
 			} else {
@@ -555,8 +602,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			exp = e;
 		}
 		if (exp != null) {
-			MessageDialog.openError(getSite().getShell(), "Save Error",
-					"Error! \n" + exp.getMessage());
+			ErrorDialog.openError(getSite().getShell(), "Save Error",
+					"Some errors occurs during saving the file.", UIUtils
+							.createErrorStatus(exp));
 		}
 		super.doSave(monitor);
 		commandStackChanged = false;
@@ -817,8 +865,6 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			String typeID = cw.getInputDataTypeID();
 			if (UIUtils.setTheProvidersForTreeViewer(viewer, typeID)) {
 				viewer.setInput(cw.getTreeViewerInputContents());
-				// the viewer must be expanded , then the graphics model can
-				// calculate the location correctly
 				try {
 					// viewer.expandAll();
 					if (viewer == this.sourceViewer) {

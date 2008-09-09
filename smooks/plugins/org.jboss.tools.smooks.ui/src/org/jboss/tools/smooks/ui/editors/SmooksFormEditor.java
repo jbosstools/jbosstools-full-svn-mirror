@@ -33,7 +33,9 @@ public class SmooksFormEditor extends FormEditor implements
 		try {
 			int index = this.addPage(this.graphicalPage);
 			this.setPageText(index, "Graph");
-
+			SmooksMainContentEditFormPage p = new SmooksMainContentEditFormPage(this,"normal","Normal");
+			index = this.addPage( p);
+			setPageText(index, "Normal");
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
