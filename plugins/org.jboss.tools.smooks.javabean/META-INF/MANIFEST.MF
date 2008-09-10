@@ -19,18 +19,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide,
  org.jboss.tools.smooks.graphicalInfo
 Eclipse-LazyStart: true
-Bundle-ClassPath: libs/commons-beanutils-1.8.0-BETA.jar,
- libs/commons-beanutils-1.8.0-BETA-javadoc.jar,
- libs/commons-beanutils-1.8.0-BETA-sources.jar,
- libs/commons-beanutils-bean-collections-1.8.0-BETA.jar,
- libs/commons-beanutils-core-1.8.0-BETA.jar,
- libs/commons-logging-1.1.1.jar,
- libs/commons-logging-1.1.1-javadoc.jar,
- libs/commons-logging-1.1.1-sources.jar,
- libs/commons-logging-adapters-1.1.1.jar,
- libs/commons-logging-api-1.1.1.jar,
- libs/commons-logging-tests.jar,
- .
 Export-Package: org.jboss.tools.smooks.javabean,
  org.jboss.tools.smooks.javabean.analyzer,
  org.jboss.tools.smooks.javabean.commandprocessor,
