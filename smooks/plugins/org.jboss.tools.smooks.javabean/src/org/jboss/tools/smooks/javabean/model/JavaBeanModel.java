@@ -19,8 +19,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.jboss.tools.smooks.analyzer.IValidatable;
+import org.jboss.tools.smooks.javabean.uitils.JavaPropertyUtils;
 
 /**
  * @author Dart Peng
@@ -284,8 +284,7 @@ public class JavaBeanModel implements IValidatable {
 				}
 			}
 			if(beanType == null) return null;
-			PropertyDescriptor[] pds = PropertyUtils
-					.getPropertyDescriptors(beanType);
+			PropertyDescriptor[] pds = JavaPropertyUtils.getPropertyDescriptor(beanType);
 
 			for (int i = 0; i < pds.length; i++) {
 				PropertyDescriptor pd = pds[i];
