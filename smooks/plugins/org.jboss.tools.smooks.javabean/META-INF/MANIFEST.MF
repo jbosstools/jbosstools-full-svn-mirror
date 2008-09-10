@@ -24,3 +24,4 @@ Export-Package: org.jboss.tools.smooks.javabean,
  org.jboss.tools.smooks.javabean.commandprocessor,
  org.jboss.tools.smooks.javabean.model,
  org.jboss.tools.smooks.javabean.ui
+Bundle-ClassPath: .
