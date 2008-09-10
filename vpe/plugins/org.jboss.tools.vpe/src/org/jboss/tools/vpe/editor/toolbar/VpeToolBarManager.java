@@ -48,10 +48,10 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 
 			// if there is not visual children then return Point(0,0)
 			public Point computeSize(int hint, int hint2, boolean changed) {
-
+                
 				int countVisibleChild = 0;
 				for (Control child : getChildren()) {
-					if (child.isVisible())
+					if (child.getVisible())
 						countVisibleChild++;
 				}
 
