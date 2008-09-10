@@ -21,6 +21,5 @@ Bundle-ClassPath: libs/dom4j-1.6.1.jar,
 Export-Package: org.jboss.tools.smooks.xml,
  org.jboss.tools.smooks.xml.model,
  org.jboss.tools.smooks.xml.ui,
- org.jboss.tools.smooks.xml2java.model,
  org.jboss.tools.smooks.xsd.model,
  org.jboss.tools.smooks.xsd.ui
