@@ -17,8 +17,7 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.smooks.model,
  org.jboss.tools.smooks.model.edit,
  org.eclipse.ui.ide,
- org.jboss.tools.smooks.graphicalInfo,
- org.junit
+ org.jboss.tools.smooks.graphicalInfo
 Eclipse-LazyStart: true
 Bundle-ClassPath: libs/commons-beanutils-1.8.0-BETA.jar,
  libs/commons-beanutils-1.8.0-BETA-javadoc.jar,
