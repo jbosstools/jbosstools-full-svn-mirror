@@ -100,7 +100,6 @@
         <xsd:attribute name="class" type="xsd:string" use="optional" />
         <xsd:attribute name="file" type="xsd:string" use="optional"/>
         <xsd:attribute name="namespaceIdentifier" type="xsd:string" use="optional"/>
-        <xsd:attribute name="invisible" type="vpe:VPE-BOOLEAN" use="optional"/>
         <xsd:attribute name="hasImaginaryBorder" type="vpe:VPE-BOOLEAN" use="optional"/>
     </xsd:complexType>
 <!--  -->   
@@ -375,6 +374,8 @@
         <xsd:attribute name="width" type="xsd:string" use="optional"/>
         <xsd:attribute name="border" type="xsd:string" use="optional"/>
         <xsd:attribute name="bgcolor" type="xsd:string" use="optional"/>
+        <xsd:attribute name="id" type="xsd:string" use="optional" />
+        <xsd:attribute name="dir" type="xsd:string" use="optional" />
     </xsd:complexType>
 <!--  -->
     <xsd:complexType name="HTML_IMG">
