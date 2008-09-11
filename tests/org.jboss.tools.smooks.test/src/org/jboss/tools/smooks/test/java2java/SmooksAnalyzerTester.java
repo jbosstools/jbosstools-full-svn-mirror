@@ -23,6 +23,9 @@ import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
+import org.jboss.tools.smooks.analyzer.NormalSmooksModelBuilder;
+import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
+import org.jboss.tools.smooks.analyzer.ResourceConfigEraser;
 import org.jboss.tools.smooks.graphical.GraphInformations;
 import org.jboss.tools.smooks.graphical.GraphicalPackage;
 import org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer;
@@ -35,25 +38,33 @@ import org.milyn.xsd.smooks.util.SmooksResourceFactoryImpl;
  * @author Dart Peng Date : 2008-9-1
  */
 public class SmooksAnalyzerTester extends TestCase {
-	public void testParse() {
+
+	private GraphInformations graph;
+	private Resource resource;
+
+	public SmooksAnalyzerTester() throws IOException {
+		super();
+		ClassLoader classLoader = SmooksAnalyzerTester.class.getClassLoader();
 		Registry.INSTANCE.put(GraphicalPackage.eNS_URI,
 				GraphicalPackage.eINSTANCE);
 		Registry.INSTANCE.put(SmooksPackage.eNS_URI, SmooksPackage.eINSTANCE);
+
+		resource = new SmooksResourceFactoryImpl().createResource(null);
+		Resource gr = new XMLResourceFactoryImpl().createResource(null);
+		InputStream stream1 = classLoader
+				.getResourceAsStream("org/jboss/tools/smooks/test/java2java/Test.xml");
+		InputStream stream2 = classLoader
+				.getResourceAsStream("org/jboss/tools/smooks/test/java2java/Test.smooks.graph");
+		gr.load(stream2, Collections.EMPTY_MAP);
+		graph = (GraphInformations) gr.getContents().get(0);
+
+		resource.load(stream1, Collections.EMPTY_MAP);
+	}
+
+	public MappingResourceConfigList analyzeGraphical() {
 		try {
 			ClassLoader classLoader = SmooksAnalyzerTester.class
 					.getClassLoader();
-			Resource resource = new SmooksResourceFactoryImpl()
-					.createResource(null);
-			Resource gr = new XMLResourceFactoryImpl().createResource(null);
-			InputStream stream1 = classLoader
-					.getResourceAsStream("org/jboss/tools/smooks/test/java2java/Test.xml");
-			InputStream stream2 = classLoader
-					.getResourceAsStream("org/jboss/tools/smooks/test/java2java/Test.smooks.graph");
-			gr.load(stream2, Collections.EMPTY_MAP);
-			GraphInformations graph = (GraphInformations) gr.getContents().get(
-					0);
-
-			resource.load(stream1, Collections.EMPTY_MAP);
 			JavaBeanAnalyzer sourceModelAnalyzer = new JavaBeanAnalyzer();
 			JavaBeanAnalyzer targetModelAnalyzer = new JavaBeanAnalyzer();
 			JavaBeanAnalyzer connectionsAnalyzer = new JavaBeanAnalyzer();
@@ -71,10 +82,41 @@ public class SmooksAnalyzerTester extends TestCase {
 			Assert.assertTrue(!connections.isEmpty());
 			Assert.assertTrue(!relationgConnection.isEmpty());
 			System.out.println(connections);
-		} catch (IOException e) {
-			e.printStackTrace();
+			return configList;
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	public void eraserMappingResourceConfig() {
+		ResourceConfigEraser eraser = new ResourceConfigEraser();
+		SmooksResourceListType listType = ((DocumentRoot) resource
+				.getContents().get(0)).getSmooksResourceList();
+		int oldCount = listType.getAbstractResourceConfig().size();
+		MappingResourceConfigList configList = analyzeGraphical();
+		eraser.cleanMappingResourceConfig(listType, configList, null);
+		int newCount = listType.getAbstractResourceConfig().size();
+		Assert.assertTrue(oldCount >= newCount);
+	}
+
+	public void testEraser() {
+		eraserMappingResourceConfig();
+	}
+
+	public void testAnalyzer() {
+		MappingResourceConfigList configList = analyzeGraphical();
+	}
+
+	public void generateNormalInforPackage() {
+		SmooksResourceListType listType = ((DocumentRoot) resource
+				.getContents().get(0)).getSmooksResourceList();
+		NormalSmooksModelPackage modePackage = NormalSmooksModelBuilder
+				.getInstance().buildNormalSmooksModelPackage(listType);
+		
+	}
+	
+	public void testGenerateNormalInforPackage(){
+		generateNormalInforPackage();
 	}
 }
