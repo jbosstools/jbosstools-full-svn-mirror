@@ -96,8 +96,8 @@ public class PackageModuleFactory extends ModuleFactoryDelegate {
 	 * @param pack
 	 * @return
 	 */
-	public static String getID(IArchive pack) {
-		return getID(pack, false);
+	protected static String getStamp(IArchive pack) {
+		return getStamp(pack, false);
 	}
 	
 	/**
@@ -107,12 +107,28 @@ public class PackageModuleFactory extends ModuleFactoryDelegate {
 	 * @param create
 	 * @return
 	 */
-	protected static String getID(IArchive pack, boolean create) {
+	protected static String getStamp(IArchive pack, boolean create) {
 		String propVal = pack.getProperty(MODULE_ID_PROPERTY_KEY);
 		if( propVal == null && create ) {
-			return "" + new Date().getTime();
+			propVal = "" + new Date().getTime();
 		}
 		return propVal;
+	}
+	
+	protected static String getId(IArchive pack) { 
+		IPath p = pack.getModelRootNode().getDescriptor().append(getStamp(pack));
+		return p.toString();
+	}
+	
+	public IModule findModule(String id) {
+		IModule m = super.findModule(id);
+		IModule[] allModules = getModules();
+		for( int i = 0; i < allModules.length; i++ ) {
+			Path p = new Path( allModules[i].getId() );
+			if( p.lastSegment().equals(id))
+				return allModules[i];
+		}
+		return m;
 	}
 	
 	/**
@@ -151,7 +167,7 @@ public class PackageModuleFactory extends ModuleFactoryDelegate {
 	}
 
 	protected IModule createModule2(IArchive pack, IProject project) {
-		return createModule(getID(pack), getName(pack), MODULE_TYPE, VERSION, project);
+		return createModule(getId(pack), getName(pack), MODULE_TYPE, VERSION, project);
 	}
 	
 	public IModule[] getModules(IProject project) {

@@ -170,16 +170,18 @@ public class ArchivesModelModuleContributor implements IModuleContributor {
 	/**
 	 * Set a property so that each module that's here in the factory
 	 * has a unique ID other than it's name (which is not unique)
+	 * 
+	 * This must set ONLY the timestamp as the property in the file.
 	 * @param archives
 	 * @return  returns whether a save has occurred
 	 */
 	protected boolean ensureArchivesHaveIDs(IProject project, IArchive[] archives) {
 		boolean requiresSave = false;
 		for( int i = 0; i < archives.length; i++ ) {
-			if( PackageModuleFactory.getID(archives[i]) == null ) {
+			if( PackageModuleFactory.getStamp(archives[i]) == null ) {
 				requiresSave = true;
 				archives[i].setProperty(PackageModuleFactory.MODULE_ID_PROPERTY_KEY, 
-										PackageModuleFactory.getID(archives[i], true));
+										PackageModuleFactory.getStamp(archives[i], true));
 			}
 		}
 		return requiresSave;
