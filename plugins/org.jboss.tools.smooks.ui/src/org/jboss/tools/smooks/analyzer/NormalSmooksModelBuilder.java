@@ -16,6 +16,7 @@ import java.util.List;
 import org.milyn.xsd.smooks.ResourceConfigType;
 import org.milyn.xsd.smooks.ResourceType;
 import org.milyn.xsd.smooks.SmooksResourceListType;
+import org.milyn.xsd.smooks.util.SmooksConstants;
 
 /**
  * @author Dart Peng<br>
@@ -58,19 +59,35 @@ public class NormalSmooksModelBuilder {
 	}
 
 	protected boolean isSmooksTransformType(ResourceConfigType config) {
+		if (config == null)
+			return false;
+		String selector = config.getSelector();
+		if (selector != null) {
+			return SmooksConstants.GLOBAL_PARAMETERS.equals(selector.trim());
+		}
 		return false;
 	}
 
 	protected boolean isDateConfig(ResourceConfigType config) {
+		if (config == null)
+			return false;
+		ResourceType resource = config.getResource();
+		if (resource != null) {
+			String r = resource.getValue();
+			if(r != null)
+			return SmooksConstants.DATE_DECODER.equals(r.trim());
+		}
 		return false;
 	}
 
 	protected boolean isBeanPopulator(ResourceConfigType config) {
+		if (config == null)
+			return false;
 		ResourceType resource = config.getResource();
 		if (resource != null) {
 			String resourceString = resource.getValue();
-			return NormalSmooksModelPackage.RESOURCE_CLASS_BEAN_POPULATOR
-					.equals(resourceString);
+			if(resourceString != null)
+			return SmooksConstants.BEAN_POPULATOR.equals(resourceString.trim());
 		}
 		return false;
 	}
