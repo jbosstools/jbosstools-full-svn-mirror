@@ -13,7 +13,6 @@ package org.jboss.tools.smooks.javabean.analyzer;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +37,7 @@ import org.jboss.tools.smooks.analyzer.IMappingAnalyzer;
 import org.jboss.tools.smooks.analyzer.ISourceModelAnalyzer;
 import org.jboss.tools.smooks.analyzer.ITargetModelAnalyzer;
 import org.jboss.tools.smooks.analyzer.MappingModel;
+import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
 import org.jboss.tools.smooks.graphical.GraphInformations;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
@@ -90,7 +90,6 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 		adapterFactory = new ComposedAdapterFactory(
 				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-
 		adapterFactory
 				.addAdapterFactory(new ResourceItemProviderAdapterFactory());
 		adapterFactory
@@ -360,14 +359,14 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		this.analyzeGraphicalModel(root, listType);
 	}
 
-	public List<MappingModel> analyzeMappingSmooksModel(
+	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType, Object sourceObject,
 			Object targetObject) {
 		if (!(sourceObject instanceof JavaBeanModel)
 				|| !(targetObject instanceof JavaBeanModel)) {
-			return Collections.EMPTY_LIST;
+			return MappingResourceConfigList.createEmptyList();
 		}
-
+		MappingResourceConfigList resourceConfigList = new MappingResourceConfigList();
 		JavaBeanModel source = (JavaBeanModel) sourceObject;
 		JavaBeanModel target = (JavaBeanModel) targetObject;
 		List<MappingModel> mappingModelList = new ArrayList<MappingModel>();
@@ -395,14 +394,16 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						setSelectorIsUsed(sourceName);
 						// create the first connection
 						mappingModelList.add(new MappingModel(source, target));
+						resourceConfigList.addResourceConfig(rc);
 						analyzeMappingModelFromResourceConfig(mappingModelList,
-								listType, rc, source, target);
+								resourceConfigList, listType, rc, source,
+								target);
 					}
 				}
 			}
 		}
-
-		return mappingModelList;
+		resourceConfigList.setMappingModelList(mappingModelList);
+		return resourceConfigList;
 	}
 
 	protected boolean isReferenceSelector(String selector) {
@@ -416,6 +417,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 	protected void analyzeMappingModelFromResourceConfig(
 			List<MappingModel> mappingModelList,
+			MappingResourceConfigList mappingResourceConfigList,
 			SmooksResourceListType resourceList,
 			ResourceConfigType resourceConfig, JavaBeanModel source,
 			JavaBeanModel target) {
@@ -443,8 +445,10 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					sourceModel = findTheChildJavaBeanModel(newSelector, source);
 					if (sourceModel != null) {
 						setSelectorIsUsed(newSelector);
+						mappingResourceConfigList.addResourceConfig(rc);
 						analyzeMappingModelFromResourceConfig(mappingModelList,
-								resourceList, rc, sourceModel, targetModel);
+								mappingResourceConfigList, resourceList, rc,
+								sourceModel, targetModel);
 					}
 				}
 			} else {
@@ -453,14 +457,15 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			if (sourceModel != null) {
 				MappingModel model = new MappingModel(sourceModel, targetModel);
 				FeatureMap it = binding.getAnyAttribute();
-				for(int i = 0 ; i < it.size() ; i++){
+				for (int i = 0; i < it.size(); i++) {
 					EStructuralFeature feature = it.getEStructuralFeature(i);
-					if(feature.equals(SmooksModelUtils.ATTRIBUTE_PROPERTY) ||
-							feature.equals(SmooksModelUtils.ATTRIBUTE_SELECTOR)) 
+					if (feature.equals(SmooksModelUtils.ATTRIBUTE_PROPERTY)
+							|| feature
+									.equals(SmooksModelUtils.ATTRIBUTE_SELECTOR))
 						continue;
 					String pname = feature.getName();
 					String pvalue = it.get(feature, false).toString();
-					PropertyModel pmodel =new PropertyModel();
+					PropertyModel pmodel = new PropertyModel();
 					pmodel.setName(pname);
 					pmodel.setValue(pvalue);
 					model.getProperties().add(pmodel);
