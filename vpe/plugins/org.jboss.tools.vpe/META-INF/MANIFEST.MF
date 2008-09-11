@@ -74,7 +74,6 @@ Require-Bundle: org.jboss.tools.common.model.ui,
  org.jboss.tools.jst.web,
  org.jboss.tools.vpe.resref,
  org.jboss.tools.common.el.core,
- org.jboss.tools.common.el.ui,
- org.jboss.tools.common.resref.ui
+ org.jboss.tools.common.el.ui
 Bundle-Version: 2.1.0
 

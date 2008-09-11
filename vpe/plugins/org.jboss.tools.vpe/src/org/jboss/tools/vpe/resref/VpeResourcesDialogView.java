@@ -15,17 +15,18 @@ import java.util.Properties;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.jboss.tools.common.el.ui.ElVariablesComposite;
 import org.jboss.tools.common.model.ui.wizards.query.AbstractQueryWizardView;
-import org.jboss.tools.common.resref.core.AbsoluteFolderReferenceComposite;
-import org.jboss.tools.common.resref.core.CssReferencesComposite;
-import org.jboss.tools.common.resref.core.RelativeFolderReferenceComposite;
-import org.jboss.tools.common.resref.core.TaglibReferencesComposite;
+import org.jboss.tools.vpe.resref.core.AbsoluteFolderReferenceComposite;
+import org.jboss.tools.vpe.resref.core.CssReferencesComposite;
+import org.jboss.tools.vpe.resref.core.ElVariablesComposite;
+import org.jboss.tools.vpe.resref.core.RelativeFolderReferenceComposite;
+import org.jboss.tools.vpe.resref.core.TaglibReferencesComposite;
 
 public class VpeResourcesDialogView extends AbstractQueryWizardView {
 	IFile file;
@@ -57,30 +58,15 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 		GridData data;
 		Composite c = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout(1, false);
-		layout.marginWidth = 0;
+		layout.marginWidth = 5;
 		layout.marginHeight = 0;
 		c.setLayout(layout);
-		
+		c.setBackground(new Color(c.getDisplay(),0,0,0));
 		Control absControl = absFolder.createControl(c);
-		data = new GridData(GridData.FILL_HORIZONTAL);
-		absControl.setLayoutData(data);
-		
 		Control relControl = relFolder.createControl(c);
-		data = new GridData(GridData.FILL_HORIZONTAL);
-		relControl.setLayoutData(data);
-
 		Control cssControl = css.createControl(c);
-		data = new GridData(GridData.FILL_BOTH);
-		cssControl.setLayoutData(data);
 		Control tldControl = tld.createControl(c);
-		data = new GridData(GridData.FILL_BOTH);
-		tldControl.setLayoutData(data);
-		
-	     //changed by estherbin
-        //http://jira.jboss.com/jira/browse/JBIDE-2010
 		Control elControl = el.createControl(c);
-		data = new GridData(GridData.FILL_BOTH);
-		elControl.setLayoutData(data);
 		return c;
 	}
 
