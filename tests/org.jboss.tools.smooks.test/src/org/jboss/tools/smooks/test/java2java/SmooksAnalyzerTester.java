@@ -14,14 +14,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelBuilder;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
@@ -32,6 +38,7 @@ import org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer;
 import org.milyn.xsd.smooks.DocumentRoot;
 import org.milyn.xsd.smooks.SmooksPackage;
 import org.milyn.xsd.smooks.SmooksResourceListType;
+import org.milyn.xsd.smooks.provider.SmooksItemProviderAdapterFactory;
 import org.milyn.xsd.smooks.util.SmooksResourceFactoryImpl;
 
 /**
@@ -41,15 +48,30 @@ public class SmooksAnalyzerTester extends TestCase {
 
 	private GraphInformations graph;
 	private Resource resource;
-
+	private ComposedAdapterFactory adapterFactory;
+	private AdapterFactoryEditingDomain editingDomain;
+	private Resource smooksResource;
+	protected CommandStack createCommandStack() {
+		return new BasicCommandStack();
+	}
 	public SmooksAnalyzerTester() throws IOException {
 		super();
+		adapterFactory = new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactory
+				.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+		adapterFactory
+				.addAdapterFactory(new SmooksItemProviderAdapterFactory());
+		editingDomain = new AdapterFactoryEditingDomain(adapterFactory,
+				createCommandStack(), new HashMap<Resource, Boolean>());
+		
+		
 		ClassLoader classLoader = SmooksAnalyzerTester.class.getClassLoader();
 		Registry.INSTANCE.put(GraphicalPackage.eNS_URI,
 				GraphicalPackage.eINSTANCE);
 		Registry.INSTANCE.put(SmooksPackage.eNS_URI, SmooksPackage.eINSTANCE);
 
-		resource = new SmooksResourceFactoryImpl().createResource(null);
+		resource = editingDomain.getResourceSet().createResource(null);
 		Resource gr = new XMLResourceFactoryImpl().createResource(null);
 		InputStream stream1 = classLoader
 				.getResourceAsStream("org/jboss/tools/smooks/test/java2java/Test.xml");
@@ -117,6 +139,7 @@ public class SmooksAnalyzerTester extends TestCase {
 	}
 	
 	public void testGenerateNormalInforPackage(){
+		eraserMappingResourceConfig();
 		generateNormalInforPackage();
 	}
 }
