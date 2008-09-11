@@ -16,11 +16,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.List;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
+import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.graphical.GraphInformations;
 import org.jboss.tools.smooks.graphical.GraphicalPackage;
 import org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer;
@@ -61,8 +63,13 @@ public class SmooksAnalyzerTester extends TestCase {
 					listType, null, classLoader);
 			Object target = targetModelAnalyzer.buildTargetInputObjects(graph,
 					listType, null, classLoader);
-			List connections = connectionsAnalyzer.analyzeMappingSmooksModel(
-					listType, source, target);
+			MappingResourceConfigList configList = connectionsAnalyzer
+					.analyzeMappingSmooksModel(listType, source, target);
+			List connections = configList.getMappingModelList();
+			List relationgConnection = configList
+					.getRelationgResourceConfigList();
+			Assert.assertTrue(!connections.isEmpty());
+			Assert.assertTrue(!relationgConnection.isEmpty());
 			System.out.println(connections);
 		} catch (IOException e) {
 			e.printStackTrace();
