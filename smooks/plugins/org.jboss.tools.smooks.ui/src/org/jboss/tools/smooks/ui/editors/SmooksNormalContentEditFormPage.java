@@ -23,23 +23,26 @@ import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
+import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
 import org.jboss.tools.smooks.ui.gef.util.GraphicsConstants;
 import org.jboss.tools.smooks.utils.UIUtils;
 
 /**
  * @author Dart Peng Date : 2008-9-9
  */
-public class SmooksMainContentEditFormPage extends FormPage {
+public class SmooksNormalContentEditFormPage extends FormPage {
 
-	public SmooksMainContentEditFormPage(FormEditor editor, String id,
+	protected NormalSmooksModelPackage modelPackage = null;
+	
+	public SmooksNormalContentEditFormPage(FormEditor editor, String id,
 			String title) {
 		super(editor, id, title);
 	}
 
-	public SmooksMainContentEditFormPage(String id, String title) {
+	public SmooksNormalContentEditFormPage(String id, String title) {
 		super(id, title);
 	}
-
+	
 	@Override
 	protected void createFormContent(IManagedForm managedForm) {
 		final ScrolledForm form = managedForm.getForm();
@@ -185,6 +188,21 @@ public class SmooksMainContentEditFormPage extends FormPage {
 			FormToolkit tool, String labelName) {
 		Button button = tool.createButton(parent, labelName, SWT.RADIO);
 		return button;
+	}
+
+	/**
+	 * @return the modelPackage
+	 */
+	public NormalSmooksModelPackage getModelPackage() {
+		return modelPackage;
+	}
+
+	/**
+	 * @param modelPackage the modelPackage to set
+	 */
+	public void setModelPackage(NormalSmooksModelPackage modelPackage) {
+		if(modelPackage == this.modelPackage) return;
+		this.modelPackage = modelPackage;
 	}
 
 }

@@ -23,7 +23,7 @@ public interface IMappingAnalyzer {
 	public void analyzeMappingGraphModel(
 			SmooksConfigurationFileGenerateContext context)
 			throws SmooksAnalyzerException;
-	public List<MappingModel> analyzeMappingSmooksModel(
+	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType,Object sourceObject,Object targetObject);
 	
 }

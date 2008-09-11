@@ -11,50 +11,59 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.milyn.xsd.smooks.DocumentRoot;
-import org.milyn.xsd.smooks.ParamType;
-import org.milyn.xsd.smooks.ResourceConfigType;
 import org.milyn.xsd.smooks.SmooksFactory;
 import org.milyn.xsd.smooks.SmooksResourceListType;
-import org.milyn.xsd.smooks.util.SmooksConstants;
-import org.milyn.xsd.smooks.util.SmooksModelUtils;
 import org.milyn.xsd.smooks.util.SmooksResourceFactoryImpl;
 
 public class SmooksFileBuilder {
+	Resource smooksResource;
+
+	public Resource getSmooksResource() {
+		return smooksResource;
+	}
+
+	public void setSmooksResource(Resource smooksResource) {
+		this.smooksResource = smooksResource;
+	}
 
 	public InputStream generateSmooksFile(
 			SmooksConfigurationFileGenerateContext context,
 			IProgressMonitor monitor) throws SmooksAnalyzerException,
 			IOException, CoreException {
 		AnalyzerFactory factory = AnalyzerFactory.getInstance();
-		IMappingAnalyzer analyzer = factory.getMappingAnalyzer(context.getSourceDataTypeID(),
-				context.getTargetDataTypeID());
+		IMappingAnalyzer analyzer = factory.getMappingAnalyzer(context
+				.getSourceDataTypeID(), context.getTargetDataTypeID());
 
-		if (analyzer == null)
+		if (analyzer == null) {
 			throw new SmooksAnalyzerException(
 					"can't find the Analyzer for sourceID : "
 							+ context.getSourceDataTypeID()
 							+ " and the targetID : "
 							+ context.getTargetDataTypeID());
-
-		SmooksResourceListType listType = SmooksFactory.eINSTANCE
-				.createSmooksResourceListType();
-		context.setSmooksResourceListModel(listType);
-		analyzer.analyzeMappingGraphModel(context);
+		}
+		if(smooksResource == null) {
+			throw new SmooksAnalyzerException("SmooksResource is NULL");
+		}
+		DocumentRoot documentRoot = (DocumentRoot)smooksResource.getContents().get(0);
+		if(documentRoot == null){
+			documentRoot = SmooksFactory.eINSTANCE.createDocumentRoot();
+			smooksResource.getContents().add(documentRoot);
+		}
+		
+		SmooksResourceListType listType = documentRoot.getSmooksResourceList();
+		if(listType == null){
+			listType = SmooksFactory.eINSTANCE.createSmooksResourceListType();
+			documentRoot.setSmooksResourceList(listType);
+		}
 
 		// init the smooksresourcelist
 		initSmooksParseStyle(context, listType);
 
-		// serialize model to stream
-		Resource resource = new SmooksResourceFactoryImpl()
-				.createResource(null);
-		DocumentRoot dr = SmooksFactory.eINSTANCE.createDocumentRoot();
-
-		// add all model of the config file
-		dr.setSmooksResourceList(listType);
-		resource.getContents().add(dr);
+		context.setSmooksResourceListModel(listType);
+		analyzer.analyzeMappingGraphModel(context);
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		resource.save(outputStream, Collections.EMPTY_MAP);
+		smooksResource.save(outputStream, Collections.EMPTY_MAP);
 		return new ByteArrayInputStream(outputStream.toByteArray());
 	}
 
