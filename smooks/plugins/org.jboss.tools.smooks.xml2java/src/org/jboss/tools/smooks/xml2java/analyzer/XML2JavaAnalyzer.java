@@ -16,7 +16,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.jboss.tools.smooks.analyzer.AbstractAnalyzer;
-import org.jboss.tools.smooks.analyzer.MappingModel;
+import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
 import org.jboss.tools.smooks.graphical.GraphInformations;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
@@ -203,7 +203,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		return null;
 	}
 
-	public List<MappingModel> analyzeMappingSmooksModel(
+	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType, Object sourceObject,
 			Object targetObject) {
 		// TODO Auto-generated method stub
