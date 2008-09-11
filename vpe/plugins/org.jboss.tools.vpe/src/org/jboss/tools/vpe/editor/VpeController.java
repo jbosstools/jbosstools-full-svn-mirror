@@ -247,7 +247,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	private IKeyEventHandler keyEventHandler;
 
 	public final static String MODEL_FLAVOR = ModelTransfer.MODEL;
-
+	//contains vpe update delau time in miliseconds
+	private int vpeUpdateDelayTime;
+	
 	public VpeController(VpeEditorPart editPart) {
 
 		this.editPart = editPart;
@@ -350,7 +352,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		
 		elReferenceListListener = ELReferenceList.getInstance();
 		elReferenceListListener.addChangeListener(this);
-
+		
+		//initialization of vpe update delay time
+		vpeUpdateDelayTime = 400;
 		// pageContext.fireTaglibsChanged();
 	}
 
@@ -542,10 +546,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				uiJob.setPriority(Job.LONG);
 				// Fix of JBIDE-1900
 				
-				uiJob.schedule(400L);
+				uiJob.schedule(getVpeUpdateDelayTime());
 			} else {
 				uiJob.cancel();
-				uiJob.schedule(400L);
+				uiJob.schedule(getVpeUpdateDelayTime());
+				setVpeUpdateDelayTime(400);
 			}
 
 			return;
@@ -1219,7 +1224,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		} finally {
 			switcher.stopActiveEditor();
 		}
-
+			setVpeUpdateDelayTime(0);
 			/*
 			 * adding calls of core event handlers, for example' CTR+H' or
 			 * 'CTRL+M' event handler dialog
@@ -3320,6 +3325,20 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	 */
 	public VpeVisualDomBuilder getVisualBuilder() {
 		return visualBuilder;
+	}
+
+	/**
+	 * @return the vpeUpdateDelayTime
+	 */
+	private int getVpeUpdateDelayTime() {
+		return vpeUpdateDelayTime;
+	}
+
+	/**
+	 * @param vpeUpdateDelayTime the vpeUpdateDelayTime to set
+	 */
+	private void setVpeUpdateDelayTime(int vpeUpdateDelayTime) {
+		this.vpeUpdateDelayTime = vpeUpdateDelayTime;
 	}
 	
 }
