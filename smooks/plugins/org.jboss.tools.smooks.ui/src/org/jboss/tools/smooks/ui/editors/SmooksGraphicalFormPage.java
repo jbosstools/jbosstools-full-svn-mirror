@@ -103,6 +103,7 @@ import org.jboss.tools.smooks.analyzer.ISourceModelAnalyzer;
 import org.jboss.tools.smooks.analyzer.ITargetModelAnalyzer;
 import org.jboss.tools.smooks.analyzer.MappingModel;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
+import org.jboss.tools.smooks.analyzer.ResourceConfigEraser;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
 import org.jboss.tools.smooks.analyzer.SmooksFileBuilder;
 import org.jboss.tools.smooks.graphical.GraphInformations;
@@ -208,28 +209,27 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		return this.getEditDomain().getCommandStack();
 	}
 
-	protected void pickUpNormalInformation() {
+	protected void cleanMappingResourceConfig() {
 		SmooksResourceListType list = null;
 		if (!smooksResource.getContents().isEmpty()) {
 			DocumentRoot doc = (DocumentRoot) this.smooksResource.getContents()
 					.get(0);
 			list = doc.getSmooksResourceList();
-			if (mappingResourceConfigList != null) {
-				List<ResourceConfigType> resourceConfigList = mappingResourceConfigList
-						.getRelationgResourceConfigList();
-				for (Iterator iterator = resourceConfigList.iterator(); iterator
-						.hasNext();) {
-					ResourceConfigType resourceConfigType = (ResourceConfigType) iterator
-							.next();
-					list.getAbstractResourceConfig().remove(resourceConfigType);
-				}
-			}
+			ResourceConfigEraser eraser = new ResourceConfigEraser();
+			eraser.cleanMappingResourceConfig(list, mappingResourceConfigList,
+					this.editingDomain);
 		} else {
 			DocumentRoot doc = SmooksFactory.eINSTANCE.createDocumentRoot();
 			smooksResource.getContents().add(doc);
 			list = SmooksFactory.eINSTANCE.createSmooksResourceListType();
 			doc.setSmooksResourceList(list);
 		}
+		callParentRefillNormalModelInfor();
+	}
+	
+	private void callParentRefillNormalModelInfor(){
+		SmooksFormEditor editor = (SmooksFormEditor)getEditor();
+		editor.refreshNormalPage();
 	}
 
 	// protected void notifyParentEditorTransformNormal
@@ -240,7 +240,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		try {
 			this.initTransformViewerModel((IEditorSite) getSite(),
 					getEditorInput());
-			pickUpNormalInformation();
+			cleanMappingResourceConfig();
 		} catch (IOWrappedException ex) {
 			MessageDialog.openWarning(getSite().getShell(), "Waring",
 					"Exceptions occurd during parsing Smooks file, no worries");
@@ -848,6 +848,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			initFormEditorWithGraphInfo(graph);
 		} catch (Throwable t) {
 			// ignore
+			t.printStackTrace();
 		}
 		IFile file = ((IFileEditorInput) input).getFile();
 		if (sourceDataTypeID == null || targetDataTypeID == null) {
@@ -880,9 +881,6 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	 */
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
-		// if (Registry.INSTANCE.get(GraphicalPackage.eNS_URI) == null) {
-		Registry.INSTANCE.put(GraphicalPackage.eNS_URI,
-				GraphicalPackage.eINSTANCE);
 		FormEditor parentEditor = this.getEditor();
 		if (parentEditor instanceof SmooksFormEditor) {
 			editingDomain = ((SmooksFormEditor) parentEditor)

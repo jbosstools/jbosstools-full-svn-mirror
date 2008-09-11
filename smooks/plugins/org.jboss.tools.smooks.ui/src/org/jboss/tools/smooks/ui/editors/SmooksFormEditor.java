@@ -36,6 +36,7 @@ import org.jboss.tools.smooks.analyzer.NormalSmooksModelBuilder;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
 import org.milyn.xsd.smooks.DocumentRoot;
 import org.milyn.xsd.smooks.provider.SmooksItemProviderAdapterFactory;
+import org.milyn.xsd.smooks.util.SmooksResourceFactoryImpl;
 
 /**
  * @author Dart Peng
@@ -70,11 +71,11 @@ public class SmooksFormEditor extends FormEditor implements
 	@Override
 	protected void addPages() {
 		graphicalPage = new SmooksGraphicalFormPage(this, "graph", "Mapping");
-		normalPage = new SmooksNormalContentEditFormPage(this, "normal",
-				"Normal Edition");
 		try {
 			int index = this.addPage(this.graphicalPage);
 			this.setPageText(index, "Graph");
+			normalPage = new SmooksNormalContentEditFormPage(this, "normal",
+					"Normal Edition",null);
 			index = this.addPage(normalPage);
 			setPageText(index, "Normal");
 		} catch (PartInitException e) {
@@ -96,8 +97,8 @@ public class SmooksFormEditor extends FormEditor implements
 		String path = ResourcesPlugin.getWorkspace().getRoot().getLocation()
 				.append(file.getFullPath()).toString();
 		if (this.getEditingDomain() != null && smooksResource == null) {
-			smooksResource = getEditingDomain().getResourceSet()
-					.createResource(URI.createFileURI(path));
+			smooksResource = new SmooksResourceFactoryImpl().createResource(URI
+					.createFileURI(path));
 			if (!smooksResource.isLoaded()) {
 				try {
 					smooksResource.load(Collections.EMPTY_MAP);
@@ -109,14 +110,22 @@ public class SmooksFormEditor extends FormEditor implements
 	}
 
 	public void refreshNormalPage() {
+		NormalSmooksModelPackage modelPackage = createSmooksModelPackage();
+		if (this.normalPage != null) {
+			normalPage.setModelPackage(modelPackage);
+		}
+	}
+
+	protected NormalSmooksModelPackage createSmooksModelPackage() {
 		NormalSmooksModelBuilder builder = NormalSmooksModelBuilder
 				.getInstance();
 		if (smooksResource.getContents().isEmpty())
-			return;
+			return null;
 		DocumentRoot document = (DocumentRoot) smooksResource.getContents()
 				.get(0);
 		NormalSmooksModelPackage modelPackage = builder
 				.buildNormalSmooksModelPackage(document.getSmooksResourceList());
+		return modelPackage;
 	}
 
 	@Override

@@ -10,9 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.editors;
 
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -24,7 +22,6 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
-import org.jboss.tools.smooks.ui.gef.util.GraphicsConstants;
 import org.jboss.tools.smooks.utils.UIUtils;
 
 /**
@@ -33,136 +30,43 @@ import org.jboss.tools.smooks.utils.UIUtils;
 public class SmooksNormalContentEditFormPage extends FormPage {
 
 	protected NormalSmooksModelPackage modelPackage = null;
-	
+
+	protected SmooksResourceConfigFormBlock resourceBlock = null;
+
 	public SmooksNormalContentEditFormPage(FormEditor editor, String id,
-			String title) {
+			String title, NormalSmooksModelPackage modelPacakge) {
 		super(editor, id, title);
+		this.setModelPackage(modelPacakge);
+		resourceBlock = new SmooksResourceConfigFormBlock();
 	}
 
-	public SmooksNormalContentEditFormPage(String id, String title) {
+	public SmooksNormalContentEditFormPage(String id, String title,
+			NormalSmooksModelPackage modelPacakge) {
 		super(id, title);
+		this.setModelPackage(modelPackage);
+		resourceBlock = new SmooksResourceConfigFormBlock();
 	}
-	
+
 	@Override
 	protected void createFormContent(IManagedForm managedForm) {
 		final ScrolledForm form = managedForm.getForm();
 		FormToolkit tool = managedForm.getToolkit();
 		tool.decorateFormHeading(form.getForm());
-		GridLayout gridLayout = UIUtils.createGeneralFormEditorLayout(2);
-		form.getBody().setLayout(gridLayout);
+		GridLayout gridLayout = UIUtils.createGeneralFormEditorLayout(1);
+		resourceBlock.createContent(managedForm);
 		Composite rootMainControl = form.getBody();
 		form.setText("Normal Page");
-		createResourceConfigGUI(rootMainControl, tool);
 		createSmooksTypeGUI(rootMainControl, tool);
-		createDataTypeGUI(rootMainControl, tool);
-	}
-
-	protected void createDataTypeGUI(Composite rootMainControl, FormToolkit tool) {
-		Section section = tool.createSection(rootMainControl, Section.TITLE_BAR
-				| Section.DESCRIPTION);
-		section.setText("Data Type");
-
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		section.setLayoutData(gd);
-		Composite dataTypeComposite = tool.createComposite(section);
-		section.setClient(dataTypeComposite);
-		GridLayout layout = new GridLayout();
-		layout.numColumns = 2;
-		layout.marginHeight = 0;
-		layout.marginWidth = 0;
-		dataTypeComposite.setLayout(layout);
-
-		Composite tableComposite = tool
-				.createComposite(dataTypeComposite);
-		FillLayout fillLayout = new FillLayout();
-		fillLayout.marginHeight = 1;
-		fillLayout.marginWidth = 1;
-		tableComposite.setLayout(fillLayout);
-		TableViewer tableTreeViewer = new TableViewer(tableComposite, SWT.NONE);
-		gd = new GridData(GridData.FILL_BOTH);
-		tableComposite.setLayoutData(gd);
-		tableComposite.setBackground(GraphicsConstants.groupBorderColor);
-		tool.paintBordersFor(tableComposite);
-
-		Composite buttonComposite = tool
-				.createComposite(dataTypeComposite);
-		gd = new GridData(GridData.FILL_VERTICAL);
-		buttonComposite.setLayoutData(gd);
-
-		GridLayout buttonLayout = new GridLayout();
-		buttonComposite.setLayout(buttonLayout);
-
-		Button addButton = tool.createButton(buttonComposite, "New", SWT.NONE);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		addButton.setLayoutData(gd);
-		Button removeButton = tool.createButton(buttonComposite, "Delete",
-				SWT.NONE);
-		removeButton.setLayoutData(gd);
-
-		Button upButton = tool.createButton(buttonComposite, "Up", SWT.NONE);
-		upButton.setLayoutData(gd);
-
-		Button downButton = tool
-				.createButton(buttonComposite, "Down", SWT.NONE);
-		downButton.setLayoutData(gd);
-	}
-
-	protected void createResourceConfigGUI(Composite rootMainControl,
-			FormToolkit tool) {
-		Section section = tool
-				.createSection(rootMainControl, Section.TITLE_BAR);
-		section.setText("Resource Config");
-
-		GridData gd = new GridData(GridData.FILL_BOTH);
-		gd.verticalSpan = 2;
-		section.setLayoutData(gd);
-		Composite resourceConfigComposite = tool.createComposite(section);
-		section.setClient(resourceConfigComposite);
-		GridLayout layout = new GridLayout();
-		layout.numColumns = 2;
-		layout.marginHeight = 0;
-		layout.marginWidth = 0;
-		resourceConfigComposite.setLayout(layout);
-
-		Composite tableComposite = tool
-				.createComposite(resourceConfigComposite);
-		FillLayout fillLayout = new FillLayout();
-		fillLayout.marginHeight = 1;
-		fillLayout.marginWidth = 1;
-		tableComposite.setLayout(fillLayout);
-		TableViewer tableTreeViewer = new TableViewer(tableComposite, SWT.NONE);
-		gd = new GridData(GridData.FILL_BOTH);
-		tableComposite.setLayoutData(gd);
-		tableComposite.setBackground(GraphicsConstants.groupBorderColor);
-		tool.paintBordersFor(tableComposite);
-
-		Composite buttonComposite = tool
-				.createComposite(resourceConfigComposite);
-		gd = new GridData(GridData.FILL_VERTICAL);
-		buttonComposite.setLayoutData(gd);
-
-		GridLayout buttonLayout = new GridLayout();
-		buttonComposite.setLayout(buttonLayout);
-
-		Button addButton = tool.createButton(buttonComposite, "New", SWT.NONE);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		addButton.setLayoutData(gd);
-		Button removeButton = tool.createButton(buttonComposite, "Delete",
-				SWT.NONE);
-		removeButton.setLayoutData(gd);
-
-		Button upButton = tool.createButton(buttonComposite, "Up", SWT.NONE);
-		upButton.setLayoutData(gd);
-
-		Button downButton = tool
-				.createButton(buttonComposite, "Down", SWT.NONE);
-		downButton.setLayoutData(gd);
-
+		form.getBody().setLayout(gridLayout);
+		form.pack();
+		
+		resourceBlock.initViewers();
 	}
 
 	protected void createSmooksTypeGUI(Composite mainComposite, FormToolkit tool) {
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		Section section = tool.createSection(mainComposite, Section.TITLE_BAR);
+		Section section = tool.createSection(mainComposite, Section.TITLE_BAR
+				| Section.DESCRIPTION | Section.TWISTIE);
 		section.setLayoutData(gd);
 		Composite typeSelectComposite = tool.createComposite(section);
 		section.setClient(typeSelectComposite);
@@ -198,11 +102,14 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 	}
 
 	/**
-	 * @param modelPackage the modelPackage to set
+	 * @param modelPackage
+	 *            the modelPackage to set
 	 */
 	public void setModelPackage(NormalSmooksModelPackage modelPackage) {
-		if(modelPackage == this.modelPackage) return;
+		if (modelPackage == this.modelPackage)
+			return;
 		this.modelPackage = modelPackage;
+		this.resourceBlock.setModelPackage(this.modelPackage);
 	}
 
 }

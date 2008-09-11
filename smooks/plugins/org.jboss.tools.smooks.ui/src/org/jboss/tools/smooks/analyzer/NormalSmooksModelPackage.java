@@ -25,10 +25,6 @@ public class NormalSmooksModelPackage {
 	private List<ResourceConfigType> beanPopulatorResourceConfigList = new ArrayList<ResourceConfigType>();
 
 	private ResourceConfigType smooksTransformTypeResourceConfig;
-	
-	public static final String RESOURCE_CLASS_BEAN_POPULATOR = "";
-	
-	public static final String RESOURCE_CLASS_DATE_POPULATOR = "";
 
 	/**
 	 * @return the dateResourceConfigList
