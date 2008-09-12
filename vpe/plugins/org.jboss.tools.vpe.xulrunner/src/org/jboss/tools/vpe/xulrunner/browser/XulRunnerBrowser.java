@@ -186,7 +186,8 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 			GREVersionRange[] greRanges = {new GREVersionRange(XULRUNNER_LOWER_VERSION, true, XULRUNNER_HIGHER_VERSION, true)};
 			File xulRunnerFile  = null;
 
-			try {
+			// JBIDE-1222 begin
+			/*try {
 				if(!XULRUNNER_LOADING_INDICATOR) {
 					
 					XULRUNNER_LOADING_INDICATOR=true;
@@ -198,7 +199,8 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 				}
 			} catch (FileNotFoundException fnfe) {
 				// Ignre this exception. Will try to get XULRunner from plugin
-			} 
+			}*/ 
+			// JBIDE-1222 end
 			
 			if (xulRunnerFile == null
 					|| !xulRunnerFile.exists()) {
