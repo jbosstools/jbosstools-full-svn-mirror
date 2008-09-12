@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: XULRunner Initializer
+Bundle-SymbolicName: org.jboss.tools.xulrunner.initializer
+Bundle-Version: 1.0.0
+Bundle-Vendor: Red Hat, Inc.
+Fragment-Host: org.eclipse.swt
+Require-Bundle: org.eclipse.core.runtime
