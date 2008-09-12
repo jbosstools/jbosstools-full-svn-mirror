@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.editors;
 
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -37,14 +38,24 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 			String title, NormalSmooksModelPackage modelPacakge) {
 		super(editor, id, title);
 		this.setModelPackage(modelPacakge);
-		resourceBlock = new SmooksResourceConfigFormBlock();
+		this.createResourceConfigFormBlock();
 	}
 
 	public SmooksNormalContentEditFormPage(String id, String title,
 			NormalSmooksModelPackage modelPacakge) {
 		super(id, title);
 		this.setModelPackage(modelPackage);
+		this.createResourceConfigFormBlock();
+	}
+	
+	protected void createResourceConfigFormBlock(){
 		resourceBlock = new SmooksResourceConfigFormBlock();
+		resourceBlock.setDomain(getEditingDomain());
+		resourceBlock.setParentEditor((SmooksFormEditor)this.getEditor());
+	}
+	
+	protected EditingDomain getEditingDomain(){
+		return ((SmooksFormEditor)getEditor()).getEditingDomain();
 	}
 
 	@Override

@@ -10,7 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.editors;
 
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.IDetailsPage;
@@ -18,96 +20,186 @@ import org.eclipse.ui.forms.IFormPart;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.milyn.xsd.smooks.ResourceConfigType;
 
 /**
  * @author Dart Peng<br>
- * Date : Sep 11, 2008
+ *         Date : Sep 11, 2008
  */
 public abstract class AbstractSmooksModelDetailPage implements IDetailsPage {
-	IFormPart formPart; 
+	IFormPart formPart;
+
 	ISelection selection;
+
 	FormToolkit formToolKit = null;
-	
-	/* (non-Javadoc)
+
+	protected ResourceConfigType oldResourceConfigList;
+
+	protected ResourceConfigType resourceConfigList;
+
+	EditingDomain domain;
+	SmooksFormEditor parentEditor;
+
+	public AbstractSmooksModelDetailPage(SmooksFormEditor parentEditor,
+			EditingDomain domain) {
+		this.domain = domain;
+		this.parentEditor = parentEditor;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.forms.IDetailsPage#createContents(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createContents(Composite parent) {
 		parent.setLayout(new FillLayout());
-		Section section = formToolKit.createSection(parent, Section.DESCRIPTION|Section.TITLE_BAR);
+		Section section = formToolKit.createSection(parent, Section.DESCRIPTION
+				| Section.TITLE_BAR);
 		section.setText("Details Information");
-		
+
 		Composite client = formToolKit.createComposite(section);
 		section.setLayout(new FillLayout());
-		
+
 		section.setClient(client);
+
+		createSectionContents(client);
+
 	}
-	
+
 	abstract protected void createSectionContents(Composite parent);
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.forms.IFormPart#commit(boolean)
 	 */
 	public void commit(boolean onSave) {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.forms.IFormPart#dispose()
 	 */
 	public void dispose() {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.forms.IFormPart#initialize(org.eclipse.ui.forms.IManagedForm)
 	 */
 	public void initialize(IManagedForm form) {
-		if(form != null){
+		if (form != null) {
 			formToolKit = form.getToolkit();
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.forms.IFormPart#isDirty()
 	 */
 	public boolean isDirty() {
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.forms.IFormPart#isStale()
 	 */
 	public boolean isStale() {
+		if (oldResourceConfigList != resourceConfigList) {
+			oldResourceConfigList = resourceConfigList;
+			return true;
+		}
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.forms.IFormPart#refresh()
 	 */
 	public void refresh() {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.forms.IFormPart#setFocus()
 	 */
 	public void setFocus() {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.forms.IFormPart#setFormInput(java.lang.Object)
 	 */
 	public boolean setFormInput(Object input) {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.forms.IPartSelectionListener#selectionChanged(org.eclipse.ui.forms.IFormPart, org.eclipse.jface.viewers.ISelection)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.forms.IPartSelectionListener#selectionChanged(org.eclipse.ui.forms.IFormPart,
+	 *      org.eclipse.jface.viewers.ISelection)
 	 */
 	public void selectionChanged(IFormPart part, ISelection selection) {
 		this.selection = selection;
 		formPart = part;
+		if (selection != null && selection instanceof IStructuredSelection) {
+			resourceConfigList = (ResourceConfigType) ((IStructuredSelection) selection)
+					.getFirstElement();
+			refresh();
+		}
+	}
+
+	protected IFormPart getFormPart() {
+		return formPart;
+	}
+
+	protected void setFormPart(IFormPart formPart) {
+		this.formPart = formPart;
+	}
+
+	protected ISelection getSelection() {
+		return selection;
+	}
+
+	protected void setSelection(ISelection selection) {
+		this.selection = selection;
+	}
+
+	protected FormToolkit getFormToolKit() {
+		return formToolKit;
+	}
+
+	protected void setFormToolKit(FormToolkit formToolKit) {
+		this.formToolKit = formToolKit;
+	}
+
+	protected ResourceConfigType getResourceConfigList() {
+		return resourceConfigList;
+	}
+
+	protected void setResourceConfigList(ResourceConfigType resourceConfigList) {
+		this.resourceConfigList = resourceConfigList;
+	}
+
+	protected EditingDomain getDomain() {
+		return domain;
+	}
+
+	protected void setDomain(EditingDomain domain) {
+		this.domain = domain;
 	}
 
 }
