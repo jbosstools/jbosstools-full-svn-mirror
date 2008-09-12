@@ -94,8 +94,7 @@ public class SmooksFormEditor extends FormEditor implements
 			throws PartInitException {
 		super.init(site, input);
 		IFile file = ((IFileEditorInput) input).getFile();
-		String path = ResourcesPlugin.getWorkspace().getRoot().getLocation()
-				.append(file.getFullPath()).toString();
+		String path =file.getLocation().toOSString();
 		if (this.getEditingDomain() != null && smooksResource == null) {
 			smooksResource = new SmooksResourceFactoryImpl().createResource(URI
 					.createFileURI(path));

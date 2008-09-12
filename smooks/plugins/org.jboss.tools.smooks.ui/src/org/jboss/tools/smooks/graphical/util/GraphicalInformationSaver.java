@@ -64,10 +64,9 @@ public class GraphicalInformationSaver {
 							e.printStackTrace();
 						}
 					}
-					IPath  rootPath = ResourcesPlugin.getWorkspace().getRoot().getLocation();
-					String path = rootPath.append(gfile.getFullPath()).toString();
+					String osString = gfile.getLocation().toOSString();
 					graphicalFileResource = new XMLResourceFactoryImpl()
-							.createResource(URI.createFileURI(path));
+							.createResource(URI.createFileURI(osString));
 				}
 			}
 		}

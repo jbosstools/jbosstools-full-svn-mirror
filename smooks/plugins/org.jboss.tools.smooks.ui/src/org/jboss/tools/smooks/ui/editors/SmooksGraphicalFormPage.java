@@ -614,6 +614,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	@Override
 	public void doSave(IProgressMonitor monitor) {
 		SmooksFileBuilder builder = this.getSmooksFileBuilder();
+		builder.setSmooksResource(this.smooksResource);
 		SmooksConfigurationFileGenerateContext context = this
 				.getSmooksConfigurationFileGenerateContext();
 		this.initSmooksConfigurationFileGenerateContext(context);
