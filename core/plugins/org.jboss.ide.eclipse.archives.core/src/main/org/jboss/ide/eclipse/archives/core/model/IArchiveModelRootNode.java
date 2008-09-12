@@ -21,6 +21,7 @@
  */
 package org.jboss.ide.eclipse.archives.core.model;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XbPackages;
 import org.jboss.ide.eclipse.archives.core.model.internal.xb.XMLBinding.XbException;
@@ -42,4 +43,5 @@ public interface IArchiveModelRootNode extends IArchiveNode {
 	public void save(IProgressMonitor monitor) throws ArchivesModelException;
 	public double getDescriptorVersion();
 	public void setDescriptorVersion(double d);	
+	public IPath getDescriptor();
 }
