@@ -591,6 +591,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			if (ar instanceof ResourceConfigType) {
 				ResourceConfigType rc = (ResourceConfigType) ar;
 				ResourceType resourceType = rc.getResource();
+				if(resourceType == null) continue;
 				String resource = resourceType.getValue();
 				if (BEANPOPULATOR.equals(resource)) {
 					// create root beanmodel
