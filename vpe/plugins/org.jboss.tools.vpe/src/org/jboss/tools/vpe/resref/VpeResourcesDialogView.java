@@ -61,7 +61,6 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 		layout.marginWidth = 5;
 		layout.marginHeight = 0;
 		c.setLayout(layout);
-		c.setBackground(new Color(c.getDisplay(),0,0,0));
 		Control absControl = absFolder.createControl(c);
 		Control relControl = relFolder.createControl(c);
 		Control cssControl = css.createControl(c);
