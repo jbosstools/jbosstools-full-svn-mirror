@@ -13,6 +13,7 @@ package org.jboss.tools.smooks.ui.editors;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -41,6 +42,18 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock {
 	TreeViewer dateTypeViewer;
 
 	NormalSmooksModelPackage modelPackage = null;
+	
+	SmooksFormEditor parentEditor;
+	
+	protected EditingDomain domain;
+
+	public EditingDomain getDomain() {
+		return domain;
+	}
+
+	public void setDomain(EditingDomain domain) {
+		this.domain = domain;
+	}
 
 	public NormalSmooksModelPackage getModelPackage() {
 		return modelPackage;
@@ -81,7 +94,7 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock {
 	@Override
 	protected void registerPages(DetailsPart detailsPart) {
 		detailsPart.registerPage(ResourceConfigTypeImpl.class,
-				new BeanPopulatorDetailPage());
+				new BeanPopulatorDetailPage(getParentEditor(),getDomain()));
 	}
 
 	protected void configDateTypeViewer() {
@@ -160,6 +173,14 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock {
 		Button downButton = tool
 				.createButton(buttonComposite, "Down", SWT.NONE);
 		downButton.setLayoutData(gd);
+	}
+
+	protected SmooksFormEditor getParentEditor() {
+		return parentEditor;
+	}
+
+	public void setParentEditor(SmooksFormEditor parentEditor) {
+		this.parentEditor = parentEditor;
 	}
 
 }
