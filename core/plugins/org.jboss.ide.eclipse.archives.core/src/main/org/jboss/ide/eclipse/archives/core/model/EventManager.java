@@ -198,6 +198,7 @@ public class EventManager {
 	}
 
 	protected static void logError(Exception e) {
+		e.printStackTrace();
 		try {
 			StackTraceElement[] trace = Thread.currentThread().getStackTrace();
 			ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_WARN, "Archives Listener error in " + trace[1].getMethodName(), e);

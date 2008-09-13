@@ -280,7 +280,7 @@ public abstract class ArchiveNodeImpl implements IArchiveNode {
 		childChanges(child, IArchiveNodeDelta.CHILD_ADDED);
 		if( !validateModel()) {
 			removeChild(child);
-			throw new ArchivesModelException("Unable to add child node");
+			throw new ArchivesModelException("Unable to add child node: " + child.toString());
 		}
 	}
 

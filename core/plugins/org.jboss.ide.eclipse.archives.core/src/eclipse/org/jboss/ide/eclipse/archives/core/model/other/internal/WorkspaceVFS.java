@@ -12,6 +12,7 @@ import org.eclipse.core.variables.IDynamicVariableResolver;
 import org.eclipse.core.variables.VariablesPlugin;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.model.IArchivesVFS;
+import org.jboss.ide.eclipse.archives.core.model.IVariableManager;
 
 public class WorkspaceVFS implements IArchivesVFS, IDynamicVariableResolver {
 	public WorkspaceVFS() {
@@ -75,7 +76,7 @@ public class WorkspaceVFS implements IArchivesVFS, IDynamicVariableResolver {
 	public String resolveValue(IDynamicVariable variable, String argument)
 			throws CoreException {
 		if( this == ArchivesCore.getInstance().getVFS()) {
-			if( variable.getName().equals("archives_current_project"))
+			if( variable.getName().equals(IVariableManager.CURRENT_PROJECT))
 				return currentProject;
 		} else {
 			return ((WorkspaceVFS)ArchivesCore.getInstance().getVFS()).resolveValue(variable, argument);

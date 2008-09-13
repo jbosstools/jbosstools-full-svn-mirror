@@ -29,5 +29,4 @@ public interface IVariableManager {
 	public static final String CURRENT_PROJECT = "archives_current_project";
 	public boolean containsVariable(String variable);
 	public String getVariableValue(String variable);
-	public String[] getVariableNames();
 }

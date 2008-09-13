@@ -36,6 +36,7 @@ import org.jboss.ide.eclipse.archives.core.model.IArchiveFileSet;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveFolder;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveModelRootNode;
 import org.jboss.ide.eclipse.archives.core.model.IArchiveNode;
+import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory.DirectoryScannerExtension.FileWrapper;
 import org.jboss.ide.eclipse.archives.core.util.ModelUtil;
 import org.jboss.ide.eclipse.archives.core.util.PathUtils;
@@ -81,7 +82,7 @@ public class ArchiveBuildDelegate {
 	 */
 	public void fullArchiveBuild(IArchive pkg) {
 		if( !pkg.canBuild() ) {
-			ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, 
+			ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_ERR,  
 					"Cannot Build archive \"" + pkg.getName() + 
 					"\" due to a problem in the archive's configuration.", null);
 			return;
@@ -94,7 +95,7 @@ public class ArchiveBuildDelegate {
 		IPath dest = PathUtils.getGlobalLocation(pkg);
 		if( dest != null && !dest.toFile().exists() ) {
 			if( !dest.toFile().mkdirs() ) {
-				ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, 
+				ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_ERR, 
 						"Cannot Build archive \"" + pkg.getName() + 
 						"\". Output location " + dest + 
 						" is not writeable", null);

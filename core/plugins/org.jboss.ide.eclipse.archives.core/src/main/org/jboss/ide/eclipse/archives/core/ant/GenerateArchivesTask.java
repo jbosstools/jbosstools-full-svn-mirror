@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.Path;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
 import org.jboss.ide.eclipse.archives.core.model.ArchivesModel;
+import org.jboss.ide.eclipse.archives.core.model.IArchivesLogger;
 
 /**
  * @author rob.stryker <rob.stryker@redhat.com>
@@ -43,18 +44,22 @@ public class GenerateArchivesTask extends Task {
 	
 	public void init() throws BuildException {
 		// Force standalone mode
-		ArchivesCore standalone = new AntArchivesCore();
+		AntArchivesCore standalone = new AntArchivesCore();
 		ArchivesCore.setInstance(standalone);
 	}
 	
+	protected AntArchivesCore getCore() {
+		return (AntArchivesCore)ArchivesCore.getInstance();
+	}
 	public void execute() throws BuildException {
+		getCore().setProject(getProject());
+		getCore().setTask(this);
 		ClassLoader original = Thread.currentThread().getContextClassLoader();
 		try {
 			IPath projectPath = new Path(this.projectPath);
 			IProgressMonitor monitor = new NullProgressMonitor();
 			
-			for (Iterator iter = getProject().getProperties().keySet().iterator(); iter.hasNext(); )
-			{
+			for (Iterator iter = getProject().getProperties().keySet().iterator(); iter.hasNext(); ) {
 				String property = (String) iter.next();
 				if (property.endsWith(".dir")) {
 					System.setProperty(property, getProject().getProperty(property));
@@ -64,15 +69,19 @@ public class GenerateArchivesTask extends Task {
 			// needed so the correct XML binding / TrueZIP jars are loaded
 			ClassLoader myCL = getClass().getClassLoader();
 			Thread.currentThread().setContextClassLoader(myCL);
-			
-			ArchivesModel.instance().registerProject(projectPath, monitor);
-			new ArchiveBuildDelegate().fullProjectBuild(projectPath);
+			if( ArchivesModel.instance().canReregister(projectPath)) {
+				ArchivesModel.instance().registerProject(projectPath, monitor);
+				new ArchiveBuildDelegate().fullProjectBuild(projectPath);
+			} else {
+				getCore().getLogger().log(IArchivesLogger.MSG_ERR, "Project \"" + projectPath + "\" does not exist or has no .packages file. Skipping.", null);
+			}
 		} catch(RuntimeException e ) {
-			e.printStackTrace();
-			throw e;
+			getCore().getLogger().log(IArchivesLogger.MSG_ERR, "A runtime error has occurred during build.", e);
 		}
 		finally {
 			Thread.currentThread().setContextClassLoader(original);
+			getCore().setProject(null);
+			getCore().setTask(null);
 		}
 	}
 

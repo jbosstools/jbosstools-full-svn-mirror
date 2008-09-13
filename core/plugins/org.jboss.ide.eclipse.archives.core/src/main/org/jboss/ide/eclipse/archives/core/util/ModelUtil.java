@@ -227,7 +227,7 @@ public class ModelUtil {
 					else 
 						modelNode.addChild(childImpl);
 				} catch( ArchivesModelException ame ) {
-					ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_WARN, "Error Adding Child", ame);
+					ArchivesCore.getInstance().getLogger().log(IArchivesLogger.MSG_ERR, ame.getMessage(), ame);
 				}
 			}
 		}
