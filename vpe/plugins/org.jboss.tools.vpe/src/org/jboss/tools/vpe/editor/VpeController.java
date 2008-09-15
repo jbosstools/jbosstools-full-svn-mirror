@@ -1722,15 +1722,17 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			visualEditor.reload();
 
 		} else {
-
+		    //Fix bugs JBIDE-2750
 			visualBuilder.setSelectionRectangle(null);
-			IDOMModel sourceModel = (IDOMModel) getModel();
-			if (sourceModel != null) {
-				IDOMDocument sourceDocument = sourceModel.getDocument();
-				visualBuilder.rebuildDom(sourceDocument);
-			} else {
-				visualBuilder.rebuildDom(null);
-			}
+			visualEditor.reload();
+//			IDOMModel sourceModel = (IDOMModel) getModel();
+//			if (sourceModel != null) {
+//				IDOMDocument sourceDocument = sourceModel.getDocument();
+//				visualBuilder.rebuildDom(sourceDocument);
+//			} else {
+//				visualBuilder.rebuildDom(null);
+//			}
+		
 		}
 	}
 
