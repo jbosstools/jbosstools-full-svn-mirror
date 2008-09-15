@@ -35,6 +35,14 @@
    <holder>JBoss, a division of Red Hat Inc.</holder>
   </copyright>
   <releaseinfo>Version: 1.1.0.GA</releaseinfo>
+
+<abstract>
+   <title/>
+       <para>
+           <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/GettingStartedGuide/pdf/Getting_Started_Guide.pdf">PDF version</ulink>
+       </para>
+</abstract>
+
  </bookinfo>
  <toc/> 
  
