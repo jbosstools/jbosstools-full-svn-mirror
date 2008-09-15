@@ -31,7 +31,7 @@
             label="Archives"
             visible="true">
          <action
-               class="org.jboss.ide.eclipse.archives.ui.actions.BuildProjectAction"
+               class="org.jboss.ide.eclipse.archives.ui.actions.BuildAction"
                definitionId="org.jboss.ide.eclipse.packages.ui.actions.BuildArchivesAction"
                icon="icons/build_packages.gif"
                id="org.jboss.ide.eclipse.archives.ui.actions.BuildArchivesAction"

@@ -3,10 +3,6 @@ package org.jboss.ide.eclipse.archives.ui.providers;
 import java.util.Arrays;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
@@ -25,7 +21,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.navigator.CommonActionProvider;
 import org.eclipse.ui.navigator.ICommonActionExtensionSite;
 import org.eclipse.ui.navigator.ICommonViewerSite;
-import org.jboss.ide.eclipse.archives.core.build.ArchiveBuildDelegate;
 import org.jboss.ide.eclipse.archives.core.build.SaveArchivesJob;
 import org.jboss.ide.eclipse.archives.core.model.ArchiveNodeFactory;
 import org.jboss.ide.eclipse.archives.core.model.IArchive;
@@ -36,6 +31,7 @@ import org.jboss.ide.eclipse.archives.ui.ArchivesSharedImages;
 import org.jboss.ide.eclipse.archives.ui.ArchivesUIMessages;
 import org.jboss.ide.eclipse.archives.ui.ExtensionManager;
 import org.jboss.ide.eclipse.archives.ui.NodeContribution;
+import org.jboss.ide.eclipse.archives.ui.actions.BuildAction;
 import org.jboss.ide.eclipse.archives.ui.actions.NewArchiveAction;
 import org.jboss.ide.eclipse.archives.ui.providers.ArchivesContentProviderDelegate.WrappedProject;
 import org.jboss.ide.eclipse.archives.ui.views.ProjectArchivesCommonView;
@@ -144,7 +140,7 @@ public class ArchivesActionProvider extends CommonActionProvider {
 		
 		buildAction = new Action("", ArchivesSharedImages.getImageDescriptor(ArchivesSharedImages.IMG_BUILD_PACKAGES)) {
 			public void run() {
-				buildSelectedNode(getSelectedObject());
+				new BuildAction().run(getSelectedObject());
 			}
 		};
 	}
@@ -307,23 +303,6 @@ public class ArchivesActionProvider extends CommonActionProvider {
 				}
 			} 
 		}
-	}
-	
-	private void buildSelectedNode(final Object selected) {
-		new Job("Build Archive Node") {
-			protected IStatus run(IProgressMonitor monitor) {
-				if( selected == null ) return Status.OK_STATUS;
-				if (selected instanceof IArchiveNode &&  
-						((IArchiveNode)selected).getNodeType() == IArchiveNode.TYPE_ARCHIVE) {
-					new ArchiveBuildDelegate().fullArchiveBuild((IArchive)selected);
-				} else if( selected != null && selected instanceof IProject ){
-					new ArchiveBuildDelegate().fullProjectBuild(((IProject)selected).getProject().getLocation());
-				} else {
-					new ArchiveBuildDelegate().fullArchiveBuild(((IArchiveNode)selected).getRootArchive());
-				}
-				return Status.OK_STATUS;
-			}
-		}.schedule();
 	}
 	
 	private void deleteSelectedNode () {
