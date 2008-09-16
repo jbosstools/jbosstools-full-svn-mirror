@@ -104,7 +104,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	}
 
 	public void analyzeGraphicalModel(AbstractStructuredDataModel root,
-			SmooksResourceListType resouceList) {
+			List resouceList) {
 
 		List children = root.getChildren();
 		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
@@ -151,7 +151,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	 * @param beanId
 	 */
 	protected void analyzeStructuredDataModel(
-			SmooksResourceListType resourceList,
+			List resourceList,
 			AbstractStructuredDataModel root,
 			AbstractStructuredDataModel dataModel,
 			ResourceConfigType parentResourceConfigType, String beanId) {
@@ -186,15 +186,15 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 					ResourceConfigType resourceConfig = SmooksFactory.eINSTANCE
 							.createResourceConfigType();
-
-					Command addResourceConfigCommand = AddCommand
-							.create(
-									editingDomain,
-									resourceList,
-									SmooksPackage.eINSTANCE
-											.getSmooksResourceListType_AbstractResourceConfig(),
-									resourceConfig);
-					addResourceConfigCommand.execute();
+					resourceList.add(resourceConfig);
+//					Command addResourceConfigCommand = AddCommand
+//							.create(
+//									editingDomain,
+//									resourceList,
+//									SmooksPackage.eINSTANCE
+//											.getSmooksResourceListType_AbstractResourceConfig(),
+//									resourceConfig);
+//					addResourceConfigCommand.execute();
 					// resouceConfig.
 					resourceConfig
 							.setSelector(getSourceBeanSelectorString((AbstractStructuredDataModel) source));
@@ -356,7 +356,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			throws SmooksAnalyzerException {
 		GraphRootModel root = context.getDataMappingRootModel();
 		SmooksResourceListType listType = context.getSmooksResourceListModel();
-		this.analyzeGraphicalModel(root, listType);
+		this.analyzeGraphicalModel(root, context.getGeneratorResourceList());
 	}
 
 	public MappingResourceConfigList analyzeMappingSmooksModel(
