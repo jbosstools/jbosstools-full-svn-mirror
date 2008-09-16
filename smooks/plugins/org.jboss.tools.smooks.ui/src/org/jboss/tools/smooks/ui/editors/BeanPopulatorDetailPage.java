@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.editors;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -21,6 +23,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import org.milyn.xsd.smooks.SmooksPackage;
 import org.milyn.xsd.smooks.util.SmooksModelUtils;
 
 /**
@@ -75,7 +78,7 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 		gd.grabExcessHorizontalSpace = true;
 		beanClassComposite.setLayoutData(gd);
 		formToolKit.paintBordersFor(beanClassComposite);
-		
+
 		this.formToolKit.createLabel(parent, "Bean ID : ");
 		Composite beanIDComposite = formToolKit.createComposite(parent);
 		GridLayout bilg = new GridLayout();
@@ -107,8 +110,6 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 	protected void clazzBrowseButtonSelected() {
 
 	}
-	
-	
 
 	@Override
 	public boolean isStale() {
@@ -159,23 +160,27 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 	}
 
 	private void configControls() {
-	
+
 		if (resourceConfigList != null) {
 			String selector = "";
 			selector = resourceConfigList.getSelector();
 			if (selector == null)
 				selector = "";
 			selectorText.setText(selector);
-			
-			String beanClass = SmooksModelUtils.getParmaText("beanClass", resourceConfigList);
-			if(beanClass == null) beanClass = "";
-			String beanId = SmooksModelUtils.getParmaText("beanId", resourceConfigList);
-			if(beanId == null) beanId = "";
-			
+
+			String beanClass = SmooksModelUtils.getParmaText("beanClass",
+					resourceConfigList);
+			if (beanClass == null)
+				beanClass = "";
+			String beanId = SmooksModelUtils.getParmaText("beanId",
+					resourceConfigList);
+			if (beanId == null)
+				beanId = "";
+
 			beanClassText.setText(beanClass);
 			beanIDText.setText(beanId);
 		}
-	
+
 	}
 
 	protected void beanIDChanged() {
@@ -187,7 +192,15 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 	}
 
 	protected void selectorChanged() {
-
+		String selector = selectorText.getText();
+		if (selector != null) {
+			Command command = SetCommand.create(this.getDomain(), resourceConfigList,
+					SmooksPackage.eINSTANCE.getResourceConfigType_Selector(),
+					selector);
+			getDomain().getCommandStack().execute(command);
+		}
+		// resourceConfigList.getResource()
+		// this.getDomain().
 	}
 
 }

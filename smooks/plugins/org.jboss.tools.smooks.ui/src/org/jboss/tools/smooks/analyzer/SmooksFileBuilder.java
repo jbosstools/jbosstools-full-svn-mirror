@@ -4,19 +4,38 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.RemoveCommand;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.milyn.xsd.smooks.DocumentRoot;
 import org.milyn.xsd.smooks.SmooksFactory;
+import org.milyn.xsd.smooks.SmooksPackage;
 import org.milyn.xsd.smooks.SmooksResourceListType;
-import org.milyn.xsd.smooks.util.SmooksResourceFactoryImpl;
+import org.milyn.xsd.smooks.provider.SmooksItemProviderAdapterFactory;
 
 public class SmooksFileBuilder {
 	Resource smooksResource;
+	EditingDomain domain;
+
+	public SmooksFileBuilder(EditingDomain domain) {
+		this.domain = domain;
+	}
 
 	public Resource getSmooksResource() {
 		return smooksResource;
@@ -41,30 +60,72 @@ public class SmooksFileBuilder {
 							+ " and the targetID : "
 							+ context.getTargetDataTypeID());
 		}
-		if(smooksResource == null) {
+		if (smooksResource == null) {
 			throw new SmooksAnalyzerException("SmooksResource is NULL");
 		}
-		DocumentRoot documentRoot = (DocumentRoot)smooksResource.getContents().get(0);
-		if(documentRoot == null){
+		DocumentRoot documentRoot = (DocumentRoot) smooksResource.getContents()
+				.get(0);
+		if (documentRoot == null) {
 			documentRoot = SmooksFactory.eINSTANCE.createDocumentRoot();
 			smooksResource.getContents().add(documentRoot);
 		}
-		
+
 		SmooksResourceListType listType = documentRoot.getSmooksResourceList();
-		if(listType == null){
+		if (listType == null) {
 			listType = SmooksFactory.eINSTANCE.createSmooksResourceListType();
 			documentRoot.setSmooksResourceList(listType);
 		}
 
 		// init the smooksresourcelist
 		initSmooksParseStyle(context, listType);
-
+		context.setGeneratorResourceList(new ArrayList());
 		context.setSmooksResourceListModel(listType);
+		context.setDomain(domain);
+
 		analyzer.analyzeMappingGraphModel(context);
+
+		insertResoureConfig(listType, context.getGeneratorResourceList());
+
+		List test = listType.getAbstractResourceConfig();
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		smooksResource.save(outputStream, Collections.EMPTY_MAP);
 		return new ByteArrayInputStream(outputStream.toByteArray());
+	}
+
+	private EditingDomain createEditingDomain() {
+		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactory
+				.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+		adapterFactory
+				.addAdapterFactory(new SmooksItemProviderAdapterFactory());
+
+		AdapterFactoryEditingDomain editingDomain = new AdapterFactoryEditingDomain(
+				adapterFactory, createCommandStack(),
+				new HashMap<Resource, Boolean>());
+
+		return editingDomain;
+	}
+
+	protected CommandStack createCommandStack() {
+		return new BasicCommandStack();
+	}
+
+	protected void insertResoureConfig(SmooksResourceListType list,
+			List resourceConfigList) {
+		EditingDomain domain = createEditingDomain();
+		int length = resourceConfigList.size();
+		List kk = list.getAbstractResourceConfig();
+		for (int i = length - 1; i >= 0; i--) {
+			Object obj = resourceConfigList.get(i);
+			Command addResourceConfigCommand = AddCommand
+					.create(
+							domain,
+							list,SmooksPackage.eINSTANCE.getSmooksResourceListType_AbstractResourceConfig(),
+							obj);
+			addResourceConfigCommand.execute();
+		}
 	}
 
 	/**

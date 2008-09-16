@@ -15,7 +15,9 @@ import java.util.List;
 
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -30,22 +32,31 @@ import org.eclipse.ui.forms.SectionPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
+import org.jboss.tools.smooks.ui.BeanPopulatorWarrper;
+import org.jboss.tools.smooks.ui.DateTypeWarrper;
+import org.jboss.tools.smooks.ui.ResourceConfigWarrper;
 import org.jboss.tools.smooks.ui.gef.util.GraphicsConstants;
+import org.milyn.xsd.smooks.ResourceConfigType;
 import org.milyn.xsd.smooks.impl.ResourceConfigTypeImpl;
 
 /**
  * @author Dart Peng<br>
  *         Date : Sep 11, 2008
  */
-public class SmooksResourceConfigFormBlock extends MasterDetailsBlock {
+public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
+		ISelectionChangedListener {
 
 	TreeViewer dateTypeViewer;
 
 	NormalSmooksModelPackage modelPackage = null;
-	
+
 	SmooksFormEditor parentEditor;
-	
+
+	IManagedForm managedForm;
+
 	protected EditingDomain domain;
+
+	private SectionPart sectionPart;
 
 	public EditingDomain getDomain() {
 		return domain;
@@ -71,6 +82,7 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock {
 	 */
 	@Override
 	protected void createMasterPart(IManagedForm managedForm, Composite parent) {
+		this.managedForm = managedForm;
 		FormToolkit tool = managedForm.getToolkit();
 		createDataTypeGUI(parent, tool, managedForm);
 		configDateTypeViewer();
@@ -93,8 +105,10 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock {
 	 */
 	@Override
 	protected void registerPages(DetailsPart detailsPart) {
-		detailsPart.registerPage(ResourceConfigTypeImpl.class,
-				new BeanPopulatorDetailPage(getParentEditor(),getDomain()));
+		detailsPart.registerPage(BeanPopulatorWarrper.class,
+				new BeanPopulatorDetailPage(getParentEditor(), getDomain()));
+		detailsPart.registerPage(DateTypeWarrper.class,
+				new DateTypeDetailPage(getParentEditor(), getDomain()));
 	}
 
 	protected void configDateTypeViewer() {
@@ -122,8 +136,8 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock {
 		Section section = tool.createSection(rootMainControl, Section.TITLE_BAR
 				| Section.DESCRIPTION);
 		section.setText("Data Type");
-		final SectionPart spart = new SectionPart(section);
-		managedForm.addPart(spart);
+		sectionPart = new SectionPart(section);
+		managedForm.addPart(sectionPart);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		Composite dataTypeComposite = tool.createComposite(section);
 		section.setClient(dataTypeComposite);
@@ -139,15 +153,7 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock {
 		fillLayout.marginWidth = 1;
 		tableComposite.setLayout(fillLayout);
 		dateTypeViewer = new TreeViewer(tableComposite, SWT.NONE);
-		dateTypeViewer
-				.addSelectionChangedListener(new ISelectionChangedListener() {
-
-					public void selectionChanged(SelectionChangedEvent event) {
-						managedForm.fireSelectionChanged(spart, event
-								.getSelection());
-					}
-
-				});
+		dateTypeViewer.addSelectionChangedListener(this);
 		gd = new GridData(GridData.FILL_BOTH);
 		tableComposite.setLayoutData(gd);
 		tableComposite.setBackground(GraphicsConstants.groupBorderColor);
@@ -181,6 +187,24 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock {
 
 	public void setParentEditor(SmooksFormEditor parentEditor) {
 		this.parentEditor = parentEditor;
+	}
+
+	public void selectionChanged(SelectionChangedEvent event) {
+		IStructuredSelection selection = (IStructuredSelection) event
+				.getSelection();
+		if (selection.isEmpty())
+			return;
+		Object obj = selection.getFirstElement();
+		if (obj instanceof ResourceConfigType) {
+			ResourceConfigWarrper warrper = ResourceConfigWarrperFactory
+					.createResourceConfigWarrper((ResourceConfigType) obj);
+			if (warrper != null) {
+				selection = new StructuredSelection(warrper);
+				managedForm.fireSelectionChanged(sectionPart,selection);
+				return;
+			}
+		}
+		managedForm.fireSelectionChanged(sectionPart, event.getSelection());
 	}
 
 }
