@@ -13,13 +13,22 @@ package org.jboss.tools.vpe.editor.template;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -31,6 +40,12 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.outline.cssdialog.common.Constants;
+import org.jboss.tools.jst.jsp.outline.cssdialog.common.ImageCombo;
+import org.jboss.tools.jst.jsp.outline.cssdialog.common.MessageUtil;
+import org.jboss.tools.jst.jsp.outline.cssdialog.common.Util;
+import org.jboss.tools.jst.jsp.outline.cssdialog.parsers.ColorParser;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 public class VpeEditAnyDialog extends TitleAreaDialog {
@@ -82,7 +97,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		((GridData)topComposite.getLayoutData()).widthHint = 300;
 
 		Composite composite = new Composite(topComposite, SWT.NONE);
-		GridLayout gridLayout = new GridLayout(2, false);
+		GridLayout gridLayout = new GridLayout(3, false);
 		gridLayout.marginWidth = 50;
 		gridLayout.marginHeight = 20;
 		gridLayout.horizontalSpacing = 5;
@@ -99,6 +114,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
         
         tagFDisplayLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
         cbTagForDisplay = new Combo(composite,SWT.DROP_DOWN | SWT.READ_ONLY);
+        gd.horizontalSpan=2;
         cbTagForDisplay.setLayoutData(gd);
         cbTagForDisplay.setItems(displayTags.toArray(new String[displayTags.size()]));
         cbTagForDisplay.select(0);
@@ -116,7 +132,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		lblDisplay.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
 		cbDisplay = new Combo(composite, SWT.DROP_DOWN | SWT.READ_ONLY);
 	
-//		gd.horizontalSpan = 2;
+		gd.horizontalSpan = 2;
 		cbDisplay.setLayoutData(gd);
 		cbDisplay.setItems(displayItems);
 		displayIndexMem = getDisplayItemIndex(data.getDisplay());
@@ -128,7 +144,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		lblValue.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
 		txtValue = new Text(composite, SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-//		gd.horizontalSpan = 2;
+		gd.horizontalSpan = 2;
 		txtValue.setLayoutData(gd);
 		txtValue.setText(data.getValue() != null ? data.getValue() : ""); //$NON-NLS-1$
 
@@ -140,7 +156,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		lblBorder.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
 		txtBorder = new Text(composite, SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-//		gd.horizontalSpan = 2;
+		gd.horizontalSpan = 2;
 		txtBorder.setLayoutData(gd);
 		txtBorder.setText(data.getBorder() != null ? data.getBorder() : ""); //$NON-NLS-1$
 
@@ -236,7 +252,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 			label.setText(labelText);
 			button = new Button(parent, SWT.CHECK);
 			GridData gd = new GridData(GridData.BEGINNING);
-//			gd.horizontalSpan = 2;
+			gd.horizontalSpan = 2;
 			button.setLayoutData(gd);
 			button.setSelection(value);
 		}
@@ -254,27 +270,54 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 	public class ColorControl {
 		private Composite parent;
 		private Label label;
-		private Text text;
-//		private Button button;
+		private ImageCombo colorCombo;
 
 		public ColorControl(Composite parent, String labelText, String value) {
 			label = new Label(parent, SWT.NONE);
 			label.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
 			label.setText(labelText);
-			text = new Text(parent, SWT.BORDER);
-			text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-			text.setText(value != null ? value : ""); //$NON-NLS-1$
-//			button = new Button(parent, SWT.BUTTON1);
-//			button.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END));
-//			button.setText("...");
-//			button.addSelectionListener(new SelectionListener() {
-//				public void widgetSelected(SelectionEvent e) {
-//					selectColor(e.widget.getDisplay().getShells()[0]);
-//				}
-//
-//				public void widgetDefaultSelected(SelectionEvent e) {
-//				}
-//			});
+			colorCombo = new ImageCombo(parent, SWT.BORDER);
+			GridData gd =new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+			gd.grabExcessHorizontalSpace =true;
+			colorCombo.setLayoutData(gd);
+			colorCombo.setText(value != null ? value : ""); //$NON-NLS-1$
+			
+			Set<Entry<String, String>> set = ColorParser.getInstance().getMap()
+																	.entrySet();
+
+			for (Map.Entry<String, String> me : set) {
+			    RGB rgb = Util.getColor(me.getKey());
+			    colorCombo.add(me.getValue(), rgb);
+			}
+			Button button = new Button(parent, SWT.PUSH);
+			button.setLayoutData(new GridData());
+			button.setToolTipText(MessageUtil.getString("BACKGROUND_COLOR_TIP")); //$NON-NLS-1$
+			ImageDescriptor colorDesc = JspEditorPlugin
+				.getImageDescriptor(Constants.IMAGE_COLORLARGE_FILE_LOCATION);
+			Image im = colorDesc.createImage();
+			button.setImage(im);
+			button.addDisposeListener(new DisposeListener() {
+			    public void widgetDisposed(DisposeEvent e) {
+				Button button = (Button) e.getSource();
+				button.getImage().dispose();
+			    }
+			});
+			button.addSelectionListener(new SelectionAdapter() {
+			    public void widgetSelected(SelectionEvent event) {
+				ColorDialog dlg = new ColorDialog(getShell());
+
+				dlg
+					.setRGB(Util.getColor((colorCombo.getText().trim())) == null ? new RGB(
+						0, 0, 0)
+						: Util.getColor((colorCombo.getText().trim())));
+				dlg.setText(MessageUtil.getString("COLOR_DIALOG_TITLE")); //$NON-NLS-1$
+				RGB rgb = dlg.open();
+				if (rgb != null) {
+				    String colorStr = Util.createColorString(rgb);
+				    colorCombo.setText(colorStr);
+				}
+			    }
+			});
 		}
 
 		public void selectColor(Shell shell) {
@@ -283,7 +326,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		}
 
 		public String getText() {
-			return text.getText().trim();
+			return colorCombo.getText().trim();
 		}
 	}
 }
