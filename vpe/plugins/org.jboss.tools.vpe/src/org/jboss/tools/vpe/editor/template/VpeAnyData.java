@@ -25,6 +25,27 @@ public class VpeAnyData extends VpeTemplateData {
 	public VpeAnyData(String name) {
 		super(name);
 	}
+	
+	public VpeAnyData(
+			String display,
+			String value,
+			String border,
+			String valueColor,
+			String valueBackgroundColor,
+			String backgroundColor,
+			String borderColor,
+			boolean showIcon
+		) {
+		this(display,
+				null,
+				value,
+				border,
+				valueColor,
+				valueBackgroundColor,
+				backgroundColor,
+				borderColor,
+				showIcon);
+	}
 	public VpeAnyData(
 				String display,
 				String tagForDisplay,
@@ -50,6 +71,7 @@ public class VpeAnyData extends VpeTemplateData {
 	public String getUri() {
 		return uri;
 	}
+	
 	public void setUri(String uri) {
 		this.uri = uri;
 	}
@@ -57,6 +79,7 @@ public class VpeAnyData extends VpeTemplateData {
 	public boolean isShowIcon(){
 		return showIcon;
 	}
+	
 	public void setShowIcon(boolean flag){
 		showIcon = flag;
 	}
@@ -64,6 +87,7 @@ public class VpeAnyData extends VpeTemplateData {
 	public String getBackgroundColor() {
 		return backgroundColor;
 	}
+	
 	public void setBackgroundColor(String backgroundColor) {
 		this.backgroundColor = backgroundColor;
 	}
@@ -71,6 +95,7 @@ public class VpeAnyData extends VpeTemplateData {
 	public String getBorder() {
 		return border;
 	}
+	
 	public void setBorder(String border) {
 		this.border = border;
 	}
@@ -78,6 +103,7 @@ public class VpeAnyData extends VpeTemplateData {
 	public String getBorderColor() {
 		return borderColor;
 	}
+	
 	public void setBorderColor(String borderColor) {
 		this.borderColor = borderColor;
 	}
@@ -85,6 +111,7 @@ public class VpeAnyData extends VpeTemplateData {
 	public String getDisplay() {
 		return display;
 	}
+	
 	public void setDisplay(String display) {
 		this.display = display;
 	}
