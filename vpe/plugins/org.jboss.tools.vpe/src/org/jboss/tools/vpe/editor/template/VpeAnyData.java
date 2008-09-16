@@ -12,6 +12,7 @@ package org.jboss.tools.vpe.editor.template;
 
 public class VpeAnyData extends VpeTemplateData {
 	private String uri;
+	private String tagForDisplay;
 	private String display;
 	private String value;
 	private String border;
@@ -26,6 +27,7 @@ public class VpeAnyData extends VpeTemplateData {
 	}
 	public VpeAnyData(
 				String display,
+				String tagForDisplay,
 				String value,
 				String border,
 				String valueColor,
@@ -42,6 +44,7 @@ public class VpeAnyData extends VpeTemplateData {
 		this.backgroundColor = backgroundColor;
 		this.borderColor = borderColor;
 		this.showIcon = showIcon;
+		this.tagForDisplay = tagForDisplay;
 	}
 	
 	public String getUri() {
@@ -106,4 +109,10 @@ public class VpeAnyData extends VpeTemplateData {
 	public void setValueColor(String valueColor) {
 		this.valueColor = valueColor;
 	}
+    public String getTagForDisplay() {
+        return tagForDisplay;
+    }
+    public void setTagForDisplay(String tagForDisplay) {
+        this.tagForDisplay = tagForDisplay;
+    }
 }

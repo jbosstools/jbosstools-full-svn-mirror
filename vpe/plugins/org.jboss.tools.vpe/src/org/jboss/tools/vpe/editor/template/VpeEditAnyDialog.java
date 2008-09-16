@@ -10,6 +10,10 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -35,6 +39,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 	private CheckControl ctlChildren;
 	private CheckControl ctlModify;
 	private Combo cbDisplay;
+	private Combo cbTagForDisplay; 
 	private int displayIndexMem;
 	private Text txtValue;
 	private Text txtBorder;
@@ -45,12 +50,23 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 	private CheckControl ctlShowIcon;
 
 	private static String[] displayItems = new String[3];
+	
+	private static List<String> displayTags = new ArrayList<String>();
 
 	static {
 		displayItems[0] = VpeAnyCreator.VAL_DISPLAY_BLOCK;
 		displayItems[1] = VpeAnyCreator.VAL_DISPLAY_INLINE;
 		displayItems[2] = VpeAnyCreator.VAL_DISPLAY_NONE;
 	}
+	static{
+	    displayTags.add(VpeUIMessages.TAG_DIV);
+	    displayTags.add(VpeUIMessages.TAG_SPAN);
+	    displayTags.add(VpeUIMessages.TAG_B);
+	    displayTags.add(VpeUIMessages.TAG_P);
+	    displayTags.add(VpeUIMessages.TAG_TABLE);
+	}
+	
+	
 
 	public VpeEditAnyDialog(Shell shell, VpeAnyData data) {
 		super(shell);
@@ -76,15 +92,30 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		composite.setBackground(parent.getBackground());
 		composite.setForeground(parent.getForeground());
 		composite.setFont(parent.getFont());
-
+		
+	    //added by estherbin https://jira.jboss.org/jira/browse/JBIDE-2521
+	    GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+        Label tagFDisplayLabel = makeLabel(composite, VpeUIMessages.TAG_FOR_DISPLAY);
+        
+        tagFDisplayLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+        cbTagForDisplay = new Combo(composite,SWT.DROP_DOWN | SWT.READ_ONLY);
+        cbTagForDisplay.setLayoutData(gd);
+        cbTagForDisplay.setItems(displayTags.toArray(new String[displayTags.size()]));
+        cbTagForDisplay.select(0);
+        
+        
 //		ctlCaseSensitive = new CheckControl(composite, "Case sensitive", data.isCaseSensitive());
 		ctlChildren = new CheckControl(composite, VpeUIMessages.CHILDREN, data.isChildren());
 //		ctlModify = new CheckControl(composite, "Modify", data.isModify());
-
+	
+	    
+	
+		
+		gd = new GridData(GridData.FILL_HORIZONTAL);
 		Label lblDisplay = makeLabel(composite, VpeUIMessages.DISPLAY);
 		lblDisplay.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
 		cbDisplay = new Combo(composite, SWT.DROP_DOWN | SWT.READ_ONLY);
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+	
 //		gd.horizontalSpan = 2;
 		cbDisplay.setLayoutData(gd);
 		cbDisplay.setItems(displayItems);

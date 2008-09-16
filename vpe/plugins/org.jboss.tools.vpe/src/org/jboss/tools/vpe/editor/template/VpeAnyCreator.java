@@ -277,6 +277,7 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 	public VpeAnyData getAnyData() {
 		return new VpeAnyData(
 					displayStr,
+					"",
 					valueStr,
 					borderStr,
 					valueColorStr,
