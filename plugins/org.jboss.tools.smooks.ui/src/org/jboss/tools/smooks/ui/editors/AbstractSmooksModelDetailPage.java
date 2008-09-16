@@ -20,6 +20,7 @@ import org.eclipse.ui.forms.IFormPart;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.jboss.tools.smooks.ui.ResourceConfigWarrper;
 import org.milyn.xsd.smooks.ResourceConfigType;
 
 /**
@@ -156,8 +157,14 @@ public abstract class AbstractSmooksModelDetailPage implements IDetailsPage {
 		this.selection = selection;
 		formPart = part;
 		if (selection != null && selection instanceof IStructuredSelection) {
-			resourceConfigList = (ResourceConfigType) ((IStructuredSelection) selection)
-					.getFirstElement();
+			Object obj = ((IStructuredSelection) selection)
+			.getFirstElement();
+			if(obj instanceof ResourceConfigType){
+				resourceConfigList = (ResourceConfigType)obj;
+			}
+			if(obj instanceof ResourceConfigWarrper){
+				resourceConfigList = ((ResourceConfigWarrper)obj).getResourceConfig();
+			}
 			refresh();
 		}
 	}

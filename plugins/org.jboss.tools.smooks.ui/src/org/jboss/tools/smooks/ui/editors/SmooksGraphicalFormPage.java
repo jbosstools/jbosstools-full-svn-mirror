@@ -226,9 +226,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		}
 		callParentRefillNormalModelInfor();
 	}
-	
-	private void callParentRefillNormalModelInfor(){
-		SmooksFormEditor editor = (SmooksFormEditor)getEditor();
+
+	private void callParentRefillNormalModelInfor() {
+		SmooksFormEditor editor = (SmooksFormEditor) getEditor();
 		editor.refreshNormalPage();
 	}
 
@@ -451,7 +451,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	}
 
 	protected SmooksFileBuilder createSmooksFileBulder() {
-		return new SmooksFileBuilder();
+		return new SmooksFileBuilder(this.getEditingDomain());
 	}
 
 	protected void initTargetTreeViewer() {
@@ -1136,6 +1136,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	 * @return the editingDomain
 	 */
 	protected AdapterFactoryEditingDomain getEditingDomain() {
+		FormEditor parentEditor = this.getEditor();
+		editingDomain = ((SmooksFormEditor) parentEditor).getEditingDomain();
 		return editingDomain;
 	}
 

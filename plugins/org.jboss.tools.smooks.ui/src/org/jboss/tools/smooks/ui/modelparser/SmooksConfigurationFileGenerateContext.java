@@ -10,6 +10,10 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.modelparser;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.jboss.tools.smooks.graphical.Param;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
 import org.milyn.xsd.smooks.SmooksResourceListType;
@@ -25,6 +29,9 @@ public class SmooksConfigurationFileGenerateContext {
 	protected String targetDataTypeID = null;
 	protected GraphRootModel dataMappingRootModel;
 	protected SmooksResourceListType smooksResourceListModel;
+	protected List generatorResourceList = new ArrayList();
+	
+	protected EditingDomain domain;
 	
 	protected String smooksType = null;
 	/**
@@ -89,6 +96,18 @@ public class SmooksConfigurationFileGenerateContext {
 	
 	public void addParam(Param param){
 		
+	}
+	public EditingDomain getDomain() {
+		return domain;
+	}
+	public void setDomain(EditingDomain domain) {
+		this.domain = domain;
+	}
+	public List getGeneratorResourceList() {
+		return generatorResourceList;
+	}
+	public void setGeneratorResourceList(List generatorResourceList) {
+		this.generatorResourceList = generatorResourceList;
 	}
 	
 }
