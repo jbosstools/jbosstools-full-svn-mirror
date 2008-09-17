@@ -71,6 +71,11 @@ div.book{
     width: 57em;
 }
 
+div.abstract {
+font-size:10px;
+}
+
+
 ul.docnav {
     margin:0px;
     width: 57em;

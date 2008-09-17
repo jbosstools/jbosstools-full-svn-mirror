@@ -58,6 +58,10 @@ div.book, div.chapter{
     margin-left:50px;
 }
 
+div.abstract {
+font-size:10px;
+}
+
 ul.docnav {
     margin:0px;
     width: 70em;
