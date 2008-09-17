@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.milyn.xsd.smooks.util;
+package org.jboss.tools.smooks.model.util;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
  * <!-- begin-user-doc -->
  * The <b>Resource </b> associated with the package.
  * <!-- end-user-doc -->
- * @see org.milyn.xsd.smooks.util.SmooksResourceFactoryImpl
+ * @see org.jboss.tools.smooks.model.util.SmooksResourceFactoryImpl
  * @generated
  */
 public class SmooksResourceImpl extends XMLResourceImpl {

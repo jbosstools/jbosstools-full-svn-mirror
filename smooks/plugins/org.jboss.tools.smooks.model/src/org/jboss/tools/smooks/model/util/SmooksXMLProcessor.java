@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.milyn.xsd.smooks.util;
+package org.jboss.tools.smooks.model.util;
 
 import java.util.Map;
 
@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
 
-import org.milyn.xsd.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.SmooksPackage;
 
 /**
  * This class contains helper methods to serialize and deserialize XML documents

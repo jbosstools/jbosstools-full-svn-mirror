@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.milyn.xsd.smooks.util;
+package org.jboss.tools.smooks.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -15,14 +15,14 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.emf.ecore.xml.type.AnyType;
 
-import org.milyn.xsd.smooks.*;
+import org.jboss.tools.smooks.model.*;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see org.milyn.xsd.smooks.SmooksPackage
+ * @see org.jboss.tools.smooks.model.SmooksPackage
  * @generated
  */
 public class SmooksAdapterFactory extends AdapterFactoryImpl {
@@ -138,13 +138,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.milyn.xsd.smooks.AbstractResourceConfig <em>Abstract Resource Config</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.AbstractResourceConfig <em>Abstract Resource Config</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.milyn.xsd.smooks.AbstractResourceConfig
+	 * @see org.jboss.tools.smooks.model.AbstractResourceConfig
 	 * @generated
 	 */
 	public Adapter createAbstractResourceConfigAdapter() {
@@ -152,13 +152,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.milyn.xsd.smooks.ConditionType <em>Condition Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.ConditionType <em>Condition Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.milyn.xsd.smooks.ConditionType
+	 * @see org.jboss.tools.smooks.model.ConditionType
 	 * @generated
 	 */
 	public Adapter createConditionTypeAdapter() {
@@ -166,13 +166,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.milyn.xsd.smooks.DocumentRoot <em>Document Root</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.DocumentRoot <em>Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.milyn.xsd.smooks.DocumentRoot
+	 * @see org.jboss.tools.smooks.model.DocumentRoot
 	 * @generated
 	 */
 	public Adapter createDocumentRootAdapter() {
@@ -180,13 +180,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.milyn.xsd.smooks.ImportType <em>Import Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.ImportType <em>Import Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.milyn.xsd.smooks.ImportType
+	 * @see org.jboss.tools.smooks.model.ImportType
 	 * @generated
 	 */
 	public Adapter createImportTypeAdapter() {
@@ -194,13 +194,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.milyn.xsd.smooks.ParamType <em>Param Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.ParamType <em>Param Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.milyn.xsd.smooks.ParamType
+	 * @see org.jboss.tools.smooks.model.ParamType
 	 * @generated
 	 */
 	public Adapter createParamTypeAdapter() {
@@ -208,13 +208,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.milyn.xsd.smooks.ProfilesType <em>Profiles Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.ProfilesType <em>Profiles Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.milyn.xsd.smooks.ProfilesType
+	 * @see org.jboss.tools.smooks.model.ProfilesType
 	 * @generated
 	 */
 	public Adapter createProfilesTypeAdapter() {
@@ -222,13 +222,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.milyn.xsd.smooks.ProfileType <em>Profile Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.ProfileType <em>Profile Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.milyn.xsd.smooks.ProfileType
+	 * @see org.jboss.tools.smooks.model.ProfileType
 	 * @generated
 	 */
 	public Adapter createProfileTypeAdapter() {
@@ -236,13 +236,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.milyn.xsd.smooks.ResourceConfigType <em>Resource Config Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.ResourceConfigType <em>Resource Config Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.milyn.xsd.smooks.ResourceConfigType
+	 * @see org.jboss.tools.smooks.model.ResourceConfigType
 	 * @generated
 	 */
 	public Adapter createResourceConfigTypeAdapter() {
@@ -250,13 +250,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.milyn.xsd.smooks.ResourceType <em>Resource Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.ResourceType <em>Resource Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.milyn.xsd.smooks.ResourceType
+	 * @see org.jboss.tools.smooks.model.ResourceType
 	 * @generated
 	 */
 	public Adapter createResourceTypeAdapter() {
@@ -264,13 +264,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.milyn.xsd.smooks.SmooksResourceListType <em>Resource List Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.SmooksResourceListType <em>Resource List Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.milyn.xsd.smooks.SmooksResourceListType
+	 * @see org.jboss.tools.smooks.model.SmooksResourceListType
 	 * @generated
 	 */
 	public Adapter createSmooksResourceListTypeAdapter() {

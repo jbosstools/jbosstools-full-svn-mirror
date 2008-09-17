@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.milyn.xsd.smooks.util;
+package org.jboss.tools.smooks.model.util;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.emf.ecore.xml.type.AnyType;
 
-import org.milyn.xsd.smooks.*;
+import org.jboss.tools.smooks.model.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,7 +25,7 @@ import org.milyn.xsd.smooks.*;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.milyn.xsd.smooks.SmooksPackage
+ * @see org.jboss.tools.smooks.model.SmooksPackage
  * @generated
  */
 public class SmooksSwitch<T> {
