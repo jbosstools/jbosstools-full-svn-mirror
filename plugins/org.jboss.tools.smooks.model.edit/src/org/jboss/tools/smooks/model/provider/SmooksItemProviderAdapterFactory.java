@@ -36,7 +36,7 @@ import org.jboss.tools.smooks.model.util.SmooksAdapterFactory;
  * <!-- end-user-doc -->
  * @generated
  */
-public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
+public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
@@ -67,7 +67,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SmooksItemProviderAdapterFactory1() {
+	public SmooksItemProviderAdapterFactory() {
 		supportedTypes.add(IEditingDomainItemProvider.class);
 		supportedTypes.add(IStructuredItemContentProvider.class);
 		supportedTypes.add(ITreeItemContentProvider.class);
@@ -81,7 +81,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ConditionTypeItemProvider1 conditionTypeItemProvider;
+	protected ConditionTypeItemProvider conditionTypeItemProvider;
 
 	/**
 	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.ConditionType}.
@@ -92,7 +92,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	@Override
 	public Adapter createConditionTypeAdapter() {
 		if (conditionTypeItemProvider == null) {
-			conditionTypeItemProvider = new ConditionTypeItemProvider1(this);
+			conditionTypeItemProvider = new ConditionTypeItemProvider(this);
 		}
 
 		return conditionTypeItemProvider;
@@ -104,7 +104,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected DocumentRootItemProvider1 documentRootItemProvider;
+	protected DocumentRootItemProvider documentRootItemProvider;
 
 	/**
 	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.DocumentRoot}.
@@ -115,7 +115,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	@Override
 	public Adapter createDocumentRootAdapter() {
 		if (documentRootItemProvider == null) {
-			documentRootItemProvider = new DocumentRootItemProvider1(this);
+			documentRootItemProvider = new DocumentRootItemProvider(this);
 		}
 
 		return documentRootItemProvider;
@@ -127,7 +127,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ImportTypeItemProvider1 importTypeItemProvider;
+	protected ImportTypeItemProvider importTypeItemProvider;
 
 	/**
 	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.ImportType}.
@@ -138,7 +138,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	@Override
 	public Adapter createImportTypeAdapter() {
 		if (importTypeItemProvider == null) {
-			importTypeItemProvider = new ImportTypeItemProvider1(this);
+			importTypeItemProvider = new ImportTypeItemProvider(this);
 		}
 
 		return importTypeItemProvider;
@@ -150,7 +150,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ParamTypeItemProvider1 paramTypeItemProvider;
+	protected ParamTypeItemProvider paramTypeItemProvider;
 
 	/**
 	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.ParamType}.
@@ -161,7 +161,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	@Override
 	public Adapter createParamTypeAdapter() {
 		if (paramTypeItemProvider == null) {
-			paramTypeItemProvider = new ParamTypeItemProvider1(this);
+			paramTypeItemProvider = new ParamTypeItemProvider(this);
 		}
 
 		return paramTypeItemProvider;
@@ -173,7 +173,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ProfilesTypeItemProvider1 profilesTypeItemProvider;
+	protected ProfilesTypeItemProvider profilesTypeItemProvider;
 
 	/**
 	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.ProfilesType}.
@@ -184,7 +184,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	@Override
 	public Adapter createProfilesTypeAdapter() {
 		if (profilesTypeItemProvider == null) {
-			profilesTypeItemProvider = new ProfilesTypeItemProvider1(this);
+			profilesTypeItemProvider = new ProfilesTypeItemProvider(this);
 		}
 
 		return profilesTypeItemProvider;
@@ -196,7 +196,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ProfileTypeItemProvider1 profileTypeItemProvider;
+	protected ProfileTypeItemProvider profileTypeItemProvider;
 
 	/**
 	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.ProfileType}.
@@ -207,7 +207,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	@Override
 	public Adapter createProfileTypeAdapter() {
 		if (profileTypeItemProvider == null) {
-			profileTypeItemProvider = new ProfileTypeItemProvider1(this);
+			profileTypeItemProvider = new ProfileTypeItemProvider(this);
 		}
 
 		return profileTypeItemProvider;
@@ -219,7 +219,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ResourceConfigTypeItemProvider1 resourceConfigTypeItemProvider;
+	protected ResourceConfigTypeItemProvider resourceConfigTypeItemProvider;
 
 	/**
 	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.ResourceConfigType}.
@@ -230,7 +230,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	@Override
 	public Adapter createResourceConfigTypeAdapter() {
 		if (resourceConfigTypeItemProvider == null) {
-			resourceConfigTypeItemProvider = new ResourceConfigTypeItemProvider1(this);
+			resourceConfigTypeItemProvider = new ResourceConfigTypeItemProvider(this);
 		}
 
 		return resourceConfigTypeItemProvider;
@@ -242,7 +242,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ResourceTypeItemProvider1 resourceTypeItemProvider;
+	protected ResourceTypeItemProvider resourceTypeItemProvider;
 
 	/**
 	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.ResourceType}.
@@ -253,7 +253,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	@Override
 	public Adapter createResourceTypeAdapter() {
 		if (resourceTypeItemProvider == null) {
-			resourceTypeItemProvider = new ResourceTypeItemProvider1(this);
+			resourceTypeItemProvider = new ResourceTypeItemProvider(this);
 		}
 
 		return resourceTypeItemProvider;
@@ -265,7 +265,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected SmooksResourceListTypeItemProvider1 smooksResourceListTypeItemProvider;
+	protected SmooksResourceListTypeItemProvider smooksResourceListTypeItemProvider;
 
 	/**
 	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.SmooksResourceListType}.
@@ -276,7 +276,7 @@ public class SmooksItemProviderAdapterFactory1 extends SmooksAdapterFactory impl
 	@Override
 	public Adapter createSmooksResourceListTypeAdapter() {
 		if (smooksResourceListTypeItemProvider == null) {
-			smooksResourceListTypeItemProvider = new SmooksResourceListTypeItemProvider1(this);
+			smooksResourceListTypeItemProvider = new SmooksResourceListTypeItemProvider(this);
 		}
 
 		return smooksResourceListTypeItemProvider;
