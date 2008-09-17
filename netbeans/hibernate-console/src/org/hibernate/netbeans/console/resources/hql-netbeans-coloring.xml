@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<fontscolors>
-    <fontcolor name="hql-java-string" foreColor="gray" default="comment"/>
-    <fontcolor name="hql-hql-string" foreColor="magenta" default="string"/>
-    <fontcolor name="hql-keyword" foreColor="blue" default="keyword"/>
-    <fontcolor name="hql-broken-hql-string" foreColor="red" default="string"/>
-    <fontcolor name="hql-default" default="default"/>
-    <fontcolor name="hql-broken-java-string" foreColor="red" default="default"/>
-</fontscolors>
