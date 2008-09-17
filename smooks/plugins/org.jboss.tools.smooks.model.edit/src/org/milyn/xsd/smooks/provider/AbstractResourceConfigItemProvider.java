@@ -24,7 +24,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 
 /**
- * This is the item provider adapter for a {@link org.milyn.xsd.smooks.AbstractResourceConfig} object.
+ * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.AbstractResourceConfig} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

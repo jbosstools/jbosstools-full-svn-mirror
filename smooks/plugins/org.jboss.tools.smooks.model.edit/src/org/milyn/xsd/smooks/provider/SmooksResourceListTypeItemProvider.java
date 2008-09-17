@@ -30,12 +30,12 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.milyn.xsd.smooks.SmooksFactory;
-import org.milyn.xsd.smooks.SmooksPackage;
-import org.milyn.xsd.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks.model.SmooksFactory;
+import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 
 /**
- * This is the item provider adapter for a {@link org.milyn.xsd.smooks.SmooksResourceListType} object.
+ * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.SmooksResourceListType} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

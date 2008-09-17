@@ -12,8 +12,8 @@ package org.jboss.tools.smooks.analyzer;
 
 import java.util.List;
 
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
-import org.milyn.xsd.smooks.SmooksResourceListType;
 
 /**
  * @author Dart Peng

@@ -20,6 +20,13 @@ import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
 import org.jboss.tools.smooks.graphical.GraphInformations;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
+import org.jboss.tools.smooks.model.ParamType;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.ResourceType;
+import org.jboss.tools.smooks.model.SmooksFactory;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
+import org.jboss.tools.smooks.model.util.SmooksModelConstants;
+import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
@@ -30,13 +37,6 @@ import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateCont
 import org.jboss.tools.smooks.utils.UIUtils;
 import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
 import org.jboss.tools.smooks.xml.model.TagPropertyObject;
-import org.milyn.xsd.smooks.ParamType;
-import org.milyn.xsd.smooks.ResourceConfigType;
-import org.milyn.xsd.smooks.ResourceType;
-import org.milyn.xsd.smooks.SmooksFactory;
-import org.milyn.xsd.smooks.SmooksResourceListType;
-import org.milyn.xsd.smooks.util.SmooksConstants;
-import org.milyn.xsd.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart Peng
@@ -103,7 +103,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		// create a resource and add it to resourceConfig
 		ResourceType resourceType = SmooksFactory.eINSTANCE
 				.createResourceType();
-		resourceType.setValue(SmooksConstants.BEAN_POPULATOR);
+		resourceType.setValue(SmooksModelConstants.BEAN_POPULATOR);
 		resourceConfigType.setResource(resourceType);
 
 		// create param for resourceConfig
@@ -116,15 +116,15 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		}
 
 		addParamTypeToResourceConfig(resourceConfigType,
-				SmooksConstants.BEAN_ID, beanID);
+				SmooksModelConstants.BEAN_ID, beanID);
 
 		// add beanClass param
 		addParamTypeToResourceConfig(resourceConfigType,
-				SmooksConstants.BEAN_CLASS, target.getBeanClassString());
+				SmooksModelConstants.BEAN_CLASS, target.getBeanClassString());
 
 		// add bindings param
 		ParamType bindingsParam = addParamTypeToResourceConfig(
-				resourceConfigType, SmooksConstants.BINDINGS, null);
+				resourceConfigType, SmooksModelConstants.BINDINGS, null);
 		processBindingsParam(bindingsParam, target,source, context, listType);
 		// 
 	}

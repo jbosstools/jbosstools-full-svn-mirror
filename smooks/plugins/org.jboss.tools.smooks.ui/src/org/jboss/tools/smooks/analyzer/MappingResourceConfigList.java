@@ -13,7 +13,7 @@ package org.jboss.tools.smooks.analyzer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.milyn.xsd.smooks.ResourceConfigType;
+import org.jboss.tools.smooks.model.ResourceConfigType;
 
 /**
  * @author Dart Peng<br>

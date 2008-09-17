@@ -14,7 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.resources.IFile;
 import org.jboss.tools.smooks.graphical.GraphInformations;
-import org.milyn.xsd.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 
 /**
  * @author Dart Peng<br>

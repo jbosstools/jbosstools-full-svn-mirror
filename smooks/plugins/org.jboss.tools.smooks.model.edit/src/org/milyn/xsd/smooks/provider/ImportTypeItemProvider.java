@@ -23,11 +23,11 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.milyn.xsd.smooks.ImportType;
-import org.milyn.xsd.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.ImportType;
+import org.jboss.tools.smooks.model.SmooksPackage;
 
 /**
- * This is the item provider adapter for a {@link org.milyn.xsd.smooks.ImportType} object.
+ * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.ImportType} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

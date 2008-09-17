@@ -22,11 +22,11 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.DocumentRoot;
+import org.jboss.tools.smooks.model.SmooksFactory;
+import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
-import org.milyn.xsd.smooks.DocumentRoot;
-import org.milyn.xsd.smooks.SmooksFactory;
-import org.milyn.xsd.smooks.SmooksPackage;
-import org.milyn.xsd.smooks.SmooksResourceListType;
 import org.milyn.xsd.smooks.provider.SmooksItemProviderAdapterFactory;
 
 public class SmooksFileBuilder {

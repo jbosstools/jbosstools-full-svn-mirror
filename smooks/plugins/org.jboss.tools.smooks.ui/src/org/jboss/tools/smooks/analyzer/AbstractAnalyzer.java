@@ -22,13 +22,13 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
-import org.milyn.xsd.smooks.ParamType;
-import org.milyn.xsd.smooks.ResourceConfigType;
-import org.milyn.xsd.smooks.SmooksFactory;
-import org.milyn.xsd.smooks.SmooksPackage;
-import org.milyn.xsd.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks.model.ParamType;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.SmooksFactory;
+import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
+import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.milyn.xsd.smooks.provider.SmooksItemProviderAdapterFactory;
-import org.milyn.xsd.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart Peng

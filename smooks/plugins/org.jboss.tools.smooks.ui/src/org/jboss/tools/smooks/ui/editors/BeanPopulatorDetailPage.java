@@ -23,8 +23,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
-import org.milyn.xsd.smooks.SmooksPackage;
-import org.milyn.xsd.smooks.util.SmooksModelUtils;
+import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 
 /**
  * @author Dart Peng<br>

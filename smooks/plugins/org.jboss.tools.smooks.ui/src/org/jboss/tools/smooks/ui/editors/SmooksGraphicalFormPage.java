@@ -110,6 +110,12 @@ import org.jboss.tools.smooks.graphical.GraphInformations;
 import org.jboss.tools.smooks.graphical.GraphicalPackage;
 import org.jboss.tools.smooks.graphical.MappingDataType;
 import org.jboss.tools.smooks.graphical.util.GraphicalInformationSaver;
+import org.jboss.tools.smooks.model.DocumentRoot;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.SmooksFactory;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
+import org.jboss.tools.smooks.model.util.SmooksModelConstants;
+import org.jboss.tools.smooks.model.util.SmooksResourceFactoryImpl;
 import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
 import org.jboss.tools.smooks.ui.IViewerInitor;
 import org.jboss.tools.smooks.ui.StructuredDataCreationWizardDailog;
@@ -127,12 +133,6 @@ import org.jboss.tools.smooks.ui.gef.util.GraphicsConstants;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.jboss.tools.smooks.ui.wizards.TransformDataSelectionWizard;
 import org.jboss.tools.smooks.utils.UIUtils;
-import org.milyn.xsd.smooks.DocumentRoot;
-import org.milyn.xsd.smooks.ResourceConfigType;
-import org.milyn.xsd.smooks.SmooksFactory;
-import org.milyn.xsd.smooks.SmooksResourceListType;
-import org.milyn.xsd.smooks.util.SmooksConstants;
-import org.milyn.xsd.smooks.util.SmooksResourceFactoryImpl;
 
 /**
  * @author Dart Peng
@@ -657,7 +657,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			SmooksConfigurationFileGenerateContext context) {
 		context.setSourceDataTypeID(this.sourceDataTypeID);
 		context.setTargetDataTypeID(this.targetDataTypeID);
-		context.setSmooksType(SmooksConstants.SAX);
+		context.setSmooksType(SmooksModelConstants.SAX);
 		context.setDataMappingRootModel(this.rootModel);
 	}
 

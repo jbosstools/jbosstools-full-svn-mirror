@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui;
 
-import org.milyn.xsd.smooks.ResourceConfigType;
+import org.jboss.tools.smooks.model.ResourceConfigType;
 
 /**
  * @author Dart Peng<br>

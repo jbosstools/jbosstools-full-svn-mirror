@@ -25,7 +25,7 @@ import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
-import org.milyn.xsd.smooks.util.SmooksAdapterFactory;
+import org.jboss.tools.smooks.model.util.SmooksAdapterFactory;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -76,7 +76,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.milyn.xsd.smooks.ConditionType} instances.
+	 * This keeps track of the one adapter used for all {@link org.jboss.tools.smooks.model.ConditionType} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -84,7 +84,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	protected ConditionTypeItemProvider conditionTypeItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.milyn.xsd.smooks.ConditionType}.
+	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.ConditionType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -99,7 +99,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.milyn.xsd.smooks.DocumentRoot} instances.
+	 * This keeps track of the one adapter used for all {@link org.jboss.tools.smooks.model.DocumentRoot} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -107,7 +107,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	protected DocumentRootItemProvider documentRootItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.milyn.xsd.smooks.DocumentRoot}.
+	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.DocumentRoot}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -122,7 +122,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.milyn.xsd.smooks.ImportType} instances.
+	 * This keeps track of the one adapter used for all {@link org.jboss.tools.smooks.model.ImportType} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -130,7 +130,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	protected ImportTypeItemProvider importTypeItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.milyn.xsd.smooks.ImportType}.
+	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.ImportType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -145,7 +145,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.milyn.xsd.smooks.ParamType} instances.
+	 * This keeps track of the one adapter used for all {@link org.jboss.tools.smooks.model.ParamType} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -153,7 +153,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	protected ParamTypeItemProvider paramTypeItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.milyn.xsd.smooks.ParamType}.
+	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.ParamType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -168,7 +168,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.milyn.xsd.smooks.ProfilesType} instances.
+	 * This keeps track of the one adapter used for all {@link org.jboss.tools.smooks.model.ProfilesType} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -176,7 +176,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	protected ProfilesTypeItemProvider profilesTypeItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.milyn.xsd.smooks.ProfilesType}.
+	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.ProfilesType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -191,7 +191,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.milyn.xsd.smooks.ProfileType} instances.
+	 * This keeps track of the one adapter used for all {@link org.jboss.tools.smooks.model.ProfileType} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -199,7 +199,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	protected ProfileTypeItemProvider profileTypeItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.milyn.xsd.smooks.ProfileType}.
+	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.ProfileType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -214,7 +214,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.milyn.xsd.smooks.ResourceConfigType} instances.
+	 * This keeps track of the one adapter used for all {@link org.jboss.tools.smooks.model.ResourceConfigType} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -222,7 +222,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	protected ResourceConfigTypeItemProvider resourceConfigTypeItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.milyn.xsd.smooks.ResourceConfigType}.
+	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.ResourceConfigType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -237,7 +237,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.milyn.xsd.smooks.ResourceType} instances.
+	 * This keeps track of the one adapter used for all {@link org.jboss.tools.smooks.model.ResourceType} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -245,7 +245,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	protected ResourceTypeItemProvider resourceTypeItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.milyn.xsd.smooks.ResourceType}.
+	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.ResourceType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -260,7 +260,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.milyn.xsd.smooks.SmooksResourceListType} instances.
+	 * This keeps track of the one adapter used for all {@link org.jboss.tools.smooks.model.SmooksResourceListType} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -268,7 +268,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	protected SmooksResourceListTypeItemProvider smooksResourceListTypeItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.milyn.xsd.smooks.SmooksResourceListType}.
+	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.SmooksResourceListType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

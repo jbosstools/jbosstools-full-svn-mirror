@@ -42,6 +42,14 @@ import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
 import org.jboss.tools.smooks.graphical.GraphInformations;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModelFactory;
+import org.jboss.tools.smooks.model.AbstractResourceConfig;
+import org.jboss.tools.smooks.model.ParamType;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.ResourceType;
+import org.jboss.tools.smooks.model.SmooksFactory;
+import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
+import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
@@ -51,15 +59,7 @@ import org.jboss.tools.smooks.ui.gef.model.TreeItemRelationModel;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.jboss.tools.smooks.utils.ProjectClassLoader;
 import org.jboss.tools.smooks.utils.UIUtils;
-import org.milyn.xsd.smooks.AbstractResourceConfig;
-import org.milyn.xsd.smooks.ParamType;
-import org.milyn.xsd.smooks.ResourceConfigType;
-import org.milyn.xsd.smooks.ResourceType;
-import org.milyn.xsd.smooks.SmooksFactory;
-import org.milyn.xsd.smooks.SmooksPackage;
-import org.milyn.xsd.smooks.SmooksResourceListType;
 import org.milyn.xsd.smooks.provider.SmooksItemProviderAdapterFactory;
-import org.milyn.xsd.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart Peng

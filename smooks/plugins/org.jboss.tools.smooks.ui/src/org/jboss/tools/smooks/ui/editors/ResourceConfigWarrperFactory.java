@@ -10,12 +10,13 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.editors;
 
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.ResourceType;
+import org.jboss.tools.smooks.model.util.SmooksModelConstants;
 import org.jboss.tools.smooks.ui.BeanPopulatorWarrper;
 import org.jboss.tools.smooks.ui.DateTypeWarrper;
 import org.jboss.tools.smooks.ui.ResourceConfigWarrper;
-import org.milyn.xsd.smooks.ResourceConfigType;
-import org.milyn.xsd.smooks.ResourceType;
-import org.milyn.xsd.smooks.util.SmooksConstants;
+
 
 /**
  * @author Dart Peng<br>
@@ -41,7 +42,7 @@ public class ResourceConfigWarrperFactory {
 		ResourceType resource = type.getResource();
 		if (resource == null)
 			return false;
-		if (SmooksConstants.BEAN_POPULATOR.equals(resource.getValue())) {
+		if (SmooksModelConstants.BEAN_POPULATOR.equals(resource.getValue())) {
 			return true;
 		}
 		return false;
@@ -51,7 +52,7 @@ public class ResourceConfigWarrperFactory {
 		ResourceType resource = type.getResource();
 		if (resource == null)
 			return false;
-		if (SmooksConstants.DATE_DECODER.equals(resource.getValue())) {
+		if (SmooksModelConstants.DATE_DECODER.equals(resource.getValue())) {
 			return true;
 		}
 		return false;

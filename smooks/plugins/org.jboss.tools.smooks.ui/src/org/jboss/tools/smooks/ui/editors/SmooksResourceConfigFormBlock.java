@@ -32,12 +32,12 @@ import org.eclipse.ui.forms.SectionPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.impl.ResourceConfigTypeImpl;
 import org.jboss.tools.smooks.ui.BeanPopulatorWarrper;
 import org.jboss.tools.smooks.ui.DateTypeWarrper;
 import org.jboss.tools.smooks.ui.ResourceConfigWarrper;
 import org.jboss.tools.smooks.ui.gef.util.GraphicsConstants;
-import org.milyn.xsd.smooks.ResourceConfigType;
-import org.milyn.xsd.smooks.impl.ResourceConfigTypeImpl;
 
 /**
  * @author Dart Peng<br>
