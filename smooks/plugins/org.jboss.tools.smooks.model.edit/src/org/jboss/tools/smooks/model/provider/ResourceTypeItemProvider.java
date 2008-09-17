@@ -13,6 +13,8 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -21,19 +23,20 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.jboss.tools.smooks.model.ImportType;
+import org.jboss.tools.smooks.model.ResourceType;
 import org.jboss.tools.smooks.model.SmooksPackage;
 
 /**
- * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.ImportType} object.
+ * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.ResourceType} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ImportTypeItemProvider1
-	extends AbstractResourceConfigItemProvider
+public class ResourceTypeItemProvider
+	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -46,7 +49,7 @@ public class ImportTypeItemProvider1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ImportTypeItemProvider1(AdapterFactory adapterFactory) {
+	public ResourceTypeItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -61,25 +64,26 @@ public class ImportTypeItemProvider1
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addFilePropertyDescriptor(object);
+			addValuePropertyDescriptor(object);
+			addTypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the File feature.
+	 * This adds a property descriptor for the Value feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addFilePropertyDescriptor(Object object) {
+	protected void addValuePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ImportType_file_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ImportType_file_feature", "_UI_ImportType_type"),
-				 SmooksPackage.Literals.IMPORT_TYPE__FILE,
+				 getString("_UI_ResourceType_value_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResourceType_value_feature", "_UI_ResourceType_type"),
+				 SmooksPackage.Literals.RESOURCE_TYPE__VALUE,
 				 true,
 				 false,
 				 false,
@@ -89,14 +93,36 @@ public class ImportTypeItemProvider1
 	}
 
 	/**
-	 * This returns ImportType.gif.
+	 * This adds a property descriptor for the Type feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ResourceType_type_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResourceType_type_feature", "_UI_ResourceType_type"),
+				 SmooksPackage.Literals.RESOURCE_TYPE__TYPE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This returns ResourceType.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ImportType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ResourceType"));
 	}
 
 	/**
@@ -107,10 +133,10 @@ public class ImportTypeItemProvider1
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((ImportType)object).getFile();
+		String label = ((ResourceType)object).getValue();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ImportType_type") :
-			getString("_UI_ImportType_type") + " " + label;
+			getString("_UI_ResourceType_type") :
+			getString("_UI_ResourceType_type") + " " + label;
 	}
 
 	/**
@@ -124,8 +150,9 @@ public class ImportTypeItemProvider1
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(ImportType.class)) {
-			case SmooksPackage.IMPORT_TYPE__FILE:
+		switch (notification.getFeatureID(ResourceType.class)) {
+			case SmooksPackage.RESOURCE_TYPE__VALUE:
+			case SmooksPackage.RESOURCE_TYPE__TYPE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}
@@ -142,6 +169,17 @@ public class ImportTypeItemProvider1
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+	}
+
+	/**
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ResourceLocator getResourceLocator() {
+		return Smooks_1_0EditPlugin.INSTANCE;
 	}
 
 }

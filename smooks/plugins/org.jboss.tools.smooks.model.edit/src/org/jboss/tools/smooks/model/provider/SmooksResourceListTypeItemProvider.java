@@ -19,9 +19,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
-import org.eclipse.emf.ecore.xml.type.XMLTypeFactory;
-import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -33,17 +30,17 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 
 /**
- * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.ParamType} object.
+ * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.SmooksResourceListType} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ParamTypeItemProvider1
+public class SmooksResourceListTypeItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -57,7 +54,7 @@ public class ParamTypeItemProvider1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ParamTypeItemProvider1(AdapterFactory adapterFactory) {
+	public SmooksResourceListTypeItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -72,26 +69,27 @@ public class ParamTypeItemProvider1
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
-			addTypePropertyDescriptor(object);
+			addDefaultSelectorPropertyDescriptor(object);
+			addDefaultSelectorNamespacePropertyDescriptor(object);
+			addDefaultTargetProfilePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature.
+	 * This adds a property descriptor for the Default Selector feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(Object object) {
+	protected void addDefaultSelectorPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ParamType_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ParamType_name_feature", "_UI_ParamType_type"),
-				 SmooksPackage.Literals.PARAM_TYPE__NAME,
+				 getString("_UI_SmooksResourceListType_defaultSelector_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SmooksResourceListType_defaultSelector_feature", "_UI_SmooksResourceListType_type"),
+				 SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR,
 				 true,
 				 false,
 				 false,
@@ -101,19 +99,41 @@ public class ParamTypeItemProvider1
 	}
 
 	/**
-	 * This adds a property descriptor for the Type feature.
+	 * This adds a property descriptor for the Default Selector Namespace feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addTypePropertyDescriptor(Object object) {
+	protected void addDefaultSelectorNamespacePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ParamType_type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ParamType_type_feature", "_UI_ParamType_type"),
-				 SmooksPackage.Literals.PARAM_TYPE__TYPE,
+				 getString("_UI_SmooksResourceListType_defaultSelectorNamespace_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SmooksResourceListType_defaultSelectorNamespace_feature", "_UI_SmooksResourceListType_type"),
+				 SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR_NAMESPACE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Default Target Profile feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addDefaultTargetProfilePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SmooksResourceListType_defaultTargetProfile_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SmooksResourceListType_defaultTargetProfile_feature", "_UI_SmooksResourceListType_type"),
+				 SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_TARGET_PROFILE,
 				 true,
 				 false,
 				 false,
@@ -134,8 +154,8 @@ public class ParamTypeItemProvider1
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(XMLTypePackage.Literals.ANY_TYPE__MIXED);
-			childrenFeatures.add(XMLTypePackage.Literals.ANY_TYPE__ANY_ATTRIBUTE);
+			childrenFeatures.add(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__PROFILES);
+			childrenFeatures.add(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP);
 		}
 		return childrenFeatures;
 	}
@@ -154,14 +174,14 @@ public class ParamTypeItemProvider1
 	}
 
 	/**
-	 * This returns ParamType.gif.
+	 * This returns SmooksResourceListType.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ParamType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/SmooksResourceListType"));
 	}
 
 	/**
@@ -172,10 +192,10 @@ public class ParamTypeItemProvider1
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((ParamType)object).getName();
+		String label = ((SmooksResourceListType)object).getDefaultSelectorNamespace();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ParamType_type") :
-			getString("_UI_ParamType_type") + " " + label;
+			getString("_UI_SmooksResourceListType_type") :
+			getString("_UI_SmooksResourceListType_type") + " " + label;
 	}
 
 	/**
@@ -189,13 +209,14 @@ public class ParamTypeItemProvider1
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(ParamType.class)) {
-			case SmooksPackage.PARAM_TYPE__NAME:
-			case SmooksPackage.PARAM_TYPE__TYPE:
+		switch (notification.getFeatureID(SmooksResourceListType.class)) {
+			case SmooksPackage.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR:
+			case SmooksPackage.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR_NAMESPACE:
+			case SmooksPackage.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_TARGET_PROFILE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case SmooksPackage.PARAM_TYPE__MIXED:
-			case SmooksPackage.PARAM_TYPE__ANY_ATTRIBUTE:
+			case SmooksPackage.SMOOKS_RESOURCE_LIST_TYPE__PROFILES:
+			case SmooksPackage.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -215,87 +236,22 @@ public class ParamTypeItemProvider1
 
 		newChildDescriptors.add
 			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT,
-					 "")));
+				(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__PROFILES,
+				 SmooksFactory.eINSTANCE.createProfilesType()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT,
-					 "")));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__PROCESSING_INSTRUCTION,
-					 XMLTypeFactory.eINSTANCE.createProcessingInstruction())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA,
-					 "")));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__CONDITION,
-					 SmooksFactory.eINSTANCE.createConditionType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+				(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
 				 FeatureMapUtil.createEntry
 					(SmooksPackage.Literals.DOCUMENT_ROOT__IMPORT,
 					 SmooksFactory.eINSTANCE.createImportType())));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__PARAM,
-					 SmooksFactory.eINSTANCE.createParamType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__PROFILE,
-					 SmooksFactory.eINSTANCE.createProfileType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__PROFILES,
-					 SmooksFactory.eINSTANCE.createProfilesType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE,
-					 SmooksFactory.eINSTANCE.createResourceType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+				(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
 				 FeatureMapUtil.createEntry
 					(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE_CONFIG,
 					 SmooksFactory.eINSTANCE.createResourceConfigType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST,
-					 SmooksFactory.eINSTANCE.createSmooksResourceListType())));
 	}
 
 	/**
@@ -306,7 +262,7 @@ public class ParamTypeItemProvider1
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return Smooks_1_0EditPlugin1.INSTANCE;
+		return Smooks_1_0EditPlugin.INSTANCE;
 	}
 
 }

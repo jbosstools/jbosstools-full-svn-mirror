@@ -36,7 +36,7 @@ import org.jboss.tools.smooks.model.SmooksPackage;
  * <!-- end-user-doc -->
  * @generated
  */
-public class DocumentRootItemProvider1
+public class DocumentRootItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -50,7 +50,7 @@ public class DocumentRootItemProvider1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DocumentRootItemProvider1(AdapterFactory adapterFactory) {
+	public DocumentRootItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -216,7 +216,7 @@ public class DocumentRootItemProvider1
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return Smooks_1_0EditPlugin1.INSTANCE;
+		return Smooks_1_0EditPlugin.INSTANCE;
 	}
 
 }

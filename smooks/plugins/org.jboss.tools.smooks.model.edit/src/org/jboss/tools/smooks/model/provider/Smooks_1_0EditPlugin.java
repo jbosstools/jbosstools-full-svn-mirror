@@ -16,14 +16,14 @@ import org.eclipse.emf.common.util.ResourceLocator;
  * <!-- end-user-doc -->
  * @generated
  */
-public final class Smooks_1_0EditPlugin1 extends EMFPlugin {
+public final class Smooks_1_0EditPlugin extends EMFPlugin {
 	/**
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final Smooks_1_0EditPlugin1 INSTANCE = new Smooks_1_0EditPlugin1();
+	public static final Smooks_1_0EditPlugin INSTANCE = new Smooks_1_0EditPlugin();
 
 	/**
 	 * Keep track of the singleton.
@@ -39,7 +39,7 @@ public final class Smooks_1_0EditPlugin1 extends EMFPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Smooks_1_0EditPlugin1() {
+	public Smooks_1_0EditPlugin() {
 		super
 		  (new ResourceLocator [] {
 		   });

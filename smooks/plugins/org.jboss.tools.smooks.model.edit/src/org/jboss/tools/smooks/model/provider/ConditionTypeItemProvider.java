@@ -15,28 +15,27 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
-
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.jboss.tools.smooks.model.ProfilesType;
-import org.jboss.tools.smooks.model.SmooksFactory;
+import org.jboss.tools.smooks.model.ConditionType;
 import org.jboss.tools.smooks.model.SmooksPackage;
 
 /**
- * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.ProfilesType} object.
+ * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.ConditionType} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ProfilesTypeItemProvider1
+public class ConditionTypeItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -50,7 +49,7 @@ public class ProfilesTypeItemProvider1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ProfilesTypeItemProvider1(AdapterFactory adapterFactory) {
+	public ConditionTypeItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -65,49 +64,65 @@ public class ProfilesTypeItemProvider1
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addValuePropertyDescriptor(object);
+			addEvaluatorPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * This adds a property descriptor for the Value feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(SmooksPackage.Literals.PROFILES_TYPE__PROFILE);
-		}
-		return childrenFeatures;
+	protected void addValuePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ConditionType_value_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ConditionType_value_feature", "_UI_ConditionType_type"),
+				 SmooksPackage.Literals.CONDITION_TYPE__VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
+	 * This adds a property descriptor for the Evaluator feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
+	protected void addEvaluatorPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ConditionType_evaluator_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ConditionType_evaluator_feature", "_UI_ConditionType_type"),
+				 SmooksPackage.Literals.CONDITION_TYPE__EVALUATOR,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
-	 * This returns ProfilesType.gif.
+	 * This returns ConditionType.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ProfilesType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ConditionType"));
 	}
 
 	/**
@@ -118,7 +133,10 @@ public class ProfilesTypeItemProvider1
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_ProfilesType_type");
+		String label = ((ConditionType)object).getValue();
+		return label == null || label.length() == 0 ?
+			getString("_UI_ConditionType_type") :
+			getString("_UI_ConditionType_type") + " " + label;
 	}
 
 	/**
@@ -132,9 +150,10 @@ public class ProfilesTypeItemProvider1
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(ProfilesType.class)) {
-			case SmooksPackage.PROFILES_TYPE__PROFILE:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+		switch (notification.getFeatureID(ConditionType.class)) {
+			case SmooksPackage.CONDITION_TYPE__VALUE:
+			case SmooksPackage.CONDITION_TYPE__EVALUATOR:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -150,11 +169,6 @@ public class ProfilesTypeItemProvider1
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SmooksPackage.Literals.PROFILES_TYPE__PROFILE,
-				 SmooksFactory.eINSTANCE.createProfileType()));
 	}
 
 	/**
@@ -165,7 +179,7 @@ public class ProfilesTypeItemProvider1
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return Smooks_1_0EditPlugin1.INSTANCE;
+		return Smooks_1_0EditPlugin.INSTANCE;
 	}
 
 }

@@ -13,8 +13,6 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -23,20 +21,19 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.jboss.tools.smooks.model.ProfileType;
+import org.jboss.tools.smooks.model.ImportType;
 import org.jboss.tools.smooks.model.SmooksPackage;
 
 /**
- * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.ProfileType} object.
+ * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.ImportType} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ProfileTypeItemProvider1
-	extends ItemProviderAdapter
+public class ImportTypeItemProvider
+	extends AbstractResourceConfigItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -49,7 +46,7 @@ public class ProfileTypeItemProvider1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ProfileTypeItemProvider1(AdapterFactory adapterFactory) {
+	public ImportTypeItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -64,27 +61,25 @@ public class ProfileTypeItemProvider1
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addValuePropertyDescriptor(object);
-			addBaseProfilePropertyDescriptor(object);
-			addSubProfilesPropertyDescriptor(object);
+			addFilePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Value feature.
+	 * This adds a property descriptor for the File feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addValuePropertyDescriptor(Object object) {
+	protected void addFilePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ProfileType_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ProfileType_value_feature", "_UI_ProfileType_type"),
-				 SmooksPackage.Literals.PROFILE_TYPE__VALUE,
+				 getString("_UI_ImportType_file_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ImportType_file_feature", "_UI_ImportType_type"),
+				 SmooksPackage.Literals.IMPORT_TYPE__FILE,
 				 true,
 				 false,
 				 false,
@@ -94,58 +89,14 @@ public class ProfileTypeItemProvider1
 	}
 
 	/**
-	 * This adds a property descriptor for the Base Profile feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addBaseProfilePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ProfileType_baseProfile_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ProfileType_baseProfile_feature", "_UI_ProfileType_type"),
-				 SmooksPackage.Literals.PROFILE_TYPE__BASE_PROFILE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Sub Profiles feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addSubProfilesPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ProfileType_subProfiles_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ProfileType_subProfiles_feature", "_UI_ProfileType_type"),
-				 SmooksPackage.Literals.PROFILE_TYPE__SUB_PROFILES,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This returns ProfileType.gif.
+	 * This returns ImportType.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ProfileType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ImportType"));
 	}
 
 	/**
@@ -156,10 +107,10 @@ public class ProfileTypeItemProvider1
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((ProfileType)object).getValue();
+		String label = ((ImportType)object).getFile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ProfileType_type") :
-			getString("_UI_ProfileType_type") + " " + label;
+			getString("_UI_ImportType_type") :
+			getString("_UI_ImportType_type") + " " + label;
 	}
 
 	/**
@@ -173,10 +124,8 @@ public class ProfileTypeItemProvider1
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(ProfileType.class)) {
-			case SmooksPackage.PROFILE_TYPE__VALUE:
-			case SmooksPackage.PROFILE_TYPE__BASE_PROFILE:
-			case SmooksPackage.PROFILE_TYPE__SUB_PROFILES:
+		switch (notification.getFeatureID(ImportType.class)) {
+			case SmooksPackage.IMPORT_TYPE__FILE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}
@@ -193,17 +142,6 @@ public class ProfileTypeItemProvider1
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public ResourceLocator getResourceLocator() {
-		return Smooks_1_0EditPlugin1.INSTANCE;
 	}
 
 }
