@@ -15,13 +15,6 @@
       </editor>
    </extension>
    <extension
-         point="org.eclipse.emf.ecore.generated_package">
-      <package
-            class="org.milyn.xsd.smooks.SmooksPackage"
-            uri="http://www.milyn.org/xsd/smooks-1.0.xsd">
-      </package>
-   </extension>
-   <extension
          point="org.eclipse.ui.views.properties.tabbed.propertySections">
       <propertySections
             contributorId="org.jboss.tools.smooks.ui.editors.SmooksFormEditor">
