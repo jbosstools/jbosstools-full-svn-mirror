@@ -24,3 +24,7 @@ merge with your existing workingsets.
 
 3) Select jbosstools.wst
 
+4) Press Finish
+
+
+
