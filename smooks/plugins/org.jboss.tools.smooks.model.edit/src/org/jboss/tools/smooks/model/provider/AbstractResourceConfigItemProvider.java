@@ -29,7 +29,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
  * <!-- end-user-doc -->
  * @generated
  */
-public class AbstractResourceConfigItemProvider1
+public class AbstractResourceConfigItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -43,7 +43,7 @@ public class AbstractResourceConfigItemProvider1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AbstractResourceConfigItemProvider1(AdapterFactory adapterFactory) {
+	public AbstractResourceConfigItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 

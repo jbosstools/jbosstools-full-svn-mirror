@@ -33,7 +33,7 @@ import org.jboss.tools.smooks.model.SmooksPackage;
  * @generated
  */
 public class ImportTypeItemProvider1
-	extends AbstractResourceConfigItemProvider1
+	extends AbstractResourceConfigItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
