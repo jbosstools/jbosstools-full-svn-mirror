@@ -17,6 +17,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -86,10 +87,11 @@ public class SmooksFileBuilder {
 
 		insertResoureConfig(listType, context.getGeneratorResourceList());
 
-		List test = listType.getAbstractResourceConfig();
-
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		smooksResource.save(outputStream, Collections.EMPTY_MAP);
+		removeSavedResourceConfig(listType,context.getGeneratorResourceList());
+		context.getGeneratorResourceList().clear();
+		context.setGeneratorResourceList(null);
 		return new ByteArrayInputStream(outputStream.toByteArray());
 	}
 
@@ -112,9 +114,30 @@ public class SmooksFileBuilder {
 		return new BasicCommandStack();
 	}
 
+	private void removeSavedResourceConfig(SmooksResourceListType list,
+			List resourceConfigList) {
+		for (Iterator iterator = resourceConfigList.iterator(); iterator
+				.hasNext();) {
+			Object object = (Object) iterator.next();
+			RemoveCommand
+					.create(
+							domain,
+							list,
+							SmooksPackage.eINSTANCE
+									.getSmooksResourceListType_AbstractResourceConfig(),
+							object).execute();
+		}
+	}
+
+	/**
+	 * TODO The Method should improve!!!!
+	 * 
+	 * @param list
+	 * @param resourceConfigList
+	 */
 	protected void insertResoureConfig(SmooksResourceListType list,
 			List resourceConfigList) {
-		EditingDomain domain = createEditingDomain();
+		// EditingDomain domain = createEditingDomain();
 		int length = resourceConfigList.size();
 		List kk = list.getAbstractResourceConfig();
 		for (int i = length - 1; i >= 0; i--) {
@@ -122,9 +145,19 @@ public class SmooksFileBuilder {
 			Command addResourceConfigCommand = AddCommand
 					.create(
 							domain,
-							list,SmooksPackage.eINSTANCE.getSmooksResourceListType_AbstractResourceConfig(),
+							list,
+							SmooksPackage.eINSTANCE
+									.getSmooksResourceListType_AbstractResourceConfig(),
 							obj);
 			addResourceConfigCommand.execute();
+			MoveCommand
+					.create(
+							domain,
+							list,
+							SmooksPackage.eINSTANCE
+									.getSmooksResourceListType_AbstractResourceConfig(),
+							obj, 1).execute();
+
 		}
 	}
 
