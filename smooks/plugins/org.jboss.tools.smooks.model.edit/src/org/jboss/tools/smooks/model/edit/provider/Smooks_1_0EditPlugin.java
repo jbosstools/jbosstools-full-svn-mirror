@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.milyn.xsd.smooks.provider;
+package org.jboss.tools.smooks.model.edit.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
 
