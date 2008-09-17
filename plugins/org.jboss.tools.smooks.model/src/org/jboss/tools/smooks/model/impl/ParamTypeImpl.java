@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.milyn.xsd.smooks.impl;
+package org.jboss.tools.smooks.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -14,8 +14,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl;
 
-import org.milyn.xsd.smooks.ParamType;
-import org.milyn.xsd.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.ParamType;
+import org.jboss.tools.smooks.model.SmooksPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,8 +24,8 @@ import org.milyn.xsd.smooks.SmooksPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.milyn.xsd.smooks.impl.ParamTypeImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.ParamTypeImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.ParamTypeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.ParamTypeImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
