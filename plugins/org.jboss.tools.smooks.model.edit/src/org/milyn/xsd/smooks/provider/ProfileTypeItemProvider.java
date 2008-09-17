@@ -26,11 +26,11 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.milyn.xsd.smooks.ProfileType;
-import org.milyn.xsd.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.ProfileType;
+import org.jboss.tools.smooks.model.SmooksPackage;
 
 /**
- * This is the item provider adapter for a {@link org.milyn.xsd.smooks.ProfileType} object.
+ * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.ProfileType} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

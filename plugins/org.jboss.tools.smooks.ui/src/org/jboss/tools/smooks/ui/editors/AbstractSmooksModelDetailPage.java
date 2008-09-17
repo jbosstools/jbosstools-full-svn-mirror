@@ -20,8 +20,8 @@ import org.eclipse.ui.forms.IFormPart;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.ui.ResourceConfigWarrper;
-import org.milyn.xsd.smooks.ResourceConfigType;
 
 /**
  * @author Dart Peng<br>

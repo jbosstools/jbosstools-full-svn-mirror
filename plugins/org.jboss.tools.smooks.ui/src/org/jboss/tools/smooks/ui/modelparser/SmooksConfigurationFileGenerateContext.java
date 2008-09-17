@@ -15,8 +15,8 @@ import java.util.List;
 
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.jboss.tools.smooks.graphical.Param;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
-import org.milyn.xsd.smooks.SmooksResourceListType;
 
 /**
  * @author Dart Peng

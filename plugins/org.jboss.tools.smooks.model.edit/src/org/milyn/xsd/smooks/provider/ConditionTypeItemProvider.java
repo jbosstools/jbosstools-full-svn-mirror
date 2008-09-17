@@ -26,11 +26,11 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.milyn.xsd.smooks.ConditionType;
-import org.milyn.xsd.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.ConditionType;
+import org.jboss.tools.smooks.model.SmooksPackage;
 
 /**
- * This is the item provider adapter for a {@link org.milyn.xsd.smooks.ConditionType} object.
+ * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.ConditionType} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

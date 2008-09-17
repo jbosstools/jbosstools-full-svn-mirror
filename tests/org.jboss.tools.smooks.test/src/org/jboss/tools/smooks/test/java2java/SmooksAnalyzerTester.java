@@ -35,11 +35,11 @@ import org.jboss.tools.smooks.analyzer.ResourceConfigEraser;
 import org.jboss.tools.smooks.graphical.GraphInformations;
 import org.jboss.tools.smooks.graphical.GraphicalPackage;
 import org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer;
-import org.milyn.xsd.smooks.DocumentRoot;
-import org.milyn.xsd.smooks.SmooksPackage;
-import org.milyn.xsd.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks.model.DocumentRoot;
+import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
+import org.jboss.tools.smooks.model.util.SmooksResourceFactoryImpl;
 import org.milyn.xsd.smooks.provider.SmooksItemProviderAdapterFactory;
-import org.milyn.xsd.smooks.util.SmooksResourceFactoryImpl;
 
 /**
  * @author Dart Peng Date : 2008-9-1

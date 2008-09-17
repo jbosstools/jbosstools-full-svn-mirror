@@ -13,10 +13,10 @@ package org.jboss.tools.smooks.analyzer;
 import java.util.Iterator;
 import java.util.List;
 
-import org.milyn.xsd.smooks.ResourceConfigType;
-import org.milyn.xsd.smooks.ResourceType;
-import org.milyn.xsd.smooks.SmooksResourceListType;
-import org.milyn.xsd.smooks.util.SmooksConstants;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.ResourceType;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
+import org.jboss.tools.smooks.model.util.SmooksModelConstants;
 
 /**
  * @author Dart Peng<br>
@@ -63,7 +63,7 @@ public class NormalSmooksModelBuilder {
 			return false;
 		String selector = config.getSelector();
 		if (selector != null) {
-			return SmooksConstants.GLOBAL_PARAMETERS.equals(selector.trim());
+			return SmooksModelConstants.GLOBAL_PARAMETERS.equals(selector.trim());
 		}
 		return false;
 	}
@@ -75,7 +75,7 @@ public class NormalSmooksModelBuilder {
 		if (resource != null) {
 			String r = resource.getValue();
 			if(r != null)
-			return SmooksConstants.DATE_DECODER.equals(r.trim());
+			return SmooksModelConstants.DATE_DECODER.equals(r.trim());
 		}
 		return false;
 	}
@@ -87,7 +87,7 @@ public class NormalSmooksModelBuilder {
 		if (resource != null) {
 			String resourceString = resource.getValue();
 			if(resourceString != null)
-			return SmooksConstants.BEAN_POPULATOR.equals(resourceString.trim());
+			return SmooksModelConstants.BEAN_POPULATOR.equals(resourceString.trim());
 		}
 		return false;
 	}

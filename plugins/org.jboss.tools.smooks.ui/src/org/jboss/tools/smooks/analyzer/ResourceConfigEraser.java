@@ -14,8 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.milyn.xsd.smooks.ResourceConfigType;
-import org.milyn.xsd.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 
 /**
  * @author Dart Peng<br>
