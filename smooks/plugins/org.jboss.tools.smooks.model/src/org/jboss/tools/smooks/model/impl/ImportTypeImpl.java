@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.milyn.xsd.smooks.impl;
+package org.jboss.tools.smooks.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -12,8 +12,8 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.milyn.xsd.smooks.ImportType;
-import org.milyn.xsd.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.ImportType;
+import org.jboss.tools.smooks.model.SmooksPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,7 +22,7 @@ import org.milyn.xsd.smooks.SmooksPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.milyn.xsd.smooks.impl.ImportTypeImpl#getFile <em>File</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.ImportTypeImpl#getFile <em>File</em>}</li>
  * </ul>
  * </p>
  *

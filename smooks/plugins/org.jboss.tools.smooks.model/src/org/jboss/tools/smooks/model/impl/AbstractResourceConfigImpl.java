@@ -4,14 +4,14 @@
  *
  * $Id$
  */
-package org.milyn.xsd.smooks.impl;
+package org.jboss.tools.smooks.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
-import org.milyn.xsd.smooks.AbstractResourceConfig;
-import org.milyn.xsd.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.AbstractResourceConfig;
+import org.jboss.tools.smooks.model.SmooksPackage;
 
 /**
  * <!-- begin-user-doc -->

@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.milyn.xsd.smooks.impl;
+package org.jboss.tools.smooks.model.impl;
 
 import java.util.Collection;
 
@@ -20,9 +20,9 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.milyn.xsd.smooks.ProfileType;
-import org.milyn.xsd.smooks.ProfilesType;
-import org.milyn.xsd.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.ProfileType;
+import org.jboss.tools.smooks.model.ProfilesType;
+import org.jboss.tools.smooks.model.SmooksPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +31,7 @@ import org.milyn.xsd.smooks.SmooksPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.milyn.xsd.smooks.impl.ProfilesTypeImpl#getProfile <em>Profile</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.ProfilesTypeImpl#getProfile <em>Profile</em>}</li>
  * </ul>
  * </p>
  *

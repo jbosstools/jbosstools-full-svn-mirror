@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.milyn.xsd.smooks.impl;
+package org.jboss.tools.smooks.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -15,18 +15,18 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 
-import org.milyn.xsd.smooks.AbstractResourceConfig;
-import org.milyn.xsd.smooks.ConditionType;
-import org.milyn.xsd.smooks.DocumentRoot;
-import org.milyn.xsd.smooks.ImportType;
-import org.milyn.xsd.smooks.ParamType;
-import org.milyn.xsd.smooks.ProfileType;
-import org.milyn.xsd.smooks.ProfilesType;
-import org.milyn.xsd.smooks.ResourceConfigType;
-import org.milyn.xsd.smooks.ResourceType;
-import org.milyn.xsd.smooks.SmooksFactory;
-import org.milyn.xsd.smooks.SmooksPackage;
-import org.milyn.xsd.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks.model.AbstractResourceConfig;
+import org.jboss.tools.smooks.model.ConditionType;
+import org.jboss.tools.smooks.model.DocumentRoot;
+import org.jboss.tools.smooks.model.ImportType;
+import org.jboss.tools.smooks.model.ParamType;
+import org.jboss.tools.smooks.model.ProfileType;
+import org.jboss.tools.smooks.model.ProfilesType;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.ResourceType;
+import org.jboss.tools.smooks.model.SmooksFactory;
+import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 
 /**
  * <!-- begin-user-doc -->
@@ -116,7 +116,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.milyn.xsd.smooks.SmooksPackage#eNS_URI
+	 * @see org.jboss.tools.smooks.model.SmooksPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */

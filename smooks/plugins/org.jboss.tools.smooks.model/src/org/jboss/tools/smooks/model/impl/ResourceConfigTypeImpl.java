@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.milyn.xsd.smooks.impl;
+package org.jboss.tools.smooks.model.impl;
 
 import java.util.Collection;
 
@@ -21,11 +21,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.milyn.xsd.smooks.ConditionType;
-import org.milyn.xsd.smooks.ParamType;
-import org.milyn.xsd.smooks.ResourceConfigType;
-import org.milyn.xsd.smooks.ResourceType;
-import org.milyn.xsd.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.ConditionType;
+import org.jboss.tools.smooks.model.ParamType;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.ResourceType;
+import org.jboss.tools.smooks.model.SmooksPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,12 +34,12 @@ import org.milyn.xsd.smooks.SmooksPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.milyn.xsd.smooks.impl.ResourceConfigTypeImpl#getResource <em>Resource</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.ResourceConfigTypeImpl#getCondition <em>Condition</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.ResourceConfigTypeImpl#getParam <em>Param</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.ResourceConfigTypeImpl#getSelector <em>Selector</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.ResourceConfigTypeImpl#getSelectorNamespace <em>Selector Namespace</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.ResourceConfigTypeImpl#getTargetProfile <em>Target Profile</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.ResourceConfigTypeImpl#getResource <em>Resource</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.ResourceConfigTypeImpl#getCondition <em>Condition</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.ResourceConfigTypeImpl#getParam <em>Param</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.ResourceConfigTypeImpl#getSelector <em>Selector</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.ResourceConfigTypeImpl#getSelectorNamespace <em>Selector Namespace</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.ResourceConfigTypeImpl#getTargetProfile <em>Target Profile</em>}</li>
  * </ul>
  * </p>
  *

@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.milyn.xsd.smooks.impl;
+package org.jboss.tools.smooks.model.impl;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -23,17 +23,17 @@ import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.milyn.xsd.smooks.AbstractResourceConfig;
-import org.milyn.xsd.smooks.ConditionType;
-import org.milyn.xsd.smooks.DocumentRoot;
-import org.milyn.xsd.smooks.ImportType;
-import org.milyn.xsd.smooks.ParamType;
-import org.milyn.xsd.smooks.ProfileType;
-import org.milyn.xsd.smooks.ProfilesType;
-import org.milyn.xsd.smooks.ResourceConfigType;
-import org.milyn.xsd.smooks.ResourceType;
-import org.milyn.xsd.smooks.SmooksPackage;
-import org.milyn.xsd.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks.model.AbstractResourceConfig;
+import org.jboss.tools.smooks.model.ConditionType;
+import org.jboss.tools.smooks.model.DocumentRoot;
+import org.jboss.tools.smooks.model.ImportType;
+import org.jboss.tools.smooks.model.ParamType;
+import org.jboss.tools.smooks.model.ProfileType;
+import org.jboss.tools.smooks.model.ProfilesType;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.ResourceType;
+import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 
 /**
  * <!-- begin-user-doc -->
@@ -42,18 +42,18 @@ import org.milyn.xsd.smooks.SmooksResourceListType;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.milyn.xsd.smooks.impl.DocumentRootImpl#getMixed <em>Mixed</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.DocumentRootImpl#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.DocumentRootImpl#getXSISchemaLocation <em>XSI Schema Location</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.DocumentRootImpl#getAbstractResourceConfig <em>Abstract Resource Config</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.DocumentRootImpl#getCondition <em>Condition</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.DocumentRootImpl#getImport <em>Import</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.DocumentRootImpl#getParam <em>Param</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.DocumentRootImpl#getProfile <em>Profile</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.DocumentRootImpl#getProfiles <em>Profiles</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.DocumentRootImpl#getResource <em>Resource</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.DocumentRootImpl#getResourceConfig <em>Resource Config</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.DocumentRootImpl#getSmooksResourceList <em>Smooks Resource List</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.DocumentRootImpl#getMixed <em>Mixed</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.DocumentRootImpl#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.DocumentRootImpl#getXSISchemaLocation <em>XSI Schema Location</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.DocumentRootImpl#getAbstractResourceConfig <em>Abstract Resource Config</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.DocumentRootImpl#getCondition <em>Condition</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.DocumentRootImpl#getImport <em>Import</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.DocumentRootImpl#getParam <em>Param</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.DocumentRootImpl#getProfile <em>Profile</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.DocumentRootImpl#getProfiles <em>Profiles</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.DocumentRootImpl#getResource <em>Resource</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.DocumentRootImpl#getResourceConfig <em>Resource Config</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.DocumentRootImpl#getSmooksResourceList <em>Smooks Resource List</em>}</li>
  * </ul>
  * </p>
  *

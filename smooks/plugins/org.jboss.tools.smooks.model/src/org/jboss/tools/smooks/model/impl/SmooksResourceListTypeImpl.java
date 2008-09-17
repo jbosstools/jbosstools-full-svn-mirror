@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.milyn.xsd.smooks.impl;
+package org.jboss.tools.smooks.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -21,10 +21,10 @@ import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.milyn.xsd.smooks.AbstractResourceConfig;
-import org.milyn.xsd.smooks.ProfilesType;
-import org.milyn.xsd.smooks.SmooksPackage;
-import org.milyn.xsd.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks.model.AbstractResourceConfig;
+import org.jboss.tools.smooks.model.ProfilesType;
+import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,12 +33,12 @@ import org.milyn.xsd.smooks.SmooksResourceListType;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.milyn.xsd.smooks.impl.SmooksResourceListTypeImpl#getProfiles <em>Profiles</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.SmooksResourceListTypeImpl#getAbstractResourceConfigGroup <em>Abstract Resource Config Group</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.SmooksResourceListTypeImpl#getAbstractResourceConfig <em>Abstract Resource Config</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.SmooksResourceListTypeImpl#getDefaultSelector <em>Default Selector</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.SmooksResourceListTypeImpl#getDefaultSelectorNamespace <em>Default Selector Namespace</em>}</li>
- *   <li>{@link org.milyn.xsd.smooks.impl.SmooksResourceListTypeImpl#getDefaultTargetProfile <em>Default Target Profile</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.SmooksResourceListTypeImpl#getProfiles <em>Profiles</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.SmooksResourceListTypeImpl#getAbstractResourceConfigGroup <em>Abstract Resource Config Group</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.SmooksResourceListTypeImpl#getAbstractResourceConfig <em>Abstract Resource Config</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.SmooksResourceListTypeImpl#getDefaultSelector <em>Default Selector</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.SmooksResourceListTypeImpl#getDefaultSelectorNamespace <em>Default Selector Namespace</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.impl.SmooksResourceListTypeImpl#getDefaultTargetProfile <em>Default Target Profile</em>}</li>
  * </ul>
  * </p>
  *
