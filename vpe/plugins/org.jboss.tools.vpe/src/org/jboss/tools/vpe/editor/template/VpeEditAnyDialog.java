@@ -56,6 +56,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 	private Combo cbDisplay;
 	private Combo cbTagForDisplay; 
 	private int displayIndexMem;
+	private int tagNameItemIndex;
 	private Text txtValue;
 	private Text txtBorder;
 	private ColorControl ctlValueColor;
@@ -117,7 +118,11 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
         gd.horizontalSpan=2;
         cbTagForDisplay.setLayoutData(gd);
         cbTagForDisplay.setItems(displayTags.toArray(new String[displayTags.size()]));
-        cbTagForDisplay.select(0);
+        tagNameItemIndex = displayTags.indexOf(data.getTagForDisplay());
+        if(tagNameItemIndex==-1) {
+        		tagNameItemIndex=0;
+        }
+        cbTagForDisplay.select(tagNameItemIndex);
         
         
 //		ctlCaseSensitive = new CheckControl(composite, "Case sensitive", data.isCaseSensitive());
@@ -202,7 +207,10 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 			data.setChanged(true);
 			data.setDisplay(display);
 		}
-
+		if(tagNameItemIndex!=cbTagForDisplay.getSelectionIndex()) {
+			data.setChanged(true);
+			data.setTagForDisplay(displayTags.get(cbTagForDisplay.getSelectionIndex()));
+		}
 		data.setChanged(isChanged(data, data.getValue(), txtValue.getText()));
 		data.setValue(txtValue.getText().trim());
 

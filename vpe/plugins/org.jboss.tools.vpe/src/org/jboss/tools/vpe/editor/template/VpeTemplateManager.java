@@ -184,6 +184,7 @@ public class VpeTemplateManager {
 	};
 
 	static final String ATTR_ANY_DISPLAY = "display"; //$NON-NLS-1$
+	static final String ATTR_ANY_TAG_FOR_DISPLAY="tag-for-display"; //$NON-NLS-1$
 	static final String ATTR_ANY_ICON = "icon"; //$NON-NLS-1$
 	static final String ATTR_ANY_VALUE = "value"; //$NON-NLS-1$
 	static final String ATTR_ANY_BORDER = "border"; //$NON-NLS-1$
@@ -602,6 +603,11 @@ public class VpeTemplateManager {
 
 							Element anyNode = getChildNode(templateNode, TAG_ANY);
 							if (anyNode != null) {
+								attr = anyNode.getAttributeNode(ATTR_ANY_TAG_FOR_DISPLAY);
+								if(attr!=null) {
+									anyData.setTagForDisplay(attr.getNodeValue());
+								}
+								
 								attr = anyNode.getAttributeNode(ATTR_TEMPLATE_CHILDREN);
 								if (attr != null) {
 									anyData.setChildren(ATTR_VALUE_YES.equalsIgnoreCase(attr.getNodeValue()));
@@ -729,6 +735,9 @@ public class VpeTemplateManager {
 		newTagElement.appendChild(newTemplateElement);
 
 		Element newAnyElement = document.createElement(TAG_ANY);
+		
+		if(data.getTagForDisplay()!=null&& data.getTagForDisplay().length() > 0)
+			newAnyElement.setAttribute(ATTR_ANY_TAG_FOR_DISPLAY, data.getTagForDisplay());
 		if (data.getDisplay() != null && data.getDisplay().length() > 0) 
 			newAnyElement.setAttribute(ATTR_ANY_DISPLAY, data.getDisplay());
 		if (data.getValue() != null && data.getValue().length() > 0) 

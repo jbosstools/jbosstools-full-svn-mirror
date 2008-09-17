@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
@@ -44,6 +43,7 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 	static final String VAL_DISPLAY_NONE = "none";
 
 	private boolean caseSensitive;
+	private VpeExpression tagForDisplayExpr;
 	private VpeExpression displayExpr;
 	private VpeExpression valueExpr;
 	private VpeExpression borderExpr;
@@ -56,6 +56,7 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 	private List propertyCreators;
 	private Set dependencySet;
 
+	private String tagForDisplayStr;
 	private String displayStr;
 	private String valueStr;
 	private String borderStr;
@@ -71,6 +72,19 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 	}
 
 	private void build(Element element, VpeDependencyMap dependencyMap) {
+		Attr tagForDisplay = element.getAttributeNode(VpeTemplateManager.ATTR_ANY_TAG_FOR_DISPLAY);
+		if (tagForDisplay != null) {
+			try {
+				tagForDisplayStr = tagForDisplay.getNodeValue();
+				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(tagForDisplayStr,caseSensitive);
+				tagForDisplayExpr = info.getExpression();
+				dependencySet = info.getDependencySet();
+				dependencyMap.setCreator(this, info.getDependencySet());
+			} catch(VpeExpressionBuilderException ex) {
+				VpePlugin.reportProblem(ex);
+			}
+		}
+		
 		Attr displayAttr = element.getAttributeNode(VpeTemplateManager.ATTR_ANY_DISPLAY);
 		if (displayAttr != null) {
 			try {
@@ -277,7 +291,7 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 	public VpeAnyData getAnyData() {
 		return new VpeAnyData(
 					displayStr,
-					"",
+					tagForDisplayStr,
 					valueStr,
 					borderStr,
 					valueColorStr,

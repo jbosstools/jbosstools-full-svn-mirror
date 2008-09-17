@@ -13,6 +13,8 @@ package org.jboss.tools.vpe.editor.template;
 public class VpeAnyData extends VpeTemplateData {
 	private String uri;
 	private String tagForDisplay;
+	private boolean showIcon;
+	
 	private String display;
 	private String value;
 	private String border;
@@ -20,7 +22,8 @@ public class VpeAnyData extends VpeTemplateData {
 	private String valueBackgroundColor;
 	private String backgroundColor;
 	private String borderColor;
-	private boolean showIcon;
+
+
 
 	public VpeAnyData(String name) {
 		super(name);
