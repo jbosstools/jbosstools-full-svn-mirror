@@ -26,8 +26,8 @@ import org.jboss.tools.smooks.model.DocumentRoot;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksPackage;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
+import org.jboss.tools.smooks.model.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
-import org.milyn.xsd.smooks.provider.SmooksItemProviderAdapterFactory;
 
 public class SmooksFileBuilder {
 	Resource smooksResource;

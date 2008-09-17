@@ -49,6 +49,7 @@ import org.jboss.tools.smooks.model.ResourceType;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksPackage;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
+import org.jboss.tools.smooks.model.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
@@ -59,7 +60,6 @@ import org.jboss.tools.smooks.ui.gef.model.TreeItemRelationModel;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.jboss.tools.smooks.utils.ProjectClassLoader;
 import org.jboss.tools.smooks.utils.UIUtils;
-import org.milyn.xsd.smooks.provider.SmooksItemProviderAdapterFactory;
 
 /**
  * @author Dart Peng

@@ -35,8 +35,8 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelBuilder;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
 import org.jboss.tools.smooks.model.DocumentRoot;
+import org.jboss.tools.smooks.model.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.util.SmooksResourceFactoryImpl;
-import org.milyn.xsd.smooks.provider.SmooksItemProviderAdapterFactory;
 
 /**
  * @author Dart Peng
