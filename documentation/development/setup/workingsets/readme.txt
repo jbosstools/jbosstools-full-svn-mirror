@@ -6,6 +6,9 @@ for easily setting up working sets in Eclipse for JBoss Tools.
 Both ways assumes you have already checked out JBoss tools plugins
 in your workspace.
 
+After you used one of the below methods you can in Package Explorer set Top Level Elements to Working Sets
+to get the plugins grouped according to the workingset.
+
 Method #1 (command-line)
 ========================
 This replaces any existing workingset definition in your workspace (take a backup if you don't feel safe doing this ;)
