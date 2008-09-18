@@ -27,7 +27,7 @@
   <para>
     <emphasis role="bold">JSF Tools Tutorial</emphasis>
     <ulink url="&jsftutoriallink;">(html)</ulink>
-   </para>
+  </para>
   <para> This tutorial will describe how to deal with classic/old style of JSF development and how
     to create a simple JSF application using the JBoss Developer Studio. </para>
 
@@ -72,7 +72,7 @@
   <para>
     <emphasis role="bold">jBPM Tools Reference Guide</emphasis>
     <ulink url="&jbpmlink;">(html)</ulink>
-      </para>
+  </para>
   <para>With jBPM Tools Reference Guide we&apos;ll help you to facilitate a cross-product
     learning and know how you can speed your development using special editors and visual designers.
     We&apos;ll also guide you through the steps on how to create a simple process and test it
@@ -81,18 +81,26 @@
   <para>
     <emphasis role="bold">Hibernate Tools Reference Guide</emphasis>
     <ulink url="&hibernatelink;">(html)</ulink>
-      </para>
+  </para>
   <para>Throughout this guide you will learn how to install and use Hibernate Tools bath via Ant and
     through Eclipse. We&apos;ll supply you with the information on how to create mapping files,
     configuration file as well as a file for controlling reverse engineering by using specific
     wizards that Hibernate tooling provides. Also you will know about Code Generation and
     peculiarities of work within Hibernate Console Perspective.</para>
-  
+
   <para>
     <emphasis role="bold">ESB Editor Reference Guide</emphasis>
     <ulink url="&esblink;">(html)</ulink>
   </para>
-  <para>This guide provides you with the information on ESB Editor which allows you to develop ESB file.</para>
+  <para>This guide provides you with the information on ESB Editor which allows you to develop ESB
+    file.</para>
+
+  <para>
+    <emphasis role="bold">JBoss Portal Tools Reference Guide</emphasis>
+    <ulink url="&jbossportallink;">(html)</ulink>
+  </para>
+  <para>The guide gives a detail look at how you can easily build a Portlet Web Application with
+    JBoss Tools and deploy it onto JBoss Portal.</para>
 
   <para>
     <emphasis role="bold">Exadel Studio Migration Guide</emphasis>
