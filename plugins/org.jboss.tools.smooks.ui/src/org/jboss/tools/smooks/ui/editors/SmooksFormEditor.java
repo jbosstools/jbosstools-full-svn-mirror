@@ -51,6 +51,8 @@ public class SmooksFormEditor extends FormEditor implements
 	private ComposedAdapterFactory adapterFactory;
 	private AdapterFactoryEditingDomain editingDomain;
 	private Resource smooksResource;
+	
+	private boolean forceDirty = false;
 
 	public SmooksFormEditor() {
 		super();
@@ -66,6 +68,13 @@ public class SmooksFormEditor extends FormEditor implements
 
 	protected CommandStack createCommandStack() {
 		return new BasicCommandStack();
+	}
+	
+	
+
+	@Override
+	public boolean isDirty() {
+		return forceDirty || super.isDirty();
 	}
 
 	@Override
@@ -130,6 +139,12 @@ public class SmooksFormEditor extends FormEditor implements
 	@Override
 	public void doSave(IProgressMonitor monitor) {
 		graphicalPage.doSave(monitor);
+		fireEditorDirty(false);
+	}
+	
+	public void fireEditorDirty(boolean dirty){
+		this.forceDirty = dirty;
+		this.firePropertyChange(PROP_DIRTY);
 	}
 
 	@Override

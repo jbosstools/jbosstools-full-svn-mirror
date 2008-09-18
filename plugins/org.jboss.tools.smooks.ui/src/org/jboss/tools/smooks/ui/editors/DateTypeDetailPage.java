@@ -41,23 +41,6 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 	}
 
 	@Override
-	public void refresh() {
-		if(this.resourceConfigList != null){
-			String formate = SmooksModelUtils.getParmaText("format", resourceConfigList);
-			String locallang = SmooksModelUtils.getParmaText("Locale-Language", resourceConfigList);
-			String localcontry = SmooksModelUtils.getParmaText("Locale-Contry", resourceConfigList);
-			if(formate == null) formate = "";
-			if(locallang == null) locallang = "";
-			if(localcontry == null) localcontry = "";
-			
-			
-			formatText.setText(formate);
-			localeContryCombo.setText(localcontry);
-			localeLangaugeCombo.setText(locallang);
-		}
-	}
-
-	@Override
 	protected void createSectionContents(Composite parent) {
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
@@ -78,6 +61,23 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 		localeContryCombo.setLayoutData(gd);
 
 		formToolKit.paintBordersFor(parent);
+	}
+
+	@Override
+	protected void initSectionUI() {
+		if(this.resourceConfigList != null){
+			String formate = SmooksModelUtils.getParmaText("format", resourceConfigList);
+			String locallang = SmooksModelUtils.getParmaText("Locale-Language", resourceConfigList);
+			String localcontry = SmooksModelUtils.getParmaText("Locale-Contry", resourceConfigList);
+			if(formate == null) formate = "";
+			if(locallang == null) locallang = "";
+			if(localcontry == null) localcontry = "";
+			
+			
+			formatText.setText(formate);
+			localeContryCombo.setText(localcontry);
+			localeLangaugeCombo.setText(locallang);
+		}
 	}
 
 }

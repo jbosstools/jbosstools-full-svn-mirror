@@ -117,17 +117,9 @@ public class JavaBeanModelLoadComposite extends Composite implements
 			gd.grabExcessHorizontalSpace = true;
 			classText.setLayoutData(gd);
 			classText.addModifyListener(new ModifyListener() {
-
-				/*
-				 * (non-Javadoc)
-				 * 
-				 * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse
-				 *      .swt.events.ModifyEvent)
-				 */
 				public void modifyText(ModifyEvent arg0) {
 					classFullName = classText.getText();
 				}
-
 			});
 
 			classBrowseButton = new Button(classTextContainer, SWT.NONE);

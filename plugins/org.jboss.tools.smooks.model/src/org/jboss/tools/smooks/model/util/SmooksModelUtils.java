@@ -71,10 +71,10 @@ public class SmooksModelUtils {
 				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT,
 				true);
 		if (value != null) {
-			if (value instanceof List) {
+			if (value instanceof List && !((List)value).isEmpty()) {
 				return ((List) value).get(0).toString().trim();
 			}
-			return value.toString();
+//			return value.toString();
 		}
 		return null;
 	}
@@ -103,5 +103,18 @@ public class SmooksModelUtils {
 	public static void appendTextToSmooksType(AnyType smooksModel, String text) {
 		smooksModel.getMixed().add(
 				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, text);
+	}
+	
+	public static void setTextToSmooksType(AnyType smooksModel, String text){
+		cleanTextToSmooksType(smooksModel);
+		appendTextToSmooksType(smooksModel,text);
+	}
+	
+	public static void cleanTextToSmooksType(AnyType smooksModel) {
+		Object obj = smooksModel.getMixed().get(
+				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT,true);
+		if(obj instanceof List){
+			((List)obj).clear();
+		}
 	}
 }
