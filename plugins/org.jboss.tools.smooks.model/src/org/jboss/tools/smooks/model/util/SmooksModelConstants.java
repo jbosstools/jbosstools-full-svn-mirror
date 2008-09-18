@@ -24,6 +24,12 @@ public class SmooksModelConstants {
 	
 	public static final String BEAN_ID = "beanId";
 	
+	public static final String FORMATE = "formate";
+	
+	public static final String LOCALE_LANGUAGE = "Locale-Language";
+	
+	public static final String LOCALE_CONTRY = "Locale-Contry";
+	
 	public static final String BEAN_CLASS = "beanClass";
 	
 	public static final String BINDINGS = "bindings";
