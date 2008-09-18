@@ -77,11 +77,11 @@ public class PortletFacetInstallDelegate implements IDelegate {
 			IJavaProject javaProject = JavaCore.create(project);	
 			
 			IPath containerPath = null;
-			if (IPortletConstants.PORTLET_FACET_VERSION_10.equals(fv.getVersionString())) {
+			//if (IPortletConstants.PORTLET_FACET_VERSION_10.equals(fv.getVersionString())) {
 				containerPath = new Path(IPortletConstants.PORTLET_CONTAINER_10_ID);
-			} else {
+			//} else {
 				containerPath = new Path(IPortletConstants.PORTLET_CONTAINER_20_ID);
-			}
+			//}
 			
 			IClasspathEntry entry = JavaCore.newContainerEntry(containerPath, true);
 			IClasspathEntry[] entries = javaProject.getRawClasspath();

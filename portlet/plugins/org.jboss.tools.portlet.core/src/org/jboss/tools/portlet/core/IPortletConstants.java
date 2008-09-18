@@ -46,6 +46,8 @@ public interface IPortletConstants {
 	static final String JBOSS_APP_FILE = "WEB-INF/jboss-app.xml";
 
 	static final String DEPLOY_JARS = "DEPLOY_JARS";
+	
+	static final String PORTLET_BRIDGE_RUNTIME = "PORTLET_BRIDGE_RUNTIME";
 
 	static final String JSF_SECTION = "jsfSection";
 

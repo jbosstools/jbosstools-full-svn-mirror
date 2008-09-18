@@ -30,6 +30,9 @@ public class JSFPortletFacetInstallDataModelProvider extends
 		if (propertyName.equals(IPortletConstants.DEPLOY_JARS)) {
 			return Boolean.TRUE;
 		}
+		if (propertyName.equals(IPortletConstants.PORTLET_BRIDGE_RUNTIME)) {
+			return "";
+		}
 		return super.getDefaultProperty(propertyName);
 	}
 
@@ -37,6 +40,7 @@ public class JSFPortletFacetInstallDataModelProvider extends
 	public Set<String> getPropertyNames() {
 		Set<String> propertyNames = super.getPropertyNames();
 		propertyNames.add(IPortletConstants.DEPLOY_JARS);
+		propertyNames.add(IPortletConstants.PORTLET_BRIDGE_RUNTIME);
 		return propertyNames;
 	}
 }

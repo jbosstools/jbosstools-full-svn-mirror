@@ -11,7 +11,9 @@
 package org.jboss.tools.portlet.core.internal.project.facet;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -278,26 +280,45 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 				.getBooleanProperty(IPortletConstants.DEPLOY_JARS);
 		if (deployJars) {
 			try {
-				URL installURL = FileLocator.toFileURL(PortletCoreActivator
-						.getDefault().getBundle().getEntry("/"));
-				String baseDir = installURL.getFile().toString();
-				File libDir = new File(baseDir + "/"
-						+ PortletCoreActivator.RESOURCES_FOLDER + "/"
-						+ PortletCoreActivator.JSFPORTLET_FOLDER);
-				List<File> filesToImport = Arrays.asList(libDir.listFiles());
-				IVirtualComponent component = ComponentCore
-						.createComponent(project);
-				IVirtualFile libVirtualFile = component.getRootFolder()
-						.getFile(IPortletConstants.WEB_INF_LIB);
+				
+				String pbRuntime = config
+						.getStringProperty(IPortletConstants.PORTLET_BRIDGE_RUNTIME);
+				if (pbRuntime != null && pbRuntime.trim().length() > 0) {
+					pbRuntime = pbRuntime.trim();
+					File pbFolder = new File(pbRuntime);
+					if (pbFolder.exists() && pbFolder.isDirectory()) {
+						String[] fileList = pbFolder.list(new FilenameFilter() {
 
-				IFile folder = libVirtualFile.getUnderlyingFile();
+							public boolean accept(File dir, String name) {
+								if (name.startsWith("portletbridge") || name.endsWith(".jar")) {
+									return true;
+								}
+								return false;
+							}
 
-				ImportOperation importOperation = new ImportOperation(folder
-						.getFullPath(), libDir,
-						FileSystemStructureProvider.INSTANCE,
-						PortletCoreActivator.OVERWRITE_ALL_QUERY, filesToImport);
-				importOperation.setCreateContainerStructure(false);
-				importOperation.run(monitor);
+						});
+						
+						List<File> filesToImport = new ArrayList<File>();
+						
+						for (int i = 0; i < fileList.length; i++) {
+							filesToImport.add(new File(pbRuntime,fileList[i]));
+						}
+						IVirtualComponent component = ComponentCore
+								.createComponent(project);
+						IVirtualFile libVirtualFile = component.getRootFolder()
+								.getFile(IPortletConstants.WEB_INF_LIB);
+
+						IFile folder = libVirtualFile.getUnderlyingFile();
+
+						ImportOperation importOperation = new ImportOperation(
+								folder.getFullPath(), pbFolder,
+								FileSystemStructureProvider.INSTANCE,
+								PortletCoreActivator.OVERWRITE_ALL_QUERY,
+								filesToImport);
+						importOperation.setCreateContainerStructure(false);
+						importOperation.run(monitor);
+					}
+				}
 			} catch (Exception e) {
 				PortletCoreActivator
 						.log(e, "Error loading classpath container");

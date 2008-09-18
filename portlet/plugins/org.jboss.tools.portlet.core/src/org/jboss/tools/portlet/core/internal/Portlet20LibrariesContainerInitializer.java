@@ -24,7 +24,7 @@ public class Portlet20LibrariesContainerInitializer extends
 		AbstractClasspathContainerInitializer {
 
 	public String getDescription(IPath containerPath, IJavaProject project) {
-		return "JBoss Portlet Classpath Container Initializer v2.0";
+		return "JBoss Portlet Classpath Container Initializer";
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class Portlet20LibrariesContainerInitializer extends
 
 	private class Portlet10ClasspathContainer extends BasePortletClasspathContainer {
 
-		public final static String DESCRIPTION = "JBoss Portlet Libraries v2.0";
+		public final static String DESCRIPTION = "JBoss Portlet Library";
 
 		public Portlet10ClasspathContainer(IPath path) {
 			super(path, DESCRIPTION, SUFFIX);

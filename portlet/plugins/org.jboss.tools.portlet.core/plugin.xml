@@ -254,4 +254,9 @@
         </catalogContribution>
 
     </extension>
+    
+    <extension point="org.eclipse.wst.common.project.facet.core.listeners">
+  		<listener class="org.jboss.tools.portlet.core.internal.project.facet.PortletPostInstallListener" 
+  		eventTypes="POST_INSTALL"/>
+	</extension>
 </plugin>
