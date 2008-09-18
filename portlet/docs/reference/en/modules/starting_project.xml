@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="starting_project" xreflabel="starting_project">
+    <?dbhtml filename="starting_project.html"?>
+    <title>Starting the Project with JBoss Portal</title>
+
+    <para>To get started with <property>JBoss Portal</property> and <property>JBoss
+        Tools</property>, you should first have a Web Project pointed to the JBoss Portal Runtime.
+        Thus, this chapter is intended to give you a detail look at how you can get it.</para>
+
+    <section id="creating _project_with_jbossportal">
+        <title>Creating a Dynamic Web Project</title>
+
+        <para>To create a Dynamic Web Project, go to <emphasis>
+                <property>File > New > Dynamic Web Project</property>
+            </emphasis> if you are in the <property>Web Perspective</property> or <property>File >
+                New > Other > Web > Dynamic Web Project</property> in any other Perspective. The
+            first page of the New Dynamic Web Project wizard looks as follows.</para>
+
+        <figure>
+            <title>New Dynamic Web Project</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/starting_project_1.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Fill in the name of your project. Next, click on the <emphasis>
+                <property>New...</property>
+            </emphasis> button in the <emphasis>
+                <property>Target Runtime</property>
+            </emphasis> section to specify a new Target Runtime. Click <emphasis>Jboss 4.2
+            Runtime</emphasis> and press <emphasis>
+                <property>Next</property>.</emphasis></para>
+
+        <figure>
+            <title>New Server Runtime</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/starting_project_2.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>On the next page you should give a name to the runtime. Let&apos;s call it
+                <emphasis>JBoss Portal 2.7 Runtime</emphasis>. And then point it to the location of
+            your JBoss AS + Portal installation.</para>
+
+        <note>
+            <title>Note:</title>
+
+            <para>The JBoss Tools Portlet feature has been tested using 2.6.5 and 2.7.0.ALPHA
+                versions of <property>JBoss Portal</property>. Remember, if you want to use Portlet
+                version 2.0 (JSR-268), you have to choose JBoss Portal 2.7.</para>
+        </note>
+
+        <figure>
+            <title>Target Runtime</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/starting_project_3.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Click on <emphasis>
+                <property>Finish</property>.</emphasis> It returns you to the <property>New Dynamic
+                Web Project</property> wizard where it&apos; also necessary to set the project
+            Configuration. <property>JBoss Tools</property> (starting from 3.0 Alpha) support the
+            JSR-168 Portlet Specification (Portlet 1.0), JSR-286 Portlet Specification (Portlet
+            2.0). Thus you can choose <emphasis>Portlet Project v1.0</emphasis> or <emphasis>Portlet
+                Project v2.0</emphasis>.</para>
+
+        <figure>
+            <title>Setting the Project Configuration</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/starting_project_4.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>The last wizard page is for configuring web modules. Here all values are set, so you
+            can leave everything as it is.</para>
+
+        <figure>
+            <title>The Project Web Modules</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/starting_project_5.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Press <emphasis>
+                <property>Finish</property>.</emphasis>
+        </para>
+
+        <para>That&apos;s it! Our base project is done.</para>
+
+    </section>
+
+    <section id="structure_overview">
+        <title>The Project Structure Overview</title>
+
+        <para>Now, let&apos;s look at the structure of the just created project.</para>
+
+        <figure>
+            <title>The Project Structure Overview</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/starting_project_6.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>What <property>JBoos Tools</property> have done here, it&apos;s adding JBoss
+            Portlet facet to the project, creating an empty <emphasis>
+                <property>portlet.xml</property>
+            </emphasis> file and adding the portlet library to the project classpath.</para>
+    </section>
+
+</chapter>

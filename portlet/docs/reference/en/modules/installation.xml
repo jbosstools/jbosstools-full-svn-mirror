@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="installation" xreflabel="installation">
+    <?dbhtml filename="installation.html"?>
+    <title>Installation issues</title>
+
+    <para>This section provides you with the steps on how to start with <property>JBoss
+        Portal</property> and integrated features using <property>JBoss Tools</property>.</para>
+
+    <itemizedlist>
+        <listitem>
+            <para>First, you need to have Eclipse Ganymede with JBoss Tools 3.0Alpha installed.</para>
+
+            <tip>
+                <title>Tip:</title>
+                <para>Read <ulink url="&gsglink;#JBossToolsInstall">JBoss Tools
+                        Installation</ulink> section in our Getting Started documentation to find
+                    out how to install <property>JBoss Tools</property> onto Eclipse.</para>
+            </tip>
+        </listitem>
+
+        <listitem>
+            <para>Next, download the JBoss Portal + JBoss AS bundle from <ulink
+                    url="http://www.jboss.org/jbossportal/download/index.html">JBoss Portal Download
+                    page</ulink></para>
+
+            <note>
+                <title>Note:</title>
+                <para>You need JBoss Portal 2.7 if you want to work with a Portlet 2.0</para>
+            </note>
+            
+        </listitem>
+
+        <listitem>
+            <para>Extract the bundle wherever you want on your hard drive</para>
+        </listitem>
+    </itemizedlist>
+
+</chapter>

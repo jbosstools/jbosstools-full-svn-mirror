@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.docbook.org/xsd/4.3/docbook.xsd"
+
+[<!ENTITY intro SYSTEM "modules/intro.xml">
+<!ENTITY installation SYSTEM "modules/installation.xml">
+<!ENTITY starting_project SYSTEM "modules/starting_project.xml">
+<!ENTITY portlets_support SYSTEM "modules/portlets_support.xml">
+
+<!ENTITY seamlink "../../seam/html_single/index.html">
+<!ENTITY aslink "../../as/html_single/index.html">
+<!ENTITY esblink "../../esb_ref_guide/html_single/index.html">
+<!ENTITY gsglink "../../GettingStartedGuide/html_single/index.html">
+<!ENTITY hibernatelink "../../hibernatetools/html_single/index.html">
+<!ENTITY jbpmlink "../../jbpm/html_single/index.html">
+<!ENTITY jsflink "../../jsf/html_single/index.html">
+<!ENTITY jsfreflink "../../jsf_tools_ref_guide/html_single/index.html">
+<!ENTITY jsftutoriallink "../../jsf_tools_tutorial/html_single/index.html">
+<!ENTITY strutsreflink "../../struts_tools_ref_guide/html_single/index.html">
+<!ENTITY strutstutoriallink "../../struts_tools_tutorial/html_single/index.html">                         
+]>
+
+<book>
+    
+     <bookinfo>
+         <title>JBoss Portal Tools Reference Guide</title>
+            
+            <author><firstname>Olga</firstname><surname>Chikvina</surname></author>
+            <author><firstname>Snjezana</firstname><surname>Peco</surname><email>snjezana.peco@redhat.com</email></author>
+             <author><firstname>Svetlana</firstname><surname>Mukhina</surname><email>smukhina@exadel.com</email></author>
+             <author><firstname>Thomas</firstname><surname>Heute</surname><email>theute@jboss.org</email></author>      
+         
+         <pubdate>September 2008</pubdate>
+	                       <copyright>
+	                           <year>2008</year>
+	                           <holder>JBoss, a division of Red Hat Inc.</holder>
+	                       </copyright>
+          <releaseinfo>
+            Version: 3.0.0.alpha
+          </releaseinfo>
+    </bookinfo>
+	
+    
+    <toc/> 
+    &intro;
+    &installation;
+    &starting_project;
+    &portlets_support;
+    
+</book>    

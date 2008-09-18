@@ -1,0 +1,187 @@
+@import url("jbossorg.css");
+
+/* -----Override jbossorg.css----- */
+
+/* Body */
+body {
+    background-image:none;
+    background-color:white;
+    margin:0 auto;
+    font-family:"liberation sans", "Myriad ", "Bitstream Vera Sans","Lucida Grande", verdana, "Luxi Sans","Trebuchet MS", helvetica,verdana,arial,sans-serif;
+    font-size:12px;
+    max-width:55em;
+    padding:0em 2em;
+    color:#333;
+    line-height:150%;
+    text-align:justify;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color:#a70000;
+    line-height:130%;
+    margin-top:0em;
+    font-family:"liberation sans","Bitstream Vera Sans","Lucida Grande","Trebuchet MS",helvetica,verdana,arial,sans-serif;
+    background-color:transparent;
+}
+
+h1 {
+    background:#800 url(../images/enterprise/red-bg.png) top left repeat;
+    line-height:1.2em;
+    color:white;
+    font-size:2em;
+    padding:1.5em;
+}
+
+/* -----Override documentation.css----- */
+
+/* Admonitions */
+div.note, div.tip, div.important, div.caution, div.warning {
+    background:#555753;
+    color:white;
+    padding:1em;
+    padding-bottom:20px;
+    border:1px solid #444;
+    margin-bottom:1.5em;
+    background-repeat:no-repeat;
+    background-position:10px 10px;
+}
+
+div.note pre, div.tip pre, div.important pre, div.caution pre, div.warning pre {
+    background-color:#F5F5F5;
+    color:white;
+}
+
+div.note {background-image:url(../images/enterprise/docbook/note.png);}
+div.tip {background-image:url(../images/enterprise/docbook/tip.png);}
+div.important {background-image:url(../images/enterprise/docbook/important.png);}
+div.caution {background-image:url(../images/enterprise/docbook/caution.png);}
+div.warning {background-image:url(../images/enterprise/docbook/warning.png);}
+
+div.note h2, div.tip h2, div.important h2, div.caution h2, div.warning h2 {
+    height:32px;
+    font-size:1.3em;
+    color:white;
+}
+
+/* Page Title */
+#title {
+    padding-top:0px;
+    padding-bottom:10px;
+    margin:0px;
+}
+
+#title a.site_href {
+    display:block;
+    height:60px;
+    width:310px;
+    float:left;
+    background:url(../images/enterprise/jbossdivisionlogo.png) top left no-repeat;
+}
+
+#title a.doc_href {
+    display:block;
+    height:60px;
+    margin-top:5px;
+    background:transparent url(../images/enterprise/enterprise_doc.png) top right no-repeat;
+}
+
+/* Table */
+table th {
+    text-align:left;
+    background-color:#900;
+    padding:.3em .5em;
+    color:white;
+}
+
+/* Status */
+.alpha1 {background:white url(../images/enterprise/watermark-alpha1.png) top left repeat;}
+.alpha2 {background:white url(../images/enterprise/watermark-alpha2.png) top left repeat;}
+.beta1 {background:white url(../images/enterprise/watermark-beta1.png) top left repeat;}
+.beta2 {background:white url(../images/enterprise/watermark-beta2.png) top left repeat;}
+.pre-release-candidate {background:white url(../images/enterprise/watermark-pre-release-candidate.png) top left repeat;}
+.release-candidate {background:white url(../images/enterprise/watermark-release-candidate.png) top left repeat;}
+	
+/* -----Override docnav.css----- */
+
+/* Document Navigation */
+.docnav li.next a strong {
+    background:url(../images/enterprise/docbook/next.png) top right no-repeat;
+    padding-top:3px;
+    padding-right:28px;
+    font-size:1.2em;
+}
+
+.docnav li.previous a strong {
+    background:url(../images/enterprise/docbook/prev.png) top left no-repeat;
+    padding-top:3px;
+    padding-left:28px;
+    font-size:1.2em;
+}
+
+.docnav li.home a strong {
+    background:url(../images/enterprise/docbook/home.png) top left no-repeat;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:28px;
+    padding-right:5px;
+    font-size:1.2em;
+}
+
+.docnav li.up a strong {
+    background:url(../images/enterprise/docbook/up.png) top left no-repeat;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:28px;
+    padding-right:5px;
+    font-size:1.2em;
+}
+
+.docnav {margin-bottom:0px;}
+
+/* Eclipse Help Navigation */
+.navheader td.next a {
+    background:url(../images/enterprise/docbook/next.png) top right no-repeat;
+    padding-top:6px;
+    padding-right:28px;
+    font-size:0.9em;
+}
+
+.navheader td.previous a {
+    background:url(../images/enterprise/docbook/prev.png) top left no-repeat;
+    padding-top:6px;
+    padding-left:28px;
+    font-size:0.9em;
+}
+
+.navfooter td.next a {
+    background:url(../images/enterprise/docbook/next.png) top right no-repeat;
+    padding-top:6px;
+    padding-right:28px;
+    font-size:0.9em;
+}
+
+.navfooter td.previous a {
+    background:url(../images/enterprise/docbook/prev.png) top left no-repeat;
+    padding-top:6px;
+    padding-left:28px;
+    font-size:0.9em;
+}
+
+.navfooter td.home a {
+    background:url(../images/enterprise/docbook/home.png) top left no-repeat;
+    padding-top:5px;
+    padding-bottom:10px;
+    padding-left:28px;
+    padding-right:5px;
+    font-size:0.9em;
+}
+
+.navfooter td.up a {
+    background:url(../images/enterprise/docbook/up.png) top left no-repeat;
+    padding-top:5px; 
+    padding-bottom:5px;
+    padding-left:28px;
+    padding-right:5px;
+    font-size:0.9em;
+}

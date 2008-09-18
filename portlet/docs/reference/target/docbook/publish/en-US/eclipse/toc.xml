@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+
+<!DOCTYPE toc
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<toc label="JBoss Portal Tools Reference Guide" topic="index.html">
+   <topic label="Introduction" href="intro.html">
+      <topic label="Preface" href="intro.html#preface"/>
+      <topic label="Key Features" href="intro.html#key_features"/>
+      <topic label="Other relevant resources on the topic" href="intro.html#rel_resources"/>
+   </topic>
+   <topic label="Installation issues" href="installation.html"/>
+   <topic label="Starting the Project with JBoss Portal" href="starting_project.html">
+      <topic label="Creating a Dynamic Web Project" href="starting_project.html#creating _project_with_jbossportal"/>
+      <topic label="The Project Structure Overview" href="starting_project.html#structure_overview"/>
+   </topic>
+   <topic label="JBoss Portlet Support" href="portlets_support.html">
+      <topic label="Adding a Java Portlet to the Project" href="portlets_support.html#adding_java_portlet"/>
+      <topic label="Adding JSF/Seam Portlets" href="portlets_support.html#adding_JsfSeam_portlet"/>
+      <topic label="Deploying a Portlet to JBoss Portal" href="portlets_support.html#d0e543"/>
+   </topic>
+</toc>
