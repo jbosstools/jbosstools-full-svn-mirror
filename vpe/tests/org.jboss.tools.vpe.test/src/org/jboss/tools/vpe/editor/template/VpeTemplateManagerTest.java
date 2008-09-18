@@ -12,11 +12,7 @@ public class VpeTemplateManagerTest extends TestCase {
 		VpeAnyData data = new VpeAnyData(
 				"tag-name1",
 				"tag-value",
-				"yes",
-				"red",
-				"green",
-				"blue",
-				"white",
+				"color:red",
 				true
 				);
 		
@@ -25,11 +21,7 @@ public class VpeTemplateManagerTest extends TestCase {
 		data = new VpeAnyData(
 				"tag-name2",
 				"tag-value",
-				"yes",
-				"red",
-				"green",
-				"blue",
-				"white",
+				"color:white",
 				true
 				);
 		

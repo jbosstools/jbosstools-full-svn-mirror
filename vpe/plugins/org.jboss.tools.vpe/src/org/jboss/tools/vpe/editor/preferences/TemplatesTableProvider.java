@@ -48,8 +48,6 @@ public class TemplatesTableProvider implements XTableProvider, XTableImageProvid
 			    return data.getTagForDisplay();
 			case 2:
 				return data.getName();
-			case 3:
-				return data.getDisplay();
 			case 4:
 				if(data.isChildren()) return "yes";
 				else return "no";

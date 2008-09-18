@@ -31,7 +31,6 @@ import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
-import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.osgi.framework.Bundle;
@@ -182,16 +181,36 @@ public class VpeTemplateManager {
 		"title", //$NON-NLS-1$
 		"dir" //$NON-NLS-1$
 	};
-
-	static final String ATTR_ANY_DISPLAY = "display"; //$NON-NLS-1$
+	@Deprecated 
+	//used just for conversion old configuration to new configuration
+	//should be deleted from some time
+	private static final String ATTR_ANY_DISPLAY = "display"; //$NON-NLS-1$
+	
 	static final String ATTR_ANY_TAG_FOR_DISPLAY="tag-for-display"; //$NON-NLS-1$
 	static final String ATTR_ANY_ICON = "icon"; //$NON-NLS-1$
 	static final String ATTR_ANY_VALUE = "value"; //$NON-NLS-1$
-	static final String ATTR_ANY_BORDER = "border"; //$NON-NLS-1$
-	static final String ATTR_ANY_VALUE_COLOR = "value-color"; //$NON-NLS-1$
-	static final String ATTR_ANY_VALUE_BACKGROUND_COLOR = "value-background-color"; //$NON-NLS-1$
-	static final String ATTR_ANY_BACKGROUND_COLOR = "background-color"; //$NON-NLS-1$
-	static final String ATTR_ANY_BORDER_COLOR = "border-color"; //$NON-NLS-1$
+	static final String  ATTR_ANY_STYLE = "style"; //$NON-NLS-1$
+	@Deprecated 
+	//used just for conversion old configuration to new configuration
+	//should be deleted from some time
+	private static final String ATTR_ANY_BORDER = "border"; //$NON-NLS-1$
+	@Deprecated 
+	//used just for conversion old configuration to new configuration
+	//should be deleted from some time
+	private static final String ATTR_ANY_VALUE_COLOR = "value-color"; //$NON-NLS-1$
+	@Deprecated 
+	//used just for conversion old configuration to new configuration
+	//should be deleted from some time
+	private static final String ATTR_ANY_VALUE_BACKGROUND_COLOR = "value-background-color"; //$NON-NLS-1$
+	@Deprecated 
+	//used just for conversion old configuration to new configuration
+	//should be deleted from some time
+	private static final String ATTR_ANY_BACKGROUND_COLOR = "background-color"; //$NON-NLS-1$
+	@Deprecated 
+	//used just for conversion old configuration to new configuration
+	//should be deleted from some time
+	private static final String ATTR_ANY_BORDER_COLOR = "border-color"; //$NON-NLS-1$
+	
 	static final String[] ATTR_ANY_PROPERTIES = {"title"}; //$NON-NLS-1$
 
 	static final String ATTR_DATATABLE_HEADER_CLASS = "headerClass"; //$NON-NLS-1$
@@ -237,6 +256,8 @@ public class VpeTemplateManager {
 	private static final String TEXT_TEMPLATE_NAME="#text"; //$NON-NLS-1$
 	//comment template name
 	private static final String COMMENT_TEMPLATE_NAME="#comment"; //$NON-NLS-1$
+	
+	private static final String ATTRIBUTE_TEMPLATE_NAME="attribute"; //$NON-NLS-1$
 	
 	/**
 	 * added by Max Areshkau, JBIDE-1494
@@ -328,6 +349,9 @@ public class VpeTemplateManager {
 			
 			return COMMENT_TEMPLATE_NAME;
 			
+		case Node.ATTRIBUTE_NODE: 
+			
+			return  ATTRIBUTE_TEMPLATE_NAME;
 		case Node.ELEMENT_NODE:
 			String sourcePrefix = sourceNode.getPrefix();
 
@@ -613,10 +637,10 @@ public class VpeTemplateManager {
 									anyData.setChildren(ATTR_VALUE_YES.equalsIgnoreCase(attr.getNodeValue()));
 								}
 								
-								attr = anyNode.getAttributeNode(ATTR_ANY_DISPLAY);
-								if (attr != null) {
-									anyData.setDisplay(attr.getNodeValue());
-								}
+//								attr = anyNode.getAttributeNode(ATTR_ANY_DISPLAY);
+//								if (attr != null) {
+//									anyData.setDisplay(attr.getNodeValue());
+//								}
 
 								attr = anyNode.getAttributeNode(ATTR_ANY_ICON);
 								if (attr != null){
@@ -627,31 +651,36 @@ public class VpeTemplateManager {
 								if (attr != null) {
 									anyData.setValue(attr.getNodeValue());
 								}
-
-								attr = anyNode.getAttributeNode(ATTR_ANY_BORDER);
-								if (attr != null) {
-									anyData.setBorder(attr.getNodeValue());
+								
+								attr = anyNode.getAttributeNode(ATTR_ANY_STYLE);
+								if (attr !=null) {
+									anyData.setValue(attr.getNodeValue());
 								}
 
-								attr = anyNode.getAttributeNode(ATTR_ANY_VALUE_COLOR);
-								if (attr != null) {
-									anyData.setValueColor(attr.getNodeValue());
-								}
-
-								attr = anyNode.getAttributeNode(ATTR_ANY_VALUE_BACKGROUND_COLOR);
-								if (attr != null) {
-									anyData.setValueBackgroundColor(attr.getNodeValue());
-								}
-
-								attr = anyNode.getAttributeNode(ATTR_ANY_BACKGROUND_COLOR);
-								if (attr != null) {
-									anyData.setBackgroundColor(attr.getNodeValue());
-								}
-
-								attr = anyNode.getAttributeNode(ATTR_ANY_BORDER_COLOR);
-								if (attr != null) {
-									anyData.setBorderColor(attr.getNodeValue());
-								}
+//								attr = anyNode.getAttributeNode(ATTR_ANY_BORDER);
+//								if (attr != null) {
+//									anyData.setBorder(attr.getNodeValue());
+//								}
+//
+//								attr = anyNode.getAttributeNode(ATTR_ANY_VALUE_COLOR);
+//								if (attr != null) {
+//									anyData.setValueColor(attr.getNodeValue());
+//								}
+//
+//								attr = anyNode.getAttributeNode(ATTR_ANY_VALUE_BACKGROUND_COLOR);
+//								if (attr != null) {
+//									anyData.setValueBackgroundColor(attr.getNodeValue());
+//								}
+//
+//								attr = anyNode.getAttributeNode(ATTR_ANY_BACKGROUND_COLOR);
+//								if (attr != null) {
+//									anyData.setBackgroundColor(attr.getNodeValue());
+//								}
+//
+//								attr = anyNode.getAttributeNode(ATTR_ANY_BORDER_COLOR);
+//								if (attr != null) {
+//									anyData.setBorderColor(attr.getNodeValue());
+//								}
 							}
 						}
 						
@@ -738,20 +767,22 @@ public class VpeTemplateManager {
 		
 		if(data.getTagForDisplay()!=null&& data.getTagForDisplay().length() > 0)
 			newAnyElement.setAttribute(ATTR_ANY_TAG_FOR_DISPLAY, data.getTagForDisplay());
-		if (data.getDisplay() != null && data.getDisplay().length() > 0) 
-			newAnyElement.setAttribute(ATTR_ANY_DISPLAY, data.getDisplay());
+//		if (data.getDisplay() != null && data.getDisplay().length() > 0) 
+//			newAnyElement.setAttribute(ATTR_ANY_DISPLAY, data.getDisplay());
 		if (data.getValue() != null && data.getValue().length() > 0) 
 			newAnyElement.setAttribute(ATTR_ANY_VALUE, data.getValue());
-		if (data.getBorder() != null && data.getBorder().length() > 0) 
-			newAnyElement.setAttribute(ATTR_ANY_BORDER, data.getBorder());
-		if (data.getValueColor() != null && data.getValueColor().length() > 0) 
-			newAnyElement.setAttribute(ATTR_ANY_VALUE_COLOR, data.getValueColor());
-		if (data.getValueBackgroundColor() != null && data.getValueBackgroundColor().length() > 0) 
-			newAnyElement.setAttribute(ATTR_ANY_VALUE_BACKGROUND_COLOR, data.getValueBackgroundColor());
-		if (data.getBackgroundColor() != null && data.getBackgroundColor().length() > 0)
-			newAnyElement.setAttribute(ATTR_ANY_BACKGROUND_COLOR, data.getBackgroundColor());
-		if (data.getBorderColor() != null && data.getBorderColor().length() > 0)
-			newAnyElement.setAttribute(ATTR_ANY_BORDER_COLOR, data.getBorderColor());
+		if(data.getStyle()!=null && data.getStyle().length()>0) 
+			newAnyElement.setAttribute(ATTR_ANY_STYLE, data.getStyle());
+//		if (data.getBorder() != null && data.getBorder().length() > 0) 
+//			newAnyElement.setAttribute(ATTR_ANY_BORDER, data.getBorder());
+//		if (data.getValueColor() != null && data.getValueColor().length() > 0) 
+//			newAnyElement.setAttribute(ATTR_ANY_VALUE_COLOR, data.getValueColor());
+//		if (data.getValueBackgroundColor() != null && data.getValueBackgroundColor().length() > 0) 
+//			newAnyElement.setAttribute(ATTR_ANY_VALUE_BACKGROUND_COLOR, data.getValueBackgroundColor());
+//		if (data.getBackgroundColor() != null && data.getBackgroundColor().length() > 0)
+//			newAnyElement.setAttribute(ATTR_ANY_BACKGROUND_COLOR, data.getBackgroundColor());
+//		if (data.getBorderColor() != null && data.getBorderColor().length() > 0)
+//			newAnyElement.setAttribute(ATTR_ANY_BORDER_COLOR, data.getBorderColor());
 		
 		newAnyElement.setAttribute(ATTR_ANY_ICON, data.isShowIcon() ? ATTR_VALUE_YES : ATTR_VALUE_NO);
 
