@@ -58,7 +58,7 @@ public class NormalSmooksModelBuilder {
 		}
 	}
 
-	protected boolean isSmooksTransformType(ResourceConfigType config) {
+	public static boolean isSmooksTransformType(ResourceConfigType config) {
 		if (config == null)
 			return false;
 		String selector = config.getSelector();
@@ -68,7 +68,7 @@ public class NormalSmooksModelBuilder {
 		return false;
 	}
 
-	protected boolean isDateConfig(ResourceConfigType config) {
+	public static boolean isDateConfig(ResourceConfigType config) {
 		if (config == null)
 			return false;
 		ResourceType resource = config.getResource();
@@ -80,7 +80,7 @@ public class NormalSmooksModelBuilder {
 		return false;
 	}
 
-	protected boolean isBeanPopulator(ResourceConfigType config) {
+	public static boolean isBeanPopulator(ResourceConfigType config) {
 		if (config == null)
 			return false;
 		ResourceType resource = config.getResource();

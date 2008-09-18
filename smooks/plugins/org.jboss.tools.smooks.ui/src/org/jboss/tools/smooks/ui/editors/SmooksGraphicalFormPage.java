@@ -1136,8 +1136,12 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	 * @return the editingDomain
 	 */
 	protected AdapterFactoryEditingDomain getEditingDomain() {
-		FormEditor parentEditor = this.getEditor();
-		editingDomain = ((SmooksFormEditor) parentEditor).getEditingDomain();
+		if (editingDomain == null) {
+			FormEditor parentEditor = this.getEditor();
+			editingDomain = ((SmooksFormEditor) parentEditor)
+					.getEditingDomain();
+			editingDomain.getCommandStack().addCommandStackListener(this);
+		}
 		return editingDomain;
 	}
 

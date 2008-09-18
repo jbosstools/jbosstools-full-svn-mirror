@@ -31,12 +31,16 @@ public abstract class AbstractSmooksModelDetailPage implements IDetailsPage {
 	IFormPart formPart;
 
 	ISelection selection;
+	
+	protected boolean canFireChange = false;;
 
 	FormToolkit formToolKit = null;
 
 	protected ResourceConfigType oldResourceConfigList;
 
 	protected ResourceConfigType resourceConfigList;
+	
+	protected IManagedForm managedForm ;
 
 	EditingDomain domain;
 	SmooksFormEditor parentEditor;
@@ -93,6 +97,7 @@ public abstract class AbstractSmooksModelDetailPage implements IDetailsPage {
 	 * @see org.eclipse.ui.forms.IFormPart#initialize(org.eclipse.ui.forms.IManagedForm)
 	 */
 	public void initialize(IManagedForm form) {
+		this.managedForm = form;
 		if (form != null) {
 			formToolKit = form.getToolkit();
 		}
@@ -126,8 +131,12 @@ public abstract class AbstractSmooksModelDetailPage implements IDetailsPage {
 	 * @see org.eclipse.ui.forms.IFormPart#refresh()
 	 */
 	public void refresh() {
-
+		canFireChange = false;
+		initSectionUI();
+		canFireChange = true;
 	}
+
+	abstract protected void initSectionUI() ;
 
 	/*
 	 * (non-Javadoc)
@@ -207,6 +216,14 @@ public abstract class AbstractSmooksModelDetailPage implements IDetailsPage {
 
 	protected void setDomain(EditingDomain domain) {
 		this.domain = domain;
+	}
+
+	public boolean isCanFireChange() {
+		return canFireChange;
+	}
+
+	public void setCanFireChange(boolean canFireChange) {
+		this.canFireChange = canFireChange;
 	}
 
 }

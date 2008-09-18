@@ -10,9 +10,23 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.editors;
 
+import java.util.Iterator;
+import java.util.List;
+
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.search.IJavaSearchScope;
+import org.eclipse.jdt.internal.corext.util.JavaModelUtil;
+import org.eclipse.jdt.internal.ui.search.JavaSearchScopeFactory;
+import org.eclipse.jdt.ui.IJavaElementSearchConstants;
+import org.eclipse.jdt.ui.JavaUI;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -23,8 +37,15 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.dialogs.SelectionDialog;
+import org.jboss.tools.smooks.model.ParamType;
+import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.util.SmooksModelConstants;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
+import org.jboss.tools.smooks.ui.SmooksUIActivator;
 
 /**
  * @author Dart Peng<br>
@@ -108,17 +129,45 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 	}
 
 	protected void clazzBrowseButtonSelected() {
+		IFileEditorInput input = (IFileEditorInput) this.parentEditor
+				.getEditorInput();
+		IJavaProject javaProject = null;
+		if (input != null) {
+			IFile file = input.getFile();
+			javaProject = JavaCore.create(file.getProject());
+		}
+		if (javaProject == null)
+			return;
+		IJavaSearchScope scope = JavaSearchScopeFactory.getInstance()
+				.createJavaProjectSearchScope(javaProject, true);
+		SelectionDialog dialog;
+		try {
+			IWorkbenchWindow runnableContext = SmooksUIActivator.getDefault()
+					.getWorkbench().getActiveWorkbenchWindow();
+			dialog = JavaUI.createTypeDialog(this.parentEditor.getSite()
+					.getShell(), runnableContext, scope,
+					IJavaElementSearchConstants.CONSIDER_CLASSES, false);
+			dialog.setMessage("Source Java Bean:");
+			dialog.setTitle("Search java bean");
 
+			if (dialog.open() == Window.OK) {
+				Object[] results = dialog.getResult();
+				if (results.length > 0) {
+					Object result = results[0];
+					String packageFullName = JavaModelUtil
+							.getTypeContainerName((IType) result);
+					beanClassText.setText(packageFullName + "."
+							+ ((IType) result).getElementName());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public boolean isStale() {
 		return true;
-	}
-
-	@Override
-	public void refresh() {
-		configControls();
 	}
 
 	private void hookContorls() {
@@ -160,7 +209,6 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 	}
 
 	private void configControls() {
-
 		if (resourceConfigList != null) {
 			String selector = "";
 			selector = resourceConfigList.getSelector();
@@ -180,27 +228,77 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 			beanClassText.setText(beanClass);
 			beanIDText.setText(beanId);
 		}
-
 	}
 
 	protected void beanIDChanged() {
-
+		if (!isCanFireChange())
+			return;
+		String beanIdStr = beanIDText.getText();
+		if (beanIdStr == null)
+			return;
+		List paramList = resourceConfigList.getParam();
+		ParamType beanId = null;
+		for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
+			ParamType param = (ParamType) iterator.next();
+			String name = param.getName();
+			if (SmooksModelConstants.BEAN_ID.equals(name)) {
+				beanId = param;
+				break;
+			}
+		}
+		if (beanId == null) {
+			beanId = SmooksFactory.eINSTANCE.createParamType();
+			beanId.setName(SmooksModelConstants.BEAN_ID);
+			AddCommand.create(domain, resourceConfigList,
+					SmooksPackage.eINSTANCE.getResourceConfigType_Param(),
+					beanId).execute();
+		}
+		SmooksModelUtils.setTextToSmooksType(beanId, beanIdStr);
+		this.parentEditor.fireEditorDirty(true);
 	}
 
 	protected void beanClassChanged() {
-
+		if (!isCanFireChange())
+			return;
+		String beanClassStr = beanClassText.getText();
+		if (beanClassStr == null)
+			return;
+		List paramList = resourceConfigList.getParam();
+		ParamType beanClass = null;
+		for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
+			ParamType param = (ParamType) iterator.next();
+			String name = param.getName();
+			if (SmooksModelConstants.BEAN_CLASS.equals(name)) {
+				beanClass = param;
+				break;
+			}
+		}
+		if (beanClass == null) {
+			beanClass = SmooksFactory.eINSTANCE.createParamType();
+			beanClass.setName(SmooksModelConstants.BEAN_CLASS);
+			AddCommand.create(domain, resourceConfigList,
+					SmooksPackage.eINSTANCE.getResourceConfigType_Param(),
+					beanClass).execute();
+		}
+		SmooksModelUtils.setTextToSmooksType(beanClass, beanClassStr);
+		this.parentEditor.fireEditorDirty(true);
 	}
 
 	protected void selectorChanged() {
+		if (!isCanFireChange())
+			return;
 		String selector = selectorText.getText();
 		if (selector != null) {
-			Command command = SetCommand.create(this.getDomain(), resourceConfigList,
-					SmooksPackage.eINSTANCE.getResourceConfigType_Selector(),
-					selector);
+			Command command = SetCommand.create(this.getDomain(),
+					resourceConfigList, SmooksPackage.eINSTANCE
+							.getResourceConfigType_Selector(), selector);
 			getDomain().getCommandStack().execute(command);
 		}
-		// resourceConfigList.getResource()
-		// this.getDomain().
+	}
+
+	@Override
+	protected void initSectionUI() {
+		configControls();
 	}
 
 }

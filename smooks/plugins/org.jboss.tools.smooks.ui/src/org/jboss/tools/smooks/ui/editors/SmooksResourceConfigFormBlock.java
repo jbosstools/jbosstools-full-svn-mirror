@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -31,9 +32,11 @@ import org.eclipse.ui.forms.MasterDetailsBlock;
 import org.eclipse.ui.forms.SectionPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.jboss.tools.smooks.analyzer.NormalSmooksModelBuilder;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.impl.ResourceConfigTypeImpl;
+import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.BeanPopulatorWarrper;
 import org.jboss.tools.smooks.ui.DateTypeWarrper;
 import org.jboss.tools.smooks.ui.ResourceConfigWarrper;
@@ -107,12 +110,33 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 	protected void registerPages(DetailsPart detailsPart) {
 		detailsPart.registerPage(BeanPopulatorWarrper.class,
 				new BeanPopulatorDetailPage(getParentEditor(), getDomain()));
-		detailsPart.registerPage(DateTypeWarrper.class,
-				new DateTypeDetailPage(getParentEditor(), getDomain()));
+		detailsPart.registerPage(DateTypeWarrper.class, new DateTypeDetailPage(
+				getParentEditor(), getDomain()));
 	}
 
 	protected void configDateTypeViewer() {
 		dateTypeViewer.setContentProvider(new DateTypeContentProvider());
+		dateTypeViewer.setLabelProvider(new LabelProvider() {
+
+			public String getText(Object element) {
+				if (element instanceof ResourceConfigType) {
+					if(NormalSmooksModelBuilder
+							.isBeanPopulator((ResourceConfigType) element)){
+						String selector = ((ResourceConfigType) element).getSelector();
+						if(selector == null) selector = "<NULL>";
+						return "BeanPopulator : " + selector;
+					}
+				}
+				if (element instanceof ResourceConfigType) {
+					if(NormalSmooksModelBuilder
+							.isDateConfig((ResourceConfigType) element)){
+						return "Date Type : ";
+					}
+				}
+				return super.getText(element);
+			}
+
+		});
 	}
 
 	public void initViewers() {
@@ -200,7 +224,7 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 					.createResourceConfigWarrper((ResourceConfigType) obj);
 			if (warrper != null) {
 				selection = new StructuredSelection(warrper);
-				managedForm.fireSelectionChanged(sectionPart,selection);
+				managedForm.fireSelectionChanged(sectionPart, selection);
 				return;
 			}
 		}
