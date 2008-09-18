@@ -32,7 +32,7 @@ public class NormalSmooksModelBuilder {
 
 	public NormalSmooksModelPackage buildNormalSmooksModelPackage(
 			SmooksResourceListType list) {
-		NormalSmooksModelPackage modelPackage = new NormalSmooksModelPackage();
+		NormalSmooksModelPackage modelPackage = new NormalSmooksModelPackage(list);
 		if (list != null) {
 			List resourceConfigList = list.getAbstractResourceConfig();
 			for (Iterator iterator = resourceConfigList.iterator(); iterator
@@ -63,7 +63,8 @@ public class NormalSmooksModelBuilder {
 			return false;
 		String selector = config.getSelector();
 		if (selector != null) {
-			return SmooksModelConstants.GLOBAL_PARAMETERS.equals(selector.trim());
+			return SmooksModelConstants.GLOBAL_PARAMETERS.equals(selector
+					.trim());
 		}
 		return false;
 	}
@@ -74,8 +75,8 @@ public class NormalSmooksModelBuilder {
 		ResourceType resource = config.getResource();
 		if (resource != null) {
 			String r = resource.getValue();
-			if(r != null)
-			return SmooksModelConstants.DATE_DECODER.equals(r.trim());
+			if (r != null)
+				return SmooksModelConstants.DATE_DECODER.equals(r.trim());
 		}
 		return false;
 	}
@@ -86,8 +87,9 @@ public class NormalSmooksModelBuilder {
 		ResourceType resource = config.getResource();
 		if (resource != null) {
 			String resourceString = resource.getValue();
-			if(resourceString != null)
-			return SmooksModelConstants.BEAN_POPULATOR.equals(resourceString.trim());
+			if (resourceString != null)
+				return SmooksModelConstants.BEAN_POPULATOR
+						.equals(resourceString.trim());
 		}
 		return false;
 	}

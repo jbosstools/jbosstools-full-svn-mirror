@@ -13,7 +13,9 @@ package org.jboss.tools.smooks.analyzer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.Assert;
 import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 
 /**
  * @author Dart Peng<br>
@@ -25,6 +27,21 @@ public class NormalSmooksModelPackage {
 	private List<ResourceConfigType> beanPopulatorResourceConfigList = new ArrayList<ResourceConfigType>();
 
 	private ResourceConfigType smooksTransformTypeResourceConfig;
+	
+	private SmooksResourceListType smooksResourceList;
+	
+	public NormalSmooksModelPackage(SmooksResourceListType listType){
+		Assert.isNotNull(listType);
+		setSmooksResourceList(listType);
+	}
+
+	public SmooksResourceListType getSmooksResourceList() {
+		return smooksResourceList;
+	}
+
+	public void setSmooksResourceList(SmooksResourceListType smooksResourceList) {
+		this.smooksResourceList = smooksResourceList;
+	}
 
 	/**
 	 * @return the dateResourceConfigList

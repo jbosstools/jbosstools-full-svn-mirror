@@ -10,17 +10,27 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.editors;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.MoveCommand;
+import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -35,12 +45,14 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelBuilder;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
 import org.jboss.tools.smooks.model.ResourceConfigType;
-import org.jboss.tools.smooks.model.impl.ResourceConfigTypeImpl;
-import org.jboss.tools.smooks.model.util.SmooksModelUtils;
+import org.jboss.tools.smooks.model.SmooksPackage;
 import org.jboss.tools.smooks.ui.BeanPopulatorWarrper;
 import org.jboss.tools.smooks.ui.DateTypeWarrper;
 import org.jboss.tools.smooks.ui.ResourceConfigWarrper;
 import org.jboss.tools.smooks.ui.gef.util.GraphicsConstants;
+import org.jboss.tools.smooks.ui.wizards.NewResourceConfigFactory;
+import org.jboss.tools.smooks.ui.wizards.NewResourceConfigKey;
+import org.jboss.tools.smooks.ui.wizards.NewResourceConfigWizard;
 
 /**
  * @author Dart Peng<br>
@@ -60,6 +72,18 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 	protected EditingDomain domain;
 
 	private SectionPart sectionPart;
+
+	private Button addButton;
+
+	private Button removeButton;
+
+	private Button upButton;
+
+	private Button downButton;
+
+	public SmooksResourceConfigFormBlock() {
+		super();
+	}
 
 	public EditingDomain getDomain() {
 		return domain;
@@ -120,18 +144,21 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 
 			public String getText(Object element) {
 				if (element instanceof ResourceConfigType) {
-					if(NormalSmooksModelBuilder
-							.isBeanPopulator((ResourceConfigType) element)){
-						String selector = ((ResourceConfigType) element).getSelector();
-						if(selector == null) selector = "<NULL>";
+					if (NormalSmooksModelBuilder
+							.isBeanPopulator((ResourceConfigType) element)) {
+						String selector = ((ResourceConfigType) element)
+								.getSelector();
+						if (selector == null)
+							selector = "<NULL>";
 						return "BeanPopulator : " + selector;
 					}
-				}
-				if (element instanceof ResourceConfigType) {
-					if(NormalSmooksModelBuilder
-							.isDateConfig((ResourceConfigType) element)){
+					if (NormalSmooksModelBuilder
+							.isDateConfig((ResourceConfigType) element)) {
 						return "Date Type : ";
 					}
+					String s =((ResourceConfigType)element).getSelector();
+					if(s == null) s= "<NULL>";
+					return "UnKnown ResourceConfig - " + s;
 				}
 				return super.getText(element);
 			}
@@ -141,7 +168,7 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 
 	public void initViewers() {
 		if (this.getModelPackage() != null) {
-			List all = new ArrayList();
+			List all = new Vector();
 			List list = modelPackage.getBeanPopulatorResourceConfigList();
 			if (list != null) {
 				all.addAll(list);
@@ -151,7 +178,8 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 				all.addAll(dl);
 			}
 
-			dateTypeViewer.setInput(all);
+			dateTypeViewer.setInput(modelPackage.getSmooksResourceList()
+					.getAbstractResourceConfig());
 		}
 	}
 
@@ -185,24 +213,136 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 
 		Composite buttonComposite = tool.createComposite(dataTypeComposite);
 		gd = new GridData(GridData.FILL_VERTICAL);
+		gd.widthHint = 100;
 		buttonComposite.setLayoutData(gd);
 
 		GridLayout buttonLayout = new GridLayout();
 		buttonComposite.setLayout(buttonLayout);
 
-		Button addButton = tool.createButton(buttonComposite, "New", SWT.NONE);
+		addButton = tool.createButton(buttonComposite, "New", SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		addButton.setLayoutData(gd);
-		Button removeButton = tool.createButton(buttonComposite, "Delete",
-				SWT.NONE);
+
+		removeButton = tool.createButton(buttonComposite, "Delete", SWT.NONE);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
 		removeButton.setLayoutData(gd);
 
-		Button upButton = tool.createButton(buttonComposite, "Up", SWT.NONE);
+		upButton = tool.createButton(buttonComposite, "Up", SWT.NONE);
 		upButton.setLayoutData(gd);
 
-		Button downButton = tool
-				.createButton(buttonComposite, "Down", SWT.NONE);
+		downButton = tool.createButton(buttonComposite, "Down", SWT.NONE);
 		downButton.setLayoutData(gd);
+
+		hookButtons();
+	}
+
+	private void hookButtons() {
+		addButton.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+				addButtonSelected();
+			}
+
+		});
+
+		removeButton.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+				removeButtonSelected();
+			}
+
+		});
+
+		upButton.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+				upButtonSelected();
+			}
+
+		});
+
+		downButton.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+				downButtonSelected();
+			}
+
+		});
+	}
+
+	protected void downButtonSelected() {
+		IStructuredSelection selection = (IStructuredSelection) dateTypeViewer
+				.getSelection();
+		Object object = selection.getFirstElement();
+		int index = ((List) dateTypeViewer.getInput()).indexOf(object);
+		if (index >= modelPackage.getSmooksResourceList().getAbstractResourceConfig().size()) {
+			return;
+		}
+		index++;
+		Command command = MoveCommand.create(domain, modelPackage
+				.getSmooksResourceList(), SmooksPackage.eINSTANCE
+				.getSmooksResourceListType_AbstractResourceConfig(), object,
+				index);
+		domain.getCommandStack().execute(command);
+		dateTypeViewer.refresh();
+	}
+
+	protected void upButtonSelected() {
+		IStructuredSelection selection = (IStructuredSelection) dateTypeViewer
+				.getSelection();
+		Object object = selection.getFirstElement();
+		int index = ((List) dateTypeViewer.getInput()).indexOf(object);
+		if (index <= 0) {
+			return;
+		}
+		index--;
+		Command command = MoveCommand.create(domain, modelPackage
+				.getSmooksResourceList(), SmooksPackage.eINSTANCE
+				.getSmooksResourceListType_AbstractResourceConfig(), object,
+				index);
+		domain.getCommandStack().execute(command);
+		dateTypeViewer.refresh();
+	}
+
+	protected void removeButtonSelected() {
+		IStructuredSelection selection = (IStructuredSelection) dateTypeViewer
+				.getSelection();
+		List selections = selection.toList();
+		CompoundCommand command = new CompoundCommand();
+		for (Iterator iterator = selections.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			Command command1 = RemoveCommand
+					.create(
+							domain,
+							modelPackage.getSmooksResourceList(),
+							SmooksPackage.eINSTANCE
+									.getSmooksResourceListType_AbstractResourceConfig(),
+							object);
+			// ((List) dateTypeViewer.getInput()).remove(object);
+			command.append(command1);
+		}
+		domain.getCommandStack().execute(command);
+		dateTypeViewer.refresh();
+	}
+
+	protected void addButtonSelected() {
+		NewResourceConfigWizard wizard = new NewResourceConfigWizard();
+		WizardDialog dialog = new WizardDialog(parentEditor.getSite()
+				.getShell(), wizard);
+		if (dialog.open() == Dialog.OK) {
+			NewResourceConfigKey key = wizard.getSelectedKey();
+			ResourceConfigType config = NewResourceConfigFactory.getInstance()
+					.createNewResourceConfig(key);
+			if (config != null) {
+				// ((List) dateTypeViewer.getInput()).add(config);
+				Command command = AddCommand.create(domain, modelPackage
+						.getSmooksResourceList(), SmooksPackage.eINSTANCE
+						.getSmooksResourceListType_AbstractResourceConfig(),
+						config);
+				domain.getCommandStack().execute(command);
+				dateTypeViewer.refresh();
+			}
+		}
 	}
 
 	protected SmooksFormEditor getParentEditor() {
