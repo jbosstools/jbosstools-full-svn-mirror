@@ -32,7 +32,7 @@
             </mediaobject>
         </figure>
 
-        <para>The Web Project and Source Folder fields the wizard fills in for you itself. Specify
+        <para>The wizard fills in The Web Project and Source Folder fields for you. Then you need to specify
             the Java package and the Class name and click <emphasis>
                 <property>Next</property>
             </emphasis>.</para>

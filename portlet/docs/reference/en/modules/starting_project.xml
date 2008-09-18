@@ -114,10 +114,10 @@
             </mediaobject>
         </figure>
 
-        <para>What <property>JBoos Tools</property> have done here, it&apos;s adding JBoss
-            Portlet facet to the project, creating an empty <emphasis>
+        <para>Here <property>JBoos Tools</property> have added JBoss
+            Portlet facet to the project, created an empty <emphasis>
                 <property>portlet.xml</property>
-            </emphasis> file and adding the portlet library to the project classpath.</para>
+            </emphasis> file and added the portlet library to the project classpath.</para>
     </section>
 
 </chapter>
