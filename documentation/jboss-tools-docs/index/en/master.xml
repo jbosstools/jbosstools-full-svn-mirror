@@ -115,6 +115,14 @@
             </primaryie>
         </indexentry>
 
+        <indexentry>
+            <primaryie>JBoss Portal Tools Reference Guide <ulink
+                url="en/jboss_portal_tools_ref_guide/html/index.html">(html)</ulink>
+                <ulink url="en/jboss_portal_tools_ref_guide/html_single/index.html">(html single)</ulink>
+                <ulink url="en/jboss_portal_tools_ref_guide/pdf/JBoss_Portal_Tools_Reference_Guide.pdf"
+                    >(pdf)</ulink>
+            </primaryie>
+        </indexentry>
 
         <indexentry>
             <primaryie>Exadel Studio Migration Guide <ulink
