@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jboss.tools.common.model.util.XMLUtil;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -109,8 +111,8 @@ public class TestDomUtil {
 				|| (!schemeNode.getNodeName().equalsIgnoreCase(
 						vpeNode.getNodeName()))
 				|| ((schemeNode.getNodeValue() != null) && (!schemeNode
-						.getNodeValue().trim()
-						.equalsIgnoreCase(vpeNode.getNodeValue().trim()))))
+						.getNodeValue().trim().equalsIgnoreCase(
+								vpeNode.getNodeValue().trim()))))
 			return false;
 
 		// compare node's attributes
@@ -162,5 +164,23 @@ public class TestDomUtil {
 
 		return true;
 
+	}
+
+	/**
+	 * get ids of tests 
+	 * @param testDocument
+	 * @return
+	 */
+	public static List<String> getTestIds(Document testDocument) {
+		Element rootElement = testDocument.getDocumentElement();
+		List<String> ids = new ArrayList<String>();
+		NodeList children = rootElement.getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			Node child = children.item(i);
+			if (child.getNodeType() == Node.ELEMENT_NODE)
+				ids.add(((Element) child).getAttribute(ID_ATTRIBUTE));
+
+		}
+		return ids;
 	}
 }

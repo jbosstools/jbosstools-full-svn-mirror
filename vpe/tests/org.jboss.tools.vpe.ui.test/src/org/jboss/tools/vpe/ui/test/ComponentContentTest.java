@@ -11,7 +11,7 @@
 package org.jboss.tools.vpe.ui.test;
 
 import java.io.File;
-import java.util.Map;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.ui.IEditorInput;
@@ -31,127 +31,32 @@ import org.w3c.dom.Element;
  */
 public abstract class ComponentContentTest extends VpeTest {
 
+	public static final String XML_FILE_EXTENSION = ".xml"; //$NON-NLS-1$
+
 	public ComponentContentTest(String name) {
 		super(name);
 	}
 
 	/**
 	 * 
-	 * @param elementPagePath
-	 *            - path to test page
-	 * @param elementId
-	 *            - id of element which will be tested
-	 * @param XmlSchemeContent
-	 *            - probable content of test element
+	 * there are several conditions:
 	 * 
-	 * @throws Throwable
-	 */
-	protected void performContentTestByContent(String elementPagePath,
-			String elementId, String xmlTestContent) throws Throwable {
-		setException(null);
-
-		IFile elementPageFile = (IFile) TestUtil.getComponentPath(
-				elementPagePath, getTestProjectName());
-
-		IEditorInput input = new FileEditorInput(elementPageFile);
-
-		TestUtil.waitForJobs();
-
-		IEditorPart editor = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().openEditor(input,
-						EDITOR_ID, true);
-
-		assertNotNull(editor);
-
-		TestUtil.waitForJobs();
-
-		// get element by id
-		nsIDOMElement vpeElement = findElementById(
-				getVpeController((JSPMultiPageEditor) editor), elementId);
-		assertNotNull(vpeElement);
-
-		// get document
-		Document modelDocument = TestDomUtil.getDocument(xmlTestContent);
-		assertNotNull(modelDocument);
-
-		// get element
-		Element modelElement = modelDocument.getDocumentElement();
-		assertNotNull(modelElement);
-
-		assertEquals(true, TestDomUtil.compareNodes(vpeElement, modelElement));
-
-		if (getException() != null) {
-			throw getException();
-		}
-
-	}
-
-	/**
-	 * use if xml file contain only one test
+	 * 1) xml file which contain tests must be named 'name of test page' +
+	 * '.xml'
+	 * 
+	 * Example: test.jsp and test.jsp.xml
+	 * 
+	 * 2) a tag <test> in xml file and required element in test page must have
+	 * the same attribute "id"
+	 * 
+	 * Example: <tests>... <test id="testId" > ...<tests> - in xml file and
+	 * <html>... <x:testElement id="testId" > ... </html> - in test page
 	 * 
 	 * @param elementPagePath
 	 *            - path to test page
-	 * @param elementId
-	 *            - id of element which will be tested
-	 * @param xmlTestPath
-	 *            - path to xml file which contains tests of content
-	 * @param xmlTestId
-	 *            - current id of test in xml file
 	 * @throws Throwable
 	 */
-	protected void performContentTest(String elementPagePath, String elementId,
-			String xmlTestPath) throws Throwable {
-		setException(null);
-
-		IFile elementPageFile = (IFile) TestUtil.getComponentPath(
-				elementPagePath, getTestProjectName());
-
-		IEditorInput input = new FileEditorInput(elementPageFile);
-
-		TestUtil.waitForJobs();
-
-		IEditorPart editor = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().openEditor(input,
-						EDITOR_ID, true);
-
-		assertNotNull(editor);
-
-		TestUtil.waitForJobs();
-
-		// get xml test file
-		File xmlTestFile = TestUtil.getXmlTestFile(xmlTestPath, getTestsRoot());
-
-		// get document
-		Document xmlTestDocument = TestDomUtil.getDocument(xmlTestFile);
-		assertNotNull(xmlTestDocument);
-
-		// compare DOMs
-		assertEquals(true, compareElements(
-				getVpeController((JSPMultiPageEditor) editor), xmlTestDocument,
-				elementId));
-
-		if (getException() != null) {
-			throw getException();
-		}
-
-	}
-
-	/**
-	 * 
-	 * use if xml file contain several tests
-	 * 
-	 * @param elementPagePath
-	 *            - path to test page
-	 * @param elementId
-	 *            - id of element which will be tested
-	 * @param xmlTestPath
-	 *            - path to xml file which contains tests of content
-	 * @param xmlTestId
-	 *            - current id of test in xml file
-	 * @throws Throwable
-	 */
-	protected void performContentTest(String elementPagePath, String elementId,
-			String xmlTestPath, String xmlTestId) throws Throwable {
+	protected void performContentTest(String elementPagePath) throws Throwable {
 		setException(null);
 
 		IFile elementPageFile = (IFile) TestUtil.getComponentPath(
@@ -172,65 +77,20 @@ public abstract class ComponentContentTest extends VpeTest {
 		VpeController controller = getVpeController((JSPMultiPageEditor) editor);
 
 		// get xml test file
-		File xmlTestFile = TestUtil.getXmlTestFile(xmlTestPath, getTestsRoot());
+		File xmlTestFile = TestUtil.getComponentPath(
+				elementPagePath + XML_FILE_EXTENSION, getTestProjectName())
+				.getLocation().toFile();
 
 		// get document
 		Document xmlTestDocument = TestDomUtil.getDocument(xmlTestFile);
 		assertNotNull(xmlTestDocument);
 
-		assertEquals(true, compareElements(controller, xmlTestDocument,
-				elementId, xmlTestId));
+		List<String> ids = TestDomUtil.getTestIds(xmlTestDocument);
 
-		if (getException() != null) {
-			throw getException();
-		}
+		for (String id : ids) {
 
-	}
-
-	/**
-	 * use if it is necessary to check several elements at the same time
-	 * 
-	 * @param elementPagePath
-	 *            - path to test page
-	 * @param xmlTestPath
-	 *            - path to xml file which contains tests of content
-	 * @param mapId
-	 *            - key is id of element which will be tested, value is
-	 *            corresponding id of test in xml file
-	 * @throws Throwable
-	 */
-	protected void performContentTest(String elementPagePath,
-			String xmlTestPath, Map<String, String> mapId) throws Throwable {
-		setException(null);
-
-		IFile elementPageFile = (IFile) TestUtil.getComponentPath(
-				elementPagePath, getTestProjectName());
-
-		IEditorInput input = new FileEditorInput(elementPageFile);
-
-		TestUtil.waitForJobs();
-
-		IEditorPart editor = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().openEditor(input,
-						EDITOR_ID, true);
-
-		assertNotNull(editor);
-
-		TestUtil.waitForJobs();
-
-		VpeController controller = getVpeController((JSPMultiPageEditor) editor);
-
-		// get xml test file
-		File xmlTestFile = TestUtil.getXmlTestFile(xmlTestPath, getTestsRoot());
-
-		// get document
-		Document xmlTestDocument = TestDomUtil.getDocument(xmlTestFile);
-		assertNotNull(xmlTestDocument);
-
-		for (String elementId : mapId.keySet()) {
-
-			assertEquals(true, compareElements(controller, xmlTestDocument,
-					elementId, mapId.get(elementId)));
+			assertEquals(true, compareElements(controller, xmlTestDocument, id,
+					id));
 		}
 
 		if (getException() != null) {
@@ -250,29 +110,6 @@ public abstract class ComponentContentTest extends VpeTest {
 		// first child
 		Element xmlModelElement = TestDomUtil.getFirstChildElement(TestDomUtil
 				.getElemenById(xmlTestDocument, xmlTestId));
-
-		assertNotNull(xmlModelElement);
-
-		// compare DOMs
-		return TestDomUtil.compareNodes(vpeElement, xmlModelElement);
-
-	}
-
-	protected boolean compareElements(VpeController controller,
-			Document xmlTestDocument, String elementId) {
-
-		// get element by id
-		nsIDOMElement vpeElement = findElementById(controller, elementId);
-		assertNotNull(vpeElement);
-
-		// get test element, get the first <test> tag in file
-		Element xmlTestElement = TestDomUtil
-				.getFirstChildElement(xmlTestDocument.getDocumentElement());
-		assertNotNull(xmlTestElement);
-
-		// model element is the first child of <test> tag
-		Element xmlModelElement = TestDomUtil
-				.getFirstChildElement(xmlTestElement);
 
 		assertNotNull(xmlModelElement);
 
@@ -305,11 +142,5 @@ public abstract class ComponentContentTest extends VpeTest {
 	 * @return
 	 */
 	abstract protected String getTestProjectName();
-
-	/**
-	 * 
-	 * @return
-	 */
-	abstract protected String getTestsRoot();
 
 }
