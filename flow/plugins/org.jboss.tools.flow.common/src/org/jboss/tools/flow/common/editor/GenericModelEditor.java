@@ -111,6 +111,7 @@ public abstract class GenericModelEditor extends GraphicalEditorWithPalette {
 	
 	protected void initializeEditDomain() {
 		setEditDomain(new DefaultEditDomain(this));
+		getCommandStack().addCommandStackListener(this);
 	}
 	
 	protected void initializeLanguage() {
