@@ -154,6 +154,16 @@ public class TestUtil {
 
 		return null;
 	}
+	
+	
+	/**
+	 * @param xmlScheme
+	 * @param xmlSchemesRoot
+	 * @return
+	 */
+	public static File getXmlTestFile(String xmlTestPath, String xmlTestsRoot) {
+		return new File(xmlTestsRoot + File.separator + xmlTestPath);
+	}
 
 	/**
 	 * Removes the project.
