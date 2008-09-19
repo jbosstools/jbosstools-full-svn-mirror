@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.text.Style;
+
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
@@ -193,23 +195,23 @@ public class VpeTemplateManager {
 	@Deprecated 
 	//used just for conversion old configuration to new configuration
 	//should be deleted from some time
-	private static final String ATTR_ANY_BORDER = "border"; //$NON-NLS-1$
+	static final String ATTR_ANY_BORDER = "border"; //$NON-NLS-1$
 	@Deprecated 
 	//used just for conversion old configuration to new configuration
 	//should be deleted from some time
-	private static final String ATTR_ANY_VALUE_COLOR = "value-color"; //$NON-NLS-1$
+	static final String ATTR_ANY_VALUE_COLOR = "value-color"; //$NON-NLS-1$
 	@Deprecated 
 	//used just for conversion old configuration to new configuration
 	//should be deleted from some time
-	private static final String ATTR_ANY_VALUE_BACKGROUND_COLOR = "value-background-color"; //$NON-NLS-1$
+	static final String ATTR_ANY_VALUE_BACKGROUND_COLOR = "value-background-color"; //$NON-NLS-1$
 	@Deprecated 
 	//used just for conversion old configuration to new configuration
 	//should be deleted from some time
-	private static final String ATTR_ANY_BACKGROUND_COLOR = "background-color"; //$NON-NLS-1$
+	static final String ATTR_ANY_BACKGROUND_COLOR = "background-color"; //$NON-NLS-1$
 	@Deprecated 
 	//used just for conversion old configuration to new configuration
 	//should be deleted from some time
-	private static final String ATTR_ANY_BORDER_COLOR = "border-color"; //$NON-NLS-1$
+	static final String ATTR_ANY_BORDER_COLOR = "border-color"; //$NON-NLS-1$
 	
 	static final String[] ATTR_ANY_PROPERTIES = {"title"}; //$NON-NLS-1$
 
@@ -636,12 +638,14 @@ public class VpeTemplateManager {
 								if (attr != null) {
 									anyData.setChildren(ATTR_VALUE_YES.equalsIgnoreCase(attr.getNodeValue()));
 								}
-								
-//								attr = anyNode.getAttributeNode(ATTR_ANY_DISPLAY);
-//								if (attr != null) {
-//									anyData.setDisplay(attr.getNodeValue());
-//								}
-
+								//TODO Max Areshkau This code was leave here for versions compatibility BEGIN
+								StringBuffer stringBuffer = new StringBuffer();
+								Node attrDisplay = anyNode.getAttributeNode(ATTR_ANY_DISPLAY);
+								if (attr != null) {
+									stringBuffer.append(HTML.ATTR_DISPLAY).append(":") //$NON-NLS-1$
+									.append(attrDisplay.getNodeValue()).append(";"); //$NON-NLS-1$
+								}
+								//-----------END
 								attr = anyNode.getAttributeNode(ATTR_ANY_ICON);
 								if (attr != null){
 									anyData.setShowIcon(ATTR_VALUE_YES.equalsIgnoreCase(attr.getNodeValue()));
@@ -654,33 +658,46 @@ public class VpeTemplateManager {
 								
 								attr = anyNode.getAttributeNode(ATTR_ANY_STYLE);
 								if (attr !=null) {
-									anyData.setValue(attr.getNodeValue());
+									anyData.setStyle(attr.getNodeValue());
 								}
 
-//								attr = anyNode.getAttributeNode(ATTR_ANY_BORDER);
-//								if (attr != null) {
-//									anyData.setBorder(attr.getNodeValue());
-//								}
-//
-//								attr = anyNode.getAttributeNode(ATTR_ANY_VALUE_COLOR);
-//								if (attr != null) {
-//									anyData.setValueColor(attr.getNodeValue());
-//								}
-//
-//								attr = anyNode.getAttributeNode(ATTR_ANY_VALUE_BACKGROUND_COLOR);
-//								if (attr != null) {
-//									anyData.setValueBackgroundColor(attr.getNodeValue());
-//								}
-//
-//								attr = anyNode.getAttributeNode(ATTR_ANY_BACKGROUND_COLOR);
-//								if (attr != null) {
-//									anyData.setBackgroundColor(attr.getNodeValue());
-//								}
-//
-//								attr = anyNode.getAttributeNode(ATTR_ANY_BORDER_COLOR);
-//								if (attr != null) {
-//									anyData.setBorderColor(attr.getNodeValue());
-//								}
+								//TODO Max Areshkau This code was leave here for versions compatibility BEGIN
+								Node attrBorder = anyNode.getAttributeNode(ATTR_ANY_BORDER);
+								if (attrBorder != null) {
+									stringBuffer.append("border-width:").append(attrBorder.getNodeValue()) //$NON-NLS-1$
+									.append(";"); //$NON-NLS-1$
+								}
+								//-----------END
+								//TODO Max Areshkau This code was leave here for versions compatibility BEGIN
+								Node attrValueColor = anyNode.getAttributeNode(ATTR_ANY_VALUE_COLOR);
+								if (attrValueColor  != null) {
+									stringBuffer.append("color:").append(attrValueColor.getNodeValue()).append(";");  //$NON-NLS-1$//$NON-NLS-2$
+								}
+								//-----------END
+								//TODO Max Areshkau This code was leave here for versions compatibility BEGIN
+								Node attrValueBackgroundColor = anyNode.getAttributeNode(ATTR_ANY_VALUE_BACKGROUND_COLOR);
+								if (attrValueBackgroundColor != null) {
+									stringBuffer.append("background-color:").append(attrValueBackgroundColor.getNodeValue()).append(";");  //$NON-NLS-1$//$NON-NLS-2$
+								}
+								//-----------END
+								//TODO Max Areshkau This code was leave here for versions compatibility BEGIN
+								Node attrBachkgroundColor = anyNode.getAttributeNode(ATTR_ANY_BACKGROUND_COLOR);
+								if (attrBachkgroundColor != null) {
+									//early for displaying any tag was used <div><span></span></div>
+									//and this property was for inner span, now used only one element 
+									//and this property duplicates
+									stringBuffer.append("background-color:").append(attrBachkgroundColor.getNodeValue()).append(";"); //$NON-NLS-1$ //$NON-NLS-2$
+								}
+								//-----------END
+								//TODO Max Areshkau This code was leave here for versions compatibility BEGIN
+								Node attrBorderColor = anyNode.getAttributeNode(ATTR_ANY_BORDER_COLOR);
+								if (attrBorderColor  != null) {
+									stringBuffer.append("border-color:").append(attrBorderColor.getNodeValue()).append(";"); //$NON-NLS-1$ //$NON-NLS-2$
+								}
+								if(stringBuffer.toString().length()>0) {
+									anyData.setStyle(stringBuffer.toString());
+								}
+								//-----------END
 							}
 						}
 						

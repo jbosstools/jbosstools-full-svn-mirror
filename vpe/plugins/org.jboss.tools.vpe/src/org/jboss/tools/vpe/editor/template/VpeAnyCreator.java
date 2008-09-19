@@ -77,7 +77,47 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 		Attr styleAttr = element.getAttributeNode(VpeTemplateManager.ATTR_ANY_STYLE);
 		if (styleAttr!=null) {
 			try {
-				styleStr = styleAttr.getValue();
+				//TODO Max Areshkau This code was leave here for versions compatibility BEGIN
+				Node attrBorder = element.getAttributeNode(VpeTemplateManager.ATTR_ANY_BORDER);
+				StringBuffer stringBuffer =  new StringBuffer();
+				
+				if (attrBorder != null) {
+					stringBuffer.append("border-width:").append(attrBorder.getNodeValue()) //$NON-NLS-1$
+					.append(";"); //$NON-NLS-1$
+				}
+				//-----------END
+				//TODO Max Areshkau This code was leave here for versions compatibility BEGIN
+				Node attrValueColor = element.getAttributeNode(VpeTemplateManager.ATTR_ANY_VALUE_COLOR);
+				if (attrValueColor  != null) {
+					stringBuffer.append("color:").append(attrValueColor.getNodeValue()).append(";");  //$NON-NLS-1$//$NON-NLS-2$
+				}
+				//-----------END
+				//TODO Max Areshkau This code was leave here for versions compatibility BEGIN
+				Node attrValueBackgroundColor = element.getAttributeNode(VpeTemplateManager.ATTR_ANY_VALUE_BACKGROUND_COLOR);
+				if (attrValueBackgroundColor != null) {
+					stringBuffer.append("background-color:").append(attrValueBackgroundColor.getNodeValue()).append(";");  //$NON-NLS-1$//$NON-NLS-2$
+				}
+				//-----------END
+				//TODO Max Areshkau This code was leave here for versions compatibility BEGIN
+				Node attrBachkgroundColor = element.getAttributeNode(VpeTemplateManager.ATTR_ANY_BACKGROUND_COLOR);
+				if (attrBachkgroundColor != null) {
+					//early for displaying any tag was used <div><span></span></div>
+					//and this property was for inner span, now used only one element 
+					//and this property duplicates
+					stringBuffer.append("background-color:").append(attrBachkgroundColor.getNodeValue()).append(";"); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+				//-----------END
+				//TODO Max Areshkau This code was leave here for versions compatibility BEGIN
+				Node attrBorderColor = element.getAttributeNode(VpeTemplateManager.ATTR_ANY_BORDER_COLOR);
+				if (attrBorderColor  != null) {
+					stringBuffer.append("border-color:").append(attrBorderColor.getNodeValue()).append(";"); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+				//-----------END
+				if(stringBuffer.toString().length()>0) {
+					styleStr = stringBuffer.toString();
+				} else {
+					styleStr = styleAttr.getValue();
+				}
 				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(styleStr, true);
 				styleExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
