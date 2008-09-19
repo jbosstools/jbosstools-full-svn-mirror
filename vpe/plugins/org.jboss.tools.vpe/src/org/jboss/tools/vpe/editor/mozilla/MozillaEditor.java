@@ -145,6 +145,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
 	 */
+	@Override
 	public void createPartControl(final Composite parent) {
 		
 		//Setting  Layout for the parent Composite

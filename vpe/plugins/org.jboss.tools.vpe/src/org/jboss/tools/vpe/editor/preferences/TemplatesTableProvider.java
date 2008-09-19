@@ -18,8 +18,8 @@ import org.eclipse.swt.graphics.*;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 
 public class TemplatesTableProvider implements XTableProvider, XTableImageProvider {
-	static String[] COLUMNS = new String[]{"URI","Tag for Display", "Tag Name", "Display", "Children"};
-	static int[] WIDTH = new int[]{200,150, 150, 100, 100};
+	static String[] COLUMNS = new String[]{"URI","Tag for Display", "Tag Name", "Children"};
+	static int[] WIDTH = new int[]{200,150, 150,100};
 	List dataList;
 	
 	public TemplatesTableProvider(List dataList){
@@ -27,7 +27,7 @@ public class TemplatesTableProvider implements XTableProvider, XTableImageProvid
 	}
 
 	public int getColumnCount() {
-		return 5;
+		return COLUMNS.length;
 	}
 
 	public int getRowCount() {
@@ -48,7 +48,7 @@ public class TemplatesTableProvider implements XTableProvider, XTableImageProvid
 			    return data.getTagForDisplay();
 			case 2:
 				return data.getName();
-			case 4:
+			case 3:
 				if(data.isChildren()) return "yes";
 				else return "no";
 		}
