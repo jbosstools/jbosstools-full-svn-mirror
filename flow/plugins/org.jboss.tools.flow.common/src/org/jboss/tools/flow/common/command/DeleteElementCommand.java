@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.gef.commands.Command;
-import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.ContainerWrapper;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
@@ -36,23 +36,23 @@ public class DeleteElementCommand extends Command {
     
     private List<NodeWrapper> incomingElementWrappers = new ArrayList<NodeWrapper>();
     private List<NodeWrapper> outgoingElementWrappers = new ArrayList<NodeWrapper>();
-    private List<AbstractConnectionWrapper> incomingConnections = new ArrayList<AbstractConnectionWrapper>();
-    private List<AbstractConnectionWrapper> outgoingConnections = new ArrayList<AbstractConnectionWrapper>();
+    private List<ConnectionWrapper> incomingConnections = new ArrayList<ConnectionWrapper>();
+    private List<ConnectionWrapper> outgoingConnections = new ArrayList<ConnectionWrapper>();
     
     
     private void deleteConnections(NodeWrapper element) {
-    	for (AbstractConnectionWrapper connection: element.getIncomingConnections()) {
+    	for (ConnectionWrapper connection: element.getIncomingConnections()) {
     		incomingElementWrappers.add(connection.getSource());
     		incomingConnections.add(connection);
     	}
-    	for (AbstractConnectionWrapper connection: element.getOutgoingConnections()) {
+    	for (ConnectionWrapper connection: element.getOutgoingConnections()) {
     		outgoingElementWrappers.add(connection.getTarget());
     		outgoingConnections.add(connection);
     	} 
-    	for (AbstractConnectionWrapper connection: incomingConnections) {
+    	for (ConnectionWrapper connection: incomingConnections) {
     		connection.disconnect();
     	}
-    	for (AbstractConnectionWrapper connection: outgoingConnections) {
+    	for (ConnectionWrapper connection: outgoingConnections) {
     		connection.disconnect();
     	}
     }
@@ -64,12 +64,12 @@ public class DeleteElementCommand extends Command {
 
     private void restoreConnections() {
     	int i = 0;
-    	for (AbstractConnectionWrapper connection: incomingConnections) {
+    	for (ConnectionWrapper connection: incomingConnections) {
     		connection.connect((NodeWrapper) incomingElementWrappers.get(i), child);
     		i++;
     	}
     	i = 0;
-    	for (AbstractConnectionWrapper connection: outgoingConnections) {
+    	for (ConnectionWrapper connection: outgoingConnections) {
     		connection.connect(child, (NodeWrapper) outgoingElementWrappers.get(i));
     		i++;
     	}

@@ -33,7 +33,7 @@ import org.jboss.tools.flow.common.policy.ElementDirectEditManager;
 import org.jboss.tools.flow.common.policy.ElementDirectEditPolicy;
 import org.jboss.tools.flow.common.policy.ElementEditPolicy;
 import org.jboss.tools.flow.common.policy.ElementNodeEditPolicy;
-import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.ModelEvent;
 import org.jboss.tools.flow.common.wrapper.ModelListener;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
@@ -61,11 +61,11 @@ public abstract class ElementEditPart extends AbstractGraphicalEditPart implemen
         installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE, new ElementDirectEditPolicy());
     }
     
-    protected List<AbstractConnectionWrapper> getModelSourceConnections() {
+    protected List<ConnectionWrapper> getModelSourceConnections() {
         return getElementWrapper().getOutgoingConnections();
     }
     
-    protected List<AbstractConnectionWrapper> getModelTargetConnections() {
+    protected List<ConnectionWrapper> getModelTargetConnections() {
         return getElementWrapper().getIncomingConnections();
     }
     

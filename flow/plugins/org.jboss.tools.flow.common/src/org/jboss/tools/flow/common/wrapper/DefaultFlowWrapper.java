@@ -3,8 +3,6 @@ package org.jboss.tools.flow.common.wrapper;
 import org.jboss.tools.flow.common.model.Flow;
 import org.jboss.tools.flow.common.model.Node;
 import org.jboss.tools.flow.common.strategy.AcceptsElementStrategy;
-import org.jboss.tools.flow.common.wrapper.AbstractFlowWrapper;
-import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
 public class DefaultFlowWrapper extends AbstractFlowWrapper {
 	

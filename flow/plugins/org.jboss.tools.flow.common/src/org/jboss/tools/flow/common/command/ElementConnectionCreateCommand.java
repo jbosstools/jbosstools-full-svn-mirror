@@ -18,6 +18,7 @@ package org.jboss.tools.flow.common.command;
 
 import org.eclipse.gef.commands.Command;
 import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
 /**
@@ -36,7 +37,7 @@ public class ElementConnectionCreateCommand extends Command {
             return false;
         }
         // Check for existence of connection already
-        for (AbstractConnectionWrapper connection: source.getOutgoingConnections()) {
+        for (ConnectionWrapper connection: source.getOutgoingConnections()) {
             if (connection.getTarget().equals(target)) {
             	return false;
             }

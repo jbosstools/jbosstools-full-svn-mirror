@@ -41,8 +41,8 @@ public interface NodeWrapper extends Wrapper {
     void setParent(ContainerWrapper parent);
     ContainerWrapper getParent();
     
-    List<AbstractConnectionWrapper> getOutgoingConnections();
-    List<AbstractConnectionWrapper> getIncomingConnections();
+    List<ConnectionWrapper> getOutgoingConnections();
+    List<ConnectionWrapper> getIncomingConnections();
     void addIncomingConnection(AbstractConnectionWrapper connection);
     void localAddIncomingConnection(AbstractConnectionWrapper connection);
     void removeIncomingConnection(AbstractConnectionWrapper connection);

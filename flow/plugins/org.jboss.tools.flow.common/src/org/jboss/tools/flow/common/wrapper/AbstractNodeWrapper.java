@@ -42,8 +42,8 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
     
     private ContainerWrapper parent;
     private transient Rectangle constraint;
-    private List<AbstractConnectionWrapper> incomingConnections = new ArrayList<AbstractConnectionWrapper>();
-    private List<AbstractConnectionWrapper> outgoingConnections = new ArrayList<AbstractConnectionWrapper>();
+    private List<ConnectionWrapper> incomingConnections = new ArrayList<ConnectionWrapper>();
+    private List<ConnectionWrapper> outgoingConnections = new ArrayList<ConnectionWrapper>();
     private transient List<ModelListener> listeners = new ArrayList<ModelListener>();
     
 	public void setConstraint(Rectangle constraint) {
@@ -71,11 +71,11 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 		return parent;
 	}
 
-	public List<AbstractConnectionWrapper> getOutgoingConnections() {
+	public List<ConnectionWrapper> getOutgoingConnections() {
 		return Collections.unmodifiableList(outgoingConnections);
 	}
 
-	public List<AbstractConnectionWrapper> getIncomingConnections() {
+	public List<ConnectionWrapper> getIncomingConnections() {
 		return Collections.unmodifiableList(incomingConnections);
 	}
 

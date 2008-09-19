@@ -30,8 +30,8 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jboss.tools.flow.common.Activator;
-import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.AbstractFlowWrapper;
+import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
 /**
@@ -91,7 +91,7 @@ public class VerticalAutoLayoutAction extends Action implements IAction {
             mapping.put(elementWrapper.getId(), node);
         }
         for (NodeWrapper elementWrapper: processWrapper.getElements()) {
-            for (AbstractConnectionWrapper connection: elementWrapper.getIncomingConnections()) {
+            for (ConnectionWrapper connection: elementWrapper.getIncomingConnections()) {
                 Node source = mapping.get(connection.getSource().getId());
                 Node target = mapping.get(connection.getTarget().getId());
                 graph.edges.add(new Edge(source, target));
