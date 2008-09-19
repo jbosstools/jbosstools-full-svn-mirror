@@ -8,13 +8,13 @@
 
     <itemizedlist>
         <listitem>
-            <para>First, you need to have Eclipse Ganymede with JBoss Tools 3.0Alpha installed.</para>
+            <para>First, you need to have Eclipse Ganymede with JBoss Tools 3.0.0.Alpha1 installed.</para>
 
             <tip>
                 <title>Tip:</title>
                 <para>Read <ulink url="&gsglink;#JBossToolsInstall">JBoss Tools
-                        Installation</ulink> section in our Getting Started documentation to find
-                    out how to install <property>JBoss Tools</property> onto Eclipse.</para>
+                    Installation</ulink> section in our Getting Started documentation to find out
+                    how to install <property>JBoss Tools</property> onto Eclipse.</para>
             </tip>
         </listitem>
 
@@ -27,7 +27,7 @@
                 <title>Note:</title>
                 <para>You need JBoss Portal 2.7 if you want to work with a Portlet 2.0</para>
             </note>
-            
+
         </listitem>
 
         <listitem>
@@ -35,4 +35,6 @@
         </listitem>
     </itemizedlist>
 
+    <para>Now, when you have it installed, we are going to demonstrate some powerful features of
+        <property>JBoss Portal</property> tooling for Eclipse.</para>
 </chapter>

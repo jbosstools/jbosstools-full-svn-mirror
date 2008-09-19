@@ -3,7 +3,7 @@
     <?dbhtml filename="intro.html"?>
     <title>Introduction</title>
 
-    <para>Starting from 3.0 version, JBoss set of plugins extends <property>JBoss Portal</property>
+    <para>Starting from 3.0.0.Alpha1 version, JBoss set of plugins extends <property>JBoss Portal</property>
         features. Thus, this guide is intended to explain you how to manage the functionality
             <property>JBoss Tools</property> provide to ease the development with <property>JBoss
             Portal</property>.</para>
@@ -47,7 +47,7 @@
                                 Configuration to enable Portlet Facet in it.</para>
                         </entry>
                         <entry>
-                            <link linkend="creating _project_with_jbossportal">creating a Dynamic
+                            <link linkend="creating _project_with_jbossportal">Creating a Dynamic
                                 Web Project</link>
                         </entry>
                     </row>
@@ -59,10 +59,11 @@
                         </entry>
 
                         <entry>
-                            <para>The wizard enables creating a JSR-186/JSR-286 compliant portlet.</para>
+                            <para>The wizard enables creating a JSR-186/JSR-286 compliant
+                            portlet.</para>
                         </entry>
                         <entry>
-                            <link linkend="adding_java_portlet">adding Java Portlet to a
+                            <link linkend="adding_java_portlet">Adding Java Portlet to a
                             project</link>
                         </entry>
                     </row>
@@ -72,10 +73,12 @@
                             <para>Create JSF/Seam Portlet wizard</para>
                         </entry>
                         <entry>
-                            <para>This wizard creates a JSF/Seam portlet that uses JBoss Portlet Bridge</para>
+                            <para>This wizard creates a JSF/Seam portlet that uses JBoss Portlet
+                                Bridge</para>
                         </entry>
                         <entry>
-                            <link linkend="adding_JsfSeam_portlet">adding JSF/Seam Portlet to a project</link>
+                            <link linkend="adding_JsfSeam_portlet">Adding JSF/Seam Portlet to a
+                                project</link>
                         </entry>
                     </row>
 
@@ -108,8 +111,9 @@
 
             <listitem>
                 <para>
-                    <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools
-                        Forum</ulink>
+                    <ulink
+                        url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
+                        >JBoss Tools Forum</ulink>
                 </para>
             </listitem>
 
@@ -123,7 +127,7 @@
             <listitem>
                 <para>
                     <ulink url="http://www.jboss.com/products/devstudio/docs">Stable JBossTools/JBDS
-                        documentation</ulink> (supplied with the latest JBDS release, 1.1.0GA
+                        documentation</ulink> (supplied with the latest JBDS release, 1.1.0 GA
                     currently) </para>
             </listitem>
         </itemizedlist>

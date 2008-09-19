@@ -43,7 +43,7 @@
         </figure>
 
         <para>On the next page you should give a name to the runtime. Let&apos;s call it
-                <emphasis>JBoss Portal 2.7 Runtime</emphasis>. And then point it to the location of
+                <emphasis>JBoss Portal 2.7 Runtime</emphasis>, and then point it to the location of
             your JBoss AS + Portal installation.</para>
 
         <note>
@@ -65,8 +65,8 @@
 
         <para>Click on <emphasis>
                 <property>Finish</property>.</emphasis> It returns you to the <property>New Dynamic
-                Web Project</property> wizard where it&apos; also necessary to set the project
-            Configuration. <property>JBoss Tools</property> (starting from 3.0 Alpha) support the
+                Web Project</property> wizard where it&apos;s also necessary to set the project
+            Configuration. <property>JBoss Tools</property> (starting from 3.0.0.Alpha1) support the
             JSR-168 Portlet Specification (Portlet 1.0), JSR-286 Portlet Specification (Portlet
             2.0). Thus you can choose <emphasis>Portlet Project v1.0</emphasis> or <emphasis>Portlet
                 Project v2.0</emphasis>.</para>
