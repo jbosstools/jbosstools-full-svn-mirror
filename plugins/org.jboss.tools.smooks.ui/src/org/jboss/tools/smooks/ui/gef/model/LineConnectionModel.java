@@ -12,6 +12,11 @@ public class LineConnectionModel extends AbstractStructuredDataConnectionModel {
 		super();
 	}
 
+	public void disConnect(){
+		this.detachSource();
+		this.detachTarget();
+	}
+	
 	public void connect() {
 		this.attachSource();
 		this.attachTarget();

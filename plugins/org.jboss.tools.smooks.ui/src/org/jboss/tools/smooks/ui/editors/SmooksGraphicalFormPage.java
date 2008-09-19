@@ -530,7 +530,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			TreeItem item = (TreeItem) items[i];
 			if (item == null)
 				continue;
-			if (item.getData(REFERENCE_MODEL) != null) {
+			if (item.getData(REFERENCE_MODEL) != null && !item.isDisposed()) {
 
 			} else {
 				AbstractStructuredDataModel model = null;
@@ -561,8 +561,48 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	protected void createSourceGraphModels() {
 		Tree tree = sourceViewer.getTree();
 		TreeItem[] items = tree.getItems();
+		clearExsitingGraphModels(SourceModel.class);
 		createGraphModels(items, SourceModel.class);
 	}
+
+	
+	private void disConnectGraphModel(Class clazz,TreeItemRelationModel model){
+		if(clazz == SourceModel.class){
+			List list = model.getModelSourceConnections();
+			List temp = new ArrayList(list);
+			for (Iterator iterator = temp.iterator(); iterator.hasNext();) {
+				LineConnectionModel line = (LineConnectionModel) iterator.next();
+				line.disConnect();
+			}
+			temp.clear();
+		}
+		
+		if(clazz == TargetModel.class){
+			List list = model.getModelTargetConnections();
+			List temp = new ArrayList(list);
+			for (Iterator iterator = temp.iterator(); iterator.hasNext();) {
+				LineConnectionModel line = (LineConnectionModel) iterator.next();
+				line.disConnect();
+			}
+			temp.clear();
+		}
+	}
+	
+	private void clearExsitingGraphModels(Class<? extends Object> clazz) {
+		if(rootModel != null){
+			List children = rootModel.getChildren();
+			List removeList = new ArrayList();
+			for (Iterator iterator = children.iterator(); iterator.hasNext();) {
+				Object object = (Object) iterator.next();
+				if(object.getClass() == clazz){
+					removeList.add(object);
+					disConnectGraphModel(clazz,(TreeItemRelationModel)object);
+				}
+			}
+			rootModel.removeChildrenList(removeList);
+		}
+	}
+	
 
 	protected void createTargetGraphModels() {
 		Tree tree = targetViewer.getTree();
@@ -920,6 +960,15 @@ public class SmooksGraphicalFormPage extends FormPage implements
 					.getCurrentCreationWizard();
 			String typeID = cw.getInputDataTypeID();
 			if (UIUtils.setTheProvidersForTreeViewer(viewer, typeID)) {
+				if (viewer.getInput() != null) {
+					if (!MessageDialog
+							.openQuestion(
+									getSite().getShell(),
+									"Changed Data?",
+									"Do you want to change the data?if you do this , all connections will be losted")) {
+						return;
+					}
+				}
 				viewer.setInput(cw.getTreeViewerInputContents());
 				try {
 					// viewer.expandAll();
@@ -932,7 +981,6 @@ public class SmooksGraphicalFormPage extends FormPage implements
 						targetDataTypeID = typeID;
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
 					MessageDialog.openError(getSite().getShell(), "Error",
 							"a error occurs during filling Data into the viewer:\n"
 									+ e.toString());

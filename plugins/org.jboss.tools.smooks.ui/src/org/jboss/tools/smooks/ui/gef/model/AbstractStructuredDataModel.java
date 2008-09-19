@@ -3,6 +3,7 @@ package org.jboss.tools.smooks.ui.gef.model;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -130,7 +131,7 @@ public abstract class AbstractStructuredDataModel implements IPropertySource,
 	}
 
 	/**
-	 * ���ýڵ��Java���͡��������Ҫ������ȫ������<code>java.lang.String</code>
+	 * ���ýڵ��Java���͡��������Ҫ������ȫ�����ￄ1�7code>java.lang.String</code>
 	 * ���������Ǹ������ͣ�������Ϊ<code>null</code>��
 	 * 
 	 * @param typeString
@@ -150,12 +151,12 @@ public abstract class AbstractStructuredDataModel implements IPropertySource,
 	/**
 	 * ��ģ�������ü������ģ�ͷ���ı�ʱ����������Ѹı�֪ͨEditPart��
 	 * EditPart��Ҫʵ��PropertyChangeListener�ӿ�
-	 * �����������ʱ�����PropertyChangeListener�ӿ��е�peopertyChange����4��ɴ�����
+	 * �����������ʱ�����PropertyChangeListener�ӿ��е�peopertyChange����4��ɴ����ￄ1�7
 	 */
 	private PropertyChangeSupport listeners = new PropertyChangeSupport(this);
 
 	/**
-	 * Ϊģ����Ӽ�����
+	 * Ϊģ����Ӽ����ￄ1�7
 	 * 
 	 * @param listener
 	 *            PropertyChangeSupport ������
@@ -175,10 +176,10 @@ public abstract class AbstractStructuredDataModel implements IPropertySource,
 	}
 
 	/**
-	 * ��ģ�ͷ���仯ʱ��Ҫ��������4����������
+	 * ��ģ�ͷ���仯ʱ��Ҫ�������ￄ1�7����������
 	 * 
 	 * @param propName
-	 *            �ı������
+	 *            �ı�����ￄ1�7
 	 * @param oldValue
 	 * @param newValue
 	 */
@@ -188,7 +189,7 @@ public abstract class AbstractStructuredDataModel implements IPropertySource,
 	}
 
 	/**
-	 * ���ص�ǰģ�����е���Ԫ�ء����ǰģ��û����Ԫ��
+	 * ���ص�ǰģ�����е���Ԫ�ء����ǰģ��û����Ԫ�ￄ1�7
 	 * 
 	 * @return ��ǰģ�����е���Ԫ��
 	 */
@@ -238,9 +239,17 @@ public abstract class AbstractStructuredDataModel implements IPropertySource,
 	protected void setLeftValueToChild(AbstractStructuredDataModel child) {
 		child.setLeft(this.isLeft);
 	}
+	
+	
+	public void removeChildrenList(Collection children){
+		if(this.children != null && children != null){
+			this.children.removeAll(children);
+			firePropertyChange(P_CHILDREN, children, null);
+		}
+	}
 
 	/**
-	 * ɾ����Ԫ�أ���֪ͨģ����Ԫ�ط���ı�
+	 * ɾ����Ԫ�أ���֪ͨģ����Ԫ�ط���ıￄ1�7
 	 * 
 	 * @param child
 	 *            ��Ԫ��
