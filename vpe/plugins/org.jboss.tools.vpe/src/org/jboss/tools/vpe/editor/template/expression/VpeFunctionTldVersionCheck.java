@@ -127,18 +127,14 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 	
 	private double getStartVersion(String tagValue) {
 		
-		DecimalFormat decimalFormat = new DecimalFormat("#*.#*"); //$NON-NLS-1$
-		
 		try {
 			if(tagValue.indexOf(MIN_VERSION_KEYWORD)!=-1){
-				
-			return  (-1)*decimalFormat.parse(tagValue.
-					substring(tagValue.indexOf(MIN_VERSION_KEYWORD)+4)).doubleValue();	
+			    return Double.parseDouble(tagValue.substring(tagValue.indexOf(MIN_VERSION_KEYWORD)+4));    
 			} else {
 				
 				return (-1)*Double.MAX_VALUE;
 			}
-		} catch (ParseException e) {
+		} catch (NumberFormatException e) {
 			
 			VpePlugin.getPluginLog().logError(e);
 		}
@@ -147,18 +143,13 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 	
 	private double getEndVersion(String tagValue) {
 		
-		DecimalFormat decimalFormat = new DecimalFormat("#*.#*"); //$NON-NLS-1$
-		
 		try{
 			if(tagValue.indexOf(MAX_VERSION_KEYWORD)!=-1) {
-			
-				return  (-1)*decimalFormat.parse(tagValue.substring(tagValue.
-						indexOf(MAX_VERSION_KEYWORD)+4)).doubleValue();
+			    return Double.parseDouble(tagValue.substring(tagValue.indexOf(MAX_VERSION_KEYWORD)+4));    
 			}else {
 				return Double.MAX_VALUE;
 			}
-		} catch (ParseException e) {
-			
+		} catch (NumberFormatException e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
 		return Double.MAX_VALUE;
