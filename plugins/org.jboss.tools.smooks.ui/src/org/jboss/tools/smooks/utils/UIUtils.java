@@ -79,6 +79,7 @@ public class UIUtils {
 
 	public static LineConnectionModel getFirstSourceModelViaConnection(
 			AbstractStructuredDataModel target) {
+		if(target == null) return null;
 		if (target instanceof IConnectableModel) {
 			List list = ((IConnectableModel) target)
 					.getModelSourceConnections();
@@ -91,9 +92,10 @@ public class UIUtils {
 	}
 	
 	public static LineConnectionModel getFirstTargetModelViaConnection(
-			AbstractStructuredDataModel target) {
-		if (target instanceof IConnectableModel) {
-			List list = ((IConnectableModel) target)
+			AbstractStructuredDataModel source) {
+		if(source == null) return null;
+		if (source instanceof IConnectableModel) {
+			List list = ((IConnectableModel) source)
 					.getModelTargetConnections();
 			if (list.isEmpty())
 				return null;

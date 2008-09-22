@@ -44,7 +44,8 @@ public class AnalyzerFactory {
 				DataTypeID ti = new DataTypeID();
 				ti.setId(id);
 				ModelAnalyzer analyzer = ((ModelAnalyzer) map.get(id));
-				if(analyzer == null) continue;
+				if (analyzer == null)
+					continue;
 				ti.setName(analyzer.getName());
 				list.add(ti);
 			}
@@ -79,13 +80,15 @@ public class AnalyzerFactory {
 		if (map == null)
 			return;
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		IExtensionPoint ep = registry.getExtensionPoint(SmooksExtensionPointConstants.EXTENTION_POINT_ANALYZER);
+		IExtensionPoint ep = registry
+				.getExtensionPoint(SmooksExtensionPointConstants.EXTENTION_POINT_ANALYZER);
 		if (ep == null)
 			return;
 		IConfigurationElement[] elements = ep.getConfigurationElements();
 		for (int i = 0; i < elements.length; i++) {
 			IConfigurationElement element = elements[i];
-			if(!element.getName().equals(elementName)) continue;
+			if (!element.getName().equals(elementName))
+				continue;
 			String aname = element
 					.getAttribute(SmooksExtensionPointConstants.EXTENTION_POINT_ATTRIBUTE_NAME);
 			String clazz = element
@@ -127,9 +130,13 @@ public class AnalyzerFactory {
 			return;
 		IConfigurationElement[] elements = ep.getConfigurationElements();
 		for (int i = 0; i < elements.length; i++) {
-			
+
 			IConfigurationElement element = elements[i];
-			if(!element.getName().equals(SmooksExtensionPointConstants.EXTENTION_POINT_ELEMENT_MAPPINGANALYZER)) continue;
+			if (!element
+					.getName()
+					.equals(
+							SmooksExtensionPointConstants.EXTENTION_POINT_ELEMENT_MAPPINGANALYZER))
+				continue;
 			String aname = element
 					.getAttribute(SmooksExtensionPointConstants.EXTENTION_POINT_ATTRIBUTE_NAME);
 			String clazz = element
@@ -141,10 +148,10 @@ public class AnalyzerFactory {
 			if (clazz == null || "".equals(clazz))
 				continue;
 
-			MappingAnalyzerMapper mapper = new MappingAnalyzerMapper();
-			mapper.setElement(element);
-			mapper.setAnalyzerName(aname);
-			mapper.setSourceDataTypeID(typeID);
+			// MappingAnalyzerMapper mapper = mappingAnalyzerMap.get
+			// mapper.setElement(element);
+			// mapper.setAnalyzerName(aname);
+			// mapper.setSourceDataTypeID(typeID);
 
 			IConfigurationElement[] childrenElements = element.getChildren();
 			for (int j = 0; j < childrenElements.length; j++) {
@@ -157,10 +164,14 @@ public class AnalyzerFactory {
 							.getAttribute(SmooksExtensionPointConstants.EXTENTION_POINT_ATTRIBUTE_ID);
 					if (tid == null || "".equals(tid))
 						continue;
+					MappingAnalyzerMapper mapper = new MappingAnalyzerMapper();
+					mapper.setElement(element);
+					mapper.setAnalyzerName(aname);
+					mapper.setSourceDataTypeID(typeID);
+					mappingAnalyzerMap.put(typeID + ":" + tid, mapper);
 					mapper.addTargetDataTypeID(tid);
 				}
 			}
-			mappingAnalyzerMap.put(typeID, mapper);
 		}
 	}
 
@@ -178,7 +189,7 @@ public class AnalyzerFactory {
 			String targetDataTypeID) throws CoreException {
 		if (this.mappingAnalyzerMap != null) {
 			MappingAnalyzerMapper mapper = (MappingAnalyzerMapper) this.mappingAnalyzerMap
-					.get(sourceDataTypeID);
+					.get(sourceDataTypeID + ":" + targetDataTypeID);
 			if (mapper == null)
 				return null;
 			if (mapper.canTransformToTheTarget(targetDataTypeID)) {
@@ -193,7 +204,8 @@ public class AnalyzerFactory {
 		if (this.sourceModelAnalyzer != null) {
 			ModelAnalyzer mapper = (ModelAnalyzer) this.sourceModelAnalyzer
 					.get(datatypeID);
-			if(mapper == null) return null;
+			if (mapper == null)
+				return null;
 			return (ISourceModelAnalyzer) createModelAnalyzer(mapper);
 		}
 		return null;
@@ -204,7 +216,8 @@ public class AnalyzerFactory {
 		if (this.targetModelAnalyzer != null) {
 			ModelAnalyzer mapper = (ModelAnalyzer) this.targetModelAnalyzer
 					.get(datatypeID);
-			if(mapper == null) return null;
+			if (mapper == null)
+				return null;
 			return (ITargetModelAnalyzer) createModelAnalyzer(mapper);
 		}
 		return null;

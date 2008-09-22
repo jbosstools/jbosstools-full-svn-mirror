@@ -144,7 +144,7 @@ public abstract class AbstractStructuredDataModel implements IPropertySource,
 	/**
 	 * ����Ԫ�ض����Ӵ�
 	 */
-	private List children = new ArrayList();
+	protected List children = new ArrayList();
 
 	private AbstractStructuredDataModel parent = null;
 
