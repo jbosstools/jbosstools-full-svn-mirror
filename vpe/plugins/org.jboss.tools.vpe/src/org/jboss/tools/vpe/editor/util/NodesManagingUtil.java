@@ -136,5 +136,19 @@ public class NodesManagingUtil {
 		return locale;
 
 	}
+	
+	/**
+	 * 
+	 * @param pageContext
+	 * @param startPosition
+	 * @param endPosition
+	 * @return
+	 */
+	public static String getSourceText(VpePageContext pageContext,
+			int startPosition, int endPosition) {
+
+		return pageContext.getSourceBuilder().getStructuredTextViewer()
+				.getTextWidget().getText(startPosition, endPosition);
+	}
 
 }
