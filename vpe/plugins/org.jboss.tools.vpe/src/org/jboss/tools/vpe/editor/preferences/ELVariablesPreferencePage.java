@@ -24,7 +24,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.jboss.tools.common.el.ui.GlobalElVariablesComposite;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
-import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.vpe.resref.VpeResourcesDialog;
 
 /**
@@ -34,8 +33,6 @@ import org.jboss.tools.vpe.resref.VpeResourcesDialog;
  */
 public class ELVariablesPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
     
-
-    private static final ResourceReference[] EMPTY_RESOURCE = new ResourceReference[0];
     /** The el. */
     private GlobalElVariablesComposite   el  = new GlobalElVariablesComposite();
     

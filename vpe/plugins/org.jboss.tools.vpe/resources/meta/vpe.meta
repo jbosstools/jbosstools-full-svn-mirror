@@ -141,7 +141,7 @@
      PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
      displayName="Add El Reference..." kind="action" name="AddItem">
      <EntityData EntityName="VPEElReference">
-      <AttributeData AttributeName="location" Mandatory="no"/>
+      <AttributeData AttributeName="location"/>
       <AttributeData AttributeName="scope" Mandatory="no"/>
       <AttributeData AttributeName="prefix" Mandatory="no"/>
      </EntityData>
