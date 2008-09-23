@@ -699,6 +699,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		context.setTargetDataTypeID(this.targetDataTypeID);
 		context.setSmooksType(SmooksModelConstants.SAX);
 		context.setDataMappingRootModel(this.rootModel);
+		context.setSmooksConfigFile(((IFileEditorInput)getEditorInput()).getFile());
 	}
 
 	protected Composite createUISectionContainer(Composite parent, int columns) {
