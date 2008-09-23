@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.TagAction;
 
+import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.jboss.tools.smooks.analyzer.AbstractAnalyzer;
 import org.jboss.tools.smooks.analyzer.MappingModel;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
@@ -214,20 +215,15 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		ResourceConfigType rootResourceConfig = findFirstMappingResourceConfig(listType);
 		String selector = rootResourceConfig.getSelector();
 		AbstractXMLObject source = findXMLObjectBySelector(selector, sourceRoot);
-		if(source == null) return MappingResourceConfigList.createEmptyList();
-		
+		if (source == null)
+			return MappingResourceConfigList.createEmptyList();
+
 		MappingResourceConfigList rcl = new MappingResourceConfigList();
-		MappingModel mapping = new MappingModel(source,sourceTarget);
+		MappingModel mapping = new MappingModel(source, sourceTarget);
 		rcl.getMappingModelList().add(mapping);
 		rcl.addResourceConfig(rootResourceConfig);
 
 		return null;
-	}
-
-	protected void createMappingResourceConfigList(ResourceConfigType config,
-			AbstractXMLObject sourceRoot, JavaBeanModel targetRoot) {
-		String selector = config.getSelector();
-		AbstractXMLObject source = findXMLObjectBySelector(selector, sourceRoot);
 	}
 
 	private AbstractXMLObject findXMLObjectBySelector(String selector,
@@ -260,8 +256,42 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 
 	protected void createMappingResourceConfigList(
 			MappingResourceConfigList configList, SmooksResourceListType list,
-			AbstractXMLObject sourceRoot, JavaBeanModel targetRoot) {
+			ResourceConfigType config, AbstractXMLObject sourceRoot,
+			JavaBeanModel targetRoot) {
+		String selector = config.getSelector();
+		String beanID = SmooksModelUtils.getParmaText(
+				SmooksModelConstants.BEAN_ID, config);
+		String beanClass = SmooksModelUtils.getParmaText(
+				SmooksModelConstants.BEAN_CLASS, config);
+		List<ParamType> paramList = config.getParam();
+		ParamType bindingParam = null;
+		for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
+			ParamType paramType = (ParamType) iterator.next();
+			String name = paramType.getName();
+			if (SmooksModelConstants.BINDINGS.equals(name)) {
+				bindingParam = paramType;
+				break;
+			}
+		}
 
+		if (bindingParam != null) {
+			List bindings = (List) bindingParam.getMixed().get(
+					SmooksModelUtils.ELEMENT_BINDING, true);
+			if (bindings != null) {
+				for (Iterator iterator = bindings.iterator(); iterator
+						.hasNext();) {
+					String property = SmooksModelUtils
+							.getAttributeValueFromAnyType((AnyType) iterator
+									.next(),
+									SmooksModelUtils.ATTRIBUTE_PROPERTY);
+					String selectorStr = SmooksModelUtils
+							.getAttributeValueFromAnyType((AnyType) iterator
+									.next(),
+									SmooksModelUtils.ATTRIBUTE_SELECTOR);
+				}
+			}
+		}
+		AbstractXMLObject source = findXMLObjectBySelector(selector, sourceRoot);
 	}
 
 	private ResourceConfigType findFirstMappingResourceConfig(
