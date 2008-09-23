@@ -2459,7 +2459,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		nsIDOMElement span = visualDocument.createElement(HTML.TAG_SPAN);
 
 		span.setAttribute(HTML.TAG_STYLE,
-				"border: dashed 1px GREY;color:GREY;font-size:12px;"); //$NON-NLS-1$
+				"border: 1px dashed GREY; color: GREY; font-size: 12px;"); //$NON-NLS-1$
 
 		nsIDOMText text = visualDocument.createTextNode(sourceNode
 				.getNodeName());

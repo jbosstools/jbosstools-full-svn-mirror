@@ -124,10 +124,11 @@ public class TestDomUtil {
 			if (attributes != null) {
 				for (int i = 0; i < attributes.getLength(); i++) {
 					Attr attr = (Attr) attributes.item(i);
+
 					if ((!vpeElement.hasAttribute(attr.getName()))
-							|| (!attr.getNodeValue().equals(
+							|| (!attr.getNodeValue().trim().equals(
 									vpeElement.getAttributeNode(attr.getName())
-											.getNodeValue())))
+											.getNodeValue().trim())))
 						return false;
 				}
 			}
@@ -167,7 +168,8 @@ public class TestDomUtil {
 	}
 
 	/**
-	 * get ids of tests 
+	 * get ids of tests
+	 * 
 	 * @param testDocument
 	 * @return
 	 */
