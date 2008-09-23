@@ -67,12 +67,16 @@ export JAVA_HOME=/usr/java/jdk1.5.0_11
 export PATH=$PATH:$JAVA_HOME/bin]]></programlisting>
     </listitem>
    </itemizedlist>
+
    <note>
     <title>Note:</title>
-    <para>When you add $JAVA_HOME/bin to $PATH, you should add it <emphasis role="bold"
-     >before</emphasis> the old $PATH not after it. This way, the machine will pick up the new JVM
-     first. You only need to run &quot;alternative&quot; as a safe guard for the right
-    JVM.</para>
+
+    <para>﻿If you have JDK already installed and added in your system path, you should add
+     <emphasis>$JAVA_HOME/bin</emphasis> before the old <emphasis>$PATH</emphasis> (not after it) so that the new
+     version of JDK can be found first, i. e. <para>
+      <emphasis>export PATH=$JAVA_HOME/bin:$PATH</emphasis>
+     </para> This way, the machine will pick up the new JVM first. You only need to run
+     "alternative" as a safe guard for the right JVM. </para>
    </note>
 
    <para>Set this variable for your account doing the installation and also for the user account
@@ -386,13 +390,14 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      </listitem>
     </itemizedlist>
 
-    <para>Some of our newer plugins, like TPTP and BIRT, need additional drivers. On the left side of the download page 
-     you can find all of the required drivers for chosen build and their versions.</para>
+    <para>Some of our newer plugins, like TPTP and BIRT, need additional drivers. On the left side
+     of the download page you can find all of the required drivers for chosen build and their
+     versions.</para>
     <para>Instead of downloading the nightly build version manually, it&apos;s also possible to
      get the latest release of <property>JBoss Tools</property> from one of our update sites: <itemizedlist>
       <listitem>
        <para>Stable Updates: <ulink url="http://download.jboss.org/jbosstools/updates/stable"
-        >http://download.jboss.org/jbosstools/updates/stable</ulink></para>
+         >http://download.jboss.org/jbosstools/updates/stable</ulink></para>
       </listitem>
       <listitem>
        <para> Development Updates: <ulink
