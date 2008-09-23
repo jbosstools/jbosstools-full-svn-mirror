@@ -27,8 +27,8 @@ import org.jboss.tools.flow.common.command.DeleteConnectionCommand;
 import org.jboss.tools.flow.common.command.SplitConnectionCommand;
 import org.jboss.tools.flow.common.editpart.ConnectionEditPart;
 import org.jboss.tools.flow.common.model.Element;
-import org.jboss.tools.flow.common.wrapper.AbstractFlowWrapper;
 import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.FlowWrapper;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
 /**
@@ -79,7 +79,7 @@ public class ConnectionEditPolicy extends org.eclipse.gef.editpolicies.Connectio
         		((Element)elementConnection.getElement()).getMetaData("configurationElement"));
         cmd.setElementConnection(elementConnection);
         cmd.setNewSecondConnection(newSecondConnection);
-        cmd.setParent(((AbstractFlowWrapper) ((ConnectionEditPart) getHost())
+        cmd.setParent(((FlowWrapper) ((ConnectionEditPart) getHost())
             .getSource().getParent().getModel()));
         cmd.setNewElement(((NodeWrapper) ((CreateRequest) request).getNewObject()));
         return cmd;

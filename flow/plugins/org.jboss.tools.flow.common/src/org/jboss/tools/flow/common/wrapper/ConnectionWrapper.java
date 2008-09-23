@@ -6,7 +6,7 @@ import org.eclipse.draw2d.geometry.Point;
 
 public interface ConnectionWrapper extends Wrapper {
 
-	static final int CHANGE_BENDPOINTS = 1;
+	int CHANGE_BENDPOINTS = 1;
 	
 	NodeWrapper getSource();
 	NodeWrapper getTarget();

@@ -29,13 +29,6 @@ import java.util.Map;
  */
 public abstract class AbstractFlowWrapper extends AbstractWrapper implements FlowWrapper {
 
-	public static final int CHANGE_ELEMENTS = 1;
-	public static final int CHANGE_VISUAL = 2;
-
-    public static final Integer ROUTER_LAYOUT_MANUAL = new Integer(0);
-    public static final Integer ROUTER_LAYOUT_MANHATTAN = new Integer(1);
-    public static final Integer ROUTER_LAYOUT_SHORTEST_PATH = new Integer(2);
-
     private Map<String, NodeWrapper> elements = new HashMap<String, NodeWrapper>();
     private transient List<ModelListener> listeners = new ArrayList<ModelListener>();
     
@@ -83,7 +76,7 @@ public abstract class AbstractFlowWrapper extends AbstractWrapper implements Flo
     
     protected abstract void internalRemoveElement(NodeWrapper element);
     
-    public AbstractFlowWrapper getFlowWrapper() {
+    public FlowWrapper getFlowWrapper() {
         return this;
     }
     

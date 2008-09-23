@@ -38,7 +38,6 @@ import org.eclipse.gef.editpolicies.RootComponentEditPolicy;
 import org.eclipse.swt.SWT;
 import org.jboss.tools.flow.common.figure.ElementFigure;
 import org.jboss.tools.flow.common.policy.ElementContainerLayoutEditPolicy;
-import org.jboss.tools.flow.common.wrapper.AbstractFlowWrapper;
 import org.jboss.tools.flow.common.wrapper.FlowWrapper;
 import org.jboss.tools.flow.common.wrapper.ModelEvent;
 import org.jboss.tools.flow.common.wrapper.ModelListener;
@@ -84,9 +83,9 @@ public class RootEditPart extends AbstractGraphicalEditPart implements ModelList
     }
 
     public void modelChanged(ModelEvent event) {
-        if (event.getChange() == AbstractFlowWrapper.CHANGE_ELEMENTS) {
+        if (event.getChange() == FlowWrapper.CHANGE_ELEMENTS) {
             refreshChildren();
-        } else if (event.getChange() == AbstractFlowWrapper.CHANGE_VISUAL) {
+        } else if (event.getChange() == FlowWrapper.CHANGE_VISUAL) {
     		refreshVisuals();
     	}
     }
@@ -109,11 +108,11 @@ public class RootEditPart extends AbstractGraphicalEditPart implements ModelList
             layer.setAntialias(SWT.ON);
         }
 
-    	if (getWrapper().getRouterLayout().equals(AbstractFlowWrapper.ROUTER_LAYOUT_MANUAL)) {
+    	if (getWrapper().getRouterLayout().equals(FlowWrapper.ROUTER_LAYOUT_MANUAL)) {
     		AutomaticRouter router = new FanRouter();
     		router.setNextRouter(new BendpointConnectionRouter());
     		layer.setConnectionRouter(router);
-    	} else if (getWrapper().getRouterLayout().equals(AbstractFlowWrapper.ROUTER_LAYOUT_MANHATTAN)) {
+    	} else if (getWrapper().getRouterLayout().equals(FlowWrapper.ROUTER_LAYOUT_MANHATTAN)) {
     		layer.setConnectionRouter(new ManhattanConnectionRouter());
     	} else {
     		layer.setConnectionRouter(new ShortestPathConnectionRouter(getFigure()));
