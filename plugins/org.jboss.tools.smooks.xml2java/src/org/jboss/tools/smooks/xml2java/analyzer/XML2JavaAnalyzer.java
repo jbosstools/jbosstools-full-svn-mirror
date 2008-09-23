@@ -52,6 +52,10 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 	public void analyzeMappingGraphModel(
 			SmooksConfigurationFileGenerateContext context)
 			throws SmooksAnalyzerException {
+		
+		String filePath = context.getSmooksConfigFile().getLocation().toOSString();
+		context.putProperty(XMLSourceModelAnalyzer.XML_FILE, filePath);
+		
 		SmooksResourceListType listType = context.getSmooksResourceListModel();
 		GraphRootModel rootModel = context.getDataMappingRootModel();
 		List children = rootModel.getChildren();
@@ -97,7 +101,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 				.getReferenceEntityModel();
 		ResourceConfigType resourceConfigType = SmooksFactory.eINSTANCE
 				.createResourceConfigType();
-		addResourceConfigType(listType, resourceConfigType);
+		context.getGeneratorResourceList().add(resourceConfigType);
+//		addResourceConfigType(listType, resourceConfigType);
 		// set the selector string value
 		resourceConfigType.setSelector(source.getName());
 		// create a resource and add it to resourceConfig

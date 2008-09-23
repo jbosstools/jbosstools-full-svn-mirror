@@ -12,6 +12,11 @@
                name="JavaBean">
          </targetSourceType>
       </mappingAnalyzer>
+      <sourceModelAnalyzer
+            class="org.jboss.tools.smooks.xml2java.analyzer.XMLSourceModelAnalyzer"
+            name="XML"
+            typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
+      </sourceModelAnalyzer>
    </extension>
 
 </plugin>
