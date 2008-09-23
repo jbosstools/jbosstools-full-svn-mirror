@@ -13,24 +13,24 @@ package org.jboss.tools.smooks.graphical.util;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Properties;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.jboss.tools.smooks.graphical.GraphInformations;
 import org.jboss.tools.smooks.graphical.GraphicalFactory;
 import org.jboss.tools.smooks.graphical.MappingDataType;
+import org.jboss.tools.smooks.graphical.Param;
+import org.jboss.tools.smooks.graphical.Params;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 
 /**
@@ -99,10 +99,26 @@ public class GraphicalInformationSaver {
 			}
 			if (graph != null) {
 				initMappingTypes(graph, sourceID, targetID);
+				Params params = GraphicalFactory.eINSTANCE.createParams();
+				graph.setParams(params);
+				initParams(params,context);
 			}
 			graphicalFileResource.save(Collections.EMPTY_MAP);
 		}
 
+	}
+
+	private void initParams(Params params,
+			SmooksConfigurationFileGenerateContext context) {
+		Properties pros = context.getProperties();
+		Enumeration<Object> keys =  pros.keys();
+		while(keys.hasMoreElements()){
+			String key = (String) keys.nextElement();
+			Param param = GraphicalFactory.eINSTANCE.createParam();
+			param.setName(key);
+			param.setValue(pros.getProperty(key));
+			params.getParam().add(param);
+		}
 	}
 
 	protected void initMappingTypes(GraphInformations infor, String sourceID,

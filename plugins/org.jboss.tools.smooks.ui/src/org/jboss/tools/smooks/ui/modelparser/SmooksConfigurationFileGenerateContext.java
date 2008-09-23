@@ -12,7 +12,9 @@ package org.jboss.tools.smooks.ui.modelparser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.jboss.tools.smooks.graphical.Param;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
@@ -30,7 +32,8 @@ public class SmooksConfigurationFileGenerateContext {
 	protected GraphRootModel dataMappingRootModel;
 	protected SmooksResourceListType smooksResourceListModel;
 	protected List generatorResourceList = new ArrayList();
-	
+	private Properties properties = new Properties();
+	protected IFile smooksConfigFile = null;
 	protected EditingDomain domain;
 	
 	protected String smooksType = null;
@@ -108,6 +111,27 @@ public class SmooksConfigurationFileGenerateContext {
 	}
 	public void setGeneratorResourceList(List generatorResourceList) {
 		this.generatorResourceList = generatorResourceList;
+	}
+	
+	public void putProperty(String paramName,String paramValue){
+		properties.setProperty(paramName, paramValue);
+	}
+	
+	public String getProperty(String paramName){
+		return properties.getProperty(paramName);
+	}
+	
+	public void cleanProperties(){
+		properties.clear();
+	}
+	public IFile getSmooksConfigFile() {
+		return smooksConfigFile;
+	}
+	public void setSmooksConfigFile(IFile smooksConfigFile) {
+		this.smooksConfigFile = smooksConfigFile;
+	}
+	public Properties getProperties() {
+		return properties;
 	}
 	
 }
