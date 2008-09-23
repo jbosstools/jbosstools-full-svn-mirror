@@ -52,7 +52,4 @@ public interface NodeWrapper extends Wrapper {
     boolean acceptsIncomingConnection(ConnectionWrapper connection, NodeWrapper source);
     boolean acceptsOutgoingConnection(ConnectionWrapper connection, NodeWrapper target);
     
-    void addListener(ModelListener listener);
-    void removeListener(ModelListener listener);
-
 }

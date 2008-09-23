@@ -19,7 +19,4 @@ public interface ConnectionWrapper extends Wrapper {
 	void removeBendpoint(int index);
 	List<Point> getBendpoints();
 	
-	void addListener(ModelListener modelListener);
-	void removeListener(ModelListener modelListener);
-
 }

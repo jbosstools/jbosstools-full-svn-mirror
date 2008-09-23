@@ -39,6 +39,7 @@ import org.eclipse.swt.SWT;
 import org.jboss.tools.flow.common.figure.ElementFigure;
 import org.jboss.tools.flow.common.policy.ElementContainerLayoutEditPolicy;
 import org.jboss.tools.flow.common.wrapper.AbstractFlowWrapper;
+import org.jboss.tools.flow.common.wrapper.FlowWrapper;
 import org.jboss.tools.flow.common.wrapper.ModelEvent;
 import org.jboss.tools.flow.common.wrapper.ModelListener;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
@@ -50,8 +51,8 @@ import org.jboss.tools.flow.common.wrapper.NodeWrapper;
  */
 public class RootEditPart extends AbstractGraphicalEditPart implements ModelListener {
     
-    public AbstractFlowWrapper getProcessWrapper() {
-        return (AbstractFlowWrapper) getModel();
+    private FlowWrapper getWrapper() {
+        return (FlowWrapper) getModel();
     }
 
     protected IFigure createFigure() {
@@ -69,16 +70,16 @@ public class RootEditPart extends AbstractGraphicalEditPart implements ModelList
     }
 
     protected List<NodeWrapper> getModelChildren() {
-        return getProcessWrapper().getElements();
+        return getWrapper().getElements();
     }
     
     public void activate() {
         super.activate();
-        getProcessWrapper().addListener(this);
+        getWrapper().addListener(this);
     }
 
     public void deactivate() {
-        getProcessWrapper().removeListener(this);
+        getWrapper().removeListener(this);
         super.deactivate();
     }
 
@@ -108,11 +109,11 @@ public class RootEditPart extends AbstractGraphicalEditPart implements ModelList
             layer.setAntialias(SWT.ON);
         }
 
-    	if (getProcessWrapper().getRouterLayout().equals(AbstractFlowWrapper.ROUTER_LAYOUT_MANUAL)) {
+    	if (getWrapper().getRouterLayout().equals(AbstractFlowWrapper.ROUTER_LAYOUT_MANUAL)) {
     		AutomaticRouter router = new FanRouter();
     		router.setNextRouter(new BendpointConnectionRouter());
     		layer.setConnectionRouter(router);
-    	} else if (getProcessWrapper().getRouterLayout().equals(AbstractFlowWrapper.ROUTER_LAYOUT_MANHATTAN)) {
+    	} else if (getWrapper().getRouterLayout().equals(AbstractFlowWrapper.ROUTER_LAYOUT_MANHATTAN)) {
     		layer.setConnectionRouter(new ManhattanConnectionRouter());
     	} else {
     		layer.setConnectionRouter(new ShortestPathConnectionRouter(getFigure()));

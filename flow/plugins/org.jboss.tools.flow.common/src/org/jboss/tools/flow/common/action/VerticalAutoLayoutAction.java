@@ -30,8 +30,8 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jboss.tools.flow.common.Activator;
-import org.jboss.tools.flow.common.wrapper.AbstractFlowWrapper;
 import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.FlowWrapper;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
 /**
@@ -67,7 +67,7 @@ public class VerticalAutoLayoutAction extends Action implements IAction {
         for (Map.Entry<String, Node> entry: mapping.entrySet()) {
             Node node = entry.getValue();
             NodeWrapper nodeWrapper = 
-            	((AbstractFlowWrapper)diagramViewer.getContents().getModel()).getElement(entry.getKey());
+            	((FlowWrapper)diagramViewer.getContents().getModel()).getElement(entry.getKey());
             nodeWrapper.setConstraint(new Rectangle(node.x, node.y, node.width, node.height));
         }
     }
@@ -75,7 +75,7 @@ public class VerticalAutoLayoutAction extends Action implements IAction {
     @SuppressWarnings("unchecked")
     protected DirectedGraph createDirectedGraph(Map<String, Node> mapping) {
         DirectedGraph graph = new DirectedGraph();
-        AbstractFlowWrapper processWrapper = (AbstractFlowWrapper)diagramViewer.getContents().getModel();
+        FlowWrapper processWrapper = (FlowWrapper)diagramViewer.getContents().getModel();
         for (NodeWrapper elementWrapper: processWrapper.getElements()) {
             Node node = new Node();
             Integer width = (Integer) elementWrapper.getConstraint().width;

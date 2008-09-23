@@ -50,7 +50,7 @@ public abstract class AbstractContainerWrapper extends AbstractNodeWrapper imple
         return elements;
     }
     
-    public AbstractFlowWrapper getFlowWrapper() {
+    public FlowWrapper getFlowWrapper() {
         return getParent().getFlowWrapper();
     }
 
