@@ -12,11 +12,6 @@ import org.jboss.tools.flow.common.model.Node;
 
 public class DefaultConnectionWrapper extends AbstractConnectionWrapper {
 	
-	public DefaultConnectionWrapper() {
-		// create a dummy connection in order to be able to add the metadata
-		setElement(createConnection(null, null));
-	}
-
 	public Connection getConnection() {
 	    return (Connection)getElement();
 	}
@@ -61,7 +56,13 @@ public class DefaultConnectionWrapper extends AbstractConnectionWrapper {
 		super.connect(source, target);
 		Node from = (Node)getSource().getElement();
 		Node to = (Node)getTarget().getElement();
-		setElement(createConnection(from, to));		
+		Connection connection = getConnection();
+		if (connection != null) {
+			connection.setTo(to);
+			connection.setFrom(from);
+		} else {
+			setElement(createConnection(from, to));		
+		}
 	}
 
 	protected Connection createConnection(Node from, Node to) {

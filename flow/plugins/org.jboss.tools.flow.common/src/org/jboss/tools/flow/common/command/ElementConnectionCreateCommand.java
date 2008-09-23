@@ -17,7 +17,6 @@ package org.jboss.tools.flow.common.command;
  */
 
 import org.eclipse.gef.commands.Command;
-import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
@@ -28,7 +27,7 @@ import org.jboss.tools.flow.common.wrapper.NodeWrapper;
  */
 public class ElementConnectionCreateCommand extends Command {
 
-	private AbstractConnectionWrapper connection;
+	private ConnectionWrapper connection;
     private NodeWrapper source;
     private NodeWrapper target;
 
@@ -66,7 +65,7 @@ public class ElementConnectionCreateCommand extends Command {
     	this.source = source;
     }
 
-    public void setConnection(AbstractConnectionWrapper connection) {
+    public void setConnection(ConnectionWrapper connection) {
         this.connection = connection;
     }
 

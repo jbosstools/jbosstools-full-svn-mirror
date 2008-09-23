@@ -30,8 +30,6 @@ public abstract class AbstractConnectionWrapper extends AbstractWrapper implemen
     
 	private static final long serialVersionUID = 1L;
 	
-	public static final int CHANGE_BENDPOINTS = 1;
-	
     private Object element;
 	private NodeWrapper source;
     private NodeWrapper target;

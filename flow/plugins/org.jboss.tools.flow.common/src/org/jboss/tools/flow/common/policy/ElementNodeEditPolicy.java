@@ -24,7 +24,7 @@ import org.jboss.tools.flow.common.command.ElementConnectionCreateCommand;
 import org.jboss.tools.flow.common.command.ReconnectElementConnectionSourceCommand;
 import org.jboss.tools.flow.common.command.ReconnectElementConnectionTargetCommand;
 import org.jboss.tools.flow.common.editpart.ElementEditPart;
-import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
 /**
@@ -37,7 +37,7 @@ public class ElementNodeEditPolicy extends GraphicalNodeEditPolicy {
     protected Command getConnectionCompleteCommand(CreateConnectionRequest request) {
         ElementConnectionCreateCommand cmd =
             (ElementConnectionCreateCommand) request.getStartCommand();
-        cmd.setConnection((AbstractConnectionWrapper) request.getNewObject());
+        cmd.setConnection((ConnectionWrapper) request.getNewObject());
         cmd.setTarget(getElement());
         return cmd;
     }
@@ -45,7 +45,7 @@ public class ElementNodeEditPolicy extends GraphicalNodeEditPolicy {
     protected Command getConnectionCreateCommand(CreateConnectionRequest request) {
         ElementConnectionCreateCommand cmd =
             new ElementConnectionCreateCommand();
-        cmd.setConnection((AbstractConnectionWrapper) request.getNewObject());
+        cmd.setConnection((ConnectionWrapper) request.getNewObject());
         cmd.setSource(getElement());
         request.setStartCommand(cmd);
         return cmd;
@@ -62,7 +62,7 @@ public class ElementNodeEditPolicy extends GraphicalNodeEditPolicy {
     protected Command getReconnectSourceCommand(ReconnectRequest request) {
         ReconnectElementConnectionSourceCommand cmd
             = new ReconnectElementConnectionSourceCommand();
-        cmd.setConnection((AbstractConnectionWrapper) request.getConnectionEditPart().getModel());
+        cmd.setConnection((ConnectionWrapper) request.getConnectionEditPart().getModel());
         cmd.setSource(getElement());
         return cmd;
     }
@@ -70,7 +70,7 @@ public class ElementNodeEditPolicy extends GraphicalNodeEditPolicy {
     protected Command getReconnectTargetCommand(ReconnectRequest request) {
         ReconnectElementConnectionTargetCommand cmd
             = new ReconnectElementConnectionTargetCommand();
-        cmd.setConnection((AbstractConnectionWrapper) request.getConnectionEditPart().getModel());
+        cmd.setConnection((ConnectionWrapper) request.getConnectionEditPart().getModel());
         cmd.setTarget(getElement());
         return cmd;
     }

@@ -33,7 +33,7 @@ import org.eclipse.gef.requests.CreationFactory;
 import org.eclipse.gef.requests.SimpleFactory;
 import org.jboss.tools.flow.common.policy.ConnectionBendpointEditPolicy;
 import org.jboss.tools.flow.common.policy.ConnectionEditPolicy;
-import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.DefaultConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.ModelEvent;
 import org.jboss.tools.flow.common.wrapper.ModelListener;
@@ -45,8 +45,8 @@ import org.jboss.tools.flow.common.wrapper.ModelListener;
  */
 public class ConnectionEditPart extends AbstractConnectionEditPart implements ModelListener {
     
-    public AbstractConnectionWrapper getElementConnection() {
-        return (AbstractConnectionWrapper) getModel();
+    public ConnectionWrapper getElementConnection() {
+        return (ConnectionWrapper) getModel();
     }
     
     protected void createEditPolicies() {
@@ -83,7 +83,7 @@ public class ConnectionEditPart extends AbstractConnectionEditPart implements Mo
     }
     
     public void modelChanged(ModelEvent event) {
-        if (event.getChange() == AbstractConnectionWrapper.CHANGE_BENDPOINTS) {
+        if (event.getChange() == ConnectionWrapper.CHANGE_BENDPOINTS) {
             refreshBendpoints();
         }
     }

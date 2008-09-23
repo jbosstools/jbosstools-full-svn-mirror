@@ -6,6 +6,10 @@ public class DefaultConnection implements Connection {
 	
 	private HashMap<String, Object> metaData = new HashMap<String, Object>();
 	private Node from, to;
+	
+	public DefaultConnection() {
+		this(null, null);
+	}
 
 	public DefaultConnection(Node from, Node to) {
 		this.from = from;
@@ -24,8 +28,16 @@ public class DefaultConnection implements Connection {
 		return from;
 	}
 	
+	public void setFrom(Node node) {
+		this.from = node;
+	}
+	
 	public Node getTo() {
 		return to;
+	}
+	
+	public void setTo(Node node) {
+		this.to = node;
 	}
 
 	public String getFromType() {

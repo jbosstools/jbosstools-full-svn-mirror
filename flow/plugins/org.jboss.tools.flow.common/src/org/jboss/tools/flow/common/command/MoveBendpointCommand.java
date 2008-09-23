@@ -18,7 +18,7 @@ package org.jboss.tools.flow.common.command;
 
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.commands.Command;
-import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 
 /**
  * A command for moving a bendpoint.
@@ -27,7 +27,7 @@ import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
  */
 public class MoveBendpointCommand extends Command {
 
-    private AbstractConnectionWrapper connection;
+    private ConnectionWrapper connection;
     private Point oldLocation, newLocation;
     private int index;
 
@@ -37,7 +37,7 @@ public class MoveBendpointCommand extends Command {
     }
 
     public void setConnectionModel(Object model) {
-        connection = (AbstractConnectionWrapper) model;
+        connection = (ConnectionWrapper) model;
     }
 
     public void setIndex(int i) {

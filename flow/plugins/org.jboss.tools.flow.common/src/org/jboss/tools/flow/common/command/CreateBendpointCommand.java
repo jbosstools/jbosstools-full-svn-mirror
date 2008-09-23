@@ -18,7 +18,7 @@ package org.jboss.tools.flow.common.command;
 
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.commands.Command;
-import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 
 /**
  * A command for creating a bendpoint.
@@ -27,7 +27,7 @@ import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
  */
 public class CreateBendpointCommand extends Command {
 
-    private AbstractConnectionWrapper connection;
+    private ConnectionWrapper connection;
     private Point location;
     private int index;
 
@@ -36,7 +36,7 @@ public class CreateBendpointCommand extends Command {
     }
 
     public void setConnection(Object model) {
-        connection = (AbstractConnectionWrapper) model;
+        connection = (ConnectionWrapper) model;
     }
 
     public void setIndex(int i) {

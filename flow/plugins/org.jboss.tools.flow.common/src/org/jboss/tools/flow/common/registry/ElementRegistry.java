@@ -24,6 +24,7 @@ import org.jboss.tools.flow.common.figure.ElementFigure;
 import org.jboss.tools.flow.common.figure.EllipseElementFigure;
 import org.jboss.tools.flow.common.figure.RectangleElementFigure;
 import org.jboss.tools.flow.common.figure.RoundedRectangleElementFigure;
+import org.jboss.tools.flow.common.model.Connection;
 import org.jboss.tools.flow.common.model.Container;
 import org.jboss.tools.flow.common.model.Element;
 import org.jboss.tools.flow.common.model.Flow;
@@ -74,8 +75,15 @@ public class ElementRegistry {
 	
 	private static Wrapper createConnection(IConfigurationElement configurationElement)
 			throws CoreException {
+		Object element = configurationElement.createExecutableExtension("class");
+		if (!(element instanceof Connection)) {
+			String message = "Expecting to instantiate a org.jboss.tools.flow.common.model.Connection instance.";
+			Logger.logError(message, new RuntimeException(message));
+			return null;
+		}
+		((Element)element).setMetaData("configurationElement", configurationElement);
 		Wrapper result = new DefaultConnectionWrapper();
-		((Element)result.getElement()).setMetaData("configurationElement", configurationElement);
+		result.setElement(element);
 		return result;
 	}
 	

@@ -17,7 +17,6 @@ package org.jboss.tools.flow.common.command;
  */
 
 import org.eclipse.gef.commands.Command;
-import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
@@ -28,7 +27,7 @@ import org.jboss.tools.flow.common.wrapper.NodeWrapper;
  */
 public class ReconnectElementConnectionTargetCommand extends Command {
 
-    private AbstractConnectionWrapper connection;
+    private ConnectionWrapper connection;
     private NodeWrapper oldTarget;
     private NodeWrapper newTarget;
     private NodeWrapper source;
@@ -57,7 +56,7 @@ public class ReconnectElementConnectionTargetCommand extends Command {
         this.newTarget = target;
     }
 
-    public void setConnection(AbstractConnectionWrapper connection) {
+    public void setConnection(ConnectionWrapper connection) {
         this.connection = connection;
         this.source = connection.getSource();
         this.oldTarget = connection.getTarget();

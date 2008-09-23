@@ -17,7 +17,7 @@ package org.jboss.tools.flow.common.command;
  */
 
 import org.eclipse.gef.commands.Command;
-import org.jboss.tools.flow.common.wrapper.AbstractConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
 /**
@@ -29,7 +29,7 @@ public class DeleteConnectionCommand extends Command {
 
     private NodeWrapper source;
     private NodeWrapper target;
-    private AbstractConnectionWrapper connection;
+    private ConnectionWrapper connection;
 
     public void execute() {
     	connection.disconnect();
@@ -43,7 +43,7 @@ public class DeleteConnectionCommand extends Command {
         target = action;
     }
 
-    public void setAntecedentTaskConnection(AbstractConnectionWrapper connection) {
+    public void setAntecedentTaskConnection(ConnectionWrapper connection) {
         this.connection = connection;
     }
 

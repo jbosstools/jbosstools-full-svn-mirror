@@ -30,10 +30,20 @@ public interface Connection extends Element {
     Node getFrom();
 
     /**
+     * Set the from node of the connection.
+     */
+    void setFrom(Node node);
+
+    /**
      * Returns the to node of the connection
      * @return the to node of the connection
      */
     Node getTo();
+
+    /**
+     * Set the to node of the connection.
+     */
+    void setTo(Node node);
 
     /**
      * Returns the type of the connection at the from node

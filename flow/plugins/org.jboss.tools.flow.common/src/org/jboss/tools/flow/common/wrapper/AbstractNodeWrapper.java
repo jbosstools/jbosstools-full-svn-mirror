@@ -79,48 +79,48 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 		return Collections.unmodifiableList(incomingConnections);
 	}
 
-	public void addIncomingConnection(AbstractConnectionWrapper connection) {
+	public void addIncomingConnection(ConnectionWrapper connection) {
 	    localAddIncomingConnection(connection);
 		internalAddIncomingConnection(connection);
 		notifyListeners(CHANGE_INCOMING_CONNECTIONS);
 	}
 	
-	public void localAddIncomingConnection(AbstractConnectionWrapper connection) {
+	public void localAddIncomingConnection(ConnectionWrapper connection) {
 	    incomingConnections.add(connection);
 	}
 
-	protected void internalAddIncomingConnection(AbstractConnectionWrapper connection) {
+	protected void internalAddIncomingConnection(ConnectionWrapper connection) {
 	}
 
-	public void removeIncomingConnection(AbstractConnectionWrapper connection) {
+	public void removeIncomingConnection(ConnectionWrapper connection) {
 		incomingConnections.remove(connection);
 		internalRemoveIncomingConnection(connection);
 		notifyListeners(CHANGE_INCOMING_CONNECTIONS);
 	}
 
-	protected void internalRemoveIncomingConnection(AbstractConnectionWrapper connection) {
+	protected void internalRemoveIncomingConnection(ConnectionWrapper connection) {
 	}
 
-	public void addOutgoingConnection(AbstractConnectionWrapper connection) {
+	public void addOutgoingConnection(ConnectionWrapper connection) {
 	    localAddOutgoingConnection(connection);
 		internalAddOutgoingConnection(connection);
 		notifyListeners(CHANGE_OUTGOING_CONNECTIONS);
 	}
 
-    public void localAddOutgoingConnection(AbstractConnectionWrapper connection) {
+    public void localAddOutgoingConnection(ConnectionWrapper connection) {
         outgoingConnections.add(connection);
     }
 
-	protected void internalAddOutgoingConnection(AbstractConnectionWrapper connection) {
+	protected void internalAddOutgoingConnection(ConnectionWrapper connection) {
 	}
 
-	public void removeOutgoingConnection(AbstractConnectionWrapper connection) {
+	public void removeOutgoingConnection(ConnectionWrapper connection) {
 		outgoingConnections.remove(connection);
 		internalRemoveOutgoingConnection(connection);
 		notifyListeners(CHANGE_OUTGOING_CONNECTIONS);
 	}
 
-	protected void internalRemoveOutgoingConnection(AbstractConnectionWrapper connection) {
+	protected void internalRemoveOutgoingConnection(ConnectionWrapper connection) {
 	}
 
 	public void setName(String name) {

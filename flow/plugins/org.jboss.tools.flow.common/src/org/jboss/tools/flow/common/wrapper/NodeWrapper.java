@@ -43,12 +43,12 @@ public interface NodeWrapper extends Wrapper {
     
     List<ConnectionWrapper> getOutgoingConnections();
     List<ConnectionWrapper> getIncomingConnections();
-    void addIncomingConnection(AbstractConnectionWrapper connection);
-    void localAddIncomingConnection(AbstractConnectionWrapper connection);
-    void removeIncomingConnection(AbstractConnectionWrapper connection);
-    void addOutgoingConnection(AbstractConnectionWrapper connection);
-    void localAddOutgoingConnection(AbstractConnectionWrapper connection);
-    void removeOutgoingConnection(AbstractConnectionWrapper connection);
+    void addIncomingConnection(ConnectionWrapper connection);
+    void localAddIncomingConnection(ConnectionWrapper connection);
+    void removeIncomingConnection(ConnectionWrapper connection);
+    void addOutgoingConnection(ConnectionWrapper connection);
+    void localAddOutgoingConnection(ConnectionWrapper connection);
+    void removeOutgoingConnection(ConnectionWrapper connection);
     boolean acceptsIncomingConnection(ConnectionWrapper connection, NodeWrapper source);
     boolean acceptsOutgoingConnection(ConnectionWrapper connection, NodeWrapper target);
     
