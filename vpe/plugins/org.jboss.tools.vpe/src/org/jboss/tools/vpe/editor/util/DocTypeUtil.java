@@ -335,11 +335,14 @@ public class DocTypeUtil {
 						if (element.hasAttribute(attributeName)) {
 
 							Attr attr = element.getAttributeNode(attributeName);
+							
+							File file = new File(attr.getValue());
+							if (!file.exists()) {
+								// corrected path
+								attr.setValue(initFile.getParent()
+										+ File.separator + attr.getValue());
 
-							// corrected path
-							attr.setValue(initFile.getParent() + File.separator
-									+ attr.getValue());
-
+							}
 						}
 
 					}
