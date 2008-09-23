@@ -103,7 +103,7 @@ public class TestUtil {
 					.getActiveWorkbenchWindow().getShell());
 
 			// run import
-			importOp.run(new NullProgressMonitor());
+			importOp.run(null);
 
 		} catch (InvocationTargetException ite) {
 			VPETestPlugin.getDefault().logError(ite.getCause());
