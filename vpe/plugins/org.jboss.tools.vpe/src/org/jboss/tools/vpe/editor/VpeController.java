@@ -1306,6 +1306,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			 */
 			if (!keyBindingPressed) {
 				if (keyEventHandler.handleKeyPress(keyEvent)) {
+					/*
+					 *  JBIDE-2670	
+					 */
+					keyEvent.stopPropagation();
 					switcher
 							.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
 					try {
@@ -1320,10 +1324,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				}
 			}
 		
-		/*
-		 *  JBIDE-2670	
-		 */
-		keyEvent.stopPropagation();
 	}
 
 	public void elementResized(nsIDOMElement element, int resizerConstrains,
