@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.xml2java.analyzer;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import org.jboss.tools.smooks.analyzer.AbstractAnalyzer;
 import org.jboss.tools.smooks.analyzer.MappingModel;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
+import org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.ResourceConfigType;
@@ -208,25 +210,22 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 				|| !(targetObject instanceof JavaBeanModel)) {
 			return MappingResourceConfigList.createEmptyList();
 		}
-
 		AbstractXMLObject sourceRoot = (AbstractXMLObject) sourceObject;
 		JavaBeanModel sourceTarget = (JavaBeanModel) targetObject;
 
 		ResourceConfigType rootResourceConfig = findFirstMappingResourceConfig(listType);
-		String selector = rootResourceConfig.getSelector();
-		AbstractXMLObject source = findXMLObjectBySelector(selector, sourceRoot);
+		String xmlName = rootResourceConfig.getSelector();
+		AbstractXMLObject source = findXMLObjectByName(xmlName, sourceRoot);
 		if (source == null)
 			return MappingResourceConfigList.createEmptyList();
 
 		MappingResourceConfigList rcl = new MappingResourceConfigList();
-		MappingModel mapping = new MappingModel(source, sourceTarget);
-		rcl.getMappingModelList().add(mapping);
-		rcl.addResourceConfig(rootResourceConfig);
-
-		return null;
+		this.createMappingResourceConfigList(rcl, listType, rootResourceConfig,
+				source, sourceTarget);
+		return rcl;
 	}
 
-	private AbstractXMLObject findXMLObjectBySelector(String selector,
+	public static AbstractXMLObject findXMLObjectByName(String selector,
 			AbstractXMLObject root) {
 		if (selector == null)
 			return null;
@@ -244,7 +243,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			for (Iterator iterator = tags.iterator(); iterator.hasNext();) {
 				AbstractXMLObject tagChild = (AbstractXMLObject) iterator
 						.next();
-				AbstractXMLObject result = findXMLObjectBySelector(selector,
+				AbstractXMLObject result = findXMLObjectByName(selector,
 						tagChild);
 				if (result != null)
 					return result;
@@ -257,12 +256,18 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 	protected void createMappingResourceConfigList(
 			MappingResourceConfigList configList, SmooksResourceListType list,
 			ResourceConfigType config, AbstractXMLObject sourceRoot,
-			JavaBeanModel targetRoot) {
+			JavaBeanModel targetJavaBean) {
 		String selector = config.getSelector();
 		String beanID = SmooksModelUtils.getParmaText(
 				SmooksModelConstants.BEAN_ID, config);
 		String beanClass = SmooksModelUtils.getParmaText(
 				SmooksModelConstants.BEAN_CLASS, config);
+
+		MappingModel mapping = new MappingModel(sourceRoot, targetJavaBean);
+		configList.getMappingModelList().add(mapping);
+		configList.addResourceConfig(config);
+		this.setSelectorIsUsed(config.getSelector());
+
 		List<ParamType> paramList = config.getParam();
 		ParamType bindingParam = null;
 		for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
@@ -280,18 +285,89 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			if (bindings != null) {
 				for (Iterator iterator = bindings.iterator(); iterator
 						.hasNext();) {
+					AnyType binding = (AnyType) iterator.next();
 					String property = SmooksModelUtils
-							.getAttributeValueFromAnyType((AnyType) iterator
-									.next(),
+							.getAttributeValueFromAnyType(binding,
 									SmooksModelUtils.ATTRIBUTE_PROPERTY);
 					String selectorStr = SmooksModelUtils
-							.getAttributeValueFromAnyType((AnyType) iterator
-									.next(),
+							.getAttributeValueFromAnyType(binding,
 									SmooksModelUtils.ATTRIBUTE_SELECTOR);
+					JavaBeanModel childBean = JavaBeanAnalyzer
+							.findTheChildJavaBeanModel(property, targetJavaBean);
+					processXMLSelector(configList, config, sourceRoot,
+							childBean, list, selectorStr);
 				}
 			}
 		}
-		AbstractXMLObject source = findXMLObjectBySelector(selector, sourceRoot);
+	}
+
+	protected void processXMLSelector(MappingResourceConfigList configList,
+			ResourceConfigType resourceConfig, AbstractXMLObject root,
+			JavaBeanModel targetBean, SmooksResourceListType listType,
+			String selector) {
+		if (isReferenceSelector(selector)) {
+			ResourceConfigType resourceConfig1 = this
+					.findResourceConfigTypeWithSelector(selector, listType);
+			String newSelector = resourceConfig1.getSelector();
+			if (newSelector == null)
+				return;
+			AbstractXMLObject newRoot = findXMLObjectByName(newSelector, root);
+			createMappingResourceConfigList(configList, listType,
+					resourceConfig1, newRoot, targetBean);
+		} else {
+			AbstractXMLObject source = findXMLObjectWithSelectorString(
+					selector, root);
+			if (source != null) {
+				MappingModel mapping = new MappingModel(source, targetBean);
+				configList.getMappingModelList().add(mapping);
+				configList.addResourceConfig(resourceConfig);
+				this.setSelectorIsUsed(selector);
+			}
+		}
+	}
+
+	public static AbstractXMLObject findXMLObjectWithSelectorString(
+			String selector, AbstractXMLObject parent) {
+		if (selector == null)
+			return null;
+		selector = selector.trim();
+		String[] names = selector.split(" ");
+		if (names == null)
+			return null;
+		AbstractXMLObject current = parent;
+		for (int i = 0; i < names.length; i++) {
+			String name = names[i].trim();
+			if (current instanceof TagObject && isXMLAttributeObject(name)) {
+				List properties = ((TagObject) current).getProperties();
+				for (Iterator iterator = properties.iterator(); iterator
+						.hasNext();) {
+					TagPropertyObject property = (TagPropertyObject) iterator
+							.next();
+					if (name.equals(property.getName())) {
+						current = property;
+					}
+				}
+			} else {
+				List list = parent.getChildren();
+				for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+					AbstractXMLObject child = (AbstractXMLObject) iterator
+							.next();
+					if (name.equals(child.getName())) {
+						current = child;
+						break;
+					}
+				}
+			}
+		}
+		if (current == parent)
+			return null;
+		return current;
+	}
+
+	public static boolean isXMLAttributeObject(String name) {
+		if (name != null && name.startsWith("@"))
+			return true;
+		return false;
 	}
 
 	private ResourceConfigType findFirstMappingResourceConfig(
