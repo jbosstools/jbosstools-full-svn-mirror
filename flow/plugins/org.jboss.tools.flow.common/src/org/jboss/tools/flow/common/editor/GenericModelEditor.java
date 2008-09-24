@@ -73,6 +73,7 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.jboss.tools.flow.common.Activator;
 import org.jboss.tools.flow.common.action.HorizontalAutoLayoutAction;
 import org.jboss.tools.flow.common.action.VerticalAutoLayoutAction;
+import org.jboss.tools.flow.common.editpart.DefaultEditPartFactory;
 import org.jboss.tools.flow.common.registry.LanguageRegistry;
 
 /**
@@ -203,7 +204,9 @@ public abstract class GenericModelEditor extends GraphicalEditorWithPalette {
 				getGraphicalViewer());
 	}
 
-	protected abstract EditPartFactory createEditPartFactory();
+    protected EditPartFactory createEditPartFactory() {
+        return new DefaultEditPartFactory();
+    }
 
 	protected void initializeGraphicalViewer() {
 		getGraphicalViewer().setContents(model);

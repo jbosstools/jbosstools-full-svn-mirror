@@ -120,7 +120,7 @@ public class ElementRegistry {
 			Logger.logError(message, new RuntimeException(message));
 			return null;
 		}
-		((Container)element).setMetaData("configurationElement", configurationElement);
+		((Element) element).setMetaData("configurationElement", configurationElement);
 		DefaultContainerWrapper result = new DefaultContainerWrapper();
 		result.setElement(element);
 		AcceptsElementStrategy acceptsElementStrategy = createAcceptsElementStrategy(configurationElement);
@@ -182,7 +182,7 @@ public class ElementRegistry {
 			Logger.logError(message, new RuntimeException(message));
 			return null;
 		}
-		((Container)element).setMetaData("configurationElement", configurationElement);
+		((Element) element).setMetaData("configurationElement", configurationElement);
 		DefaultFlowWrapper result = new DefaultFlowWrapper();		
 		result.setElement(element);
 		AcceptsElementStrategy acceptsElementStrategy = createAcceptsElementStrategy(configurationElement);
@@ -323,6 +323,10 @@ public class ElementRegistry {
 		} else {
 			return null;
 		}
+	}
+	
+	public static IConfigurationElement getConfigurationElement(String elementId) {
+		return elementMap.get(elementId);
 	}
 	
 	public static CreationFactory getCreationFactory(final String elementId) {

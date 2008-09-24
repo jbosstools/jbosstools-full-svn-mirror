@@ -24,13 +24,10 @@ import org.eclipse.gef.palette.ConnectionCreationToolEntry;
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.PaletteRoot;
-import org.eclipse.gef.requests.SimpleFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jboss.tools.flow.common.editor.PaletteFactory;
+import org.jboss.tools.flow.common.registry.ElementRegistry;
 import org.jboss.tools.process.ruleflow.Activator;
-import org.jboss.tools.process.ruleflow.editor.core.BaseConnectionWrapper;
-import org.jboss.tools.process.ruleflow.editor.core.StartNodeWrapper;
-import org.jboss.tools.process.ruleflow.editor.core.SubProcessWrapper;
 
 /**
  * Factory for creating a RuleFlow palette.
@@ -46,13 +43,13 @@ public class RuleFlowPaletteFactory extends PaletteFactory {
     }
 
     protected PaletteEntry createConnectionEntry() {
-    	return new ConnectionCreationToolEntry(
-                "Connection Creation",
-                "Creating connections",
-                new SimpleFactory(BaseConnectionWrapper.class),
-                ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/connection.gif")), 
-                ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/connection.gif"))
-            );
+        return new ConnectionCreationToolEntry(
+            "Connection",
+            "Creating a new connection",
+            ElementRegistry.getCreationFactory("org.jboss.tools.flow.ruleflow.connection"),                
+            ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/connection.gif")),
+            ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/connection.gif"))
+        );
     }
     
     protected List<PaletteEntry> createComponentEntries() {
@@ -60,9 +57,9 @@ public class RuleFlowPaletteFactory extends PaletteFactory {
         
         CombinedTemplateCreationEntry combined = new CombinedTemplateCreationEntry(
             "Start",
-            "Create a new Start",
-            StartNodeWrapper.class,
-            new SimpleFactory(StartNodeWrapper.class),
+            "Create a new start node",
+            "org.jboss.tools.flow.ruleflow.start",
+            ElementRegistry.getCreationFactory("org.jboss.tools.flow.ruleflow.start"),
             ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/start.gif")),
             ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/start.gif"))
         );
@@ -70,14 +67,14 @@ public class RuleFlowPaletteFactory extends PaletteFactory {
         
         combined = new CombinedTemplateCreationEntry(
             "SubProcess",
-            "Create a new sub-process",
-            SubProcessWrapper.class,
-            new SimpleFactory(SubProcessWrapper.class),
+            "Create a new sub process node",
+            "org.jboss.tools.flow.ruleflow.subProcess",
+            ElementRegistry.getCreationFactory("org.jboss.tools.flow.ruleflow.subProcess"),                
             ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/process.gif")),
             ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/process.gif"))
         );
         entries.add(combined);
-                          
+                                  
         return entries;
     }
     

@@ -18,17 +18,18 @@ package org.jboss.tools.process.ruleflow.editor;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.palette.PaletteRoot;
-import org.eclipse.ui.IFileEditorInput;
+import org.jboss.tools.flow.common.Activator;
 import org.jboss.tools.flow.common.editor.GenericModelEditor;
-import org.jboss.tools.process.ruleflow.editor.core.ProcessWrapper;
-import org.jboss.tools.process.ruleflow.editor.core.StartNodeWrapper;
-import org.jboss.tools.process.ruleflow.editor.editpart.RuleFlowEditPartFactory;
+import org.jboss.tools.flow.common.registry.ElementRegistry;
+import org.jboss.tools.flow.common.wrapper.AbstractFlowWrapper;
+import org.jboss.tools.process.ruleflow.model.RuleFlowProcess;
+import org.jboss.tools.process.ruleflow.xml.XmlRuleFlowProcessDumper;
+import org.jboss.tools.process.ruleflow.xml.XmlRuleFlowProcessReader;
 
 /**
  * Graphical editor for a RuleFlow.
@@ -37,35 +38,45 @@ import org.jboss.tools.process.ruleflow.editor.editpart.RuleFlowEditPartFactory;
  */
 public class RuleFlowEditor extends GenericModelEditor {
 
-    protected EditPartFactory createEditPartFactory() {
-        return new RuleFlowEditPartFactory();
-    }
-
     protected PaletteRoot createPalette() {
         return new RuleFlowPaletteFactory().createPalette();
     }
 
     protected Object createModel() {
-        ProcessWrapper result = new ProcessWrapper();
-        StartNodeWrapper start = new StartNodeWrapper();
-        start.setConstraint(new Rectangle(100, 100, -1, -1));
-        result.addElement(start);
-        IFile file = ((IFileEditorInput) getEditorInput()).getFile();
-        String name = file.getName();
-        result.setName(name.substring(0, name.length() - 3));
-        return result;
+    	return ElementRegistry.createWrapper("org.jboss.tools.flow.ruleflow.process");
     }
     
-    public ProcessWrapper getRuleFlowModel() {
-        return (ProcessWrapper) getModel();
-    }
-
     protected void writeModel(OutputStream os) throws IOException {
-        // TODO
+        OutputStreamWriter writer = new OutputStreamWriter(os);
+        try {
+            RuleFlowProcess process = (RuleFlowProcess) ((AbstractFlowWrapper) getModel()).getElement();
+            String out = XmlRuleFlowProcessDumper.dump(process);
+            writer.write(out);
+        } catch (Throwable t) {
+            Activator.log(t);
+        }
+        writer.close();
     }
     
     protected void createModel(InputStream is) {
-        // TODO
-        setModel(createModel());
+        try {
+            InputStreamReader reader = new InputStreamReader(is);
+            XmlRuleFlowProcessReader xmlReader = new XmlRuleFlowProcessReader();
+            try {
+                RuleFlowProcess process = (RuleFlowProcess) xmlReader.read(reader);
+                if (process == null) {
+                    setModel(createModel());
+                } else {
+                    setModel(new RuleFlowWrapperBuilder().getProcessWrapper(process));
+                }
+            } catch (Throwable t) {
+            	Activator.log(t);
+                setModel(createModel());
+            }
+            reader.close();
+        } catch (Throwable t) {
+        	Activator.log(t);
+        }
     }
+    
 }

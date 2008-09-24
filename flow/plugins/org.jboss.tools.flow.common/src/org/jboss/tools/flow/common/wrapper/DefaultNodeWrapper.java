@@ -84,4 +84,25 @@ public class DefaultNodeWrapper extends AbstractNodeWrapper {
 			return true;
 		}
 	}
+	
+	protected void internalAddIncomingConnection(AbstractConnectionWrapper connection) {
+		getNode().addIncomingConnection("DROOLS_DEFAULT",
+			((DefaultConnectionWrapper) connection).getConnection());
+	}
+	
+	protected void internalRemoveIncomingConnection(AbstractConnectionWrapper connection) {
+		getNode().removeIncomingConnection("DROOLS_DEFAULT",
+			((DefaultConnectionWrapper) connection).getConnection());
+	}
+	
+	protected void internalAddOutgoingConnection(AbstractConnectionWrapper connection) {
+		getNode().addOutgoingConnection("DROOLS_DEFAULT",
+			((DefaultConnectionWrapper) connection).getConnection());
+	}
+	
+	protected void internalRemoveOutgoingConnection(AbstractConnectionWrapper connection) {
+		getNode().removeOutgoingConnection("DROOLS_DEFAULT",
+			((DefaultConnectionWrapper) connection).getConnection());
+	}
+
 }
