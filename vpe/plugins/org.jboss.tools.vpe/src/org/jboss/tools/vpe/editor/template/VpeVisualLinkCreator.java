@@ -122,7 +122,7 @@ public class VpeVisualLinkCreator extends VpeAbstractCreator {
 
         if (dirExpr != null) {
             String dir = dirExpr.exec(pageContext, sourceNode).stringValue();
-            a.setAttribute(HTML.ATTR_DIR, dirStr);
+            a.setAttribute(HTML.ATTR_DIR, dir);
         }
 
         if (styleExpr != null) {
