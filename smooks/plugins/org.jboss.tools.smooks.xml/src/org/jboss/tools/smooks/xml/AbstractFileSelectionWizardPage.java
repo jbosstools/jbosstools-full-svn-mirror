@@ -60,6 +60,10 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	public Object getReturnValue() {
 		return returnObject;
 	}
+	
+	public String getFilePath(){
+		return fileText.getText();
+	}
 
 	/*
 	 * (non-Javadoc)

@@ -109,6 +109,8 @@ import org.jboss.tools.smooks.analyzer.SmooksFileBuilder;
 import org.jboss.tools.smooks.graphical.GraphInformations;
 import org.jboss.tools.smooks.graphical.GraphicalPackage;
 import org.jboss.tools.smooks.graphical.MappingDataType;
+import org.jboss.tools.smooks.graphical.Param;
+import org.jboss.tools.smooks.graphical.Params;
 import org.jboss.tools.smooks.graphical.util.GraphicalInformationSaver;
 import org.jboss.tools.smooks.model.DocumentRoot;
 import org.jboss.tools.smooks.model.ResourceConfigType;
@@ -565,44 +567,44 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		createGraphModels(items, SourceModel.class);
 	}
 
-	
-	private void disConnectGraphModel(Class clazz,TreeItemRelationModel model){
-		if(clazz == SourceModel.class){
+	private void disConnectGraphModel(Class clazz, TreeItemRelationModel model) {
+		if (clazz == SourceModel.class) {
 			List list = model.getModelSourceConnections();
 			List temp = new ArrayList(list);
 			for (Iterator iterator = temp.iterator(); iterator.hasNext();) {
-				LineConnectionModel line = (LineConnectionModel) iterator.next();
+				LineConnectionModel line = (LineConnectionModel) iterator
+						.next();
 				line.disConnect();
 			}
 			temp.clear();
 		}
-		
-		if(clazz == TargetModel.class){
+
+		if (clazz == TargetModel.class) {
 			List list = model.getModelTargetConnections();
 			List temp = new ArrayList(list);
 			for (Iterator iterator = temp.iterator(); iterator.hasNext();) {
-				LineConnectionModel line = (LineConnectionModel) iterator.next();
+				LineConnectionModel line = (LineConnectionModel) iterator
+						.next();
 				line.disConnect();
 			}
 			temp.clear();
 		}
 	}
-	
+
 	private void clearExsitingGraphModels(Class<? extends Object> clazz) {
-		if(rootModel != null){
+		if (rootModel != null) {
 			List children = rootModel.getChildren();
 			List removeList = new ArrayList();
 			for (Iterator iterator = children.iterator(); iterator.hasNext();) {
 				Object object = (Object) iterator.next();
-				if(object.getClass() == clazz){
+				if (object.getClass() == clazz) {
 					removeList.add(object);
-					disConnectGraphModel(clazz,(TreeItemRelationModel)object);
+					disConnectGraphModel(clazz, (TreeItemRelationModel) object);
 				}
 			}
 			rootModel.removeChildrenList(removeList);
 		}
 	}
-	
 
 	protected void createTargetGraphModels() {
 		Tree tree = targetViewer.getTree();
@@ -699,7 +701,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		context.setTargetDataTypeID(this.targetDataTypeID);
 		context.setSmooksType(SmooksModelConstants.SAX);
 		context.setDataMappingRootModel(this.rootModel);
-		context.setSmooksConfigFile(((IFileEditorInput)getEditorInput()).getFile());
+		context.setSmooksConfigFile(((IFileEditorInput) getEditorInput())
+				.getFile());
 	}
 
 	protected Composite createUISectionContainer(Composite parent, int columns) {
@@ -888,6 +891,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		try {
 			graph = graphicalInformationSaver.doLoad();
 			initFormEditorWithGraphInfo(graph);
+			initSmooksContext(graph, this
+					.getSmooksConfigurationFileGenerateContext());
 		} catch (Throwable t) {
 			// ignore
 			t.printStackTrace();
@@ -912,6 +917,21 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			SmooksResourceListType listType = ((DocumentRoot) smooksResource
 					.getContents().get(0)).getSmooksResourceList();
 			this.analyzeGraphicalModel(listType, graph, file);
+		}
+	}
+
+	protected void initSmooksContext(GraphInformations graph,
+			SmooksConfigurationFileGenerateContext context) {
+		Params params = graph.getParams();
+		if (params != null) {
+			List list = params.getParam();
+			for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+				Param p = (Param) iterator.next();
+				String name = p.getName();
+				String value = p.getValue();
+				if (name != null && value != null)
+					context.putProperty(name, value);
+			}
 		}
 	}
 
@@ -959,6 +979,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		if (dialog.open() == WizardDialog.OK) {
 			IStrucutredDataCreationWizard cw = dialog
 					.getCurrentCreationWizard();
+			this.getSmooksConfigurationFileGenerateContext().addProperties(
+					cw.getProperties());
 			String typeID = cw.getInputDataTypeID();
 			if (UIUtils.setTheProvidersForTreeViewer(viewer, typeID)) {
 				if (viewer.getInput() != null) {

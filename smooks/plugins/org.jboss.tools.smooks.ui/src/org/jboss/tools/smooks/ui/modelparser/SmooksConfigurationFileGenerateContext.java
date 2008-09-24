@@ -11,6 +11,7 @@
 package org.jboss.tools.smooks.ui.modelparser;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
@@ -132,6 +133,15 @@ public class SmooksConfigurationFileGenerateContext {
 	}
 	public Properties getProperties() {
 		return properties;
+	}
+	
+	public void addProperties(Properties properties){
+		if(properties == null) return;
+		Enumeration keys = properties.keys();
+		while(keys.hasMoreElements()){
+			Object key = keys.nextElement();
+			this.properties.put(key, properties.get(key));
+		}
 	}
 	
 }

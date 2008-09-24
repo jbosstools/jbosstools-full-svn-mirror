@@ -12,6 +12,7 @@ package org.jboss.tools.smooks.javabean.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IJavaProject;
@@ -31,6 +32,8 @@ public class NewJavaBeanStrucutredDataWizard extends Wizard implements IStrucutr
 	JavaBeanConfigWizardPage page = null;
 	IJavaProject project = null;
 	Object result = null;
+	
+	Properties properties = new Properties();
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
@@ -72,6 +75,10 @@ public class NewJavaBeanStrucutredDataWizard extends Wizard implements IStrucutr
 
 	public String getInputDataTypeID() {
 		return JavaBeanActivator.DATA_TYPE_ID_JAVABEAN;
+	}
+
+	public Properties getProperties() {
+		return this.properties;
 	}
 
 }

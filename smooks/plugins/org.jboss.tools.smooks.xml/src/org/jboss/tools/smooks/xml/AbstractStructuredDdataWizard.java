@@ -14,8 +14,8 @@ import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
  */
 public abstract class AbstractStructuredDdataWizard extends Wizard implements
 		IStrucutredDataCreationWizard {
-	AbstractFileSelectionWizardPage page = null;
-	Object xsdElement  = null;
+	protected AbstractFileSelectionWizardPage page = null;
+	protected Object xsdElement  = null;
 	/**
 	 * 
 	 */

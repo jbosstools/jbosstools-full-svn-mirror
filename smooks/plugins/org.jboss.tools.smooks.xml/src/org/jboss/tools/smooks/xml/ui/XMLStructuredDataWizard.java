@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.xml.ui;
 
+import java.util.Properties;
+
 import org.jboss.tools.smooks.xml.AbstractFileSelectionWizardPage;
 import org.jboss.tools.smooks.xml.AbstractStructuredDdataWizard;
 import org.jboss.tools.smooks.xml.XmlActivator;
@@ -18,18 +20,34 @@ import org.jboss.tools.smooks.xml.XmlActivator;
  * @author Dart Peng
  * @Date Aug 18, 2008
  */
-public class XMLStructuredDataWizard extends AbstractStructuredDdataWizard{
+public class XMLStructuredDataWizard extends AbstractStructuredDdataWizard {
+	Properties properties = new Properties();
+	String filePath = null;
+
+	public static final String XML_FILE = "xmlFile";
 
 	@Override
 	protected AbstractFileSelectionWizardPage createAbstractFileSelectionWizardPage() {
 		return new XMLStructuredDataWizardPage("XML");
 	}
 
-	/* (non-Javadoc)
+	public boolean performFinish() {
+		filePath = page.getFilePath();
+		properties.put(XML_FILE, filePath);
+		return super.performFinish();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard#getInputDataTypeID()
 	 */
 	public String getInputDataTypeID() {
 		return XmlActivator.TYPE_ID_XML;
 	}
-	
+
+	public Properties getProperties() {
+		return properties;
+	}
+
 }
