@@ -870,11 +870,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		try {
 			/*
 			 * Added by Max Areshkau JBIDE-1457
-			 * ModelLifecycleEvent.MODEL_RELEASED generated when model in model
+			 * ModelLifecycleEvent.MODEL_RELEASED is generated when model in model
 			 * calls methods releaseFromRead() or releaseFromEdit(). When editor
 			 * is open he has only when href on model, so nothing can generated
 			 * this event.When editor closes generation of this event depends
-			 * from cantains any service href on model or not. It's can be a
+			 * from containing any service href on model or not. It's can be a
 			 * reason of problems on reopen file.
 			 * 
 			 * We shouldn't call here rebuild dom.
@@ -884,7 +884,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					System.out
 							.println(">>> processPostModelEvent: " + event.toString()); //$NON-NLS-1$
 				}
-				visualBuilder.setSelectionRectangle(null);
+				// commented to fix org.mozilla.xpcom.XPCOMException: The function "repaint" returned an error condition  (0x8000ffff)
+				//visualBuilder.setSelectionRectangle(null);
 				IStructuredModel model = event.getModel();
 				model.removeModelLifecycleListener(this);
 				IDOMModel sourceModel = (IDOMModel) getModel();
