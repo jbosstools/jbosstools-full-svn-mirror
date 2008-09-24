@@ -57,10 +57,6 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			SmooksConfigurationFileGenerateContext context)
 			throws SmooksAnalyzerException {
 
-		String filePath = context.getSmooksConfigFile().getLocation()
-				.toOSString();
-		context.putProperty(XMLSourceModelAnalyzer.XML_FILE, filePath);
-
 		SmooksResourceListType listType = context.getSmooksResourceListModel();
 		GraphRootModel rootModel = context.getDataMappingRootModel();
 		List children = rootModel.getChildren();
@@ -339,6 +335,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			String name = names[i].trim();
 			if (current instanceof TagObject && isXMLAttributeObject(name)) {
 				List properties = ((TagObject) current).getProperties();
+				name = name.substring(1);
 				for (Iterator iterator = properties.iterator(); iterator
 						.hasNext();) {
 					TagPropertyObject property = (TagPropertyObject) iterator

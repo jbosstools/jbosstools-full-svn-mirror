@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui;
 
+import java.util.Properties;
+
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
@@ -25,5 +27,7 @@ public interface IStrucutredDataCreationWizard extends IWizard {
 	public void init(IEditorSite site, IEditorInput input);
 	
 	public String getInputDataTypeID();
+	
+	public Properties getProperties();
 	
 }
