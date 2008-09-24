@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="first_seam" xreflabel="first_seam" revisionflag="added">
+<chapter id="first_seam" xreflabel="first_seam" revisionflag="added" role="updated">
   <?dbhtml filename="first_seam.html"?>
   <chapterinfo>
     <keywordset>
@@ -971,44 +971,4 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
     </section>
 
   </section>
-
-  <!--section id="gsg_seam_faq">
-    <title>FAQ</title>
-    <para>For more information on work with Seam in JBoss Developer Studio, refer to the following
-      FAQ to get the answers on the most &quot;popular&quot; questions.</para>
-
-    <para><emphasis role="bold">How to import an example Seam project from jboss-eap directory?</emphasis></para>
-
-      <para>To import an example Seam project from <emphasis>
-          <property>jboss-eap</property>
-        </emphasis> into your working directory, you should perform the following steps:</para>
-
-      <itemizedlist>
-        <listitem>
-          <para>Go to <emphasis>
-              <property>New > Other > Java Project from Existing Buildfile</property>
-            </emphasis></para>
-        </listitem>
-
-        <listitem>
-          <para>Point to the <emphasis>
-              <property>build.xml</property>
-            </emphasis> of any chosen project by pressing <emphasis>
-              <property>Browse</property>
-            </emphasis> button</para>
-        </listitem>
-
-        <listitem>
-          <para>Hit <emphasis>
-              <property>Finish</property>
-            </emphasis> to open the project</para>
-        </listitem>
-      </itemizedlist>
-
-      <para>As these seam examples are non WTP projects, next you should enable Seam support for
-        them. To do that, right click the project and go to<emphasis>
-          <property>Properties > Seam Settings</property>. </emphasis></para>
-
-  </section-->
-
 </chapter>
