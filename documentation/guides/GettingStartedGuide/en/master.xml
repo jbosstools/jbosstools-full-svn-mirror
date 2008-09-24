@@ -7,6 +7,7 @@
 <!ENTITY first_seam  SYSTEM "modules/first_seam.xml">
 <!ENTITY jsp_application  SYSTEM "modules/jsp_application.xml">
 <!ENTITY rad_jsf_application  SYSTEM "modules/rad_jsf_application.xml">
+<!ENTITY gsg_faq  SYSTEM "modules/gsg_faq.xml">
 <!ENTITY further_reading  SYSTEM "modules/further_reading.xml">
 
 <!ENTITY seamlink "../../seam/html_single/index.html">
@@ -52,6 +53,8 @@
  &first_seam; 
  &jsp_application;
  &rad_jsf_application; 
+ &gsg_faq;
  &further_reading; 
+
  
 </book>
