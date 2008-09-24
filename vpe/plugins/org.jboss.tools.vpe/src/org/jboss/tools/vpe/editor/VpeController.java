@@ -892,7 +892,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				sourceModel.addModelLifecycleListener(this);
 				bundle.clearAll();
 				bundle.refresh();
-				visualBuilder.setSelectionRectangle(null);
+				//visualBuilder.setSelectionRectangle(null);
 				IDOMDocument sourceDocument = sourceModel.getDocument();
 				// JBIDE-1457
 				// visualBuilder.rebuildDom(sourceDocument);
