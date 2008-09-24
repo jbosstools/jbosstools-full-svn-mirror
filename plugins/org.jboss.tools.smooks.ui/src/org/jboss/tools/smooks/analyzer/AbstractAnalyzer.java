@@ -12,6 +12,7 @@ package org.jboss.tools.smooks.analyzer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -38,8 +39,9 @@ public abstract class AbstractAnalyzer implements IMappingAnalyzer {
 	protected List usedConnectionList = new ArrayList();
 	protected AdapterFactoryEditingDomain editingDomain;
 	protected ComposedAdapterFactory adapterFactory;
-
+	private HashMap<String, Object> userdResourceTypeMap;
 	public AbstractAnalyzer() {
+		userdResourceTypeMap = new HashMap<String, Object>();
 		adapterFactory = new ComposedAdapterFactory(
 				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
@@ -68,6 +70,16 @@ public abstract class AbstractAnalyzer implements IMappingAnalyzer {
 		usedConnectionList.clear();
 	}
 	
+	
+	protected void setSelectorIsUsed(String selector) {
+		userdResourceTypeMap.put(selector, new Object());
+	}
+
+
+	protected boolean isSelectorIsUsed(String resourceType) {
+		return (userdResourceTypeMap.get(resourceType) != null);
+	}
+	
 	protected void addResourceConfigType(SmooksResourceListType resourceList,
 			ResourceConfigType resourceConfig) {
 		Command addResourceConfigCommand = AddCommand.create(
@@ -87,6 +99,49 @@ public abstract class AbstractAnalyzer implements IMappingAnalyzer {
 		}
 		resourceConfigType.getParam().add(paramType);
 		return paramType;
+	}
+	
+	
+	protected String getBeanIDFromParam(ResourceConfigType config) {
+		List list = config.getParam();
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			ParamType p = (ParamType) iterator.next();
+			if ("beanId".equals(p.getName())) {
+				return SmooksModelUtils.getAnyTypeText(p);
+			}
+
+		}
+		return null;
+	}
+	
+	protected String getBeanIdWithRawSelectorString(String selector) {
+		selector = selector.substring(2, selector.length() - 1);
+		return selector;
+	}
+
+	protected boolean isReferenceSelector(String selector) {
+		return (selector.startsWith("${") && selector.endsWith("}"));
+	}
+
+	
+	protected ResourceConfigType findResourceConfigTypeWithSelector(
+			String selector, SmooksResourceListType listType) {
+		if (isReferenceSelector(selector)) {
+			selector = this.getBeanIdWithRawSelectorString(selector);
+		}
+		List rl = listType.getAbstractResourceConfig();
+		ResourceConfigType resourceConfig = null;
+		for (Iterator iterator = rl.iterator(); iterator.hasNext();) {
+			ResourceConfigType rct = (ResourceConfigType) iterator.next();
+			if (this.isSelectorIsUsed(rct.getSelector()))
+				continue;
+			String beanId = getBeanIDFromParam(rct);
+			if (selector.equals(beanId)) {
+				resourceConfig = rct;
+				break;
+			}
+		}
+		return resourceConfig;
 	}
 
 	/**

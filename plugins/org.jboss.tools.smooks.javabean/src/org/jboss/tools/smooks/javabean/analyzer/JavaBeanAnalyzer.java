@@ -438,7 +438,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				continue;
 			if (isReferenceSelector(selector)) {
 				ResourceConfigType rc = this
-						.findResourceCinfigTypeWithSelector(selector,
+						.findResourceConfigTypeWithSelector(selector,
 								resourceList);
 				if (rc != null) {
 					String newSelector = rc.getSelector();
@@ -663,9 +663,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			model.setError("don't exist");
 		}
 
-		if (selector.startsWith("${") && selector.endsWith("}")) {
+		if (isReferenceSelector(selector)) {
 			selector = selector.substring(2, selector.length() - 1);
-			ResourceConfigType resourceConfig = findResourceCinfigTypeWithSelector(
+			ResourceConfigType resourceConfig = findResourceConfigTypeWithSelector(
 					selector, listType);
 			if (resourceConfig != null) {
 				this.buildChildrenOfTargetInputModel(listType, model, false,
@@ -712,7 +712,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		}
 	}
 
-	protected ResourceConfigType findResourceCinfigTypeWithSelector(
+	protected ResourceConfigType findResourceConfigTypeWithSelector(
 			String selector, SmooksResourceListType listType) {
 		if (isReferenceSelector(selector)) {
 			selector = this.getBeanIdWithRawSelectorString(selector);
@@ -740,7 +740,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			// memory out???
 			currentModel.getProperties();
 			selector = this.getBeanIdWithRawSelectorString(selector);
-			ResourceConfigType resourceConfig = findResourceCinfigTypeWithSelector(
+			ResourceConfigType resourceConfig = findResourceConfigTypeWithSelector(
 					selector, listType);
 			if (resourceConfig != null) {
 				String referenceSelector = resourceConfig.getSelector();
@@ -825,7 +825,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	 * @param parentModel
 	 * @return
 	 */
-	protected JavaBeanModel findTheChildJavaBeanModel(String name,
+	public static JavaBeanModel findTheChildJavaBeanModel(String name,
 			JavaBeanModel parentModel) {
 		List list = parentModel.getProperties();
 		if (list == null)

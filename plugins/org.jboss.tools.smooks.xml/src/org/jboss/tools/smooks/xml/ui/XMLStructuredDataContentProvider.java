@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
 import org.jboss.tools.smooks.xml.model.DocumentObject;
 import org.jboss.tools.smooks.xml.model.TagObject;
 
@@ -50,7 +51,9 @@ public class XMLStructuredDataContentProvider implements ITreeContentProvider {
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getParent(java.lang.Object )
 	 */
 	public Object getParent(Object arg0) {
-		// if(arg0 instanceof)
+		 if(arg0 instanceof AbstractXMLObject){
+			 return ((AbstractXMLObject)arg0).getParent();
+		 }
 		return null;
 	}
 
