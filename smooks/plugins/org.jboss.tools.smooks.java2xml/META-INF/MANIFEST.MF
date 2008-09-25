@@ -16,3 +16,6 @@ Require-Bundle: org.eclipse.ui,
 Eclipse-LazyStart: true
 Bundle-ClassPath: libs/dom4j-1.6.1.jar,
  .
+Export-Package: org.jboss.tools.smooks.java2xml,
+ org.jboss.tools.smooks.java2xml.analyzer,
+ org.jboss.tools.smooks.java2xml.utils
