@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xsd.edit,
  org.eclipse.emf,
  org.eclipse.emf.ecore.edit,
- org.eclipse.emf.edit.ui
+ org.eclipse.emf.edit.ui,
+ org.jboss.tools.smooks.java2xml
 Eclipse-LazyStart: true
 Bundle-ClassPath: lib/dom4j-1.6.1.jar,
  .
