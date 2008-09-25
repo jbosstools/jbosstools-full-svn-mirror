@@ -4,13 +4,6 @@
    <extension
          point="org.jboss.tools.smooks.ui.viewerInitor">
       <viewerInitor
-            contentProvider="org.jboss.tools.smooks.xsd.model.XSDStructuredModelContentProvider"
-            creationWizard="org.jboss.tools.smooks.xsd.ui.XSDStructuredDataWizard"
-            labelProvider="org.jboss.tools.smooks.xsd.model.XSDStructuredModelLabelProvider"
-            name="XSD"
-            typeID="org.jboss.tools.smooks.xml.viewerInitor.xsd">
-      </viewerInitor>
-      <viewerInitor
             contentProvider="org.jboss.tools.smooks.xml.ui.XMLStructuredDataContentProvider"
             creationWizard="org.jboss.tools.smooks.xml.ui.XMLStructuredDataWizard"
             labelProvider="org.jboss.tools.smooks.xml.ui.XMLStructuredDataLabelProvider"
