@@ -15,7 +15,7 @@ package org.jboss.tools.smooks.java2xml.utils;
  * @Date : Sep 25, 2008
  */
 public class XMLConstants {
-	public static final String REPLACE_FREEMARKER_FOR_EXPRESS_ELEMENT_NAME = "adfafdafafda_dfafda";
+	public static final String REPLACE_FREEMARKER_FOR_EXPRESS_ELEMENT_NAME = "replaceElementNameForFreeMarker";
 
 	public static final String REPLACE_FREEMARKER_FOR_EXPRESS_ELEMENT_ATTRIBUTE = "desc";
 
