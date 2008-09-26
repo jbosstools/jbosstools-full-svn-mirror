@@ -524,7 +524,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						}
 						
 						// cause is to lock calls others events  
-						if (switcher
+						if (switcher!=null&&switcher
 								.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE))
 							try {
 								sourceSelectionChanged();
