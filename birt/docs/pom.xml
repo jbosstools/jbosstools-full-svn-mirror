@@ -95,8 +95,8 @@
     </distributionManagement>
     
     <properties>
-        <stylesdir>../../../documentation/jbosstools-docbook-xslt/src/main/resources</stylesdir>
-        <cssdir>../../../documentation/jbosstools-jdocbook-style/src/main/org/css</cssdir>
+        <stylesdir>../../documentation/jbosstools-docbook-xslt/src/main/resources</stylesdir>
+        <cssdir>../../documentation/jbosstools-jdocbook-style/src/main/org/css</cssdir>
         <translation>en-US</translation>
     </properties> 
 
