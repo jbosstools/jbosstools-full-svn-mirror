@@ -11,7 +11,6 @@
 package org.jboss.tools.vpe.ui.test;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,15 +27,14 @@ import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.dialogs.IOverwriteQuery;
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.ui.wizards.datatransfer.ImportOperation;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.internal.contentassist.ContentAssistUtils;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
+import org.jboss.tools.test.util.ResourcesUtils;
+import org.jboss.tools.tests.ImportBean;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
-import org.jboss.tools.vpe.ui.test.beans.ImportBean;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -66,50 +64,21 @@ public class TestUtil {
 
 
 	/**
+	 * @deprecated Use {@link ResourcesUtils#importProjectIntoWorkspace(ImportBean)} instead
+	 */
+	static public void importProjectIntoWorkspace(ImportBean bean) {
+		ResourcesUtils.importProjectIntoWorkspace(bean);
+	}
+	
+	/**
 	 * Import project into workspace.
 	 * 
 	 * @param path the path
 	 * @param projectName the project name
+	 * @deprecated Use {@link ResourcesUtils#importProjectIntoWorkspace(String,String)} instead
 	 */
-	static void importProjectIntoWorkspace(String path, String projectName) {
-
-		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
-				projectName);
-
-		try {
-
-			IOverwriteQuery overwrite = new IOverwriteQuery() {
-				public String queryOverwrite(String pathString) {
-					return ALL;
-				}
-			};
-
-			ImportProvider importProvider = new ImportProvider();
-
-			// need to remove from imported project "svn" files
-			List<String> unimportedFiles = new ArrayList<String>();
-			unimportedFiles.add(".svn"); //$NON-NLS-1$
-
-			importProvider.setUnimportedFiles(unimportedFiles);
-
-			// create import operation
-			ImportOperation importOp = new ImportOperation(project
-					.getFullPath(), new File(path), importProvider, overwrite);
-
-			// import files just to project folder ( without old structure )
-			importOp.setCreateContainerStructure(false);
-
-			importOp.setContext(PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getShell());
-
-			// run import
-			importOp.run(null);
-
-		} catch (InvocationTargetException ite) {
-			VPETestPlugin.getDefault().logError(ite.getCause());
-		} catch (InterruptedException ie) {
-			VPETestPlugin.getDefault().logError(ie);
-		}
+	static public void importProjectIntoWorkspace(String path, String projectName) {
+		ResourcesUtils.importProjectIntoWorkspace(path, projectName);
 	}
 
 	/**
@@ -172,7 +141,7 @@ public class TestUtil {
 	 * 
 	 * @throws CoreException the core exception
 	 */
-	static void removeProject(String projectName) throws CoreException {
+	static public void removeProject(String projectName) throws CoreException {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
 				projectName);
 		if (project != null) {

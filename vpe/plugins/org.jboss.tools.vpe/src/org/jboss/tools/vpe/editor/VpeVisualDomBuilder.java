@@ -420,7 +420,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 			throw new VpeDisposeException();
 		}
-		getPageContext().processDisplayEvents();
+		//getPageContext().processDisplayEvents();
 
 		// check source node can be changed and link can be a null in this case
 		// we shouldn't process this node

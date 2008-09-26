@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.ui.test;
+package org.jboss.tools.tests;
 
 import java.io.File;
 import java.io.FileInputStream;

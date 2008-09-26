@@ -8,7 +8,7 @@
 * Contributors:
 *     Red Hat, Inc. - initial API and implementation
 ******************************************************************************/
-package org.jboss.tools.vpe.ui.test.beans;
+package org.jboss.tools.tests;
 
 /**
  * @author Max Areshkau

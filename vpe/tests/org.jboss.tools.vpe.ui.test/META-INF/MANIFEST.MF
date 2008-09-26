@@ -18,8 +18,8 @@ Require-Bundle: org.eclipse.ui,
  org.mozilla.xpcom,
  org.jboss.tools.jst.firstrun,
  org.eclipse.wst.server.core,
- org.eclipse.jface.text
+ org.eclipse.jface.text,
+ org.jboss.tools.tests;bundle-version="2.0.0";visibility:=reexport
 Eclipse-LazyStart: true
 Bundle-ClassPath: .
-Export-Package: org.jboss.tools.vpe.ui.test,
- org.jboss.tools.vpe.ui.test.beans
+Export-Package: org.jboss.tools.vpe.ui.test

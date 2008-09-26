@@ -13,11 +13,12 @@ package org.jboss.tools.vpe.ui.test;
 import java.io.File;
 import java.util.List;
 
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.jboss.tools.vpe.ui.test.beans.ImportBean;
-
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
+
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.jboss.tools.test.util.ResourcesUtils;
+import org.jboss.tools.tests.ImportBean;
 
 /**
  * @author Max Areshkau
@@ -46,7 +47,7 @@ public class VpeTestSetup extends TestSetup {
 		super.setUp();
 		for (ImportBean importBean : getTestProjects()) {			
 			if (ResourcesPlugin.getWorkspace().getRoot().findMember(importBean.getImportProjectName()) == null) {
-				TestUtil.importProjectIntoWorkspace((importBean.getImportProjectPath()
+				ResourcesUtils.importProjectIntoWorkspace((importBean.getImportProjectPath()
 						+ File.separator+importBean.getImportProjectName()),importBean.getImportProjectName());
 			}		
 		}

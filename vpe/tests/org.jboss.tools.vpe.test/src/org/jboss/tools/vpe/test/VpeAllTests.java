@@ -19,10 +19,10 @@ import junit.framework.TestSuite;
 
 import org.jboss.tools.jsf.vpe.jsf.test.JsfComponentTest;
 import org.jboss.tools.jsf.vpe.jsf.test.JsfTestPlugin;
+import org.jboss.tools.tests.ImportBean;
 import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPageTest;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManagerTest;
 import org.jboss.tools.vpe.ui.test.VpeTestSetup;
-import org.jboss.tools.vpe.ui.test.beans.ImportBean;
 
 /**
  * Class created for run tests for org.jboss.tools.vpe plugin.
