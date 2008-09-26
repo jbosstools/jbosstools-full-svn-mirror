@@ -30,10 +30,10 @@
                                 <listitem><para>EMF Version 2.4 Release EMF+XSD</para></listitem>
                                 <listitem><para>GEF Version 3.4 Release runtime</para></listitem>
                                 <listitem><para>WTP Version 3.0 Release</para></listitem>
-                                <listitem><para>BIRT Report Designer SDK 2.3.0 Release or BIRT Report Designer 2.3.0 Release <ulink url="http://repository.jboss.org/eclipse/birt/2.3.0/birt-report-framework-2_3_0.zip">download here</ulink></para></listitem>
+                                <listitem><para><ulink url="http://repository.jboss.org/eclipse/birt/2.3.0/birt-report-framework-2_3_0.zip">BIRT Report Designer SDK 2.3.0 Release</ulink> or BIRT Report Designer 2.3.0 Release</para></listitem>
                                 <listitem><para>JBoss Application Server 4.2.2 GA</para></listitem>
                                 <listitem><para>JBoss Seam 2.0.1 GA</para></listitem>
-                                <listitem><para>BIRT Web Tools Integration <ulink url="http://repository.jboss.org/eclipse/birt/2.3.0/birt-wtp-integration-sdk-2_3_0.zip">download here</ulink></para></listitem>
+                                <listitem><para><ulink url="http://repository.jboss.org/eclipse/birt/2.3.0/birt-wtp-integration-sdk-2_3_0.zip">BIRT Web Tools Integration</ulink></para></listitem>
                                 <listitem><para>JBoss Tools nightly build</para></listitem>
                                
                            </itemizedlist>    
