@@ -188,7 +188,10 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	}
 	@Override
 	public boolean isChildren() {
-		return creator == null ? false : children;
+		// was commented to correct work of non-visual templates which have
+		// visual children
+		// (for example rich:graphValidator)
+		return /* creator == null ? false : */children;
 	}
 	
 	private VpeCreatorInfo createVisualElement(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualParent, Map<VpeTemplate,ModifyInfo> visualNodeMap) {
