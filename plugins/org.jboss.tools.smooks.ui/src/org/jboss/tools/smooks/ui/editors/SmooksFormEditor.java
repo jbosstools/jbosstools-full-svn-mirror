@@ -13,9 +13,9 @@ package org.jboss.tools.smooks.ui.editors;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
@@ -117,9 +117,10 @@ public class SmooksFormEditor extends FormEditor implements
 		}
 	}
 
-	public void refreshNormalPage() {
+	public void refreshNormalPage(List resourceHidenConfigs) {
 		NormalSmooksModelPackage modelPackage = createSmooksModelPackage();
 		if (this.normalPage != null) {
+			modelPackage.setHidenSmooksElements(resourceHidenConfigs);
 			normalPage.setModelPackage(modelPackage);
 		}
 	}

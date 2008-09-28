@@ -4,7 +4,6 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
@@ -13,11 +12,9 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -29,24 +26,22 @@ import org.eclipse.ui.dialogs.ContainerSelectionDialog;
  * OR with the extension that matches the expected one (smooks).
  */
 
-public class SmooksNewWizardPage extends WizardPage {
+public class SmooksConfigFileNewWizardPage extends WizardPage {
 	private Text containerText;
 
 	private Text fileText;
 
 	private ISelection selection;
 
-	private Combo typeSelectCombo;
-
 	/**
 	 * Constructor for SampleNewWizardPage.
 	 * 
 	 * @param pageName
 	 */
-	public SmooksNewWizardPage(ISelection selection) {
+	public SmooksConfigFileNewWizardPage(ISelection selection) {
 		super("wizardPage");
-		setTitle("Multi-page Editor File");
-		setDescription("This wizard creates a new file with *.smooks extension that can be opened by a multi-page editor.");
+		setTitle("Smooks Configuration File");
+		setDescription("This wizard creates a new smooks configuration file with *.smooks extension that can be opened by a Smooks editor.");
 		this.selection = selection;
 	}
 
@@ -54,13 +49,6 @@ public class SmooksNewWizardPage extends WizardPage {
 	 * @see IDialogPage#createControl(Composite)
 	 */
 	public void createControl(Composite parent) {
-//		if(true){
-//			Button bu = new Button(parent,SWT.BORDER);
-//			bu.setText("BUTTON");
-//			this.setControl(bu);
-//			return;
-//		}
-//		parent.setLayout(new FillLayout());
 		Composite container = new Composite(parent, SWT.NULL);
 		GridLayout layout = new GridLayout();
 		container.setLayout(layout);
@@ -85,49 +73,20 @@ public class SmooksNewWizardPage extends WizardPage {
 				handleBrowse();
 			}
 		});
-		{
-			Label l = new Label(container, SWT.NULL);
-			l.setText("Trasform Type:");
+		label = new Label(container, SWT.NULL);
+		label.setText("&File name:");
 
-			typeSelectCombo = new Combo(container, SWT.BORDER | SWT.READ_ONLY);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			gd.horizontalSpan = 2;
-			typeSelectCombo.setLayoutData(gd);
-			typeSelectCombo.addSelectionListener(new SelectionListener() {
-
-				public void widgetDefaultSelected(SelectionEvent evt) {
-
-				}
-
-				public void widgetSelected(SelectionEvent evt) {
-					dialogChanged();
-				}
-
-			});
-		}
-		{
-			label = new Label(container, SWT.NULL);
-			label.setText("&File name:");
-
-			fileText = new Text(container, SWT.BORDER | SWT.SINGLE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			fileText.setLayoutData(gd);
-			fileText.addModifyListener(new ModifyListener() {
-				public void modifyText(ModifyEvent e) {
-					dialogChanged();
-				}
-			});
-		}
-
-		
-		initTypeSelectCombo();
+		fileText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		fileText.setLayoutData(gd);
+		fileText.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				dialogChanged();
+			}
+		});
 		initialize();
 		dialogChanged();
 		setControl(container);
-	}
-
-	protected void initTypeSelectCombo() {
-		typeSelectCombo.add("Java2Java");
 	}
 
 	/**
@@ -150,8 +109,9 @@ public class SmooksNewWizardPage extends WizardPage {
 				containerText.setText(container.getFullPath().toString());
 			}
 		}
-		fileText.setText("smooks-config.smooks");
+		fileText.setText("SmooksConfigurationFile.smooks");
 	}
+	
 
 	/**
 	 * Uses the standard container selection dialog to choose the new value for
@@ -178,13 +138,6 @@ public class SmooksNewWizardPage extends WizardPage {
 		IResource container = ResourcesPlugin.getWorkspace().getRoot()
 				.findMember(new Path(getContainerName()));
 		String fileName = getFileName();
-
-		int index = typeSelectCombo.getSelectionIndex();
-
-		if (index == -1) {
-			updateStatus("Please select transform type");
-			return;
-		}
 
 		if (getContainerName().length() == 0) {
 			updateStatus("File container must be specified");

@@ -21,15 +21,16 @@ import org.jboss.tools.smooks.model.util.SmooksModelConstants;
  *         Date : Sep 18, 2008
  */
 public class NewResourceConfigFactory implements INewResourceConfigFactory {
-	
+
 	private static NewResourceConfigFactory instance = null;
 
-	private NewResourceConfigFactory(){
-		
+	private NewResourceConfigFactory() {
+
 	}
-	
+
 	public static synchronized NewResourceConfigFactory getInstance() {
-		if(instance == null) instance = new NewResourceConfigFactory();
+		if (instance == null)
+			instance = new NewResourceConfigFactory();
 		return instance;
 	}
 
@@ -81,6 +82,18 @@ public class NewResourceConfigFactory implements INewResourceConfigFactory {
 
 			return config;
 		}
+
+		if (SmooksModelConstants.AT_DOCUMENT.equals(key.getId())) {
+			ResourceConfigType config = SmooksFactory.eINSTANCE
+					.createResourceConfigType();
+//			config.setSelector(SmooksModelConstants.AT_DOCUMENT);
+			ResourceType resource = SmooksFactory.eINSTANCE
+					.createResourceType();
+			resource.setValue("/");
+			config.setResource(resource);
+			
+			return config;
+		}
 		return null;
 	}
 
@@ -92,7 +105,11 @@ public class NewResourceConfigFactory implements INewResourceConfigFactory {
 		NewResourceConfigKey date = new NewResourceConfigKey();
 		date.setId(SmooksModelConstants.DATE_DECODER);
 		date.setName("Date Decoder");
-		return new NewResourceConfigKey[] { bean, date };
+
+		NewResourceConfigKey documentFile = new NewResourceConfigKey();
+		documentFile.setId(SmooksModelConstants.AT_DOCUMENT);
+		documentFile.setName("Document");
+		return new NewResourceConfigKey[] { bean, date ,documentFile };
 	}
 
 }

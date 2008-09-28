@@ -41,21 +41,24 @@ public class NormalSmooksModelBuilder {
 						.next();
 				this.processResouceConfig(resourceConfig, modelPackage);
 			}
+			if(resourceConfigList.isEmpty()){
+				
+			}
 		}
 		return modelPackage;
 	}
 
 	protected void processResouceConfig(ResourceConfigType config,
 			NormalSmooksModelPackage modelPackage) {
-		if (isBeanPopulator(config)) {
-			modelPackage.getBeanPopulatorResourceConfigList().add(config);
-		}
-		if (isDateConfig(config)) {
-			modelPackage.getDateResourceConfigList().add(config);
-		}
-		if (isSmooksTransformType(config)) {
-			modelPackage.setSmooksTransformTypeResourceConfig(config);
-		}
+//		if (isBeanPopulator(config)) {
+//			modelPackage.getBeanPopulatorResourceConfigList().add(config);
+//		}
+//		if (isDateConfig(config)) {
+//			modelPackage.getDateResourceConfigList().add(config);
+//		}
+//		if (isSmooksTransformType(config)) {
+//			modelPackage.setSmooksTransformTypeResourceConfig(config);
+//		}
 	}
 
 	public static boolean isSmooksTransformType(ResourceConfigType config) {

@@ -21,7 +21,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.edit,
  org.jboss.tools.smooks.model.edit,
  org.jboss.tools.smooks.graphicalInfo,
- org.eclipse.ui.views.properties.tabbed
+ org.eclipse.ui.views.properties.tabbed,
+ org.eclipse.emf.edit.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: .
