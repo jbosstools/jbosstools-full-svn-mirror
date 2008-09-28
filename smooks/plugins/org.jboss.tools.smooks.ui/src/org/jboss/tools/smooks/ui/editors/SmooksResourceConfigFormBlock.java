@@ -12,7 +12,6 @@ package org.jboss.tools.smooks.ui.editors;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
@@ -27,6 +26,8 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -46,8 +47,10 @@ import org.jboss.tools.smooks.analyzer.NormalSmooksModelBuilder;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.BeanPopulatorWarrper;
 import org.jboss.tools.smooks.ui.DateTypeWarrper;
+import org.jboss.tools.smooks.ui.DocumentSelectionWarrper;
 import org.jboss.tools.smooks.ui.ResourceConfigWarrper;
 import org.jboss.tools.smooks.ui.gef.util.GraphicsConstants;
 import org.jboss.tools.smooks.ui.wizards.NewResourceConfigFactory;
@@ -61,13 +64,15 @@ import org.jboss.tools.smooks.ui.wizards.NewResourceConfigWizard;
 public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 		ISelectionChangedListener {
 
-	TreeViewer dateTypeViewer;
+	protected TreeViewer dateTypeViewer;
 
-	NormalSmooksModelPackage modelPackage = null;
+	protected NormalSmooksModelPackage modelPackage = null;
 
-	SmooksFormEditor parentEditor;
+	protected ResourceConfigType transformType = null;
 
-	IManagedForm managedForm;
+	protected SmooksFormEditor parentEditor;
+
+	protected IManagedForm managedForm;
 
 	protected EditingDomain domain;
 
@@ -136,6 +141,10 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 				new BeanPopulatorDetailPage(getParentEditor(), getDomain()));
 		detailsPart.registerPage(DateTypeWarrper.class, new DateTypeDetailPage(
 				getParentEditor(), getDomain()));
+
+		detailsPart.registerPage(DocumentSelectionWarrper.class,
+				new DocumentResourceTypeDetailPage(getParentEditor(),
+						getDomain()));
 	}
 
 	protected void configDateTypeViewer() {
@@ -154,30 +163,48 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 					}
 					if (NormalSmooksModelBuilder
 							.isDateConfig((ResourceConfigType) element)) {
-						return "Date Type : ";
+						return "Date Type";
 					}
-					String s =((ResourceConfigType)element).getSelector();
-					if(s == null) s= "<NULL>";
+					if (SmooksModelUtils
+							.isFilePathResourceConfig((ResourceConfigType) element)) {
+						String selector = ((ResourceConfigType) element)
+								.getSelector();
+						if (selector == null)
+							selector = "<NULL>";
+						return "Template File :" + selector;
+					}
+					String s = ((ResourceConfigType) element).getSelector();
+					if (s == null)
+						s = "<NULL>";
 					return "UnKnown ResourceConfig - " + s;
 				}
 				return super.getText(element);
 			}
 
 		});
+		// don't display the first ResourceConfig element;because it will be
+		// "show" with Smooks TransformData Type GUI
+		dateTypeViewer.setFilters(new ViewerFilter[] { new ViewerFilter() {
+			public boolean select(Viewer viewer, Object parentElement,
+					Object element) {
+				if (element == transformType)
+					return false;
+				if(modelPackage != null){
+					List hidenList = modelPackage.getHidenSmooksElements();
+					for (Iterator iterator = hidenList.iterator(); iterator
+							.hasNext();) {
+						Object object = (Object) iterator.next();
+						if(object == element) return false;
+					}
+				}
+				return true;
+			}
+		} });
 	}
 
-	public void initViewers() {
+	public void initViewers(ResourceConfigType transformType) {
+		this.transformType = transformType;
 		if (this.getModelPackage() != null) {
-			List all = new Vector();
-			List list = modelPackage.getBeanPopulatorResourceConfigList();
-			if (list != null) {
-				all.addAll(list);
-			}
-			List dl = modelPackage.getDateResourceConfigList();
-			if (dl != null) {
-				all.addAll(dl);
-			}
-
 			dateTypeViewer.setInput(modelPackage.getSmooksResourceList()
 					.getAbstractResourceConfig());
 		}
@@ -275,7 +302,8 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 				.getSelection();
 		Object object = selection.getFirstElement();
 		int index = ((List) dateTypeViewer.getInput()).indexOf(object);
-		if (index >= modelPackage.getSmooksResourceList().getAbstractResourceConfig().size()) {
+		if (index >= modelPackage.getSmooksResourceList()
+				.getAbstractResourceConfig().size()) {
 			return;
 		}
 		index++;

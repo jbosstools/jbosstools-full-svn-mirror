@@ -600,6 +600,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				}
 			}
 		}
+		if(current == null) return null;
 		Class rootClass = null;
 		rootClassName = SmooksModelUtils.getParmaText("beanClass", current);
 		if (rootClassName != null && loader != null) {

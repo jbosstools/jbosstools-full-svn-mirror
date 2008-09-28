@@ -14,12 +14,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.ResourceType;
 import org.jboss.tools.smooks.model.SmooksPackage;
 
 /**
@@ -48,6 +50,76 @@ public class SmooksModelUtils {
 		param.getMixed().add(ELEMENT_BINDING, binding);
 		return binding;
 	}
+	
+	public static String getTransformType(ResourceConfigType resourceConfig){
+		ParamType typeParam = null;
+		if(isTransformTypeResourceConfig(resourceConfig)){
+			List paramList = resourceConfig.getParam();
+			for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
+				ParamType param = (ParamType) iterator.next();
+				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(param.getName())) {
+					typeParam = param;
+					break;
+				}
+			}
+			if(typeParam != null){
+				return SmooksModelUtils.getAnyTypeText(typeParam);
+			}
+		}
+		return "";
+	}
+
+	public static void setTransformType(ResourceConfigType resourceConfig,
+			String type) {
+		if(type == null) type = "";
+		if (isTransformTypeResourceConfig(resourceConfig)) {
+			List paramList = resourceConfig.getParam();
+			for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
+				ParamType param = (ParamType) iterator.next();
+				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(param.getName())) {
+					cleanTextToSmooksType(param);
+					setTextToSmooksType(param, type);
+				}
+			}
+		}
+	}
+	
+	public static boolean isFilePathResourceConfig(ResourceConfigType resourceConfig){
+		ResourceType resource = resourceConfig.getResource();
+		if(resource != null){
+			String value = resource.getValue();
+			if(value != null){
+				if(value.startsWith("\\")){
+					return true;
+				}
+				if(value.startsWith("/")){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static boolean isTransformTypeResourceConfig(
+			ResourceConfigType resourceConfig) {
+		String selector = resourceConfig.getSelector();
+		if (!SmooksModelConstants.GLOBAL_PARAMETERS.equals(selector)) {
+			return false;
+		}
+
+		if (resourceConfig.getParam().isEmpty()) {
+			return false;
+		} else {
+			List paramList = resourceConfig.getParam();
+			for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
+				ParamType p = (ParamType) iterator.next();
+				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(p.getName())) {
+					return true;
+				}
+			}
+			return false;
+		}
+	}
 
 	public static String getParmaText(String paramName,
 			ResourceConfigType resourceConfigType) {
@@ -60,21 +132,21 @@ public class SmooksModelUtils {
 		}
 		return null;
 	}
-	
-	public static  String getAttributeValueFromAnyType(AnyType anyType,EStructuralFeature attribute) {
+
+	public static String getAttributeValueFromAnyType(AnyType anyType,
+			EStructuralFeature attribute) {
 		String value = (String) anyType.getAnyAttribute().get(attribute, false);
 		return value;
 	}
-	
-	public static String getAnyTypeText(AnyType anyType){
+
+	public static String getAnyTypeText(AnyType anyType) {
 		Object value = anyType.getMixed().get(
-				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT,
-				true);
+				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, true);
 		if (value != null) {
-			if (value instanceof List && !((List)value).isEmpty()) {
+			if (value instanceof List && !((List) value).isEmpty()) {
 				return ((List) value).get(0).toString().trim();
 			}
-//			return value.toString();
+			// return value.toString();
 		}
 		return null;
 	}
@@ -104,17 +176,17 @@ public class SmooksModelUtils {
 		smooksModel.getMixed().add(
 				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, text);
 	}
-	
-	public static void setTextToSmooksType(AnyType smooksModel, String text){
+
+	public static void setTextToSmooksType(AnyType smooksModel, String text) {
 		cleanTextToSmooksType(smooksModel);
-		appendTextToSmooksType(smooksModel,text);
+		appendTextToSmooksType(smooksModel, text);
 	}
-	
+
 	public static void cleanTextToSmooksType(AnyType smooksModel) {
 		Object obj = smooksModel.getMixed().get(
-				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT,true);
-		if(obj instanceof List){
-			((List)obj).clear();
+				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, true);
+		if (obj instanceof List) {
+			((List) obj).clear();
 		}
 	}
 }

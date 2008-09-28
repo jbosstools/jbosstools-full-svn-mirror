@@ -55,11 +55,11 @@ public class AnalyzerFactory {
 	}
 
 	public List getRegistryTargetIDList() {
-		return getIDList(sourceModelAnalyzer);
+		return getIDList(targetModelAnalyzer);
 	}
 
 	public List getRegistrySourceIDList() {
-		return getIDList(targetModelAnalyzer);
+		return getIDList(sourceModelAnalyzer);
 	}
 
 	protected AnalyzerFactory() {

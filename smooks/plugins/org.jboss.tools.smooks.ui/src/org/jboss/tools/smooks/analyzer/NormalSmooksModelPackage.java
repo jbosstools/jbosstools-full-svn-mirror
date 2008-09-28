@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.analyzer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.Assert;
@@ -22,11 +21,13 @@ import org.jboss.tools.smooks.model.SmooksResourceListType;
  *         Date : Sep 11, 2008
  */
 public class NormalSmooksModelPackage {
-	private List<ResourceConfigType> dateResourceConfigList = new ArrayList<ResourceConfigType>();
-
-	private List<ResourceConfigType> beanPopulatorResourceConfigList = new ArrayList<ResourceConfigType>();
-
-	private ResourceConfigType smooksTransformTypeResourceConfig;
+//	private List<ResourceConfigType> dateResourceConfigList = new ArrayList<ResourceConfigType>();
+//
+//	private List<ResourceConfigType> beanPopulatorResourceConfigList = new ArrayList<ResourceConfigType>();
+//
+//	private ResourceConfigType smooksTransformTypeResourceConfig;
+	
+	private List  hidenSmooksElements = null;
 	
 	private SmooksResourceListType smooksResourceList;
 	
@@ -43,50 +44,59 @@ public class NormalSmooksModelPackage {
 		this.smooksResourceList = smooksResourceList;
 	}
 
-	/**
-	 * @return the dateResourceConfigList
-	 */
-	public List<ResourceConfigType> getDateResourceConfigList() {
-		return dateResourceConfigList;
+	public List  getHidenSmooksElements() {
+		return hidenSmooksElements;
 	}
 
-	/**
-	 * @param dateResourceConfigList the dateResourceConfigList to set
-	 */
-	public void setDateResourceConfigList(
-			List<ResourceConfigType> dateResourceConfigList) {
-		this.dateResourceConfigList = dateResourceConfigList;
+	public void setHidenSmooksElements(
+			List  hidenSmooksElements) {
+		this.hidenSmooksElements = hidenSmooksElements;
 	}
 
-	/**
-	 * @return the beanPopulatorResourceConfigList
-	 */
-	public List<ResourceConfigType> getBeanPopulatorResourceConfigList() {
-		return beanPopulatorResourceConfigList;
-	}
-
-	/**
-	 * @param beanPopulatorResourceConfigList the beanPopulatorResourceConfigList to set
-	 */
-	public void setBeanPopulatorResourceConfigList(
-			List<ResourceConfigType> beanPopulatorResourceConfigList) {
-		this.beanPopulatorResourceConfigList = beanPopulatorResourceConfigList;
-	}
-
-	/**
-	 * @return the smooksTransformTypeResourceConfig
-	 */
-	public ResourceConfigType getSmooksTransformTypeResourceConfig() {
-		return smooksTransformTypeResourceConfig;
-	}
-
-	/**
-	 * @param smooksTransformTypeResourceConfig the smooksTransformTypeResourceConfig to set
-	 */
-	public void setSmooksTransformTypeResourceConfig(
-			ResourceConfigType smooksTransformTypeResourceConfig) {
-		this.smooksTransformTypeResourceConfig = smooksTransformTypeResourceConfig;
-	}
+//	/**
+//	 * @return the dateResourceConfigList
+//	 */
+//	public List<ResourceConfigType> getDateResourceConfigList() {
+//		return dateResourceConfigList;
+//	}
+//
+//	/**
+//	 * @param dateResourceConfigList the dateResourceConfigList to set
+//	 */
+//	public void setDateResourceConfigList(
+//			List<ResourceConfigType> dateResourceConfigList) {
+//		this.dateResourceConfigList = dateResourceConfigList;
+//	}
+//
+//	/**
+//	 * @return the beanPopulatorResourceConfigList
+//	 */
+//	public List<ResourceConfigType> getBeanPopulatorResourceConfigList() {
+//		return beanPopulatorResourceConfigList;
+//	}
+//
+//	/**
+//	 * @param beanPopulatorResourceConfigList the beanPopulatorResourceConfigList to set
+//	 */
+//	public void setBeanPopulatorResourceConfigList(
+//			List<ResourceConfigType> beanPopulatorResourceConfigList) {
+//		this.beanPopulatorResourceConfigList = beanPopulatorResourceConfigList;
+//	}
+//
+//	/**
+//	 * @return the smooksTransformTypeResourceConfig
+//	 */
+//	public ResourceConfigType getSmooksTransformTypeResourceConfig() {
+//		return smooksTransformTypeResourceConfig;
+//	}
+//
+//	/**
+//	 * @param smooksTransformTypeResourceConfig the smooksTransformTypeResourceConfig to set
+//	 */
+//	public void setSmooksTransformTypeResourceConfig(
+//			ResourceConfigType smooksTransformTypeResourceConfig) {
+//		this.smooksTransformTypeResourceConfig = smooksTransformTypeResourceConfig;
+//	}
 	
 	
 

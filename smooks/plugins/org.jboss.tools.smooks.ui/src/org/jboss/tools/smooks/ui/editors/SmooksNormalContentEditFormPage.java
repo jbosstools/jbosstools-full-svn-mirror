@@ -12,9 +12,12 @@ package org.jboss.tools.smooks.ui.editors;
 
 import java.util.List;
 
-import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -26,8 +29,12 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
-import org.jboss.tools.smooks.model.DocumentRoot;
-import org.jboss.tools.smooks.model.SmooksResourceListType;
+import org.jboss.tools.smooks.model.ParamType;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.SmooksFactory;
+import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.util.SmooksModelConstants;
+import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.utils.UIUtils;
 
 /**
@@ -39,28 +46,41 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 
 	protected SmooksResourceConfigFormBlock resourceBlock = null;
 
+	protected ResourceConfigType transformType = null;
+
+	private Button saxButton;
+
+	private Button domButton;
+
+	private Button saxdomButton;
+
+	private EditingDomain domain;
+
+	private List hidenResourceConfigs;
+
 	public SmooksNormalContentEditFormPage(FormEditor editor, String id,
 			String title, NormalSmooksModelPackage modelPacakge) {
 		super(editor, id, title);
-		this.setModelPackage(modelPacakge);
+		domain = ((SmooksFormEditor) editor).getEditingDomain();
 		this.createResourceConfigFormBlock();
+		this.setModelPackage(modelPacakge);
 	}
 
 	public SmooksNormalContentEditFormPage(String id, String title,
 			NormalSmooksModelPackage modelPacakge) {
 		super(id, title);
-		this.setModelPackage(modelPackage);
 		this.createResourceConfigFormBlock();
+		this.setModelPackage(modelPacakge);
 	}
-	
-	protected void createResourceConfigFormBlock(){
+
+	protected void createResourceConfigFormBlock() {
 		resourceBlock = new SmooksResourceConfigFormBlock();
 		resourceBlock.setDomain(getEditingDomain());
-		resourceBlock.setParentEditor((SmooksFormEditor)this.getEditor());
+		resourceBlock.setParentEditor((SmooksFormEditor) this.getEditor());
 	}
-	
-	protected EditingDomain getEditingDomain(){
-		return ((SmooksFormEditor)getEditor()).getEditingDomain();
+
+	protected EditingDomain getEditingDomain() {
+		return ((SmooksFormEditor) getEditor()).getEditingDomain();
 	}
 
 	@Override
@@ -75,8 +95,57 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 		createSmooksTypeGUI(rootMainControl, tool);
 		form.getBody().setLayout(gridLayout);
 		form.pack();
+		this.initTransformTypeResourceConfig();
+		resourceBlock.initViewers(transformType);
+	}
+
+	private ResourceConfigType createTransformType() {
+		ResourceConfigType transformType = SmooksFactory.eINSTANCE
+				.createResourceConfigType();
+		AddCommand.create(
+				domain,
+				modelPackage.getSmooksResourceList(),
+				SmooksPackage.eINSTANCE
+						.getSmooksResourceListType_AbstractResourceConfig(),
+				transformType).execute();
+		MoveCommand.create(domain, modelPackage.getSmooksResourceList(),
+				SmooksPackage.eINSTANCE
+						.getSmooksResourceListType_AbstractResourceConfig(),
+				transformType, 0);
+		transformType.setSelector(SmooksModelConstants.GLOBAL_PARAMETERS);
+		ParamType typeParam = SmooksFactory.eINSTANCE.createParamType();
+		typeParam.setName(SmooksModelConstants.STREAM_FILTER_TYPE);
+		transformType.getParam().add(typeParam);
 		
-		resourceBlock.initViewers();
+		return transformType;
+	}
+
+	protected void initTransformTypeResourceConfig() {
+		if (this.getModelPackage() != null) {
+			List list = modelPackage.getSmooksResourceList()
+					.getAbstractResourceConfig();
+			if (list != null && !list.isEmpty()) {
+				ResourceConfigType first = (ResourceConfigType) list.get(0);
+				if (SmooksModelUtils.isTransformTypeResourceConfig(first)) {
+					this.transformType = first;
+				}
+			}
+			if (transformType == null) {
+				transformType = createTransformType();
+			}
+			if (transformType != null) {
+				String type = SmooksModelUtils.getTransformType(transformType);
+				if (SmooksModelConstants.SAX.equals(type)) {
+					saxButton.setSelection(true);
+				}
+				if (SmooksModelConstants.DOM.equals(type)) {
+					domButton.setSelection(true);
+				}
+				if ("SAX/DOM".equals(type)) {
+					saxdomButton.setSelection(true);
+				}
+			}
+		}
 	}
 
 	protected void createSmooksTypeGUI(Composite mainComposite, FormToolkit tool) {
@@ -97,11 +166,46 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 		layout.numColumns = 3;
 		typeSelectComposite.setLayout(layout);
 
-		createTypeSelectRadioButton(typeSelectComposite, tool, "SAX")
-				.setSelection(true);
-		createTypeSelectRadioButton(typeSelectComposite, tool, "DOM");
-		createTypeSelectRadioButton(typeSelectComposite, tool, "SAX/DOM");
+		saxButton = createTypeSelectRadioButton(typeSelectComposite, tool,
+				SmooksModelConstants.SAX);
+		domButton = createTypeSelectRadioButton(typeSelectComposite, tool,
+				SmooksModelConstants.DOM);
+		saxdomButton = createTypeSelectRadioButton(typeSelectComposite, tool,
+				SmooksModelConstants.SAX_DOM);
+		hookButtons();
+	}
 
+	private void setTransformType(String type) {
+		if (this.transformType != null) {
+			SmooksModelUtils.setTransformType(transformType, type);
+			((SmooksFormEditor)getEditor()).fireEditorDirty(true);
+		}
+	}
+
+	protected void hookButtons() {
+		saxButton.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+				setTransformType(SmooksModelConstants.SAX);
+			}
+
+		});
+
+		domButton.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+				setTransformType(SmooksModelConstants.DOM);
+			}
+
+		});
+
+		saxdomButton.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+				setTransformType(SmooksModelConstants.SAX_DOM);
+			}
+
+		});
 	}
 
 	private Button createTypeSelectRadioButton(Composite parent,
@@ -125,7 +229,7 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 		if (modelPackage == this.modelPackage)
 			return;
 		this.modelPackage = modelPackage;
-		this.resourceBlock.setModelPackage(this.modelPackage);
+		if (resourceBlock != null)
+			this.resourceBlock.setModelPackage(this.modelPackage);
 	}
-
 }

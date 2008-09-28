@@ -57,9 +57,11 @@ public class GraphicalInformationSaver {
 				String gfileName = fileName + ".graph";
 				if (container != null) {
 					IFile gfile = container.getFile(new Path(gfileName));
-					if(!gfile.exists()){
+					if (!gfile.exists()) {
 						try {
-							gfile.create(new ByteArrayInputStream("".getBytes()), true, null);
+							gfile.create(
+									new ByteArrayInputStream("".getBytes()),
+									true, null);
 						} catch (CoreException e) {
 							e.printStackTrace();
 						}
@@ -72,15 +74,55 @@ public class GraphicalInformationSaver {
 		}
 	}
 
+	public GraphicalInformationSaver(IFile file) {
+		IContainer container = file.getParent();
+		String fileName = file.getName();
+		if (fileName.endsWith(".smooks")) {
+			String gfileName = fileName + ".graph";
+			if (container != null) {
+				IFile gfile = container.getFile(new Path(gfileName));
+				if (!gfile.exists()) {
+					try {
+						gfile.create(new ByteArrayInputStream("".getBytes()),
+								true, null);
+					} catch (CoreException e) {
+						e.printStackTrace();
+					}
+				}
+				String osString = gfile.getLocation().toOSString();
+				graphicalFileResource = new XMLResourceFactoryImpl()
+						.createResource(URI.createFileURI(osString));
+			}
+		}
+	}
+
 	public GraphInformations doLoad() throws IOException {
 		// throw new IOException("can't find the file");
 		if (graphicalFileResource != null) {
 			graphicalFileResource.load(Collections.EMPTY_MAP);
-				GraphInformations graph = (GraphInformations) graphicalFileResource
-						.getContents().get(0);
-				return graph;
+			GraphInformations graph = (GraphInformations) graphicalFileResource
+					.getContents().get(0);
+			return graph;
 		}
 		return null;
+	}
+
+	public void doSave(IProgressMonitor monitor, String sourceid,
+			String targetid) throws IOException {
+		GraphInformations graph = null;
+		if (graphicalFileResource != null) {
+			if (graphicalFileResource.getContents().isEmpty()) {
+				graph = GraphicalFactory.eINSTANCE.createGraphInformations();
+				graphicalFileResource.getContents().add(graph);
+			} else {
+				graph = (GraphInformations) graphicalFileResource.getContents()
+						.get(0);
+			}
+			if (graph != null) {
+				initMappingTypes(graph, sourceid, targetid);
+			}
+			graphicalFileResource.save(Collections.EMPTY_MAP);
+		}
 	}
 
 	public void doSave(IProgressMonitor monitor,
@@ -101,7 +143,7 @@ public class GraphicalInformationSaver {
 				initMappingTypes(graph, sourceID, targetID);
 				Params params = GraphicalFactory.eINSTANCE.createParams();
 				graph.setParams(params);
-				initParams(params,context);
+				initParams(params, context);
 			}
 			graphicalFileResource.save(Collections.EMPTY_MAP);
 		}
@@ -111,8 +153,8 @@ public class GraphicalInformationSaver {
 	private void initParams(Params params,
 			SmooksConfigurationFileGenerateContext context) {
 		Properties pros = context.getProperties();
-		Enumeration<Object> keys =  pros.keys();
-		while(keys.hasMoreElements()){
+		Enumeration<Object> keys = pros.keys();
+		while (keys.hasMoreElements()) {
 			String key = (String) keys.nextElement();
 			Param param = GraphicalFactory.eINSTANCE.createParam();
 			param.setName(key);

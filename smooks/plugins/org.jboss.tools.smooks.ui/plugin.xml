@@ -48,4 +48,18 @@
          </propertyTab>
       </propertyTabs>
    </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.jboss.tools.smooks.ui.wizards"
+            name="Smooks">
+      </category>
+      <wizard
+            category="org.jboss.tools.smooks.ui.wizards"
+            class="org.jboss.tools.smooks.ui.wizards.SmooksConfigFileNewWizard"
+            icon="icons/sample.gif"
+            id="org.jboss.tools.smooks.ui.wizards.SmooksConfigFileNewWizard"
+            name="Smooks Configuration File">
+      </wizard>
+   </extension>
 </plugin>

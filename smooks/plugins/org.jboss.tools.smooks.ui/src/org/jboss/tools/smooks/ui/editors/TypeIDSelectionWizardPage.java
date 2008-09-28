@@ -13,7 +13,6 @@ package org.jboss.tools.smooks.ui.editors;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
@@ -41,10 +40,27 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 
 	protected CheckboxTableViewer source;
 	protected CheckboxTableViewer target;
+	private List sourceList;
+	private String sourceID = null;
+	private String targetID = null;
+	
+	
+	
 
-	public TypeIDSelectionWizardPage(String pageName, String title,
-			ImageDescriptor titleImage) {
-		super(pageName, title, titleImage);
+	public String getSourceID() {
+		return sourceID;
+	}
+
+	public void setSourceID(String sourceID) {
+		this.sourceID = sourceID;
+	}
+
+	public String getTargetID() {
+		return targetID;
+	}
+
+	public void setTargetID(String targetID) {
+		this.targetID = targetID;
 	}
 
 	public TypeIDSelectionWizardPage(String pageName) {
@@ -62,10 +78,8 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		gl.numColumns = 2;
 		gl.makeColumnsEqualWidth = true;
 		mainComposite.setLayout(gl);
-		List<DataTypeID> sourceList = AnalyzerFactory.getInstance()
+		 sourceList = AnalyzerFactory.getInstance()
 				.getRegistrySourceIDList();
-		List<DataTypeID> targetList = AnalyzerFactory.getInstance()
-				.getRegistryTargetIDList();
 		Label sl = new Label(mainComposite, SWT.NONE);
 		sl.setText("Source Data Type ID List : ");
 
@@ -79,18 +93,10 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		target.getTable().setLayoutData(gd);
 
 		source.setInput(sourceList);
-		target.setInput(targetList);
+		target.setInput(sourceList);
 		initViewer();
 		
 		this.setControl(mainComposite);
-	}
-
-	public String getSourceDataTypeID() {
-		return getDataTypeID(source);
-	}
-
-	public String getTargetDataTypeID() {
-		return getDataTypeID(target);
 	}
 
 	protected String getDataTypeID(CheckboxTableViewer viewer) {
@@ -146,15 +152,23 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 					viewer.setChecked(event.getElement(), true);
 					fireEvent = true;
 				}
+				
+				if(viewer == source){
+					setSourceID(getDataTypeID(source));
+				}
+				
+				if(viewer == target){
+					setTargetID(getDataTypeID(target));
+				}
 			}
 
 		});
 		TableColumn nameColumn = new TableColumn(viewer.getTable(), SWT.NONE);
 		nameColumn.setWidth(100);
 		nameColumn.setText("Name");
-		TableColumn idColumn = new TableColumn(viewer.getTable(), SWT.NONE);
-		idColumn.setWidth(100);
-		idColumn.setText("ID");
+//		TableColumn idColumn = new TableColumn(viewer.getTable(), SWT.NONE);
+//		idColumn.setWidth(100);
+//		idColumn.setText("ID");
 		viewer.setContentProvider(new TypeIDContentProvider());
 		viewer.setLabelProvider(new TypeIDLabelProvider());
 		return viewer;
@@ -191,8 +205,8 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 				switch (columnIndex) {
 				case 0:
 					return ((DataTypeID) element).getName();
-				case 1:
-					return ((DataTypeID) element).getId();
+//				case 1:
+//					return ((DataTypeID) element).getId();
 				}
 			}
 			return "";

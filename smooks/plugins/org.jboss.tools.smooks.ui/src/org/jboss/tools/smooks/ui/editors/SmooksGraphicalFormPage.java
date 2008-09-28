@@ -21,18 +21,15 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionLayer;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.IOWrappedException;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.KeyStroke;
@@ -107,17 +104,14 @@ import org.jboss.tools.smooks.analyzer.ResourceConfigEraser;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
 import org.jboss.tools.smooks.analyzer.SmooksFileBuilder;
 import org.jboss.tools.smooks.graphical.GraphInformations;
-import org.jboss.tools.smooks.graphical.GraphicalPackage;
 import org.jboss.tools.smooks.graphical.MappingDataType;
 import org.jboss.tools.smooks.graphical.Param;
 import org.jboss.tools.smooks.graphical.Params;
 import org.jboss.tools.smooks.graphical.util.GraphicalInformationSaver;
 import org.jboss.tools.smooks.model.DocumentRoot;
-import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
-import org.jboss.tools.smooks.model.util.SmooksResourceFactoryImpl;
 import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
 import org.jboss.tools.smooks.ui.IViewerInitor;
 import org.jboss.tools.smooks.ui.StructuredDataCreationWizardDailog;
@@ -226,12 +220,12 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			list = SmooksFactory.eINSTANCE.createSmooksResourceListType();
 			doc.setSmooksResourceList(list);
 		}
-		callParentRefillNormalModelInfor();
+
 	}
 
-	private void callParentRefillNormalModelInfor() {
+	private void callParentRefillNormalModelInfor(List hidenResourceConfigs) {
 		SmooksFormEditor editor = (SmooksFormEditor) getEditor();
-		editor.refreshNormalPage();
+		editor.refreshNormalPage(hidenResourceConfigs);
 	}
 
 	// protected void notifyParentEditorTransformNormal
@@ -242,7 +236,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		try {
 			this.initTransformViewerModel((IEditorSite) getSite(),
 					getEditorInput());
-			cleanMappingResourceConfig();
+			if (mappingResourceConfigList != null)
+				callParentRefillNormalModelInfor(mappingResourceConfigList
+						.getRelationgResourceConfigList());
 		} catch (IOWrappedException ex) {
 			MessageDialog.openWarning(getSite().getShell(), "Waring",
 					"Exceptions occurd during parsing Smooks file, no worries");
@@ -663,6 +659,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		Exception exp = null;
 		try {
 			// generate smooks configuration file
+			this.cleanMappingResourceConfig();
 			InputStream stream = builder.generateSmooksFile(context, monitor);
 			IFile file = ((IFileEditorInput) this.getEditorInput()).getFile();
 			if (file.exists()) {
@@ -906,6 +903,12 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			if (dialog.open() == org.eclipse.jface.dialogs.Dialog.OK) {
 				sourceDataTypeID = wizard.getSourceDataTypeID();
 				targetDataTypeID = wizard.getTargetDataTypeID();
+				this.getSmooksConfigurationFileGenerateContext()
+						.setSourceDataTypeID(sourceDataTypeID);
+				this.getSmooksConfigurationFileGenerateContext()
+						.setTargetDataTypeID(targetDataTypeID);
+				graphicalInformationSaver.doSave(new NullProgressMonitor(),
+						getSmooksConfigurationFileGenerateContext());
 			}
 		}
 		smooksResource = this.getSmooksResource();

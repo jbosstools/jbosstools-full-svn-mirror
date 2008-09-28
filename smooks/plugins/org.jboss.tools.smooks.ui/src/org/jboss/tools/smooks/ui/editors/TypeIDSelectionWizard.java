@@ -46,8 +46,8 @@ public class TypeIDSelectionWizard extends Wizard {
 	 */
 	@Override
 	public boolean performFinish() {
-		String sid = page.getSourceDataTypeID();
-		String tid = page.getTargetDataTypeID();
+		String sid = page.getSourceID();
+		String tid = page.getTargetID();
 		if(sid == null || tid == null) return false;
 		this.sourceDataTypeID = sid;
 		this.targetDataTypeID = tid;
