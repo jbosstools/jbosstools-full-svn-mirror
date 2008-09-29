@@ -3283,28 +3283,39 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void reinit() {
-
-		visualBuilder.setSelectionRectangle(null);
-		visualEditor.setEditorDomEventListener(this);	
-		IDOMModel sourceModel = (IDOMModel) getModel();
-		if (sourceModel != null) {
-			IDOMDocument sourceDocument = sourceModel.getDocument();
-			visualBuilder.rebuildDom(sourceDocument);
-		} else {
-			visualBuilder.rebuildDom(null);
-		}
-		//reinits selection controller+ controller
-		visualEditor.reinitDesignMode();
-		visualSelectionController = new VpeSelectionController(visualEditor.getEditor().getSelectionController());
+		try {
+			if(!switcher
+			.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+				return;
+			}
+			visualBuilder.setSelectionRectangle(null);
+			visualEditor.setEditorDomEventListener(this);	
+			IDOMModel sourceModel = (IDOMModel) getModel();
+			if (sourceModel != null) {
+				IDOMDocument sourceDocument = sourceModel.getDocument();
+				visualBuilder.rebuildDom(sourceDocument);
+			} else {
+				visualBuilder.rebuildDom(null);
+			}
+			//reinits selection controller+ controller
+			visualEditor.reinitDesignMode();
+			visualSelectionController = new VpeSelectionController(visualEditor.getEditor().getSelectionController());
+		
+			selectionBuilder = new VpeSelectionBuilder(domMapping, sourceBuilder,
+					visualBuilder, visualSelectionController);
 	
-		selectionBuilder = new VpeSelectionBuilder(domMapping, sourceBuilder,
-				visualBuilder, visualSelectionController);
-
-		selectionManager = new SelectionManager(pageContext,
-				sourceEditor, visualSelectionController);
-
-		keyEventHandler = new KeyEventManager(sourceEditor, domMapping,
-				pageContext,visualSelectionController);
+			selectionManager = new SelectionManager(pageContext,
+					sourceEditor, visualSelectionController);
+	
+			keyEventHandler = new KeyEventManager(sourceEditor, domMapping,
+					pageContext,visualSelectionController);
+			//restore selection in visula part
+			sourceSelectionChanged();
+		}finally {
+			
+			switcher.stopActiveEditor();
+		}
+			
 	}
 
 	/**
