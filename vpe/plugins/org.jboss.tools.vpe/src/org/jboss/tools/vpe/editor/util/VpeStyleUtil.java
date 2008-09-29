@@ -38,7 +38,7 @@ import org.w3c.dom.Node;
 
 public class VpeStyleUtil {
 
-	public static final String UNRESOLVED_IMAGE_PATH = "ve/unresolved_image.gif"; //$NON-NLS-1$
+	public static final String UNRESOLVED_IMAGE_PATH = "unresolved_image.gif"; //$NON-NLS-1$
 
 	public static final String ATTRIBUTE_STYLE = "style"; //$NON-NLS-1$
 
