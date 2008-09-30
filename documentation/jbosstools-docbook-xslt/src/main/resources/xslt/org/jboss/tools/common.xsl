@@ -135,12 +135,12 @@
   	<xsl:choose>
   		 <xsl:when test="local-name()='note' or local-name()='tip' or local-name()='important' or local-name()='warning' or local-name()='caution'"> 
   			<xsl:call-template name="my.graphical.admonition"/>
-         </xsl:when> 
-         <xsl:otherwise>
+		</xsl:when> 
+         <xsl:when test="local-name()='diffmk:wrapper'">
          	<span class="diffmkwrapper">
   			<xsl:value-of select="."/> 
   		</span>
-         </xsl:otherwise>
+         </xsl:when>
   	</xsl:choose>
   </xsl:template>
   <xsl:template name="my.graphical.admonition">
@@ -178,5 +178,14 @@
   			<xsl:apply-templates /> 
 		</div>
 	</div>
+	</xsl:template>
+
+	<xsl:template match="abstract" mode="titlepage.mode">
+	  <xsl:apply-templates select="." mode="class.attribute"/>
+	  <xsl:call-template name="paragraph">
+	    <xsl:with-param name="content">
+	      <xsl:apply-templates mode="titlepage.mode"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
 	</xsl:template>
 </xsl:stylesheet>

@@ -131,5 +131,60 @@
   </xsl:template>
   
   <!-- XHTML and PDF -->
-  
+  <xsl:template match="//node()[@diffmk:change]">
+  	<xsl:choose>
+  		 <xsl:when test="local-name()='note' or local-name()='tip' or local-name()='important' or local-name()='warning' or local-name()='caution'"> 
+  			<xsl:call-template name="my.graphical.admonition"/>
+		</xsl:when> 
+         <xsl:when test="local-name()='diffmk:wrapper'">
+         	<span class="diffmkwrapper">
+  			<xsl:value-of select="."/> 
+  		</span>
+         </xsl:when>
+  	</xsl:choose>
+  </xsl:template>
+  <xsl:template name="my.graphical.admonition">
+	<xsl:variable name="admon.type">
+		<xsl:choose>
+			<xsl:when test="local-name(.)='note'">Note</xsl:when>
+			<xsl:when test="local-name(.)='warning'">Warning</xsl:when>
+			<xsl:when test="local-name(.)='caution'">Caution</xsl:when>
+			<xsl:when test="local-name(.)='tip'">Tip</xsl:when>
+			<xsl:when test="local-name(.)='important'">Important</xsl:when>
+			<xsl:otherwise>Note</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+
+	<xsl:variable name="alt">
+		<xsl:call-template name="gentext">
+			<xsl:with-param name="key" select="$admon.type"/>
+		</xsl:call-template>
+	</xsl:variable>
+
+	<div xmlns="http://www.w3.org/1999/xhtml">
+	 	<xsl:apply-templates select="." mode="class.attribute"/>
+		<xsl:if test="$admon.style != ''">
+			<xsl:attribute name="style">
+				<xsl:value-of select="$admon.style"/>
+			</xsl:attribute>
+		</xsl:if>
+		<xsl:call-template name="anchor"/>
+		<xsl:if test="$admon.textlabel != 0 or title">
+			<h2>
+				<xsl:apply-templates select="." mode="object.title.markup"/>
+			</h2>
+		</xsl:if>
+		<div class="diffmkwrapper">
+  			<xsl:apply-templates /> 
+		</div>
+	</div>
+	</xsl:template>
+	<xsl:template match="abstract" mode="titlepage.mode">
+	  <xsl:apply-templates select="." mode="class.attribute"/>
+	  <xsl:call-template name="paragraph">
+	    <xsl:with-param name="content">
+	      <xsl:apply-templates mode="titlepage.mode"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:template>
 </xsl:stylesheet>
