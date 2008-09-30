@@ -55,35 +55,87 @@
                                 
                         <para>We will show you how to use the Creation wizard for creating a new BIRT report.</para>
                                 
-                                <para>First create a Report project. Select <emphasis><property>File &gt;New &gt; Project...</property>
-                                </emphasis> in the main menu bar or context menu. The new project dialog appears.  Choose  <emphasis><property>Business Intelligence and Reporting Tools &gt; Report Project</property></emphasis>. Click on the Next button.</para>
-                                
-                                <figure>
-                                        <title>New Dialog</title>
+                                <para>First create a Report project. Select <emphasis><property>File &gt; New &gt; Project...</property>
+                                </emphasis> in the main menu bar or context menu. The new project dialog appears.  Choose  <emphasis><property>Business Intelligence and Reporting Tools &gt; Report Project</property></emphasis>:
+                                        
+                                        <figure>
+                                        <title>New Report Project Creation</title>
                                         <mediaobject>
                                                 <imageobject>
-                                                        <imagedata fileref="images/esb_support/01_create_esb.png"/>
+                                                        <imagedata fileref="images/BirtSupport/01ReportProjectWizard.png"/>
                                                 </imageobject>
                                         </mediaobject>
-                                </figure>
+                                </figure> 
+                                        
+                                        Click on the <emphasis><property>Next</property></emphasis> button. Specify a name for the project and change location if necessary:</para>
                                 
-                                <para> Clicking <emphasis><property>Next</property></emphasis> brings us to the wizard page where it&apos;s necessary to specify the
-                                        folder, name and version for the file. We choose, for example, <emphasis><property>jboss-esb.xml</property>
-                                        </emphasis> as the name and accept the selected projects folder and default version.</para>
-                                <figure>
-                                        <title>Folder, Name and Version</title>
-                                        <mediaobject>
-                                                <imageobject>
-                                                        <imagedata fileref="images/esb_support/02_create_esb.png"/>
-                                                </imageobject>
-                                        </mediaobject>
-                                </figure>
+                        <figure>
+                                <title>Specify a Name for the Report Project</title>
+                                <mediaobject>
+                                        <imageobject>
+                                                <imagedata fileref="images/BirtSupport/02ProjectName.png"/>
+                                        </imageobject>
+                                </mediaobject>
+                        </figure> 
                                 
-                                <para>Thus, our file will be created in the selected projects folder by default. If you want to change the folder
-                                        for your future file click <emphasis><property>Browse...</property></emphasis> button to set needed folder or simply type it.</para>
-                                
-                                <para>Clicking on <emphasis><property>Finish</property>
-                                </emphasis> results in the file being generated. The wizard creates one xml file.</para>
+                        <para>Click on the <emphasis><property>Finish</property></emphasis> button. Click <emphasis><property>Ok</property></emphasis>  to switch to the Report Design perspective. Your Report Project is now created:</para>
+                               
+                               
+                        <figure>
+                                <title>New Report Project Created</title>
+                                <mediaobject>
+                                        <imageobject>
+                                                <imagedata fileref="images/BirtSupport/03NewProjectCreated.png"/>
+                                        </imageobject>
+                                </mediaobject>
+                        </figure> 
+                               
+                        <para>Now you can create a Report. Go to <emphasis><property>File &gt; New &gt; Report...</property></emphasis>:</para>
+                               
+                        <figure>
+                                <title>Create a New Report</title>
+                                <mediaobject>
+                                        <imageobject>
+                                                <imagedata fileref="images/BirtSupport/04NewReport.png"/>
+                                        </imageobject>
+                                </mediaobject>
+                        </figure> 
+                               
+                        <para>The new report dialog appears. Select the created project as a parent folder in the tree view:</para>
+                        
+                        <figure>
+                                <title>Select a Parent Folder</title>
+                                <mediaobject>
+                                        <imageobject>
+                                                <imagedata fileref="images/BirtSupport/05SelectingParentFolder.png"/>
+                                        </imageobject>
+                                </mediaobject>
+                        </figure> 
+                               
+                               <para>Click on the <emphasis><property>Next</property></emphasis> button. Then select the type of the template to use for your report. Each template is shown in the Preview window and is described below. Tick off the "Show Report Creation Cheat Sheet" checkbox if you don't  need the Cheat Sheets view to be displayed. The Cheat Sheets view can walk you though the process of creating a report based on the template you selected. 
+                                       
+                                        <figure>
+                                <title>Choose a Report Template</title>
+                                <mediaobject>
+                                        <imageobject>
+                                                <imagedata fileref="images/BirtSupport/06ReportTemplate.png"/>
+                                        </imageobject>
+                                </mediaobject>
+                        </figure> 
+                                       
+                                       
+                                       Click on the <emphasis><property>Finish</property></emphasis> button to open the newly created report in the workspace:</para>
+                               
+                                  <figure>
+                                <title>Report Opened in the Workspace</title>
+                                <mediaobject>
+                                        <imageobject>
+                                                <imagedata fileref="images/BirtSupport/07SimpleListingReport.png"/>
+                                        </imageobject>
+                                </mediaobject>
+                        </figure> 
+                                       
+                               
                         
                 </section>
         
