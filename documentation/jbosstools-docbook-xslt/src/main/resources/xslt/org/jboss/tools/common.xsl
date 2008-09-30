@@ -6,7 +6,7 @@
   Author: Mark Newton <mark.newton@jboss.org>
 -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:diffmk="http://diffmk.sf.net/ns/diff" version="1.0">
 
   <!-- XHTML settings -->
   <xsl:param name="html.stylesheet" select="'css/tools.css'"/>
@@ -101,6 +101,17 @@
               <xsl:value-of select="@role"/> 
             </xsl:attribute> 
           </xsl:when> 
+	  	<!-- For mkdiff compatibility-->
+	  	<xsl:when test="@revisionflag='added'"> 
+            <xsl:attribute name="class"> 
+              <xsl:value-of select="@revisionflag"/> 
+            </xsl:attribute>
+        </xsl:when> 
+	    <xsl:when test="@revisionflag='changed'"> 
+            <xsl:attribute name="class"> 
+              <xsl:value-of select="@revisionflag"/> 
+            </xsl:attribute>
+          </xsl:when> 
         </xsl:choose> 
         
         <!-- * if $autotoc.label.in.hyperlink is non-zero, then output the label --> 
@@ -120,5 +131,52 @@
     </span> 
   </xsl:template> 
   <!-- XHTML and PDF -->
-  
+  <xsl:template match="//node()[@diffmk:change]">
+  	<xsl:choose>
+  		 <xsl:when test="local-name()='note' or local-name()='tip' or local-name()='important' or local-name()='warning' or local-name()='caution'"> 
+  			<xsl:call-template name="my.graphical.admonition"/>
+         </xsl:when> 
+         <xsl:otherwise>
+         	<span class="diffmkwrapper">
+  			<xsl:value-of select="."/> 
+  		</span>
+         </xsl:otherwise>
+  	</xsl:choose>
+  </xsl:template>
+  <xsl:template name="my.graphical.admonition">
+	<xsl:variable name="admon.type">
+		<xsl:choose>
+			<xsl:when test="local-name(.)='note'">Note</xsl:when>
+			<xsl:when test="local-name(.)='warning'">Warning</xsl:when>
+			<xsl:when test="local-name(.)='caution'">Caution</xsl:when>
+			<xsl:when test="local-name(.)='tip'">Tip</xsl:when>
+			<xsl:when test="local-name(.)='important'">Important</xsl:when>
+			<xsl:otherwise>Note</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+
+	<xsl:variable name="alt">
+		<xsl:call-template name="gentext">
+			<xsl:with-param name="key" select="$admon.type"/>
+		</xsl:call-template>
+	</xsl:variable>
+
+	<div xmlns="http://www.w3.org/1999/xhtml">
+	 	<xsl:apply-templates select="." mode="class.attribute"/>
+		<xsl:if test="$admon.style != ''">
+			<xsl:attribute name="style">
+				<xsl:value-of select="$admon.style"/>
+			</xsl:attribute>
+		</xsl:if>
+		<xsl:call-template name="anchor"/>
+		<xsl:if test="$admon.textlabel != 0 or title">
+			<h2>
+				<xsl:apply-templates select="." mode="object.title.markup"/>
+			</h2>
+		</xsl:if>
+		<div class="diffmkwrapper">
+  			<xsl:apply-templates /> 
+		</div>
+	</div>
+	</xsl:template>
 </xsl:stylesheet>

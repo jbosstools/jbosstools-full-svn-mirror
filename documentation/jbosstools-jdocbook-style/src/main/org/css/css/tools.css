@@ -83,11 +83,14 @@ ul.docnav {
     display:block;
 }
 
-a.new { 
+a.new, a.added { 
 background:transparent url(../images/new.png) no-repeat scroll right top; 
 padding-right:70px; 
 } 
-a.updated { 
+a.updated, a.changed { 
 background:transparent url(../images/updated.png) no-repeat scroll right top; 
 padding-right:70px; 
+}
+span.diffmkwrapper, div.diffmkwrapper p a{
+	background-color: #ACE1AF;
 }
