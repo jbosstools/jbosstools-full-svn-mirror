@@ -28,7 +28,6 @@ z-index:-1;
 }
 */
 
-
 body {
 background-image:url(../images/jbosstools_label2.png);
 background-repeat:no-repeat;
@@ -91,6 +90,12 @@ a.updated, a.changed {
 background:transparent url(../images/updated.png) no-repeat scroll right top; 
 padding-right:70px; 
 }
-span.diffmkwrapper, div.diffmkwrapper p a{
-	background-color: #ACE1AF;
+span.diffmkwrapper{
+	background-color: #cce2f6;
+}
+
+div.diffmkwrapper p{
+	background-color: #c8d7e4;
+	padding:0px;
+	margin-left:56px;
 }
