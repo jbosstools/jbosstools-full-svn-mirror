@@ -55,8 +55,8 @@
                                 
                         <para>We will show you how to use the Creation wizard for creating a new BIRT report.</para>
                                 
-                                <para>Select <emphasis><property>File &gt;New &gt; Other...</property>
-                                </emphasis> in the main menu bar or context menu for selected project and then <emphasis><property>ESB &gt; ESB File</property></emphasis> in the New dialog:</para>
+                                <para>First create a Report project. Select <emphasis><property>File &gt;New &gt; Project...</property>
+                                </emphasis> in the main menu bar or context menu. The new project dialog appears.  Choose  <emphasis><property>Business Intelligence and Reporting Tools &gt; Report Project</property></emphasis>. Click on the Next button.</para>
                                 
                                 <figure>
                                         <title>New Dialog</title>
