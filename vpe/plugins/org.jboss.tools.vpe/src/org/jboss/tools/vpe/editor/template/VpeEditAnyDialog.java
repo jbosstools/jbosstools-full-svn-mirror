@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
-import org.jboss.tools.jst.jsp.outline.cssdialog.CSSDialog;
+import org.jboss.tools.jst.jsp.outline.cssdialog.CSSStyleDialog;
 import org.jboss.tools.jst.jsp.outline.cssdialog.common.Constants;
 import org.jboss.tools.jst.jsp.outline.cssdialog.common.MessageUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
@@ -126,7 +126,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		button.addSelectionListener(new SelectionAdapter() {
 		    @Override
 			public void widgetSelected(SelectionEvent event) {
-		    	CSSDialog cssDialog = new CSSDialog(composite.getShell(),txtStyle.getText());
+		    	CSSStyleDialog cssDialog = new CSSStyleDialog(composite.getShell(),txtStyle.getText());
 				if (cssDialog.open() == Window.OK) {
 				    txtStyle.setText(cssDialog.getNewStyle());
 				}
