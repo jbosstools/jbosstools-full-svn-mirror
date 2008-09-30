@@ -100,7 +100,13 @@
     <ulink url="&jbossportallink;">(html)</ulink>
   </para>
   <para>The guide gives a detail look at how you can easily build a Portlet Web Application with
-    JBoss Tools and deploy it onto JBoss Portal.</para>
+  JBoss Tools and deploy it onto JBoss Portal.</para>
+  
+  <para>
+    <emphasis role="bold">JBoss WS User Guide</emphasis>
+    <ulink url="&wslink;">(html)</ulink>
+  </para>
+  <para>This guide gives you practical help on JBossWS usage.</para>
 
   <para>
     <emphasis role="bold">Exadel Studio Migration Guide</emphasis>

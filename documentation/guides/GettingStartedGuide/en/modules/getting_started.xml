@@ -193,11 +193,11 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
    <itemizedlist>
     <listitem>
-     <para>Download the appropriate installation file for your platform from <ulink
-       url="http://www.jboss.com/products/devstudio">Red Hat website</ulink>.</para>
+     <para>First of all you need  the appropriate installation file for your platform from <ulink
+      url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">Red Hat website</ulink>.</para>
     </listitem>
     <listitem>
-     <para>Run in console:</para>
+     <para>Then run in console:</para>
      <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-linux-gtk-1.1.0.GA.jar
 ]]></programlisting>
     </listitem>
