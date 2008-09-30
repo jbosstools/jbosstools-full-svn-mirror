@@ -6,7 +6,7 @@
   Author: Mark Newton <mark.newton@jboss.org>
 -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:diffmk="http://diffmk.sf.net/ns/diff" version="1.0">
   
   <!-- XHTML settings -->
   
