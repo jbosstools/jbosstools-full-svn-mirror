@@ -82,11 +82,11 @@ ul.docnav {
     display:block;
 }
 
-a.new, a.added { 
+.new, .added { 
 background:transparent url(../images/new.png) no-repeat scroll right top; 
 padding-right:70px; 
 } 
-a.updated, a.changed { 
+.updated, .changed { 
 background:transparent url(../images/updated.png) no-repeat scroll right top; 
 padding-right:70px; 
 }
