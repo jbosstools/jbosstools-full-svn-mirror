@@ -129,15 +129,12 @@
                 <![CDATA[-vmargs -Xms128m -Xmx512m -XX:MaxPermSize=128m
 ]]></programlisting>
             
-            
             <para>
                 <emphasis role="bold">How can I add my own tag library to the JBoss Tools Palette?</emphasis>
             </para>
             <para>See <ulink url="&jsflink;#AddingCustomJSFTagsToTheRedHatPalette7433">Adding Tag
                 Libraries</ulink> in Visual Web Tools Guide.</para>
-            
-        </section>
-    
+            </section>    
     
     <section id="question1">
         <title>How to get Code Assist for Seam specific resources in an externally
