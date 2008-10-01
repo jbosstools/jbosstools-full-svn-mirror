@@ -445,7 +445,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					sourceNode)) {
 				sourceNodeClone = (sourceNode).cloneNode(true);
 				if(sourceNodeClone instanceof Element){
-				   ((Element)sourceNodeClone).setAttribute(PARENT,"");
+				   ((Element)sourceNodeClone).setAttribute(PARENT,""); //$NON-NLS-1$
 				    Attr a = ((Element)sourceNodeClone).getAttributeNode(PARENT);
 				    a.setUserData(PARENT, sourceNode.getParentNode(),null);
 				    

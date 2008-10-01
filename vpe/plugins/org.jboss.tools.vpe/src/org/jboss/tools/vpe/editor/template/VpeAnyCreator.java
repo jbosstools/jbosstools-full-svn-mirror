@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
@@ -179,6 +181,10 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 		
 		String styleString = getExprValue(pageContext, styleExpr, sourceNode);
 		
+		if ("yes".equalsIgnoreCase(VpePreference.SHOW_BORDER_FOR_UNKNOWN_TAGS.getValue())) { //$NON-NLS-1$
+			styleString =  "border: 1px solid green;" +styleString; //$NON-NLS-1$
+		}
+		
 		anyElement.setAttribute(HTML.ATTR_STYLE, styleString);
 		
 		if (propertyCreators != null) {
@@ -193,8 +199,6 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 				}
 			}
 		}
-
-//		setStyles(pageContext, sourceNode, div, span);
 
 		String valueStr = getExprValue(pageContext, valueExpr, sourceNode);
 		nsIDOMNode valueNode = visualDocument.createTextNode(valueStr);
