@@ -88,6 +88,7 @@ public final class HTML {
 	public static final String ATTR_ALT = "alt"; //$NON-NLS-1$
 	public static final String ATTR_JSFC = "jsfc";  //$NON-NLS-1$
 	public static final String ATTR_DISPLAY = "display";  //$NON-NLS-1$
+	public static final String ATTR_READONLY = "readonly"; //$NON-NLS-1$
 
 	public static final String VALUE_TOP_ALIGN = "top"; //$NON-NLS-1$
 	public static final String VALUE_MIDDLE_ALIGN = "middle"; //$NON-NLS-1$
