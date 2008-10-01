@@ -22,8 +22,11 @@ import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author Sergey Dzmitrovich
@@ -127,9 +130,12 @@ public abstract class ComponentContentTest extends VpeTest {
 	}
 
 	/**
+	 * test for invisible tags
 	 * 
 	 * @param elementPagePath
 	 *            - path to test page
+	 * @param elementId
+	 *            - id of element on page
 	 * @throws Throwable
 	 */
 	protected void performInvisibleTagTest(String elementPagePath,
@@ -191,6 +197,80 @@ public abstract class ComponentContentTest extends VpeTest {
 	}
 
 	/**
+	 * test for invisible tags which can have visible children
+	 * 
+	 * @param elementPagePath
+	 *            - path to test page
+	 * @param elementId
+	 *            - id of element on page
+	 * @throws Throwable
+	 */
+	protected void performInvisibleWrapperTagTest(String elementPagePath,
+			String elementId) throws Throwable {
+		setException(null);
+
+		IFile elementPageFile = (IFile) TestUtil.getComponentPath(
+				elementPagePath, getTestProjectName());
+
+		IEditorInput input = new FileEditorInput(elementPageFile);
+
+		TestUtil.waitForJobs();
+
+		IEditorPart editor = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getActivePage().openEditor(input,
+						EDITOR_ID, true);
+
+		assertNotNull(editor);
+
+		TestUtil.waitForJobs();
+
+		VpeController controller = getVpeController((JSPMultiPageEditor) editor);
+
+		// find source element and check if it is not null
+		Element sourceELement = findSourceElementById(controller, elementId);
+		assertNotNull(sourceELement);
+
+		// find visual element and check if it is null
+		nsIDOMElement visualElement = findElementById(controller, elementId);
+		assertNull(visualElement);
+
+		// check children of non-visual 
+		NodeList children = sourceELement.getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			Node child = children.item(i);
+			assertNotNull(findNode(controller, child));
+		}
+
+		// set show invisible tag's flag to true
+		controller.getVisualBuilder().setShowInvisibleTags(true);
+		controller.visualRefresh();
+
+		TestUtil.waitForIdle();
+
+		// find visual element and check if it is not null
+		visualElement = findElementById(controller, elementId);
+		assertNotNull(visualElement);
+
+		// generate text for invisible tag
+		String modelInvisibleTagText = generateInvisibleTagText(sourceELement
+				.getNodeName());
+
+		// generate dom document and get root element
+		Element modelElement = TestDomUtil.getDocument(modelInvisibleTagText)
+				.getDocumentElement();
+		assertNotNull(modelElement);
+
+		// compare elements
+		assertEquals(true, TestDomUtil
+				.compareNodes(visualElement, modelElement));
+
+		if (getException() != null) {
+			throw getException();
+		}
+
+	}
+
+	/**
 	 * 
 	 * @param tagName
 	 * @return
@@ -219,6 +299,24 @@ public abstract class ComponentContentTest extends VpeTest {
 			return null;
 
 		return (nsIDOMElement) nodeMapping.getVisualNode();
+	}
+
+	/**
+	 * find visual element by "id" entered in source part of vpe
+	 * 
+	 * @param controller
+	 * @param elementId
+	 * @return
+	 */
+	protected nsIDOMNode findNode(VpeController controller, Node node) {
+
+		VpeNodeMapping nodeMapping = controller.getDomMapping().getNodeMapping(
+				node);
+
+		if (nodeMapping == null)
+			return null;
+
+		return nodeMapping.getVisualNode();
 	}
 
 	/**
