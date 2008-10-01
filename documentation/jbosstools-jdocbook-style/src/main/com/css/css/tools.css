@@ -93,11 +93,20 @@ margin-top:5px;
 text-align:right;
 }
 
-a.new { 
+.new, .added { 
 background:transparent url(../images/new.png) no-repeat scroll right top; 
 padding-right:70px; 
 } 
-a.updated { 
+.updated, .changed { 
 background:transparent url(../images/updated.png) no-repeat scroll right top; 
 padding-right:70px; 
+}
+span.diffmkwrapper{
+	background-color: #cce2f6;
+}
+
+div.diffmkwrapper p{
+	background-color: #c8d7e4;
+	padding:0px;
+	margin-left:56px;
 }
