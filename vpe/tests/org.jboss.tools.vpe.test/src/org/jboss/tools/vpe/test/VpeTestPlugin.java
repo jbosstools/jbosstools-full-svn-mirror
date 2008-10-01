@@ -19,7 +19,7 @@ import org.osgi.framework.BundleContext;
 public class VpeTestPlugin extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jboss.ide.vpe.tests";
+	public static final String PLUGIN_ID = "org.jboss.ide.vpe.tests"; //$NON-NLS-1$
 
 	// The shared instance
 	private static VpeTestPlugin plugin;

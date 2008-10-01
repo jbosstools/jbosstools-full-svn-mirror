@@ -14,24 +14,23 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import junit.framework.TestCase;
 import org.eclipse.core.internal.registry.ExtensionRegistry;
 import org.eclipse.core.runtime.ContributorFactoryOSGi;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IContributor;
 import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.RegistryFactory;
-import org.osgi.framework.Bundle;
-import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.common.reporting.IProblemReporter;
 import org.jboss.tools.common.reporting.ProblemReporterFactory;
-import junit.framework.TestCase;
+import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.osgi.framework.Bundle;
 
 /**
  * This class created for testing templates expression.
@@ -40,15 +39,15 @@ import junit.framework.TestCase;
  */
 public class TemplatesExpressionParsingTest extends TestCase {
 
-	private static final String PLUGIN_FAILURE_NAME = "testFailure-plugin.xml";
+	private static final String PLUGIN_FAILURE_NAME = "testFailure-plugin.xml"; //$NON-NLS-1$
 
-	private static final String PLUGIN_OK_NAME = "testOk-plugin.xml";
+	private static final String PLUGIN_OK_NAME = "testOk-plugin.xml"; //$NON-NLS-1$
 
-	private static final String EXTENSION_POINT_ID = "org.jboss.tools.vpe.templates";
+	private static final String EXTENSION_POINT_ID = "org.jboss.tools.vpe.templates"; //$NON-NLS-1$
 
-	private static final String EXTENSION_ERROR_EXTENSION_ID_1 = "org.jboss.tools.vpe.tests.failureExtensions";
+	private static final String EXTENSION_ERROR_EXTENSION_ID_1 = "org.jboss.tools.vpe.tests.failureExtensions"; //$NON-NLS-1$
 
-	private static final String EXTENSION_ERROR_EXTENSION_ID_2 = "org.jboss.tools.vpe.tests.okExtensions";
+	private static final String EXTENSION_ERROR_EXTENSION_ID_2 = "org.jboss.tools.vpe.tests.okExtensions"; //$NON-NLS-1$
 
 	private IStatus iStatus = null;
 
@@ -87,8 +86,8 @@ public class TemplatesExpressionParsingTest extends TestCase {
 
 		vpeTemplateManager = VpeTemplateManager.getInstance();
 		vpeTemplateManager.reload();
-		assertNull("Can not parse template from ReDHat DevStudio" + iStatus, iStatus);
-		assertEquals("There exist some errors", 0, errorNumber);
+		assertNull("Can not parse template from ReDHat DevStudio" + iStatus, iStatus); //$NON-NLS-1$
+		assertEquals("There exist some errors", 0, errorNumber); //$NON-NLS-1$
 		assertNotNull(vpeTemplateManager);
 	}
 
@@ -101,8 +100,8 @@ public class TemplatesExpressionParsingTest extends TestCase {
 		createTemplatesForTesting(PLUGIN_OK_NAME);
 		vpeTemplateManager = VpeTemplateManager.getInstance();
 		vpeTemplateManager.reload();
-		assertNull("Can not parse template from ReDHat DevStudio" + iStatus, iStatus);
-		assertEquals("There exist some errors", 0, errorNumber);
+		assertNull("Can not parse template from ReDHat DevStudio" + iStatus, iStatus); //$NON-NLS-1$
+		assertEquals("There exist some errors", 0, errorNumber); //$NON-NLS-1$
 		return;
 	}
 	
@@ -117,8 +116,8 @@ public class TemplatesExpressionParsingTest extends TestCase {
 		vpeTemplateManager = VpeTemplateManager.getInstance();
 		errorNumber = 0;
 		vpeTemplateManager.reload();
-		assertEquals("Number founds error is Incorrect ", 5, errorNumber);
-		assertNotNull("Can not parse template from ReDHat DevStudio" + iStatus,
+		assertEquals("Number founds error is Incorrect ", 5, errorNumber); //$NON-NLS-1$
+		assertNotNull("Can not parse template from ReDHat DevStudio" + iStatus, //$NON-NLS-1$
 				iStatus);
 		return;
 	}
@@ -166,7 +165,7 @@ public class TemplatesExpressionParsingTest extends TestCase {
 			bundle = Platform.getBundle(confElement.getNamespaceIdentifier());
 		}
 
-		URL url = bundle.getEntry("/");
+		URL url = bundle.getEntry("/"); //$NON-NLS-1$
 
 		IPath path = new Path(FileLocator.toFileURL(url).getFile());
 		path = path.append(name);

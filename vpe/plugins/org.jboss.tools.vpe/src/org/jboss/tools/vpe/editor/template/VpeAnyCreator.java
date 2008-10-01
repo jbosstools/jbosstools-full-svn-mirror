@@ -138,20 +138,6 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 			}
 		}
 
-		Attr showIconAttr = element.getAttributeNode(VpeTemplateManager.ATTR_ANY_ICON);
-		if (showIconAttr != null) {
-			try {
-				if("yes".equals(showIconAttr.getValue())) showIconBool = true;
-				else showIconBool = false;
-				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(showIconAttr.getValue(), true);
-				dependencyMap.setCreator(this, info.getDependencySet());
-			} catch(VpeExpressionBuilderException e) {
-				VpePlugin.reportProblem(e);
-			}
-		}
-
-
-
 		if (VpeTemplateManager.ATTR_ANY_PROPERTIES != null) {
 			for (int i = 0; i < VpeTemplateManager.ATTR_ANY_PROPERTIES.length; i++) {
 				String attrName = VpeTemplateManager.ATTR_ANY_PROPERTIES[i];
@@ -270,8 +256,7 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 		return new VpeAnyData(
 					tagForDisplayStr,
 					valueStr,
-					styleStr,
-					showIconBool
+					styleStr
 				);
 	}
 

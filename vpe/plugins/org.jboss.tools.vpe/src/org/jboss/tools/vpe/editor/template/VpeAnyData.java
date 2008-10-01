@@ -18,7 +18,6 @@ package org.jboss.tools.vpe.editor.template;
 public class VpeAnyData extends VpeTemplateData {
 	private String uri;
 	private String tagForDisplay;
-	private boolean showIcon;
 	private String value;
 	private String style;
 
@@ -36,11 +35,8 @@ public class VpeAnyData extends VpeTemplateData {
 	public VpeAnyData(
 				String tagForDisplay,
 				String value,
-				String style,
-				boolean showIcon
-			) {
+				String style) {
 		this.value = value;
-		this.showIcon = showIcon;
 		this.tagForDisplay = tagForDisplay;
 		this.style=style;
 	}
@@ -53,14 +49,6 @@ public class VpeAnyData extends VpeTemplateData {
 	public void setUri(String uri) {
 		
 		this.uri = uri;
-	}
-
-	public boolean isShowIcon(){
-		return showIcon;
-	}
-	
-	public void setShowIcon(boolean flag){
-		showIcon = flag;
 	}
 
 	public String getValue() {

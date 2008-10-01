@@ -189,7 +189,6 @@ public class VpeTemplateManager {
 	private static final String ATTR_ANY_DISPLAY = "display"; //$NON-NLS-1$
 	
 	static final String ATTR_ANY_TAG_FOR_DISPLAY="tag-for-display"; //$NON-NLS-1$
-	static final String ATTR_ANY_ICON = "icon"; //$NON-NLS-1$
 	static final String ATTR_ANY_VALUE = "value"; //$NON-NLS-1$
 	static final String  ATTR_ANY_STYLE = "style"; //$NON-NLS-1$
 	@Deprecated 
@@ -646,10 +645,6 @@ public class VpeTemplateManager {
 									.append(attrDisplay.getNodeValue()).append(";"); //$NON-NLS-1$
 								}
 								//-----------END
-								attr = anyNode.getAttributeNode(ATTR_ANY_ICON);
-								if (attr != null){
-									anyData.setShowIcon(ATTR_VALUE_YES.equalsIgnoreCase(attr.getNodeValue()));
-								}
 
 								attr = anyNode.getAttributeNode(ATTR_ANY_VALUE);
 								if (attr != null) {
@@ -801,8 +796,6 @@ public class VpeTemplateManager {
 //		if (data.getBorderColor() != null && data.getBorderColor().length() > 0)
 //			newAnyElement.setAttribute(ATTR_ANY_BORDER_COLOR, data.getBorderColor());
 		
-		newAnyElement.setAttribute(ATTR_ANY_ICON, data.isShowIcon() ? ATTR_VALUE_YES : ATTR_VALUE_NO);
-
 		newTemplateElement.appendChild(newAnyElement);
 
 		return newTagElement;

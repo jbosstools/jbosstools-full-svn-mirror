@@ -44,7 +44,6 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 	private Text txtTagForDisplay; 
 	private Text txtValue;
 	private Text txtStyle;
-	private CheckControl ctlShowIcon;
 
 	public VpeEditAnyDialog(Shell shell, VpeAnyData data) {
 		super(shell);
@@ -87,9 +86,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 //		ctlCaseSensitive = new CheckControl(composite, "Case sensitive", data.isCaseSensitive());
 		ctlChildren = new CheckControl(composite, VpeUIMessages.CHILDREN, data.isChildren());
 //		ctlModify = new CheckControl(composite, "Modify", data.isModify());
-	
-		ctlShowIcon = new CheckControl(composite, VpeUIMessages.ICON, data.isShowIcon());
-		
+			
 		//value control
 		Label lblValue = makeLabel(composite, VpeUIMessages.VALUE);
 		lblValue.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
@@ -155,9 +152,6 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		data.setChanged(isChanged(data, data.getValue(), txtValue.getText()));
 		data.setValue(txtValue.getText().trim());
 
-		data.setChanged(isChanged(data, data.isShowIcon(), ctlShowIcon.getSelection()));
-		data.setShowIcon(ctlShowIcon.getSelection());
-		
 		data.setChanged(isChanged(data, data.getStyle(), txtStyle.getText()));
 		data.setStyle(txtStyle.getText());
 		

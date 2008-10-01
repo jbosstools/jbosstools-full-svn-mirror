@@ -34,7 +34,7 @@ import org.jboss.tools.vpe.ui.test.VpeTestSetup;
 public class VpeAllTests extends TestCase{
 	
 	public static Test suite(){
-		TestSuite suite = new TestSuite("Tests for vpe");
+		TestSuite suite = new TestSuite("Tests for vpe"); //$NON-NLS-1$
 		// $JUnit-BEGIN$
 		suite.addTestSuite(TemplateLoadingTest.class);
 		suite.addTestSuite(TemplateSchemeValidateTest.class);
