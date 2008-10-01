@@ -42,6 +42,7 @@ import org.jboss.tools.common.el.core.model.ELPropertyInvocation;
 import org.jboss.tools.common.el.core.model.ELUtil;
 import org.jboss.tools.common.el.core.parser.ELParser;
 import org.jboss.tools.common.el.core.parser.ELParserFactory;
+import org.jboss.tools.common.el.core.parser.ELParserUtil;
 import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
@@ -346,7 +347,7 @@ public class BundleMap {
 	}
 	
 	private List<ELInstance> parseJSFExpression(String expression){
-		ELParser parser = ELParserFactory.createDefaultParser();
+		ELParser parser = ELParserUtil.getDefaultFactory().createParser();
 		ELModel model = parser.parse(expression);
 		List<ELInstance> is = model.getInstances();
 		return is;
