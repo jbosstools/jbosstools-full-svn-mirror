@@ -33,7 +33,15 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
+import org.jboss.tools.common.el.core.model.ELArgumentInvocation;
+import org.jboss.tools.common.el.core.model.ELExpression;
+import org.jboss.tools.common.el.core.model.ELInstance;
+import org.jboss.tools.common.el.core.model.ELInvocationExpression;
+import org.jboss.tools.common.el.core.model.ELModel;
+import org.jboss.tools.common.el.core.model.ELPropertyInvocation;
+import org.jboss.tools.common.el.core.model.ELUtil;
 import org.jboss.tools.common.el.core.parser.ELParser;
+import org.jboss.tools.common.el.core.parser.ELParserFactory;
 import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
@@ -122,53 +130,54 @@ public class BundleMap {
 	}
 	
 	public boolean openBundle(String expression, String locale){
-//		ELParser.Token token = parseJSFExpression(expression);
-//		if(token == null) return false;
-//		ELParser.Token t = token;
-//		String prefix = null;
-//		String propertyName = null;
-//		while(t != null) {
-//			if(t.kind == ELParser.OPEN) {
-//				String[] values = getCall(expression, t);
-//				if(values != null) {
-//					prefix = values[0];
-//					propertyName = values[1];
-//					break;
-//				}
-//			}
-//			t = t.next;
-//		}
-//		if(prefix == null) return false;
-//
-//		BundleEntry entry = getBundle(prefix);
-//		
-//		if(entry == null){
-//			if (hasJsfProjectNatureType()) {
-//				IProject project = ((IFileEditorInput)editor.getEditorInput()).getFile().getProject();
-//				XModel model = EclipseResourceUtil.getModelNature(project).getModel();
-//				String prefix2 = prefix;
-//				if(propertyName != null && prefix != null) {
-//					prefix2 = prefix + "." + propertyName;
-//				}
-//				WebPromptingProvider.getInstance().getList(model, WebPromptingProvider.JSF_BEAN_OPEN, prefix2, null);
-//			}
-//			return false;
-//		}
-//
-//		if (hasJsfProjectNatureType()) {
-//			Properties p = new Properties();
-//			p.put(WebPromptingProvider.BUNDLE, entry.uri);
-//			p.put(WebPromptingProvider.KEY, propertyName);
-//			if (locale != null) p.put(WebPromptingProvider.LOCALE, locale);
-//			p.put(WebPromptingProvider.FILE, ((IFileEditorInput)editor.getEditorInput()).getFile().getProject());
-//	
-//			IProject project = ((IFileEditorInput)editor.getEditorInput()).getFile().getProject();
-//			XModel model = EclipseResourceUtil.getModelNature(project).getModel();
-//	
-//			WebPromptingProvider.getInstance().getList(model, WebPromptingProvider.JSF_OPEN_KEY, entry.uri, p);
-//			String error = p.getProperty(WebPromptingProvider.ERROR); 
-//			return (error == null || error.length() == 0);
-//		}
+		List<ELInstance> is = parseJSFExpression(expression);
+		if(is == null || is.size() == 0) return false;
+		String prefix = null;
+		String propertyName = null;
+		for (ELInstance i: is) {
+			ELExpression expr = i.getExpression();
+			if(expr == null) continue;
+			List<ELInvocationExpression> invs = expr.getInvocations();
+			if(invs.size() > 0) {
+				String[] values = getCall(invs.get(0));
+				if(values != null) {
+					prefix = values[0];
+					propertyName = values[1];
+					break;
+				}
+			}
+		}
+		if(prefix == null) return false;
+
+		BundleEntry entry = getBundle(prefix);
+		
+		if(entry == null){
+			if (hasJsfProjectNatureType()) {
+				IProject project = ((IFileEditorInput)editor.getEditorInput()).getFile().getProject();
+				XModel model = EclipseResourceUtil.getModelNature(project).getModel();
+				String prefix2 = prefix;
+				if(propertyName != null && prefix != null) {
+					prefix2 = prefix + "." + propertyName;
+				}
+				WebPromptingProvider.getInstance().getList(model, WebPromptingProvider.JSF_BEAN_OPEN, prefix2, null);
+			}
+			return false;
+		}
+
+		if (hasJsfProjectNatureType()) {
+			Properties p = new Properties();
+			p.put(WebPromptingProvider.BUNDLE, entry.uri);
+			p.put(WebPromptingProvider.KEY, propertyName);
+			if (locale != null) p.put(WebPromptingProvider.LOCALE, locale);
+			p.put(WebPromptingProvider.FILE, ((IFileEditorInput)editor.getEditorInput()).getFile().getProject());
+	
+			IProject project = ((IFileEditorInput)editor.getEditorInput()).getFile().getProject();
+			XModel model = EclipseResourceUtil.getModelNature(project).getModel();
+	
+			WebPromptingProvider.getInstance().getList(model, WebPromptingProvider.JSF_OPEN_KEY, entry.uri, p);
+			String error = p.getProperty(WebPromptingProvider.ERROR); 
+			return (error == null || error.length() == 0);
+		}
 		return false;
 	}
 
@@ -248,10 +257,6 @@ public class BundleMap {
 	public void removeBundle(int hashCode) {
 		removeBundle(hashCode, true);
 	}
-	
-//	public void addBundle(int hashCode, String prefix, String uri, int offset){
-//		addBundle(hashCode, prefix, uri, offset, true);
-//	}
 	
 	private void addBundle(int hashCode, String prefix, String uri, int offset, boolean refresh) {
 		ResourceBundle bundle = getBundleByUrl(uri);
@@ -340,88 +345,82 @@ public class BundleMap {
 		}
 	}
 	
-//	private ELParser.Token parseJSFExpression(String expression){
-//		ELParser parser = new ELParser();
-//		ELParser.Token token = parser.parse(expression);
-//		return token;		
-//		return null;
-//	}
-	
-	public String getBundleValue(String name, int offset){
-//		if(isShowBundleUsageAsEL) return name;
-//		ELParser.Token token = parseJSFExpression(name);
-//		if(token == null) return null;
-//		ELParser.Token t = token;
-//		StringBuffer sb = new StringBuffer();
-//		while(t != null) {
-//			if(t.kind == ELParser.OPEN) {
-//				String[] values = getCall(name, t);
-//				ELParser.Token te = t;
-//				while(te.next != null && te.kind != ELParser.CLOSE) te = te.next;
-//				String dv = name.substring(t.start, te.end);
-//				String value = (values == null) ? null : getBundleValue(values[0], values[1], offset);
-//				if(value == null) {
-//					sb.append(dv);
-//				} else {
-//					sb.append(value);
-//				}
-//				t = te;
-//			} else {
-//				sb.append(name.substring(t.start, t.end));
-//			}
-//			t = t.next;
-//		}
-//		return sb.toString();
-		return "";
+	private List<ELInstance> parseJSFExpression(String expression){
+		ELParser parser = ELParserFactory.createDefaultParser();
+		ELModel model = parser.parse(expression);
+		List<ELInstance> is = model.getInstances();
+		return is;
 	}
 	
-//	private ELParser.Token next(ELParser.Token t) {
-//		if(t == null) return null;
-//		t = t.next;
-//		if(t != null && t.kind == ELParser.SPACES) t = t.next;
-//		return t;
-//	}
-//	
-//	String[] getCall(String expression, ELParser.Token t) {
-//		if(t == null || t.kind != ELParser.OPEN) return null;
-//		t = next(t);
-//		if(t == null || t.kind != ELParser.NAME) return null;
-//		String prefix = expression.substring(t.start, t.end);
-//		String propName = null;
-//		t = next(t);
-//		if(t != null && t.kind == ELParser.DOT) {
-//			t = next(t);
-//			if(t == null || t.kind != ELParser.NAME) return null;
-//			propName = expression.substring(t.start, t.end);
-//		} else if(t != null && t.kind == ELParser.OPEN_ARG) {
-//			t = next(t);
-//			if(t == null || t.kind != ELParser.ARGUMENT) return null;
-//			propName = expression.substring(t.start, t.end);
-//			t = next(t);
-//			if(t == null || t.kind != ELParser.CLOSE_ARG) return null;
-//		}
-//		t = next(t);
-//		if(t == null || t.kind != ELParser.CLOSE) return null;
-//		return propName == null ? null : new String[]{prefix, propName};
-//	}
-//	
-//	private String getBundleValue(String prefix, String propertyName, int offset) {
-//		BundleEntry entry = getBundle(prefix);
-//		if(entry != null) {
-//		    //Added by estherbin fix JBIDE-2010 (issue with resources). 
-//			if(offset!=0 && (entry.offset > offset))return null;
-//			String name = prefix + "." + propertyName;
-//			try{
-//				String value = (String)entry.bundle.getObject(propertyName);
-//				if(!usedKeys.containsKey(name))
-//					usedKeys.put(name, new UsedKey(entry.uri, prefix, propertyName, value, entry.hashCode, entry.offset));
-//				return value;
-//			}catch(MissingResourceException ex){
-//				return null;
-//			}
-//		} 
-//		return null;
-//	}
+	public String getBundleValue(String name, int offset){
+		if(isShowBundleUsageAsEL) return name;
+		List<ELInstance> is = parseJSFExpression(name);
+		if(is == null) return null;
+		StringBuffer sb = new StringBuffer();
+		int index = 0;
+		for (ELInstance i: is) {
+			int start = i.getStartPosition();
+			sb.append(name.substring(index, start));
+			index = start;
+			if(i.getExpression() instanceof ELInvocationExpression) {
+				ELInvocationExpression expr = (ELInvocationExpression)i.getExpression();
+				String[] values = getCall(expr);
+				if(values != null) {
+					String value = (values == null) ? null : getBundleValue(values[0], values[1], offset);
+					if(value != null) {
+						sb.append(value);
+						index = i.getEndPosition();
+					}
+					
+				}
+			}
+			if(index < i.getEndPosition()) {
+				sb.append(name.substring(index, i.getEndPosition()));
+				index = i.getEndPosition();
+			}
+		}
+		sb.append(name.substring(index));
+		return sb.toString();
+	}
+	
+	String[] getCall(ELInvocationExpression expr) {
+		if(expr == null) return null;
+		ELInvocationExpression left = expr.getLeft();
+		if(left == null) return null;
+		String name = expr.getMemberName();
+		if(name == null || name.length() == 0) return null;
+		if(expr instanceof ELPropertyInvocation) {
+			return new String[]{left.getText(), name};
+		} else if(expr instanceof ELArgumentInvocation) {
+			if(name.startsWith("\"") || name.startsWith("'")) {
+				name = name.substring(1);
+			}
+			if(name.endsWith("\"") || name.endsWith("'")) {
+				name = name.substring(0, name.length() - 1);
+			}
+			if(name.length() == 0) return null;
+			return new String[]{left.getText(), name};
+		}
+		return null;
+	}
+	
+	private String getBundleValue(String prefix, String propertyName, int offset) {
+		BundleEntry entry = getBundle(prefix);
+		if(entry != null) {
+		    //Added by estherbin fix JBIDE-2010 (issue with resources). 
+			if(offset!=0 && (entry.offset > offset))return null;
+			String name = prefix + "." + propertyName;
+			try{
+				String value = (String)entry.bundle.getObject(propertyName);
+				if(!usedKeys.containsKey(name))
+					usedKeys.put(name, new UsedKey(entry.uri, prefix, propertyName, value, entry.hashCode, entry.offset));
+				return value;
+			}catch(MissingResourceException ex){
+				return null;
+			}
+		} 
+		return null;
+	}
 	
 	public void addBundleMapListener(BundleMapListener listener) {
 		if (listener != null) {
