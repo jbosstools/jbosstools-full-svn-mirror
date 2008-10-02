@@ -25,6 +25,7 @@
 		<module>../../esb/docs/esb_ref_guide</module>
 		<module>../../ws/docs/reference</module>
 		<module>../../portlet/docs/reference</module>
+		<module>../../birt/docs</module>
 
 		<module>index</module>
 	</modules>
