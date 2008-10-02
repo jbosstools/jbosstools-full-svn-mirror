@@ -53,7 +53,7 @@
                         <title>Creating a BIRT Report</title>
                         <para>In this chapter we suggest a step-by-step walk-through of creating your own BIRT report.</para>
                                 
-                        <para>We will show you how to use the Creation wizard for creating a new BIRT report.</para>
+     <section><title>Create a Report Project</title>
                                 
                                 <para>First create a Report project. Select <emphasis><property>File &gt; New &gt; Project...</property>
                                 </emphasis> in the main menu bar or context menu. The new project dialog appears.  Choose  <emphasis><property>Business Intelligence and Reporting Tools &gt; Report Project</property></emphasis>:
@@ -89,7 +89,9 @@
                                         </imageobject>
                                 </mediaobject>
                         </figure> 
-                               
+     </section>
+                       
+      <section> <title>Create a Report</title>
                         <para>Now you can create a Report. Go to <emphasis><property>File &gt; New &gt; Report...</property></emphasis>:</para>
                                
                         <figure>
@@ -135,7 +137,58 @@
                                 </mediaobject>
                         </figure> 
                                        
-                               
+      </section>           
+                        
+                        <section>
+                         <title>Build a Data Source</title>
+                                
+                                <para>Data source is used to connect to the database. In order to create a data source for your report follow these steps:</para>
+                             <para>Open the Data Explorer View. Select Data Sources, right-click on it and choose New Data Source:</para>
+                             
+                             
+                                <figure>
+                                        <title>Create a Data Source</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/08DataSource.png"/>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
+                             
+                                <para>The New Data Source dialog appears. Choose the "Create from a data source type in the following list" radiobutton and then "Classic Models Inc. Sample Database". Click on the <emphasis><property>Next</property></emphasis> button:</para>
+                                                   
+                             
+                                <figure>
+                                        <title>New Data Source</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/09NewDataSource.png"/>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
+                                
+                                <para>The newly created data source details wll be displayed: Driver Class, Database URL and Database User:</para>
+                                
+                                <figure>
+                                        <title>New Data Source Details</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/10NewSampleDateSource.png"/>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
+                             <para>Click on the <emphasis><property>Finish</property></emphasis> button to add the data source to the data source for your report.</para>
+                             
+                        <para>If you need to edit the data source right-click on it and select the corresponding option.</para>    
+                        </section>
+                        
+                        
+                        <section><title>Builde a Data Set</title>
+                        
+                        text here
+                        
+                        
+                        </section>
                         
                 </section>
         
