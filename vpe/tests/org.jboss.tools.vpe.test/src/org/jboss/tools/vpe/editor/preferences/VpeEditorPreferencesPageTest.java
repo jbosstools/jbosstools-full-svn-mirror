@@ -9,7 +9,7 @@ public class VpeEditorPreferencesPageTest extends TestCase {
 	public void testVpeEditorPreferencesPageShow() {
 		PreferenceDialog prefDialog = 
 			WorkbenchUtils.createPreferenceDialog(
-					VpeEditorPreferencesPage.class.getName());
+					VpeEditorPreferencesPage.ID);
 
 		try {
 			prefDialog.setBlockOnOpen(false);

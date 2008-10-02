@@ -24,6 +24,8 @@ import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 public class VpeEditorPreferencesPage extends TabbedPreferencesPage implements IWorkbenchPreferencePage {
 
+	
+	public static final String ID = "org.jboss.tools.vpe.editor"; 
 	public VpeEditorPreferencesPage() {
 		addPreferencePage(new GeneralPage());
 		addPreferencePage(new TemplatesPreferencePage());
@@ -34,8 +36,8 @@ public class VpeEditorPreferencesPage extends TabbedPreferencesPage implements I
         Preferences preferences = VpePlugin.getDefault().getPluginPreferences();
         PreferenceDialog prefsdlg = PreferencesUtil.createPreferenceDialogOn(
                 PlatformUI.getWorkbench().getDisplay().getActiveShell(),
-            "org.jboss.tools.vpe.editor", new String[] {
-                        "org.jboss.tools.vpe.editor" }, null);
+                ID, new String[] {
+                        ID }, null);
 
         prefsdlg.open();
 	}
