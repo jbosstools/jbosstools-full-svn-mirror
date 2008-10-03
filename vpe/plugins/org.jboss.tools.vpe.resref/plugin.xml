@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+    <extension point="org.jboss.tools.common.model.classes">
+       <xclass id="org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
+		class="org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"/>
+    </extension>
+</plugin>
