@@ -183,9 +183,48 @@
                         </section>
                         
                         
-                        <section><title>Builde a Data Set</title>
+                        <section><title>Build a Data Set</title>
                         
-                        text here
+                                <para>Data Set is a query to get and represent necessary column data from the data source specified. Select Data Sets in the tree view, right-click on it and select New Data Set:</para>
+                                        
+                                <figure>
+                                        <title>Create a Data Set</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/11DataSet.png"/>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
+                                        
+                                        
+                                <para>The New Data Set dialog will appear. Enter a name for the Data Set Name field and ensure that the Data Source field shows the data source already created and that the Data Set Type field is set to "SQL Select Query". 
+                                        Then click on the Next button:</para>
+                        
+                        
+                         <figure>
+                                        <title>New Data Set Details</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/12NewDataSet.png"/>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
+                                        
+                        <para>Enter the following details into the query:</para>
+                                <programlisting><![CDATA[
+SELECT *
+FROM CUSTOMERS
+WHERE COUNTRY = 'USA']]></programlisting>
+                        
+                        
+                                <figure>
+                                        <title>Query Details</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/13SQLQuery.png"/>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
                         
                         
                         </section>
