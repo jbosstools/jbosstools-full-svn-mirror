@@ -12,7 +12,7 @@
  
  <title>Migration of JSF and Struts Projects</title>
  <para>In this chapter you can find concise description of migration of JSF and Struts Projects.</para>
- <section>  
+ <section id="import_jsf">  
   <title>JSF</title>
   <para>JBoss Developer Studio includes an Import <property>JSF Project</property> Wizard that radically simplifies the process of bringing your existing JSF applications
    into your JBoss Developer Studio workspace as JSF projects. You just need to follow these four steps:</para>
@@ -53,7 +53,7 @@
    </mediaobject>
   </figure>
  
-  <itemizedlist continuation="continues">
+  <itemizedlist continuation="continues" id="import_jsf_screen">
    <listitem><para>In the <emphasis><property>Project Folders</property></emphasis> screen, you can configure the rest of your project. Afterwards click on the <emphasis><property>Finish</property></emphasis> button.</para></listitem>
    </itemizedlist>
 		<para>On this step JBoss Developer Studio will try to determine your project
