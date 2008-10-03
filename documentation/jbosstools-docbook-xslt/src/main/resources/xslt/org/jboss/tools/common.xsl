@@ -200,22 +200,10 @@
 
   <!-- Let's handle the case where a component (bibliography, for example)
        occurs inside a section; will we need parameters for this? -->
-	<xsl:variable name="revflag">
-		<xsl:choose> 
-		  <xsl:when test="../@role='new' or ../@role='updated'"> 
-		      <xsl:value-of select="../@role"/> 
-		  </xsl:when> 
-		<!-- For mkdiff compatibility-->
-		<xsl:when test="../@revisionflag='added' or ../@revisionflag='changed'"> 
-		     <xsl:value-of select="../@revisionflag"/> 
-		</xsl:when>
-		 <xsl:otherwise></xsl:otherwise>
-		</xsl:choose> 
-	</xsl:variable>
+	
   <xsl:element name="h{$level+1}">
 		<xsl:attribute name="class">
 			title
-			<xsl:value-of select="$revflag" />
 		</xsl:attribute>
     <xsl:if test="$generate.id.attributes = 0">
       <xsl:call-template name="anchor">
@@ -227,6 +215,16 @@
       <xsl:with-param name="allow-anchors" select="1"/>
     </xsl:apply-templates>
   </xsl:element>
+  
+  	<xsl:choose> 
+		  <xsl:when test="../@role='new' or ../@revisionflag='added'"> 
+			<img src="images/new.png" alt="new" class="img_marker" />
+		  </xsl:when> 
+		<!-- For mkdiff compatibility-->
+		<xsl:when test="../@role='updated' or ../@revisionflag='changed'"> 
+			<img src="images/updated.png" alt="updated" class="img_marker" />
+		</xsl:when>
+	</xsl:choose> 
 </xsl:template>
 
 <!-- ==================================================================== -->
@@ -266,24 +264,9 @@
     </xsl:choose>
   </xsl:variable>
   
-  	<xsl:variable name="revflag">
-		<xsl:choose> 
-		  <xsl:when test="../@role='new' or ../@role='updated'"> 
-		      <xsl:value-of select="../@role"/> 
-		  </xsl:when> 
-		<!-- For mkdiff compatibility-->
-		<xsl:when test="../@revisionflag='added' or ../@revisionflag='changed'"> 
-		     <xsl:value-of select="../@revisionflag"/> 
-		</xsl:when>
-		 <xsl:otherwise></xsl:otherwise>
-		</xsl:choose> 
-	</xsl:variable>
-	
   <xsl:element name="h{$hlevel}">
     <xsl:attribute name="class">
 	<xsl:value-of select="$class"/>
-	<xsl:text> </xsl:text>
-	<xsl:value-of select="$revflag"/>
     </xsl:attribute>
     <xsl:if test="$css.decoration != '0'">
       <xsl:if test="$hlevel&lt;3">
@@ -301,6 +284,15 @@
     </xsl:if>
     <xsl:copy-of select="$title"/>
   </xsl:element>
+ 	<xsl:choose> 
+		  <xsl:when test="../@role='new' or ../@revisionflag='added'"> 
+			<img src="images/new.png" alt="new" class="img_marker" />
+		  </xsl:when> 
+		<!-- For mkdiff compatibility-->
+		<xsl:when test="../@role='updated' or ../@revisionflag='changed'"> 
+			<img src="images/updated.png" alt="updated" class="img_marker" />
+		</xsl:when>
+	</xsl:choose>
 </xsl:template>
 
 <!-- ==================================================================== -->
