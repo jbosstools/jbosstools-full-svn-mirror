@@ -27,10 +27,6 @@
           paths=".vpe."
       />
    </extension>
-    <extension point="org.jboss.tools.common.model.classes">
-       <xclass id="org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
-	class="org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"/>
-    </extension>
 	<extension point="org.eclipse.ui.preferencePages">
       <page category="org.jboss.tools.common.xstudio.editors" class="org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage" id="org.jboss.tools.vpe.editor" name="Visual Page Editor"></page>
       <page
