@@ -353,8 +353,11 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 						pageContext);
 				List columnClasses = getClasses(columnClassesExpr, sourceNode,
 						pageContext);
-				int rci = 0, cci = 0;
+				
+				int rci = 0; // index of row class
 				for (int i = 0; i < rowCount; i++) {
+					int cci = 0; // index of column class. Reset on every new row. 
+					
 					nsIDOMElement visualRow = visualDocument
 							.createElement(HTML.TAG_TR);
 					if (rowClasses.size() > 0) {
