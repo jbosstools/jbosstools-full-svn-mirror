@@ -3,17 +3,33 @@
     <?dbhtml filename="birtDesigner.html"?>
     <chapterinfo>
         <keywordset>
-            <keyword>JBoss BIRT</keyword>
+            <keyword>JBoss</keyword>
             <keyword>BIRT</keyword>
             <keyword>BIRT Designer</keyword>
-            
+            <keyword>BIRT Report Designer</keyword>
         </keywordset>
     </chapterinfo>
 
     <title>BIRT Designer</title>
 
-    <para>text here</para>
-
+    <para>There are a number of ways we can improve the report's appearance: </para>
+        
+    <itemizedlist><listitem><para>Add a title to the top of the report;</para></listitem>
+    
+    
+    
+    Add a title to the top of the report. 
+        Add some color to enhance the column headings. 
+        Shrink the size of the city and state columns. 
+        Add some color to make the state and city group headers stand out. 
+        Format the phone numbers. 
+        Sort customers by name.
+    </itemizedlist>
+    
+    
+    
+    
+    
     <section id="birt_designer_introduction">
         
         <title>BIRT Designer</title>
