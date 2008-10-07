@@ -18,6 +18,7 @@ import java.util.Properties;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -41,6 +42,8 @@ public class GraphicalInformationSaver {
 	private IEditorInput input;
 
 	protected Resource graphicalFileResource;
+	
+	private IFile file = null;
 
 	/**
 	 * Create the instance during init step
@@ -66,6 +69,7 @@ public class GraphicalInformationSaver {
 							e.printStackTrace();
 						}
 					}
+					setFile(gfile);
 					String osString = gfile.getLocation().toOSString();
 					graphicalFileResource = new XMLResourceFactoryImpl()
 							.createResource(URI.createFileURI(osString));
@@ -89,6 +93,7 @@ public class GraphicalInformationSaver {
 						e.printStackTrace();
 					}
 				}
+				setFile(gfile);
 				String osString = gfile.getLocation().toOSString();
 				graphicalFileResource = new XMLResourceFactoryImpl()
 						.createResource(URI.createFileURI(osString));
@@ -108,7 +113,7 @@ public class GraphicalInformationSaver {
 	}
 
 	public void doSave(IProgressMonitor monitor, String sourceid,
-			String targetid) throws IOException {
+			String targetid) throws IOException, CoreException {
 		GraphInformations graph = null;
 		if (graphicalFileResource != null) {
 			if (graphicalFileResource.getContents().isEmpty()) {
@@ -122,6 +127,7 @@ public class GraphicalInformationSaver {
 				initMappingTypes(graph, sourceid, targetid);
 			}
 			graphicalFileResource.save(Collections.EMPTY_MAP);
+			if(this.file != null) file.refreshLocal(IResource.DEPTH_ONE, monitor);
 		}
 	}
 
@@ -146,6 +152,7 @@ public class GraphicalInformationSaver {
 				initParams(params, context);
 			}
 			graphicalFileResource.save(Collections.EMPTY_MAP);
+			if(this.file != null) file.refreshLocal(IResource.DEPTH_ONE, monitor);
 		}
 
 	}
@@ -173,6 +180,14 @@ public class GraphicalInformationSaver {
 
 		mapping.setSourceTypeID(sourceID);
 		mapping.setTargetTypeID(targetID);
+	}
+
+	public IFile getFile() {
+		return file;
+	}
+
+	public void setFile(IFile file) {
+		this.file = file;
 	}
 
 }
